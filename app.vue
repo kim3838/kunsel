@@ -31,7 +31,8 @@
         <div class="tw-text-sm tw-text-gray-500" style="font-family: 'Kotta One', 'serif';">
             <span v-text="serifParagraph"></span>
         </div>
-        {{useNuxtApp().$_.capitalize('hello world')}}
+        <div>{{useNuxtApp().$_.capitalize('hello world')}}</div>
+        <div>{{useNuxtApp().$moment().format('YYYY-MM-DD')}}</div>
     </div>
 </template>
 <script setup lang="ts">
@@ -42,6 +43,9 @@
 
     let lodashValue = useNuxtApp().$_.capitalize('hello world');
     console.log(lodashValue);
+
+    const {$moment} = useNuxtApp();
+    console.log($moment().format('YYYY-MM-DD'));
 
     let sansParagraph: string = "Sans : The quick brown fox jumps over the lazy dog.";
     let serifParagraph: string = "Serif : The quick brown fox jumps over the lazy dog.";

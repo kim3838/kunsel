@@ -52,9 +52,9 @@ export default defineNuxtConfig({
     components: {
         dirs: [
             '~/components',
-            '~/components/Logo',
-            '~/components/Jetstream',
-            '~/components/Form'
+            //'~/components/Logo',
+            //'~/components/Jetstream',
+            //'~/components/Form'
         ]
     },
 
