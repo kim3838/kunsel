@@ -35,6 +35,29 @@ export default defineNuxtConfig({
         },
     },
 
+    css: [
+        '@/assets/css/main.css',
+        '@/assets/css/tailwind.css',
+        '@/assets/css/fonts.css',
+        '@/assets/css/datetimepicker.css'
+    ],
+
+    postcss: {
+        plugins: {
+            tailwindcss: {},
+            autoprefixer: {},
+        },
+    },
+
+    components: {
+        dirs: [
+            '~/components',
+            '~/components/Logo',
+            '~/components/Jetstream',
+            '~/components/Form'
+        ]
+    },
+
     modules: [
         '@nuxtjs/tailwindcss'
     ],

@@ -31,11 +31,17 @@
         <div class="tw-text-sm tw-text-gray-500" style="font-family: 'Kotta One', 'serif';">
             <span v-text="serifParagraph"></span>
         </div>
+        {{useNuxtApp().$_.capitalize('hello world')}}
     </div>
 </template>
 <script setup lang="ts">
-    const runtimeConfig = useRuntimeConfig()
-    console.log(runtimeConfig);
+    const runtimeConfig = useRuntimeConfig();
+    const appConfig = useAppConfig()
+    console.log({runtimeConfig: runtimeConfig});
+    console.log({appConfig: appConfig});
+
+    let lodashValue = useNuxtApp().$_.capitalize('hello world');
+    console.log(lodashValue);
 
     let sansParagraph: string = "Sans : The quick brown fox jumps over the lazy dog.";
     let serifParagraph: string = "Serif : The quick brown fox jumps over the lazy dog.";
