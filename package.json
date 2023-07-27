@@ -14,5 +14,10 @@
         "@tailwindcss/forms": "^0.5.4",
         "@types/node": "^18.16.19",
         "nuxt": "^3.6.3"
+    },
+    "dependencies": {
+        "@nuxtjs/axios": "^5.13.6",
+        "lodash": "^4.17.21",
+        "moment": "^2.29.4"
     }
 }
