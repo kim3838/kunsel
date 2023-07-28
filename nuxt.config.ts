@@ -4,6 +4,8 @@ export default defineNuxtConfig({
         enabled: true
     },
 
+    debug: false,//prints out hook names and timings on the server, and logs hook arguments as well in the browser.
+
     app: {
         head: {
             title: 'sn-frontendv3',
@@ -59,15 +61,28 @@ export default defineNuxtConfig({
     },
 
     modules: [
-        '@nuxtjs/tailwindcss'
+        '@nuxtjs/tailwindcss',
+        'nuxt-lodash'
     ],
+
+    server: {
+        https: false,
+        //https: {key: './server.key',cert: './server.crt'},
+    },
+
+    lodash: {
+        prefix: "_",
+        prefixSkip: false,
+        upperAfterPrefix: false,
+        exclude: [],
+        alias: [],
+    },
 
     runtimeConfig: {
         // The private keys which are only available server-side
         apiSecret: '456',
         // Keys within public are also exposed client-side
         public: {
-            baseURL: process.env.BASE_URL || 'http://localhost:8000',
             version: process.env.VERSION,
         }
     }
