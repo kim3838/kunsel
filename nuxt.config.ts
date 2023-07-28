@@ -79,11 +79,13 @@ export default defineNuxtConfig({
     },
 
     runtimeConfig: {
-        // The private keys which are only available server-side
-        apiSecret: '456',
         // Keys within public are also exposed client-side
         public: {
             version: process.env.VERSION,
-        }
+            baseURL: process.env.BASE_URL || 'http://localhost:8000',
+        },
+        // The private keys which are only available server-side
+        apiSecret: '456',// Replaced by process.env.NUXT_API_SECRET
+        apiKey: '789' // Default to an empty string, automatically set at runtime using process.env.NUXT_API_KEY
     }
 })

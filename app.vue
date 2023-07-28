@@ -46,11 +46,10 @@ const { $debug, $moment} = useNuxtApp();
 const runtimeConfig = useRuntimeConfig();
 const appConfig = useAppConfig();
 
-$debug("runtimeConfig: " + JSON.stringify(runtimeConfig));
-$debug("appConfig: " + JSON.stringify(appConfig));
-$debug($moment().format('YYYY-MM-DD'));
-$debug(_upperCase('lodash uppercase'));
+$debug('runtimeConfig',runtimeConfig);
+$debug('appConfig', appConfig);
+$debug('moment', $moment().format('YYYY-MM-DD'));
+$debug('lodash', _upperCase('lodash uppercase'));
 
-// let mountains = await $axios.get('https://api.nuxtjs.dev/mountains'+ '?secret=1');
-// console.log({mountains:mountains});
+// const mountains = await $fetch('https://api.nuxtjs.dev/mountains').catch((error) => error.data)
 </script>
