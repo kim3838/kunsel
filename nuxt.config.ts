@@ -1,12 +1,8 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-    devtools: {
-        enabled: true
-    },
-
-    debug: false,//prints out hook names and timings on the server, and logs hook arguments as well in the browser.
 
     app: {
+        baseURL: "/",
         head: {
             title: 'sn-frontendv3',
             "meta": [
@@ -38,8 +34,13 @@ export default defineNuxtConfig({
             "bodyAttrs": {
                 class: 'tw-text-accent tw-font-sans'
             }
-        },
-        baseURL: "/"
+        }
+    },
+
+    debug: false,//prints out hook names and timings on the server, and logs hook arguments as well in the browser.
+
+    devtools: {
+        enabled: true
     },
 
     css: [
@@ -48,13 +49,6 @@ export default defineNuxtConfig({
         '@/assets/css/fonts.css',
         '@/assets/css/datetimepicker.css'
     ],
-
-    postcss: {
-        plugins: {
-            tailwindcss: {},
-            autoprefixer: {},
-        },
-    },
 
     components: {
         dirs: [
@@ -65,22 +59,24 @@ export default defineNuxtConfig({
         ]
     },
 
-    modules: [
-        '@nuxtjs/tailwindcss',
-        'nuxt-lodash'
-    ],
-
-    server: {
-        https: false,
-        //https: {key: './server.key',cert: './server.crt'},
-    },
-
     lodash: {
         prefix: "_",
         prefixSkip: false,
         upperAfterPrefix: false,
         exclude: [],
         alias: [],
+    },
+
+    modules: [
+        '@nuxtjs/tailwindcss',
+        'nuxt-lodash'
+    ],
+
+    postcss: {
+        plugins: {
+            tailwindcss: {},
+            autoprefixer: {},
+        },
     },
 
     runtimeConfig: {
@@ -92,5 +88,10 @@ export default defineNuxtConfig({
         // Private keys which are only available server-side
         apiSecret: '',// Replaced by process.env.NUXT_API_SECRET
         apiKey: '' // Default to an empty string, automatically set at runtime using process.env.NUXT_API_KEY
+    },
+
+    server: {
+        https: false,
+        //https: {key: './server.key',cert: './server.crt'},
     }
 })
