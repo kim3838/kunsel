@@ -11,26 +11,26 @@
             <div class="tw-flex tw-h-full tw-items-center tw-border-neutral-200 tw-border">
                 <form @submit.prevent="login" class="tw-w-72">
                     <div class="tw-block">
-                        <FormInputLabel :height="'sm'" for="email" value="Email" />
-                        <FormInput :height="'sm'" id="email" type="email" class="tw-w-full" v-model="email" autofocus autocomplete="off" />
+                        <FormInputLabel :size="'sm'" for="email" value="Email" />
+                        <FormInput :size="'sm'" id="email" type="email" class="tw-w-full" v-model="email" autofocus autocomplete="off" />
                         <sup>{{email}}</sup>
                     </div>
 
                     <div class="tw-block tw-mt-4">
-                        <FormInputLabel :height="'md'" for="password" value="Password" />
-                        <FormInput :height="'md'" id="password" type="password" class="tw-w-full" v-model="password" required autocomplete="current-password" />
+                        <FormInputLabel :size="'md'" for="password" value="Password" />
+                        <FormInput :size="'md'" id="password" type="password" class="tw-w-full" v-model="password" required autocomplete="current-password" />
                         <sup>{{password}}</sup>
                     </div>
 
                     <div class="tw-block tw-mt-4">
                         <label class="tw-flex tw-items-center">
-                            <FormCheckbox name="remember" v-model="remember" :height="'md'" :label="'Remember me'" />
+                            <FormCheckbox name="remember" v-model="remember" :size="'md'" :label="'Remember me'" />
                             <sup>{{remember}}</sup>
                         </label>
                     </div>
 
                     <div class="tw-flex tw-items-center tw-justify-end tw-mt-4">
-                        <Button :height="'md'"><span class="tw-font-semibold">Authenticate</span></Button>
+                        <Button :size="'md'"><span class="tw-font-semibold">Authenticate</span></Button>
                     </div>
                 </form>
             </div>

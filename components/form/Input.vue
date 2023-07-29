@@ -13,7 +13,7 @@ import { computed } from 'vue';
 
 const props = defineProps({
     modelValue: String,
-    height: {
+    size: {
         default: null
     },
     disabled: {
@@ -38,7 +38,7 @@ const heightClass = computed(() => {
         'xl': 'tw-h-14',
         '2xl' : 'tw-h-16',
         '3xl' : 'tw-h-20',
-    }[props.height]
+    }[props.size]
 });
 
 const fontClass = computed(() => {
@@ -51,7 +51,7 @@ const fontClass = computed(() => {
         'xl': 'tw-text-xl tw-font-semibold',
         '2xl': 'tw-text-3xl tw-font-bold',
         '3xl': 'tw-text-5xl tw-font-bold',
-    }[props.height];
+    }[props.size];
 });
 
 const backgroundClass = computed(() => {

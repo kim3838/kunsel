@@ -12,7 +12,7 @@
                 type: String,
                 default: null
             },
-            height: {
+            size: {
                 default: null
             },
         },
@@ -26,7 +26,7 @@
                     'md': 'tw-text-base tw-font-medium tw-leading-4',
                     'lg': 'tw-text-lg tw-font-medium tw-leading-5',
                     'xl': 'tw-text-xl tw-font-semibold tw-leading-5',
-                }[this.height]
+                }[this.size]
             },
         }
     }

@@ -23,7 +23,7 @@ const props = defineProps({
         type: String,
         default: '_',
     },
-    height: {
+    size: {
         default: null
     },
 });
@@ -45,7 +45,7 @@ const heightClass = computed(() => {
         'sm': 'tw-h-3 tw-w-3',
         'md': 'tw-h-3.5 tw-w-3.5',
         'lg': 'tw-h-5 tw-w-5',
-    }[props.height];
+    }[props.size];
 });
 
 const fontClass = computed(() => {
@@ -54,7 +54,7 @@ const fontClass = computed(() => {
         'sm': 'tw-text-sm',
         'md': 'tw-text-base tw-font-medium',
         'lg': 'tw-text-xl tw-font-semibold'
-    }[props.height];
+    }[props.size];
 });
 
 const inputClass = computed(() => {
@@ -63,7 +63,7 @@ const inputClass = computed(() => {
         'sm': '',
         'md': '',
         'lg': 'tw-border-2'
-    }[props.height];
+    }[props.size];
 });
 </script>
 
