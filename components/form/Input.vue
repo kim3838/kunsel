@@ -9,7 +9,7 @@
 </template>
 
 <script setup>
-import { reactive, computed, nextTick } from 'vue';
+import { computed } from 'vue';
 
 const props = defineProps({
     modelValue: String,
@@ -25,6 +25,7 @@ const props = defineProps({
         default: false
     }
 });
+
 defineEmits(['update:modelValue']);
 
 const heightClass = computed(() => {
@@ -63,6 +64,5 @@ const backgroundClass = computed(() => {
 function focus(){
     this.$refs.input.focus();
 }
-
 </script>
 

@@ -16,7 +16,8 @@ import { computed, defineEmits } from 'vue';
 const props = defineProps({
     modelValue: [Array, Boolean],
     value: {
-        type: [Boolean, Object]
+        type: [Boolean, Object],
+        default: false
     },
     label: {
         type: String,
@@ -26,6 +27,7 @@ const props = defineProps({
         default: null
     },
 });
+
 const emit = defineEmits(["update:modelValue"]);
 
 const proxyModel = computed({
@@ -35,7 +37,7 @@ const proxyModel = computed({
     set(newValue) {
         emit("update:modelValue", newValue);
     }
-})
+});
 
 const heightClass = computed(() => {
     return {

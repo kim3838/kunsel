@@ -24,7 +24,7 @@
 
                     <div class="tw-block tw-mt-4">
                         <label class="tw-flex tw-items-center">
-                            <FormCheckbox name="remember" v-model="remember" :value="{'value' : 'remember'}" :height="'md'" :label="'Remember me'" />
+                            <FormCheckbox name="remember" v-model="remember" :height="'md'" :label="'Remember me'" />
                             <sup>{{remember}}</sup>
                         </label>
                     </div>
@@ -44,7 +44,7 @@ import { ref } from 'vue';
 
 const email = ref("berenice.jerde@example.com1");
 const password = ref("password");
-const remember = ref(false);
+const remember = ref(true);
 
 function login() {
     console.log({
