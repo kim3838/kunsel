@@ -34,7 +34,11 @@ export default defineNuxtConfig({
             "bodyAttrs": {
                 class: 'tw-text-accent tw-font-sans'
             }
-        }
+        },
+        layoutTransition: false,
+        pageTransition: false,
+        rootId: "__nuxt",
+        rootTag: "div"
     },
 
     debug: false,//prints out hook names and timings on the server, and logs hook arguments as well in the browser.
