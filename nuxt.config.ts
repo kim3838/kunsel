@@ -54,14 +54,9 @@ export default defineNuxtConfig({
         '@/assets/css/datetimepicker.css'
     ],
 
-    components: {
-        dirs: [
-            '~/components',
-            //'~/components/Logo',
-            //'~/components/Jetstream',
-            //'~/components/Form'
-        ]
-    },
+    components: [
+        {path: '~/components'}
+    ],
 
     lodash: {
         prefix: "_",
