@@ -36,7 +36,6 @@
     </div>
 </template>
 <script setup lang="ts">
-import {_debounce, _upperCase} from "#imports";
 
 let sansParagraph: string = "Sans : The quick brown fox jumps over the lazy dog.";
 let serifParagraph: string = "Serif : The quick brown fox jumps over the lazy dog.";

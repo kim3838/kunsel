@@ -29,12 +29,17 @@ export default defineNuxtConfig({
                 {rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=Spline+Sans+Mono:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap'}
             ],
             "style": [],
-            "script": [],
+            "script": [
+                {src: '/js/common/moment.min.js'},
+                {src: '/js/common/jquery.min.js'},
+                {src: '/js/datetimepicker/index.js'}
+            ],
             "noscript": [],
             "bodyAttrs": {
                 class: 'tw-text-accent tw-font-sans'
             }
         },
+        baseURL: "/"
     },
 
     css: [
@@ -81,11 +86,11 @@ export default defineNuxtConfig({
     runtimeConfig: {
         // Keys within public are also exposed client-side
         public: {
-            version: process.env.VERSION,
+            version: process.env.VERSION || '1.0.0',
             baseURL: process.env.BASE_URL || 'http://localhost:8000',
         },
-        // The private keys which are only available server-side
-        apiSecret: '456',// Replaced by process.env.NUXT_API_SECRET
-        apiKey: '789' // Default to an empty string, automatically set at runtime using process.env.NUXT_API_KEY
+        // Private keys which are only available server-side
+        apiSecret: '',// Replaced by process.env.NUXT_API_SECRET
+        apiKey: '' // Default to an empty string, automatically set at runtime using process.env.NUXT_API_KEY
     }
 })
