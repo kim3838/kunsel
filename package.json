@@ -17,6 +17,7 @@
         "nuxt-lodash": "^2.5.0"
     },
     "dependencies": {
+        "@pinia/nuxt": "^0.4.11",
         "moment": "^2.29.4"
     }
 }

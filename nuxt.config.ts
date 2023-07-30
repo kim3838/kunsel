@@ -1,5 +1,8 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
+    alias: {
+        pinia: "/node_modules/@pinia/nuxt/node_modules/pinia/dist/pinia.mjs"
+    },
 
     app: {
         baseURL: "/",
@@ -68,6 +71,7 @@ export default defineNuxtConfig({
 
     modules: [
         '@nuxtjs/tailwindcss',
+        '@pinia/nuxt',
         'nuxt-lodash'
     ],
 
