@@ -1,11 +1,13 @@
 
-import { useMainStore } from '~/store'
+import { useCoreStore } from '~/store/index';
+import { useFormStore } from '~/store/form';
 import {defineNuxtPlugin} from "#app";
 
 export default defineNuxtPlugin(({ $pinia }) => {
     return {
         provide: {
-            store: useMainStore($pinia)
+            storeCore: useCoreStore($pinia),
+            formStore: useFormStore($pinia),
         }
     }
 })
