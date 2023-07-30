@@ -1,6 +1,5 @@
 
 import { defineStore } from 'pinia'
-// import { defineStore } from '@pinia/nuxt';
 
 export const useMainStore = defineStore('main', {
     state: () => ({
