@@ -28,6 +28,8 @@
                                 <div class="tw-block tw-mt-4">
                                     <label class="tw-flex tw-items-center">
                                         <FormCheckbox name="remember" v-model="remember" :size="'md'" :label="'Remember me'" />
+                                    </label>
+                                    <label>
                                         <sup>{{remember}}</sup>
                                     </label>
                                 </div>

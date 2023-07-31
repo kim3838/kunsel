@@ -6,7 +6,7 @@ import {defineNuxtPlugin} from "#app";
 export default defineNuxtPlugin(({ $pinia }) => {
     return {
         provide: {
-            storeCore: useCoreStore($pinia),
+            coreStore: useCoreStore($pinia),
             formStore: useFormStore($pinia),
         }
     }

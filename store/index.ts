@@ -3,22 +3,31 @@ import { defineStore } from 'pinia'
 
 export const useCoreStore = defineStore('core', {
     state: () => ({
-        counter: 0,
+        service: {
+            error: {
+                prompt: false,
+                title: null,
+                payload: null
+            }
+        }
     }),
 
     getters: {
-        // getters receive the state as first parameter
-        doubleCounter: (state) => state.counter * 2,
-        // use getters in other getters
-        doubleCounterPlusOne(): number {
-            return this.doubleCounter + 1
-        },
+        getServiceError() {
+            return this.service.error;
+        }
     },
 
     actions: {
-        increment() {
-            // `this` is the store instance
-            this.counter++
+        setServiceError(serviceError){
+            this.service.error = serviceError;
         },
+        resetServiceError(state){
+            this.service.error = {
+                prompt: false,
+                title: null,
+                payload: null
+            };
+        }
     },
 })

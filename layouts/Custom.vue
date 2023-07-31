@@ -10,6 +10,9 @@
                             <NavLink :to="'/'" :active="isRouteActive('index')">
                                 Home
                             </NavLink>
+                            <NavLink :to="'/prototype'" :active="isRouteActive('prototype')">
+                                Prototype
+                            </NavLink>
                             <NavLink :to="'/login'" :active="isRouteActive('login')">
                                 Login
                             </NavLink>
