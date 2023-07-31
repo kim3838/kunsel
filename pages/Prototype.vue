@@ -84,6 +84,53 @@
                         </div>
 
                         <div class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-8">
+                            <div class="tw-flex tw-items-start tw-justify-start tw-block tw-border tw-border-neutral-200">
+                                <div>
+                                    <FormInputLabel :size="'md'" value="SM : Gender Group" />
+                                    <FormRadioGroup
+                                        :selections="genderGroup.selection"
+                                        :size="'sm'"
+                                        class="tw-border tw-border-neutral-200"
+                                        v-model="genderGroup.selected" />
+                                    <div>Selected Option: {{ genderGroup.selected }}</div>
+                                </div>
+                            </div>
+                            <div class="tw-flex tw-items-start tw-justify-start tw-block tw-border tw-border-neutral-200">
+                                <div>
+                                    <FormInputLabel :size="'md'" value="SM : Status Group" />
+                                    <FormRadioGroup
+                                        :selections="statusGroup.selection"
+                                        :size="'sm'"
+                                        class="tw-border tw-border-neutral-200"
+                                        v-model="statusGroup.selected" />
+                                    <div>Selected Option: {{ statusGroup.selected }}</div>
+                                </div>
+                            </div>
+                            <div class="tw-flex tw-items-start tw-justify-start tw-block tw-border tw-border-neutral-200">
+                                <div>
+                                    <FormInputLabel :size="'md'" value="MD : Transaction Group" />
+                                    <FormRadioGroup
+                                        :selections="transactionGroup.selection"
+                                        :size="'md'"
+                                        class="tw-border tw-border-neutral-200"
+                                        v-model="transactionGroup.selected" />
+                                    <div>Selected Option: {{ transactionGroup.selected }}</div>
+                                </div>
+                            </div>
+                            <div class="tw-flex tw-items-start tw-justify-start tw-block tw-border tw-border-neutral-200">
+                                <div>
+                                    <FormInputLabel :size="'md'" value="LG : Category Group" />
+                                    <FormRadioGroup
+                                        :selections="categoryGroup.selection"
+                                        :size="'lg'"
+                                        class="tw-border tw-border-neutral-200"
+                                        v-model="categoryGroup.selected" />
+                                    <div>Selected Option: {{ categoryGroup.selected }}</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-8">
                             <div class="tw-block tw-border tw-border-neutral-200">
                                 <FormInputLabel :size="'xs'" for="form_input_1" value="XS Label" />
                                 <FormInput :size="'xs'" class="tw-w-full" placeholder="Enter username" id="form_input_1" type="text" autocomplete="off" />
@@ -186,6 +233,45 @@ let formStore = $formStore;
 let remember1 = ref(null);
 let remember2 = ref(null);
 let remember3 = ref(null);
+let statusGroup = ref({
+    selection: [
+        {text : 'For Approval', value: 0},
+        {text : 'Approved', value: 1},
+        {text : 'Processing', value: 2},
+        {text : 'Rejected', value: 3},
+        {text : 'Complete', value: 4},
+    ],
+    selected: 3
+});
+let transactionGroup = ref({
+    selection: [
+        {text : 'Cash', value: 0},
+        {text : 'Pre Paid', value: 1},
+        {text : 'Post Paid', value: 2},
+        {text : 'Card', value: 3},
+        {text : 'Debit', value: 4},
+    ],
+    selected: 3
+});
+let genderGroup = ref({
+    selection: [
+        {text : 'Male', value: 0},
+        {text : 'Female', value: 1},
+    ],
+    selected: 1
+});
+let categoryGroup = ref({
+    selection: [
+        {text : 'Charms', value: 0},
+        {text : 'Bracelets', value: 1},
+        {text : 'Brooches and Pins', value: 2},
+        {text : 'Necklaces', value: 3},
+        {text : 'Earrings', value: 4},
+        {text : 'Rings', value: 5},
+        {text : 'Polyester', value: 6},
+    ],
+    selected: 3
+});
 bootDatetimePicker();
 
 </script>
