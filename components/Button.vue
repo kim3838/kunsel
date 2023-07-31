@@ -41,7 +41,7 @@
                 type: String,
                 default: 'submit',
             },
-            height: {
+            size: {
                 default: null
             },
             disabled: {
@@ -59,7 +59,7 @@
                     'md': 'tw-h-8',
                     'lg': 'tw-h-10',
                     'xl': 'tw-h-14',
-                }[this.height]
+                }[this.size]
             },
 
             spacingClass() {
@@ -70,7 +70,7 @@
                     'md': 'tw-px-2',
                     'lg': 'tw-px-3',
                     'xl': 'tw-px-7',
-                }[this.height]
+                }[this.size]
             },
 
             fontClass(){
@@ -81,7 +81,7 @@
                     'md': 'tw-text-base tw-tracking-tighter',
                     'lg': 'tw-text-xl',
                     'xl': 'tw-text-3xl',
-                }[this.height]
+                }[this.size]
             }
         },
     }
