@@ -70,7 +70,6 @@ export default defineNuxtConfig({
     },
 
     modules: [
-        '@invictus.codes/nuxt-vuetify',
         '@nuxtjs/tailwindcss',
         '@pinia/nuxt',
         'nuxt-lodash'
@@ -97,36 +96,5 @@ export default defineNuxtConfig({
     server: {
         https: false,
         //https: {key: './server.key',cert: './server.crt'},
-    },
-
-    vuetify: {
-        /* vuetify options */
-        vuetifyOptions: {
-            theme: false,
-            defaults: {
-                global: {
-                    ripple: false,
-                }
-            },
-        },
-
-        moduleOptions: {
-            treeshaking: true,
-            useIconCDN: false,
-
-            /*
-            * vite-plugin-vuetify options
-            *
-            * styles
-            * - true: precompiled vuetify css
-            * - none: no styles are loaded
-            * - sass: sass styles are used
-            * - expose: sass styles are used
-            * - { configFile: '<your sass/scss-file here>' }: use your own styles file*/
-            styles: true,
-            //Auto imports the Vuetify components (only available with treeshaking)
-            autoImport: true,
-            useVuetifyLabs: false,
-        }
     }
 })
