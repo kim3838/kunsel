@@ -10,31 +10,68 @@
                         </div>
                         <div class="tw-relative tw-border tw-border-light tw-p-14 tw-pb-96">
                             <div class="tw-border tw-w-60 tw-p-[0.5rem] tw-border-slate-400/20">
-                                <FormInputLabel :size="'md'" value="Label" />
-                                <div class="tw-w-full tw-h-8 tw-flex tw-justify-start tw-border tw-border-neutral-200"><!--  -->
+                                <FormInputLabel :size="'md'" @click="active = !active" value="Static Multi Select" />
+                                <div
+                                    class="tw-w-full tw-relative tw-h-8 tw-flex tw-justify-start tw-border"
+                                    :class="[
+                                        active
+                                            ? 'tw-relative tw-border-light tw-border-b-neutral-200'
+                                            : 'tw-border-neutral-200']"
+                                >
                                     <!-- Idle -->
-                                    <div class="tw-w-12 tw-flex tw-justify-center tw-items-center"><!-- tw-border tw-border-[red] -->
-                                        <Icon class="tw-h-7 tw-w-7" name="mdi:food-kosher"/>
+                                    <div v-if="!active" class="tw-w-10 tw-flex tw-justify-center tw-items-center"><!-- tw-border tw-border-[red] -->
+                                        <Icon class="tw-h-5 tw-w-5" name="ion:md-options"/>
                                     </div>
-                                    <div class="tw-w-full tw-relative tw-cursor-pointer"><!-- tw-border tw-border-[green] -->
-                                        <div class="tw-absolute tw-h-8 tw-pt-[9px] tw- tw-left-[0.2rem] tw-right-[2.2rem] tw-text-sm tw-leading-[0.875rem] tw-truncate"><!-- tw-border tw-border-[pink] -->
-                                            None Selected, None Selected Selected
+                                    <div v-if="!active" class="tw-w-full tw-relative tw-cursor-pointer"><!-- tw-border tw-border-[green] -->
+                                        <div class="tw-absolute tw-h-8 tw-pt-[9px] tw-left-[0.2rem] tw-right-[2.2rem] tw-text-sm tw-leading-[0.875rem] tw-truncate"><!-- tw-border tw-border-[pink] -->
+                                            Option 01, Option 02, Option 03
                                         </div>
                                         <div class="tw-absolute tw-right-0 tw-top-0 tw-w-8 tw-h-8 tw-flex tw-justify-center tw-items-center"><!-- tw-border tw-border-[red] -->
                                             <Icon class="tw-h-5 tw-w-5" name="ic:baseline-arrow-drop-down" />
                                         </div>
                                     </div>
 
-                                    <!-- Clicked -->
-                                    <FormInput
-                                        v-if="false"
-                                        class="tw-border-[transparent] tw-w-2/3"
-                                        :size="'md'"
-                                        type="text"
-                                        v-model="inputData"
-                                        autocomplete="off"
-                                        :focusable="true"
-                                        :disabled="false" />
+                                    <div v-if="active" class="tw-w-10 tw-flex tw-justify-center tw-items-center"><!-- tw-border tw-border-[red] -->
+                                        <!-- carbon:checkbox -->
+                                        <!-- carbon:checkbox-checked-filled -->
+                                        <!-- carbon:checkbox-indeterminate-filled -->
+                                        <Icon class="tw-h-6 tw-w-6" :name="'carbon:checkbox'"/>
+                                    </div>
+                                    <div v-if="active" class="tw-w-full tw-relative"><!-- tw-border tw-border-[green] -->
+                                        <div class="tw-absolute tw-right-[2rem] tw-flex tw-items-center">
+                                            <FormInput
+                                                v-if="active"
+                                                class="tw-w-full tw-h-[1.875rem]"
+                                                :size="'sm'"
+                                                type="text"
+                                                placeholder="Search..."
+                                                v-model="inputData"
+                                                autocomplete="off"
+                                                :withBorder="false"
+                                                :rounded="false"
+                                                :focusable="false"
+                                                :disabled="false" />
+                                        </div>
+                                        <div class="tw-absolute tw-right-0 tw-top-0 tw-w-8 tw-h-8 tw-flex tw-justify-center tw-items-center"><!-- tw-border tw-border-[red] -->
+                                            <Icon class="tw-h-6 tw-w-6 tw-cursor-pointer hover:tw-bg-neutral-200" name="ic:baseline-clear" />
+                                        </div>
+                                    </div>
+                                    <!-- Selection Body -->
+                                    <div v-if="active" class="tw-absolute tw-top-[1.875rem] tw-right-[-1px] tw-left-[-1px] tw-border tw-bg-white tw-border-light tw-border-t-neutral-200">
+
+                                        <!-- Selection List -->
+                                        <div>
+                                            <FormCheckbox
+                                                :size="'sm'"
+                                                class="tw-pl-2 hover:tw-bg-neutral-200"
+                                                v-for="item in category.selection"
+                                                :key="item.value"
+                                                :checked="category.selected.indexOf(item.value) >= 0"
+                                                :label="item.text"
+                                                @click="select(item)"
+                                            />
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -53,7 +90,35 @@ definePageMeta({
     layout: false,
 });
 
+let active = ref(true);
 let inputData = ref(null);
+let category  = ref({
+    search: '',
+    data: [
+        {text : 'Charms', value: 0},
+        {text : 'Bracelets', value: 1},
+        {text : 'Brooches and Pins', value: 2},
+        {text : 'Necklaces', value: 3},
+        {text : 'Earrings', value: 4},
+        {text : 'Rings', value: 5},
+        {text : 'Polyester', value: 6},
+    ],
+    selection: [
+        {text : 'Charms', value: 0},
+        {text : 'Bracelets', value: 1},
+        {text : 'Brooches and Pins', value: 2},
+        {text : 'Necklaces', value: 3},
+        {text : 'Earrings', value: 4},
+        {text : 'Rings', value: 5},
+        {text : 'Polyester', value: 6},
+    ],
+    selected: []
+});
+
+function select(item: any){
+    console.log(item);
+    this.category.selected.push(item.value);
+}
 </script>
 
 <style scoped>

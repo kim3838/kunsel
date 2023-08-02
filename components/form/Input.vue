@@ -5,8 +5,11 @@
             fontClass,
             heightClass,
             backgroundClass,
-            ring ? 'focus:tw-ring-light focus:tw-ring-opacity-25' : 'focus:tw-ring-transparent',focusable ? 'focus:tw-border-lighter focus:tw-ring' : '']"
-        class="tw-pl-1 tw-form-input tw-border tw-border-neutral-200 tw-rounded-sm"
+            ring ? 'focus:tw-ring-light focus:tw-ring-opacity-25' : 'focus:tw-ring-transparent',
+            focusable ? 'focus:tw-border-lighter focus:tw-ring' : '',
+            withBorder ? 'tw-border tw-border-neutral-200' : 'tw-border tw-border-transparent',
+            rounded ? 'tw-rounded-sm': '']"
+        class="tw-pl-1 tw-form-input"
         :value="modelValue"
         @input="$emit('update:modelValue', $event.target.value)"
         ref="input">
@@ -32,6 +35,14 @@ const props = defineProps({
         type: Boolean,
         default: true
     },
+    withBorder: {
+        type: Boolean,
+        default: true
+    },
+    rounded: {
+        type: Boolean,
+        default: true
+    }
 });
 
 defineEmits(['update:modelValue']);

@@ -3,6 +3,7 @@
         <input
             type="checkbox"
             :value="value"
+            :checked="checked"
             v-model="proxyModel"
             :class="[heightClass, inputClass]"
             class="tw-form-checkbox tw-text-darker tw-border-light focus:tw-ring-transparent focus:tw-border-lighter focus:tw-ring">
@@ -25,6 +26,10 @@ const props = defineProps({
     },
     size: {
         default: null
+    },
+    checked: {
+        type: Boolean,
+        default: false,
     },
 });
 
