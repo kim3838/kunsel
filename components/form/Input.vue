@@ -1,8 +1,12 @@
 <template>
     <input
         :disabled="disabled"
-        :class="[fontClass, heightClass, backgroundClass, ring ? 'focus:tw-ring-light focus:tw-ring-opacity-25' : 'focus:tw-ring-transparent']"
-        class="tw-pl-1 tw-form-input tw-border tw-border-neutral-200 tw-rounded-sm focus:tw-border-lighter focus:tw-ring"
+        :class="[
+            fontClass,
+            heightClass,
+            backgroundClass,
+            ring ? 'focus:tw-ring-light focus:tw-ring-opacity-25' : 'focus:tw-ring-transparent',focusable ? 'focus:tw-border-lighter focus:tw-ring' : '']"
+        class="tw-pl-1 tw-form-input tw-border tw-border-neutral-200 tw-rounded-sm"
         :value="modelValue"
         @input="$emit('update:modelValue', $event.target.value)"
         ref="input">
@@ -23,7 +27,11 @@ const props = defineProps({
     ring: {
         type: Boolean,
         default: false
-    }
+    },
+    focusable: {
+        type: Boolean,
+        default: true
+    },
 });
 
 defineEmits(['update:modelValue']);
