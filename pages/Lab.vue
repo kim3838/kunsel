@@ -64,13 +64,14 @@
                                             <FormCheckbox
                                                 :size="'sm'"
                                                 class="tw-pl-2 hover:tw-bg-neutral-200"
-                                                v-for="item in category.selection"
+                                                v-for="item in options.selection"
                                                 :key="item.value"
-                                                :checked="category.selected.indexOf(item.value) >= 0"
+                                                :checked="isItemSelected(item)"
                                                 :label="item.text"
-                                                @click="select(item)"
+                                                @click="selectItem(item)"
                                             />
                                         </div>
+                                        <div class="tw-pl-2 tw-text-xs">{{selectedSummary}}</div>
                                     </div>
                                 </div>
                             </div>
@@ -84,7 +85,7 @@
 
 <script setup lang="ts">
 
-import { ref } from 'vue';
+import { ref, computed, reactive } from 'vue';
 
 definePageMeta({
     layout: false,
@@ -92,7 +93,7 @@ definePageMeta({
 
 let active = ref(true);
 let inputData = ref(null);
-let category  = ref({
+let options  = reactive({
     search: '',
     data: [
         {text : 'Charms', value: 0},
@@ -114,10 +115,18 @@ let category  = ref({
     ],
     selected: []
 });
+let selectedSummary = computed(() => options.selected);
 
-function select(item: any){
-    console.log(item);
-    this.category.selected.push(item.value);
+function isItemSelected(item){
+    return options.selected.indexOf(item.value) >= 0;
+}
+
+function selectItem(item: any){
+    if(isItemSelected(item)){
+        _remove(options.selected, (value) => value == item.value);
+    } else {
+        options.selected.push(item.value);
+    }
 }
 </script>
 
