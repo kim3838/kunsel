@@ -32,10 +32,7 @@
                                     </div>
 
                                     <div v-if="active" class="tw-w-10 tw-flex tw-justify-center tw-items-center"><!-- tw-border tw-border-[red] -->
-                                        <!-- carbon:checkbox -->
-                                        <!-- carbon:checkbox-checked-filled -->
-                                        <!-- carbon:checkbox-indeterminate-filled -->
-                                        <Icon class="tw-h-6 tw-w-6" :name="'carbon:checkbox'"/>
+                                        <Icon @click="toggleSelection()" class="tw-h-6 tw-w-6 tw-cursor-pointer" :name="headerIcon()"/>
                                     </div>
                                     <div v-if="active" class="tw-w-full tw-relative"><!-- tw-border tw-border-[green] -->
                                         <div class="tw-absolute tw-right-[2rem] tw-flex tw-items-center">
@@ -71,7 +68,7 @@
                                                 @click="selectItem(item)"
                                             />
                                         </div>
-                                        <div class="tw-pl-2 tw-text-xs">{{selectedSummary}}</div>
+                                        <div class="tw-pl-2 tw-text-xs">{{selectionSummary}}</div>
                                     </div>
                                 </div>
                             </div>
@@ -85,7 +82,7 @@
 
 <script setup lang="ts">
 
-import { ref, computed, reactive } from 'vue';
+import { ref, computed, reactive, nextTick } from 'vue';
 
 definePageMeta({
     layout: false,
@@ -115,13 +112,37 @@ let options  = reactive({
     ],
     selected: []
 });
-let selectedSummary = computed(() => options.selected);
+let selectionSummary = computed(() => options.selected);
 
 function isItemSelected(item){
     return options.selected.indexOf(item.value) >= 0;
 }
 
-function selectItem(item: any){
+function selectedAllCurrentSelection(): boolean {
+    return options.selected.length === options.selection.length;
+}
+
+function selectedSomeCurrentSelection(): boolean {
+    return options.selected.length > 0 && !selectedAllCurrentSelection();
+}
+
+function headerIcon(): string{
+    if (selectedAllCurrentSelection()) return 'ic:sharp-check-box';
+    if (selectedSomeCurrentSelection()) return 'ic:sharp-indeterminate-check-box';
+    return 'ic:sharp-check-box-outline-blank';
+}
+
+async function toggleSelection(){
+    await nextTick();
+
+    if (selectedAllCurrentSelection()){
+        options.selected = [];
+    } else {
+        options.selected = options.selection.map(item => item.value);
+    }
+}
+
+function selectItem(item: any): void{
     if(isItemSelected(item)){
         _remove(options.selected, (value) => value == item.value);
     } else {
