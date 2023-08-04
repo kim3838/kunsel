@@ -6,7 +6,7 @@
             heightClass,
             backgroundClass,
             ring ? 'focus:tw-ring-light focus:tw-ring-opacity-25' : 'focus:tw-ring-transparent',
-            focusable ? 'focus:tw-border-lighter focus:tw-ring' : '',
+            focusRing ? 'focus:tw-border-lighter focus:tw-ring' : '',
             withBorder ? 'tw-border tw-border-neutral-200' : 'tw-border tw-border-transparent',
             rounded ? 'tw-rounded-sm': '']"
         class="tw-pl-1 tw-form-input"
@@ -31,7 +31,7 @@ const props = defineProps({
         type: Boolean,
         default: false
     },
-    focusable: {
+    focusRing: {
         type: Boolean,
         default: true
     },
@@ -80,8 +80,5 @@ const backgroundClass = computed(() => {
     }[props.disabled];
 });
 
-function focus(){
-    this.$refs.input.focus();
-}
 </script>
 
