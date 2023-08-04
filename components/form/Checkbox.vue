@@ -1,5 +1,6 @@
 <template>
-    <span class="tw-flex tw-items-center tw-justify-start tw-cursor-pointer">
+    <span class="tw-relative tw-overflow-hidden tw-flex tw-items-center tw-justify-start tw-cursor-pointer">
+        <span class="tw-absolute tw-h-full tw-w-full"></span>
         <input
             :tabindex="tabable ? 0 : -1"
             type="checkbox"
