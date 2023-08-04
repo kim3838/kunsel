@@ -15,7 +15,7 @@
                             <form @submit.prevent="login" class="tw-w-72">
                                 <div class="tw-block">
                                     <FormInputLabel :size="'sm'" for="email" value="Email" />
-                                    <FormInput :size="'sm'" id="email" type="email" class="tw-w-full" v-model="email" autofocus autocomplete="off" />
+                                    <FormInput :size="'sm'" id="email" type="email" class="tw-w-full" ref="emailInput" v-model="email" autofocus autocomplete="off" />
                                     <sup>{{email}}</sup>
                                 </div>
 
@@ -48,11 +48,18 @@
 
 <script setup lang="ts">
 
-import { ref } from 'vue';
+import { ref, onMounted, nextTick } from 'vue';
 
 definePageMeta({
     layout: false,
 });
+
+let emailInput = ref(null);
+
+onMounted(async () => {
+    await nextTick();
+    emailInput.value.$refs.input.focus();
+})
 
 const email = ref("berenice.jerde@example.com1");
 const password = ref("password");
