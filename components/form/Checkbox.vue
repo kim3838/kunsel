@@ -1,6 +1,7 @@
 <template>
     <span class="tw-flex tw-items-center tw-justify-start tw-cursor-pointer">
         <input
+            :tabindex="tabable ? 0 : -1"
             type="checkbox"
             :value="value"
             :checked="checked"
@@ -31,6 +32,10 @@ const props = defineProps({
         type: Boolean,
         default: false,
     },
+    tabable: {
+        type: Boolean,
+        default: true,
+    }
 });
 
 const emit = defineEmits(["update:modelValue"]);
