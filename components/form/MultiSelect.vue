@@ -1,7 +1,7 @@
 <template>
     <div
         tabindex="0"
-        v-on:focus="activateSelection(1)"
+        v-on:focus="keepSelectionActive(1)"
         v-on:blur="loseFocus(1)"
         class="tw-w-full tw-relative focus:tw-outline-none">
         <div class="tw-w-full tw-relative tw-h-8 tw-flex tw-justify-start tw-border"
@@ -11,8 +11,16 @@
                 <Icon class="tw-h-5 tw-w-5" name="ion:md-options"/>
             </div>
             <div v-if="!active" class="tw-w-full tw-relative hover:tw-bg-neutral-100 tw-cursor-pointer"><!-- tw-border tw-border-[green] -->
-                <div class="tw-absolute tw-h-8 tw-pt-[9px] tw-left-[0.2rem] tw-right-[2.2rem] tw-text-sm tw-leading-[0.875rem] tw-truncate"><!-- tw-border tw-border-[pink] -->
-                    {{selectionSummary}}
+                <div class="tw-absolute tw-h-8 tw-pt-[9px] tw-left-[0.2rem] tw-right-[2.2rem] tw-text-sm tw-text-light tw-leading-[0.875rem] tw-truncate"><!-- tw-border tw-border-[pink] -->
+                    <div v-if="options.selected.length === 0">
+                        None Selected
+                    </div>
+                    <div v-if="options.selected.length < 3">
+                        {{selectionItems}}
+                    </div>
+                    <div v-else-if="options.selected.length > 2">
+                        {{selectionSummary}}
+                    </div>
                 </div>
                 <div class="tw-absolute tw-right-0 tw-top-0 tw-w-8 tw-h-8 tw-flex tw-justify-center tw-items-center"><!-- tw-border tw-border-[red] -->
                     <Icon class="tw-h-5 tw-w-5" name="ic:baseline-arrow-drop-down" />
@@ -20,21 +28,21 @@
             </div>
 
             <div v-if="active" class="tw-w-10 tw-flex tw-justify-center tw-items-center"><!-- tw-border tw-border-[red] -->
-                <Icon @click="toggleSelection()" class="tw-h-6 tw-w-6 tw-cursor-pointer" :name="headerIcon()"/>
+                <Icon @click="toggleSelection" class="tw-h-6 tw-w-6 tw-cursor-pointer" :name="headerIcon()"/>
             </div>
             <div v-if="active" class="tw-w-full tw-relative"><!-- tw-border tw-border-[green] -->
                 <div class="tw-absolute tw-right-[2rem] tw-flex tw-items-center">
                     <FormInput
-                        ref="selectionSearch"
-                        v-if="active"
+                        autocomplete="off"
                         class="tw-w-full tw-h-[1.875rem]"
-                        :size="'sm'"
+                        ref="selectionSearch"
                         type="text"
                         placeholder="Search..."
-                        v-on:focus="activateSelection(2)"
+                        v-on:focus="keepSelectionActive(2)"
                         v-on:blur="loseFocus(2)"
-                        v-model="props.search"
-                        autocomplete="off"
+                        v-model="props.options.search"
+                        v-if="active"
+                        :size="'sm'"
                         :withBorder="false"
                         :rounded="false"
                         :focusRing="false"
@@ -45,13 +53,12 @@
                 </div>
             </div>
         </div>
-        <!-- Selection Body
-        <div v-if="active" class="tw-absolute tw-top-[1.875rem] tw-right-[-1px] tw-left-[-1px] tw-border tw-bg-white tw-border-light tw-border-t-neutral-200"> -->
+        <!-- Selection Body -->
         <div v-show="active" class="tw-z-10 tw-absolute tw-w-full tw-border tw-bg-white tw-border-light tw-border-t-transparent">
             <!-- Selection List -->
             <div>
                 <FormCheckbox
-                    :size="'sm'"
+                    :size="'md'"
                     class="tw-pl-2 hover:tw-bg-neutral-200"
                     v-for="item in options.selection"
                     :key="item.value"
@@ -61,7 +68,6 @@
                     @click="selectItem(item)"
                 />
             </div>
-            <div class="tw-pl-2 tw-text-xs">{{selectionSummary}}</div>
         </div>
     </div>
 </template>
@@ -83,35 +89,56 @@ const props = defineProps({
     },
 });
 
-let recentId = ref(0);
-let focused = ref(false);
+let keepFocus = ref(false);
 let selectionSearch = ref(null);
 let active = ref(false);
 
-let selectionSummary = computed(() => props.options.selected);
+let selectionItems = computed(()=>{
+    return props.options.selection.filter((item) => {
+        return props.options.selected.indexOf(item.value) >= 0;
+    }).map(item => item.text).join(", ");
+});
 
-async function activateSelection(id: number){
-    if(!active.value){
-        recentId.value = id;
-        active.value = true;
+let selectionSummary = computed(() => {
+    let summary = '';
+
+    if (props.options.selected.length < props.options.selection.length) {
+        summary = `${props.options.selected.length} Selected`;
+    } else if (props.options.selected.length === props.options.selection.length){
+        summary = `All Selected`;
     }
 
-    await nextTick();
+    return summary;
+});
 
-    selectionSearch.value.$refs.input.focus();
-    focused.value = true;
+async function keepSelectionActive(chain: number){
+    if(!active.value){
+        active.value = true;
+        //Keep focus to prevent losing active status
+        keepFocus.value = true;
+    }
 
-    setTimeout(function(){
-        focused.value = false;
-    }, 40);
+    //If keepSelectionActive called from (Selection div parent)
+    //transfer the focus on the (Selection body search input)
+    if(chain == 1){
+        await nextTick();
+
+        selectionSearch.value.$refs.input.focus();
+
+        //Revert back keep focus to false
+        //so that elements that is not (Selection div parent / Selection body search input)
+        //got focused will not trigger keepSelectionActive
+        setTimeout(function(){
+            keepFocus.value = false;
+        }, 20);
+    }
 }
 
-function loseFocus(id: number){
-    setTimeout(function(){
-        if(active.value && !focused.value){
-            active.value = false;
-        }
-    }, 20);
+function loseFocus(chain: number){
+    //Lose only active status if keepFocus is false
+    if(active.value && !keepFocus.value){
+        active.value = false;
+    }
 }
 
 function isItemSelected(item){
@@ -132,7 +159,7 @@ function headerIcon(): string{
     return 'ic:sharp-check-box-outline-blank';
 }
 
-async function toggleSelection(){
+async function toggleSelection(): void{
     await nextTick();
 
     if (selectedAllCurrentSelection()){

@@ -13,13 +13,13 @@
                                 <div class="tw-border tw-w-60 tw-p-[0.5rem] tw-border-slate-400/20">
                                     <FormInputLabel :size="'md'" value="Static Multi Select" />
                                     <FormMultiSelect
-                                        :options="options"
+                                        :options="category"
                                     />
                                 </div>
                                 <div class="tw-border tw-w-60 tw-p-[0.5rem] tw-border-slate-400/20">
                                     <FormInputLabel :size="'md'" value="Static Multi Select" />
                                     <FormMultiSelect
-                                        :options="options"
+                                        :options="status"
                                     />
                                 </div>
                                 <FormInput
@@ -58,7 +58,7 @@ definePageMeta({
     layout: false,
 });
 
-let options = reactive({
+let category = reactive({
     search: '',
     data: [
         {text : 'Charms', value: 0},
@@ -77,6 +77,25 @@ let options = reactive({
         {text : 'Earrings', value: 4},
         {text : 'Rings', value: 5},
         {text : 'Polyester', value: 6},
+    ],
+    selected: []
+});
+
+let status = reactive({
+    search: '',
+    data: [
+        {text : 'For Approval', value: 0},
+        {text : 'Processing', value: 1},
+        {text : 'Approved', value: 2},
+        {text : 'Rejected', value: 3},
+        {text : 'Complete', value: 4},
+    ],
+    selection: [
+        {text : 'For Approval', value: 0},
+        {text : 'Processing', value: 1},
+        {text : 'Approved', value: 2},
+        {text : 'Rejected', value: 3},
+        {text : 'Complete', value: 4},
     ],
     selected: []
 });

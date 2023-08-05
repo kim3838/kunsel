@@ -8,7 +8,7 @@
             :checked="checked"
             v-model="proxyModel"
             :class="[heightClass, inputClass]"
-            class="tw-form-checkbox tw-text-darker tw-border-light focus:tw-ring-transparent focus:tw-border-lighter focus:tw-ring">
+            class="tw-form-checkbox tw-text-accent tw-border-light focus:tw-ring-transparent focus:tw-border-lighter focus:tw-ring">
         <span :class="[fontClass]" class="tw-ml-1" v-text="label"></span>
     </span>
 </template>
