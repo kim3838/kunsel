@@ -81,7 +81,7 @@ let category = reactive({
     selected: []
 });
 
-let status = reactive({
+let status = ref({
     search: '',
     data: [
         {text : 'For Approval', value: 0},

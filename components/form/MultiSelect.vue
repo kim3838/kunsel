@@ -40,6 +40,7 @@
                         placeholder="Search..."
                         v-on:focus="keepSelectionActive(2)"
                         v-on:blur="loseFocus(2)"
+                        v-on:input="searchSelection"
                         v-model="props.options.search"
                         v-if="active"
                         :size="'sm'"
@@ -60,9 +61,9 @@
             <div>
                 <FormCheckbox
                     :size="'md'"
+                    v-for="item in options.selection" :key="item.value"
                     class="tw-pl-2 hover:tw-bg-neutral-200"
-                    v-for="item in options.selection"
-                    :key="item.value"
+                    :class="[isItemInSearchPool(item) ? '' : 'tw-hidden']"
                     :checked="isItemSelected(item)"
                     :label="item.text"
                     :tabable="false"
@@ -93,9 +94,11 @@ const props = defineProps({
 let keepFocus = ref(false);
 let selectionSearch = ref(null);
 let active = ref(false);
+let searchPool = ref([]);
+searchPool.value = props.options.data.map(item => item.value);
 
 let selectionItems = computed(()=>{
-    return props.options.selection.filter((item) => {
+    return props.options.data.filter((item) => {
         return props.options.selected.indexOf(item.value) >= 0;
     }).map(item => item.text).join(", ");
 });
@@ -103,9 +106,9 @@ let selectionItems = computed(()=>{
 let selectionSummary = computed(() => {
     let summary = '';
 
-    if (props.options.selected.length < props.options.selection.length) {
+    if (props.options.selected.length < props.options.data.length) {
         summary = `${props.options.selected.length} Selected`;
-    } else if (props.options.selected.length === props.options.selection.length){
+    } else if (props.options.selected.length === props.options.data.length){
         summary = `All Selected`;
     }
 
@@ -143,23 +146,56 @@ function loseFocus(chain: number){
 }
 
 function toggleSelection(){
-    if (selectedAllCurrentSelection()){
-        props.options.selected = [];
+    if (props.options.search.trim()){
+        if (selectedAllCurrentSelection()){
+            props.options.selected = props.options.selected.filter(value => {
+                return !isItemInSearchPool({value: value});
+            });
+        } else {
+            let selectedNotInSearch = props.options.selected.filter(value => {
+                return !isItemInSearchPool({value: value});
+            });
+            let selectionInSearch = props.options.selection.filter(data => {
+                return data.text.toLowerCase().indexOf(props.options.search.trim().toLowerCase()) > -1
+            }).map(item => item.value);
+
+            props.options.selected = _uniq(selectedNotInSearch.concat(selectionInSearch));
+        }
     } else {
-        props.options.selected = props.options.selection.map(item => item.value);
+        if (selectedAllCurrentSelection()){
+            props.options.selected = [];
+        } else {
+            props.options.selected = props.options.selection.map(item => item.value);
+        }
     }
 }
 
-function isItemSelected(item){
-    return props.options.selected.indexOf(item.value) >= 0;
-}
-
 function selectedAllCurrentSelection(): boolean {
-    return props.options.selected.length === props.options.selection.length;
+    if (props.options.search.trim()){
+        let selected = props.options.selected.filter(value => {
+            return isItemInSearchPool({value: value});
+        });
+
+        let selection = props.options.selection.filter(data => {
+            return data.text.toLowerCase().indexOf(props.options.search.trim().toLowerCase()) > -1
+        });
+
+        return (selection.length > 0) && (selected.length === selection.length);
+    } else {
+        return props.options.selected.length === props.options.selection.length;
+    }
 }
 
 function selectedSomeCurrentSelection(): boolean {
-    return props.options.selected.length > 0 && !selectedAllCurrentSelection();
+    if (props.options.search.trim()){
+        let selected = props.options.selected.filter(value => {
+            return isItemInSearchPool({value: value});
+        });
+
+        return selected.length > 0 && !selectedAllCurrentSelection();
+    } else {
+        return props.options.selected.length > 0 && !selectedAllCurrentSelection();
+    }
 }
 
 function headerIcon(): string{
@@ -174,5 +210,25 @@ function selectItem(item: any): void{
     } else {
         props.options.selected.push(item.value);
     }
+}
+
+function isItemSelected(item): boolean{
+    return props.options.selected.indexOf(item.value) >= 0;
+}
+
+function isItemInSearchPool(item): boolean{
+    return searchPool.value.indexOf(item.value) >= 0;
+}
+
+function searchSelection(){
+    if (!props.options.search.trim()){
+        searchPool.value = props.options.data.map(item => item.value);
+    } else {
+        searchPool.value = props.options.data.filter(data => {
+            return data.text.toLowerCase().indexOf(props.options.search.toLowerCase()) > -1
+        }).map(item => item.value);
+    }
+
+
 }
 </script>
