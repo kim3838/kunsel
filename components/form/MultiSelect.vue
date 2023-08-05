@@ -113,7 +113,6 @@ let selectionSummary = computed(() => {
 });
 
 async function keepSelectionActive(chain: number){
-    console.log("FOCUS: " + chain);
     if(!active.value){
         active.value = true;
         //Keep focus to prevent losing active status
@@ -137,7 +136,6 @@ async function keepSelectionActive(chain: number){
 }
 
 function loseFocus(chain: number){
-    console.log("LOSE FOCUS: " + chain);
     //Lose only active status if keepFocus is false
     if(active.value && !keepFocus.value){
         active.value = false;
@@ -145,8 +143,6 @@ function loseFocus(chain: number){
 }
 
 function toggleSelection(){
-    console.log("TOGGLE SELECTION");
-
     if (selectedAllCurrentSelection()){
         props.options.selected = [];
     } else {
