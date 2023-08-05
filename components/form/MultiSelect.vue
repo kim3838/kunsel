@@ -27,10 +27,10 @@
                 </div>
             </div>
 
-            <div v-if="active" class="tw-w-10 tw-flex tw-justify-center tw-items-center"><!-- tw-border tw-border-[red] -->
+            <div v-show="active" :class="[active?'tw-w-10 tw-flex':'']" class="tw-justify-center tw-items-center"><!-- tw-border tw-border-[red] -->
                 <Icon @click="toggleSelection" class="tw-h-6 tw-w-6 tw-cursor-pointer" :name="headerIcon()"/>
             </div>
-            <div v-if="active" class="tw-w-full tw-relative"><!-- tw-border tw-border-[green] -->
+            <div v-show="active" class="tw-w-full tw-relative"><!-- tw-border tw-border-[green] -->
                 <div class="tw-absolute tw-right-[2rem] tw-flex tw-items-center">
                     <FormInput
                         autocomplete="off"
@@ -52,6 +52,7 @@
                     <Icon class="tw-h-6 tw-w-6 tw-cursor-pointer hover:tw-bg-neutral-200" name="ic:baseline-clear" />
                 </div>
             </div>
+
         </div>
         <!-- Selection Body -->
         <div v-show="active" class="tw-z-10 tw-absolute tw-w-full tw-border tw-bg-white tw-border-light tw-border-t-transparent">
@@ -112,6 +113,7 @@ let selectionSummary = computed(() => {
 });
 
 async function keepSelectionActive(chain: number){
+    console.log("FOCUS: " + chain);
     if(!active.value){
         active.value = true;
         //Keep focus to prevent losing active status
@@ -135,9 +137,20 @@ async function keepSelectionActive(chain: number){
 }
 
 function loseFocus(chain: number){
+    console.log("LOSE FOCUS: " + chain);
     //Lose only active status if keepFocus is false
     if(active.value && !keepFocus.value){
         active.value = false;
+    }
+}
+
+function toggleSelection(){
+    console.log("TOGGLE SELECTION");
+
+    if (selectedAllCurrentSelection()){
+        props.options.selected = [];
+    } else {
+        props.options.selected = props.options.selection.map(item => item.value);
     }
 }
 
@@ -157,16 +170,6 @@ function headerIcon(): string{
     if (selectedAllCurrentSelection()) return 'ic:sharp-check-box';
     if (selectedSomeCurrentSelection()) return 'ic:sharp-indeterminate-check-box';
     return 'ic:sharp-check-box-outline-blank';
-}
-
-async function toggleSelection(): void{
-    await nextTick();
-
-    if (selectedAllCurrentSelection()){
-        props.options.selected = [];
-    } else {
-        props.options.selected = props.options.selection.map(item => item.value);
-    }
 }
 
 function selectItem(item: any): void{
