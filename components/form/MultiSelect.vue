@@ -64,7 +64,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, reactive, nextTick, onMounted  } from 'vue';
+import { ref, computed, nextTick  } from 'vue';
 
 const props = defineProps({
     options: {
