@@ -6,31 +6,22 @@
         class="tw-w-full tw-relative focus:tw-outline-none">
         <div class="tw-w-full tw-relative tw-h-8 tw-flex tw-justify-start tw-border"
              :class="[active ? 'tw-relative tw-border-light tw-border-b-neutral-200' : 'tw-border-neutral-200']">
-            <!-- Idle -->
             <div v-if="!active" class="tw-w-10 tw-flex tw-justify-center tw-items-center"><!-- tw-border tw-border-[red] -->
                 <Icon class="tw-h-5 tw-w-5" name="ion:md-options"/>
             </div>
-            <div v-if="!active" class="tw-w-full tw-relative hover:tw-bg-neutral-100 tw-cursor-pointer"><!-- tw-border tw-border-[green] -->
-                <div class="tw-absolute tw-h-8 tw-pt-[9px] tw-left-[0.2rem] tw-right-[2.2rem] tw-text-sm tw-text-light tw-leading-[0.875rem] tw-truncate"><!-- tw-border tw-border-[pink] -->
-                    <div v-if="options.selected.length === 0">
-                        None Selected
-                    </div>
-                    <div v-if="options.selected.length < 3">
-                        {{selectionItems}}
-                    </div>
-                    <div v-else-if="options.selected.length > 2">
-                        {{selectionSummary}}
-                    </div>
+            <div v-if="!active" class="tw-w-full tw-relative hover:tw-bg-neutral-100 tw-cursor-pointer">
+                <div class="tw-absolute tw-h-8 tw-pt-[9px] tw-left-[0.2rem] tw-right-[2.2rem] tw-truncate tw-text-sm tw-text-light tw-leading-[0.875rem]">
+                    {{selectionSummary}}
                 </div>
-                <div class="tw-absolute tw-right-0 tw-top-0 tw-w-8 tw-h-8 tw-flex tw-justify-center tw-items-center"><!-- tw-border tw-border-[red] -->
+                <div class="tw-absolute tw-right-0 tw-top-0 tw-w-8 tw-h-8 tw-flex tw-justify-center tw-items-center">
                     <Icon class="tw-h-5 tw-w-5" name="ic:baseline-arrow-drop-down" />
                 </div>
             </div>
 
-            <div v-show="active" :class="[active?'tw-w-10 tw-flex':'']" class="tw-justify-center tw-items-center"><!-- tw-border tw-border-[red] -->
+            <div v-show="active" :class="[active?'tw-w-10 tw-flex':'']" class="tw-justify-center tw-items-center">
                 <Icon @click="toggleSelection" class="tw-h-6 tw-w-6 tw-cursor-pointer" :name="headerIcon()"/>
             </div>
-            <div v-show="active" class="tw-w-full tw-relative"><!-- tw-border tw-border-[green] -->
+            <div v-show="active" class="tw-w-full tw-relative">
                 <div class="tw-absolute tw-right-[2rem] tw-flex tw-items-center">
                     <FormInput
                         autocomplete="off"
@@ -49,15 +40,13 @@
                         :focusRing="false"
                         :disabled="false" />
                 </div>
-                <div class="tw-absolute tw-right-0 tw-top-0 tw-w-8 tw-h-8 tw-flex tw-justify-center tw-items-center"><!-- tw-border tw-border-[red] -->
-                    <Icon class="tw-h-6 tw-w-6 tw-cursor-pointer hover:tw-bg-neutral-200" name="ic:baseline-clear" />
+                <div class="tw-absolute tw-right-0 tw-top-0 tw-w-8 tw-h-8 tw-flex tw-justify-center tw-items-center">
+                    <Icon @click="clearSearch" class="tw-h-6 tw-w-6 tw-cursor-pointer hover:tw-bg-neutral-200" name="ic:baseline-clear" />
                 </div>
             </div>
-
         </div>
-        <!-- Selection Body -->
+
         <div v-show="active" class="tw-z-10 tw-absolute tw-w-full tw-border tw-bg-white tw-border-light tw-border-t-transparent">
-            <!-- Selection List -->
             <div>
                 <FormCheckbox
                     :size="'md'"
@@ -97,22 +86,24 @@ let active = ref(false);
 let searchPool = ref([]);
 searchPool.value = props.options.data.map(item => item.value);
 
-let selectionItems = computed(()=>{
-    return props.options.data.filter((item) => {
-        return props.options.selected.indexOf(item.value) >= 0;
-    }).map(item => item.text).join(", ");
-});
-
 let selectionSummary = computed(() => {
-    let summary = '';
+    if(props.options.selected.length === 0){
+        return "None Selected"
+    } else if(props.options.selected.length < 3) {
+        return props.options.data.filter((item) => {
+            return props.options.selected.indexOf(item.value) >= 0;
+        }).map(item => item.text).join(", ");
+    } else if(props.options.selected.length > 2) {
+        let summary = '';
 
-    if (props.options.selected.length < props.options.data.length) {
-        summary = `${props.options.selected.length} Selected`;
-    } else if (props.options.selected.length === props.options.data.length){
-        summary = `All Selected`;
+        if (props.options.selected.length < props.options.data.length) {
+            summary = `${props.options.selected.length} Selected`;
+        } else if (props.options.selected.length === props.options.data.length){
+            summary = `All Selected`;
+        }
+
+        return summary;
     }
-
-    return summary;
 });
 
 async function keepSelectionActive(chain: number){
@@ -228,7 +219,10 @@ function searchSelection(){
             return data.text.toLowerCase().indexOf(props.options.search.toLowerCase()) > -1
         }).map(item => item.value);
     }
+}
 
-
+function clearSearch(){
+    props.options.search = "";
+    searchPool.value = props.options.data.map(item => item.value);
 }
 </script>
