@@ -23,7 +23,7 @@
                                     />
                                 </div>
                                 <FormInput
-                                    class="tw-w-full tw-h-8"
+                                    class="tw-w-full"
                                     :size="'sm'"
                                     type="text"
                                     placeholder="Search..."
@@ -33,8 +33,8 @@
                                     :focusRing="false"
                                     :disabled="false" />
                                 <FormInput
-                                    class="tw-w-full tw-h-8"
-                                    :size="'sm'"
+                                    class="tw-w-full"
+                                    :size="'md'"
                                     type="text"
                                     placeholder="Search..."
                                     autocomplete="off"

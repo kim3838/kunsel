@@ -49,7 +49,7 @@
         <div v-show="active" class="tw-z-10 tw-absolute tw-w-full tw-border tw-bg-white tw-border-light tw-border-t-transparent">
             <div>
                 <FormCheckbox
-                    :size="'md'"
+                    :size="'sm'"
                     v-for="item in options.selection" :key="item.value"
                     class="tw-pl-2 hover:tw-bg-neutral-200"
                     :class="[isItemInSearchPool(item) ? '' : 'tw-hidden']"

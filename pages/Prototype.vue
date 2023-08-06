@@ -9,6 +9,16 @@
                     <div class="tw-space-y-2">
                         <div class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-8">
                             <div class="tw-block tw-border tw-border-neutral-200">
+                                <FormInputLabel :size="'md'" value="Static Multi Select" />
+                                <FormMultiSelect
+                                    :options="category"
+                                />
+                            </div>
+                        </div>
+
+
+                        <div class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-8">
+                            <div class="tw-block tw-border tw-border-neutral-200">
                                 <FormInputLabel :size="'md'" for="bootstrapDatePicker" value="Date" />
                                 <FormInput
                                     :size="'md'"
@@ -271,6 +281,29 @@ let categoryGroup = ref({
         {text : 'Polyester', value: 6},
     ],
     selected: 3
+});
+
+let category = reactive({
+    search: '',
+    data: [
+        {text : 'Charms', value: 0},
+        {text : 'Bracelets', value: 1},
+        {text : 'Brooches and Pins', value: 2},
+        {text : 'Necklaces', value: 3},
+        {text : 'Earrings', value: 4},
+        {text : 'Rings', value: 5},
+        {text : 'Polyester', value: 6},
+    ],
+    selection: [
+        {text : 'Charms', value: 0},
+        {text : 'Bracelets', value: 1},
+        {text : 'Brooches and Pins', value: 2},
+        {text : 'Necklaces', value: 3},
+        {text : 'Earrings', value: 4},
+        {text : 'Rings', value: 5},
+        {text : 'Polyester', value: 6},
+    ],
+    selected: []
 });
 bootDatetimePicker();
 
