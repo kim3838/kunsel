@@ -14,6 +14,10 @@
                                     :options="category"
                                 />
                             </div>
+                            <div class="tw-block tw-border tw-border-neutral-200">
+                                <FormInputLabel :size="'md'" for="form_input_3" value="MD Label" />
+                                <FormInput :size="'md'" class="tw-w-full" placeholder="Enter username" id="form_input_3" type="text" autocomplete="off" />
+                            </div>
                         </div>
 
 

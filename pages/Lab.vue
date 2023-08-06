@@ -9,41 +9,48 @@
                             Static MultiSelect
                         </div>
                         <div class="tw-relative tw-border tw-border-light tw-p-14 tw-pb-96">
-                            <form>
-                                <div class="tw-border tw-w-60 tw-p-[0.5rem] tw-border-slate-400/20">
-                                    <FormInputLabel :size="'md'" value="Static Multi Select" />
-                                    <FormMultiSelect
-                                        :options="category"
-                                    />
-                                </div>
-                                <div class="tw-border tw-w-60 tw-p-[0.5rem] tw-border-slate-400/20">
-                                    <FormInputLabel :size="'md'" value="Static Multi Select" />
-                                    <FormMultiSelect
-                                        :options="status"
-                                    />
-                                </div>
-                                <FormInput
-                                    class="tw-w-full"
-                                    :size="'sm'"
-                                    type="text"
-                                    placeholder="Search..."
-                                    autocomplete="off"
-                                    :withBorder="true"
-                                    :rounded="false"
-                                    :focusRing="false"
-                                    :disabled="false" />
-                                <FormInput
-                                    class="tw-w-full"
-                                    :size="'md'"
-                                    type="text"
-                                    placeholder="Search..."
-                                    autocomplete="off"
-                                    :withBorder="true"
-                                    :rounded="false"
-                                    :focusRing="true"
-                                    :disabled="false" />
-                            </form>
-
+                            <div class="tw-border tw-w-60 tw-p-[0.5rem] tw-border-slate-400/20">
+                                <FormInputLabel :size="'md'" value="Static Multi Select" />
+                                <FormMultiSelect
+                                    :options="category"
+                                />
+                            </div>
+                            <div class="tw-border tw-w-60 tw-p-[0.5rem] tw-border-slate-400/20">
+                                <FormInputLabel :size="'md'" value="Static Multi Select" />
+                                <FormMultiSelect
+                                    :options="status"
+                                />
+                            </div>
+                            <FormInput
+                                class="tw-w-full"
+                                :size="'sm'"
+                                type="text"
+                                placeholder="SM Search..."
+                                autocomplete="off"
+                                :withBorder="true"
+                                :rounded="false"
+                                :focusRing="false"
+                                :disabled="false" />
+                            <FormInput
+                                class="tw-w-full"
+                                :size="'md'"
+                                type="text"
+                                placeholder="MD Search..."
+                                autocomplete="off"
+                                :withBorder="true"
+                                :rounded="false"
+                                :focusRing="true"
+                                :disabled="false" />
+                            <FormInput
+                                class="tw-w-full"
+                                :size="'lg'"
+                                type="text"
+                                placeholder="LG Search..."
+                                autocomplete="off"
+                                :withBorder="true"
+                                :rounded="false"
+                                :focusRing="true"
+                                :disabled="false" />
                         </div>
                     </div>
                 </div>

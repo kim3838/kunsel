@@ -63,7 +63,7 @@ const fontClass = computed(() => {
     return {
         [null]: 'tw-text-base tw-font-medium',
         'sm': 'tw-text-sm',
-        'md': 'tw-text-base tw-font-medium',
+        'md': 'tw-text-base',
         'lg': 'tw-text-xl tw-font-semibold'
     }[props.size];
 });
