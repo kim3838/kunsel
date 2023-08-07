@@ -10,9 +10,11 @@
                         <div class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-8">
                             <div class="tw-block tw-border tw-border-neutral-200">
                                 <FormInputLabel :size="'md'" value="Static Multi Select" />
-                                <FormMultiSelect
-                                    :options="category"
-                                />
+                                <FormMultiSelect :size="'md'" :options="category" :icon="'ic:sharp-hdr-on-select'"/>
+                            </div>
+                            <div class="tw-block tw-border tw-border-neutral-200">
+                                <FormInputLabel :size="'md'" value="Static Single Select" />
+                                <FormSingleSelect :size="'md'" :icon="'ic:sharp-rsvp'" :options="plan"/>
                             </div>
                             <div class="tw-block tw-border tw-border-neutral-200">
                                 <FormInputLabel :size="'md'" for="form_input_3" value="MD Label" />
@@ -308,6 +310,25 @@ let category = reactive({
         {text : 'Polyester', value: 6},
     ],
     selected: []
+});
+
+let plan = reactive({
+    search: '',
+    data: [
+        {text : 'Free', value: 0},
+        {text : 'Individual', value: 1},
+        {text : 'Standard Corporate', value: 2},
+        {text : 'Custom Corporate', value: 3},
+        {text : 'Evaluator', value: 4}
+    ],
+    selection: [
+        {text : 'Free', value: 0},
+        {text : 'Individual', value: 1},
+        {text : 'Standard Corporate', value: 2},
+        {text : 'Custom Corporate', value: 3},
+        {text : 'Evaluator', value: 4}
+    ],
+    selected: null
 });
 bootDatetimePicker();
 
