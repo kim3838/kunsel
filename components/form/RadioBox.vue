@@ -42,7 +42,7 @@ const props = defineProps({
         default: ''
     },
     selected: {
-        type: [String, Number],
+        type: [String, Number, null],
         default: 0
     },
     size: {
