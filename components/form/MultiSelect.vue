@@ -6,11 +6,11 @@
         class="tw-w-full tw-relative focus:tw-outline-none">
         <div class="tw-w-full tw-relative tw-h-8 tw-flex tw-justify-start tw-border"
              :class="[active ? 'tw-relative tw-border-light tw-border-b-neutral-200' : 'tw-border-neutral-200']">
-            <div v-if="!active" class="tw-w-10 tw-flex tw-justify-center tw-items-center"><!-- tw-border tw-border-[red] -->
-                <Icon class="tw-h-5 tw-w-5" name="ion:md-options"/>
+            <div v-if="!active" class="tw-w-10 tw-flex tw-justify-center tw-items-center">
+                <Icon class="tw-h-5 tw-w-5" :name="icon"/>
             </div>
             <div v-if="!active" class="tw-w-full tw-relative hover:tw-bg-neutral-100 tw-cursor-pointer">
-                <div class="tw-absolute tw-h-8 tw-pt-[9px] tw-left-[0.2rem] tw-right-[2.2rem] tw-truncate tw-text-sm tw-text-light tw-leading-[0.875rem]">
+                <div :class="[selectionClass]" class="tw-absolute tw-h-8 tw-left-[0.2rem] tw-right-[2.2rem] tw-truncate tw-text-accent tw-leading-[0.875rem]">
                     {{selectionSummary}}
                 </div>
                 <div class="tw-absolute tw-right-0 tw-top-0 tw-w-8 tw-h-8 tw-flex tw-justify-center tw-items-center">
@@ -78,6 +78,13 @@ const props = defineProps({
             }
         }
     },
+    size: {
+        default: null
+    },
+    icon: {
+        type: String,
+        default: 'ion:md-options'
+    }
 });
 
 let keepFocus = ref(false);
@@ -85,6 +92,15 @@ let selectionSearch = ref(null);
 let active = ref(false);
 let searchPool = ref([]);
 searchPool.value = props.options.data.map(item => item.value);
+
+const selectionClass = computed(() => {
+    return {
+        [null]: 'tw-pt-[8px] tw-text-md',
+        'sm': 'tw-pt-[8px] tw-text-md',
+        'md': 'tw-pt-[9px] tw-text-sm',
+        'lg': 'tw-pt-[8px] tw-text-md'
+    }[props.size];
+});
 
 let selectionSummary = computed(() => {
     if(props.options.selected.length === 0){

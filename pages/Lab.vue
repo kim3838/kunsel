@@ -6,20 +6,20 @@
                     <div class="moody-card">
                         <div class="moody-card-frame"></div>
                         <div class="tw-relative tw-border tw-border-light tw-border-b-0 tw-p-3 tw-flex tw-justify-center tw-items-center">
-                            Static MultiSelect
+                            Static SingleSelect
                         </div>
                         <div class="tw-relative tw-border tw-border-light tw-p-14 tw-pb-96">
                             <div class="tw-border tw-w-60 tw-p-[0.5rem] tw-border-slate-400/20">
                                 <FormInputLabel :size="'md'" value="Static Multi Select" />
-                                <FormMultiSelect
-                                    :options="category"
-                                />
+                                <FormMultiSelect :size="'md'" :icon="'ic:sharp-hdr-on-select'" :options="category"/>
+                            </div>
+                            <div class="tw-border tw-w-60 tw-p-[0.5rem] tw-border-slate-400/20">
+                                <FormInputLabel :size="'md'" value="Static Single Select" />
+                                <FormSingleSelect :size="'md'" :icon="'ic:sharp-solar-power'" :options="plan"/>
                             </div>
                             <div class="tw-border tw-w-60 tw-p-[0.5rem] tw-border-slate-400/20">
                                 <FormInputLabel :size="'md'" value="Static Multi Select" />
-                                <FormMultiSelect
-                                    :options="status"
-                                />
+                                <FormMultiSelect :size="'md'" :icon="'ic:sharp-rsvp'" :options="status"/>
                             </div>
                             <FormInput
                                 class="tw-w-full"
@@ -105,6 +105,25 @@ let status = reactive({
         {text : 'Complete', value: 4},
     ],
     selected: []
+});
+
+let plan = reactive({
+    search: '',
+    data: [
+        {text : 'Free', value: 0},
+        {text : 'Individual', value: 1},
+        {text : 'Standard Corporate', value: 2},
+        {text : 'Custom Corporate', value: 3},
+        {text : 'Evaluator', value: 4}
+    ],
+    selection: [
+        {text : 'Free', value: 0},
+        {text : 'Individual', value: 1},
+        {text : 'Standard Corporate', value: 2},
+        {text : 'Custom Corporate', value: 3},
+        {text : 'Evaluator', value: 4}
+    ],
+    selected: null
 });
 
 </script>
