@@ -12,10 +12,10 @@ const { $debug, $moment, $coreStore, $formStore} = useNuxtApp();
 const runtimeConfig = useRuntimeConfig();
 const appConfig = useAppConfig();
 
-$debug('runtimeConfig',runtimeConfig);
-$debug('appConfig', appConfig);
-$debug('moment', $moment().format('YYYY-MM-DD'));
-$debug('lodash', _upperCase('lodash uppercase'));
+// $debug('runtimeConfig',runtimeConfig);
+// $debug('appConfig', appConfig);
+// $debug('moment', $moment().format('YYYY-MM-DD'));
+// $debug('lodash', _upperCase('lodash uppercase'));
 
 // $coreStore.increment();
 // console.log($coreStore.$state.counter);

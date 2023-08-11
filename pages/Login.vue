@@ -65,12 +65,41 @@ const email = ref("berenice.jerde@example.com1");
 const password = ref("password");
 const remember = ref(true);
 
-function login() {
-    console.log({
-        email: email,
-        password: password,
-        remember: remember
+async function login() {
+    await useApiFetch("/sanctum/csrf-cookie");
+
+    const { data, pending, refresh, error, status } = await useApiFetch("/login", {
+        method: 'POST',
+        body: {
+            email: email,
+            password: password
+        }
     });
+
+    //console.log({email: email, password: password, remember: remember});
+
+    console.log({
+        data: data,
+        pending: pending,
+        error: error,
+        status: status
+    });
+
+    if(status._value == 'success'){
+        //Authenticated
+
+        const { data, pending, refresh, error, status } = await useApiFetch("/api/user");
+
+        console.log({
+            data: data
+        })
+    }
+
+    if(status._value == 'error'){
+        console.log({
+            error: error.value.data
+        });
+    }
 }
 
 </script>
