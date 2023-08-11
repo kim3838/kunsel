@@ -12,7 +12,7 @@
                         </div>
 
                         <div class="tw-flex tw-h-full tw-items-center tw-border-neutral-200 tw-border">
-                            <form @submit.prevent="login" class="tw-w-72">
+                            <form @submit.prevent="handleLogin" class="tw-w-72">
                                 <div class="tw-block">
                                     <FormInputLabel :size="'sm'" for="email" value="Email" />
                                     <FormInput :size="'sm'" id="email" type="email" class="tw-w-full" ref="emailInput" v-model="email" autofocus autocomplete="off" />
@@ -48,6 +48,7 @@
 
 <script setup lang="ts">
 
+const { $authStore} = useNuxtApp();
 import { ref, onMounted, nextTick } from 'vue';
 
 definePageMeta({
@@ -65,43 +66,14 @@ const email = ref("berenice.jerde@example.com1");
 const password = ref("password");
 const remember = ref(true);
 
-async function login() {
-    await useApiFetch("/sanctum/csrf-cookie");
+const auth = $authStore;
 
-    const { data, pending, refresh, error, status } = await useApiFetch("/login", {
-        method: 'POST',
-        body: {
-            email: email,
-            password: password
-        }
+async function handleLogin(){
+    await auth.login({
+        email: email,
+        password: password
     });
-
-    //console.log({email: email, password: password, remember: remember});
-
-    console.log({
-        data: data,
-        pending: pending,
-        error: error,
-        status: status
-    });
-
-    if(status._value == 'success'){
-        //Authenticated
-
-        const { data, pending, refresh, error, status } = await useApiFetch("/api/user");
-
-        console.log({
-            data: data
-        })
-    }
-
-    if(status._value == 'error'){
-        console.log({
-            error: error.value.data
-        });
-    }
 }
-
 </script>
 
 <style scoped>
