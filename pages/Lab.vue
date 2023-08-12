@@ -63,6 +63,7 @@
 
 definePageMeta({
     layout: false,
+    middleware: 'guest'
 });
 
 let category = reactive({
