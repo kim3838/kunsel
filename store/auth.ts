@@ -14,6 +14,26 @@ type Credentials = {
 
 export const useAuthStore = defineStore('auth', () => {
     const user = ref<User | null>(null);
+    const isLoggedIn = computed(() => !!user.value);
+
+    async function logout(){
+        const { data, pending, refresh, error, status } = await useApiFetch("/logout", {
+            method: 'POST'
+        });
+
+        user.value = null;
+        navigateTo("/login");
+    }
+
+    async function fetchUser(){
+        const { data, status } = await useApiFetch("/api/user", {
+            method: 'GET'
+        });
+
+        if(status._value == 'success'){
+            user.value = data.value.values as User;
+        }
+    }
 
     async function login(credentials: Credentials) {
         const { $coreStore } = useNuxtApp();
@@ -29,9 +49,7 @@ export const useAuthStore = defineStore('auth', () => {
         });
 
         if(login.status._value == 'success'){
-            const { data, pending, refresh, error, status } = await useApiFetch("/api/user");
-
-            user.value = data.value.values as User;
+            await fetchUser();
         }
 
         if(login.status._value == 'error'){
@@ -49,5 +67,5 @@ export const useAuthStore = defineStore('auth', () => {
         return login;
     }
 
-    return {user, login};
+    return {user, login, isLoggedIn, fetchUser, logout};
 });
