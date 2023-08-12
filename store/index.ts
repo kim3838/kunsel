@@ -7,6 +7,7 @@ export const useCoreStore = defineStore('core', {
             error: {
                 prompt: false,
                 title: null,
+                icon: null,
                 payload: null
             }
         }
@@ -26,6 +27,7 @@ export const useCoreStore = defineStore('core', {
             this.service.error = {
                 prompt: false,
                 title: null,
+                icon: null,
                 payload: null
             };
         }
