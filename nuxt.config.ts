@@ -90,6 +90,7 @@ export default defineNuxtConfig({
         public: {
             version: process.env.VERSION || '1.0.0',
             baseURL: process.env.BASE_URL || 'http://localhost:8000',
+            frontendURL: process.env.FRONTEND_URL || 'http://localhost:3000',
         },
         // Private keys which are only available server-side
         apiSecret: '',// Replaced by process.env.NUXT_API_SECRET
