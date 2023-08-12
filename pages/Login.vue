@@ -34,7 +34,11 @@
                                     </label>
                                 </div>
 
-                                <div class="tw-flex tw-items-center tw-justify-end tw-mt-4">
+                                <div v-if="useNuxtApp().$coreStore.service.error.payload && !useNuxtApp().$coreStore.service.error.prompt" class="tw-block tw-text-sm tw-text-red-600">
+                                    <span>{{ useNuxtApp().$coreStore.service.error.payload.message }}</span>
+                                </div>
+
+                                <div class="tw-flex tw-items-center tw-justify-end">
                                     <Button :size="'md'"><span class="tw-font-semibold">Authenticate</span></Button>
                                 </div>
                             </form>
@@ -48,7 +52,7 @@
 
 <script setup lang="ts">
 
-const { $authStore} = useNuxtApp();
+const { $coreStore, $authStore} = useNuxtApp();
 import { ref, onMounted, nextTick } from 'vue';
 
 definePageMeta({
