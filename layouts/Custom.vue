@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="tw-relative">
         <nav class="tw-border-b tw-border-neutral-200" :class="{'lg:tw-ml-sidebar': false}">
             <!-- Primary Navigation Menu -->
             <div class="tw-max-w-full tw-bg-white tw-mx-auto tw-px-2">
@@ -27,6 +27,7 @@
         <main class="tw-relative">
             <slot name="content"/>
         </main>
+        <ServiceErrorModal></ServiceErrorModal>
     </div>
 </template>
 
