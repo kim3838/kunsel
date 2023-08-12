@@ -34,14 +34,21 @@
                                     </label>
                                 </div>
 
-                                <div v-if="useNuxtApp().$coreStore.service.error.payload && !useNuxtApp().$coreStore.service.error.prompt" class="tw-block tw-text-sm tw-text-red-600">
-                                    <span>{{ useNuxtApp().$coreStore.service.error.payload.message }}</span>
+                                <div v-if="$coreStore.service.error.payload && !useNuxtApp().$coreStore.service.error.prompt" class="tw-block tw-text-sm tw-text-red-600">
+                                    <span>{{ $coreStore.service.error.payload.message }}</span>
                                 </div>
 
-                                <div class="tw-flex tw-items-center tw-justify-end">
+                                <div>
+                                    {{$authStore.user}}
+                                </div>
+
+                                <div v-if="!$authStore.isLoggedIn" class="tw-flex tw-items-center tw-justify-end">
                                     <Button :size="'md'"><span class="tw-font-semibold">Authenticate</span></Button>
                                 </div>
                             </form>
+                            <div v-if="$authStore.isLoggedIn" class="tw-justify-end">
+                                <Button @click="handleLogout" :size="'md'"><span class="tw-font-semibold">Logout</span></Button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -52,11 +59,11 @@
 
 <script setup lang="ts">
 
-const { $coreStore, $authStore} = useNuxtApp();
+const { $coreStore, $authStore } = useNuxtApp();
 import { ref, onMounted, nextTick } from 'vue';
 
 definePageMeta({
-    layout: false,
+    layout: false
 });
 
 let emailInput = ref(null);
@@ -77,6 +84,10 @@ async function handleLogin(){
         email: email,
         password: password
     });
+}
+
+async function handleLogout(){
+    await auth.logout();
 }
 </script>
 
