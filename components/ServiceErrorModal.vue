@@ -5,7 +5,11 @@
         :show="useNuxtApp().$coreStore.service.error.prompt"
         @close="useNuxtApp().$coreStore.resetServiceError()">
         <template #icon>
-            <Icon class="tw-h-full tw-w-full" name="ic:sharp-error-outline"></Icon>
+            <Icon
+                v-if="useNuxtApp().$coreStore.service.error.icon"
+                class="tw-h-full tw-w-full"
+                :name="useNuxtApp().$coreStore.service.error.icon">
+            </Icon>
         </template>
 
         <template #title>
