@@ -22,7 +22,7 @@ export const useCoreStore = defineStore('core', {
         setServiceError(serviceError){
             this.service.error = serviceError;
         },
-        resetServiceError(state){
+        resetServiceError(){
             this.service.error = {
                 prompt: false,
                 title: null,
