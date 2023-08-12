@@ -17,12 +17,24 @@ export const useAuthStore = defineStore('auth', () => {
     const isLoggedIn = computed(() => !!user.value);
 
     async function logout(){
-        const { data, pending, refresh, error, status } = await useApiFetch("/logout", {
+        const { $coreStore } = useNuxtApp();
+        const { error, status } = await useApiFetch("/logout", {
             method: 'POST'
         });
 
-        user.value = null;
-        navigateTo("/login");
+        if(status._value == 'success'){
+            user.value = null;
+            navigateTo("/login");
+        }
+
+        if(status._value == 'error'){
+            $coreStore.setServiceError({
+                prompt: true,
+                icon: 'ic:sharp-lens-blur',
+                title: 'Logout failed',
+                payload: error.value.data
+            });
+        }
     }
 
     async function fetchUser(){
@@ -59,6 +71,7 @@ export const useAuthStore = defineStore('auth', () => {
 
             $coreStore.setServiceError({
                 prompt: true,
+                icon: 'ic:sharp-error-outline',
                 title: 'Authentication failed',
                 payload: login.error.value.data
             });
