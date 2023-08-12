@@ -5,7 +5,8 @@ export function useApiFetch<T>(path: string, options: UseFetchOptions<T> = {}){
     const runtimeConfig = useRuntimeConfig();
 
     let headers: any = {
-        referer: runtimeConfig.public.frontendURL
+        referer: runtimeConfig.public.frontendURL,
+        accept: 'application/json, text/plain, */*'
     };
 
     const XSRF_TOKEN = useCookie('XSRF-TOKEN');
