@@ -1,5 +1,6 @@
 
 import { defineStore } from 'pinia'
+import {UseFetchOptions} from "nuxt/app";
 
 type User = {
     id: number,
@@ -16,23 +17,26 @@ export const useAuthStore = defineStore('auth', () => {
     const user = ref<User | null>(null);
     const isLoggedIn = computed(() => !!user.value);
 
-    async function logout(){
+    async function logout(options: UseFetchOptions<T> = {}){
         const { $coreStore } = useNuxtApp();
-        const { error, status } = await useApiFetch("/logout", {
-            method: 'POST'
+        $coreStore.resetServiceError();
+
+        const logout = await useApiFetch("/logout", {
+            method: 'POST',
+            ...options
         });
 
-        if(status._value == 'success'){
+        if(logout.status._value == 'success'){
             user.value = null;
             navigateTo("/login");
         }
 
-        if(status._value == 'error'){
+        if(logout.status._value == 'error'){
             $coreStore.setServiceError({
                 prompt: true,
                 icon: 'ic:sharp-lens-blur',
                 title: 'Logout failed',
-                payload: error.value.data
+                payload: logout.error.value.data
             });
         }
     }
@@ -47,7 +51,7 @@ export const useAuthStore = defineStore('auth', () => {
         }
     }
 
-    async function login(credentials: Credentials) {
+    async function login(credentials: Credentials, options: UseFetchOptions<T> = {}) {
         const { $coreStore } = useNuxtApp();
         $coreStore.resetServiceError();
 
@@ -57,7 +61,8 @@ export const useAuthStore = defineStore('auth', () => {
 
         const login = await useApiFetch("/login", {
             method: 'POST',
-            body: credentials
+            body: credentials,
+            ...options
         });
 
         if(login.status._value == 'success'){
@@ -65,10 +70,6 @@ export const useAuthStore = defineStore('auth', () => {
         }
 
         if(login.status._value == 'error'){
-            console.log({
-                auth_error: login.error.value.data
-            });
-
             $coreStore.setServiceError({
                 prompt: true,
                 icon: 'ic:sharp-error-outline',
@@ -76,8 +77,6 @@ export const useAuthStore = defineStore('auth', () => {
                 payload: login.error.value.data
             });
         }
-
-        return login;
     }
 
     return {user, login, isLoggedIn, fetchUser, logout};

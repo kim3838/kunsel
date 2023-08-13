@@ -15,19 +15,19 @@
                             <form @submit.prevent="handleLogin" class="tw-w-72">
                                 <div class="tw-block">
                                     <FormInputLabel :size="'sm'" for="email" value="Email" />
-                                    <FormInput :size="'sm'" id="email" type="email" class="tw-w-full" ref="emailInput" v-model="email" autofocus autocomplete="off" />
+                                    <FormInput :disabled="pending" :size="'sm'" id="email" type="email" class="tw-w-full" ref="emailInput" v-model="email" autofocus autocomplete="off" />
                                     <sup>{{email}}</sup>
                                 </div>
 
                                 <div class="tw-block tw-mt-4">
                                     <FormInputLabel :size="'md'" for="password" value="Password" />
-                                    <FormInput :size="'md'" id="password" type="password" class="tw-w-full" v-model="password" required autocomplete="current-password" />
+                                    <FormInput :disabled="pending" :size="'md'" id="password" type="password" class="tw-w-full" v-model="password" required autocomplete="current-password" />
                                     <sup>{{password}}</sup>
                                 </div>
 
                                 <div class="tw-block tw-mt-4">
                                     <label class="tw-flex tw-items-center">
-                                        <FormCheckbox name="remember" v-model="remember" :size="'md'" :label="'Remember me'" />
+                                        <FormCheckbox :disabled="pending" name="remember" v-model="remember" :size="'md'" :label="'Remember me'" />
                                     </label>
                                     <label>
                                         <sup>{{remember}}</sup>
@@ -38,16 +38,18 @@
                                     <span>{{ $coreStore.service.error.payload.message }}</span>
                                 </div>
 
+                                <div v-if="pending" class="tw-text-sm">Authenticating...</div>
+
                                 <div>
                                     {{$authStore.user}}
                                 </div>
 
                                 <div v-if="!$authStore.isLoggedIn" class="tw-flex tw-items-center tw-justify-end">
-                                    <Button :size="'md'"><span class="tw-font-semibold">Authenticate</span></Button>
+                                    <Button :disabled="pending" :size="'md'"><span class="tw-font-semibold">Authenticate</span></Button>
                                 </div>
                             </form>
                             <div v-if="$authStore.isLoggedIn" class="tw-justify-end">
-                                <Button @click="handleLogout" :size="'md'"><span class="tw-font-semibold">Logout</span></Button>
+                                <Button :disabled="pending" @click="handleLogout" :size="'md'"><span class="tw-font-semibold">Logout</span></Button>
                             </div>
                         </div>
                     </div>
@@ -76,18 +78,29 @@ onMounted(async () => {
 const email = ref("berenice.jerde@example.com1");
 const password = ref("password");
 const remember = ref(true);
+const pending = ref(false);
 
-const auth = $authStore;
+function handleLogin(){
+    pending.value = true;
 
-async function handleLogin(){
-    await auth.login({
+    $authStore.login({
         email: email,
         password: password
+    }, {
+        onResponse() {
+            pending.value = false;
+        }
     });
 }
 
-async function handleLogout(){
-    await auth.logout();
+function handleLogout(){
+    pending.value = true;
+
+    $authStore.logout({
+        onResponse() {
+            pending.value = false;
+        }
+    });
 }
 </script>
 
