@@ -2,6 +2,7 @@
     <span class="tw-relative tw-overflow-hidden tw-flex tw-items-center tw-justify-start tw-cursor-pointer">
         <span class="tw-absolute tw-h-full tw-w-full"></span>
         <input
+            :disabled="disabled"
             :tabindex="tabable ? 0 : -1"
             type="checkbox"
             :value="value"
@@ -20,6 +21,10 @@ const props = defineProps({
     modelValue: [Array, Boolean],
     value: {
         type: [Boolean, Object],
+        default: false
+    },
+    disabled: {
+        type: Boolean,
         default: false
     },
     label: {
