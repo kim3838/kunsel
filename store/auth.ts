@@ -5,7 +5,8 @@ import {UseFetchOptions} from "nuxt/app";
 type User = {
     id: number,
     name: string,
-    email: string
+    email: string,
+    email_verified_at: string,
 };
 
 type Credentials = {
@@ -67,6 +68,7 @@ export const useAuthStore = defineStore('auth', () => {
 
         if(login.status._value == 'success'){
             await fetchUser();
+            navigateTo("/profile", {replace: true});
         }
 
         if(login.status._value == 'error'){

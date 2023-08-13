@@ -19,6 +19,9 @@
                             <NavLink :to="'/login'" :active="isRouteActive('login')">
                                 Login
                             </NavLink>
+                            <NavLink :to="'/profile'" :active="isRouteActive('profile')">
+                                Profile
+                            </NavLink>
                         </div>
                     </div>
                 </div>

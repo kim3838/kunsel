@@ -40,17 +40,10 @@
 
                                 <div v-if="pending" class="tw-text-sm">Authenticating...</div>
 
-                                <div>
-                                    {{$authStore.user}}
-                                </div>
-
                                 <div v-if="!$authStore.isLoggedIn" class="tw-flex tw-items-center tw-justify-end">
                                     <Button :disabled="pending" :size="'md'"><span class="tw-font-semibold">Authenticate</span></Button>
                                 </div>
                             </form>
-                            <div v-if="$authStore.isLoggedIn" class="tw-justify-end">
-                                <Button :disabled="pending" @click="handleLogout" :size="'md'"><span class="tw-font-semibold">Logout</span></Button>
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -61,12 +54,13 @@
 
 <script setup lang="ts">
 
+definePageMeta({
+    layout: false,
+    middleware: 'guest'
+});
+
 const { $coreStore, $authStore } = useNuxtApp();
 import { ref, onMounted, nextTick } from 'vue';
-
-definePageMeta({
-    layout: false
-});
 
 let emailInput = ref(null);
 
@@ -87,16 +81,6 @@ function handleLogin(){
         email: email,
         password: password
     }, {
-        onResponse() {
-            pending.value = false;
-        }
-    });
-}
-
-function handleLogout(){
-    pending.value = true;
-
-    $authStore.logout({
         onResponse() {
             pending.value = false;
         }
