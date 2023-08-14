@@ -22,6 +22,9 @@
                             <NavLink :to="'/profile'" :active="isRouteActive('profile')">
                                 Profile
                             </NavLink>
+                            <NavLink :to="'/users'" :active="isRouteActive('users')">
+                                Users
+                            </NavLink>
                         </div>
                     </div>
                 </div>
