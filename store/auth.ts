@@ -1,6 +1,6 @@
-
-import { defineStore } from 'pinia'
+import {defineStore} from 'pinia'
 import {UseFetchOptions} from "nuxt/app";
+import {apiFetch} from "~/composables/api-fetch";
 
 type User = {
     id: number,
@@ -18,21 +18,21 @@ export const useAuthStore = defineStore('auth', () => {
     const user = ref<User | null>(null);
     const isLoggedIn = computed(() => !!user.value);
 
-    async function logout(options: UseFetchOptions = {}){
-        const { $coreStore } = useNuxtApp();
+    async function logout(options: UseFetchOptions = {}) {
+        const {$coreStore} = useNuxtApp();
         $coreStore.resetServiceError();
 
-        const logout = await useApiFetch("/logout", {
+        const logout = await apiFetch("/logout", {
             method: 'POST',
             ...options
         });
 
-        if(logout.status._value == 'success'){
+        if (logout.status._value == 'success') {
             user.value = null;
             navigateTo("/login");
         }
 
-        if(logout.status._value == 'error'){
+        if (logout.status._value == 'error') {
             $coreStore.setServiceError({
                 prompt: true,
                 icon: 'ic:sharp-lens-blur',
@@ -42,36 +42,36 @@ export const useAuthStore = defineStore('auth', () => {
         }
     }
 
-    async function fetchUser(){
-        const { data, status } = await useApiFetch("/api/user", {
+    async function fetchUser() {
+        const {data, status} = await apiFetch("/api/user", {
             method: 'GET'
         });
 
-        if(status._value == 'success'){
+        if (status._value == 'success') {
             user.value = data.value.values as User;
         }
     }
 
     async function login(credentials: Credentials, options: UseFetchOptions = {}) {
-        const { $coreStore } = useNuxtApp();
+        const {$coreStore} = useNuxtApp();
         $coreStore.resetServiceError();
 
-        if(!useCookie('XSRF-TOKEN').value){
-            await useApiFetch("/sanctum/csrf-cookie");
+        if (!useCookie('XSRF-TOKEN').value) {
+            await apiFetch("/sanctum/csrf-cookie");
         }
 
-        const login = await useApiFetch("/login", {
+        const login = await apiFetch("/login", {
             method: 'POST',
             body: credentials,
             ...options
         });
 
-        if(login.status._value == 'success'){
+        if (login.status._value == 'success') {
             await fetchUser();
             navigateTo("/profile", {replace: true});
         }
 
-        if(login.status._value == 'error'){
+        if (login.status._value == 'error') {
             $coreStore.setServiceError({
                 prompt: true,
                 icon: 'ic:sharp-error-outline',
