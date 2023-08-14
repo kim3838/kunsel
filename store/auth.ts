@@ -18,7 +18,7 @@ export const useAuthStore = defineStore('auth', () => {
     const user = ref<User | null>(null);
     const isLoggedIn = computed(() => !!user.value);
 
-    async function logout(options: UseFetchOptions<T> = {}){
+    async function logout(options: UseFetchOptions = {}){
         const { $coreStore } = useNuxtApp();
         $coreStore.resetServiceError();
 
@@ -52,7 +52,7 @@ export const useAuthStore = defineStore('auth', () => {
         }
     }
 
-    async function login(credentials: Credentials, options: UseFetchOptions<T> = {}) {
+    async function login(credentials: Credentials, options: UseFetchOptions = {}) {
         const { $coreStore } = useNuxtApp();
         $coreStore.resetServiceError();
 
