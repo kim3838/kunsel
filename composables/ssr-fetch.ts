@@ -1,7 +1,7 @@
 
 import type {UseFetchOptions} from "nuxt/app";
 
-export function apiFetch<T>(path: string, options: UseFetchOptions<T> = {}){
+export function ssrFetch<T>(path: string, options: UseFetchOptions<T> = {}){
     const runtimeConfig = useRuntimeConfig();
 
     let headers: any = {

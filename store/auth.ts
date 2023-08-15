@@ -1,6 +1,5 @@
 import {defineStore} from 'pinia'
 import {UseFetchOptions} from "nuxt/app";
-import {apiFetch} from "~/composables/api-fetch";
 
 type User = {
     id: number,
@@ -22,7 +21,7 @@ export const useAuthStore = defineStore('auth', () => {
         const {$coreStore} = useNuxtApp();
         $coreStore.resetServiceError();
 
-        const logout = await apiFetch("/logout", {
+        const logout = await ssrFetch("/logout", {
             method: 'POST',
             ...options
         });
@@ -43,7 +42,7 @@ export const useAuthStore = defineStore('auth', () => {
     }
 
     async function fetchUser() {
-        const {data, status} = await apiFetch("/api/user", {
+        const {data, status} = await ssrFetch("/api/user", {
             method: 'GET'
         });
 
@@ -57,10 +56,10 @@ export const useAuthStore = defineStore('auth', () => {
         $coreStore.resetServiceError();
 
         if (!useCookie('XSRF-TOKEN').value) {
-            await apiFetch("/sanctum/csrf-cookie");
+            await ssrFetch("/sanctum/csrf-cookie");
         }
 
-        const login = await apiFetch("/login", {
+        const login = await ssrFetch("/login", {
             method: 'POST',
             body: credentials,
             ...options
