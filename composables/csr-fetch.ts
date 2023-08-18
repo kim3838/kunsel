@@ -17,7 +17,9 @@ export function csrFetch<T>(path: string, options: UseFetchOptions<T> = {}){
 
     return useFetch(runtimeConfig.public.baseURL + path, {
         credentials: 'include',
+        watch: false,
         server: false,
+        immediate: false,
         lazy: true,
         ...options,
         headers: {
