@@ -1,5 +1,6 @@
 <template>
     <button
+        ref="button"
         :disabled="disabled"
         :class="[heightClass, spacingClass, fontClass]"
         :type="type"
