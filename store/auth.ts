@@ -43,12 +43,13 @@ export const useAuthStore = defineStore('auth', () => {
 
     async function fetchUser() {
         const {data, status} = await ssrFetch("/api/user", {
-            method: 'GET'
+            method: 'GET',
+            onResponse({request, response, options}) {
+                if(response._data.code == 200){
+                    user.value = response._data.values;
+                }
+            }
         });
-
-        if (status._value == 'success') {
-            user.value = data.value.values as User;
-        }
     }
 
     async function login(credentials: Credentials, options: UseFetchOptions = {}) {

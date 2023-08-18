@@ -79,7 +79,7 @@ function handleLogin(){
 
     $authStore.login({
         email: email,
-        password: password
+        password: password,
     }, {
         onResponse() {
             pending.value = false;
