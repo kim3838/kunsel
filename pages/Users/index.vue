@@ -28,8 +28,20 @@
 
                         <div class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-8">
                             <div class="tw-block tw-border tw-border-neutral-200">
-                                <FormInputLabel :size="'md'" value="Date and Time" />
-                                <FormInput id="bootstrapDateTimePicker" readonly v-model="filters.datetime" :size="'md'" class="tw-w-full" type="text" />
+                                <FormInputLabel :size="'md'" value="Date Added: From" />
+                                <FormInput id="datetimefrom" readonly v-model="filters.datetimeFrom" :size="'md'" class="tw-w-full" type="text" />
+                            </div>
+                            <div class="tw-block tw-border tw-border-neutral-200">
+                                <FormInputLabel :size="'md'" value="Date Added: To" />
+                                <FormInput id="datetimeto" readonly v-model="filters.datetimeTo" :size="'md'" class="tw-w-full" type="text" />
+                            </div>
+                            <div class="tw-block tw-border tw-border-neutral-200">
+                                <FormInputLabel :size="'md'" value="Date Picker" />
+                                <FormInput id="date" readonly v-model="filters.date" :size="'md'" class="tw-w-full" type="text" />
+                            </div>
+                            <div class="tw-block tw-border tw-border-neutral-200">
+                                <FormInputLabel :size="'md'" value="Month Picker" />
+                                <FormInput id="month" readonly v-model="filters.month.label" :size="'md'" class="tw-w-full" type="text" />
                             </div>
                         </div>
 
@@ -55,6 +67,7 @@
 
 <script setup lang="ts">
 import {ref, reactive, watch, nextTick} from 'vue';
+import moment from "moment/moment";
 const {$coreStore, $moment} = useNuxtApp();
 
 definePageMeta({
@@ -72,14 +85,21 @@ let filters = reactive({
         callback: 1
     },
     code: 'PRTY',
-    datetime: $moment().format('YYYY-MM-DD HH:mm:ss')
+    datetimeFrom: $moment().startOf('day').format('YYYY-MM-DD HH:mm:ss'),
+    datetimeTo: $moment().endOf('day').format('YYYY-MM-DD HH:mm:ss'),
+    date: $moment().format('YYYY-MM-DD'),
+    month: {
+        value: $moment().format('YYYY-MM'),
+        label: $moment().format('YYYY MMMM')
+    }
 });
 
 let filtersComputed = computed(() => {
     return {
         search: filters.search.keyword,
         code: filters.code,
-        datetime: filters.datetime
+        datetimeFrom: filters.datetimeFrom,
+        datetimeTo: filters.datetimeTo
     };
 });
 
@@ -89,6 +109,7 @@ const {pending, execute} = csrFetch("/api/v1/request", {
         filters: filtersComputed
     },
     onResponse({request, response, options}) {
+        //Todo: Response composable handler
         if(response._data.code >= 500 && response._data.code < 600){
             $coreStore.setServiceError({
                 prompt: true,
@@ -112,6 +133,7 @@ watch(pending, async (newPending, oldPending) => {
     }
 });
 
+//Todo: Filter data watcher composable
 watch(()=>{
     return filters.code;
 }, () => {execute();});
@@ -126,6 +148,33 @@ watch(() => {
     }, 1500);
 });
 
-dateTimePicker();
+dateTimePicker([
+    {
+        id: 'datetimefrom',
+        type: 'datetime',
+        selectedCallback: (payload) => {
+            filters.datetimeFrom = payload.value;
+        }
+    },{
+        id: 'datetimeto',
+        type: 'datetime',
+        selectedCallback: (payload) => {
+            filters.datetimeTo = payload.value;
+        }
+    },{
+        id: 'date',
+        type: 'date',
+        selectedCallback: (payload) => {
+            filters.date = payload.value;
+        }
+    },{
+        id: 'month',
+        type: 'month',
+        selectedCallback: (payload) => {
+            filters.month.value = payload.value;
+            filters.month.label = payload.label;
+        }
+    }
+]);
 
 </script>
