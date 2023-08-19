@@ -33,6 +33,7 @@
                                     id="bootstrapDatePicker"
                                     v-model="formStore.filters.date"
                                     autocomplete="off"
+                                    readonly
                                     :disabled="false" />
                             </div>
                             <div class="tw-block tw-border tw-border-neutral-200">
@@ -44,6 +45,7 @@
                                     id="bootstrapDateTimePicker"
                                     v-model="formStore.filters.dateTime"
                                     autocomplete="off"
+                                    readonly
                                     :disabled="false" />
                             </div>
 
@@ -56,6 +58,7 @@
                                     id="bootstrapMonthPicker"
                                     v-model="formStore.filters.monthLabel"
                                     autocomplete="off"
+                                    readonly
                                     :disabled="false" />
                             </div>
                         </div>
