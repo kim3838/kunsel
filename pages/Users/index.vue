@@ -7,13 +7,35 @@
                         <div class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-8">
                             <div class="tw-block tw-border tw-border-neutral-200">
                                 <FormInputLabel :size="'md'" value="Search" />
-                                <FormInput :size="'md'" ref="locationInput" v-model="search" class="tw-w-full" placeholder="Enter username" type="text" autocomplete="off" />
+                                <FormInput :size="'md'" ref="locationInput" readonly v-model="filters.search.keyword" class="tw-w-full" placeholder="Search something" type="text" autocomplete="off" />
+                            </div>
+                            <div class="tw-block tw-border tw-border-neutral-200">
+                                <FormInputLabel :size="'md'" value="_" class="tw-text-transparent" />
+                                <Button @click="filters.search.keyword += '.';" :size="'md'"><span class="tw-font-semibold">Concat "."</span></Button>
                             </div>
                         </div>
 
                         <div class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-8">
                             <div class="tw-block tw-border tw-border-neutral-200">
-                                <Button ref="submitButton" @click="refresh" :disabled="pending" :size="'md'"><span class="tw-font-semibold">Refresh</span></Button>
+                                <FormInputLabel :size="'md'" value="Code" />
+                                <FormInput :size="'md'" readonly v-model="filters.code" class="tw-w-full" placeholder="Search something" type="text" autocomplete="off" />
+                            </div>
+                            <div class="tw-block tw-border tw-border-neutral-200">
+                                <FormInputLabel :size="'md'" value="_" class="tw-text-transparent" />
+                                <Button @click="filters.code += '.';" :size="'md'"><span class="tw-font-semibold">Concat "."</span></Button>
+                            </div>
+                        </div>
+
+                        <div class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-8">
+                            <div class="tw-block tw-border tw-border-neutral-200">
+                                <FormInputLabel :size="'md'" value="Date and Time" />
+                                <FormInput id="bootstrapDateTimePicker" readonly v-model="filters.datetime" :size="'md'" class="tw-w-full" type="text" />
+                            </div>
+                        </div>
+
+                        <div class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-8">
+                            <div class="tw-block tw-border tw-border-neutral-200">
+                                <Button ref="submitButton" @click="execute" :disabled="pending" :size="'md'"><span class="tw-font-semibold">Refresh</span></Button>
                             </div>
                         </div>
 
@@ -32,27 +54,39 @@
 </style>
 
 <script setup lang="ts">
-import {ref, watch, nextTick} from 'vue';
-const {$coreStore} = useNuxtApp();
+import {ref, reactive, watch, nextTick} from 'vue';
+const {$coreStore, $moment} = useNuxtApp();
 
 definePageMeta({
     layout: false,
     middleware: 'auth'
 });
 
-let search = ref('Search...');
-let searchCallback = ref(1);
 let jsonResponse = ref({});
 let locationInput = ref(null);
 let submitButton = ref(null);
 
-const {pending, refresh} = csrFetch("/api/v1/request", {
+let filters = reactive({
+    search: {
+        keyword: 'Search...',
+        callback: 1
+    },
+    code: 'PRTY',
+    datetime: $moment().format('YYYY-MM-DD HH:mm:ss')
+});
+
+let filtersComputed = computed(() => {
+    return {
+        search: filters.search.keyword,
+        code: filters.code,
+        datetime: filters.datetime
+    };
+});
+
+const {pending, execute} = csrFetch("/api/v1/request", {
     method: 'GET',
     params: {
-        filters: {
-            search: search,
-            date: '2022-07'
-        }
+        filters: filtersComputed
     },
     onResponse({request, response, options}) {
         if(response._data.code >= 500 && response._data.code < 600){
@@ -78,10 +112,17 @@ watch(pending, async (newPending, oldPending) => {
     }
 });
 
-watch(search, (searchInput) => {
-    clearTimeout(searchCallback.value);
-    searchCallback.value = setTimeout(function(){
-        refresh();
+watch(()=>{
+    return filters.code;
+}, () => {execute();});
+
+watch(() => {
+    return filters.search.keyword;
+}, (keyword) => {
+    clearTimeout(filters.search.callback);
+
+    filters.search.callback = setTimeout(()=>{
+        execute();
     }, 1500);
 });
 
