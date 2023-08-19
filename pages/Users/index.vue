@@ -6,42 +6,43 @@
                     <div class="tw-space-y-2">
                         <div class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-8">
                             <div class="tw-block tw-border tw-border-neutral-200">
-                                <FormInputLabel :size="'md'" value="Search" />
-                                <FormInput :size="'md'" ref="locationInput" readonly v-model="filters.search.keyword" class="tw-w-full" placeholder="Search something" type="text" autocomplete="off" />
+                                <FormInputLabel :size="'md'" value="Search"/>
+                                <FormInput :size="'md'" ref="locationInput" readonly v-model="filters.search.keyword" class="tw-w-full" placeholder="Search something" type="text" autocomplete="off"/>
                             </div>
                             <div class="tw-block tw-border tw-border-neutral-200">
-                                <FormInputLabel :size="'md'" value="_" class="tw-text-transparent" />
+                                <FormInputLabel :size="'md'" value="_" class="tw-text-transparent"/>
                                 <Button @click="filters.search.keyword += '.';" :size="'md'"><span class="tw-font-semibold">Concat "."</span></Button>
                             </div>
                         </div>
 
                         <div class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-8">
                             <div class="tw-block tw-border tw-border-neutral-200">
-                                <FormInputLabel :size="'md'" value="Code" />
-                                <FormInput :size="'md'" readonly v-model="filters.code" class="tw-w-full" placeholder="Search something" type="text" autocomplete="off" />
+                                <FormInputLabel :size="'md'" value="Code"/>
+                                <FormInput :size="'md'" readonly v-model="filters.code" class="tw-w-full" placeholder="Search something" type="text" autocomplete="off"/>
                             </div>
                             <div class="tw-block tw-border tw-border-neutral-200">
-                                <FormInputLabel :size="'md'" value="_" class="tw-text-transparent" />
-                                <Button @click="filters.code += '.';" :size="'md'"><span class="tw-font-semibold">Concat "."</span></Button>
+                                <FormInputLabel :size="'md'" value="_" class="tw-text-transparent"/>
+                                <Button @click="filters.code += '.';" :size="'md'"><span class="tw-font-semibold">Concat "."</span>
+                                </Button>
                             </div>
                         </div>
 
                         <div class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-8">
                             <div class="tw-block tw-border tw-border-neutral-200">
-                                <FormInputLabel :size="'md'" value="Date Added: From" />
-                                <FormInput id="datetimefrom" readonly v-model="filters.datetimeFrom" :size="'md'" class="tw-w-full" type="text" />
+                                <FormInputLabel :size="'md'" value="Date Added: From"/>
+                                <FormInput id="datetimefrom" readonly v-model="filters.datetimeFrom" :size="'md'" class="tw-w-full" type="text"/>
                             </div>
                             <div class="tw-block tw-border tw-border-neutral-200">
-                                <FormInputLabel :size="'md'" value="Date Added: To" />
-                                <FormInput id="datetimeto" readonly v-model="filters.datetimeTo" :size="'md'" class="tw-w-full" type="text" />
+                                <FormInputLabel :size="'md'" value="Date Added: To"/>
+                                <FormInput id="datetimeto" readonly v-model="filters.datetimeTo" :size="'md'" class="tw-w-full" type="text"/>
                             </div>
                             <div class="tw-block tw-border tw-border-neutral-200">
-                                <FormInputLabel :size="'md'" value="Date Picker" />
-                                <FormInput id="date" readonly v-model="filters.date" :size="'md'" class="tw-w-full" type="text" />
+                                <FormInputLabel :size="'md'" value="Date Picker"/>
+                                <FormInput id="date" readonly v-model="filters.date" :size="'md'" class="tw-w-full" type="text"/>
                             </div>
                             <div class="tw-block tw-border tw-border-neutral-200">
-                                <FormInputLabel :size="'md'" value="Month Picker" />
-                                <FormInput id="month" readonly v-model="filters.month.label" :size="'md'" class="tw-w-full" type="text" />
+                                <FormInputLabel :size="'md'" value="Month Picker"/>
+                                <FormInput id="month" readonly v-model="filters.month.label" :size="'md'" class="tw-w-full" type="text"/>
                             </div>
                         </div>
 
@@ -68,6 +69,7 @@
 <script setup lang="ts">
 import {ref, reactive, watch, nextTick} from 'vue';
 import moment from "moment/moment";
+
 const {$coreStore, $moment} = useNuxtApp();
 
 definePageMeta({
@@ -110,7 +112,7 @@ const {pending, execute} = csrFetch("/api/v1/request", {
     },
     onResponse({request, response, options}) {
         //Todo: Response composable handler
-        if(response._data.code >= 500 && response._data.code < 600){
+        if (response._data.code >= 500 && response._data.code < 600) {
             $coreStore.setServiceError({
                 prompt: true,
                 icon: 'ic:sharp-error-outline',
@@ -125,7 +127,7 @@ const {pending, execute} = csrFetch("/api/v1/request", {
 });
 
 watch(pending, async (newPending, oldPending) => {
-    if(!newPending){
+    if (!newPending) {
         await nextTick();
         submitButton.value.$refs.button.focus();
     } else {
@@ -134,16 +136,15 @@ watch(pending, async (newPending, oldPending) => {
 });
 
 //Todo: Filter data watcher composable
-watch(()=>{
-    return filters.code;
-}, () => {execute();});
-
+watch(() => {return filters.code;}, () => {execute();});
+watch(() => {return filters.datetimeFrom;}, () => {execute();});
+watch(() => {return filters.datetimeTo;}, () => {execute();});
 watch(() => {
     return filters.search.keyword;
 }, (keyword) => {
     clearTimeout(filters.search.callback);
 
-    filters.search.callback = setTimeout(()=>{
+    filters.search.callback = setTimeout(() => {
         execute();
     }, 1500);
 });
@@ -155,19 +156,19 @@ dateTimePicker([
         selectedCallback: (payload) => {
             filters.datetimeFrom = payload.value;
         }
-    },{
+    }, {
         id: 'datetimeto',
         type: 'datetime',
         selectedCallback: (payload) => {
             filters.datetimeTo = payload.value;
         }
-    },{
+    }, {
         id: 'date',
         type: 'date',
         selectedCallback: (payload) => {
             filters.date = payload.value;
         }
-    },{
+    }, {
         id: 'month',
         type: 'month',
         selectedCallback: (payload) => {
