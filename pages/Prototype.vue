@@ -25,24 +25,24 @@
 
                         <div class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-8">
                             <div class="tw-block tw-border tw-border-neutral-200">
-                                <FormInputLabel :size="'md'" for="bootstrapDatePicker" value="Date" />
+                                <FormInputLabel :size="'md'" for="date" value="Date" />
                                 <FormInput
                                     :size="'md'"
                                     class="tw-w-full"
                                     type="text"
-                                    id="bootstrapDatePicker"
+                                    id="date"
                                     v-model="formStore.filters.date"
                                     autocomplete="off"
                                     readonly
                                     :disabled="false" />
                             </div>
                             <div class="tw-block tw-border tw-border-neutral-200">
-                                <FormInputLabel for="bootstrapDateTimePicker" value="DateTime" />
+                                <FormInputLabel for="datetime" value="DateTime" />
                                 <FormInput
                                     :size="'md'"
                                     class="tw-w-full"
                                     type="text"
-                                    id="bootstrapDateTimePicker"
+                                    id="datetime"
                                     v-model="formStore.filters.dateTime"
                                     autocomplete="off"
                                     readonly
@@ -50,12 +50,12 @@
                             </div>
 
                             <div class="tw-block tw-border tw-border-neutral-200">
-                                <FormInputLabel for="bootstrapMonthPicker" value="Month" />
+                                <FormInputLabel for="month" value="Month" />
                                 <FormInput
                                     :size="'md'"
                                     class="tw-w-full"
                                     type="text"
-                                    id="bootstrapMonthPicker"
+                                    id="month"
                                     v-model="formStore.filters.monthLabel"
                                     autocomplete="off"
                                     readonly
@@ -333,6 +333,40 @@ let plan = reactive({
     ],
     selected: null
 });
-bootDatetimePicker();
 
+dateTimePicker([
+    {
+        id: 'datetime',
+        type: 'datetime',
+        selectedCallback: (payload) => {
+            formStore.setFormFilterValue({
+                key: 'dateTime',
+                value: payload.value
+            });
+        }
+    }, {
+        id: 'date',
+        type: 'date',
+        selectedCallback: (payload) => {
+            formStore.setFormFilterValue({
+                key: 'date',
+                value: payload.value
+            });
+        }
+    }, {
+        id: 'month',
+        type: 'month',
+        selectedCallback: (payload) => {
+            formStore.setFormFilterValue({
+                key: 'monthValue',
+                value: payload.value
+            });
+
+            formStore.setFormFilterValue({
+                key: 'monthLabel',
+                value: payload.label
+            });
+        }
+    }
+]);
 </script>
