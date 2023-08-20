@@ -7,7 +7,7 @@
                         <div class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-8">
                             <div class="tw-block tw-border tw-border-neutral-200">
                                 <FormInputLabel :size="'md'" value="Search"/>
-                                <FormInput :size="'md'" ref="locationInput" readonly v-model="filters.search.keyword" class="tw-w-full" placeholder="Search something" type="text" autocomplete="off"/>
+                                <FormInput :size="'md'" ref="searchInput" v-model="filters.search.keyword" class="tw-w-full" placeholder="Search something" type="text" autocomplete="off"/>
                             </div>
                             <div class="tw-block tw-border tw-border-neutral-200">
                                 <FormInputLabel :size="'md'" value="_" class="tw-text-transparent"/>
@@ -78,7 +78,7 @@ definePageMeta({
 });
 
 let jsonResponse = ref({});
-let locationInput = ref(null);
+let searchInput = ref(null);
 let submitButton = ref(null);
 
 let filters = reactive({
