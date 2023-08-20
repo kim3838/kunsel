@@ -48,6 +48,13 @@ export default defineNuxtConfig({
 
     debug: false,//prints out hook names and timings on the server, and logs hook arguments as well in the browser.
 
+    imports: {
+        dirs: [
+            'composables/**',
+            'stores'
+        ]
+    },
+
     devtools: {
         enabled: true
     },

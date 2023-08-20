@@ -68,7 +68,6 @@
 
 <script setup lang="ts">
 import {ref, reactive, watch, nextTick} from 'vue';
-import moment from "moment/moment";
 
 const {$coreStore, $moment} = useNuxtApp();
 
@@ -109,6 +108,9 @@ const {pending, execute} = csrFetch("/api/v1/request", {
     method: 'GET',
     params: {
         filters: filtersComputed
+    },
+    onRequest(){
+        $coreStore.resetServiceError();
     },
     onResponse({request, response, options}) {
         //Todo: Response composable handler
