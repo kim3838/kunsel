@@ -82,7 +82,7 @@ let submitButton = ref(null);
 
 let filters = reactive({
     search: {
-        keyword: 'Search...',
+        keyword: '',
         callback: 1
     },
     code: 'PRTY',
@@ -104,9 +104,11 @@ let filtersComputed = computed(() => {
     };
 });
 
-const {pending, execute} = csrFetch("/api/v1/request", {
+const {pending, execute} = csrFetch("/api/v1/prototypes", {
     method: 'GET',
     params: {
+        page: 1,
+        perPage: 10,
         filters: filtersComputed
     },
     onRequest(){
@@ -130,8 +132,8 @@ const {pending, execute} = csrFetch("/api/v1/request", {
 
 watch(pending, async (newPending, oldPending) => {
     if (!newPending) {
-        await nextTick();
-        submitButton.value.$refs.button.focus();
+        //await nextTick();
+        //submitButton.value.$refs.button.focus();
     } else {
         jsonResponse.value = "Fetching data...";
     }
