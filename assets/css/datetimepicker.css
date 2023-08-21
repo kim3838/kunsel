@@ -249,13 +249,15 @@
     text-decoration: line-through;
 }
 
+/*Datetime picker border Theme [lighter] color*/
 .daterangepicker select.monthselect, .daterangepicker select.yearselect {
     font-size: 16px;
     padding: 4px 2px;
     height: auto;
     margin: 0;
     cursor: default;
-    border: 1px solid #D1D5DB;
+    border: 1px solid #b4b4b4;
+    background-color: white;
 }
 
 .daterangepicker select.monthselect {
@@ -267,11 +269,13 @@
     width: 40%;
 }
 
+/*Datetime picker border Theme [lighter] color*/
 .daterangepicker select.hourselect, .daterangepicker select.minuteselect, .daterangepicker select.secondselect, .daterangepicker select.ampmselect {
     width: 50px;
     margin: 0 auto;
     /*background: #eee;*/
-    border: 1px solid #D1D5DB;
+    border: 1px solid #b4b4b4;
+    background-color: white;
     padding: 2px;
     outline: 0;
     font-size: 14px;
