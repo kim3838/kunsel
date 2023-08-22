@@ -6,7 +6,7 @@
                 <div class="tw-flex tw-justify-center tw-h-10">
                     <div class="tw-relative tw-flex">
                         <!-- Navigation Links -->
-                        <div class="tw-hidden tw-space-x-4 lg:tw--my-px lg:tw-ml-10 lg:tw-flex">
+                        <div class="tw-hidden tw-space-x-8 lg:tw--my-px lg:tw-ml-10 lg:tw-flex">
                             <NavLink :to="'/'" :active="isRouteActive('index')">
                                 Home
                             </NavLink>

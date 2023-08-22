@@ -6,7 +6,9 @@
                     <div class="moody-card">
                         <div class="moody-card-frame"></div>
                         <div class="tw-relative tw-border tw-border-light tw-border-b-0 tw-p-3 tw-flex tw-justify-center tw-items-center">
-                            _
+                            <span >
+
+                            </span>
                         </div>
                         <div class="tw-relative tw-border tw-border-light tw-p-14 tw-pb-96">
 

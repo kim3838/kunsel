@@ -3,15 +3,22 @@
         <NuxtLayout name="custom">
             <template #content>
                 <div class="tw-m-2 tw-p-2 tw-border tw-border-light">
-                    <div class="tw-flex tw-items-center tw-justify-center">
+
+                    <div class="tw-flex tw-justify-center tw-text-lg tw-text-gray-500">Premium Battle Pass</div>
+                    <div class="tw-flex tw-justify-center tw-tracking-wider tw-font-[Gupter] tw-text-4xl tw-font-semibold">GET MORE WITH PREMIUM</div>
+                    <div class="tw-flex tw-justify-center">
+                        <p class="tw-tracking-wider tw-text-xl tw-text-gray-500 tw-max-w-[720px] tw-text-center">Earn your way through 90 tiers and unlock premium rewards like Awoken Armor Sets , Mounts & Mount Armor, Platinum, and much more.</p>
+                    </div>
+
+                    <div class="tw-flex tw-border tw-border-neutral-200">
                         <div class="moody-card tw-p-6">
                             <div class="moody-card-frame"></div>
                             <div class="tw-relative">
-                                <TextSample></TextSample>
+                                <Accordion></Accordion>
                             </div>
                         </div>
 
-                        <div class="tw-flex tw-h-full tw-items-center tw-border-neutral-200 tw-border">
+                        <div class="tw-p-6 tw-border tw-border-neutral-200">
                             <form @submit.prevent="handleLogin" class="tw-w-72">
                                 <div class="tw-block">
                                     <InputLabel :size="'sm'" for="email" value="Email" />
@@ -46,6 +53,7 @@
                             </form>
                         </div>
                     </div>
+
                 </div>
             </template>
         </NuxtLayout>
@@ -53,6 +61,8 @@
 </template>
 
 <script setup lang="ts">
+
+import Accordion from "~/components/Accordion.vue";
 
 definePageMeta({
     layout: false,
@@ -90,6 +100,7 @@ function handleLogin(){
 </script>
 
 <style scoped>
+
 .container {
     @apply tw-flex tw-justify-center tw-items-center tw-text-center tw-mx-auto;
     /*border: 1px solid silver;*/
