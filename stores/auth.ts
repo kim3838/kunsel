@@ -10,7 +10,8 @@ type User = {
 
 type Credentials = {
     email: string,
-    password: string
+    password: string,
+    remember: boolean
 };
 
 export const useAuthStore = defineStore('auth', () => {
