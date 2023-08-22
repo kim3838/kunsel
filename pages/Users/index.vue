@@ -6,22 +6,22 @@
                     <div class="tw-space-y-2">
                         <div class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-8">
                             <div class="tw-block tw-border tw-border-neutral-200">
-                                <FormInputLabel :size="'md'" value="Search"/>
-                                <FormInput :size="'md'" ref="searchInput" v-model="filters.search.keyword" class="tw-w-full" placeholder="Search something" type="text" autocomplete="off"/>
+                                <InputLabel :size="'md'" value="Search"/>
+                                <Input :size="'md'" ref="searchInput" v-model="filters.search.keyword" class="tw-w-full" placeholder="Search something" type="text" autocomplete="off"/>
                             </div>
                             <div class="tw-block tw-border tw-border-neutral-200">
-                                <FormInputLabel :size="'md'" value="_" class="tw-text-transparent"/>
+                                <InputLabel :size="'md'" value="_" class="tw-text-transparent"/>
                                 <Button @click="filters.search.keyword += '.';" :size="'md'"><span class="tw-font-semibold">Concat "."</span></Button>
                             </div>
                         </div>
 
                         <div class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-8">
                             <div class="tw-block tw-border tw-border-neutral-200">
-                                <FormInputLabel :size="'md'" value="Code"/>
-                                <FormInput :size="'md'" readonly v-model="filters.code" class="tw-w-full" placeholder="Search something" type="text" autocomplete="off"/>
+                                <InputLabel :size="'md'" value="Code"/>
+                                <Input :size="'md'" readonly v-model="filters.code" class="tw-w-full" placeholder="Search something" type="text" autocomplete="off"/>
                             </div>
                             <div class="tw-block tw-border tw-border-neutral-200">
-                                <FormInputLabel :size="'md'" value="_" class="tw-text-transparent"/>
+                                <InputLabel :size="'md'" value="_" class="tw-text-transparent"/>
                                 <Button @click="filters.code += '.';" :size="'md'"><span class="tw-font-semibold">Concat "."</span>
                                 </Button>
                             </div>
@@ -29,20 +29,20 @@
 
                         <div class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-8">
                             <div class="tw-block tw-border tw-border-neutral-200">
-                                <FormInputLabel :size="'md'" value="Date Added: From"/>
-                                <FormInput id="datetimefrom" readonly v-model="filters.datetimeFrom" :size="'md'" class="tw-w-full" type="text"/>
+                                <InputLabel :size="'md'" value="Date Added: From"/>
+                                <Input id="datetimefrom" readonly v-model="filters.datetimeFrom" :size="'md'" class="tw-w-full" type="text"/>
                             </div>
                             <div class="tw-block tw-border tw-border-neutral-200">
-                                <FormInputLabel :size="'md'" value="Date Added: To"/>
-                                <FormInput id="datetimeto" readonly v-model="filters.datetimeTo" :size="'md'" class="tw-w-full" type="text"/>
+                                <InputLabel :size="'md'" value="Date Added: To"/>
+                                <Input id="datetimeto" readonly v-model="filters.datetimeTo" :size="'md'" class="tw-w-full" type="text"/>
                             </div>
                             <div class="tw-block tw-border tw-border-neutral-200">
-                                <FormInputLabel :size="'md'" value="Date Picker"/>
-                                <FormInput id="date" readonly v-model="filters.date" :size="'md'" class="tw-w-full" type="text"/>
+                                <InputLabel :size="'md'" value="Date Picker"/>
+                                <Input id="date" readonly v-model="filters.date" :size="'md'" class="tw-w-full" type="text"/>
                             </div>
                             <div class="tw-block tw-border tw-border-neutral-200">
-                                <FormInputLabel :size="'md'" value="Month Picker"/>
-                                <FormInput id="month" readonly v-model="filters.month.label" :size="'md'" class="tw-w-full" type="text"/>
+                                <InputLabel :size="'md'" value="Month Picker"/>
+                                <Input id="month" readonly v-model="filters.month.label" :size="'md'" class="tw-w-full" type="text"/>
                             </div>
                         </div>
 

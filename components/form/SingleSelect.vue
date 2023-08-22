@@ -20,7 +20,7 @@
 
             <div v-show="active" class="tw-w-full tw-relative">
                 <div class="tw-absolute tw-flex tw-items-center">
-                    <FormInput
+                    <Input
                         autocomplete="off"
                         class="tw-w-full tw-h-[1.875rem]"
                         ref="selectionSearch"

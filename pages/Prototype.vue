@@ -9,24 +9,24 @@
                     <div class="tw-space-y-2">
                         <div class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-8">
                             <div class="tw-block tw-border tw-border-neutral-200">
-                                <FormInputLabel :size="'md'" value="Static Multi Select" />
-                                <FormMultiSelect :size="'md'" :options="category" :icon="'ic:sharp-hdr-on-select'"/>
+                                <InputLabel :size="'md'" value="Static Multi Select" />
+                                <MultiSelect :size="'md'" :options="category" :icon="'ic:sharp-hdr-on-select'"/>
                             </div>
                             <div class="tw-block tw-border tw-border-neutral-200">
-                                <FormInputLabel :size="'md'" value="Static Single Select" />
-                                <FormSingleSelect :size="'md'" :icon="'ic:sharp-rsvp'" :options="plan"/>
+                                <InputLabel :size="'md'" value="Static Single Select" />
+                                <SingleSelect :size="'md'" :icon="'ic:sharp-rsvp'" :options="plan"/>
                             </div>
                             <div class="tw-block tw-border tw-border-neutral-200">
-                                <FormInputLabel :size="'md'" for="form_input_3" value="MD Label" />
-                                <FormInput :size="'md'" class="tw-w-full" placeholder="Enter username" id="form_input_3" type="text" autocomplete="off" />
+                                <InputLabel :size="'md'" for="form_input_3" value="MD Label" />
+                                <Input :size="'md'" class="tw-w-full" placeholder="Enter username" id="form_input_3" type="text" autocomplete="off" />
                             </div>
                         </div>
 
 
                         <div class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-8">
                             <div class="tw-block tw-border tw-border-neutral-200">
-                                <FormInputLabel :size="'md'" for="date" value="Date" />
-                                <FormInput
+                                <InputLabel :size="'md'" for="date" value="Date" />
+                                <Input
                                     :size="'md'"
                                     class="tw-w-full"
                                     type="text"
@@ -37,8 +37,8 @@
                                     :disabled="false" />
                             </div>
                             <div class="tw-block tw-border tw-border-neutral-200">
-                                <FormInputLabel for="datetime" value="DateTime" />
-                                <FormInput
+                                <InputLabel for="datetime" value="DateTime" />
+                                <Input
                                     :size="'md'"
                                     class="tw-w-full"
                                     type="text"
@@ -50,8 +50,8 @@
                             </div>
 
                             <div class="tw-block tw-border tw-border-neutral-200">
-                                <FormInputLabel for="month" value="Month" />
-                                <FormInput
+                                <InputLabel for="month" value="Month" />
+                                <Input
                                     :size="'md'"
                                     class="tw-w-full"
                                     type="text"
@@ -87,17 +87,17 @@
                         <div class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-8">
                             <div class="tw-border tw-border-neutral-200">
                                 <label class="tw-flex tw-items-center">
-                                    <FormCheckbox v-model="remember1" :size="'sm'" :label="'SM Checkbox'" name="remember" />
+                                    <Checkbox v-model="remember1" :size="'sm'" :label="'SM Checkbox'" name="remember" />
                                 </label>
                             </div>
                             <div class="tw-border tw-border-neutral-200">
                                 <label class="tw-flex tw-items-center">
-                                    <FormCheckbox v-model="remember2" :size="'md'" :label="'MD Checkbox'" name="remember" />
+                                    <Checkbox v-model="remember2" :size="'md'" :label="'MD Checkbox'" name="remember" />
                                 </label>
                             </div>
                             <div class="tw-border tw-border-neutral-200">
                                 <label class="tw-flex tw-items-center">
-                                    <FormCheckbox v-model="remember3" :size="'lg'" :label="'LG Checkbox'" name="remember" />
+                                    <Checkbox v-model="remember3" :size="'lg'" :label="'LG Checkbox'" name="remember" />
                                 </label>
                             </div>
                         </div>
@@ -105,8 +105,8 @@
                         <div class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-8">
                             <div class="tw-flex tw-items-start tw-justify-start tw-block tw-border tw-border-neutral-200">
                                 <div>
-                                    <FormInputLabel :size="'md'" value="SM : Gender Group" />
-                                    <FormRadioGroup
+                                    <InputLabel :size="'md'" value="SM : Gender Group" />
+                                    <RadioGroup
                                         :selections="genderGroup.selection"
                                         :size="'sm'"
                                         class="tw-border tw-border-neutral-200"
@@ -116,8 +116,8 @@
                             </div>
                             <div class="tw-flex tw-items-start tw-justify-start tw-block tw-border tw-border-neutral-200">
                                 <div>
-                                    <FormInputLabel :size="'md'" value="SM : Status Group" />
-                                    <FormRadioGroup
+                                    <InputLabel :size="'md'" value="SM : Status Group" />
+                                    <RadioGroup
                                         :selections="statusGroup.selection"
                                         :size="'sm'"
                                         class="tw-border tw-border-neutral-200"
@@ -127,8 +127,8 @@
                             </div>
                             <div class="tw-flex tw-items-start tw-justify-start tw-block tw-border tw-border-neutral-200">
                                 <div>
-                                    <FormInputLabel :size="'md'" value="MD : Transaction Group" />
-                                    <FormRadioGroup
+                                    <InputLabel :size="'md'" value="MD : Transaction Group" />
+                                    <RadioGroup
                                         :selections="transactionGroup.selection"
                                         :size="'md'"
                                         class="tw-border tw-border-neutral-200"
@@ -138,8 +138,8 @@
                             </div>
                             <div class="tw-flex tw-items-start tw-justify-start tw-block tw-border tw-border-neutral-200">
                                 <div>
-                                    <FormInputLabel :size="'md'" value="LG : Category Group" />
-                                    <FormRadioGroup
+                                    <InputLabel :size="'md'" value="LG : Category Group" />
+                                    <RadioGroup
                                         :selections="categoryGroup.selection"
                                         :size="'lg'"
                                         class="tw-border tw-border-neutral-200"
@@ -151,24 +151,24 @@
 
                         <div class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-8">
                             <div class="tw-block tw-border tw-border-neutral-200">
-                                <FormInputLabel :size="'xs'" for="form_input_1" value="XS Label" />
-                                <FormInput :size="'xs'" class="tw-w-full" placeholder="Enter username" id="form_input_1" type="text" autocomplete="off" />
+                                <InputLabel :size="'xs'" for="form_input_1" value="XS Label" />
+                                <Input :size="'xs'" class="tw-w-full" placeholder="Enter username" id="form_input_1" type="text" autocomplete="off" />
                             </div>
                             <div class="tw-block tw-border tw-border-neutral-200">
-                                <FormInputLabel :size="'sm'" for="form_input_2" value="SM Label" />
-                                <FormInput :size="'sm'" class="tw-w-full" placeholder="Enter username" id="form_input_2" type="text" autocomplete="off" />
+                                <InputLabel :size="'sm'" for="form_input_2" value="SM Label" />
+                                <Input :size="'sm'" class="tw-w-full" placeholder="Enter username" id="form_input_2" type="text" autocomplete="off" />
                             </div>
                             <div class="tw-block tw-border tw-border-neutral-200">
-                                <FormInputLabel :size="'md'" for="form_input_3" value="MD Label" />
-                                <FormInput :size="'md'" class="tw-w-full" placeholder="Enter username" id="form_input_3" type="text" autocomplete="off" />
+                                <InputLabel :size="'md'" for="form_input_3" value="MD Label" />
+                                <Input :size="'md'" class="tw-w-full" placeholder="Enter username" id="form_input_3" type="text" autocomplete="off" />
                             </div>
                             <div class="tw-block tw-border tw-border-neutral-200">
-                                <FormInputLabel :size="'lg'" for="form_input_4" value="LG Label" />
-                                <FormInput :size="'lg'" class="tw-w-full" placeholder="Enter username" id="form_input_4" type="text" autocomplete="off" />
+                                <InputLabel :size="'lg'" for="form_input_4" value="LG Label" />
+                                <Input :size="'lg'" class="tw-w-full" placeholder="Enter username" id="form_input_4" type="text" autocomplete="off" />
                             </div>
                             <div class="tw-col-span-2 tw-block tw-border tw-border-neutral-200">
-                                <FormInputLabel :size="'xl'" for="form_input_5" value="XL Label" />
-                                <FormInput :size="'xl'" class="tw-w-full" placeholder="Enter username" id="form_input_5" type="text" autocomplete="off" />
+                                <InputLabel :size="'xl'" for="form_input_5" value="XL Label" />
+                                <Input :size="'xl'" class="tw-w-full" placeholder="Enter username" id="form_input_5" type="text" autocomplete="off" />
                             </div>
                         </div>
 

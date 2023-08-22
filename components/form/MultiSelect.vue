@@ -23,7 +23,7 @@
             </div>
             <div v-show="active" class="tw-w-full tw-relative">
                 <div class="tw-absolute tw-right-[2rem] tw-flex tw-items-center">
-                    <FormInput
+                    <Input
                         autocomplete="off"
                         class="tw-w-full tw-h-[1.875rem]"
                         ref="selectionSearch"
@@ -48,7 +48,7 @@
 
         <div v-show="active" class="tw-z-10 tw-absolute tw-w-full tw-border tw-bg-white tw-border-light tw-border-t-transparent">
             <div class="tw-max-h-[240px] tw-overflow-y-scroll">
-                <FormCheckbox
+                <Checkbox
                     :size="'md'"
                     v-for="item in options.selection" :key="item.value"
                     class="tw-pl-2 hover:tw-bg-neutral-200"

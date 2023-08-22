@@ -1,6 +1,6 @@
 <template>
     <div>
-        <FormRadioBox
+        <RadioBox
             class="tw-flex tw-items-center"
             v-for="selection in selections"
             v-model="computedSelected"

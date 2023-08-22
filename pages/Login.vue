@@ -14,20 +14,20 @@
                         <div class="tw-flex tw-h-full tw-items-center tw-border-neutral-200 tw-border">
                             <form @submit.prevent="handleLogin" class="tw-w-72">
                                 <div class="tw-block">
-                                    <FormInputLabel :size="'sm'" for="email" value="Email" />
-                                    <FormInput :disabled="pending" :size="'sm'" id="email" type="email" class="tw-w-full" ref="emailInput" v-model="email" autofocus autocomplete="off" />
+                                    <InputLabel :size="'sm'" for="email" value="Email" />
+                                    <Input :disabled="pending" :size="'sm'" id="email" type="email" class="tw-w-full" ref="emailInput" v-model="email" autofocus autocomplete="off" />
                                     <sup>{{email}}</sup>
                                 </div>
 
                                 <div class="tw-block tw-mt-4">
-                                    <FormInputLabel :size="'md'" for="password" value="Password" />
-                                    <FormInput :disabled="pending" :size="'md'" id="password" type="password" class="tw-w-full" v-model="password" required autocomplete="current-password" />
+                                    <InputLabel :size="'md'" for="password" value="Password" />
+                                    <Input :disabled="pending" :size="'md'" id="password" type="password" class="tw-w-full" v-model="password" required autocomplete="current-password" />
                                     <sup>{{password}}</sup>
                                 </div>
 
                                 <div class="tw-block tw-mt-4">
                                     <label class="tw-flex tw-items-center">
-                                        <FormCheckbox :disabled="pending" name="remember" v-model="remember" :size="'md'" :label="'Remember me'" />
+                                        <Checkbox :disabled="pending" name="remember" v-model="remember" :size="'md'" :label="'Remember me'" />
                                     </label>
                                     <label>
                                         <sup>{{remember}}</sup>
