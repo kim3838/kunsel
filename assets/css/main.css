@@ -56,6 +56,17 @@ body{
     background: rgba(0, 0, 0, 0.22);
 }
 
+.header-1{
+    filter:
+            drop-shadow(rgba(201, 201, 201, 0.5) 0px 0px 3px)
+            drop-shadow(#818181 0px 0px 3px)
+            drop-shadow(rgba(0, 0, 0, 0.3) 0px 1px 3px)
+            drop-shadow(rgba(0, 0, 0, 0.3) 0px 0px 3px)
+            brightness(1.6);
+    text-shadow: 1px 3px 3px rgba(0, 0, 0, 0.7);
+    text-transform: uppercase;
+}
+
 .sidebarable{
     height: auto;
     min-height: 100%;
