@@ -6,51 +6,10 @@
                     <div class="moody-card">
                         <div class="moody-card-frame"></div>
                         <div class="tw-relative tw-border tw-border-light tw-border-b-0 tw-p-3 tw-flex tw-justify-center tw-items-center">
-                            Static SingleSelect
+                            _
                         </div>
                         <div class="tw-relative tw-border tw-border-light tw-p-14 tw-pb-96">
-                            <div class="tw-border tw-w-60 tw-p-[0.5rem] tw-border-slate-400/20">
-                                <FormInputLabel :size="'md'" value="Static Multi Select" />
-                                <FormMultiSelect :size="'md'" :icon="'ic:sharp-hdr-on-select'" :options="category"/>
-                            </div>
-                            <div class="tw-border tw-w-60 tw-p-[0.5rem] tw-border-slate-400/20">
-                                <FormInputLabel :size="'md'" value="Static Single Select" />
-                                <FormSingleSelect :size="'md'" :icon="'ic:sharp-solar-power'" :options="plan"/>
-                            </div>
-                            <div class="tw-border tw-w-60 tw-p-[0.5rem] tw-border-slate-400/20">
-                                <FormInputLabel :size="'md'" value="Static Multi Select" />
-                                <FormMultiSelect :size="'md'" :icon="'ic:sharp-rsvp'" :options="status"/>
-                            </div>
-                            <FormInput
-                                class="tw-w-full"
-                                :size="'sm'"
-                                type="text"
-                                placeholder="SM Search..."
-                                autocomplete="off"
-                                :withBorder="true"
-                                :rounded="false"
-                                :focusRing="false"
-                                :disabled="false" />
-                            <FormInput
-                                class="tw-w-full"
-                                :size="'md'"
-                                type="text"
-                                placeholder="MD Search..."
-                                autocomplete="off"
-                                :withBorder="true"
-                                :rounded="false"
-                                :focusRing="true"
-                                :disabled="false" />
-                            <FormInput
-                                class="tw-w-full"
-                                :size="'lg'"
-                                type="text"
-                                placeholder="LG Search..."
-                                autocomplete="off"
-                                :withBorder="true"
-                                :rounded="false"
-                                :focusRing="true"
-                                :disabled="false" />
+
                         </div>
                     </div>
                 </div>
@@ -61,71 +20,125 @@
 
 <script setup lang="ts">
 
+import {ref} from "vue";
+
 definePageMeta({
     layout: false,
     middleware: 'auth'
 });
 
-let category = reactive({
-    search: '',
-    data: [
-        {text : 'Charms', value: 0},
-        {text : 'Bracelets', value: 1},
-        {text : 'Brooches and Pins', value: 2},
-        {text : 'Necklaces', value: 3},
-        {text : 'Earrings', value: 4},
-        {text : 'Rings', value: 5},
-        {text : 'Polyester', value: 6},
-    ],
-    selection: [
-        {text : 'Charms', value: 0},
-        {text : 'Bracelets', value: 1},
-        {text : 'Brooches and Pins', value: 2},
-        {text : 'Necklaces', value: 3},
-        {text : 'Earrings', value: 4},
-        {text : 'Rings', value: 5},
-        {text : 'Polyester', value: 6},
-    ],
-    selected: []
-});
-
-let status = reactive({
-    search: '',
-    data: [
-        {text : 'For Approval', value: 0},
-        {text : 'Processing', value: 1},
-        {text : 'Approved', value: 2},
-        {text : 'Rejected', value: 3},
-        {text : 'Complete', value: 4},
-    ],
-    selection: [
-        {text : 'For Approval', value: 0},
-        {text : 'Processing', value: 1},
-        {text : 'Approved', value: 2},
-        {text : 'Rejected', value: 3},
-        {text : 'Complete', value: 4},
-    ],
-    selected: []
-});
-
-let plan = reactive({
-    search: '',
-    data: [
-        {text : 'Free', value: 0},
-        {text : 'Individual', value: 1},
-        {text : 'Standard Corporate', value: 2},
-        {text : 'Custom Corporate', value: 3},
-        {text : 'Evaluator', value: 4}
-    ],
-    selection: [
-        {text : 'Free', value: 0},
-        {text : 'Individual', value: 1},
-        {text : 'Standard Corporate', value: 2},
-        {text : 'Custom Corporate', value: 3},
-        {text : 'Evaluator', value: 4}
-    ],
-    selected: null
-});
+let data = ref([
+    {
+        "id": 45,
+        "name": "GSX 8ZJC5 37V",
+        "code": "PRT0451171313",
+        "type": 1,
+        "category": null,
+        "capacity": 33,
+        "datetime_added": "2023-08-22 17:44:03",
+        "created_at": "2023-08-22 17:44:03",
+        "updated_at": "2023-08-22 17:44:03"
+    },
+    {
+        "id": 67,
+        "name": "CP1 HN3 DX4K2",
+        "code": "PRT9284750057",
+        "type": 1,
+        "category": 114,
+        "capacity": 23,
+        "datetime_added": "2023-08-22 17:44:03",
+        "created_at": "2023-08-22 17:44:03",
+        "updated_at": "2023-08-22 17:44:03"
+    },
+    {
+        "id": 88,
+        "name": "XIM 9QY QY125",
+        "code": "PRT9249091497",
+        "type": 5,
+        "category": null,
+        "capacity": 22,
+        "datetime_added": "2023-08-22 17:44:03",
+        "created_at": "2023-08-22 17:44:03",
+        "updated_at": "2023-08-22 17:44:03"
+    },
+    {
+        "id": 246,
+        "name": "IB8 EAW DML6X",
+        "code": "PRT3041670860",
+        "type": 4,
+        "category": 89,
+        "capacity": 26,
+        "datetime_added": "2023-08-22 17:44:03",
+        "created_at": "2023-08-22 17:44:03",
+        "updated_at": "2023-08-22 17:44:03"
+    },
+    {
+        "id": 273,
+        "name": "72WKAM 11B T5",
+        "code": "PRT9023387510",
+        "type": 1,
+        "category": null,
+        "capacity": 3,
+        "datetime_added": "2023-08-22 17:44:03",
+        "created_at": "2023-08-22 17:44:03",
+        "updated_at": "2023-08-22 17:44:03"
+    },
+    {
+        "id": 384,
+        "name": "PM2 V8W ZCAGR",
+        "code": "PRT0920672517",
+        "type": 5,
+        "category": null,
+        "capacity": 8,
+        "datetime_added": "2023-08-22 17:44:03",
+        "created_at": "2023-08-22 17:44:03",
+        "updated_at": "2023-08-22 17:44:03"
+    },
+    {
+        "id": 418,
+        "name": "VFSNL4 FL2 7C",
+        "code": "PRT1915550179",
+        "type": 3,
+        "category": null,
+        "capacity": 19,
+        "datetime_added": "2023-08-22 17:44:03",
+        "created_at": "2023-08-22 17:44:03",
+        "updated_at": "2023-08-22 17:44:03"
+    },
+    {
+        "id": 478,
+        "name": "RC0 868Q6 GZI",
+        "code": "PRT4902978961",
+        "type": 2,
+        "category": 68,
+        "capacity": 15,
+        "datetime_added": "2023-08-22 17:44:03",
+        "created_at": "2023-08-22 17:44:03",
+        "updated_at": "2023-08-22 17:44:03"
+    },
+    {
+        "id": 552,
+        "name": "9Q8 YEESZ DKF",
+        "code": "PRT3932126979",
+        "type": 1,
+        "category": 4,
+        "capacity": 15,
+        "datetime_added": "2023-08-22 17:44:03",
+        "created_at": "2023-08-22 17:44:03",
+        "updated_at": "2023-08-22 17:44:03"
+    },
+    {
+        "id": 702,
+        "name": "45EE9R TES VK",
+        "code": "PRT2563775044",
+        "type": 5,
+        "category": 79,
+        "capacity": 35,
+        "datetime_added": "2023-08-22 17:44:03",
+        "created_at": "2023-08-22 17:44:03",
+        "updated_at": "2023-08-22 17:44:03"
+    }
+]);
 
 </script>
 
