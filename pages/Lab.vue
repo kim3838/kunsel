@@ -3,15 +3,18 @@
         <NuxtLayout name="custom">
             <template #content>
                 <div id="lab" class="tw-m-2 tw-p-2 tw-border tw-border-light tw-flex tw-justify-center tw-items-center">
-                    <div class="moody-card">
+                    <div class="moody-card tw-w-[800px]">
                         <div class="moody-card-frame"></div>
                         <div class="tw-relative tw-border tw-border-light tw-border-b-0 tw-p-3 tw-flex tw-justify-center tw-items-center">
                             <span >
 
                             </span>
                         </div>
-                        <div class="tw-relative tw-border tw-border-light tw-p-14 tw-pb-96">
-
+                        <div class="tw-relative tw-border tw-border-light tw-p-7">
+                            <DataTable
+                                :headers="headers"
+                                :rows="data"
+                            ></DataTable>
                         </div>
                     </div>
                 </div>
@@ -26,9 +29,20 @@ import {ref} from "vue";
 
 definePageMeta({
     layout: false,
-    middleware: 'auth'
+    middleware: 'guest'
 });
 
+let headers = ref([
+    { text: 'ID',  align: 'left',value: 'id'},
+    { text: 'NAME',  align: 'left',value: 'name'},
+    { text: 'CODE',  align: 'left',value: 'code'},
+    { text: 'TYPE',  align: 'left',value: 'type'},
+    { text: 'CATEGORY',  align: 'left',value: 'category'},
+    { text: 'CAPACITY',  align: 'left',value: 'capacity'},
+    { text: 'DATE ADDED', align: 'right', value: 'datetime_added'},
+    { text: 'DATE CREATED', align: 'right', value: 'created_at'},
+    { text: 'DATE UPDATED', align: 'right', value: 'updated_at'},
+]);
 let data = ref([
     {
         "id": 45,
