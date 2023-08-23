@@ -44,7 +44,7 @@
         </div>
 
         <div v-show="active" class="tw-z-10 tw-absolute tw-w-full tw-border tw-bg-white tw-border-light tw-border-t-transparent">
-            <div class="tw-max-h-[240px] tw-overflow-y-scroll">
+            <div class="tw-max-h-[240px] tw-overflow-y-auto">
                 <div
                     v-for="item in options.selection" :key="item.value"
                     class="tw-pl-1.5 hover:tw-bg-neutral-200 tw-flex tw-items-center tw-cursor-pointer"
