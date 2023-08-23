@@ -1,5 +1,5 @@
 <template>
-    <div class="table-division">
+    <div id="table-division">
         <table class="tw-border-collapse">
             <thead>
                 <tr>
@@ -31,8 +31,32 @@ const props = defineProps({
 </script>
 
 <style scoped>
-.table-division{
-    overflow-x: scroll;
+
+#table-division{
+    overflow-x: auto;
+    scrollbar-color: rgba(0, 0, 0, 0.12) rgb(243 244 246);
+    scrollbar-width: thin;
+}
+
+#table-division::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+}
+
+/* Track */
+#table-division::-webkit-scrollbar-track {
+    background: rgb(243 244 246);
+    box-shadow: inset 0 0 4px rgba(0, 0, 0, 0.12);
+}
+
+/* Handle */
+#table-division::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.12);
+}
+
+/* Handle on hover */
+#table-division::-webkit-scrollbar-thumb:hover {
+    background: rgba(0, 0, 0, 0.22);
 }
 
 table{
