@@ -3,11 +3,11 @@
         <NuxtLayout name="custom">
             <template #content>
                 <div id="lab" class="tw-m-2 tw-p-2 tw-border tw-border-light tw-flex tw-justify-center tw-items-center">
-                    <div class="moody-card tw-w-[800px]">
+                    <div class="moody-card tw-max-w-[800px] tw-w-[800px]">
                         <div class="moody-card-frame"></div>
                         <div class="tw-relative tw-border tw-border-light tw-border-b-0 tw-p-3 tw-flex tw-justify-center tw-items-center">
                             <span >
-
+                                DataTable
                             </span>
                         </div>
                         <div class="tw-relative tw-border tw-border-light tw-p-7">

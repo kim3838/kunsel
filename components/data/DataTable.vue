@@ -3,12 +3,18 @@
         <table class="tw-border-collapse">
             <thead>
                 <tr>
-                    <td v-for="header in headers" :key="header.value" v-text="header.text"></td>
+                    <td
+                        v-for="header in headers" :key="header.value" v-text="header.text"
+                        class="tw-font-semibold"
+                    ></td>
                 </tr>
             </thead>
             <tbody>
                 <tr v-for="row in rows" :key="row.id" >
-                    <td v-for="header in headers" :key="row.id" v-text="row[header.value]"></td>
+                    <td
+                        v-for="header in headers" :key="row.id" v-text="row[header.value]"
+                        class="tw-text-sm"
+                    ></td>
                 </tr>
             </tbody>
         </table>
@@ -71,6 +77,7 @@ thead{
 }
 
 thead tr td{
+    padding: 3px;
     border-bottom: 0;
     border-left: 0;
     border-right: 1px solid rgba(212, 212, 212, 1);
@@ -85,6 +92,7 @@ tbody{
 }
 
 tbody tr td{
+    padding: 3px;
     border-bottom: 0;
     border-left: 0;
     border-right: 1px solid rgba(212, 212, 212, 1);
