@@ -1,9 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
     content: [
-        "./components/Form/**/*.{js,vue,ts}",
-        "./components/Jetstream/**/*.{js,vue,ts}",
-        "./components/Logo/**/*.{js,vue,ts}",
         "./components/**/*.{js,vue,ts}",
         "./layouts/**/*.vue",
         "./pages/**/*.vue",
@@ -21,7 +18,7 @@ module.exports = {
             fontFamily : {
                 sans : ['Sofia Sans Semi Condensed', 'Source Sans Pro', 'Barlow', 'Spline Sans', 'Roboto', 'Roboto Condensed', 'Inter', 'sans-serif'],
                 serif : ['Almendra', 'Oranienbaum', 'Instrument Serif', 'Gupter', 'Kotta One', 'serif'],
-                mono : ['Spline Sans Mono', 'Roboto Mono', 'monospace'],
+                mono : ['Roboto Mono', 'Spline Sans Mono', 'monospace'],
             },
             spacing: {
                 'sidebar': '250px',
