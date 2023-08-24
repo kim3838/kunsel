@@ -12,9 +12,10 @@
             <tbody>
                 <tr v-for="row in rows" :key="row.id" >
                     <td
-                        v-for="header in headers" :key="row.id" v-text="row[header.value]"
-                        class="tw-text-sm"
-                    ></td>
+                        v-for="header in headers" :key="row.id"
+                        class="tw-text-sm">
+                        <slot :name="`cell.${header.value}`" :cell="row">{{row[header.value]}}</slot>
+                    </td>
                 </tr>
             </tbody>
         </table>
@@ -100,6 +101,6 @@ tbody tr td{
 }
 
 tbody tr:nth-of-type(2n+1){
-    background-color: rgba(229, 229, 229, 0.5);
+    background-color: rgba(229, 229, 229, 0.4);
 }
 </style>

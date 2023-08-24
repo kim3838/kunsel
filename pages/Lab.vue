@@ -13,8 +13,11 @@
                         <div class="tw-relative tw-border tw-border-light tw-p-7">
                             <DataTable
                                 :headers="headers"
-                                :rows="data"
-                            ></DataTable>
+                                :rows="data">
+                                <template v-slot:cell.name="{cell}">
+                                    <span>{{`Name:${cell.name}`}}</span>
+                                </template>
+                            </DataTable>
                         </div>
                     </div>
                 </div>
