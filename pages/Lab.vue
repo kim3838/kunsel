@@ -14,8 +14,14 @@
                             <DataTable
                                 :headers="headers"
                                 :rows="data">
-                                <template v-slot:cell.name="{cell}">
-                                    <span>{{`Name:${cell.name}`}}</span>
+                                <template v-slot:cell.name="{index, cell}">
+                                    <span>{{`Name: [${index}] ${cell.name}`}}</span>
+                                </template>
+                                <template v-slot:cell.code="{index, cell}">
+                                    <span class="tw-font-mono">{{`Code: [${index}] ${cell.code}`}}</span>
+                                </template>
+                                <template v-slot:cell.category="{index, cell}">
+                                    <span class="tw-font-mono">{{cell.category}}</span>
                                 </template>
                             </DataTable>
                         </div>
@@ -36,15 +42,15 @@ definePageMeta({
 });
 
 let headers = ref([
-    { text: 'ID',  align: 'left',value: 'id'},
-    { text: 'NAME',  align: 'left',value: 'name'},
-    { text: 'CODE',  align: 'left',value: 'code'},
-    { text: 'TYPE',  align: 'left',value: 'type'},
-    { text: 'CATEGORY',  align: 'left',value: 'category'},
-    { text: 'CAPACITY',  align: 'left',value: 'capacity'},
-    { text: 'DATE ADDED', align: 'right', value: 'datetime_added'},
-    { text: 'DATE CREATED', align: 'right', value: 'created_at'},
-    { text: 'DATE UPDATED', align: 'right', value: 'updated_at'},
+    { text: 'ID', value: 'id'},
+    { text: 'NAME', value: 'name'},
+    { text: 'CODE', alignHeader: 'center', value: 'code'},
+    { text: 'TYPE', value: 'type'},
+    { text: 'CATEGORY', alignData: 'right', value: 'category'},
+    { text: 'CAPACITY', alignData: 'left', value: 'capacity'},
+    { text: 'DATE ADDED', alignData: 'right', value: 'datetime_added'},
+    { text: 'DATE CREATED', alignData: 'right', value: 'created_at'},
+    { text: 'DATE UPDATED', alignData: 'right', value: 'updated_at'},
 ]);
 let data = ref([
     {

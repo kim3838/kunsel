@@ -6,15 +6,22 @@
                     <td
                         v-for="header in headers" :key="header.value" v-text="header.text"
                         class="tw-font-semibold"
-                    ></td>
+                        :class="[cellAlignClass(header?.alignHeader)]">
+                    </td>
                 </tr>
             </thead>
             <tbody>
                 <tr v-for="row in rows" :key="row.id" >
                     <td
-                        v-for="header in headers" :key="row.id"
-                        class="tw-text-sm">
-                        <slot :name="`cell.${header.value}`" :cell="row">{{row[header.value]}}</slot>
+                        class="tw-text-sm"
+                        v-for="(header, index) in headers" :key="row.id"
+                        :class="[cellAlignClass(header?.alignData)]">
+                        <slot
+                            :name="`cell.${header.value}`"
+                            :cell="row"
+                            :index="index">
+                            {{row[header.value]}}
+                        </slot>
                     </td>
                 </tr>
             </tbody>
@@ -35,6 +42,15 @@ const props = defineProps({
         default: () => [],
     },
 });
+
+function cellAlignClass(align = null){
+    return {
+        [null]: 'tw-text-left',
+        'left': 'tw-text-left',
+        'center': 'tw-text-center',
+        'right': 'tw-text-right',
+    }[align]
+}
 </script>
 
 <style scoped>
