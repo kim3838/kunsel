@@ -4,7 +4,7 @@
             <thead>
                 <tr>
                     <td v-if="selection" style="padding:3px 0.45rem 3px 0.45rem;">
-                        <Checkbox :size="'md'" />
+                        <Checkbox :checked="headerCheckStatus()" @click="toggleCheck()" :size="'md'" />
                     </td>
                     <td
                         v-for="header in headers" :key="header.value"
@@ -14,9 +14,9 @@
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="row in rows" :key="row.id" >
+                <tr v-for="row in rows" :key="row.id">
                     <td v-if="selection" style="padding:3px 0.45rem 3px 0.45rem;">
-                        <Checkbox :size="'md'" />
+                        <Checkbox :size="'md'" :checked="isRowSelected(row)" @click="checkRow(row)"/>
                     </td>
                     <td
                         v-for="(header, index) in headers" :key="row.id"
@@ -35,7 +35,8 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue';
+import {computed, ref} from 'vue';
+import {forEach} from "lodash-es";
 
 const props = defineProps({
     headers: {
@@ -57,6 +58,8 @@ const props = defineProps({
     selection: Boolean
 });
 
+const emit = defineEmits(["update:modelValue"]);
+
 function cellAlignClass(align = null){
     return {
         [null]: 'tw-text-left',
@@ -65,6 +68,46 @@ function cellAlignClass(align = null){
         'right': 'tw-text-right',
     }[align];
 }
+
+function checkedAllCurrentSelection(): boolean {
+    return _difference(currentRowIds.value, props.modelValue).length <= 0;
+}
+
+function headerCheckStatus(): string{
+    if (checkedAllCurrentSelection()) return true;
+    return false;
+}
+
+function isRowSelected(row): boolean{
+    return props.modelValue.indexOf(row.id) >= 0;
+}
+
+function checkRow(row: any): void{
+    if(isRowSelected(row)){
+        _remove(props.modelValue, (value) => value == row.id);
+    } else {
+        props.modelValue.push(row.id);
+    }
+}
+
+function toggleCheck(){
+    if (checkedAllCurrentSelection()){
+        let clearedCurrentRows = _remove(props.modelValue, function(id) {
+            let inCurrentRowIds = currentRowIds.value.indexOf(id) >= 0;
+            return !inCurrentRowIds;
+        });
+
+        emit('update:modelValue', clearedCurrentRows);
+    } else {
+        let merged = _uniq(props.modelValue.concat(currentRowIds.value));
+
+        emit('update:modelValue', merged);
+    }
+}
+
+const currentRowIds = computed(() => {
+    return props.rows.map(row => row.id);
+});
 
 const headerFontClass = computed(() => {
     return {

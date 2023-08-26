@@ -44,7 +44,7 @@ definePageMeta({
     middleware: 'guest'
 });
 
-let selected = ref([]);
+let selected = ref([1001,1002]);
 let headers = ref([
     { text: 'ID', value: 'id'},
     { text: 'NAME', value: 'name'},
