@@ -86,18 +86,23 @@
 
                         <div class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-8">
                             <div class="tw-border tw-border-neutral-200">
-                                <label class="tw-flex tw-items-center">
-                                    <Checkbox v-model="remember1" :size="'sm'" :label="'SM Checkbox'" name="remember" />
+                                <label>
+                                    <Checkbox v-model="remember1" :label="' '" :size="'md'" name="remember" />
                                 </label>
                             </div>
                             <div class="tw-border tw-border-neutral-200">
-                                <label class="tw-flex tw-items-center">
-                                    <Checkbox v-model="remember2" :size="'md'" :label="'MD Checkbox'" name="remember" />
+                                <label>
+                                    <Checkbox v-model="remember2" :size="'sm'" :label="'SM Checkbox'" name="remember" />
                                 </label>
                             </div>
                             <div class="tw-border tw-border-neutral-200">
-                                <label class="tw-flex tw-items-center">
-                                    <Checkbox v-model="remember3" :size="'lg'" :label="'LG Checkbox'" name="remember" />
+                                <label>
+                                    <Checkbox v-model="remember3" :size="'md'" :label="'MD Checkbox'" name="remember" />
+                                </label>
+                            </div>
+                            <div class="tw-border tw-border-neutral-200">
+                                <label>
+                                    <Checkbox v-model="remember4" :size="'lg'" :label="'LG Checkbox'" name="remember" />
                                 </label>
                             </div>
                         </div>
@@ -252,6 +257,7 @@ let formStore = $formStore;
 let remember1 = ref(null);
 let remember2 = ref(null);
 let remember3 = ref(null);
+let remember4 = ref(null);
 let statusGroup = ref({
     selection: [
         {text : 'For Approval', value: 0},

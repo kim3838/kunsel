@@ -10,7 +10,7 @@
             v-model="proxyModel"
             :class="[heightClass, inputClass]"
             class="tw-form-checkbox tw-text-accent tw-border-light focus:tw-ring-transparent focus:tw-border-lighter focus:tw-ring">
-        <span :class="[fontClass]" class="tw-ml-1 tw-text-accent" v-text="label"></span>
+        <span v-if="label?.trim()" :class="[fontClass]" class="tw-ml-1 tw-text-accent" v-text="label"></span>
     </span>
 </template>
 
@@ -29,7 +29,7 @@ const props = defineProps({
     },
     label: {
         type: String,
-        default: '_',
+        default: null,
     },
     size: {
         default: null
