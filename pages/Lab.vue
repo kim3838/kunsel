@@ -7,10 +7,21 @@
                         <div class="moody-card-frame"></div>
                         <div class="tw-relative tw-border tw-border-light tw-border-b-0 tw-p-3 tw-flex tw-justify-center tw-items-center">
                             <span >
-                                DataTable
+                                Lab
                             </span>
                         </div>
                         <div class="tw-relative tw-border tw-border-light tw-p-7">
+                            <div class="tw-grid tw-gap-2 tw-grid-cols-1 lg:tw-grid-cols-3">
+                                <div class="tw-block tw-border tw-border-neutral-200">
+                                    <InputLabel :size="'md'" value="Static Multi Select" />
+                                    <MultiSelect :size="'md'" :options="category" :icon="'ic:sharp-hdr-on-select'"/>
+                                </div>
+                                <div class="tw-block tw-border tw-border-neutral-200">
+                                    <InputLabel :size="'md'" value="Static Single Select" />
+                                    <SingleSelect :size="'md'" :icon="'ic:sharp-rsvp'" :options="plan"/>
+                                </div>
+                            </div>
+                            <br>
                             <DataTable
                                 :headers="headers"
                                 :rows="data"
@@ -45,6 +56,46 @@ definePageMeta({
 });
 
 let selected = ref([1001,1002]);
+let category = reactive({
+    search: '',
+    data: [
+        {text : 'Charms', value: 0},
+        {text : 'Bracelets', value: 1},
+        {text : 'Brooches and Pins', value: 2},
+        {text : 'Necklaces', value: 3},
+        {text : 'Earrings', value: 4},
+        {text : 'Rings', value: 5},
+        {text : 'Polyester', value: 6},
+    ],
+    selection: [
+        {text : 'Charms', value: 0},
+        {text : 'Bracelets', value: 1},
+        {text : 'Brooches and Pins', value: 2},
+        {text : 'Necklaces', value: 3},
+        {text : 'Earrings', value: 4},
+        {text : 'Rings', value: 5},
+        {text : 'Polyester', value: 6},
+    ],
+    selected: []
+});
+let plan = reactive({
+    search: '',
+    data: [
+        {text : 'Free', value: 0},
+        {text : 'Individual', value: 1},
+        {text : 'Standard Corporate', value: 2},
+        {text : 'Custom Corporate', value: 3},
+        {text : 'Evaluator', value: 4}
+    ],
+    selection: [
+        {text : 'Free', value: 0},
+        {text : 'Individual', value: 1},
+        {text : 'Standard Corporate', value: 2},
+        {text : 'Custom Corporate', value: 3},
+        {text : 'Evaluator', value: 4}
+    ],
+    selected: null
+});
 let headers = ref([
     { text: 'ID', value: 'id'},
     { text: 'NAME', value: 'name'},

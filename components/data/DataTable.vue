@@ -74,8 +74,7 @@ function checkedAllCurrentSelection(): boolean {
 }
 
 function headerCheckStatus(): string{
-    if (checkedAllCurrentSelection()) return true;
-    return false;
+    return checkedAllCurrentSelection();
 }
 
 function isRowSelected(row): boolean{

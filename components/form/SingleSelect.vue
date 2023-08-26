@@ -92,7 +92,7 @@ const selectionClass = computed(() => {
     return {
         [null]: 'tw-pt-[8px] tw-text-md',
         'sm': 'tw-pt-[8px] tw-text-md',
-        'md': 'tw-pt-[9px] tw-text-sm',
+        'md': 'tw-pt-[8px] tw-text-sm',
         'lg': 'tw-pt-[8px] tw-text-md'
     }[props.size];
 });

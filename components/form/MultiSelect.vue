@@ -18,8 +18,9 @@
                 </div>
             </div>
 
-            <div v-show="active" :class="[active?'tw-w-10 tw-flex':'']" class="tw-justify-center tw-items-center">
-                <Icon @click="toggleSelection" class="tw-h-6 tw-w-6 tw-cursor-pointer" :name="headerIcon()"/>
+            <div v-show="active" :class="[active?'tw-pl-[0.5rem] tw-flex':'']" class="tw-justify-center tw-items-center">
+                <Icon v-if="false" @click="toggleSelection" class="tw-text-neutral-300 tw-h-6 tw-w-6 tw-cursor-pointer" :name="headerIcon()"/>
+                <Checkbox :checked="headerCheckStatus()" @click="toggleSelection" />
             </div>
             <div v-show="active" class="tw-w-full tw-relative">
                 <div class="tw-absolute tw-right-[2rem] tw-flex tw-items-center">
@@ -97,7 +98,7 @@ const selectionClass = computed(() => {
     return {
         [null]: 'tw-pt-[8px] tw-text-md',
         'sm': 'tw-pt-[8px] tw-text-md',
-        'md': 'tw-pt-[9px] tw-text-sm',
+        'md': 'tw-pt-[8px] tw-text-sm',
         'lg': 'tw-pt-[8px] tw-text-md'
     }[props.size];
 });
@@ -209,6 +210,10 @@ function headerIcon(): string{
     if (selectedAllCurrentSelection()) return 'ic:sharp-check-box';
     if (selectedSomeCurrentSelection()) return 'ic:sharp-indeterminate-check-box';
     return 'ic:sharp-check-box-outline-blank';
+}
+
+function headerCheckStatus(): string{
+    return selectedAllCurrentSelection();
 }
 
 function selectItem(item: any): void{
