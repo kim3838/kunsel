@@ -15,7 +15,8 @@
         "@types/node": "^18.16.19",
         "nuxt": "^3.6.3",
         "nuxt-icon": "^0.4.2",
-        "nuxt-lodash": "^2.5.0"
+        "nuxt-lodash": "^2.5.0",
+        "sass": "^1.66.1"
     },
     "dependencies": {
         "@pinia/nuxt": "^0.4.11",

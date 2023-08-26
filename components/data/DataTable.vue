@@ -3,6 +3,9 @@
         <table class="tw-border-collapse">
             <thead>
                 <tr>
+                    <td v-if="selection">
+                        <Checkbox :size="'md'" />
+                    </td>
                     <td
                         v-for="header in headers" :key="header.value" v-text="header.text"
                         class="tw-font-semibold"
@@ -12,8 +15,11 @@
             </thead>
             <tbody>
                 <tr v-for="row in rows" :key="row.id" >
+                    <td v-if="selection">
+                        <Checkbox :size="'md'" />
+                    </td>
                     <td
-                        class="tw-text-sm"
+                        class="tw-text-base"
                         v-for="(header, index) in headers" :key="row.id"
                         :class="[cellAlignClass(header?.alignData)]">
                         <slot
@@ -41,6 +47,11 @@ const props = defineProps({
         type: Array,
         default: () => [],
     },
+    modelValue: {
+        type: Array,
+        default: () => [],
+    },
+    selection: Boolean
 });
 
 function cellAlignClass(align = null){
@@ -53,7 +64,7 @@ function cellAlignClass(align = null){
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 
 #table-division{
     overflow-x: auto;
@@ -82,38 +93,36 @@ function cellAlignClass(align = null){
     background: rgba(0, 0, 0, 0.22);
 }
 
+$tableBorder: #b4b4b4;
+$cellBorder: rgba(212, 212, 212, 1);
+
 table{
     white-space: nowrap;
+    border: 1px solid $tableBorder;
 }
 
-thead{
-    border-bottom: 0;
-    border-left: 1px solid rgba(212, 212, 212, 1);
-    border-right: 1px solid rgba(212, 212, 212, 1);
-    border-top: 1px solid rgba(212, 212, 212, 1);
-}
-
-thead tr td{
+thead tr td:not(:last-child){
     padding: 3px;
     border-bottom: 0;
     border-left: 0;
-    border-right: 1px solid rgba(212, 212, 212, 1);
-    border-top: 1px solid rgba(212, 212, 212, 1);
+    border-right: 1px solid $cellBorder;
+    border-top: 0;
 }
 
-tbody{
-    border-bottom: 1px solid rgba(212, 212, 212, 1);
-    border-left: 1px solid rgba(212, 212, 212, 1);
+tbody tr td:not(:last-child){
+    padding: 3px;
+    border-bottom: 0;
+    border-left: 0;
+    border-right: 1px solid $cellBorder;
+    border-top: 1px solid $cellBorder;
+}
+
+tbody tr td:last-child{
+    padding: 3px;
+    border-bottom: 0;
+    border-left: 0;
     border-right: 0;
-    border-top: 1px solid rgba(212, 212, 212, 1);
-}
-
-tbody tr td{
-    padding: 3px;
-    border-bottom: 0;
-    border-left: 0;
-    border-right: 1px solid rgba(212, 212, 212, 1);
-    border-top: 1px solid rgba(212, 212, 212, 1);
+    border-top: 1px solid $cellBorder;
 }
 
 tbody tr:nth-of-type(2n+1){

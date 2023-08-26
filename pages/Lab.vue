@@ -13,7 +13,9 @@
                         <div class="tw-relative tw-border tw-border-light tw-p-7">
                             <DataTable
                                 :headers="headers"
-                                :rows="data">
+                                :rows="data"
+                                v-model="selected"
+                                selection>
                                 <template v-slot:cell.name="{index, cell}">
                                     <span>{{`Name: [${index}] ${cell.name}`}}</span>
                                 </template>
@@ -41,6 +43,7 @@ definePageMeta({
     middleware: 'guest'
 });
 
+let selected = ref([]);
 let headers = ref([
     { text: 'ID', value: 'id'},
     { text: 'NAME', value: 'name'},
