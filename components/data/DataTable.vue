@@ -8,12 +8,17 @@
                     </td>
                     <td
                         v-for="header in headers" :key="header.value"
-                        :class="[headerFontClass, cellAlignClass(header?.alignHeader)]">
+                        :class="[
+                            headerFontClass,
+                            cellAlignClass(header?.alignHeader),
+                            header?.width ? `tw-min-w-[${header.width}]` : ''
+                        ]">
                         <span>{{header.text}}</span>
                     </td>
                 </tr>
             </thead>
             <tbody>
+                <!-- Table cell height: sm = 25px, md = 29px, lg = 33px, xl = 37px -->
                 <tr v-for="row in rows" :key="row.id">
                     <td v-if="selection" style="padding:3px 0.45rem 3px 0.45rem;">
                         <Checkbox :size="'md'" :checked="isRowSelected(row)" @click="checkRow(row)"/>
@@ -23,9 +28,10 @@
                         :class="[bodyFontClass, cellAlignClass(header?.alignData)]">
                         <slot
                             :name="`cell.${header.value}`"
+                            :slot="{buttonSize: buttonSize, inputSize: inputSize}"
                             :cell="row"
                             :index="index">
-                            {{row[header.value]}}
+                            <div class="tw-p-[3px]">{{row[header.value]}}</div>
                         </slot>
                     </td>
                 </tr>
@@ -36,7 +42,6 @@
 
 <script setup lang="ts">
 import {computed, ref} from 'vue';
-import {forEach} from "lodash-es";
 
 const props = defineProps({
     headers: {
@@ -113,6 +118,7 @@ const headerFontClass = computed(() => {
         'sm': 'tw-font-semibold tw-text-sm',
         'md': 'tw-font-semibold tw-text-base',
         'lg': 'tw-font-semibold tw-text-lg',
+        'xl': 'tw-font-semibold tw-text-xl',
     }[props.size];
 });
 
@@ -121,7 +127,28 @@ const bodyFontClass = computed(() => {
         'sm': 'tw-text-xs',
         'md': 'tw-text-sm',
         'lg': 'tw-text-base',
+        'xl': 'tw-text-lg',
     }[props.size];
+});
+
+const buttonSize = computed(() => {
+    return {
+        [null]: '',
+        'sm': '2xs',
+        'md': 'xs',
+        'lg': 'sm',
+        'xl': 'md',
+    }[props.size]
+});
+
+const inputSize = computed(() => {
+    return {
+        [null]: '',
+        'sm': '2xs',
+        'md': 'xs',
+        'lg': 'sm',
+        'xl': 'md',
+    }[props.size]
 });
 
 </script>
@@ -172,7 +199,6 @@ thead tr td:not(:last-child){
 }
 
 tbody tr td:not(:last-child){
-    padding: 4px 3px 3px 3px;
     border-bottom: 0;
     border-left: 0;
     border-right: 1px solid $cellBorder;
@@ -180,7 +206,6 @@ tbody tr td:not(:last-child){
 }
 
 tbody tr td:last-child{
-    padding: 3px;
     border-bottom: 0;
     border-left: 0;
     border-right: 0;
