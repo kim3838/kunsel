@@ -2,7 +2,7 @@
     <button
         ref="button"
         :disabled="disabled"
-        :class="[heightClass, spacingClass, fontClass]"
+        :class="[heightClass, spacingClass]"
         :type="type"
         class="
             tw-font-[Barlow]
@@ -31,7 +31,11 @@
                 tw-from-dark/90
                 tw-via-transparent
                 tw-to-dark/50"></div>
-        <slot></slot>
+        <slot :fontClass="fontClass">
+            <span v-if="label?.trim()" class="tw-flex tw-items-center" :class="[fontClass]">
+                <Icon v-if="icon?.trim()" :class="[iconClass]" :name="icon"></Icon>{{label}}
+            </span>
+        </slot>
     </button>
 </template>
 
@@ -48,13 +52,22 @@
             disabled: {
                 type: Boolean,
                 default: false
-            }
+            },
+            icon: {
+                type: String,
+                default: null,
+            },
+            label: {
+                type: String,
+                default: null,
+            },
         },
 
         computed: {
             heightClass() {
                 return {
                     [null]: 'tw-h-9',
+                    '2xs': 'tw-h-4',
                     'xs': 'tw-h-5',
                     'sm': 'tw-h-7',
                     'md': 'tw-h-8',
@@ -66,6 +79,7 @@
             spacingClass() {
                 return {
                     [null]: 'tw-px-2',
+                    '2xs': 'tw-px-1',
                     'xs': 'tw-px-1.5',
                     'sm': 'tw-px-1.5',
                     'md': 'tw-px-2',
@@ -74,14 +88,27 @@
                 }[this.size]
             },
 
+            iconClass(){
+                return {
+                    [null]: '',
+                    '2xs': 'tw-h-[0.875rem] tw-w-[0.875rem]',
+                    'xs': 'tw-h-[1rem] tw-w-[1rem]',
+                    'sm': 'tw-h-[1.2rem] tw-w-[1.2rem]',
+                    'md': 'tw-h-[1.2rem] tw-w-[1.2rem] tw-mt-[0.2rem]',
+                    'lg': 'tw-h-[1.875rem] tw-w-[1.875rem] tw-mt-[0.1rem]',
+                    'xl': 'tw-h-[2.25rem] tw-w-[2.25rem] tw-mt-[0.1rem]',
+                }[this.size]
+            },
+
             fontClass(){
                 return {
-                    [null]: 'tw-text-base tw-tracking-tighter',
-                    'xs': 'tw-text-xs',
-                    'sm': 'tw-text-sm',
-                    'md': 'tw-text-base tw-tracking-tighter',
-                    'lg': 'tw-text-xl',
-                    'xl': 'tw-text-3xl',
+                    [null]: 'tw-text-base tw-font-semibold tw-tracking-tight',
+                    '2xs': 'tw-text-xs tw-font-semibold',
+                    'xs': 'tw-text-xs tw-font-semibold',
+                    'sm': 'tw-text-sm tw-font-semibold',
+                    'md': 'tw-text-base tw-font-semibold tw-tracking-tight',
+                    'lg': 'tw-text-2xl tw-font-black',
+                    'xl': 'tw-text-3xl tw-font-black',
                 }[this.size]
             }
         },

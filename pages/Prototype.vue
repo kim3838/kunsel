@@ -65,22 +65,28 @@
 
                         <div class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-8">
                             <div class="tw-flex tw-items-start tw-justify-start tw-block tw-border tw-border-neutral-200">
-                                <Button :size="'xs'"><span class="tw-font-semibold">XS Button</span></Button>
+                                <Button :size="'2xs'" :icon="'ic:sharp-label-important'" :label="'XXS Button'"></Button>
                             </div>
                             <div class="tw-flex tw-items-start tw-justify-start tw-block tw-border tw-border-neutral-200">
-                                <Button :size="'sm'"><span class="tw-font-semibold">SM Authenticate</span></Button>
+                                <Button :size="'xs'" :icon="'ic:sharp-label-important'" :label="'XS Button'"></Button>
                             </div>
                             <div class="tw-flex tw-items-start tw-justify-start tw-block tw-border tw-border-neutral-200">
-                                <Button :size="'md'"><span class="tw-font-semibold">MD Authenticate</span></Button>
+                                <Button :size="'sm'" :icon="'ic:sharp-label-important'" :label="'SM Authenticate'"></Button>
                             </div>
                             <div class="tw-flex tw-items-start tw-justify-start tw-block tw-border tw-border-neutral-200">
-                                <Button :disabled="true"><span class="tw-font-semibold">DEFAULT Disabled</span></Button>
+                                <Button :size="'md'" :label="'MD Authenticate'"></Button>
+                            </div>
+                            <div class="tw-flex tw-items-start tw-justify-start tw-block tw-border tw-border-neutral-200">
+                                <Button :size="'md'" :icon="'ic:sharp-label-important'" :label="'MD Authenticate'"></Button>
+                            </div>
+                            <div class="tw-flex tw-items-start tw-justify-start tw-block tw-border tw-border-neutral-200">
+                                <Button :disabled="true" :label="'DEFAULT Disabled'"></Button>
                             </div>
                             <div class="tw-flex tw-items-start tw-justify-start tw-block tw-w-full tw-border tw-border-neutral-200">
-                                <Button :size="'lg'"><span class="tw-font-bold">LG SKIP</span></Button>
+                                <Button :size="'lg'" :icon="'ic:sharp-label-important'" :label="'LG SKIP'"></Button>
                             </div>
                             <div class="tw-col-span-2 tw-flex tw-items-start tw-justify-start tw-block tw-w-full tw-border tw-border-neutral-200">
-                                <Button :size="'xl'"><span class="tw-font-bold">XL Authenticate</span></Button>
+                                <Button :size="'xl'" :icon="'ic:sharp-label-important'" :label="'XL Authenticate'"></Button>
                             </div>
                         </div>
 
