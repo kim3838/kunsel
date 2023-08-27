@@ -50,7 +50,8 @@ defineEmits(['update:modelValue']);
 const heightClass = computed(() => {
     return {
         [null]: 'tw-h-9',
-        'xs': 'tw-h-5',
+        '2xs': 'tw-h-5',
+        'xs': 'tw-h-6',
         'sm': 'tw-h-7',
         'md': 'tw-h-8',
         'lg': 'tw-h-11',
@@ -63,6 +64,7 @@ const heightClass = computed(() => {
 const fontClass = computed(() => {
     return {
         [null]: 'tw-text-base',
+        '2xs': 'tw-text-xs',
         'xs': 'tw-text-xs',
         'sm': 'tw-text-sm',
         'md': 'tw-text-sm',

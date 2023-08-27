@@ -65,28 +65,28 @@
 
                         <div class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-8">
                             <div class="tw-flex tw-items-start tw-justify-start tw-block tw-border tw-border-neutral-200">
-                                <Button :size="'2xs'" :icon="'ic:sharp-label-important'" :label="'XXS Button'"></Button>
+                                <Button :size="'2xs'" :icon="'ic:sharp-send-to-mobile'" :label="'XXS Button'"></Button>
                             </div>
                             <div class="tw-flex tw-items-start tw-justify-start tw-block tw-border tw-border-neutral-200">
-                                <Button :size="'xs'" :icon="'ic:sharp-label-important'" :label="'XS Button'"></Button>
+                                <Button :size="'xs'" :icon="'ic:sharp-send-to-mobile'" :label="'XS Button'"></Button>
                             </div>
                             <div class="tw-flex tw-items-start tw-justify-start tw-block tw-border tw-border-neutral-200">
-                                <Button :size="'sm'" :icon="'ic:sharp-label-important'" :label="'SM Authenticate'"></Button>
+                                <Button :size="'sm'" :icon="'ic:sharp-send-to-mobile'" :label="'SM Authenticate'"></Button>
                             </div>
                             <div class="tw-flex tw-items-start tw-justify-start tw-block tw-border tw-border-neutral-200">
                                 <Button :size="'md'" :label="'MD Authenticate'"></Button>
                             </div>
                             <div class="tw-flex tw-items-start tw-justify-start tw-block tw-border tw-border-neutral-200">
-                                <Button :size="'md'" :icon="'ic:sharp-label-important'" :label="'MD Authenticate'"></Button>
+                                <Button :size="'md'" :icon="'ic:sharp-send-to-mobile'" :label="'MD Authenticate'"></Button>
                             </div>
                             <div class="tw-flex tw-items-start tw-justify-start tw-block tw-border tw-border-neutral-200">
                                 <Button :disabled="true" :label="'DEFAULT Disabled'"></Button>
                             </div>
                             <div class="tw-flex tw-items-start tw-justify-start tw-block tw-w-full tw-border tw-border-neutral-200">
-                                <Button :size="'lg'" :icon="'ic:sharp-label-important'" :label="'LG SKIP'"></Button>
+                                <Button :size="'lg'" :icon="'ic:sharp-send-to-mobile'" :label="'LG SKIP'"></Button>
                             </div>
                             <div class="tw-col-span-2 tw-flex tw-items-start tw-justify-start tw-block tw-w-full tw-border tw-border-neutral-200">
-                                <Button :size="'xl'" :icon="'ic:sharp-label-important'" :label="'XL Authenticate'"></Button>
+                                <Button :size="'xl'" :icon="'ic:sharp-send-to-mobile'" :label="'XL Authenticate'"></Button>
                             </div>
                         </div>
 
@@ -162,24 +162,28 @@
 
                         <div class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-8">
                             <div class="tw-block tw-border tw-border-neutral-200">
-                                <InputLabel :size="'xs'" for="form_input_1" value="XS Label" />
-                                <Input :size="'xs'" class="tw-w-full" placeholder="Enter username" id="form_input_1" type="text" autocomplete="off" />
+                                <InputLabel :size="'2xs'" for="form_input_1" value="XXS Label" />
+                                <Input :size="'2xs'" class="tw-w-full" placeholder="Enter username" id="form_input_1" type="text" autocomplete="off" />
                             </div>
                             <div class="tw-block tw-border tw-border-neutral-200">
-                                <InputLabel :size="'sm'" for="form_input_2" value="SM Label" />
-                                <Input :size="'sm'" class="tw-w-full" placeholder="Enter username" id="form_input_2" type="text" autocomplete="off" />
+                                <InputLabel :size="'xs'" for="form_input_2" value="XS Label" />
+                                <Input :size="'xs'" class="tw-w-full" placeholder="Enter username" id="form_input_2" type="text" autocomplete="off" />
                             </div>
                             <div class="tw-block tw-border tw-border-neutral-200">
-                                <InputLabel :size="'md'" for="form_input_3" value="MD Label" />
-                                <Input :size="'md'" class="tw-w-full" placeholder="Enter username" id="form_input_3" type="text" autocomplete="off" />
+                                <InputLabel :size="'sm'" for="form_input_3" value="SM Label" />
+                                <Input :size="'sm'" class="tw-w-full" placeholder="Enter username" id="form_input_3" type="text" autocomplete="off" />
                             </div>
                             <div class="tw-block tw-border tw-border-neutral-200">
-                                <InputLabel :size="'lg'" for="form_input_4" value="LG Label" />
-                                <Input :size="'lg'" class="tw-w-full" placeholder="Enter username" id="form_input_4" type="text" autocomplete="off" />
+                                <InputLabel :size="'md'" for="form_input_4" value="MD Label" />
+                                <Input :size="'md'" class="tw-w-full" placeholder="Enter username" id="form_input_4" type="text" autocomplete="off" />
+                            </div>
+                            <div class="tw-block tw-border tw-border-neutral-200">
+                                <InputLabel :size="'lg'" for="form_input_5" value="LG Label" />
+                                <Input :size="'lg'" class="tw-w-full" placeholder="Enter username" id="form_input_5" type="text" autocomplete="off" />
                             </div>
                             <div class="tw-col-span-2 tw-block tw-border tw-border-neutral-200">
-                                <InputLabel :size="'xl'" for="form_input_5" value="XL Label" />
-                                <Input :size="'xl'" class="tw-w-full" placeholder="Enter username" id="form_input_5" type="text" autocomplete="off" />
+                                <InputLabel :size="'xl'" for="form_input_6" value="XL Label" />
+                                <Input :size="'xl'" class="tw-w-full" placeholder="Enter username" id="form_input_6" type="text" autocomplete="off" />
                             </div>
                         </div>
 

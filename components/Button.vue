@@ -66,9 +66,9 @@
         computed: {
             heightClass() {
                 return {
-                    [null]: 'tw-h-9',
-                    '2xs': 'tw-h-4',
-                    'xs': 'tw-h-5',
+                    [null]: 'tw-h-8',
+                    '2xs': 'tw-h-5',
+                    'xs': 'tw-h-6',
                     'sm': 'tw-h-7',
                     'md': 'tw-h-8',
                     'lg': 'tw-h-10',
@@ -93,7 +93,7 @@
                     [null]: '',
                     '2xs': 'tw-h-[0.875rem] tw-w-[0.875rem]',
                     'xs': 'tw-h-[1rem] tw-w-[1rem]',
-                    'sm': 'tw-h-[1.2rem] tw-w-[1.2rem]',
+                    'sm': 'tw-h-[1rem] tw-w-[1rem]',
                     'md': 'tw-h-[1.2rem] tw-w-[1.2rem] tw-mt-[0.2rem]',
                     'lg': 'tw-h-[1.875rem] tw-w-[1.875rem] tw-mt-[0.1rem]',
                     'xl': 'tw-h-[2.25rem] tw-w-[2.25rem] tw-mt-[0.1rem]',

@@ -21,6 +21,7 @@
             fontClass(){
                 return {
                     [null]: 'tw-text-base tw-font-medium tw-leading-4',
+                    '2xs': 'tw-text-xs tw-font-medium tw-leading-3',
                     'xs': 'tw-text-xs tw-font-medium tw-leading-3',
                     'sm': 'tw-text-sm tw-font-medium tw-leading-3',
                     'md': 'tw-text-base tw-font-medium tw-leading-4',
