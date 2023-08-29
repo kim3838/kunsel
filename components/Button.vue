@@ -106,7 +106,7 @@
                     '2xs': 'tw-text-xs tw-font-semibold',
                     'xs': 'tw-text-xs tw-font-semibold',
                     'sm': 'tw-text-sm tw-font-semibold',
-                    'md': 'tw-text-base tw-font-semibold tw-tracking-tight',
+                    'md': 'tw-text-base tw-font-semibold tw-tracking-tight tw-pb-[0.1rem]',
                     'lg': 'tw-text-2xl tw-font-black',
                     'xl': 'tw-text-3xl tw-font-black',
                 }[this.size]

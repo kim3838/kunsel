@@ -11,7 +11,7 @@
                             </span>
                         </div>
                         <div class="tw-relative tw-border tw-border-light tw-p-7">
-                            <div class="tw-grid tw-gap-2 tw-grid-cols-4">
+                            <div class="tw-grid tw-gap-2 tw-grid-cols-4 tw-mb-2">
                                 <div class="tw-block">
                                     <InputLabel :size="'md'" value="Static Multi Select" />
                                     <MultiSelect :size="'md'" :options="category" :icon="'ic:sharp-hdr-on-select'"/>
@@ -21,20 +21,19 @@
                                     <SingleSelect :size="'md'" :icon="'ic:sharp-rsvp'" :options="plan"/>
                                 </div>
                             </div>
-                            <br>
                             <DataTable
                                 :headers="headers"
-                                :size="'md'"
+                                :size="'xl'"
                                 :rows="data"
                                 v-model="selected"
                                 selection>
                                 <template v-slot:cell.tools="{cell, slot}">
                                     <div class="tw-h-full tw-w-full tw-flex tw-items-center">
-                                        <Button v-if="true" :size="slot.buttonSize" :icon="'ic:sharp-send-to-mobile'" :label="'VIEW'"></Button>
+                                        <Button :size="slot.buttonSize" :icon="'ic:sharp-send-to-mobile'" :label="'Slot Button'"></Button>
                                     </div>
                                 </template>
                                 <template v-slot:cell.input="{cell, slot}">
-                                    <Input v-if="true" :size="slot.inputSize" class="tw-w-full" placeholder="Enter Amount" type="text" autocomplete="off" />
+                                    <Input :size="slot.inputSize" class="tw-w-full" placeholder="Enter Amount" type="text" autocomplete="off" />
                                 </template>
                                 <template v-slot:cell.name="{index, cell}">
                                     <span>{{`[${index}] ${cell.name}`}}</span>
@@ -104,9 +103,9 @@ let plan = reactive({
     ],
     selected: null
 });
-let headers = ref([
-    { text: 'TOOLS', value: 'tools'},
-    { text: 'INPUT', value: 'input', width: '120px'},
+let headers = reactive([
+    { text: 'TOOLS', value: 'tools', width: '100px'},
+    { text: 'INPUT', value: 'input', width: '220px'},
     { text: 'ID', value: 'id'},
     { text: 'NAME', value: 'name'},
     { text: 'CODE', alignHeader: 'center', value: 'code'},
