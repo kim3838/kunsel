@@ -7,11 +7,12 @@
                         <Checkbox :checked="headerCheckStatus()" @click="toggleCheck()" :size="'md'" />
                     </td>
                     <td
-                        v-for="header in headers" :key="header.value"
+                        v-for="header in headers"
+                        :key="header.value"
+                        :style="{'min-width': header.width}"
                         :class="[
                             headerFontClass,
                             cellAlignClass(header?.alignHeader),
-                            header?.width ? `tw-min-w-[${header.width}]` : ''
                         ]">
                         <span>{{header.text}}</span>
                     </td>

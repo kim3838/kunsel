@@ -23,7 +23,7 @@
                             </div>
                             <DataTable
                                 :headers="headers"
-                                :size="'xl'"
+                                :size="'md'"
                                 :rows="data"
                                 v-model="selected"
                                 selection>
@@ -104,8 +104,8 @@ let plan = reactive({
     selected: null
 });
 let headers = reactive([
-    { text: 'TOOLS', value: 'tools', width: '100px'},
-    { text: 'INPUT', value: 'input', width: '220px'},
+    { text: 'TOOLS', value: 'tools'},
+    { text: 'INPUT', value: 'input', width: '120px'},
     { text: 'ID', value: 'id'},
     { text: 'NAME', value: 'name'},
     { text: 'CODE', alignHeader: 'center', value: 'code'},
