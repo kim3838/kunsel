@@ -2,9 +2,9 @@
 
 export default defineNuxtConfig({
     // @ts-ignore
-    alias: {
-        pinia: "/node_modules/@pinia/nuxt/node_modules/pinia/dist/pinia.mjs"
-    },
+    // alias: {
+    //     pinia: "/node_modules/@pinia/nuxt/node_modules/pinia/dist/pinia.mjs"
+    // },
 
     app: {
         baseURL: "/",
