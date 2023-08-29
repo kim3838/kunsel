@@ -71,7 +71,7 @@
                     'xs': 'tw-h-6',
                     'sm': 'tw-h-7',
                     'md': 'tw-h-8',
-                    'lg': 'tw-h-10',
+                    'lg': 'tw-h-11',
                     'xl': 'tw-h-14',
                 }[this.size]
             },

@@ -24,8 +24,8 @@
                             <br>
                             <DataTable
                                 :headers="headers"
-                                :rows="data"
                                 :size="'md'"
+                                :rows="data"
                                 v-model="selected"
                                 selection>
                                 <template v-slot:cell.tools="{cell, slot}">
