@@ -16,14 +16,7 @@
                                 <InputLabel :size="'md'" value="Static Single Select" />
                                 <SingleSelect :size="'md'" :icon="'ic:sharp-rsvp'" :options="plan"/>
                             </div>
-                            <div class="tw-block tw-border tw-border-neutral-200">
-                                <InputLabel :size="'md'" for="form_input_3" value="MD Label" />
-                                <Input :size="'md'" class="tw-w-full" placeholder="Enter username" id="form_input_3" type="text" autocomplete="off" />
-                            </div>
-                        </div>
 
-
-                        <div class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-8">
                             <div class="tw-block tw-border tw-border-neutral-200">
                                 <InputLabel :size="'md'" for="date" value="Date" />
                                 <Input
@@ -63,6 +56,60 @@
                             </div>
                         </div>
 
+                        <div class="tw-grid tw-gap-2 tw-grid-cols-1 lg:tw-grid-cols-2 xl:tw-grid-cols-3">
+                            <div class="tw-block tw-p-2 tw-border tw-border-neutral-200">
+                                <InputLabel class="tw-mb-2" :size="'md'" value="SM Datatable" />
+                                <DataTable
+                                    :headers="headers_1"
+                                    :size="'sm'"
+                                    :rows="data_1">
+                                    <template v-slot:cell.name="{index, cell}">
+                                        <span>{{`[${index}] ${cell.name}`}}</span>
+                                    </template>
+                                </DataTable>
+                            </div>
+                            <div class="tw-block tw-p-2 tw-border tw-border-neutral-200">
+                                <InputLabel class="tw-mb-2" :size="'md'" value="MD Datatable with Selection" />
+                                <DataTable
+                                    :headers="headers_2"
+                                    :size="'md'"
+                                    :rows="data_1"
+                                    v-model="selected_1"
+                                    selection>
+                                    <template v-slot:cell.name="{index, cell}">
+                                        <span>{{`[${index}] ${cell.name}`}}</span>
+                                    </template>
+                                    <template v-slot:cell.code="{index, cell}">
+                                        <span class="tw-font-mono">{{cell.code}}</span>
+                                    </template>
+                                </DataTable>
+                            </div>
+                            <div class="tw-block tw-p-2 tw-border tw-border-neutral-200">
+                                <InputLabel class="tw-mb-2" :size="'md'" value="XL Datatable with Selection and Form Foundations" />
+                                <DataTable
+                                    :headers="headers_3"
+                                    :size="'xl'"
+                                    :rows="data_1"
+                                    v-model="selected_2"
+                                    selection>
+                                    <template v-slot:cell.tools="{cell, slot}">
+                                        <div class="tw-h-full tw-w-full tw-flex tw-items-center">
+                                            <Button :size="slot.buttonSize" :icon="'ic:sharp-all-inbox'" :label="'Slot Button'"></Button>
+                                        </div>
+                                    </template>
+                                    <template v-slot:cell.input="{cell, slot}">
+                                        <Input :size="slot.inputSize" class="tw-w-full" placeholder="Enter Amount" type="text" autocomplete="off" />
+                                    </template>
+                                    <template v-slot:cell.name="{index, cell}">
+                                        <span>{{`[${index}] ${cell.name}`}}</span>
+                                    </template>
+                                    <template v-slot:cell.code="{index, cell}">
+                                        <span class="tw-font-mono">{{cell.code}}</span>
+                                    </template>
+                                </DataTable>
+                            </div>
+                        </div>
+
                         <div class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-8">
                             <div class="tw-flex tw-items-start tw-justify-start tw-block tw-border tw-border-neutral-200">
                                 <Button :size="'2xs'" :icon="'ic:sharp-send-to-mobile'" :label="'XXS Button'"></Button>
@@ -72,9 +119,6 @@
                             </div>
                             <div class="tw-flex tw-items-start tw-justify-start tw-block tw-border tw-border-neutral-200">
                                 <Button :size="'sm'" :icon="'ic:sharp-send-to-mobile'" :label="'SM Authenticate'"></Button>
-                            </div>
-                            <div class="tw-flex tw-items-start tw-justify-start tw-block tw-border tw-border-neutral-200">
-                                <Button :size="'md'" :label="'MD Authenticate'"></Button>
                             </div>
                             <div class="tw-flex tw-items-start tw-justify-start tw-block tw-border tw-border-neutral-200">
                                 <Button :size="'md'" :icon="'ic:sharp-send-to-mobile'" :label="'MD Authenticate'"></Button>
@@ -307,7 +351,6 @@ let categoryGroup = ref({
     ],
     selected: 3
 });
-
 let category = reactive({
     search: '',
     data: [
@@ -330,7 +373,6 @@ let category = reactive({
     ],
     selected: []
 });
-
 let plan = reactive({
     search: '',
     data: [
@@ -349,6 +391,153 @@ let plan = reactive({
     ],
     selected: null
 });
+
+let selected_1 = ref([1001,1002]);
+let selected_2 = ref([1001,1002]);
+let headers_1 = reactive([
+    { text: 'ID', value: 'id'},
+    { text: 'NAME', value: 'name'},
+    { text: 'CATEGORY', alignData: 'right', value: 'category'},
+    { text: 'DATE ADDED', alignData: 'right', value: 'datetime_added'},
+    { text: 'DATE CREATED', alignData: 'right', value: 'created_at'},
+    { text: 'DATE UPDATED', alignData: 'right', value: 'updated_at'},
+]);
+let headers_2 = reactive([
+    { text: 'ID', value: 'id'},
+    { text: 'NAME', value: 'name'},
+    { text: 'CODE', alignHeader: 'center', value: 'code'},
+    { text: 'TYPE', value: 'type'},
+    { text: 'CATEGORY', alignData: 'right', value: 'category'},
+    { text: 'CAPACITY', alignData: 'left', value: 'capacity'},
+    { text: 'DATE ADDED', alignData: 'right', value: 'datetime_added'},
+    { text: 'DATE CREATED', alignData: 'right', value: 'created_at'},
+    { text: 'DATE UPDATED', alignData: 'right', value: 'updated_at'},
+]);
+let headers_3 = reactive([
+    { text: 'TOOLS', value: 'tools'},
+    { text: 'INPUT', value: 'input', width: '120px'},
+    { text: 'ID', value: 'id'},
+    { text: 'NAME', value: 'name'},
+    { text: 'CODE', alignHeader: 'center', value: 'code'},
+    { text: 'TYPE', value: 'type'},
+    { text: 'CATEGORY', alignData: 'right', value: 'category'},
+    { text: 'CAPACITY', alignData: 'left', value: 'capacity'},
+    { text: 'DATE ADDED', alignData: 'right', value: 'datetime_added'},
+    { text: 'DATE CREATED', alignData: 'right', value: 'created_at'},
+    { text: 'DATE UPDATED', alignData: 'right', value: 'updated_at'},
+]);
+let data_1 = ref([
+    {
+        "id": 45,
+        "name": "GSX 8ZJC5 37V",
+        "code": "PRT0451171313",
+        "type": 1,
+        "category": null,
+        "capacity": 33,
+        "datetime_added": "2023-08-22 17:44:03",
+        "created_at": "2023-08-22 17:44:03",
+        "updated_at": "2023-08-22 17:44:03"
+    },
+    {
+        "id": 67,
+        "name": "CP1 HN3 DX4K2",
+        "code": "PRT9284750057",
+        "type": 1,
+        "category": 114,
+        "capacity": 23,
+        "datetime_added": "2023-08-22 17:44:03",
+        "created_at": "2023-08-22 17:44:03",
+        "updated_at": "2023-08-22 17:44:03"
+    },
+    {
+        "id": 88,
+        "name": "XIM 9QY QY125",
+        "code": "PRT9249091497",
+        "type": 5,
+        "category": null,
+        "capacity": 22,
+        "datetime_added": "2023-08-22 17:44:03",
+        "created_at": "2023-08-22 17:44:03",
+        "updated_at": "2023-08-22 17:44:03"
+    },
+    {
+        "id": 246,
+        "name": "IB8 EAW DML6X",
+        "code": "PRT3041670860",
+        "type": 4,
+        "category": 89,
+        "capacity": 26,
+        "datetime_added": "2023-08-22 17:44:03",
+        "created_at": "2023-08-22 17:44:03",
+        "updated_at": "2023-08-22 17:44:03"
+    },
+    {
+        "id": 273,
+        "name": "72WKAM 11B T5",
+        "code": "PRT9023387510",
+        "type": 1,
+        "category": null,
+        "capacity": 3,
+        "datetime_added": "2023-08-22 17:44:03",
+        "created_at": "2023-08-22 17:44:03",
+        "updated_at": "2023-08-22 17:44:03"
+    },
+    {
+        "id": 384,
+        "name": "PM2 V8W ZCAGR",
+        "code": "PRT0920672517",
+        "type": 5,
+        "category": null,
+        "capacity": 8,
+        "datetime_added": "2023-08-22 17:44:03",
+        "created_at": "2023-08-22 17:44:03",
+        "updated_at": "2023-08-22 17:44:03"
+    },
+    {
+        "id": 418,
+        "name": "VFSNL4 FL2 7C",
+        "code": "PRT1915550179",
+        "type": 3,
+        "category": null,
+        "capacity": 19,
+        "datetime_added": "2023-08-22 17:44:03",
+        "created_at": "2023-08-22 17:44:03",
+        "updated_at": "2023-08-22 17:44:03"
+    },
+    {
+        "id": 478,
+        "name": "RC0 868Q6 GZI",
+        "code": "PRT4902978961",
+        "type": 2,
+        "category": 68,
+        "capacity": 15,
+        "datetime_added": "2023-08-22 17:44:03",
+        "created_at": "2023-08-22 17:44:03",
+        "updated_at": "2023-08-22 17:44:03"
+    },
+    {
+        "id": 552,
+        "name": "9Q8 YEESZ DKF",
+        "code": "PRT3932126979",
+        "type": 1,
+        "category": 4,
+        "capacity": 15,
+        "datetime_added": "2023-08-22 17:44:03",
+        "created_at": "2023-08-22 17:44:03",
+        "updated_at": "2023-08-22 17:44:03"
+    },
+    {
+        "id": 702,
+        "name": "45EE9R TES VK",
+        "code": "PRT2563775044",
+        "type": 5,
+        "category": 79,
+        "capacity": 35,
+        "datetime_added": "2023-08-22 17:44:03",
+        "created_at": "2023-08-22 17:44:03",
+        "updated_at": "2023-08-22 17:44:03"
+    }
+]);
 
 dateTimePicker([
     {
