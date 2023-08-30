@@ -3,13 +3,14 @@
         <table class="tw-border-collapse">
             <thead>
                 <tr>
-                    <td v-if="selection" style="padding:3px 0.45rem 3px 0.45rem;">
+                    <td v-if="selection" style="padding:3px 0.5rem;">
                         <Checkbox :checked="headerCheckStatus()" @click="toggleCheck()" :size="'md'" />
                     </td>
                     <td
                         v-for="header in headers"
                         :key="header.value"
                         :style="{'min-width': header.width}"
+                        style="padding:0.25rem;"
                         :class="[
                             headerFontClass,
                             cellAlignClass(header?.alignHeader),
@@ -21,7 +22,7 @@
             <tbody>
                 <!-- Table cell height: sm = 25px, md = 29px, lg = 33px, xl = 37px -->
                 <tr v-for="row in rows" :key="row.id">
-                    <td v-if="selection" style="padding:3px 0.45rem 3px 0.45rem;">
+                    <td v-if="selection" style="padding:3px 0.5rem;">
                         <Checkbox :size="'md'" :checked="isRowSelected(row)" @click="checkRow(row)"/>
                     </td>
                     <td
@@ -192,7 +193,6 @@ table{
 }
 
 thead tr td:not(:last-child){
-    padding: 4px 3px 3px 3px;
     border-bottom: 0;
     border-left: 0;
     border-right: 1px solid $cellBorder;

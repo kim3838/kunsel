@@ -39,10 +39,7 @@
                                     <span>{{`[${index}] ${cell.name}`}}</span>
                                 </template>
                                 <template v-slot:cell.code="{index, cell}">
-                                    <span class="tw-font-mono">{{`[${index}] ${cell.code}`}}</span>
-                                </template>
-                                <template v-slot:cell.category="{index, cell}">
-                                    <span class="tw-font-mono">{{cell.category}}</span>
+                                    <span class="tw-font-mono">{{cell.code}}</span>
                                 </template>
                             </DataTable>
                         </div>
@@ -109,12 +106,12 @@ let headers = reactive([
     { text: 'ID', value: 'id'},
     { text: 'NAME', value: 'name'},
     { text: 'CODE', alignHeader: 'center', value: 'code'},
-    { text: 'TYPE', value: 'type'},
-    { text: 'CATEGORY', alignData: 'right', value: 'category'},
-    { text: 'CAPACITY', alignData: 'left', value: 'capacity'},
-    { text: 'DATE ADDED', alignData: 'right', value: 'datetime_added'},
-    { text: 'DATE CREATED', alignData: 'right', value: 'created_at'},
-    { text: 'DATE UPDATED', alignData: 'right', value: 'updated_at'},
+    // { text: 'TYPE', value: 'type'},
+    // { text: 'CATEGORY', alignData: 'right', value: 'category'},
+    // { text: 'CAPACITY', alignData: 'left', value: 'capacity'},
+    // { text: 'DATE ADDED', alignData: 'right', value: 'datetime_added'},
+    // { text: 'DATE CREATED', alignData: 'right', value: 'created_at'},
+    // { text: 'DATE UPDATED', alignData: 'right', value: 'updated_at'},
 ]);
 let data = ref([
     {
