@@ -4,7 +4,7 @@
             <thead>
                 <tr>
                     <td v-if="selection" style="padding:3px 0.5rem;">
-                        <Checkbox :checked="headerCheckStatus()" @click="toggleCheck()" :size="'md'" />
+                        <Checkbox :size="checkBoxSize" :checked="headerCheckStatus()" @click="toggleCheck()" />
                     </td>
                     <td
                         v-for="header in headers"
@@ -23,7 +23,7 @@
                 <!-- Table cell height: sm = 25px, md = 29px, lg = 33px, xl = 37px -->
                 <tr v-for="row in rows" :key="row.id">
                     <td v-if="selection" style="padding:3px 0.5rem;">
-                        <Checkbox :size="'md'" :checked="isRowSelected(row)" @click="checkRow(row)"/>
+                        <Checkbox :size="checkBoxSize" :checked="isRowSelected(row)" @click="checkRow(row)"/>
                     </td>
                     <td
                         v-for="(header, index) in headers" :key="row.id"
@@ -140,6 +140,16 @@ const buttonSize = computed(() => {
         'md': 'xs',
         'lg': 'sm',
         'xl': 'md',
+    }[props.size]
+});
+
+const checkBoxSize = computed(() => {
+    return {
+        [null]: 'md',
+        'sm': 'md',
+        'md': 'md',
+        'lg': 'lg',
+        'xl': 'lg',
     }[props.size]
 });
 

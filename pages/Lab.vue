@@ -23,7 +23,7 @@
                             </div>
                             <DataTable
                                 :headers="headers"
-                                :size="'md'"
+                                :size="'lg'"
                                 :rows="data"
                                 v-model="selected"
                                 selection>
