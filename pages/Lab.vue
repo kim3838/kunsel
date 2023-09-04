@@ -21,6 +21,7 @@
                                     <SingleSelect :size="'md'" :icon="'ic:sharp-rsvp'" :options="plan"/>
                                 </div>
                             </div>
+                            <PageInformation :pagination="pagination" />
                             <DataTable
                                 :headers="headers"
                                 :size="'lg'"
@@ -225,7 +226,16 @@ let data = ref([
         "updated_at": "2023-08-22 17:44:03"
     }
 ]);
-
+let pagination = ref({
+    "total": 48,
+    "count": 10,
+    "per_page": 10,
+    "current_page": 1,
+    "total_pages": 5,
+    "links": {
+        "next": "/?page=2"
+    }
+});
 </script>
 
 <style scoped>
