@@ -21,16 +21,24 @@
                                     <SingleSelect :size="'md'" :icon="'ic:sharp-rsvp'" :options="plan"/>
                                 </div>
                             </div>
-                            <PageInformation :pagination="pagination" />
+                            <PageInformation :pagination="pagination" :no-record-label="'No Expense Found'"/>
+                            <Pagination
+                                :data-table-size="'sm'"
+                                :pagination="pagination"
+                                :first-page="()=>{console.log('FIRST PAGE');}"
+                                :previous-page="()=>{console.log('PREVIOUS PAGE');}"
+                                :next-page="()=>{console.log('NEXT PAGE');}"
+                                :last-page="()=>{console.log('LAST PAGE');}"
+                            />
                             <DataTable
                                 :headers="headers"
-                                :size="'lg'"
+                                :size="'sm'"
                                 :rows="data"
                                 v-model="selected"
                                 selection>
                                 <template v-slot:cell.tools="{cell, slot}">
                                     <div class="tw-h-full tw-w-full tw-flex tw-items-center">
-                                        <Button :size="slot.buttonSize" :icon="'ic:sharp-send-to-mobile'" :label="'Slot Button'"></Button>
+                                        <Button :variant="'outline'" :size="slot.buttonSize" :icon="'ic:sharp-send-to-mobile'" :label="'Slot Button'"></Button>
                                     </div>
                                 </template>
                                 <template v-slot:cell.input="{cell, slot}">
