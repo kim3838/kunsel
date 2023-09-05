@@ -135,6 +135,30 @@
                         </div>
 
                         <div class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-8">
+                            <div class="tw-flex tw-items-start tw-justify-start tw-block tw-border tw-border-neutral-200">
+                                <Button :variant="'outline'" :size="'2xs'" :icon="'ic:sharp-dashboard'" :label="'XXS Button'"></Button>
+                            </div>
+                            <div class="tw-flex tw-items-start tw-justify-start tw-block tw-border tw-border-neutral-200">
+                                <Button :variant="'outline'" :size="'xs'" :icon="'ic:sharp-dashboard'" :label="'XS Button'"></Button>
+                            </div>
+                            <div class="tw-flex tw-items-start tw-justify-start tw-block tw-border tw-border-neutral-200">
+                                <Button :variant="'outline'" :size="'sm'" :icon="'ic:sharp-dashboard'" :label="'SM Authenticate'"></Button>
+                            </div>
+                            <div class="tw-flex tw-items-start tw-justify-start tw-block tw-border tw-border-neutral-200">
+                                <Button :variant="'outline'" :size="'md'" :icon="'ic:sharp-dashboard'" :label="'MD Authenticate'"></Button>
+                            </div>
+                            <div class="tw-flex tw-items-start tw-justify-start tw-block tw-border tw-border-neutral-200">
+                                <Button :variant="'outline'" :disabled="true" :label="'DEFAULT Disabled'"></Button>
+                            </div>
+                            <div class="tw-flex tw-items-start tw-justify-start tw-block tw-w-full tw-border tw-border-neutral-200">
+                                <Button :variant="'outline'" :size="'lg'" :icon="'ic:sharp-dashboard'" :label="'LG SKIP'"></Button>
+                            </div>
+                            <div class="tw-col-span-2 tw-flex tw-items-start tw-justify-start tw-block tw-w-full tw-border tw-border-neutral-200">
+                                <Button :variant="'outline'" :size="'xl'" :icon="'ic:sharp-dashboard'" :label="'XL Authenticate'"></Button>
+                            </div>
+                        </div>
+
+                        <div class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-8">
                             <div class="tw-border tw-border-neutral-200">
                                 <label>
                                     <Checkbox v-model="remember1" :label="' '" :size="'md'" name="remember" />
