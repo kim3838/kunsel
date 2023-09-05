@@ -19,7 +19,11 @@ const props = defineProps({
                 total_pages: 0
             }
         }
-    }
+    },
+    noRecordLabel: {
+        type: String,
+        default: 'No Record Found',
+    },
 });
 
 const currentPage = computed(() => props.pagination.current_page);
@@ -32,11 +36,15 @@ const pageInfo = computed(() => {
 });
 
 const showingFirstRowOf = computed(() => {
-    return ((currentPage.value > 1 ? (((currentPage.value - 1) * perPage.value) + 1) : currentPage.value));
+    return ((currentPage.value > 1
+        ? (((currentPage.value - 1) * perPage.value) + 1)
+        : currentPage.value));
 });
 
 const showingLastRowOf = computed(() => {
-    return (currentPage.value > 1 ? (currentPage.value === totalPages.value ? (totalRow.value) : (currentPage.value * perPage.value)) : ((currentPage.value + perPage.value) - 1));
+    return (currentPage.value > 1
+        ? (currentPage.value === totalPages.value ? (totalRow.value) : (currentPage.value * perPage.value))
+        : ((currentPage.value + perPage.value) - 1));
 });
 
 const showing = computed(() => {
@@ -44,6 +52,8 @@ const showing = computed(() => {
 });
 
 const pageInformation = computed(() => {
-    return pageInfo.value + ", Showing " + showing.value + " Records";
+    return currentPage.value == 0
+        ? props.noRecordLabel
+        : pageInfo.value + ", Showing " + showing.value + " Record/s";
 });
 </script>
