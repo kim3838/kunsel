@@ -8,10 +8,10 @@
             tw-font-[Barlow]
             tw-inline-flex
             tw-items-center
-
             tw-rounded-sm
             tw-font-medium
             tw-tracking-wide
+            tw-box-border
             focus:tw-outline-none
             focus:tw-border-light
             focus:tw-ring
@@ -108,7 +108,7 @@
             colorClass(){
                 return {
                     'default': 'tw-bg-darker hover:tw-bg-darker/90 active:tw-bg-darker/90 tw-text-white',
-                    'outline': 'tw-text-accent',
+                    'outline': this.disabled ? 'tw-bg-[#b4b4b4]/50' : 'tw-text-accent hover:tw-bg-darker hover:tw-text-white',
                 }[this.variant]
             },
 
@@ -122,7 +122,7 @@
             shadeClass(){
                 return {
                     'default': 'tw-bg-gradient-to-br tw-bg-transparent tw-from-dark/90 tw-via-transparent tw-to-dark/50',
-                    'outline': '',
+                    'outline': this.disabled ? '' : 'hover:tw-bg-gradient-to-br hover:tw-bg-transparent hover:tw-from-dark/90 hover:tw-via-transparent hover:tw-to-dark/50',
                 }[this.variant]
             }
         },
