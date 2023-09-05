@@ -2,19 +2,16 @@
     <button
         ref="button"
         :disabled="disabled"
-        :class="[heightClass, spacingClass]"
+        :class="[heightClass, spacingClass, colorClass, borderClass]"
         :type="type"
         class="
             tw-font-[Barlow]
             tw-inline-flex
             tw-items-center
-            tw-bg-darker
+
             tw-rounded-sm
             tw-font-medium
             tw-tracking-wide
-            tw-text-white
-            hover:tw-bg-darker/90
-            active:tw-bg-darker/90
             focus:tw-outline-none
             focus:tw-border-light
             focus:tw-ring
@@ -22,15 +19,7 @@
             disabled:tw-opacity-60
             tw-transition
             tw-relative">
-        <div
-            class="
-                shade
-                tw-rounded-sm
-                tw-bg-gradient-to-br
-                tw-bg-transparent
-                tw-from-dark/90
-                tw-via-transparent
-                tw-to-dark/50"></div>
+        <div :class="[shadeClass]" class="shade tw-rounded-sm"></div>
         <slot :fontClass="fontClass">
             <span v-if="label?.trim()" class="tw-flex tw-items-center" :class="[fontClass]">
                 <Icon v-if="icon?.trim()" :class="[iconClass]" :name="icon"></Icon>{{label}}
@@ -45,6 +34,10 @@
             type: {
                 type: String,
                 default: 'submit',
+            },
+            variant: {
+                type: String,
+                default: 'default',
             },
             size: {
                 default: null
@@ -110,6 +103,27 @@
                     'lg': 'tw-text-2xl tw-font-black',
                     'xl': 'tw-text-3xl tw-font-black',
                 }[this.size]
+            },
+
+            colorClass(){
+                return {
+                    'default': 'tw-bg-darker hover:tw-bg-darker/90 active:tw-bg-darker/90 tw-text-white',
+                    'outline': 'tw-text-accent',
+                }[this.variant]
+            },
+
+            borderClass(){
+                return {
+                    'default': '',
+                    'outline': 'tw-border tw-border-[#b4b4b4]',
+                }[this.variant]
+            },
+
+            shadeClass(){
+                return {
+                    'default': 'tw-bg-gradient-to-br tw-bg-transparent tw-from-dark/90 tw-via-transparent tw-to-dark/50',
+                    'outline': '',
+                }[this.variant]
             }
         },
     }
