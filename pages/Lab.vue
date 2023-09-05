@@ -23,7 +23,7 @@
                             </div>
                             <PageInformation :pagination="pagination" :no-record-label="'No Expense Found'"/>
                             <Pagination
-                                :data-table-size="'sm'"
+                                :size="'md'"
                                 :pagination="pagination"
                                 :first-page="()=>{console.log('FIRST PAGE');}"
                                 :previous-page="()=>{console.log('PREVIOUS PAGE');}"
@@ -32,7 +32,7 @@
                             />
                             <DataTable
                                 :headers="headers"
-                                :size="'sm'"
+                                :size="'md'"
                                 :rows="data"
                                 v-model="selected"
                                 selection>

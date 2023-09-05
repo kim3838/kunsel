@@ -52,7 +52,7 @@ const props = defineProps({
 
     pending: Boolean,
 
-    dataTableSize: {
+    size: {
         type: String,
         default: 'md',
     },
@@ -85,6 +85,6 @@ const buttonSize = computed(() => {
         'md': 'xs',
         'lg': 'sm',
         'xl': 'md',
-    }[props.dataTableSize]
+    }[props.size]
 });
 </script>
