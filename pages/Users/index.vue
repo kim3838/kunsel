@@ -11,7 +11,7 @@
                             </div>
                             <div class="tw-block tw-border tw-border-neutral-200">
                                 <InputLabel :size="'md'" value="_" class="tw-text-transparent"/>
-                                <Button @click="filters.search.keyword += '.';" :size="'md'"><span class="tw-font-semibold">Concat "."</span></Button>
+                                <Button @click="filters.search.keyword += '.';" :size="'md'" :icon="'ic:sharp-join-left'" :label="'Concat &quot;.&quot;'"></Button>
                             </div>
                         </div>
 
@@ -22,8 +22,7 @@
                             </div>
                             <div class="tw-block tw-border tw-border-neutral-200">
                                 <InputLabel :size="'md'" value="_" class="tw-text-transparent"/>
-                                <Button @click="filters.code += '.';" :size="'md'"><span class="tw-font-semibold">Concat "."</span>
-                                </Button>
+                                <Button @click="filters.code += '.';" :size="'md'" :icon="'ic:sharp-join-left'" :label="'Concat &quot;.&quot;'"></Button>
                             </div>
                         </div>
 
@@ -48,12 +47,38 @@
 
                         <div class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-8">
                             <div class="tw-block tw-border tw-border-neutral-200">
-                                <Button ref="submitButton" @click="execute" :disabled="pending" :size="'md'"><span class="tw-font-semibold">Refresh</span></Button>
+                                <Button ref="submitButton" @click="execute" :disabled="pending" :size="'md'" :icon="'ic:sharp-refresh'" :label="'Refresh'"></Button>
                             </div>
                         </div>
 
+                        <div>
+                            <PageInformation
+                                v-if="users.meta.pagination.total > 0"
+                                :pagination="users.meta.pagination"
+                                :no-record-label="'No User Found'"/>
+                            <Pagination
+                                :size="'md'"
+                                :pagination="users.meta.pagination"
+                                :first-page="()=>{filters.page = 1;}"
+                                :previous-page="()=>{filters.page -= 1;}"
+                                :next-page="()=>{filters.page += 1;}"
+                                :last-page="()=>{filters.page = users.meta.pagination.total_pages;}"
+                            />
+                            <DataTable
+                                :headers="usersHeaders"
+                                :size="'md'"
+                                :rows="users.data"
+                                :no-data-label="pending ? 'Loading' : 'No User Found'"
+                                v-model="selectedUsers"
+                                selection>
+                            </DataTable>
+                        </div>
+
                         <div class="tw-border tw-border-neutral-200">
-                            <pre class="tw-text-sm">{{ jsonResponse }}</pre>
+                            <pre class="tw-text-sm">{{ users.data }}</pre>
+                        </div>
+                        <div class="tw-border tw-border-neutral-200">
+                            <pre class="tw-text-sm">{{ users.meta }}</pre>
                         </div>
                     </div>
                 </div>
@@ -76,11 +101,37 @@ definePageMeta({
     middleware: 'auth'
 });
 
-let jsonResponse = ref({});
+let jsonResponse = ref(null);
+let users = reactive({
+    'data': [],
+    'meta': {
+        pagination: {
+            total: 0,
+            count: 0,
+            per_page: 0,
+            current_page: 0,
+            total_pages: 0
+        }
+    }
+});
+let usersHeaders = reactive([
+    { text: 'ID', value: 'id'},
+    { text: 'NAME', value: 'name'},
+    { text: 'CODE', alignHeader: 'center', value: 'code'},
+    { text: 'TYPE', value: 'type'},
+    { text: 'CATEGORY', alignData: 'right', value: 'category'},
+    { text: 'CAPACITY', alignData: 'left', value: 'capacity'},
+    { text: 'DATE ADDED', alignData: 'right', value: 'datetime_added'},
+    { text: 'DATE CREATED', alignData: 'right', value: 'created_at'},
+    { text: 'DATE UPDATED', alignData: 'right', value: 'updated_at'},
+]);
+let selectedUsers = ref([]);
 let searchInput = ref(null);
 let submitButton = ref(null);
 
 let filters = reactive({
+    page: 1,
+    perPage: 10,
     search: {
         keyword: '',
         callback: 1
@@ -95,23 +146,24 @@ let filters = reactive({
     }
 });
 
-let filtersComputed = computed(() => {
+let paramsComputed = computed(() => {
     return {
-        search: filters.search.keyword,
-        code: filters.code,
-        datetimeFrom: filters.datetimeFrom,
-        datetimeTo: filters.datetimeTo
+        page: filters.page,
+        perPage: filters.perPage,
+        filters: {
+            search: filters.search.keyword,
+            code: filters.code,
+            datetimeFrom: filters.datetimeFrom,
+            datetimeTo: filters.datetimeTo
+        }
     };
 });
 
 const {pending, execute} = csrFetch("/api/v1/prototypes", {
     method: 'GET',
-    params: {
-        page: 1,
-        perPage: 10,
-        filters: filtersComputed
-    },
+    params: paramsComputed,
     onRequest(){
+        clearTimeout(filters.search.callback);
         $coreStore.resetServiceError();
     },
     onResponse({request, response, options}) {
@@ -123,9 +175,18 @@ const {pending, execute} = csrFetch("/api/v1/prototypes", {
                 title: 'Something Went Wrong',
                 payload: response._data
             });
-            jsonResponse.value = "Something Went Wrong.";
         } else {
             jsonResponse.value = response._data;
+            users.data = _get(response, '_data.values.data', []);
+            users.meta = _get(response, '_data.values.meta', {
+                pagination: {
+                    total: 0,
+                    count: 0,
+                    per_page: 0,
+                    current_page: 0,
+                    total_pages: 0
+                }
+            });
         }
     }
 });
@@ -140,9 +201,11 @@ watch(pending, async (newPending, oldPending) => {
 });
 
 //Todo: Filter data watcher composable
-watch(() => {return filters.code;}, () => {execute();});
-watch(() => {return filters.datetimeFrom;}, () => {execute();});
-watch(() => {return filters.datetimeTo;}, () => {execute();});
+watch(() => {return filters.code;}, () => {clearTimeout(filters.search.callback);execute();});
+watch(() => {return filters.page;}, () => {clearTimeout(filters.search.callback);execute();});
+watch(() => {return filters.perPage;}, () => {clearTimeout(filters.search.callback);execute();});
+watch(() => {return filters.datetimeFrom;}, () => {clearTimeout(filters.search.callback);execute();});
+watch(() => {return filters.datetimeTo;}, () => {clearTimeout(filters.search.callback);execute();});
 watch(() => {
     return filters.search.keyword;
 }, (keyword) => {

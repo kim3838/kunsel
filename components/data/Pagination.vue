@@ -2,28 +2,28 @@
     <div>
         <span class="tw-space-x-0.5">
             <Button
-                :disabled="pagination.current_page === 1 || pending || pagination.current_page === 0"
+                :disabled="pagination.current_page === 1 || pending || pagination.total === 0"
                 @click="firstPage()"
                 :variant="'outline'"
                 :size="buttonSize"
                 :icon="'ic:sharp-first-page'"
                 :label="'First Page'" />
             <Button
-                :disabled="pagination.current_page === 1 || pending || pagination.current_page === 0"
+                :disabled="pagination.current_page === 1 || pending || pagination.total === 0"
                 @click="previousPage()"
                 :variant="'outline'"
                 :size="buttonSize"
                 :icon="'ic:sharp-keyboard-double-arrow-left'"
                 :label="'Previous Page'" />
             <Button
-                :disabled="pagination.current_page === pagination.total_pages || pending || pagination.current_page === 0"
+                :disabled="pagination.current_page === pagination.total_pages || pending || pagination.total === 0"
                 @click="nextPage()"
                 :variant="'outline'"
                 :size="buttonSize"
                 :icon="'ic:sharp-keyboard-double-arrow-right'"
                 :label="'Next Page'" />
             <Button
-                :disabled="pagination.total_pages === 1 || pending || pagination.current_page === 0"
+                :disabled="pagination.current_page === pagination.total_pages || pending || pagination.total === 0"
                 @click="lastPage()"
                 :variant="'outline'"
                 :size="buttonSize"

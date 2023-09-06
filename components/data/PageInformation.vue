@@ -52,7 +52,7 @@ const showing = computed(() => {
 });
 
 const pageInformation = computed(() => {
-    return currentPage.value == 0
+    return totalRow.value == 0
         ? props.noRecordLabel
         : pageInfo.value + ", Showing " + showing.value + " Record/s";
 });
