@@ -47,7 +47,7 @@
 
                         <div class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-8">
                             <div class="tw-block tw-border tw-border-neutral-200">
-                                <Button ref="submitButton" @click="execute" :disabled="pending" :size="'md'" :icon="'ic:sharp-refresh'" :label="'Refresh'"></Button>
+                                <Button ref="submitButton" @click="paginate()" :disabled="pending" :size="'md'" :icon="'ic:sharp-refresh'" :label="'Refresh'"></Button>
                             </div>
                         </div>
 
@@ -121,9 +121,9 @@ let usersHeaders = reactive([
     { text: 'TYPE', value: 'type'},
     { text: 'CATEGORY', alignData: 'right', value: 'category'},
     { text: 'CAPACITY', alignData: 'left', value: 'capacity'},
-    { text: 'DATE ADDED', alignData: 'right', value: 'datetime_added'},
-    { text: 'DATE CREATED', alignData: 'right', value: 'created_at'},
-    { text: 'DATE UPDATED', alignData: 'right', value: 'updated_at'},
+    { text: 'DATE ADDED', alignData: 'left', value: 'datetime_added'},
+    { text: 'DATE CREATED', alignData: 'left', value: 'created_at'},
+    { text: 'DATE UPDATED', alignData: 'left', value: 'updated_at'},
 ]);
 let selectedUsers = ref([]);
 let searchInput = ref(null);
@@ -201,20 +201,26 @@ watch(pending, async (newPending, oldPending) => {
 });
 
 //Todo: Filter data watcher composable
-watch(() => {return filters.code;}, () => {clearTimeout(filters.search.callback);execute();});
-watch(() => {return filters.page;}, () => {clearTimeout(filters.search.callback);execute();});
-watch(() => {return filters.perPage;}, () => {clearTimeout(filters.search.callback);execute();});
-watch(() => {return filters.datetimeFrom;}, () => {clearTimeout(filters.search.callback);execute();});
-watch(() => {return filters.datetimeTo;}, () => {clearTimeout(filters.search.callback);execute();});
+watch(() => {return filters.code;}, () => {paginate();});
+watch(() => {return filters.page;}, () => {paginate(filters.page);});
+watch(() => {return filters.perPage;}, () => {paginate();});
+watch(() => {return filters.datetimeFrom;}, () => {paginate();});
+watch(() => {return filters.datetimeTo;}, () => {paginate();});
 watch(() => {
     return filters.search.keyword;
 }, (keyword) => {
     clearTimeout(filters.search.callback);
 
     filters.search.callback = setTimeout(() => {
-        execute();
+        paginate();
     }, 1500);
 });
+
+function paginate(page = 1){
+    clearTimeout(filters.search.callback);
+    filters.page = page;
+    execute();
+}
 
 dateTimePicker([
     {
