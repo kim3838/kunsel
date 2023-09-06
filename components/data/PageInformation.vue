@@ -6,6 +6,7 @@
 
 <script setup lang="ts">
 import {computed, ref} from 'vue';
+const {$ordinal} = useNuxtApp();
 
 const props = defineProps({
     pagination: {
@@ -42,18 +43,22 @@ const showingFirstRowOf = computed(() => {
 });
 
 const showingLastRowOf = computed(() => {
-    return (currentPage.value > 1
+    let totalIsGreaterOrEqualToPerPage = currentPage.value > 1
         ? (currentPage.value === totalPages.value ? (totalRow.value) : (currentPage.value * perPage.value))
-        : ((currentPage.value + perPage.value) - 1));
+        : (currentPage.value + perPage.value) - 1;
+
+    return totalRow.value < perPage.value ? totalRow.value : totalIsGreaterOrEqualToPerPage;
 });
 
 const showing = computed(() => {
-    return showingFirstRowOf.value + "-" + showingLastRowOf.value + " of " + totalRow.value;
+    return showingFirstRowOf.value == showingLastRowOf.value
+        ? $ordinal(showingFirstRowOf.value) + " of " + totalRow.value
+        : showingFirstRowOf.value + "-" + showingLastRowOf.value + " of " + totalRow.value;
 });
 
 const pageInformation = computed(() => {
     return totalRow.value == 0
         ? props.noRecordLabel
-        : pageInfo.value + ", Showing " + showing.value + " Record/s";
+        : pageInfo.value + ", Showing " + showing.value + " Result" + (totalRow.value > 1 ? 's' : '');
 });
 </script>
