@@ -34,6 +34,7 @@
                                 :headers="headers"
                                 :size="'md'"
                                 :rows="data"
+                                :no-data-label="'No Data Found'"
                                 v-model="selected"
                                 selection>
                                 <template v-slot:cell.tools="{cell, slot}">

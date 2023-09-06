@@ -37,6 +37,11 @@
                         </slot>
                     </td>
                 </tr>
+                <tr v-if="!rows.length">
+                    <td colspan="100%" class="tw-text-center tw-font-semibold" :class="[bodyFontClass]">
+                        {{noDataLabel}}
+                    </td>
+                </tr>
             </tbody>
         </table>
     </div>
@@ -62,7 +67,11 @@ const props = defineProps({
         type: Array,
         default: () => [],
     },
-    selection: Boolean
+    selection: Boolean,
+    noDataLabel: {
+        type: String,
+        default: 'No Record',
+    }
 });
 
 const emit = defineEmits(["update:modelValue"]);
