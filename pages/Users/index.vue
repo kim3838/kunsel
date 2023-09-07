@@ -123,6 +123,7 @@ let users = reactive({
     }
 });
 let usersHeaders = reactive([
+    { text: '#', value: 'row_number'},
     { text: 'ID', value: 'id'},
     { text: 'NAME', value: 'name'},
     { text: 'CODE', alignHeader: 'center', value: 'code'},
