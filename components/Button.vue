@@ -21,7 +21,7 @@
             tw-relative">
         <div :class="[shadeClass]" class="shade tw-rounded-sm"></div>
         <slot :fontClass="fontClass">
-            <span v-if="label?.trim()" class="tw-flex tw-items-center" :class="[fontClass]">
+            <span class="tw-flex tw-items-center" :class="[fontClass]">
                 <Icon v-if="icon?.trim()" :class="[iconClass]" :name="icon"></Icon>{{label}}
             </span>
         </slot>
@@ -52,7 +52,7 @@
             },
             label: {
                 type: String,
-                default: null,
+                default: '',
             },
         },
 

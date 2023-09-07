@@ -3,32 +3,32 @@
         <span class="tw-space-x-0.5">
             <Button
                 :disabled="pagination.current_page === 1 || pending || pagination.total === 0"
-                @click="firstPage()"
+                @click="firstPage.handler()"
                 :variant="'outline'"
                 :size="buttonSize"
                 :icon="'ic:sharp-first-page'"
-                :label="'First Page'" />
+                :label="firstPage.label" />
             <Button
                 :disabled="pagination.current_page === 1 || pending || pagination.total === 0"
-                @click="previousPage()"
+                @click="previousPage.handler()"
                 :variant="'outline'"
                 :size="buttonSize"
                 :icon="'ic:sharp-keyboard-double-arrow-left'"
-                :label="'Previous Page'" />
+                :label="previousPage.label" />
             <Button
                 :disabled="pagination.current_page === pagination.total_pages || pending || pagination.total === 0"
-                @click="nextPage()"
+                @click="nextPage.handler()"
                 :variant="'outline'"
                 :size="buttonSize"
                 :icon="'ic:sharp-keyboard-double-arrow-right'"
-                :label="'Next Page'" />
+                :label="nextPage.label" />
             <Button
                 :disabled="pagination.current_page === pagination.total_pages || pending || pagination.total === 0"
-                @click="lastPage()"
+                @click="lastPage.handler()"
                 :variant="'outline'"
                 :size="buttonSize"
                 :icon="'ic:sharp-last-page'"
-                :label="'Last Page'" />
+                :label="lastPage.label" />
         </span>
     </div>
 </template>
@@ -58,23 +58,43 @@ const props = defineProps({
     },
 
     firstPage: {
-        type: Function,
-        default: ()=>{}
+        type: Object,
+        default: function () {
+            return {
+                label: '',
+                handler: ()=>{}
+            }
+        }
     },
 
     previousPage: {
-        type: Function,
-        default: ()=>{}
+        type: Object,
+        default: function () {
+            return {
+                label: '',
+                handler: ()=>{}
+            }
+        }
     },
 
     nextPage: {
-        type: Function,
-        default: ()=>{}
+        type: Object,
+        default: function () {
+            return {
+                label: '',
+                handler: ()=>{}
+            }
+        }
     },
 
     lastPage: {
-        type: Function,
-        default: ()=>{}
+        type: Object,
+        default: function () {
+            return {
+                label: '',
+                handler: ()=>{}
+            }
+        }
     }
 });
 

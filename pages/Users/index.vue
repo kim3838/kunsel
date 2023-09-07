@@ -59,10 +59,18 @@
                             <Pagination
                                 :size="'md'"
                                 :pagination="users.meta.pagination"
-                                :first-page="()=>{filters.page = 1;}"
-                                :previous-page="()=>{filters.page -= 1;}"
-                                :next-page="()=>{filters.page += 1;}"
-                                :last-page="()=>{filters.page = users.meta.pagination.total_pages;}"
+                                :first-page="{
+                                    handler: ()=>{filters.page = 1;}
+                                }"
+                                :previous-page="{
+                                    handler: ()=>{filters.page -= 1;}
+                                }"
+                                :next-page="{
+                                    handler: ()=>{filters.page += 1;}
+                                }"
+                                :last-page="{
+                                    handler: ()=>{filters.page = users.meta.pagination.total_pages;}
+                                }"
                             />
                             <DataTable
                                 :headers="usersHeaders"
