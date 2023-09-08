@@ -3,28 +3,28 @@
         <span class="tw-space-x-0.5">
             <Button
                 :disabled="pagination.current_page === 1 || pending || pagination.total === 0"
-                @click="firstPage.handler()"
+                @click="firstPageHandler()"
                 :variant="'outline'"
                 :size="buttonSize"
                 :icon="'ic:sharp-first-page'"
                 :label="firstPage.label" />
             <Button
                 :disabled="pagination.current_page === 1 || pending || pagination.total === 0"
-                @click="previousPage.handler()"
+                @click="previousPageHandler()"
                 :variant="'outline'"
                 :size="buttonSize"
                 :icon="'ic:sharp-keyboard-double-arrow-left'"
                 :label="previousPage.label" />
             <Button
                 :disabled="pagination.current_page === pagination.total_pages || pending || pagination.total === 0"
-                @click="nextPage.handler()"
+                @click="nextPageHandler()"
                 :variant="'outline'"
                 :size="buttonSize"
                 :icon="'ic:sharp-keyboard-double-arrow-right'"
                 :label="nextPage.label" />
             <Button
                 :disabled="pagination.current_page === pagination.total_pages || pending || pagination.total === 0"
-                @click="lastPage.handler()"
+                @click="lastPageHandler()"
                 :variant="'outline'"
                 :size="buttonSize"
                 :icon="'ic:sharp-last-page'"
@@ -37,6 +37,17 @@
 import {computed, ref} from 'vue';
 
 const props = defineProps({
+
+    modelValue: {
+        type: Object,
+        default: function () {
+            return {
+                page: 1,
+                perPage: 10
+            }
+        }
+    },
+
     pagination: {
         type: Object,
         default: function () {
@@ -61,8 +72,7 @@ const props = defineProps({
         type: Object,
         default: function () {
             return {
-                label: '',
-                handler: ()=>{}
+                label: 'First Page'
             }
         }
     },
@@ -71,8 +81,7 @@ const props = defineProps({
         type: Object,
         default: function () {
             return {
-                label: '',
-                handler: ()=>{}
+                label: ''
             }
         }
     },
@@ -81,8 +90,7 @@ const props = defineProps({
         type: Object,
         default: function () {
             return {
-                label: '',
-                handler: ()=>{}
+                label: ''
             }
         }
     },
@@ -91,8 +99,7 @@ const props = defineProps({
         type: Object,
         default: function () {
             return {
-                label: '',
-                handler: ()=>{}
+                label: ''
             }
         }
     }
@@ -107,4 +114,17 @@ const buttonSize = computed(() => {
         'xl': 'md',
     }[props.size]
 });
+
+function firstPageHandler(){
+    props.modelValue.page = 1;
+}
+function previousPageHandler(){
+    props.modelValue.page -= 1;
+}
+function nextPageHandler(){
+    props.modelValue.page += 1;
+}
+function lastPageHandler(){
+    props.modelValue.page = props.pagination.total_pages;
+}
 </script>
