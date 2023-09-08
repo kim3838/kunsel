@@ -48,9 +48,7 @@ const props = defineProps({
 const proxyChecked = computed(() => {
 
     if(Array.isArray(props.selected)){
-        let selected = props.selected.indexOf(props.value) >= 0;
-        console.log("proxyChecked? " + props.value + " : " + (selected ? 'TRUE' : 'FALSE'));
-        return selected;
+        return props.selected.indexOf(props.value) >= 0;
     } else {
         return props.checked;
     }
