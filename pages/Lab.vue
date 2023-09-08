@@ -11,30 +11,35 @@
                             </span>
                         </div>
                         <div class="tw-relative tw-border tw-border-light tw-p-7">
-                            <div class="tw-grid tw-gap-2 tw-grid-cols-4 tw-mb-2">
+                            <div class="tw-grid tw-gap-2 tw-grid-cols-2 tw-mb-2">
                                 <div class="tw-block">
                                     <InputLabel :size="'md'" value="Static Multi Select" />
                                     <MultiSelect :size="'md'" :options="category" :icon="'ic:sharp-hdr-on-select'"/>
                                 </div>
                                 <div class="tw-block">
                                     <InputLabel :size="'md'" value="Static Single Select" />
-                                    <SingleSelect :size="'md'" :icon="'ic:sharp-rsvp'" :options="plan"/>
+                                    <SingleSelect :size="'sm'" :icon="'ic:sharp-rsvp'" :options="plan"/>
                                 </div>
+                            </div>
+
+                            <div class="tw-grid tw-gap-2 tw-grid-cols-10 tw-mb-2">
                                 <div class="tw-block">
                                     <InputLabel :size="'md'" value="_" class="tw-text-transparent"/>
-                                    <Button @click="data = original" :size="'md'" :label="'Original'"></Button>
+                                    <Button @click="data = original" :size="'sm'" :label="'Original'"></Button>
                                 </div>
                                 <div class="tw-block">
                                     <InputLabel :size="'md'" value="_" class="tw-text-transparent"/>
                                     <Button @click="data = replace" :size="'md'" :label="'Replace'"></Button>
                                 </div>
                             </div>
-                            <PageInformation :pagination="pagination" :no-record-label="'No Expense Found'"/>
+                            <PageInformation v-if="false" :pagination="pagination" :no-record-label="'No Expense Found'"/>
                             <Pagination
+                                v-if="false"
                                 :size="'xl'"
                                 :pagination="pagination"
                             />
                             <DataTable
+                                v-if="false"
                                 :headers="headers"
                                 :size="'xl'"
                                 :rows="data"
@@ -102,14 +107,22 @@ let plan = reactive({
         {text : 'Free', value: 0},
         {text : 'Individual', value: 1},
         {text : 'Standard Corporate', value: 2},
-        {text : 'Custom Corporate', value: 3},
+        {text : 'Standard Corporate', value: 2},
+        {text : 'Standard Corporate', value: 2},
+        {text : 'Standard Corporate', value: 2},
+        {text : 'Standard Corporate', value: 2},
+        {text : 'Custom Corporate, Custom Corporate, Custom Corporate', value: 3},
         {text : 'Evaluator', value: 4}
     ],
     selection: [
         {text : 'Free', value: 0},
         {text : 'Individual', value: 1},
         {text : 'Standard Corporate', value: 2},
-        {text : 'Custom Corporate', value: 3},
+        {text : 'Standard Corporate', value: 2},
+        {text : 'Standard Corporate', value: 2},
+        {text : 'Standard Corporate', value: 2},
+        {text : 'Standard Corporate', value: 2},
+        {text : 'Custom Corporate, Custom Corporate, Custom Corporate', value: 3},
         {text : 'Evaluator', value: 4}
     ],
     selected: null
