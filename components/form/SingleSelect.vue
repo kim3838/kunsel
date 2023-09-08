@@ -87,10 +87,9 @@ let active = ref(false);
 let searchPool = ref([]);
 searchPool.value = props.options.data.map(item => item.value);
 
-let activeComputed = computed(() => active.value);
-
 const heightClass = computed(() => {
     return {
+        'xs': 'tw-h-6',
         'sm': 'tw-h-7',
         'md': 'tw-h-8'
     }[props.size];
@@ -98,6 +97,7 @@ const heightClass = computed(() => {
 
 const iconClass = computed(() => {
     return {
+        'xs': 'tw-h-5 tw-w-5',
         'sm': 'tw-h-5 tw-w-5',
         'md': 'tw-h-5 tw-w-5'
     }[props.size];
@@ -105,6 +105,7 @@ const iconClass = computed(() => {
 
 const dropDownIconHolderClass = computed(() => {
     return {
+        'xs': 'tw-w-6 tw-h-6',
         'sm': 'tw-w-7 tw-h-7',
         'md': 'tw-w-8 tw-h-8'
     }[props.size];
@@ -112,6 +113,7 @@ const dropDownIconHolderClass = computed(() => {
 
 const dropDownIconClass = computed(() => {
     return {
+        'xs': 'tw-h-5 tw-w-5',
         'sm': 'tw-h-5 tw-w-5',//tw-border tw-border-green-700
         'md': 'tw-h-5 tw-w-5'
     }[props.size];
@@ -119,13 +121,15 @@ const dropDownIconClass = computed(() => {
 
 const selectionClass = computed(() => {
     return {
-        'sm': 'tw-pt-[7px] tw-text-xs tw-h-7 tw-leading-[0.875rem]',
+        'xs': 'tw-pt-[5px] tw-text-xs tw-h-6 tw-leading-[0.875rem]',
+        'sm': 'tw-pt-[7px] tw-text-sm tw-h-7 tw-leading-[0.875rem]',
         'md': 'tw-pt-[8px] tw-text-sm tw-h-8 tw-leading-[0.875rem]'
     }[props.size];
 });
 
 const optionsFontClass = computed(() => {
     return {
+        'xs': 'tw-text-xs',
         'sm': 'tw-text-xs',
         'md': 'tw-text-base'
     }[props.size];
@@ -133,6 +137,7 @@ const optionsFontClass = computed(() => {
 
 const inputSize = computed(() => {
     return {
+        'xs': '2xs',
         'sm': 'xs',
         'md': 'sm'
     }[props.size];

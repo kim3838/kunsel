@@ -34,7 +34,7 @@
                         :class="[bodyFontClass, cellAlignClass(header?.alignData)]">
                         <slot
                             :name="`cell.${header.value}`"
-                            :slot="{buttonSize: buttonSize, inputSize: inputSize}"
+                            :slot="{buttonSize: buttonSize, inputSize: inputSize, selectSize: selectSize}"
                             :cell="row"
                             :index="index">
                             <div class="tw-p-[3px]">{{row[header.value]}}</div>
@@ -170,6 +170,16 @@ const checkBoxSize = computed(() => {
 });
 
 const inputSize = computed(() => {
+    return {
+        [null]: '',
+        'sm': '2xs',
+        'md': 'xs',
+        'lg': 'sm',
+        'xl': 'md',
+    }[props.size]
+});
+
+const selectSize = computed(() => {
     return {
         [null]: '',
         'sm': '2xs',

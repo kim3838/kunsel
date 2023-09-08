@@ -11,14 +11,18 @@
                             </span>
                         </div>
                         <div class="tw-relative tw-border tw-border-light tw-p-7">
-                            <div class="tw-grid tw-gap-2 tw-grid-cols-2 tw-mb-2">
+                            <div class="tw-grid tw-gap-2 tw-grid-cols-4 tw-mb-2">
                                 <div class="tw-block">
                                     <InputLabel :size="'md'" value="Static Multi Select" />
                                     <MultiSelect :size="'md'" :options="category" :icon="'ic:sharp-hdr-on-select'"/>
                                 </div>
                                 <div class="tw-block">
                                     <InputLabel :size="'md'" value="Static Single Select" />
-                                    <SingleSelect :size="'sm'" :icon="'ic:sharp-rsvp'" :options="plan"/>
+                                    <SingleSelect :size="'sm'" :icon="'ic:sharp-assignment'" :options="plan"/>
+                                </div>
+                                <div class="tw-block">
+                                    <InputLabel :size="'md'" value="Static Single Select" />
+                                    <SingleSelect :size="'xs'" :icon="'ic:sharp-assignment'" :options="plan"/>
                                 </div>
                             </div>
 
@@ -29,17 +33,17 @@
                                 </div>
                                 <div class="tw-block">
                                     <InputLabel :size="'md'" value="_" class="tw-text-transparent"/>
-                                    <Button @click="data = replace" :size="'md'" :label="'Replace'"></Button>
+                                    <Button @click="data = replace" :size="'xs'" :label="'Replace'"></Button>
                                 </div>
                             </div>
-                            <PageInformation v-if="false" :pagination="pagination" :no-record-label="'No Expense Found'"/>
+                            <PageInformation v-if="true" :pagination="pagination" :no-record-label="'No Expense Found'"/>
                             <Pagination
-                                v-if="false"
+                                v-if="true"
                                 :size="'xl'"
                                 :pagination="pagination"
                             />
                             <DataTable
-                                v-if="false"
+                                v-if="true"
                                 :headers="headers"
                                 :size="'xl'"
                                 :rows="data"
@@ -53,6 +57,9 @@
                                 </template>
                                 <template v-slot:cell.input="{cell, slot}">
                                     <Input :size="slot.inputSize" class="tw-w-full" placeholder="Enter Amount" type="text" autocomplete="off" />
+                                </template>
+                                <template v-slot:cell.select="{cell, slot}">
+                                    <SingleSelect :size="slot.selectSize" :icon="'ic:sharp-local-florist'" :options="plan"/>
                                 </template>
                                 <template v-slot:cell.name="{index, cell}">
                                     <span>{{`[${index}] ${cell.name}`}}</span>
@@ -130,6 +137,7 @@ let plan = reactive({
 let headers = reactive([
     { text: 'TOOLS', value: 'tools'},
     { text: 'INPUT', value: 'input', width: '120px'},
+    { text: 'SELECT', value: 'select', width: '200px'},
     { text: 'ID', value: 'id'},
     { text: 'NAME', value: 'name'},
     { text: 'CODE', alignHeader: 'center', value: 'code'},
