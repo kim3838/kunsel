@@ -20,19 +20,23 @@
                                     <InputLabel :size="'md'" value="Static Single Select" />
                                     <SingleSelect :size="'md'" :icon="'ic:sharp-rsvp'" :options="plan"/>
                                 </div>
+                                <div class="tw-block">
+                                    <InputLabel :size="'md'" value="_" class="tw-text-transparent"/>
+                                    <Button @click="data = original" :size="'md'" :label="'Original'"></Button>
+                                </div>
+                                <div class="tw-block">
+                                    <InputLabel :size="'md'" value="_" class="tw-text-transparent"/>
+                                    <Button @click="data = replace" :size="'md'" :label="'Replace'"></Button>
+                                </div>
                             </div>
                             <PageInformation :pagination="pagination" :no-record-label="'No Expense Found'"/>
                             <Pagination
-                                :size="'md'"
+                                :size="'xl'"
                                 :pagination="pagination"
-                                :first-page="()=>{console.log('FIRST PAGE');}"
-                                :previous-page="()=>{console.log('PREVIOUS PAGE');}"
-                                :next-page="()=>{console.log('NEXT PAGE');}"
-                                :last-page="()=>{console.log('LAST PAGE');}"
                             />
                             <DataTable
                                 :headers="headers"
-                                :size="'md'"
+                                :size="'xl'"
                                 :rows="data"
                                 :no-data-label="'No Data Found'"
                                 v-model="selected"
@@ -69,7 +73,7 @@ definePageMeta({
     middleware: 'guest'
 });
 
-let selected = ref([1001,1002]);
+let selected = ref([1002,2002,67,88]);
 let category = reactive({
     search: '',
     data: [
@@ -234,6 +238,142 @@ let data = ref([
         "created_at": "2023-08-22 17:44:03",
         "updated_at": "2023-08-22 17:44:03"
     }
+]);
+let original = ref([
+    {
+        "id": 45,
+        "name": "GSX 8ZJC5 37V",
+        "code": "PRT0451171313",
+        "type": 1,
+        "category": null,
+        "capacity": 33,
+        "datetime_added": "2023-08-22 17:44:03",
+        "created_at": "2023-08-22 17:44:03",
+        "updated_at": "2023-08-22 17:44:03"
+    },
+    {
+        "id": 67,
+        "name": "CP1 HN3 DX4K2",
+        "code": "PRT9284750057",
+        "type": 1,
+        "category": 114,
+        "capacity": 23,
+        "datetime_added": "2023-08-22 17:44:03",
+        "created_at": "2023-08-22 17:44:03",
+        "updated_at": "2023-08-22 17:44:03"
+    },
+    {
+        "id": 88,
+        "name": "XIM 9QY QY125",
+        "code": "PRT9249091497",
+        "type": 5,
+        "category": null,
+        "capacity": 22,
+        "datetime_added": "2023-08-22 17:44:03",
+        "created_at": "2023-08-22 17:44:03",
+        "updated_at": "2023-08-22 17:44:03"
+    },
+    {
+        "id": 246,
+        "name": "IB8 EAW DML6X",
+        "code": "PRT3041670860",
+        "type": 4,
+        "category": 89,
+        "capacity": 26,
+        "datetime_added": "2023-08-22 17:44:03",
+        "created_at": "2023-08-22 17:44:03",
+        "updated_at": "2023-08-22 17:44:03"
+    },
+    {
+        "id": 273,
+        "name": "72WKAM 11B T5",
+        "code": "PRT9023387510",
+        "type": 1,
+        "category": null,
+        "capacity": 3,
+        "datetime_added": "2023-08-22 17:44:03",
+        "created_at": "2023-08-22 17:44:03",
+        "updated_at": "2023-08-22 17:44:03"
+    },
+    {
+        "id": 384,
+        "name": "PM2 V8W ZCAGR",
+        "code": "PRT0920672517",
+        "type": 5,
+        "category": null,
+        "capacity": 8,
+        "datetime_added": "2023-08-22 17:44:03",
+        "created_at": "2023-08-22 17:44:03",
+        "updated_at": "2023-08-22 17:44:03"
+    },
+    {
+        "id": 418,
+        "name": "VFSNL4 FL2 7C",
+        "code": "PRT1915550179",
+        "type": 3,
+        "category": null,
+        "capacity": 19,
+        "datetime_added": "2023-08-22 17:44:03",
+        "created_at": "2023-08-22 17:44:03",
+        "updated_at": "2023-08-22 17:44:03"
+    },
+    {
+        "id": 478,
+        "name": "RC0 868Q6 GZI",
+        "code": "PRT4902978961",
+        "type": 2,
+        "category": 68,
+        "capacity": 15,
+        "datetime_added": "2023-08-22 17:44:03",
+        "created_at": "2023-08-22 17:44:03",
+        "updated_at": "2023-08-22 17:44:03"
+    },
+    {
+        "id": 552,
+        "name": "9Q8 YEESZ DKF",
+        "code": "PRT3932126979",
+        "type": 1,
+        "category": 4,
+        "capacity": 15,
+        "datetime_added": "2023-08-22 17:44:03",
+        "created_at": "2023-08-22 17:44:03",
+        "updated_at": "2023-08-22 17:44:03"
+    },
+    {
+        "id": 702,
+        "name": "45EE9R TES VK",
+        "code": "PRT2563775044",
+        "type": 5,
+        "category": 79,
+        "capacity": 35,
+        "datetime_added": "2023-08-22 17:44:03",
+        "created_at": "2023-08-22 17:44:03",
+        "updated_at": "2023-08-22 17:44:03"
+    }
+]);
+let replace = ref([
+    {
+        "id": 1001,
+        "name": "GSX 8ZJC5 37V",
+        "code": "PRT0451171313",
+        "type": 1,
+        "category": null,
+        "capacity": 33,
+        "datetime_added": "2023-08-22 17:44:03",
+        "created_at": "2023-08-22 17:44:03",
+        "updated_at": "2023-08-22 17:44:03"
+    },
+    {
+        "id": 1002,
+        "name": "CP1 HN3 DX4K2",
+        "code": "PRT9284750057",
+        "type": 1,
+        "category": 114,
+        "capacity": 23,
+        "datetime_added": "2023-08-22 17:44:03",
+        "created_at": "2023-08-22 17:44:03",
+        "updated_at": "2023-08-22 17:44:03"
+    },
 ]);
 let pagination = ref({
     "total": 48,

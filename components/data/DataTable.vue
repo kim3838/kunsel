@@ -4,7 +4,7 @@
             <thead>
                 <tr>
                     <td v-if="selection" style="padding:3px 0.5rem;">
-                        <Checkbox :size="checkBoxSize" :checked="headerCheckStatus()" @click="toggleCheck()" />
+                        <NonModelCheckBox :size="checkBoxSize" :checked="checkedAllCurrentSelection()" @click="toggleCheck()" />
                     </td>
                     <td
                         v-for="header in headers"
@@ -23,7 +23,11 @@
                 <!-- Table cell height: sm = 25px, md = 29px, lg = 33px, xl = 37px -->
                 <tr v-for="row in rows" :key="row.id">
                     <td v-if="selection" style="padding:3px 0.5rem;">
-                        <Checkbox :size="checkBoxSize" :checked="isRowSelected(row)" @click="checkRow(row)"/>
+                        <NonModelCheckBox
+                            :size="checkBoxSize"
+                            :value="row.id"
+                            :selected="props.modelValue"
+                            @click="checkRow(row)"/>
                     </td>
                     <td
                         v-for="(header, index) in headers" :key="row.id"
@@ -49,6 +53,7 @@
 
 <script setup lang="ts">
 import {computed, ref} from 'vue';
+import {nextTick} from 'vue';
 
 const props = defineProps({
     headers: {
@@ -86,11 +91,13 @@ function cellAlignClass(align = null){
 }
 
 function checkedAllCurrentSelection(): boolean {
-    return _difference(currentRowIds.value, props.modelValue).length <= 0;
-}
+    let result = false;
 
-function headerCheckStatus(): string{
-    return checkedAllCurrentSelection();
+    if(currentRowIds.value.length){
+        result = _difference(currentRowIds.value, props.modelValue).length <= 0
+    }
+
+    return result;
 }
 
 function isRowSelected(row): boolean{

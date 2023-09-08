@@ -57,24 +57,14 @@
                                 :pagination="users.meta.pagination"
                                 :no-record-label="'No User Found'"/>
                             <Pagination
-                                :size="'md'"
+                                :size="'xl'"
                                 :pagination="users.meta.pagination"
-                                :first-page="{
-                                    handler: ()=>{filters.page = 1;}
-                                }"
-                                :previous-page="{
-                                    handler: ()=>{filters.page -= 1;}
-                                }"
-                                :next-page="{
-                                    handler: ()=>{filters.page += 1;}
-                                }"
-                                :last-page="{
-                                    handler: ()=>{filters.page = users.meta.pagination.total_pages;}
-                                }"
+                                :pending="pending"
+                                v-model="filters"
                             />
                             <DataTable
                                 :headers="usersHeaders"
-                                :size="'md'"
+                                :size="'xl'"
                                 :rows="users.data"
                                 :no-data-label="pending ? 'Loading' : 'No User Found'"
                                 v-model="selectedUsers"

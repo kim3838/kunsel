@@ -20,7 +20,7 @@
 
             <div v-show="active" :class="[active?'tw-pl-[0.5rem] tw-flex':'']" class="tw-justify-center tw-items-center">
                 <Icon v-if="false" @click="toggleSelection" class="tw-text-neutral-300 tw-h-6 tw-w-6 tw-cursor-pointer" :name="headerIcon()"/>
-                <Checkbox :checked="headerCheckStatus()" @click="toggleSelection" />
+                <NonModelCheckBox :checked="selectedAllCurrentSelection()" @click="toggleSelection" />
             </div>
             <div v-show="active" class="tw-w-full tw-relative">
                 <div class="tw-absolute tw-right-[2rem] tw-flex tw-items-center">
@@ -49,7 +49,7 @@
 
         <div v-show="active" class="tw-z-10 tw-absolute tw-w-full tw-border tw-bg-white tw-border-light tw-border-t-transparent">
             <div class="tw-max-h-[240px] tw-overflow-y-auto">
-                <Checkbox
+                <NonModelCheckBox
                     :size="'md'"
                     v-for="item in options.selection" :key="item.value"
                     class="tw-pl-2 hover:tw-bg-neutral-200"
@@ -210,10 +210,6 @@ function headerIcon(): string{
     if (selectedAllCurrentSelection()) return 'ic:sharp-check-box';
     if (selectedSomeCurrentSelection()) return 'ic:sharp-indeterminate-check-box';
     return 'ic:sharp-check-box-outline-blank';
-}
-
-function headerCheckStatus(): string{
-    return selectedAllCurrentSelection();
 }
 
 function selectItem(item: any): void{

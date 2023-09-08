@@ -5,7 +5,7 @@
             :disabled="disabled"
             :tabindex="tabable ? 0 : -1"
             type="checkbox"
-            v-model="proxyModel"
+            :checked="proxyChecked"
             :class="[heightClass, inputClass]"
             class="tw-form-checkbox tw-text-accent tw-border-light focus:tw-ring-transparent focus:tw-border-lighter focus:tw-ring">
         <span v-if="label?.trim()" :class="[fontClass]" class="tw-ml-1 tw-text-accent" v-text="label"></span>
@@ -16,7 +16,14 @@
 import { computed } from 'vue';
 
 const props = defineProps({
-    modelValue: [Number, Boolean, String],
+    value: {
+        type: [Number, String, Object],
+        default: null
+    },
+    selected: {
+        type: Array,
+        default: null,
+    },
     disabled: {
         type: Boolean,
         default: false
@@ -28,20 +35,24 @@ const props = defineProps({
     size: {
         default: null
     },
+    checked: {
+        type: Boolean,
+        default: false,
+    },
     tabable: {
         type: Boolean,
         default: true,
     }
 });
 
-const emit = defineEmits(["update:modelValue"]);
+const proxyChecked = computed(() => {
 
-const proxyModel = computed({
-    get() {
-        return props.modelValue;
-    },
-    set(newValue) {
-        emit("update:modelValue", newValue);
+    if(Array.isArray(props.selected)){
+        let selected = props.selected.indexOf(props.value) >= 0;
+        console.log("proxyChecked? " + props.value + " : " + (selected ? 'TRUE' : 'FALSE'));
+        return selected;
+    } else {
+        return props.checked;
     }
 });
 

@@ -333,9 +333,9 @@ definePageMeta({
 const { $formStore} = useNuxtApp();
 let formStore = $formStore;
 let remember1 = ref(null);
-let remember2 = ref(null);
-let remember3 = ref(null);
-let remember4 = ref(null);
+let remember2 = ref(true);
+let remember3 = ref(1);
+let remember4 = ref('1');
 let statusGroup = ref({
     selection: [
         {text : 'For Approval', value: 0},
