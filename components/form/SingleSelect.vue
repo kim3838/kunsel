@@ -4,25 +4,26 @@
         v-on:focus="keepSelectionActive(1)"
         v-on:blur="loseFocus(1)"
         class="tw-w-full tw-relative focus:tw-outline-none">
-        <div class="tw-w-full tw-relative tw-h-8 tw-flex tw-justify-start tw-border"
-             :class="[active ? 'tw-relative tw-border-light tw-border-b-neutral-200' : 'tw-border-neutral-200']">
+        <div class="tw-w-full tw-relative tw-flex tw-justify-start tw-border"
+             :class="[heightClass, active ? 'tw-relative tw-border-light' : 'tw-border-neutral-200']">
             <div v-if="!active" class="tw-w-10 tw-flex tw-justify-center tw-items-center">
-                <Icon class="tw-h-5 tw-w-5" :name="icon"/>
+                <Icon :class="[iconClass]" :name="icon"/>
             </div>
             <div v-if="!active" class="tw-w-full tw-relative hover:tw-bg-neutral-100 tw-cursor-pointer">
-                <div :class="[selectionClass]" class="tw-absolute tw-h-8 tw-left-[0.2rem] tw-right-[2.2rem] tw-truncate tw-text-accent tw-leading-[0.875rem]">
+                <div :class="[selectionClass]" class="tw-absolute tw-left-[0.2rem] tw-right-[2.2rem] tw-truncate tw-text-accent">
                     {{selectionSummary}}
                 </div>
-                <div class="tw-absolute tw-right-0 tw-top-0 tw-w-8 tw-h-8 tw-flex tw-justify-center tw-items-center">
-                    <Icon class="tw-h-5 tw-w-5" name="ic:baseline-arrow-drop-down" />
+                <div :class="[dropDownIconHolderClass]" class="tw-absolute tw-right-0 tw-top-0 tw-flex tw-justify-center tw-items-center">
+                    <Icon :class="[dropDownIconClass]" name="ic:baseline-arrow-drop-down" />
                 </div>
             </div>
 
-            <div v-show="active" class="tw-w-full tw-relative">
-                <div class="tw-absolute tw-flex tw-items-center">
+            <div :class="[active ? 'tw-block' : 'tw-hidden']" class="tw-w-full tw-h-full tw-relative tw-flex tw-items-center">
+                <div class="tw-absolute tw-left-0 tw-right-[2rem]">
+                    <!--  tw-border tw-border-red-600 -->
                     <Input
                         autocomplete="off"
-                        class="tw-w-full tw-h-[1.875rem]"
+                        class="tw-w-full"
                         ref="selectionSearch"
                         type="text"
                         placeholder="Search..."
@@ -31,28 +32,26 @@
                         v-on:input="searchSelection"
                         v-model="props.options.search"
                         v-if="active"
-                        :size="'sm'"
+                        :size="inputSize"
                         :withBorder="false"
                         :rounded="false"
                         :focusRing="false"
                         :disabled="false" />
                 </div>
-                <div class="tw-absolute tw-right-0 tw-top-0 tw-w-8 tw-h-8 tw-flex tw-justify-center tw-items-center">
-                    <Icon @click="clearSearch" class="tw-h-6 tw-w-6 tw-cursor-pointer hover:tw-bg-neutral-200" name="ic:baseline-clear" />
+                <div :class="[dropDownIconHolderClass]" class="tw-absolute tw-right-0 tw-top-0 tw-flex tw-justify-center tw-items-center">
+                    <Icon :class="[dropDownIconClass]" @click="clearSearch" class="tw-cursor-pointer hover:tw-bg-neutral-200" name="ic:baseline-clear" />
                 </div>
             </div>
         </div>
 
-        <div v-show="active" class="tw-z-10 tw-absolute tw-w-full tw-border tw-bg-white tw-border-light tw-border-t-transparent">
-            <div class="tw-max-h-[240px] tw-overflow-y-auto">
-                <div
-                    v-for="item in options.selection" :key="item.value"
-                    class="tw-pl-1.5 hover:tw-bg-neutral-200 tw-flex tw-items-center tw-cursor-pointer"
-                    :class="[isItemInSearchPool(item) ? '' : 'tw-hidden']"
-                    @click="selectItem(item)">
-                    <Icon class="tw-h-5 tw-w-[1.15rem]" :class="[isItemSelected(item) ? 'tw-text-accent' : 'tw-text-transparent']" name="ic:sharp-check-box"></Icon>
-                    <span class="tw-text-accent tw-ml-0.5" :class="[optionsFontClass]">{{item.text}}</span>
-                </div>
+        <div v-show="active" class="tw-z-10 tw-absolute tw-border tw-bg-white tw-pr-1.5 tw-border-light tw-w-max tw-max-h-[240px] tw-overflow-y-auto">
+            <div
+                v-for="item in options.selection" :key="item.value"
+                class="tw-pl-1.5 hover:tw-bg-neutral-200 tw-flex tw-items-center tw-cursor-pointer"
+                :class="[isItemInSearchPool(item) ? '' : 'tw-hidden']"
+                @click="selectItem(item)">
+                <Icon class="tw-h-5 tw-w-[1.15rem]" :class="[isItemSelected(item) ? 'tw-text-accent' : 'tw-text-transparent']" name="ic:sharp-check-box"></Icon>
+                <span class="tw-text-accent tw-ml-0.5" :class="[optionsFontClass]">{{item.text}}</span>
             </div>
         </div>
     </div>
@@ -78,7 +77,7 @@ const props = defineProps({
         default: 'ion:md-options'
     },
     size: {
-        default: null
+        default: 'md'
     },
 });
 
@@ -88,21 +87,54 @@ let active = ref(false);
 let searchPool = ref([]);
 searchPool.value = props.options.data.map(item => item.value);
 
+let activeComputed = computed(() => active.value);
+
+const heightClass = computed(() => {
+    return {
+        'sm': 'tw-h-7',
+        'md': 'tw-h-8'
+    }[props.size];
+});
+
+const iconClass = computed(() => {
+    return {
+        'sm': 'tw-h-5 tw-w-5',
+        'md': 'tw-h-5 tw-w-5'
+    }[props.size];
+});
+
+const dropDownIconHolderClass = computed(() => {
+    return {
+        'sm': 'tw-w-7 tw-h-7',
+        'md': 'tw-w-8 tw-h-8'
+    }[props.size];
+});
+
+const dropDownIconClass = computed(() => {
+    return {
+        'sm': 'tw-h-5 tw-w-5',//tw-border tw-border-green-700
+        'md': 'tw-h-5 tw-w-5'
+    }[props.size];
+});
+
 const selectionClass = computed(() => {
     return {
-        [null]: 'tw-pt-[8px] tw-text-md',
-        'sm': 'tw-pt-[8px] tw-text-md',
-        'md': 'tw-pt-[8px] tw-text-sm',
-        'lg': 'tw-pt-[8px] tw-text-md'
+        'sm': 'tw-pt-[7px] tw-text-xs tw-h-7 tw-leading-[0.875rem]',
+        'md': 'tw-pt-[8px] tw-text-sm tw-h-8 tw-leading-[0.875rem]'
     }[props.size];
 });
 
 const optionsFontClass = computed(() => {
     return {
-        [null]: 'tw-text-base',
-        'sm': 'tw-text-base',
-        'md': 'tw-text-base',
-        'lg': 'tw-text-base'
+        'sm': 'tw-text-xs',
+        'md': 'tw-text-base'
+    }[props.size];
+});
+
+const inputSize = computed(() => {
+    return {
+        'sm': 'xs',
+        'md': 'sm'
     }[props.size];
 });
 

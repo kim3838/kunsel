@@ -5,7 +5,7 @@
         v-on:blur="loseFocus(1)"
         class="tw-w-full tw-relative focus:tw-outline-none">
         <div class="tw-w-full tw-relative tw-h-8 tw-flex tw-justify-start tw-border"
-             :class="[active ? 'tw-relative tw-border-light tw-border-b-neutral-200' : 'tw-border-neutral-200']">
+             :class="[active ? 'tw-relative tw-border-light' : 'tw-border-neutral-200']">
             <div v-if="!active" class="tw-w-10 tw-flex tw-justify-center tw-items-center">
                 <Icon class="tw-h-5 tw-w-5" :name="icon"/>
             </div>
@@ -18,15 +18,15 @@
                 </div>
             </div>
 
-            <div v-show="active" :class="[active?'tw-pl-[0.5rem] tw-flex':'']" class="tw-justify-center tw-items-center">
+            <div :class="[active ? 'tw-block tw-px-[0.5rem] tw-flex' : 'tw-hidden']" class="tw-justify-center tw-items-center">
                 <Icon v-if="false" @click="toggleSelection" class="tw-text-neutral-300 tw-h-6 tw-w-6 tw-cursor-pointer" :name="headerIcon()"/>
                 <NonModelCheckBox :checked="selectedAllCurrentSelection()" @click="toggleSelection" />
             </div>
-            <div v-show="active" class="tw-w-full tw-relative">
-                <div class="tw-absolute tw-right-[2rem] tw-flex tw-items-center">
+            <div :class="[active ? 'tw-block' : 'tw-hidden']" class="tw-w-full tw-relative">
+                <div class="tw-absolute tw-left-0 tw-right-[2rem] tw-flex tw-items-center">
                     <Input
                         autocomplete="off"
-                        class="tw-w-full tw-h-[1.875rem]"
+                        class="tw-w-full"
                         ref="selectionSearch"
                         type="text"
                         placeholder="Search..."
@@ -42,12 +42,12 @@
                         :disabled="false" />
                 </div>
                 <div class="tw-absolute tw-right-0 tw-top-0 tw-w-8 tw-h-8 tw-flex tw-justify-center tw-items-center">
-                    <Icon @click="clearSearch" class="tw-h-6 tw-w-6 tw-cursor-pointer hover:tw-bg-neutral-200" name="ic:baseline-clear" />
+                    <Icon @click="clearSearch" class="tw-h-5 tw-w-5 tw-cursor-pointer hover:tw-bg-neutral-200" name="ic:baseline-clear" />
                 </div>
             </div>
         </div>
 
-        <div v-show="active" class="tw-z-10 tw-absolute tw-w-full tw-border tw-bg-white tw-border-light tw-border-t-transparent">
+        <div v-show="active" class="tw-z-10 tw-absolute tw-w-full tw-border tw-bg-white tw-pr-1.5 tw-border-light tw-w-max tw-border-t-transparent">
             <div class="tw-max-h-[240px] tw-overflow-y-auto">
                 <NonModelCheckBox
                     :size="'md'"
