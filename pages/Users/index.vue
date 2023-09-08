@@ -47,7 +47,7 @@
 
                         <div class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-8">
                             <div class="tw-block tw-border tw-border-neutral-200">
-                                <Button ref="submitButton" @click="paginate(filters.page, true)" :disabled="pending" :size="'md'" :icon="'ic:sharp-refresh'" :label="'Refresh'"></Button>
+                                <Button ref="submitButton" @click="paginate(1, true)" :disabled="pending" :size="'md'" :icon="'ic:sharp-refresh'" :label="'Refresh'"></Button>
                             </div>
                         </div>
 
@@ -207,18 +207,18 @@ watch(pending, async (newPending, oldPending) => {
 });
 
 //Todo: Filter data watcher composable
-watch(() => {return filters.code;}, () => {paginate(filters.page, true);});
+watch(() => {return filters.code;}, () => {paginate(1, true);});
 watch(() => {return filters.page;}, () => {paginate(filters.page);});
-watch(() => {return filters.perPage;}, () => {paginate(filters.page);});
-watch(() => {return filters.datetimeFrom;}, () => {paginate(filters.page, true);});
-watch(() => {return filters.datetimeTo;}, () => {paginate(filters.page, true);});
+watch(() => {return filters.perPage;}, () => {paginate(1);});
+watch(() => {return filters.datetimeFrom;}, () => {paginate(1, true);});
+watch(() => {return filters.datetimeTo;}, () => {paginate(1, true);});
 watch(() => {
     return filters.search.keyword;
 }, (keyword) => {
     clearTimeout(filters.search.callback);
 
     filters.search.callback = setTimeout(() => {
-        paginate(filters.page, true);
+        paginate(1, true);
     }, 1500);
 });
 
