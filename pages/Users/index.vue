@@ -47,7 +47,7 @@
 
                         <div class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-8">
                             <div class="tw-block tw-border tw-border-neutral-200">
-                                <Button ref="submitButton" @click="paginate()" :disabled="pending" :size="'md'" :icon="'ic:sharp-refresh'" :label="'Refresh'"></Button>
+                                <Button ref="submitButton" @click="paginate(filters.page, true)" :disabled="pending" :size="'md'" :icon="'ic:sharp-refresh'" :label="'Refresh'"></Button>
                             </div>
                         </div>
 
@@ -91,7 +91,6 @@
 
 <script setup lang="ts">
 import {ref, reactive, watch, nextTick} from 'vue';
-
 const {$coreStore, $moment} = useNuxtApp();
 
 definePageMeta({
@@ -99,7 +98,6 @@ definePageMeta({
     middleware: 'auth'
 });
 
-let jsonResponse = ref(null);
 let users = reactive({
     'data': [],
     'meta': {
@@ -124,10 +122,6 @@ let usersHeaders = reactive([
     { text: 'DATE CREATED', alignData: 'left', value: 'created_at'},
     { text: 'DATE UPDATED', alignData: 'left', value: 'updated_at'},
 ]);
-let selectedUsers = ref([]);
-let searchInput = ref(null);
-let submitButton = ref(null);
-
 let filters = reactive({
     page: 1,
     perPage: 10,
@@ -145,6 +139,11 @@ let filters = reactive({
     }
 });
 
+let selectedUsers = ref([]);
+let searchInput = ref(null);
+let submitButton = ref(null);
+
+
 let pageComputed = computed({
     get() {
         return {
@@ -156,7 +155,6 @@ let pageComputed = computed({
         filters[payload.key] = payload.value;
     }
 });
-
 let paramsComputed = computed(() => {
     return {
         page: filters.page,
@@ -187,7 +185,6 @@ const {pending, execute} = csrFetch("/api/v1/prototypes", {
                 payload: response._data
             });
         } else {
-            jsonResponse.value = response._data;
             users.data = _get(response, '_data.values.data', []);
             users.meta = _get(response, '_data.values.meta', {
                 pagination: {
@@ -204,32 +201,36 @@ const {pending, execute} = csrFetch("/api/v1/prototypes", {
 
 watch(pending, async (newPending, oldPending) => {
     if (!newPending) {
-        //await nextTick();
-        //submitButton.value.$refs.button.focus();
-    } else {
-        jsonResponse.value = "Fetching data...";
+        await nextTick();
+        submitButton.value.$refs.button.focus();
     }
 });
 
 //Todo: Filter data watcher composable
-watch(() => {return filters.code;}, () => {paginate();});
+watch(() => {return filters.code;}, () => {paginate(filters.page, true);});
 watch(() => {return filters.page;}, () => {paginate(filters.page);});
-watch(() => {return filters.perPage;}, () => {paginate();});
-watch(() => {return filters.datetimeFrom;}, () => {paginate();});
-watch(() => {return filters.datetimeTo;}, () => {paginate();});
+watch(() => {return filters.perPage;}, () => {paginate(filters.page);});
+watch(() => {return filters.datetimeFrom;}, () => {paginate(filters.page, true);});
+watch(() => {return filters.datetimeTo;}, () => {paginate(filters.page, true);});
 watch(() => {
     return filters.search.keyword;
 }, (keyword) => {
     clearTimeout(filters.search.callback);
 
     filters.search.callback = setTimeout(() => {
-        paginate();
+        paginate(filters.page, true);
     }, 1500);
 });
 
-function paginate(page = 1){
+function paginate(page = 1, clearSelection = false){
     clearTimeout(filters.search.callback);
+
     filters.page = page;
+
+    if(clearSelection){
+        selectedUsers.value = [];
+
+    }
     execute();
 }
 

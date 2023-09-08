@@ -132,6 +132,7 @@ function previousPageHandler(){
         'value': previousPage
     });
 }
+
 function nextPageHandler(){
     let nextPage = props.modelValue.page + 1;
 
@@ -140,6 +141,7 @@ function nextPageHandler(){
         'value': nextPage
     });
 }
+
 function lastPageHandler(){
     emit("update:modelValue", {
         'key': 'page',
