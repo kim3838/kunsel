@@ -60,7 +60,7 @@
                                 :size="'xl'"
                                 :pagination="users.meta.pagination"
                                 :pending="pending"
-                                v-model="filters"
+                                v-model="pageComputed"
                             />
                             <DataTable
                                 :headers="usersHeaders"
@@ -142,6 +142,18 @@ let filters = reactive({
     month: {
         value: $moment().format('YYYY-MM'),
         label: $moment().format('YYYY MMMM')
+    }
+});
+
+let pageComputed = computed({
+    get() {
+        return {
+            page: filters.page,
+            perPage: filters.perPage,
+        }
+    },
+    set(payload) {
+        filters[payload.key] = payload.value;
     }
 });
 

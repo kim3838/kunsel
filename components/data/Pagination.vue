@@ -115,16 +115,35 @@ const buttonSize = computed(() => {
     }[props.size]
 });
 
+const emit = defineEmits(["update:modelValue"]);
+
 function firstPageHandler(){
-    props.modelValue.page = 1;
+    emit("update:modelValue", {
+        'key': 'page',
+        'value': 1
+    });
 }
+
 function previousPageHandler(){
-    props.modelValue.page -= 1;
+    let previousPage = props.modelValue.page - 1;
+
+    emit("update:modelValue", {
+        'key': 'page',
+        'value': previousPage
+    });
 }
 function nextPageHandler(){
-    props.modelValue.page += 1;
+    let nextPage = props.modelValue.page + 1;
+
+    emit("update:modelValue", {
+        'key': 'page',
+        'value': nextPage
+    });
 }
 function lastPageHandler(){
-    props.modelValue.page = props.pagination.total_pages;
+    emit("update:modelValue", {
+        'key': 'page',
+        'value': props.pagination.total_pages
+    });
 }
 </script>
