@@ -10,7 +10,7 @@
                 <Icon :class="[iconClass]" :name="icon"/>
             </div>
             <div v-if="!active" class="tw-w-full tw-relative hover:tw-bg-neutral-100 tw-cursor-pointer">
-                <div :class="[selectionClass]" class="tw-absolute tw-truncate tw-text-accent">
+                <div :class="[selectionClass]" class="tw-absolute tw-truncate tw-text-accent tw-flex tw-items-center">
                     {{selectionSummary}}
                 </div>
                 <div :class="[dropDownIconHolderClass]" class="tw-absolute tw-right-0 tw-top-0 tw-flex tw-justify-center tw-items-center">
@@ -86,6 +86,14 @@ const props = defineProps({
         type: String,
         default: ''
     },
+    key: {
+        type: String,
+        default: null
+    },
+    teleport: {
+        type: String,
+        default: null
+    },
     size: {
         default: 'md'
     },
@@ -144,10 +152,10 @@ const dropDownIconClass = computed(() => {
 
 const selectionClass = computed(() => {
     return {
-        '2xs': 'tw-pt-[3px] tw-text-xs tw-h-5 tw-leading-[0.875rem] tw-left-[0.2rem] tw-right-[1.45rem]',
-        'xs': 'tw-pt-[5px] tw-text-xs tw-h-6 tw-leading-[0.875rem] tw-left-[0.2rem] tw-right-[1.7rem]',
-        'sm': 'tw-pt-[7px] tw-text-sm tw-h-7 tw-leading-[0.875rem] tw-left-[0.2rem] tw-right-[1.85rem]',
-        'md': 'tw-pt-[8px] tw-text-sm tw-h-8 tw-leading-[0.875rem] tw-left-[0.2rem] tw-right-[2.2rem]'
+        '2xs': 'tw-text-xs tw-h-5 tw-leading-[0.875rem] tw-left-[0.2rem] tw-right-[1.45rem]',
+        'xs': 'tw-text-xs tw-h-6 tw-leading-[0.875rem] tw-left-[0.2rem] tw-right-[1.7rem]',
+        'sm': 'tw-text-sm tw-h-7 tw-leading-[0.875rem] tw-left-[0.2rem] tw-right-[1.85rem]',
+        'md': 'tw-text-sm tw-h-8 tw-leading-[0.875rem] tw-left-[0.2rem] tw-right-[2.2rem]'
     }[props.size];
 });
 
