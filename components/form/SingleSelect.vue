@@ -3,7 +3,7 @@
         tabindex="0"
         v-on:focus="keepSelectionActive(1)"
         v-on:blur="loseFocus(1)"
-        class="tw-w-full tw-relative focus:tw-outline-none">
+        class="tw-w-full tw-relative focus:tw-outline-none tw-bg-white">
         <div class="tw-w-full tw-relative tw-flex tw-justify-start tw-border"
              :class="[heightClass, active ? 'tw-relative tw-border-light' : 'tw-border-neutral-200']">
             <div v-if="!active" :class="[iconHolderClass]" class="tw-flex tw-justify-center tw-items-center">
@@ -43,7 +43,7 @@
             </div>
         </div>
 
-        <div v-show="active" class="options-holder tw-z-10 tw-mt-[7px] tw-absolute tw-bg-white tw-border tw-border-light tw-w-max">
+        <div v-show="active" class="options-holder tw-z-10 tw-mt-[7px] tw-absolute tw-bg-white tw-border tw-border-light tw-w-max tw-drop-shadow-2xl">
             <div class="tw-absolute tw-border-solid tw-border-b-light" :style="[optionsArrowSlotClass]"></div>
             <div class="tw-absolute tw-border-solid tw-border-b-white" :style="[optionsArrowClass]"></div>
             <div class="tw-px-2 tw-pt-2" :class="[optionsFontClass]">

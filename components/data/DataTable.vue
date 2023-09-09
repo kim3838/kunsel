@@ -194,7 +194,7 @@ const selectSize = computed(() => {
 <style lang="scss" scoped>
 
 #table-division{
-    //overflow-x: auto;
+    overflow-x: auto;
     scrollbar-color: rgba(0, 0, 0, 0.12) rgb(243 244 246);
     scrollbar-width: thin;
 }
