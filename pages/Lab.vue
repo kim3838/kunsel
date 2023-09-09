@@ -3,7 +3,7 @@
         <NuxtLayout name="custom">
             <template #content>
                 <div id="lab" class="tw-m-2 tw-p-2 tw-border tw-border-light tw-flex tw-justify-center tw-items-center">
-                    <div class="moody-card tw-max-w-[800px] tw-w-[800px]">
+                    <div class="moody-card tw-max-w-[950px] tw-w-[950px]">
                         <div class="moody-card-frame"></div>
                         <div class="tw-relative tw-border tw-border-light tw-border-b-0 tw-p-3 tw-flex tw-justify-center tw-items-center">
                             <span >
@@ -11,18 +11,26 @@
                             </span>
                         </div>
                         <div class="tw-relative tw-border tw-border-light tw-p-7">
-                            <div class="tw-grid tw-gap-2 tw-grid-cols-4 tw-mb-2">
+                            <div class="tw-grid tw-gap-2 tw-grid-cols-5 tw-mb-2">
                                 <div class="tw-block">
                                     <InputLabel :size="'md'" value="Static Multi Select" />
                                     <MultiSelect :size="'md'" :options="category" :icon="'ic:sharp-hdr-on-select'"/>
                                 </div>
                                 <div class="tw-block">
-                                    <InputLabel :size="'md'" value="Static Single Select" />
+                                    <InputLabel :size="'md'" value="MD Static Single Select" />
+                                    <SingleSelect :size="'md'" :icon="'ic:sharp-hdr-on-select'" :label="'Plan'" :options="plan"/>
+                                </div>
+                                <div class="tw-block">
+                                    <InputLabel :size="'sm'" value="SM Static Single Select" />
                                     <SingleSelect :size="'sm'" :icon="'ic:sharp-assignment'" :options="plan"/>
                                 </div>
                                 <div class="tw-block">
-                                    <InputLabel :size="'md'" value="Static Single Select" />
+                                    <InputLabel :size="'xs'" value="XS Static Single Select" />
                                     <SingleSelect :size="'xs'" :icon="'ic:sharp-assignment'" :options="plan"/>
+                                </div>
+                                <div class="tw-block">
+                                    <InputLabel :size="'2xs'" value="2XS Static Single Select" />
+                                    <SingleSelect :size="'2xs'" :icon="'ic:sharp-assignment'" :options="plan"/>
                                 </div>
                             </div>
 
@@ -39,13 +47,13 @@
                             <PageInformation v-if="true" :pagination="pagination" :no-record-label="'No Expense Found'"/>
                             <Pagination
                                 v-if="true"
-                                :size="'xl'"
+                                :size="'sm'"
                                 :pagination="pagination"
                             />
                             <DataTable
                                 v-if="true"
                                 :headers="headers"
-                                :size="'xl'"
+                                :size="'sm'"
                                 :rows="data"
                                 :no-data-label="'No Data Found'"
                                 v-model="selected"
@@ -59,7 +67,7 @@
                                     <Input :size="slot.inputSize" class="tw-w-full" placeholder="Enter Amount" type="text" autocomplete="off" />
                                 </template>
                                 <template v-slot:cell.select="{cell, slot}">
-                                    <SingleSelect :size="slot.selectSize" :icon="'ic:sharp-local-florist'" :options="plan"/>
+                                    <SingleSelect :size="slot.selectSize" :icon="'ic:sharp-local-florist'" :label="'Plan'" :options="plan"/>
                                 </template>
                                 <template v-slot:cell.name="{index, cell}">
                                     <span>{{`[${index}] ${cell.name}`}}</span>
@@ -113,6 +121,12 @@ let plan = reactive({
     data: [
         {text : 'Free', value: 0},
         {text : 'Individual', value: 1},
+        {text : 'Individual', value: 1},
+        {text : 'Individual', value: 1},
+        {text : 'Standard Corporate', value: 2},
+        {text : 'Standard Corporate', value: 2},
+        {text : 'Standard Corporate', value: 2},
+        {text : 'Standard Corporate', value: 2},
         {text : 'Standard Corporate', value: 2},
         {text : 'Standard Corporate', value: 2},
         {text : 'Standard Corporate', value: 2},
@@ -124,6 +138,12 @@ let plan = reactive({
     selection: [
         {text : 'Free', value: 0},
         {text : 'Individual', value: 1},
+        {text : 'Individual', value: 1},
+        {text : 'Individual', value: 1},
+        {text : 'Standard Corporate', value: 2},
+        {text : 'Standard Corporate', value: 2},
+        {text : 'Standard Corporate', value: 2},
+        {text : 'Standard Corporate', value: 2},
         {text : 'Standard Corporate', value: 2},
         {text : 'Standard Corporate', value: 2},
         {text : 'Standard Corporate', value: 2},
@@ -141,12 +161,12 @@ let headers = reactive([
     { text: 'ID', value: 'id'},
     { text: 'NAME', value: 'name'},
     { text: 'CODE', alignHeader: 'center', value: 'code'},
-    // { text: 'TYPE', value: 'type'},
-    // { text: 'CATEGORY', alignData: 'right', value: 'category'},
-    // { text: 'CAPACITY', alignData: 'left', value: 'capacity'},
-    // { text: 'DATE ADDED', alignData: 'right', value: 'datetime_added'},
-    // { text: 'DATE CREATED', alignData: 'right', value: 'created_at'},
-    // { text: 'DATE UPDATED', alignData: 'right', value: 'updated_at'},
+    { text: 'TYPE', value: 'type'},
+    { text: 'CATEGORY', alignData: 'right', value: 'category'},
+    { text: 'CAPACITY', alignData: 'left', value: 'capacity'},
+    { text: 'DATE ADDED', alignData: 'right', value: 'datetime_added'},
+    { text: 'DATE CREATED', alignData: 'right', value: 'created_at'},
+    { text: 'DATE UPDATED', alignData: 'right', value: 'updated_at'},
 ]);
 let data = ref([
     {
