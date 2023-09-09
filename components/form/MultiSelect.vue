@@ -10,7 +10,7 @@
                 <Icon class="tw-h-5 tw-w-5" :name="icon"/>
             </div>
             <div v-if="!active" class="tw-w-full tw-relative hover:tw-bg-neutral-100 tw-cursor-pointer">
-                <div :class="[selectionClass]" class="tw-absolute tw-h-8 tw-left-[0.2rem] tw-right-[2.2rem] tw-truncate tw-text-accent tw-leading-[0.875rem]">
+                <div :class="[selectionClass]" class="tw-absolute tw-truncate tw-text-accent tw-flex tw-items-center">
                     {{selectionSummary}}
                 </div>
                 <div class="tw-absolute tw-right-0 tw-top-0 tw-w-8 tw-h-8 tw-flex tw-justify-center tw-items-center">
@@ -80,7 +80,7 @@ const props = defineProps({
         }
     },
     size: {
-        default: null
+        default: 'md'
     },
     icon: {
         type: String,
@@ -96,10 +96,9 @@ searchPool.value = props.options.data.map(item => item.value);
 
 const selectionClass = computed(() => {
     return {
-        [null]: 'tw-pt-[8px] tw-text-md',
-        'sm': 'tw-pt-[8px] tw-text-md',
-        'md': 'tw-pt-[8px] tw-text-sm',
-        'lg': 'tw-pt-[8px] tw-text-md'
+        'sm': 'tw-text-md tw-h-8 tw-leading-[0.875rem] tw-left-[0.2rem] tw-right-[2.2rem]',
+        'md': 'tw-text-sm tw-h-8 tw-leading-[0.875rem] tw-left-[0.2rem] tw-right-[2.2rem]',
+        'lg': 'tw-text-md tw-h-8 tw-leading-[0.875rem] tw-left-[0.2rem] tw-right-[2.2rem]'
     }[props.size];
 });
 
