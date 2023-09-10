@@ -4,6 +4,24 @@ export function dateTimePicker(options: any[] = []) {
     const {$moment} = useNuxtApp();
 
     onMounted(async () => {
+        scaffold(options);
+    });
+
+    onUnmounted(async () => {
+        clearScaffold();
+    });
+
+    function clearScaffold(){
+        //Clear datetimepicker elements on dom
+        const elements = document.getElementsByClassName("daterangepicker ltr single opensright");
+
+        while (elements.length > 0) {
+            // @ts-ignore
+            elements[0].parentNode.removeChild(elements[0]);
+        }
+    }
+
+    async function scaffold(options){
         await nextTick();
 
         _forEach(options, option => {
@@ -87,16 +105,12 @@ export function dateTimePicker(options: any[] = []) {
                     break;
             }
         })
+    }
 
-    });
+    async function reRender(options: any[] = []){
+        clearScaffold();
+        scaffold(options);
+    }
 
-    onUnmounted(async () => {
-        //Clear datetimepicker elements on dom
-        const elements = document.getElementsByClassName("daterangepicker ltr single opensright");
-
-        while (elements.length > 0) {
-            // @ts-ignore
-            elements[0].parentNode.removeChild(elements[0]);
-        }
-    });
+    return {reRender};
 }

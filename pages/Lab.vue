@@ -37,11 +37,11 @@
                             <div v-if="true" class="tw-grid tw-gap-2 tw-grid-cols-10 tw-mb-2">
                                 <div class="tw-block">
                                     <InputLabel :size="'md'" value="_" class="tw-text-transparent"/>
-                                    <Button @click="data = original" :size="'sm'" :label="'Original'"></Button>
+                                    <Button @click="backOriginal()" :size="'sm'" :label="'Original'"></Button>
                                 </div>
                                 <div class="tw-block">
                                     <InputLabel :size="'md'" value="_" class="tw-text-transparent"/>
-                                    <Button @click="data = replace" :size="'xs'" :label="'Replace'"></Button>
+                                    <Button @click="replaceOriginal()" :size="'xs'" :label="'Replace'"></Button>
                                 </div>
                             </div>
                             <PageInformation v-if="true" :pagination="pagination" :no-record-label="'No Expense Found'"/>
@@ -50,49 +50,47 @@
                                 :size="'xl'"
                                 :pagination="pagination"
                             />
-                            <div class="tw-border tw-w-[700px] tw-border-red-400">
-                                <DataTable
-                                    v-if="true"
-                                    :headers="headers"
-                                    :size="'xl'"
-                                    :rows="data"
-                                    :no-data-label="'No Data Found'"
-                                    v-model="selected"
-                                    selection>
-                                    <template v-slot:cell.tools="{cell, slot}">
-                                        <div class="tw-h-full tw-w-full tw-flex tw-items-center">
-                                            <Button :variant="'outline'" :size="slot.buttonSize" :icon="'ic:sharp-send-to-mobile'" :label="'Slot Button'"></Button>
-                                        </div>
-                                    </template>
-                                    <template v-slot:cell.input="{cell, slot}">
-                                        <Input :id="`datetimesample-` + cell.id" v-model="datetimeFrom" readonly :size="slot.inputSize" class="tw-w-full" type="text" />
-                                    </template>
-                                    <template v-slot:cell.select="{cell, slot, scrollReference}">
-                                        <SingleSelect
-                                            in-data-table
-                                            :scroll-reference="scrollReference"
-                                            :size="slot.selectSize"
-                                            :icon="'ic:sharp-local-florist'"
-                                            :label="'Plan'"
-                                            :options="plan" />
-                                    </template>
-                                    <template v-slot:cell.name="{index, cell}">
-                                        <span>{{`[${index}] ${cell.name}`}}</span>
-                                    </template>
-                                    <template v-slot:cell.code="{index, cell}">
-                                        <span class="tw-font-mono">{{cell.code}}</span>
-                                    </template>
-                                    <template v-slot:cell.category="{cell, slot, scrollReference}">
-                                        <SingleSelect
-                                            in-data-table
-                                            :scroll-reference="scrollReference"
-                                            :size="slot.selectSize"
-                                            :icon="'ic:sharp-local-florist'"
-                                            :label="'Plan'"
-                                            :options="plan" />
-                                    </template>
-                                </DataTable>
-                            </div>
+                            <DataTable
+                                v-if="true"
+                                :headers="headers"
+                                :size="'xl'"
+                                :rows="data"
+                                :no-data-label="'No Data Found'"
+                                v-model="selected"
+                                selection>
+                                <template v-slot:cell.tools="{cell, slot}">
+                                    <div class="tw-h-full tw-w-full tw-flex tw-items-center">
+                                        <Button :variant="'outline'" :size="slot.buttonSize" :icon="'ic:sharp-send-to-mobile'" :label="'Slot Button'"></Button>
+                                    </div>
+                                </template>
+                                <template v-slot:cell.input="{cell, slot}">
+                                    <Input :id="`datetimesample-` + cell.id" v-model="datetimeFrom" readonly :size="slot.inputSize" class="tw-w-full" type="text" />
+                                </template>
+                                <template v-slot:cell.select="{cell, slot, scrollReference}">
+                                    <SingleSelect
+                                        in-data-table
+                                        :scroll-reference="scrollReference"
+                                        :size="slot.selectSize"
+                                        :icon="'ic:sharp-local-florist'"
+                                        :label="'Plan'"
+                                        :options="plan" />
+                                </template>
+                                <template v-slot:cell.name="{index, cell}">
+                                    <span>{{`[${index}] ${cell.name}`}}</span>
+                                </template>
+                                <template v-slot:cell.code="{index, cell}">
+                                    <span class="tw-font-mono">{{cell.code}}</span>
+                                </template>
+                                <template v-slot:cell.category="{cell, slot, scrollReference}">
+                                    <SingleSelect
+                                        in-data-table
+                                        :scroll-reference="scrollReference"
+                                        :size="slot.selectSize"
+                                        :icon="'ic:sharp-local-florist'"
+                                        :label="'Plan'"
+                                        :options="plan" />
+                                </template>
+                            </DataTable>
                         </div>
                     </div>
                 </div>
@@ -445,7 +443,7 @@ let pagination = ref({
         "next": "/?page=2"
     }
 });
-dateTimePicker([
+let originalDatePickers = ref([
     {
         id: 'datetimesample-45',
         type: 'datetime',
@@ -466,8 +464,37 @@ dateTimePicker([
         selectedCallback: (payload) => {
             datetimeFrom.value = payload.value;
         }
+    },
+]);
+let replaceDatePickers = ref([
+    {
+        id: 'datetimesample-1001',
+        type: 'datetime',
+        selectedCallback: (payload) => {
+            datetimeFrom.value = payload.value;
+        }
+    },
+    {
+        id: 'datetimesample-1002',
+        type: 'datetime',
+        selectedCallback: (payload) => {
+            datetimeFrom.value = payload.value;
+        }
     }
 ]);
+
+const {reRender} = dateTimePicker(originalDatePickers.value);
+
+function backOriginal(){
+    data.value = original.value;
+    reRender(originalDatePickers.value);
+}
+
+function replaceOriginal(){
+    data.value = replace.value;
+    reRender(replaceDatePickers.value);
+}
+
 </script>
 
 <style scoped>
