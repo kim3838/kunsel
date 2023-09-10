@@ -3,9 +3,9 @@
         tabindex="0"
         v-on:focus="keepSelectionActive(1)"
         v-on:blur="loseFocus(1)"
-        class="tw-w-full tw-relative focus:tw-outline-none tw-bg-white">
-        <div class="tw-w-full tw-relative tw-flex tw-justify-start tw-border"
-             :class="[heightClass, active ? 'tw-relative tw-border-light' : 'tw-border-neutral-200']">
+        class="tw-w-full focus:tw-outline-none tw-bg-white">
+        <div class="tw-w-full tw-flex tw-justify-start tw-border"
+             :class="[heightClass, active ? 'tw-border-light' : 'tw-border-neutral-200']">
             <div v-if="!active" :class="[iconHolderClass]" class="tw-flex tw-justify-center tw-items-center">
                 <Icon :class="[iconClass]" :name="icon"/>
             </div>
@@ -43,10 +43,10 @@
             </div>
         </div>
 
-        <div v-show="active" class="options-holder tw-z-10 tw-mt-[7px] tw-absolute tw-bg-white tw-border tw-border-light tw-w-max tw-drop-shadow-2xl">
+        <div v-show="active" :style="[selectionOffsetComputed]" ref="selectionOrigin" class="options-holder tw-z-10 tw-mt-[7px] tw-absolute tw-bg-white tw-border tw-border-light tw-w-max" :class="[dropShadow ? 'tw-drop-shadow-2xl' : '']">
             <div class="tw-absolute tw-border-solid tw-border-b-light" :style="[optionsArrowSlotClass]"></div>
             <div class="tw-absolute tw-border-solid tw-border-b-white" :style="[optionsArrowClass]"></div>
-            <div class="tw-px-2 tw-pt-2" :class="[optionsFontClass]">
+            <div class="tw-px-2 tw-pt-2 tw-text-left" :class="[optionsFontClass]">
                 {{searchPool.length ? `Select ` + label : 'Not Found.'}}
             </div>
             <div class="tw-max-h-[240px] tw-overflow-y-auto tw-border tw-border-t-lighter/25">
@@ -64,7 +64,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, nextTick  } from 'vue';
+import { ref, computed, watch, nextTick } from 'vue';
 
 const props = defineProps({
     options: {
@@ -78,6 +78,13 @@ const props = defineProps({
             }
         }
     },
+    inDataTable: Boolean,
+    dropShadow: Boolean,
+    alwaysActive: Boolean,
+    scrollReference: {
+        type: Object,
+        default: null
+    },
     icon: {
         type: String,
         default: 'ion:md-options'
@@ -86,14 +93,6 @@ const props = defineProps({
         type: String,
         default: ''
     },
-    key: {
-        type: String,
-        default: null
-    },
-    teleport: {
-        type: String,
-        default: null
-    },
     size: {
         default: 'md'
     },
@@ -101,7 +100,12 @@ const props = defineProps({
 
 let keepFocus = ref(false);
 let selectionSearch = ref(null);
-let active = ref(false);
+let selectionOrigin = ref(null);
+let selectionOffset = reactive({
+    origin: null,
+    left: 0
+});
+let active = ref(!!props.alwaysActive);
 let searchPool = ref([]);
 searchPool.value = props.options.data.map(item => item.value);
 
@@ -239,7 +243,7 @@ async function keepSelectionActive(chain: number){
 
 function loseFocus(chain: number){
     //Lose only active status if keepFocus is false
-    if(active.value && !keepFocus.value){
+    if(active.value && !keepFocus.value && !props.alwaysActive){
         active.value = false;
     }
 }
@@ -276,4 +280,27 @@ function clearSearch(){
     props.options.search = "";
     searchPool.value = props.options.data.map(item => item.value);
 }
+
+const selectionOffsetComputed = computed(()=>{
+    return {'left': (selectionOffset.origin === null || !props.inDataTable) ? '' : `${selectionOffset.left}px`};
+});
+
+watch(active, async (newValue) => {
+    await nextTick();
+
+    if(props.inDataTable){
+        if(selectionOffset.origin === null){
+            selectionOffset.origin = selectionOrigin.value.offsetLeft;
+        }
+
+        if(newValue){
+            let originOffsetLeft = selectionOffset.origin;
+            let parentScrollLeft = props.scrollReference.scrollLeft;
+            let offsetLeft = originOffsetLeft - parentScrollLeft;
+            selectionOffset.left = offsetLeft < 0 ? 0 : offsetLeft;
+        } else {
+            selectionOffset.left = selectionOffset.origin;
+        }
+    }
+});
 </script>

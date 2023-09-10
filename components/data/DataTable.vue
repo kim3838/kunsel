@@ -1,5 +1,5 @@
 <template>
-    <div id="table-division">
+    <div id="table-division" ref="dataTableScroll">
         <table class="tw-border-collapse">
             <thead>
                 <tr>
@@ -34,6 +34,7 @@
                         :class="[bodyFontClass, cellAlignClass(header?.alignData)]">
                         <slot
                             :name="`cell.${header.value}`"
+                            :scrollReference="dataTableScroll"
                             :slot="{buttonSize: buttonSize, inputSize: inputSize, selectSize: selectSize}"
                             :cell="row"
                             :index="index">
@@ -78,6 +79,8 @@ const props = defineProps({
         default: 'No Record',
     }
 });
+
+let dataTableScroll = ref(null);
 
 const emit = defineEmits(["update:modelValue"]);
 
