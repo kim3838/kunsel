@@ -4,8 +4,10 @@
         v-on:focus="keepSelectionActive(1)"
         v-on:blur="loseFocus(1)"
         class="tw-w-full focus:tw-outline-none tw-bg-white">
-        <div class="tw-w-full tw-flex tw-justify-start tw-border"
-             :class="[heightClass, active ? 'tw-border-light' : 'tw-border-neutral-200']">
+        <div
+            ref="selectHeader"
+            class="tw-w-full tw-flex tw-justify-start tw-border"
+            :class="[heightClass, active ? 'tw-border-light' : 'tw-border-neutral-200']">
             <div v-if="!active" :class="[iconHolderClass]" class="tw-flex tw-justify-center tw-items-center">
                 <Icon :class="[iconClass]" :name="icon"/>
             </div>
@@ -19,7 +21,7 @@
             </div>
 
             <div :class="[active ? 'tw-block' : 'tw-hidden']" class="tw-w-full tw-h-full tw-relative tw-overflow-hidden">
-                <div :class="[inputHolderClass]" class="tw-absolute tw-left-0">
+                <div :class="[inputHolderClass]" class="tw-absolute tw-left-0 tw-h-full tw-flex tw-items-center">
                     <Input
                         autocomplete="off"
                         class="tw-w-full"
@@ -43,16 +45,21 @@
             </div>
         </div>
 
-        <div v-show="active" :style="[selectionOffsetComputed]" ref="selectionOrigin" class="options-holder tw-z-10 tw-mt-[7px] tw-absolute tw-bg-white tw-border tw-border-light tw-w-max" :class="[dropShadow ? 'tw-drop-shadow-2xl' : '']">
+        <div
+            v-show="active"
+            :style="[selectionOffsetComputed, selectionWidthComputed]"
+            ref="selectionOrigin"
+            class="options-holder tw-z-10 tw-mt-[7px] tw-absolute tw-bg-white tw-border tw-border-light"
+            :class="[dropShadow ? 'tw-drop-shadow-2xl' : '']">
             <div class="tw-absolute tw-border-solid tw-border-b-light" :style="[optionsArrowSlotClass]"></div>
             <div class="tw-absolute tw-border-solid tw-border-b-white" :style="[optionsArrowClass]"></div>
             <div class="tw-px-2 tw-pt-2 tw-text-left" :class="[optionsFontClass]">
                 {{searchPool.length ? `Select ` + label : 'Not Found.'}}
             </div>
-            <div class="tw-max-h-[240px] tw-overflow-y-auto tw-border tw-border-t-lighter/25">
+            <div class="tw-max-h-[240px] tw-overflow-auto tw-border tw-border-t-lighter/25">
                 <div
                     v-for="item in options.selection" :key="item.value"
-                    class="tw-pl-1.5 hover:tw-bg-neutral-200 tw-flex tw-items-center tw-cursor-pointer"
+                    class="tw-px-1.5 hover:tw-bg-neutral-200 tw-flex tw-items-center tw-cursor-pointer"
                     :class="[isItemInSearchPool(item) ? '' : 'tw-hidden']"
                     @click="selectItem(item)">
                     <Icon class="tw-h-5 tw-w-[1.15rem]" :class="[isItemSelected(item) ? 'tw-text-accent' : 'tw-text-transparent']" name="ic:sharp-check-box"></Icon>
@@ -64,7 +71,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, watch, nextTick } from 'vue';
+import { computed, nextTick, onMounted, ref, watch } from 'vue';
 
 const props = defineProps({
     options: {
@@ -81,6 +88,10 @@ const props = defineProps({
     inDataTable: Boolean,
     dropShadow: Boolean,
     alwaysActive: Boolean,
+    selectionMaxWidth: {
+        type: Boolean,
+        default: true
+    },
     scrollReference: {
         type: Object,
         default: null
@@ -100,7 +111,9 @@ const props = defineProps({
 
 let keepFocus = ref(false);
 let selectionSearch = ref(null);
+let selectHeader = ref(null);
 let selectionOrigin = ref(null);
+let selectionWidth = ref(null);
 let selectionOffset = reactive({
     origin: null,
     left: 0
@@ -165,9 +178,9 @@ const selectionClass = computed(() => {
 
 const optionsFontClass = computed(() => {
     return {
-        '2xs': 'tw-text-xs',
-        'xs': 'tw-text-xs',
-        'sm': 'tw-text-xs',
+        '2xs': 'tw-text-base',
+        'xs': 'tw-text-base',
+        'sm': 'tw-text-base',
         'md': 'tw-text-base'
     }[props.size];
 });
@@ -208,7 +221,7 @@ const optionsArrowClass = computed(() => {
     }[props.size];
 });
 
-let selectionSummary = computed(() => {
+const selectionSummary = computed(() => {
     if(props.options.selected == null){
         return "None Selected"
     } else {
@@ -216,6 +229,35 @@ let selectionSummary = computed(() => {
             return item.value == props.options.selected;
         })[0].text;
     }
+});
+
+const selectionOffsetComputed = computed(()=>{
+    let offsetStyles = {};
+
+    if (selectionOffset.origin === null || !props.inDataTable){
+
+    } else {
+        offsetStyles['left'] = `${selectionOffset.left}px`
+    }
+
+    return offsetStyles;
+});
+
+const selectionWidthComputed = computed(()=>{
+    let widthStyles = {};
+
+    console.log({selectionMaxWidth:props.selectionMaxWidth});
+    if(selectionWidth.value === null || props.selectionMaxWidth){
+        widthStyles['width'] = 'max-content';
+
+        if(selectionWidth.value != null){
+            widthStyles['min-width'] = `${selectionWidth.value}px`;
+        }
+    } else {
+        widthStyles['width'] = `${selectionWidth.value}px`;
+    }
+    console.log({widthStyles:widthStyles});
+    return widthStyles;
 });
 
 async function keepSelectionActive(chain: number){
@@ -281,12 +323,9 @@ function clearSearch(){
     searchPool.value = props.options.data.map(item => item.value);
 }
 
-const selectionOffsetComputed = computed(()=>{
-    return {'left': (selectionOffset.origin === null || !props.inDataTable) ? '' : `${selectionOffset.left}px`};
-});
-
 watch(active, async (newValue) => {
     await nextTick();
+    selectionWidth.value = selectHeader.value.offsetWidth;
 
     if(props.inDataTable){
         if(selectionOffset.origin === null){
@@ -302,5 +341,10 @@ watch(active, async (newValue) => {
             selectionOffset.left = selectionOffset.origin;
         }
     }
+});
+
+onMounted(async () => {
+    await nextTick();
+    selectionWidth.value = selectHeader.value.offsetWidth;
 });
 </script>

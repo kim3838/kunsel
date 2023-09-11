@@ -14,7 +14,7 @@
                             </div>
                             <div class="tw-block tw-border tw-border-neutral-200">
                                 <InputLabel :size="'md'" value="Static Single Select" />
-                                <SingleSelect :size="'md'" :icon="'ic:sharp-rsvp'" :options="plan"/>
+                                <SingleSelect :always-active="false" :size="'md'" :icon="'ic:sharp-rsvp'" :options="plan"/>
                             </div>
 
                             <div class="tw-block tw-border tw-border-neutral-200">
@@ -404,14 +404,14 @@ let plan = reactive({
         {text : 'Individual', value: 1},
         {text : 'Standard Corporate', value: 2},
         {text : 'Custom Corporate', value: 3},
-        {text : 'Evaluator', value: 4}
+        {text : 'Evaluator', value: 4},
     ],
     selection: [
         {text : 'Free', value: 0},
         {text : 'Individual', value: 1},
         {text : 'Standard Corporate', value: 2},
         {text : 'Custom Corporate', value: 3},
-        {text : 'Evaluator', value: 4}
+        {text : 'Evaluator', value: 4},
     ],
     selected: null
 });

@@ -2,7 +2,6 @@
     <div>
         <NuxtLayout name="custom">
             <template #content>
-
                 <div id="lab" class="tw-m-2 tw-p-2 tw-border tw-border-light">
                     <div class="moody-card tw-max-w-[950px] tw-w-[950px]">
                         <div class="moody-card-frame"></div>
@@ -12,29 +11,29 @@
                             </span>
                         </div>
                         <div class="tw-relative tw-border tw-border-light tw-p-7">
-                            <div v-if="true" class="tw-grid tw-gap-2 tw-grid-cols-5 tw-mb-2">
+                            <div v-if="true" class="tw-grid tw-gap-2 md:tw-grid-cols-5 tw-mb-2 sm:tw-grid-cols-3">
                                 <div v-if="true" class="tw-block">
                                     <InputLabel :size="'md'" value="Static Multi Select" />
-                                    <MultiSelect :size="'md'" :options="category" :icon="'ic:sharp-hdr-on-select'"/>
+                                    <MultiSelect v-if="false" :size="'md'" :options="category" :icon="'ic:sharp-hdr-on-select'"/>
                                 </div>
                                 <div v-if="true" class="tw-block">
                                     <InputLabel :size="'md'" value="MD Static Single Select" />
-                                    <SingleSelect :size="'md'" :icon="'ic:sharp-hdr-on-select'" :label="'Plan'" :options="plan"/>
+                                    <SingleSelect v-if="false" :always-active="false" :size="'md'" :icon="'ic:sharp-hdr-on-select'" :label="'Plan'" :options="plan"/>
                                 </div>
                                 <div v-if="true" class="tw-block">
                                     <InputLabel :size="'sm'" value="SM Static Single Select" />
-                                    <SingleSelect :size="'sm'" :icon="'ic:sharp-assignment'" :options="plan"/>
+                                    <SingleSelect v-if="false" :size="'sm'" :icon="'ic:sharp-assignment'" :options="plan"/>
                                 </div>
                                 <div v-if="true" class="tw-block">
                                     <InputLabel :size="'xs'" value="XS Static Single Select" />
-                                    <SingleSelect :size="'xs'" :icon="'ic:sharp-assignment'" :options="plan"/>
+                                    <SingleSelect v-if="true" :always-active="true" :selection-max-width="false" :size="'xs'" :icon="'ic:sharp-assignment'" :options="plan"/>
                                 </div>
                                 <div v-if="true" class="tw-block">
                                     <InputLabel :size="'2xs'" value="2XS Static Single Select" />
-                                    <SingleSelect :size="'2xs'" :icon="'ic:sharp-assignment'" :options="plan"/>
+                                    <SingleSelect :always-active="true" :size="'2xs'" :icon="'ic:sharp-assignment'" :options="plan"/>
                                 </div>
                             </div>
-                            <div v-if="true" class="tw-grid tw-gap-2 tw-grid-cols-10 tw-mb-2">
+                            <div v-if="false" class="tw-grid tw-gap-2 tw-grid-cols-10 tw-mb-2">
                                 <div class="tw-block">
                                     <InputLabel :size="'md'" value="_" class="tw-text-transparent"/>
                                     <Button @click="backOriginal()" :size="'sm'" :label="'Original'"></Button>
@@ -44,16 +43,16 @@
                                     <Button @click="replaceOriginal()" :size="'xs'" :label="'Replace'"></Button>
                                 </div>
                             </div>
-                            <PageInformation v-if="true" :pagination="pagination" :no-record-label="'No Expense Found'"/>
+                            <PageInformation v-if="false" :pagination="pagination" :no-record-label="'No Expense Found'"/>
                             <Pagination
-                                v-if="true"
+                                v-if="false"
                                 :size="'xl'"
                                 :pagination="pagination"
                             />
                             <DataTable
                                 v-if="true"
                                 :headers="headers"
-                                :size="'xl'"
+                                :size="'sm'"
                                 :rows="data"
                                 :no-data-label="'No Data Found'"
                                 v-model="selected"
