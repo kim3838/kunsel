@@ -50,7 +50,7 @@
                                 :pagination="pagination"
                             />
                             <DataTable
-                                v-if="true"
+                                v-if="false"
                                 :headers="headers"
                                 :size="'sm'"
                                 :rows="data"

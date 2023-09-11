@@ -246,7 +246,6 @@ const selectionOffsetComputed = computed(()=>{
 const selectionWidthComputed = computed(()=>{
     let widthStyles = {};
 
-    console.log({selectionMaxWidth:props.selectionMaxWidth});
     if(selectionWidth.value === null || props.selectionMaxWidth){
         widthStyles['width'] = 'max-content';
 
@@ -256,7 +255,7 @@ const selectionWidthComputed = computed(()=>{
     } else {
         widthStyles['width'] = `${selectionWidth.value}px`;
     }
-    console.log({widthStyles:widthStyles});
+
     return widthStyles;
 });
 
