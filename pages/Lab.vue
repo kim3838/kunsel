@@ -52,7 +52,7 @@
                             <DataTable
                                 v-if="false"
                                 :headers="headers"
-                                :size="'sm'"
+                                :size="'xl'"
                                 :rows="data"
                                 :no-data-label="'No Data Found'"
                                 v-model="selected"
@@ -67,7 +67,7 @@
                                 </template>
                                 <template v-slot:cell.select="{cell, slot, scrollReference}">
                                     <SingleSelect
-                                        in-data-table
+                                        in-scrollable
                                         :scroll-reference="scrollReference"
                                         :size="slot.selectSize"
                                         :icon="'ic:sharp-local-florist'"
@@ -82,7 +82,7 @@
                                 </template>
                                 <template v-slot:cell.category="{cell, slot, scrollReference}">
                                     <SingleSelect
-                                        in-data-table
+                                        in-scrollable
                                         :scroll-reference="scrollReference"
                                         :size="slot.selectSize"
                                         :icon="'ic:sharp-local-florist'"

@@ -60,10 +60,15 @@
                 <div
                     v-for="item in options.selection" :key="item.value"
                     class="tw-px-1.5 hover:tw-bg-neutral-200 tw-flex tw-items-center tw-cursor-pointer"
-                    :class="[isItemInSearchPool(item) ? '' : 'tw-hidden']"
+                    :class="[isItemInSearchPool(item) ? '' : 'tw-hidden', optionsFontClass]"
                     @click="selectItem(item)">
-                    <Icon class="tw-h-5 tw-w-[1.15rem]" :class="[isItemSelected(item) ? 'tw-text-accent' : 'tw-text-transparent']" name="ic:sharp-check-box"></Icon>
-                    <span class="tw-text-accent tw-ml-0.5" :class="[optionsFontClass]">{{item.text}}</span>
+                    <div class="tw-w-max">
+                        <Icon
+                            class="tw-h-5 tw-w-5"
+                            :class="[isItemSelected(item) ? 'tw-text-accent' : 'tw-text-transparent']"
+                            name="ic:sharp-check-box" />
+                    </div>
+                    <div class="tw-text-accent tw-ml-0.5">{{item.text}}</div>
                 </div>
             </div>
         </div>
@@ -85,7 +90,7 @@ const props = defineProps({
             }
         }
     },
-    inDataTable: Boolean,
+    inScrollable: Boolean,
     dropShadow: Boolean,
     alwaysActive: Boolean,
     selectionMaxWidth: {
@@ -234,7 +239,7 @@ const selectionSummary = computed(() => {
 const selectionOffsetComputed = computed(()=>{
     let offsetStyles = {};
 
-    if (selectionOffset.origin === null || !props.inDataTable){
+    if (selectionOffset.origin === null || !props.inScrollable){
 
     } else {
         offsetStyles['left'] = `${selectionOffset.left}px`
@@ -326,7 +331,7 @@ watch(active, async (newValue) => {
     await nextTick();
     selectionWidth.value = selectHeader.value.offsetWidth;
 
-    if(props.inDataTable){
+    if(props.inScrollable){
         if(selectionOffset.origin === null){
             selectionOffset.origin = selectionOrigin.value.offsetLeft;
         }
