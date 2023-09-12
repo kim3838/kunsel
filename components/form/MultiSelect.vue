@@ -3,27 +3,28 @@
         tabindex="0"
         v-on:focus="keepSelectionActive(1)"
         v-on:blur="loseFocus(1)"
-        class="tw-w-full tw-relative focus:tw-outline-none">
-        <div class="tw-w-full tw-relative tw-h-8 tw-flex tw-justify-start tw-border"
-             :class="[active ? 'tw-relative tw-border-light' : 'tw-border-neutral-200']">
-            <div v-if="!active" class="tw-w-10 tw-flex tw-justify-center tw-items-center">
-                <Icon class="tw-h-5 tw-w-5" :name="icon"/>
+        class="tw-w-full focus:tw-outline-none tw-bg-white">
+        <div
+            ref="selectHeader"
+            class="tw-w-full tw-flex tw-justify-start tw-border"
+            :class="[heightClass, active ? 'tw-border-light' : 'tw-border-neutral-200']">
+            <div v-if="!active" :class="[iconHolderClass]" class="tw-flex tw-justify-center tw-items-center">
+                <Icon :class="[iconClass]" :name="icon"/>
             </div>
             <div v-if="!active" class="tw-w-full tw-relative hover:tw-bg-neutral-100 tw-cursor-pointer">
                 <div :class="[selectionClass]" class="tw-absolute tw-truncate tw-text-accent tw-flex tw-items-center">
                     {{selectionSummary}}
                 </div>
-                <div class="tw-absolute tw-right-0 tw-top-0 tw-w-8 tw-h-8 tw-flex tw-justify-center tw-items-center">
-                    <Icon class="tw-h-5 tw-w-5" name="ic:baseline-arrow-drop-down" />
+                <div :class="[dropDownIconHolderClass]" class="tw-absolute tw-right-0 tw-top-0 tw-flex tw-justify-center tw-items-center">
+                    <Icon :class="[dropDownIconClass]" name="ic:baseline-arrow-drop-down" />
                 </div>
             </div>
 
-            <div :class="[active ? 'tw-block tw-px-[0.5rem] tw-flex' : 'tw-hidden']" class="tw-justify-center tw-items-center">
-                <Icon v-if="false" @click="toggleSelection" class="tw-text-neutral-300 tw-h-6 tw-w-6 tw-cursor-pointer" :name="headerIcon()"/>
-                <NonModelCheckBox :checked="selectedAllCurrentSelection()" @click="toggleSelection" />
+            <div :class="[active ? 'tw-block' : 'tw-hidden', iconHolderClass]" class="tw-flex tw-items-center">
+                <NonModelCheckBox :size="'md'" :checked="selectedAllCurrentSelection()" @click="toggleSelection" />
             </div>
-            <div :class="[active ? 'tw-block' : 'tw-hidden']" class="tw-w-full tw-relative">
-                <div class="tw-absolute tw-left-0 tw-right-[2rem] tw-flex tw-items-center">
+            <div :class="[active ? 'tw-block' : 'tw-hidden']" class="tw-w-full tw-h-full tw-relative tw-overflow-hidden tw-items-center">
+                <div :class="[inputHolderClass]" class="tw-absolute tw-left-0 tw-h-full tw-flex tw-items-center">
                     <Input
                         autocomplete="off"
                         class="tw-w-full"
@@ -35,20 +36,30 @@
                         v-on:input="searchSelection"
                         v-model="props.options.search"
                         v-if="active"
-                        :size="'sm'"
+                        :size="inputSize"
                         :withBorder="false"
                         :rounded="false"
                         :focusRing="false"
                         :disabled="false" />
                 </div>
-                <div class="tw-absolute tw-right-0 tw-top-0 tw-w-8 tw-h-8 tw-flex tw-justify-center tw-items-center">
-                    <Icon @click="clearSearch" class="tw-h-5 tw-w-5 tw-cursor-pointer hover:tw-bg-neutral-200" name="ic:baseline-clear" />
+                <div :class="[dropDownIconHolderClass]" class="tw-absolute tw-right-0 tw-top-0 tw-flex tw-justify-center tw-items-center">
+                    <Icon :class="[dropDownIconClass]" @click="clearSearch" class="tw-cursor-pointer hover:tw-bg-neutral-200" name="ic:baseline-clear" />
                 </div>
             </div>
         </div>
 
-        <div v-show="active" class="tw-z-10 tw-absolute tw-w-full tw-border tw-bg-white tw-pr-1.5 tw-border-light tw-w-max tw-border-t-transparent">
-            <div class="tw-max-h-[240px] tw-overflow-y-auto">
+        <div
+            v-show="active"
+            :style="[selectionOffsetComputed, selectionWidthComputed]"
+            ref="selectionOrigin"
+            class="tw-z-10 tw-mt-[7px] tw-absolute tw-bg-white tw-border tw-border-light"
+            :class="[dropShadow ? 'tw-drop-shadow-2xl' : '']">
+            <div class="tw-absolute tw-border-solid tw-border-b-light" :style="[optionsArrowSlotClass]"></div>
+            <div class="tw-absolute tw-border-solid tw-border-b-white" :style="[optionsArrowClass]"></div>
+            <div class="tw-px-2 tw-pt-2 tw-text-left" :class="[optionsFontClass]">
+                {{searchPool.length ? `Select ` + label : 'Not Found.'}}
+            </div>
+            <div class="tw-max-h-[240px] tw-overflow-auto tw-border tw-border-t-lighter/25">
                 <NonModelCheckBox
                     :size="'md'"
                     v-for="item in options.selection" :key="item.value"
@@ -65,7 +76,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, nextTick  } from 'vue';
+import {ref, computed, nextTick, watch, onMounted} from 'vue';
 
 const props = defineProps({
     options: {
@@ -79,30 +90,142 @@ const props = defineProps({
             }
         }
     },
-    size: {
-        default: 'md'
+    inHorizontalScrollable: Boolean,
+    dropShadow: Boolean,
+    alwaysActive: Boolean,
+    selectionMaxWidth: {
+        type: Boolean,
+        default: true
+    },
+    scrollReference: {
+        type: Object,
+        default: null
     },
     icon: {
         type: String,
         default: 'ion:md-options'
-    }
+    },
+    label: {
+        type: String,
+        default: ''
+    },
+    size: {
+        default: 'md'
+    },
 });
 
 let keepFocus = ref(false);
 let selectionSearch = ref(null);
-let active = ref(false);
+let selectHeader = ref(null);
+let selectionOrigin = ref(null);
+let selectionWidth = ref(null);
+let selectionOffset = reactive({
+    origin: null,
+    left: 0
+});
+let active = ref(!!props.alwaysActive);
 let searchPool = ref([]);
 searchPool.value = props.options.data.map(item => item.value);
 
-const selectionClass = computed(() => {
+const heightClass = computed(() => {
     return {
-        'sm': 'tw-text-md tw-h-8 tw-leading-[0.875rem] tw-left-[0.2rem] tw-right-[2.2rem]',
-        'md': 'tw-text-sm tw-h-8 tw-leading-[0.875rem] tw-left-[0.2rem] tw-right-[2.2rem]',
-        'lg': 'tw-text-md tw-h-8 tw-leading-[0.875rem] tw-left-[0.2rem] tw-right-[2.2rem]'
+        '2xs': 'tw-h-5',
+        'xs': 'tw-h-6',
+        'sm': 'tw-h-7',
+        'md': 'tw-h-8'
     }[props.size];
 });
 
-let selectionSummary = computed(() => {
+const headerCheckToggleSize = computed(() => {
+    return {
+        '2xs': '2xs',
+        'xs': '2xs',
+        'sm': 'xs',
+        'md': 'sm'
+    }[props.size];
+});
+
+const iconHolderClass = computed(() => {
+    return {
+        '2xs': 'tw-pl-2',
+        'xs': 'tw-pl-2',
+        'sm': 'tw-pl-2',
+        'md': 'tw-pl-2'
+    }[props.size];
+});
+
+const iconClass = computed(() => {
+    return {
+        '2xs': 'tw-h-4 tw-w-4',
+        'xs': 'tw-h-5 tw-w-5',
+        'sm': 'tw-h-5 tw-w-5',
+        'md': 'tw-h-5 tw-w-5'
+    }[props.size];
+});
+
+const dropDownIconHolderClass = computed(() => {
+    return {
+        '2xs': 'tw-w-5 tw-h-5',
+        'xs': 'tw-w-6 tw-h-6',
+        'sm': 'tw-w-7 tw-h-7',
+        'md': 'tw-w-8 tw-h-8'
+    }[props.size];
+});
+
+const dropDownIconClass = computed(() => {
+    return {
+        '2xs': 'tw-h-4 tw-w-4',
+        'xs': 'tw-h-5 tw-w-5',
+        'sm': 'tw-h-5 tw-w-5',
+        'md': 'tw-h-5 tw-w-5'
+    }[props.size];
+});
+
+const selectionClass = computed(() => {
+    return {
+        '2xs': 'tw-text-xs tw-h-5 tw-leading-[0.875rem] tw-left-[0.2rem] tw-right-[1.45rem]',
+        'xs': 'tw-text-xs tw-h-6 tw-leading-[0.875rem] tw-left-[0.2rem] tw-right-[1.7rem]',
+        'sm': 'tw-text-sm tw-h-7 tw-leading-[0.875rem] tw-left-[0.2rem] tw-right-[1.85rem]',
+        'md': 'tw-text-sm tw-h-8 tw-leading-[0.875rem] tw-left-[0.2rem] tw-right-[2.2rem]'
+    }[props.size];
+});
+
+const optionsFontClass = computed(() => {
+    return {
+        '2xs': 'tw-text-base',
+        'xs': 'tw-text-base',
+        'sm': 'tw-text-base',
+        'md': 'tw-text-base'
+    }[props.size];
+});
+
+const inputHolderClass = computed(() => {
+    return {
+        '2xs': 'tw-right-5',
+        'xs': 'tw-right-6',
+        'sm': 'tw-right-7',
+        'md': 'tw-right-8'
+    }[props.size];
+});
+
+const inputSize = computed(() => {
+    return {
+        '2xs': '2xs',
+        'xs': '2xs',
+        'sm': 'xs',
+        'md': 'sm'
+    }[props.size];
+});
+
+const optionsArrowSlotClass = computed(() => {
+    return {'left':'9px', 'top': '-7px', 'border-right': '7px solid transparent', 'border-left': '7px solid transparent', 'border-bottom': '7px'};
+});
+
+const optionsArrowClass = computed(() => {
+    return {'left':'10px', 'top': '-6px', 'border-right': '6px solid transparent', 'border-left': '6px solid transparent', 'border-bottom': '6px'};
+});
+
+const selectionSummary = computed(() => {
     if(props.options.selected.length === 0){
         return "None Selected"
     } else if(props.options.selected.length < 3) {
@@ -120,6 +243,34 @@ let selectionSummary = computed(() => {
 
         return summary;
     }
+});
+
+const selectionOffsetComputed = computed(()=>{
+    let offsetStyles = {};
+
+    if (selectionOffset.origin === null || !props.inHorizontalScrollable){
+
+    } else {
+        offsetStyles['left'] = `${selectionOffset.left}px`
+    }
+
+    return offsetStyles;
+});
+
+const selectionWidthComputed = computed(()=>{
+    let widthStyles = {};
+
+    if(selectionWidth.value === null || props.selectionMaxWidth){
+        widthStyles['width'] = 'max-content';
+
+        if(selectionWidth.value != null){
+            widthStyles['min-width'] = `${selectionWidth.value}px`;
+        }
+    } else {
+        widthStyles['width'] = `${selectionWidth.value}px`;
+    }
+
+    return widthStyles;
 });
 
 async function keepSelectionActive(chain: number){
@@ -146,8 +297,8 @@ async function keepSelectionActive(chain: number){
 }
 
 function loseFocus(chain: number){
-    //Lose only active status if keepFocus is false
-    if(active.value && !keepFocus.value){
+    //Lose only active status if keepFocus is false or Not Active Lock
+    if(active.value && !keepFocus.value && !props.alwaysActive){
         active.value = false;
     }
 }
@@ -241,4 +392,29 @@ function clearSearch(){
     props.options.search = "";
     searchPool.value = props.options.data.map(item => item.value);
 }
+
+watch(active, async (newValue) => {
+    await nextTick();
+    selectionWidth.value = selectHeader.value.offsetWidth;
+
+    if(props.inHorizontalScrollable){
+        if(selectionOffset.origin === null){
+            selectionOffset.origin = selectionOrigin.value.offsetLeft;
+        }
+
+        if(newValue){
+            let originOffsetLeft = selectionOffset.origin;
+            let parentScrollLeft = props.scrollReference.scrollLeft;
+            let offsetLeft = originOffsetLeft - parentScrollLeft;
+            selectionOffset.left = offsetLeft < 0 ? 0 : offsetLeft;
+        } else {
+            selectionOffset.left = selectionOffset.origin;
+        }
+    }
+});
+
+onMounted(async () => {
+    await nextTick();
+    selectionWidth.value = selectHeader.value.offsetWidth;
+});
 </script>

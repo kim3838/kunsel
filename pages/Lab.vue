@@ -11,26 +11,40 @@
                             </span>
                         </div>
                         <div class="tw-relative tw-border tw-border-light tw-p-7">
-                            <div v-if="true" class="tw-grid tw-gap-2 md:tw-grid-cols-5 tw-mb-2 sm:tw-grid-cols-3">
+                            <div v-if="true" class="tw-grid tw-gap-2 md:tw-grid-cols-4 tw-mb-2 sm:tw-grid-cols-3">
                                 <div v-if="true" class="tw-block">
-                                    <InputLabel :size="'md'" value="Static Multi Select" />
-                                    <MultiSelect v-if="false" :size="'md'" :options="category" :icon="'ic:sharp-hdr-on-select'"/>
+                                    <InputLabel :size="'md'" value="MD Static Multi Select" />
+                                    <MultiSelect :selection-max-width="false" :always-active="false" :size="'md'" :options="category" :icon="'ic:sharp-hdr-on-select'"/>
                                 </div>
+                                <div v-if="true" class="tw-block">
+                                    <InputLabel :size="'md'" value="SM Static Multi Select" />
+                                    <MultiSelect :selection-max-width="false" :always-active="false" :size="'sm'" :options="category" :icon="'ic:sharp-hdr-on-select'"/>
+                                </div>
+                                <div v-if="true" class="tw-block">
+                                    <InputLabel :size="'md'" value="XS Static Multi Select" />
+                                    <MultiSelect :selection-max-width="false" :always-active="false" :size="'xs'" :options="category" :icon="'ic:sharp-hdr-on-select'"/>
+                                </div>
+                                <div v-if="true" class="tw-block">
+                                    <InputLabel :size="'md'" value="2XS Static Multi Select" />
+                                    <MultiSelect :always-active="false" :size="'2xs'" :options="category" :icon="'ic:sharp-hdr-on-select'"/>
+                                </div>
+                            </div>
+                            <div v-if="true" class="tw-grid tw-gap-2 md:tw-grid-cols-4 tw-mb-2 sm:tw-grid-cols-3">
                                 <div v-if="true" class="tw-block">
                                     <InputLabel :size="'md'" value="MD Static Single Select" />
-                                    <SingleSelect v-if="false" :always-active="false" :size="'md'" :icon="'ic:sharp-hdr-on-select'" :label="'Plan'" :options="plan"/>
+                                    <SingleSelect :selection-max-width="false" :always-active="false" :size="'md'" :icon="'ic:sharp-hdr-on-select'" :label="'Plan'" :options="plan"/>
                                 </div>
                                 <div v-if="true" class="tw-block">
-                                    <InputLabel :size="'sm'" value="SM Static Single Select" />
-                                    <SingleSelect v-if="false" :size="'sm'" :icon="'ic:sharp-assignment'" :options="plan"/>
+                                    <InputLabel :size="'md'" value="SM Static Single Select" />
+                                    <SingleSelect  :selection-max-width="false" :always-active="false" :size="'sm'" :icon="'ic:sharp-assignment'" :options="plan"/>
                                 </div>
                                 <div v-if="true" class="tw-block">
-                                    <InputLabel :size="'xs'" value="XS Static Single Select" />
-                                    <SingleSelect v-if="true" :always-active="true" :selection-max-width="false" :size="'xs'" :icon="'ic:sharp-assignment'" :options="plan"/>
+                                    <InputLabel :size="'md'" value="XS Static Single Select" />
+                                    <SingleSelect :selection-max-width="false" :always-active="false" :size="'xs'" :icon="'ic:sharp-assignment'" :options="plan"/>
                                 </div>
                                 <div v-if="true" class="tw-block">
-                                    <InputLabel :size="'2xs'" value="2XS Static Single Select" />
-                                    <SingleSelect :always-active="true" :size="'2xs'" :icon="'ic:sharp-assignment'" :options="plan"/>
+                                    <InputLabel :size="'md'" value="2XS Static Single Select" />
+                                    <SingleSelect :always-active="false" :size="'2xs'" :icon="'ic:sharp-assignment'" :options="plan"/>
                                 </div>
                             </div>
                             <div v-if="false" class="tw-grid tw-gap-2 tw-grid-cols-10 tw-mb-2">
@@ -50,7 +64,7 @@
                                 :pagination="pagination"
                             />
                             <DataTable
-                                v-if="false"
+                                v-if="true"
                                 :headers="headers"
                                 :size="'xl'"
                                 :rows="data"
@@ -66,13 +80,12 @@
                                     <Input :id="`datetimesample-` + cell.id" v-model="datetimeFrom" readonly :size="slot.inputSize" class="tw-w-full" type="text" />
                                 </template>
                                 <template v-slot:cell.select="{cell, slot, scrollReference}">
-                                    <SingleSelect
-                                        in-scrollable
+                                    <MultiSelect
+                                        in-horizontal-scrollable
                                         :scroll-reference="scrollReference"
                                         :size="slot.selectSize"
-                                        :icon="'ic:sharp-local-florist'"
-                                        :label="'Plan'"
-                                        :options="plan" />
+                                        :options="category"
+                                        :icon="'ic:sharp-hdr-on-select'"/>
                                 </template>
                                 <template v-slot:cell.name="{index, cell}">
                                     <span>{{`[${index}] ${cell.name}`}}</span>
@@ -82,7 +95,7 @@
                                 </template>
                                 <template v-slot:cell.category="{cell, slot, scrollReference}">
                                     <SingleSelect
-                                        in-scrollable
+                                        in-horizontal-scrollable
                                         :scroll-reference="scrollReference"
                                         :size="slot.selectSize"
                                         :icon="'ic:sharp-local-florist'"
@@ -120,6 +133,7 @@ let category = reactive({
         {text : 'Earrings', value: 4},
         {text : 'Rings', value: 5},
         {text : 'Polyester', value: 6},
+        {text : 'Polyester, Polyester, Polyester, Polyester, Polyester', value: 7},
     ],
     selection: [
         {text : 'Charms', value: 0},
@@ -129,6 +143,7 @@ let category = reactive({
         {text : 'Earrings', value: 4},
         {text : 'Rings', value: 5},
         {text : 'Polyester', value: 6},
+        {text : 'Polyester, Polyester, Polyester, Polyester, Polyester', value: 7},
     ],
     selected: []
 });

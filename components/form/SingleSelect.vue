@@ -49,7 +49,7 @@
             v-show="active"
             :style="[selectionOffsetComputed, selectionWidthComputed]"
             ref="selectionOrigin"
-            class="options-holder tw-z-10 tw-mt-[7px] tw-absolute tw-bg-white tw-border tw-border-light"
+            class="tw-z-10 tw-mt-[7px] tw-absolute tw-bg-white tw-border tw-border-light"
             :class="[dropShadow ? 'tw-drop-shadow-2xl' : '']">
             <div class="tw-absolute tw-border-solid tw-border-b-light" :style="[optionsArrowSlotClass]"></div>
             <div class="tw-absolute tw-border-solid tw-border-b-white" :style="[optionsArrowClass]"></div>
@@ -90,7 +90,7 @@ const props = defineProps({
             }
         }
     },
-    inScrollable: Boolean,
+    inHorizontalScrollable: Boolean,
     dropShadow: Boolean,
     alwaysActive: Boolean,
     selectionMaxWidth: {
@@ -209,21 +209,11 @@ const inputSize = computed(() => {
 });
 
 const optionsArrowSlotClass = computed(() => {
-    return {
-        '2xs': {'left':'7px', 'top': '-5px', 'border-right': '5px solid transparent', 'border-left': '5px solid transparent', 'border-bottom': '5px'},
-        'xs': {'left':'9px', 'top': '-7px', 'border-right': '7px solid transparent', 'border-left': '7px solid transparent', 'border-bottom': '7px'},
-        'sm': {'left':'9px', 'top': '-7px', 'border-right': '7px solid transparent', 'border-left': '7px solid transparent', 'border-bottom': '7px'},
-        'md': {'left':'9px', 'top': '-7px', 'border-right': '7px solid transparent', 'border-left': '7px solid transparent', 'border-bottom': '7px'}
-    }[props.size];
+    return {'left':'9px', 'top': '-7px', 'border-right': '7px solid transparent', 'border-left': '7px solid transparent', 'border-bottom': '7px'};
 });
 
 const optionsArrowClass = computed(() => {
-    return {
-        '2xs': {'left':'8px', 'top': '-4px', 'border-right': '4px solid transparent', 'border-left': '4px solid transparent', 'border-bottom': '4px'},
-        'xs': {'left':'10px', 'top': '-6px', 'border-right': '6px solid transparent', 'border-left': '6px solid transparent', 'border-bottom': '6px'},
-        'sm': {'left':'10px', 'top': '-6px', 'border-right': '6px solid transparent', 'border-left': '6px solid transparent', 'border-bottom': '6px'},
-        'md': {'left':'10px', 'top': '-6px', 'border-right': '6px solid transparent', 'border-left': '6px solid transparent', 'border-bottom': '6px'}
-    }[props.size];
+    return {'left':'10px', 'top': '-6px', 'border-right': '6px solid transparent', 'border-left': '6px solid transparent', 'border-bottom': '6px'};
 });
 
 const selectionSummary = computed(() => {
@@ -239,7 +229,7 @@ const selectionSummary = computed(() => {
 const selectionOffsetComputed = computed(()=>{
     let offsetStyles = {};
 
-    if (selectionOffset.origin === null || !props.inScrollable){
+    if (selectionOffset.origin === null || !props.inHorizontalScrollable){
 
     } else {
         offsetStyles['left'] = `${selectionOffset.left}px`
@@ -288,7 +278,7 @@ async function keepSelectionActive(chain: number){
 }
 
 function loseFocus(chain: number){
-    //Lose only active status if keepFocus is false
+    //Lose only active status if keepFocus is false or Not Active Lock
     if(active.value && !keepFocus.value && !props.alwaysActive){
         active.value = false;
     }
@@ -331,7 +321,7 @@ watch(active, async (newValue) => {
     await nextTick();
     selectionWidth.value = selectHeader.value.offsetWidth;
 
-    if(props.inScrollable){
+    if(props.inHorizontalScrollable){
         if(selectionOffset.origin === null){
             selectionOffset.origin = selectionOrigin.value.offsetLeft;
         }
