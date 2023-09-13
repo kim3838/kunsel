@@ -14,19 +14,19 @@
                             <div v-if="true" class="tw-grid tw-gap-2 md:tw-grid-cols-4 tw-mb-2 sm:tw-grid-cols-3">
                                 <div v-if="true" class="tw-block">
                                     <InputLabel :size="'md'" value="MD Static Multi Select" />
-                                    <MultiSelect :selection-max-width="false" :always-active="false" :size="'md'" :options="category" :icon="'ic:sharp-hdr-on-select'"/>
+                                    <MultiSelect drop-shadow :selection-max-width="false" :always-active="false" :size="'md'" :options="category" :icon="'ic:sharp-hdr-on-select'"/>
                                 </div>
                                 <div v-if="true" class="tw-block">
                                     <InputLabel :size="'md'" value="SM Static Multi Select" />
-                                    <MultiSelect :selection-max-width="false" :always-active="false" :size="'sm'" :options="category" :icon="'ic:sharp-hdr-on-select'"/>
+                                    <MultiSelect drop-shadow :selection-max-width="false" :always-active="false" :size="'sm'" :options="category" :icon="'ic:sharp-hdr-on-select'"/>
                                 </div>
                                 <div v-if="true" class="tw-block">
                                     <InputLabel :size="'md'" value="XS Static Multi Select" />
-                                    <MultiSelect :selection-max-width="false" :always-active="false" :size="'xs'" :options="category" :icon="'ic:sharp-hdr-on-select'"/>
+                                    <MultiSelect drop-shadow :selection-max-width="false" :always-active="false" :size="'xs'" :options="category" :icon="'ic:sharp-hdr-on-select'"/>
                                 </div>
                                 <div v-if="true" class="tw-block">
                                     <InputLabel :size="'md'" value="2XS Static Multi Select" />
-                                    <MultiSelect :always-active="false" :size="'2xs'" :options="category" :icon="'ic:sharp-hdr-on-select'"/>
+                                    <MultiSelect drop-shadow :always-active="false" :size="'2xs'" :options="category" :icon="'ic:sharp-hdr-on-select'"/>
                                 </div>
                             </div>
                             <div v-if="true" class="tw-grid tw-gap-2 md:tw-grid-cols-4 tw-mb-2 sm:tw-grid-cols-3">
@@ -82,6 +82,7 @@
                                 <template v-slot:cell.select="{cell, slot, scrollReference}">
                                     <MultiSelect
                                         in-horizontal-scrollable
+                                        drop-shadow
                                         :scroll-reference="scrollReference"
                                         :size="slot.selectSize"
                                         :options="category"

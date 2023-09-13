@@ -63,48 +63,94 @@
                                     :headers="headers_1"
                                     :size="'sm'"
                                     :rows="data_1">
-                                    <template v-slot:cell.name="{index, cell}">
-                                        <span>{{`[${index}] ${cell.name}`}}</span>
+                                    <template v-slot:cell.name="{cell, index, slot}">
+                                        <Button class="tw-w-full" :variant="'outline'" :size="slot.buttonSize" :label="`[${index}] ${cell.name}`"></Button>
+                                    </template>
+                                    <template v-slot:cell.category="{cell, slot, scrollReference}">
+                                        <MultiSelect
+                                            in-horizontal-scrollable
+                                            drop-shadow
+                                            :scroll-reference="scrollReference"
+                                            :size="slot.selectSize"
+                                            :options="category"
+                                            :icon="'ic:sharp-hdr-on-select'"/>
+                                    </template>
+                                    <template v-slot:cell.datetime_added="{cell, slot, scrollReference}">
+                                        <Input :id="`datetime_added-` + cell.id" v-model="cell.datetime_added" readonly :size="slot.inputSize" class="tw-w-full" type="text" />
                                     </template>
                                 </DataTable>
                             </div>
-                            <div class="tw-block tw-p-2 tw-border tw-border-neutral-200">
+                            <div class="tw-block tw-col-span-1 xl:tw-col-span-2 tw-p-2 tw-border tw-border-neutral-200">
                                 <InputLabel class="tw-mb-2" :size="'md'" value="MD Datatable with Selection" />
                                 <DataTable
                                     :headers="headers_2"
                                     :size="'md'"
-                                    :rows="data_1"
+                                    :rows="data_2"
                                     v-model="selected_1"
                                     selection>
-                                    <template v-slot:cell.name="{index, cell}">
-                                        <span>{{`[${index}] ${cell.name}`}}</span>
+                                    <template v-slot:cell.name="{index, cell, slot}">
+                                        <Input v-model="cell.name" readonly :size="slot.inputSize" class="tw-w-full" type="text" />
                                     </template>
-                                    <template v-slot:cell.code="{index, cell}">
-                                        <span class="tw-font-mono">{{cell.code}}</span>
+                                    <template v-slot:cell.code="{index, cell, slot}">
+                                        <Input v-model="cell.code" readonly :size="slot.inputSize" class="tw-w-full" type="text" />
+                                    </template>
+                                    <template v-slot:cell.datetime_added="{cell, slot, scrollReference}">
+                                        <Input :id="`datetime_added-` + cell.id" v-model="cell.datetime_added" readonly :size="slot.inputSize" class="tw-w-full" type="text" />
                                     </template>
                                 </DataTable>
                             </div>
-                            <div class="tw-block tw-p-2 tw-border tw-border-neutral-200">
+                            <div class="tw-block tw-col-span-2 xl:tw-col-span-3 tw-p-2 tw-border tw-border-neutral-200">
                                 <InputLabel class="tw-mb-2" :size="'md'" value="XL Datatable with Selection and Form Foundations" />
                                 <DataTable
                                     :headers="headers_3"
                                     :size="'xl'"
-                                    :rows="data_1"
+                                    :rows="data_3"
                                     v-model="selected_2"
                                     selection>
-                                    <template v-slot:cell.tools="{cell, slot}">
-                                        <div class="tw-h-full tw-w-full tw-flex tw-items-center">
+                                    <template v-slot:cell.tools="{cell, slot, scrollReference}">
+                                        <div class="tw-h-full tw-space-x-0.5 tw-w-full tw-flex tw-items-center">
                                             <Button :size="slot.buttonSize" :icon="'ic:sharp-all-inbox'" :label="'Slot Button'"></Button>
+                                            <Button :variant="'outline'" :size="slot.buttonSize" :icon="'ic:sharp-all-inbox'" :label="'Slot Button'"></Button>
                                         </div>
                                     </template>
-                                    <template v-slot:cell.input="{cell, slot}">
+                                    <template v-slot:cell.input="{cell, index, slot}">
                                         <Input :size="slot.inputSize" class="tw-w-full" placeholder="Enter Amount" type="text" autocomplete="off" />
                                     </template>
-                                    <template v-slot:cell.name="{index, cell}">
-                                        <span>{{`[${index}] ${cell.name}`}}</span>
+                                    <template v-slot:cell.name="{cell, index, slot}">
+                                        <Input :size="slot.inputSize" class="tw-w-full" v-model="cell.name" type="text" autocomplete="off" />
                                     </template>
-                                    <template v-slot:cell.code="{index, cell}">
-                                        <span class="tw-font-mono">{{cell.code}}</span>
+                                    <template v-slot:cell.code="{cell, index, slot}">
+                                        <Input :size="slot.inputSize" class="tw-w-full" v-model="cell.code" type="text" autocomplete="off" />
+                                    </template>
+                                    <template v-slot:cell.single_select="{cell, slot, scrollReference}">
+                                        <MultiSelect
+                                            in-horizontal-scrollable
+                                            drop-shadow
+                                            :scroll-reference="scrollReference"
+                                            :size="slot.selectSize"
+                                            :options="category"
+                                            :icon="'ic:sharp-hdr-on-select'"/>
+                                    </template>
+                                    <template v-slot:cell.multi_select="{cell, slot, scrollReference}">
+                                        <SingleSelect
+                                            in-horizontal-scrollable
+                                            :scroll-reference="scrollReference"
+                                            :size="slot.selectSize"
+                                            :icon="'ic:sharp-local-florist'"
+                                            :label="'Plan'"
+                                            :options="plan" />
+                                    </template>
+                                    <template v-slot:cell.type="{cell, index, slot}">
+                                        <Input :size="slot.inputSize" class="tw-w-full" v-model="cell.type" type="number" autocomplete="off" />
+                                    </template>
+                                    <template v-slot:cell.category="{cell, index, slot}">
+                                        <Input :size="slot.inputSize" class="tw-w-full" v-model="cell.category" type="number" autocomplete="off" />
+                                    </template>
+                                    <template v-slot:cell.capacity="{cell, index, slot}">
+                                        <Input :size="slot.inputSize" class="tw-w-full" v-model="cell.capacity" type="number" autocomplete="off" />
+                                    </template>
+                                    <template v-slot:cell.datetime_added="{cell, slot, scrollReference}">
+                                        <Input :id="`datetime_added-` + cell.id" v-model="cell.datetime_added" readonly :size="slot.inputSize" class="tw-w-full" type="text" />
                                     </template>
                                 </DataTable>
                             </div>
@@ -421,8 +467,8 @@ let selected_2 = ref([1001,1002]);
 let headers_1 = reactive([
     { text: 'ID', value: 'id'},
     { text: 'NAME', value: 'name'},
-    { text: 'CATEGORY', alignData: 'right', value: 'category'},
-    { text: 'DATE ADDED', alignData: 'right', value: 'datetime_added'},
+    { text: 'CATEGORY', alignData: 'right', value: 'category', width: '140px'},
+    { text: 'DATE ADDED', alignData: 'right', value: 'datetime_added', width: '130px'},
     { text: 'DATE CREATED', alignData: 'right', value: 'created_at'},
     { text: 'DATE UPDATED', alignData: 'right', value: 'updated_at'},
 ]);
@@ -430,23 +476,24 @@ let headers_2 = reactive([
     { text: 'ID', value: 'id'},
     { text: 'NAME', value: 'name'},
     { text: 'CODE', alignHeader: 'center', value: 'code'},
-    { text: 'TYPE', value: 'type'},
+    { text: 'DATE ADDED', alignData: 'right', value: 'datetime_added'},
     { text: 'CATEGORY', alignData: 'right', value: 'category'},
     { text: 'CAPACITY', alignData: 'left', value: 'capacity'},
-    { text: 'DATE ADDED', alignData: 'right', value: 'datetime_added'},
-    { text: 'DATE CREATED', alignData: 'right', value: 'created_at'},
-    { text: 'DATE UPDATED', alignData: 'right', value: 'updated_at'},
+    { text: 'TYPE', value: 'type'}
 ]);
 let headers_3 = reactive([
+    { text: '#', value: 'row_number'},
     { text: 'TOOLS', value: 'tools'},
-    { text: 'INPUT', value: 'input', width: '120px'},
+    { text: 'INPUT', value: 'input', width: '220px'},
     { text: 'ID', value: 'id'},
-    { text: 'NAME', value: 'name'},
-    { text: 'CODE', alignHeader: 'center', value: 'code'},
+    { text: 'NAME', value: 'name', width: '120px'},
+    { text: 'CODE', alignHeader: 'center', value: 'code', width: '100px'},
+    { text: 'SINGLE SELECT', value: 'single_select', width: '170px'},
+    { text: 'MULTI SELECT', value: 'multi_select', width: '170px'},
     { text: 'TYPE', value: 'type'},
     { text: 'CATEGORY', alignData: 'right', value: 'category'},
     { text: 'CAPACITY', alignData: 'left', value: 'capacity'},
-    { text: 'DATE ADDED', alignData: 'right', value: 'datetime_added'},
+    { text: 'DATE ADDED', alignData: 'right', value: 'datetime_added', width: '150px'},
     { text: 'DATE CREATED', alignData: 'right', value: 'created_at'},
     { text: 'DATE UPDATED', alignData: 'right', value: 'updated_at'},
 ]);
@@ -484,6 +531,9 @@ let data_1 = ref([
         "created_at": "2023-08-22 17:44:03",
         "updated_at": "2023-08-22 17:44:03"
     },
+]);
+
+let data_2 = ref([
     {
         "id": 246,
         "name": "IB8 EAW DML6X",
@@ -517,7 +567,11 @@ let data_1 = ref([
         "created_at": "2023-08-22 17:44:03",
         "updated_at": "2023-08-22 17:44:03"
     },
+]);
+
+let data_3 = ref([
     {
+        "row_number": '#1',
         "id": 418,
         "name": "VFSNL4 FL2 7C",
         "code": "PRT1915550179",
@@ -529,6 +583,7 @@ let data_1 = ref([
         "updated_at": "2023-08-22 17:44:03"
     },
     {
+        "row_number": '#2',
         "id": 478,
         "name": "RC0 868Q6 GZI",
         "code": "PRT4902978961",
@@ -540,6 +595,7 @@ let data_1 = ref([
         "updated_at": "2023-08-22 17:44:03"
     },
     {
+        "row_number": '#3',
         "id": 552,
         "name": "9Q8 YEESZ DKF",
         "code": "PRT3932126979",
@@ -551,6 +607,7 @@ let data_1 = ref([
         "updated_at": "2023-08-22 17:44:03"
     },
     {
+        "row_number": '#4',
         "id": 702,
         "name": "45EE9R TES VK",
         "code": "PRT2563775044",
@@ -563,7 +620,37 @@ let data_1 = ref([
     }
 ]);
 
-dateTimePicker([
+let data_1_DateTimePickers = data_1.value.map(record => {
+    return {
+        id: `datetime_added-` + record.id,
+        type: 'datetime',
+        selectedCallback: (payload) => {
+            record.datetime_added = payload.value;
+        }
+    }
+});
+
+let data_2_DateTimePickers = data_2.value.map(record => {
+    return {
+        id: `datetime_added-` + record.id,
+        type: 'datetime',
+        selectedCallback: (payload) => {
+            record.datetime_added = payload.value;
+        }
+    }
+});
+
+let data_3_DateTimePickers = data_3.value.map(record => {
+    return {
+        id: `datetime_added-` + record.id,
+        type: 'datetime',
+        selectedCallback: (payload) => {
+            record.datetime_added = payload.value;
+        }
+    }
+});
+
+let dateTimePickers = ref([
     {
         id: 'datetime',
         type: 'datetime',
@@ -598,4 +685,11 @@ dateTimePicker([
         }
     }
 ]);
+
+dateTimePickers.value = dateTimePickers.value
+    .concat(data_1_DateTimePickers)
+    .concat(data_2_DateTimePickers)
+    .concat(data_3_DateTimePickers);
+
+dateTimePicker(dateTimePickers.value);
 </script>
