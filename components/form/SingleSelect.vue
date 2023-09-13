@@ -132,7 +132,8 @@ const heightClass = computed(() => {
         '2xs': 'tw-h-5',
         'xs': 'tw-h-6',
         'sm': 'tw-h-7',
-        'md': 'tw-h-8'
+        'md': 'tw-h-8',
+        'lg': 'tw-h-11'
     }[props.size];
 });
 
@@ -141,7 +142,8 @@ const iconHolderClass = computed(() => {
         '2xs': 'tw-w-4',
         'xs': 'tw-w-6',
         'sm': 'tw-w-8',
-        'md': 'tw-w-10'
+        'md': 'tw-w-10',
+        'lg': 'tw-w-11'
     }[props.size];
 });
 
@@ -150,7 +152,8 @@ const iconClass = computed(() => {
         '2xs': 'tw-h-4 tw-w-4',
         'xs': 'tw-h-5 tw-w-5',
         'sm': 'tw-h-5 tw-w-5',
-        'md': 'tw-h-5 tw-w-5'
+        'md': 'tw-h-5 tw-w-5',
+        'lg': 'tw-h-6 tw-w-6'
     }[props.size];
 });
 
@@ -159,7 +162,8 @@ const dropDownIconHolderClass = computed(() => {
         '2xs': 'tw-w-5 tw-h-5',
         'xs': 'tw-w-6 tw-h-6',
         'sm': 'tw-w-7 tw-h-7',
-        'md': 'tw-w-8 tw-h-8'
+        'md': 'tw-w-8 tw-h-8',
+        'lg': 'tw-w-11 tw-h-11'
     }[props.size];
 });
 
@@ -168,7 +172,8 @@ const dropDownIconClass = computed(() => {
         '2xs': 'tw-h-4 tw-w-4',
         'xs': 'tw-h-5 tw-w-5',
         'sm': 'tw-h-5 tw-w-5',
-        'md': 'tw-h-5 tw-w-5'
+        'md': 'tw-h-5 tw-w-5',
+        'lg': 'tw-h-6 tw-w-6'
     }[props.size];
 });
 
@@ -177,7 +182,8 @@ const selectionClass = computed(() => {
         '2xs': 'tw-text-xs tw-h-5 tw-leading-[0.875rem] tw-left-[0.2rem] tw-right-[1.45rem]',
         'xs': 'tw-text-xs tw-h-6 tw-leading-[0.875rem] tw-left-[0.2rem] tw-right-[1.7rem]',
         'sm': 'tw-text-sm tw-h-7 tw-leading-[0.875rem] tw-left-[0.2rem] tw-right-[1.85rem]',
-        'md': 'tw-text-sm tw-h-8 tw-leading-[0.875rem] tw-left-[0.2rem] tw-right-[2.2rem]'
+        'md': 'tw-text-sm tw-h-8 tw-leading-[0.875rem] tw-left-[0.2rem] tw-right-[2.2rem]',
+        'lg': 'tw-text-lg tw-h-11 tw-leading-[0.875rem] tw-left-[0.2rem] tw-right-[2.95rem]',
     }[props.size];
 });
 
@@ -186,7 +192,8 @@ const optionsFontClass = computed(() => {
         '2xs': 'tw-text-base',
         'xs': 'tw-text-base',
         'sm': 'tw-text-base',
-        'md': 'tw-text-base'
+        'md': 'tw-text-base',
+        'lg': 'tw-text-base'
     }[props.size];
 });
 
@@ -195,7 +202,8 @@ const inputHolderClass = computed(() => {
         '2xs': 'tw-right-5',
         'xs': 'tw-right-6',
         'sm': 'tw-right-7',
-        'md': 'tw-right-8'
+        'md': 'tw-right-8',
+        'lg': 'tw-right-11',
     }[props.size];
 });
 
@@ -204,7 +212,8 @@ const inputSize = computed(() => {
         '2xs': '2xs',
         'xs': '2xs',
         'sm': 'xs',
-        'md': 'sm'
+        'md': 'sm',
+        'lg': 'lg',
     }[props.size];
 });
 

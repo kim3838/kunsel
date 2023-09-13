@@ -11,40 +11,16 @@
                             </span>
                         </div>
                         <div class="tw-relative tw-border tw-border-light tw-p-7">
-                            <div v-if="true" class="tw-grid tw-gap-2 md:tw-grid-cols-4 tw-mb-2 sm:tw-grid-cols-3">
-                                <div v-if="true" class="tw-block">
-                                    <InputLabel :size="'md'" value="MD Static Multi Select" />
-                                    <MultiSelect drop-shadow :selection-max-width="false" :always-active="false" :size="'md'" :options="category" :icon="'ic:sharp-hdr-on-select'"/>
-                                </div>
-                                <div v-if="true" class="tw-block">
-                                    <InputLabel :size="'md'" value="SM Static Multi Select" />
-                                    <MultiSelect drop-shadow :selection-max-width="false" :always-active="false" :size="'sm'" :options="category" :icon="'ic:sharp-hdr-on-select'"/>
-                                </div>
-                                <div v-if="true" class="tw-block">
-                                    <InputLabel :size="'md'" value="XS Static Multi Select" />
-                                    <MultiSelect drop-shadow :selection-max-width="false" :always-active="false" :size="'xs'" :options="category" :icon="'ic:sharp-hdr-on-select'"/>
-                                </div>
-                                <div v-if="true" class="tw-block">
-                                    <InputLabel :size="'md'" value="2XS Static Multi Select" />
-                                    <MultiSelect drop-shadow :always-active="false" :size="'2xs'" :options="category" :icon="'ic:sharp-hdr-on-select'"/>
-                                </div>
+                            <div class="tw-grid tw-gap-2 tw-grid-cols-5 tw-mb-2 tw-border tw-border-red-400">
+                                <Button :size="'lg'" :icon="'ic:sharp-send-to-mobile'" :label="'LG SKIP'"></Button>
+                                <MultiSelect drop-shadow :selection-max-width="false" :always-active="false" :size="'md'" :options="category" :icon="'ic:sharp-hdr-on-select'"/>
                             </div>
-                            <div v-if="true" class="tw-grid tw-gap-2 md:tw-grid-cols-4 tw-mb-2 sm:tw-grid-cols-3">
-                                <div v-if="true" class="tw-block">
-                                    <InputLabel :size="'md'" value="MD Static Single Select" />
-                                    <SingleSelect :selection-max-width="false" :always-active="false" :size="'md'" :icon="'ic:sharp-hdr-on-select'" :label="'Plan'" :options="plan"/>
+                            <div class="tw-grid tw-gap-2 tw-grid-cols-4 tw-border tw-border-amber-400">
+                                <div class="tw-block">
+                                    <Button :size="'lg'" :variant="'outline'" :icon="'ic:sharp-send-to-mobile'" :label="'LG SKIP'"></Button>
                                 </div>
-                                <div v-if="true" class="tw-block">
-                                    <InputLabel :size="'md'" value="SM Static Single Select" />
-                                    <SingleSelect  :selection-max-width="false" :always-active="false" :size="'sm'" :icon="'ic:sharp-assignment'" :options="plan"/>
-                                </div>
-                                <div v-if="true" class="tw-block">
-                                    <InputLabel :size="'md'" value="XS Static Single Select" />
-                                    <SingleSelect :selection-max-width="false" :always-active="false" :size="'xs'" :icon="'ic:sharp-assignment'" :options="plan"/>
-                                </div>
-                                <div v-if="true" class="tw-block">
-                                    <InputLabel :size="'md'" value="2XS Static Single Select" />
-                                    <SingleSelect :always-active="false" :size="'2xs'" :icon="'ic:sharp-assignment'" :options="plan"/>
+                                <div class="tw-block tw-col-span-2">
+                                    <SingleSelect :selection-max-width="true" :always-active="false" :size="'lg'" :icon="'ic:sharp-hdr-on-select'" :label="'Plan'" :options="plan"/>
                                 </div>
                             </div>
                             <div v-if="false" class="tw-grid tw-gap-2 tw-grid-cols-10 tw-mb-2">
@@ -64,7 +40,7 @@
                                 :pagination="pagination"
                             />
                             <DataTable
-                                v-if="true"
+                                v-if="false"
                                 :headers="headers"
                                 :size="'xl'"
                                 :rows="data"
