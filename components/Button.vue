@@ -22,7 +22,7 @@
         <div :class="[shadeClass]" class="shade tw-rounded-sm"></div>
         <slot :fontClass="fontClass">
             <span class="tw-flex tw-items-center" :class="[fontClass]">
-                <Icon v-if="icon?.trim()" :class="[iconClass]" :name="icon"></Icon>{{label}}
+                <Icon v-if="icon?.trim()" :class="[iconClass, icon?.trim() ? 'tw-mr-0.5' : '']" :name="icon"></Icon><span>{{label}}</span>
             </span>
         </slot>
     </button>
@@ -40,7 +40,7 @@
                 default: 'default',
             },
             size: {
-                default: null
+                default: 'md'
             },
             disabled: {
                 type: Boolean,
@@ -59,7 +59,6 @@
         computed: {
             heightClass() {
                 return {
-                    [null]: 'tw-h-8',
                     '2xs': 'tw-h-5',
                     'xs': 'tw-h-6',
                     'sm': 'tw-h-7',
@@ -71,7 +70,6 @@
 
             spacingClass() {
                 return {
-                    [null]: 'tw-px-2',
                     '2xs': 'tw-px-1',
                     'xs': 'tw-px-1.5',
                     'sm': 'tw-px-1.5',
@@ -83,7 +81,6 @@
 
             iconClass(){
                 return {
-                    [null]: '',
                     '2xs': 'tw-h-[0.875rem] tw-w-[0.875rem]',
                     'xs': 'tw-h-[1rem] tw-w-[1rem]',
                     'sm': 'tw-h-[1rem] tw-w-[1rem]',
@@ -95,11 +92,10 @@
 
             fontClass(){
                 return {
-                    [null]: 'tw-text-base tw-font-semibold tw-tracking-tight',
                     '2xs': 'tw-text-xs tw-font-semibold',
                     'xs': 'tw-text-xs tw-font-semibold',
                     'sm': 'tw-text-sm tw-font-semibold',
-                    'md': 'tw-text-base tw-font-semibold tw-tracking-tight tw-pb-[0.1rem]',
+                    'md': 'tw-text-base tw-font-black tw-tracking-normal tw-pb-[0.1rem]',
                     'lg': 'tw-text-2xl tw-font-black',
                     'xl': 'tw-text-3xl tw-font-black',
                 }[this.size]
