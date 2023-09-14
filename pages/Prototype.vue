@@ -10,11 +10,11 @@
                         <div class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-8">
                             <div class="tw-block tw-border tw-border-neutral-200">
                                 <InputLabel :size="'md'" value="Static Multi Select" />
-                                <MultiSelect :size="'md'" :options="category" :icon="'ic:sharp-hdr-on-select'"/>
+                                <MultiSelect :size="'md'" :options="category" :icon="'ic:sharp-qr-code'"/>
                             </div>
                             <div class="tw-block tw-border tw-border-neutral-200">
                                 <InputLabel :size="'md'" value="Static Single Select" />
-                                <SingleSelect :always-active="false" :size="'md'" :icon="'ic:sharp-rsvp'" :options="plan"/>
+                                <SingleSelect :always-active="false" :size="'md'" :icon="'ic:sharp-qr-code'" :options="plan"/>
                             </div>
 
                             <div class="tw-block tw-border tw-border-neutral-200">
@@ -109,8 +109,11 @@
                                     selection>
                                     <template v-slot:cell.tools="{cell, slot, scrollReference}">
                                         <div class="tw-h-full tw-space-x-0.5 tw-w-full tw-flex tw-items-center">
-                                            <Button :size="slot.buttonSize" :icon="'ic:sharp-all-inbox'" :label="'Slot Button'"></Button>
-                                            <Button :variant="'outline'" :size="slot.buttonSize" :icon="'ic:sharp-all-inbox'" :label="'Slot Button'"></Button>
+                                            <Button :size="slot.buttonSize" :icon="'ic:sharp-hive'" :label="'Slot Button'"></Button>
+                                            <Button :variant="'outline'" :size="slot.buttonSize" :icon="'ic:sharp-hive'" :label="'Slot Button'"></Button>
+                                            <Button :variant="'outline'" :size="slot.buttonSize" :icon="'ic:sharp-view-module'"></Button>
+                                            <Button :variant="'outline'" :size="slot.buttonSize" :icon="'ic:sharp-view-list'"></Button>
+                                            <Button :size="slot.buttonSize" :icon="'ic:sharp-view-carousel'"></Button>
                                         </div>
                                     </template>
                                     <template v-slot:cell.input="{cell, index, slot}">
@@ -123,15 +126,6 @@
                                         <Input :size="slot.inputSize" class="tw-w-full" v-model="cell.code" type="text" autocomplete="off" />
                                     </template>
                                     <template v-slot:cell.single_select="{cell, slot, scrollReference}">
-                                        <MultiSelect
-                                            in-horizontal-scrollable
-                                            drop-shadow
-                                            :scroll-reference="scrollReference"
-                                            :size="slot.selectSize"
-                                            :options="category"
-                                            :icon="'ic:sharp-hdr-on-select'"/>
-                                    </template>
-                                    <template v-slot:cell.multi_select="{cell, slot, scrollReference}">
                                         <SingleSelect
                                             in-horizontal-scrollable
                                             :scroll-reference="scrollReference"
@@ -139,6 +133,15 @@
                                             :icon="'ic:sharp-local-florist'"
                                             :label="'Plan'"
                                             :options="plan" />
+                                    </template>
+                                    <template v-slot:cell.multi_select="{cell, slot, scrollReference}">
+                                        <MultiSelect
+                                            in-horizontal-scrollable
+                                            drop-shadow
+                                            :scroll-reference="scrollReference"
+                                            :size="slot.selectSize"
+                                            :options="category"
+                                            :icon="'ic:sharp-hdr-on-select'"/>
                                     </template>
                                     <template v-slot:cell.type="{cell, index, slot}">
                                         <Input :size="slot.inputSize" class="tw-w-full" v-model="cell.type" type="number" autocomplete="off" />

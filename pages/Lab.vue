@@ -11,16 +11,20 @@
                             </span>
                         </div>
                         <div class="tw-relative tw-border tw-border-light tw-p-7">
-                            <div class="tw-grid tw-gap-2 tw-grid-cols-5 tw-mb-2 tw-border tw-border-red-400">
-                                <Button :size="'lg'" :icon="'ic:sharp-send-to-mobile'" :label="'LG SKIP'"></Button>
-                                <MultiSelect drop-shadow :selection-max-width="false" :always-active="false" :size="'md'" :options="category" :icon="'ic:sharp-hdr-on-select'"/>
+                            <div class="tw-grid tw-gap-2 tw-grid-cols-4 tw-mb-2 tw-border tw-border-red-400">
+                                <div class="tw-block">
+                                    <Button :size="'lg'" :icon="'ic:sharp-display-settings'" :label="'LG SKIP'"></Button>
+                                </div>
+                                <div class="tw-block tw-col-span-2">
+                                    <MultiSelect drop-shadow :always-active="false" :size="'lg'" :options="category" :icon="'ic:sharp-display-settings'"/>
+                                </div>
                             </div>
                             <div class="tw-grid tw-gap-2 tw-grid-cols-4 tw-border tw-border-amber-400">
                                 <div class="tw-block">
-                                    <Button :size="'lg'" :variant="'outline'" :icon="'ic:sharp-send-to-mobile'" :label="'LG SKIP'"></Button>
+                                    <Button :size="'lg'" :variant="'outline'" :icon="'ic:sharp-display-settings'" :label="'LG SKIP'"></Button>
                                 </div>
                                 <div class="tw-block tw-col-span-2">
-                                    <SingleSelect :selection-max-width="true" :always-active="false" :size="'lg'" :icon="'ic:sharp-hdr-on-select'" :label="'Plan'" :options="plan"/>
+                                    <SingleSelect :selection-max-width="true" :always-active="false" :size="'lg'" :icon="'ic:sharp-display-settings'" :label="'Plan'" :options="plan"/>
                                 </div>
                             </div>
                             <div v-if="false" class="tw-grid tw-gap-2 tw-grid-cols-10 tw-mb-2">
@@ -110,7 +114,7 @@ let category = reactive({
         {text : 'Earrings', value: 4},
         {text : 'Rings', value: 5},
         {text : 'Polyester', value: 6},
-        {text : 'Polyester, Polyester, Polyester, Polyester, Polyester', value: 7},
+        {text : 'Polyester, Polyester, Polyester, Polyester, Polyester, Polyester, Polyester', value: 7},
     ],
     selection: [
         {text : 'Charms', value: 0},
@@ -120,7 +124,7 @@ let category = reactive({
         {text : 'Earrings', value: 4},
         {text : 'Rings', value: 5},
         {text : 'Polyester', value: 6},
-        {text : 'Polyester, Polyester, Polyester, Polyester, Polyester', value: 7},
+        {text : 'Polyester, Polyester, Polyester, Polyester, Polyester, Polyester, Polyester', value: 7},
     ],
     selected: []
 });

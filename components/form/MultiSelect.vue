@@ -20,8 +20,8 @@
                 </div>
             </div>
 
-            <div :class="[active ? 'tw-block' : 'tw-hidden', iconHolderClass]" class="tw-flex tw-items-center">
-                <NonModelCheckBox :size="'md'" :checked="selectedAllCurrentSelection()" @click="toggleSelection" />
+            <div :class="[active ? 'tw-block tw-pl-2' : 'tw-hidden']" class="tw-flex tw-items-center">
+                <NonModelCheckBox :size="checkBoxSize" :checked="selectedAllCurrentSelection()" @click="toggleSelection" />
             </div>
             <div :class="[active ? 'tw-block' : 'tw-hidden']" class="tw-w-full tw-h-full tw-relative tw-overflow-hidden tw-items-center">
                 <div :class="[inputHolderClass]" class="tw-absolute tw-left-0 tw-h-full tw-flex tw-items-center">
@@ -61,9 +61,9 @@
             </div>
             <div class="tw-max-h-[240px] tw-overflow-auto tw-border tw-border-t-lighter/25">
                 <NonModelCheckBox
-                    :size="'md'"
+                    :size="checkBoxSize"
                     v-for="item in options.selection" :key="item.value"
-                    class="tw-pl-2 hover:tw-bg-neutral-200"
+                    class="tw-px-2 hover:tw-bg-neutral-200"
                     :class="[isItemInSearchPool(item) ? '' : 'tw-hidden']"
                     :checked="isItemSelected(item)"
                     :label="item.text"
@@ -132,25 +132,28 @@ const heightClass = computed(() => {
         '2xs': 'tw-h-5',
         'xs': 'tw-h-6',
         'sm': 'tw-h-7',
-        'md': 'tw-h-8'
+        'md': 'tw-h-8',
+        'lg': 'tw-h-11'
     }[props.size];
 });
 
-const headerCheckToggleSize = computed(() => {
+const checkBoxSize = computed(() => {
     return {
-        '2xs': '2xs',
-        'xs': '2xs',
-        'sm': 'xs',
-        'md': 'sm'
+        '2xs': 'md',
+        'xs': 'md',
+        'sm': 'md',
+        'md': 'md',
+        'lg': 'lg'
     }[props.size];
 });
 
 const iconHolderClass = computed(() => {
     return {
-        '2xs': 'tw-pl-2',
-        'xs': 'tw-pl-2',
-        'sm': 'tw-pl-2',
-        'md': 'tw-pl-2'
+        '2xs': 'tw-w-4',
+        'xs': 'tw-w-6',
+        'sm': 'tw-w-8',
+        'md': 'tw-w-10',
+        'lg': 'tw-w-11'
     }[props.size];
 });
 
@@ -159,7 +162,8 @@ const iconClass = computed(() => {
         '2xs': 'tw-h-4 tw-w-4',
         'xs': 'tw-h-5 tw-w-5',
         'sm': 'tw-h-5 tw-w-5',
-        'md': 'tw-h-5 tw-w-5'
+        'md': 'tw-h-5 tw-w-5',
+        'lg': 'tw-h-6 tw-w-6'
     }[props.size];
 });
 
@@ -168,7 +172,8 @@ const dropDownIconHolderClass = computed(() => {
         '2xs': 'tw-w-5 tw-h-5',
         'xs': 'tw-w-6 tw-h-6',
         'sm': 'tw-w-7 tw-h-7',
-        'md': 'tw-w-8 tw-h-8'
+        'md': 'tw-w-8 tw-h-8',
+        'lg': 'tw-w-11 tw-h-11'
     }[props.size];
 });
 
@@ -177,7 +182,8 @@ const dropDownIconClass = computed(() => {
         '2xs': 'tw-h-4 tw-w-4',
         'xs': 'tw-h-5 tw-w-5',
         'sm': 'tw-h-5 tw-w-5',
-        'md': 'tw-h-5 tw-w-5'
+        'md': 'tw-h-5 tw-w-5',
+        'lg': 'tw-h-6 tw-w-6'
     }[props.size];
 });
 
@@ -186,7 +192,8 @@ const selectionClass = computed(() => {
         '2xs': 'tw-text-xs tw-h-5 tw-leading-[0.875rem] tw-left-[0.2rem] tw-right-[1.45rem]',
         'xs': 'tw-text-xs tw-h-6 tw-leading-[0.875rem] tw-left-[0.2rem] tw-right-[1.7rem]',
         'sm': 'tw-text-sm tw-h-7 tw-leading-[0.875rem] tw-left-[0.2rem] tw-right-[1.85rem]',
-        'md': 'tw-text-sm tw-h-8 tw-leading-[0.875rem] tw-left-[0.2rem] tw-right-[2.2rem]'
+        'md': 'tw-text-sm tw-h-8 tw-leading-[0.875rem] tw-left-[0.2rem] tw-right-[2.2rem]',
+        'lg': 'tw-text-lg tw-h-11 tw-leading-[0.875rem] tw-left-[0.2rem] tw-right-[2.95rem]',
     }[props.size];
 });
 
@@ -195,7 +202,8 @@ const optionsFontClass = computed(() => {
         '2xs': 'tw-text-base',
         'xs': 'tw-text-base',
         'sm': 'tw-text-base',
-        'md': 'tw-text-base'
+        'md': 'tw-text-base',
+        'lg': 'tw-text-lg'
     }[props.size];
 });
 
@@ -204,7 +212,8 @@ const inputHolderClass = computed(() => {
         '2xs': 'tw-right-5',
         'xs': 'tw-right-6',
         'sm': 'tw-right-7',
-        'md': 'tw-right-8'
+        'md': 'tw-right-8',
+        'lg': 'tw-right-11',
     }[props.size];
 });
 
@@ -213,7 +222,8 @@ const inputSize = computed(() => {
         '2xs': '2xs',
         'xs': '2xs',
         'sm': 'xs',
-        'md': 'sm'
+        'md': 'sm',
+        'lg': 'lg',
     }[props.size];
 });
 
@@ -228,11 +238,11 @@ const optionsArrowClass = computed(() => {
 const selectionSummary = computed(() => {
     if(props.options.selected.length === 0){
         return "None Selected"
-    } else if(props.options.selected.length < 3) {
+    } else if(props.options.selected.length < 5) {
         return props.options.data.filter((item) => {
             return props.options.selected.indexOf(item.value) >= 0;
         }).map(item => item.text).join(", ");
-    } else if(props.options.selected.length > 2) {
+    } else if(props.options.selected.length > 4) {
         let summary = '';
 
         if (props.options.selected.length < props.options.data.length) {
