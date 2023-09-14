@@ -59,7 +59,7 @@
             <div class="tw-max-h-[240px] tw-overflow-auto tw-border tw-border-t-lighter/25">
                 <div
                     v-for="item in options.selection" :key="item.value"
-                    class="tw-px-1.5 hover:tw-bg-neutral-200 tw-flex tw-items-center tw-cursor-pointer"
+                    class="tw-px-2 hover:tw-bg-neutral-200 tw-flex tw-items-center tw-cursor-pointer"
                     :class="[isItemInSearchPool(item) ? '' : 'tw-hidden', optionsFontClass]"
                     @click="selectItem(item)">
                     <div class="tw-w-max">
@@ -193,7 +193,7 @@ const optionsFontClass = computed(() => {
         'xs': 'tw-text-base',
         'sm': 'tw-text-base',
         'md': 'tw-text-base',
-        'lg': 'tw-text-base'
+        'lg': 'tw-text-lg'
     }[props.size];
 });
 
