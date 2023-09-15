@@ -49,7 +49,7 @@
                                     <div v-if="pending" class="tw-text-sm">Authenticating...</div>
 
                                     <div v-if="!$authStore.isLoggedIn" class="tw-flex tw-items-center tw-justify-end">
-                                        <Button :disabled="pending" :icon="'ic:sharp-log-in'" :size="'md'" :label="'Authenticate'"></Button>
+                                        <Button :disabled="pending" :variant="'outline'" :icon="'ic:sharp-log-in'" :size="'md'" :label="'Authenticate'"></Button>
                                     </div>
                                 </form>
                             </div>
