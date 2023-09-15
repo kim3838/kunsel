@@ -30,11 +30,11 @@
                 :icon="'ic:sharp-last-page'"
                 :label="lastPage.label" />
             <SingleSelect
-                class="tw-absolute tw-w-[110px] tw-inline-block"
+                class="tw-absolute tw-w-[160px] tw-inline-block"
                 :size="selectSize"
                 :searchable="false"
                 :value-persist="true"
-                :icon="'ic:sharp-list-alt'"
+                :icon="'mdi:book-open-page-variant'"
                 :label="'Per Page'"
                 :options="perPage"/>
         </div>
@@ -136,14 +136,14 @@ const emit = defineEmits(["update:modelValue"]);
 let perPage = reactive({
     search: '',
     data: [
-        {text : '10', value: 10},
-        {text : '25', value: 25},
-        {text : '100', value: 100},
+        {text : '10 per page', value: 10},
+        {text : '25 per page', value: 25},
+        {text : '100 per page', value: 100},
     ],
     selection: [
-        {text : '10', value: 10},
-        {text : '25', value: 25},
-        {text : '100', value: 100},
+        {text : '10 per page', value: 10},
+        {text : '25 per page', value: 25},
+        {text : '100 per page', value: 100},
     ],
     selected: props.modelValue?.perPage
 });
