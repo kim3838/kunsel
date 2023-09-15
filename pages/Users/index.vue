@@ -57,14 +57,14 @@
                                 :pagination="users.meta.pagination"
                                 :no-record-label="'No User Found'"/>
                             <Pagination
-                                :size="'xl'"
+                                :size="'lg'"
                                 :pagination="users.meta.pagination"
                                 :pending="pending"
                                 v-model="pageComputed"
                             />
                             <DataTable
                                 :headers="usersHeaders"
-                                :size="'xl'"
+                                :size="'lg'"
                                 :rows="users.data"
                                 :no-data-label="pending ? 'Loading' : 'No User Found'"
                                 v-model="selectedUsers"

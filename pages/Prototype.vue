@@ -10,20 +10,20 @@
                         <div class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-8">
                             <div class="tw-block tw-border tw-border-neutral-200">
                                 <InputLabel :size="'md'" value="Static Multi Select" />
-                                <MultiSelect :size="'md'" :options="category" :icon="'ic:sharp-qr-code'"/>
+                                <MultiSelect drop-shadow :size="'md'" :options="category" :icon="'ic:sharp-qr-code'"/>
                             </div>
                             <div class="tw-block tw-border tw-border-neutral-200">
                                 <InputLabel :size="'md'" value="Non Searchable Multi Select" />
-                                <MultiSelect :searchable="false" :size="'md'" :options="category" :icon="'ic:sharp-qr-code'"/>
+                                <MultiSelect drop-shadow :searchable="false" :size="'md'" :options="category" :icon="'ic:sharp-qr-code'"/>
                             </div>
                             <div class="tw-block tw-border tw-border-neutral-200">
                                 <InputLabel :size="'md'" value="Static Single Select" />
-                                <SingleSelect :always-active="false" :size="'md'" :icon="'ic:sharp-qr-code'" :options="plan"/>
+                                <SingleSelect drop-shadow :always-active="false" :size="'md'" :icon="'ic:sharp-qr-code'" :options="plan"/>
                             </div>
 
                             <div class="tw-block tw-border tw-border-neutral-200">
                                 <InputLabel :size="'md'" value="Non Searchable Single Select" />
-                                <SingleSelect :searchable="false" :size="'md'" :icon="'ic:sharp-qr-code'" :options="plan"/>
+                                <SingleSelect drop-shadow :searchable="false" :size="'md'" :icon="'ic:sharp-qr-code'" :options="plan"/>
                             </div>
 
                             <div class="tw-block tw-border tw-border-neutral-200">
@@ -137,6 +137,7 @@
                                     <template v-slot:cell.single_select="{cell, slot, scrollReference}">
                                         <SingleSelect
                                             in-horizontal-scrollable
+                                            drop-shadow
                                             :scroll-reference="scrollReference"
                                             :size="slot.selectSize"
                                             :icon="'ic:sharp-local-florist'"

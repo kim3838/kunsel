@@ -30,11 +30,12 @@
                 :icon="'ic:sharp-last-page'"
                 :label="lastPage.label" />
             <SingleSelect
+                drop-shadow
                 class="tw-absolute tw-inline-block"
                 :size="selectSize"
                 :searchable="false"
                 :value-persist="true"
-                :width="'150px'"
+                :width="perPageSelectWidth"
                 :icon="'mdi:book-open-page-variant'"
                 :label="'Per Page'"
                 :options="perPage"/>
@@ -132,16 +133,27 @@ const selectSize = computed(() => {
     }[props.size]
 });
 
+const perPageSelectWidth = computed(() => {
+    return {
+        'sm': '120px',
+        'md': '130px',
+        'lg': '140px',
+        'xl': '160px',
+    }[props.size]
+});
+
 const emit = defineEmits(["update:modelValue"]);
 
 let perPage = reactive({
     search: '',
     data: [
+        {text : '5 per page', value: 5},
         {text : '10 per page', value: 10},
         {text : '25 per page', value: 25},
         {text : '100 per page', value: 100},
     ],
     selection: [
+        {text : '5 per page', value: 5},
         {text : '10 per page', value: 10},
         {text : '25 per page', value: 25},
         {text : '100 per page', value: 100},
