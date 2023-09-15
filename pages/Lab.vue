@@ -2,7 +2,25 @@
     <div>
         <NuxtLayout name="custom">
             <template #content>
-                <div id="lab" class="tw-m-2 tw-p-2 tw-border tw-border-light">
+
+                <MultiSelect
+                    drop-shadow
+                    :always-active="false"
+                    :searchable="false"
+                    :size="'md'"
+                    :options="category"
+                    :icon="'ic:sharp-display-settings'"/>
+                <SingleSelect
+                    class="tw-absolute tw-inline-block"
+                    :size="'md'"
+                    :searchable="false"
+                    :value-persist="true"
+                    :width="'150px'"
+                    :icon="'mdi:book-open-page-variant'"
+                    :label="'Per Page'"
+                    :options="perPage"/>
+
+                <div v-if="false" id="lab" class="tw-m-2 tw-p-2 tw-border tw-border-light">
                     <div class="moody-card tw-max-w-[950px] tw-w-[950px]">
                         <div class="moody-card-frame"></div>
                         <div class="tw-relative tw-border tw-border-light tw-border-b-0 tw-p-3 tw-flex tw-justify-center tw-items-center">
@@ -11,23 +29,37 @@
                             </span>
                         </div>
                         <div class="tw-relative tw-border tw-border-light tw-p-7">
-                            <div class="tw-grid tw-gap-2 tw-grid-cols-4 tw-mb-2 tw-border tw-border-red-400">
+                            <div class="tw-grid tw-gap-2 tw-grid-cols-4 tw-mb-2">
                                 <div class="tw-block">
                                     <Button :size="'md'" :icon="'ic:sharp-display-settings'" :label="'LG SKIP'"></Button>
                                 </div>
-                                <div class="tw-block tw-col-span-2">
+                                <div class="tw-block">
                                     <MultiSelect drop-shadow :always-active="false" :size="'md'" :options="category" :icon="'ic:sharp-display-settings'"/>
                                 </div>
+                                <div></div>
+                                <div></div>
                             </div>
-                            <div class="tw-grid tw-gap-2 tw-grid-cols-4 tw-border tw-border-amber-400">
+                            <div class="tw-grid tw-gap-2 tw-grid-cols-4">
                                 <div class="tw-block">
                                     <Button :size="'md'" :variant="'outline'" :icon="'ic:sharp-display-settings'" :label="'LG SKIP'"></Button>
                                 </div>
-                                <div class="tw-block tw-col-span-2">
+                                <div class="tw-block">
                                     <SingleSelect :selection-max-width="true" :always-active="false" :size="'md'" :icon="'ic:sharp-display-settings'" :label="'Plan'" :options="plan"/>
                                 </div>
+                                <div class="tw-block">
+                                    <SingleSelect
+                                        class="tw-absolute tw-inline-block"
+                                        :size="'md'"
+                                        :searchable="false"
+                                        :value-persist="false"
+                                        :width="'150px'"
+                                        :icon="'mdi:book-open-page-variant'"
+                                        :label="'Per Page'"
+                                        :options="perPage"/>
+                                </div>
+                                <div></div>
                             </div>
-                            <div v-if="true" class="tw-grid tw-gap-2 tw-grid-cols-10 tw-mb-2">
+                            <div v-if="false" class="tw-grid tw-gap-2 tw-grid-cols-10 tw-mb-2">
                                 <div class="tw-block">
                                     <InputLabel :size="'md'" value="_" class="tw-text-transparent"/>
                                     <Button @click="backOriginal()" :size="'sm'" :label="'Original'"></Button>
@@ -37,14 +69,14 @@
                                     <Button @click="replaceOriginal()" :size="'xs'" :label="'Replace'"></Button>
                                 </div>
                             </div>
-                            <PageInformation v-if="true" :pagination="pagination" :no-record-label="'No Expense Found'"/>
+                            <PageInformation v-if="false" :pagination="pagination" :no-record-label="'No Expense Found'"/>
                             <Pagination
-                                v-if="true"
+                                v-if="false"
                                 :size="'xl'"
                                 :pagination="pagination"
                             />
                             <DataTable
-                                v-if="true"
+                                v-if="false"
                                 :headers="headers"
                                 :size="'xl'"
                                 :rows="data"
@@ -104,6 +136,20 @@ definePageMeta({
 
 let selected = ref([1002,2002,67,88]);
 let datetimeFrom = ref($moment().startOf('day').format('YYYY-MM-DD HH:mm:ss'));
+let perPage = reactive({
+    search: '',
+    data: [
+        {text : '10 per page', value: 10},
+        {text : '25 per page', value: 25},
+        {text : '100 per page', value: 100},
+    ],
+    selection: [
+        {text : '10 per page', value: 10},
+        {text : '25 per page', value: 25},
+        {text : '100 per page', value: 100},
+    ],
+    selected: 10
+});
 let category = reactive({
     search: '',
     data: [
