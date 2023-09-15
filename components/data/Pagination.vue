@@ -33,6 +33,7 @@
                 class="tw-absolute tw-w-[110px] tw-inline-block"
                 :size="selectSize"
                 :searchable="false"
+                :value-persist="true"
                 :icon="'ic:sharp-list-alt'"
                 :label="'Per Page'"
                 :options="perPage"/>
@@ -149,13 +150,13 @@ let perPage = reactive({
 
 watch(() => {
     return perPage.selected;
-}, (perPage) => {
+}, (newPerPage) => {
 
-    console.log({'new perPage' : perPage});
+    console.log({'new perPage' : newPerPage});
 
     emit("update:modelValue", {
         'key': 'perPage',
-        'value': perPage
+        'value': newPerPage
     });
 });
 

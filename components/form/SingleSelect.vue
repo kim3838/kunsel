@@ -1,5 +1,6 @@
 <template>
     <div
+        ref="selectParent"
         tabindex="0"
         v-on:focus="keepSelectionActive(1)"
         v-on:blur="loseFocus(1)"
@@ -61,7 +62,7 @@
                     v-for="item in options.selection" :key="item.value"
                     class="tw-px-2 hover:tw-bg-neutral-200 tw-flex tw-items-center tw-cursor-pointer"
                     :class="[isItemInSearchPool(item) ? '' : 'tw-hidden', optionsFontClass]"
-                    @click="selectItem(item)">
+                    @click="valuePersist && isItemSelected(item) ? false :selectItem(item)">
                     <div class="tw-w-max">
                         <Icon
                             class="tw-h-5 tw-w-5"
@@ -93,6 +94,10 @@ const props = defineProps({
     inHorizontalScrollable: Boolean,
     dropShadow: Boolean,
     alwaysActive: Boolean,
+    valuePersist: {
+        type: Boolean,
+        default: false
+    },
     selectionMaxWidth: {
         type: Boolean,
         default: true
@@ -120,6 +125,7 @@ const props = defineProps({
 
 let keepFocus = ref(false);
 let selectionSearch = ref(null);
+let selectParent = ref(null);
 let selectHeader = ref(null);
 let selectionOrigin = ref(null);
 let selectionWidth = ref(null);
