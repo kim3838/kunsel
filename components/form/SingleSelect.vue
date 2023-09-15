@@ -4,15 +4,16 @@
         tabindex="0"
         v-on:focus="keepSelectionActive(1)"
         v-on:blur="loseFocus(1)"
-        class="tw-w-full focus:tw-outline-none tw-bg-white">
+        :style="{width: width}"
+        class="focus:tw-outline-none tw-bg-white">
         <div
             ref="selectHeader"
             class="tw-w-full tw-flex tw-justify-start"
             :class="[heightClass, borderClass]">
-            <div v-if="!active || !searchable" :class="[iconHolderClass]" class="tw-flex tw-justify-center tw-items-center">
+            <div :style="{display: !active ? 'inline-block' : 'none'}" :class="[iconHolderClass]" class="tw-flex tw-justify-center tw-items-center">
                 <Icon :class="[iconClass]" :name="icon"/>
             </div>
-            <div v-if="!active || !searchable" class="tw-w-full tw-relative hover:tw-bg-neutral-100 tw-cursor-pointer">
+            <div :style="{display: !active ? 'inline-block' : 'none'}" class="tw-w-full tw-relative hover:tw-bg-neutral-100 tw-cursor-pointer">
                 <div :class="[selectionClass]" class="tw-absolute tw-truncate tw-text-accent tw-flex tw-items-center">
                     {{selectionSummary}}
                 </div>
@@ -21,14 +22,15 @@
                 </div>
             </div>
 
-            <div :class="[active && searchable ? 'tw-block' : 'tw-hidden']" class="tw-w-full tw-h-full tw-relative tw-overflow-hidden">
+            <div :style="{display: active ? 'block' : 'none'}" class="tw-w-full tw-h-full tw-relative tw-overflow-hidden">
                 <div :class="[inputHolderClass]" class="tw-absolute tw-left-0 tw-h-full tw-flex tw-items-center">
                     <Input
+                        :readonly="!searchable"
                         autocomplete="off"
                         class="tw-w-full"
                         ref="selectionSearch"
                         type="text"
-                        placeholder="Search..."
+                        :placeholder="searchable ? 'Search...' : selectionSummary"
                         v-on:focus="keepSelectionActive(2)"
                         v-on:blur="loseFocus(2)"
                         v-on:input="searchSelection"
@@ -40,8 +42,15 @@
                         :focusRing="false"
                         :disabled="false" />
                 </div>
-                <div :class="[dropDownIconHolderClass]" class="tw-absolute tw-right-0 tw-top-0 tw-flex tw-justify-center tw-items-center">
-                    <Icon :class="[dropDownIconClass]" @click="clearSearch" class="tw-cursor-pointer hover:tw-bg-neutral-200" name="ic:baseline-clear" />
+                <div
+                    :class="[dropDownIconHolderClass]"
+                    class="tw-absolute tw-right-0 tw-top-0 tw-flex tw-justify-center tw-items-center">
+                    <Icon
+                        v-if="searchable"
+                        @click="clearSearch"
+                        :class="[dropDownIconClass]"
+                        class="tw-cursor-pointer hover:tw-bg-neutral-200"
+                        name="ic:baseline-clear" />
                 </div>
             </div>
         </div>
@@ -97,6 +106,10 @@ const props = defineProps({
     valuePersist: {
         type: Boolean,
         default: false
+    },
+    width: {
+        type: String,
+        default: '100%'
     },
     selectionMaxWidth: {
         type: Boolean,

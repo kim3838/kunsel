@@ -30,10 +30,11 @@
                 :icon="'ic:sharp-last-page'"
                 :label="lastPage.label" />
             <SingleSelect
-                class="tw-absolute tw-w-[160px] tw-inline-block"
+                class="tw-absolute tw-inline-block"
                 :size="selectSize"
                 :searchable="false"
                 :value-persist="true"
+                :width="'150px'"
                 :icon="'mdi:book-open-page-variant'"
                 :label="'Per Page'"
                 :options="perPage"/>
@@ -151,9 +152,6 @@ let perPage = reactive({
 watch(() => {
     return perPage.selected;
 }, (newPerPage) => {
-
-    console.log({'new perPage' : newPerPage});
-
     emit("update:modelValue", {
         'key': 'perPage',
         'value': newPerPage
