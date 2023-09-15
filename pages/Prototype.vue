@@ -13,8 +13,17 @@
                                 <MultiSelect :size="'md'" :options="category" :icon="'ic:sharp-qr-code'"/>
                             </div>
                             <div class="tw-block tw-border tw-border-neutral-200">
+                                <InputLabel :size="'md'" value="Non Searchable Multi Select" />
+                                <MultiSelect :searchable="false" :size="'md'" :options="category" :icon="'ic:sharp-qr-code'"/>
+                            </div>
+                            <div class="tw-block tw-border tw-border-neutral-200">
                                 <InputLabel :size="'md'" value="Static Single Select" />
                                 <SingleSelect :always-active="false" :size="'md'" :icon="'ic:sharp-qr-code'" :options="plan"/>
+                            </div>
+
+                            <div class="tw-block tw-border tw-border-neutral-200">
+                                <InputLabel :size="'md'" value="Non Searchable Single Select" />
+                                <SingleSelect :searchable="false" :size="'md'" :icon="'ic:sharp-qr-code'" :options="plan"/>
                             </div>
 
                             <div class="tw-block tw-border tw-border-neutral-200">

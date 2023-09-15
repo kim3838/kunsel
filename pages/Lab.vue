@@ -13,21 +13,21 @@
                         <div class="tw-relative tw-border tw-border-light tw-p-7">
                             <div class="tw-grid tw-gap-2 tw-grid-cols-4 tw-mb-2 tw-border tw-border-red-400">
                                 <div class="tw-block">
-                                    <Button :size="'lg'" :icon="'ic:sharp-display-settings'" :label="'LG SKIP'"></Button>
+                                    <Button :size="'md'" :icon="'ic:sharp-display-settings'" :label="'LG SKIP'"></Button>
                                 </div>
                                 <div class="tw-block tw-col-span-2">
-                                    <MultiSelect drop-shadow :always-active="false" :size="'lg'" :options="category" :icon="'ic:sharp-display-settings'"/>
+                                    <MultiSelect drop-shadow :always-active="false" :size="'md'" :options="category" :icon="'ic:sharp-display-settings'"/>
                                 </div>
                             </div>
                             <div class="tw-grid tw-gap-2 tw-grid-cols-4 tw-border tw-border-amber-400">
                                 <div class="tw-block">
-                                    <Button :size="'lg'" :variant="'outline'" :icon="'ic:sharp-display-settings'" :label="'LG SKIP'"></Button>
+                                    <Button :size="'md'" :variant="'outline'" :icon="'ic:sharp-display-settings'" :label="'LG SKIP'"></Button>
                                 </div>
                                 <div class="tw-block tw-col-span-2">
-                                    <SingleSelect :selection-max-width="true" :always-active="false" :size="'lg'" :icon="'ic:sharp-display-settings'" :label="'Plan'" :options="plan"/>
+                                    <SingleSelect :selection-max-width="true" :always-active="false" :size="'md'" :icon="'ic:sharp-display-settings'" :label="'Plan'" :options="plan"/>
                                 </div>
                             </div>
-                            <div v-if="false" class="tw-grid tw-gap-2 tw-grid-cols-10 tw-mb-2">
+                            <div v-if="true" class="tw-grid tw-gap-2 tw-grid-cols-10 tw-mb-2">
                                 <div class="tw-block">
                                     <InputLabel :size="'md'" value="_" class="tw-text-transparent"/>
                                     <Button @click="backOriginal()" :size="'sm'" :label="'Original'"></Button>
@@ -37,14 +37,14 @@
                                     <Button @click="replaceOriginal()" :size="'xs'" :label="'Replace'"></Button>
                                 </div>
                             </div>
-                            <PageInformation v-if="false" :pagination="pagination" :no-record-label="'No Expense Found'"/>
+                            <PageInformation v-if="true" :pagination="pagination" :no-record-label="'No Expense Found'"/>
                             <Pagination
-                                v-if="false"
+                                v-if="true"
                                 :size="'xl'"
                                 :pagination="pagination"
                             />
                             <DataTable
-                                v-if="false"
+                                v-if="true"
                                 :headers="headers"
                                 :size="'xl'"
                                 :rows="data"

@@ -23,7 +23,7 @@
             <div :class="[active ? 'tw-block tw-pl-2' : 'tw-hidden']" class="tw-flex tw-items-center">
                 <NonModelCheckBox :size="checkBoxSize" :checked="selectedAllCurrentSelection()" @click="toggleSelection" />
             </div>
-            <div :class="[active ? 'tw-block' : 'tw-hidden']" class="tw-w-full tw-h-full tw-relative tw-overflow-hidden tw-items-center">
+            <div :class="[active && searchable ? 'tw-block' : 'tw-hidden']" class="tw-w-full tw-h-full tw-relative tw-overflow-hidden tw-items-center">
                 <div :class="[inputHolderClass]" class="tw-absolute tw-left-0 tw-h-full tw-flex tw-items-center">
                     <Input
                         autocomplete="off"
@@ -94,6 +94,10 @@ const props = defineProps({
     dropShadow: Boolean,
     alwaysActive: Boolean,
     selectionMaxWidth: {
+        type: Boolean,
+        default: true
+    },
+    searchable: {
         type: Boolean,
         default: true
     },

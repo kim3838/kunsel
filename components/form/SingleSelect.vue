@@ -6,12 +6,12 @@
         class="tw-w-full focus:tw-outline-none tw-bg-white">
         <div
             ref="selectHeader"
-            class="tw-w-full tw-flex tw-justify-start tw-border"
-            :class="[heightClass, active ? 'tw-border-light' : 'tw-border-neutral-200']">
-            <div v-if="!active" :class="[iconHolderClass]" class="tw-flex tw-justify-center tw-items-center">
+            class="tw-w-full tw-flex tw-justify-start"
+            :class="[heightClass, borderClass]">
+            <div v-if="!active || !searchable" :class="[iconHolderClass]" class="tw-flex tw-justify-center tw-items-center">
                 <Icon :class="[iconClass]" :name="icon"/>
             </div>
-            <div v-if="!active" class="tw-w-full tw-relative hover:tw-bg-neutral-100 tw-cursor-pointer">
+            <div v-if="!active || !searchable" class="tw-w-full tw-relative hover:tw-bg-neutral-100 tw-cursor-pointer">
                 <div :class="[selectionClass]" class="tw-absolute tw-truncate tw-text-accent tw-flex tw-items-center">
                     {{selectionSummary}}
                 </div>
@@ -20,7 +20,7 @@
                 </div>
             </div>
 
-            <div :class="[active ? 'tw-block' : 'tw-hidden']" class="tw-w-full tw-h-full tw-relative tw-overflow-hidden">
+            <div :class="[active && searchable ? 'tw-block' : 'tw-hidden']" class="tw-w-full tw-h-full tw-relative tw-overflow-hidden">
                 <div :class="[inputHolderClass]" class="tw-absolute tw-left-0 tw-h-full tw-flex tw-items-center">
                     <Input
                         autocomplete="off"
@@ -97,6 +97,10 @@ const props = defineProps({
         type: Boolean,
         default: true
     },
+    searchable: {
+        type: Boolean,
+        default: true
+    },
     scrollReference: {
         type: Object,
         default: null
@@ -135,6 +139,10 @@ const heightClass = computed(() => {
         'md': 'tw-h-8',
         'lg': 'tw-h-11'
     }[props.size];
+});
+
+const borderClass = computed(() => {
+    return (active.value ? 'tw-border tw-border-light' : 'tw-border tw-border-neutral-200');
 });
 
 const iconHolderClass = computed(() => {
@@ -227,7 +235,7 @@ const optionsArrowClass = computed(() => {
 
 const selectionSummary = computed(() => {
     if(props.options.selected == null){
-        return "None Selected"
+        return props.label ? `No ${props.label} Selected` : "None Selected";
     } else {
         return props.options.data.filter((item) => {
             return item.value == props.options.selected;
