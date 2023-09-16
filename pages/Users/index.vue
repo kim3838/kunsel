@@ -36,14 +36,6 @@
                                     <InputLabel :size="'md'" value="Date Added: To"/>
                                     <Input id="datetimeto" readonly v-model="filters.datetimeTo" :size="'md'" class="tw-w-full" type="text"/>
                                 </div>
-                                <div class="tw-block">
-                                    <InputLabel :size="'md'" value="Date Picker"/>
-                                    <Input id="date" readonly v-model="filters.date" :size="'md'" class="tw-w-full" type="text"/>
-                                </div>
-                                <div class="tw-block">
-                                    <InputLabel :size="'md'" value="Month Picker"/>
-                                    <Input id="month" readonly v-model="filters.month.label" :size="'md'" class="tw-w-full" type="text"/>
-                                </div>
                             </div>
 
                             <div class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-8">
@@ -72,6 +64,16 @@
                                 :no-data-label="pending ? 'Loading' : 'No User Found'"
                                 v-model="selectedUsers"
                                 selection>
+                                <template v-slot:cell.datetime_added="{cell, slot}">
+                                    <Input :id="`datetime_added-` + cell.id" v-model="cell.datetime_added" readonly :size="slot.inputSize" class="tw-w-full" type="text" />
+                                </template>
+                                <template v-slot:cell.actions="{cell, slot, scrollReference}">
+                                    <div class="tw-h-full tw-space-x-0.5 tw-w-full tw-flex tw-items-center">
+                                        <Button type="button" :variant="'outline'" :size="slot.buttonSize" :label="'Details'" :icon="'streamline:interface-file-clipboard-text-edition-form-task-checklist-edit-clipboard'"></Button>
+                                        <Button type="button" :variant="'outline'" :size="slot.buttonSize" :label="'Approve'" :icon="'streamline:interface-file-clipboard-check-checkmark-edit-task-edition-checklist-check-success-clipboard-form'"></Button>
+                                        <Button type="button" :variant="'outline'" :size="slot.buttonSize" :label="'Deny'" :icon="'streamline:interface-file-clipboard-block-edit-task-edition-block-clipboard-form'"></Button>
+                                    </div>
+                                </template>
                             </DataTable>
                         </div>
 
@@ -93,7 +95,7 @@
 </style>
 
 <script setup lang="ts">
-import {ref, reactive, watch, nextTick} from 'vue';
+import {ref, reactive, watch, nextTick, onMounted} from 'vue';
 const {$coreStore, $moment} = useNuxtApp();
 
 definePageMeta({
@@ -122,8 +124,9 @@ let usersHeaders = reactive([
     { text: 'CATEGORY', alignData: 'right', value: 'category'},
     { text: 'CAPACITY', alignData: 'left', value: 'capacity'},
     { text: 'DATE ADDED', alignData: 'left', value: 'datetime_added'},
-    { text: 'DATE CREATED', alignData: 'left', value: 'created_at'},
-    { text: 'DATE UPDATED', alignData: 'left', value: 'updated_at'},
+    { text: 'ACTIONS', alignData: 'left', value: 'actions'},
+    // { text: 'DATE CREATED', alignData: 'left', value: 'created_at'},
+    // { text: 'DATE UPDATED', alignData: 'left', value: 'updated_at'},
 ]);
 let filters = reactive({
     page: 1,
@@ -135,11 +138,6 @@ let filters = reactive({
     code: 'PRTY',
     datetimeFrom: $moment().startOf('day').format('YYYY-MM-DD HH:mm:ss'),
     datetimeTo: $moment().endOf('day').format('YYYY-MM-DD HH:mm:ss'),
-    date: $moment().format('YYYY-MM-DD'),
-    month: {
-        value: $moment().format('YYYY-MM'),
-        label: $moment().format('YYYY MMMM')
-    }
 });
 
 let selectedUsers = ref([]);
@@ -197,6 +195,7 @@ const {pending, execute} = csrFetch("/api/v1/prototypes", {
                     total_pages: 0
                 }
             });
+            renderDateTimePickers();
         }
     }
 });
@@ -234,12 +233,11 @@ function paginate(page = 1, clearSelection = false){
 
     if(clearSelection){
         selectedUsers.value = [];
-
     }
     execute();
 }
 
-dateTimePicker([
+let filtersDateTimePickers = ref([
     {
         id: 'datetimefrom',
         type: 'datetime',
@@ -252,20 +250,28 @@ dateTimePicker([
         selectedCallback: (payload) => {
             filters.datetimeTo = payload.value;
         }
-    }, {
-        id: 'date',
-        type: 'date',
-        selectedCallback: (payload) => {
-            filters.date = payload.value;
-        }
-    }, {
-        id: 'month',
-        type: 'month',
-        selectedCallback: (payload) => {
-            filters.month.value = payload.value;
-            filters.month.label = payload.label;
-        }
     }
 ]);
 
+const {render} = dateTimePicker();
+
+function renderDateTimePickers(){
+    let dataDateTimePickers = users.data.map(record => {
+        return {
+            id: `datetime_added-` + record.id,
+            type: 'datetime',
+            selectedCallback: (payload) => {
+                record.datetime_added = payload.value;
+            }
+        }
+    });
+
+    let dateTimePickers = filtersDateTimePickers.value.concat(dataDateTimePickers);
+
+    render(dateTimePickers);
+}
+
+onMounted(async () => {
+    render(filtersDateTimePickers.value);
+});
 </script>

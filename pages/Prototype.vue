@@ -67,10 +67,10 @@
 
                         <div class="tw-grid tw-gap-2 tw-grid-cols-1 lg:tw-grid-cols-2 xl:tw-grid-cols-3">
                             <div class="tw-block tw-p-2 tw-border tw-border-neutral-200">
-                                <InputLabel class="tw-mb-2" :size="'md'" value="SM Datatable" />
+                                <InputLabel class="tw-mb-2" :size="'md'" value="MD Datatable" />
                                 <DataTable
                                     :headers="headers_1"
-                                    :size="'sm'"
+                                    :size="'md'"
                                     :rows="data_1">
                                     <template v-slot:cell.name="{cell, index, slot}">
                                         <Button class="tw-w-full" :variant="'outline'" :size="slot.buttonSize" :label="`[${index}] ${cell.name}`"></Button>
@@ -90,10 +90,10 @@
                                 </DataTable>
                             </div>
                             <div class="tw-block tw-col-span-1 xl:tw-col-span-2 tw-p-2 tw-border tw-border-neutral-200">
-                                <InputLabel class="tw-mb-2" :size="'md'" value="MD Datatable with Selection" />
+                                <InputLabel class="tw-mb-2" :size="'md'" value="LG Datatable with Selection" />
                                 <DataTable
                                     :headers="headers_2"
-                                    :size="'md'"
+                                    :size="'lg'"
                                     :rows="data_2"
                                     v-model="selected_1"
                                     selection>
@@ -383,7 +383,7 @@
 
 <script setup lang="ts">
 
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 
 definePageMeta({
     layout: false,
@@ -704,5 +704,9 @@ dateTimePickers.value = dateTimePickers.value
     .concat(data_2_DateTimePickers)
     .concat(data_3_DateTimePickers);
 
-dateTimePicker(dateTimePickers.value);
+const {render} = dateTimePicker();
+
+onMounted(async () => {
+    render(dateTimePickers.value);
+});
 </script>

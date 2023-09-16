@@ -13,55 +13,55 @@
                         <div class="tw-relative tw-border tw-border-light tw-p-7">
                             <div class="tw-grid tw-gap-2 tw-grid-cols-4 tw-mb-2">
                                 <div class="tw-block">
-                                    <Button :size="'lg'" :icon="'ic:sharp-display-settings'" :label="'LG SKIP'"></Button>
+                                    <Button :size="'md'" :icon="'ic:sharp-display-settings'" :label="'LG SKIP'"></Button>
                                 </div>
                                 <div class="tw-block">
                                     <MultiSelect
                                         drop-shadow
-                                        :idle-border="'rgb(229,229,229)'"
+                                        :idle-border="'orange'"
                                         :always-active="false"
                                         :searchable="false"
-                                        :size="'lg'"
+                                        :size="'md'"
                                         :options="category"
                                         :icon="'ic:sharp-display-settings'"/>
                                 </div>
                                 <div class="tw-block">
                                     <MultiSelect
                                         drop-shadow
-                                        :idle-border="'#b4b4b4'"
+                                        :idle-border="'pink'"
                                         :always-active="false"
                                         :searchable="false"
-                                        :size="'lg'"
+                                        :size="'md'"
                                         :options="category"
                                         :icon="'ic:sharp-display-settings'"/>
                                 </div>
                                 <div class="tw-block">
                                     <MultiSelect
                                         drop-shadow
-                                        :idle-border="'#8063ab'"
+                                        :idle-border="'blue'"
                                         :always-active="false"
                                         :searchable="false"
-                                        :size="'lg'"
+                                        :size="'md'"
                                         :options="category"
                                         :icon="'ic:sharp-display-settings'"/>
                                 </div>
                             </div>
                             <div class="tw-grid tw-gap-2 tw-grid-cols-4">
                                 <div class="tw-block">
-                                    <Button :size="'lg'" :variant="'outline'" :icon="'ic:sharp-display-settings'" :label="'LG SKIP'"></Button>
+                                    <Button :size="'md'" :variant="'outline'" :icon="'ic:sharp-display-settings'" :label="'LG SKIP'"></Button>
                                 </div>
                                 <div class="tw-block">
                                     <SingleSelect
                                         :selection-max-width="true"
                                         :always-active="false"
-                                        :size="'lg'"
+                                        :size="'md'"
                                         :icon="'ic:sharp-display-settings'"
                                         :label="'Plan'"
                                         :options="plan"/>
                                 </div>
                                 <div class="tw-block">
                                     <SingleSelect
-                                        :size="'lg'"
+                                        :size="'md'"
                                         :searchable="false"
                                         :value-persist="true"
                                         :icon="'mdi:book-open-page-variant'"
@@ -83,13 +83,13 @@
                             <PageInformation v-if="false" :pagination="pagination" :no-record-label="'No Expense Found'"/>
                             <Pagination
                                 v-if="false"
-                                :size="'xl'"
+                                :size="'lg'"
                                 :pagination="pagination"
                             />
                             <DataTable
-                                v-if="false"
+                                v-if="true"
                                 :headers="headers"
-                                :size="'xl'"
+                                :size="'lg'"
                                 :rows="data"
                                 :no-data-label="'No Data Found'"
                                 v-model="selected"
@@ -535,16 +535,16 @@ let replaceDatePickers = ref([
     }
 ]);
 
-const {reRender} = dateTimePicker(originalDatePickers.value);
+const {render} = dateTimePicker(originalDatePickers.value);
 
 function backOriginal(){
     data.value = original.value;
-    reRender(originalDatePickers.value);
+    render(originalDatePickers.value);
 }
 
 function replaceOriginal(){
     data.value = replace.value;
-    reRender(replaceDatePickers.value);
+    render(replaceDatePickers.value);
 }
 
 </script>
