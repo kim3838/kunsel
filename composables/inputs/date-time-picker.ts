@@ -107,10 +107,10 @@ export function dateTimePicker(options: any[] = []) {
         })
     }
 
-    async function reRender(options: any[] = []){
+    async function render(options: any[] = []){
         clearScaffold();
         scaffold(options);
     }
 
-    return {reRender};
+    return {render};
 }
