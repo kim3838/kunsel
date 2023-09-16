@@ -1,46 +1,44 @@
 <template>
-    <div>
-        <div class="tw-space-x-0.5">
-            <Button
-                :disabled="pagination.current_page === 1 || pending || pagination.total === 0"
-                @click="firstPageHandler()"
-                :variant="'outline'"
-                :size="buttonSize"
-                :icon="'ic:sharp-first-page'"
-                :label="firstPage.label" />
-            <Button
-                :disabled="pagination.current_page === 1 || pending || pagination.total === 0"
-                @click="previousPageHandler()"
-                :variant="'outline'"
-                :size="buttonSize"
-                :icon="'ic:sharp-keyboard-double-arrow-left'"
-                :label="previousPage.label" />
-            <Button
-                :disabled="pagination.current_page === pagination.total_pages || pending || pagination.total === 0"
-                @click="nextPageHandler()"
-                :variant="'outline'"
-                :size="buttonSize"
-                :icon="'ic:sharp-keyboard-double-arrow-right'"
-                :label="nextPage.label" />
-            <Button
-                :disabled="pagination.current_page === pagination.total_pages || pending || pagination.total === 0"
-                @click="lastPageHandler()"
-                :variant="'outline'"
-                :size="buttonSize"
-                :icon="'ic:sharp-last-page'"
-                :label="lastPage.label" />
-            <SingleSelect
-                drop-shadow
-                class="tw-absolute tw-inline-block"
-                :size="selectSize"
-                :searchable="false"
-                :value-persist="true"
-                :width="perPageSelectWidth"
-                :icon="'mdi:book-open-page-variant'"
-                :label="'Per Page'"
-                :options="perPage"/>
-        </div>
-    </div>
+    <span class="tw-space-x-0.5 tw-flex tw-w-max">
+        <Button
+            :disabled="pagination.current_page === 1 || pending || pagination.total === 0"
+            @click="firstPageHandler()"
+            :variant="'outline'"
+            :size="buttonSize"
+            :icon="'ic:sharp-first-page'"
+            :label="firstPage.label" />
+        <Button
+            :disabled="pagination.current_page === 1 || pending || pagination.total === 0"
+            @click="previousPageHandler()"
+            :variant="'outline'"
+            :size="buttonSize"
+            :icon="'ic:sharp-keyboard-double-arrow-left'"
+            :label="previousPage.label" />
+        <Button
+            :disabled="pagination.current_page === pagination.total_pages || pending || pagination.total === 0"
+            @click="nextPageHandler()"
+            :variant="'outline'"
+            :size="buttonSize"
+            :icon="'ic:sharp-keyboard-double-arrow-right'"
+            :label="nextPage.label" />
+        <Button
+            :disabled="pagination.current_page === pagination.total_pages || pending || pagination.total === 0"
+            @click="lastPageHandler()"
+            :variant="'outline'"
+            :size="buttonSize"
+            :icon="'ic:sharp-last-page'"
+            :label="lastPage.label" />
+        <SingleSelect
+            drop-shadow
+            :size="selectSize"
+            :searchable="false"
+            :value-persist="true"
+            :width="perPageSelectWidth"
+            :idle-border="'#b4b4b4'"
+            :icon="'mdi:book-open-page-variant'"
+            :label="'Per Page'"
+            :options="perPage"/>
+    </span>
 </template>
 
 <script setup lang="ts">
@@ -82,7 +80,7 @@ const props = defineProps({
         type: Object,
         default: function () {
             return {
-                label: 'First Page'
+                label: ''
             }
         }
     },

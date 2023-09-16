@@ -63,6 +63,7 @@
                                 v-model="pageComputed"
                             />
                             <DataTable
+                                class="tw-mt-0.5"
                                 :headers="usersHeaders"
                                 :size="'lg'"
                                 :rows="users.data"
@@ -142,7 +143,6 @@ let filters = reactive({
 let selectedUsers = ref([]);
 let searchInput = ref(null);
 let submitButton = ref(null);
-
 
 let pageComputed = computed({
     get() {

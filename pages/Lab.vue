@@ -2,25 +2,7 @@
     <div>
         <NuxtLayout name="custom">
             <template #content>
-
-                <MultiSelect
-                    drop-shadow
-                    :always-active="false"
-                    :searchable="false"
-                    :size="'md'"
-                    :options="category"
-                    :icon="'ic:sharp-display-settings'"/>
-                <SingleSelect
-                    class="tw-absolute tw-inline-block"
-                    :size="'md'"
-                    :searchable="false"
-                    :value-persist="true"
-                    :width="'150px'"
-                    :icon="'mdi:book-open-page-variant'"
-                    :label="'Per Page'"
-                    :options="perPage"/>
-
-                <div v-if="false" id="lab" class="tw-m-2 tw-p-2 tw-border tw-border-light">
+                <div v-if="true" id="lab" class="tw-m-2 tw-p-2 tw-border tw-border-light">
                     <div class="moody-card tw-max-w-[950px] tw-w-[950px]">
                         <div class="moody-card-frame"></div>
                         <div class="tw-relative tw-border tw-border-light tw-border-b-0 tw-p-3 tw-flex tw-justify-center tw-items-center">
@@ -31,28 +13,57 @@
                         <div class="tw-relative tw-border tw-border-light tw-p-7">
                             <div class="tw-grid tw-gap-2 tw-grid-cols-4 tw-mb-2">
                                 <div class="tw-block">
-                                    <Button :size="'md'" :icon="'ic:sharp-display-settings'" :label="'LG SKIP'"></Button>
+                                    <Button :size="'lg'" :icon="'ic:sharp-display-settings'" :label="'LG SKIP'"></Button>
                                 </div>
                                 <div class="tw-block">
-                                    <MultiSelect drop-shadow :always-active="false" :size="'md'" :options="category" :icon="'ic:sharp-display-settings'"/>
+                                    <MultiSelect
+                                        drop-shadow
+                                        :idle-border="'rgb(229,229,229)'"
+                                        :always-active="false"
+                                        :searchable="false"
+                                        :size="'lg'"
+                                        :options="category"
+                                        :icon="'ic:sharp-display-settings'"/>
                                 </div>
-                                <div></div>
-                                <div></div>
+                                <div class="tw-block">
+                                    <MultiSelect
+                                        drop-shadow
+                                        :idle-border="'#b4b4b4'"
+                                        :always-active="false"
+                                        :searchable="false"
+                                        :size="'lg'"
+                                        :options="category"
+                                        :icon="'ic:sharp-display-settings'"/>
+                                </div>
+                                <div class="tw-block">
+                                    <MultiSelect
+                                        drop-shadow
+                                        :idle-border="'#8063ab'"
+                                        :always-active="false"
+                                        :searchable="false"
+                                        :size="'lg'"
+                                        :options="category"
+                                        :icon="'ic:sharp-display-settings'"/>
+                                </div>
                             </div>
                             <div class="tw-grid tw-gap-2 tw-grid-cols-4">
                                 <div class="tw-block">
-                                    <Button :size="'md'" :variant="'outline'" :icon="'ic:sharp-display-settings'" :label="'LG SKIP'"></Button>
-                                </div>
-                                <div class="tw-block">
-                                    <SingleSelect :selection-max-width="true" :always-active="false" :size="'md'" :icon="'ic:sharp-display-settings'" :label="'Plan'" :options="plan"/>
+                                    <Button :size="'lg'" :variant="'outline'" :icon="'ic:sharp-display-settings'" :label="'LG SKIP'"></Button>
                                 </div>
                                 <div class="tw-block">
                                     <SingleSelect
-                                        class="tw-absolute tw-inline-block"
-                                        :size="'md'"
+                                        :selection-max-width="true"
+                                        :always-active="false"
+                                        :size="'lg'"
+                                        :icon="'ic:sharp-display-settings'"
+                                        :label="'Plan'"
+                                        :options="plan"/>
+                                </div>
+                                <div class="tw-block">
+                                    <SingleSelect
+                                        :size="'lg'"
                                         :searchable="false"
-                                        :value-persist="false"
-                                        :width="'150px'"
+                                        :value-persist="true"
                                         :icon="'mdi:book-open-page-variant'"
                                         :label="'Per Page'"
                                         :options="perPage"/>
