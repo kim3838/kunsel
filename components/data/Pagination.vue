@@ -35,7 +35,7 @@
             :value-persist="true"
             :width="perPageSelectWidth"
             :idle-border="'#b4b4b4'"
-            :icon="'mdi:book-open-page-variant'"
+            :icon="'mdi:book-open-page-variant-outline'"
             :label="'Per Page'"
             :options="perPage"/>
     </span>
