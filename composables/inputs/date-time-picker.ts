@@ -7,7 +7,7 @@ export function dateTimePicker(options: any[] = []) {
         scaffold(options);
     });
 
-    onUnmounted(async () => {
+    onUnmounted(() => {
         clearScaffold();
     });
 
