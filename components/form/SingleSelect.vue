@@ -8,6 +8,7 @@
         class="focus:tw-outline-none tw-bg-white">
         <div
             ref="selectHeader"
+            :style="{'border-radius': '2px'}"
             class="tw-w-full tw-flex tw-justify-start"
             :class="[heightClass, borderClass]">
             <div :style="{display: !active ? 'inline-block' : 'none'}" :class="[iconHolderClass]" class="tw-flex tw-justify-center tw-items-center">
@@ -57,7 +58,7 @@
 
         <div
             v-show="active"
-            :style="[selectionOffsetComputed, selectionWidthComputed]"
+            :style="[selectionOffsetComputed, selectionWidthComputed, {'border-radius': '2px'}]"
             ref="selectionOrigin"
             class="tw-z-10 tw-mt-[7px] tw-absolute tw-bg-white tw-border tw-border-light"
             :class="[dropShadow ? 'tw-drop-shadow-2xl' : '']">
@@ -111,6 +112,10 @@ const props = defineProps({
         type: String,
         default: '100%'
     },
+    idleBorder: {
+        type: String,
+        default: '#e5e5e5'//neutral-200
+    },
     selectionMaxWidth: {
         type: Boolean,
         default: true
@@ -161,7 +166,7 @@ const heightClass = computed(() => {
 });
 
 const borderClass = computed(() => {
-    return (active.value ? 'tw-border tw-border-light' : 'tw-border tw-border-neutral-200');
+    return (active.value ? 'tw-border tw-border-light' : 'idle-border');
 });
 
 const iconHolderClass = computed(() => {
@@ -378,3 +383,9 @@ onMounted(async () => {
     selectionWidth.value = selectHeader.value.offsetWidth;
 });
 </script>
+<style scoped>
+.idle-border {
+    border-width: 1px;
+    border-color: v-bind(idleBorder);
+}
+</style>

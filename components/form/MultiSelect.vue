@@ -3,11 +3,13 @@
         tabindex="0"
         v-on:focus="keepSelectionActive(1)"
         v-on:blur="loseFocus(1)"
-        class="tw-w-full focus:tw-outline-none tw-bg-white">
+        :style="{width: width}"
+        class="focus:tw-outline-none tw-bg-white">
         <div
             ref="selectHeader"
-            class="tw-w-full tw-flex tw-justify-start tw-border"
-            :class="[heightClass, active ? 'tw-border-light' : 'tw-border-neutral-200']">
+            :style="{'border-radius': '2px'}"
+            class="tw-w-full tw-flex tw-justify-start"
+            :class="[heightClass, borderClass]">
             <div v-if="!active" :class="[iconHolderClass]" class="tw-flex tw-justify-center tw-items-center">
                 <Icon :class="[iconClass]" :name="icon"/>
             </div>
@@ -58,7 +60,7 @@
 
         <div
             v-show="active"
-            :style="[selectionOffsetComputed, selectionWidthComputed]"
+            :style="[selectionOffsetComputed, selectionWidthComputed, {'border-radius': '2px'}]"
             ref="selectionOrigin"
             class="tw-z-10 tw-mt-[7px] tw-absolute tw-bg-white tw-border tw-border-light"
             :class="[dropShadow ? 'tw-drop-shadow-2xl' : '']">
@@ -101,6 +103,14 @@ const props = defineProps({
     inHorizontalScrollable: Boolean,
     dropShadow: Boolean,
     alwaysActive: Boolean,
+    width: {
+        type: String,
+        default: '100%'
+    },
+    idleBorder: {
+        type: String,
+        default: '#e5e5e5'//neutral-200
+    },
     selectionMaxWidth: {
         type: Boolean,
         default: true
@@ -147,6 +157,10 @@ const heightClass = computed(() => {
         'md': 'tw-h-8',
         'lg': 'tw-h-11'
     }[props.size];
+});
+
+const borderClass = computed(() => {
+    return (active.value ? 'tw-border tw-border-light' : 'idle-border');
 });
 
 const checkBoxSize = computed(() => {
@@ -440,3 +454,9 @@ onMounted(async () => {
     selectionWidth.value = selectHeader.value.offsetWidth;
 });
 </script>
+<style scoped>
+.idle-border {
+    border-width: 1px;
+    border-color: v-bind(idleBorder);
+}
+</style>
