@@ -146,7 +146,7 @@ const props = defineProps({
     },
     label: {
         type: String,
-        default: ''
+        default: 'Select'
     },
     size: {
         default: 'md'
