@@ -62,8 +62,8 @@
             v-show="active"
             :style="[selectionOffsetComputed, selectionWidthComputed, {'border-radius': '2px'}]"
             ref="selectionOrigin"
-            class="tw-z-10 tw-mt-[7px] tw-bg-white tw-border tw-border-light"
-            :class="[dropShadow ? 'tw-drop-shadow-2xl' : '', selectionFloat ? 'tw-absolute' : 'tw-relative']">
+            class="tw-z-10 tw-mt-[7px] tw-bg-white"
+            :class="[dropShadow ? 'tw-drop-shadow-2xl' : '', selectionFloat ? 'tw-absolute' : 'tw-relative', borderClass]">
             <div class="tw-absolute tw-border-solid tw-border-b-light" :style="[optionsArrowSlotClass]"></div>
             <div class="tw-absolute tw-border-solid tw-border-b-white" :style="[optionsArrowClass]"></div>
             <div class="tw-px-2 tw-pt-2 tw-text-left" :class="[optionsFontClass]">
@@ -110,6 +110,10 @@ const props = defineProps({
     idleBorder: {
         type: String,
         default: '#e5e5e5'//neutral-200
+    },
+    activeBorder: {
+        type: String,
+        default: '#969696'//theme.colors.light
     },
     selectionMaxWidth: {
         type: Boolean,
@@ -168,7 +172,7 @@ const heightClass = computed(() => {
 });
 
 const borderClass = computed(() => {
-    return (active.value ? 'tw-border tw-border-light' : 'idle-border');
+    return (active.value ? 'active-border' : 'idle-border');
 });
 
 const checkBoxSize = computed(() => {
@@ -470,5 +474,9 @@ onMounted(async () => {
 .idle-border {
     border-width: 1px;
     border-color: v-bind(idleBorder);
+}
+.active-border {
+    border-width: 1px;
+    border-color: v-bind(activeBorder);
 }
 </style>
