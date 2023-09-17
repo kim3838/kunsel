@@ -11,61 +11,79 @@
                             </span>
                         </div>
                         <div class="tw-relative tw-border tw-border-light tw-p-7">
-                            <div class="tw-grid tw-gap-2 tw-grid-cols-4 tw-mb-2">
-                                <div class="tw-block">
+                            <div class="tw-grid tw-gap-2 tw-grid-cols-4 tw-mb-2 tw-border tw-border-light">
+                                <div class="tw-flex tw-block">
                                     <Button :size="'md'" :icon="'ic:sharp-display-settings'" :label="'LG SKIP'"></Button>
                                 </div>
-                                <div class="tw-block">
+                                <div class="tw-flex tw-block">
                                     <MultiSelect
-                                        drop-shadow
+                                        :selection-max-width="false"
+                                        :selection-max-height="'120px'"
+                                        :selection-float="false"
                                         :idle-border="'orange'"
-                                        :always-active="false"
+                                        :always-active="true"
                                         :searchable="false"
+                                        :label="'Select Category'"
                                         :size="'md'"
                                         :options="category"
                                         :icon="'ic:sharp-display-settings'"/>
                                 </div>
-                                <div class="tw-block">
+                                <div class="tw-flex tw-block">
                                     <MultiSelect
-                                        drop-shadow
+                                        :selection-max-width="false"
+                                        :selection-max-height="'120px'"
+                                        :selection-float="false"
                                         :idle-border="'pink'"
-                                        :always-active="false"
-                                        :searchable="false"
+                                        :always-active="true"
+                                        :searchable="true"
+                                        :label="'Filter Category'"
                                         :size="'md'"
                                         :options="category"
                                         :icon="'ic:sharp-display-settings'"/>
                                 </div>
-                                <div class="tw-block">
+                                <div class="tw-flex tw-block">
                                     <MultiSelect
-                                        drop-shadow
+                                        :selection-max-width="false"
+                                        :selection-max-height="'120px'"
+                                        :selection-float="false"
                                         :idle-border="'blue'"
-                                        :always-active="false"
+                                        :always-active="true"
                                         :searchable="false"
+                                        :selection-header="false"
                                         :size="'md'"
                                         :options="category"
                                         :icon="'ic:sharp-display-settings'"/>
                                 </div>
                             </div>
-                            <div class="tw-grid tw-gap-2 tw-grid-cols-4">
-                                <div class="tw-block">
+                            <div class="tw-grid tw-gap-2 tw-grid-cols-4 tw-border tw-border-light">
+                                <div class="tw-flex tw-block">
                                     <Button :size="'md'" :variant="'outline'" :icon="'ic:sharp-display-settings'" :label="'LG SKIP'"></Button>
                                 </div>
-                                <div class="tw-block">
+                                <div class="tw-flex tw-block">
                                     <SingleSelect
-                                        :selection-max-width="true"
-                                        :always-active="false"
+                                        :selection-max-width="false"
+                                        :selection-max-height="'120px'"
+                                        :selection-float="false"
+                                        :idle-border="'green'"
+                                        :always-active="true"
+                                        :searchable="false"
                                         :size="'md'"
                                         :icon="'ic:sharp-display-settings'"
-                                        :label="'Plan'"
+                                        :label="'Select Plan'"
                                         :options="plan"/>
                                 </div>
-                                <div class="tw-block">
+                                <div class="tw-flex tw-block">
                                     <SingleSelect
                                         :size="'md'"
+                                        :selection-max-width="false"
+                                        :selection-max-height="'120px'"
+                                        :selection-float="false"
+                                        :idle-border="'indigo'"
+                                        :always-active="true"
                                         :searchable="false"
                                         :value-persist="true"
                                         :icon="'mdi:book-open-page-variant'"
-                                        :label="'Per Page'"
+                                        :label="'Select Per Page'"
                                         :options="perPage"/>
                                 </div>
                                 <div></div>
@@ -87,7 +105,7 @@
                                 :pagination="pagination"
                             />
                             <DataTable
-                                v-if="true"
+                                v-if="false"
                                 :headers="headers"
                                 :size="'lg'"
                                 :rows="data"

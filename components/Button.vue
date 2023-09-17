@@ -2,13 +2,13 @@
     <button
         ref="button"
         :disabled="disabled"
+        :style="{'border-radius': '2px'}"
         :class="[heightClass, spacingClass, colorClass, borderClass]"
         :type="type"
         class="
             tw-font-[Barlow]
             tw-inline-flex
             tw-items-center
-            tw-rounded-sm
             tw-font-medium
             tw-tracking-wide
             tw-box-border

@@ -60,14 +60,14 @@
             v-show="active"
             :style="[selectionOffsetComputed, selectionWidthComputed, {'border-radius': '2px'}]"
             ref="selectionOrigin"
-            class="tw-z-10 tw-mt-[7px] tw-absolute tw-bg-white tw-border tw-border-light"
-            :class="[dropShadow ? 'tw-drop-shadow-2xl' : '']">
+            class="tw-z-10 tw-mt-[7px] tw-bg-white tw-border tw-border-light"
+            :class="[dropShadow ? 'tw-drop-shadow-2xl' : '', selectionFloat ? 'tw-absolute' : 'tw-relative']">
             <div class="tw-absolute tw-border-solid tw-border-b-light" :style="[optionsArrowSlotClass]"></div>
             <div class="tw-absolute tw-border-solid tw-border-b-white" :style="[optionsArrowClass]"></div>
             <div class="tw-px-2 tw-pt-2 tw-text-left" :class="[optionsFontClass]">
-                {{searchPool.length ? `Select ` + label : 'Not Found.'}}
+                {{selectionHeaderSummary}}
             </div>
-            <div class="tw-max-h-[240px] tw-overflow-auto tw-border tw-border-t-lighter/25">
+            <div :style="{'max-height': selectionMaxHeight}" class="tw-overflow-auto tw-border tw-border-t-lighter/25">
                 <div
                     v-for="item in options.selection" :key="item.value"
                     class="tw-px-2 hover:tw-bg-neutral-200 tw-flex tw-items-center tw-cursor-pointer"
@@ -117,6 +117,14 @@ const props = defineProps({
         default: '#e5e5e5'//neutral-200
     },
     selectionMaxWidth: {
+        type: Boolean,
+        default: true
+    },
+    selectionMaxHeight: {
+        type: String,
+        default: '240px'
+    },
+    selectionFloat: {
         type: Boolean,
         default: true
     },
@@ -257,9 +265,13 @@ const optionsArrowClass = computed(() => {
     return {'left':'10px', 'top': '-6px', 'border-right': '6px solid transparent', 'border-left': '6px solid transparent', 'border-bottom': '6px'};
 });
 
+const selectionHeaderSummary = computed(()=>{
+    return searchPool.value.length ? props.label : 'Not Found.';
+});
+
 const selectionSummary = computed(() => {
     if(props.options.selected == null){
-        return props.label ? `No ${props.label} Selected` : "None Selected";
+        return "None Selected";
     } else {
         return props.options.data.filter((item) => {
             return item.value == props.options.selected;
