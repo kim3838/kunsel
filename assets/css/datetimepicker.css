@@ -283,7 +283,7 @@
 
 .daterangepicker .calendar-time {
     text-align: center;
-    margin: 4px auto 0 auto;
+    margin: 12px auto 0 auto;
     line-height: 30px;
     position: relative;
 }
@@ -438,4 +438,10 @@
     .daterangepicker .drp-calendar.left {
         clear: none !important;
     }
+}
+
+.timelabel {
+    font-size: 0.75rem;
+    position: absolute;
+    bottom: 65%;
 }

@@ -904,7 +904,7 @@ console.log("Load Public : Datetimepicker");
             // hours
             //
 
-            html = '<select class="hourselect">';
+            html = '<span style="position: relative"><span class="timelabel">Hour</span><select class="hourselect">';
 
             var start = this.timePicker24Hour ? 0 : 1;
             var end = this.timePicker24Hour ? 23 : 12;
@@ -930,13 +930,13 @@ console.log("Load Public : Datetimepicker");
                 }
             }
 
-            html += '</select> ';
+            html += '</select></span> ';
 
             //
             // minutes
             //
 
-            html += ': <select class="minuteselect">';
+            html += ': <span><span style="position: relative"><span class="timelabel">Minutes</span><select class="minuteselect">';
 
             for (var i = 0; i < 60; i += this.timePickerIncrement) {
                 var padded = i < 10 ? '0' + i : i;
@@ -957,14 +957,14 @@ console.log("Load Public : Datetimepicker");
                 }
             }
 
-            html += '</select> ';
+            html += '</select></span> ';
 
             //
             // seconds
             //
 
             if (this.timePickerSeconds) {
-                html += ': <select class="secondselect">';
+                html += ': <span><span style="position: relative"><span class="timelabel">Seconds</span><select class="secondselect">';
 
                 for (var i = 0; i < 60; i++) {
                     var padded = i < 10 ? '0' + i : i;
@@ -985,7 +985,7 @@ console.log("Load Public : Datetimepicker");
                     }
                 }
 
-                html += '</select> ';
+                html += '</select></span> ';
             }
 
             //

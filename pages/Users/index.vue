@@ -155,6 +155,7 @@ let pageComputed = computed({
         filters[payload.key] = payload.value;
     }
 });
+
 let paramsComputed = computed(() => {
     return {
         page: filters.page,
@@ -234,6 +235,7 @@ function paginate(page = 1, clearSelection = false){
     if(clearSelection){
         selectedUsers.value = [];
     }
+
     execute();
 }
 
