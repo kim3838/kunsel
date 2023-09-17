@@ -83,7 +83,7 @@
                                         :selection-max-height="'120px'"
                                         :selection-float="false"
                                         :idle-border="'indigo'"
-                                        :active-border="'indigo'"
+                                        :active-border="'red'"
                                         :always-active="true"
                                         :searchable="false"
                                         :value-persist="true"

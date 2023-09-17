@@ -64,7 +64,7 @@
             ref="selectionOrigin"
             class="tw-z-10 tw-mt-[7px] tw-bg-white"
             :class="[dropShadow ? 'tw-drop-shadow-2xl' : '', selectionFloat ? 'tw-absolute' : 'tw-relative', borderClass]">
-            <div class="tw-absolute tw-border-solid tw-border-b-light" :style="[optionsArrowSlotClass]"></div>
+            <div class="tw-absolute" :style="[optionsArrowSlotClass]"></div>
             <div class="tw-absolute tw-border-solid tw-border-b-white" :style="[optionsArrowClass]"></div>
             <div class="tw-px-2 tw-pt-2 tw-text-left" :class="[optionsFontClass]">
                 {{selectionHeaderSummary}}
@@ -266,7 +266,7 @@ const inputSize = computed(() => {
 });
 
 const optionsArrowSlotClass = computed(() => {
-    return {'left':'9px', 'top': '-7px', 'border-right': '7px solid transparent', 'border-left': '7px solid transparent', 'border-bottom': '7px'};
+    return {'left':'9px', 'top': '-7px', 'border-right': '7px solid transparent', 'border-left': '7px solid transparent', 'border-bottom': '7px solid ' + props.activeBorder};
 });
 
 const optionsArrowClass = computed(() => {
