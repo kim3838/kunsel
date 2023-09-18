@@ -2,14 +2,10 @@
 
 export default defineNuxtConfig({
     // @ts-ignore
-    // alias: {
-    //     pinia: "/node_modules/@pinia/nuxt/node_modules/pinia/dist/pinia.mjs"
-    // },
-
     app: {
         baseURL: "/",
         head: {
-            title: 'sn-frontendv3',
+            title: 'sn-f v3',
             "meta": [
                 {"name": "viewport","content": "width=device-width, initial-scale=1"},
                 {"charset": "utf-8"}
@@ -36,8 +32,11 @@ export default defineNuxtConfig({
                 {src: '/js/datetimepicker/index.js'}
             ],
             "noscript": [],
+            "htmlAttrs": {
+                class: ''//tw-dark
+            },
             "bodyAttrs": {
-                class: 'tw-text-accent tw-font-sans'
+                class: 'tw-text-accent tw-font-sans tw-bg-white dark:tw-bg-gray-800'
             }
         },
         layoutTransition: false,
