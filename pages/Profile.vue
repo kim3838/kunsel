@@ -1,6 +1,6 @@
 <template>
     <div>
-        <NuxtLayout name="custom">
+        <NuxtLayout :name="$coreStore.layout">
             <template #content>
                 <div class="tw-m-2 tw-p-2 tw-border tw-border-light">
                     <div v-if="$authStore.isLoggedIn" class="tw-justify-end">

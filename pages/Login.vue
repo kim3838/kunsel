@@ -1,8 +1,8 @@
 <template>
     <div>
-        <NuxtLayout name="custom">
+        <NuxtLayout :name="$coreStore.layout">
             <template #content>
-                <div class="tw-m-2 tw-p-2 tw-border tw-border-light">
+                <div class="tw-m-2 tw-p-2 tw-border tw-border-light dark:tw-border-[white]">
 
                     <div class="tw-flex tw-justify-center tw-text-lg tw-text-gray-500">Premium Battle Pass</div>
                     <div class="tw-flex tw-justify-center tw-tracking-wider header-1 tw-text-neutral-50 tw-font-[Gupter] tw-text-4xl tw-font-semibold">GET MORE WITH PREMIUM</div>
@@ -63,8 +63,6 @@
 </template>
 
 <script setup lang="ts">
-
-import Accordion from "~/components/Accordion.vue";
 
 definePageMeta({
     layout: false,

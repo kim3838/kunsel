@@ -1,6 +1,6 @@
 <template>
     <div>
-        <NuxtLayout name="custom">
+        <NuxtLayout :name="$coreStore.layout">
             <template #content>
                 <TextSample></TextSample>
             </template>
