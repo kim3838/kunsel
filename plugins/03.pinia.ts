@@ -6,6 +6,7 @@ export default defineNuxtPlugin(({$pinia}) => {
             coreStore: useCoreStore($pinia),
             formStore: useFormStore($pinia),
             authStore: useAuthStore($pinia),
+            themeStore: useThemeStore($pinia),
         }
     }
 })

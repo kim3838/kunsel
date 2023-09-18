@@ -8,12 +8,13 @@
 
 <script setup lang="ts">
 
-const { $debug, $moment, $coreStore, $formStore} = useNuxtApp();
+const { $debug, $moment, $coreStore, $formStore, $themeStore } = useNuxtApp();
 const runtimeConfig = useRuntimeConfig();
 const appConfig = useAppConfig();
 
 // $debug('runtimeConfig',runtimeConfig);
 // $debug('appConfig', appConfig);
+// $debug('themeStore', $themeStore['colors']['light']);
 // $debug('moment', $moment().format('YYYY-MM-DD'));
 // $debug('lodash', _upperCase('lodash uppercase'));
 
