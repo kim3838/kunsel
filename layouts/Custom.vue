@@ -2,7 +2,7 @@
     <div class="tw-relative">
         <nav class="tw-border-b tw-border-neutral-200" :class="{'lg:tw-ml-sidebar': false}">
             <!-- Primary Navigation Menu -->
-            <div class="tw-max-w-full tw-bg-white tw-mx-auto tw-px-2">
+            <div class="tw-max-w-full tw-mx-auto tw-px-2 tw-bg-white dark:tw-bg-gray-800">
                 <div class="tw-flex tw-justify-center tw-h-10">
                     <div class="tw-relative tw-flex">
                         <!-- Navigation Links -->
