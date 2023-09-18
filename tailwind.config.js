@@ -11,6 +11,8 @@ module.exports = {
 
     prefix: 'tw-',
 
+    darkMode: 'class',
+
     important: true,
 
     theme: {
