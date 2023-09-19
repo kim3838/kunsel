@@ -65,6 +65,95 @@
                             </div>
                         </div>
 
+                        <div class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-8">
+                            <div class="tw-flex tw-block">
+                                <MultiSelect
+                                    :selection-max-width="false"
+                                    :selection-max-height="'120px'"
+                                    :selection-float="false"
+                                    :idle-border="'orange'"
+                                    :active-border="'orange'"
+                                    :always-active="true"
+                                    :searchable="false"
+                                    :label="'Select Category'"
+                                    :size="'md'"
+                                    :options="category"
+                                    :icon="'ic:sharp-display-settings'"/>
+                            </div>
+                            <div class="tw-flex tw-block">
+                                <MultiSelect
+                                    :selection-max-width="false"
+                                    :selection-max-height="'120px'"
+                                    :selection-float="false"
+                                    :idle-border="'pink'"
+                                    :active-border="'pink'"
+                                    :always-active="true"
+                                    :searchable="true"
+                                    :label="'Filter Category'"
+                                    :size="'md'"
+                                    :options="category"
+                                    :icon="'ic:sharp-display-settings'"/>
+                            </div>
+                            <div class="tw-flex tw-block">
+                                <MultiSelect
+                                    :selection-max-width="false"
+                                    :selection-max-height="'120px'"
+                                    :selection-float="false"
+                                    :idle-border="'blue'"
+                                    :active-border="'blue'"
+                                    :always-active="true"
+                                    :searchable="false"
+                                    :selection-header="false"
+                                    :size="'md'"
+                                    :options="category"
+                                    :icon="'ic:sharp-display-settings'"/>
+                            </div>
+                            <div class="tw-flex tw-block">
+                                <SingleSelect
+                                    :selection-max-width="false"
+                                    :selection-max-height="'120px'"
+                                    :selection-float="false"
+                                    :idle-border="'green'"
+                                    :active-border="'green'"
+                                    :always-active="true"
+                                    :searchable="false"
+                                    :size="'md'"
+                                    :icon="'ic:sharp-display-settings'"
+                                    :label="'Select Plan'"
+                                    :options="plan"/>
+                            </div>
+                            <div class="tw-flex tw-block">
+                                <SingleSelect
+                                    :size="'md'"
+                                    :selection-max-width="false"
+                                    :selection-max-height="'120px'"
+                                    :selection-float="false"
+                                    :idle-border="'indigo'"
+                                    :active-border="'red'"
+                                    :always-active="true"
+                                    :searchable="false"
+                                    :value-persist="true"
+                                    :icon="'mdi:book-open-page-variant'"
+                                    :label="'Select Plan'"
+                                    :options="plan"/>
+                            </div>
+                            <div class="tw-flex tw-block">
+                                <SingleSelect
+                                    :size="'md'"
+                                    :selection-max-width="false"
+                                    :selection-max-height="'120px'"
+                                    :selection-float="false"
+                                    :idle-border="'indigo'"
+                                    :active-border="'red'"
+                                    :always-active="true"
+                                    :searchable="false"
+                                    :value-persist="true"
+                                    :icon="'mdi:book-open-page-variant'"
+                                    :label="'Select Per Page'"
+                                    :options="perPage"/>
+                            </div>
+                        </div>
+
                         <div class="tw-grid tw-gap-2 tw-grid-cols-1 lg:tw-grid-cols-2 xl:tw-grid-cols-3">
                             <div class="tw-block tw-p-2 tw-border tw-border-neutral-200">
                                 <InputLabel class="tw-mb-2" :size="'md'" value="MD Datatable" />
@@ -473,6 +562,20 @@ let plan = reactive({
         {text : 'Evaluator', value: 4},
     ],
     selected: null
+});
+let perPage = reactive({
+    search: '',
+    data: [
+        {text : '10 per page', value: 10},
+        {text : '25 per page', value: 25},
+        {text : '100 per page', value: 100},
+    ],
+    selection: [
+        {text : '10 per page', value: 10},
+        {text : '25 per page', value: 25},
+        {text : '100 per page', value: 100},
+    ],
+    selected: 10
 });
 
 let selected_1 = ref([1001,1002]);
