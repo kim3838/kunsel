@@ -3,8 +3,12 @@ import { defineStore } from 'pinia'
 export const useThemeStore = defineStore('theme', {
     state: () => ({
         theme: 'light',
-        colors: {
+        blueprint: {
+            color: 'accent'
+        },
+        palletes: {
             light: {
+                'background': '#ffffff',
                 'neutral' : '#e5e5e5',
                 'lighter': '#b4b4b4',
                 'light': '#969696',
@@ -13,6 +17,7 @@ export const useThemeStore = defineStore('theme', {
                 'accent': '#646464',
             },
             pink: {
+                'background': '#ffffff',
                 'neutral' : '#e5e5e5',
                 'lighter': '#F8ECD1',
                 'light': '#DEB6AB',
@@ -21,6 +26,7 @@ export const useThemeStore = defineStore('theme', {
                 'accent': '#80506b',
             },
             green: {
+                'background': '#ffffff',
                 'neutral' : '#e5e5e5',
                 'lighter': '#EAE7B1',
                 'light': '#A6BB8D',
@@ -34,6 +40,15 @@ export const useThemeStore = defineStore('theme', {
     getters: {
         getTheme() {
             return this.theme;
+        },
+        palletesComputed() {
+            return this.palletes[this.theme];
+        },
+        colorComputed() {
+            return this.palletesComputed[this.blueprint.color];
+        },
+        backgroundComputed() {
+            return this.palletesComputed['background'];
         }
     },
 
