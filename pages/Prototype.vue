@@ -7,7 +7,7 @@
                     <div>Tailwind Url: <NuxtLink class="tw-text-sky-600" :to="'_tailwind'" target="_blank">{{('http://localhost:3000' + '/_tailwind/')}}</NuxtLink></div>
 
                     <div class="tw-space-y-2">
-                        <div class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-8">
+                        <div v-if="true" class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-8">
                             <div class="tw-block tw-border tw-border-neutral-200">
                                 <InputLabel :size="'md'" value="Static Multi Select" />
                                 <MultiSelect drop-shadow :size="'md'" :options="category" :icon="'ic:sharp-qr-code'"/>
@@ -65,7 +65,7 @@
                             </div>
                         </div>
 
-                        <div class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-8">
+                        <div v-if="false" class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-8">
                             <div class="tw-flex tw-block">
                                 <MultiSelect
                                     :selection-max-width="false"
@@ -154,7 +154,7 @@
                             </div>
                         </div>
 
-                        <div class="tw-grid tw-gap-2 tw-grid-cols-1 lg:tw-grid-cols-2 xl:tw-grid-cols-3">
+                        <div v-if="false" class="tw-grid tw-gap-2 tw-grid-cols-1 lg:tw-grid-cols-2 xl:tw-grid-cols-3">
                             <div class="tw-block tw-p-2 tw-border tw-border-neutral-200">
                                 <InputLabel class="tw-mb-2" :size="'md'" value="MD Datatable" />
                                 <DataTable
@@ -258,7 +258,7 @@
                             </div>
                         </div>
 
-                        <div class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-8">
+                        <div v-if="false" class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-8">
                             <div class="tw-flex tw-items-start tw-justify-start tw-block tw-border tw-border-neutral-200">
                                 <Button :size="'2xs'" :icon="'ic:sharp-send-to-mobile'" :label="'XXS Button'"></Button>
                             </div>
@@ -282,7 +282,7 @@
                             </div>
                         </div>
 
-                        <div class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-8">
+                        <div v-if="false" class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-8">
                             <div class="tw-flex tw-items-start tw-justify-start tw-block tw-border tw-border-neutral-200">
                                 <Button :variant="'outline'" :size="'2xs'" :icon="'ic:sharp-dashboard'" :label="'XXS Button'"></Button>
                             </div>
@@ -306,7 +306,7 @@
                             </div>
                         </div>
 
-                        <div class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-8">
+                        <div v-if="false" class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-8">
                             <div class="tw-border tw-border-neutral-200">
                                 <label>
                                     <Checkbox v-model="remember1" :label="' '" :size="'md'" name="remember" />
@@ -329,7 +329,7 @@
                             </div>
                         </div>
 
-                        <div class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-8">
+                        <div v-if="false" class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-8">
                             <div class="tw-flex tw-items-start tw-justify-start tw-block tw-border tw-border-neutral-200">
                                 <div>
                                     <InputLabel :size="'md'" value="SM : Gender Group" />
@@ -376,7 +376,7 @@
                             </div>
                         </div>
 
-                        <div class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-8">
+                        <div v-if="true" class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-8">
                             <div class="tw-block tw-border tw-border-neutral-200">
                                 <InputLabel :size="'2xs'" for="form_input_1" value="XXS Label" />
                                 <Input :size="'2xs'" class="tw-w-full" placeholder="Enter username" id="form_input_1" type="text" autocomplete="off" />

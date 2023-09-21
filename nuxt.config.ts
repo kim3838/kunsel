@@ -33,10 +33,10 @@ export default defineNuxtConfig({
             ],
             "noscript": [],
             "htmlAttrs": {
-                class: ''//tw-dark
+                // class: ''//tw-dark
             },
             "bodyAttrs": {
-                class: 'tw-text-accent tw-font-sans tw-bg-white dark:tw-bg-gray-800'
+                class: 'color-class tw-font-sans'
             }
         },
         layoutTransition: false,

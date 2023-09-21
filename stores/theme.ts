@@ -49,7 +49,16 @@ export const useThemeStore = defineStore('theme', {
         },
         backgroundComputed() {
             return this.palletesComputed['background'];
-        }
+        },
+        accentComputed() {
+            return this.palletesComputed['accent'];
+        },
+        lightComputed() {
+            return this.palletesComputed['light'];
+        },
+        lighterComputed() {
+            return this.palletesComputed['lighter'];
+        },
     },
 
     actions: {

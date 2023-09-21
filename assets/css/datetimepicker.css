@@ -2,13 +2,9 @@
     display: none;
 }
 
-/*Datetime picker border Theme border [lighter] color*/
 .daterangepicker {
     position: absolute;
     font-family: inherit;
-    /*color: #374151;*/
-    background-color: #fff;
-    border: 1px solid #b4b4b4;
     width: 278px;
     max-width: none;
     padding: 0;
@@ -28,12 +24,10 @@
     content: '';
 }
 
-/*Datetime picker arrow border bottom Theme [lighter] color*/
 .daterangepicker:before {
     top: -7px;
     border-right: 7px solid transparent;
     border-left: 7px solid transparent;
-    border-bottom: 7px solid #b4b4b4;
 }
 
 .daterangepicker:after {
@@ -130,12 +124,8 @@
     border: none;
 }
 
-/*Datetime picker arrow border Theme [accent] color*/
 .daterangepicker .calendar-table .next span, .daterangepicker .calendar-table .prev span {
     color: #fff;
-    /*border: solid #374151;*/
-    border: solid #646464;
-    border-width: 0 2px 2px 0;
     border-radius: 0;
     display: inline-block;
     padding: 3px;
@@ -182,12 +172,6 @@
     cursor: pointer;
 }
 
-.daterangepicker .calendar-table {
-    border: 1px solid #fff;
-    border-radius: 4px;
-    background-color: #fff;
-}
-
 .daterangepicker .calendar-table table {
     width: 100%;
     margin: 0;
@@ -204,12 +188,6 @@
 .daterangepicker td.week, .daterangepicker th.week {
     font-size: 80%;
     color: #ccc;
-}
-
-.daterangepicker td.off, .daterangepicker td.off.in-range, .daterangepicker td.off.start-date, .daterangepicker td.off.end-date {
-    background-color: #fff;
-    border-color: transparent;
-    color: #adadad;
 }
 
 .daterangepicker td.in-range {
@@ -231,14 +209,6 @@
     border-radius: 4px;
 }
 
-/*Datetime picker active background Theme [accent] color*/
-.daterangepicker td.active, .daterangepicker td.active:hover {
-    /*background-color: #357ebd;*/
-    background-color: #646464;
-    border-color: transparent;
-    color: #fff;
-}
-
 .daterangepicker th.month {
     width: auto;
 }
@@ -249,14 +219,12 @@
     text-decoration: line-through;
 }
 
-/*Datetime picker border Theme [lighter] color*/
 .daterangepicker select.monthselect, .daterangepicker select.yearselect {
     font-size: 16px;
     padding: 4px 2px;
     height: auto;
     margin: 0;
     cursor: default;
-    border: 1px solid #b4b4b4;
     background-color: white;
 }
 
@@ -269,13 +237,9 @@
     width: 40%;
 }
 
-/*Datetime picker border Theme [lighter] color*/
 .daterangepicker select.hourselect, .daterangepicker select.minuteselect, .daterangepicker select.secondselect, .daterangepicker select.ampmselect {
     width: 50px;
     margin: 0 auto;
-    /*background: #eee;*/
-    border: 1px solid #b4b4b4;
-    background-color: white;
     padding: 2px;
     outline: 0;
     font-size: 14px;

@@ -33,7 +33,7 @@ console.log("Load Public : Datetimepicker");
     var DateRangePicker = function(element, options, cb) {
 
         //default settings for options
-        this.parentEl = 'body';
+        this.parentEl = '#datetimepicker-slot';//#datetimepicker-slot
         this.element = $(element);
         this.startDate = moment().startOf('day');
         this.endDate = moment().endOf('day');
@@ -1033,7 +1033,7 @@ console.log("Load Public : Datetimepicker");
                 drops = this.drops;
 
             var parentRightEdge = $(window).width();
-            if (!this.parentEl.is('body')) {
+            if (!this.parentEl.is('#datetimepicker-slot')) {//body
                 parentOffset = {
                     top: this.parentEl.offset().top - this.parentEl.scrollTop(),
                     left: this.parentEl.offset().left - this.parentEl.scrollLeft()
