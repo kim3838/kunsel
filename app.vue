@@ -23,16 +23,11 @@ let text = ref($themeStore.text);
 let textInvert = ref($themeStore.textInvert);
 let textSecondary = ref($themeStore.textSecondary);
 
-// let backgroundColor = palletes['background'];
-// $debug('backgroundColor', backgroundColor);
-// let color = ref($themeStore.colors[theme.value][$themeStore.blueprint.color]);
-// $debug('color', color.value);
 // $debug('runtimeConfig',runtimeConfig);
 // $debug('appConfig', appConfig);
 // $debug('themeStore', $themeStore['colors']['light']);
 // $debug('moment', $moment().format('YYYY-MM-DD'));
 // $debug('lodash', _upperCase('lodash uppercase'));
-
 // console.log({'layout': $coreStore.layout});
 // console.log({'layout': $coreStore.service.error.title});
 

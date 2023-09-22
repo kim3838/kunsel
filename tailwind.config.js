@@ -25,13 +25,6 @@ module.exports = {
             spacing: {
                 'sidebar': '250px',
             },
-            // colors: {
-            //     'lighter': '#b4b4b4',
-            //     'light': '#969696',
-            //     'dark': '#787878',
-            //     'darker': '#323232',
-            //     'accent': '#646464'
-            // }
         },
     },
 
