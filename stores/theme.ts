@@ -3,18 +3,17 @@ import { defineStore } from 'pinia'
 export const useThemeStore = defineStore('theme', {
     state: () => ({
         theme: 'light',
-        blueprint: {
-            color: 'accent'
-        },
         palletes: {
             light: {
-                'background': '#ffffff',
-                'neutral' : '#e5e5e5',
-                'lighter': '#b4b4b4',
-                'light': '#969696',
-                'dark': '#787878',
-                'darker': '#323232',
-                'accent': '#646464',
+                'primary': '#323232',
+                'secondary': '#787878',
+                'accent': '#969696',
+                'shade': '#b4b4b4',
+                'neutral': '#e5e5e5',
+                'tint': '#ffffff',
+                'text': '#646464',
+                'text-invert': '#ffffff',
+                'text-secondary': '#b4b4b4',
             },
             pink: {
                 'background': '#ffffff',
@@ -44,20 +43,32 @@ export const useThemeStore = defineStore('theme', {
         palletesComputed() {
             return this.palletes[this.theme];
         },
-        colorComputed() {
-            return this.palletesComputed[this.blueprint.color];
+        primary() {
+            return this.palletesComputed['primary'];
         },
-        backgroundComputed() {
-            return this.palletesComputed['background'];
+        secondary() {
+            return this.palletesComputed['secondary'];
         },
-        accentComputed() {
+        accent() {
             return this.palletesComputed['accent'];
         },
-        lightComputed() {
-            return this.palletesComputed['light'];
+        shade() {
+            return this.palletesComputed['shade'];
         },
-        lighterComputed() {
-            return this.palletesComputed['lighter'];
+        neutral() {
+            return this.palletesComputed['neutral'];
+        },
+        tint() {
+            return this.palletesComputed['tint'];
+        },
+        text() {
+            return this.palletesComputed['text'];
+        },
+        textInvert() {
+            return this.palletesComputed['text-invert'];
+        },
+        textSecondary() {
+            return this.palletesComputed['text-secondary'];
         },
     },
 
