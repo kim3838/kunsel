@@ -13,11 +13,16 @@ const { $themeStore } = useNuxtApp();
 const runtimeConfig = useRuntimeConfig();
 const appConfig = useAppConfig();
 
-let color = ref($themeStore.colorComputed);
-let background = ref($themeStore.backgroundComputed);
-let accent = ref($themeStore.accentComputed);
-let light = ref($themeStore.lightComputed);
-let lighter = ref($themeStore.lighterComputed);
+let primary = ref($themeStore.primary);
+let secondary = ref($themeStore.secondary);
+let accent = ref($themeStore.accent);
+let shade = ref($themeStore.shade);
+let neutral = ref($themeStore.neutral);
+let tint = ref($themeStore.tint);
+let text = ref($themeStore.text);
+let textInvert = ref($themeStore.textInvert);
+let textSecondary = ref($themeStore.textSecondary);
+
 // let backgroundColor = palletes['background'];
 // $debug('backgroundColor', backgroundColor);
 // let color = ref($themeStore.colors[theme.value][$themeStore.blueprint.color]);
@@ -35,33 +40,33 @@ let lighter = ref($themeStore.lighterComputed);
 </script>
 <style>
 .color-class {
-    color: v-bind(color);
+    color: v-bind(text);
 }
 
 .daterangepicker{
-    border: 1px solid v-bind(lighter);
-    background-color: v-bind(background);
+    border: 1px solid v-bind(shade);
+    background-color: v-bind(tint);
 }
 
 .daterangepicker .calendar-table {
     border-radius: 4px;
-    background-color: v-bind(background);
+    background-color: v-bind(tint);
 }
 
 .daterangepicker td.off, .daterangepicker td.off.in-range, .daterangepicker td.off.start-date, .daterangepicker td.off.end-date {
-    background-color: v-bind(background);
+    background-color: v-bind(tint);
     border-color: transparent;
-    color: v-bind(light);
+    color: v-bind(textSecondary);
 }
 
 .daterangepicker td.active, .daterangepicker td.active:hover {
-    background-color: v-bind(accent);
+    background-color: v-bind(text);
     border-color: transparent;
-    color: #fff;
+    color: v-bind(textInvert);
 }
 
 .daterangepicker:before {
-    border-bottom: 7px solid v-bind(lighter);
+    border-bottom: 7px solid v-bind(shade);
 }
 
 .daterangepicker .calendar-table .next span, .daterangepicker .calendar-table .prev span {
@@ -70,11 +75,11 @@ let lighter = ref($themeStore.lighterComputed);
 }
 
 .daterangepicker select.monthselect, .daterangepicker select.yearselect {
-    border: 1px solid v-bind(lighter);
+    border: 1px solid v-bind(shade);
 }
 
 .daterangepicker select.hourselect, .daterangepicker select.minuteselect, .daterangepicker select.secondselect, .daterangepicker select.ampmselect {
-    border: 1px solid v-bind(lighter);
-    background-color: v-bind(background);
+    border: 1px solid v-bind(shade);
+    background-color: v-bind(tint);
 }
 </style>
