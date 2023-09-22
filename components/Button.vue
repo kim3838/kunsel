@@ -121,7 +121,7 @@ const fontClass = computed(() => {
 const colorClass = computed(() => {
     return {
         'default': 'default-background',
-        'outline': props.disabled ? 'outlined-disabled' : 'outlined',
+        'outline': props.disabled ? '' : 'outlined',
     }[props.variant]
 });
 
@@ -166,10 +166,6 @@ const shadeClass = computed(() => {
 
 .outlined-border{
     border: 1px solid v-bind(shade);
-}
-
-.outlined-disabled{
-    background-color: v-bind(shade50);
 }
 
 .outlined{
