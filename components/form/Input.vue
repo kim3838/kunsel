@@ -5,9 +5,9 @@
             fontClass,
             heightClass,
             backgroundClass,
-            ring ? 'focus:tw-ring-light focus:tw-ring-opacity-25' : 'focus:tw-ring-transparent',
-            focusRing ? 'focus:tw-border-lighter focus:tw-ring' : '',
-            withBorder ? 'tw-border tw-border-neutral-200' : 'tw-border tw-border-transparent',
+            'focus:tw-ring-transparent focus:tw-ring',
+            focusRing ? 'focus-ring' : '',
+            withBorder ? 'bordered' : 'borderless',
             rounded ? 'tw-rounded-sm': '']"
         class="tw-pl-1 tw-form-input"
         :value="modelValue"
@@ -16,7 +16,14 @@
 </template>
 
 <script setup>
-import { computed } from 'vue';
+import {ref, computed} from 'vue';
+
+const { $themeStore } = useNuxtApp();
+
+let shade = ref($themeStore.shade);
+let neutral = ref($themeStore.neutral);
+let tint = ref($themeStore.tint);
+
 
 const props = defineProps({
     modelValue: [String, Number],
@@ -76,11 +83,25 @@ const fontClass = computed(() => {
 });
 
 const backgroundClass = computed(() => {
-    return {
-        [false] : 'tw-bg-white',
-        [true] : 'tw-bg-gray-200'
-    }[props.disabled];
+    return props.disabled ? '' : 'input-background';
 });
 
 </script>
+<style scoped>
+.input-background{
+    background-color: v-bind(tint);
+}
 
+.focus-ring:focus{
+    border-color: v-bind(shade);
+}
+
+.bordered{
+    border-width: 1px;
+    border-color: v-bind(neutral);
+}
+
+.borderless{
+    border: 1px solid transparent;
+}
+</style>

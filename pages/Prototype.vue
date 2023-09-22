@@ -394,11 +394,15 @@
                                 <Input :size="'md'" class="tw-w-full" placeholder="Enter username" id="form_input_4" type="text" autocomplete="off" />
                             </div>
                             <div class="tw-block tw-border tw-border-neutral-200">
-                                <InputLabel :size="'lg'" for="form_input_5" value="LG Label" />
+                                <InputLabel :size="'md'" for="form_input_5" value="MD Label" />
+                                <Input :size="'md'" disabled class="tw-w-full" placeholder="Disabled" id="form_input_4" type="text" autocomplete="off" />
+                            </div>
+                            <div class="tw-block tw-border tw-border-neutral-200">
+                                <InputLabel :size="'lg'" for="form_input_6" value="LG Label" />
                                 <Input :size="'lg'" class="tw-w-full" placeholder="Enter username" id="form_input_5" type="text" autocomplete="off" />
                             </div>
                             <div class="tw-col-span-2 tw-block tw-border tw-border-neutral-200">
-                                <InputLabel :size="'xl'" for="form_input_6" value="XL Label" />
+                                <InputLabel :size="'xl'" for="form_input_7" value="XL Label" />
                                 <Input :size="'xl'" class="tw-w-full" placeholder="Enter username" id="form_input_6" type="text" autocomplete="off" />
                             </div>
                         </div>
