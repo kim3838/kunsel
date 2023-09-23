@@ -154,7 +154,6 @@ const bodyFontClass = computed(() => {
 
 const buttonSize = computed(() => {
     return {
-        [null]: '',
         'sm': '2xs',
         'md': 'xs',
         'lg': 'sm',
@@ -164,7 +163,6 @@ const buttonSize = computed(() => {
 
 const checkBoxSize = computed(() => {
     return {
-        [null]: 'md',
         'sm': 'md',
         'md': 'md',
         'lg': 'lg',
@@ -174,7 +172,6 @@ const checkBoxSize = computed(() => {
 
 const inputSize = computed(() => {
     return {
-        [null]: '',
         'sm': '2xs',
         'md': 'xs',
         'lg': 'sm',
@@ -184,7 +181,6 @@ const inputSize = computed(() => {
 
 const selectSize = computed(() => {
     return {
-        [null]: '',
         'sm': '2xs',
         'md': 'xs',
         'lg': 'sm',
