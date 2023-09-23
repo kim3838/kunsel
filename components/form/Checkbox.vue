@@ -7,13 +7,17 @@
             type="checkbox"
             v-model="proxyModel"
             :class="[heightClass, inputClass]"
-            class="tw-form-checkbox tw-text-accent tw-border-light focus:tw-ring-transparent focus:tw-border-lighter focus:tw-ring">
+            class="tw-form-checkbox checkbox focus:tw-ring-transparent focus:tw-border-lighter focus:tw-ring">
         <span v-if="label?.trim()" :class="[fontClass]" class="tw-ml-1 tw-text-accent" v-text="label"></span>
     </span>
 </template>
 
 <script setup>
-import { computed } from 'vue';
+import { ref, computed } from 'vue';
+const { $themeStore } = useNuxtApp();
+
+let text = ref($themeStore.text);
+let lining = ref($themeStore.lining);
 
 const props = defineProps({
     modelValue: [Number, Boolean, String],
@@ -26,7 +30,8 @@ const props = defineProps({
         default: null,
     },
     size: {
-        default: null
+        type: String,
+        default: 'md'
     },
     tabable: {
         type: Boolean,
@@ -47,7 +52,6 @@ const proxyModel = computed({
 
 const heightClass = computed(() => {
     return {
-        [null]: 'tw-h-3.5 tw-w-3.5',
         'sm': 'tw-h-3 tw-w-3',
         'md': 'tw-h-3.5 tw-w-3.5',
         'lg': 'tw-h-5 tw-w-5',
@@ -56,7 +60,6 @@ const heightClass = computed(() => {
 
 const fontClass = computed(() => {
     return {
-        [null]: 'tw-text-base tw-font-medium',
         'sm': 'tw-text-sm',
         'md': 'tw-text-base',
         'lg': 'tw-text-xl tw-font-semibold'
@@ -65,11 +68,24 @@ const fontClass = computed(() => {
 
 const inputClass = computed(() => {
     return {
-        [null]: '',
-        'sm': '',
-        'md': '',
-        'lg': 'tw-border-2'
+        'sm': 'checkbox-md',
+        'md': 'checkbox-md',
+        'lg': 'checkbox-lg'
     }[props.size];
 });
 </script>
 
+<style scoped>
+.checkbox {
+    color: v-bind(text) !important;
+    border-color: v-bind(lining) !important;
+}
+
+.checkbox-md{
+    border-width: 1px;
+}
+
+.checkbox-lg{
+    border-width: 2px;
+}
+</style>
