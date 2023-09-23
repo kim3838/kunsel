@@ -4,17 +4,17 @@
         v-on:focus="keepSelectionActive(1)"
         v-on:blur="loseFocus(1)"
         :style="{width: width}"
-        class="focus:tw-outline-none tw-bg-white">
+        class="focus:tw-outline-none">
         <div
             ref="selectHeader"
             :style="{'border-radius': '2px'}"
-            class="tw-w-full tw-flex tw-justify-start"
+            class="tw-w-full tw-flex tw-justify-start background"
             :class="[heightClass, borderClass]">
             <div v-if="!active" :class="[iconHolderClass]" class="tw-flex tw-justify-center tw-items-center">
                 <Icon :class="[iconClass]" :name="icon"/>
             </div>
-            <div v-if="!active" class="tw-w-full tw-relative hover:tw-bg-neutral-100 tw-cursor-pointer">
-                <div :class="[selectionClass]" class="tw-absolute tw-truncate tw-text-accent tw-flex tw-items-center">
+            <div v-if="!active" class="tw-w-full tw-relative tw-cursor-pointer">
+                <div :class="[selectionClass]" class="tw-absolute tw-truncate tw-flex tw-items-center">
                     {{selectionSummary}}
                 </div>
                 <div :class="[dropDownIconHolderClass]" class="tw-absolute tw-right-0 tw-top-0 tw-flex tw-justify-center tw-items-center">
@@ -52,7 +52,7 @@
                         v-if="searchable"
                         @click="clearSearch"
                         :class="[dropDownIconClass]"
-                        class="tw-cursor-pointer hover:tw-bg-neutral-200"
+                        class="tw-cursor-pointer"
                         name="ic:baseline-clear" />
                 </div>
             </div>
@@ -62,18 +62,18 @@
             v-show="active"
             :style="[selectionOffsetComputed, selectionWidthComputed, {'border-radius': '2px'}]"
             ref="selectionOrigin"
-            class="tw-z-10 tw-mt-[7px] tw-bg-white"
+            class="tw-z-10 tw-mt-[7px] background"
             :class="[dropShadow ? 'tw-drop-shadow-2xl' : '', selectionFloat ? 'tw-absolute' : 'tw-relative', borderClass]">
-            <div class="tw-absolute" :style="[optionsArrowSlotClass]"></div>
-            <div class="tw-absolute tw-border-solid tw-border-b-white" :style="[optionsArrowClass]"></div>
+            <div class="tw-absolute tw-border-solid options-arrow-lining-color" :style="[optionsArrowSlotClass]"></div>
+            <div class="tw-absolute tw-border-solid options-arrow-color" :style="[optionsArrowClass]"></div>
             <div class="tw-px-2 tw-pt-2 tw-text-left" :class="[optionsFontClass]">
                 {{selectionHeaderSummary}}
             </div>
-            <div :style="{'max-height': selectionMaxHeight}" class="tw-overflow-auto tw-border tw-border-t-lighter/25">
+            <div :style="{'max-height': selectionMaxHeight}" class="tw-overflow-auto">
                 <NonModelCheckBox
                     :size="checkBoxSize"
                     v-for="item in options.selection" :key="item.value"
-                    class="tw-px-2 hover:tw-bg-neutral-200"
+                    class="tw-px-2 options-class"
                     :class="[isItemInSearchPool(item) ? '' : 'tw-hidden']"
                     :checked="isItemSelected(item)"
                     :label="item.text"
@@ -87,6 +87,13 @@
 
 <script setup lang="ts">
 import {ref, computed, nextTick, watch, onMounted} from 'vue';
+const { $themeStore } = useNuxtApp();
+
+let thread = ref($themeStore.thread);
+let lining = ref($themeStore.lining);
+let accent = ref($themeStore.accent);
+let neutral = ref($themeStore.neutral);
+let tint = ref($themeStore.tint);
 
 const props = defineProps({
     options: {
@@ -109,11 +116,11 @@ const props = defineProps({
     },
     idleBorder: {
         type: String,
-        default: '#e5e5e5'//neutral-200
+        default: ''
     },
     activeBorder: {
         type: String,
-        default: '#969696'//theme.colors.light
+        default: ''
     },
     selectionMaxWidth: {
         type: Boolean,
@@ -160,6 +167,14 @@ let selectionOffset = reactive({
 let active = ref(!!props.alwaysActive);
 let searchPool = ref([]);
 searchPool.value = props.options.data.map(item => item.value);
+
+const idleBorderComputed = computed(() => {
+    return props.idleBorder ? props.idleBorder : thread.value;
+});
+
+const activeBorderComputed = computed(() => {
+    return props.activeBorder ? props.activeBorder : lining.value;
+});
 
 const heightClass = computed(() => {
     return {
@@ -266,7 +281,7 @@ const inputSize = computed(() => {
 });
 
 const optionsArrowSlotClass = computed(() => {
-    return {'left':'9px', 'top': '-7px', 'border-right': '7px solid transparent', 'border-left': '7px solid transparent', 'border-bottom': '7px solid ' + props.activeBorder};
+    return {'left':'9px', 'top': '-7px', 'border-right': '7px solid transparent', 'border-left': '7px solid transparent', 'border-bottom': '7px'};
 });
 
 const optionsArrowClass = computed(() => {
@@ -471,12 +486,29 @@ onMounted(async () => {
 });
 </script>
 <style scoped>
+.background {
+    background-color: v-bind(tint);
+}
+
 .idle-border {
     border-width: 1px;
-    border-color: v-bind(idleBorder);
+    border-color: v-bind(idleBorderComputed) !important;
 }
+
 .active-border {
     border-width: 1px;
-    border-color: v-bind(activeBorder);
+    border-color: v-bind(activeBorderComputed) !important;
+}
+
+.options-arrow-lining-color{
+    border-bottom-color: v-bind(activeBorderComputed) !important;
+}
+
+.options-arrow-color {
+    border-bottom-color: v-bind(tint) !important;
+}
+
+.options-class:hover{
+    background-color: v-bind(neutral);
 }
 </style>

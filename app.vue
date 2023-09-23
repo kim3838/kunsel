@@ -14,9 +14,8 @@ const runtimeConfig = useRuntimeConfig();
 const appConfig = useAppConfig();
 
 let primary = ref($themeStore.primary);
-let secondary = ref($themeStore.secondary);
 let accent = ref($themeStore.accent);
-let shade = ref($themeStore.shade);
+let lining = ref($themeStore.lining);
 let neutral = ref($themeStore.neutral);
 let tint = ref($themeStore.tint);
 let text = ref($themeStore.text);
@@ -39,7 +38,7 @@ let textSecondary = ref($themeStore.textSecondary);
 }
 
 .daterangepicker{
-    border: 1px solid v-bind(shade);
+    border: 1px solid v-bind(lining);
     background-color: v-bind(tint);
 }
 
@@ -61,7 +60,7 @@ let textSecondary = ref($themeStore.textSecondary);
 }
 
 .daterangepicker:before {
-    border-bottom: 7px solid v-bind(shade);
+    border-bottom: 7px solid v-bind(lining);
 }
 
 .daterangepicker .calendar-table .next span, .daterangepicker .calendar-table .prev span {
@@ -70,11 +69,11 @@ let textSecondary = ref($themeStore.textSecondary);
 }
 
 .daterangepicker select.monthselect, .daterangepicker select.yearselect {
-    border: 1px solid v-bind(shade);
+    border: 1px solid v-bind(lining);
 }
 
 .daterangepicker select.hourselect, .daterangepicker select.minuteselect, .daterangepicker select.secondselect, .daterangepicker select.ampmselect {
-    border: 1px solid v-bind(shade);
+    border: 1px solid v-bind(lining);
     background-color: v-bind(tint);
 }
 </style>

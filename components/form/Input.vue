@@ -21,9 +21,10 @@ import {ref, computed} from 'vue';
 const { $themeStore } = useNuxtApp();
 
 let shade = ref($themeStore.shade);
-let neutral = ref($themeStore.neutral);
+let thread = ref($themeStore.thread);
 let tint = ref($themeStore.tint);
-
+let accent = ref($themeStore.accent);
+let lining = ref($themeStore.lining);
 
 const props = defineProps({
     modelValue: [String, Number],
@@ -76,7 +77,7 @@ const fontClass = computed(() => {
         'sm': 'tw-text-sm',
         'md': 'tw-text-sm',
         'lg': 'tw-text-lg tw-font-semibold',
-        'xl': 'tw-text-xl tw-font-semibold',
+        'xl': 'tw-text-2xl tw-font-semibold',
         '2xl': 'tw-text-3xl tw-font-bold',
         '3xl': 'tw-text-5xl tw-font-bold',
     }[props.size];
@@ -89,16 +90,16 @@ const backgroundClass = computed(() => {
 </script>
 <style scoped>
 .input-background{
-    background-color: v-bind(tint);
+    background-color: v-bind(tint) !important;
 }
 
 .focus-ring:focus{
-    border-color: v-bind(shade);
+    border-color: v-bind(lining) !important;
 }
 
 .bordered{
     border-width: 1px;
-    border-color: v-bind(neutral);
+    border-color: v-bind(thread) !important;
 }
 
 .borderless{

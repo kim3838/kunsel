@@ -18,8 +18,10 @@
             focus:tw-ring-transparent
             disabled:tw-opacity-60
             tw-transition
+            tw-ease-in-out
+            tw-duration-300
             tw-relative">
-        <div :class="[shadeClass]" class="shade tw-rounded-sm"></div>
+        <div :class="[shadeClass]" class="shade"></div>
         <slot :fontClass="fontClass">
             <span class="tw-flex tw-items-center" :class="[fontClass]">
                 <Icon v-if="icon?.trim()" :class="[iconClass, icon?.trim() ? 'tw-mr-0.5' : '']" :name="icon"></Icon><span>{{label}}</span>
@@ -35,18 +37,18 @@ const { $themeStore } = useNuxtApp();
 
 let primary = ref($themeStore.primary);
 let primary90 = ref($themeStore.primary + 'E6');
-let secondary = ref($themeStore.secondary);
-let secondary90 = ref($themeStore.secondary + 'E6');
+
 let accent = ref($themeStore.accent);
 let accent80 = ref($themeStore.accent + 'CC');
 let accent70 = ref($themeStore.accent + 'B2');
-let shade = ref($themeStore.shade);
-let shade50 = ref($themeStore.shade + '7F');
-let neutral = ref($themeStore.neutral);
+let thread = ref($themeStore.thread);
+let thread50 = ref($themeStore.thread + '7F');
+let thread90 = ref($themeStore.thread + 'E5');
+let lining = ref($themeStore.lining);
 let tint = ref($themeStore.tint);
+
 let text = ref($themeStore.text);
 let textInvert = ref($themeStore.textInvert);
-let textSecondary = ref($themeStore.textSecondary);
 
 const props = defineProps({
     type: {
@@ -112,7 +114,7 @@ const fontClass = computed(() => {
         '2xs': 'tw-text-xs tw-font-semibold',
         'xs': 'tw-text-xs tw-font-semibold',
         'sm': 'tw-text-sm tw-font-semibold',
-        'md': 'tw-text-base tw-font-semibold tw-tracking-normal',
+        'md': 'tw-text-base tw-font-semibold tw-tracking-tight',
         'lg': 'tw-text-2xl tw-font-black',
         'xl': 'tw-text-3xl tw-font-black',
     }[props.size]
@@ -148,37 +150,47 @@ const shadeClass = computed(() => {
     right: 0;
     bottom: 0;
     left: 0;
+    border-radius: 2px;
 }
 
 .default-background{
-    background-color: v-bind(primary);
-    color: v-bind(textInvert);
+    background-color: v-bind(primary) !important;
+    color: v-bind(textInvert) !important;
 }
 
 .default-background:hover, .default-background:active{
-    background-color: v-bind(primary90);
+    background-color: v-bind(primary90) !important;
 }
 
 .default-shade{
     background: transparent;
-    background: linear-gradient( to bottom right, v-bind(accent80) 0%, transparent 55%, v-bind(accent70) 100%);
+    background: linear-gradient( to bottom right, v-bind(accent80) 0%, transparent 55%, v-bind(accent70) 100%) !important;
 }
 
 .outlined-border{
-    border: 1px solid v-bind(shade);
+    border: 1px solid v-bind(thread);
+}
+
+.outlined-border:focus{
+    border: 1px solid v-bind(lining);
 }
 
 .outlined{
-    color: v-bind(text);
+    background-color: v-bind(tint) !important;
+    color: v-bind(text) !important;
 }
 
 .outlined:hover{
-    background-color: v-bind(primary);
-    color: v-bind(textInvert);
+    background-color: v-bind(primary) !important;
+    color: v-bind(textInvert) !important;
+}
+
+.outline-shade{
+    background: transparent;
+    background: linear-gradient( to bottom right, v-bind(thread90) 0%, transparent 25%, v-bind(thread50) 100%) !important;
 }
 
 .outline-shade:hover{
-    background: transparent;
-    background: linear-gradient( to bottom right, v-bind(accent80) 0%, transparent 55%, v-bind(accent70) 100%);
+    background: linear-gradient( to bottom right, v-bind(accent80) 0%, transparent 55%, v-bind(accent70) 100%) !important;
 }
 </style>

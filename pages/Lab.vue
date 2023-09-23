@@ -20,8 +20,7 @@
                                         :selection-max-width="false"
                                         :selection-max-height="'120px'"
                                         :selection-float="false"
-                                        :idle-border="'orange'"
-                                        :active-border="'orange'"
+
                                         :always-active="true"
                                         :searchable="false"
                                         :label="'Select Category'"
@@ -67,8 +66,6 @@
                                         :selection-max-width="false"
                                         :selection-max-height="'120px'"
                                         :selection-float="false"
-                                        :idle-border="'green'"
-                                        :active-border="'green'"
                                         :always-active="true"
                                         :searchable="false"
                                         :size="'md'"

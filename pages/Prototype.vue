@@ -301,7 +301,7 @@
                             <div class="tw-flex tw-items-start tw-justify-start tw-block tw-w-full tw-border tw-border-neutral-200">
                                 <Button :variant="'outline'" :size="'lg'" :icon="'ic:sharp-dashboard'" :label="'LG SKIP'"></Button>
                             </div>
-                            <div class="tw-col-span-2 tw-flex tw-items-start tw-justify-start tw-block tw-w-full tw-border tw-border-neutral-200">
+                            <div class="tw-col-span-2 tw-flex tw-items-start tw-justify-start tw-block tw-w-full">
                                 <Button :variant="'outline'" :size="'xl'" :icon="'ic:sharp-dashboard'" :label="'XL Authenticate'"></Button>
                             </div>
                         </div>

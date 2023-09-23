@@ -5,12 +5,23 @@ export const useThemeStore = defineStore('theme', {
         theme: 'light',
         palletes: {
             light: {
+                //     'lighter': '#b4b4b4',
+                //     'light': '#969696',
+                //     'dark': '#787878',
+                //     'darker': '#323232',
+                //     'accent': '#646464'
                 'primary': '#323232',
                 'secondary': '#787878',
                 'accent': '#969696',
-                'shade': '#b4b4b4',
+
+                'lining': '#b4b4b4',
+                'thread': '#e5e5e5',
+
                 'neutral': '#e5e5e5',
+
                 'tint': '#ffffff',
+                'shade': '#9B9B9B',
+
                 'text': '#646464',
                 'text-invert': '#ffffff',
                 'text-secondary': '#b4b4b4',
@@ -52,14 +63,20 @@ export const useThemeStore = defineStore('theme', {
         accent() {
             return this.palletesComputed['accent'];
         },
-        shade() {
-            return this.palletesComputed['shade'];
+        lining() {
+            return this.palletesComputed['lining'];
+        },
+        thread() {
+            return this.palletesComputed['thread'];
         },
         neutral() {
             return this.palletesComputed['neutral'];
         },
         tint() {
             return this.palletesComputed['tint'];
+        },
+        shade() {
+            return this.palletesComputed['shade'];
         },
         text() {
             return this.palletesComputed['text'];
