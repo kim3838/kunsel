@@ -76,10 +76,10 @@
                     <div class="tw-w-max">
                         <Icon
                             class="tw-h-5 tw-w-5"
-                            :class="[isItemSelected(item) ? 'tw-text-accent' : 'tw-text-transparent']"
+                            :class="[isItemSelected(item) ? 'options-active' : 'tw-text-transparent']"
                             name="ic:sharp-check-box" />
                     </div>
-                    <div class="tw-text-accent tw-ml-0.5">{{item.text}}</div>
+                    <div class="tw-ml-0.5">{{item.text}}</div>
                 </div>
             </div>
         </div>
@@ -95,6 +95,7 @@ let lining = ref($themeStore.lining);
 let accent = ref($themeStore.accent);
 let neutral = ref($themeStore.neutral);
 let tint = ref($themeStore.tint);
+let text = ref($themeStore.text);
 
 const props = defineProps({
     options: {
@@ -439,5 +440,9 @@ onMounted(async () => {
 
 .options-class:hover{
     background-color: v-bind(neutral);
+}
+
+.options-active{
+    color: v-bind(text);
 }
 </style>
