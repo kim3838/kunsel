@@ -168,10 +168,6 @@ const shadeClass = computed(() => {
 }
 
 .outlined-border{
-    border: 1px solid v-bind(thread);
-}
-
-.outlined-border:focus{
     border: 1px solid v-bind(lining);
 }
 

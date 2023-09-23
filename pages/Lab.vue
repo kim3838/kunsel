@@ -21,7 +21,7 @@
                                         :selection-max-height="'120px'"
                                         :selection-float="false"
 
-                                        :always-active="true"
+                                        :always-active="false"
                                         :searchable="false"
                                         :label="'Select Category'"
                                         :size="'md'"
@@ -60,6 +60,18 @@
                             <div class="tw-grid tw-gap-2 tw-grid-cols-4 tw-border tw-border-light">
                                 <div class="tw-flex tw-block">
                                     <Button :size="'md'" :variant="'outline'" :icon="'ic:sharp-display-settings'" :label="'LG SKIP'"></Button>
+                                </div>
+                                <div class="tw-flex tw-block">
+                                    <SingleSelect
+                                        :selection-max-width="false"
+                                        :selection-max-height="'120px'"
+                                        :selection-float="false"
+                                        :always-active="false"
+                                        :searchable="false"
+                                        :size="'md'"
+                                        :icon="'ic:sharp-display-settings'"
+                                        :label="'Select Plan'"
+                                        :options="plan"/>
                                 </div>
                                 <div class="tw-flex tw-block">
                                     <SingleSelect
