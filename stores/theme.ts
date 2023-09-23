@@ -15,6 +15,7 @@ export const useThemeStore = defineStore('theme', {
                 'neutral': '#e5e5e5',
 
                 'tint': '#ffffff',
+                'body': '#ffffff',
                 'shade': '#9B9B9B',
 
                 'text': '#646464',
@@ -32,6 +33,7 @@ export const useThemeStore = defineStore('theme', {
                 'neutral': '#e5e5e5',
 
                 'tint': '#ffffff',
+                'body': '#ffffff',
                 'shade': '#afa4a4',
 
                 'text': '#686a7e',
@@ -68,6 +70,9 @@ export const useThemeStore = defineStore('theme', {
         },
         tint() {
             return this.palletesComputed['tint'];
+        },
+        body() {
+            return this.palletesComputed['body'];
         },
         shade() {
             return this.palletesComputed['shade'];
