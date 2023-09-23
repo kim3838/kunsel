@@ -17,6 +17,8 @@ import { ref, computed } from 'vue';
 const { $themeStore } = useNuxtApp();
 
 let text = ref($themeStore.text);
+let primary = ref($themeStore.primary);
+let primary70 = ref($themeStore.primary + 'B2');
 let lining = ref($themeStore.lining);
 
 const props = defineProps({
@@ -77,7 +79,7 @@ const inputClass = computed(() => {
 
 <style scoped>
 .checkbox {
-    color: v-bind(text) !important;
+    color: v-bind(primary70) !important;
     border-color: v-bind(lining) !important;
 }
 

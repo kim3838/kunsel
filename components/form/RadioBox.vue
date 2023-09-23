@@ -1,7 +1,7 @@
 <template>
     <label :for="labelId">
-        <Icon v-if="selected == value" :class="[heightClass]" name="ic:sharp-radio-button-checked"></Icon>
-        <Icon v-else :class="[heightClass]" name="ic:sharp-radio-button-unchecked"></Icon>
+        <Icon v-if="selected == value" :class="[heightClass, 'radio']" name="ic:sharp-radio-button-checked"></Icon>
+        <Icon v-else :class="[heightClass]" class='radio' name="ic:sharp-radio-button-unchecked"></Icon>
         <input
             type="radio"
             :value="value"
@@ -14,7 +14,13 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue';
+import { ref, computed } from 'vue';
+const { $themeStore } = useNuxtApp();
+
+let text = ref($themeStore.text);
+let primary = ref($themeStore.primary);
+let primary70 = ref($themeStore.primary + 'B2');
+let lining = ref($themeStore.lining);
 
 const props = defineProps({
     modelValue: {
@@ -70,5 +76,9 @@ input[type="radio"] {
     opacity: 0;
     width: 0;
     height: 0;
+}
+
+.radio{
+    color: v-bind(primary70) !important;
 }
 </style>
