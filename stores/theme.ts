@@ -2,7 +2,18 @@ import { defineStore } from 'pinia'
 
 export const useThemeStore = defineStore('theme', {
     state: () => ({
-        theme: 'blue',
+        appTheme: 'blue',
+        hexAlpha: {
+            '10': '19',
+            '20': '33',
+            '30': '4C',
+            '40': '66',
+            '50': '7F',
+            '60': '99',
+            '70': 'B2',
+            '80': 'CC',
+            '90': 'E5',
+        },
         palletes: {
             light: {
                 'primary': '#323232',
@@ -45,10 +56,10 @@ export const useThemeStore = defineStore('theme', {
 
     getters: {
         getTheme() {
-            return this.theme;
+            return this.appTheme;
         },
         palletesComputed() {
-            return this.palletes[this.theme];
+            return this.palletes[this.appTheme];
         },
         primary() {
             return this.palletesComputed['primary'];
@@ -90,7 +101,9 @@ export const useThemeStore = defineStore('theme', {
 
     actions: {
         setTheme(theme){
-            this.theme = theme;
+            if(theme != this.appTheme){
+                this.appTheme = theme;
+            }
         }
     },
 })
