@@ -14,6 +14,14 @@
                                     <InputLabel :size="'md'" value="_" class="tw-text-transparent"/>
                                     <Button type="button" :variant="'outline'" @click="filters.search.keyword += '.';" :size="'md'" :icon="'ic:sharp-join-left'" :label="'Concat &quot;.&quot;'"></Button>
                                 </div>
+                                <div class="tw-block">
+                                    <InputLabel :size="'md'" value="_" class="tw-text-transparent"/>
+                                    <Button type="button" :variant="'outline'" @click="$themeStore.setTheme('blue')" :size="'md'" :icon="'mdi:palette-swatch-variant'" :label="'Blue Theme'"></Button>
+                                </div>
+                                <div class="tw-block">
+                                    <InputLabel :size="'md'" value="_" class="tw-text-transparent"/>
+                                    <Button type="button" :variant="'outline'" @click="$themeStore.setTheme('light')" :size="'md'" :icon="'mdi:palette-swatch-variant'" :label="'Light Theme'"></Button>
+                                </div>
                             </div>
 
                             <div class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-8">

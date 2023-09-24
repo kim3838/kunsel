@@ -13,13 +13,19 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue';
-const { $themeStore } = useNuxtApp();
+import {ref, computed} from 'vue';
+import {storeToRefs} from 'pinia';
+const {$themeStore} = useNuxtApp();
 
-let text = ref($themeStore.text);
-let primary = ref($themeStore.primary);
-let primary70 = ref($themeStore.primary + 'B2');
-let lining = ref($themeStore.lining);
+const {
+    hexAlpha,
+    primary: primaryColor,
+    lining: liningColor
+} = storeToRefs($themeStore);
+
+const primaryColor70 = computed(() => {
+    return primaryColor.value + hexAlpha.value['70'];
+});
 
 const props = defineProps({
     value: {
@@ -88,8 +94,8 @@ const inputClass = computed(() => {
 
 <style scoped>
 .checkbox {
-    color: v-bind(primary70) !important;
-    border-color: v-bind(lining) !important;
+    color: v-bind(primaryColor70) !important;
+    border-color: v-bind(liningColor) !important;
 }
 
 .checkbox-md{

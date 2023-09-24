@@ -154,13 +154,15 @@
                             </div>
                         </div>
 
-                        <div v-if="false" class="tw-grid tw-gap-2 tw-grid-cols-1 lg:tw-grid-cols-2 xl:tw-grid-cols-3">
+                        <div v-if="true" class="tw-grid tw-gap-2 tw-grid-cols-1 lg:tw-grid-cols-2 xl:tw-grid-cols-3">
                             <div class="tw-block tw-p-2 tw-border tw-border-neutral-200">
                                 <InputLabel class="tw-mb-2" :size="'md'" value="MD Datatable" />
                                 <DataTable
                                     :headers="headers_1"
                                     :size="'md'"
-                                    :rows="data_1">
+                                    :rows="data_1"
+                                    v-model="selected_1"
+                                    selection>
                                     <template v-slot:cell.name="{cell, index, slot}">
                                         <Button class="tw-w-full" :variant="'outline'" :size="slot.buttonSize" :label="`[${index}] ${cell.name}`"></Button>
                                     </template>
@@ -184,7 +186,7 @@
                                     :headers="headers_2"
                                     :size="'lg'"
                                     :rows="data_2"
-                                    v-model="selected_1"
+                                    v-model="selected_2"
                                     selection>
                                     <template v-slot:cell.name="{index, cell, slot}">
                                         <Input v-model="cell.name" readonly :size="slot.inputSize" class="tw-w-full" type="text" />
@@ -203,7 +205,7 @@
                                     :headers="headers_3"
                                     :size="'xl'"
                                     :rows="data_3"
-                                    v-model="selected_2"
+                                    v-model="selected_3"
                                     selection>
                                     <template v-slot:cell.tools="{cell, slot, scrollReference}">
                                         <div class="tw-h-full tw-space-x-0.5 tw-w-full tw-flex tw-items-center">
@@ -275,7 +277,7 @@
                                 <Button :disabled="true" :label="'DEFAULT Disabled'"></Button>
                             </div>
                             <div class="tw-flex tw-items-start tw-justify-start tw-block tw-w-full tw-border tw-border-neutral-200">
-                                <Button :size="'lg'" :icon="'ic:sharp-send-to-mobile'" :label="'LG SKIP'"></Button>
+                                <Button @click="$themeStore.setTheme('blue')" :size="'lg'" :icon="'mdi:palette-swatch-variant'" :label="'Blue Theme'"></Button>
                             </div>
                             <div class="tw-col-span-2 tw-flex tw-items-start tw-justify-start tw-block tw-w-full tw-border tw-border-neutral-200">
                                 <Button :size="'xl'" :icon="'ic:sharp-send-to-mobile'" :label="'XL Authenticate'"></Button>
@@ -299,14 +301,14 @@
                                 <Button :variant="'outline'" :disabled="true" :label="'DEFAULT Disabled'"></Button>
                             </div>
                             <div class="tw-flex tw-items-start tw-justify-start tw-block tw-w-full tw-border tw-border-neutral-200">
-                                <Button :variant="'outline'" :size="'lg'" :icon="'ic:sharp-dashboard'" :label="'LG SKIP'"></Button>
+                                <Button @click="$themeStore.setTheme('light')" :variant="'outline'" :size="'lg'" :icon="'mdi:palette-swatch-variant'" :label="'Light Theme'"></Button>
                             </div>
                             <div class="tw-col-span-2 tw-flex tw-items-start tw-justify-start tw-block tw-w-full">
                                 <Button :variant="'outline'" :size="'xl'" :icon="'ic:sharp-dashboard'" :label="'XL Authenticate'"></Button>
                             </div>
                         </div>
 
-                        <div v-if="false" class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-8">
+                        <div v-if="true" class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-8">
                             <div class="tw-border tw-border-neutral-200">
                                 <label>
                                     <Checkbox v-model="remember1" :label="' '" :size="'md'" name="remember" />
@@ -329,7 +331,7 @@
                             </div>
                         </div>
 
-                        <div v-if="false" class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-8">
+                        <div v-if="true" class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-8">
                             <div class="tw-flex tw-items-start tw-justify-start tw-block tw-border tw-border-neutral-200">
                                 <div>
                                     <InputLabel :size="'md'" value="SM : Gender Group" />
@@ -407,7 +409,7 @@
                             </div>
                         </div>
 
-                        <div v-if="false" class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-8">
+                        <div v-if="true" class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-8">
                             <div class="tw-block tw-border tw-border-neutral-200 tw-col-span-2">
                                 <p class="tw-text-sm tw-leading-4">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
                             </div>
@@ -476,13 +478,13 @@
 
 <script setup lang="ts">
 
-import { ref, onMounted } from 'vue';
+import {ref, onMounted} from 'vue';
 
 definePageMeta({
     layout: false,
 });
 
-const { $formStore} = useNuxtApp();
+const {$themeStore, $formStore} = useNuxtApp();
 let formStore = $formStore;
 let remember1 = ref(null);
 let remember2 = ref(true);
@@ -584,6 +586,7 @@ let perPage = reactive({
 
 let selected_1 = ref([1001,1002]);
 let selected_2 = ref([1001,1002]);
+let selected_3 = ref([1001,1002]);
 let headers_1 = reactive([
     { text: 'ID', value: 'id'},
     { text: 'NAME', value: 'name'},

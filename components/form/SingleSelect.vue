@@ -87,15 +87,17 @@
 </template>
 
 <script setup lang="ts">
-import { computed, nextTick, onMounted, ref, watch } from 'vue';
-const { $themeStore } = useNuxtApp();
+import {computed, nextTick, onMounted, ref, watch} from 'vue';
+import {storeToRefs} from 'pinia';
+const {$themeStore} = useNuxtApp();
 
-let thread = ref($themeStore.thread);
-let lining = ref($themeStore.lining);
-let accent = ref($themeStore.accent);
-let neutral = ref($themeStore.neutral);
-let tint = ref($themeStore.tint);
-let text = ref($themeStore.text);
+const {
+    lining: liningColor,
+    thread: threadColor,
+    neutral: neutralColor,
+    tint: tintColor,
+    text: textColor,
+} = storeToRefs($themeStore);
 
 const props = defineProps({
     options: {
@@ -176,11 +178,11 @@ let searchPool = ref([]);
 searchPool.value = props.options.data.map(item => item.value);
 
 const idleBorderComputed = computed(() => {
-    return props.idleBorder ? props.idleBorder : thread.value;
+    return props.idleBorder ? props.idleBorder : threadColor.value;
 });
 
 const activeBorderComputed = computed(() => {
-    return props.activeBorder ? props.activeBorder : lining.value;
+    return props.activeBorder ? props.activeBorder : liningColor.value;
 });
 
 const heightClass = computed(() => {
@@ -417,7 +419,7 @@ onMounted(async () => {
 </script>
 <style scoped>
 .background {
-    background-color: v-bind(tint);
+    background-color: v-bind(tintColor);
 }
 
 .idle-border {
@@ -435,14 +437,14 @@ onMounted(async () => {
 }
 
 .options-arrow-color {
-    border-bottom-color: v-bind(tint) !important;
+    border-bottom-color: v-bind(tintColor) !important;
 }
 
 .options-class:hover{
-    background-color: v-bind(neutral);
+    background-color: v-bind(neutralColor);
 }
 
 .options-active{
-    color: v-bind(text);
+    color: v-bind(textColor);
 }
 </style>

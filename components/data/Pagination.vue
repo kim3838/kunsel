@@ -34,7 +34,7 @@
             :searchable="false"
             :value-persist="true"
             :width="perPageSelectWidth"
-            :idle-border="'#b4b4b4'"
+            :idle-border="$themeStore.lining"
             :icon="'mdi:book-open-page-variant-outline'"
             :label="'Per Page'"
             :options="perPage"/>

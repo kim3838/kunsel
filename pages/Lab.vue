@@ -3,7 +3,7 @@
         <NuxtLayout :name="$coreStore.layout">
             <template #content>
                 <div v-if="true" id="lab" class="tw-m-2 tw-p-2 tw-border tw-border-light">
-                    <div class="moody-card tw-max-w-[950px] tw-w-[950px]">
+                    <div class="moody-card tw-max-w-[1080px] tw-w-[1080px]">
                         <div class="moody-card-frame"></div>
                         <div class="tw-relative tw-border tw-border-light tw-border-b-0 tw-p-3 tw-flex tw-justify-center tw-items-center">
                             <span >
@@ -11,9 +11,12 @@
                             </span>
                         </div>
                         <div class="tw-relative tw-border tw-border-light tw-p-7">
-                            <div class="tw-grid tw-gap-2 tw-grid-cols-4 tw-mb-2 tw-border tw-border-light">
+                            <div class="tw-grid tw-gap-2 tw-grid-cols-5 tw-mb-2 tw-border tw-border-light">
                                 <div class="tw-flex tw-block">
-                                    <Button :size="'md'" :icon="'ic:sharp-display-settings'" :label="'LG SKIP'"></Button>
+                                    <Button @click="$themeStore.setTheme('blue')" :size="'md'" :icon="'ic:sharp-display-settings'" :label="'Blue Theme'"></Button>
+                                </div>
+                                <div class="tw-flex tw-block">
+                                    <Button @click="$themeStore.setTheme('light')" :size="'md'" :icon="'ic:sharp-display-settings'" :label="'Light Theme'"></Button>
                                 </div>
                                 <div class="tw-flex tw-block">
                                     <MultiSelect
@@ -170,6 +173,7 @@
 <script setup lang="ts">
 
 import {ref} from "vue";
+const { $themeStore } = useNuxtApp();
 const {$moment} = useNuxtApp();
 
 definePageMeta({
@@ -577,6 +581,14 @@ function backOriginal(){
 function replaceOriginal(){
     data.value = replace.value;
     render(replaceDatePickers.value);
+}
+
+function themeLight(){
+    $themeStore.setTheme('light');
+}
+
+function themeBlue(){
+    $themeStore.setTheme('blue');
 }
 
 </script>

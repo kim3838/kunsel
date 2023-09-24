@@ -17,14 +17,14 @@
 
 <script setup>
 import {ref, computed} from 'vue';
+import {storeToRefs} from 'pinia';
+const {$themeStore} = useNuxtApp();
 
-const { $themeStore } = useNuxtApp();
-
-let shade = ref($themeStore.shade);
-let thread = ref($themeStore.thread);
-let tint = ref($themeStore.tint);
-let accent = ref($themeStore.accent);
-let lining = ref($themeStore.lining);
+const {
+    lining: liningColor,
+    thread: threadColor,
+    tint: tintColor,
+} = storeToRefs($themeStore);
 
 const props = defineProps({
     modelValue: [String, Number],
@@ -90,16 +90,16 @@ const backgroundClass = computed(() => {
 </script>
 <style scoped>
 .input-background{
-    background-color: v-bind(tint) !important;
+    background-color: v-bind(tintColor) !important;
 }
 
 .focus-ring:focus{
-    border-color: v-bind(lining) !important;
+    border-color: v-bind(liningColor) !important;
 }
 
 .bordered{
     border-width: 1px;
-    border-color: v-bind(thread) !important;
+    border-color: v-bind(threadColor) !important;
 }
 
 .borderless{
