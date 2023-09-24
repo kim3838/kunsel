@@ -9,7 +9,7 @@
                 leave-class="tw-opacity-100"
                 leave-to-class="tw-opacity-0">
                 <div v-show="show" class="tw-fixed tw-inset-0 tw-transform tw-transition-all" @click="close">
-                    <div class="tw-absolute tw-inset-0 tw-bg-darker tw-opacity-75"></div>
+                    <div class="tw-absolute tw-inset-0 modal-layer tw-opacity-75"></div>
                 </div>
             </transition>
 
@@ -21,7 +21,7 @@
                 leave-class="tw-opacity-100 tw-translate-y-0 sm:tw-scale-100"
                 leave-to-class="tw-opacity-0 tw-translate-y-4 sm:tw-translate-y-0 sm:tw-scale-95">
                 <div class="tw-h-full tw-flex tw-items-center">
-                    <div v-show="show" class="tw-mb-6 tw-bg-white tw-rounded-sm tw-overflow-hidden tw-shadow-xl tw-transform tw-transition-all tw-w-full sm:tw-w-full sm:tw-mx-auto" :class="maxWidthClass">
+                    <div v-show="show" class="tw-mb-6 modal-body tw-rounded-sm tw-overflow-hidden tw-shadow-xl tw-transform tw-transition-all tw-w-full sm:tw-w-full sm:tw-mx-auto" :class="maxWidthClass">
                         <slot></slot>
                     </div>
                 </div>
@@ -31,44 +31,68 @@
 </template>
 
 <script>
-    export default {
-        props: {
-            loading: {
-                default: false
-            },
-            show: {
-                default: false
-            },
-            maxWidth: {
-                default: '2xl'
-            },
-            closeable: {
-                default: true
-            },
+import {storeToRefs} from 'pinia';
+
+export default {
+    setup(){
+        const {$themeStore} = useNuxtApp();
+
+        const {
+            primary: primaryColor,
+            body: bodyColor,
+        } = storeToRefs($themeStore);
+
+        return {
+            primaryColor,
+            bodyColor
+        };
+    },
+    props: {
+        loading: {
+            default: false
         },
-
-        methods: {
-            close() {
-                if (this.closeable) {
-                    this.$emit('close')
-                }
-            }
+        show: {
+            default: false
         },
-
-        created() {
-
+        maxWidth: {
+            default: '2xl'
         },
+        closeable: {
+            default: true
+        },
+    },
 
-        computed: {
-            maxWidthClass() {
-                return {
-                    'sm': 'sm:tw-max-w-sm',
-                    'md': 'sm:tw-max-w-md',
-                    'lg': 'sm:tw-max-w-lg',
-                    'xl': 'sm:tw-max-w-xl',
-                    '2xl': 'sm:tw-max-w-2xl',
-                }[this.maxWidth]
+    methods: {
+        close() {
+            if (this.closeable) {
+                this.$emit('close')
             }
         }
+    },
+
+    created() {
+
+    },
+
+    computed: {
+        maxWidthClass() {
+            return {
+                'sm': 'sm:tw-max-w-sm',
+                'md': 'sm:tw-max-w-md',
+                'lg': 'sm:tw-max-w-lg',
+                'xl': 'sm:tw-max-w-xl',
+                '2xl': 'sm:tw-max-w-2xl',
+            }[this.maxWidth]
+        }
     }
+}
 </script>
+<style scoped>
+.modal-layer{
+    background-color: v-bind(primaryColor);
+}
+
+.modal-body{
+    background-color: v-bind(bodyColor);
+}
+</style>

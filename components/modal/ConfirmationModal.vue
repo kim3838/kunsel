@@ -4,7 +4,7 @@
         :max-width="maxWidth"
         :closeable="closeable"
         @close="close">
-        <div class="tw-p-3 tw-border tw-border-neutral-200">
+        <div class="tw-p-3 modal-body">
             <div class="sm:tw-flex sm:tw-items-start">
                 <div class="tw-mx-auto tw-flex-shrink-0 tw-flex tw-items-center tw-justify-center tw-h-12 tw-w-12 sm:tw-mx-0 sm:tw-h-10 sm:tw-w-10">
                     <slot name="icon"></slot>
@@ -30,7 +30,20 @@
 </template>
 
 <script>
+import {storeToRefs} from 'pinia';
+
 export default {
+    setup(){
+        const {$themeStore} = useNuxtApp();
+
+        const {
+            neutral: neutralColor,
+        } = storeToRefs($themeStore);
+
+        return {
+            neutralColor
+        };
+    },
     props: {
         show: {
             default: false
@@ -50,3 +63,9 @@ export default {
     }
 }
 </script>
+<style scoped>
+
+.modal-body{
+    border:1px solid v-bind(neutralColor);
+}
+</style>
