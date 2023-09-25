@@ -54,7 +54,22 @@
 
 <script setup lang="ts">
 import {computed, ref} from 'vue';
-import {nextTick} from 'vue';
+import {storeToRefs} from 'pinia';
+const {$themeStore} = useNuxtApp();
+
+const {
+    hexAlpha,
+    lining: liningColor,
+    thread: threadColor,
+} = storeToRefs($themeStore);
+
+const liningColor70 = computed(() => {
+    return liningColor.value + hexAlpha.value['70'];
+});
+
+const liningColor10 = computed(() => {
+    return liningColor.value + hexAlpha.value['10'];
+});
 
 const props = defineProps({
     headers: {
@@ -194,7 +209,7 @@ const selectSize = computed(() => {
 
 #table-division{
     overflow-x: auto;
-    scrollbar-color: rgba(0, 0, 0, 0.12) rgb(243 244 246);
+    scrollbar-color: v-bind(liningColor70) v-bind(liningColor10);
     scrollbar-width: thin;
 }
 
@@ -206,21 +221,21 @@ const selectSize = computed(() => {
 /* Track */
 #table-division::-webkit-scrollbar-track {
     background: rgb(243 244 246);
-    box-shadow: inset 0 0 4px rgba(0, 0, 0, 0.12);
+    box-shadow: inset 0 0 4px v-bind(liningColor10);
 }
 
 /* Handle */
 #table-division::-webkit-scrollbar-thumb {
-    background: rgba(0, 0, 0, 0.12);
+    background: v-bind(liningColor70);
 }
 
 /* Handle on hover */
 #table-division::-webkit-scrollbar-thumb:hover {
-    background: rgba(0, 0, 0, 0.22);
+    background: v-bind(liningColor);
 }
 
-$tableBorder: #b4b4b4;
-$cellBorder: rgba(212, 212, 212, 1);
+$tableBorder: v-bind(liningColor);
+$cellBorder: v-bind(liningColor70);
 
 table{
     white-space: nowrap;
@@ -249,6 +264,6 @@ tbody tr td:last-child{
 }
 
 tbody tr:nth-of-type(2n+1){
-    background-color: rgba(229, 229, 229, 0.4);
+    background-color: v-bind(liningColor10);
 }
 </style>
