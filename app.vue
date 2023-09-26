@@ -38,6 +38,10 @@ const {
     color: v-bind(textColor);
 }
 
+.scaffold{
+    border: 1px solid v-bind(liningColor);
+}
+
 .daterangepicker{
     border: 1px solid v-bind(liningColor);
     background-color: v-bind(tintColor);
