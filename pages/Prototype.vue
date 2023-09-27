@@ -209,11 +209,11 @@
                                     selection>
                                     <template v-slot:cell.tools="{cell, slot, scrollReference}">
                                         <div class="tw-h-full tw-space-x-0.5 tw-w-full tw-flex tw-items-center">
-                                            <Button :size="slot.buttonSize" :icon="'ic:sharp-hive'" :label="'Slot Button'"></Button>
-                                            <Button :variant="'outline'" :size="slot.buttonSize" :icon="'ic:sharp-hive'" :label="'Slot Button'"></Button>
-                                            <Button :variant="'outline'" :size="slot.buttonSize" :icon="'ic:sharp-view-module'"></Button>
-                                            <Button :variant="'outline'" :size="slot.buttonSize" :icon="'ic:sharp-view-list'"></Button>
-                                            <Button :size="slot.buttonSize" :icon="'ic:sharp-view-carousel'"></Button>
+                                            <Button :size="slot.buttonSize" :icon="'ic:sharp-discount'" :label="'Slot Button'"></Button>
+                                            <Button :variant="'outline'" :size="slot.buttonSize" :icon="'ic:sharp-discount'" :label="'Slot Button'"></Button>
+                                            <Button :variant="'outline'" :size="slot.buttonSize" :icon="'ic:sharp-diamond'"></Button>
+                                            <Button :variant="'outline'" :size="slot.buttonSize" :icon="'ic:sharp-dynamic-form'"></Button>
+                                            <Button :size="slot.buttonSize" :icon="'ic:sharp-dry-cleaning'"></Button>
                                         </div>
                                     </template>
                                     <template v-slot:cell.input="{cell, index, slot}">

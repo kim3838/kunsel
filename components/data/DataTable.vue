@@ -67,6 +67,10 @@ const liningColor70 = computed(() => {
     return liningColor.value + hexAlpha.value['70'];
 });
 
+const liningColor20 = computed(() => {
+    return liningColor.value + hexAlpha.value['20'];
+});
+
 const liningColor10 = computed(() => {
     return liningColor.value + hexAlpha.value['10'];
 });
@@ -264,6 +268,6 @@ tbody tr td:last-child{
 }
 
 tbody tr:nth-of-type(2n+1){
-    background-color: v-bind(liningColor10);
+    background-color: v-bind(liningColor20);
 }
 </style>
