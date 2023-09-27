@@ -13,6 +13,9 @@
                             <NavLink :to="'/prototype'" :active="isRouteActive('prototype')">
                                 Prototype
                             </NavLink>
+                            <NavLink :to="'/card'" :active="isRouteActive('card')">
+                                Card
+                            </NavLink>
                             <NavLink :to="'/lab'" :active="isRouteActive('lab')">
                                 Lab
                             </NavLink>

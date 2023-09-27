@@ -173,7 +173,7 @@
 <script setup lang="ts">
 
 import {ref} from "vue";
-const { $themeStore } = useNuxtApp();
+const {$themeStore} = useNuxtApp();
 const {$moment} = useNuxtApp();
 
 definePageMeta({
@@ -617,7 +617,7 @@ function themeBlue(){
         left: -9px;
         right: 7px;
         bottom: 7px;
-        border: 1px solid silver;
+        border: 1px solid red;
         display: block;
     }
 
@@ -628,7 +628,7 @@ function themeBlue(){
         left: 7px;
         right: -9px;
         bottom: -8px;
-        border: 1px solid silver;
+        border: 1px solid green;
         display: block;
     }
 </style>
