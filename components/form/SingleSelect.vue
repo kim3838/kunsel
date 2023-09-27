@@ -50,7 +50,7 @@
                         v-if="searchable"
                         @click="clearSearch"
                         :class="[dropDownIconClass]"
-                        class="tw-cursor-pointer hover:tw-bg-neutral-200"
+                        class="tw-cursor-pointer"
                         name="ic:baseline-clear" />
                 </div>
             </div>
