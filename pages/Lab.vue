@@ -2,167 +2,14 @@
     <div>
         <NuxtLayout :name="$coreStore.layout">
             <template #content>
-                <div v-if="true" id="lab" class="tw-m-2 tw-p-2 tw-border tw-border-light">
-                    <div class="moody-card tw-max-w-[1080px] tw-w-[1080px]">
-                        <div class="moody-card-frame"></div>
-                        <div class="tw-relative tw-border tw-border-light tw-border-b-0 tw-p-3 tw-flex tw-justify-center tw-items-center">
-                            <span >
-                                Lab
-                            </span>
-                        </div>
-                        <div class="tw-relative tw-border tw-border-light tw-p-7">
-                            <div class="tw-grid tw-gap-2 tw-grid-cols-5 tw-mb-2 tw-border tw-border-light">
-                                <div class="tw-flex tw-block">
-                                    <Button @click="$themeStore.setTheme('blue')" :size="'md'" :icon="'ic:sharp-display-settings'" :label="'Blue Theme'"></Button>
-                                </div>
-                                <div class="tw-flex tw-block">
-                                    <Button @click="$themeStore.setTheme('light')" :size="'md'" :icon="'ic:sharp-display-settings'" :label="'Light Theme'"></Button>
-                                </div>
-                                <div class="tw-flex tw-block">
-                                    <MultiSelect
-                                        :selection-max-width="false"
-                                        :selection-max-height="'120px'"
-                                        :selection-float="false"
-
-                                        :always-active="false"
-                                        :searchable="false"
-                                        :label="'Select Category'"
-                                        :size="'md'"
-                                        :options="category"
-                                        :icon="'ic:sharp-display-settings'"/>
-                                </div>
-                                <div class="tw-flex tw-block">
-                                    <MultiSelect
-                                        :selection-max-width="false"
-                                        :selection-max-height="'120px'"
-                                        :selection-float="false"
-                                        :idle-border="'pink'"
-                                        :active-border="'pink'"
-                                        :always-active="true"
-                                        :searchable="true"
-                                        :label="'Filter Category'"
-                                        :size="'md'"
-                                        :options="category"
-                                        :icon="'ic:sharp-display-settings'"/>
-                                </div>
-                                <div class="tw-flex tw-block">
-                                    <MultiSelect
-                                        :selection-max-width="false"
-                                        :selection-max-height="'120px'"
-                                        :selection-float="false"
-                                        :idle-border="'blue'"
-                                        :active-border="'blue'"
-                                        :always-active="true"
-                                        :searchable="false"
-                                        :selection-header="false"
-                                        :size="'md'"
-                                        :options="category"
-                                        :icon="'ic:sharp-display-settings'"/>
-                                </div>
-                            </div>
-                            <div class="tw-grid tw-gap-2 tw-grid-cols-4 tw-border tw-border-light">
-                                <div class="tw-flex tw-block">
-                                    <Button :size="'md'" :variant="'outline'" :icon="'ic:sharp-display-settings'" :label="'LG SKIP'"></Button>
-                                </div>
-                                <div class="tw-flex tw-block">
-                                    <SingleSelect
-                                        :selection-max-width="false"
-                                        :selection-max-height="'120px'"
-                                        :selection-float="false"
-                                        :always-active="false"
-                                        :searchable="false"
-                                        :size="'md'"
-                                        :icon="'ic:sharp-display-settings'"
-                                        :label="'Select Plan'"
-                                        :options="plan"/>
-                                </div>
-                                <div class="tw-flex tw-block">
-                                    <SingleSelect
-                                        :selection-max-width="false"
-                                        :selection-max-height="'120px'"
-                                        :selection-float="false"
-                                        :always-active="true"
-                                        :searchable="false"
-                                        :size="'md'"
-                                        :icon="'ic:sharp-display-settings'"
-                                        :label="'Select Plan'"
-                                        :options="plan"/>
-                                </div>
-                                <div class="tw-flex tw-block">
-                                    <SingleSelect
-                                        :size="'md'"
-                                        :selection-max-width="false"
-                                        :selection-max-height="'120px'"
-                                        :selection-float="false"
-                                        :idle-border="'indigo'"
-                                        :active-border="'red'"
-                                        :always-active="true"
-                                        :searchable="false"
-                                        :value-persist="true"
-                                        :icon="'mdi:book-open-page-variant'"
-                                        :label="'Select Per Page'"
-                                        :options="perPage"/>
-                                </div>
-                                <div></div>
-                            </div>
-                            <div v-if="false" class="tw-grid tw-gap-2 tw-grid-cols-10 tw-mb-2">
-                                <div class="tw-block">
-                                    <InputLabel :size="'md'" value="_" class="tw-text-transparent"/>
-                                    <Button @click="backOriginal()" :size="'sm'" :label="'Original'"></Button>
-                                </div>
-                                <div class="tw-block">
-                                    <InputLabel :size="'md'" value="_" class="tw-text-transparent"/>
-                                    <Button @click="replaceOriginal()" :size="'xs'" :label="'Replace'"></Button>
-                                </div>
-                            </div>
-                            <PageInformation v-if="false" :pagination="pagination" :no-record-label="'No Expense Found'"/>
-                            <Pagination
-                                v-if="false"
-                                :size="'lg'"
-                                :pagination="pagination"
-                            />
-                            <DataTable
-                                v-if="false"
-                                :headers="headers"
-                                :size="'lg'"
-                                :rows="data"
-                                :no-data-label="'No Data Found'"
-                                v-model="selected"
-                                selection>
-                                <template v-slot:cell.tools="{cell, slot}">
-                                    <div class="tw-h-full tw-w-full tw-flex tw-items-center">
-                                        <Button :variant="'outline'" :size="slot.buttonSize" :icon="'ic:sharp-send-to-mobile'" :label="'Slot Button'"></Button>
-                                    </div>
-                                </template>
-                                <template v-slot:cell.input="{cell, slot}">
-                                    <Input :id="`datetimesample-` + cell.id" v-model="datetimeFrom" readonly :size="slot.inputSize" class="tw-w-full" type="text" />
-                                </template>
-                                <template v-slot:cell.select="{cell, slot, scrollReference}">
-                                    <MultiSelect
-                                        in-horizontal-scrollable
-                                        drop-shadow
-                                        :scroll-reference="scrollReference"
-                                        :size="slot.selectSize"
-                                        :options="category"
-                                        :icon="'ic:sharp-hdr-on-select'"/>
-                                </template>
-                                <template v-slot:cell.name="{index, cell}">
-                                    <span>{{`[${index}] ${cell.name}`}}</span>
-                                </template>
-                                <template v-slot:cell.code="{index, cell}">
-                                    <span class="tw-font-mono">{{cell.code}}</span>
-                                </template>
-                                <template v-slot:cell.category="{cell, slot, scrollReference}">
-                                    <SingleSelect
-                                        in-horizontal-scrollable
-                                        :scroll-reference="scrollReference"
-                                        :size="slot.selectSize"
-                                        :icon="'ic:sharp-local-florist'"
-                                        :label="'Plan'"
-                                        :options="plan" />
-                                </template>
-                            </DataTable>
-                        </div>
+                <div class="tw-m-20 tw-flex tw-justify-center tw-space-x-2 tw-mx-auto">
+                    <div v-for="card in cards" :key="card">
+                        <Card
+                            :image="card.image"
+                            :title="card.title"
+                            :sub-title="card.subTitle"
+                            :link="card.link"
+                        />
                     </div>
                 </div>
             </template>
@@ -171,464 +18,60 @@
 </template>
 
 <script setup lang="ts">
-
-import {ref} from "vue";
-const {$themeStore} = useNuxtApp();
-const {$moment} = useNuxtApp();
+import {ref,reactive} from "vue";
 
 definePageMeta({
     layout: false,
     middleware: 'guest'
 });
 
-let selected = ref([1002,2002,67,88]);
-let datetimeFrom = ref($moment().startOf('day').format('YYYY-MM-DD HH:mm:ss'));
-let perPage = reactive({
-    search: '',
-    data: [
-        {text : '10 per page', value: 10},
-        {text : '25 per page', value: 25},
-        {text : '100 per page', value: 100},
-    ],
-    selection: [
-        {text : '10 per page', value: 10},
-        {text : '25 per page', value: 25},
-        {text : '100 per page', value: 100},
-    ],
-    selected: 10
-});
-let category = reactive({
-    search: '',
-    data: [
-        {text : 'Charms', value: 0},
-        {text : 'Bracelets', value: 1},
-        {text : 'Brooches and Pins', value: 2},
-        {text : 'Necklaces', value: 3},
-        {text : 'Earrings', value: 4},
-        {text : 'Rings', value: 5},
-        {text : 'Polyester', value: 6},
-        {text : 'Polyester, Polyester, Polyester, Polyester, Polyester, Polyester, Polyester', value: 7},
-    ],
-    selection: [
-        {text : 'Charms', value: 0},
-        {text : 'Bracelets', value: 1},
-        {text : 'Brooches and Pins', value: 2},
-        {text : 'Necklaces', value: 3},
-        {text : 'Earrings', value: 4},
-        {text : 'Rings', value: 5},
-        {text : 'Polyester', value: 6},
-        {text : 'Polyester, Polyester, Polyester, Polyester, Polyester, Polyester, Polyester', value: 7},
-    ],
-    selected: []
-});
-let plan = reactive({
-    search: '',
-    data: [
-        {text : 'Free', value: 0},
-        {text : 'Individual', value: 1},
-        {text : 'Individual', value: 1},
-        {text : 'Individual', value: 1},
-        {text : 'Standard Corporate', value: 2},
-        {text : 'Standard Corporate', value: 2},
-        {text : 'Standard Corporate', value: 2},
-        {text : 'Standard Corporate', value: 2},
-        {text : 'Standard Corporate', value: 2},
-        {text : 'Standard Corporate', value: 2},
-        {text : 'Standard Corporate', value: 2},
-        {text : 'Standard Corporate', value: 2},
-        {text : 'Standard Corporate', value: 2},
-        {text : 'Custom Corporate, Custom Corporate, Custom Corporate', value: 3},
-        {text : 'Evaluator', value: 4}
-    ],
-    selection: [
-        {text : 'Free', value: 0},
-        {text : 'Individual', value: 1},
-        {text : 'Individual', value: 1},
-        {text : 'Individual', value: 1},
-        {text : 'Standard Corporate', value: 2},
-        {text : 'Standard Corporate', value: 2},
-        {text : 'Standard Corporate', value: 2},
-        {text : 'Standard Corporate', value: 2},
-        {text : 'Standard Corporate', value: 2},
-        {text : 'Standard Corporate', value: 2},
-        {text : 'Standard Corporate', value: 2},
-        {text : 'Standard Corporate', value: 2},
-        {text : 'Standard Corporate', value: 2},
-        {text : 'Custom Corporate, Custom Corporate, Custom Corporate', value: 3},
-        {text : 'Evaluator', value: 4}
-    ],
-    selected: null
-});
-let headers = reactive([
-    { text: 'TOOLS', value: 'tools'},
-    { text: 'INPUT', value: 'input', width: '170px'},
-    { text: 'SELECT', value: 'select', width: '200px'},
-    { text: 'ID', value: 'id'},
-    { text: 'NAME', value: 'name'},
-    { text: 'CODE', alignHeader: 'center', value: 'code'},
-    { text: 'TYPE', value: 'type'},
-    { text: 'CATEGORY', alignData: 'right', value: 'category', width: '200px'},
-    { text: 'CAPACITY', alignData: 'left', value: 'capacity'},
-    { text: 'DATE ADDED', alignData: 'right', value: 'datetime_added'},
-    { text: 'DATE CREATED', alignData: 'right', value: 'created_at'},
-    { text: 'DATE UPDATED', alignData: 'right', value: 'updated_at'},
-]);
-let data = ref([
+let cards = reactive([
     {
-        "id": 45,
-        "name": "GSX 8ZJC5 37V",
-        "code": "PRT0451171313",
-        "type": 1,
-        "category": null,
-        "capacity": 33,
-        "datetime_added": "2023-08-22 17:44:03",
-        "created_at": "2023-08-22 17:44:03",
-        "updated_at": "2023-08-22 17:44:03"
+        'image':{
+            'path': '/images/hero/aa5b582b-908b-4db3-b5bc-1276f062d609.webp'
+        },
+        'title': 'COLORFUL Launches EVOL X15 AT Gaming Laptop Powered by Intel 13th Gen CPUs and NVIDIA GeForce RTX 4060 GPU',
+        'subTitle': 'The EVOL X15 AT sports a 15.6” QHD (2560x1440) 165Hz display with NVIDIA G-SYNC support for stutter-free and tear-free gaming experience. Aside from Pine Blue and Mist Grey, the new EVOL X15 AT gaming laptop comes in the new Purple Grape color.',
+        'link' : '/prototype'
     },
     {
-        "id": 67,
-        "name": "CP1 HN3 DX4K2",
-        "code": "PRT9284750057",
-        "type": 1,
-        "category": 114,
-        "capacity": 23,
-        "datetime_added": "2023-08-22 17:44:03",
-        "created_at": "2023-08-22 17:44:03",
-        "updated_at": "2023-08-22 17:44:03"
+        'image':{
+            'path': '/images/hero/667a2407-ae78-4e4d-b69e-059552bca96e.webp'
+        },
+        'title': 'Upgrade to Beyond Fast',
+        'subTitle': 'GeForce RTX 40 Series and DLSS 3.',
+        'link' : '/prototype'
     },
     {
-        "id": 88,
-        "name": "XIM 9QY QY125",
-        "code": "PRT9249091497",
-        "type": 5,
-        "category": null,
-        "capacity": 22,
-        "datetime_added": "2023-08-22 17:44:03",
-        "created_at": "2023-08-22 17:44:03",
-        "updated_at": "2023-08-22 17:44:03"
+        'image':{
+            'path': '/images/hero/2e38535a-c147-416f-995e-1d1b618d07ca.webp'
+        },
+        'title': 'COLORFUL Launches B760 Series Motherboards',
+        'subTitle': 'COLORFUL introduces the CVN B760M FROZEN WIFI D5 and CVN B760I FROZEN WIFI motherboards for gamers and enthusiasts. Coming in a compact micro-ATX and mini-ITX form factors, both motherboards feature PCIe 5.0 x16 slot to support the latest high-end graphics cards. The CVN B760 motherboards also come with Wi-Fi 6, three PCIe 4.0 M.2 slots for the CVN B760M FROZEN WIFI D5 and two PCIe 4.0 M.2 slots for the CVN B760I FROZEN WIFI mini-ITX motherboard. COLORFUL also presents the BATTLE-AX B760M-F PRO motherboard with DDR4 memory support and two PCIe 4.0 M.2 slots.',
+        'link' : '/prototype'
     },
     {
-        "id": 246,
-        "name": "IB8 EAW DML6X",
-        "code": "PRT3041670860",
-        "type": 4,
-        "category": 89,
-        "capacity": 26,
-        "datetime_added": "2023-08-22 17:44:03",
-        "created_at": "2023-08-22 17:44:03",
-        "updated_at": "2023-08-22 17:44:03"
+        'image':{
+            'path': 'images/hero/21f0a52e-db0a-4108-9405-44a8a548e534.webp'
+        },
+        'title': 'MEOW SET',
+        'subTitle': 'RTX 4060 Ti MEOW-ORG OC 16GB / B760M-MEOW WIFI D5 ORANGE.',
+        'link' : '/prototype'
     },
     {
-        "id": 273,
-        "name": "72WKAM 11B T5",
-        "code": "PRT9023387510",
-        "type": 1,
-        "category": null,
-        "capacity": 3,
-        "datetime_added": "2023-08-22 17:44:03",
-        "created_at": "2023-08-22 17:44:03",
-        "updated_at": "2023-08-22 17:44:03"
-    },
-    {
-        "id": 384,
-        "name": "PM2 V8W ZCAGR",
-        "code": "PRT0920672517",
-        "type": 5,
-        "category": null,
-        "capacity": 8,
-        "datetime_added": "2023-08-22 17:44:03",
-        "created_at": "2023-08-22 17:44:03",
-        "updated_at": "2023-08-22 17:44:03"
-    },
-    {
-        "id": 418,
-        "name": "VFSNL4 FL2 7C",
-        "code": "PRT1915550179",
-        "type": 3,
-        "category": null,
-        "capacity": 19,
-        "datetime_added": "2023-08-22 17:44:03",
-        "created_at": "2023-08-22 17:44:03",
-        "updated_at": "2023-08-22 17:44:03"
-    },
-    {
-        "id": 478,
-        "name": "RC0 868Q6 GZI",
-        "code": "PRT4902978961",
-        "type": 2,
-        "category": 68,
-        "capacity": 15,
-        "datetime_added": "2023-08-22 17:44:03",
-        "created_at": "2023-08-22 17:44:03",
-        "updated_at": "2023-08-22 17:44:03"
-    },
-    {
-        "id": 552,
-        "name": "9Q8 YEESZ DKF",
-        "code": "PRT3932126979",
-        "type": 1,
-        "category": 4,
-        "capacity": 15,
-        "datetime_added": "2023-08-22 17:44:03",
-        "created_at": "2023-08-22 17:44:03",
-        "updated_at": "2023-08-22 17:44:03"
-    },
-    {
-        "id": 702,
-        "name": "45EE9R TES VK",
-        "code": "PRT2563775044",
-        "type": 5,
-        "category": 79,
-        "capacity": 35,
-        "datetime_added": "2023-08-22 17:44:03",
-        "created_at": "2023-08-22 17:44:03",
-        "updated_at": "2023-08-22 17:44:03"
-    }
-]);
-let original = ref([
-    {
-        "id": 45,
-        "name": "GSX 8ZJC5 37V",
-        "code": "PRT0451171313",
-        "type": 1,
-        "category": null,
-        "capacity": 33,
-        "datetime_added": "2023-08-22 17:44:03",
-        "created_at": "2023-08-22 17:44:03",
-        "updated_at": "2023-08-22 17:44:03"
-    },
-    {
-        "id": 67,
-        "name": "CP1 HN3 DX4K2",
-        "code": "PRT9284750057",
-        "type": 1,
-        "category": 114,
-        "capacity": 23,
-        "datetime_added": "2023-08-22 17:44:03",
-        "created_at": "2023-08-22 17:44:03",
-        "updated_at": "2023-08-22 17:44:03"
-    },
-    {
-        "id": 88,
-        "name": "XIM 9QY QY125",
-        "code": "PRT9249091497",
-        "type": 5,
-        "category": null,
-        "capacity": 22,
-        "datetime_added": "2023-08-22 17:44:03",
-        "created_at": "2023-08-22 17:44:03",
-        "updated_at": "2023-08-22 17:44:03"
-    },
-    {
-        "id": 246,
-        "name": "IB8 EAW DML6X",
-        "code": "PRT3041670860",
-        "type": 4,
-        "category": 89,
-        "capacity": 26,
-        "datetime_added": "2023-08-22 17:44:03",
-        "created_at": "2023-08-22 17:44:03",
-        "updated_at": "2023-08-22 17:44:03"
-    },
-    {
-        "id": 273,
-        "name": "72WKAM 11B T5",
-        "code": "PRT9023387510",
-        "type": 1,
-        "category": null,
-        "capacity": 3,
-        "datetime_added": "2023-08-22 17:44:03",
-        "created_at": "2023-08-22 17:44:03",
-        "updated_at": "2023-08-22 17:44:03"
-    },
-    {
-        "id": 384,
-        "name": "PM2 V8W ZCAGR",
-        "code": "PRT0920672517",
-        "type": 5,
-        "category": null,
-        "capacity": 8,
-        "datetime_added": "2023-08-22 17:44:03",
-        "created_at": "2023-08-22 17:44:03",
-        "updated_at": "2023-08-22 17:44:03"
-    },
-    {
-        "id": 418,
-        "name": "VFSNL4 FL2 7C",
-        "code": "PRT1915550179",
-        "type": 3,
-        "category": null,
-        "capacity": 19,
-        "datetime_added": "2023-08-22 17:44:03",
-        "created_at": "2023-08-22 17:44:03",
-        "updated_at": "2023-08-22 17:44:03"
-    },
-    {
-        "id": 478,
-        "name": "RC0 868Q6 GZI",
-        "code": "PRT4902978961",
-        "type": 2,
-        "category": 68,
-        "capacity": 15,
-        "datetime_added": "2023-08-22 17:44:03",
-        "created_at": "2023-08-22 17:44:03",
-        "updated_at": "2023-08-22 17:44:03"
-    },
-    {
-        "id": 552,
-        "name": "9Q8 YEESZ DKF",
-        "code": "PRT3932126979",
-        "type": 1,
-        "category": 4,
-        "capacity": 15,
-        "datetime_added": "2023-08-22 17:44:03",
-        "created_at": "2023-08-22 17:44:03",
-        "updated_at": "2023-08-22 17:44:03"
-    },
-    {
-        "id": 702,
-        "name": "45EE9R TES VK",
-        "code": "PRT2563775044",
-        "type": 5,
-        "category": 79,
-        "capacity": 35,
-        "datetime_added": "2023-08-22 17:44:03",
-        "created_at": "2023-08-22 17:44:03",
-        "updated_at": "2023-08-22 17:44:03"
-    }
-]);
-let replace = ref([
-    {
-        "id": 1001,
-        "name": "GSX 8ZJC5 37V",
-        "code": "PRT0451171313",
-        "type": 1,
-        "category": null,
-        "capacity": 33,
-        "datetime_added": "2023-08-22 17:44:03",
-        "created_at": "2023-08-22 17:44:03",
-        "updated_at": "2023-08-22 17:44:03"
-    },
-    {
-        "id": 1002,
-        "name": "CP1 HN3 DX4K2",
-        "code": "PRT9284750057",
-        "type": 1,
-        "category": 114,
-        "capacity": 23,
-        "datetime_added": "2023-08-22 17:44:03",
-        "created_at": "2023-08-22 17:44:03",
-        "updated_at": "2023-08-22 17:44:03"
+        'image':{
+            'path': 'images/hero/ea05cc1d-1384-47f4-84ab-b3c049f7e13e.webp'
+        },
+        'title': 'AIO PC',
+        'subTitle': 'iGame G-ONE Plus i7-12700H/RTX3060.',
+        'link' : '/prototype'
     },
 ]);
-let pagination = ref({
-    "total": 48,
-    "count": 10,
-    "per_page": 10,
-    "current_page": 1,
-    "total_pages": 5,
-    "links": {
-        "next": "/?page=2"
-    }
-});
-let originalDatePickers = ref([
-    {
-        id: 'datetimesample-45',
-        type: 'datetime',
-        selectedCallback: (payload) => {
-            datetimeFrom.value = payload.value;
-        }
-    },
-    {
-        id: 'datetimesample-273',
-        type: 'datetime',
-        selectedCallback: (payload) => {
-            datetimeFrom.value = payload.value;
-        }
-    },
-    {
-        id: 'datetimesample-702',
-        type: 'datetime',
-        selectedCallback: (payload) => {
-            datetimeFrom.value = payload.value;
-        }
-    },
-]);
-let replaceDatePickers = ref([
-    {
-        id: 'datetimesample-1001',
-        type: 'datetime',
-        selectedCallback: (payload) => {
-            datetimeFrom.value = payload.value;
-        }
-    },
-    {
-        id: 'datetimesample-1002',
-        type: 'datetime',
-        selectedCallback: (payload) => {
-            datetimeFrom.value = payload.value;
-        }
-    }
-]);
-
-const {render} = dateTimePicker(originalDatePickers.value);
-
-function backOriginal(){
-    data.value = original.value;
-    render(originalDatePickers.value);
-}
-
-function replaceOriginal(){
-    data.value = replace.value;
-    render(replaceDatePickers.value);
-}
-
-function themeLight(){
-    $themeStore.setTheme('light');
-}
-
-function themeBlue(){
-    $themeStore.setTheme('blue');
-}
 
 </script>
 
 <style scoped>
     #lab{
         height: calc(100vh - calc(41px) - calc(1rem));
-    }
-
-    .moody-card{
-        border: 1px solid silver;
-        position: relative;
-        margin: 24px;
-    }
-
-    .moody-card-frame{
-        box-sizing: border-box;
-        display: block;
-        content: none;
-    }
-
-    .moody-card-frame:before{
-        position: absolute;
-        content: "";
-        top: -8px;
-        left: -9px;
-        right: 7px;
-        bottom: 7px;
-        border: 1px solid red;
-        display: block;
-    }
-
-    .moody-card-frame:after{
-        position: absolute;
-        content: "";
-        top: 7px;
-        left: 7px;
-        right: -9px;
-        bottom: -8px;
-        border: 1px solid green;
-        display: block;
     }
 </style>
