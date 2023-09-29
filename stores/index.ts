@@ -2,7 +2,7 @@ import { defineStore } from 'pinia'
 
 export const useCoreStore = defineStore('core', {
     state: () => ({
-        layout: 'custom',
+        layout: 'landing',
         service: {
             error: {
                 prompt: false,
@@ -24,7 +24,9 @@ export const useCoreStore = defineStore('core', {
             this.service.error = serviceError;
         },
         setLayout(layout){
-            this.layout = layout;
+            if(layout != this.layout){
+                this.layout = layout;
+            }
         },
         resetServiceError(){
             this.service.error = {

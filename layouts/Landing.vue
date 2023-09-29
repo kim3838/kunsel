@@ -1,0 +1,231 @@
+<template>
+    <div class="tw-relative">
+        <!-- Primary Navigation Menu -->
+        <nav ref="navigation" class="primary-navigation-parent tw-fixed" :class="{'lg:tw-ml-sidebar': false}">
+            <div class="tw-max-w-full tw-mx-auto">
+                <div class="tw-flex tw-justify-center tw-h-7 lg:tw-h-14">
+                    <div class="tw-flex">
+                        <!-- Navigation Links -->
+                        <div class="tw-hidden tw-space-x-8 tw--my-px lg:tw-flex">
+                            <NavLink :to="'/'" :active="isRouteActive('index')">
+                                Home
+                            </NavLink>
+                            <NavLink :to="'/prototype'" :active="isRouteActive('prototype')">
+                                Prototype
+                            </NavLink>
+                            <NavLink :to="'/lab'" :active="isRouteActive('lab')">
+                                Lab
+                            </NavLink>
+                            <NavLink :to="'/login'" :active="isRouteActive('login')">
+                                Login
+                            </NavLink>
+                            <NavLink :to="'/profile'" :active="isRouteActive('profile')">
+                                Profile
+                            </NavLink>
+                            <NavLink :to="'/users'" :active="isRouteActive('users')">
+                                Users
+                            </NavLink>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+        <main class="tw-relative allocate-navigation">
+            <slot name="content"/>
+        </main>
+        <ServiceErrorModal></ServiceErrorModal>
+        <footer>
+            <div class="tw-mx-auto tw-max-w-screen-xl tw-px-4 tw-pb-6 tw-pt-16 sm:tw-px-6 lg:tw-px-8 lg:tw-pt-24">
+                <div class="tw-grid tw-grid-cols-1 tw-gap-8 lg:tw-grid-cols-4">
+                    <div>
+                        <div class="tw-flex tw-justify-center sm:tw-justify-start">
+                            <!--Logo-->
+                        </div>
+
+                        <p class="tw-mt-6 tw-max-w-md tw-text-center tw-leading-relaxed tw-text-gray-500 sm:tw-max-w-xs sm:tw-text-left">
+                            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Incidunt
+                            consequuntur amet culpa cum itaque neque.
+                        </p>
+
+                        <ul class="tw-mt-2 tw-flex tw-justify-center tw-gap-6 sm:tw-justify-start md:gap-8">
+                            <li>
+                                <a href="/" rel="noreferrer" target="_blank">
+                                    <Icon class="tw-h-5 tw-w-5" name="mdi:facebook"></Icon>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/" rel="noreferrer" target="_blank">
+                                    <Icon class="tw-h-5 tw-w-5" name="mdi:instagram"></Icon>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/" rel="noreferrer" target="_blank">
+                                    <Icon class="tw-h-5 tw-w-5" name="mdi:youtube"></Icon>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="tw-grid tw-grid-cols-1 tw-gap-8 sm:tw-grid-cols-2 md:tw-grid-cols-5 lg:tw-col-span-3">
+                        <div class="tw-text-center sm:tw-text-left md:tw-col-span-2">
+                            <p class="tw-text-lg tw-font-medium">Contact Us</p>
+
+                            <ul class="tw-mt-8 tw-space-y-4 tw-text-sm">
+                                <li>
+                                    <a class="tw-flex tw-items-center tw-justify-center sm:tw-justify-start" href="/">
+                                        <Icon name="ic:round-mail-outline"></Icon>
+                                        <span>kimdeguzman20@yahoo.com</span>
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a class="tw-flex tw-items-center tw-justify-center sm:tw-justify-start" href="/">
+                                        <Icon name="ic:sharp-phone"></Icon>
+                                        <span>+63 991 6180 206</span>
+                                    </a>
+                                </li>
+
+                                <li class="tw-flex tw-items-start tw-justify-center sm:tw-justify-start">
+                                    <Icon name="ic:sharp-location-on"></Icon>
+                                    <address class="tw--mt-0.5 tw-not-italic">
+                                        Manila, Philippines
+                                    </address>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div class="tw-text-center sm:tw-text-left">
+                            <p class="tw-text-lg tw-font-medium">Our Services</p>
+
+                            <ul class="tw-mt-8 tw-space-y-4 tw-text-sm">
+                                <li>
+                                    <a class="tw-transition hover:tw-text-gray-700/75" href="/">Web Development</a>
+                                </li>
+                                <li>
+                                    <a class="tw-transition hover:tw-text-gray-700/75" href="/">Web Design</a>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div class="tw-text-center sm:tw-text-left">
+                            <p class="tw-text-lg tw-font-medium">Helpful Links</p>
+
+                            <ul class="tw-mt-8 tw-space-y-4 tw-text-sm">
+                                <li>
+                                    <a class="tw-transition hover:tw-text-gray-700/75" href="/">FAQs</a>
+                                </li>
+                                <li>
+                                    <a class="tw-transition hover:tw-text-gray-700/75" href="/">Support</a>
+                                </li>
+
+                                <li>
+                                    <a class="tw-group tw-flex tw-justify-center tw-gap-1.5 sm:tw-justify-start" href="/">
+                                        <span class="tw-transition group-hover:tw-text-gray-700/75">
+                                            Live Chat
+                                        </span>
+                                        <span class="tw-relative tw-flex tw-h-2 tw-w-2">
+                                            <span class="tw-absolute tw-inline-flex tw-h-full tw-w-full tw-animate-ping tw-rounded-full tw-bg-slate-400 tw-opacity-75"></span>
+                                            <span class="tw-relative tw-inline-flex tw-h-2 tw-w-2 tw-rounded-full tw-bg-slate-500"></span>
+                                        </span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div class="tw-text-center sm:tw-text-left">
+                            <p class="tw-text-lg tw-font-medium">About Us</p>
+
+                            <ul class="tw-mt-8 tw-space-y-4 tw-text-sm">
+                                <li>
+                                    <a class="tw-transition hover:tw-text-gray-700/75" href="/">Company History</a>
+                                </li>
+
+                                <li>
+                                    <a class="tw-transition hover:tw-text-gray-700/75" href="/">Meet the Team</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tw-mt-12 tw-pt-6">
+                    <div class="tw-text-center sm:tw-flex sm:tw-justify-between sm:tw-text-left">
+                        <p class="tw-text-sm">
+                            <span class="tw-block sm:tw-inline">All rights reserved.</span>
+                            <a class="tw-inline-block tw-underline" href="/">
+                                Terms & Conditions
+                            </a>
+                            <span>&middot;</span>
+                            <a class="tw-inline-block tw-underline" href="/">
+                                Privacy Policy
+                            </a>
+                        </p>
+                        <p class="tw-mt-4 tw-text-sm tw-flex tw-items-center tw-justify-center sm:tw-justify-start sm:tw-order-first sm:tw-mt-0">
+                            <Icon name="ic:sharp-copyright"></Icon>2022 Lorem Ipsum
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </footer>
+
+    </div>
+</template>
+
+<script setup lang="ts">
+import {storeToRefs} from 'pinia';
+import {nextTick, onMounted, onUnmounted, ref} from "vue";
+
+const {$themeStore} = useNuxtApp();
+const route = useRoute();
+
+const {
+    neutral: neutralColor,
+    tint: tintColor,
+    lining: liningColor,
+    thread: threadColor
+} = storeToRefs($themeStore);
+
+let navigation = ref(null);
+let navigationHeight = ref('0px');
+let windowWidth = ref(0);
+
+function isRouteActive(routeSlug: string) {
+    return [route.path, _toLower(route.name)].indexOf(_toLower(routeSlug)) >= 0;
+}
+
+async function handleWindowWidth() {
+    windowWidth.value = window.innerWidth;
+    await nextTick(() => {
+        navigationHeight.value = `${navigation.value.offsetHeight}px`;
+    });
+}
+
+onMounted(async () => {
+    await nextTick(() => {
+        navigationHeight.value = `${navigation.value.offsetHeight}px`;
+    });
+    window.addEventListener('resize', handleWindowWidth);
+});
+
+onUnmounted(async () => {
+    window.removeEventListener('resize', handleWindowWidth);
+});
+
+</script>
+<style scoped>
+.primary-navigation-parent {
+    background-color: v-bind(tintColor) !important;
+    border-width: 1px;
+    border-bottom-style: solid;
+    border-bottom-color: v-bind(neutralColor);
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    z-index: 30;
+}
+
+.allocate-navigation {
+    margin-top: v-bind(navigationHeight);
+}
+</style>
