@@ -19,7 +19,7 @@
                                 </div>
                             </div>
 
-                            <div class="tw-x-2 tw-mt-8 tw-border tw-border-neutral-200">
+                            <div class="tw-border tw-border-neutral-200">
                                 <form @submit.prevent="handleLogin" class="tw-w-72">
                                     <div class="tw-block">
                                         <InputLabel :size="'sm'" for="email" value="Email" />

@@ -1,18 +1,9 @@
 <template>
     <div>
         <NuxtLayout :name="$coreStore.layout">
-            <template #content>
-                <div class="tw-m-20 tw-flex tw-justify-center tw-space-x-2 tw-mx-auto">
-                    <div v-for="card in cards" :key="card">
-                        <Card
-                            :image="card.image"
-                            :title="card.title"
-                            :sub-title="card.subTitle"
-                            :link="card.link"
-                        />
-                    </div>
-                </div>
-            </template>
+<!--            <template #content>-->
+
+<!--            </template>-->
         </NuxtLayout>
     </div>
 </template>
