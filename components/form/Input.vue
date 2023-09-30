@@ -105,4 +105,18 @@ const backgroundClass = computed(() => {
 .borderless{
     border: 1px solid transparent;
 }
+
+input[type=number] {
+    position: relative;
+}
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+    position: absolute;
+    opacity: 1;
+    top: 0;
+    right: 0;
+    height: 100%;
+}
+
 </style>
