@@ -79,10 +79,10 @@
                                 </li>
 
                                 <li>
-                                    <a class="tw-flex tw-items-center tw-justify-center sm:tw-justify-start" href="/">
+                                    <span class="tw-flex tw-items-center tw-justify-center sm:tw-justify-start" href="/">
                                         <Icon name="ic:sharp-phone"></Icon>
                                         <span>+63 991 9991 991</span>
-                                    </a>
+                                    </span>
                                 </li>
 
                                 <li class="tw-flex tw-items-start tw-justify-center sm:tw-justify-start">
@@ -216,6 +216,10 @@ onUnmounted(async () => {
 
 </script>
 <style scoped>
+a:hover{
+    text-decoration: underline;
+}
+
 .primary-navigation-parent {
     background-color: v-bind(tintColor) !important;
     border-width: 1px;
