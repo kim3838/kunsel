@@ -148,7 +148,9 @@
                     </div>
                 </div>
 
-                <div class="tw-mt-12 tw-pt-6">
+                <div class="footer-rule tw-mt-2"></div>
+
+                <div class="tw-pt-2 tw-mt-2">
                     <div class="tw-text-center sm:tw-flex sm:tw-justify-between sm:tw-text-left">
                         <p class="tw-text-sm">
                             <span class="tw-block sm:tw-inline">All rights reserved.</span>
@@ -183,7 +185,6 @@ const {
     accent: accentColor,
     neutral: neutralColor,
     tint: tintColor,
-    lining: liningColor,
     thread: threadColor
 } = storeToRefs($themeStore);
 
@@ -237,5 +238,18 @@ onUnmounted(async () => {
 
 .ping-highlight{
     background-color: v-bind(accentColor);
+}
+
+.footer-rule{
+    height: 1px;
+    width: 100%;
+    background: linear-gradient(
+        to right,
+        transparent 0%,
+        v-bind(threadColor) 10%,
+        transparent 50%,
+        v-bind(threadColor) 90%,
+        transparent 100%
+    );
 }
 </style>
