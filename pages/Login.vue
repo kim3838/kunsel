@@ -2,7 +2,7 @@
     <div>
         <NuxtLayout :name="$coreStore.layout">
             <template #content>
-                <div class="tw-mx-auto tw-max-w-screen-xl tw-flex tw-border tw-border-green-200 tw-max-w-6xl">
+                <div class="tw-mx-auto tw-max-w-screen-2xl tw-flex tw-border tw-border-green-200 tw-max-w-6xl">
 
                     <div class="tw-border tw-border-red-200">
                         <form @submit.prevent="handleLogin" class="tw-w-72">

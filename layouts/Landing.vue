@@ -36,7 +36,7 @@
         </main>
         <ServiceErrorModal></ServiceErrorModal>
         <footer>
-            <div class="tw-mx-auto tw-max-w-screen-xl tw-px-4 tw-pb-6 tw-pt-16 sm:tw-px-6 lg:tw-px-8 lg:tw-pt-24">
+            <div class="tw-mx-auto tw-max-w-screen-2xl tw-px-4 tw-pb-6 tw-pt-16 sm:tw-px-6 lg:tw-px-8 lg:tw-pt-24">
                 <div class="tw-grid tw-grid-cols-1 lg:tw-grid-cols-4">
                     <div>
                         <div class="tw-flex tw-justify-center sm:tw-justify-start">
