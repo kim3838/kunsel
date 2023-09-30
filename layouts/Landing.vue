@@ -72,7 +72,7 @@
 
                             <ul class="tw-mt-8 tw-space-y-4 tw-text-sm">
                                 <li>
-                                    <a class="tw-flex tw-items-center tw-justify-center sm:tw-justify-start" href="/">
+                                    <a class="footer-link tw-flex tw-items-center tw-justify-center sm:tw-justify-start" href="/">
                                         <Icon name="ic:round-mail-outline"></Icon>
                                         <span>mail@domain.com</span>
                                     </a>
@@ -99,10 +99,10 @@
 
                             <ul class="tw-mt-8 tw-space-y-4 tw-text-sm">
                                 <li>
-                                    <a class="tw-transition hover:tw-text-gray-700/75" href="/">Web Development</a>
+                                    <a class="footer-link tw-transition hover:tw-text-gray-700/75" href="/">Web Development</a>
                                 </li>
                                 <li>
-                                    <a class="tw-transition hover:tw-text-gray-700/75" href="/">Web Design</a>
+                                    <a class="footer-link tw-transition hover:tw-text-gray-700/75" href="/">Web Design</a>
                                 </li>
                             </ul>
                         </div>
@@ -112,14 +112,14 @@
 
                             <ul class="tw-mt-8 tw-space-y-4 tw-text-sm">
                                 <li>
-                                    <a class="tw-transition hover:tw-text-gray-700/75" href="/">FAQs</a>
+                                    <a class="footer-link tw-transition hover:tw-text-gray-700/75" href="/">FAQs</a>
                                 </li>
                                 <li>
-                                    <a class="tw-transition hover:tw-text-gray-700/75" href="/">Support</a>
+                                    <a class="footer-link tw-transition hover:tw-text-gray-700/75" href="/">Support</a>
                                 </li>
 
                                 <li>
-                                    <a class="tw-group tw-flex tw-justify-center tw-gap-1.5 sm:tw-justify-start" href="/">
+                                    <a class="footer-link tw-group tw-flex tw-justify-center tw-gap-1.5 sm:tw-justify-start" href="/">
                                         <span class="tw-transition group-hover:tw-text-gray-700/75">
                                             Live Chat
                                         </span>
@@ -137,11 +137,11 @@
 
                             <ul class="tw-mt-8 tw-space-y-4 tw-text-sm">
                                 <li>
-                                    <a class="tw-transition hover:tw-text-gray-700/75" href="/">Company History</a>
+                                    <a class="footer-link tw-transition hover:tw-text-gray-700/75" href="/">Company History</a>
                                 </li>
 
                                 <li>
-                                    <a class="tw-transition hover:tw-text-gray-700/75" href="/">Meet the Team</a>
+                                    <a class="footer-link tw-transition hover:tw-text-gray-700/75" href="/">Meet the Team</a>
                                 </li>
                             </ul>
                         </div>
@@ -216,7 +216,7 @@ onUnmounted(async () => {
 
 </script>
 <style scoped>
-a:hover{
+a.footer-link:hover{
     text-decoration: underline;
 }
 
