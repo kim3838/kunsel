@@ -1,8 +1,8 @@
 <template>
     <NuxtLink
         :to="to"
-        class="tw-inline-flex tw-items-center tw-px-1 tw-border-b-2 tw-text-xl tw-font-serif tw-transition tw-duration-150 tw-ease-in-out focus:tw-outline-none"
-        :class="classes">
+        class="tw-box-border tw-inline-flex tw-items-center tw-px-4 tw-text-xl tw-font-medium focus:tw-outline-none focus:tw-ring-transparent focus:tw-ring-1"
+        :class="[classes, 'nav-link']">
         <slot></slot>
     </NuxtLink>
 </template>
@@ -15,10 +15,15 @@ const {$themeStore} = useNuxtApp();
 const {
     hexAlpha,
     primary: primaryColor,
+    accent: accentColor,
+    neutral: neutralColor,
 } = storeToRefs($themeStore);
 
 const primaryColor50 = computed(() => {
     return primaryColor.value + hexAlpha.value['50'];
+});
+const accentColor10 = computed(() => {
+    return accentColor.value + hexAlpha.value['10'];
 });
 
 const props = defineProps({
@@ -35,11 +40,28 @@ const props = defineProps({
 const classes = computed(() => {
     return props.active
         ? 'nav-active'
-        : 'tw-border-transparent'
+        : 'nav'
 });
 </script>
 <style scoped>
 .nav-active{
-    border-color: v-bind(primaryColor50);
+    border-style: solid;
+    border-top-color: transparent;
+    border-left-color: transparent;
+    border-right-color: transparent;
+    border-top-width: 1px;
+    border-left-width: 1px;
+    border-right-width: 1px;
+    border-bottom-width: 2px;
+    border-bottom-color: v-bind(primaryColor50);
+    background-color: v-bind(accentColor10);
+}
+
+.nav{
+    border: 1px solid transparent;
+}
+
+.nav-link:focus{
+    border: 1px solid v-bind(neutralColor);
 }
 </style>

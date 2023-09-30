@@ -6,7 +6,7 @@
                 <div class="tw-flex tw-justify-center tw-h-7 lg:tw-h-14">
                     <div class="tw-flex">
                         <!-- Navigation Links -->
-                        <div class="tw-hidden tw-space-x-8 tw--my-px lg:tw-flex">
+                        <div class="tw-hidden tw--my-px lg:tw-flex">
                             <NavLink :to="'/'" :active="isRouteActive('index')">
                                 Home
                             </NavLink>
@@ -25,6 +25,7 @@
                             <NavLink :to="'/users'" :active="isRouteActive('users')">
                                 Users
                             </NavLink>
+                            <NavDrop :title="'Account'" :links="accountLinks" />
                         </div>
                     </div>
                 </div>
@@ -42,7 +43,7 @@
                             <SquareEnix :height="'calc(3.8rem - 1px)'"/>
                         </div>
 
-                        <p class="tw-text-center tw-leading-relaxed tw-text-gray-500 sm:tw-max-w-md sm:tw-text-left">
+                        <p class="tw-font-serif tw-text-center tw-leading-relaxed tw-text-gray-500 sm:tw-max-w-md sm:tw-text-left">
                             Lorem ipsum dolor, sit amet consectetur adipisicing elit. Incidunt
                             consequuntur amet culpa cum itaque neque.
                         </p>
@@ -68,14 +69,14 @@
 
                     <div class="tw-grid tw-grid-cols-1 tw-gap-8 tw-mt-8 lg:tw-mt-0 sm:tw-grid-cols-2 md:tw-grid-cols-5 lg:tw-col-span-3">
                         <div class="tw-text-center sm:tw-text-left md:tw-col-span-2 lg:tw-pl-14">
-                            <p class="tw-text-lg tw-font-medium">Contact Us</p>
+                            <p class="tw-text-lg tw-font-medium tw-font-serif">Contact Us</p>
 
                             <ul class="tw-mt-8 tw-space-y-4 tw-text-sm">
                                 <li>
-                                    <a class="footer-link tw-flex tw-items-center tw-justify-center sm:tw-justify-start" href="/">
+                                    <span class="footer-link tw-flex tw-items-center tw-justify-center sm:tw-justify-start" href="/">
                                         <Icon name="ic:round-mail-outline"></Icon>
                                         <span>mail@domain.com</span>
-                                    </a>
+                                    </span>
                                 </li>
 
                                 <li>
@@ -95,7 +96,7 @@
                         </div>
 
                         <div class="tw-text-center sm:tw-text-left">
-                            <p class="tw-text-lg tw-font-medium">Our Services</p>
+                            <p class="tw-text-lg tw-font-medium tw-font-serif">Our Services</p>
 
                             <ul class="tw-mt-8 tw-space-y-4 tw-text-sm">
                                 <li>
@@ -108,7 +109,7 @@
                         </div>
 
                         <div class="tw-text-center sm:tw-text-left">
-                            <p class="tw-text-lg tw-font-medium">Helpful Links</p>
+                            <p class="tw-text-lg tw-font-medium tw-font-serif">Helpful Links</p>
 
                             <ul class="tw-mt-8 tw-space-y-4 tw-text-sm">
                                 <li>
@@ -133,7 +134,7 @@
                         </div>
 
                         <div class="tw-text-center sm:tw-text-left">
-                            <p class="tw-text-lg tw-font-medium">About Us</p>
+                            <p class="tw-text-lg tw-font-medium tw-font-serif">About Us</p>
 
                             <ul class="tw-mt-8 tw-space-y-4 tw-text-sm">
                                 <li>
@@ -175,9 +176,9 @@
 
 <script setup lang="ts">
 import {storeToRefs} from 'pinia';
-import {nextTick, onMounted, onUnmounted, ref} from "vue";
+import {computed, nextTick, onMounted, onUnmounted, ref} from "vue";
 
-const {$themeStore} = useNuxtApp();
+const {$authStore,$themeStore} = useNuxtApp();
 const route = useRoute();
 
 const {
@@ -191,6 +192,39 @@ const {
 let navigation = ref(null);
 let navigationHeight = ref('0px');
 let windowWidth = ref(0);
+let accountLinks = computed(()=>{
+    let links: object[] = [];
+
+    if($authStore.isLoggedIn){
+        links = links.concat([
+            {
+                label: 'Account Settings',
+                icon: 'eos-icons:rotating-gear',
+                to: '/profile',
+            },
+            {
+                label: 'Logout',
+                to: '',
+                callback: () => {
+                    $authStore.logout();
+                }
+            }
+        ]);
+    } else {
+        links.unshift({
+            label: 'Login',
+            to: '/login',
+        });
+    }
+
+    links.push({
+        label: 'Shop',
+        icon: 'ic:sharp-shop',
+        to: '',
+    });
+
+    return links;
+});
 
 function isRouteActive(routeSlug: string) {
     return [route.path, _toLower(route.name)].indexOf(_toLower(routeSlug)) >= 0;
