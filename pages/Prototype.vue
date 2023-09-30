@@ -7,7 +7,7 @@
                     <div>Tailwind Url: <NuxtLink class="tw-text-sky-600" :to="'_tailwind'" target="_blank">{{('http://localhost:3000' + '/_tailwind/')}}</NuxtLink></div>
 
                     <div class="tw-space-y-2">
-                        <div v-if="false" class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-8">
+                        <div v-if="true" class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-8">
                             <div class="tw-block tw-border tw-border-neutral-200">
                                 <InputLabel :size="'md'" value="Static Multi Select" />
                                 <MultiSelect drop-shadow :size="'md'" :options="category" :icon="'ic:sharp-qr-code'"/>

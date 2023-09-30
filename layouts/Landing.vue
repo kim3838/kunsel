@@ -36,13 +36,32 @@
         <ServiceErrorModal></ServiceErrorModal>
         <footer>
             <div class="tw-mx-auto tw-max-w-screen-xl tw-px-4 tw-pb-6 tw-pt-16 sm:tw-px-6 lg:tw-px-8 lg:tw-pt-24">
-                <div class="tw-grid tw-grid-cols-1 tw-gap-8 lg:tw-grid-cols-4">
+                <div class="tw-grid tw-grid-cols-1 lg:tw-grid-cols-4">
                     <div>
                         <div class="tw-flex tw-justify-center sm:tw-justify-start">
-                            <!--Logo-->
+                            <svg version="1.1" xmlns="http://www.w3.org/2000/svg" height="3.8rem" viewBox="-5.969 -13 760 95" enable-background="new -5.969 -13 760 95">
+                                <path d="M97,0c-6.648,0-12,5.352-12,12v45c0,6.648,5.352,12,12,12h16v9h15v-9h17c6.648,0,12-5.352,12-12V12
+	c0-6.648-5.352-12-12-12H97z M100,12h41v44h-13v-7h-15v7h-13V12z"/>
+                                <path d="M14,0C7.352,0,2,5.352,2,12v16c0,6.648,5.352,12,12,12h44h2v16h-2H31H19h-2H0v1c0,6.648,5.352,12,12,12h5h2
+	h42c6.648,0,12-5.352,12-12V39c0-6.648-5.352-12-12-12h-3H15V12h43v6h14v-6c0-6.648-5.352-12-12-12H14z"/>
+                                <path d="M169,0v12v45c0,6.648,5.352,12,12,12h8h9h1h8h17c6.648,0,12-5.352,12-12V12V0h-9h-5h-1v56h-14h-8h-1h-9h-5V0
+	h-3H169z"/>
+                                <path d="M273.5,1L239,69h15l7.625-15h38.75L308,69h15L288.5,1L288,0h-14
+	L273.5,1z M281,15.781L294.313,42h-26.625L281,15.781z"/>
+                                <path d="M330,0v12v19v38h15V43h9.5l25,26h20l-25-26h7.5c6.648,0,12-5.352,12-12V12c0-6.648-5.352-12-12-12h-37h-3H330
+	z M345,12h30c2.216,0,4,1.784,4,4v11c0,2.216-1.784,4-4,4h-30V12z"/>
+                                <path d="M407,0v69h58V56h-43V12h43V0H407z"/>
+                                <rect x="435" y="27" fill="#E20A16" width="25" height="13"/>
+                                <path d="M497,0v69h58V56h-43V12h43V0H497z"/>
+                                <rect x="525" y="27" fill="#E20A16" width="25" height="13"/>
+                                <path d="M567,0v3.5V69h14V20.188l36,42.938l1,1.188L621.938,69H625h6h1V0h-1h-14v46.438L581,3.5L578.063,0H567z"/>
+                                <rect x="644" width="16" height="69"/>
+                                <path d="M667.938,0l30.031,33.344L667.75,69h18l21.5-25.344L730.063,69h18l-32.094-35.656L744.25,0h-18
+	l-19.563,23.063L685.938,0H667.938z"/>
+                            </svg>
                         </div>
 
-                        <p class="tw-mt-6 tw-max-w-md tw-text-center tw-leading-relaxed tw-text-gray-500 sm:tw-max-w-xs sm:tw-text-left">
+                        <p class="tw-text-center tw-leading-relaxed tw-text-gray-500 sm:tw-max-w-md sm:tw-text-left">
                             Lorem ipsum dolor, sit amet consectetur adipisicing elit. Incidunt
                             consequuntur amet culpa cum itaque neque.
                         </p>
@@ -66,22 +85,22 @@
                         </ul>
                     </div>
 
-                    <div class="tw-grid tw-grid-cols-1 tw-gap-8 sm:tw-grid-cols-2 md:tw-grid-cols-5 lg:tw-col-span-3">
-                        <div class="tw-text-center sm:tw-text-left md:tw-col-span-2">
+                    <div class="tw-grid tw-grid-cols-1 tw-gap-8 tw-mt-8 lg:tw-mt-0 sm:tw-grid-cols-2 md:tw-grid-cols-5 lg:tw-col-span-3">
+                        <div class="tw-text-center sm:tw-text-left md:tw-col-span-2 lg:tw-pl-16">
                             <p class="tw-text-lg tw-font-medium">Contact Us</p>
 
                             <ul class="tw-mt-8 tw-space-y-4 tw-text-sm">
                                 <li>
                                     <a class="tw-flex tw-items-center tw-justify-center sm:tw-justify-start" href="/">
                                         <Icon name="ic:round-mail-outline"></Icon>
-                                        <span>kimdeguzman20@yahoo.com</span>
+                                        <span>mail@domain.com</span>
                                     </a>
                                 </li>
 
                                 <li>
                                     <a class="tw-flex tw-items-center tw-justify-center sm:tw-justify-start" href="/">
                                         <Icon name="ic:sharp-phone"></Icon>
-                                        <span>+63 991 6180 206</span>
+                                        <span>+63 991 9991 991</span>
                                     </a>
                                 </li>
 
@@ -124,8 +143,8 @@
                                             Live Chat
                                         </span>
                                         <span class="tw-relative tw-flex tw-h-2 tw-w-2">
-                                            <span class="tw-absolute tw-inline-flex tw-h-full tw-w-full tw-animate-ping tw-rounded-full tw-bg-slate-400 tw-opacity-75"></span>
-                                            <span class="tw-relative tw-inline-flex tw-h-2 tw-w-2 tw-rounded-full tw-bg-slate-500"></span>
+                                            <span class="tw-absolute tw-inline-flex tw-h-full tw-w-full tw-animate-ping tw-rounded-full ping-highlight tw-opacity-75"></span>
+                                            <span class="tw-relative tw-inline-flex tw-h-2 tw-w-2 tw-rounded-full ping"></span>
                                         </span>
                                     </a>
                                 </li>
@@ -179,6 +198,8 @@ const {$themeStore} = useNuxtApp();
 const route = useRoute();
 
 const {
+    primary: primaryColor,
+    accent: accentColor,
     neutral: neutralColor,
     tint: tintColor,
     lining: liningColor,
@@ -227,5 +248,13 @@ onUnmounted(async () => {
 
 .allocate-navigation {
     margin-top: v-bind(navigationHeight);
+}
+
+.ping{
+    background-color: v-bind(primaryColor);
+}
+
+.ping-highlight{
+    background-color: v-bind(accentColor);
 }
 </style>
