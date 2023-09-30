@@ -70,6 +70,7 @@ export default defineNuxtConfig({
         {path: '~/components/form'},
         {path: '~/components/modal'},
         {path: '~/components/data'},
+        {path: '~/components/logo'},
     ],
 
     lodash: {
