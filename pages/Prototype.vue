@@ -14,16 +14,28 @@
                             </div>
                             <div class="tw-block tw-border tw-border-neutral-200">
                                 <InputLabel :size="'md'" value="Non Searchable Multi Select" />
-                                <MultiSelect drop-shadow :searchable="false" :size="'md'" :options="category" :icon="'ic:sharp-qr-code'"/>
+                                <MultiSelect drop-shadow :searchable="false" :size="'md'" :options="category" :icon="'eos-icons:installing'"/>
                             </div>
                             <div class="tw-block tw-border tw-border-neutral-200">
                                 <InputLabel :size="'md'" value="Static Single Select" />
-                                <SingleSelect drop-shadow :always-active="false" :size="'md'" :icon="'ic:sharp-qr-code'" :options="plan"/>
+                                <SingleSelect drop-shadow :always-active="false" :size="'md'" :icon="'emojione-monotone:japanese-no-vacancy-button'" :options="plan"/>
                             </div>
 
                             <div class="tw-block tw-border tw-border-neutral-200">
                                 <InputLabel :size="'md'" value="Non Searchable Single Select" />
-                                <SingleSelect drop-shadow :searchable="false" :size="'md'" :icon="'ic:sharp-qr-code'" :options="plan"/>
+                                <SingleSelect drop-shadow :searchable="false" :size="'md'" :icon="'emojione-monotone:japanese-vacancy-button'" :options="plan"/>
+                            </div>
+
+                            <div class="tw-block tw-border tw-border-neutral-200">
+                                <InputLabel :size="'md'" value="Single Select Persist Value" />
+                                <SingleSelect
+                                    drop-shadow
+                                    :size="'md'"
+                                    :searchable="false"
+                                    :value-persist="true"
+                                    :icon="'emojione-monotone:japanese-dolls'"
+                                    :label="'Select Booking'"
+                                    :options="bookingType"/>
                             </div>
 
                             <div class="tw-block tw-border tw-border-neutral-200">
@@ -71,8 +83,8 @@
                                     :selection-max-width="false"
                                     :selection-max-height="'120px'"
                                     :selection-float="false"
-                                    :idle-border="'orange'"
-                                    :active-border="'orange'"
+                                    :idle-border="'red'"
+                                    :active-border="'red'"
                                     :always-active="true"
                                     :searchable="false"
                                     :label="'Select Category'"
@@ -85,8 +97,8 @@
                                     :selection-max-width="false"
                                     :selection-max-height="'120px'"
                                     :selection-float="false"
-                                    :idle-border="'pink'"
-                                    :active-border="'pink'"
+                                    :idle-border="'orange'"
+                                    :active-border="'orange'"
                                     :always-active="true"
                                     :searchable="true"
                                     :label="'Filter Category'"
@@ -99,8 +111,8 @@
                                     :selection-max-width="false"
                                     :selection-max-height="'120px'"
                                     :selection-float="false"
-                                    :idle-border="'blue'"
-                                    :active-border="'blue'"
+                                    :idle-border="'yellow'"
+                                    :active-border="'yellow'"
                                     :always-active="true"
                                     :searchable="false"
                                     :selection-header="false"
@@ -118,7 +130,22 @@
                                     :always-active="true"
                                     :searchable="false"
                                     :size="'md'"
-                                    :icon="'ic:sharp-display-settings'"
+                                    :icon="'eos-icons:installing'"
+                                    :label="'Select Plan'"
+                                    :options="plan"/>
+                            </div>
+                            <div class="tw-flex tw-block">
+                                <SingleSelect
+                                    :size="'md'"
+                                    :selection-max-width="false"
+                                    :selection-max-height="'120px'"
+                                    :selection-float="false"
+                                    :idle-border="'blue'"
+                                    :active-border="'blue'"
+                                    :always-active="true"
+                                    :searchable="false"
+                                    :value-persist="true"
+                                    :icon="'eos-icons:installing'"
                                     :label="'Select Plan'"
                                     :options="plan"/>
                             </div>
@@ -129,26 +156,11 @@
                                     :selection-max-height="'120px'"
                                     :selection-float="false"
                                     :idle-border="'indigo'"
-                                    :active-border="'red'"
+                                    :active-border="'indigo'"
                                     :always-active="true"
                                     :searchable="false"
                                     :value-persist="true"
-                                    :icon="'mdi:book-open-page-variant'"
-                                    :label="'Select Plan'"
-                                    :options="plan"/>
-                            </div>
-                            <div class="tw-flex tw-block">
-                                <SingleSelect
-                                    :size="'md'"
-                                    :selection-max-width="false"
-                                    :selection-max-height="'120px'"
-                                    :selection-float="false"
-                                    :idle-border="'indigo'"
-                                    :active-border="'red'"
-                                    :always-active="true"
-                                    :searchable="false"
-                                    :value-persist="true"
-                                    :icon="'mdi:book-open-page-variant'"
+                                    :icon="'eos-icons:installing'"
                                     :label="'Select Per Page'"
                                     :options="perPage"/>
                             </div>
@@ -164,7 +176,7 @@
                                     v-model="selected_1"
                                     selection>
                                     <template v-slot:cell.name="{cell, index, slot}">
-                                        <Button class="tw-w-full" :variant="'outline'" :size="slot.buttonSize" :label="`[${index}] ${cell.name}`"></Button>
+                                        <Button class="tw-w-full" :variant="'flat'" :size="slot.buttonSize" :label="`[${index}] ${cell.name}`"></Button>
                                     </template>
                                     <template v-slot:cell.category="{cell, slot, scrollReference}">
                                         <MultiSelect
@@ -209,11 +221,12 @@
                                     selection>
                                     <template v-slot:cell.tools="{cell, slot, scrollReference}">
                                         <div class="tw-h-full tw-space-x-0.5 tw-w-full tw-flex tw-items-center">
-                                            <Button :size="slot.buttonSize" :icon="'ic:sharp-discount'" :label="'Slot Button'"></Button>
-                                            <Button :variant="'outline'" :size="slot.buttonSize" :icon="'ic:sharp-discount'" :label="'Slot Button'"></Button>
-                                            <Button :variant="'outline'" :size="slot.buttonSize" :icon="'ic:sharp-diamond'"></Button>
-                                            <Button :variant="'outline'" :size="slot.buttonSize" :icon="'ic:sharp-dynamic-form'"></Button>
-                                            <Button :size="slot.buttonSize" :icon="'ic:sharp-dry-cleaning'"></Button>
+                                            <Button :size="slot.buttonSize" :icon="'emojione-monotone:envelope-with-arrow'" :label="'Slot I'"></Button>
+                                            <Button :variant="'flat'" :size="slot.buttonSize" :icon="'emojione-monotone:envelope'" :label="'Slot II'"></Button>
+                                            <Button :variant="'flat'" :size="slot.buttonSize" :icon="'emojione-monotone:incoming-envelope'" :label="'Slot III'"></Button>
+                                            <Button :variant="'flat'" :size="slot.buttonSize" :icon="'emojione-monotone:dollar-banknote'"></Button>
+                                            <Button :variant="'flat'" :size="slot.buttonSize" :icon="'emojione-monotone:spiral-calendar'"></Button>
+                                            <Button :size="slot.buttonSize" :icon="'emojione-monotone:loudly-crying-face'"></Button>
                                         </div>
                                     </template>
                                     <template v-slot:cell.input="{cell, index, slot}">
@@ -231,7 +244,7 @@
                                             drop-shadow
                                             :scroll-reference="scrollReference"
                                             :size="slot.selectSize"
-                                            :icon="'ic:sharp-local-florist'"
+                                            :icon="'emojione-monotone:kaaba'"
                                             :label="'Plan'"
                                             :options="plan" />
                                     </template>
@@ -242,7 +255,7 @@
                                             :scroll-reference="scrollReference"
                                             :size="slot.selectSize"
                                             :options="category"
-                                            :icon="'ic:sharp-hdr-on-select'"/>
+                                            :icon="'emojione-monotone:japanese-post-office'"/>
                                     </template>
                                     <template v-slot:cell.type="{cell, index, slot}">
                                         <Input :size="slot.inputSize" class="tw-w-full" v-model="cell.type" type="number" autocomplete="off" />
@@ -274,13 +287,13 @@
                                 <Button :size="'md'" :icon="'ic:sharp-send-to-mobile'" :label="'MD Authenticate'"></Button>
                             </div>
                             <div class="tw-flex tw-items-start tw-justify-start tw-block tw-border tw-border-neutral-200">
-                                <Button :disabled="true" :label="'DEFAULT Disabled'"></Button>
+                                <Button :disabled="true" :icon="'eos-icons:compass'" :label="'DEFAULT Disabled'"></Button>
                             </div>
                             <div class="tw-flex tw-items-start tw-justify-start tw-block tw-w-full tw-border tw-border-neutral-200">
                                 <Button @click="$themeStore.setTheme('blue')" :size="'lg'" :icon="'mdi:palette-swatch-variant'" :label="'Blue Theme'"></Button>
                             </div>
                             <div class="tw-col-span-2 tw-flex tw-items-start tw-justify-start tw-block tw-w-full tw-border tw-border-neutral-200">
-                                <Button :size="'xl'" :icon="'ic:sharp-send-to-mobile'" :label="'XL Authenticate'"></Button>
+                                <Button :size="'xl'" :icon="'eos-icons:atom-electron'" :label="'XL Authenticate'"></Button>
                             </div>
                         </div>
 
@@ -298,13 +311,13 @@
                                 <Button :variant="'outline'" :size="'md'" :icon="'ic:sharp-dashboard'" :label="'MD Authenticate'"></Button>
                             </div>
                             <div class="tw-flex tw-items-start tw-justify-start tw-block tw-border tw-border-neutral-200">
-                                <Button :variant="'outline'" :disabled="true" :label="'DEFAULT Disabled'"></Button>
+                                <Button :variant="'outline'" :icon="'eos-icons:compass'" :disabled="true" :label="'DEFAULT Disabled'"></Button>
                             </div>
                             <div class="tw-flex tw-items-start tw-justify-start tw-block tw-w-full tw-border tw-border-neutral-200">
                                 <Button @click="$themeStore.setTheme('light')" :variant="'outline'" :size="'lg'" :icon="'mdi:palette-swatch-variant'" :label="'Light Theme'"></Button>
                             </div>
                             <div class="tw-col-span-2 tw-flex tw-items-start tw-justify-start tw-block tw-w-full">
-                                <Button :variant="'outline'" :size="'xl'" :icon="'ic:sharp-dashboard'" :label="'XL Authenticate'"></Button>
+                                <Button :variant="'outline'" :size="'xl'" :icon="'eos-icons:atom-electron'" :label="'XL Authenticate'"></Button>
                             </div>
                         </div>
 
@@ -582,6 +595,20 @@ let perPage = reactive({
         {text : '100 per page', value: 100},
     ],
     selected: 10
+});
+let bookingType = reactive({
+    search: '',
+    data: [
+        {text : 'Individual', value: 1},
+        {text : 'Spouse/Co-Owner', value: 2},
+        {text : 'Corporation/Partnership', value: 3}
+    ],
+    selection: [
+        {text : 'Individual', value: 1},
+        {text : 'Spouse/Co-Owner', value: 2},
+        {text : 'Corporation/Partnership', value: 3}
+    ],
+    selected: 1
 });
 
 let selected_1 = ref([1001,1002]);
