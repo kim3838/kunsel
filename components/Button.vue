@@ -49,6 +49,9 @@ const {
 const primaryColor90 = computed(() => {
     return primaryColor.value + hexAlpha.value['90'];
 });
+const primaryColor70 = computed(() => {
+    return primaryColor.value + hexAlpha.value['70'];
+});
 const accentColor80 = computed(() => {
     return accentColor.value + hexAlpha.value['80'];
 });
@@ -136,6 +139,7 @@ const colorClass = computed(() => {
     return {
         'default': 'default-background',
         'outline': props.disabled ? '' : 'outlined',
+        'flat': props.disabled ? '' : 'flat',
     }[props.variant]
 });
 
@@ -143,6 +147,7 @@ const borderClass = computed(() => {
     return {
         'default': '',
         'outline': 'outlined-border',
+        'flat': 'flat-border',
     }[props.variant]
 });
 
@@ -150,6 +155,7 @@ const shadeClass = computed(() => {
     return {
         'default': 'default-shade',
         'outline': props.disabled ? '' : 'outline-shade',
+        'flat': '',
     }[props.variant]
 });
 
@@ -201,4 +207,13 @@ const shadeClass = computed(() => {
 .outline-shade:hover{
     background: linear-gradient( to bottom right, v-bind(accentColor80) 0%, transparent 55%, v-bind(accentColor70) 100%) !important;
 }
+
+.flat{
+    background-color: v-bind(tintColor) !important;
+    color: v-bind(textColor) !important;
+}
+.flat-border{
+    border: 1px solid v-bind(threadColor);
+}
+
 </style>

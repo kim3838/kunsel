@@ -69,13 +69,13 @@
 
                     <div class="tw-grid tw-grid-cols-1 tw-gap-8 tw-mt-8 lg:tw-mt-0 sm:tw-grid-cols-2 md:tw-grid-cols-5 lg:tw-col-span-3">
                         <div class="tw-text-center sm:tw-text-left md:tw-col-span-2 lg:tw-pl-14">
-                            <p class="tw-text-lg tw-font-medium tw-font-serif">Contact Us</p>
+                            <p class="tw-text-lg tw-font-medium">Contact Us</p>
 
                             <ul class="tw-mt-8 tw-space-y-4 tw-text-sm">
                                 <li>
                                     <span class="footer-link tw-flex tw-items-center tw-justify-center sm:tw-justify-start" href="/">
                                         <Icon name="ic:round-mail-outline"></Icon>
-                                        <span>mail@domain.com</span>
+                                        <span class="tw-ml-1">mail@domain.com</span>
                                     </span>
                                 </li>
 
@@ -96,7 +96,7 @@
                         </div>
 
                         <div class="tw-text-center sm:tw-text-left">
-                            <p class="tw-text-lg tw-font-medium tw-font-serif">Our Services</p>
+                            <p class="tw-text-lg tw-font-medium">Our Services</p>
 
                             <ul class="tw-mt-8 tw-space-y-4 tw-text-sm">
                                 <li>
@@ -109,7 +109,7 @@
                         </div>
 
                         <div class="tw-text-center sm:tw-text-left">
-                            <p class="tw-text-lg tw-font-medium tw-font-serif">Helpful Links</p>
+                            <p class="tw-text-lg tw-font-medium">Helpful Links</p>
 
                             <ul class="tw-mt-8 tw-space-y-4 tw-text-sm">
                                 <li>
@@ -134,7 +134,7 @@
                         </div>
 
                         <div class="tw-text-center sm:tw-text-left">
-                            <p class="tw-text-lg tw-font-medium tw-font-serif">About Us</p>
+                            <p class="tw-text-lg tw-font-medium">About Us</p>
 
                             <ul class="tw-mt-8 tw-space-y-4 tw-text-sm">
                                 <li>
