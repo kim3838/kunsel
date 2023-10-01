@@ -30,7 +30,7 @@
                 <NuxtLink
                     v-if="link"
                     :to="link">
-                    <Button :variant="'outline'" :size="'sm'" :icon="'gridicons:reader'" :label="'Read More'"></Button>
+                    <Button :variant="'flat'" :size="'sm'" :icon="'ion:newspaper-outline'" :label="'Read More'"></Button>
                 </NuxtLink>
             </div>
         </div>
