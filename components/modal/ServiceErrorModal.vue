@@ -2,36 +2,36 @@
     <ConfirmationModal
         :closeable="false"
         :max-width="'lg'"
-        :show="useNuxtApp().$coreStore.service.error.prompt"
-        @close="useNuxtApp().$coreStore.resetServiceError()">
+        :show="service.error.prompt"
+        @close="$coreStore.resetServiceError()">
         <template #icon>
             <Icon
-                v-if="useNuxtApp().$coreStore.service.error.icon"
+                v-if="service.error.icon"
                 class="tw-h-full tw-w-full"
-                :name="useNuxtApp().$coreStore.service.error.icon">
+                :name="service.error.icon">
             </Icon>
         </template>
 
         <template #title>
-            <span v-text="useNuxtApp().$coreStore.service.error.title"></span>
+            <span v-text="service.error.title"></span>
         </template>
 
         <template #content>
-            <div v-if="useNuxtApp().$coreStore.service.error.payload">
-                <div v-text="useNuxtApp().$coreStore.service.error.payload.message"></div>
+            <div v-if="service.error.payload">
+                <div v-text="service.error.payload.message"></div>
             </div>
         </template>
 
         <template #footer>
-            <Button :size="'md'" @click.native="useNuxtApp().$coreStore.resetServiceError()">
+            <Button :size="'md'" @click.native="$coreStore.resetServiceError()">
                 <span class="tw-font-semibold">Close</span>
             </Button>
         </template>
     </ConfirmationModal>
 </template>
 
-<script>
-export default {
-    name: "ServiceErrorModal",
-}
+<script setup>
+import {storeToRefs} from 'pinia';
+const {$coreStore} = useNuxtApp();
+const {service} = storeToRefs($coreStore);
 </script>
