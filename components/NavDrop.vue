@@ -73,6 +73,7 @@ const classes = computed(() => {
     box-sizing: border-box;
     display: inline-flex;
     align-items: center;
+    border: 1px solid transparent;
 }
 
 .nav-drop-options-parent{
