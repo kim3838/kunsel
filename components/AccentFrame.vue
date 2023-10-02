@@ -13,18 +13,16 @@
             </div>
             <div class="frame-thread-2">
                 <div class="frame-thread-2-top"></div>
+                <div class="frame-thread-2-top-triangle">
+                    <div class="frame-thread-2-top-triangle-head"></div>
+                    <div class="frame-thread-2-top-triangle-tail"></div>
+                </div>
                 <div class="frame-thread-2-top-v">
-                    <div class="frame-thread-2-top-element"></div>
+                    <div class="frame-thread-2-top-v-element"></div>
                 </div>
                 <div class="frame-thread-2-right"></div>
                 <div class="frame-thread-2-bottom"></div>
                 <div class="frame-thread-2-left"></div>
-            </div>
-            <div class="frame-thread-3">
-                <div class="frame-thread-3-top"></div>
-                <div class="frame-thread-3-top-v">
-                    <div class="frame-thread-3-top-element"></div>
-                </div>
             </div>
         </div>
 
@@ -78,6 +76,7 @@ const props = defineProps({
     bottom: 1rem;
     left: 0rem;
     background-color: v-bind(tintColor);
+    border: 1px solid v-bind(neutralColor);
 }
 
 .frame-thread-1{
@@ -245,7 +244,7 @@ const props = defineProps({
     left: 50%;
     transform: translateX(-50%);
 }
-.frame-thread-2-top-element{
+.frame-thread-2-top-v-element{
     position: absolute;
     content: "";
     top: 0;
@@ -254,7 +253,7 @@ const props = defineProps({
     left: 0;
     transform: rotate(45deg);
 }
-.frame-thread-2-top-element:before{
+.frame-thread-2-top-v-element:before{
     position: absolute;
     content: "";
     right: 0;
@@ -267,7 +266,7 @@ const props = defineProps({
         transparent 60%
     );
 }
-.frame-thread-2-top-element:after{
+.frame-thread-2-top-v-element:after{
     position: absolute;
     content: "";
     left: 0;
@@ -278,6 +277,64 @@ const props = defineProps({
         to right,
         v-bind(threadColor) 0%,
         transparent 60%
+    );
+}
+
+.frame-thread-2-top-triangle{
+    position: absolute;
+    width: 3.9rem;
+    height: 3.9rem;
+    display: block;
+    top: -2.1rem;
+    left: 50%;
+    transform: translateX(-50%);
+}
+.frame-thread-2-top-triangle-head{
+    position: absolute;
+    content: "";
+    top: 2.1rem;
+    left: -0.7rem;
+    right: 0.7rem;
+    width: calc(100% + 1.4rem);
+    border-top: 2px solid v-bind(liningColor);
+    border-left: 3px solid transparent;
+    border-right: 3px solid transparent;
+    height: 2px;
+}
+
+.frame-thread-2-top-triangle-tail{
+    position: absolute;
+    content: "";
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    transform: rotate(45deg);
+}
+.frame-thread-2-top-triangle-tail:before{
+    position: absolute;
+    content: "";
+    right: 0;
+    bottom: 0;
+    height: 100%;
+    width: 1px;
+    background: linear-gradient(
+        to bottom,
+        v-bind(liningColor) 0%,
+        transparent 80%
+    );
+}
+.frame-thread-2-top-triangle-tail:after{
+    position: absolute;
+    content: "";
+    left: 0;
+    bottom: 0;
+    height: 1px;
+    width: 100%;
+    background: linear-gradient(
+        to right,
+        v-bind(liningColor) 0%,
+        transparent 80%
     );
 }
 

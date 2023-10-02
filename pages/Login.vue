@@ -3,26 +3,26 @@
         <NuxtLayout :name="$coreStore.layout">
             <template #content>
                 <div class="tw-mx-auto tw-max-w-screen-2xl tw-flex tw-justify-center tw-border tw-border-green-200">
-                    <div class="tw-w-[850px] tw-h-[550px] login-hero tw-flex tw-items-center tw-justify-center">
+                    <div class="tw-w-[850px] tw-h-[550px] tw-flex tw-items-center tw-justify-center">
                         <AccentFrame class="tw-my-4 tw-w-max ">
                             <template #content>
                                 <div class="tw-relative">
                                     <form @submit.prevent="handleLogin" class="tw-w-72">
                                         <div class="tw-block">
                                             <InputLabel :size="'sm'" for="email" value="Email" />
-                                            <Input :disabled="pending" :size="'lg'" id="email" type="email" class="tw-w-full" ref="emailInput" v-model="email" autofocus autocomplete="off" />
+                                            <Input :disabled="pending" :size="'md'" id="email" type="email" class="tw-w-full" ref="emailInput" v-model="email" autofocus autocomplete="off" />
                                             <sup>{{email}}</sup>
                                         </div>
 
                                         <div class="tw-block tw-mt-4">
                                             <InputLabel :size="'md'" for="password" value="Password" />
-                                            <Input :disabled="pending" :size="'lg'" id="password" type="password" class="tw-w-full" v-model="password" required autocomplete="current-password" />
+                                            <Input :disabled="pending" :size="'md'" id="password" type="password" class="tw-w-full" v-model="password" required autocomplete="current-password" />
                                             <sup>{{password}}</sup>
                                         </div>
 
                                         <div class="tw-block tw-mt-4">
                                             <label class="tw-flex tw-items-center">
-                                                <Checkbox :disabled="pending" name="remember" v-model="remember" :size="'lg'" :label="'Remember me'" />
+                                                <Checkbox :disabled="pending" name="remember" v-model="remember" :size="'md'" :label="'Remember me'" />
                                             </label>
                                             <label>
                                                 <sup>{{remember}}</sup>
@@ -34,7 +34,7 @@
                                         </div>
 
                                         <div v-if="!$authStore.isLoggedIn" class="tw-flex tw-items-center tw-justify-end">
-                                            <Button :disabled="pending" :variant="'flat'" :icon="pending ? 'eos-icons:installing' : 'mdi:key-chain'" :size="'lg'" :label="pending ? 'Authenticating...' : 'Authenticate'"></Button>
+                                            <Button :disabled="pending" :variant="'flat'" :icon="pending ? 'eos-icons:installing' : 'mdi:key-chain'" :size="'md'" :label="pending ? 'Authenticating...' : 'Authenticate'"></Button>
                                         </div>
                                     </form>
                                 </div>
@@ -90,7 +90,7 @@ function handleLogin(){
 }
 
 .login-hero{
-    background-image: url("/images/hero/21f0a52e-db0a-4108-9405-44a8a548e534.webp");
+    background-image: url("/images/hero/667a2407-ae78-4e4d-b69e-059552bca96e.webp");
     background-repeat: no-repeat;
     background-size: cover;
 }
