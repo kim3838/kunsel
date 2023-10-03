@@ -17,6 +17,7 @@ type Credentials = {
 export const useAuthStore = defineStore('auth', () => {
     const user = ref<User | null>(null);
     const isLoggedIn = computed(() => !!user.value);
+    const authPending = ref(false);
 
     async function logout(options: UseFetchOptions = {}) {
         const {$coreStore} = useNuxtApp();
@@ -53,9 +54,17 @@ export const useAuthStore = defineStore('auth', () => {
         });
     }
 
+    /*
+    * options: UseFetchOptions can consist of
+    *
+    * -Fetch options https://nuxt.com/docs/api/composables/use-fetch
+    * -interceptors https://github.com/unjs/ofetch
+    *   * May override onRequestError or onResponse
+    **/
     async function login(credentials: Credentials, options: UseFetchOptions = {}) {
         const {$coreStore} = useNuxtApp();
         $coreStore.resetServiceError();
+        authPending.value = true;
 
         if (!useCookie('XSRF-TOKEN').value) {
             await ssrFetch("/sanctum/csrf-cookie");
@@ -64,23 +73,44 @@ export const useAuthStore = defineStore('auth', () => {
         const login = await ssrFetch("/login", {
             method: 'POST',
             body: credentials,
+            onRequestError({ request, options, error }) {
+                authPending.value = false;
+
+                $coreStore.setServiceError({
+                    prompt: true,
+                    icon: 'ic:sharp-error-outline',
+                    title: 'Request failed',
+                    payload: {message: error.message}
+                });
+            },
+            async onResponse({request, response, options}) {
+                authPending.value = false;
+
+                if (response?._data?.code >= 500 && response?._data?.code < 600) {
+                    $coreStore.setServiceError({
+                        prompt: true,
+                        icon: 'ic:sharp-error-outline',
+                        title: 'Authentication failed',
+                        payload: response._data
+                    });
+                } else if(response?._data?.code >= 401 && response?._data?.code < 499){
+                    $coreStore.setServiceError({
+                        prompt: true,
+                        icon: 'ic:sharp-error-outline',
+                        title: 'Authentication failed',
+                        payload: response._data
+                    });
+                } else {
+                    await fetchUser();
+                    await navigateTo({
+                        path: '/',
+                        replace: true
+                    });
+                }
+            },
             ...options
         });
-
-        if (login.status._value == 'success') {
-            await fetchUser();
-            navigateTo("/profile", {replace: true});
-        }
-
-        if (login.status._value == 'error') {
-            $coreStore.setServiceError({
-                prompt: true,
-                icon: 'ic:sharp-error-outline',
-                title: 'Authentication failed',
-                payload: login.error.value.data
-            });
-        }
     }
 
-    return {user, login, isLoggedIn, fetchUser, logout};
+    return {user, login, isLoggedIn, authPending, fetchUser, logout};
 });

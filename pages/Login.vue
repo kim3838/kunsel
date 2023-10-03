@@ -3,7 +3,7 @@
         <NuxtLayout :name="$coreStore.layout">
             <template #content>
                 <div class="tw-mx-auto tw-max-w-screen-2xl tw-flex tw-justify-center tw-border tw-border-green-200">
-                    <div class="tw-w-[850px] tw-h-[550px] tw-flex tw-items-center tw-justify-center">
+                    <div class="tw-w-[850px] tw-h-[550px] login-hero tw-flex tw-items-center tw-justify-center">
                         <AccentFrame class="tw-my-4 tw-w-max ">
                             <template #content>
                                 <div class="tw-relative">
@@ -48,13 +48,18 @@
 </template>
 
 <script setup lang="ts">
+import {ref, onMounted, nextTick} from 'vue';
+import {storeToRefs} from 'pinia';
+const {$coreStore, $authStore} = useNuxtApp();
+
 definePageMeta({
     layout: false,
     middleware: 'guest'
 });
 
-const { $coreStore, $authStore } = useNuxtApp();
-import { ref, onMounted, nextTick } from 'vue';
+const {
+    authPending: pending
+} = storeToRefs($authStore);
 
 let emailInput = ref(null);
 
@@ -66,19 +71,12 @@ onMounted(async () => {
 const email = ref("berenice.jerde@example.com1");
 const password = ref("password");
 const remember = ref(true);
-const pending = ref(false);
 
 function handleLogin(){
-    pending.value = true;
-
     $authStore.login({
         email: email,
         password: password,
         remember: remember
-    }, {
-        onResponse() {
-            pending.value = false;
-        }
     });
 }
 </script>
