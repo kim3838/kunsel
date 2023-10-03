@@ -77,9 +77,9 @@
                                 </template>
                                 <template v-slot:cell.actions="{cell, slot, scrollReference}">
                                     <div class="tw-h-full tw-space-x-0.5 tw-w-full tw-flex tw-items-center">
-                                        <Button type="button" :variant="'outline'" :size="slot.buttonSize" :label="'Details'" :icon="'streamline:interface-file-clipboard-text-edition-form-task-checklist-edit-clipboard'"></Button>
-                                        <Button type="button" :variant="'outline'" :size="slot.buttonSize" :label="'Approve'" :icon="'streamline:interface-file-clipboard-check-checkmark-edit-task-edition-checklist-check-success-clipboard-form'"></Button>
-                                        <Button type="button" :variant="'outline'" :size="slot.buttonSize" :label="'Deny'" :icon="'streamline:interface-file-clipboard-block-edit-task-edition-block-clipboard-form'"></Button>
+                                        <Button type="button" :variant="'flat'" :size="slot.buttonSize" :label="'Details'" :icon="'streamline:interface-file-clipboard-text-edition-form-task-checklist-edit-clipboard'"></Button>
+                                        <Button type="button" :variant="'flat'" :size="slot.buttonSize" :label="'Approve'" :icon="'streamline:interface-file-clipboard-check-checkmark-edit-task-edition-checklist-check-success-clipboard-form'"></Button>
+                                        <Button type="button" :variant="'flat'" :size="slot.buttonSize" :label="'Deny'" :icon="'streamline:interface-file-clipboard-block-edit-task-edition-block-clipboard-form'"></Button>
                                     </div>
                                 </template>
                             </DataTable>

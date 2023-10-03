@@ -3,28 +3,28 @@
         <Button
             :disabled="pagination.current_page === 1 || pending || pagination.total === 0"
             @click="firstPageHandler()"
-            :variant="'outline'"
+            :variant="'flat'"
             :size="buttonSize"
             :icon="'ic:sharp-first-page'"
             :label="firstPage.label" />
         <Button
             :disabled="pagination.current_page === 1 || pending || pagination.total === 0"
             @click="previousPageHandler()"
-            :variant="'outline'"
+            :variant="'flat'"
             :size="buttonSize"
             :icon="'ic:sharp-keyboard-double-arrow-left'"
             :label="previousPage.label" />
         <Button
             :disabled="pagination.current_page === pagination.total_pages || pending || pagination.total === 0"
             @click="nextPageHandler()"
-            :variant="'outline'"
+            :variant="'flat'"
             :size="buttonSize"
             :icon="'ic:sharp-keyboard-double-arrow-right'"
             :label="nextPage.label" />
         <Button
             :disabled="pagination.current_page === pagination.total_pages || pending || pagination.total === 0"
             @click="lastPageHandler()"
-            :variant="'outline'"
+            :variant="'flat'"
             :size="buttonSize"
             :icon="'ic:sharp-last-page'"
             :label="lastPage.label" />
@@ -34,7 +34,6 @@
             :searchable="false"
             :value-persist="true"
             :width="perPageSelectWidth"
-            :idle-border="$themeStore.lining"
             :icon="'mdi:book-open-page-variant-outline'"
             :label="'Per Page'"
             :options="perPage"/>
