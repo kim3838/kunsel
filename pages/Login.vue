@@ -2,8 +2,8 @@
     <div>
         <NuxtLayout :name="$coreStore.layout">
             <template #content>
-                <div class="tw-mx-auto tw-max-w-screen-2xl tw-flex tw-justify-center tw-border tw-border-green-200">
-                    <div class="tw-w-[850px] tw-h-[550px] login-hero tw-flex tw-items-center tw-justify-center">
+                <div class="tw-mx-auto tw-max-w-screen-2xl tw-flex tw-justify-center">
+                    <div class="tw-flex tw-items-center tw-justify-center">
                         <AccentFrame class="tw-my-4 tw-w-max ">
                             <template #content>
                                 <div class="tw-relative">

@@ -2,8 +2,7 @@
     <div>
         <NuxtLayout :name="$coreStore.layout">
             <template #content>
-                <div class="tw-m-2 tw-p-2 tw-border tw-border-light">
-
+                <div>
                     <div>Tailwind Url: <NuxtLink class="tw-text-sky-600" :to="'_tailwind'" target="_blank">{{('http://localhost:3000' + '/_tailwind/')}}</NuxtLink></div>
 
                     <div class="tw-space-y-2">

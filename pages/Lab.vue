@@ -2,8 +2,8 @@
     <div>
         <NuxtLayout :name="$coreStore.layout">
             <template #content>
-                <div class="tw-mx-auto tw-max-w-screen-2xl tw-border tw-border-green-200">
-                    <div class="tw-flex tw-justify-center tw-space-x-1.5 tw-border tw-border-red-200">
+                <div class="tw-mx-auto tw-max-w-screen-2xl tw-flex tw-justify-center">
+                    <div class="tw-my-4 tw-flex tw-justify-center tw-space-x-1.5">
                         <Button :size="'lg'" :icon="'ic:sharp-diamond'" :label="'Default'" />
                         <Button :size="'lg'" :icon="'ic:sharp-diamond'" :variant="'outline'" :label="'Outline'" />
                         <Button :size="'lg'" :icon="'ic:sharp-diamond'" :variant="'flat'" :label="'Flat'" />
