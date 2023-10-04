@@ -45,7 +45,7 @@
                             <SquareEnix :height="'calc(3.8rem - 1px)'"/>
                         </div>
 
-                        <p class="tw-font-serif tw-text-center tw-leading-relaxed tw-text-gray-500 sm:tw-max-w-md sm:tw-text-left">
+                        <p class="tw-font-serif tw-text-center tw-leading-relaxed sm:tw-max-w-md sm:tw-text-left">
                             Lorem ipsum dolor, sit amet consectetur adipisicing elit. Incidunt
                             consequuntur amet culpa cum itaque neque.
                         </p>
