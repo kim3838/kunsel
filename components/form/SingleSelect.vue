@@ -60,7 +60,7 @@
             v-show="active"
             :style="[selectionOffsetComputed, selectionWidthComputed, {'border-radius': '2px'}]"
             ref="selectionOrigin"
-            class="tw-z-10 tw-mt-[7px] background"
+            class="tw-z-30 tw-mt-[7px] background"
             :class="[dropShadow ? 'tw-drop-shadow-2xl' : '', selectionFloat ? 'tw-absolute' : 'tw-relative', borderClass]">
             <div class="tw-absolute tw-border-solid options-arrow-lining-color" :style="[optionsArrowSlotClass]"></div>
             <div class="tw-absolute tw-border-solid options-arrow-color" :style="[optionsArrowClass]"></div>

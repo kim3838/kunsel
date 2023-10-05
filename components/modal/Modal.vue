@@ -1,6 +1,6 @@
 <template>
     <transition leave-active-class="tw-duration-200">
-        <div v-show="show" class="tw-fixed tw-inset-0 tw-overflow-y-auto tw-px-4 tw-py-6 sm:tw-px-0 tw-z-40">
+        <div v-show="show" class="tw-fixed tw-inset-0 tw-overflow-y-auto tw-px-4 tw-py-6 sm:tw-px-0 tw-z-50">
             <transition
                 enter-active-class="tw-ease-out tw-duration-300"
                 enter-class="tw-opacity-0"
