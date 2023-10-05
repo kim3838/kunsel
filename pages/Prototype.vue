@@ -39,11 +39,11 @@
 
                             <div class="tw-block tw-border tw-border-neutral-200">
                                 <InputLabel :size="'md'" for="date" value="Date" />
-                                <Input
+                                <InputWithIcon
+                                    :icon="'simple-icons:googlecalendar'"
                                     :size="'md'"
-                                    class="tw-w-full"
-                                    type="text"
-                                    id="date"
+                                    :type="'text'"
+                                    :id="'date'"
                                     v-model="formStore.filters.date"
                                     autocomplete="off"
                                     readonly
@@ -51,11 +51,11 @@
                             </div>
                             <div class="tw-block tw-border tw-border-neutral-200">
                                 <InputLabel for="datetime" value="DateTime" />
-                                <Input
+                                <InputWithIcon
+                                    :icon="'simple-icons:googlecalendar'"
                                     :size="'md'"
-                                    class="tw-w-full"
-                                    type="text"
-                                    id="datetime"
+                                    :type="'text'"
+                                    :id="'datetime'"
                                     v-model="formStore.filters.dateTime"
                                     autocomplete="off"
                                     readonly
@@ -64,11 +64,11 @@
 
                             <div class="tw-block tw-border tw-border-neutral-200">
                                 <InputLabel for="month" value="Month" />
-                                <Input
+                                <InputWithIcon
+                                    :icon="'simple-icons:protoncalendar'"
                                     :size="'md'"
-                                    class="tw-w-full"
-                                    type="text"
-                                    id="month"
+                                    :type="'text'"
+                                    :id="'month'"
                                     v-model="formStore.filters.monthLabel"
                                     autocomplete="off"
                                     readonly
@@ -187,7 +187,14 @@
                                             :icon="'ic:sharp-hdr-on-select'"/>
                                     </template>
                                     <template v-slot:cell.datetime_added="{cell, slot, scrollReference}">
-                                        <Input :id="`datetime_added-` + cell.id" v-model="cell.datetime_added" readonly :size="slot.inputSize" class="tw-w-full" type="text" />
+                                        <InputWithIcon
+                                            :icon="'ion:calendar-number-sharp'"
+                                            :id="`datetime_added-` + cell.id"
+                                            v-model="cell.datetime_added"
+                                            readonly
+                                            in-cell
+                                            :size="slot.inputSize"
+                                            :type="'text'" />
                                     </template>
                                 </DataTable>
                             </div>
@@ -206,7 +213,14 @@
                                         <Input v-model="cell.code" readonly :size="slot.inputSize" class="tw-w-full" type="text" />
                                     </template>
                                     <template v-slot:cell.datetime_added="{cell, slot, scrollReference}">
-                                        <Input :id="`datetime_added-` + cell.id" v-model="cell.datetime_added" readonly :size="slot.inputSize" class="tw-w-full" type="text" />
+                                        <InputWithIcon
+                                            :icon="'ion:calendar-number-sharp'"
+                                            :id="`datetime_added-` + cell.id"
+                                            v-model="cell.datetime_added"
+                                            readonly
+                                            in-cell
+                                            :size="slot.inputSize"
+                                            :type="'text'" />
                                     </template>
                                 </DataTable>
                             </div>
@@ -266,7 +280,14 @@
                                         <Input :size="slot.inputSize" class="tw-w-full" v-model="cell.capacity" type="number" autocomplete="off" />
                                     </template>
                                     <template v-slot:cell.datetime_added="{cell, slot, scrollReference}">
-                                        <Input :id="`datetime_added-` + cell.id" v-model="cell.datetime_added" readonly :size="slot.inputSize" class="tw-w-full" type="text" />
+                                        <InputWithIcon
+                                            :icon="'ion:calendar-number-sharp'"
+                                            :id="`datetime_added-` + cell.id"
+                                            v-model="cell.datetime_added"
+                                            readonly
+                                            in-cell
+                                            :size="slot.inputSize"
+                                            :type="'text'" />
                                     </template>
                                 </DataTable>
                             </div>
@@ -641,7 +662,7 @@ let headers_1 = reactive([
     { text: 'ID', value: 'id'},
     { text: 'NAME', value: 'name'},
     { text: 'CATEGORY', alignData: 'right', value: 'category', width: '140px'},
-    { text: 'DATE ADDED', alignData: 'right', value: 'datetime_added', width: '130px'},
+    { text: 'DATE ADDED', alignData: 'right', value: 'datetime_added', width: '145px'},
     { text: 'DATE CREATED', alignData: 'right', value: 'created_at'},
     { text: 'DATE UPDATED', alignData: 'right', value: 'updated_at'},
 ]);
@@ -666,7 +687,7 @@ let headers_3 = reactive([
     { text: 'TYPE', value: 'type'},
     { text: 'CATEGORY', alignData: 'right', value: 'category'},
     { text: 'CAPACITY', alignData: 'left', value: 'capacity'},
-    { text: 'DATE ADDED', alignData: 'right', value: 'datetime_added', width: '150px'},
+    { text: 'DATE ADDED', alignData: 'right', value: 'datetime_added', width: '170px'},
     { text: 'DATE CREATED', alignData: 'right', value: 'created_at'},
     { text: 'DATE UPDATED', alignData: 'right', value: 'updated_at'},
 ]);

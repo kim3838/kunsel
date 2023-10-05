@@ -38,11 +38,11 @@
                             <div class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-8">
                                 <div class="tw-bloc">
                                     <InputLabel :size="'md'" value="Date Added: From"/>
-                                    <Input id="datetimefrom" readonly v-model="filters.datetimeFrom" :size="'md'" class="tw-w-full" type="text"/>
+                                    <InputWithIcon :icon="'ion:calendar-number-sharp'" :id="'datetimefrom'" readonly v-model="filters.datetimeFrom" :size="'md'" class="tw-w-full" :type="'text'"/>
                                 </div>
                                 <div class="tw-block">
                                     <InputLabel :size="'md'" value="Date Added: To"/>
-                                    <Input id="datetimeto" readonly v-model="filters.datetimeTo" :size="'md'" class="tw-w-full" type="text"/>
+                                    <InputWithIcon :icon="'ion:calendar-number-sharp'" :id="'datetimeto'" readonly v-model="filters.datetimeTo" :size="'md'" class="tw-w-full" :type="'text'"/>
                                 </div>
                             </div>
 
@@ -59,7 +59,7 @@
                                 :pagination="users.meta.pagination"
                                 :no-record-label="'No User Found'"/>
                             <Pagination
-                                :size="'lg'"
+                                :size="'xl'"
                                 :pagination="users.meta.pagination"
                                 :pending="pending"
                                 v-model="pageComputed"
@@ -67,13 +67,21 @@
                             <DataTable
                                 class="tw-mt-0.5"
                                 :headers="usersHeaders"
-                                :size="'lg'"
+                                :size="'xl'"
                                 :rows="users.data"
                                 :no-data-label="pending ? 'Loading' : 'No User Found'"
                                 v-model="selectedUsers"
                                 selection>
                                 <template v-slot:cell.datetime_added="{cell, slot}">
-                                    <Input :id="`datetime_added-` + cell.id" v-model="cell.datetime_added" readonly :size="slot.inputSize" class="tw-w-full" type="text" />
+                                    <InputWithIcon
+                                        :icon="'ion:calendar-number-sharp'"
+                                        :id="`datetime_added-` + cell.id"
+                                        v-model="cell.datetime_added"
+                                        readonly
+                                        in-cell
+                                        :size="slot.inputSize"
+                                        class="tw-w-full"
+                                        :type="'text'" />
                                 </template>
                                 <template v-slot:cell.actions="{cell, slot, scrollReference}">
                                     <div class="tw-h-full tw-space-x-0.5 tw-w-full tw-flex tw-items-center">
