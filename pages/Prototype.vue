@@ -165,8 +165,8 @@
                             </div>
                         </div>
 
-                        <div v-if="true" class="tw-grid tw-gap-2 tw-grid-cols-1 lg:tw-grid-cols-2 xl:tw-grid-cols-3">
-                            <div class="tw-block tw-p-2 tw-border tw-border-neutral-200">
+                        <div v-if="true" class="tw-grid tw-gap-2 sm:tw-grid-cols-1 md:tw-grid-cols-2 lg:tw-grid-cols-4">
+                            <div class="tw-block tw-col-span-1 sm:tw-col-span-3 md:tw-col-span-2 lg:tw-col-span-2 tw-p-2 tw-border tw-border-neutral-200">
                                 <InputLabel class="tw-mb-2" :size="'md'" value="MD Datatable" />
                                 <DataTable
                                     :headers="headers_1"
@@ -198,7 +198,7 @@
                                     </template>
                                 </DataTable>
                             </div>
-                            <div class="tw-block tw-col-span-1 xl:tw-col-span-2 tw-p-2 tw-border tw-border-neutral-200">
+                            <div class="tw-block tw-col-span-1 sm:tw-col-span-3 md:tw-col-span-2 lg:tw-col-span-2 tw-p-2 tw-border tw-border-neutral-200">
                                 <InputLabel class="tw-mb-2" :size="'md'" value="LG Datatable with Selection" />
                                 <DataTable
                                     :headers="headers_2"
@@ -224,7 +224,7 @@
                                     </template>
                                 </DataTable>
                             </div>
-                            <div class="tw-block tw-col-span-2 xl:tw-col-span-3 tw-p-2 tw-border tw-border-neutral-200">
+                            <div class="tw-block md:tw-col-span-2 lg:tw-col-span-4 tw-p-2 tw-border tw-border-neutral-200">
                                 <InputLabel class="tw-mb-2" :size="'md'" value="XL Datatable with Selection and Form Foundations" />
                                 <DataTable
                                     :headers="headers_3"

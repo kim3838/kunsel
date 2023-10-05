@@ -10,19 +10,41 @@
                                     <form @submit.prevent="handleLogin" class="tw-w-72">
                                         <div class="tw-block">
                                             <InputLabel :size="'sm'" for="email" value="Email" />
-                                            <Input :disabled="pending" :size="'md'" id="email" type="email" class="tw-w-full" ref="emailInput" v-model="email" autofocus autocomplete="off" />
+                                            <Input
+                                                :disabled="pending"
+                                                :size="'md'"
+                                                id="email"
+                                                type="email"
+                                                class="tw-w-full"
+                                                ref="emailInput"
+                                                v-model="email"
+                                                autofocus
+                                                autocomplete="off" />
                                             <sup>{{email}}</sup>
                                         </div>
 
                                         <div class="tw-block tw-mt-4">
                                             <InputLabel :size="'md'" for="password" value="Password" />
-                                            <Input :disabled="pending" :size="'md'" id="password" type="password" class="tw-w-full" v-model="password" required autocomplete="current-password" />
+                                            <Input
+                                                :disabled="pending"
+                                                :size="'md'"
+                                                id="password"
+                                                type="password"
+                                                class="tw-w-full"
+                                                v-model="password"
+                                                required
+                                                autocomplete="current-password" />
                                             <sup>{{password}}</sup>
                                         </div>
 
                                         <div class="tw-block tw-mt-4">
                                             <label class="tw-flex tw-items-center">
-                                                <Checkbox :disabled="pending" name="remember" v-model="remember" :size="'md'" :label="'Remember me'" />
+                                                <Checkbox
+                                                    :disabled="pending"
+                                                    name="remember"
+                                                    v-model="remember"
+                                                    :size="'md'"
+                                                    :label="'Remember me'" />
                                             </label>
                                             <label>
                                                 <sup>{{remember}}</sup>
@@ -34,7 +56,12 @@
                                         </div>
 
                                         <div v-if="!$authStore.isLoggedIn" class="tw-flex tw-items-center tw-justify-end">
-                                            <Button :disabled="pending" :variant="'flat'" :icon="pending ? 'eos-icons:installing' : 'mdi:key-chain'" :size="'md'" :label="pending ? 'Authenticating...' : 'Authenticate'"></Button>
+                                            <Button
+                                                :disabled="pending"
+                                                :size="'md'"
+                                                :variant="'flat'"
+                                                :icon="pending ? 'eos-icons:installing' : 'mdi:key-chain'"
+                                                :label="pending ? 'Authenticating...' : 'Authenticate'"></Button>
                                         </div>
                                     </form>
                                 </div>
