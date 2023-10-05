@@ -3,11 +3,19 @@
         <NuxtLayout :name="$coreStore.layout">
             <template #content>
                 <div class="tw-mx-auto tw-max-w-screen-2xl tw-flex tw-justify-center">
-                    <div class="tw-my-4 tw-flex tw-justify-center tw-space-x-1.5">
-                        <Button :size="'lg'" :icon="'ic:sharp-diamond'" :label="'Default'" />
-                        <Button :size="'lg'" :icon="'ic:sharp-diamond'" :variant="'outline'" :label="'Outline'" />
-                        <Button :size="'lg'" :icon="'ic:sharp-diamond'" :variant="'flat'" :label="'Flat'" />
-                        <Button :size="'lg'" :icon="'ic:sharp-diamond'" :variant="'flat'" disabled :label="'Flat'" />
+                    <div v-if="true">
+                        <InputWithIcon class="tw-my-4 tw-w-full" ref="inputValue" :size="size" :icon="'ic:sharp-qr-code'" :placeholder="'Enter value'" type="text" autocomplete="off" />
+                        <div class="tw-my-4 tw-flex tw-justify-center tw-space-x-1.5 tw-flex-nowrap">
+                            <Input ref="inputValue" :size="size" :placeholder="'Enter value'" type="text" autocomplete="off" />
+                            <Button :size="size" :icon="icon" :variant="'flat'" :label="'Flat'" />
+                            <InputWithIcon ref="inputValue" :size="size" :icon="icon" :placeholder="'Enter value'" :type="'text'" autocomplete="off" />
+                        </div>
+                        <div class="tw-my-4 tw-flex tw-justify-center tw-space-x-1.5">
+                            <Button :size="size" :icon="icon" :label="'Default'" />
+                            <Button :size="size" :icon="icon" :variant="'outline'" :label="'Outline'" />
+                            <Button :size="size" :icon="icon" :variant="'flat'" :label="'Flat'" />
+                            <Button :size="size" :icon="icon" :variant="'flat'" disabled :label="'Flat'" />
+                        </div>
                     </div>
                 </div>
             </template>
@@ -16,13 +24,14 @@
 </template>
 
 <script setup lang="ts">
-import {ref,reactive} from "vue";
+import {ref, reactive, nextTick, onMounted} from "vue";
 
 definePageMeta({
     layout: false,
     middleware: 'guest'
 });
-
+let size = ref('md');
+let icon = ref('simple-icons:googlecalendar');
 let cards = reactive([
     {
         'image':{
@@ -65,6 +74,14 @@ let cards = reactive([
         'link' : '/prototype'
     },
 ]);
+let inputValue = ref(null);
+
+onMounted(async () => {
+    nextTick(() => {
+        inputValue.value.$refs.input.focus();
+    });
+})
+
 
 </script>
 
