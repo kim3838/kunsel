@@ -34,21 +34,21 @@ export const useThemeStore = defineStore('theme', {
                 'text-secondary': '#b4b4b4',
             },
             dark: {
-                'primary': '#414141',
+                'primary': '#9a9a9a',
                 'secondary': '#ffffff',
                 'accent': '#707070',
 
                 'lining': '#e5e5e5',
                 'thread': '#464646',
 
-                'neutral': '#4f4f4f',
+                'neutral': '#656565',
 
-                'tint': '#707070',
+                'tint': '#4f4f4f',
                 'body': '#323232',
-                'shade': '#323232',
+                'shade': '#414141',
 
-                'text': '#ffffff',
-                'text-invert': '#a8a8a8',
+                'text': '#e3e3e3',
+                'text-invert': '#464646',
                 'text-secondary': '#c2c2c2',
             },
             blue: {
