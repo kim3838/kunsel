@@ -2,7 +2,7 @@
     <div>
         <NuxtLayout :name="$coreStore.layout">
             <template #content>
-                <div class="tw-m-2 tw-p-2 tw-border tw-border-light">
+                <div class="tw-m-2 tw-p-2 tw-border-neutral-200">
                     <div v-if="$authStore.isLoggedIn" class="tw-justify-end">
                         <Button :disabled="pending" @click="handleLogout" :size="'md'"><span class="tw-font-semibold">Logout</span></Button>
                     </div>

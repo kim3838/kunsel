@@ -13,7 +13,6 @@
             tw-tracking-wide
             tw-box-border
             focus:tw-outline-none
-            focus:tw-border-light
             focus:tw-ring
             focus:tw-ring-transparent
             disabled:tw-opacity-60

@@ -7,7 +7,7 @@
             type="checkbox"
             v-model="proxyModel"
             :class="[heightClass, inputClass]"
-            class="tw-form-checkbox checkbox focus:tw-ring-transparent focus:tw-border-lighter focus:tw-ring">
+            class="tw-form-checkbox checkbox tw-outline-none focus:tw-ring-transparent focus:tw-ring">
         <span v-if="label?.trim()" :class="[fontClass]" class="tw-ml-1 tw-text-accent" v-text="label"></span>
     </span>
 </template>
@@ -87,6 +87,7 @@ const inputClass = computed(() => {
 .checkbox {
     color: v-bind(primaryColor70) !important;
     border-color: v-bind(liningColor) !important;
+    outline-color: transparent;
 }
 
 .checkbox-md{

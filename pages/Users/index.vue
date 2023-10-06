@@ -2,7 +2,7 @@
     <div>
         <NuxtLayout :name="$coreStore.layout">
             <template #content>
-                <div class="tw-m-2 tw-p-2 tw-border tw-border-light">
+                <div class="tw-m-2 tw-p-2 tw-border tw-border-neutral-200">
                     <div>
                         <form @submit.prevent="paginate(1, true)" class="tw-space-y-0.5">
                             <div class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-8">
