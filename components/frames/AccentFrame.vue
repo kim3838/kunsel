@@ -99,7 +99,7 @@ const props = defineProps({
     box-sizing: border-box;
     overflow: hidden;
 }
-.frame-thread-1-top:before{
+.frame-thread-1-top::before{
     content: "";
     position: absolute;
     left: 0;
@@ -107,7 +107,7 @@ const props = defineProps({
     height: 1px;
     background: v-bind(liningColor);
 }
-.frame-thread-1-top:after{
+.frame-thread-1-top::after{
     content: "";
     position: absolute;
     right: 0;
@@ -133,7 +133,7 @@ const props = defineProps({
     left: 0;
     transform: rotate(45deg);
 }
-.frame-thread-1-top-element:before{
+.frame-thread-1-top-element::before{
     position: absolute;
     content: "";
     right: 0;
@@ -147,7 +147,7 @@ const props = defineProps({
         transparent 100%
     );
 }
-.frame-thread-1-top-element:after{
+.frame-thread-1-top-element::after{
     position: absolute;
     content: "";
     left: 0;
@@ -219,7 +219,7 @@ const props = defineProps({
     bottom: 0;
     box-sizing: border-box;
 }
-.frame-thread-2-top:before{
+.frame-thread-2-top::before{
     content: "";
     position: absolute;
     left: 0;
@@ -227,7 +227,7 @@ const props = defineProps({
     height: 1px;
     background: v-bind(threadColor);
 }
-.frame-thread-2-top:after{
+.frame-thread-2-top::after{
     content: "";
     position: absolute;
     right: 0;
@@ -253,7 +253,7 @@ const props = defineProps({
     left: 0;
     transform: rotate(45deg);
 }
-.frame-thread-2-top-v-element:before{
+.frame-thread-2-top-v-element::before{
     position: absolute;
     content: "";
     right: 0;
@@ -266,7 +266,7 @@ const props = defineProps({
         transparent 60%
     );
 }
-.frame-thread-2-top-v-element:after{
+.frame-thread-2-top-v-element::after{
     position: absolute;
     content: "";
     left: 0;
@@ -311,7 +311,7 @@ const props = defineProps({
     left: 0;
     transform: rotate(45deg);
 }
-.frame-thread-2-top-triangle-tail:before{
+.frame-thread-2-top-triangle-tail::before{
     position: absolute;
     content: "";
     right: 0;
@@ -324,7 +324,7 @@ const props = defineProps({
         transparent 80%
     );
 }
-.frame-thread-2-top-triangle-tail:after{
+.frame-thread-2-top-triangle-tail::after{
     position: absolute;
     content: "";
     left: 0;
