@@ -358,7 +358,7 @@
                                 <Button :variant="'flat'" :icon="'eos-icons:compass'" :disabled="true" :label="'DEFAULT Disabled'"></Button>
                             </div>
                             <div class="tw-flex tw-items-start tw-justify-start tw-block tw-w-full tw-border tw-border-neutral-200">
-                                <Button :variant="'flat'" :size="'lg'" :icon="'mdi:palette-swatch-variant'" :label="'LG Flat'"></Button>
+                                <Button @click="$themeStore.setTheme('emerald')" :variant="'flat'" :size="'lg'" :icon="'mdi:palette-swatch-variant'" :label="'Emerald Theme'"></Button>
                             </div>
                             <div class="tw-col-span-2 tw-flex tw-items-start tw-justify-start tw-block tw-w-full">
                                 <Button :variant="'flat'" :size="'xl'" :icon="'eos-icons:atom-electron'" :label="'XL Authenticate'"></Button>
