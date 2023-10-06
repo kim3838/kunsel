@@ -56,8 +56,8 @@ export const useThemeStore = defineStore('theme', {
                 'secondary': '#ffffff',
                 'accent': '#79AC78',
 
-                'lining': '#79AC78',
-                'thread': '#d2f5c6',
+                'lining': '#d2f5c6',
+                'thread': '#678369',
 
                 'neutral': '#4d7779',
 

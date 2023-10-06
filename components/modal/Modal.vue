@@ -39,11 +39,13 @@ export default {
 
         const {
             primary: primaryColor,
+            neutral: neutralColor,
             body: bodyColor,
         } = storeToRefs($themeStore);
 
         return {
             primaryColor,
+            neutralColor,
             bodyColor
         };
     },
@@ -89,7 +91,7 @@ export default {
 </script>
 <style scoped>
 .modal-layer{
-    background-color: v-bind(primaryColor);
+    background-color: v-bind(neutralColor);
 }
 
 .modal-body{
