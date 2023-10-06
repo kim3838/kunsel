@@ -52,12 +52,12 @@ export const useThemeStore = defineStore('theme', {
                 'text-secondary': '#99aed0',
             },
             emerald: {
-                'primary': '#42d6de',
+                'primary': '#d2f5c6',
                 'secondary': '#ffffff',
                 'accent': '#79AC78',
 
-                'lining': '#93d092',
-                'thread': '#ffffff',
+                'lining': '#79AC78',
+                'thread': '#d2f5c6',
 
                 'neutral': '#4d7779',
 
