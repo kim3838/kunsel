@@ -187,6 +187,7 @@ const {
     accent: accentColor,
     neutral: neutralColor,
     tint: tintColor,
+    body: bodyColor,
     thread: threadColor
 } = storeToRefs($themeStore);
 
@@ -256,7 +257,10 @@ a.footer-link:hover{
 }
 
 .primary-navigation-parent {
-    background-color: v-bind(tintColor) !important;
+    background-color: v-bind(bodyColor) !important;
+    border-top: none;
+    border-left: none;
+    border-right: none;
     border-width: 1px;
     border-bottom-style: solid;
     border-bottom-color: v-bind(neutralColor);
