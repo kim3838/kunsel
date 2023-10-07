@@ -2,7 +2,7 @@ import { defineStore } from 'pinia'
 
 export const useThemeStore = defineStore('theme', {
     state: () => ({
-        appTheme: 'blue',
+        appTheme: 'dark',
         hexAlpha: {
             '10': '19',
             '20': '33',
@@ -16,6 +16,7 @@ export const useThemeStore = defineStore('theme', {
         },
         palletes: {
             light: {
+                'type': 'light',
                 'primary': '#323232',
                 'secondary': '#787878',
                 'accent': '#c9c9c9',
@@ -34,8 +35,9 @@ export const useThemeStore = defineStore('theme', {
                 'text-secondary': '#b4b4b4',
             },
             dark: {
-                'primary': '#9a9a9a',
-                'secondary': '#ffffff',
+                'type': 'dark',
+                'primary': '#e5e5e5',
+                'secondary': '#464646',
                 'accent': '#707070',
 
                 'lining': '#e5e5e5',
@@ -49,9 +51,10 @@ export const useThemeStore = defineStore('theme', {
 
                 'text': '#e3e3e3',
                 'text-invert': '#464646',
-                'text-secondary': '#c2c2c2',
+                'text-secondary': '#7a7a7a',
             },
             blue: {
+                'type': 'light',
                 'primary': '#132e60',
                 'secondary': '#ad3d1d',
                 'accent': '#8b97a9',
@@ -70,6 +73,7 @@ export const useThemeStore = defineStore('theme', {
                 'text-secondary': '#99aed0',
             },
             emerald: {
+                'type': 'dark',
                 'primary': '#d2f5c6',
                 'secondary': '#ffffff',
                 'accent': '#79AC78',
@@ -96,6 +100,9 @@ export const useThemeStore = defineStore('theme', {
         },
         palletesComputed() {
             return this.palletes[this.appTheme];
+        },
+        type() {
+            return this.palletesComputed['type'];
         },
         primary() {
             return this.palletesComputed['primary'];
