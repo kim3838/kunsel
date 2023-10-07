@@ -1,14 +1,16 @@
 <template>
-    <span class="tw-relative tw-overflow-hidden tw-flex tw-items-center tw-justify-start tw-cursor-pointer">
-        <span class="tw-absolute tw-h-full tw-w-full"></span>
-        <input
-            :disabled="disabled"
-            :tabindex="tabable ? 0 : -1"
-            type="checkbox"
-            :checked="proxyChecked"
-            :class="[heightClass, inputClass]"
-            class="tw-form-checkbox checkbox tw-outline-none focus:tw-ring-transparent focus:tw-ring">
-        <span v-if="label?.trim()" :class="[fontClass]" class="tw-ml-1 tw-text-accent" v-text="label"></span>
+    <span class="tw-relative tw-overflow-hidden tw-flex tw-items-start tw-justify-start tw-cursor-pointer">
+        <div class="tw-absolute tw-h-full tw-w-full"></div>
+        <div :style="{'height': checkBoxSlotHeight}" class="tw-flex tw-items-center">
+            <input
+                :disabled="disabled"
+                :tabindex="tabable ? 0 : -1"
+                type="checkbox"
+                :checked="proxyChecked"
+                :class="[heightClass, inputClass]"
+                class="tw-form-checkbox checkbox tw-outline-none focus:tw-ring-transparent focus:tw-ring">
+        </div>
+        <div v-if="label?.trim()" :class="[fontClass]" class="tw-ml-1 tw-whitespace-pre-wrap">{{label}}</div>
     </span>
 </template>
 
@@ -70,6 +72,14 @@ const proxyChecked = computed(() => {
         return props.checked;
     }
 });
+
+const checkBoxSlotHeight = computed(()=>{
+    return {
+        'sm': '20px',
+        'md': '24px',
+        'lg': '28px',
+    }[props.size];
+})
 
 const heightClass = computed(() => {
     return {
