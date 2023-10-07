@@ -16,6 +16,17 @@
                             <Button :size="size" :icon="icon" :variant="'flat'" :label="'Flat'" />
                             <Button :size="size" :icon="icon" :variant="'flat'" disabled :label="'Flat'" />
                         </div>
+
+                        <div class="tw-my-4 tw-h-[1px] tw-bg-gradient-to-r tw-from-transparent tw-via-neutral-400 tw-to-transparent"></div>
+
+                        <div class="tw-my-4 tw-grid tw-grid-cols-2">
+                            <div>
+                                <label v-for="category in categorySelection" :key="category">
+                                    <Checkbox v-model="category.value" :label="category.text" :size="'md'" />
+                                </label>
+                            </div>
+                            <div>Right</div>
+                        </div>
                     </div>
                 </div>
             </template>
@@ -32,49 +43,17 @@ definePageMeta({
 });
 let size = ref('md');
 let icon = ref('simple-icons:googlecalendar');
-let cards = reactive([
-    {
-        'image':{
-            'path': '/images/hero/aa5b582b-908b-4db3-b5bc-1276f062d609.webp'
-        },
-        'title': 'COLORFUL Launches EVOL X15 AT Gaming Laptop Powered by Intel 13th Gen CPUs and NVIDIA GeForce RTX 4060 GPU',
-        'subTitle': 'The EVOL X15 AT sports a 15.6” QHD (2560x1440) 165Hz display with NVIDIA G-SYNC support for stutter-free and tear-free gaming experience. Aside from Pine Blue and Mist Grey, the new EVOL X15 AT gaming laptop comes in the new Purple Grape color.',
-        'link' : '/prototype'
-    },
-    {
-        'image':{
-            'path': '/images/hero/667a2407-ae78-4e4d-b69e-059552bca96e.webp'
-        },
-        'title': 'Upgrade to Beyond Fast',
-        'subTitle': 'GeForce RTX 40 Series and DLSS 3.',
-        'link' : '/prototype'
-    },
-    {
-        'image':{
-            'path': '/images/hero/2e38535a-c147-416f-995e-1d1b618d07ca.webp'
-        },
-        'title': 'COLORFUL Launches B760 Series Motherboards',
-        'subTitle': 'COLORFUL introduces the CVN B760M FROZEN WIFI D5 and CVN B760I FROZEN WIFI motherboards for gamers and enthusiasts. Coming in a compact micro-ATX and mini-ITX form factors, both motherboards feature PCIe 5.0 x16 slot to support the latest high-end graphics cards. The CVN B760 motherboards also come with Wi-Fi 6, three PCIe 4.0 M.2 slots for the CVN B760M FROZEN WIFI D5 and two PCIe 4.0 M.2 slots for the CVN B760I FROZEN WIFI mini-ITX motherboard. COLORFUL also presents the BATTLE-AX B760M-F PRO motherboard with DDR4 memory support and two PCIe 4.0 M.2 slots.',
-        'link' : '/prototype'
-    },
-    {
-        'image':{
-            'path': 'images/hero/21f0a52e-db0a-4108-9405-44a8a548e534.webp'
-        },
-        'title': 'MEOW SET',
-        'subTitle': 'RTX 4060 Ti MEOW-ORG OC 16GB / B760M-MEOW WIFI D5 ORANGE.',
-        'link' : '/prototype'
-    },
-    {
-        'image':{
-            'path': 'images/hero/ea05cc1d-1384-47f4-84ab-b3c049f7e13e.webp'
-        },
-        'title': 'AIO PC',
-        'subTitle': 'iGame G-ONE Plus i7-12700H/RTX3060.',
-        'link' : '/prototype'
-    },
-]);
 let inputValue = ref(null);
+
+let categorySelection = reactive([
+    {text : 'Charms', value: true},
+    {text : 'Bracelets', value: true},
+    {text : 'Brooches and Pins', value: false},
+    {text : 'Necklaces', value: true},
+    {text : 'Earrings', value: false},
+    {text : 'Rings', value: true},
+    {text : 'Polyester', value: true},
+]);
 
 onMounted(async () => {
     nextTick(() => {

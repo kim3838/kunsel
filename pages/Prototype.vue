@@ -389,6 +389,26 @@
                         </div>
 
                         <div v-if="true" class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-8">
+                            <div class="tw-border tw-border-neutral-200">
+                            </div>
+                            <div class="tw-border tw-border-neutral-200">
+                                <label v-for="category in categorySelection" :key="category">
+                                    <Checkbox v-model="category.value" :label="category.text" :size="'sm'" />
+                                </label>
+                            </div>
+                            <div class="tw-border tw-border-neutral-200">
+                                <label v-for="category in categorySelection" :key="category">
+                                    <Checkbox v-model="category.value" :label="category.text" :size="'md'" />
+                                </label>
+                            </div>
+                            <div class="tw-border tw-border-neutral-200">
+                                <label v-for="category in categorySelection" :key="category">
+                                    <Checkbox v-model="category.value" :label="category.text" :size="'lg'" />
+                                </label>
+                            </div>
+                        </div>
+
+                        <div v-if="true" class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-8">
                             <div class="tw-flex tw-items-start tw-justify-start tw-block tw-border tw-border-neutral-200">
                                 <div>
                                     <InputLabel :size="'md'" value="SM : Gender Group" />
@@ -535,7 +555,7 @@
 
 <script setup lang="ts">
 
-import {ref, onMounted} from 'vue';
+import {ref, onMounted, reactive} from 'vue';
 
 definePageMeta({
     layout: false,
@@ -547,6 +567,15 @@ let remember1 = ref(null);
 let remember2 = ref(true);
 let remember3 = ref(1);
 let remember4 = ref('1');
+let categorySelection = reactive([
+    {text : 'Charms', value: true},
+    {text : 'Bracelets', value: true},
+    {text : 'Brooches and Pins', value: false},
+    {text : 'Necklaces', value: true},
+    {text : 'Earrings', value: false},
+    {text : 'Rings', value: true},
+    {text : 'Polyester', value: true},
+]);
 let statusGroup = ref({
     selection: [
         {text : 'For Approval', value: 0},
