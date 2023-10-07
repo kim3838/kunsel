@@ -21,6 +21,7 @@ const {$themeStore} = useNuxtApp();
 const {
     hexAlpha,
     primary: primaryColor,
+    text: textColor,
 } = storeToRefs($themeStore);
 
 const primaryColor70 = computed(() => {
@@ -45,7 +46,7 @@ const props = defineProps({
         default: 0
     },
     size: {
-        default: null
+        default: 'md'
     }
 });
 
@@ -57,7 +58,6 @@ const isChecked = computed(() => {
 
 const heightClass = computed(() => {
     return {
-        [null]: 'tw-h-3.5 tw-w-3.5',
         'sm': 'tw-h-3.5 tw-w-3.5',
         'md': 'tw-h-5 tw-w-5',
         'lg': 'tw-h-6 tw-w-6',
@@ -66,7 +66,6 @@ const heightClass = computed(() => {
 
 const fontClass = computed(() => {
     return {
-        [null]: 'tw-text-base',
         'sm': 'tw-text-sm',
         'md': 'tw-text-base tw-leading-6',
         'lg': 'tw-text-xl tw-font-semibold'
@@ -84,6 +83,6 @@ input[type="radio"] {
 }
 
 .radio{
-    color: v-bind(primaryColor70) !important;
+    color: v-bind(textColor) !important;
 }
 </style>
