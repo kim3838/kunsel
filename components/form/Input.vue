@@ -21,10 +21,20 @@ import {storeToRefs} from 'pinia';
 const {$themeStore} = useNuxtApp();
 
 const {
+    hexAlpha,
+    type: themeType,
+    primary: primaryColor,
     lining: liningColor,
     thread: threadColor,
     tint: tintColor,
+    textInvert: textInvertColor,
 } = storeToRefs($themeStore);
+
+const disabledBackgroundColor = computed(() => {
+    return themeType.value == 'light'
+        ? (primaryColor.value + hexAlpha.value['10'])
+        : (textInvertColor.value + hexAlpha.value['40']);
+});
 
 const props = defineProps({
     modelValue: [String, Number],
@@ -84,11 +94,15 @@ const fontClass = computed(() => {
 });
 
 const backgroundClass = computed(() => {
-    return props.disabled ? '' : 'input-background';
+    return props.disabled ? 'input-disabled' : 'input-background';
 });
 
 </script>
 <style scoped>
+.input-disabled{
+    background-color: v-bind(disabledBackgroundColor) !important;
+}
+
 .input-background{
     background-color: v-bind(tintColor) !important;
 }
