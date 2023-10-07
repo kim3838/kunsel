@@ -1,7 +1,7 @@
 <template>
     <div class="tw-relative">
         <!-- Primary Navigation Menu -->
-        <nav ref="navigation" class="primary-navigation-parent tw-fixed" :class="{'lg:tw-ml-sidebar': false}">
+        <nav ref="navigation" class="primary-navigation-parent tw-z-40 tw-fixed" :class="{'lg:tw-ml-sidebar': false}">
             <div class="tw-max-w-full tw-mx-auto">
                 <div class="tw-flex tw-justify-center tw-h-7 lg:tw-h-14">
                     <div class="tw-flex">
