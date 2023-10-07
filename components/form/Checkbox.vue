@@ -19,12 +19,16 @@ const {$themeStore} = useNuxtApp();
 
 const {
     hexAlpha,
+    type: themeType,
     primary: primaryColor,
-    lining: liningColor
+    lining: liningColor,
+    textInvert: textInvertColor,
 } = storeToRefs($themeStore);
 
-const primaryColor70 = computed(() => {
-    return primaryColor.value + hexAlpha.value['70'];
+const checkBoxColor = computed(() => {
+    return themeType.value == 'light'
+        ? (primaryColor.value + hexAlpha.value['70'])
+        : (textInvertColor.value);
 });
 
 const props = defineProps({
@@ -85,7 +89,7 @@ const inputClass = computed(() => {
 
 <style scoped>
 .checkbox {
-    color: v-bind(primaryColor70) !important;
+    color: v-bind(checkBoxColor) !important;
     border-color: v-bind(liningColor) !important;
     outline-color: transparent;
 }
