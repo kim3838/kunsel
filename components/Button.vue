@@ -185,7 +185,7 @@ const shadeClass = computed(() => {
 }
 
 .outlined-border{
-    border: 1px solid v-bind(liningColor);
+    border: 1px solid v-bind(threadColor);
 }
 
 .outlined{
