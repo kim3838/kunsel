@@ -125,7 +125,7 @@ const props = defineProps({
         type: String,
         default: ''
     },
-    selectionMaxWidth: {
+    selectionMaxContent: {
         type: Boolean,
         default: true
     },
@@ -330,7 +330,7 @@ const selectionOffsetComputed = computed(()=>{
 const selectionWidthComputed = computed(()=>{
     let widthStyles = {};
 
-    if(selectionWidth.value === null || props.selectionMaxWidth){
+    if(selectionWidth.value === null || props.selectionMaxContent){
         widthStyles['width'] = 'max-content';
 
         if(selectionWidth.value != null){

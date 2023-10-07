@@ -79,7 +79,7 @@
                         <div v-if="false" class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-8">
                             <div class="tw-flex tw-block">
                                 <MultiSelect
-                                    :selection-max-width="false"
+                                    :selection-max-content="false"
                                     :selection-max-height="'120px'"
                                     :selection-float="false"
                                     :idle-border="'red'"
@@ -93,7 +93,7 @@
                             </div>
                             <div class="tw-flex tw-block">
                                 <MultiSelect
-                                    :selection-max-width="false"
+                                    :selection-max-content="false"
                                     :selection-max-height="'120px'"
                                     :selection-float="false"
                                     :idle-border="'orange'"
@@ -107,7 +107,7 @@
                             </div>
                             <div class="tw-flex tw-block">
                                 <MultiSelect
-                                    :selection-max-width="false"
+                                    :selection-max-content="false"
                                     :selection-max-height="'120px'"
                                     :selection-float="false"
                                     :idle-border="'yellow'"
@@ -121,7 +121,7 @@
                             </div>
                             <div class="tw-flex tw-block">
                                 <SingleSelect
-                                    :selection-max-width="false"
+                                    :selection-max-content="false"
                                     :selection-max-height="'120px'"
                                     :selection-float="false"
                                     :idle-border="'green'"
@@ -136,7 +136,7 @@
                             <div class="tw-flex tw-block">
                                 <SingleSelect
                                     :size="'md'"
-                                    :selection-max-width="false"
+                                    :selection-max-content="false"
                                     :selection-max-height="'120px'"
                                     :selection-float="false"
                                     :idle-border="'blue'"
@@ -151,7 +151,7 @@
                             <div class="tw-flex tw-block">
                                 <SingleSelect
                                     :size="'md'"
-                                    :selection-max-width="false"
+                                    :selection-max-content="false"
                                     :selection-max-height="'120px'"
                                     :selection-float="false"
                                     :idle-border="'indigo'"
