@@ -7,25 +7,25 @@
 
                     <div class="tw-space-y-2">
                         <div v-if="true" class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-8">
-                            <div class="tw-block tw-border tw-border-neutral-200">
+                            <div class="tw-block neutral-border">
                                 <InputLabel :size="'md'" value="Static Multi Select" />
                                 <MultiSelect drop-shadow :size="'md'" :options="category" :icon="'ic:sharp-qr-code'"/>
                             </div>
-                            <div class="tw-block tw-border tw-border-neutral-200">
+                            <div class="tw-block neutral-border">
                                 <InputLabel :size="'md'" value="Non Searchable Multi Select" />
                                 <MultiSelect drop-shadow :searchable="false" :size="'md'" :options="category" :icon="'eos-icons:installing'"/>
                             </div>
-                            <div class="tw-block tw-border tw-border-neutral-200">
+                            <div class="tw-block neutral-border">
                                 <InputLabel :size="'md'" value="Static Single Select" />
                                 <SingleSelect drop-shadow :always-active="false" :size="'md'" :icon="'emojione-monotone:japanese-no-vacancy-button'" :options="plan"/>
                             </div>
 
-                            <div class="tw-block tw-border tw-border-neutral-200">
+                            <div class="tw-block neutral-border">
                                 <InputLabel :size="'md'" value="Non Searchable Single Select" />
                                 <SingleSelect drop-shadow :searchable="false" :size="'md'" :icon="'emojione-monotone:japanese-vacancy-button'" :options="plan"/>
                             </div>
 
-                            <div class="tw-block tw-border tw-border-neutral-200">
+                            <div class="tw-block neutral-border">
                                 <InputLabel :size="'md'" value="Single Select Persist Value" />
                                 <SingleSelect
                                     drop-shadow
@@ -37,7 +37,7 @@
                                     :options="bookingType"/>
                             </div>
 
-                            <div class="tw-block tw-border tw-border-neutral-200">
+                            <div class="tw-block neutral-border">
                                 <InputLabel :size="'md'" for="date" value="Date" />
                                 <InputWithIcon
                                     :icon="'simple-icons:googlecalendar'"
@@ -49,7 +49,7 @@
                                     readonly
                                     :disabled="false" />
                             </div>
-                            <div class="tw-block tw-border tw-border-neutral-200">
+                            <div class="tw-block neutral-border">
                                 <InputLabel for="datetime" value="DateTime" />
                                 <InputWithIcon
                                     :icon="'simple-icons:googlecalendar'"
@@ -62,7 +62,7 @@
                                     :disabled="false" />
                             </div>
 
-                            <div class="tw-block tw-border tw-border-neutral-200">
+                            <div class="tw-block neutral-border">
                                 <InputLabel for="month" value="Month" />
                                 <InputWithIcon
                                     :icon="'simple-icons:protoncalendar'"
@@ -166,7 +166,7 @@
                         </div>
 
                         <div v-if="true" class="tw-grid tw-gap-2 sm:tw-grid-cols-1 md:tw-grid-cols-2 lg:tw-grid-cols-4">
-                            <div class="tw-block tw-col-span-1 sm:tw-col-span-3 md:tw-col-span-2 lg:tw-col-span-2 tw-p-2 tw-border tw-border-neutral-200">
+                            <div class="tw-block tw-col-span-1 sm:tw-col-span-3 md:tw-col-span-2 lg:tw-col-span-2 tw-p-2 neutral-border">
                                 <InputLabel class="tw-mb-2" :size="'md'" value="MD Datatable" />
                                 <DataTable
                                     :headers="headers_1"
@@ -198,7 +198,7 @@
                                     </template>
                                 </DataTable>
                             </div>
-                            <div class="tw-block tw-col-span-1 sm:tw-col-span-3 md:tw-col-span-2 lg:tw-col-span-2 tw-p-2 tw-border tw-border-neutral-200">
+                            <div class="tw-block tw-col-span-1 sm:tw-col-span-3 md:tw-col-span-2 lg:tw-col-span-2 tw-p-2 neutral-border">
                                 <InputLabel class="tw-mb-2" :size="'md'" value="LG Datatable with Selection" />
                                 <DataTable
                                     :headers="headers_2"
@@ -224,7 +224,7 @@
                                     </template>
                                 </DataTable>
                             </div>
-                            <div class="tw-block md:tw-col-span-2 lg:tw-col-span-4 tw-p-2 tw-border tw-border-neutral-200">
+                            <div class="tw-block md:tw-col-span-2 lg:tw-col-span-4 tw-p-2 neutral-border">
                                 <InputLabel class="tw-mb-2" :size="'md'" value="XL Datatable with Selection and Form Foundations" />
                                 <DataTable
                                     :headers="headers_3"
@@ -294,46 +294,46 @@
                         </div>
 
                         <div v-if="true" class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-8">
-                            <div class="tw-flex tw-items-start tw-justify-start tw-block tw-border tw-border-neutral-200">
+                            <div class="tw-flex tw-items-start tw-justify-start tw-block neutral-border">
                                 <Button :size="'2xs'" :icon="'ic:sharp-send-to-mobile'" :label="'XXS Button'"></Button>
                             </div>
-                            <div class="tw-flex tw-items-start tw-justify-start tw-block tw-border tw-border-neutral-200">
+                            <div class="tw-flex tw-items-start tw-justify-start tw-block neutral-border">
                                 <Button :size="'xs'" :icon="'ic:sharp-send-to-mobile'" :label="'XS Button'"></Button>
                             </div>
-                            <div class="tw-flex tw-items-start tw-justify-start tw-block tw-border tw-border-neutral-200">
+                            <div class="tw-flex tw-items-start tw-justify-start tw-block neutral-border">
                                 <Button :size="'sm'" :icon="'ic:sharp-send-to-mobile'" :label="'SM Authenticate'"></Button>
                             </div>
-                            <div class="tw-flex tw-items-start tw-justify-start tw-block tw-border tw-border-neutral-200">
+                            <div class="tw-flex tw-items-start tw-justify-start tw-block neutral-border">
                                 <Button :size="'md'" :icon="'ic:sharp-send-to-mobile'" :label="'MD Authenticate'"></Button>
                             </div>
-                            <div class="tw-flex tw-items-start tw-justify-start tw-block tw-border tw-border-neutral-200">
+                            <div class="tw-flex tw-items-start tw-justify-start tw-block neutral-border">
                                 <Button :disabled="true" :icon="'eos-icons:compass'" :label="'DEFAULT Disabled'"></Button>
                             </div>
-                            <div class="tw-flex tw-items-start tw-justify-start tw-block tw-w-full tw-border tw-border-neutral-200">
+                            <div class="tw-flex tw-items-start tw-justify-start tw-block tw-w-full neutral-border">
                                 <Button @click="$themeStore.setTheme('blue')" :size="'lg'" :icon="'mdi:palette-swatch-variant'" :label="'Blue Theme'"></Button>
                             </div>
-                            <div class="tw-col-span-2 tw-flex tw-items-start tw-justify-start tw-block tw-w-full tw-border tw-border-neutral-200">
+                            <div class="tw-col-span-2 tw-flex tw-items-start tw-justify-start tw-block tw-w-full neutral-border">
                                 <Button :size="'xl'" :icon="'eos-icons:atom-electron'" :label="'XL Authenticate'"></Button>
                             </div>
                         </div>
 
                         <div v-if="true" class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-8">
-                            <div class="tw-flex tw-items-start tw-justify-start tw-block tw-border tw-border-neutral-200">
+                            <div class="tw-flex tw-items-start tw-justify-start tw-block neutral-border">
                                 <Button :variant="'outline'" :size="'2xs'" :icon="'ic:sharp-dashboard'" :label="'XXS Button'"></Button>
                             </div>
-                            <div class="tw-flex tw-items-start tw-justify-start tw-block tw-border tw-border-neutral-200">
+                            <div class="tw-flex tw-items-start tw-justify-start tw-block neutral-border">
                                 <Button :variant="'outline'" :size="'xs'" :icon="'ic:sharp-dashboard'" :label="'XS Button'"></Button>
                             </div>
-                            <div class="tw-flex tw-items-start tw-justify-start tw-block tw-border tw-border-neutral-200">
+                            <div class="tw-flex tw-items-start tw-justify-start tw-block neutral-border">
                                 <Button :variant="'outline'" :size="'sm'" :icon="'ic:sharp-dashboard'" :label="'SM Authenticate'"></Button>
                             </div>
-                            <div class="tw-flex tw-items-start tw-justify-start tw-block tw-border tw-border-neutral-200">
+                            <div class="tw-flex tw-items-start tw-justify-start tw-block neutral-border">
                                 <Button :variant="'outline'" :size="'md'" :icon="'ic:sharp-dashboard'" :label="'MD Authenticate'"></Button>
                             </div>
-                            <div class="tw-flex tw-items-start tw-justify-start tw-block tw-border tw-border-neutral-200">
+                            <div class="tw-flex tw-items-start tw-justify-start tw-block neutral-border">
                                 <Button :variant="'outline'" :icon="'eos-icons:compass'" :disabled="true" :label="'DEFAULT Disabled'"></Button>
                             </div>
-                            <div class="tw-flex tw-items-start tw-justify-start tw-block tw-w-full tw-border tw-border-neutral-200">
+                            <div class="tw-flex tw-items-start tw-justify-start tw-block tw-w-full neutral-border">
                                 <Button @click="$themeStore.setTheme('light')" :variant="'outline'" :size="'lg'" :icon="'mdi:palette-swatch-variant'" :label="'Light Theme'"></Button>
                             </div>
                             <div class="tw-col-span-2 tw-flex tw-items-start tw-justify-start tw-block tw-w-full">
@@ -342,46 +342,46 @@
                         </div>
 
                         <div v-if="true" class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-8">
-                            <div class="tw-flex tw-items-start tw-justify-start tw-block tw-border tw-border-neutral-200">
+                            <div class="tw-flex tw-items-start tw-justify-start tw-block neutral-border">
                                 <Button :variant="'flat'" :size="'2xs'" :icon="'ic:sharp-dashboard'" :label="'XXS Button'"></Button>
                             </div>
-                            <div class="tw-flex tw-items-start tw-justify-start tw-block tw-border tw-border-neutral-200">
+                            <div class="tw-flex tw-items-start tw-justify-start tw-block neutral-border">
                                 <Button :variant="'flat'" :size="'xs'" :icon="'ic:sharp-dashboard'" :label="'XS Button'"></Button>
                             </div>
-                            <div class="tw-flex tw-items-start tw-justify-start tw-block tw-border tw-border-neutral-200">
+                            <div class="tw-flex tw-items-start tw-justify-start tw-block neutral-border">
                                 <Button :variant="'flat'" :size="'sm'" :icon="'ic:sharp-dashboard'" :label="'SM Authenticate'"></Button>
                             </div>
-                            <div class="tw-flex tw-items-start tw-justify-start tw-block tw-border tw-border-neutral-200">
+                            <div class="tw-flex tw-items-start tw-justify-start tw-block neutral-border">
                                 <Button :variant="'flat'" :size="'md'" :icon="'ic:sharp-dashboard'" :label="'MD Authenticate'"></Button>
                             </div>
-                            <div class="tw-flex tw-items-start tw-justify-start tw-block tw-border tw-border-neutral-200">
+                            <div class="tw-flex tw-items-start tw-justify-start tw-block neutral-border">
                                 <Button :variant="'flat'" :icon="'eos-icons:compass'" :disabled="true" :label="'DEFAULT Disabled'"></Button>
                             </div>
-                            <div class="tw-flex tw-items-start tw-justify-start tw-block tw-w-full tw-border tw-border-neutral-200">
+                            <div class="tw-flex tw-items-start tw-justify-start tw-block tw-w-full neutral-border">
                                 <Button @click="$themeStore.setTheme('emerald')" :variant="'flat'" :size="'lg'" :icon="'mdi:palette-swatch-variant'" :label="'Emerald Theme'"></Button>
                             </div>
-                            <div class="tw-col-span-2 tw-flex tw-items-start tw-justify-start tw-block tw-w-full">
+                            <div class="tw-col-span-2 tw-flex tw-items-start tw-justify-start tw-block tw-w-full neutral-border">
                                 <Button :variant="'flat'" :size="'xl'" :icon="'eos-icons:atom-electron'" :label="'XL Authenticate'"></Button>
                             </div>
                         </div>
 
                         <div v-if="true" class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-8">
-                            <div class="tw-border tw-border-neutral-200">
+                            <div class="neutral-border">
                                 <label>
                                     <Checkbox v-model="remember1" :label="' '" :size="'md'" name="remember" />
                                 </label>
                             </div>
-                            <div class="tw-border tw-border-neutral-200">
+                            <div class="neutral-border">
                                 <label>
                                     <Checkbox v-model="remember2" :size="'sm'" :label="'SM Checkbox'" name="remember" />
                                 </label>
                             </div>
-                            <div class="tw-border tw-border-neutral-200">
+                            <div class="neutral-border">
                                 <label>
                                     <Checkbox v-model="remember3" :size="'md'" :label="'MD Checkbox'" name="remember" />
                                 </label>
                             </div>
-                            <div class="tw-border tw-border-neutral-200">
+                            <div class="neutral-border">
                                 <label>
                                     <Checkbox v-model="remember4" :size="'lg'" :label="'LG Checkbox'" name="remember" />
                                 </label>
@@ -389,19 +389,19 @@
                         </div>
 
                         <div v-if="true" class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-8">
-                            <div class="tw-border tw-border-neutral-200">
+                            <div class="neutral-border">
                             </div>
-                            <div class="tw-border tw-border-neutral-200">
+                            <div class="neutral-border">
                                 <label v-for="category in categorySelection" :key="category">
                                     <Checkbox v-model="category.value" :label="category.text" :size="'sm'" />
                                 </label>
                             </div>
-                            <div class="tw-border tw-border-neutral-200">
+                            <div class="neutral-border">
                                 <label v-for="category in categorySelection" :key="category">
                                     <Checkbox v-model="category.value" :label="category.text" :size="'md'" />
                                 </label>
                             </div>
-                            <div class="tw-border tw-border-neutral-200">
+                            <div class="neutral-border">
                                 <label v-for="category in categorySelection" :key="category">
                                     <Checkbox v-model="category.value" :label="category.text" :size="'lg'" />
                                 </label>
@@ -409,46 +409,46 @@
                         </div>
 
                         <div v-if="true" class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-8">
-                            <div class="tw-flex tw-items-start tw-justify-start tw-block tw-border tw-border-neutral-200">
+                            <div class="tw-flex tw-items-start tw-justify-start tw-block neutral-border">
                                 <div>
                                     <InputLabel :size="'md'" value="SM : Gender Group" />
                                     <RadioGroup
                                         :selections="genderGroup.selection"
                                         :size="'sm'"
-                                        class="tw-border tw-border-neutral-200"
+                                        class="neutral-border"
                                         v-model="genderGroup.selected" />
                                     <div>Selected Option: {{ genderGroup.selected }}</div>
                                 </div>
                             </div>
-                            <div class="tw-flex tw-items-start tw-justify-start tw-block tw-border tw-border-neutral-200">
+                            <div class="tw-flex tw-items-start tw-justify-start tw-block neutral-border">
                                 <div>
                                     <InputLabel :size="'md'" value="SM : Status Group" />
                                     <RadioGroup
                                         :selections="statusGroup.selection"
                                         :size="'sm'"
-                                        class="tw-border tw-border-neutral-200"
+                                        class="neutral-border"
                                         v-model="statusGroup.selected" />
                                     <div>Selected Option: {{ statusGroup.selected }}</div>
                                 </div>
                             </div>
-                            <div class="tw-flex tw-items-start tw-justify-start tw-block tw-border tw-border-neutral-200">
+                            <div class="tw-flex tw-items-start tw-justify-start tw-block neutral-border">
                                 <div>
                                     <InputLabel :size="'md'" value="MD : Transaction Group" />
                                     <RadioGroup
                                         :selections="transactionGroup.selection"
                                         :size="'md'"
-                                        class="tw-border tw-border-neutral-200"
+                                        class="neutral-border"
                                         v-model="transactionGroup.selected" />
                                     <div>Selected Option: {{ transactionGroup.selected }}</div>
                                 </div>
                             </div>
-                            <div class="tw-flex tw-items-start tw-justify-start tw-block tw-border tw-border-neutral-200">
+                            <div class="tw-flex tw-items-start tw-justify-start tw-block neutral-border">
                                 <div>
                                     <InputLabel :size="'md'" value="LG : Category Group" />
                                     <RadioGroup
                                         :selections="categoryGroup.selection"
                                         :size="'lg'"
-                                        class="tw-border tw-border-neutral-200"
+                                        class="neutral-border"
                                         v-model="categoryGroup.selected" />
                                     <div>Selected Option: {{ categoryGroup.selected }}</div>
                                 </div>
@@ -456,53 +456,53 @@
                         </div>
 
                         <div v-if="true" class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-8">
-                            <div class="tw-block tw-border tw-border-neutral-200">
+                            <div class="tw-block neutral-border">
                                 <InputLabel :size="'2xs'" for="form_input_1" value="XXS Label" />
                                 <Input :size="'2xs'" class="tw-w-full" placeholder="Enter username" id="form_input_1" type="text" autocomplete="off" />
                             </div>
-                            <div class="tw-block tw-border tw-border-neutral-200">
+                            <div class="tw-block neutral-border">
                                 <InputLabel :size="'xs'" for="form_input_2" value="XS Label" />
                                 <Input :size="'xs'" class="tw-w-full" placeholder="Enter username" id="form_input_2" type="text" autocomplete="off" />
                             </div>
-                            <div class="tw-block tw-border tw-border-neutral-200">
+                            <div class="tw-block neutral-border">
                                 <InputLabel :size="'sm'" for="form_input_3" value="SM Label" />
                                 <Input :size="'sm'" class="tw-w-full" placeholder="Enter username" id="form_input_3" type="text" autocomplete="off" />
                             </div>
-                            <div class="tw-block tw-border tw-border-neutral-200">
+                            <div class="tw-block neutral-border">
                                 <InputLabel :size="'md'" for="form_input_4" value="MD Label" />
                                 <Input :size="'md'" class="tw-w-full" placeholder="Enter username" id="form_input_4" type="text" autocomplete="off" />
                             </div>
-                            <div class="tw-block tw-border tw-border-neutral-200">
+                            <div class="tw-block neutral-border">
                                 <InputLabel :size="'md'" for="form_input_5" value="MD Label" />
                                 <Input :size="'md'" disabled class="tw-w-full" placeholder="Disabled" id="form_input_4" type="text" autocomplete="off" />
                             </div>
-                            <div class="tw-block tw-border tw-border-neutral-200">
+                            <div class="tw-block neutral-border">
                                 <InputLabel :size="'lg'" for="form_input_6" value="LG Label" />
                                 <Input :size="'lg'" class="tw-w-full" placeholder="Enter username" id="form_input_5" type="text" autocomplete="off" />
                             </div>
-                            <div class="tw-col-span-2 tw-block tw-border tw-border-neutral-200">
+                            <div class="tw-col-span-2 tw-block neutral-border">
                                 <InputLabel :size="'xl'" for="form_input_7" value="XL Label" />
                                 <Input :size="'xl'" class="tw-w-full" placeholder="Enter username" id="form_input_6" type="text" autocomplete="off" />
                             </div>
                         </div>
 
                         <div v-if="true" class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-8">
-                            <div class="tw-block tw-border tw-border-neutral-200 tw-col-span-2">
+                            <div class="tw-block neutral-border tw-col-span-2">
                                 <p class="tw-text-sm tw-leading-4">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
                             </div>
-                            <div class="tw-block tw-border tw-border-neutral-200 tw-col-span-2">
+                            <div class="tw-block neutral-border tw-col-span-2">
                                 <p class="tw-text-base tw-leading-4">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
                             </div>
-                            <div class="tw-block tw-border tw-border-neutral-200 tw-col-span-2">
+                            <div class="tw-block neutral-border tw-col-span-2">
                                 <p class="tw-text-lg tw-leading-5">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
                             </div>
-                            <div class="tw-block tw-border tw-border-neutral-200 tw-col-span-2">
+                            <div class="tw-block neutral-border tw-col-span-2">
                                 <p class="tw-text-xl tw-leading-6">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
                             </div>
                         </div>
 
                         <div v-if="false" class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-8">
-                            <div class="tw-block tw-border tw-border-neutral-200 tw-col-span-2">
+                            <div class="tw-block neutral-border tw-col-span-2">
                                 <p class="tw-text-sm tw-font-thin tw-leading-4">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
                                 <p class="tw-text-sm tw-font-extralight tw-leading-4">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
                                 <p class="tw-text-sm tw-font-light tw-leading-4">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
@@ -513,7 +513,7 @@
                                 <p class="tw-text-sm tw-font-extrabold tw-leading-4">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
                                 <p class="tw-text-sm tw-font-black tw-leading-4">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
                             </div>
-                            <div class="tw-block tw-border tw-border-neutral-200 tw-col-span-2">
+                            <div class="tw-block neutral-border tw-col-span-2">
                                 <p class="tw-text-base tw-font-thin tw-leading-4">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
                                 <p class="tw-text-base tw-font-extralight tw-leading-4">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
                                 <p class="tw-text-base tw-font-light tw-leading-4">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
@@ -524,7 +524,7 @@
                                 <p class="tw-text-base tw-font-extrabold tw-leading-4">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
                                 <p class="tw-text-base tw-font-black tw-leading-4">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
                             </div>
-                            <div class="tw-block tw-border tw-border-neutral-200 tw-col-span-2">
+                            <div class="tw-block neutral-border tw-col-span-2">
                                 <p class="tw-text-lg tw-font-thin tw-leading-5">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
                                 <p class="tw-text-lg tw-font-extralight tw-leading-5">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
                                 <p class="tw-text-lg tw-font-light tw-leading-5">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
@@ -535,7 +535,7 @@
                                 <p class="tw-text-lg tw-font-extrabold tw-leading-5">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
                                 <p class="tw-text-lg tw-font-black tw-leading-5">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
                             </div>
-                            <div class="tw-block tw-border tw-border-neutral-200 tw-col-span-2">
+                            <div class="tw-block neutral-border tw-col-span-2">
                                 <p class="tw-text-xl tw-font-extralight tw-leading-6">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
                                 <p class="tw-text-xl tw-font-light tw-leading-6">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
                                 <p class="tw-text-xl tw-font-normal tw-leading-6">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
@@ -554,14 +554,18 @@
 </template>
 
 <script setup lang="ts">
-
 import {ref, onMounted, reactive} from 'vue';
+import {storeToRefs} from 'pinia';
+const {$themeStore, $formStore} = useNuxtApp();
 
 definePageMeta({
     layout: false,
 });
 
-const {$themeStore, $formStore} = useNuxtApp();
+const {
+    neutral: neutralColor
+} = storeToRefs($themeStore);
+
 let formStore = $formStore;
 let remember1 = ref(null);
 let remember2 = ref(true);
@@ -920,3 +924,9 @@ onMounted(async () => {
     render(dateTimePickers.value);
 });
 </script>
+
+<style scoped>
+.neutral-border{
+    border: 1px solid v-bind(neutralColor);
+}
+</style>
