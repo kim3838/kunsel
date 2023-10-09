@@ -9,26 +9,27 @@
                         <div v-if="true" class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-8">
                             <div class="tw-block neutral-border">
                                 <InputLabel :size="'md'" value="Static Multi Select" />
-                                <MultiSelect drop-shadow :size="'md'" :options="category" :icon="'ic:sharp-qr-code'"/>
+                                <MultiSelect drop-shadow :selection-max-viewable-line="5" :size="'md'" :options="category" :icon="'ic:sharp-qr-code'"/>
                             </div>
                             <div class="tw-block neutral-border">
                                 <InputLabel :size="'md'" value="Non Searchable Multi Select" />
-                                <MultiSelect drop-shadow :searchable="false" :size="'md'" :options="category" :icon="'eos-icons:installing'"/>
+                                <MultiSelect drop-shadow :selection-max-viewable-line="5" :searchable="false" :size="'md'" :options="category" :icon="'eos-icons:installing'"/>
                             </div>
                             <div class="tw-block neutral-border">
                                 <InputLabel :size="'md'" value="Static Single Select" />
-                                <SingleSelect drop-shadow :always-active="false" :size="'md'" :icon="'emojione-monotone:japanese-no-vacancy-button'" :options="plan"/>
+                                <SingleSelect drop-shadow :selection-max-viewable-line="4" :always-active="false" :size="'md'" :icon="'emojione-monotone:japanese-no-vacancy-button'" :options="plan"/>
                             </div>
 
                             <div class="tw-block neutral-border">
                                 <InputLabel :size="'md'" value="Non Searchable Single Select" />
-                                <SingleSelect drop-shadow :searchable="false" :size="'md'" :icon="'emojione-monotone:japanese-vacancy-button'" :options="plan"/>
+                                <SingleSelect drop-shadow :selection-max-viewable-line="4" :searchable="false" :size="'md'" :icon="'emojione-monotone:japanese-vacancy-button'" :options="plan"/>
                             </div>
 
                             <div class="tw-block neutral-border">
                                 <InputLabel :size="'md'" value="Single Select Persist Value" />
                                 <SingleSelect
                                     drop-shadow
+                                    :selection-max-viewable-line="3"
                                     :size="'md'"
                                     :searchable="false"
                                     :value-persist="true"
@@ -80,64 +81,64 @@
                             <div class="tw-flex tw-block">
                                 <MultiSelect
                                     :selection-max-content="false"
-                                    :selection-max-height="'120px'"
+                                    :selection-max-viewable-line="9"
                                     :selection-float="false"
                                     :idle-border="'red'"
                                     :active-border="'red'"
                                     :always-active="true"
                                     :searchable="false"
                                     :label="'Select Category'"
-                                    :size="'md'"
+                                    :size="'lg'"
                                     :options="category"
                                     :icon="'ic:sharp-display-settings'"/>
                             </div>
                             <div class="tw-flex tw-block">
                                 <MultiSelect
                                     :selection-max-content="false"
-                                    :selection-max-height="'120px'"
+                                    :selection-max-viewable-line="3"
                                     :selection-float="false"
                                     :idle-border="'orange'"
                                     :active-border="'orange'"
                                     :always-active="true"
                                     :searchable="true"
                                     :label="'Filter Category'"
-                                    :size="'md'"
+                                    :size="'lg'"
                                     :options="category"
                                     :icon="'ic:sharp-display-settings'"/>
                             </div>
                             <div class="tw-flex tw-block">
                                 <MultiSelect
                                     :selection-max-content="false"
-                                    :selection-max-height="'120px'"
+                                    :selection-max-viewable-line="3"
                                     :selection-float="false"
                                     :idle-border="'yellow'"
                                     :active-border="'yellow'"
                                     :always-active="true"
                                     :searchable="false"
                                     :selection-header="false"
-                                    :size="'md'"
+                                    :size="'lg'"
                                     :options="category"
                                     :icon="'ic:sharp-display-settings'"/>
                             </div>
                             <div class="tw-flex tw-block">
                                 <SingleSelect
                                     :selection-max-content="false"
-                                    :selection-max-height="'120px'"
+                                    :selection-max-viewable-line="5"
                                     :selection-float="false"
                                     :idle-border="'green'"
                                     :active-border="'green'"
                                     :always-active="true"
                                     :searchable="false"
-                                    :size="'md'"
+                                    :size="'lg'"
                                     :icon="'eos-icons:installing'"
                                     :label="'Select Plan'"
                                     :options="plan"/>
                             </div>
                             <div class="tw-flex tw-block">
                                 <SingleSelect
-                                    :size="'md'"
+                                    :size="'lg'"
                                     :selection-max-content="false"
-                                    :selection-max-height="'120px'"
+                                    :selection-max-viewable-line="5"
                                     :selection-float="false"
                                     :idle-border="'blue'"
                                     :active-border="'blue'"
@@ -150,9 +151,9 @@
                             </div>
                             <div class="tw-flex tw-block">
                                 <SingleSelect
-                                    :size="'md'"
+                                    :size="'lg'"
                                     :selection-max-content="false"
-                                    :selection-max-height="'120px'"
+                                    :selection-max-viewable-line="3"
                                     :selection-float="false"
                                     :idle-border="'indigo'"
                                     :active-border="'indigo'"
@@ -624,7 +625,7 @@ let category = reactive({
     data: [
         {text : 'Charms', value: 0},
         {text : 'Bracelets', value: 1},
-        {text : 'Brooches and Pins', value: 2},
+        {text : 'Brooches\nand\nPins', value: 2},
         {text : 'Necklaces', value: 3},
         {text : 'Earrings', value: 4},
         {text : 'Rings', value: 5},
@@ -633,7 +634,7 @@ let category = reactive({
     selection: [
         {text : 'Charms', value: 0},
         {text : 'Bracelets', value: 1},
-        {text : 'Brooches and Pins', value: 2},
+        {text : 'Brooches\nand\nPins', value: 2},
         {text : 'Necklaces', value: 3},
         {text : 'Earrings', value: 4},
         {text : 'Rings', value: 5},

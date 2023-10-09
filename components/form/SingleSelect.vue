@@ -134,9 +134,9 @@ const props = defineProps({
         type: Boolean,
         default: true
     },
-    selectionMaxHeight: {
-        type: String,
-        default: '240px'
+    selectionMaxViewableLine: {
+        type: Number,
+        default: 10
     },
     selectionFloat: {
         type: Boolean,
@@ -237,6 +237,18 @@ const dropDownIconClass = computed(() => {
         'md': 'tw-h-5 tw-w-5',
         'lg': 'tw-h-6 tw-w-6'
     }[props.size];
+});
+
+const selectionMaxHeight = computed(() => {
+    let rowSize = {
+        '2xs': 24,
+        'xs': 24,
+        'sm': 24,
+        'md': 24,
+        'lg': 28
+    }[props.size];
+
+    return `${(rowSize ?? 24) * props.selectionMaxViewableLine}px`;
 });
 
 const selectionClass = computed(() => {

@@ -63,16 +63,19 @@
             :class="[dropShadow ? 'tw-drop-shadow-2xl' : '', selectionFloat ? 'tw-absolute' : 'tw-relative', borderClass]">
             <div class="tw-absolute tw-border-solid options-arrow-lining-color" :style="[optionsArrowSlotClass]"></div>
             <div class="tw-absolute tw-border-solid options-arrow-color" :style="[optionsArrowClass]"></div>
-            <div v-show="selectedComputed.length" class="tw-px-2 tw-pt-2 tw-text-left" :class="[optionsFontClass]">
+
+            <div v-show="selectedComputed.length" class="tw-px-2 tw-pt-2 tw-flex tw-justify-between" :class="[optionsFontClass]">
                 Selected
+                <Button :size="'xs'" :variant="'flat'" :label="'Clear Selected'"/>
             </div>
-            <div v-show="selectedComputed.length" :style="{'max-height': selectedMaxHeight}" class="border-bottom tw-overflow-auto">
+            <div v-show="selectedComputed.length" :style="{'max-height': selectedMaxHeight}" class="tw-overflow-auto">
                 <UnorderedList
                     v-for="item in selectedComputed" :key="item.text"
                     class="tw-px-2 options-class"
-                    :size="checkBoxSize"
+                    :size="selectedItemSize"
                     :label="item.text"/>
             </div>
+            <div class="horizontal-rule"></div>
             <div class="tw-px-2 tw-pt-2 tw-text-left" :class="[optionsFontClass]">
                 {{selectionHeaderSummary}}
             </div>
@@ -82,7 +85,6 @@
                     :size="checkBoxSize"
                     v-for="item in selection" :key="item.value"
                     class="tw-px-2 options-class"
-
                     :checked="isItemSelected(item)"
                     :label="item.text"
                     :tabable="false"
@@ -142,13 +144,13 @@ const props = defineProps({
         type: Boolean,
         default: true
     },
-    selectionMaxHeight: {
-        type: String,
-        default: '240px'
+    selectionMaxViewableLine: {
+        type: Number,
+        default: 10
     },
-    selectedMaxHeight: {
-        type: String,
-        default: '60px'
+    selectedMaxViewableLine: {
+        type: Number,
+        default: 10
     },
     selectionFloat: {
         type: Boolean,
@@ -210,6 +212,16 @@ const heightClass = computed(() => {
 
 const borderClass = computed(() => {
     return (active.value ? 'active-border' : 'idle-border');
+});
+
+const selectedItemSize = computed(() => {
+    return {
+        '2xs': 'md',
+        'xs': 'md',
+        'sm': 'md',
+        'md': 'md',
+        'lg': 'lg'
+    }[props.size];
 });
 
 const checkBoxSize = computed(() => {
@@ -368,6 +380,30 @@ function loseFocus(chain: number){
     }
 }
 
+const selectionMaxHeight = computed(() => {
+    let rowSize = {
+        '2xs': 24,
+        'xs': 24,
+        'sm': 24,
+        'md': 24,
+        'lg': 28
+    }[props.size];
+
+    return `${(rowSize ?? 24) * props.selectionMaxViewableLine}px`;
+});
+
+const selectedMaxHeight = computed(() => {
+    let rowSize = {
+        '2xs': 24,
+        'xs': 24,
+        'sm': 24,
+        'md': 24,
+        'lg': 28
+    }[props.size];
+
+    return `${(rowSize ?? 24) * props.selectedMaxViewableLine}px`;
+});
+
 const selectionHeaderSummary = computed(()=>{
     return (props.payload.fetch.filters.search.keyword.trim() && selection.value.length == 0)
         ? 'Not Found.'
@@ -397,14 +433,16 @@ const selectionSummary = computed(() => {
 
 const selectedComputed = computed(() => {
     return [
-        {text: 'PRT3221289642\n' +
-                '005-5RZX3-MPJ-9GRRWA'},
-        {text: 'PRT2207924614\n' +
-                '00B-ALV-JVFQT-AX8R5G'},
-        {text: 'PRT7204079729\n' +
-                '00H-S6EX6-EQ8-FJFNB7'},
-        {text: 'PRT0802781119\n' +
-                '00PV3U-9JD-MK-4TSB8B'},
+        {text: 'PRT3221289642'},
+        {text: 'PRT3221288753'},
+        // {text: 'PRT3221289642\n' +
+        //         '005-5RZX3-MPJ-9GRRWA'},
+        // {text: 'PRT2207924614\n' +
+        //         '00B-ALV-JVFQT-AX8R5G'},
+        // {text: 'PRT7204079729\n' +
+        //         '00H-S6EX6-EQ8-FJFNB7'},
+        // {text: 'PRT0802781119\n' +
+        //         '00PV3U-9JD-MK-4TSB8B'},
     ]
 })
 
@@ -511,8 +549,10 @@ watch(() => {
     background-color: v-bind(tintColor);
 }
 
-.border-bottom{
-    border-bottom:1px solid v-bind(neutralColor);
+.horizontal-rule{
+    height: 1px;
+    width: 100%;
+    background-color: v-bind(activeBorderComputed);
 }
 
 .idle-border {

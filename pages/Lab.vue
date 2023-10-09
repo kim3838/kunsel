@@ -4,40 +4,56 @@
             <template #content>
                 <div class="tw-mx-auto tw-max-w-screen-2xl tw-flex tw-justify-center">
                     <div v-if="true">
-                        <div class="tw-my-4 tw-grid tw-grid-cols-2">
+                        <div class="tw-my-4 tw-grid tw-gap-1 tw-grid-cols-2">
                             <div>
-                                <label v-for="category in categorySelection" :key="category">
-                                    <Checkbox v-model="category.value" :label="category.text" :size="'lg'" />
-                                </label>
+                                <AccentFrame class="tw-w-full">
+                                    <template #content>
+                                        <label v-for="category in categorySelection" :key="category">
+                                            <Checkbox
+                                                v-model="category.value"
+                                                :label="category.text"
+                                                :size="'md'" />
+                                        </label>
+                                    </template>
+                                </AccentFrame>
                             </div>
                             <div class="tw-w-80">
-                                <MultiSelectPaginated
-                                    :selection-max-content="false"
-                                    :selection-max-height="'280px'"
-                                    :selection-float="false"
-                                    :always-active="true"
-                                    :active-border="$themeStore.thread"
-                                    :label="'Select Prototypes'"
-                                    :size="'lg'"
-                                    :payload="prototypePayload"
-                                    :icon="'logos:codio'"/>
+                                <AccentFrame class="tw-w-full">
+                                    <template #content>
+                                        <MultiSelectPaginated
+                                            :selection-max-content="false"
+                                            :selected-max-viewable-line="2"
+                                            :selection-max-viewable-line="5"
+                                            :selection-float="false"
+                                            :always-active="true"
+                                            :active-border="$themeStore.thread"
+                                            :label="'Select Prototypes'"
+                                            :size="'lg'"
+                                            :payload="prototypePayload"
+                                            :icon="'logos:codio'"/>
+                                    </template>
+                                </AccentFrame>
                             </div>
                         </div>
 
                         <div class="tw-my-4 tw-h-[1px] tw-bg-gradient-to-r tw-from-transparent tw-via-neutral-400 tw-to-transparent"></div>
 
-                        <InputWithIcon class="tw-my-4 tw-w-full" ref="inputValue" :size="size" :icon="'ic:sharp-qr-code'" :placeholder="'Enter value'" type="text" autocomplete="off" />
-                        <div class="tw-my-4 tw-flex tw-justify-center tw-space-x-1.5 tw-flex-nowrap">
-                            <Input ref="inputValue" :size="size" :placeholder="'Enter value'" type="text" autocomplete="off" />
-                            <Button :size="size" :icon="icon" :variant="'flat'" :label="'Flat'" />
-                            <InputWithIcon ref="inputValue" :size="size" :icon="icon" :placeholder="'Enter value'" :type="'text'" autocomplete="off" />
-                        </div>
-                        <div class="tw-my-4 tw-flex tw-justify-center tw-space-x-1.5">
-                            <Button :size="size" :icon="icon" :label="'Default'" />
-                            <Button :size="size" :icon="icon" :variant="'outline'" :label="'Outline'" />
-                            <Button :size="size" :icon="icon" :variant="'flat'" :label="'Flat'" />
-                            <Button :size="size" :icon="icon" :variant="'flat'" disabled :label="'Flat'" />
-                        </div>
+                        <AccentFrame class="tw-w-full">
+                            <template #content>
+                                <InputWithIcon class="tw-my-4 tw-w-full" ref="inputValue" :size="size" :icon="'ic:sharp-qr-code'" :placeholder="'Enter value'" type="text" autocomplete="off" />
+                                <div class="tw-my-4 tw-flex tw-justify-center tw-space-x-1.5 tw-flex-nowrap">
+                                    <Input ref="inputValue" :size="size" :placeholder="'Enter value'" type="text" autocomplete="off" />
+                                    <Button :size="size" :icon="icon" :variant="'flat'" :label="'Flat'" />
+                                    <InputWithIcon ref="inputValue" :size="size" :icon="icon" :placeholder="'Enter value'" :type="'text'" autocomplete="off" />
+                                </div>
+                                <div class="tw-my-4 tw-flex tw-justify-center tw-space-x-1.5">
+                                    <Button :size="size" :icon="icon" :label="'Default'" />
+                                    <Button :size="size" :icon="icon" :variant="'outline'" :label="'Outline'" />
+                                    <Button :size="size" :icon="icon" :variant="'flat'" :label="'Flat'" />
+                                    <Button :size="size" :icon="icon" :variant="'flat'" disabled :label="'Flat'" />
+                                </div>
+                            </template>
+                        </AccentFrame>
                     </div>
                 </div>
             </template>
