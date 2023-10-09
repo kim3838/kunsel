@@ -2,10 +2,7 @@
     <div class="tw-relative tw-overflow-hidden tw-flex tw-items-start tw-justify-start">
         <div class="tw-absolute tw-h-full tw-w-full tw-pointer-events-none"></div>
         <div :style="{'height': iconSlotHeight}" class="tw-flex tw-items-center">
-            <Icon
-                :name="icon"
-                class="icon"
-                :class="[heightClass]"/>
+            <Icon :name="icon" :class="[heightClass]"/>
         </div>
         <div :class="[fontClass]" class="tw-ml-1 tw-whitespace-pre-wrap">{{label}}</div>
     </div>
@@ -23,12 +20,6 @@ const {
     lining: liningColor,
     textInvert: textInvertColor,
 } = storeToRefs($themeStore);
-
-const iconColor = computed(() => {
-    return themeType.value == 'light'
-        ? (primaryColor.value + hexAlpha.value['70'])
-        : (textInvertColor.value);
-});
 
 const props = defineProps({
     label: {
@@ -69,9 +60,3 @@ const fontClass = computed(() => {
     }[props.size];
 });
 </script>
-
-<style scoped>
-.icon {
-    color: v-bind(iconColor) !important;
-}
-</style>
