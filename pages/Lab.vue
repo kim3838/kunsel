@@ -7,7 +7,7 @@
                         <div class="tw-my-4 tw-grid tw-grid-cols-2">
                             <div>
                                 <label v-for="category in categorySelection" :key="category">
-                                    <Checkbox v-model="category.value" :label="category.text" :size="'md'" />
+                                    <Checkbox v-model="category.value" :label="category.text" :size="'lg'" />
                                 </label>
                             </div>
                             <div class="tw-w-80">
@@ -18,9 +18,9 @@
                                     :always-active="true"
                                     :active-border="$themeStore.thread"
                                     :label="'Select Prototypes'"
-                                    :size="'md'"
-                                    :options="category"
-                                    :icon="'logos:aurora'"/>
+                                    :size="'lg'"
+                                    :payload="prototypePayload"
+                                    :icon="'logos:codio'"/>
                             </div>
                         </div>
 
@@ -56,26 +56,16 @@ let size = ref('lg');
 let icon = ref('simple-icons:googlecalendar');
 let inputValue = ref(null);
 
-let category = reactive({
-    search: '',
-    data: [
-        {text : 'Charms', value: 0},
-        {text : 'Bracelets', value: 1},
-        {text : 'Brooches and Pins\nBrooches and Pins\nBrooches and Pins', value: 2},
-        {text : 'Necklaces', value: 3},
-        {text : 'Earrings', value: 4},
-        {text : 'Rings', value: 5},
-        {text : 'Polyester', value: 6},
-    ],
-    selection: [
-        {text : 'Charms', value: 0},
-        {text : 'Bracelets', value: 1},
-        {text : 'Brooches and Pins\nBrooches and Pins\nBrooches and Pins', value: 2},
-        {text : 'Necklaces', value: 3},
-        {text : 'Earrings', value: 4},
-        {text : 'Rings', value: 5},
-        {text : 'Polyester', value: 6},
-    ],
+let prototypePayload = reactive({
+    fetch: {
+        url: '/api/selections/prototype',
+        filters: {
+            search: {
+                keyword: '',
+                callback: 1
+            }
+        }
+    },
     selected: []
 });
 let categorySelection = reactive([

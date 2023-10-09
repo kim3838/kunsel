@@ -23,7 +23,7 @@
             </div>
 
             <div :class="[active ? 'tw-block' : 'tw-hidden']" class="tw-w-full tw-h-full tw-relative tw-overflow-hidden tw-items-center">
-                <div :class="[inputHolderClass]" class="tw-absolute tw-left-0 tw-h-full tw-flex tw-items-center">
+                <div :class="[inputHolderClass]" class="tw-pl-1 tw-absolute tw-left-0 tw-h-full tw-flex tw-items-center">
                     <Input
                         :readonly="!searchable"
                         autocomplete="off"
@@ -63,8 +63,15 @@
             :class="[dropShadow ? 'tw-drop-shadow-2xl' : '', selectionFloat ? 'tw-absolute' : 'tw-relative', borderClass]">
             <div class="tw-absolute tw-border-solid options-arrow-lining-color" :style="[optionsArrowSlotClass]"></div>
             <div class="tw-absolute tw-border-solid options-arrow-color" :style="[optionsArrowClass]"></div>
-            <div class="border-bottom tw-px-2 tw-pt-2 tw-text-left" :class="[optionsFontClass]">
+            <div v-show="selectedComputed.length" class="tw-px-2 tw-pt-2 tw-text-left" :class="[optionsFontClass]">
                 Selected
+            </div>
+            <div v-show="selectedComputed.length" :style="{'max-height': selectedMaxHeight}" class="border-bottom tw-overflow-auto">
+                <UnorderedList
+                    v-for="item in selectedComputed" :key="item.text"
+                    class="tw-px-2 options-class"
+                    :size="checkBoxSize"
+                    :label="item.text"/>
             </div>
             <div class="tw-px-2 tw-pt-2 tw-text-left" :class="[optionsFontClass]">
                 {{selectionHeaderSummary}}
@@ -95,8 +102,7 @@ const {
     lining: liningColor,
     thread: threadColor,
     neutral: neutralColor,
-    tint: tintColor,
-    text: textColor,
+    tint: tintColor
 } = storeToRefs($themeStore);
 
 const props = defineProps({
@@ -110,8 +116,7 @@ const props = defineProps({
                         search: {
                             keyword: '',
                             callback: 1
-                        },
-                        id: []
+                        }
                     }
                 },
                 selected: []
@@ -141,6 +146,10 @@ const props = defineProps({
         type: String,
         default: '240px'
     },
+    selectedMaxHeight: {
+        type: String,
+        default: '60px'
+    },
     selectionFloat: {
         type: Boolean,
         default: true
@@ -168,6 +177,7 @@ const props = defineProps({
 
 let keepFocus = ref(false);
 let selection = ref([]);
+let selected = ref([]);
 let page = ref(1);
 let perPage = ref(10);
 let selectionSearch = ref(null);
@@ -384,6 +394,19 @@ const selectionSummary = computed(() => {
     //     return summary;
     // }
 });
+
+const selectedComputed = computed(() => {
+    return [
+        {text: 'PRT3221289642\n' +
+                '005-5RZX3-MPJ-9GRRWA'},
+        {text: 'PRT2207924614\n' +
+                '00B-ALV-JVFQT-AX8R5G'},
+        {text: 'PRT7204079729\n' +
+                '00H-S6EX6-EQ8-FJFNB7'},
+        {text: 'PRT0802781119\n' +
+                '00PV3U-9JD-MK-4TSB8B'},
+    ]
+})
 
 function isItemSelected(item): boolean{
     return props.payload.selected.indexOf(item.value) >= 0;
