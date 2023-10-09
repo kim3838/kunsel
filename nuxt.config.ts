@@ -71,7 +71,8 @@ export default defineNuxtConfig({
         {path: '~/components/modal'},
         {path: '~/components/data'},
         {path: '~/components/logo'},
-        {path: '~/components/frames'},
+        {path: '~/components/frame'},
+        {path: '~/components/list'},
     ],
 
     lodash: {
