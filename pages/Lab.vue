@@ -28,7 +28,7 @@
                                             :always-active="true"
                                             :active-border="$themeStore.thread"
                                             :label="'Select Prototypes'"
-                                            :size="'lg'"
+                                            :size="'md'"
                                             :payload="prototypePayload"
                                             :icon="'logos:codio'"/>
                                     </template>
