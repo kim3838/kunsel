@@ -63,19 +63,6 @@
             :class="[dropShadow ? 'tw-drop-shadow-2xl' : '', selectionFloat ? 'tw-absolute' : 'tw-relative', borderClass]">
             <div class="tw-absolute tw-border-solid options-arrow-lining-color" :style="[optionsArrowSlotClass]"></div>
             <div class="tw-absolute tw-border-solid options-arrow-color" :style="[optionsArrowClass]"></div>
-
-            <div v-show="selectedComputed.length" class="tw-px-2 tw-pt-2 tw-flex tw-justify-between" :class="[optionsFontClass]">
-                Selected
-                <Button :size="'xs'" :variant="'flat'" :label="'Clear Selected'"/>
-            </div>
-            <div v-show="selectedComputed.length" :style="{'max-height': selectedMaxHeight}" class="tw-overflow-auto">
-                <UnorderedList
-                    v-for="item in selectedComputed" :key="item.text"
-                    class="tw-px-2 options-class"
-                    :size="selectedItemSize"
-                    :label="item.text"/>
-            </div>
-            <div class="horizontal-rule"></div>
             <div class="tw-px-2 tw-pt-2 tw-text-left" :class="[optionsFontClass]">
                 {{selectionHeaderSummary}}
             </div>
@@ -90,6 +77,18 @@
                     :tabable="false"
                     @click="selectItem(item)"
                 />
+            </div>
+            <div class="horizontal-rule"></div>
+            <div v-show="selectedComputed.length" class="tw-px-2 tw-py-2 tw-flex tw-justify-between" :class="[optionsFontClass]">
+                Selected
+                <Button :size="'xs'" :variant="'flat'" :label="'Clear Selected'"/>
+            </div>
+            <div v-show="selectedComputed.length" :style="{'max-height': selectedMaxHeight}" class="tw-overflow-auto">
+                <UnorderedList
+                    v-for="item in selectedComputed" :key="item.text"
+                    class="tw-px-2 options-class"
+                    :size="selectedItemSize"
+                    :label="item.text"/>
             </div>
         </div>
     </div>
@@ -432,29 +431,33 @@ const selectionSummary = computed(() => {
 });
 
 const selectedComputed = computed(() => {
-    return [
-        {text: 'PRT3221289642'},
-        {text: 'PRT3221288753'},
-        // {text: 'PRT3221289642\n' +
-        //         '005-5RZX3-MPJ-9GRRWA'},
-        // {text: 'PRT2207924614\n' +
-        //         '00B-ALV-JVFQT-AX8R5G'},
-        // {text: 'PRT7204079729\n' +
-        //         '00H-S6EX6-EQ8-FJFNB7'},
-        // {text: 'PRT0802781119\n' +
-        //         '00PV3U-9JD-MK-4TSB8B'},
-    ]
+    return selected.value;
+    // return [
+    //     {text: 'PRT3221289642'},
+    //     {text: 'PRT3221288753'},
+    //     {text: 'PRT3221289642\n' +
+    //             '005-5RZX3-MPJ-9GRRWA'},
+    //     {text: 'PRT2207924614\n' +
+    //             '00B-ALV-JVFQT-AX8R5G'},
+    //     {text: 'PRT7204079729\n' +
+    //             '00H-S6EX6-EQ8-FJFNB7'},
+    //     {text: 'PRT0802781119\n' +
+    //             '00PV3U-9JD-MK-4TSB8B'},
+    // ]
 })
 
 function isItemSelected(item): boolean{
     return props.payload.selected.indexOf(item.value) >= 0;
 }
 
-function selectItem(item: any): void{
+async function selectItem(item: any): void{
+    await nextTick();
     if(isItemSelected(item)){
         _remove(props.payload.selected, (value) => value == item.value);
+        _remove(selected.value, (list) => list.value == item.value);
     } else {
         props.payload.selected.push(item.value);
+        selected.value.push(item);
     }
 }
 
@@ -488,17 +491,22 @@ watch(active, async (newValue) => {
     }
 });
 
-onMounted(async () => {
-    await nextTick();
-    selectionWidth.value = selectHeader.value.offsetWidth;
-});
-
 let paramsComputed = computed(() => {
     return {
         page: page.value,
         perPage: perPage.value,
         filters: {
             search: props.payload.fetch.filters.search.keyword
+        }
+    };
+});
+
+let selectedParamsComputed = computed(() => {
+    return {
+        page: 1,
+        perPage: props.payload?.selected.length,
+        filters: {
+            id: props.payload?.selected
         }
     };
 });
@@ -543,6 +551,41 @@ watch(() => {
         execute();
     }, 1500);
 });
+
+const {pending: selectedPending, execute: selectedExecute} = csrFetch(props.payload?.fetch.url, {
+    method: 'GET',
+    params: selectedParamsComputed,
+    onRequest(){
+
+    },
+    onRequestError({ request, options, error }) {
+        $coreStore.setServiceError({
+            prompt: true,
+            icon: 'ic:sharp-error-outline',
+            title: 'Request failed',
+            payload: {message: error.message}
+        });
+    },
+    onResponse({request, response, options}) {
+        //Todo: Response composable handler
+        if (response._data.code >= 500 && response._data.code < 600) {
+            $coreStore.setServiceError({
+                prompt: true,
+                icon: 'ic:sharp-error-outline',
+                title: 'Something Went Wrong',
+                payload: response._data
+            });
+        } else {
+            selected.value = _get(response, '_data.values.selection.data', []);
+        }
+    }
+});
+
+onMounted(async () => {
+    await nextTick();
+    selectionWidth.value = selectHeader.value.offsetWidth;
+});
+
 </script>
 <style scoped>
 .background {

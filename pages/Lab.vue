@@ -22,8 +22,8 @@
                                     <template #content>
                                         <MultiSelectPaginated
                                             :selection-max-content="false"
-                                            :selected-max-viewable-line="2"
-                                            :selection-max-viewable-line="5"
+                                            :selected-max-viewable-line="6"
+                                            :selection-max-viewable-line="8"
                                             :selection-float="false"
                                             :always-active="true"
                                             :active-border="$themeStore.thread"
@@ -82,7 +82,7 @@ let prototypePayload = reactive({
             }
         }
     },
-    selected: []
+    selected: [1992, 1263, 1256]
 });
 let categorySelection = reactive([
     {text : 'Charms', value: true},
