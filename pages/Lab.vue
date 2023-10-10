@@ -23,7 +23,7 @@
                                         <MultiSelectPaginated
                                             :selection-max-content="false"
                                             :selected-max-viewable-line="6"
-                                            :selection-max-viewable-line="8"
+                                            :selection-max-viewable-line="10"
                                             :selection-float="false"
                                             :always-active="true"
                                             :active-border="$themeStore.thread"

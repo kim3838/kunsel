@@ -66,7 +66,7 @@
             <div class="tw-px-2 tw-pt-2 tw-text-left" :class="[optionsFontClass]">
                 {{selectionHeaderSummary}}
             </div>
-            <div :style="{'max-height': selectionMaxHeight}" class="tw-overflow-auto">
+            <div ref="selectionScroll" :style="{'max-height': selectionMaxHeight}" class="tw-overflow-auto">
                 <!-- :class="[isItemInSearchPool(item) ? '' : 'tw-hidden']" -->
                 <NonModelCheckBox
                     :size="checkBoxSize"
@@ -77,6 +77,12 @@
                     :tabable="false"
                     @click="selectItem(item)"
                 />
+                <UnorderedList
+                    v-show="selectionScrollBottomReached || pending"
+                    class="tw-px-2 options-class"
+                    :icon="'eos-icons:loading'"
+                    :size="selectedItemSize"
+                    :label="'Loading...'"/>
             </div>
             <div class="horizontal-rule"></div>
             <div v-show="selectedComputed.length" class="tw-px-2 tw-py-2 tw-flex tw-justify-between" :class="[optionsFontClass]">
@@ -95,6 +101,7 @@
 </template>
 
 <script setup lang="ts">
+import {useScroll} from '@vueuse/core';
 import {ref, computed, nextTick, watch, onMounted} from 'vue';
 import {storeToRefs} from 'pinia';
 const {$coreStore, $themeStore} = useNuxtApp();
@@ -535,13 +542,28 @@ const {pending, execute} = csrFetch(props.payload?.fetch.url, {
                 payload: response._data
             });
         } else {
-            selection.value = _get(response, '_data.values.selection.data', []);
+            selection.value = selection.value.concat(_get(response, '_data.values.selection.data', []));
         }
     }
 });
+
+const selectionScroll = ref<HTMLElement | null>(null)
+const {
+    arrivedState: arrivedStateArrivedState
+} = useScroll(selectionScroll, { behavior: 'smooth' })
+const {bottom: selectionScrollBottomReached} = toRefs(arrivedStateArrivedState);
+
+watch(selectionScrollBottomReached, (bottomReached) => {
+    if(bottomReached){
+        page.value += 1;
+        setTimeout(()=>{execute();}, 700);
+    }
+});
+
 watch(pending, async (newPending, oldPending) => {
     console.log({pending: newPending});
 });
+
 watch(() => {
     return props.payload.fetch.filters.search.keyword;
 }, (keyword) => {
