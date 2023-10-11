@@ -1,6 +1,6 @@
 
 export default defineAppConfig({
-    title: 'Hello Nuxt',
+    title: 'SFV3',
     theme: {
         dark: true,
         colors: {
