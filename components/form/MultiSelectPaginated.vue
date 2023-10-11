@@ -33,7 +33,6 @@
                         :placeholder="searchable ? 'Search...' : selectionSummary"
                         v-on:focus="keepSelectionActive(2)"
                         v-on:blur="loseFocus(2)"
-                        v-on:input="searchSelection"
                         v-model="props.payload.fetch.filters.search.keyword"
                         v-if="active"
                         :size="inputSize"
@@ -77,17 +76,19 @@
                     :tabable="false"
                     @click="selectItem(item)"
                 />
-                <UnorderedList
-                    v-show="selectionScrollBottomReached || pending"
-                    class="tw-px-2 options-class"
-                    :icon="'eos-icons:loading'"
-                    :size="selectedItemSize"
-                    :label="'Loading...'"/>
+                <div v-show="showSelectionEndResult">
+                    <UnorderedList
+                        class="tw-px-2"
+                        :icon="selectionEndResult.icon"
+                        :size="selectedItemSize"
+                        :label="selectionEndResult.label"/>
+                </div>
+                <div v-if="selectionMaxViewableLine == selection.length && !showSelectionEndResult" class="tw-h-8 tw-w-full tw-bg-transparent"></div>
             </div>
             <div class="horizontal-rule"></div>
             <div v-show="selectedComputed.length" class="tw-px-2 tw-py-2 tw-flex tw-justify-between" :class="[optionsFontClass]">
                 Selected
-                <Button :size="'xs'" :variant="'flat'" :label="'Clear Selected'"/>
+                <Button @click="clearSelected" :size="'xs'" :variant="'flat'" :label="'Clear Selected'"/>
             </div>
             <div v-show="selectedComputed.length" :style="{'max-height': selectedMaxHeight}" class="tw-overflow-auto">
                 <UnorderedList
@@ -186,9 +187,16 @@ const props = defineProps({
 let keepFocus = ref(false);
 let selection = ref([]);
 let selected = ref([]);
+let searchTriggered = ref(false);
 let page = ref(1);
-let perPage = ref(10);
+let perPage = computed(() => {
+    return props.selectionMaxViewableLine;
+});
 let selectionSearch = ref(null);
+let selectionEndResult = reactive({
+    'icon': 'eos-icons:loading',
+    'label': 'Loading...',
+});
 let selectHeader = ref(null);
 let selectionOrigin = ref(null);
 let selectionWidth = ref(null);
@@ -468,14 +476,15 @@ async function selectItem(item: any): void{
     }
 }
 
-function searchSelection(){
-
-}
-
 function clearSearch(){
     if(!pending.value){
         props.payload.fetch.filters.search.keyword = "";
     }
+}
+
+function clearSelected(){
+    props.payload.selected = [];
+    selected.value = [];
 }
 
 watch(active, async (newValue) => {
@@ -518,11 +527,25 @@ let selectedParamsComputed = computed(() => {
     };
 });
 
+const selectionScroll = ref<HTMLElement | null>(null)
+const {
+    y: selectionScrollY,
+    arrivedState: selectionScrollArrivedState
+} = useScroll(selectionScroll, { behavior: 'smooth' })
+const {bottom: selectionScrollBottomReached} = toRefs(selectionScrollArrivedState);
+
+const showSelectionEndResult = computed(() => {
+    let selectionIsGreaterThanViewableMaxLine = selection.value.length > props.selectionMaxViewableLine;
+
+    return selectionIsGreaterThanViewableMaxLine || pending.value;
+});
+
 const {pending, execute} = csrFetch(props.payload?.fetch.url, {
     method: 'GET',
     params: paramsComputed,
     onRequest(){
-
+        selectionEndResult.icon = 'eos-icons:loading';
+        selectionEndResult.label = 'Loading...';
     },
     onRequestError({ request, options, error }) {
         $coreStore.setServiceError({
@@ -532,7 +555,7 @@ const {pending, execute} = csrFetch(props.payload?.fetch.url, {
             payload: {message: error.message}
         });
     },
-    onResponse({request, response, options}) {
+    async onResponse({request, response, options}) {
         //Todo: Response composable handler
         if (response._data.code >= 500 && response._data.code < 600) {
             $coreStore.setServiceError({
@@ -542,26 +565,32 @@ const {pending, execute} = csrFetch(props.payload?.fetch.url, {
                 payload: response._data
             });
         } else {
-            selection.value = selection.value.concat(_get(response, '_data.values.selection.data', []));
+            if(searchTriggered.value){
+                selection.value = [];
+            }
+
+            let data = _get(response, '_data.values.selection.data', []);
+            selection.value = selection.value.concat(data);
+
+            if(searchTriggered.value){
+                searchTriggered.value = false;
+                await nextTick();
+                selectionScrollY.value = 0;
+            }
+
+            if(selection.value.length && data.length == 0){
+                selectionEndResult.icon = 'radix-icons:dot';
+                selectionEndResult.label = 'End of result.';
+            }
         }
     }
 });
 
-const selectionScroll = ref<HTMLElement | null>(null)
-const {
-    arrivedState: arrivedStateArrivedState
-} = useScroll(selectionScroll, { behavior: 'smooth' })
-const {bottom: selectionScrollBottomReached} = toRefs(arrivedStateArrivedState);
-
 watch(selectionScrollBottomReached, (bottomReached) => {
     if(bottomReached){
         page.value += 1;
-        setTimeout(()=>{execute();}, 700);
+        execute();
     }
-});
-
-watch(pending, async (newPending, oldPending) => {
-    console.log({pending: newPending});
 });
 
 watch(() => {
@@ -570,12 +599,15 @@ watch(() => {
     clearTimeout(props.payload.fetch.filters.search.callback);
 
     props.payload.fetch.filters.search.callback = setTimeout(() => {
+        searchTriggered.value = true;
+        page.value = 1;
         execute();
     }, 1500);
 });
 
 const {pending: selectedPending, execute: selectedExecute} = csrFetch(props.payload?.fetch.url, {
     method: 'GET',
+    immediate: false,
     params: selectedParamsComputed,
     onRequest(){
 
@@ -603,6 +635,10 @@ const {pending: selectedPending, execute: selectedExecute} = csrFetch(props.payl
     }
 });
 
+if(props.payload?.selected.length){
+    selectedExecute();
+}
+
 onMounted(async () => {
     await nextTick();
     selectionWidth.value = selectHeader.value.offsetWidth;
@@ -612,6 +648,10 @@ onMounted(async () => {
 <style scoped>
 .background {
     background-color: v-bind(tintColor);
+}
+
+.selection-loading{
+    /*display: v-bind(selectionLoadingDisplay) !important;*/
 }
 
 .horizontal-rule{

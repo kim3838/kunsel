@@ -12,7 +12,7 @@
                                             <Checkbox
                                                 v-model="category.value"
                                                 :label="category.text"
-                                                :size="'md'" />
+                                                :size="'lg'" />
                                         </label>
                                     </template>
                                 </AccentFrame>
@@ -22,13 +22,13 @@
                                     <template #content>
                                         <MultiSelectPaginated
                                             :selection-max-content="false"
-                                            :selected-max-viewable-line="6"
-                                            :selection-max-viewable-line="10"
+                                            :selected-max-viewable-line="4"
+                                            :selection-max-viewable-line="8"
                                             :selection-float="false"
                                             :always-active="true"
                                             :active-border="$themeStore.thread"
                                             :label="'Select Prototypes'"
-                                            :size="'md'"
+                                            :size="'lg'"
                                             :payload="prototypePayload"
                                             :icon="'logos:codio'"/>
                                     </template>
@@ -77,12 +77,12 @@ let prototypePayload = reactive({
         url: '/api/selections/prototype',
         filters: {
             search: {
-                keyword: '',
+                keyword: '',//1239
                 callback: 1
             }
         }
     },
-    selected: [1992, 1263, 1256]
+    selected: [1992]//[1992, 1263, 1256]
 });
 let categorySelection = reactive([
     {text : 'Charms', value: true},
