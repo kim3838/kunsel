@@ -22,7 +22,7 @@
             <tbody>
                 <!-- Table cell height: sm = 25px, md = 29px, lg = 33px, xl = 37px -->
                 <tr v-for="row in rows" :key="row.id">
-                    <td v-if="selection" style="padding:3px 0.5rem;">
+                    <td v-if="selection" style="padding:0 0.5rem;">
                         <NonModelCheckBox
                             :size="checkBoxSize"
                             :value="row.id"
