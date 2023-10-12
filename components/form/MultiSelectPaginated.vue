@@ -425,40 +425,17 @@ const selectionHeaderSummary = computed(()=>{
 });
 
 const selectionSummary = computed(() => {
-    return "Selection Summary";
-    // if(props.options.selected.length === 0){
-    //     return "None Selected";
-    // } else if(props.options.selected.length < 5) {
-    //     return props.options.data.filter((item) => {
-    //         return props.options.selected.indexOf(item.value) >= 0;
-    //     }).map(item => item.text).join(", ");
-    // } else if(props.options.selected.length > 4) {
-    //     let summary = '';
-    //
-    //     if (props.options.selected.length < props.options.data.length) {
-    //         summary = `${props.options.selected.length} Selected`;
-    //     } else if (props.options.selected.length === props.options.data.length){
-    //         summary = `All Selected`;
-    //     }
-    //
-    //     return summary;
-    // }
+    if(props.payload.selected.length === 0){
+        return "None Selected";
+    } else if(props.payload.selected.length < 5) {
+        return selected.value.map(item => item.text).join(", ");
+    } else if(props.payload.selected.length > 4) {
+        return `${props.payload.selected.length} Selected`;
+    }
 });
 
 const selectedComputed = computed(() => {
     return selected.value;
-    // return [
-    //     {text: 'PRT3221289642'},
-    //     {text: 'PRT3221288753'},
-    //     {text: 'PRT3221289642\n' +
-    //             '005-5RZX3-MPJ-9GRRWA'},
-    //     {text: 'PRT2207924614\n' +
-    //             '00B-ALV-JVFQT-AX8R5G'},
-    //     {text: 'PRT7204079729\n' +
-    //             '00H-S6EX6-EQ8-FJFNB7'},
-    //     {text: 'PRT0802781119\n' +
-    //             '00PV3U-9JD-MK-4TSB8B'},
-    // ]
 })
 
 function isItemSelected(item): boolean{

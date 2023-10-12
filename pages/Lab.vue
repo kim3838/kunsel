@@ -25,6 +25,7 @@
                                             :selected-max-viewable-line="4"
                                             :selection-max-viewable-line="8"
                                             :selection-float="false"
+                                            :searchable="false"
                                             :always-active="true"
                                             :active-border="$themeStore.thread"
                                             :label="'Select Prototypes'"
