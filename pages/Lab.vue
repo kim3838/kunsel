@@ -12,7 +12,7 @@
                                             <Checkbox
                                                 v-model="category.value"
                                                 :label="category.text"
-                                                :size="'lg'" />
+                                                :size="'md'" />
                                         </label>
                                     </template>
                                 </AccentFrame>
@@ -24,12 +24,12 @@
                                             :selection-max-content="false"
                                             :selected-max-viewable-line="4"
                                             :selection-max-viewable-line="8"
-                                            :selection-float="false"
-                                            :searchable="false"
-                                            :always-active="true"
+                                            :searchable="true"
+                                            :selection-float="true"
+                                            :always-active="false"
                                             :active-border="$themeStore.thread"
                                             :label="'Select Prototypes'"
-                                            :size="'lg'"
+                                            :size="'md'"
                                             :payload="prototypePayload"
                                             :icon="'logos:codio'"/>
                                     </template>

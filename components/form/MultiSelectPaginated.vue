@@ -1,8 +1,7 @@
 <template>
     <div
+        ref="selectParent"
         tabindex="0"
-        v-on:focus="keepSelectionActive(1)"
-        v-on:blur="loseFocus(1)"
         :style="{width: width}"
         class="focus:tw-outline-none">
         <div
@@ -31,8 +30,6 @@
                         ref="selectionSearch"
                         type="text"
                         :placeholder="searchable ? 'Search...' : selectionSummary"
-                        v-on:focus="keepSelectionActive(2)"
-                        v-on:blur="loseFocus(2)"
                         v-model="props.payload.fetch.filters.search.keyword"
                         v-if="active"
                         :size="inputSize"
@@ -62,11 +59,36 @@
             :class="[dropShadow ? 'tw-drop-shadow-2xl' : '', selectionFloat ? 'tw-absolute' : 'tw-relative', borderClass]">
             <div class="tw-absolute tw-border-solid options-arrow-lining-color" :style="[optionsArrowSlotClass]"></div>
             <div class="tw-absolute tw-border-solid options-arrow-color" :style="[optionsArrowClass]"></div>
+
+            <div v-show="selectedComputed.length" class="tw-px-2 tw-py-2 tw-gap-1 tw-flex" :class="[optionsFontClass]">
+                <Button
+                    ref="toggleSelectedButtonVisibility"
+                    @click="toggleSelectedVisibility"
+                    :disabled="!selectedComputed.length"
+                    :size="headerActionSize"
+                    :variant="'flat'"
+                    :icon="showSelectedToggleButton.icon"
+                    :label="showSelectedToggleButton.label" />
+                <Button
+                    ref="clearSelectedButton"
+                    @click="clearSelected"
+                    :size="headerActionSize"
+                    :variant="'flat'"
+                    :icon="'ic:baseline-clear'"
+                    :label="'Clear'"/>
+            </div>
+            <div v-show="showSelected" :style="{'height': selectedMaxHeight, 'max-height': selectedMaxHeight}" class="tw-overflow-auto">
+                <UnorderedList
+                    v-for="item in selectedComputed" :key="item.text"
+                    class="tw-px-2 options-class"
+                    :size="selectedItemSize"
+                    :label="item.text"/>
+            </div>
+            <div class="horizontal-rule"></div>
             <div class="tw-px-2 tw-pt-2 tw-text-left" :class="[optionsFontClass]">
                 {{selectionHeaderSummary}}
             </div>
-            <div ref="selectionScroll" :style="{'max-height': selectionMaxHeight}" class="tw-overflow-auto">
-                <!-- :class="[isItemInSearchPool(item) ? '' : 'tw-hidden']" -->
+            <div tabindex="0" ref="selectionScroll" :style="{'max-height': selectionMaxHeight}" class="tw-overflow-auto">
                 <NonModelCheckBox
                     :size="checkBoxSize"
                     v-for="item in selection" :key="item.value"
@@ -85,24 +107,12 @@
                 </div>
                 <div v-if="selectionMaxViewableLine == selection.length && !showSelectionEndResult" class="tw-h-8 tw-w-full tw-bg-transparent"></div>
             </div>
-            <div class="horizontal-rule"></div>
-            <div v-show="selectedComputed.length" class="tw-px-2 tw-py-2 tw-flex tw-justify-between" :class="[optionsFontClass]">
-                Selected
-                <Button @click="clearSelected" :size="'xs'" :variant="'flat'" :label="'Clear Selected'"/>
-            </div>
-            <div v-show="selectedComputed.length" :style="{'max-height': selectedMaxHeight}" class="tw-overflow-auto">
-                <UnorderedList
-                    v-for="item in selectedComputed" :key="item.text"
-                    class="tw-px-2 options-class"
-                    :size="selectedItemSize"
-                    :label="item.text"/>
-            </div>
         </div>
     </div>
 </template>
 
 <script setup lang="ts">
-import {useScroll} from '@vueuse/core';
+import {useFocus, useScroll} from '@vueuse/core';
 import {ref, computed, nextTick, watch, onMounted} from 'vue';
 import {storeToRefs} from 'pinia';
 const {$coreStore, $themeStore} = useNuxtApp();
@@ -184,7 +194,9 @@ const props = defineProps({
     },
 });
 
+let active = ref(!!props.alwaysActive);
 let keepFocus = ref(false);
+let keepFocusCallback = ref(1);
 let selection = ref([]);
 let selected = ref([]);
 let searchTriggered = ref(false);
@@ -192,11 +204,19 @@ let page = ref(1);
 let perPage = computed(() => {
     return props.selectionMaxViewableLine;
 });
+let selectParent = ref(null);
 let selectionSearch = ref(null);
+let toggleSelectedButtonVisibility = ref(null);
+let clearSelectedButton = ref(null);
 let selectionEndResult = reactive({
     'icon': 'eos-icons:loading',
     'label': 'Loading...',
 });
+let showSelectedToggleButton = reactive({
+    'icon': 'ion:md-eye',
+    'label': 'Show',
+});
+let showSelected = ref(false);
 let selectHeader = ref(null);
 let selectionOrigin = ref(null);
 let selectionWidth = ref(null);
@@ -204,7 +224,11 @@ let selectionOffset = reactive({
     origin: null,
     left: 0
 });
-let active = ref(!!props.alwaysActive);
+
+const { focused: selectParentFocused } = useFocus(selectParent);
+const { focused: selectionSearchFocused } = useFocus(selectionSearch);
+const { focused: toggleSelectedButtonVisibilityFocused } = useFocus(toggleSelectedButtonVisibility);
+const { focused: clearSelectedButtonFocused } = useFocus(clearSelectedButton);
 
 const idleBorderComputed = computed(() => {
     return props.idleBorder ? props.idleBorder : threadColor.value;
@@ -308,6 +332,16 @@ const optionsFontClass = computed(() => {
     }[props.size];
 });
 
+const headerActionSize = computed(() => {
+    return {
+        '2xs': 'xs',
+        'xs': 'xs',
+        'sm': 'xs',
+        'md': 'xs',
+        'lg': 'sm'
+    }[props.size];
+});
+
 const inputHolderClass = computed(() => {
     return {
         '2xs': 'tw-right-5',
@@ -364,34 +398,26 @@ const selectionWidthComputed = computed(()=>{
     return widthStyles;
 });
 
-async function keepSelectionActive(chain: number){
+function keepFocusAlive(){
     if(!active.value){
         active.value = true;
-        //Keep focus to prevent losing active status
-        keepFocus.value = true;
     }
 
-    //If keepSelectionActive called from (Selection div parent)
-    //transfer the focus on the (Selection body search input)
-    if(chain == 1){
-        await nextTick();
+    clearTimeout(keepFocusCallback.value);
+    keepFocus.value = true;
 
-        selectionSearch.value.$refs.input.focus();
-
-        //Revert back keep focus to false
-        //so that elements that is not (Selection div parent / Selection body search input)
-        //got focused will not trigger keepSelectionActive
-        setTimeout(function(){
-            keepFocus.value = false;
-        }, 20);
-    }
+    keepFocusCallback.value = setTimeout(() => {
+        keepFocus.value = false;
+    }, 20);
 }
 
-function loseFocus(chain: number){
-    //Lose only active status if keepFocus is false or Not Active Lock
-    if(active.value && !keepFocus.value && !props.alwaysActive){
-        active.value = false;
-    }
+function loseFocus(chain: Boolean = false){
+    setTimeout(function(){
+        //Lose only active status if keepFocus is false or Not Active Lock
+        if(active.value && !keepFocus.value && !props.alwaysActive){
+            active.value = false;
+        }
+    }, 10);
 }
 
 const selectionMaxHeight = computed(() => {
@@ -447,6 +473,9 @@ async function selectItem(item: any): void{
     if(isItemSelected(item)){
         _remove(props.payload.selected, (value) => value == item.value);
         _remove(selected.value, (list) => list.value == item.value);
+        if(selected.value.length == 0){
+            resetSelectedVisibilityToggleButton();
+        }
     } else {
         props.payload.selected.push(item.value);
         selected.value.push(item);
@@ -462,6 +491,23 @@ function clearSearch(){
 function clearSelected(){
     props.payload.selected = [];
     selected.value = [];
+    resetSelectedVisibilityToggleButton();
+}
+
+function resetSelectedVisibilityToggleButton(){
+    showSelected.value = false;
+    showSelectedToggleButton.icon = 'ion:md-eye';
+    showSelectedToggleButton.label = 'Show';
+}
+
+function toggleSelectedVisibility(){
+    if(showSelected.value){
+        resetSelectedVisibilityToggleButton()
+    } else {
+        showSelected.value = true;
+        showSelectedToggleButton.icon = 'ion:md-eye-off';
+        showSelectedToggleButton.label = 'Hide';
+    }
 }
 
 watch(active, async (newValue) => {
@@ -510,6 +556,43 @@ const {
     arrivedState: selectionScrollArrivedState
 } = useScroll(selectionScroll, { behavior: 'smooth' })
 const {bottom: selectionScrollBottomReached} = toRefs(selectionScrollArrivedState);
+const {focused: selectionScrollFocused } = useFocus(selectionScroll)
+
+watch(selectParentFocused, (focused) => {
+    if (focused) {
+        keepFocusAlive();
+    } else {
+        loseFocus();
+    }
+});
+watch(selectionScrollFocused, (focused) => {
+    if (focused) {
+        keepFocusAlive();
+    } else {
+        loseFocus();
+    }
+});
+watch(toggleSelectedButtonVisibilityFocused, (focused) => {
+    if (focused) {
+        keepFocusAlive();
+    } else {
+        loseFocus();
+    }
+});
+watch(clearSelectedButtonFocused, (focused) => {
+    if (focused) {
+        keepFocusAlive();
+    } else {
+        loseFocus();
+    }
+});
+watch(selectionSearchFocused, (focused) => {
+    if (focused) {
+        keepFocusAlive();
+    } else {
+        loseFocus();
+    }
+});
 
 const showSelectionEndResult = computed(() => {
     let selectionIsGreaterThanViewableMaxLine = selection.value.length > props.selectionMaxViewableLine;
