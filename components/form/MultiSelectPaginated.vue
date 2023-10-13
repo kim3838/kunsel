@@ -710,10 +710,6 @@ onMounted(async () => {
     background-color: v-bind(tintColor);
 }
 
-.selection-loading{
-    /*display: v-bind(selectionLoadingDisplay) !important;*/
-}
-
 .horizontal-rule{
     height: 1px;
     width: 100%;
