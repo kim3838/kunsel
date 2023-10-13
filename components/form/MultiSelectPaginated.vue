@@ -402,13 +402,17 @@ function keepFocusAlive(){
     if(!active.value){
         active.value = true;
     }
+    nextTick(() => {
+        selectionSearch.value.$refs.input.focus();
 
-    clearTimeout(keepFocusCallback.value);
-    keepFocus.value = true;
+        clearTimeout(keepFocusCallback.value);
+        keepFocus.value = true;
 
-    keepFocusCallback.value = setTimeout(() => {
-        keepFocus.value = false;
-    }, 20);
+        keepFocusCallback.value = setTimeout(() => {
+            keepFocus.value = false;
+        }, 20);
+    });
+
 }
 
 function loseFocus(chain: Boolean = false){
