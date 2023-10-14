@@ -66,19 +66,14 @@
                 {{selectionHeaderSummary}}
             </div>
             <div tabindex="0" ref="selectionScroll" :style="{'max-height': selectionMaxHeight}" class="tw-overflow-auto">
-                <div
+                <UnorderedList
                     v-for="item in options.selection" :key="item.value"
-                    class="tw-px-2 options-class tw-flex tw-items-center tw-cursor-pointer"
+                    class="tw-px-2 options-class tw-cursor-pointer"
                     :class="[isItemInSearchPool(item) ? '' : 'tw-hidden', optionsFontClass]"
-                    @click="valuePersist && isItemSelected(item) ? false :selectItem(item)">
-                    <div class="tw-w-max">
-                        <Icon
-                            class="tw-h-5 tw-w-5"
-                            :class="[isItemSelected(item) ? 'options-active' : 'tw-text-transparent']"
-                            name="ic:sharp-check-box" />
-                    </div>
-                    <div class="tw-ml-0.5">{{item.text}}</div>
-                </div>
+                    @click="valuePersist && isItemSelected(item) ? false :selectItem(item)"
+                    :icon="isItemSelected(item) ? 'ic:sharp-radio-button-checked' : 'ic:sharp-radio-button-unchecked'"
+                    :size="selectionItemSize"
+                    :label="item.text"/>
             </div>
         </div>
     </div>
@@ -212,6 +207,16 @@ const heightClass = computed(() => {
 
 const borderClass = computed(() => {
     return (active.value ? 'active-border' : 'idle-border');
+});
+
+const selectionItemSize = computed(() => {
+    return {
+        '2xs': 'md',
+        'xs': 'md',
+        'sm': 'md',
+        'md': 'md',
+        'lg': 'lg'
+    }[props.size];
 });
 
 const iconHolderClass = computed(() => {
