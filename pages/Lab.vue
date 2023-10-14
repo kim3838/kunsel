@@ -5,18 +5,7 @@
                 <div class="tw-mx-auto tw-max-w-screen-2xl tw-flex tw-justify-center">
                     <div v-if="true" class="tw-w-full">
                         <div class="tw-w-full tw-my-4 tw-grid tw-gap-1 tw-grid-cols-5">
-                            <div v-if="false">
-                                <AccentFrame class="tw-w-full">
-                                    <template #content>
-                                        <label v-for="category in categorySelection" :key="category">
-                                            <Checkbox
-                                                v-model="category.value"
-                                                :label="category.text"
-                                                :size="size" />
-                                        </label>
-                                        </template>
-                                </AccentFrame>
-                            </div>
+
                             <div>
                                 <AccentFrame class="tw-w-full">
                                     <template #content>
@@ -29,7 +18,7 @@
                                     <template #content>
                                         <MultiSelectPaginated
                                             :tabindex="2"
-                                            drop-shadow
+                                            :drop-shadow="true"
                                             :selection-max-content="false"
                                             :selected-max-viewable-line="6"
                                             :selection-max-viewable-line="10"
@@ -58,8 +47,8 @@
                                             :tabindex="5"
                                             drop-shadow
                                             :searchable="true"
-                                            :selection-float="false"
-                                            :always-active="true"
+                                            :selection-float="true"
+                                            :always-active="false"
                                             :selection-max-viewable-line="5"
                                             :size="size" :options="category"
                                             :icon="'ic:sharp-qr-code'"/>
@@ -78,14 +67,28 @@
                                     <template #content>
                                         <SingleSelect
                                             :tabindex="8"
+                                            :value-persist="true"
+                                            :drop-shadow="true"
+                                            :selection-max-content="true"
                                             :searchable="true"
-                                            :selection-float="false"
-                                            :always-active="true"
-                                            drop-shadow
+                                            :selection-float="true"
+                                            :always-active="false"
                                             :size="size"
-                                            :selection-max-viewable-line="4"
+                                            :selection-max-viewable-line="8"
                                             :icon="'emojione-monotone:japanese-no-vacancy-button'"
-                                            :options="plan"/>
+                                            :options="singleSelectPrototype"/>
+                                    </template>
+                                </AccentFrame>
+                            </div>
+                            <div>
+                                <AccentFrame class="tw-w-full">
+                                    <template #content>
+                                        <label v-for="category in categorySelection" :key="category">
+                                            <Checkbox
+                                                v-model="category.value"
+                                                :label="category.text"
+                                                :size="size" />
+                                        </label>
                                     </template>
                                 </AccentFrame>
                             </div>
@@ -93,6 +96,33 @@
                                 <AccentFrame class="tw-w-full">
                                     <template #content>
                                         <InputWithIcon :tabindex="10" ref="inputValue" :size="size" :icon="'ic:sharp-qr-code'" :placeholder="'Enter value'" type="text" autocomplete="off" />
+                                    </template>
+                                </AccentFrame>
+                            </div>
+                            <div>
+                                <AccentFrame class="tw-w-full">
+                                    <template #content>
+                                        <SingleSelectPaginated
+                                            :tabindex="13"
+                                            :value-persist="true"
+                                            :drop-shadow="true"
+                                            :selection-max-content="false"
+                                            :selection-max-viewable-line="10"
+                                            :searchable="true"
+                                            :selection-float="true"
+                                            :always-active="false"
+                                            :active-border="$themeStore.thread"
+                                            :label="'Select Prototype'"
+                                            :size="size"
+                                            :payload="singleSelectPrototypePayload"
+                                            :icon="'emojione-monotone:japanese-no-vacancy-button'"/>
+                                    </template>
+                                </AccentFrame>
+                            </div>
+                            <div>
+                                <AccentFrame class="tw-w-full">
+                                    <template #content>
+                                        <InputWithIcon :tabindex="15" ref="inputValue" :size="size" :icon="'ic:sharp-qr-code'" :placeholder="'Enter value'" type="text" autocomplete="off" />
                                     </template>
                                 </AccentFrame>
                             </div>
@@ -130,7 +160,7 @@ definePageMeta({
     layout: false,
     middleware: 'guest'
 });
-let size = ref('lg');
+let size = ref('md');
 let icon = ref('simple-icons:googlecalendar');
 let inputValue = ref(null);
 
@@ -146,21 +176,33 @@ let multiSelectPrototypePayload = reactive({
     },
     selected: [1992]//[1992, 1263, 1256]
 });
-let plan = reactive({
+let singleSelectPrototypePayload = reactive({
+    fetch: {
+        url: '/api/selections/prototype',
+        filters: {
+            search: {
+                keyword: '',//1239
+                callback: 1
+            }
+        }
+    },
+    selected: null,//1263
+});
+let singleSelectPrototype = reactive({
     search: '',
     data: [
-        {text : 'Free', value: 0},
-        {text : 'Individual', value: 1},
-        {text : 'Standard Corporate', value: 2},
-        {text : 'Custom Corporate', value: 3},
-        {text : 'Evaluator', value: 4},
+        {text : 'PRT3221289642 005-5RZX3-MPJ-9GRRWA', value: 0},
+        {text : 'PRT3224439642 005-5RZX3-MPJ-9GRRWA', value: 1},
+        {text : 'PRT3222219642 005-5RZX3-MPJ-9GRRWA', value: 2},
+        {text : 'PRT3224324642 005-5RZX3-MPJ-9GRRWA', value: 3},
+        {text : 'PRT3221285552 005-5RZX3-MPJ-9GRRWA', value: 4},
     ],
     selection: [
-        {text : 'Free', value: 0},
-        {text : 'Individual', value: 1},
-        {text : 'Standard Corporate', value: 2},
-        {text : 'Custom Corporate', value: 3},
-        {text : 'Evaluator', value: 4},
+        {text : 'PRT3221289642 005-5RZX3-MPJ-9GRRWA', value: 0},
+        {text : 'PRT3224439642 005-5RZX3-MPJ-9GRRWA', value: 1},
+        {text : 'PRT3222219642 005-5RZX3-MPJ-9GRRWA', value: 2},
+        {text : 'PRT3224324642 005-5RZX3-MPJ-9GRRWA', value: 3},
+        {text : 'PRT3221285552 005-5RZX3-MPJ-9GRRWA', value: 4},
     ],
     selected: null
 });

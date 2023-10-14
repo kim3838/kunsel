@@ -27,7 +27,6 @@
                         :tabindex="tabindexInput"
                         :readonly="!searchable"
                         autocomplete="off"
-                        class="tw-w-full"
                         ref="selectionSearch"
                         type="text"
                         :placeholder="searchable ? 'Search...' : selectionSummary"
@@ -48,7 +47,7 @@
                         @click="clearSearch"
                         :class="[dropDownIconClass]"
                         class="tw-cursor-pointer"
-                        :name="pending ? 'eos-icons:loading' : 'ic:baseline-clear'" /><!-- eos-icons:installing --> <!-- eos-icons:loading -->
+                        :name="pending ? 'eos-icons:loading' : 'ic:baseline-clear'" />
                 </div>
             </div>
         </div>
@@ -325,6 +324,30 @@ const dropDownIconClass = computed(() => {
     }[props.size];
 });
 
+const selectionMaxHeight = computed(() => {
+    let rowSize = {
+        '2xs': 24,
+        'xs': 24,
+        'sm': 24,
+        'md': 24,
+        'lg': 28
+    }[props.size];
+
+    return `${(rowSize ?? 24) * props.selectionMaxViewableLine}px`;
+});
+
+const selectedMaxHeight = computed(() => {
+    let rowSize = {
+        '2xs': 24,
+        'xs': 24,
+        'sm': 24,
+        'md': 24,
+        'lg': 28
+    }[props.size];
+
+    return `${(rowSize ?? 24) * props.selectedMaxViewableLine}px`;
+});
+
 const selectionClass = computed(() => {
     return {
         '2xs': 'tw-text-xs tw-h-5 tw-leading-[0.875rem] tw-left-[0.2rem] tw-right-[1.45rem]',
@@ -436,30 +459,6 @@ function loseFocus(chain: Boolean = false){
         }
     }, 10);
 }
-
-const selectionMaxHeight = computed(() => {
-    let rowSize = {
-        '2xs': 24,
-        'xs': 24,
-        'sm': 24,
-        'md': 24,
-        'lg': 28
-    }[props.size];
-
-    return `${(rowSize ?? 24) * props.selectionMaxViewableLine}px`;
-});
-
-const selectedMaxHeight = computed(() => {
-    let rowSize = {
-        '2xs': 24,
-        'xs': 24,
-        'sm': 24,
-        'md': 24,
-        'lg': 28
-    }[props.size];
-
-    return `${(rowSize ?? 24) * props.selectedMaxViewableLine}px`;
-});
 
 const selectionHeaderSummary = computed(()=>{
     return (props.payload.fetch.filters.search.keyword.trim() && selection.value.length == 0)
@@ -653,7 +652,6 @@ const {pending, execute} = csrFetch(props.payload?.fetch.url, {
         });
     },
     async onResponse({request, response, options}) {
-        //Todo: Response composable handler
         if (response._data.code >= 500 && response._data.code < 600) {
             $coreStore.setServiceError({
                 prompt: true,
@@ -718,7 +716,6 @@ const {pending: selectedPending, execute: selectedExecute} = csrFetch(props.payl
         });
     },
     onResponse({request, response, options}) {
-        //Todo: Response composable handler
         if (response._data.code >= 500 && response._data.code < 600) {
             $coreStore.setServiceError({
                 prompt: true,
