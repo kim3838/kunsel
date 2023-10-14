@@ -1,8 +1,7 @@
 <template>
     <div
-        tabindex="0"
-        v-on:focus="keepSelectionActive(1)"
-        v-on:blur="loseFocus(1)"
+        ref="selectParent"
+        :tabindex="tabindexComputed"
         :style="{width: width}"
         class="focus:tw-outline-none">
         <div
@@ -23,19 +22,19 @@
             </div>
 
             <div :class="[active ? 'tw-block tw-pl-2' : 'tw-hidden']" class="tw-flex tw-items-center">
-                <NonModelCheckBox :size="checkBoxSize" :checked="selectedAllCurrentSelection()" @click="toggleSelection" />
+                <NonModelCheckBox :tabable="false" :size="checkBoxSize" :checked="selectedAllCurrentSelection()" @click="toggleSelection" />
             </div>
             <div :class="[active ? 'tw-block' : 'tw-hidden']" class="tw-w-full tw-h-full tw-relative tw-overflow-hidden tw-items-center">
                 <div :class="[inputHolderClass]" class="tw-absolute tw-left-0 tw-h-full tw-flex tw-items-center">
                     <Input
+                        :tabindex="tabindexInput"
                         :readonly="!searchable"
                         autocomplete="off"
                         class="tw-w-full"
                         ref="selectionSearch"
                         type="text"
                         :placeholder="searchable ? 'Search...' : selectionSummary"
-                        v-on:focus="keepSelectionActive(2)"
-                        v-on:blur="loseFocus(2)"
+                        @keydown="keyHandler"
                         v-on:input="searchSelection"
                         v-model="props.options.search"
                         v-if="active"
@@ -69,7 +68,7 @@
             <div class="tw-px-2 tw-pt-2 tw-text-left" :class="[optionsFontClass]">
                 {{selectionHeaderSummary}}
             </div>
-            <div :style="{'max-height': selectionMaxHeight}" class="tw-overflow-auto">
+            <div tabindex="0" ref="selectionScroll" :style="{'max-height': selectionMaxHeight}" class="tw-overflow-auto">
                 <NonModelCheckBox
                     :size="checkBoxSize"
                     v-for="item in options.selection" :key="item.value"
@@ -86,7 +85,8 @@
 </template>
 
 <script setup lang="ts">
-import {ref, computed, nextTick, watch, onMounted} from 'vue';
+import {useFocus} from '@vueuse/core';
+import {ref, toRef, computed, nextTick, watch, onMounted} from 'vue';
 import {storeToRefs} from 'pinia';
 const {$themeStore} = useNuxtApp();
 
@@ -94,8 +94,7 @@ const {
     lining: liningColor,
     thread: threadColor,
     neutral: neutralColor,
-    tint: tintColor,
-    text: textColor,
+    tint: tintColor
 } = storeToRefs($themeStore);
 
 const props = defineProps({
@@ -109,6 +108,10 @@ const props = defineProps({
                 selected: []
             }
         }
+    },
+    tabindex: {
+        type: Number,
+        default: 0
     },
     inHorizontalScrollable: Boolean,
     dropShadow: Boolean,
@@ -158,8 +161,17 @@ const props = defineProps({
     },
 });
 
+let active = ref(!!props.alwaysActive);
+let backTabbed = ref(false);
+let tabindexComputed = toRef(props.tabindex);
+let tabindexInput = computed(() => {
+    return tabindexComputed.value + 1;
+});
 let keepFocus = ref(false);
+let keepFocusCallback = ref(1);
+let selectParent = ref(null);
 let selectionSearch = ref(null);
+let selectionScroll = ref<HTMLElement | null>(null);
 let selectHeader = ref(null);
 let selectionOrigin = ref(null);
 let selectionWidth = ref(null);
@@ -167,7 +179,11 @@ let selectionOffset = reactive({
     origin: null,
     left: 0
 });
-let active = ref(!!props.alwaysActive);
+
+const { focused: selectParentFocused } = useFocus(selectParent);
+const { focused: selectionSearchFocused } = useFocus(selectionSearch);
+const { focused: selectionScrollFocused } = useFocus(selectionScroll);
+
 let searchPool = ref([]);
 searchPool.value = props.options.data.map(item => item.value);
 
@@ -355,34 +371,29 @@ const selectionWidthComputed = computed(()=>{
     return widthStyles;
 });
 
-async function keepSelectionActive(chain: number){
+function keepFocusAlive(){
     if(!active.value){
         active.value = true;
-        //Keep focus to prevent losing active status
-        keepFocus.value = true;
     }
-
-    //If keepSelectionActive called from (Selection div parent)
-    //transfer the focus on the (Selection body search input)
-    if(chain == 1){
-        await nextTick();
-
+    nextTick(() => {
         selectionSearch.value.$refs.input.focus();
 
-        //Revert back keep focus to false
-        //so that elements that is not (Selection div parent / Selection body search input)
-        //got focused will not trigger keepSelectionActive
-        setTimeout(function(){
+        clearTimeout(keepFocusCallback.value);
+        keepFocus.value = true;
+
+        keepFocusCallback.value = setTimeout(() => {
             keepFocus.value = false;
         }, 20);
-    }
+    });
 }
 
-function loseFocus(chain: number){
-    //Lose only active status if keepFocus is false or Not Active Lock
-    if(active.value && !keepFocus.value && !props.alwaysActive){
-        active.value = false;
-    }
+function loseFocus(chain: Boolean = false){
+    setTimeout(function(){
+        //Lose only active status if keepFocus is false or Not Active Lock
+        if(active.value && !keepFocus.value && !props.alwaysActive){
+            active.value = false;
+        }
+    }, 10);
 }
 
 function toggleSelection(){
@@ -473,6 +484,50 @@ function searchSelection(){
 function clearSearch(){
     props.options.search = "";
     searchPool.value = props.options.data.map(item => item.value);
+}
+
+watch(selectParentFocused, (focused) => {
+    if (focused) {
+        if(backTabbed.value){
+            loseFocus();
+        } else {
+            keepFocusAlive();
+        }
+    } else {
+        loseFocus();
+    }
+});
+watch(selectionScrollFocused, (focused) => {
+    if (focused) {
+        keepFocusAlive();
+    } else {
+        loseFocus();
+    }
+});
+watch(selectionSearchFocused, (focused) => {
+    if (focused) {
+        keepFocusAlive();
+    } else {
+        loseFocus();
+    }
+});
+
+function keyHandler(event) {
+    let key = event.which;
+
+    if (event.shiftKey && event.keyCode === 9){
+        handleBackTab();
+    }
+}
+
+function handleBackTab() {
+    backTabbed.value = true;
+    tabindexComputed.value = tabindexComputed.value * -1;
+
+    setTimeout(function() {
+        backTabbed.value = false;
+        tabindexComputed.value = Math.abs(tabindexComputed.value);
+    }, 10)
 }
 
 watch(active, async (newValue) => {

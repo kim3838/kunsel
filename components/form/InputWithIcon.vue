@@ -5,6 +5,7 @@
         </div>
         <input
             :id="id"
+            :tabindex="tabindex"
             :disabled="disabled"
             :class="[
                 fontClass,
@@ -46,6 +47,10 @@ const props = defineProps({
     id: {
         type: String,
         default: null,
+    },
+    tabindex: {
+        type: Number,
+        default: 0
     },
     icon: {
         type: String,

@@ -1,7 +1,7 @@
 <template>
     <div
         ref="selectParent"
-        tabindex="0"
+        :tabindex="tabindexComputed"
         :style="{width: width}"
         class="focus:tw-outline-none">
         <div
@@ -24,12 +24,14 @@
             <div :class="[active ? 'tw-block' : 'tw-hidden']" class="tw-w-full tw-h-full tw-relative tw-overflow-hidden tw-items-center">
                 <div :class="[inputHolderClass]" class="tw-pl-1 tw-absolute tw-left-0 tw-h-full tw-flex tw-items-center">
                     <Input
+                        :tabindex="tabindexInput"
                         :readonly="!searchable"
                         autocomplete="off"
                         class="tw-w-full"
                         ref="selectionSearch"
                         type="text"
                         :placeholder="searchable ? 'Search...' : selectionSummary"
+                        @keydown="keyHandler"
                         v-model="props.payload.fetch.filters.search.keyword"
                         v-if="active"
                         :size="inputSize"
@@ -113,7 +115,7 @@
 
 <script setup lang="ts">
 import {useFocus, useScroll} from '@vueuse/core';
-import {ref, computed, nextTick, watch, onMounted} from 'vue';
+import {ref, toRef, computed, nextTick, watch, onMounted} from 'vue';
 import {storeToRefs} from 'pinia';
 const {$coreStore, $themeStore} = useNuxtApp();
 
@@ -141,6 +143,10 @@ const props = defineProps({
                 selected: []
             }
         }
+    },
+    tabindex: {
+        type: Number,
+        default: 0
     },
     inHorizontalScrollable: Boolean,
     dropShadow: Boolean,
@@ -195,6 +201,11 @@ const props = defineProps({
 });
 
 let active = ref(!!props.alwaysActive);
+let backTabbed = ref(false);
+let tabindexComputed = toRef(props.tabindex);
+let tabindexInput = computed(()=>{
+    return tabindexComputed.value + 1;
+});
 let keepFocus = ref(false);
 let keepFocusCallback = ref(1);
 let selection = ref([]);
@@ -206,6 +217,7 @@ let perPage = computed(() => {
 });
 let selectParent = ref(null);
 let selectionSearch = ref(null);
+let selectionScroll = ref<HTMLElement | null>(null);
 let toggleSelectedButtonVisibility = ref(null);
 let clearSelectedButton = ref(null);
 let selectionEndResult = reactive({
@@ -229,6 +241,7 @@ const { focused: selectParentFocused } = useFocus(selectParent);
 const { focused: selectionSearchFocused } = useFocus(selectionSearch);
 const { focused: toggleSelectedButtonVisibilityFocused } = useFocus(toggleSelectedButtonVisibility);
 const { focused: clearSelectedButtonFocused } = useFocus(clearSelectedButton);
+const { focused: selectionScrollFocused } = useFocus(selectionScroll);
 
 const idleBorderComputed = computed(() => {
     return props.idleBorder ? props.idleBorder : threadColor.value;
@@ -554,17 +567,19 @@ let selectedParamsComputed = computed(() => {
     };
 });
 
-const selectionScroll = ref<HTMLElement | null>(null)
 const {
     y: selectionScrollY,
     arrivedState: selectionScrollArrivedState
 } = useScroll(selectionScroll, { behavior: 'smooth' })
 const {bottom: selectionScrollBottomReached} = toRefs(selectionScrollArrivedState);
-const {focused: selectionScrollFocused } = useFocus(selectionScroll)
 
 watch(selectParentFocused, (focused) => {
     if (focused) {
-        keepFocusAlive();
+        if(backTabbed.value){
+            loseFocus();
+        } else {
+            keepFocusAlive();
+        }
     } else {
         loseFocus();
     }
@@ -597,6 +612,24 @@ watch(selectionSearchFocused, (focused) => {
         loseFocus();
     }
 });
+
+function keyHandler(event) {
+    let key = event.which;
+
+    if (event.shiftKey && event.keyCode === 9){
+        handleBackTab();
+    }
+}
+
+function handleBackTab() {
+    backTabbed.value = true;
+    tabindexComputed.value = tabindexComputed.value * -1;
+
+    setTimeout(function() {
+        backTabbed.value = false;
+        tabindexComputed.value = Math.abs(tabindexComputed.value);
+    }, 10)
+}
 
 const showSelectionEndResult = computed(() => {
     let selectionIsGreaterThanViewableMaxLine = selection.value.length > props.selectionMaxViewableLine;
