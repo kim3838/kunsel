@@ -1,5 +1,6 @@
 <template>
     <input
+        :tabindex="tabindex"
         :disabled="disabled"
         :class="[
             fontClass,
@@ -9,7 +10,7 @@
             focusRing ? 'focus-ring' : '',
             withBorder ? 'bordered' : 'borderless',
             rounded ? 'tw-rounded-sm': '']"
-        class="tw-pl-1 tw-form-input"
+        class="tw-pl-1 tw-form-input tw-w-full"
         :value="modelValue"
         @input="$emit('update:modelValue', $event.target.value)"
         ref="input">
@@ -40,6 +41,10 @@ const props = defineProps({
     modelValue: [String, Number],
     size: {
         default: null
+    },
+    tabindex: {
+        type: Number,
+        default: 0
     },
     disabled: {
         type: Boolean,

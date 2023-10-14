@@ -208,10 +208,10 @@
                                     v-model="selected_2"
                                     selection>
                                     <template v-slot:cell.name="{index, cell, slot}">
-                                        <Input v-model="cell.name" readonly :size="slot.inputSize" class="tw-w-full" type="text" />
+                                        <Input v-model="cell.name" readonly :size="slot.inputSize" type="text" />
                                     </template>
                                     <template v-slot:cell.code="{index, cell, slot}">
-                                        <Input v-model="cell.code" readonly :size="slot.inputSize" class="tw-w-full" type="text" />
+                                        <Input v-model="cell.code" readonly :size="slot.inputSize" type="text" />
                                     </template>
                                     <template v-slot:cell.datetime_added="{cell, slot, scrollReference}">
                                         <InputWithIcon
@@ -272,13 +272,13 @@
                                             :icon="'emojione-monotone:japanese-post-office'"/>
                                     </template>
                                     <template v-slot:cell.type="{cell, index, slot}">
-                                        <Input :size="slot.inputSize" class="tw-w-full" v-model="cell.type" type="number" autocomplete="off" />
+                                        <Input :size="slot.inputSize" v-model="cell.type" type="number" autocomplete="off" />
                                     </template>
                                     <template v-slot:cell.category="{cell, index, slot}">
-                                        <Input :size="slot.inputSize" class="tw-w-full" v-model="cell.category" type="number" autocomplete="off" />
+                                        <Input :size="slot.inputSize" v-model="cell.category" type="number" autocomplete="off" />
                                     </template>
                                     <template v-slot:cell.capacity="{cell, index, slot}">
-                                        <Input :size="slot.inputSize" class="tw-w-full" v-model="cell.capacity" type="number" autocomplete="off" />
+                                        <Input :size="slot.inputSize" v-model="cell.capacity" type="number" autocomplete="off" />
                                     </template>
                                     <template v-slot:cell.datetime_added="{cell, slot, scrollReference}">
                                         <InputWithIcon
@@ -459,31 +459,61 @@
                         <div v-if="true" class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-8">
                             <div class="tw-block neutral-border">
                                 <InputLabel :size="'2xs'" for="form_input_1" value="XXS Label" />
-                                <Input :size="'2xs'" class="tw-w-full" placeholder="Enter username" id="form_input_1" type="text" autocomplete="off" />
+                                <Input :size="'2xs'" placeholder="Enter username" id="form_input_1" type="text" autocomplete="off" />
                             </div>
                             <div class="tw-block neutral-border">
                                 <InputLabel :size="'xs'" for="form_input_2" value="XS Label" />
-                                <Input :size="'xs'" class="tw-w-full" placeholder="Enter username" id="form_input_2" type="text" autocomplete="off" />
+                                <Input :size="'xs'" placeholder="Enter username" id="form_input_2" type="text" autocomplete="off" />
                             </div>
                             <div class="tw-block neutral-border">
                                 <InputLabel :size="'sm'" for="form_input_3" value="SM Label" />
-                                <Input :size="'sm'" class="tw-w-full" placeholder="Enter username" id="form_input_3" type="text" autocomplete="off" />
+                                <Input :size="'sm'" placeholder="Enter username" id="form_input_3" type="text" autocomplete="off" />
                             </div>
                             <div class="tw-block neutral-border">
                                 <InputLabel :size="'md'" for="form_input_4" value="MD Label" />
-                                <Input :size="'md'" class="tw-w-full" placeholder="Enter username" id="form_input_4" type="text" autocomplete="off" />
+                                <Input :size="'md'" placeholder="Enter username" id="form_input_4" type="text" autocomplete="off" />
                             </div>
                             <div class="tw-block neutral-border">
                                 <InputLabel :size="'md'" for="form_input_5" value="MD Label" />
-                                <Input :size="'md'" disabled class="tw-w-full" placeholder="Disabled" id="form_input_4" type="text" autocomplete="off" />
+                                <Input :size="'md'" disabled placeholder="Disabled" id="form_input_4" type="text" autocomplete="off" />
                             </div>
                             <div class="tw-block neutral-border">
                                 <InputLabel :size="'lg'" for="form_input_6" value="LG Label" />
-                                <Input :size="'lg'" class="tw-w-full" placeholder="Enter username" id="form_input_5" type="text" autocomplete="off" />
+                                <Input :size="'lg'" placeholder="Enter username" id="form_input_5" type="text" autocomplete="off" />
                             </div>
                             <div class="tw-col-span-2 tw-block neutral-border">
                                 <InputLabel :size="'xl'" for="form_input_7" value="XL Label" />
-                                <Input :size="'xl'" class="tw-w-full" placeholder="Enter username" id="form_input_6" type="text" autocomplete="off" />
+                                <Input :size="'xl'" placeholder="Enter username" id="form_input_6" type="text" autocomplete="off" />
+                            </div>
+                        </div>
+                        <div v-if="true" class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-8">
+                            <div class="tw-block neutral-border">
+                                <InputLabel :size="'2xs'" for="form_input_1" value="XXS Label" />
+                                <InputWithIcon :size="'2xs'" :icon="'ic:sharp-qr-code'" placeholder="Enter username" id="form_input_1" type="text" autocomplete="off" />
+                            </div>
+                            <div class="tw-block neutral-border">
+                                <InputLabel :size="'xs'" for="form_input_2" value="XS Label" />
+                                <InputWithIcon :size="'xs'" :icon="'ic:sharp-qr-code'" placeholder="Enter username" id="form_input_2" type="text" autocomplete="off" />
+                            </div>
+                            <div class="tw-block neutral-border">
+                                <InputLabel :size="'sm'" for="form_input_3" value="SM Label" />
+                                <InputWithIcon :size="'sm'" :icon="'ic:sharp-qr-code'" placeholder="Enter username" id="form_input_3" type="text" autocomplete="off" />
+                            </div>
+                            <div class="tw-block neutral-border">
+                                <InputLabel :size="'md'" for="form_input_4" value="MD Label" />
+                                <InputWithIcon :size="'md'" :icon="'ic:sharp-qr-code'" placeholder="Enter username" id="form_input_4" type="text" autocomplete="off" />
+                            </div>
+                            <div class="tw-block neutral-border">
+                                <InputLabel :size="'md'" for="form_input_5" value="MD Label" />
+                                <InputWithIcon :size="'md'" :icon="'ic:sharp-qr-code'" disabled placeholder="Disabled" id="form_input_4" type="text" autocomplete="off" />
+                            </div>
+                            <div class="tw-block neutral-border">
+                                <InputLabel :size="'lg'" for="form_input_6" value="LG Label" />
+                                <InputWithIcon :size="'lg'" :icon="'ic:sharp-qr-code'" placeholder="Enter username" id="form_input_5" type="text" autocomplete="off" />
+                            </div>
+                            <div class="tw-col-span-2 tw-block neutral-border">
+                                <InputLabel :size="'xl'" for="form_input_7" value="XL Label" />
+                                <InputWithIcon :size="'xl'" :icon="'ic:sharp-qr-code'" placeholder="Enter username" id="form_input_6" type="text" autocomplete="off" />
                             </div>
                         </div>
 
