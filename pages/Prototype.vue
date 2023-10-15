@@ -77,6 +77,39 @@
                             </div>
                         </div>
 
+                        <div v-if="true" class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-8">
+                            <div class="tw-block neutral-border">
+                                <InputLabel value="Paginated Multi Select" />
+                                <MultiSelectPaginated
+                                    :drop-shadow="true"
+                                    :selection-max-content="false"
+                                    :selected-max-viewable-line="6"
+                                    :selection-max-viewable-line="10"
+                                    :searchable="true"
+                                    :selection-float="true"
+                                    :always-active="false"
+                                    :label="'Select Prototypes'"
+                                    :size="'md'"
+                                    :payload="multiSelectPrototypePayload"
+                                    :icon="'ic:sharp-qr-code'"/>
+                            </div>
+                            <div class="tw-block neutral-border">
+                                <InputLabel value="Paginated Single Select" />
+                                <SingleSelectPaginated
+                                    :value-persist="true"
+                                    :drop-shadow="true"
+                                    :selection-max-content="false"
+                                    :selection-max-viewable-line="10"
+                                    :searchable="true"
+                                    :selection-float="true"
+                                    :always-active="false"
+                                    :label="'Select Prototype'"
+                                    :size="'md'"
+                                    :payload="singleSelectPrototypePayload"
+                                    :icon="'emojione-monotone:japanese-no-vacancy-button'"/>
+                            </div>
+                        </div>
+
                         <div v-if="false" class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-8">
                             <div class="tw-flex tw-block">
                                 <MultiSelect
@@ -717,6 +750,30 @@ let bookingType = reactive({
         {text : 'Corporation/Partnership', value: 3}
     ],
     selected: 1
+});
+let multiSelectPrototypePayload = reactive({
+    fetch: {
+        url: '/api/selections/prototype',
+        filters: {
+            search: {
+                keyword: '',
+                callback: 1
+            }
+        }
+    },
+    selected: [1992,1263]
+});
+let singleSelectPrototypePayload = reactive({
+    fetch: {
+        url: '/api/selections/prototype',
+        filters: {
+            search: {
+                keyword: '',
+                callback: 1
+            }
+        }
+    },
+    selected: null,
 });
 
 let selected_1 = ref([1001,1002]);

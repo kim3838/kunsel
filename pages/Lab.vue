@@ -167,12 +167,12 @@ let multiSelectPrototypePayload = reactive({
         url: '/api/selections/prototype',
         filters: {
             search: {
-                keyword: '',//1239
+                keyword: '',
                 callback: 1
             }
         }
     },
-    selected: [1992]//[1992, 1263, 1256]
+    selected: [1992,1263]
 });
 let singleSelectPrototypePayload = reactive({
     fetch: {
