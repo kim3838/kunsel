@@ -434,6 +434,58 @@ const selectionWidthComputed = computed(()=>{
     return widthStyles;
 });
 
+const selectionHeaderSummary = computed(()=>{
+    return (props.payload.fetch.filters.search.keyword.trim() && selection.value.length == 0)
+        ? 'Not Found.'
+        : props.label;
+});
+
+const selectionSummary = computed(() => {
+    if(props.payload.selected.length === 0){
+        return "None Selected";
+    } else if(props.payload.selected.length < 5) {
+        return selected.value.map(item => item.text).join(", ");
+    } else if(props.payload.selected.length > 4) {
+        return `${props.payload.selected.length} Selected`;
+    }
+});
+
+const selectedComputed = computed(() => {
+    return selected.value;
+});
+
+let paramsComputed = computed(() => {
+    return {
+        page: page.value,
+        perPage: perPage.value,
+        filters: {
+            search: props.payload.fetch.filters.search.keyword
+        }
+    };
+});
+
+let selectedParamsComputed = computed(() => {
+    return {
+        page: 1,
+        perPage: props.payload?.selected.length,
+        filters: {
+            id: props.payload?.selected
+        }
+    };
+});
+
+const {
+    y: selectionScrollY,
+    arrivedState: selectionScrollArrivedState
+} = useScroll(selectionScroll, { behavior: 'smooth' })
+const {bottom: selectionScrollBottomReached} = toRefs(selectionScrollArrivedState);
+
+const showSelectionEndResult = computed(() => {
+    let selectionIsGreaterThanViewableMaxLine = selection.value.length > props.selectionMaxViewableLine;
+
+    return selectionIsGreaterThanViewableMaxLine || pending.value;
+});
+
 function keepFocusAlive(){
     if(!active.value){
         active.value = true;
@@ -459,26 +511,6 @@ function loseFocus(chain: Boolean = false){
         }
     }, 10);
 }
-
-const selectionHeaderSummary = computed(()=>{
-    return (props.payload.fetch.filters.search.keyword.trim() && selection.value.length == 0)
-        ? 'Not Found.'
-        : props.label;
-});
-
-const selectionSummary = computed(() => {
-    if(props.payload.selected.length === 0){
-        return "None Selected";
-    } else if(props.payload.selected.length < 5) {
-        return selected.value.map(item => item.text).join(", ");
-    } else if(props.payload.selected.length > 4) {
-        return `${props.payload.selected.length} Selected`;
-    }
-});
-
-const selectedComputed = computed(() => {
-    return selected.value;
-})
 
 function isItemSelected(item): boolean{
     return props.payload.selected.indexOf(item.value) >= 0;
@@ -546,32 +578,6 @@ watch(active, async (newValue) => {
     }
 });
 
-let paramsComputed = computed(() => {
-    return {
-        page: page.value,
-        perPage: perPage.value,
-        filters: {
-            search: props.payload.fetch.filters.search.keyword
-        }
-    };
-});
-
-let selectedParamsComputed = computed(() => {
-    return {
-        page: 1,
-        perPage: props.payload?.selected.length,
-        filters: {
-            id: props.payload?.selected
-        }
-    };
-});
-
-const {
-    y: selectionScrollY,
-    arrivedState: selectionScrollArrivedState
-} = useScroll(selectionScroll, { behavior: 'smooth' })
-const {bottom: selectionScrollBottomReached} = toRefs(selectionScrollArrivedState);
-
 watch(selectParentFocused, (focused) => {
     if (focused) {
         if(backTabbed.value){
@@ -629,12 +635,6 @@ function handleBackTab() {
         tabindexComputed.value = Math.abs(tabindexComputed.value);
     }, 10)
 }
-
-const showSelectionEndResult = computed(() => {
-    let selectionIsGreaterThanViewableMaxLine = selection.value.length > props.selectionMaxViewableLine;
-
-    return selectionIsGreaterThanViewableMaxLine || pending.value;
-});
 
 const {pending, execute} = csrFetch(props.payload?.fetch.url, {
     method: 'GET',

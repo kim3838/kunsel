@@ -367,6 +367,52 @@ const selectionWidthComputed = computed(()=>{
     return widthStyles;
 });
 
+const selectionHeaderSummary = computed(()=>{
+    return (props.payload.fetch.filters.search.keyword.trim() && selection.value.length == 0)
+        ? 'Not Found.'
+        : props.label;
+});
+
+const selectionSummary = computed(() => {
+    if(props.payload.selected == null){
+        return "None Selected";
+    } else {
+        return selected.value.text;
+    }
+});
+
+let paramsComputed = computed(() => {
+    return {
+        page: page.value,
+        perPage: perPage.value,
+        filters: {
+            search: props.payload.fetch.filters.search.keyword
+        }
+    };
+});
+
+let selectedParamsComputed = computed(() => {
+    return {
+        page: 1,
+        perPage: 1,
+        filters: {
+            id: props.payload?.selected ? Array.of(props.payload?.selected) : []
+        }
+    };
+});
+
+const {
+    y: selectionScrollY,
+    arrivedState: selectionScrollArrivedState
+} = useScroll(selectionScroll, { behavior: 'smooth' })
+const {bottom: selectionScrollBottomReached} = toRefs(selectionScrollArrivedState);
+
+const showSelectionEndResult = computed(() => {
+    let selectionIsGreaterThanViewableMaxLine = selection.value.length > props.selectionMaxViewableLine;
+
+    return selectionIsGreaterThanViewableMaxLine || pending.value;
+});
+
 function keepFocusAlive(){
     if(!active.value){
         active.value = true;
@@ -391,20 +437,6 @@ function loseFocus(chain: Boolean = false){
         }
     }, 10);
 }
-
-const selectionHeaderSummary = computed(()=>{
-    return (props.payload.fetch.filters.search.keyword.trim() && selection.value.length == 0)
-        ? 'Not Found.'
-        : props.label;
-});
-
-const selectionSummary = computed(() => {
-    if(props.payload.selected == null){
-        return "None Selected";
-    } else {
-        return selected.value.text;
-    }
-});
 
 function isItemSelected(item): boolean{
     return props.payload.selected == item.value;
@@ -447,32 +479,6 @@ watch(active, async (newValue) => {
         }
     }
 });
-
-let paramsComputed = computed(() => {
-    return {
-        page: page.value,
-        perPage: perPage.value,
-        filters: {
-            search: props.payload.fetch.filters.search.keyword
-        }
-    };
-});
-
-let selectedParamsComputed = computed(() => {
-    return {
-        page: 1,
-        perPage: 1,
-        filters: {
-            id: props.payload?.selected ? Array.of(props.payload?.selected) : []
-        }
-    };
-});
-
-const {
-    y: selectionScrollY,
-    arrivedState: selectionScrollArrivedState
-} = useScroll(selectionScroll, { behavior: 'smooth' })
-const {bottom: selectionScrollBottomReached} = toRefs(selectionScrollArrivedState);
 
 watch(selectParentFocused, (focused) => {
     if (focused) {
@@ -517,12 +523,6 @@ function handleBackTab() {
         tabindexComputed.value = Math.abs(tabindexComputed.value);
     }, 10)
 }
-
-const showSelectionEndResult = computed(() => {
-    let selectionIsGreaterThanViewableMaxLine = selection.value.length > props.selectionMaxViewableLine;
-
-    return selectionIsGreaterThanViewableMaxLine || pending.value;
-});
 
 const {pending, execute} = csrFetch(props.payload?.fetch.url, {
     method: 'GET',
