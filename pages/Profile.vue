@@ -2,18 +2,26 @@
     <div>
         <NuxtLayout :name="$coreStore.layout">
             <template #content>
-                <div class="tw-m-2 tw-p-2 tw-border-neutral-200">
-                    <div v-if="$authStore.isLoggedIn" class="tw-justify-end">
-                        <Button :disabled="pending" @click="handleLogout" :size="'md'"><span class="tw-font-semibold">Logout</span></Button>
+                <div class="tw-mx-auto tw-max-w-screen-2xl tw-flex tw-justify-center">
+                    <div class="tw-flex tw-items-center tw-justify-center">
+                        <AccentFrame class="tw-my-4 tw-w-max ">
+                            <template #content>
+                                <div class="tw-relative">
+                                    <p class="tw-font-semibold tw-text-lg">Profile Information</p>
+                                    <div class="tw-mt-2 tw-grid tw-gap-2 tw-grid-cols-2">
+                                        <div>
+                                            <InputLabel :size="'sm'" value="Username" />
+                                            <InputWithIcon :icon="'ic:sharp-person-pin'" v-model="$authStore.user.name" />
+                                        </div>
+                                        <div>
+                                            <InputLabel :size="'sm'" value="Email" />
+                                            <InputWithIcon :icon="'ic:round-mail-outline'" v-model="$authStore.user.email" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </template>
+                        </AccentFrame>
                     </div>
-                    <table class="tw-mt-1 tw-border-collapse tw-tw-border tw-border-neutral-300">
-                        <tbody>
-                            <tr><td class="tw-border tw-border-neutral-300">Id</td><td class="tw-border tw-border-neutral-300">{{$authStore.user?.id}}</td></tr>
-                            <tr><td class="tw-border tw-border-neutral-300">Name</td><td class="tw-border tw-border-neutral-300">{{$authStore.user?.name}}</td></tr>
-                            <tr><td class="tw-border tw-border-neutral-300">Email</td><td class="tw-border tw-border-neutral-300">{{$authStore.user?.email}}</td></tr>
-                            <tr><td class="tw-border tw-border-neutral-300">Email Verified at</td><td class="tw-border tw-border-neutral-300">{{$moment($authStore.user?.email_verified_at).format('YYYY-MM-DD HH:mm:ss')}}</td></tr>
-                        </tbody>
-                    </table>
                 </div>
             </template>
         </NuxtLayout>
@@ -34,15 +42,4 @@ definePageMeta({
 
 const { $moment, $authStore } = useNuxtApp();
 
-const pending = ref(false);
-
-function handleLogout(){
-    pending.value = true;
-
-    $authStore.logout({
-        onResponse() {
-            pending.value = false;
-        }
-    });
-}
 </script>

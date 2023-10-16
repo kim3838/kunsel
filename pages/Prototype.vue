@@ -1012,9 +1012,3 @@ onMounted(async () => {
     render(dateTimePickers.value);
 });
 </script>
-
-<style scoped>
-.neutral-border{
-    border: 1px solid v-bind(neutralColor);
-}
-</style>

@@ -5,7 +5,6 @@
                 <div class="tw-mx-auto tw-max-w-screen-2xl tw-flex tw-justify-center">
                     <div v-if="true" class="tw-w-full">
                         <div class="tw-w-full tw-my-4 tw-grid tw-gap-1 tw-grid-cols-5">
-
                             <div>
                                 <AccentFrame class="tw-w-full">
                                     <template #content>

@@ -27,6 +27,7 @@ const {
     lining: liningColor,
     tint: tintColor,
     text: textColor,
+    neutral: neutralColor,
     textInvert: textInvertColor,
     textSecondary: textSecondaryColor,
 } = storeToRefs($themeStore);
@@ -44,6 +45,10 @@ const {
 <style>
 .nuxt-page {
     color: v-bind(textColor);
+}
+
+.neutral-border{
+    border: 1px solid v-bind(neutralColor);
 }
 
 .top-fragment{
