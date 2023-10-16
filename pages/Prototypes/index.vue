@@ -2,9 +2,9 @@
     <div>
         <NuxtLayout :name="$coreStore.layout">
             <template #content>
-                <div class="tw-m-2 tw-p-2 tw-border tw-border-neutral-200">
-                    <div>
-                        <form @submit.prevent="paginate(1, true)" class="tw-space-y-0.5">
+                <div class="tw-mx-auto tw-max-w-screen-2xl tw-flex tw-justify-center">
+                    <div class="tw-w-full">
+                        <form @submit.prevent="paginate(1, true)" class="tw-space-y-0.5 tw-my-4 tw-p-[1.5rem] neutral-border">
                             <div class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-8">
                                 <div class="tw-block">
                                     <InputLabel :size="'md'" value="Search"/>
@@ -12,15 +12,7 @@
                                 </div>
                                 <div class="tw-block">
                                     <InputLabel :size="'md'" value="_" class="tw-text-transparent"/>
-                                    <Button type="button" :variant="'outline'" @click="filters.search.keyword += '.';" :size="'md'" :icon="'ic:sharp-join-left'" :label="'Concat &quot;.&quot;'"></Button>
-                                </div>
-                                <div class="tw-block">
-                                    <InputLabel :size="'md'" value="_" class="tw-text-transparent"/>
-                                    <Button type="button" :variant="'outline'" @click="$themeStore.setTheme('blue')" :size="'md'" :icon="'mdi:palette-swatch-variant'" :label="'Blue Theme'"></Button>
-                                </div>
-                                <div class="tw-block">
-                                    <InputLabel :size="'md'" value="_" class="tw-text-transparent"/>
-                                    <Button type="button" :variant="'outline'" @click="$themeStore.setTheme('light')" :size="'md'" :icon="'mdi:palette-swatch-variant'" :label="'Light Theme'"></Button>
+                                    <Button type="button" :variant="'flat'" @click="filters.search.keyword += '.';" :size="'md'" :icon="'ic:sharp-join-left'" :label="'Concat &quot;.&quot;'"></Button>
                                 </div>
                             </div>
 
@@ -31,7 +23,7 @@
                                 </div>
                                 <div class="tw-block">
                                     <InputLabel :size="'md'" value="_" class="tw-text-transparent"/>
-                                    <Button type="button" :variant="'outline'" @click="filters.code += '.';" :size="'md'" :icon="'ic:sharp-join-left'" :label="'Concat &quot;.&quot;'"></Button>
+                                    <Button type="button" :variant="'flat'" @click="filters.code += '.';" :size="'md'" :icon="'ic:sharp-join-left'" :label="'Concat &quot;.&quot;'"></Button>
                                 </div>
                             </div>
 
@@ -53,52 +45,49 @@
                             </div>
                         </form>
 
-                        <div>
-                            <PageInformation
-                                v-if="users.meta.pagination.total > 0"
-                                :pagination="users.meta.pagination"
-                                :no-record-label="'No User Found'"/>
-                            <Pagination
-                                :size="'xl'"
-                                :pagination="users.meta.pagination"
-                                :pending="pending"
-                                v-model="pageComputed"
-                            />
-                            <DataTable
-                                class="tw-mt-0.5"
-                                :headers="usersHeaders"
-                                :size="'xl'"
-                                :rows="users.data"
-                                :no-data-label="pending ? 'Loading' : 'No User Found'"
-                                v-model="selectedUsers"
-                                selection>
-                                <template v-slot:cell.datetime_added="{cell, slot}">
-                                    <InputWithIcon
-                                        :icon="'ion:calendar-number-sharp'"
-                                        :id="`datetime_added-` + cell.id"
-                                        v-model="cell.datetime_added"
-                                        readonly
-                                        in-cell
-                                        :size="slot.inputSize"
-                                        class="tw-w-full"
-                                        :type="'text'" />
-                                </template>
-                                <template v-slot:cell.actions="{cell, slot, scrollReference}">
-                                    <div class="tw-h-full tw-space-x-0.5 tw-w-full tw-flex tw-items-center">
-                                        <Button type="button" :variant="'flat'" :size="slot.buttonSize" :label="'Details'" :icon="'ci:list-checklist-alt'"></Button>
-                                        <Button type="button" :variant="'flat'" :size="slot.buttonSize" :label="'Approve'" :icon="'fe:check-circle'"></Button>
-                                        <Button type="button" :variant="'flat'" :size="slot.buttonSize" :label="'Deny'" :icon="'icon-park-outline:reject'"></Button>
-                                    </div>
-                                </template>
-                            </DataTable>
-                        </div>
-
-                        <div class="tw-border tw-border-neutral-200">
-                            <pre class="tw-text-sm">{{ users.data }}</pre>
-                        </div>
-                        <div class="tw-border tw-border-neutral-200">
-                            <pre class="tw-text-sm">{{ users.meta }}</pre>
-                        </div>
+                        <AccentFrame>
+                            <template #content>
+                                <div>
+                                    <PageInformation
+                                        v-if="prototypes.meta.pagination.total > 0"
+                                        :pagination="prototypes.meta.pagination"
+                                        :no-record-label="'No Record Found'"/>
+                                    <Pagination
+                                        :size="'lg'"
+                                        :pagination="prototypes.meta.pagination"
+                                        :pending="pending"
+                                        v-model="pageComputed"
+                                    />
+                                    <DataTable
+                                        class="tw-mt-0.5"
+                                        :headers="prototypeHeaders"
+                                        :size="'lg'"
+                                        :rows="prototypes.data"
+                                        :no-data-label="pending ? 'Loading' : 'No Prototype Found'"
+                                        v-model="selectedPrototypes"
+                                        selection>
+                                        <template v-slot:cell.datetime_added="{cell, slot}">
+                                            <InputWithIcon
+                                                :icon="'ion:calendar-number-sharp'"
+                                                :id="`datetime_added-` + cell.id"
+                                                v-model="cell.datetime_added"
+                                                readonly
+                                                in-cell
+                                                :size="slot.inputSize"
+                                                class="tw-w-full"
+                                                :type="'text'" />
+                                        </template>
+                                        <template v-slot:cell.actions="{cell, slot, scrollReference}">
+                                            <div class="tw-h-full tw-space-x-0.5 tw-w-full tw-flex tw-items-center">
+                                                <Button type="button" :variant="'flat'" :size="slot.buttonSize" :label="'Details'" :icon="'ci:list-checklist-alt'"></Button>
+                                                <Button type="button" :variant="'flat'" :size="slot.buttonSize" :label="'Approve'" :icon="'fe:check-circle'"></Button>
+                                                <Button type="button" :variant="'flat'" :size="slot.buttonSize" :label="'Deny'" :icon="'icon-park-outline:reject'"></Button>
+                                            </div>
+                                        </template>
+                                    </DataTable>
+                                </div>
+                            </template>
+                        </AccentFrame>
                     </div>
                 </div>
             </template>
@@ -119,7 +108,7 @@ definePageMeta({
     middleware: 'auth'
 });
 
-let users = reactive({
+let prototypes = reactive({
     'data': [],
     'meta': {
         pagination: {
@@ -131,7 +120,7 @@ let users = reactive({
         }
     }
 });
-let usersHeaders = reactive([
+let prototypeHeaders = reactive([
     { text: '#', value: 'row_number'},
     { text: 'ID', value: 'id'},
     { text: 'NAME', value: 'name'},
@@ -156,7 +145,7 @@ let filters = reactive({
     datetimeTo: $moment().endOf('day').format('YYYY-MM-DD HH:mm:ss'),
 });
 
-let selectedUsers = ref([]);
+let selectedPrototypes = ref([]);
 let searchInput = ref(null);
 let submitButton = ref(null);
 
@@ -202,8 +191,8 @@ const {pending, execute} = csrFetch("/api/v1/prototypes", {
                 payload: response._data
             });
         } else {
-            users.data = _get(response, '_data.values.data', []);
-            users.meta = _get(response, '_data.values.meta', {
+            prototypes.data = _get(response, '_data.values.data', []);
+            prototypes.meta = _get(response, '_data.values.meta', {
                 pagination: {
                     total: 0,
                     count: 0,
@@ -249,7 +238,7 @@ function paginate(page = 1, clearSelection = false){
     filters.page = page;
 
     if(clearSelection){
-        selectedUsers.value = [];
+        selectedPrototypes.value = [];
     }
 
     execute();
@@ -274,7 +263,7 @@ let filtersDateTimePickers = ref([
 const {render} = dateTimePicker();
 
 function renderDateTimePickers(){
-    let dataDateTimePickers = users.data.map(record => {
+    let dataDateTimePickers = prototypes.data.map(record => {
         return {
             id: `datetime_added-` + record.id,
             type: 'datetime',

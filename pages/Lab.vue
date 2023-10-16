@@ -2,9 +2,9 @@
     <div>
         <NuxtLayout :name="$coreStore.layout">
             <template #content>
-                <div class="tw-mx-auto tw-max-w-screen-2xl tw-flex tw-justify-center">
-                    <div v-if="true" class="tw-w-full">
-                        <div class="tw-w-full tw-my-4 tw-grid tw-gap-1 tw-grid-cols-5">
+                <div class="tw-mx-auto tw-max-w-screen-2xl tw-flex">
+                    <div class="tw-w-full">
+                        <div class="tw-my-4 tw-grid tw-gap-2 tw-grid-cols-5">
                             <div>
                                 <AccentFrame class="tw-w-full">
                                     <template #content>

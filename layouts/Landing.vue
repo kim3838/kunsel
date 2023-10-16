@@ -22,8 +22,8 @@
                             <NavLink :to="'/profile'" :active="isRouteActive('profile')">
                                 Profile
                             </NavLink>
-                            <NavLink :to="'/users'" :active="isRouteActive('users')">
-                                Users
+                            <NavLink :to="'/prototypes'" :active="isRouteActive('prototypes')">
+                                Prototypes
                             </NavLink>
                             <NavDrop :title="'Account'" :links="accountLinks" />
                         </div>
