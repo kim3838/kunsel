@@ -93,7 +93,7 @@ onMounted(async () => {
     emailInput.value.$refs.input.focus();
 })
 
-const email = ref("berenice.jerde@example.com1");
+const email = ref("kimdeguzman20@yahoo.com1");
 const password = ref("password");
 const remember = ref(true);
 
