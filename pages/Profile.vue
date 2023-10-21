@@ -10,11 +10,11 @@
                                 <div class="tw-mt-2 tw-grid tw-gap-2 tw-grid-cols-2">
                                     <div>
                                         <InputLabel :size="'sm'" value="Username" />
-                                        <InputWithIcon :icon="'ic:sharp-person-pin'" v-model="$authStore.user.name" />
+                                        <InputWithIcon :icon="'ic:sharp-person-pin'" v-model="user.name" />
                                     </div>
                                     <div>
                                         <InputLabel :size="'sm'" value="Email" />
-                                        <InputWithIcon :icon="'ic:round-mail-outline'" v-model="$authStore.user.email" />
+                                        <InputWithIcon :icon="'ic:round-mail-outline'" v-model="user.email" />
                                     </div>
                                 </div>
                             </div>
@@ -31,13 +31,15 @@
 </style>
 
 <script setup lang="ts">
-import {ref} from "vue";
+import {storeToRefs} from 'pinia';
+const {$authStore} = useNuxtApp();
 
 definePageMeta({
     layout: false,
     middleware: 'auth'
 });
 
-const { $moment, $authStore } = useNuxtApp();
-
+const {
+    user: user
+} = storeToRefs($authStore);
 </script>
