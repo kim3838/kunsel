@@ -35,7 +35,8 @@
         <main class="tw-relative allocate-navigation">
             <slot name="content"/>
         </main>
-        <ServiceErrorModal></ServiceErrorModal>
+        <!-- Action Modal -->
+        <PromptModal />
         <!-- Footer -->
         <footer>
             <div class="tw-mx-auto tw-max-w-screen-2xl tw-px-4 tw-pb-6 tw-pt-16 sm:tw-px-6 lg:tw-px-8 lg:tw-pt-24">
@@ -197,7 +198,7 @@ let windowWidth = ref(0);
 let accountLinks = computed(()=>{
     let links: object[] = [];
 
-    if($authStore.isLoggedIn){
+    if($authStore.isAuthenticated){
         links = links.concat([
             {
                 label: 'Account Settings',
