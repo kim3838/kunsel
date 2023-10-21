@@ -1,9 +1,17 @@
 <template>
-    <div>
-        <h1 v-if="error.statusCode === 404">Page not found</h1>
-        <h1 v-else>An error occurred</h1>
-        <NuxtLink to="/">Back to Home page</NuxtLink>
-        <pre>{{error}}</pre>
+    <div class="tw-mx-auto tw-max-w-screen-2xl">
+        <div class="tw-my-4">
+            <div class="tw-w-max tw-mx-auto tw-p-16 tw-text-center tw-border tw-border-neutral-200">
+                <div v-if="error.statusCode === 404">Page not found</div>
+                <div v-else>An error occurred</div>
+                <NuxtLink class="tw-underline tw-text-sm" to="/">
+                    <Button :variant="'flat'" :label="'Back to Home page'"/>
+                </NuxtLink>
+            </div>
+        </div>
+        <div class="tw-my-4">
+            <pre class="tw-w-full">{{ error }}</pre>
+        </div>
     </div>
 </template>
 
