@@ -2,10 +2,10 @@ import {defineStore} from 'pinia'
 import {UseFetchOptions} from "nuxt/app";
 
 type User = {
-    id: number,
-    name: string,
-    email: string,
-    email_verified_at: string,
+    id: number | null,
+    name: string | null,
+    email: string | null,
+    email_verified_at: string | null,
 };
 
 type Credentials = {
@@ -15,11 +15,18 @@ type Credentials = {
 };
 
 export const useAuthStore = defineStore('auth', () => {
-    const user = ref<User | null>(null);
-    const isLoggedIn = computed(() => !!user.value);
-    const authPending = ref(false);
+    const user = ref<User>({
+        id: null,
+        name: null,
+        email: null,
+        email_verified_at: null,
+    });
+    const isAuthenticated = computed(() => (user.value?.id != null));
+    let authPending = ref(false);
 
     async function logout(options: UseFetchOptions = {}) {
+        if (!isAuthenticated.value) return;
+
         const {$coreStore} = useNuxtApp();
         $coreStore.resetServiceError();
 
@@ -29,7 +36,12 @@ export const useAuthStore = defineStore('auth', () => {
         });
 
         if (logout.status._value == 'success') {
-            user.value = null;
+            user.value = {
+                id: null,
+                name: null,
+                email: null,
+                email_verified_at: null,
+            };
             navigateTo("/login");
         }
 
@@ -48,7 +60,13 @@ export const useAuthStore = defineStore('auth', () => {
             method: 'GET',
             onResponse({request, response, options}) {
                 if(response._data.code == 200){
-                    user.value = response._data.values;
+                    
+                    user.value = {
+                        id: _get(response, '_data.values.id', null),
+                        name: _get(response, '_data.values.name', null),
+                        email: _get(response, '_data.values.email', null),
+                        email_verified_at: _get(response, '_data.values.email_verified_at', null),
+                    };
                 }
             }
         });
@@ -62,6 +80,8 @@ export const useAuthStore = defineStore('auth', () => {
     *   * May override onRequestError or onResponse
     **/
     async function login(credentials: Credentials, options: UseFetchOptions = {}) {
+        if (isAuthenticated.value) return;
+
         const {$coreStore} = useNuxtApp();
         $coreStore.resetServiceError();
         authPending.value = true;
@@ -70,7 +90,7 @@ export const useAuthStore = defineStore('auth', () => {
             await ssrFetch("/sanctum/csrf-cookie");
         }
 
-        const login = await ssrFetch("/login", {
+        await ssrFetch("/login", {
             method: 'POST',
             body: credentials,
             onRequestError({ request, options, error }) {
@@ -112,5 +132,5 @@ export const useAuthStore = defineStore('auth', () => {
         });
     }
 
-    return {user, login, isLoggedIn, authPending, fetchUser, logout};
+    return {user, login, isAuthenticated, authPending, fetchUser, logout};
 });

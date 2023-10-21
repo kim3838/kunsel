@@ -5,10 +5,10 @@
                 <div class="tw-mx-auto tw-max-w-screen-2xl tw-flex tw-justify-center">
                     <AccentFrame class="tw-my-4">
                         <template #content>
-                            <div class="tw-relative">
+                            <div class="tw-relative tw-py-4">
                                 <form @submit.prevent="handleLogin" class="tw-w-72">
                                     <div class="tw-block">
-                                        <InputLabel :size="'sm'" for="email" value="Email" />
+                                        <InputLabel :size="'md'" for="email" value="Email" />
                                         <Input
                                             :disabled="pending"
                                             :size="'md'"
@@ -19,7 +19,6 @@
                                             v-model="email"
                                             autofocus
                                             autocomplete="off" />
-                                        <sup>{{email}}</sup>
                                     </div>
 
                                     <div class="tw-block tw-mt-4">
@@ -33,7 +32,6 @@
                                             v-model="password"
                                             required
                                             autocomplete="current-password" />
-                                        <sup>{{password}}</sup>
                                     </div>
 
                                     <div class="tw-block tw-mt-4">
@@ -45,16 +43,16 @@
                                                 :size="'md'"
                                                 :label="'Remember me'" />
                                         </label>
-                                        <label>
-                                            <sup>{{remember}}</sup>
-                                        </label>
                                     </div>
 
-                                    <div v-if="$coreStore.service.error.payload && !useNuxtApp().$coreStore.service.error.prompt" class="tw-block tw-text-sm tw-text-red-600">
+                                    <div v-if="$coreStore.service.error.payload && !useNuxtApp().$coreStore.service.error.prompt" class="tw-block tw-text-sm tw-text-red-400">
                                         <span>{{ $coreStore.service.error.payload.message }}</span>
                                     </div>
 
-                                    <div v-if="!$authStore.isLoggedIn" class="tw-flex tw-items-center tw-justify-end">
+                                    <div v-if="!$authStore.isAuthenticated" class="tw-flex tw-mt-4 tw-items-center tw-justify-between">
+                                        <div class="tw-block tw-text-sm tw-underline">
+                                            <NuxtLink :to="'forgot-password'">Forgot password.</NuxtLink>
+                                        </div>
                                         <Button
                                             :disabled="pending"
                                             :size="'md'"
