@@ -2,29 +2,29 @@
     <ConfirmationModal
         :closeable="false"
         :max-width="'lg'"
-        :show="service.error.prompt"
-        @close="$coreStore.resetServiceError()">
+        :show="prompt.show"
+        @close="$coreStore.promptAction()">
         <template #icon>
             <Icon
-                v-if="service.error.icon"
+                v-if="prompt.icon"
                 class="tw-h-full tw-w-full"
-                :name="service.error.icon">
+                :name="prompt.icon">
             </Icon>
         </template>
 
         <template #title>
-            <span v-text="service.error.title"></span>
+            <span v-text="prompt.title"></span>
         </template>
 
         <template #content>
-            <div v-if="service.error.payload">
-                <div v-text="service.error.payload.message"></div>
+            <div v-if="prompt.message">
+                <div v-text="prompt.message"></div>
             </div>
         </template>
 
         <template #footer>
-            <Button :size="'md'" @click.native="$coreStore.resetServiceError()">
-                <span class="tw-font-semibold">Close</span>
+            <Button :size="'md'" :variant="'flat'" @click.native="$coreStore.promptAction()">
+                <span class="tw-font-semibold">{{prompt.action.label}}</span>
             </Button>
         </template>
     </ConfirmationModal>
@@ -33,5 +33,5 @@
 <script setup>
 import {storeToRefs} from 'pinia';
 const {$coreStore} = useNuxtApp();
-const {service} = storeToRefs($coreStore);
+const {prompt} = storeToRefs($coreStore);
 </script>

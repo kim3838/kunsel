@@ -10,6 +10,16 @@ export const useCoreStore = defineStore('core', {
                 icon: null,
                 payload: null
             }
+        },
+        prompt: {
+            show: false,
+            icon: null,
+            title: null,
+            message: null,
+            action: {
+                callback: null,
+                label: 'Click'
+            }
         }
     }),
 
@@ -20,13 +30,39 @@ export const useCoreStore = defineStore('core', {
     },
 
     actions: {
-        setServiceError(serviceError){
-            this.service.error = serviceError;
-        },
         setLayout(layout){
             if(layout != this.layout){
                 this.layout = layout;
             }
+        },
+        setServiceError(serviceError){
+            this.service.error = serviceError;
+            if(this.service.error.prompt){
+                this.prompt = {
+                    show: true,
+                    icon: this.service.error.icon,
+                    title: this.service.error.title,
+                    message: this.service.error?.payload?.message,
+                    action: {
+                        callback: () => {
+                            this.resetServiceError();
+                        },
+                        label: 'Close'
+                    }
+                };
+            }
+        },
+        setPrompt(promptPayload){
+            this.prompt = {
+                show: true,
+                icon: promptPayload.icon,
+                title: promptPayload.title,
+                message: promptPayload.message,
+                action: {
+                    callback: promptPayload.action.callback,
+                    label: promptPayload.action.label
+                }
+            };
         },
         resetServiceError(){
             this.service.error = {
@@ -35,6 +71,24 @@ export const useCoreStore = defineStore('core', {
                 icon: null,
                 payload: null
             };
+        },
+        resetPrompt(){
+            this.prompt = {
+                show: false,
+                icon: null,
+                title: null,
+                message: null,
+                action: {
+                    callback: null,
+                    label: 'Click'
+                }
+            };
+        },
+        promptAction(){
+            if(typeof this.prompt.action.callback == 'function'){
+                this.prompt.action.callback();
+            }
+            this.resetPrompt();
         }
     },
 })
