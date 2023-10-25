@@ -7,9 +7,14 @@
                         <template #content>
                             <div class="tw-relative tw-py-4">
                                 <form @submit.prevent="execute" class="tw-w-72">
-                                    <p class="tw-text-base">
-                                        Forgot your password? No problem. Just let us know your email address and we will email you a password reset link that will allow you to choose a new one.
+                                    <p class="tw-font-semibold tw-text-lg">
+                                        Forgot your password? No problem.
                                     </p>
+                                    <br>
+                                    <p class="tw-text-base">
+                                        Just let us know your email address and we will email you a password reset link that will allow you to choose a new one.
+                                    </p>
+
                                     <div class="tw-block tw-mt-4">
                                         <InputWithIcon
                                             :icon="'ic:round-mail-outline'"
