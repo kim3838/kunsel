@@ -225,7 +225,7 @@ let selectionEndResult = reactive({
 });
 let showSelectedToggleButton = reactive({
     'icon': 'ion:md-eye',
-    'label': 'Show',
+    'label': 'Show Checked',
 });
 let showSelected = ref(false);
 let selectHeader = ref(null);
@@ -545,7 +545,7 @@ function clearSelected(){
 function resetSelectedVisibilityToggleButton(){
     showSelected.value = false;
     showSelectedToggleButton.icon = 'ion:md-eye';
-    showSelectedToggleButton.label = 'Show';
+    showSelectedToggleButton.label = 'Show Checked';
 }
 
 function toggleSelectedVisibility(){
@@ -554,7 +554,7 @@ function toggleSelectedVisibility(){
     } else {
         showSelected.value = true;
         showSelectedToggleButton.icon = 'ion:md-eye-off';
-        showSelectedToggleButton.label = 'Hide';
+        showSelectedToggleButton.label = 'Hide Checked';
     }
 }
 
