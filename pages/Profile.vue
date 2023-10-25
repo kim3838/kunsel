@@ -10,11 +10,17 @@
                                 <div class="tw-mt-2 tw-grid tw-gap-2 tw-grid-cols-2">
                                     <div>
                                         <InputLabel :size="'sm'" value="Username" />
-                                        <InputWithIcon :icon="'ic:sharp-person-pin'" v-model="user.name" />
+                                        <InputWithIcon :icon="'ic:sharp-person-pin'" v-model="user.name" readonly />
                                     </div>
                                     <div>
                                         <InputLabel :size="'sm'" value="Email" />
-                                        <InputWithIcon :icon="'ic:round-mail-outline'" v-model="user.email" />
+                                        <InputWithIcon :icon="'ic:round-mail-outline'" v-model="user.email" readonly />
+                                    </div>
+                                    <div>
+                                        <InputWithIcon
+                                            :icon="user.email_verified_at ? 'ic:sharp-verified-user' : 'mdi:security-close'"
+                                            :placeholder="user.email_verified_at ? 'Email Verified' : 'Email Not Verified'"
+                                            readonly />
                                     </div>
                                 </div>
                             </div>
