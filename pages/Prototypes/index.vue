@@ -105,7 +105,10 @@ const {$coreStore, $moment} = useNuxtApp();
 
 definePageMeta({
     layout: false,
-    middleware: 'auth'
+    middleware: [
+        'auth',
+        'verified'
+    ]
 });
 
 let prototypes = reactive({

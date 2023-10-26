@@ -21,7 +21,10 @@
 import {ref,reactive} from "vue";
 definePageMeta({
     layout: false,
-    middleware: 'guest'
+    middleware: [
+        'auth',
+        'verified'
+    ]
 });
 
 let cards = reactive([
