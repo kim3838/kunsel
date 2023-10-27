@@ -86,9 +86,7 @@ export const useAuthStore = defineStore('auth', () => {
         $coreStore.resetServiceError();
         authPending.value = true;
 
-        if (!useCookie('XSRF-TOKEN').value) {
-            await ssrFetch("/sanctum/csrf-cookie");
-        }
+        await ssrFetch("/sanctum/csrf-cookie");
 
         await ssrFetch("/login", {
             method: 'POST',
