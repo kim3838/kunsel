@@ -10,7 +10,7 @@
                                     <div class="tw-block">
                                         <InputLabel :size="'md'" for="email" value="Email" />
                                         <Input
-                                            :disabled="pending"
+                                            :disabled="authPending"
                                             :size="'md'"
                                             id="email"
                                             type="email"
@@ -24,7 +24,7 @@
                                     <div class="tw-block tw-mt-4">
                                         <InputLabel :size="'md'" for="password" value="Password" />
                                         <Input
-                                            :disabled="pending"
+                                            :disabled="authPending"
                                             :size="'md'"
                                             id="password"
                                             type="password"
@@ -38,16 +38,16 @@
                                         <span>{{ $coreStore.service.error.payload.message }}</span>
                                     </div>
 
-                                    <div v-if="!$authStore.isAuthenticated" class="tw-flex tw-mt-4 tw-items-center tw-justify-between">
+                                    <div v-if="!isAuthenticated" class="tw-flex tw-mt-4 tw-items-center tw-justify-between">
                                         <div class="tw-block tw-text-sm tw-underline">
                                             <NuxtLink :to="'forgot-password'">Forgot password.</NuxtLink>
                                         </div>
                                         <Button
-                                            :disabled="pending"
+                                            :disabled="authPending"
                                             :size="'md'"
                                             :variant="'flat'"
-                                            :icon="pending ? 'eos-icons:installing' : 'mdi:key-chain'"
-                                            :label="pending ? 'Authenticating...' : 'Authenticate'"></Button>
+                                            :icon="authPending ? 'eos-icons:installing' : 'mdi:key-chain'"
+                                            :label="authPending ? 'Authenticating...' : 'Authenticate'"></Button>
                                     </div>
                                 </form>
                             </div>
@@ -61,17 +61,13 @@
 
 <script setup lang="ts">
 import {ref, onMounted, nextTick} from 'vue';
-import {storeToRefs} from 'pinia';
-const {$coreStore, $authStore} = useNuxtApp();
+const {$coreStore} = useNuxtApp();
+const {isAuthenticated, login, authPending} = useAuth();
 
 definePageMeta({
     layout: false,
     middleware: 'guest'
 });
-
-const {
-    authPending: pending
-} = storeToRefs($authStore);
 
 let emailInput = ref(null);
 
@@ -84,7 +80,7 @@ const email = ref("luxere20@gmail.com");
 const password = ref("password");
 
 function handleLogin(){
-    $authStore.login({
+    login({
         email: email,
         password: password
     });
