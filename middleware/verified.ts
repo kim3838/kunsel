@@ -1,8 +1,7 @@
-
 export default defineNuxtRouteMiddleware((to, from) => {
-    const { $authStore } = useNuxtApp();
+    const user = userState();
 
-    if($authStore.user.email_verified_at == null && to.path !== '/verify'){
+    if(!(user.value.email_verified_at) && to.path !== '/verify'){
         return navigateTo("/verify", {replace: true});
     }
 })
