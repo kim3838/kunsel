@@ -180,7 +180,8 @@
 import {storeToRefs} from 'pinia';
 import {computed, nextTick, onMounted, onUnmounted, ref} from "vue";
 
-const {$authStore,$themeStore} = useNuxtApp();
+const {$themeStore} = useNuxtApp();
+const {isAuthenticated, logout} = useAuth();
 const route = useRoute();
 
 const {
@@ -198,7 +199,7 @@ let windowWidth = ref(0);
 let accountLinks = computed(()=>{
     let links: object[] = [];
 
-    if($authStore.isAuthenticated){
+    if(isAuthenticated.value){
         links = links.concat([
             {
                 label: 'Account Settings',
@@ -209,7 +210,7 @@ let accountLinks = computed(()=>{
                 label: 'Logout',
                 to: '',
                 callback: () => {
-                    $authStore.logout();
+                    logout();
                 }
             }
         ]);
