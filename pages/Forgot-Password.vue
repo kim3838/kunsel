@@ -48,7 +48,7 @@
 </template>
 <script setup>
 import {ref, computed, onMounted, nextTick} from 'vue';
-const {$coreStore, $authStore} = useNuxtApp();
+const {$coreStore} = useNuxtApp();
 
 definePageMeta({
     layout: false,
