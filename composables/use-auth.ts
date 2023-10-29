@@ -100,7 +100,7 @@ export const useAuth = () => {
 
     async function logout(options: UseFetchOptions = {}) {
         if (!isAuthenticated.value) return;
-        console.log('LOGOUT');
+
         const {$coreStore} = useNuxtApp();
         $coreStore.resetServiceError();
 

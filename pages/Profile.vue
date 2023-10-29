@@ -18,8 +18,8 @@
                                     </div>
                                     <div>
                                         <InputWithIcon
-                                            :icon="user.email_verified_at ? 'ic:sharp-verified-user' : 'mdi:security-close'"
-                                            :placeholder="user.email_verified_at ? 'Email Verified' : 'Email Not Verified'"
+                                            :icon="user?.email_verified_at ? 'ic:sharp-verified-user' : 'mdi:security-close'"
+                                            :placeholder="user?.email_verified_at ? 'Email Verified' : 'Email Not Verified'"
                                             readonly />
                                     </div>
                                 </div>
@@ -37,15 +37,10 @@
 </style>
 
 <script setup lang="ts">
-import {storeToRefs} from 'pinia';
-const {$authStore} = useNuxtApp();
+const user = userState();
 
 definePageMeta({
     layout: false,
     middleware: 'auth'
 });
-
-const {
-    user: user
-} = storeToRefs($authStore);
 </script>

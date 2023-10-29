@@ -12,7 +12,7 @@ export function ssrFetch<T>(path: string, options: UseFetchOptions<T> = {}){
     const XSRF_TOKEN = useCookie('XSRF-TOKEN');
 
     if(XSRF_TOKEN.value){
-        headers['X-XSRF-TOKEN'] = XSRF_TOKEN as String;
+        headers['X-XSRF-TOKEN'] = XSRF_TOKEN.value;
     }
 
     if(process.server){
