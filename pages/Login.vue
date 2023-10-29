@@ -34,6 +34,17 @@
                                             autocomplete="current-password" />
                                     </div>
 
+                                    <div class="tw-block tw-mt-4">
+                                        <label class="tw-flex tw-items-center">
+                                            <Checkbox
+                                                :disabled="authPending"
+                                                name="remember"
+                                                v-model="remember"
+                                                :size="'md'"
+                                                :label="'Remember me'" />
+                                        </label>
+                                    </div>
+
                                     <div v-if="$coreStore.service.error.payload && !useNuxtApp().$coreStore.service.error.prompt" class="tw-block tw-text-sm tw-text-red-400">
                                         <span>{{ $coreStore.service.error.payload.message }}</span>
                                     </div>
@@ -78,11 +89,13 @@ onMounted(async () => {
 
 const email = ref("luxere20@gmail.com");
 const password = ref("password");
+const remember = ref(false);
 
 function handleLogin(){
     login({
         email: email,
-        password: password
+        password: password,
+        remember: remember
     });
 }
 </script>
