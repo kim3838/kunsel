@@ -180,7 +180,7 @@
 import {storeToRefs} from 'pinia';
 import {computed, nextTick, onMounted, onUnmounted, ref} from "vue";
 
-const {$themeStore} = useNuxtApp();
+const {$coreStore, $themeStore} = useNuxtApp();
 const {isAuthenticated, logout} = useAuth();
 const route = useRoute();
 
@@ -211,6 +211,28 @@ let accountLinks = computed(()=>{
                 to: '',
                 callback: () => {
                     logout();
+                }
+            },
+            {
+                label: 'Logout Other Device',
+                to: '',
+                callback: async () => {
+                    await ssrFetch("/sanctum/csrf-cookie");
+                    await ssrFetch("/api/logout-other-device", {
+                        method: 'GET',
+                        onResponse({request, response, options}) {
+                            console.log({'logout-other-device' : _get(response, '_data.values', [])});
+
+                            $coreStore.setPrompt({
+                                icon: 'mdi:key-chain',
+                                title: 'Logout other device',
+                                message: _get(response, '_data.message', ''),
+                                action: {
+                                    label: 'Close'
+                                }
+                            });
+                        }
+                    });
                 }
             }
         ]);
