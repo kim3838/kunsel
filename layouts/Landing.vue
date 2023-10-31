@@ -234,6 +234,18 @@ let accountLinks = computed(()=>{
                         }
                     });
                 }
+            },
+            {
+                label: 'Test Post',
+                to: '',
+                callback: async () => {
+                    await csrFetch("/api/test-post", {
+                        method: 'POST',
+                        onResponse({request, response, options}) {
+                            console.log({'CSR POST RESPONSE' : response._data.code});
+                        }
+                    });
+                }
             }
         ]);
     } else {
