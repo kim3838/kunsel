@@ -50,8 +50,8 @@
                                     </div>
 
                                     <div v-if="!isAuthenticated" class="tw-flex tw-mt-4 tw-items-center tw-justify-between">
-                                        <div class="tw-block tw-text-sm tw-underline">
-                                            <NuxtLink :to="'forgot-password'">Forgot password.</NuxtLink>
+                                        <div class="tw-block tw-text-sm tw-self-end">
+                                            <NuxtLink class="hover:tw-underline" :to="'forgot-password'">Forgot password.</NuxtLink>
                                         </div>
                                         <Button
                                             :disabled="authPending"
