@@ -2,7 +2,7 @@
     <div>
         <NuxtLayout :name="$coreStore.layout">
             <template #content>
-                <div>
+                <div class="tw-mx-auto tw-max-w-screen-2xl">
                     <div>Tailwind Url: <NuxtLink class="tw-text-sky-600" :to="'_tailwind'" target="_blank">{{('http://localhost:3000' + '/_tailwind/')}}</NuxtLink></div>
 
                     <div class="tw-space-y-2">
@@ -327,7 +327,7 @@
                             </div>
                         </div>
 
-                        <div v-if="true" class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-8">
+                        <div v-if="true" class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-9">
                             <div class="tw-flex tw-items-start tw-justify-start tw-block neutral-border">
                                 <Button :size="'2xs'" :icon="'ic:sharp-send-to-mobile'" :label="'XXS Button'"></Button>
                             </div>
@@ -341,9 +341,9 @@
                                 <Button :size="'md'" :icon="'ic:sharp-send-to-mobile'" :label="'MD Authenticate'"></Button>
                             </div>
                             <div class="tw-flex tw-items-start tw-justify-start tw-block neutral-border">
-                                <Button :disabled="true" :icon="'eos-icons:compass'" :label="'DEFAULT Disabled'"></Button>
+                                <Button :disabled="true" :icon="'eos-icons:compass'" :label="'Disabled'"></Button>
                             </div>
-                            <div class="tw-flex tw-items-start tw-justify-start tw-block tw-w-full neutral-border">
+                            <div class="tw-col-span-2 tw-flex tw-items-start tw-justify-start tw-block tw-w-full neutral-border">
                                 <Button @click="$themeStore.setTheme('blue')" :size="'lg'" :icon="'mdi:palette-swatch-variant'" :label="'Blue Theme'"></Button>
                             </div>
                             <div class="tw-col-span-2 tw-flex tw-items-start tw-justify-start tw-block tw-w-full neutral-border">
@@ -351,7 +351,7 @@
                             </div>
                         </div>
 
-                        <div v-if="true" class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-8">
+                        <div v-if="true" class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-9">
                             <div class="tw-flex tw-items-start tw-justify-start tw-block neutral-border">
                                 <Button :variant="'outline'" :size="'2xs'" :icon="'ic:sharp-dashboard'" :label="'XXS Button'"></Button>
                             </div>
@@ -365,9 +365,9 @@
                                 <Button :variant="'outline'" :size="'md'" :icon="'ic:sharp-dashboard'" :label="'MD Authenticate'"></Button>
                             </div>
                             <div class="tw-flex tw-items-start tw-justify-start tw-block neutral-border">
-                                <Button :variant="'outline'" :icon="'eos-icons:compass'" :disabled="true" :label="'DEFAULT Disabled'"></Button>
+                                <Button :variant="'outline'" :icon="'eos-icons:compass'" :disabled="true" :label="'Disabled'"></Button>
                             </div>
-                            <div class="tw-flex tw-items-start tw-justify-start tw-block tw-w-full neutral-border">
+                            <div class="tw-col-span-2 tw-flex tw-items-start tw-justify-start tw-block tw-w-full neutral-border">
                                 <Button @click="$themeStore.setTheme('light')" :variant="'outline'" :size="'lg'" :icon="'mdi:palette-swatch-variant'" :label="'Light Theme'"></Button>
                             </div>
                             <div class="tw-col-span-2 tw-flex tw-items-start tw-justify-start tw-block tw-w-full">
@@ -375,7 +375,7 @@
                             </div>
                         </div>
 
-                        <div v-if="true" class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-8">
+                        <div v-if="true" class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-9">
                             <div class="tw-flex tw-items-start tw-justify-start tw-block neutral-border">
                                 <Button :variant="'flat'" :size="'2xs'" :icon="'ic:sharp-dashboard'" :label="'XXS Button'"></Button>
                             </div>
@@ -389,9 +389,9 @@
                                 <Button :variant="'flat'" :size="'md'" :icon="'ic:sharp-dashboard'" :label="'MD Authenticate'"></Button>
                             </div>
                             <div class="tw-flex tw-items-start tw-justify-start tw-block neutral-border">
-                                <Button :variant="'flat'" :icon="'eos-icons:compass'" :disabled="true" :label="'DEFAULT Disabled'"></Button>
+                                <Button :variant="'flat'" :icon="'eos-icons:compass'" :disabled="true" :label="'Disabled'"></Button>
                             </div>
-                            <div class="tw-flex tw-items-start tw-justify-start tw-block tw-w-full neutral-border">
+                            <div class="tw-col-span-2 tw-flex tw-items-start tw-justify-start tw-block tw-w-full neutral-border">
                                 <Button @click="$themeStore.setTheme('emerald')" :variant="'flat'" :size="'lg'" :icon="'mdi:palette-swatch-variant'" :label="'Emerald Theme'"></Button>
                             </div>
                             <div class="tw-col-span-2 tw-flex tw-items-start tw-justify-start tw-block tw-w-full neutral-border">
