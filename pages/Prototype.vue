@@ -82,7 +82,7 @@
                                 <InputLabel value="Paginated Multi Select" />
                                 <MultiSelectPaginated
                                     :drop-shadow="true"
-                                    :selection-max-content="false"
+                                    :selection-max-content="true"
                                     :selected-max-viewable-line="6"
                                     :selection-max-viewable-line="10"
                                     :searchable="true"
@@ -273,7 +273,6 @@
                                             <Button :variant="'flat'" :size="slot.buttonSize" :icon="'emojione-monotone:incoming-envelope'" :label="'Slot III'"></Button>
                                             <Button :variant="'flat'" :size="slot.buttonSize" :icon="'emojione-monotone:dollar-banknote'"></Button>
                                             <Button :variant="'flat'" :size="slot.buttonSize" :icon="'emojione-monotone:spiral-calendar'"></Button>
-                                            <Button :size="slot.buttonSize" :icon="'emojione-monotone:loudly-crying-face'"></Button>
                                         </div>
                                     </template>
                                     <template v-slot:cell.input="{cell, index, slot}">
@@ -284,6 +283,38 @@
                                     </template>
                                     <template v-slot:cell.code="{cell, index, slot}">
                                         <Input :size="slot.inputSize" class="tw-w-full" v-model="cell.code" type="text" autocomplete="off" />
+                                    </template>
+                                    <template v-slot:cell.single_paginated="{cell, slot, scrollReference}">
+                                        <SingleSelectPaginated
+                                            in-horizontal-scrollable
+                                            :scroll-reference="scrollReference"
+                                            :value-persist="true"
+                                            :drop-shadow="true"
+                                            :selection-max-content="true"
+                                            :selection-max-viewable-line="10"
+                                            :searchable="true"
+                                            :selection-float="true"
+                                            :always-active="false"
+                                            :label="'Select Prototype'"
+                                            :size="slot.selectSize"
+                                            :payload="cell.single_select_prototype_payload"
+                                            :icon="'emojione-monotone:japanese-no-vacancy-button'"/>
+                                    </template>
+                                    <template v-slot:cell.multi_paginated="{cell, slot, scrollReference}">
+                                        <MultiSelectPaginated
+                                            in-horizontal-scrollable
+                                            :scroll-reference="scrollReference"
+                                            :drop-shadow="true"
+                                            :selection-max-content="true"
+                                            :selected-max-viewable-line="6"
+                                            :selection-max-viewable-line="10"
+                                            :searchable="true"
+                                            :selection-float="true"
+                                            :always-active="false"
+                                            :label="'Select Prototypes'"
+                                            :size="slot.selectSize"
+                                            :payload="cell.multi_select_prototype_payload"
+                                            :icon="'ic:sharp-qr-code'"/>
                                     </template>
                                     <template v-slot:cell.single_select="{cell, slot, scrollReference}">
                                         <SingleSelect
@@ -799,10 +830,11 @@ let headers_2 = reactive([
 let headers_3 = reactive([
     { text: '#', value: 'row_number'},
     { text: 'TOOLS', value: 'tools'},
-    { text: 'INPUT', value: 'input', width: '220px'},
     { text: 'ID', value: 'id'},
     { text: 'NAME', value: 'name', width: '120px'},
     { text: 'CODE', alignHeader: 'center', value: 'code', width: '100px'},
+    { text: 'SINGLE PAGINATED', value: 'single_paginated', width: '170px'},
+    { text: 'MULTI PAGINATED', value: 'multi_paginated', width: '170px'},
     { text: 'SINGLE SELECT', value: 'single_select', width: '170px'},
     { text: 'MULTI SELECT', value: 'multi_select', width: '170px'},
     { text: 'TYPE', value: 'type'},
@@ -893,6 +925,30 @@ let data_3 = ref([
         "type": 3,
         "category": null,
         "capacity": 19,
+        "single_select_prototype_payload": {
+            fetch: {
+                url: '/api/selections/prototype',
+                filters: {
+                    search: {
+                        keyword: '',
+                        callback: 1
+                    }
+                }
+            },
+            selected: null,
+        },
+        "multi_select_prototype_payload": {
+            fetch: {
+                url: '/api/selections/prototype',
+                filters: {
+                    search: {
+                        keyword: '',
+                        callback: 1
+                    }
+                }
+            },
+            selected: []
+        },
         "datetime_added": "2023-08-22 17:44:03",
         "created_at": "2023-08-22 17:44:03",
         "updated_at": "2023-08-22 17:44:03"
@@ -905,6 +961,30 @@ let data_3 = ref([
         "type": 2,
         "category": 68,
         "capacity": 15,
+        "single_select_prototype_payload": {
+            fetch: {
+                url: '/api/selections/prototype',
+                filters: {
+                    search: {
+                        keyword: '',
+                        callback: 1
+                    }
+                }
+            },
+            selected: null,
+        },
+        "multi_select_prototype_payload": {
+            fetch: {
+                url: '/api/selections/prototype',
+                filters: {
+                    search: {
+                        keyword: '',
+                        callback: 1
+                    }
+                }
+            },
+            selected: []
+        },
         "datetime_added": "2023-08-22 17:44:03",
         "created_at": "2023-08-22 17:44:03",
         "updated_at": "2023-08-22 17:44:03"
@@ -917,6 +997,30 @@ let data_3 = ref([
         "type": 1,
         "category": 4,
         "capacity": 15,
+        "single_select_prototype_payload": {
+            fetch: {
+                url: '/api/selections/prototype',
+                filters: {
+                    search: {
+                        keyword: '',
+                        callback: 1
+                    }
+                }
+            },
+            selected: null,
+        },
+        "multi_select_prototype_payload": {
+            fetch: {
+                url: '/api/selections/prototype',
+                filters: {
+                    search: {
+                        keyword: '',
+                        callback: 1
+                    }
+                }
+            },
+            selected: []
+        },
         "datetime_added": "2023-08-22 17:44:03",
         "created_at": "2023-08-22 17:44:03",
         "updated_at": "2023-08-22 17:44:03"
@@ -929,6 +1033,30 @@ let data_3 = ref([
         "type": 5,
         "category": 79,
         "capacity": 35,
+        "single_select_prototype_payload": {
+            fetch: {
+                url: '/api/selections/prototype',
+                filters: {
+                    search: {
+                        keyword: '',
+                        callback: 1
+                    }
+                }
+            },
+            selected: null,
+        },
+        "multi_select_prototype_payload": {
+            fetch: {
+                url: '/api/selections/prototype',
+                filters: {
+                    search: {
+                        keyword: '',
+                        callback: 1
+                    }
+                }
+            },
+            selected: []
+        },
         "datetime_added": "2023-08-22 17:44:03",
         "created_at": "2023-08-22 17:44:03",
         "updated_at": "2023-08-22 17:44:03"
