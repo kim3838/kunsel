@@ -1,8 +1,8 @@
 <template>
     <NuxtLink
         :to="to"
-        class="tw-box-border tw-inline-flex tw-items-center tw-px-4 tw-text-xl tw-font-medium focus:tw-outline-none focus:tw-ring-transparent focus:tw-ring-1"
-        :class="[classes, 'nav-link']">
+        class="tw-box-border tw-inline-flex tw-items-center tw-px-4 focus:tw-outline-none focus:tw-ring-transparent focus:tw-ring-1"
+        :class="[classes, headerFontClass, 'nav-link']">
         <slot></slot>
     </NuxtLink>
 </template>
@@ -35,12 +35,23 @@ const props = defineProps({
         type: Boolean,
         default: false,
     },
+    size: {
+        default: 'md'
+    },
 });
 
 const classes = computed(() => {
     return props.active
         ? 'nav-active'
         : 'nav'
+});
+
+const headerFontClass = computed(() => {
+    return {
+        'sm': 'tw-text-base tw-font-medium',
+        'md': 'tw-text-lg tw-font-medium',
+        'lg': 'tw-text-xl tw-font-medium',
+    }[props.size]
 });
 </script>
 <style scoped>
