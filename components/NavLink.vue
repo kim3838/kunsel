@@ -22,8 +22,8 @@ const {
 const primaryColor50 = computed(() => {
     return primaryColor.value + hexAlpha.value['50'];
 });
-const accentColor10 = computed(() => {
-    return accentColor.value + hexAlpha.value['10'];
+const accentColor20 = computed(() => {
+    return accentColor.value + hexAlpha.value['20'];
 });
 
 const props = defineProps({
@@ -65,7 +65,7 @@ const headerFontClass = computed(() => {
     border-right-width: 1px;
     border-bottom-width: 2px;
     border-bottom-color: v-bind(primaryColor50);
-    background-color: v-bind(accentColor10);
+    background-color: v-bind(accentColor20);
 }
 
 .nav{

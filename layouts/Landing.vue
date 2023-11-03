@@ -2,32 +2,47 @@
     <div class="tw-relative">
         <!-- Primary Navigation Menu -->
         <nav ref="navigation" class="primary-navigation-parent tw-z-40 tw-fixed" :class="{'lg:tw-ml-sidebar': false}">
-            <div class="tw-max-w-full tw-mx-auto">
-                <div class="tw-flex tw-justify-center tw-h-7 lg:tw-h-14">
-                    <div class="tw-flex">
-                        <!-- Navigation Links -->
-                        <div class="tw-hidden tw--my-px lg:tw-flex">
-                            <NavLink :to="'/'" :active="isRouteActive('index')">
-                                Home
-                            </NavLink>
-                            <NavLink :to="'/prototype'" :active="isRouteActive('prototype')">
-                                Prototype
-                            </NavLink>
-                            <NavLink :to="'/lab'" :active="isRouteActive('lab')">
-                                Lab
-                            </NavLink>
-                            <NavLink :to="'/login'" :active="isRouteActive('login')">
-                                Login
-                            </NavLink>
-                            <NavLink :to="'/profile'" :active="isRouteActive('profile')">
-                                Profile
-                            </NavLink>
-                            <NavLink :to="'/prototypes'" :active="isRouteActive('prototypes')">
-                                Prototypes
-                            </NavLink>
-                            <NavDrop :title="'Account'" :links="accountLinks" />
-                        </div>
+            <div class="tw-absolute tw-text-xs tw-text-right tw-w-full">Height: {{screenHeight}},Width: {{screenWidth}}</div>
+            <div class="tw-max-w-screen-2xl tw-mx-auto tw-flex tw-justify-between tw-h-8 lg:tw-h-14">
+                <div class="tw--my-px tw-flex tw-items-center">
+                    <NavDrop
+                        class="sm:tw-hidden tw-h-full"
+                        :size="navigationHeaderSize"
+                        :title="'Menu'"
+                        :links="[]" />
+                </div>
+                <div class="tw-flex">
+                    <!-- Navigation Links -->
+                    <div class="tw--my-px tw-hidden sm:tw-flex">
+                        <NavLink :size="navigationHeaderSize" :to="'/'" :active="isRouteActive('index')">
+                            Home
+                        </NavLink>
+                        <NavLink :size="navigationHeaderSize" :to="'/prototype'" :active="isRouteActive('prototype')">
+                            Prototype
+                        </NavLink>
+                        <NavLink :size="navigationHeaderSize" :to="'/lab'" :active="isRouteActive('lab')">
+                            Lab
+                        </NavLink>
+                        <NavLink :size="navigationHeaderSize" :to="'/login'" :active="isRouteActive('login')">
+                            Login
+                        </NavLink>
+                        <NavLink :size="navigationHeaderSize" :to="'/profile'" :active="isRouteActive('profile')">
+                            Profile
+                        </NavLink>
+                        <NavLink :size="navigationHeaderSize" :to="'/prototypes'" :active="isRouteActive('prototypes')">
+                            Prototypes
+                        </NavLink>
+                        <NavDrop v-if="!isAuthenticated" :size="navigationHeaderSize" :title="'Account'" :links="accountLinks" />
                     </div>
+                </div>
+                <div class="tw--my-px tw-flex tw-items-center">
+                    <NavDrop
+                        class="tw-h-full"
+                        v-if="isAuthenticated"
+                        :size="navigationHeaderSize"
+                        :drop-origin="'right'"
+                        :title="user?.name"
+                        :links="accountLinks" />
                 </div>
             </div>
         </nav>
@@ -181,9 +196,9 @@ import {storeToRefs} from 'pinia';
 import {computed, nextTick, onMounted, onUnmounted, ref} from "vue";
 
 const {$coreStore, $themeStore} = useNuxtApp();
-const {isAuthenticated, logout} = useAuth();
+const {isAuthenticated, user, logout} = useAuth();
 const route = useRoute();
-
+const {screens, width: screenWidth, height: screenHeight } = useScreen();
 const {
     primary: primaryColor,
     accent: accentColor,
@@ -194,6 +209,25 @@ const {
 } = storeToRefs($themeStore);
 
 let navigation = ref(null);
+let navigationHeaderSize = computed(() => {
+    let size = 'md'
+
+    if (screenWidth.value >= screens['2xl']) {//3xl
+        size = 'md';
+    } else if (screenWidth.value >= screens['xl'] && screenWidth.value < screens['2xl']) {//2xl
+        size = 'md';
+    } else if (screenWidth.value >= screens['lg'] && screenWidth.value < screens['xl']) {//xl
+        size = 'md';
+    } else if (screenWidth.value >= screens['md'] && screenWidth.value < screens['lg']) {//lg
+        size = 'sm';
+    } else if (screenWidth.value >= screens['sm'] && screenWidth.value < screens['md']) {//md
+        size = 'sm';
+    } else if (screenWidth.value < screens['sm']) {//sm
+        size = 'sm';
+    }
+
+    return size;
+});
 let navigationHeight = ref('0px');
 let windowWidth = ref(0);
 let accountLinks = computed(()=>{

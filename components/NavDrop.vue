@@ -35,8 +35,8 @@ const {
 const primaryColor50 = computed(() => {
     return primaryColor.value + hexAlpha.value['50'];
 });
-const accentColor10 = computed(() => {
-    return accentColor.value + hexAlpha.value['10'];
+const accentColor20 = computed(() => {
+    return accentColor.value + hexAlpha.value['20'];
 });
 
 const props = defineProps({
@@ -57,7 +57,7 @@ const props = defineProps({
 })
 
 const active = ref(false);
-const activeComputed = computed(() =>{
+const activeComputed = computed(() => {
     return props.links.length && active.value;
 });
 const navDropOptionsStyleComputed = computed(()=>{
@@ -82,7 +82,7 @@ const headerFontClass = computed(() => {
 </script>
 <style scoped>
 .nav-active{
-    background-color: v-bind(accentColor10);
+    background-color: v-bind(accentColor20);
     border: 1px solid v-bind(neutralColor);
     border-bottom-width: 0px;
 }
@@ -106,6 +106,6 @@ const headerFontClass = computed(() => {
 }
 
 .nav-drop-link:hover{
-    background-color: v-bind(accentColor10);
+    background-color: v-bind(accentColor20);
 }
 </style>
