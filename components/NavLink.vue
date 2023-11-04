@@ -75,4 +75,8 @@ const headerFontClass = computed(() => {
 .nav-link:focus{
     border: 1px solid v-bind(neutralColor);
 }
+
+.nav-link:hover{
+    background-color: v-bind(accentColor20);
+}
 </style>

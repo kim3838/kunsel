@@ -1,29 +1,51 @@
 <template>
-    <span
-        @mouseenter="active = true"
-        @mouseleave="active = false"
+    <div
+        ref="nav"
         tabindex="0"
         :class="[classes, headerFontClass]"
-        class="nav tw-px-4 focus:tw-outline-none focus:tw-ring-transparent focus:tw-ring-1">
+        class="nav tw-px-4 tw-cursor-pointer focus:tw-outline-none focus:tw-ring-transparent focus:tw-ring-1">
         {{title}}
-        <Icon name="ic:baseline-arrow-drop-down"/>
-        <div v-if="activeComputed" :style="navDropOptionsStyleComputed" class="nav-drop-options-parent tw-text-base tw-drop-shadow-2xl">
-            <div v-for="link in links" :key="link" class="nav-drop-link tw-cursor-pointer">
-                <NuxtLink v-if="link.to" :to="link.to" class="tw-px-4 tw-py-1 tw-w-full tw-inline-flex tw-items-center">
-                    <Icon v-if="link.icon" :name="link.icon" class="tw-mr-1" /><span>{{link.label}}</span>
+        <Icon :name="navDropIcon"/>
+        <div
+            v-if="activeComputed"
+            :style="navDropOptionsStyleComputed"
+            class="nav-drop-options-parent tw-text-base tw-drop-shadow-2xl">
+            <div v-for="dropOption in dropOptions" :key="dropOption.title" class="nav-drop-link tw-cursor-pointer">
+
+                <NuxtLink
+                    v-if="dropOption.type === 'link'"
+                    :to="dropOption.to"
+                    class="tw-px-4 tw-py-1 tw-w-full tw-inline-flex tw-items-center">
+                    <Icon v-if="dropOption.icon" :name="dropOption.icon" class="tw-mr-1" /><span>{{dropOption.title}}</span>
                 </NuxtLink>
-                <div @click="typeof link.callback == 'function' ? link.callback() : false;" v-else class="tw-px-4 tw-py-1 tw-w-full tw-inline-flex tw-items-center">
-                    <Icon v-if="link.icon" :name="link.icon" class="tw-mr-1" /><span>{{link.label}}</span>
+
+                <div v-if="dropOption.type === 'action'"
+                     @click="typeof dropOption.callback == 'function' ? dropOption.callback() : false;"
+                     class="tw-px-4 tw-py-1 tw-w-full tw-inline-flex tw-items-center">
+                    <Icon v-if="dropOption.icon" :name="dropOption.icon" class="tw-mr-1" /><span>{{dropOption.title}}</span>
                 </div>
+
+                <NavDrop
+                    class="tw-w-full"
+                    v-if="dropOption.type === 'drop'"
+                    :parent="false"
+                    :size="'sm'"
+                    :drop-justify="'right'"
+                    :title="dropOption.title"
+                    :drop-options="dropOption.options"
+                />
             </div>
         </div>
-    </span>
+    </div>
 </template>
 <script setup>
 import {computed, ref} from "vue";
+import {useFocusWithin} from '@vueuse/core';
 import {storeToRefs} from 'pinia';
-const {$themeStore} = useNuxtApp();
 
+const {$themeStore} = useNuxtApp();
+const nav = ref();
+const {focused: navigationFocused} = useFocusWithin(nav);
 const {
     hexAlpha,
     primary: primaryColor,
@@ -32,6 +54,9 @@ const {
     tint: tintColor
 } = storeToRefs($themeStore);
 
+const navDropIcon = computed(()=>{
+   return props.parent ? 'ic:baseline-arrow-drop-down' : 'ic:baseline-arrow-right';
+});
 const primaryColor50 = computed(() => {
     return primaryColor.value + hexAlpha.value['50'];
 });
@@ -40,7 +65,7 @@ const accentColor20 = computed(() => {
 });
 
 const props = defineProps({
-    links: {
+    dropOptions: {
         type: Array,
         default: []
     },
@@ -51,19 +76,42 @@ const props = defineProps({
     size: {
         default: 'md'
     },
-    dropOrigin: {
+    dropJustify: {
+        default: 'bottom'
+    },
+    dropAlign: {
         default: 'left'
+    },
+    parent: {
+        type: Boolean,
+        default: true
     }
 })
 
-const active = ref(false);
 const activeComputed = computed(() => {
-    return props.links.length && active.value;
+    return props.dropOptions.length && navigationFocused.value;
 });
-const navDropOptionsStyleComputed = computed(()=>{
-    return {
-        [props.dropOrigin]: 'calc(-1px)'
-    }
+const navDropOptionsStyleComputed = computed(() => {
+
+    let dropDirection = {
+        'bottom': {
+            'border-top-width': '0px',
+            top: 'calc(100% + 1px)',
+            [props.dropAlign]: 'calc(-1px)',
+        },
+        'right': {
+            'border-top-width': '1px',
+            top: '-1px',
+            left: 'calc(100% + 1px)',
+        },
+        'left': {
+            'border-top-width': '1px',
+            top: '-1px',
+            right: 'calc(100% + 1px)',
+        },
+    };
+
+    return dropDirection[props.dropJustify]
 });
 
 const classes = computed(() => {
@@ -94,12 +142,13 @@ const headerFontClass = computed(() => {
     align-items: center;
     border: 1px solid transparent;
 }
+.nav:hover{
+    background-color: v-bind(accentColor20);
+}
 
 .nav-drop-options-parent{
     position: absolute;
     border: 1px solid v-bind(neutralColor);
-    border-top-width: 0px;
-    top: calc(100% + 1px);
     min-width: calc(100% + 2px);
     width: max-content;
     background-color: v-bind(tintColor);

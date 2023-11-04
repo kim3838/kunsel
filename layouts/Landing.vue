@@ -9,40 +9,41 @@
                         class="sm:tw-hidden tw-h-full"
                         :size="navigationHeaderSize"
                         :title="'Menu'"
-                        :links="[]" />
+                        :drop-options="menuOptions" />
                 </div>
                 <div class="tw-flex">
                     <!-- Navigation Links -->
                     <div class="tw--my-px tw-hidden sm:tw-flex">
-                        <NavLink :size="navigationHeaderSize" :to="'/'" :active="isRouteActive('index')">
-                            Home
-                        </NavLink>
-                        <NavLink :size="navigationHeaderSize" :to="'/prototype'" :active="isRouteActive('prototype')">
-                            Prototype
-                        </NavLink>
-                        <NavLink :size="navigationHeaderSize" :to="'/lab'" :active="isRouteActive('lab')">
-                            Lab
-                        </NavLink>
-                        <NavLink :size="navigationHeaderSize" :to="'/login'" :active="isRouteActive('login')">
-                            Login
-                        </NavLink>
-                        <NavLink :size="navigationHeaderSize" :to="'/profile'" :active="isRouteActive('profile')">
-                            Profile
-                        </NavLink>
-                        <NavLink :size="navigationHeaderSize" :to="'/prototypes'" :active="isRouteActive('prototypes')">
-                            Prototypes
-                        </NavLink>
-                        <NavDrop v-if="!isAuthenticated" :size="navigationHeaderSize" :title="'Account'" :links="accountLinks" />
+                        <span class="tw-flex tw-items-center"  v-for="navigation in mainNavigation" :key="navigation.title">
+                            <NavLink
+                                class="tw-h-full"
+                                v-if="navigation.type == 'link'"
+                                :size="navigationHeaderSize"
+                                :to="navigation.to"
+                                :active="isRouteActive(navigation.route)">
+                                {{navigation.title}}
+                            </NavLink>
+
+                            <NavDrop
+                                class="tw-h-full"
+                                v-if="navigation.type === 'drop'"
+                                :size="navigationHeaderSize"
+                                :title="navigation.title"
+                                :drop-options="navigation.options"
+                            />
+                        </span>
                     </div>
                 </div>
                 <div class="tw--my-px tw-flex tw-items-center">
-                    <NavDrop
+                    <component
+                        :is="navDrop"
                         class="tw-h-full"
                         v-if="isAuthenticated"
                         :size="navigationHeaderSize"
-                        :drop-origin="'right'"
+                        :drop-align="'right'"
                         :title="user?.name"
-                        :links="accountLinks" />
+                        :drop-options="accountOptions"
+                    />
                 </div>
             </div>
         </nav>
@@ -195,6 +196,8 @@
 import {storeToRefs} from 'pinia';
 import {computed, nextTick, onMounted, onUnmounted, ref} from "vue";
 
+const navDrop = resolveComponent('navDrop');
+
 const {$coreStore, $themeStore} = useNuxtApp();
 const {isAuthenticated, user, logout} = useAuth();
 const route = useRoute();
@@ -230,30 +233,82 @@ let navigationHeaderSize = computed(() => {
 });
 let navigationHeight = ref('0px');
 let windowWidth = ref(0);
-let accountLinks = computed(()=>{
-    let links: object[] = [];
+let mainNavigation = computed(()=>{
+    let options: object[] = [];
+
+    options = options.concat([
+        {
+            type: 'link',
+            title: 'Home',
+            to: '/',
+            route: 'index'
+        },
+        {
+            type: 'link',
+            title: 'Prototype',
+            to: '/prototype',
+            route: 'prototype'
+        },
+        {
+            type: 'link',
+            title: 'Lab',
+            to: '/lab',
+            route: 'lab'
+        },
+        {
+            type: 'link',
+            title: 'Login',
+            to: '/login',
+            route: 'login'
+        },
+        {
+            type: 'link',
+            title: 'Profile',
+            to: '/profile',
+            route: 'profile'
+        },
+        {
+            type: 'link',
+            title: 'Prototypes',
+            to: '/prototypes',
+            route: 'prototypes'
+        },
+    ]);
+
+    if(!isAuthenticated.value){
+        options = options.concat([{
+            type: 'drop',
+            title: 'Account',
+            options: accountOptions.value
+        },]);
+    }
+
+    return options;
+});
+let accountOptions = computed(() => {
+    let options: object[] = [];
 
     if(isAuthenticated.value){
-        links = links.concat([
+        options = options.concat([
             {
-                label: 'Account Settings',
+                type: 'link',
+                title: 'Account Settings',
                 icon: 'eos-icons:rotating-gear',
                 to: '/profile',
             },
             {
-                label: 'Logout',
-                to: '',
+                type: 'action',
+                title: 'Logout',
                 callback: () => {
                     logout();
-                }
+                },
             },
             {
-                label: 'Logout Other Device',
-                to: '',
+                type: 'action',
+                title: 'Logout Other Device',
                 callback: async () => {
-                    await ssrFetch("/sanctum/csrf-cookie");
-                    await ssrFetch("/api/logout-other-device", {
-                        method: 'GET',
+                    await csrFetch("/api/logout-other-device", {
+                        method: 'POST',
                         onResponse({request, response, options}) {
                             console.log({'logout-other-device' : _get(response, '_data.values', [])});
 
@@ -267,11 +322,12 @@ let accountLinks = computed(()=>{
                             });
                         }
                     });
-                }
+                },
             },
             {
-                label: 'Test Post',
-                to: '',
+                type: 'action',
+                title: 'Test Post',
+                icon: 'material-symbols:request-quote-sharp',
                 callback: async () => {
                     await csrFetch("/api/test-post", {
                         method: 'POST',
@@ -279,23 +335,58 @@ let accountLinks = computed(()=>{
                             console.log({'CSR POST RESPONSE' : response._data.code});
                         }
                     });
-                }
+                },
             }
         ]);
     } else {
-        links.unshift({
-            label: 'Login',
+        options.unshift({
+            type: 'link',
+            title: 'Login',
             to: '/login',
         });
     }
 
-    links.push({
-        label: 'Shop',
+    options.push({
+        type: 'link',
+        title: 'Shop',
         icon: 'ic:sharp-shop',
         to: '',
     });
 
-    return links;
+    return options;
+});
+let menuOptions = computed(() => {
+    let options: object[] = [];
+
+    options = options.concat(mainNavigation.value);
+
+    options = options.concat([
+        {
+            type: 'drop',
+            title: 'Help',
+            icon: 'ic:baseline-arrow-right',
+            options: [
+                {
+                    type: 'link',
+                    title: 'FAQ',
+                    icon: 'ic:baseline-arrow-right',
+                },
+                {
+                    type: 'link',
+                    title: 'Support',
+                    icon: 'ic:baseline-arrow-right',
+                },
+                {
+                    type: 'link',
+                    title: 'Live Chat',
+                    icon: 'ic:baseline-arrow-right',
+                },
+            ]
+        },
+
+    ]);
+
+    return options;
 });
 
 function isRouteActive(routeSlug: string) {
