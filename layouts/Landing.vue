@@ -211,7 +211,6 @@ const {
     thread: threadColor
 } = storeToRefs($themeStore);
 
-let navigation = ref(null);
 let navigationHeaderSize = computed(() => {
     let size = 'md'
 
@@ -231,8 +230,6 @@ let navigationHeaderSize = computed(() => {
 
     return size;
 });
-let navigationHeight = ref('0px');
-let windowWidth = ref(0);
 let mainNavigation = computed(()=>{
     let options: object[] = [];
 
@@ -393,24 +390,6 @@ function isRouteActive(routeSlug: string) {
     return [route.path, _toLower(route.name)].indexOf(_toLower(routeSlug)) >= 0;
 }
 
-async function handleWindowWidth() {
-    windowWidth.value = window.innerWidth;
-    await nextTick(() => {
-        navigationHeight.value = `${navigation.value.offsetHeight}px`;
-    });
-}
-
-onMounted(async () => {
-    await nextTick(() => {
-        navigationHeight.value = `${navigation.value.offsetHeight}px`;
-    });
-    window.addEventListener('resize', handleWindowWidth);
-});
-
-onUnmounted(async () => {
-    window.removeEventListener('resize', handleWindowWidth);
-});
-
 </script>
 <style scoped>
 a.footer-link:hover{
@@ -433,7 +412,7 @@ a.footer-link:hover{
 }
 
 .allocate-navigation {
-    margin-top: v-bind(navigationHeight);
+    margin-top: 57px;
 }
 
 .ping{
