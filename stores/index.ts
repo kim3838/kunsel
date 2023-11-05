@@ -16,6 +16,7 @@ export const useCoreStore = defineStore('core', {
             icon: null,
             title: null,
             message: null,
+            messageList: [],
             action: {
                 callback: null,
                 label: 'Click'
@@ -37,12 +38,17 @@ export const useCoreStore = defineStore('core', {
         },
         setServiceError(serviceError){
             this.service.error = serviceError;
+
+            let errors = _flatten(Object.values(this.service.error?.payload?.errors) ?? []);
+            let message = errors.length ? null : this.service.error?.payload?.message;
+
             if(this.service.error.prompt){
                 this.prompt = {
                     show: true,
                     icon: this.service.error.icon,
                     title: this.service.error.title,
-                    message: this.service.error?.payload?.message,
+                    message: message,
+                    messageList: errors,
                     action: {
                         callback: () => {
                             this.resetServiceError();
@@ -58,6 +64,7 @@ export const useCoreStore = defineStore('core', {
                 icon: promptPayload.icon,
                 title: promptPayload.title,
                 message: promptPayload.message,
+                messageList: [],
                 action: {
                     callback: promptPayload.action.callback,
                     label: promptPayload.action.label
@@ -78,6 +85,7 @@ export const useCoreStore = defineStore('core', {
                 icon: null,
                 title: null,
                 message: null,
+                messageList: [],
                 action: {
                     callback: null,
                     label: 'Click'

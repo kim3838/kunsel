@@ -20,6 +20,13 @@
             <div v-if="prompt.message">
                 <div v-text="prompt.message"></div>
             </div>
+            <div v-if="prompt.messageList.length">
+                <ul>
+                    <li v-for="message in prompt.messageList" :key="message">
+                        <Icon name="radix-icons:dot"></Icon>&nbsp;{{message}}
+                    </li>
+                </ul>
+            </div>
         </template>
 
         <template #footer>
