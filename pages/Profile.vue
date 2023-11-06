@@ -50,6 +50,19 @@
                                 </div>
                             </div>
                         </form>
+
+                        <form @submit.prevent="executeLogoutOtherDevice" class="tw-mt-4 tw-p-[1.5rem] neutral-border tw-w-max">
+                            <p class="tw-font-semibold tw-text-lg">Logout other Devices</p>
+
+                            <div class="tw-mt-2 tw-grid tw-gap-2 tw-grid-cols-2">
+                                <div>
+                                    <InputWithIcon :disabled="logoutOtherDevicePending" :icon="'mdi:key-chain'" type="password" placeholder="Enter password" v-model="confirmPassword" required />
+                                </div>
+                                <div>
+                                    <Button :disabled="logoutOtherDevicePending" :variant="'flat'" :label="'Logout Other Device'" />
+                                </div>
+                            </div>
+                        </form>
                     </div>
 
                 </div>
@@ -154,6 +167,60 @@ const {execute: executeUpdatePassword} = csrFetch("/update-password", {
                         updatePassword.currentPassword = '';
                         updatePassword.newPassword = '';
                         updatePassword.confirmNewPassword = '';
+                    },
+                    label: 'Close'
+                }
+            });
+        }
+    }
+});
+
+let confirmPassword = ref('');
+let logoutOtherDevicePending = ref(false);
+const {execute: executeLogoutOtherDevice} = csrFetch("/api/logout-other-device", {
+    method: 'POST',
+    body: {password: confirmPassword},
+    immediate: false,
+    onRequest(){
+        logoutOtherDevicePending.value = true;
+        $coreStore.resetServiceError();
+    },
+    onRequestError({ request, options, error }) {
+        logoutOtherDevicePending.value = false;
+
+        $coreStore.setServiceError({
+            prompt: true,
+            icon: 'ic:sharp-error-outline',
+            title: 'Request failed',
+            payload: {message: error.message}
+        });
+    },
+    onResponse({request, response, options}) {
+        logoutOtherDevicePending.value = false;
+
+        if (response._data.code >= 500 && response._data.code < 600) {
+            $coreStore.setServiceError({
+                prompt: true,
+                icon: 'ic:sharp-error-outline',
+                title: 'Something Went Wrong',
+                payload: response._data
+            });
+        } else if(response?._data?.code >= 401 && response?._data?.code < 499){
+            $coreStore.setServiceError({
+                prompt: true,
+                icon: 'ic:sharp-error-outline',
+                title: 'Request failed',
+                payload: response._data
+            });
+        } else {
+
+            $coreStore.setPrompt({
+                icon: 'mdi:key-chain',
+                title: 'Logout other device',
+                message: _get(response, '_data.message', ''),
+                action: {
+                    callback: () => {
+                        confirmPassword.value = '';
                     },
                     label: 'Close'
                 }
