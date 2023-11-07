@@ -3,22 +3,23 @@
         <NuxtLayout :name="$coreStore.layout">
             <template #content>
                 <div class="tw-mx-auto tw-max-w-screen-2xl">
-                    <div class="tw-mx-auto tw-flex tw-flex-col tw-justify-center tw-w-max">
-                        <AccentFrame class="tw-my-4 tw-w-max">
+                    <div class="tw-mx-auto tw-flex tw-flex-col tw-justify-center tw-w-fit">
+                        <AccentFrame class="tw-my-4 tw-max-w-screen-md">
                             <template #content>
                                 <div class="tw-relative">
                                     <p class="tw-font-semibold tw-text-lg">Profile Information</p>
-                                    <div class="tw-mt-2 tw-grid tw-gap-2 tw-grid-cols-2">
+                                    <div class="tw-mt-4 tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2">
                                         <div>
                                             <InputLabel :size="'sm'" value="Username" />
-                                            <InputWithIcon :icon="'ic:sharp-person-pin'" v-model="user.name" readonly />
+                                            <InputWithIcon class="tw-w-full" :icon="'ic:sharp-person-pin'" v-model="user.name" readonly />
                                         </div>
                                         <div>
                                             <InputLabel :size="'sm'" value="Email" />
-                                            <InputWithIcon :icon="'ic:round-mail-outline'" v-model="user.email" readonly />
+                                            <InputWithIcon class="tw-w-full" :icon="'ic:round-mail-outline'" v-model="user.email" readonly />
                                         </div>
                                         <div>
                                             <InputWithIcon
+                                                class="tw-w-full"
                                                 :icon="user?.email_verified_at ? 'ic:sharp-verified-user' : 'mdi:security-close'"
                                                 :placeholder="user?.email_verified_at ? 'Email Verified' : 'Email Not Verified'"
                                                 readonly />
@@ -28,41 +29,66 @@
                             </template>
                         </AccentFrame>
 
-                        <form @submit.prevent="executeUpdatePassword" class="tw-mt-4 tw-p-[1.5rem] neutral-border tw-w-max">
+                        <form @submit.prevent="executeUpdatePassword" class="tw-max-w-screen-md tw-p-[1.5rem] neutral-border">
                             <p class="tw-font-semibold tw-text-lg">Update Password</p>
+                            <p class="tw-text-base">Ensure your account is using a long, random password to stay secure.</p>
 
-                            <div class="tw-mt-2 tw-grid tw-gap-2 tw-grid-cols-2">
-                                <div class="tw-col-span-2">
+                            <div class="tw-mt-4 tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2">
+                                <div class="tw-col-span-1 sm:tw-col-span-2">
                                     <InputLabel :size="'sm'" value="Current Password" />
-                                    <InputWithIcon :disabled="updatePasswordPending" :icon="'mdi:key-chain'" type="password" placeholder="Enter current password" v-model="updatePassword.currentPassword" required />
+                                    <InputWithIcon class="tw-w-full" :disabled="updatePasswordPending" :icon="'mdi:key-chain'" type="password" placeholder="Enter current password" v-model="updatePassword.currentPassword" required />
                                 </div>
                                 <div>
                                     <InputLabel :size="'sm'" value="New Password" />
-                                    <InputWithIcon :disabled="updatePasswordPending" :icon="'ph:password-fill'" type="password" placeholder="Enter new password" v-model="updatePassword.newPassword" required />
+                                    <InputWithIcon class="tw-w-full" :disabled="updatePasswordPending" :icon="'ph:password-fill'" type="password" placeholder="Enter new password" v-model="updatePassword.newPassword" required />
                                 </div>
                                 <div>
                                     <InputLabel :size="'sm'" value="Confirm New Password" />
-                                    <InputWithIcon :disabled="updatePasswordPending" :icon="'ph:password-fill'" type="password" placeholder="Re-enter new password" v-model="updatePassword.confirmNewPassword" required />
+                                    <InputWithIcon class="tw-w-full" :disabled="updatePasswordPending" :icon="'ph:password-fill'" type="password" placeholder="Re-enter new password" v-model="updatePassword.confirmNewPassword" required />
                                 </div>
                                 <div></div>
                                 <div>
-                                    <Button :disabled="updatePasswordPending" :size="'sm'" :variant="'flat'" :label="'Update Password'" />
+                                    <Button :disabled="updatePasswordPending" :label="'Update Password'" />
                                 </div>
                             </div>
                         </form>
 
-                        <form @submit.prevent="executeLogoutOtherDevice" class="tw-mt-4 tw-p-[1.5rem] neutral-border tw-w-max">
-                            <p class="tw-font-semibold tw-text-lg">Logout other Devices</p>
+                        <form @submit.prevent="executeLogoutOtherDevice" class="tw-max-w-screen-md tw-mt-4 tw-p-[1.5rem] neutral-border">
+                            <p class="tw-font-semibold tw-text-lg">Browser Sessions </p>
+                            <p class="tw-text-base">Manage and log out your active sessions on other browsers and devices. </p>
 
-                            <div class="tw-mt-2 tw-grid tw-gap-2 tw-grid-cols-2">
+                            <div v-if="sessions.length > 0" class="tw-mt-5 tw-space-y-6">
+                                <div v-for="(session, i) in sessions" :key="i" class="tw-flex tw-items-center">
+                                    <div>
+                                        <Icon class="tw-h-8 tw-w-8" :name="session.agent.platform ? 'zondicons:computer-desktop' : 'material-symbols:question-mark'"></Icon>
+                                    </div>
+
+                                    <div class="tw-ms-3">
+                                        <div class="tw-text-sm">
+                                            {{ session.agent.platform ? session.agent.platform : 'Unknown' }} - {{ session.agent.browser ? session.agent.browser : 'Unknown' }}
+                                        </div>
+
+                                        <div>
+                                            <div class="tw-text-sm">
+                                                <span>{{ session.ip_address }}</span>&nbsp;-&nbsp;
+                                                <span v-if="session.is_current_device" class="tw-text-green-500 tw-font-semibold">This device</span>
+                                                <span v-else>Last active {{ session.last_active }}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="tw-mt-4 tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2">
                                 <div>
                                     <InputWithIcon :disabled="logoutOtherDevicePending" :icon="'mdi:key-chain'" type="password" placeholder="Enter password" v-model="confirmPassword" required />
                                 </div>
                                 <div>
-                                    <Button :disabled="logoutOtherDevicePending" :variant="'flat'" :label="'Logout Other Device'" />
+                                    <Button :disabled="logoutOtherDevicePending" :label="'Log Out Other Devices'" />
                                 </div>
                             </div>
                         </form>
+
                     </div>
 
                 </div>
@@ -226,6 +252,14 @@ const {execute: executeLogoutOtherDevice} = csrFetch("/api/logout-other-device",
                 }
             });
         }
+    }
+});
+
+let sessions = ref([]);
+await ssrFetch("/api/sessions", {
+    method: 'GET',
+    onResponse({request, response, options}) {
+        sessions.value = _get(response, '_data.values', []);
     }
 });
 </script>
