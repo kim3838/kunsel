@@ -2,7 +2,6 @@
     <div class="tw-relative">
         <!-- Primary Navigation Menu -->
         <nav ref="navigation" class="primary-navigation-parent tw-z-40 tw-fixed" :class="{'lg:tw-ml-sidebar': false}">
-            <div class="tw-absolute tw-text-xs tw-text-right tw-w-full">Height: {{screenHeight}},Width: {{screenWidth}}</div>
             <div class="tw-max-w-screen-2xl tw-mx-auto tw-flex tw-justify-between tw-h-8 lg:tw-h-14">
                 <div class="tw--my-px tw-flex tw-items-center">
                     <NavDrop
@@ -298,27 +297,6 @@ let accountOptions = computed(() => {
                 title: 'Logout',
                 callback: () => {
                     logout();
-                },
-            },
-            {
-                type: 'action',
-                title: 'Logout Other Device',
-                callback: async () => {
-                    await csrFetch("/api/logout-other-device", {
-                        method: 'POST',
-                        onResponse({request, response, options}) {
-                            console.log({'logout-other-device' : _get(response, '_data.values', [])});
-
-                            $coreStore.setPrompt({
-                                icon: 'mdi:key-chain',
-                                title: 'Logout other device',
-                                message: _get(response, '_data.message', ''),
-                                action: {
-                                    label: 'Close'
-                                }
-                            });
-                        }
-                    });
                 },
             },
             {
