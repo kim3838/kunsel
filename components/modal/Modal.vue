@@ -21,7 +21,7 @@
                 leave-class="tw-opacity-100 tw-translate-y-0 sm:tw-scale-100"
                 leave-to-class="tw-opacity-0 tw-translate-y-4 sm:tw-translate-y-0 sm:tw-scale-95">
                 <div class="tw-h-full tw-flex tw-items-center">
-                    <div v-show="show" class="tw-mb-6 modal-body tw-rounded-sm tw-overflow-hidden tw-shadow-xl tw-transform tw-transition-all tw-w-full sm:tw-w-full sm:tw-mx-auto" :class="maxWidthClass">
+                    <div v-show="show" class="tw-mb-6 modal-body tw-rounded-sm tw-overflow-hidden tw-transform tw-transition-all tw-w-full sm:tw-w-full sm:tw-mx-auto" :class="maxWidthClass">
                         <slot></slot>
                     </div>
                 </div>
@@ -41,12 +41,14 @@ export default {
             primary: primaryColor,
             neutral: neutralColor,
             body: bodyColor,
+            lining: liningColor,
         } = storeToRefs($themeStore);
 
         return {
             primaryColor,
             neutralColor,
-            bodyColor
+            bodyColor,
+            liningColor
         };
     },
     props: {
@@ -91,10 +93,13 @@ export default {
 </script>
 <style scoped>
 .modal-layer{
-    background-color: v-bind(neutralColor);
+    background-color: transparent;
 }
 
 .modal-body{
     background-color: v-bind(bodyColor);
+    filter:
+        drop-shadow(v-bind(liningColor) 0px 0px 100px)
+        drop-shadow(v-bind(liningColor) 0px 0px 50px);
 }
 </style>
