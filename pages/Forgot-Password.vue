@@ -6,7 +6,7 @@
                     <AccentFrame class="tw-my-4">
                         <template #content>
                             <div class="tw-relative tw-py-4">
-                                <form @submit.prevent="execute" class="tw-w-72">
+                                <form @submit.prevent="handleForgotPassword" class="tw-w-72">
                                     <p class="tw-font-semibold tw-text-lg">
                                         Forgot your password? No problem.
                                     </p>
@@ -70,7 +70,12 @@ let bodyComputed = computed(() => {
     };
 });
 
-const {execute} = csrFetch("/forgot-password", {
+async function handleForgotPassword(){
+    await csrFetch("/sanctum/csrf-cookie");
+    await executeForgotPassword();
+}
+
+const {execute: executeForgotPassword} = csrFetch("/forgot-password", {
     method: 'POST',
     body: bodyComputed,
     immediate: false,
