@@ -40,7 +40,7 @@
 
                             <div class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-8">
                                 <div class="tw-block">
-                                    <Button :variant="'outline'" ref="submitButton" type="submit" @click="paginate(1, true)" :disabled="pending" :size="'md'" :icon="'ic:sharp-refresh'" :label="'Refresh'"></Button>
+                                    <Button ref="submitButton" type="submit" @click="paginate(1, true)" :disabled="pending" :size="'md'" :icon="pending ? 'eos-icons:loading' : 'mdi:data'" :label="pending ? 'Loading' : 'Process'"></Button>
                                 </div>
                             </div>
                         </form>
