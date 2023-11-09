@@ -5,11 +5,13 @@
         :show="prompt.show"
         @close="$coreStore.promptAction()">
         <template #icon>
-            <Icon
-                v-if="prompt.icon"
-                class="tw-h-full tw-w-full"
-                :name="prompt.icon">
-            </Icon>
+            <ClientOnly>
+                <Icon
+                    v-if="prompt.icon"
+                    class="tw-h-full tw-w-full"
+                    :name="prompt.icon">
+                </Icon>
+            </ClientOnly>
         </template>
 
         <template #title>
@@ -22,9 +24,11 @@
             </div>
             <div v-if="prompt.messageList.length">
                 <ul>
-                    <li v-for="message in prompt.messageList" :key="message">
-                        <Icon name="radix-icons:dot"></Icon>&nbsp;{{message}}
-                    </li>
+                    <ClientOnly>
+                        <li v-for="message in prompt.messageList" :key="message">
+                            <Icon name="radix-icons:dot"></Icon>&nbsp;{{message}}
+                        </li>
+                    </ClientOnly>
                 </ul>
             </div>
         </template>

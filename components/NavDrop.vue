@@ -5,7 +5,7 @@
         :class="[classes, headerFontClass]"
         class="nav tw-px-4 tw-cursor-pointer focus:tw-outline-none focus:tw-ring-transparent focus:tw-ring-1">
         {{title}}
-        <Icon :name="navDropIcon"/>
+        <ClientOnly><Icon :name="navDropIcon"/></ClientOnly>
         <div
             v-if="activeComputed"
             :style="navDropOptionsStyleComputed"
@@ -16,13 +16,13 @@
                     v-if="dropOption.type === 'link'"
                     :to="dropOption.to"
                     class="tw-px-4 tw-py-1 tw-w-full tw-inline-flex tw-items-center">
-                    <Icon v-if="dropOption.icon" :name="dropOption.icon" class="tw-mr-1" /><span>{{dropOption.title}}</span>
+                    <ClientOnly><Icon v-if="dropOption.icon" :name="dropOption.icon" class="tw-mr-1" /></ClientOnly><span>{{dropOption.title}}</span>
                 </NuxtLink>
 
                 <div v-if="dropOption.type === 'action'"
                      @click="typeof dropOption.callback == 'function' ? dropOption.callback() : false;"
                      class="tw-px-4 tw-py-1 tw-w-full tw-inline-flex tw-items-center">
-                    <Icon v-if="dropOption.icon" :name="dropOption.icon" class="tw-mr-1" /><span>{{dropOption.title}}</span>
+                    <ClientOnly><Icon v-if="dropOption.icon" :name="dropOption.icon" class="tw-mr-1" /></ClientOnly><span>{{dropOption.title}}</span>
                 </div>
 
                 <NavDrop

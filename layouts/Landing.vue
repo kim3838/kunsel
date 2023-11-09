@@ -61,7 +61,7 @@
                             <SquareEnix :height="'calc(3.8rem - 1px)'"/>
                         </div>
 
-                        <p class="tw-font-serif tw-text-center tw-leading-relaxed sm:tw-max-w-md sm:tw-text-left">
+                        <p class="tw-text-center tw-leading-relaxed sm:tw-max-w-md sm:tw-text-left">
                             Lorem ipsum dolor, sit amet consectetur adipisicing elit. Incidunt
                             consequuntur amet culpa cum itaque neque.
                         </p>
@@ -69,17 +69,17 @@
                         <ul class="tw-mt-2 tw-flex tw-justify-center tw-gap-6 sm:tw-justify-start md:gap-8">
                             <li>
                                 <a href="/" rel="noreferrer" target="_blank">
-                                    <Icon class="tw-h-5 tw-w-5" name="mdi:facebook"></Icon>
+                                    <ClientOnly><Icon class="tw-h-5 tw-w-5" name="mdi:facebook"></Icon></ClientOnly>
                                 </a>
                             </li>
                             <li>
                                 <a href="/" rel="noreferrer" target="_blank">
-                                    <Icon class="tw-h-5 tw-w-5" name="mdi:instagram"></Icon>
+                                    <ClientOnly><Icon class="tw-h-5 tw-w-5" name="mdi:instagram"></Icon></ClientOnly>
                                 </a>
                             </li>
                             <li>
                                 <a href="/" rel="noreferrer" target="_blank">
-                                    <Icon class="tw-h-5 tw-w-5" name="mdi:youtube"></Icon>
+                                    <ClientOnly><Icon class="tw-h-5 tw-w-5" name="mdi:youtube"></Icon></ClientOnly>
                                 </a>
                             </li>
                         </ul>
@@ -92,20 +92,20 @@
                             <ul class="tw-mt-8 tw-space-y-4 tw-text-sm">
                                 <li>
                                     <span class="footer-link tw-flex tw-items-center tw-justify-center sm:tw-justify-start" href="/">
-                                        <Icon name="ic:round-mail-outline"></Icon>
+                                        <ClientOnly><Icon name="ic:round-mail-outline"></Icon></ClientOnly>
                                         <span class="tw-ml-1">mail@domain.com</span>
                                     </span>
                                 </li>
 
                                 <li>
                                     <span class="tw-flex tw-items-center tw-justify-center sm:tw-justify-start" href="/">
-                                        <Icon name="ic:sharp-phone"></Icon>
+                                        <ClientOnly><Icon name="ic:sharp-phone"></Icon></ClientOnly>
                                         <span>+63 991 9991 991</span>
                                     </span>
                                 </li>
 
                                 <li class="tw-flex tw-items-start tw-justify-center sm:tw-justify-start">
-                                    <Icon name="ic:sharp-location-on"></Icon>
+                                    <ClientOnly><Icon name="ic:sharp-location-on"></Icon></ClientOnly>
                                     <address class="tw--mt-0.5 tw-not-italic">
                                         Manila, Philippines
                                     </address>

@@ -23,7 +23,7 @@
         <div :class="[shadeClass]" class="shade"></div>
         <slot :fontClass="fontClass">
             <span class="tw-flex tw-items-center" :class="[fontClass]">
-                <Icon v-if="icon?.trim()" :class="[iconClass, icon?.trim() ? 'tw-mr-0.5' : '']" :name="icon"></Icon><span>{{label}}</span>
+                <ClientOnly><Icon v-if="icon?.trim()" :class="[iconClass, icon?.trim() ? 'tw-mr-0.5' : '']" :name="icon"></Icon></ClientOnly><span>{{label}}</span>
             </span>
         </slot>
     </button>

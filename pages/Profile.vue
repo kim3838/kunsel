@@ -60,7 +60,7 @@
                             <div v-if="sessions.length > 0" class="tw-mt-5 tw-space-y-6">
                                 <div v-for="(session, i) in sessions" :key="i" class="tw-flex tw-items-center">
                                     <div>
-                                        <Icon class="tw-h-8 tw-w-8" :name="session.agent.platform ? 'zondicons:computer-desktop' : 'material-symbols:question-mark'"></Icon>
+                                        <ClientOnly><Icon class="tw-h-8 tw-w-8" :name="session.agent.platform ? 'zondicons:computer-desktop' : 'material-symbols:question-mark'"></Icon></ClientOnly>
                                     </div>
 
                                     <div class="tw-ms-3">
@@ -256,7 +256,7 @@ const {execute: executeLogoutOtherDevice} = csrFetch("/api/logout-other-device",
 });
 
 let sessions = ref([]);
-await ssrFetch("/api/sessions", {
+await csrFetch("/api/sessions", {
     method: 'GET',
     onResponse({request, response, options}) {
         sessions.value = _get(response, '_data.values', []);

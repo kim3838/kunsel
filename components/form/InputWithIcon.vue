@@ -1,7 +1,7 @@
 <template>
     <div class="tw-relative tw-box-border" :class="[heightClass]">
         <div v-if="icon?.trim()" class="tw-absolute tw-h-full tw-z-20 tw-flex tw-items-center tw-pointer-events-none">
-            <Icon :class="[iconClass]" :name="icon" />
+            <ClientOnly><Icon :class="[iconClass]" :name="icon" /></ClientOnly>
         </div>
         <input
             :id="id"

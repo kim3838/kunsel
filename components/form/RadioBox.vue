@@ -1,7 +1,9 @@
 <template>
     <label :for="labelId">
-        <Icon v-if="selected == value" :class="[heightClass, 'radio']" name="ic:sharp-radio-button-checked"></Icon>
-        <Icon v-else :class="[heightClass]" class='radio' name="ic:sharp-radio-button-unchecked"></Icon>
+        <ClientOnly>
+            <Icon v-if="selected == value" :class="[heightClass, 'radio']" name="ic:sharp-radio-button-checked"></Icon>
+            <Icon v-else :class="[heightClass]" class='radio' name="ic:sharp-radio-button-unchecked"></Icon>
+        </ClientOnly>
         <input
             type="radio"
             :value="value"
