@@ -66,6 +66,6 @@ export default {
 <style scoped>
 
 .modal-body{
-    border:1px solid v-bind(neutralColor);
+    border-bottom:1px solid v-bind(neutralColor);
 }
 </style>
