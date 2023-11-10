@@ -39,14 +39,14 @@ export const useCoreStore = defineStore('core', {
         setServiceError(serviceError){
             this.service.error = serviceError;
 
-            let errors = _flatten(Object.values(this.service.error?.payload?.errors) ?? []);
-            let message = errors.length ? null : this.service.error?.payload?.message;
+            let errors = _flatten(Object.values(_get(serviceError, 'payload.errors', {})));
+            let message = errors.length ? null : _get(serviceError, 'payload.message', null);
 
-            if(this.service.error.prompt){
+            if(_get(serviceError, 'prompt', false)){
                 this.prompt = {
-                    show: true,
-                    icon: this.service.error.icon,
-                    title: this.service.error.title,
+                    show: serviceError.prompt,
+                    icon: serviceError.icon,
+                    title: serviceError.title,
                     message: message,
                     messageList: errors,
                     action: {
