@@ -394,11 +394,14 @@ let paramsComputed = computed(() => {
 });
 
 let selectedParamsComputed = computed(() => {
+
+    const selected = _get(props, 'payload.selected', null);
+
     return {
         page: 1,
         perPage: 1,
         filters: {
-            id: props.payload?.selected ? Array.of(props.payload?.selected) : []
+            id: selected ? Array.of(selected) : []
         }
     };
 });
@@ -464,6 +467,14 @@ function clearSearch(){
 
 watch(active, async (newValue) => {
     await nextTick();
+
+    //On active state: Fetch selection if selection is empty
+    if(newValue && _isEmpty(selection.value)){
+        execute();
+    }
+
+    //If selection is in horizontal scrollable
+    //set selection options offset left to align just below its selection header
     selectionWidth.value = selectHeader.value.offsetWidth;
 
     if(props.inHorizontalScrollable){
@@ -526,47 +537,44 @@ function handleBackTab() {
     }, 10)
 }
 
-const {pending, execute} = csrFetch(props.payload?.fetch.url, {
+const pending = ref(false);
+const { execute} = csrFetch(props.payload.fetch.url, {
     method: 'GET',
+    immediate: false,
     params: paramsComputed,
-    onRequest(){
+}, {
+    onRequest: () => {
+        pending.value = true;
         selectionEndResult.icon = 'eos-icons:loading';
         selectionEndResult.label = 'Loading...';
     },
-    onRequestError({ request, options, error }) {
-        $coreStore.setServiceError({
-            prompt: true,
-            icon: 'ic:sharp-error-outline',
-            title: 'Request failed',
-            payload: {message: error.message}
-        });
+    onRequestError: () => {
+        pending.value = false;
+        selectionEndResult.icon = 'eos-icons:loading';
+        selectionEndResult.label = 'Loading failed.';
     },
-    async onResponse({request, response, options}) {
-        if (response._data.code >= 500 && response._data.code < 600) {
-            $coreStore.setServiceError({
-                prompt: true,
-                icon: 'ic:sharp-error-outline',
-                title: 'Something Went Wrong',
-                payload: response._data
-            });
-        } else {
-            if(searchTriggered.value){
-                selection.value = [];
-            }
+    onResponse: () => {
+        pending.value = false;
+        selectionEndResult.icon = 'eos-icons:loading';
+        selectionEndResult.label = 'Please wait...';
+    },
+    onSuccessResponse: async (request, response, options) => {
+        if(searchTriggered.value){
+            selection.value = [];
+        }
 
-            let data = _get(response, '_data.values.selection.data', []);
-            selection.value = selection.value.concat(data);
+        let data = _get(response, '_data.values.selection.data', []);
+        selection.value = selection.value.concat(data);
 
-            if(searchTriggered.value){
-                searchTriggered.value = false;
-                await nextTick();
-                selectionScrollY.value = 0;
-            }
+        if(searchTriggered.value){
+            searchTriggered.value = false;
+            await nextTick();
+            selectionScrollY.value = 0;
+        }
 
-            if(selection.value.length && data.length == 0){
-                selectionEndResult.icon = 'radix-icons:dot';
-                selectionEndResult.label = 'End of result.';
-            }
+        if(selection.value.length && data.length == 0){
+            selectionEndResult.icon = 'radix-icons:dot';
+            selectionEndResult.label = 'End of result.';
         }
     }
 });
@@ -590,38 +598,19 @@ watch(() => {
     }, 1500);
 });
 
-const {pending: selectedPending, execute: selectedExecute} = csrFetch(props.payload?.fetch.url, {
+const {execute: selectedExecute} = csrFetch(props.payload.fetch.url, {
     method: 'GET',
     immediate: false,
     params: selectedParamsComputed,
-    onRequest(){
+}, {
+    onSuccessResponse: (request, response, options) => {
+        let data = _get(response, '_data.values.selection.data', {});
 
-    },
-    onRequestError({ request, options, error }) {
-        $coreStore.setServiceError({
-            prompt: true,
-            icon: 'ic:sharp-error-outline',
-            title: 'Request failed',
-            payload: {message: error.message}
-        });
-    },
-    onResponse({request, response, options}) {
-        if (response._data.code >= 500 && response._data.code < 600) {
-            $coreStore.setServiceError({
-                prompt: true,
-                icon: 'ic:sharp-error-outline',
-                title: 'Something Went Wrong',
-                payload: response._data
-            });
-        } else {
-            let data = _get(response, '_data.values.selection.data', {});
-
-            selected.value = Array.isArray(data) ? data[0] : {};
-        }
+        selected.value = Array.isArray(data) ? data[0] : {};
     }
 });
 
-if(props.payload?.selected){
+if(props.payload.selected){
     selectedExecute();
 }
 
