@@ -29,8 +29,7 @@
                                             id="password"
                                             type="password"
                                             class="tw-w-full"
-                                            v-model="data.password"
-                                            required />
+                                            v-model="data.password" />
                                     </div>
 
                                     <div class="tw-block tw-mt-4">
@@ -41,8 +40,7 @@
                                             id="password_confirmation"
                                             type="password"
                                             class="tw-w-full"
-                                            v-model="data.password_confirmation"
-                                            required />
+                                            v-model="data.password_confirmation" />
                                     </div>
 
                                     <div class="tw-flex tw-mt-4 tw-items-center tw-justify-end">
@@ -88,64 +86,41 @@ const data = reactive({
     password_confirmation: "",
 });
 
-let pending = ref(false);
-
 onMounted(async () => {
     await nextTick();
     password.value.$refs.input.focus();
 });
 
+const pending = ref(false);
 const {execute} = csrFetch("/reset-password", {
     method: 'POST',
     body: data,
-    immediate: false,
-    onRequest(){
+    immediate: false
+}, {
+    onRequest: () => {
         pending.value = true;
-        $coreStore.resetServiceError();
     },
-    onRequestError({ request, options, error }) {
+    onRequestError: () => {
         pending.value = false;
-
-        $coreStore.setServiceError({
-            prompt: true,
-            icon: 'ic:sharp-error-outline',
-            title: 'Request failed',
-            payload: {message: error.message}
+    },
+    onResponse: () => {
+        pending.value = false;
+    },
+    onSuccessResponse: (request, response, options) => {
+        $coreStore.setPrompt({
+            icon: 'mdi:key-chain',
+            title: 'Password Reset',
+            message: _get(response, '_data.message', ''),
+            action: {
+                callback: ()=>{
+                    navigateTo({
+                        path: '/login',
+                        replace: true
+                    });
+                },
+                label: 'Close'
+            }
         });
-    },
-    onResponse({request, response, options}) {
-        pending.value = false;
-
-        if (response._data.code >= 500 && response._data.code < 600) {
-            $coreStore.setServiceError({
-                prompt: true,
-                icon: 'ic:sharp-error-outline',
-                title: 'Something Went Wrong',
-                payload: response._data
-            });
-        } else if(response?._data?.code >= 401 && response?._data?.code < 499){
-            $coreStore.setServiceError({
-                prompt: true,
-                icon: 'ic:sharp-error-outline',
-                title: 'Request failed',
-                payload: response._data
-            });
-        } else {
-            $coreStore.setPrompt({
-                icon: 'ic:outline-mark-email-read',
-                title: 'Password Reset',
-                message: _get(response, '_data.message', ''),
-                action: {
-                    callback: ()=>{
-                        navigateTo({
-                            path: '/login',
-                            replace: true
-                        });
-                    },
-                    label: 'Close'
-                }
-            });
-        }
     }
 });
 </script>

@@ -151,53 +151,30 @@ const {execute: executeUpdatePassword} = csrFetch("/update-password", {
     method: 'POST',
     body: updatePasswordDataComputed,
     immediate: false,
-    onRequest(){
+}, {
+    onRequest: () => {
         updatePasswordPending.value = true;
-        $coreStore.resetServiceError();
     },
-    onRequestError({ request, options, error }) {
+    onRequestError: () => {
         updatePasswordPending.value = false;
-
-        $coreStore.setServiceError({
-            prompt: true,
-            icon: 'ic:sharp-error-outline',
-            title: 'Request failed',
-            payload: {message: error.message}
+    },
+    onResponse: () => {
+        updatePasswordPending.value = false;
+    },
+    onSuccessResponse: (request, response, options) => {
+        $coreStore.setPrompt({
+            icon: 'mdi:key-chain',
+            title: 'Update Password',
+            message: _get(response, '_data.message', ''),
+            action: {
+                callback: () => {
+                    updatePassword.currentPassword = '';
+                    updatePassword.newPassword = '';
+                    updatePassword.confirmNewPassword = '';
+                },
+                label: 'Close'
+            }
         });
-    },
-    onResponse({request, response, options}) {
-        updatePasswordPending.value = false;
-
-        if (response._data.code >= 500 && response._data.code < 600) {
-            $coreStore.setServiceError({
-                prompt: true,
-                icon: 'ic:sharp-error-outline',
-                title: 'Something Went Wrong',
-                payload: response._data
-            });
-        } else if(response?._data?.code >= 401 && response?._data?.code < 499){
-            $coreStore.setServiceError({
-                prompt: true,
-                icon: 'ic:sharp-error-outline',
-                title: 'Request failed',
-                payload: response._data
-            });
-        } else {
-
-            $coreStore.setPrompt({
-                icon: 'mdi:key-chain',
-                title: 'Update Password',
-                message: _get(response, '_data.message', ''),
-                action: {
-                    callback: () => {
-                        updatePassword.currentPassword = '';
-                        updatePassword.newPassword = '';
-                        updatePassword.confirmNewPassword = '';
-                    },
-                    label: 'Close'
-                }
-            });
-        }
     }
 });
 
@@ -207,51 +184,28 @@ const {execute: executeLogoutOtherDevice} = csrFetch("/api/logout-other-device",
     method: 'POST',
     body: {password: confirmPassword},
     immediate: false,
-    onRequest(){
+}, {
+    onRequest: () => {
         logoutOtherDevicePending.value = true;
-        $coreStore.resetServiceError();
     },
-    onRequestError({ request, options, error }) {
+    onRequestError: () => {
         logoutOtherDevicePending.value = false;
-
-        $coreStore.setServiceError({
-            prompt: true,
-            icon: 'ic:sharp-error-outline',
-            title: 'Request failed',
-            payload: {message: error.message}
+    },
+    onResponse: () => {
+        logoutOtherDevicePending.value = false;
+    },
+    onSuccessResponse: (request, response, options) => {
+        $coreStore.setPrompt({
+            icon: 'mdi:key-chain',
+            title: 'Logout other device',
+            message: _get(response, '_data.message', ''),
+            action: {
+                callback: () => {
+                    confirmPassword.value = '';
+                },
+                label: 'Close'
+            }
         });
-    },
-    onResponse({request, response, options}) {
-        logoutOtherDevicePending.value = false;
-
-        if (response._data.code >= 500 && response._data.code < 600) {
-            $coreStore.setServiceError({
-                prompt: true,
-                icon: 'ic:sharp-error-outline',
-                title: 'Something Went Wrong',
-                payload: response._data
-            });
-        } else if(response?._data?.code >= 401 && response?._data?.code < 499){
-            $coreStore.setServiceError({
-                prompt: true,
-                icon: 'ic:sharp-error-outline',
-                title: 'Request failed',
-                payload: response._data
-            });
-        } else {
-
-            $coreStore.setPrompt({
-                icon: 'mdi:key-chain',
-                title: 'Logout other device',
-                message: _get(response, '_data.message', ''),
-                action: {
-                    callback: () => {
-                        confirmPassword.value = '';
-                    },
-                    label: 'Close'
-                }
-            });
-        }
     }
 });
 

@@ -26,7 +26,7 @@
                                             :size="'md'"
                                             :variant="'flat'"
                                             :icon="pending ? 'eos-icons:installing' : 'ic:round-mail-outline'"
-                                            :label="pending ? 'Requesting...' : 'Resend Email Verification'"></Button>
+                                            :label="pending ? 'Requesting...' : 'Send Email Verification'"></Button>
                                     </div>
                                 </form>
                             </div>
@@ -53,48 +53,26 @@ let pending = ref(false);
 
 const {execute} = csrFetch("/email/verification-notification", {
     method: 'POST',
-    immediate: false,
-    onRequest(){
+    immediate: false
+}, {
+    onRequest: () => {
         pending.value = true;
-        $coreStore.resetServiceError();
     },
-    onRequestError({ request, options, error }) {
+    onRequestError: () => {
         pending.value = false;
-
-        $coreStore.setServiceError({
-            prompt: true,
-            icon: 'ic:sharp-error-outline',
-            title: 'Request failed',
-            payload: {message: error.message}
+    },
+    onResponse: () => {
+        pending.value = false;
+    },
+    onSuccessResponse: (request, response, options) => {
+        $coreStore.setPrompt({
+            icon: 'ic:outline-mark-email-read',
+            title: 'Email Verification',
+            message: _get(response, '_data.message', ''),
+            action: {
+                label: 'Close'
+            }
         });
-    },
-    onResponse({request, response, options}) {
-        pending.value = false;
-
-        if (response._data.code >= 500 && response._data.code < 600) {
-            $coreStore.setServiceError({
-                prompt: true,
-                icon: 'ic:sharp-error-outline',
-                title: 'Something Went Wrong',
-                payload: response._data
-            });
-        } else if(response?._data?.code >= 401 && response?._data?.code < 499){
-            $coreStore.setServiceError({
-                prompt: true,
-                icon: 'ic:sharp-error-outline',
-                title: 'Request failed',
-                payload: response._data
-            });
-        } else {
-            $coreStore.setPrompt({
-                icon: 'ic:outline-mark-email-read',
-                title: 'Email Verification',
-                message: _get(response, '_data.message', ''),
-                action: {
-                    label: 'Close'
-                }
-            });
-        }
     }
 });
 </script>

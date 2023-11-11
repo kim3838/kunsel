@@ -71,6 +71,7 @@ let bodyComputed = computed(() => {
 });
 
 async function handleForgotPassword(){
+    pending.value = true;
     await csrFetch("/sanctum/csrf-cookie");
     await executeForgotPassword();
 }
@@ -78,54 +79,32 @@ async function handleForgotPassword(){
 const {execute: executeForgotPassword} = csrFetch("/forgot-password", {
     method: 'POST',
     body: bodyComputed,
-    immediate: false,
-    onRequest(){
+    immediate: false
+}, {
+    onRequest: () => {
         pending.value = true;
-        $coreStore.resetServiceError();
     },
-    onRequestError({ request, options, error }) {
+    onRequestError: () => {
         pending.value = false;
-
-        $coreStore.setServiceError({
-            prompt: true,
-            icon: 'ic:sharp-error-outline',
-            title: 'Request failed',
-            payload: {message: error.message}
+    },
+    onResponse: () => {
+        pending.value = false;
+    },
+    onSuccessResponse: (request, response, options) => {
+        $coreStore.setPrompt({
+            icon: 'ic:outline-mark-email-read',
+            title: 'Password Reset',
+            message: _get(response, '_data.message', ''),
+            action: {
+                callback: () => {
+                    navigateTo({
+                        path: '/login',
+                        replace: true
+                    });
+                },
+                label: 'Close'
+            }
         });
-    },
-    onResponse({request, response, options}) {
-        pending.value = false;
-
-        if (response._data.code >= 500 && response._data.code < 600) {
-            $coreStore.setServiceError({
-                prompt: true,
-                icon: 'ic:sharp-error-outline',
-                title: 'Something Went Wrong',
-                payload: response._data
-            });
-        } else if(response?._data?.code >= 401 && response?._data?.code < 499){
-            $coreStore.setServiceError({
-                prompt: true,
-                icon: 'ic:sharp-error-outline',
-                title: 'Request failed',
-                payload: response._data
-            });
-        } else {
-            $coreStore.setPrompt({
-                icon: 'ic:outline-mark-email-read',
-                title: 'Password Reset',
-                message: _get(response, '_data.message', ''),
-                action: {
-                    callback: ()=>{
-                        navigateTo({
-                            path: '/login',
-                            replace: true
-                        });
-                    },
-                    label: 'Close'
-                }
-            });
-        }
     }
 });
 </script>

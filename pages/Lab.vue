@@ -157,7 +157,7 @@ definePageMeta({
     layout: false,
     middleware: 'guest'
 });
-let size = ref('md');
+let size = ref('lg');
 let icon = ref('simple-icons:googlecalendar');
 let inputValue = ref(null);
 
@@ -171,8 +171,12 @@ let multiSelectPrototypePayload = reactive({
             }
         }
     },
-    selected: [1992,1263]
+    selected: [1992,1263]//1992,1263
 });
+// setTimeout(() => {
+//     multiSelectPrototypePayload.selected = [];
+//     multiSelectPrototypePayload.fetch.filters.search.keyword = '1239';
+// }, 10300);
 let singleSelectPrototypePayload = reactive({
     fetch: {
         url: '/api/selections/prototype',
@@ -183,8 +187,12 @@ let singleSelectPrototypePayload = reactive({
             }
         }
     },
-    selected: null,//1263
+    selected: 1263,//1263
 });
+// setTimeout(() => {
+//     singleSelectPrototypePayload.selected = 1172;
+//     singleSelectPrototypePayload.fetch.filters.search.keyword = '1239';
+// }, 10300);
 let singleSelectPrototype = reactive({
     search: '',
     data: [

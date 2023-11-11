@@ -306,7 +306,8 @@ let accountOptions = computed(() => {
                 callback: async () => {
                     await csrFetch("/api/test-post", {
                         method: 'POST',
-                        onResponse({request, response, options}) {
+                    }, {
+                        onResponse: (request, response, options) => {
                             console.log({'CSR POST RESPONSE' : response._data.code});
                         }
                     });

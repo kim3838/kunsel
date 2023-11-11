@@ -47,7 +47,7 @@ export const useAuth = () => {
     * -interceptors https://github.com/unjs/ofetch
     *   * May override onRequestError or onResponse
     **/
-    async function login(credentials: LoginCredentials, options: UseFetchOptions = {}) {
+    async function login(credentials: LoginCredentials) {
         if (isAuthenticated.value) return;
 
         const {$coreStore} = useNuxtApp();
@@ -58,70 +58,41 @@ export const useAuth = () => {
 
         await csrFetch("/login", {
             method: 'POST',
-            body: credentials,
-            onRequestError({ request, options, error }) {
+            body: credentials
+        }, {
+            onRequest: () => {
+                authPending.value = true;
+            },
+            onRequestError: () => {
                 authPending.value = false;
-
-                $coreStore.setServiceError({
-                    prompt: true,
-                    icon: 'ic:sharp-error-outline',
-                    title: 'Request failed',
-                    payload: {message: error.message}
+            },
+            onResponse: () => {
+                authPending.value = false;
+            },
+            onSuccessResponse: async (request, response, options) => {
+                await fetchUser();
+                await navigateTo({
+                    path: '/',
+                    replace: true
                 });
-            },
-            async onResponse({request, response, options}) {
-                authPending.value = false;
-
-                if (response?._data?.code >= 500 && response?._data?.code < 600) {
-                    $coreStore.setServiceError({
-                        prompt: true,
-                        icon: 'ic:sharp-error-outline',
-                        title: 'Authentication failed',
-                        payload: response._data
-                    });
-                } else if(response?._data?.code >= 401 && response?._data?.code < 499){
-                    $coreStore.setServiceError({
-                        prompt: true,
-                        icon: 'ic:sharp-error-outline',
-                        title: 'Authentication failed',
-                        payload: response._data
-                    });
-                } else {
-                    await fetchUser();
-                    await navigateTo({
-                        path: '/',
-                        replace: true
-                    });
-                }
-            },
-            ...options
+            }
         });
     }
 
-    async function logout(options: UseFetchOptions = {}) {
+    async function logout() {
         if (!isAuthenticated.value) return;
 
         const {$coreStore} = useNuxtApp();
         $coreStore.resetServiceError();
 
-        const logout = await csrFetch("/logout", {
-            method: 'POST',
-            ...options
+        await csrFetch("/logout", {
+            method: 'POST'
+        },{
+            onSuccessResponse: (request, response, options) => {
+                user.value = null;
+                navigateTo("/login", {replace: true});
+            }
         });
-
-        if (logout.status._value == 'success') {
-            user.value = null;
-            navigateTo("/login", {replace: true});
-        }
-
-        if (logout.status._value == 'error') {
-            $coreStore.setServiceError({
-                prompt: true,
-                icon: 'ic:sharp-lens-blur',
-                title: 'Logout failed',
-                payload: logout.error.value.data
-            });
-        }
     }
 
     return {
