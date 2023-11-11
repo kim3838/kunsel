@@ -40,7 +40,7 @@
 
                             <div class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-8">
                                 <div class="tw-block">
-                                    <Button ref="submitButton" type="submit" @click="paginate(1, true)" :disabled="pending" :size="'md'" :icon="pending ? 'eos-icons:loading' : 'mdi:data'" :label="pending ? 'Loading' : 'Process'"></Button>
+                                    <Button ref="submitButton" type="submit" :disabled="pending" :size="'md'" :icon="pending ? 'eos-icons:loading' : 'mdi:data'" :label="pending ? 'Loading' : 'Process'"></Button>
                                 </div>
                             </div>
                         </form>
@@ -180,32 +180,22 @@ let paramsComputed = computed(() => {
 const {pending, execute} = csrFetch("/api/v1/prototypes", {
     method: 'GET',
     params: paramsComputed,
-    onRequest(){
+},{
+    onRequest: () => {
         clearTimeout(filters.search.callback);
-        $coreStore.resetServiceError();
     },
-    onResponse({request, response, options}) {
-        //Todo: Response composable handler
-        if (response._data.code >= 500 && response._data.code < 600) {
-            $coreStore.setServiceError({
-                prompt: true,
-                icon: 'ic:sharp-error-outline',
-                title: 'Something Went Wrong',
-                payload: response._data
-            });
-        } else {
-            prototypes.data = _get(response, '_data.values.data', []);
-            prototypes.meta = _get(response, '_data.values.meta', {
-                pagination: {
-                    total: 0,
-                    count: 0,
-                    per_page: 0,
-                    current_page: 0,
-                    total_pages: 0
-                }
-            });
-            renderDateTimePickers();
-        }
+    onSuccessResponse: (request, response, options) => {
+        prototypes.data = _get(response, '_data.values.data', []);
+        prototypes.meta = _get(response, '_data.values.meta', {
+            pagination: {
+                total: 0,
+                count: 0,
+                per_page: 0,
+                current_page: 0,
+                total_pages: 0
+            }
+        });
+        renderDateTimePickers();
     }
 });
 
