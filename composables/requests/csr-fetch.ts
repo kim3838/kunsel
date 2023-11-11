@@ -1,15 +1,24 @@
 
 import type {UseFetchOptions} from "nuxt/app";
 
-export function csrFetch<T>(path: string, options: UseFetchOptions<T> = {}){
+export function csrFetch<T>(
+    path: string,
+    options: UseFetchOptions<T> = {},
+    callbacks: Object = {},
+    promptResponse = true
+){
     const runtimeConfig = useRuntimeConfig();
+    const {$coreStore} = useNuxtApp();
 
     let headers: any = {
         referer: runtimeConfig.public.frontendURL,
         accept: 'application/json, text/plain, */*'
     };
 
-    const XSRF_TOKEN = useCookie('XSRF-TOKEN');
+    const XSRF_TOKEN = useCookie('XSRF-TOKEN', {
+        secure: true,
+        sameSite: 'none'
+    });
 
     if(XSRF_TOKEN.value){
         headers['X-XSRF-TOKEN'] = XSRF_TOKEN.value;
@@ -26,7 +35,60 @@ export function csrFetch<T>(path: string, options: UseFetchOptions<T> = {}){
         credentials: 'include',
         watch: false,
         immediate: true,
+        lazy: true,
         server: false,
+        async onRequest(){
+            console.log({'CSR FETCH' : 'START'})
+
+            if(callbacks.onRequest && typeof callbacks.onRequest == 'function'){
+                await callbacks.onRequest();
+            }
+
+            $coreStore.resetServiceError();
+        },
+        async onRequestError({ request, options, error }) {
+            console.log({'CSR FETCH ERROR' : error})
+
+            if(callbacks.onRequestError && typeof callbacks.onRequestError == 'function'){
+                await callbacks.onRequestError(request, options, error);
+            }
+
+            $coreStore.setServiceError({
+                prompt: promptResponse,
+                icon: 'ic:sharp-error-outline',
+                title: 'Request failed',
+                payload: {message: error.message}
+            });
+        },
+        async onResponse({request, response, options}) {
+            console.log({'CSR FETCH RESPONSE' : response})
+
+            if(callbacks.onResponse && typeof callbacks.onResponse == 'function'){
+                await callbacks.onResponse(request, response, options);
+            }
+
+            if (response._data.code >= 500 && response._data.code < 600) {
+                $coreStore.setServiceError({
+                    prompt: promptResponse,
+                    icon: 'ic:sharp-error-outline',
+                    title: 'Something Went Wrong',
+                    payload: response._data
+                });
+            } else if(response?._data?.code >= 400 && response?._data?.code < 499){
+                $coreStore.setServiceError({
+                    prompt: promptResponse,
+                    icon: 'ic:sharp-error-outline',
+                    title: 'Request failed',
+                    payload: response._data
+                });
+            } else {
+                console.log({'CSR FETCH SUCCESS' : response});
+
+                if(callbacks.onSuccessResponse && typeof callbacks.onSuccessResponse == 'function'){
+                    await callbacks.onSuccessResponse(request, response, options);
+                }
+            }
+        },
         ...options,
         headers: {
             ...headers,

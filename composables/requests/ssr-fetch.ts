@@ -9,7 +9,10 @@ export function ssrFetch<T>(path: string, options: UseFetchOptions<T> = {}){
         accept: 'application/json, text/plain, */*'
     };
 
-    const XSRF_TOKEN = useCookie('XSRF-TOKEN');
+    const XSRF_TOKEN = useCookie('XSRF-TOKEN', {
+        secure: true,
+        sameSite: 'none'
+    });
 
     if(XSRF_TOKEN.value){
         headers['X-XSRF-TOKEN'] = XSRF_TOKEN.value;
