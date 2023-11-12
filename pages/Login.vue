@@ -56,7 +56,6 @@
                                         <Button
                                             :disabled="authPending"
                                             :size="'md'"
-                                            :variant="'flat'"
                                             :icon="authPending ? 'eos-icons:installing' : 'mdi:key-chain'"
                                             :label="authPending ? 'Authenticating...' : 'Authenticate'"></Button>
                                     </div>
