@@ -7,7 +7,7 @@
                         <AccentFrame class="tw-my-4 tw-max-w-screen-md">
                             <template #content>
                                 <div class="tw-relative">
-                                    <p class="tw-font-semibold tw-text-lg">Profile Information</p>
+                                    <p class="tw-font-medium tw-text-lg">Profile Information</p>
                                     <div class="tw-mt-4 tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2">
                                         <div>
                                             <InputLabel :size="'sm'" value="Username" />
@@ -30,7 +30,7 @@
                         </AccentFrame>
 
                         <form @submit.prevent="executeUpdatePassword" class="tw-max-w-screen-md tw-p-[1.5rem] neutral-border">
-                            <p class="tw-font-semibold tw-text-lg">Update Password</p>
+                            <p class="tw-font-medium tw-text-lg">Update Password</p>
                             <p class="tw-text-base">Ensure your account is using a long, random password to stay secure.</p>
 
                             <div class="tw-mt-4 tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2">
@@ -54,7 +54,7 @@
                         </form>
 
                         <form @submit.prevent="executeLogoutOtherDevice" class="tw-max-w-screen-md tw-mt-4 tw-p-[1.5rem] neutral-border">
-                            <p class="tw-font-semibold tw-text-lg">Browser Sessions </p>
+                            <p class="tw-font-medium tw-text-lg">Browser Sessions </p>
                             <p class="tw-text-base">Manage and log out your active sessions on other browsers and devices. </p>
 
                             <div v-if="sessions.length > 0" class="tw-mt-5 tw-space-y-6">
