@@ -5,7 +5,7 @@
     url('/fonts/source-sans-pro/sourcesanspro-light-webfont.woff') format('woff'),
     url('/fonts/source-sans-pro/sourcesanspro-light-webfont.woff2') format('woff2');
     font-style: normal;
-    font-stretch: ultra-condensed;
+    font-stretch: normal;
     font-display: swap;
     font-weight: 300;
 }
@@ -16,7 +16,7 @@
     url('/fonts/source-sans-pro/sourcesanspro-regular-webfont.woff') format('woff'),
     url('/fonts/source-sans-pro/sourcesanspro-regular-webfont.woff2') format('woff2');
     font-style: normal;
-    font-stretch: ultra-condensed;
+    font-stretch: normal;
     font-display: swap;
     font-weight: 400;
 }
@@ -27,7 +27,7 @@
     url('/fonts/source-sans-pro/sourcesanspro-semibold-webfont.woff') format('woff'),
     url('/fonts/source-sans-pro/sourcesanspro-semibold-webfont.woff2') format('woff2');
     font-style: normal;
-    font-stretch: ultra-condensed;
+    font-stretch: normal;
     font-display: swap;
     font-weight: 500;
 }
@@ -38,7 +38,7 @@
     url('/fonts/source-sans-pro/sourcesanspro-semibold-webfont.woff') format('woff'),
     url('/fonts/source-sans-pro/sourcesanspro-semibold-webfont.woff2') format('woff2');
     font-style: normal;
-    font-stretch: ultra-condensed;
+    font-stretch: normal;
     font-weight: 600;
 }
 
@@ -48,7 +48,7 @@
     url('/fonts/source-sans-pro/sourcesanspro-bold-webfont.woff') format('woff'),
     url('/fonts/source-sans-pro/sourcesanspro-bold-webfont.woff2') format('woff2');
     font-style: normal;
-    font-stretch: ultra-condensed;
+    font-stretch: normal;
     font-weight: 700;
 }
 
@@ -58,7 +58,7 @@
     url('/fonts/source-sans-pro/sourcesanspro-bold-webfont.woff') format('woff'),
     url('/fonts/source-sans-pro/sourcesanspro-bold-webfont.woff2') format('woff2');
     font-style: normal;
-    font-stretch: ultra-condensed;
+    font-stretch: normal;
     font-weight: 800;
 }
 
@@ -190,7 +190,7 @@
     font-family: "Google Sans Text";
     src: url('/fonts/google-sans-text/ttf/GoogleSansTextRegular.ttf') format('truetype');
     font-style: normal;
-    font-stretch: ultra-condensed;
+    font-stretch: normal;
     font-display: swap;
     font-weight: 300;
 }
@@ -199,7 +199,7 @@
     font-family: "Google Sans Text";
     src: url('/fonts/google-sans-text/ttf/GoogleSansTextRegular.ttf') format('truetype');
     font-style: normal;
-    font-stretch: ultra-condensed;
+    font-stretch: normal;
     font-display: swap;
     font-weight: 400;
 }
@@ -208,7 +208,7 @@
     font-family: "Google Sans Text";
     src: url('/fonts/google-sans-text/ttf/GoogleSansTextRegular.ttf') format('truetype');
     font-style: normal;
-    font-stretch: ultra-condensed;
+    font-stretch: normal;
     font-display: swap;
     font-weight: 500;
 }
@@ -217,7 +217,7 @@
     font-family: "Google Sans Text";
     src: url('/fonts/google-sans-text/ttf/GoogleSansTextMedium.ttf') format('truetype');
     font-style: normal;
-    font-stretch: ultra-condensed;
+    font-stretch: normal;
     font-weight: 600;
 }
 
@@ -225,7 +225,7 @@
     font-family: "Google Sans Text";
     src: url('/fonts/google-sans-text/ttf/GoogleSansTextBold.ttf') format('truetype');
     font-style: normal;
-    font-stretch: ultra-condensed;
+    font-stretch: normal;
     font-weight: 700;
 }
 
@@ -233,8 +233,66 @@
     font-family: "Google Sans Text";
     src: url('/fonts/google-sans-text/ttf/GoogleSansTextBold.ttf') format('truetype');
     font-style: normal;
-    font-stretch: ultra-condensed;
+    font-stretch: normal;
     font-weight: 800;
+}
+
+/**********************************************************************************************************************/
+
+@font-face {
+    font-family: "Prociono";
+    src: url('/fonts/prociono/ttf/Prociono-Regular.ttf') format('truetype');
+    font-style: normal;
+    font-stretch: normal;
+    font-display: swap;
+    font-weight: 400;
+}
+
+@font-face {
+    font-family: "Prociono";
+    src: url('/fonts/prociono/ttf/Prociono-Regular.ttf') format('truetype');
+    font-style: normal;
+    font-stretch: normal;
+    font-display: swap;
+    font-weight: 500;
+}
+
+/**********************************************************************************************************************/
+
+@font-face {
+    font-family: "Spline Sans";
+    src: url('/fonts/spline-sans/ttf/SplineSans-Light.ttf') format('truetype');
+    font-style: normal;
+    font-stretch: normal;
+    font-display: swap;
+    font-weight: 300;
+}
+
+@font-face {
+    font-family: "Spline Sans";
+    src: url('/fonts/spline-sans/ttf/SplineSans-Regular.ttf') format('truetype');
+    font-style: normal;
+    font-stretch: normal;
+    font-display: swap;
+    font-weight: 400;
+}
+
+@font-face {
+    font-family: "Spline Sans";
+    src: url('/fonts/spline-sans/ttf/SplineSans-Regular.ttf') format('truetype');
+    font-style: normal;
+    font-stretch: normal;
+    font-display: swap;
+    font-weight: 500;
+}
+
+@font-face {
+    font-family: "Spline Sans";
+    src: url('/fonts/spline-sans/ttf/SplineSans-Medium.ttf') format('truetype');
+    font-style: normal;
+    font-stretch: normal;
+    font-display: swap;
+    font-weight: 600;
 }
 
 /**********************************************************************************************************************/
