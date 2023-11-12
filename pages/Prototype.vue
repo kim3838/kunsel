@@ -8,25 +8,25 @@
                     <div class="tw-space-y-2">
                         <div v-if="true" class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-8">
                             <div class="tw-block neutral-border">
-                                <InputLabel :size="'md'" value="Static Multi Select" />
+                                <InputLabel :size="'sm'" value="Static Multi Select" />
                                 <MultiSelect drop-shadow :selection-max-viewable-line="5" :size="'md'" :options="category" :icon="'ic:sharp-qr-code'"/>
                             </div>
                             <div class="tw-block neutral-border">
-                                <InputLabel :size="'md'" value="Non Searchable Multi Select" />
+                                <InputLabel :size="'sm'" value="Non Searchable Multi Select" />
                                 <MultiSelect drop-shadow :selection-max-viewable-line="5" :searchable="false" :size="'md'" :options="category" :icon="'eos-icons:installing'"/>
                             </div>
                             <div class="tw-block neutral-border">
-                                <InputLabel :size="'md'" value="Static Single Select" />
+                                <InputLabel :size="'sm'" value="Static Single Select" />
                                 <SingleSelect drop-shadow :selection-max-viewable-line="4" :always-active="false" :size="'md'" :icon="'emojione-monotone:japanese-no-vacancy-button'" :options="plan"/>
                             </div>
 
                             <div class="tw-block neutral-border">
-                                <InputLabel :size="'md'" value="Non Searchable Single Select" />
+                                <InputLabel :size="'sm'" value="Non Searchable Single Select" />
                                 <SingleSelect drop-shadow :selection-max-viewable-line="4" :searchable="false" :size="'md'" :icon="'emojione-monotone:japanese-vacancy-button'" :options="plan"/>
                             </div>
 
                             <div class="tw-block neutral-border">
-                                <InputLabel :size="'md'" value="Single Select Persist Value" />
+                                <InputLabel :size="'sm'" value="Single Select Persist Value" />
                                 <SingleSelect
                                     drop-shadow
                                     :selection-max-viewable-line="3"
@@ -39,7 +39,7 @@
                             </div>
 
                             <div class="tw-block neutral-border">
-                                <InputLabel :size="'md'" for="date" value="Date" />
+                                <InputLabel :size="'sm'" for="date" value="Date" />
                                 <InputWithIcon
                                     :icon="'simple-icons:googlecalendar'"
                                     :size="'md'"
@@ -51,7 +51,7 @@
                                     :disabled="false" />
                             </div>
                             <div class="tw-block neutral-border">
-                                <InputLabel for="datetime" value="DateTime" />
+                                <InputLabel :size="'sm'" for="datetime" value="DateTime" />
                                 <InputWithIcon
                                     :icon="'simple-icons:googlecalendar'"
                                     :size="'md'"
@@ -64,7 +64,7 @@
                             </div>
 
                             <div class="tw-block neutral-border">
-                                <InputLabel for="month" value="Month" />
+                                <InputLabel :size="'sm'" for="month" value="Month" />
                                 <InputWithIcon
                                     :icon="'simple-icons:protoncalendar'"
                                     :size="'md'"
@@ -79,7 +79,7 @@
 
                         <div v-if="true" class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-8">
                             <div class="tw-block neutral-border">
-                                <InputLabel value="Paginated Multi Select" />
+                                <InputLabel :size="'sm'" value="Paginated Multi Select" />
                                 <MultiSelectPaginated
                                     :drop-shadow="true"
                                     :selection-max-content="true"
@@ -94,7 +94,7 @@
                                     :icon="'ic:sharp-qr-code'"/>
                             </div>
                             <div class="tw-block neutral-border">
-                                <InputLabel value="Paginated Single Select" />
+                                <InputLabel :size="'sm'" value="Paginated Single Select" />
                                 <SingleSelectPaginated
                                     :value-persist="true"
                                     :drop-shadow="true"
