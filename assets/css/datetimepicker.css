@@ -406,7 +406,7 @@
 
 .timelabel {
     position: absolute;
-    bottom: 110%;
+    bottom: 120%;
     font-size: 0.75rem;
     line-height: 0.75rem;
     cursor: default;
