@@ -6,7 +6,6 @@
         :class="[heightClass, spacingClass, colorClass, borderClass]"
         :type="type"
         class="
-            tw-font-[Barlow]
             tw-inline-flex
             tw-items-center
             tw-font-medium
@@ -116,8 +115,8 @@ const iconClass = computed(() => {
     return {
         '2xs': 'tw-h-[0.875rem] tw-w-[0.875rem]',
         'xs': 'tw-h-[1rem] tw-w-[1rem]',
-        'sm': 'tw-h-[1rem] tw-w-[1rem]',
-        'md': 'tw-h-[1.2rem] tw-w-[1.2rem] tw-mt-[0.2rem]',
+        'sm': 'tw-h-[1rem] tw-w-[1rem] tw-mt-[0.1rem]',
+        'md': 'tw-h-[1.2rem] tw-w-[1.2rem] tw-mt-[0.1rem]',
         'lg': 'tw-h-[1.875rem] tw-w-[1.875rem] tw-mt-[0.1rem]',
         'xl': 'tw-h-[2.25rem] tw-w-[2.25rem] tw-mt-[0.1rem]',
     }[props.size]
@@ -125,12 +124,12 @@ const iconClass = computed(() => {
 
 const fontClass = computed(() => {
     return {
-        '2xs': 'tw-text-xs tw-font-semibold',
-        'xs': 'tw-text-xs tw-font-semibold',
-        'sm': 'tw-text-sm tw-font-semibold',
-        'md': 'tw-text-base tw-font-semibold tw-tracking-tight',
-        'lg': 'tw-text-2xl tw-font-black',
-        'xl': 'tw-text-3xl tw-font-black',
+        '2xs':  "tw-font-['Barlow_Semi_Condensed'] tw-text-xs tw-font-medium",
+        'xs':   "tw-font-['Barlow_Semi_Condensed'] tw-text-sm tw-font-medium",
+        'sm':   "tw-font-['Barlow_Semi_Condensed'] tw-text-base tw-font-medium",
+        'md':   "tw-font-['Barlow_Semi_Condensed'] tw-text-lg tw-font-medium",
+        'lg':   "tw-font-['Barlow'] tw-text-2xl tw-font-semibold",
+        'xl':   "tw-font-['Barlow'] tw-text-3xl tw-font-semibold",
     }[props.size]
 });
 
