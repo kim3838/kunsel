@@ -1,13 +1,13 @@
 
 @font-face {
     font-family: "Source Sans Pro";
-    src: url('/fonts/source-sans-pro/sourcesanspro-regular-webfont.ttf') format('truetype'),
-    url('/fonts/source-sans-pro/sourcesanspro-regular-webfont.woff') format('woff'),
-    url('/fonts/source-sans-pro/sourcesanspro-regular-webfont.woff2') format('woff2');
+    src: url('/fonts/source-sans-pro/sourcesanspro-light-webfont.ttf') format('truetype'),
+    url('/fonts/source-sans-pro/sourcesanspro-light-webfont.woff') format('woff'),
+    url('/fonts/source-sans-pro/sourcesanspro-light-webfont.woff2') format('woff2');
     font-style: normal;
-    font-stretch: normal;
+    font-stretch: ultra-condensed;
     font-display: swap;
-    font-weight: 500;
+    font-weight: 300;
 }
 
 @font-face {
@@ -16,8 +16,9 @@
     url('/fonts/source-sans-pro/sourcesanspro-regular-webfont.woff') format('woff'),
     url('/fonts/source-sans-pro/sourcesanspro-regular-webfont.woff2') format('woff2');
     font-style: normal;
-    font-stretch: normal;
-    font-weight: 600;
+    font-stretch: ultra-condensed;
+    font-display: swap;
+    font-weight: 400;
 }
 
 @font-face {
@@ -26,11 +27,64 @@
     url('/fonts/source-sans-pro/sourcesanspro-semibold-webfont.woff') format('woff'),
     url('/fonts/source-sans-pro/sourcesanspro-semibold-webfont.woff2') format('woff2');
     font-style: normal;
-    font-stretch: normal;
+    font-stretch: ultra-condensed;
+    font-display: swap;
+    font-weight: 500;
+}
+
+@font-face {
+    font-family: "Source Sans Pro";
+    src: url('/fonts/source-sans-pro/sourcesanspro-semibold-webfont.ttf') format('truetype'),
+    url('/fonts/source-sans-pro/sourcesanspro-semibold-webfont.woff') format('woff'),
+    url('/fonts/source-sans-pro/sourcesanspro-semibold-webfont.woff2') format('woff2');
+    font-style: normal;
+    font-stretch: ultra-condensed;
+    font-weight: 600;
+}
+
+@font-face {
+    font-family: "Source Sans Pro";
+    src: url('/fonts/source-sans-pro/sourcesanspro-bold-webfont.ttf') format('truetype'),
+    url('/fonts/source-sans-pro/sourcesanspro-bold-webfont.woff') format('woff'),
+    url('/fonts/source-sans-pro/sourcesanspro-bold-webfont.woff2') format('woff2');
+    font-style: normal;
+    font-stretch: ultra-condensed;
     font-weight: 700;
 }
 
+@font-face {
+    font-family: "Source Sans Pro";
+    src: url('/fonts/source-sans-pro/sourcesanspro-bold-webfont.ttf') format('truetype'),
+    url('/fonts/source-sans-pro/sourcesanspro-bold-webfont.woff') format('woff'),
+    url('/fonts/source-sans-pro/sourcesanspro-bold-webfont.woff2') format('woff2');
+    font-style: normal;
+    font-stretch: ultra-condensed;
+    font-weight: 800;
+}
+
 /**********************************************************************************************************************/
+
+@font-face {
+    font-family: "Barlow";
+    src: url('/fonts/barlow/ttf/Barlow-Thin.ttf') format('truetype'),
+    url('/fonts/barlow/woff/Barlow-Thin.woff') format('woff'),
+    url('/fonts/barlow/woff2/Barlow-Thin.woff2') format('woff2');
+    font-style: normal;
+    font-stretch: normal;
+    font-display: swap;
+    font-weight: 200;
+}
+
+@font-face {
+    font-family: "Barlow";
+    src: url('/fonts/barlow/ttf/Barlow-Light.ttf') format('truetype'),
+    url('/fonts/barlow/woff/Barlow-Light.woff') format('woff'),
+    url('/fonts/barlow/woff2/Barlow-Light.woff2') format('woff2');
+    font-style: normal;
+    font-stretch: normal;
+    font-display: swap;
+    font-weight: 300;
+}
 
 @font-face {
     font-family: "Barlow";
@@ -40,27 +94,18 @@
     font-style: normal;
     font-stretch: normal;
     font-display: swap;
+    font-weight: 400;
+}
+
+@font-face {
+    font-family: "Barlow";
+    src: url('/fonts/barlow/ttf/Barlow-Medium.ttf') format('truetype'),
+    url('/fonts/barlow/woff/Barlow-Medium.woff') format('woff'),
+    url('/fonts/barlow/woff2/Barlow-Medium.woff2') format('woff2');
+    font-style: normal;
+    font-stretch: normal;
+    font-display: swap;
     font-weight: 500;
-}
-
-@font-face {
-    font-family: "Barlow";
-    src: url('/fonts/barlow/ttf/Barlow-Medium.ttf') format('truetype'),
-    url('/fonts/barlow/woff/Barlow-Medium.woff') format('woff'),
-    url('/fonts/barlow/woff2/Barlow-Medium.woff2') format('woff2');
-    font-style: normal;
-    font-stretch: normal;
-    font-weight: 600;
-}
-
-@font-face {
-    font-family: "Barlow";
-    src: url('/fonts/barlow/ttf/Barlow-Medium.ttf') format('truetype'),
-    url('/fonts/barlow/woff/Barlow-Medium.woff') format('woff'),
-    url('/fonts/barlow/woff2/Barlow-Medium.woff2') format('woff2');
-    font-style: normal;
-    font-stretch: normal;
-    font-weight: 700;
 }
 
 @font-face {
@@ -70,6 +115,125 @@
     url('/fonts/barlow/woff2/Barlow-SemiBold.woff2') format('woff2');
     font-style: normal;
     font-stretch: normal;
+    font-display: swap;
+    font-weight: 600;
+}
+
+/**********************************************************************************************************************/
+
+@font-face {
+    font-family: "Barlow Semi Condensed";
+    src: url('/fonts/barlow-semi-condensed/ttf/BarlowSemiCondensed-Thin.ttf') format('truetype');
+    font-style: normal;
+    font-stretch: normal;
+    font-display: swap;
+    font-weight: 200;
+}
+
+@font-face {
+    font-family: "Barlow Semi Condensed";
+    src: url('/fonts/barlow-semi-condensed/ttf/BarlowSemiCondensed-Light.ttf') format('truetype');
+    font-style: normal;
+    font-stretch: normal;
+    font-display: swap;
+    font-weight: 300;
+}
+
+@font-face {
+    font-family: "Barlow Semi Condensed";
+    src: url('/fonts/barlow-semi-condensed/ttf/BarlowSemiCondensed-Regular.ttf') format('truetype');
+    font-style: normal;
+    font-stretch: normal;
+    font-display: swap;
+    font-weight: 400;
+}
+
+@font-face {
+    font-family: "Barlow Semi Condensed";
+    src: url('/fonts/barlow-semi-condensed/ttf/BarlowSemiCondensed-Medium.ttf') format('truetype');
+    font-style: normal;
+    font-stretch: normal;
+    font-display: swap;
+    font-weight: 500;
+}
+
+@font-face {
+    font-family: "Barlow Semi Condensed";
+    src: url('/fonts/barlow-semi-condensed/ttf/BarlowSemiCondensed-SemiBold.ttf') format('truetype');
+    font-style: normal;
+    font-stretch: normal;
+    font-display: swap;
+    font-weight: 600;
+}
+
+@font-face {
+    font-family: "Barlow Semi Condensed";
+    src: url('/fonts/barlow-semi-condensed/ttf/BarlowSemiCondensed-Bold.ttf') format('truetype');
+    font-style: normal;
+    font-stretch: normal;
+    font-display: swap;
+    font-weight: 700;
+}
+
+@font-face {
+    font-family: "Barlow Semi Condensed";
+    src: url('/fonts/barlow-semi-condensed/ttf/BarlowSemiCondensed-Bold.ttf') format('truetype');
+    font-style: normal;
+    font-stretch: normal;
+    font-display: swap;
+    font-weight: 800;
+}
+
+/**********************************************************************************************************************/
+
+@font-face {
+    font-family: "Google Sans Text";
+    src: url('/fonts/google-sans-text/ttf/GoogleSansTextRegular.ttf') format('truetype');
+    font-style: normal;
+    font-stretch: ultra-condensed;
+    font-display: swap;
+    font-weight: 300;
+}
+
+@font-face {
+    font-family: "Google Sans Text";
+    src: url('/fonts/google-sans-text/ttf/GoogleSansTextRegular.ttf') format('truetype');
+    font-style: normal;
+    font-stretch: ultra-condensed;
+    font-display: swap;
+    font-weight: 400;
+}
+
+@font-face {
+    font-family: "Google Sans Text";
+    src: url('/fonts/google-sans-text/ttf/GoogleSansTextRegular.ttf') format('truetype');
+    font-style: normal;
+    font-stretch: ultra-condensed;
+    font-display: swap;
+    font-weight: 500;
+}
+
+@font-face {
+    font-family: "Google Sans Text";
+    src: url('/fonts/google-sans-text/ttf/GoogleSansTextMedium.ttf') format('truetype');
+    font-style: normal;
+    font-stretch: ultra-condensed;
+    font-weight: 600;
+}
+
+@font-face {
+    font-family: "Google Sans Text";
+    src: url('/fonts/google-sans-text/ttf/GoogleSansTextBold.ttf') format('truetype');
+    font-style: normal;
+    font-stretch: ultra-condensed;
+    font-weight: 700;
+}
+
+@font-face {
+    font-family: "Google Sans Text";
+    src: url('/fonts/google-sans-text/ttf/GoogleSansTextBold.ttf') format('truetype');
+    font-style: normal;
+    font-stretch: ultra-condensed;
     font-weight: 800;
 }
 
