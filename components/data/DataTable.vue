@@ -154,8 +154,8 @@ const headerFontClass = computed(() => {
     return {
         'sm': 'tw-font-semibold tw-text-sm',
         'md': 'tw-font-semibold tw-text-base',
-        'lg': 'tw-font-semibold tw-text-lg',
-        'xl': 'tw-font-semibold tw-text-xl',
+        'lg': 'tw-font-semibold tw-text-base',
+        'xl': 'tw-font-semibold tw-text-base',
     }[props.size];
 });
 
