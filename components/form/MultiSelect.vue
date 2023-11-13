@@ -25,8 +25,9 @@
                 <NonModelCheckBox :tabable="false" :size="checkBoxSize" :checked="selectedAllCurrentSelection()" @click="toggleSelection" />
             </div>
             <div :class="[active ? 'tw-block' : 'tw-hidden']" class="tw-w-full tw-h-full tw-relative tw-overflow-hidden tw-items-center">
-                <div :class="[inputHolderClass]" class="tw-absolute tw-left-0 tw-h-full tw-flex tw-items-center">
+                <div v-if="searchable" :class="[inputHolderClass]" class="tw-absolute tw-left-0 tw-h-full tw-flex tw-items-center">
                     <Input
+                        v-if="active"
                         :tabindex="tabindexInput"
                         :readonly="!searchable"
                         autocomplete="off"
@@ -37,12 +38,14 @@
                         @keydown="keyHandler"
                         v-on:input="searchSelection"
                         v-model="props.options.search"
-                        v-if="active"
                         :size="inputSize"
                         :withBorder="false"
                         :rounded="false"
                         :focusRing="false"
                         :disabled="false" />
+                </div>
+                <div v-else :class="[selectionClass]" class="tw-absolute tw-truncate tw-flex tw-items-center">
+                    {{selectionSummary}}
                 </div>
                 <div
                     :class="[dropDownIconHolderClass]"
@@ -378,7 +381,9 @@ function keepFocusAlive(){
         active.value = true;
     }
     nextTick(() => {
-        selectionSearch.value.$refs.input.focus();
+        if(props.searchable){
+            selectionSearch.value.$refs.input.focus();
+        }
 
         clearTimeout(keepFocusCallback.value);
         keepFocus.value = true;

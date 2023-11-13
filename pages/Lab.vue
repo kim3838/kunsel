@@ -5,14 +5,14 @@
                 <div class="tw-mx-auto tw-max-w-screen-2xl tw-flex">
                     <div class="tw-w-full">
                         <div class="tw-my-4 tw-grid tw-gap-2 tw-grid-cols-5">
-                            <div>
+                            <div v-if="false">
                                 <AccentFrame class="tw-w-full">
                                     <template #content>
                                         <Input :tabindex="1" :size="size" :placeholder="'Enter value'" type="text" autocomplete="off" />
                                     </template>
                                 </AccentFrame>
                             </div>
-                            <div>
+                            <div class="tw-col-span-2">
                                 <AccentFrame class="tw-w-full">
                                     <template #content>
                                         <MultiSelectPaginated
@@ -21,7 +21,7 @@
                                             :selection-max-content="false"
                                             :selected-max-viewable-line="6"
                                             :selection-max-viewable-line="10"
-                                            :searchable="true"
+                                            :searchable="false"
                                             :selection-float="true"
                                             :always-active="false"
                                             :label="'Select Prototypes'"
@@ -31,20 +31,20 @@
                                     </template>
                                 </AccentFrame>
                             </div>
-                            <div>
+                            <div v-if="false">
                                 <AccentFrame class="tw-w-full">
                                     <template #content>
                                         <Input :tabindex="4" :size="size" :placeholder="'Enter value'" type="text" autocomplete="off" />
                                     </template>
                                 </AccentFrame>
                             </div>
-                            <div>
+                            <div class="tw-col-span-2">
                                 <AccentFrame class="tw-w-full">
                                     <template #content>
                                         <MultiSelect
                                             :tabindex="5"
                                             drop-shadow
-                                            :searchable="true"
+                                            :searchable="false"
                                             :selection-float="true"
                                             :always-active="false"
                                             :selection-max-viewable-line="5"
@@ -60,7 +60,7 @@
                                     </template>
                                 </AccentFrame>
                             </div>
-                            <div>
+                            <div class="tw-col-span-2">
                                 <AccentFrame class="tw-w-full">
                                     <template #content>
                                         <SingleSelect
@@ -68,7 +68,7 @@
                                             :value-persist="true"
                                             :drop-shadow="true"
                                             :selection-max-content="true"
-                                            :searchable="true"
+                                            :searchable="false"
                                             :selection-float="true"
                                             :always-active="false"
                                             :size="size"
@@ -78,7 +78,7 @@
                                     </template>
                                 </AccentFrame>
                             </div>
-                            <div>
+                            <div v-if="false">
                                 <AccentFrame class="tw-w-full">
                                     <template #content>
                                         <label v-for="category in categorySelection" :key="category">
@@ -90,14 +90,14 @@
                                     </template>
                                 </AccentFrame>
                             </div>
-                            <div>
+                            <div v-if="false">
                                 <AccentFrame class="tw-w-full">
                                     <template #content>
                                         <InputWithIcon :tabindex="10" ref="inputValue" :size="size" :icon="'ic:sharp-qr-code'" :placeholder="'Enter value'" type="text" autocomplete="off" />
                                     </template>
                                 </AccentFrame>
                             </div>
-                            <div>
+                            <div class="tw-col-span-2">
                                 <AccentFrame class="tw-w-full">
                                     <template #content>
                                         <SingleSelectPaginated
@@ -106,7 +106,7 @@
                                             :drop-shadow="true"
                                             :selection-max-content="false"
                                             :selection-max-viewable-line="10"
-                                            :searchable="true"
+                                            :searchable="false"
                                             :selection-float="true"
                                             :always-active="false"
                                             :label="'Select Prototype'"
