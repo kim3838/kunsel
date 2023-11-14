@@ -9,6 +9,7 @@ export function csrFetch<T>(
 ){
     const runtimeConfig = useRuntimeConfig();
     const {$coreStore} = useNuxtApp();
+    const user = userState();
 
     let headers: any = {
         referer: runtimeConfig.public.frontendURL,
@@ -75,12 +76,29 @@ export function csrFetch<T>(
                     payload: response._data
                 });
             } else if(response?._data?.code >= 400 && response?._data?.code < 499){
-                $coreStore.setServiceError({
-                    prompt: promptResponse,
-                    icon: 'ic:sharp-error-outline',
-                    title: 'Request failed',
-                    payload: response._data
-                });
+
+                if(response?._data?.code == 401){
+                    $coreStore.setPrompt({
+                        icon: 'mdi:connection',
+                        title: _get(response, '_data.message', ''),
+                        message: 'Session have been ended, login again to restore session.',
+                        action: {
+                            callback: () => {
+                                user.value = undefined;
+                                navigateTo("/login", {replace: true});
+                            },
+                            label: 'Okay'
+                        }
+                    });
+                } else {
+                    $coreStore.setServiceError({
+                        prompt: promptResponse,
+                        icon: 'ic:sharp-error-outline',
+                        title: 'Request failed',
+                        payload: response._data
+                    });
+                }
+
             } else {
                 console.log({'CSR FETCH SUCCESS' : response});
 

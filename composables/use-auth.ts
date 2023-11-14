@@ -89,7 +89,7 @@ export const useAuth = () => {
             method: 'POST'
         },{
             onSuccessResponse: (request, response, options) => {
-                user.value = null;
+                user.value = undefined;
                 navigateTo("/login", {replace: true});
             }
         });
