@@ -77,7 +77,7 @@ export function csrFetch<T>(
                 });
             } else if(response?._data?.code >= 400 && response?._data?.code < 499){
 
-                if(response?._data?.code == 401){
+                if(response?._data?.code == 401 && user.value){
                     $coreStore.setPrompt({
                         icon: 'mdi:connection',
                         title: _get(response, '_data.message', ''),
