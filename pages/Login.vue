@@ -8,15 +8,15 @@
                             <div class="tw-relative tw-py-4">
                                 <form @submit.prevent="handleLogin" class="tw-w-72">
                                     <div class="tw-block">
-                                        <InputLabel :size="'md'" for="email" value="Email" />
+                                        <InputLabel :size="'md'" for="identifier" value="Username or Email" />
                                         <Input
                                             :disabled="authPending"
                                             :size="'md'"
-                                            id="email"
-                                            type="email"
+                                            id="identifier"
+                                            type="text"
                                             class="tw-w-full"
-                                            ref="emailInput"
-                                            v-model="email"
+                                            ref="identifierInput"
+                                            v-model="identifier"
                                             autofocus
                                             autocomplete="off" />
                                     </div>
@@ -79,20 +79,20 @@ definePageMeta({
     middleware: 'guest'
 });
 
-let emailInput = ref(null);
+let identifierInput = ref(null);
 
 onMounted(async () => {
     await nextTick();
-    emailInput.value.$refs.input.focus();
+    identifierInput.value.$refs.input.focus();
 })
 
-const email = ref("luxere20@gmail.com");
+const identifier = ref("kim.123");
 const password = ref("password");
 const remember = ref(false);
 
 function handleLogin(){
     login({
-        email: email,
+        identifier: identifier,
         password: password,
         remember: remember
     });
