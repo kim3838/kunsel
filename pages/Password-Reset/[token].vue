@@ -6,7 +6,7 @@
                     <AccentFrame class="tw-my-4">
                         <template #content>
                             <div class="tw-relative tw-py-4">
-                                <form @submit.prevent="execute" class="tw-w-72">
+                                <form @submit.prevent="handleResetPassword" class="tw-w-72">
                                     <div class="tw-block tw-mt-4">
                                         <InputWithIcon
                                             :icon="'ic:round-mail-outline'"
@@ -91,8 +91,13 @@ onMounted(async () => {
     password.value.$refs.input.focus();
 });
 
+async function handleResetPassword() {
+    pending.value = true;
+    await executeResetPassword();
+}
+
 const pending = ref(false);
-const {execute} = csrFetch("/api/reset-password", {
+const {execute: executeResetPassword} = csrFetch("/reset-password", {
     method: 'POST',
     body: data,
     immediate: false
