@@ -51,7 +51,7 @@ definePageMeta({
 
 let pending = ref(false);
 
-const {execute} = csrFetch("/email/verification-notification", {
+const {execute} = csrFetch("/api/email/verification-notification", {
     method: 'POST',
     immediate: false
 }, {

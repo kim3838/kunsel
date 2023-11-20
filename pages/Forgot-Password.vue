@@ -72,7 +72,6 @@ let bodyComputed = computed(() => {
 
 async function handleForgotPassword(){
     pending.value = true;
-    await csrFetch("/sanctum/csrf-cookie");
     await executeForgotPassword();
 }
 

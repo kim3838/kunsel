@@ -92,7 +92,7 @@ onMounted(async () => {
 });
 
 const pending = ref(false);
-const {execute} = csrFetch("/reset-password", {
+const {execute} = csrFetch("/api/reset-password", {
     method: 'POST',
     body: data,
     immediate: false

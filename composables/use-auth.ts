@@ -56,7 +56,7 @@ export const useAuth = () => {
 
         await csrFetch("/sanctum/csrf-cookie");
 
-        await csrFetch("/login", {
+        await csrFetch("/api/login", {
             method: 'POST',
             body: credentials
         }, {
@@ -85,7 +85,7 @@ export const useAuth = () => {
         const {$coreStore} = useNuxtApp();
         $coreStore.resetServiceError();
 
-        await csrFetch("/logout", {
+        await csrFetch("/api/logout", {
             method: 'POST'
         },{
             onSuccessResponse: (request, response, options) => {
