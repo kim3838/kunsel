@@ -182,7 +182,7 @@
                             </a>
                         </p>
                         <p class="tw-mt-4 tw-text-sm tw-flex tw-items-center tw-justify-center sm:tw-justify-start sm:tw-order-first sm:tw-mt-0">
-                            <Icon name="ic:sharp-copyright"></Icon>2022 Lorem Ipsum
+                            <ClientOnly><Icon name="ic:sharp-copyright"></Icon></ClientOnly>2022 Lorem Ipsum
                         </p>
                     </div>
                 </div>
