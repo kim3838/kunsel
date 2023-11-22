@@ -140,7 +140,7 @@
 
                                 <div class="tw-mt-4 tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2">
                                     <div>
-                                        <Button  v-if="twoFactorEnabled" @click="executeDisableTwoFactor" type="button" :disabled="disableTwoFactorPending" :label="'Disable 2 Factor Authentication'" />
+                                        <Button :variant="'flat'" v-if="twoFactorEnabled" @click="executeDisableTwoFactor" type="button" :disabled="disableTwoFactorPending" :label="'Disable 2 Factor Authentication'" />
                                     </div>
                                     <div>
                                         <Button  v-if="!twoFactorEnabled" @click="executeEnableTwoFactor" type="button" :disabled="enableTwoFactorPending" :label="'Enable 2 Factor Authentication'" />
