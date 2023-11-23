@@ -34,7 +34,7 @@
         </template>
 
         <template #footer>
-            <Button :size="'md'" :variant="'flat'" @click.native="$coreStore.promptAction()">
+            <Button :size="'md'" @click.native="$coreStore.promptAction()">
                 <span class="tw-font-semibold">{{prompt.action.label}}</span>
             </Button>
         </template>
