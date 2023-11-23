@@ -11,7 +11,7 @@
                 </div>
 
                 <div class="tw-mt-3 tw-text-center sm:tw-mt-0 sm:tw-ml-2 sm:tw-text-left">
-                    <h3 class="tw-text-xl tw-font-bold">
+                    <h3 class="tw-text-xl tw-font-semibold">
                         <slot name="title"></slot>
                     </h3>
 
@@ -22,7 +22,7 @@
             </div>
         </div>
 
-        <div class="tw-px-3 tw-py-2.5 tw-text-right">
+        <div class="tw-px-3 tw-py-2.5 tw-text-end">
             <slot name="footer">
             </slot>
         </div>
