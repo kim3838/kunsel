@@ -143,7 +143,9 @@
                                         <Button :variant="'flat'" v-if="twoFactorEnabled" @click="executeDisableTwoFactor" type="button" :disabled="disableTwoFactorPending" :label="'Disable 2 Factor Authentication'" />
                                     </div>
                                     <div>
-                                        <Button  v-if="!twoFactorEnabled" @click="executeEnableTwoFactor" type="button" :disabled="enableTwoFactorPending" :label="'Enable 2 Factor Authentication'" />
+                                        <ConfirmsPassword v-if="!twoFactorEnabled" @confirmed="executeEnableTwoFactor">
+                                            <Button type="button" :disabled="enableTwoFactorPending" :label="'Enable 2 Factor Authentication'" />
+                                        </ConfirmsPassword>
                                     </div>
                                 </div>
                             </div>
