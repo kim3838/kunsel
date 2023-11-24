@@ -32,9 +32,9 @@ const {
     textSecondary: textSecondaryColor,
 } = storeToRefs($themeStore);
 
-$debug('runtimeConfig',runtimeConfig);
-$debug('appConfig', appConfig);
-$debug('NODE_ENV', process.env.NODE_ENV);
+// $debug('runtimeConfig',runtimeConfig);
+// $debug('appConfig', appConfig);
+// $debug('NODE_ENV', process.env.NODE_ENV);
 // $debug('themeStore', $themeStore['colors']['light']);
 // $debug('moment', $moment().format('YYYY-MM-DD'));
 // $debug('lodash', _upperCase('lodash uppercase'));
