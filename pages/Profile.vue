@@ -198,21 +198,19 @@ let updatePasswordDataComputed = computed(() => {
 
 await ssrFetch("/api/user", {
     method: 'GET',
-    onResponse({request, response, options}) {
+}, {
+    onSuccessResponse: (request, response, options) => {
+        let two_factor_enabled = _get(response, '_data.values.two_factor_enabled', null)
+        let two_factor_confirmed = _get(response, '_data.values.two_factor_confirmed', null)
 
-        if(response._data.code == 200){
-            let two_factor_enabled = _get(response, '_data.values.two_factor_enabled', null)
-            let two_factor_confirmed = _get(response, '_data.values.two_factor_confirmed', null)
-
-            user.value = {
-                id: _get(response, '_data.values.id', null),
-                name: _get(response, '_data.values.name', null),
-                email: _get(response, '_data.values.email', null),
-                email_verified_at: _get(response, '_data.values.email_verified_at', null),
-                two_factor_enabled: two_factor_enabled,
-                two_factor_confirmed: two_factor_confirmed,
-            };
-        }
+        user.value = {
+            id: _get(response, '_data.values.id', null),
+            name: _get(response, '_data.values.name', null),
+            email: _get(response, '_data.values.email', null),
+            email_verified_at: _get(response, '_data.values.email_verified_at', null),
+            two_factor_enabled: two_factor_enabled,
+            two_factor_confirmed: two_factor_confirmed,
+        };
     }
 });
 
@@ -280,9 +278,10 @@ const {execute: executeLogoutOtherDevice} = csrFetch("/api/logout-other-device",
 });
 
 let sessions = ref([]);
-await csrFetch("/api/sessions", {
-    method: 'GET',
-    onResponse({request, response, options}) {
+csrFetch("/api/sessions", {
+    method: 'GET'
+}, {
+    onSuccessResponse: (request, response, options) => {
         sessions.value = _get(response, '_data.values', []);
     }
 });
@@ -295,7 +294,7 @@ const qrCode = ref(null);
 const recoveryCodes = ref([]);
 const twoFactorConfirmationCode = ref('');
 
-await ssrFetch("/api/user", {
+await csrFetch("/api/user", {
     method: 'GET',
 }, {
     onSuccessResponse: (request, response, options) => {
