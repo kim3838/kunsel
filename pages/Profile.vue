@@ -107,10 +107,22 @@
                                         </p>
 
                                         <div v-if="twoFactorConfirming">
-                                            <div v-if="qrCode" class="tw-mt-4 tw-p-2 tw-bg-white" v-html="qrCode" />
-                                            <div v-if="setupKey" class="tw-mt-4 tw-font-medium">
+                                            <div v-if="qrCode && !pendingTwoFactorQrCode" class="tw-mt-4 tw-p-2 tw-bg-white" v-html="qrCode" />
+                                            <UnorderedList
+                                                class="tw-mt-4"
+                                                v-else-if="pendingTwoFactorQrCode"
+                                                :icon="'eos-icons:loading'"
+                                                :size="'md'"
+                                                :label="'Loading QR code, please wait...'"/>
+
+                                            <div v-if="setupKey && !pendingTwoFactorSetupKey" class="tw-mt-4 tw-font-medium">
                                                 Setup Key: <span>{{setupKey}}</span>
                                             </div>
+                                            <UnorderedList
+                                                v-else-if="pendingTwoFactorSetupKey"
+                                                :icon="'eos-icons:loading'"
+                                                :size="'md'"
+                                                :label="'Loading setup key, please wait...'"/>
 
                                             <div class="tw-mt-4 tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2">
                                                 <div>
@@ -122,14 +134,20 @@
                                             </div>
                                         </div>
 
-                                        <div v-if="recoveryCodes.length > 0 && !twoFactorConfirming">
+                                        <div v-if="!twoFactorConfirming">
                                             <div class="tw-mt-4 tw-text-sm">
                                                 <p class="tw-font-medium">
                                                     Store these recovery codes in a secure password manager. They can be used to recover access to your account if your two factor authentication device is lost.
                                                 </p>
                                             </div>
 
-                                            <div class="tw-grid tw-gap-1 tw-mt-4 tw-px-4 tw-py-4 tw-font-mono tw-text-sm">
+                                            <UnorderedList
+                                                class="tw-mt-4"
+                                                v-if="pendingTwoFactorRecoveryCodes"
+                                                :icon="'eos-icons:loading'"
+                                                :size="'md'"
+                                                :label="'Loading recovery codes, please wait...'"/>
+                                            <div class="tw-grid tw-gap-1 tw-mt-4 tw-font-mono tw-text-sm">
                                                 <div v-for="code in recoveryCodes" :key="code">
                                                     {{ code }}
                                                 </div>
@@ -294,7 +312,7 @@ const qrCode = ref(null);
 const recoveryCodes = ref([]);
 const twoFactorConfirmationCode = ref('');
 
-await csrFetch("/api/user", {
+csrFetch("/api/user", {
     method: 'GET',
 }, {
     onSuccessResponse: (request, response, options) => {
@@ -337,7 +355,7 @@ const {execute: executeEnableTwoFactor} = csrFetch("/api/two-factor-authenticati
     }
 });
 
-const {execute: executeTwoFactorSetupKey} = csrFetch("/api/two-factor-secret-key", {
+const {pending:pendingTwoFactorSetupKey, execute: executeTwoFactorSetupKey} = csrFetch("/api/two-factor-secret-key", {
     method: 'GET',
     immediate: false,
 }, {
@@ -345,7 +363,7 @@ const {execute: executeTwoFactorSetupKey} = csrFetch("/api/two-factor-secret-key
         setupKey.value = _get(response, '_data.values.secret_key', null);
     }
 });
-const {execute: executeTwoFactorQrCode} = csrFetch("/api/two-factor-qr-code", {
+const {pending:pendingTwoFactorQrCode, execute: executeTwoFactorQrCode} = csrFetch("/api/two-factor-qr-code", {
     method: 'GET',
     immediate: false,
 }, {
@@ -353,7 +371,7 @@ const {execute: executeTwoFactorQrCode} = csrFetch("/api/two-factor-qr-code", {
         qrCode.value = _get(response, '_data.values.svg', null);
     }
 });
-const {execute: executeTwoFactorRecoveryCodes} = csrFetch("/api/two-factor-recovery-codes", {
+const {pending:pendingTwoFactorRecoveryCodes, execute: executeTwoFactorRecoveryCodes} = csrFetch("/api/two-factor-recovery-codes", {
     method: 'GET',
     immediate: false,
 }, {
