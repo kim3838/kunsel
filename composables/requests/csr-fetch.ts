@@ -18,7 +18,7 @@ export function csrFetch<T>(
 
     const XSRF_TOKEN = useCookie('XSRF-TOKEN', {
         secure: true,
-        sameSite: 'none'
+        sameSite: 'lax'
     });
 
     if(XSRF_TOKEN.value){
@@ -48,7 +48,7 @@ export function csrFetch<T>(
             $coreStore.resetServiceError();
         },
         async onRequestError({ request, options, error }) {
-            console.log({'CSR FETCH ERROR' : error})
+            console.log({'CSR FETCH ERROR' : error.message})
 
             if(callbacks.onRequestError && typeof callbacks.onRequestError == 'function'){
                 await callbacks.onRequestError(request, options, error);
