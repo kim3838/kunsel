@@ -103,16 +103,17 @@ export default defineNuxtConfig({
         // Keys within public are also exposed client-side
         public: {
             version: process.env.VERSION || '1.0.0',
-            baseURL: process.env.BASE_URL || 'http://localhost:8000',
-            frontendURL: process.env.FRONTEND_URL || 'http://localhost:3000',
+            baseURL: process.env.BASE_URL || 'http://api.server.local',
+            frontendURL: process.env.FRONTEND_URL || 'http://client.server.local:3000',
         },
         // Private keys which are only available server-side
         apiSecret: '',// Replaced by process.env.NUXT_API_SECRET
         apiKey: '' // Default to an empty string, automatically set at runtime using process.env.NUXT_API_KEY
     },
 
-    server: {
+    devServer: {
+        host: 'client.server.local',
         https: false,
-        //https: {key: './server.key',cert: './server.crt'},
+        port: 3000,
     }
 })
