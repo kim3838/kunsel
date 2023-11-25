@@ -62,7 +62,7 @@ export function csrFetch<T>(
             });
         },
         async onResponse({request, response, options}) {
-            console.log({'CSR FETCH RESPONSE' : response})
+            console.log({'CSR FETCH RESPONSE' : response?._data?.code})
 
             if(callbacks.onResponse && typeof callbacks.onResponse == 'function'){
                 await callbacks.onResponse(request, response, options);
@@ -100,7 +100,7 @@ export function csrFetch<T>(
                 }
 
             } else {
-                console.log({'CSR FETCH SUCCESS' : response});
+                console.log({'CSR FETCH': 'SUCCESS' });
 
                 if(callbacks.onSuccessResponse && typeof callbacks.onSuccessResponse == 'function'){
                     await callbacks.onSuccessResponse(request, response, options);
