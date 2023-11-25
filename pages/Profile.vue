@@ -94,7 +94,7 @@
                                 <p class="tw-font-medium tw-text-lg">Two Factor Authentication</p>
                                 <p class="tw-text-base">Add additional security to your account using two factor authentication.</p>
 
-                                <div class="tw-mt-4 tw-pt-4 neutral-border-top">
+                                <div class="tw-mt-4 tw-pt-4">
                                     <p v-if="twoFactorEnabled && twoFactorConfirmed" class="tw-font-medium tw-text-lg">You have enabled two factor authentication.</p>
                                     <p v-else-if="twoFactorEnabled && !twoFactorConfirmed" class="tw-font-medium tw-text-lg">Finish enabling two factor authentication.</p>
                                     <p v-else class="tw-font-medium tw-text-lg">You have not enabled two factor authentication. </p>
@@ -295,23 +295,22 @@ const qrCode = ref(null);
 const recoveryCodes = ref([]);
 const twoFactorConfirmationCode = ref('');
 
-await csrFetch("/api/user", {
+await ssrFetch("/api/user", {
     method: 'GET',
-    onResponse({request, response, options}) {
-        if(response._data.code == 200){
-            let two_factor_enabled = _get(response, '_data.values.two_factor_enabled', null)
-            let two_factor_confirmed = _get(response, '_data.values.two_factor_confirmed', null)
+}, {
+    onSuccessResponse: (request, response, options) => {
+        let two_factor_enabled = _get(response, '_data.values.two_factor_enabled', null)
+        let two_factor_confirmed = _get(response, '_data.values.two_factor_confirmed', null)
 
-            if(two_factor_enabled && !two_factor_confirmed){
-                twoFactorConfirming.value = true;
-                executeTwoFactorSetupKey();
-                executeTwoFactorQrCode();
-                executeTwoFactorRecoveryCodes();
-            }
+        if(two_factor_enabled && !two_factor_confirmed){
+            twoFactorConfirming.value = true;
+            executeTwoFactorSetupKey();
+            executeTwoFactorQrCode();
+            executeTwoFactorRecoveryCodes();
+        }
 
-            if(two_factor_enabled && two_factor_confirmed){
-                executeTwoFactorRecoveryCodes();
-            }
+        if(two_factor_enabled && two_factor_confirmed){
+            executeTwoFactorRecoveryCodes();
         }
     }
 });
