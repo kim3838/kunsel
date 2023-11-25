@@ -24,18 +24,15 @@ export const useAuth = () => {
 
     async function fetchUser() {
         await ssrFetch("/api/user", {
-            method: 'GET',
-            onResponse({request, response, options}) {
-                console.log({'SSR FETCH USER RESPONSE' : response._data.code});
-
-                if(response._data.code == 200){
-                    user.value = {
-                        id: _get(response, '_data.values.id', null),
-                        name: _get(response, '_data.values.name', null),
-                        email: _get(response, '_data.values.email', null),
-                        email_verified_at: _get(response, '_data.values.email_verified_at', null),
-                    };
-                }
+            method: 'GET'
+        }, {
+            onSuccessResponse: async (request, response, options) => {
+                user.value = {
+                    id: _get(response, '_data.values.id', null),
+                    name: _get(response, '_data.values.name', null),
+                    email: _get(response, '_data.values.email', null),
+                    email_verified_at: _get(response, '_data.values.email_verified_at', null),
+                };
             }
         });
     }
