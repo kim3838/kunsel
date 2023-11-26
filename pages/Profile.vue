@@ -57,7 +57,7 @@
                             <p class="tw-font-medium tw-text-lg">Browser Sessions</p>
                             <p class="tw-text-base">Manage and log out your active sessions on other browsers and devices. </p>
 
-                            <div v-if="sessions.length > 0" class="tw-mt-5 tw-space-y-6">
+                            <div v-if="!pendingBrowserSessions && sessions.length > 0" class="tw-mt-5 tw-space-y-6">
                                 <div v-for="(session, i) in sessions" :key="i" class="tw-flex tw-items-center">
                                     <div>
                                         <ClientOnly><Icon class="tw-h-8 tw-w-8" :name="session.agent.platform ? 'zondicons:computer-desktop' : 'material-symbols:question-mark'"></Icon></ClientOnly>
@@ -78,6 +78,12 @@
                                     </div>
                                 </div>
                             </div>
+                            <UnorderedList
+                                v-else-if="pendingBrowserSessions"
+                                class="tw-mt-4"
+                                :icon="'eos-icons:loading'"
+                                :size="'md'"
+                                :label="'Loading browser sessions, please wait...'"/>
 
                             <div class="tw-mt-4 tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2">
                                 <div>
@@ -296,7 +302,7 @@ const {execute: executeLogoutOtherDevice} = csrFetch("/api/logout-other-device",
 });
 
 let sessions = ref([]);
-csrFetch("/api/sessions", {
+const {pending:pendingBrowserSessions} = csrFetch("/api/sessions", {
     method: 'GET'
 }, {
     onSuccessResponse: (request, response, options) => {
