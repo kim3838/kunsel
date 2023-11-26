@@ -67,6 +67,45 @@ export const useAuth = () => {
                 authPending.value = false;
             },
             onSuccessResponse: async (request, response, options) => {
+                let twoFactorChallenge = _get(response, '_data.values.two_factor_challenge', false);
+
+                if(twoFactorChallenge){
+                    await navigateTo({
+                        path: '/two-factor-challenge',
+                        replace: true
+                    });
+                } else {
+                    await fetchUser();
+                    await navigateTo({
+                        path: '/',
+                        replace: true
+                    });
+                }
+            }
+        });
+    }
+
+    async function twoFactorLogin(form = {}) {
+        if (isAuthenticated.value) return;
+
+        const {$coreStore} = useNuxtApp();
+        $coreStore.resetServiceError();
+        authPending.value = true;
+
+        await csrFetch("/api/two-factor-login", {
+            method: 'POST',
+            body: form
+        }, {
+            onRequest: () => {
+                authPending.value = true;
+            },
+            onRequestError: () => {
+                authPending.value = false;
+            },
+            onResponse: () => {
+                authPending.value = false;
+            },
+            onSuccessResponse: async (request, response, options) => {
                 await fetchUser();
                 await navigateTo({
                     path: '/',
@@ -97,6 +136,7 @@ export const useAuth = () => {
         isAuthenticated,
         fetchUser,
         login,
+        twoFactorLogin,
         authPending,
         logout
     };
