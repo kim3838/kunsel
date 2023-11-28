@@ -10,12 +10,16 @@
                                     <div class="tw-block tw-font-medium tw-text-lg">
                                         Enter your code
                                     </div>
-                                    <div class="tw-block">
+                                    <template v-if="! recovery">
                                         Please confirm access to your account by entering the authentication code provided by your authenticator application.
-                                    </div>
+                                    </template>
+
+                                    <template v-else>
+                                        Please confirm access to your account by entering one of your emergency recovery codes.
+                                    </template>
 
                                     <div class="tw-block tw-mt-4">
-                                        <InputLabel :size="'md'" for="code" value="Code" />
+                                        <InputLabel :size="'md'" for="code" :value="recovery ? 'Enter Recovery Code' : 'Enter Authentication Code'" />
                                         <Input
                                             :disabled="authPending"
                                             :size="'md'"
@@ -25,7 +29,7 @@
                                             class="tw-w-full"
                                             ref="codeInput"
                                             inputmode="numeric"
-                                            placeholder="Enter authentication code"
+                                            :placeholder="recovery ? 'Recovery code' : 'Authentication code'"
                                             autocomplete="off" />
                                     </div>
 
@@ -35,7 +39,9 @@
 
                                     <div v-if="!isAuthenticated" class="tw-flex tw-mt-4 tw-items-center tw-justify-between">
                                         <div class="tw-block tw-text-sm tw-self-end">
-                                            <NuxtLink class="hover:tw-underline tw-cursor-pointer">Use recovery code.</NuxtLink>
+                                            <NuxtLink @click.prevent="toggleRecovery" class="hover:tw-underline tw-cursor-pointer">
+                                                {{!recovery ? 'Use a recovery code' : 'Use an authentication code'}}
+                                            </NuxtLink>
                                         </div>
                                         <Button
                                             :disabled="authPending"
@@ -54,7 +60,8 @@
 </template>
 
 <script setup lang="ts">
-import {ref, onMounted, nextTick} from 'vue';
+import {computed, ref, onMounted, nextTick} from 'vue';
+
 const {$coreStore} = useNuxtApp();
 const {twoFactorLogin, isAuthenticated, authPending} = useAuth();
 
@@ -63,18 +70,29 @@ definePageMeta({
     middleware: 'guest'
 });
 
-let codeInput = ref(null);
+const recovery = ref(false);
+const codeInput = ref(null);
+const code = ref("");
+const twoFactorLoginComputed = computed(() => {
+    return {
+        [recovery.value ? 'recovery_code' : 'code']: code.value
+    }
+});
 
 onMounted(async () => {
     await nextTick();
     codeInput.value.$refs.input.focus();
-})
+});
 
-const code = ref("");
+const toggleRecovery = async () => {
+    recovery.value ^= true;
+
+    await nextTick();
+
+    code.value = '';
+};
 
 function handleLogin(){
-    twoFactorLogin({
-        code: code,
-    });
+    twoFactorLogin(twoFactorLoginComputed);
 }
 </script>
