@@ -105,6 +105,12 @@ export const useAuth = () => {
             onResponse: () => {
                 authPending.value = false;
             },
+            onNotAcceptableResponse: async() => {
+                showError({
+                    statusCode: 404,
+                    statusMessage: "Challenged user not found."
+                });
+            },
             onSuccessResponse: async (request, response, options) => {
                 await fetchUser();
                 await navigateTo({
