@@ -132,7 +132,7 @@
 
                                             <div class="tw-mt-4 tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2">
                                                 <div>
-                                                    <InputWithIcon :icon="'mdi:key-chain'" type="text" placeholder="Confirmation Code" v-model="twoFactorConfirmationCode" />
+                                                    <InputWithIcon @keyup.enter="executeConfirmTwoFactor" :icon="'mdi:key-chain'" type="text" placeholder="Confirmation Code" v-model="twoFactorConfirmationCode" />
                                                 </div>
                                                 <div>
                                                     <Button @click="executeConfirmTwoFactor" type="button" :disabled="confirmTwoFactorPending" :label="'Confirm'" />
@@ -163,6 +163,12 @@
                                 </div>
 
                                 <div class="tw-mt-4 tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2">
+                                    <div v-if="twoFactorEnabled && twoFactorConfirmed">
+                                        <ConfirmsPassword v-if="!recoveryCodes.length" @confirmed="executeTwoFactorRecoveryCodes">
+                                            <Button :variant="'flat'" @click="" type="button" :disabled="pendingTwoFactorRecoveryCodes" :label="'Show Recovery Codes'" />
+                                        </ConfirmsPassword>
+                                    </div>
+                                    <div v-if="twoFactorEnabled && twoFactorConfirmed"></div>
                                     <div>
                                         <Button :variant="'flat'" v-if="twoFactorEnabled" @click="executeDisableTwoFactor" type="button" :disabled="disableTwoFactorPending" :label="'Disable 2 Factor Authentication'" />
                                     </div>
@@ -331,10 +337,6 @@ csrFetch("/api/user", {
             executeTwoFactorQrCode();
             executeTwoFactorRecoveryCodes();
         }
-
-        if(two_factor_enabled && two_factor_confirmed){
-            executeTwoFactorRecoveryCodes();
-        }
     }
 });
 
@@ -377,10 +379,20 @@ const {pending:pendingTwoFactorQrCode, execute: executeTwoFactorQrCode} = csrFet
         qrCode.value = _get(response, '_data.values.svg', null);
     }
 });
-const {pending:pendingTwoFactorRecoveryCodes, execute: executeTwoFactorRecoveryCodes} = csrFetch("/api/two-factor-recovery-codes", {
+const pendingTwoFactorRecoveryCodes = ref(false);
+const {execute: executeTwoFactorRecoveryCodes} = csrFetch("/api/two-factor-recovery-codes", {
     method: 'GET',
     immediate: false,
 }, {
+    onRequest: () => {
+        pendingTwoFactorRecoveryCodes.value = true;
+    },
+    onRequestError: () => {
+        pendingTwoFactorRecoveryCodes.value = false;
+    },
+    onResponse: () => {
+        pendingTwoFactorRecoveryCodes.value = false;
+    },
     onSuccessResponse: (request, response, options) => {
         recoveryCodes.value = _get(response, '_data.values.recovery_codes', []);
     }
