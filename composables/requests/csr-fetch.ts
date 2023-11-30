@@ -25,6 +25,15 @@ export function csrFetch<T>(
         headers['X-XSRF-TOKEN'] = XSRF_TOKEN.value;
     }
 
+    function setResponse(icon: String, title: String, payload: Object){
+        $coreStore.setServiceError({
+            prompt: promptResponse,
+            icon: icon,
+            title: title,
+            payload: payload
+        });
+    }
+
     /*
     * When using immediate: false
     *
@@ -54,12 +63,7 @@ export function csrFetch<T>(
                 await callbacks.onRequestError(request, options, error);
             }
 
-            $coreStore.setServiceError({
-                prompt: promptResponse,
-                icon: 'ic:sharp-error-outline',
-                title: 'Request failed',
-                payload: {message: error.message}
-            });
+            setResponse('ic:sharp-error-outline', 'Request failed', {message: error.message});
         },
         async onResponse({request, response, options}) {
             console.log({'CSR FETCH RESPONSE' : response?._data?.code})
@@ -69,34 +73,42 @@ export function csrFetch<T>(
             }
 
             if (response._data.code >= 500 && response._data.code < 600) {
-                $coreStore.setServiceError({
-                    prompt: promptResponse,
-                    icon: 'ic:sharp-error-outline',
-                    title: 'Something Went Wrong',
-                    payload: response._data
-                });
+
+                setResponse('ic:sharp-error-outline', 'Something Went Wrong', response._data);
             } else if(response?._data?.code >= 400 && response?._data?.code < 499){
 
-                if(response?._data?.code == 401 && user.value){
-                    $coreStore.setPrompt({
-                        icon: 'mdi:connection',
-                        title: _get(response, '_data.message', ''),
-                        message: 'Session have been ended, login again to restore session.',
-                        action: {
-                            callback: () => {
-                                user.value = undefined;
-                                navigateTo("/login", {replace: true});
-                            },
-                            label: 'Okay'
+                let responseCode = response?._data?.code;
+
+                switch (responseCode.toString()) {
+                    case '401':
+                        if(user.value){
+                            $coreStore.setPrompt({
+                                icon: 'mdi:connection',
+                                title: _get(response, '_data.message', ''),
+                                message: 'Session have been ended, login again to restore session.',
+                                action: {
+                                    callback: () => {
+                                        user.value = undefined;
+                                        navigateTo("/login", {replace: true});
+                                    },
+                                    label: 'Okay'
+                                }
+                            });
+                        } else {
+                            setResponse('ic:sharp-error-outline', 'Request failed', response._data);
                         }
-                    });
-                } else {
-                    $coreStore.setServiceError({
-                        prompt: promptResponse,
-                        icon: 'ic:sharp-error-outline',
-                        title: 'Request failed',
-                        payload: response._data
-                    });
+                        break;
+                    case '406':
+
+                        if(callbacks.onNotAcceptableResponse && typeof callbacks.onNotAcceptableResponse == 'function'){
+                            await callbacks.onNotAcceptableResponse(request, response, options);
+                        } else {
+                            setResponse('ic:sharp-error-outline', 'Request failed', response._data);
+                        }
+
+                        break;
+                    default:
+                        setResponse('ic:sharp-error-outline', 'Request failed', response._data);
                 }
 
             } else {
