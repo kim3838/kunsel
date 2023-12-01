@@ -141,7 +141,7 @@
                                         </div>
 
                                         <div v-if="!twoFactorConfirming">
-                                            <div class="tw-mt-4 tw-text-sm">
+                                            <div v-if="recoveryCodes.length" class="tw-mt-4 tw-text-sm">
                                                 <p class="tw-font-medium">
                                                     Store these recovery codes in a secure password manager. They can be used to recover access to your account if your two factor authentication device is lost.
                                                 </p>
@@ -170,7 +170,9 @@
                                     </div>
                                     <div v-if="twoFactorEnabled && twoFactorConfirmed"></div>
                                     <div>
-                                        <Button :variant="'flat'" v-if="twoFactorEnabled" @click="executeDisableTwoFactor" type="button" :disabled="disableTwoFactorPending" :label="'Disable 2 Factor Authentication'" />
+                                        <ConfirmsPassword v-if="twoFactorEnabled" @confirmed="executeDisableTwoFactor">
+                                            <Button :variant="'flat'" type="button" :disabled="disableTwoFactorPending" :label="'Disable 2 Factor Authentication'" />
+                                        </ConfirmsPassword>
                                     </div>
                                     <div>
                                         <ConfirmsPassword v-if="!twoFactorEnabled" @confirmed="executeEnableTwoFactor">
