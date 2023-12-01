@@ -22,7 +22,7 @@
         <div :class="[shadeClass]" class="shade"></div>
         <slot :fontClass="fontClass">
             <span class="tw-flex tw-items-center" :class="[fontClass]">
-                <ClientOnly><Icon v-if="icon?.trim()" :class="[iconClass, icon?.trim() ? 'tw-mr-0.5' : '']" :name="icon"></Icon></ClientOnly><span>{{label}}</span>
+                <ClientOnly><Icon v-if="icon?.trim()" :class="[iconClass]" :name="icon"></Icon></ClientOnly><span :class="[labelSpacing]">{{label}}</span>
             </span>
         </slot>
     </button>
@@ -97,28 +97,43 @@ const heightClass = computed(() => {
         'md': 'tw-h-8',
         'lg': 'tw-h-11',
         'xl': 'tw-h-14',
+        '2xl' : 'tw-h-16',
     }[props.size]
 });
 
 const spacingClass = computed(() => {
     return {
-        '2xs': 'tw-px-1',
-        'xs': 'tw-px-1.5',
-        'sm': 'tw-px-1.5',
-        'md': 'tw-px-2',
-        'lg': 'tw-px-3',
-        'xl': 'tw-px-7',
+        '2xs': 'tw-pl-[0.15rem] tw-pr-[0.5rem]',
+        'xs': 'tw-pl-[0.15rem] tw-pr-[0.5rem]',
+        'sm': 'tw-pl-[0.6rem] tw-pr-[0.7rem]',
+        'md': 'tw-pl-[0.6rem] tw-pr-[0.7rem]',
+        'lg': 'tw-pl-[0.4rem] tw-pr-[0.7rem]',
+        'xl': 'tw-pl-2 tw-pr-[1.5rem]',
+        '2xl': 'tw-pl-2 tw-pr-[1.5rem]',
     }[props.size]
 });
 
 const iconClass = computed(() => {
     return {
-        '2xs': 'tw-h-[0.875rem] tw-w-[0.875rem]',
-        'xs': 'tw-h-[1rem] tw-w-[1rem]',
-        'sm': 'tw-h-[1rem] tw-w-[1rem] tw-mt-[0.1rem]',
-        'md': 'tw-h-[1.2rem] tw-w-[1.2rem] tw-mt-[0.1rem]',
-        'lg': 'tw-h-[1.875rem] tw-w-[1.875rem] tw-mt-[0.1rem]',
-        'xl': 'tw-h-[2.25rem] tw-w-[2.25rem] tw-mt-[0.1rem]',
+        '2xs': 'tw-h-4 tw-w-4',
+        'xs': 'tw-h-5 tw-w-5',
+        'sm': 'tw-h-5 tw-w-5',
+        'md': 'tw-h-5 tw-w-5',
+        'lg': 'tw-h-8 tw-w-8',
+        'xl': 'tw-h-9 tw-w-9',
+        '2xl': 'tw-h-12 tw-w-12',
+    }[props.size]
+});
+
+const labelSpacing = computed(() => {
+    return {
+        '2xs': props.icon?.trim() ? 'tw-ml-[0.2rem]' : '',
+        'xs': props.icon?.trim() ? 'tw-ml-[0.15rem]' : '',
+        'sm': props.icon?.trim() ? 'tw-ml-[0.25rem]' : '',
+        'md': props.icon?.trim() ? 'tw-ml-[0.25rem]' : '',
+        'lg': props.icon?.trim() ? 'tw-ml-[0.25rem]' : '',
+        'xl': props.icon?.trim() ? 'tw-ml-[0.25rem]' : '',
+        '2xl': props.icon?.trim() ? 'tw-ml-[0.25rem]' : '',
     }[props.size]
 });
 
@@ -130,6 +145,7 @@ const fontClass = computed(() => {
         'md': "tw-font-['Barlow_Semi_Condensed'] tw-text-base tw-font-medium",
         'lg': "tw-font-['Barlow'] tw-text-2xl tw-font-semibold",
         'xl': "tw-font-['Barlow'] tw-text-3xl tw-font-semibold",
+        '2xl': "tw-font-['Barlow'] tw-text-4xl tw-font-semibold",
     }[props.size]
 });
 

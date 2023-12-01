@@ -364,6 +364,471 @@
                             </div>
                         </div>
 
+                        <div>
+                            <InputLabel class="tw-mb-2" :size="'md'" value="Tab Group" />
+                            <div class="tw-grid tw-gap-1 tw-grid-cols-1 sm:tw-grid-cols-2 md:tw-grid-cols-3 lg:tw-grid-cols-5">
+                                <div>
+                                    <Input :tabindex="1" :size="tabGroup.size" :placeholder="'Enter value'" type="text" autocomplete="off" />
+                                </div>
+                                <div>
+                                    <MultiSelectPaginated
+                                        :tabindex="2"
+                                        :drop-shadow="true"
+                                        :selection-max-content="false"
+                                        :selected-max-viewable-line="6"
+                                        :selection-max-viewable-line="10"
+                                        :searchable="false"
+                                        :selection-float="true"
+                                        :always-active="false"
+                                        :label="'Select Prototypes'"
+                                        :size="tabGroup.size"
+                                        :payload="multiSelectPrototypePayload"
+                                        :icon="tabGroup.icon"/>
+                                </div>
+                                <div>
+                                    <InputWithIcon :tabindex="4" :size="tabGroup.size" :icon="tabGroup.icon" :placeholder="'Enter value'" type="text" autocomplete="off" />
+                                </div>
+                                <div>
+                                    <MultiSelect
+                                        :tabindex="5"
+                                        drop-shadow
+                                        :searchable="false"
+                                        :selection-float="true"
+                                        :always-active="false"
+                                        :selection-max-viewable-line="5"
+                                        :size="tabGroup.size"
+                                        :options="category"
+                                        :icon="tabGroup.icon"/>
+                                </div>
+                                <div>
+                                    <InputWithIcon :tabindex="7" :size="tabGroup.size" :icon="tabGroup.icon" :placeholder="'Enter value'" type="text" autocomplete="off" />
+                                </div>
+                                <div>
+                                    <Input :tabindex="8" :size="tabGroup.size" :placeholder="'Enter value'" type="text" autocomplete="off" />
+                                </div>
+                                <div>
+                                    <SingleSelectPaginated
+                                        :tabindex="9"
+                                        :value-persist="true"
+                                        :drop-shadow="true"
+                                        :selection-max-content="true"
+                                        :selection-max-viewable-line="10"
+                                        :searchable="false"
+                                        :selection-float="true"
+                                        :always-active="false"
+                                        :label="'Select Prototype'"
+                                        :size="tabGroup.size"
+                                        :payload="singleSelectPrototypePayload"
+                                        :icon="tabGroup.icon"/>
+                                </div>
+                                <div>
+                                    <InputWithIcon :tabindex="11" :size="tabGroup.size" :icon="tabGroup.icon" :placeholder="'Enter value'" type="text" autocomplete="off" />
+                                </div>
+                                <div>
+                                    <SingleSelect
+                                        :tabindex="12"
+                                        :value-persist="true"
+                                        :drop-shadow="true"
+                                        :selection-max-content="true"
+                                        :searchable="false"
+                                        :selection-float="true"
+                                        :always-active="false"
+                                        :size="tabGroup.size"
+                                        :selection-max-viewable-line="8"
+                                        :icon="tabGroup.icon"
+                                        :options="singleSelectPrototype"/>
+                                </div>
+                                <div>
+                                    <InputWithIcon :tabindex="14" :size="tabGroup.size" :icon="tabGroup.icon" :placeholder="'Enter value'" type="text" autocomplete="off" />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <InputLabel class="tw-mb-2" :size="'md'" value="Spacing Aligment Grid" />
+                            <div class="tw-grid tw-gap-1 tw-grid-cols-5">
+                                <div v-if="true" class="tw-grid tw-gap-1 tw-grid-cols-1">
+                                    <div>
+                                        <MultiSelectPaginated
+                                            :drop-shadow="true"
+                                            :selection-max-content="false"
+                                            :selected-max-viewable-line="6"
+                                            :selection-max-viewable-line="10"
+                                            :searchable="false"
+                                            :selection-float="true"
+                                            :always-active="false"
+                                            :label="'Select Prototypes'"
+                                            :size="'2xs'"
+                                            :payload="multiSelectPrototypePayload"
+                                            :icon="tabGroup.icon"/>
+                                    </div>
+                                    <div>
+                                        <InputWithIcon :size="'2xs'" :icon="tabGroup.icon" :placeholder="'Enter value'" type="text" autocomplete="off" />
+                                    </div>
+                                    <div>
+                                        <MultiSelect
+                                            drop-shadow
+                                            :searchable="false"
+                                            :selection-float="true"
+                                            :always-active="false"
+                                            :selection-max-viewable-line="5"
+                                            :size="'2xs'"
+                                            :options="category"
+                                            :icon="tabGroup.icon"/>
+                                    </div>
+                                    <div>
+                                        <SingleSelectPaginated
+                                            :value-persist="true"
+                                            :drop-shadow="true"
+                                            :selection-max-content="true"
+                                            :selection-max-viewable-line="10"
+                                            :searchable="false"
+                                            :selection-float="true"
+                                            :always-active="false"
+                                            :label="'Select Prototype'"
+                                            :size="'2xs'"
+                                            :payload="singleSelectPrototypePayload"
+                                            :icon="tabGroup.icon"/>
+                                    </div>
+                                    <div>
+                                        <SingleSelect
+                                            :value-persist="true"
+                                            :drop-shadow="true"
+                                            :selection-max-content="true"
+                                            :searchable="false"
+                                            :selection-float="true"
+                                            :always-active="false"
+                                            :size="'2xs'"
+                                            :selection-max-viewable-line="8"
+                                            :icon="tabGroup.icon"
+                                            :options="singleSelectPrototype"/>
+                                    </div>
+
+                                    <div>
+                                        <Button class="tw-w-full" :size="'2xs'" :icon="tabGroup.icon" :label="'Button'" />
+                                    </div>
+                                    <div>
+                                        <Button class="tw-w-full" :size="'2xs'" :icon="tabGroup.icon" :variant="'outline'" :label="'Button'" />
+                                    </div>
+                                    <div>
+                                        <Button class="tw-w-full" :size="'2xs'" :icon="tabGroup.icon" :variant="'flat'" :label="'Button'" />
+                                    </div>
+                                    <div>
+                                        <Button class="tw-w-full" :size="'2xs'" :icon="tabGroup.icon" :variant="'flat'" disabled :label="'Button'" />
+                                    </div>
+                                    <div>
+                                        <InputWithIcon ref="inputValue" :size="'2xs'" :icon="tabGroup.icon" :placeholder="'Enter value'" :type="'text'" autocomplete="off" />
+                                    </div>
+                                </div>
+
+                                <div v-if="true" class="tw-grid tw-gap-1 tw-grid-cols-1">
+                                    <div>
+                                        <MultiSelectPaginated
+                                            :drop-shadow="true"
+                                            :selection-max-content="false"
+                                            :selected-max-viewable-line="6"
+                                            :selection-max-viewable-line="10"
+                                            :searchable="false"
+                                            :selection-float="true"
+                                            :always-active="false"
+                                            :label="'Select Prototypes'"
+                                            :size="'xs'"
+                                            :payload="multiSelectPrototypePayload"
+                                            :icon="tabGroup.icon"/>
+                                    </div>
+                                    <div>
+                                        <InputWithIcon :size="'xs'" :icon="tabGroup.icon" :placeholder="'Enter value'" type="text" autocomplete="off" />
+                                    </div>
+                                    <div>
+                                        <MultiSelect
+                                            drop-shadow
+                                            :searchable="false"
+                                            :selection-float="true"
+                                            :always-active="false"
+                                            :selection-max-viewable-line="5"
+                                            :size="'xs'"
+                                            :options="category"
+                                            :icon="tabGroup.icon"/>
+                                    </div>
+                                    <div>
+                                        <SingleSelectPaginated
+                                            :value-persist="true"
+                                            :drop-shadow="true"
+                                            :selection-max-content="true"
+                                            :selection-max-viewable-line="10"
+                                            :searchable="false"
+                                            :selection-float="true"
+                                            :always-active="false"
+                                            :label="'Select Prototype'"
+                                            :size="'xs'"
+                                            :payload="singleSelectPrototypePayload"
+                                            :icon="tabGroup.icon"/>
+                                    </div>
+                                    <div>
+                                        <SingleSelect
+                                            :value-persist="true"
+                                            :drop-shadow="true"
+                                            :selection-max-content="true"
+                                            :searchable="false"
+                                            :selection-float="true"
+                                            :always-active="false"
+                                            :size="'xs'"
+                                            :selection-max-viewable-line="8"
+                                            :icon="tabGroup.icon"
+                                            :options="singleSelectPrototype"/>
+                                    </div>
+
+                                    <div>
+                                        <Button class="tw-w-full" :size="'xs'" :icon="tabGroup.icon" :label="'Button'" />
+                                    </div>
+                                    <div>
+                                        <Button class="tw-w-full" :size="'xs'" :icon="tabGroup.icon" :variant="'outline'" :label="'Button'" />
+                                    </div>
+                                    <div>
+                                        <Button class="tw-w-full" :size="'xs'" :icon="tabGroup.icon" :variant="'flat'" :label="'Button'" />
+                                    </div>
+                                    <div>
+                                        <Button class="tw-w-full" :size="'xs'" :icon="tabGroup.icon" :variant="'flat'" disabled :label="'Button'" />
+                                    </div>
+                                    <div>
+                                        <InputWithIcon ref="inputValue" :size="'xs'" :icon="tabGroup.icon" :placeholder="'Enter value'" :type="'text'" autocomplete="off" />
+                                    </div>
+                                </div>
+
+                                <div v-if="true" class="tw-grid tw-gap-1 tw-grid-cols-1">
+                                    <div>
+                                        <MultiSelectPaginated
+                                            :drop-shadow="true"
+                                            :selection-max-content="false"
+                                            :selected-max-viewable-line="6"
+                                            :selection-max-viewable-line="10"
+                                            :searchable="false"
+                                            :selection-float="true"
+                                            :always-active="false"
+                                            :label="'Select Prototypes'"
+                                            :size="'sm'"
+                                            :payload="multiSelectPrototypePayload"
+                                            :icon="tabGroup.icon"/>
+                                    </div>
+                                    <div>
+                                        <InputWithIcon :size="'sm'" :icon="tabGroup.icon" :placeholder="'Enter value'" type="text" autocomplete="off" />
+                                    </div>
+                                    <div>
+                                        <MultiSelect
+                                            drop-shadow
+                                            :searchable="false"
+                                            :selection-float="true"
+                                            :always-active="false"
+                                            :selection-max-viewable-line="5"
+                                            :size="'sm'"
+                                            :options="category"
+                                            :icon="tabGroup.icon"/>
+                                    </div>
+                                    <div>
+                                        <SingleSelectPaginated
+                                            :value-persist="true"
+                                            :drop-shadow="true"
+                                            :selection-max-content="true"
+                                            :selection-max-viewable-line="10"
+                                            :searchable="false"
+                                            :selection-float="true"
+                                            :always-active="false"
+                                            :label="'Select Prototype'"
+                                            :size="'sm'"
+                                            :payload="singleSelectPrototypePayload"
+                                            :icon="tabGroup.icon"/>
+                                    </div>
+                                    <div>
+                                        <SingleSelect
+                                            :value-persist="true"
+                                            :drop-shadow="true"
+                                            :selection-max-content="true"
+                                            :searchable="false"
+                                            :selection-float="true"
+                                            :always-active="false"
+                                            :size="'sm'"
+                                            :selection-max-viewable-line="8"
+                                            :icon="tabGroup.icon"
+                                            :options="singleSelectPrototype"/>
+                                    </div>
+
+                                    <div>
+                                        <Button class="tw-w-full" :size="'sm'" :icon="tabGroup.icon" :label="'Button'" />
+                                    </div>
+                                    <div>
+                                        <Button class="tw-w-full" :size="'sm'" :icon="tabGroup.icon" :variant="'outline'" :label="'Button'" />
+                                    </div>
+                                    <div>
+                                        <Button class="tw-w-full" :size="'sm'" :icon="tabGroup.icon" :variant="'flat'" :label="'Button'" />
+                                    </div>
+                                    <div>
+                                        <Button class="tw-w-full" :size="'sm'" :icon="tabGroup.icon" :variant="'flat'" disabled :label="'Button'" />
+                                    </div>
+                                    <div>
+                                        <InputWithIcon ref="inputValue" :size="'sm'" :icon="tabGroup.icon" :placeholder="'Enter value'" :type="'text'" autocomplete="off" />
+                                    </div>
+                                </div>
+
+                                <div v-if="true" class="tw-grid tw-gap-1 tw-grid-cols-1">
+                                    <div>
+                                        <MultiSelectPaginated
+                                            :drop-shadow="true"
+                                            :selection-max-content="false"
+                                            :selected-max-viewable-line="6"
+                                            :selection-max-viewable-line="10"
+                                            :searchable="false"
+                                            :selection-float="true"
+                                            :always-active="false"
+                                            :label="'Select Prototypes'"
+                                            :size="'md'"
+                                            :payload="multiSelectPrototypePayload"
+                                            :icon="tabGroup.icon"/>
+                                    </div>
+                                    <div>
+                                        <InputWithIcon :size="'md'" :icon="tabGroup.icon" :placeholder="'Enter value'" type="text" autocomplete="off" />
+                                    </div>
+                                    <div>
+                                        <MultiSelect
+                                            drop-shadow
+                                            :searchable="false"
+                                            :selection-float="true"
+                                            :always-active="false"
+                                            :selection-max-viewable-line="5"
+                                            :size="'md'"
+                                            :options="category"
+                                            :icon="tabGroup.icon"/>
+                                    </div>
+                                    <div>
+                                        <SingleSelectPaginated
+                                            :value-persist="true"
+                                            :drop-shadow="true"
+                                            :selection-max-content="true"
+                                            :selection-max-viewable-line="10"
+                                            :searchable="false"
+                                            :selection-float="true"
+                                            :always-active="false"
+                                            :label="'Select Prototype'"
+                                            :size="'md'"
+                                            :payload="singleSelectPrototypePayload"
+                                            :icon="tabGroup.icon"/>
+                                    </div>
+                                    <div>
+                                        <SingleSelect
+                                            :value-persist="true"
+                                            :drop-shadow="true"
+                                            :selection-max-content="true"
+                                            :searchable="false"
+                                            :selection-float="true"
+                                            :always-active="false"
+                                            :size="'md'"
+                                            :selection-max-viewable-line="8"
+                                            :icon="tabGroup.icon"
+                                            :options="singleSelectPrototype"/>
+                                    </div>
+
+                                    <div>
+                                        <Button class="tw-w-full" :size="'md'" :icon="tabGroup.icon" :label="'Button'" />
+                                    </div>
+                                    <div>
+                                        <Button class="tw-w-full" :size="'md'" :icon="tabGroup.icon" :variant="'outline'" :label="'Button'" />
+                                    </div>
+                                    <div>
+                                        <Button class="tw-w-full" :size="'md'" :icon="tabGroup.icon" :variant="'flat'" :label="'Button'" />
+                                    </div>
+                                    <div>
+                                        <Button class="tw-w-full" :size="'md'" :icon="tabGroup.icon" :variant="'flat'" disabled :label="'Button'" />
+                                    </div>
+                                    <div>
+                                        <InputWithIcon ref="inputValue" :size="'md'" :icon="tabGroup.icon" :placeholder="'Enter value'" :type="'text'" autocomplete="off" />
+                                    </div>
+                                </div>
+
+                                <div v-if="true" class="tw-grid tw-gap-1 tw-grid-cols-1">
+                                    <div>
+                                        <MultiSelectPaginated
+                                            :drop-shadow="true"
+                                            :selection-max-content="false"
+                                            :selected-max-viewable-line="6"
+                                            :selection-max-viewable-line="10"
+                                            :searchable="false"
+                                            :selection-float="true"
+                                            :always-active="false"
+                                            :label="'Select Prototypes'"
+                                            :size="'lg'"
+                                            :payload="multiSelectPrototypePayload"
+                                            :icon="tabGroup.icon"/>
+                                    </div>
+                                    <div>
+                                        <InputWithIcon :size="'lg'" :icon="tabGroup.icon" :placeholder="'Enter value'" type="text" autocomplete="off" />
+                                    </div>
+                                    <div>
+                                        <MultiSelect
+                                            drop-shadow
+                                            :searchable="false"
+                                            :selection-float="true"
+                                            :always-active="false"
+                                            :selection-max-viewable-line="5"
+                                            :size="'lg'"
+                                            :options="category"
+                                            :icon="tabGroup.icon"/>
+                                    </div>
+                                    <div>
+                                        <SingleSelectPaginated
+                                            :value-persist="true"
+                                            :drop-shadow="true"
+                                            :selection-max-content="true"
+                                            :selection-max-viewable-line="10"
+                                            :searchable="false"
+                                            :selection-float="true"
+                                            :always-active="false"
+                                            :label="'Select Prototype'"
+                                            :size="'lg'"
+                                            :payload="singleSelectPrototypePayload"
+                                            :icon="tabGroup.icon"/>
+                                    </div>
+                                    <div>
+                                        <SingleSelect
+                                            :value-persist="true"
+                                            :drop-shadow="true"
+                                            :selection-max-content="true"
+                                            :searchable="false"
+                                            :selection-float="true"
+                                            :always-active="false"
+                                            :size="'lg'"
+                                            :selection-max-viewable-line="8"
+                                            :icon="tabGroup.icon"
+                                            :options="singleSelectPrototype"/>
+                                    </div>
+
+                                    <div>
+                                        <Button class="tw-w-full" :size="'lg'" :icon="tabGroup.icon" :label="'Button'" />
+                                    </div>
+                                    <div>
+                                        <Button class="tw-w-full" :size="'lg'" :icon="tabGroup.icon" :variant="'outline'" :label="'Button'" />
+                                    </div>
+                                    <div>
+                                        <Button class="tw-w-full" :size="'lg'" :icon="tabGroup.icon" :variant="'flat'" :label="'Button'" />
+                                    </div>
+                                    <div>
+                                        <Button class="tw-w-full" :size="'lg'" :icon="tabGroup.icon" :variant="'flat'" disabled :label="'Button'" />
+                                    </div>
+                                    <div>
+                                        <InputWithIcon ref="inputValue" :size="'lg'" :icon="tabGroup.icon" :placeholder="'Enter value'" :type="'text'" autocomplete="off" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <div class="tw-my-4 tw-flex tw-justify-center tw-space-x-1.5">
+                                <Button :size="tabGroup.size" :icon="tabGroup.icon" :label="'Default'" />
+                                <Button :size="tabGroup.size" :icon="tabGroup.icon" :variant="'outline'" :label="'Outline'" />
+                                <Button :size="tabGroup.size" :icon="tabGroup.icon" :variant="'flat'" :label="'Flat'" />
+                                <Button :size="tabGroup.size" :icon="tabGroup.icon" :variant="'flat'" disabled :label="'Flat'" />
+                                <InputWithIcon ref="inputValue" :size="tabGroup.size" :icon="tabGroup.icon" :placeholder="'Enter value'" :type="'text'" autocomplete="off" />
+                            </div>
+                        </div>
+
                         <div v-if="true" class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-9">
                             <div class="tw-flex tw-items-start tw-justify-start tw-block neutral-border">
                                 <Button :size="'2xs'" :icon="'ic:sharp-send-to-mobile'" :label="'XXS Button'"></Button>
@@ -668,6 +1133,11 @@ const {
     neutral: neutralColor
 } = storeToRefs($themeStore);
 
+let tabGroup = reactive({
+    'icon' : 'ant-design:appstore-filled',
+    'size' : 'md'
+});
+
 let formStore = $formStore;
 let remember1 = ref(null);
 let remember2 = ref(true);
@@ -800,6 +1270,24 @@ let multiSelectPrototypePayload = reactive({
         }
     },
     selected: [1992,1263]
+});
+let singleSelectPrototype = reactive({
+    search: '',
+    data: [
+        {text : 'PRT3221289642 005-5RZX3-MPJ-9GRRWA', value: 0},
+        {text : 'PRT3224439642 005-5RZX3-MPJ-9GRRWA', value: 1},
+        {text : 'PRT3222219642 005-5RZX3-MPJ-9GRRWA', value: 2},
+        {text : 'PRT3224324642 005-5RZX3-MPJ-9GRRWA', value: 3},
+        {text : 'PRT3221285552 005-5RZX3-MPJ-9GRRWA', value: 4},
+    ],
+    selection: [
+        {text : 'PRT3221289642 005-5RZX3-MPJ-9GRRWA', value: 0},
+        {text : 'PRT3224439642 005-5RZX3-MPJ-9GRRWA', value: 1},
+        {text : 'PRT3222219642 005-5RZX3-MPJ-9GRRWA', value: 2},
+        {text : 'PRT3224324642 005-5RZX3-MPJ-9GRRWA', value: 3},
+        {text : 'PRT3221285552 005-5RZX3-MPJ-9GRRWA', value: 4},
+    ],
+    selected: null
 });
 let singleSelectPrototypePayload = reactive({
     fetch: {

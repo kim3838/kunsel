@@ -27,7 +27,7 @@
                                             :label="'Select Prototypes'"
                                             :size="size"
                                             :payload="multiSelectPrototypePayload"
-                                            :icon="'logos:codio'"/>
+                                            :icon="'ic:sharp-qr-code'"/>
                                     </template>
                                 </AccentFrame>
                             </div>
@@ -73,7 +73,7 @@
                                             :always-active="false"
                                             :size="size"
                                             :selection-max-viewable-line="8"
-                                            :icon="'emojione-monotone:japanese-no-vacancy-button'"
+                                            :icon="'ic:sharp-qr-code'"
                                             :options="singleSelectPrototype"/>
                                     </template>
                                 </AccentFrame>
@@ -112,7 +112,7 @@
                                             :label="'Select Prototype'"
                                             :size="size"
                                             :payload="singleSelectPrototypePayload"
-                                            :icon="'emojione-monotone:japanese-no-vacancy-button'"/>
+                                            :icon="'ic:sharp-qr-code'"/>
                                     </template>
                                 </AccentFrame>
                             </div>

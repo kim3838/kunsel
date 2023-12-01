@@ -9,7 +9,7 @@
             :style="{'border-radius': '2px'}"
             class="tw-w-full tw-flex tw-justify-start background"
             :class="[heightClass, borderClass]">
-            <div v-if="!active" :class="[iconHolderClass]" class="tw-flex tw-justify-center tw-items-center">
+            <div v-if="!active" :class="[iconHolderClass]" class="tw-flex tw-justify-end tw-items-center">
                 <ClientOnly><Icon :class="[iconClass]" :name="pending ? 'eos-icons:loading' : icon"/></ClientOnly>
             </div>
             <div v-if="!active" class="tw-w-full tw-relative tw-cursor-pointer">
@@ -291,10 +291,10 @@ const checkBoxSize = computed(() => {
 
 const iconHolderClass = computed(() => {
     return {
-        '2xs': 'tw-w-4',
+        '2xs': 'tw-w-5',
         'xs': 'tw-w-6',
         'sm': 'tw-w-8',
-        'md': 'tw-w-10',
+        'md': 'tw-w-8',
         'lg': 'tw-w-11'
     }[props.size];
 });
@@ -305,7 +305,7 @@ const iconClass = computed(() => {
         'xs': 'tw-h-5 tw-w-5',
         'sm': 'tw-h-5 tw-w-5',
         'md': 'tw-h-5 tw-w-5',
-        'lg': 'tw-h-6 tw-w-6'
+        'lg': 'tw-h-8 tw-w-8'
     }[props.size];
 });
 

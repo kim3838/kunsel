@@ -98,13 +98,13 @@ defineEmits(['update:modelValue']);
 
 const iconClass = computed(() => {
     return {
-        '2xs': 'tw-h-[0.875rem] tw-w-[0.875rem] tw-ml-[0.2rem]',
-        'xs': 'tw-h-[1rem] tw-w-[1rem] tw-ml-[0.2rem]',
-        'sm': 'tw-h-[1rem] tw-w-[1rem] tw-ml-[0.4rem]',
-        'md': 'tw-h-[1.2rem] tw-w-[1.2rem] tw-ml-[0.4rem]',
-        'lg': 'tw-h-[1.875rem] tw-w-[1.875rem] tw-mt-[0.1rem] tw-ml-[0.4rem]',
-        'xl': 'tw-h-[2.25rem] tw-w-[2.25rem] tw-mt-[0.1rem] tw-ml-[0.4rem]',
-        '2xl': 'tw-h-[2.25rem] tw-w-[2.25rem] tw-mt-[0.1rem] tw-ml-[0.4rem]',
+        '2xs': 'tw-h-4 tw-w-4 tw-ml-[0.17rem]',
+        'xs': 'tw-h-5 tw-w-5 tw-ml-[0.2rem]',
+        'sm': 'tw-h-5 tw-w-5 tw-ml-[0.6rem]',
+        'md': 'tw-h-5 tw-w-5 tw-ml-[0.6rem]',
+        'lg': 'tw-h-8 tw-w-8 tw-mt-[0.1rem] tw-ml-[0.45rem]',
+        'xl': 'tw-h-9 tw-w-9 tw-mt-[0.1rem] tw-ml-[0.6rem]',
+        '2xl': 'tw-h-12 tw-w-12 tw-mt-[0.1rem] tw-ml-[0.6rem]',
     }[props.size]
 });
 
@@ -121,12 +121,13 @@ const absoluteTopAllocation = computed(() => {
 
 const spacingClass = computed(() => {
     return {
-        '2xs': props.icon?.trim() ? 'tw-pl-5' : '',
-        'xs': props.icon?.trim() ? 'tw-pl-5' : '',
-        'sm': props.icon?.trim() ? 'tw-pl-6' : '',
-        'md': props.icon?.trim() ? 'tw-pl-7' : '',
-        'lg': props.icon?.trim() ? 'tw-pl-10' : '',
-        'xl': props.icon?.trim() ? 'tw-pl-11' : ''
+        '2xs': props.icon?.trim() ? 'tw-pl-[1.3rem]' : '',
+        'xs': props.icon?.trim() ? 'tw-pl-[1.55rem]' : '',
+        'sm': props.icon?.trim() ? 'tw-pl-[2rem]' : '',
+        'md': props.icon?.trim() ? 'tw-pl-[2rem]' : '',
+        'lg': props.icon?.trim() ? 'tw-pl-[2.5rem]' : '',
+        'xl': props.icon?.trim() ? 'tw-pl-[3rem]' : '',
+        '2xl': props.icon?.trim() ? 'tw-pl-[3.75rem]' : ''
     }[props.size]
 });
 
@@ -151,7 +152,7 @@ const fontClass = computed(() => {
         'md': 'tw-text-sm',
         'lg': 'tw-text-lg tw-font-semibold',
         'xl': 'tw-text-2xl tw-font-semibold',
-        '2xl': 'tw-text-3xl tw-font-bold',
+        '2xl': 'tw-text-4xl tw-font-semibold',
         '3xl': 'tw-text-5xl tw-font-bold',
     }[props.size];
 });
