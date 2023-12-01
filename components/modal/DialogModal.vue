@@ -10,7 +10,7 @@
                 <slot name="title" />
             </div>
 
-            <div class="tw-mt-4 tw-text-base">
+            <div class="tw-mt-1 tw-text-base">
                 <slot name="content" />
             </div>
         </div>

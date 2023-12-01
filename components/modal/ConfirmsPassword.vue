@@ -33,7 +33,7 @@
                 <Button @click="closeModal" :label="'Cancel'" />
 
                 <Button
-                    class="tw-ms-3"
+                    class="tw-ms-2"
                     :disabled="confirmPasswordPending"
                     @click="confirmPassword"
                     :label="button"/>
