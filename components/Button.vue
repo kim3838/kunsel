@@ -120,10 +120,10 @@ const labelSpacingClass = computed(() => {
 
 const iconSpacingClass = computed(() => {
     return {
-        '2xs': props.label?.trim() ? '' : 'tw-pl-[0.01rem]',
-        'xs': props.label?.trim() ? '' : 'tw-pl-[0.1rem]',
-        'sm': props.label?.trim() ? '' : 'tw-pl-[0.3rem] tw-mr-[0.2rem]',
-        'md': props.label?.trim() ? '' : 'tw-pl-[0.3rem] tw-mr-[0.2rem]',
+        '2xs': props.label?.trim() ? '' : 'tw-pl-[0.15rem] tw-mr-[0.1rem]',
+        'xs': props.label?.trim() ? '' : 'tw-pl-[0.15rem] tw-mr-[0.1rem]',
+        'sm': props.label?.trim() ? '' : 'tw-pl-[0.45rem] tw-mr-[0.35rem]',
+        'md': props.label?.trim() ? '' : 'tw-pl-[0.45rem] tw-mr-[0.35rem]',
         'lg': props.label?.trim() ? '' : 'tw-pl-[0.575rem] tw-mr-[0.3rem]',
         'xl': props.label?.trim() ? '' : 'tw-pl-[0.675rem] tw-mr-[0.5rem]',
         '2xl': props.label?.trim() ? '' : 'tw-pl-[0.8rem] tw-mr-[0.7rem]'
