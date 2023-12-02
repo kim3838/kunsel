@@ -3,11 +3,9 @@
         ref="button"
         :disabled="disabled"
         :style="{'border-radius': '2px'}"
-        :class="[heightClass, spacingClass, colorClass, borderClass]"
+        :class="[heightClass, colorClass, borderClass]"
         :type="type"
         class="
-            tw-inline-flex
-            tw-items-center
             tw-font-medium
             tw-tracking-wide
             tw-box-border
@@ -21,9 +19,16 @@
             tw-relative">
         <div :class="[shadeClass]" class="shade"></div>
         <slot :fontClass="fontClass">
-            <span class="tw-flex tw-items-center" :class="[fontClass]">
-                <ClientOnly><Icon v-if="icon?.trim()" :class="[iconClass]" :name="icon"></Icon></ClientOnly><span :class="[labelSpacing]">{{label}}</span>
-            </span>
+            <div class="tw-w-full tw-h-full tw-flex" :class="[fontClass]">
+                <div
+                    v-if="icon?.trim()"
+                    :class="[iconHolderClass, label?.trim() ? 'tw-justify-end' : 'tw-justify-center']"
+                    class="tw-flex tw-items-center">
+                    <ClientOnly><Icon v-if="icon?.trim()" :class="[iconClass]" :name="icon"></Icon></ClientOnly>
+                </div>
+
+                <div v-if="label?.trim()" :class="['tw-w-full tw-flex tw-items-center tw-truncate', labelSpacingClass]">{{label}}</div>
+            </div>
         </slot>
     </button>
 </template>
@@ -101,16 +106,28 @@ const heightClass = computed(() => {
     }[props.size]
 });
 
-const spacingClass = computed(() => {
+const labelSpacingClass = computed(() => {
     return {
-        '2xs': 'tw-pl-[0.15rem] tw-pr-[0.5rem]',
-        'xs': 'tw-pl-[0.15rem] tw-pr-[0.5rem]',
-        'sm': 'tw-pl-[0.6rem] tw-pr-[0.7rem]',
-        'md': 'tw-pl-[0.6rem] tw-pr-[0.7rem]',
-        'lg': 'tw-pl-[0.4rem] tw-pr-[0.7rem]',
-        'xl': 'tw-pl-2 tw-pr-[1.5rem]',
-        '2xl': 'tw-pl-2 tw-pr-[1.5rem]',
+        '2xs': props.icon?.trim() ? 'tw-px-[0.2rem]' : 'tw-px-1',
+        'xs': props.icon?.trim() ? 'tw-px-[0.2rem]' : 'tw-px-1',
+        'sm': props.icon?.trim() ? 'tw-px-[0.2rem]' : 'tw-px-2',
+        'md': props.icon?.trim() ? 'tw-px-1' : 'tw-px-2',
+        'lg': props.icon?.trim() ? 'tw-px-1' : 'tw-px-2',
+        'xl': props.icon?.trim() ? 'tw-px-1' : 'tw-px-4',
+        '2xl': props.icon?.trim() ? 'tw-px-1' : 'tw-px-4'
     }[props.size]
+});
+
+const iconHolderClass = computed(() => {
+    return {
+        '2xs': props.variant == 'default' ? 'tw-w-[1.3rem]': 'tw-w-[1.25rem]',
+        'xs': props.variant == 'default' ? 'tw-w-[1.575rem]': 'tw-w-[1.475rem]',
+        'sm': props.variant == 'default' ? 'tw-w-[2.05rem]': 'tw-w-[1.95rem]',
+        'md': props.variant == 'default' ? 'tw-w-[2.05rem]': 'tw-w-[1.95rem]',
+        'lg': props.variant == 'default' ? 'tw-w-[2.85rem]' : 'tw-w-[2.75rem]',
+        'xl': props.variant == 'default' ? 'tw-w-[3.55rem]' : 'tw-w-[3.5rem]',
+        '2xl': props.variant == 'default' ? 'tw-w-[4rem]' : 'tw-w-[3.95rem]',
+    }[props.size];
 });
 
 const iconClass = computed(() => {
@@ -122,18 +139,6 @@ const iconClass = computed(() => {
         'lg': 'tw-h-8 tw-w-8',
         'xl': 'tw-h-9 tw-w-9',
         '2xl': 'tw-h-12 tw-w-12',
-    }[props.size]
-});
-
-const labelSpacing = computed(() => {
-    return {
-        '2xs': props.icon?.trim() ? 'tw-ml-[0.2rem]' : '',
-        'xs': props.icon?.trim() ? 'tw-ml-[0.15rem]' : '',
-        'sm': props.icon?.trim() ? 'tw-ml-[0.25rem]' : '',
-        'md': props.icon?.trim() ? 'tw-ml-[0.25rem]' : '',
-        'lg': props.icon?.trim() ? 'tw-ml-[0.25rem]' : '',
-        'xl': props.icon?.trim() ? 'tw-ml-[0.25rem]' : '',
-        '2xl': props.icon?.trim() ? 'tw-ml-[0.25rem]' : '',
     }[props.size]
 });
 

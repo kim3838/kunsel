@@ -126,23 +126,6 @@
                         </div>
 
                         <div class="tw-my-4 tw-h-[1px] tw-bg-gradient-to-r tw-from-transparent tw-via-neutral-400 tw-to-transparent"></div>
-
-                        <AccentFrame class="tw-w-full">
-                            <template #content>
-                                <InputWithIcon class="tw-my-4 " ref="inputValue" :size="size" :icon="'ic:sharp-qr-code'" :placeholder="'Enter value'" type="text" autocomplete="off" />
-                                <div class="tw-my-4 tw-flex tw-justify-center tw-space-x-1.5 tw-flex-nowrap">
-                                    <Input ref="inputValue" :size="size" :placeholder="'Enter value'" type="text" autocomplete="off" />
-                                    <Button :size="size" :icon="icon" :variant="'flat'" :label="'Flat'" />
-                                    <InputWithIcon ref="inputValue" :size="size" :icon="icon" :placeholder="'Enter value'" :type="'text'" autocomplete="off" />
-                                </div>
-                                <div class="tw-my-4 tw-flex tw-justify-center tw-space-x-1.5">
-                                    <Button :size="size" :icon="icon" :label="'Default'" />
-                                    <Button :size="size" :icon="icon" :variant="'outline'" :label="'Outline'" />
-                                    <Button :size="size" :icon="icon" :variant="'flat'" :label="'Flat'" />
-                                    <Button :size="size" :icon="icon" :variant="'flat'" disabled :label="'Flat'" />
-                                </div>
-                            </template>
-                        </AccentFrame>
                     </div>
                 </div>
             </template>

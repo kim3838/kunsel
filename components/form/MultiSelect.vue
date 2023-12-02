@@ -206,7 +206,7 @@ const heightClass = computed(() => {
         'xs': 'tw-h-6',
         'sm': 'tw-h-7',
         'md': 'tw-h-8',
-        'lg': 'tw-h-11'
+        'lg': 'tw-h-11',
     }[props.size];
 });
 

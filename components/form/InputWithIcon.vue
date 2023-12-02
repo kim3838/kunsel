@@ -1,7 +1,10 @@
 <template>
     <div class="tw-relative tw-box-border" :class="[heightClass]">
-        <div v-if="icon?.trim()" class="tw-absolute tw-h-full tw-z-20 tw-flex tw-items-center tw-pointer-events-none">
-            <ClientOnly><Icon :class="[iconClass]" :name="icon" /></ClientOnly>
+        <div v-if="icon?.trim()" class="tw-absolute tw-w-full tw-h-full tw-z-20 tw-flex tw-pointer-events-none">
+            <div :class="[iconHolderClass]" class="tw-h-full tw-flex tw-justify-end tw-items-center">
+                <ClientOnly><Icon :class="[iconClass]" :name="icon" /></ClientOnly>
+            </div>
+            <div class="tw-w-full tw-relative"></div>
         </div>
         <input
             :id="id"
@@ -96,15 +99,27 @@ const props = defineProps({
 
 defineEmits(['update:modelValue']);
 
+const iconHolderClass = computed(() => {
+    return {
+        '2xs': 'tw-w-[1.35rem]',
+        'xs': 'tw-w-[1.575rem]',
+        'sm': 'tw-w-[2.05rem]',
+        'md': 'tw-w-[2.05rem]',
+        'lg': 'tw-w-[2.85rem]',
+        'xl': 'tw-w-[3.5rem]',
+        '2xl': 'tw-w-[4rem]',
+    }[props.size];
+});
+
 const iconClass = computed(() => {
     return {
-        '2xs': 'tw-h-4 tw-w-4 tw-ml-[0.17rem]',
-        'xs': 'tw-h-5 tw-w-5 tw-ml-[0.2rem]',
-        'sm': 'tw-h-5 tw-w-5 tw-ml-[0.6rem]',
-        'md': 'tw-h-5 tw-w-5 tw-ml-[0.6rem]',
-        'lg': 'tw-h-8 tw-w-8 tw-mt-[0.1rem] tw-ml-[0.45rem]',
-        'xl': 'tw-h-9 tw-w-9 tw-mt-[0.1rem] tw-ml-[0.6rem]',
-        '2xl': 'tw-h-12 tw-w-12 tw-mt-[0.1rem] tw-ml-[0.6rem]',
+        '2xs': 'tw-h-4 tw-w-4',
+        'xs': 'tw-h-5 tw-w-5',
+        'sm': 'tw-h-5 tw-w-5',
+        'md': 'tw-h-5 tw-w-5',
+        'lg': 'tw-h-8 tw-w-8',
+        'xl': 'tw-h-9 tw-w-9',
+        '2xl': 'tw-h-12 tw-w-12',
     }[props.size]
 });
 
@@ -115,7 +130,8 @@ const absoluteTopAllocation = computed(() => {
         'sm': '0',
         'md': '0',
         'lg': '0',
-        'xl': '0'
+        'xl': '0',
+        '2xl': '0',
     }[props.size]
 });
 
@@ -123,10 +139,10 @@ const spacingClass = computed(() => {
     return {
         '2xs': props.icon?.trim() ? 'tw-pl-[1.3rem]' : '',
         'xs': props.icon?.trim() ? 'tw-pl-[1.55rem]' : '',
-        'sm': props.icon?.trim() ? 'tw-pl-[2rem]' : '',
+        'sm': props.icon?.trim() ? 'tw-pl-[1.875rem]' : '',
         'md': props.icon?.trim() ? 'tw-pl-[2rem]' : '',
         'lg': props.icon?.trim() ? 'tw-pl-[2.5rem]' : '',
-        'xl': props.icon?.trim() ? 'tw-pl-[3rem]' : '',
+        'xl': props.icon?.trim() ? 'tw-pl-[3.2rem]' : '',
         '2xl': props.icon?.trim() ? 'tw-pl-[3.75rem]' : ''
     }[props.size]
 });
