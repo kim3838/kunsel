@@ -269,6 +269,28 @@ let mainNavigation = computed(()=>{
             to: '/prototypes',
             route: 'prototypes'
         },
+        {
+            type: 'drop',
+            title: 'Help',
+            icon: 'ic:baseline-arrow-right',
+            options: [
+                {
+                    type: 'link',
+                    title: 'FAQ',
+                    icon: 'ic:baseline-arrow-right',
+                },
+                {
+                    type: 'link',
+                    title: 'Support',
+                    icon: 'ic:baseline-arrow-right',
+                },
+                {
+                    type: 'link',
+                    title: 'Live Chat',
+                    icon: 'ic:baseline-arrow-right',
+                },
+            ]
+        }
     ]);
 
     if(!isAuthenticated.value){
@@ -336,31 +358,7 @@ let menuOptions = computed(() => {
 
     options = options.concat(mainNavigation.value);
 
-    options = options.concat([
-        {
-            type: 'drop',
-            title: 'Help',
-            icon: 'ic:baseline-arrow-right',
-            options: [
-                {
-                    type: 'link',
-                    title: 'FAQ',
-                    icon: 'ic:baseline-arrow-right',
-                },
-                {
-                    type: 'link',
-                    title: 'Support',
-                    icon: 'ic:baseline-arrow-right',
-                },
-                {
-                    type: 'link',
-                    title: 'Live Chat',
-                    icon: 'ic:baseline-arrow-right',
-                },
-            ]
-        },
-
-    ]);
+    options = options.concat([]);
 
     return options;
 });
