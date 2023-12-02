@@ -449,7 +449,7 @@
                         <div v-if="true">
                             <div class="tw-block tw-p-2 neutral-border">
                                 <InputLabel class="tw-mb-2" :size="'md'" value="Spacing Aligment Grid" />
-                                <div class="tw-grid tw-gap-1 tw-grid-cols-6">
+                                <div class="tw-grid tw-gap-1 tw-grid-cols-7">
                                     <div v-if="true">
                                         <div>
                                             <MultiSelectPaginated
@@ -508,10 +508,12 @@
                                         </div>
 
                                         <div><Button class="tw-w-full" :size="'2xs'" :icon="tabGroup.icon" :label="'Button'" /></div>
-                                        <div><Button class="tw-w-full" :size="'2xs'" :icon="tabGroup.icon" :variant="'outline'" :label="'Button'" /></div>
-                                        <div><Button class="tw-w-full" :size="'2xs'" :icon="tabGroup.icon" :variant="'flat'" :label="'Button'" /></div>
-                                        <div><Button class="tw-w-full" :size="'2xs'" :icon="tabGroup.icon" :variant="'flat'" disabled :label="'Button'" /></div>
+                                        <div><Button class="tw-w-3/4" :size="'2xs'" :icon="tabGroup.icon" :variant="'outline'" :label="'Button'" /></div>
+                                        <div><Button class="tw-w-1/2" :size="'2xs'" :icon="tabGroup.icon" :variant="'flat'" :label="'Button'" /></div>
+                                        <div><Button class="tw-w-1/3" :size="'2xs'" :icon="tabGroup.icon" :variant="'flat'" disabled :label="'Button'" /></div>
+                                        <div><Button class="" :size="'2xs'" :icon="tabGroup.icon" :variant="'flat'" :label="'Button'" /></div>
                                         <div><InputWithIcon ref="inputValue" :size="'2xs'" :icon="tabGroup.icon" :placeholder="'Enter value'" :type="'text'" autocomplete="off" /></div>
+                                        <div><Button class="" :size="'2xs'" :icon="tabGroup.icon" :variant="'flat'" :label="''" /></div>
                                     </div>
 
                                     <div v-if="true">
@@ -572,10 +574,12 @@
                                         </div>
 
                                         <div><Button class="tw-w-full" :size="'xs'" :icon="tabGroup.icon" :label="'Button'" /></div>
-                                        <div><Button class="tw-w-full" :size="'xs'" :icon="tabGroup.icon" :variant="'outline'" :label="'Button'" /></div>
-                                        <div><Button class="tw-w-full" :size="'xs'" :icon="tabGroup.icon" :variant="'flat'" :label="'Button'" /></div>
-                                        <div><Button class="tw-w-full" :size="'xs'" :icon="tabGroup.icon" :variant="'flat'" disabled :label="'Button'" /></div>
+                                        <div><Button class="tw-w-3/4" :size="'xs'" :icon="tabGroup.icon" :variant="'outline'" :label="'Button'" /></div>
+                                        <div><Button class="tw-w-1/2" :size="'xs'" :icon="tabGroup.icon" :variant="'flat'" :label="'Button'" /></div>
+                                        <div><Button class="tw-w-1/3" :size="'xs'" :icon="tabGroup.icon" :variant="'flat'" disabled :label="'Button'" /></div>
+                                        <div><Button class="" :size="'xs'" :icon="tabGroup.icon" :variant="'flat'" :label="'Button'" /></div>
                                         <div><InputWithIcon ref="inputValue" :size="'xs'" :icon="tabGroup.icon" :placeholder="'Enter value'" :type="'text'" autocomplete="off" /></div>
+                                        <div><Button class="" :size="'xs'" :icon="tabGroup.icon" :variant="'flat'" :label="''" /></div>
                                     </div>
 
                                     <div v-if="true">
@@ -636,10 +640,12 @@
                                         </div>
 
                                         <div><Button class="tw-w-full" :size="'sm'" :icon="tabGroup.icon" :label="'Button'" /></div>
-                                        <div><Button class="tw-w-1/2" :size="'sm'" :icon="tabGroup.icon" :variant="'outline'" :label="'Button'" /></div>
+                                        <div><Button class="tw-w-3/4" :size="'sm'" :icon="tabGroup.icon" :variant="'outline'" :label="'Button'" /></div>
+                                        <div><Button class="tw-w-1/2" :size="'sm'" :icon="tabGroup.icon" :variant="'flat'" :label="'Button'" /></div>
+                                        <div><Button class="tw-w-1/3" :size="'sm'" :icon="tabGroup.icon" :variant="'flat'" disabled :label="'Button'" /></div>
                                         <div><Button class="" :size="'sm'" :icon="tabGroup.icon" :variant="'flat'" :label="'Button'" /></div>
-                                        <div><Button class="" :size="'sm'" :icon="tabGroup.icon" :variant="'flat'" disabled :label="'Button'" /></div>
                                         <div><InputWithIcon ref="inputValue" :size="'sm'" :icon="tabGroup.icon" :placeholder="'Enter value'" :type="'text'" autocomplete="off" /></div>
+                                        <div><Button class="" :size="'sm'" :icon="tabGroup.icon" :variant="'flat'" :label="''" /></div>
                                     </div>
 
                                     <div v-if="true">
@@ -700,10 +706,12 @@
                                         </div>
 
                                         <div><Button class="tw-w-full" :size="'md'" :icon="tabGroup.icon" :label="'Button'" /></div>
-                                        <div><Button class="tw-w-1/2" :size="'md'" :icon="tabGroup.icon" :variant="'outline'" :label="'Button'" /></div>
+                                        <div><Button class="tw-w-3/4" :size="'md'" :icon="tabGroup.icon" :variant="'outline'" :label="'Button'" /></div>
+                                        <div><Button class="tw-w-1/2" :size="'md'" :icon="tabGroup.icon" :variant="'flat'" :label="'Button'" /></div>
+                                        <div><Button class="tw-w-1/3" :size="'md'" :icon="tabGroup.icon" :variant="'flat'" disabled :label="'Button'" /></div>
                                         <div><Button class="" :size="'md'" :icon="tabGroup.icon" :variant="'flat'" :label="'Button'" /></div>
-                                        <div><Button class="" :size="'md'" :icon="tabGroup.icon" :variant="'flat'" disabled :label="'Button'" /></div>
                                         <div><InputWithIcon ref="inputValue" :size="'md'" :icon="tabGroup.icon" :placeholder="'Enter value'" :type="'text'" autocomplete="off" /></div>
+                                        <div><Button class="" :size="'md'" :icon="tabGroup.icon" :variant="'flat'" :label="''" /></div>
                                     </div>
 
                                     <div v-if="true">
@@ -764,19 +772,31 @@
                                         </div>
 
                                         <div><Button class="tw-w-full" :size="'lg'" :icon="tabGroup.icon" :label="'Button'" /></div>
-                                        <div><Button class="tw-w-1/2" :size="'lg'" :icon="tabGroup.icon" :variant="'outline'" :label="'Button'" /></div>
+                                        <div><Button class="tw-w-3/4" :size="'lg'" :icon="tabGroup.icon" :variant="'outline'" :label="'Button'" /></div>
+                                        <div><Button class="tw-w-1/3" :size="'lg'" :icon="tabGroup.icon" :variant="'flat'" disabled :label="'Button'" /></div>
                                         <div><Button class="" :size="'lg'" :icon="tabGroup.icon" :variant="'flat'" :label="'Button'" /></div>
-                                        <div><Button class="" :size="'lg'" :icon="tabGroup.icon" :variant="'flat'" disabled :label="'Button'" /></div>
                                         <div><InputWithIcon ref="inputValue" :size="'lg'" :icon="tabGroup.icon" :placeholder="'Enter value'" :type="'text'" autocomplete="off" /></div>
+                                        <div><Button class="" :size="'lg'" :icon="tabGroup.icon" :variant="'flat'" :label="''" /></div>
                                     </div>
 
                                     <div v-if="true">
                                         <div><InputWithIcon :size="'xl'" :icon="tabGroup.icon" :placeholder="'Enter value'" type="text" autocomplete="off" /></div>
                                         <div><Button class="tw-w-full" :size="'xl'" :icon="tabGroup.icon" :label="'Button'" /></div>
-                                        <div><Button class="tw-w-1/2" :size="'xl'" :icon="tabGroup.icon" :variant="'outline'" :label="'Button'" /></div>
-                                        <div><Button class="" :size="'xl'" :icon="tabGroup.icon" :variant="'flat'" :label="'Button'" /></div>
-                                        <div><Button class="" :size="'xl'" :icon="tabGroup.icon" :variant="'flat'" disabled :label="'Button'" /></div>
+                                        <div><Button class="tw-w-3/4" :size="'xl'" :icon="tabGroup.icon" :variant="'outline'" :label="'Button'" /></div>
+                                        <div><Button class="tw-w-1/2" :size="'xl'" :icon="tabGroup.icon" :variant="'flat'" :label="'Button'" /></div>
+                                        <div><Button class="tw-w-1/3" :size="'xl'" :icon="tabGroup.icon" :variant="'flat'" disabled :label="'Button'" /></div>
                                         <div><InputWithIcon ref="inputValue" :size="'xl'" :icon="tabGroup.icon" :placeholder="'Enter value'" :type="'text'" autocomplete="off" /></div>
+                                        <div><Button class="" :size="'xl'" :icon="tabGroup.icon" :variant="'flat'" :label="''" /></div>
+                                    </div>
+
+                                    <div v-if="true">
+                                        <div><InputWithIcon :size="'2xl'" :icon="tabGroup.icon" :placeholder="'Enter value'" type="text" autocomplete="off" /></div>
+                                        <div><Button class="tw-w-full" :size="'2xl'" :icon="tabGroup.icon" :label="'Button'" /></div>
+                                        <div><Button class="tw-w-3/4" :size="'2xl'" :icon="tabGroup.icon" :variant="'outline'" :label="'Button'" /></div>
+                                        <div><Button class="tw-w-1/2" :size="'2xl'" :icon="tabGroup.icon" :variant="'flat'" :label="'Button'" /></div>
+                                        <div><Button class="tw-w-1/3" :size="'2xl'" :icon="tabGroup.icon" :variant="'flat'" disabled :label="'Button'" /></div>
+                                        <div><InputWithIcon ref="inputValue" :size="'2xl'" :icon="tabGroup.icon" :placeholder="'Enter value'" :type="'text'" autocomplete="off" /></div>
+                                        <div><Button class="" :size="'2xl'" :icon="tabGroup.icon" :variant="'flat'" :label="''" /></div>
                                     </div>
                                 </div>
                             </div>
@@ -864,7 +884,7 @@
                             </div>
                         </div>
 
-                        <div v-if="false" class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-8">
+                        <div v-if="true" class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-8">
                             <div class="neutral-border">
                                 <label>
                                     <Checkbox v-model="remember1" :label="' '" :size="'md'" name="remember" />

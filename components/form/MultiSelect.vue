@@ -9,7 +9,7 @@
             :style="{'border-radius': '2px'}"
             class="tw-w-full tw-flex tw-justify-start background"
             :class="[heightClass, borderClass]">
-            <div v-if="!active" :class="[iconHolderClass]" class="tw-flex tw-justify-end tw-items-center">
+            <div v-if="!active" :class="[iconHolderClass]" class="tw-flex-none tw-flex tw-justify-end tw-items-center">
                 <ClientOnly><Icon :class="[iconClass]" :name="icon"/></ClientOnly>
             </div>
             <div v-if="!active" class="tw-w-full tw-relative tw-cursor-pointer">
@@ -226,11 +226,11 @@ const checkBoxSize = computed(() => {
 
 const iconHolderClass = computed(() => {
     return {
-        '2xs': 'tw-w-5',
-        'xs': 'tw-w-6',
-        'sm': 'tw-w-8',
-        'md': 'tw-w-8',
-        'lg': 'tw-w-11'
+        '2xs': 'tw-w-[1.2rem]',
+        'xs': 'tw-w-[1.45rem]',
+        'sm': 'tw-w-[1.7rem]',
+        'md': 'tw-w-[1.7rem]',
+        'lg': 'tw-w-[2.75rem]'
     }[props.size];
 });
 

@@ -22,8 +22,8 @@
             <div class="tw-w-full tw-h-full tw-flex" :class="[fontClass]">
                 <div
                     v-if="icon?.trim()"
-                    :class="[iconHolderClass, label?.trim() ? 'tw-justify-end' : 'tw-justify-center']"
-                    class="tw-flex tw-items-center">
+                    :class="[iconHolderClass, iconSpacingClass, label?.trim() ? 'tw-justify-end' : 'tw-justify-center']"
+                    class="tw-flex-none tw-flex tw-items-center">
                     <ClientOnly><Icon v-if="icon?.trim()" :class="[iconClass]" :name="icon"></Icon></ClientOnly>
                 </div>
 
@@ -108,24 +108,36 @@ const heightClass = computed(() => {
 
 const labelSpacingClass = computed(() => {
     return {
-        '2xs': props.icon?.trim() ? 'tw-px-[0.2rem]' : 'tw-px-1',
-        'xs': props.icon?.trim() ? 'tw-px-[0.2rem]' : 'tw-px-1',
-        'sm': props.icon?.trim() ? 'tw-px-[0.2rem]' : 'tw-px-2',
-        'md': props.icon?.trim() ? 'tw-px-1' : 'tw-px-2',
-        'lg': props.icon?.trim() ? 'tw-px-1' : 'tw-px-2',
-        'xl': props.icon?.trim() ? 'tw-px-1' : 'tw-px-4',
-        '2xl': props.icon?.trim() ? 'tw-px-1' : 'tw-px-4'
+        '2xs': props.icon?.trim() ? 'tw-pl-[0.2rem] tw-pr-[0.5rem]' : 'tw-px-1',
+        'xs': props.icon?.trim() ? 'tw-pl-[0.2rem] tw-pr-[0.5rem]' : 'tw-px-1',
+        'sm': props.icon?.trim() ? 'tw-pl-[0.2rem] tw-pr-[0.5rem]' : 'tw-px-2',
+        'md': props.icon?.trim() ? 'tw-pl-1 tw-pr-[0.5rem]' : 'tw-px-2',
+        'lg': props.icon?.trim() ? 'tw-pl-1 tw-pr-[0.5rem]' : 'tw-px-2',
+        'xl': props.icon?.trim() ? 'tw-pl-1 tw-pr-[0.5rem]' : 'tw-px-4',
+        '2xl': props.icon?.trim() ? 'tw-pl-1 tw-pr-[0.5rem]' : 'tw-px-4'
+    }[props.size]
+});
+
+const iconSpacingClass = computed(() => {
+    return {
+        '2xs': props.label?.trim() ? '' : 'tw-pl-[0.01rem]',
+        'xs': props.label?.trim() ? '' : 'tw-pl-[0.1rem]',
+        'sm': props.label?.trim() ? '' : 'tw-pl-[0.3rem] tw-mr-[0.2rem]',
+        'md': props.label?.trim() ? '' : 'tw-pl-[0.3rem] tw-mr-[0.2rem]',
+        'lg': props.label?.trim() ? '' : 'tw-pl-[0.575rem] tw-mr-[0.3rem]',
+        'xl': props.label?.trim() ? '' : 'tw-pl-[0.675rem] tw-mr-[0.5rem]',
+        '2xl': props.label?.trim() ? '' : 'tw-pl-[0.8rem] tw-mr-[0.7rem]'
     }[props.size]
 });
 
 const iconHolderClass = computed(() => {
     return {
-        '2xs': props.variant == 'default' ? 'tw-w-[1.3rem]': 'tw-w-[1.25rem]',
-        'xs': props.variant == 'default' ? 'tw-w-[1.575rem]': 'tw-w-[1.475rem]',
-        'sm': props.variant == 'default' ? 'tw-w-[2.05rem]': 'tw-w-[1.95rem]',
-        'md': props.variant == 'default' ? 'tw-w-[2.05rem]': 'tw-w-[1.95rem]',
+        '2xs': props.variant == 'default' ? 'tw-w-[1.25rem]': 'tw-w-[1.2rem]',
+        'xs': props.variant == 'default' ? 'tw-w-[1.5rem]': 'tw-w-[1.4rem]',
+        'sm': props.variant == 'default' ? 'tw-w-[1.75rem]': 'tw-w-[1.7rem]',
+        'md': props.variant == 'default' ? 'tw-w-[1.75rem]': 'tw-w-[1.7rem]',
         'lg': props.variant == 'default' ? 'tw-w-[2.85rem]' : 'tw-w-[2.75rem]',
-        'xl': props.variant == 'default' ? 'tw-w-[3.55rem]' : 'tw-w-[3.5rem]',
+        'xl': props.variant == 'default' ? 'tw-w-[3rem]' : 'tw-w-[2.9rem]',
         '2xl': props.variant == 'default' ? 'tw-w-[4rem]' : 'tw-w-[3.95rem]',
     }[props.size];
 });

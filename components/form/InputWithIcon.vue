@@ -1,7 +1,7 @@
 <template>
     <div class="tw-relative tw-box-border" :class="[heightClass]">
         <div v-if="icon?.trim()" class="tw-absolute tw-w-full tw-h-full tw-z-20 tw-flex tw-pointer-events-none">
-            <div :class="[iconHolderClass]" class="tw-h-full tw-flex tw-justify-end tw-items-center">
+            <div :class="[iconHolderClass]" class="tw-flex-none tw-h-full tw-flex tw-justify-end tw-items-center">
                 <ClientOnly><Icon :class="[iconClass]" :name="icon" /></ClientOnly>
             </div>
             <div class="tw-w-full tw-relative"></div>
@@ -101,12 +101,12 @@ defineEmits(['update:modelValue']);
 
 const iconHolderClass = computed(() => {
     return {
-        '2xs': 'tw-w-[1.35rem]',
-        'xs': 'tw-w-[1.575rem]',
-        'sm': 'tw-w-[2.05rem]',
-        'md': 'tw-w-[2.05rem]',
+        '2xs': 'tw-w-5',
+        'xs': 'tw-w-[1.485rem]',
+        'sm': 'tw-w-[1.77rem]',
+        'md': 'tw-w-[1.75rem]',
         'lg': 'tw-w-[2.85rem]',
-        'xl': 'tw-w-[3.5rem]',
+        'xl': 'tw-w-[3rem]',
         '2xl': 'tw-w-[4rem]',
     }[props.size];
 });
@@ -137,13 +137,13 @@ const absoluteTopAllocation = computed(() => {
 
 const spacingClass = computed(() => {
     return {
-        '2xs': props.icon?.trim() ? 'tw-pl-[1.3rem]' : '',
+        '2xs': props.icon?.trim() ? 'tw-pl-[1.4rem]' : '',
         'xs': props.icon?.trim() ? 'tw-pl-[1.55rem]' : '',
         'sm': props.icon?.trim() ? 'tw-pl-[1.875rem]' : '',
-        'md': props.icon?.trim() ? 'tw-pl-[2rem]' : '',
-        'lg': props.icon?.trim() ? 'tw-pl-[2.5rem]' : '',
+        'md': props.icon?.trim() ? 'tw-pl-[1.875rem]' : '',
+        'lg': props.icon?.trim() ? 'tw-pl-[3rem]' : '',
         'xl': props.icon?.trim() ? 'tw-pl-[3.2rem]' : '',
-        '2xl': props.icon?.trim() ? 'tw-pl-[3.75rem]' : ''
+        '2xl': props.icon?.trim() ? 'tw-pl-[4.3rem]' : ''
     }[props.size]
 });
 
