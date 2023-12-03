@@ -70,7 +70,7 @@ const fontClass = computed(() => {
     return {
         'sm': 'tw-text-sm',
         'md': 'tw-text-base tw-leading-6',
-        'lg': 'tw-text-xl tw-font-semibold'
+        'lg': 'tw-text-lg'
     }[props.size]
 });
 

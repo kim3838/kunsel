@@ -83,7 +83,7 @@ const fontClass = computed(() => {
     return {
         'sm': 'tw-text-sm',
         'md': 'tw-text-base',
-        'lg': 'tw-text-xl tw-font-semibold'
+        'lg': 'tw-text-lg'
     }[props.size];
 });
 
