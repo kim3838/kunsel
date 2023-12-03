@@ -66,7 +66,7 @@
             <div class="tw-absolute tw-border-solid options-arrow-lining-color" :style="[optionsArrowSlotClass]"></div>
             <div class="tw-absolute tw-border-solid options-arrow-color" :style="[optionsArrowClass]"></div>
 
-            <div v-show="selectedComputed.length" class="tw-px-2 tw-py-2 tw-gap-1 tw-flex" :class="[optionsFontClass]">
+            <div v-show="selectedComputed.length" class="tw-px-2 tw-py-2 tw-gap-1 tw-flex tw-overflow-x-scroll" :class="[optionsFontClass]">
                 <Button
                     ref="toggleSelectedButtonVisibility"
                     @click="toggleSelectedVisibility"
