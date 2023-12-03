@@ -91,7 +91,7 @@ const fontClass = computed(() => {
         'xs': 'tw-text-xs',
         'sm': 'tw-text-sm',
         'md': 'tw-text-sm',
-        'lg': 'tw-text-lg tw-font-semibold',
+        'lg': 'tw-text-lg',
         'xl': 'tw-text-2xl tw-font-semibold',
         '2xl': 'tw-text-3xl tw-font-bold',
         '3xl': 'tw-text-5xl tw-font-bold',

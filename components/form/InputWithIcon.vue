@@ -37,10 +37,20 @@ import {storeToRefs} from 'pinia';
 const {$themeStore} = useNuxtApp();
 
 const {
+    hexAlpha,
+    type: themeType,
+    primary: primaryColor,
     lining: liningColor,
     thread: threadColor,
     tint: tintColor,
+    textInvert: textInvertColor,
 } = storeToRefs($themeStore);
+
+const disabledBackgroundColor = computed(() => {
+    return themeType.value == 'light'
+        ? (primaryColor.value + hexAlpha.value['10'])
+        : (textInvertColor.value + hexAlpha.value['40']);
+});
 
 const props = defineProps({
     modelValue: [String, Number],
@@ -166,7 +176,7 @@ const fontClass = computed(() => {
         'xs': 'tw-text-xs',
         'sm': 'tw-text-sm',
         'md': 'tw-text-sm',
-        'lg': 'tw-text-lg tw-font-semibold',
+        'lg': 'tw-text-lg',
         'xl': 'tw-text-2xl tw-font-semibold',
         '2xl': 'tw-text-4xl tw-font-semibold',
         '3xl': 'tw-text-5xl tw-font-bold',
@@ -174,11 +184,15 @@ const fontClass = computed(() => {
 });
 
 const backgroundClass = computed(() => {
-    return props.disabled ? '' : 'input-background';
+    return props.disabled ? 'input-disabled' : 'input-background';
 });
 
 </script>
 <style scoped>
+.input-disabled{
+    background-color: v-bind(disabledBackgroundColor) !important;
+}
+
 .input-background{
     background-color: v-bind(tintColor) !important;
 }
