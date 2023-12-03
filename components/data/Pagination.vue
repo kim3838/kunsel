@@ -1,6 +1,7 @@
 <template>
     <span class="tw-space-x-0.5 tw-flex tw-w-max">
         <Button
+            type="button"
             :disabled="pagination.current_page === 1 || pending || pagination.total === 0"
             @click="firstPageHandler()"
             :variant="'flat'"
@@ -8,6 +9,7 @@
             :icon="'ic:sharp-first-page'"
             :label="firstPage.label" />
         <Button
+            type="button"
             :disabled="pagination.current_page === 1 || pending || pagination.total === 0"
             @click="previousPageHandler()"
             :variant="'flat'"
@@ -15,6 +17,7 @@
             :icon="'ic:sharp-keyboard-double-arrow-left'"
             :label="previousPage.label" />
         <Button
+            type="button"
             :disabled="pagination.current_page === pagination.total_pages || pending || pagination.total === 0"
             @click="nextPageHandler()"
             :variant="'flat'"
@@ -22,6 +25,7 @@
             :icon="'ic:sharp-keyboard-double-arrow-right'"
             :label="nextPage.label" />
         <Button
+            type="button"
             :disabled="pagination.current_page === pagination.total_pages || pending || pagination.total === 0"
             @click="lastPageHandler()"
             :variant="'flat'"
