@@ -40,7 +40,7 @@ const disabledBackgroundColor = computed(() => {
 const props = defineProps({
     modelValue: [String, Number],
     size: {
-        default: null
+        default: 'md'
     },
     tabindex: {
         type: Number,
@@ -72,7 +72,6 @@ defineEmits(['update:modelValue']);
 
 const heightClass = computed(() => {
     return {
-        [null]: 'tw-h-9',
         '2xs': 'tw-h-5',
         'xs': 'tw-h-6',
         'sm': 'tw-h-7',
@@ -86,7 +85,6 @@ const heightClass = computed(() => {
 
 const fontClass = computed(() => {
     return {
-        [null]: 'tw-text-base',
         '2xs': 'tw-text-xs',
         'xs': 'tw-text-xs',
         'sm': 'tw-text-sm',
