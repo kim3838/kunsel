@@ -72,6 +72,7 @@ export default defineNuxtConfig({
         {path: '~/components/form'},
         {path: '~/components/modal'},
         {path: '~/components/data'},
+        {path: '~/components/accordion'},
         {path: '~/components/logo'},
         {path: '~/components/frame'},
         {path: '~/components/list'},
