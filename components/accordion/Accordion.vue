@@ -9,17 +9,17 @@
             @toggle="toggleDetail"
         >
             <template v-slot:title>
-                <div class="tw-text-lg">
+                <div :class="[titleFontClass]">
                     {{detail.title}}
                 </div>
             </template>
             <template v-slot:body="{active}">
-                <div v-if="detail.body.type === 'text'">
+                <div v-if="detail.body.type === 'text'" :class="[bodyFontClass]">
                     {{detail.body.value}}
                 </div>
                 <div v-else-if="detail.body.type === 'checkbox'">
                     <label v-for="detailsCheckbox in detail.body.value" :key="detailsCheckbox">
-                        <Checkbox v-model="detailsCheckbox.value" :label="detailsCheckbox.text" :size="'md'" />
+                        <Checkbox v-model="detailsCheckbox.value" :label="detailsCheckbox.text" :size="checkBoxSize" />
                     </label>
                 </div>
             </template>
@@ -27,6 +27,8 @@
     </div>
 </template>
 <script setup>
+import {computed} from "vue";
+
 const props = defineProps({
     size: {
         default: 'md'
@@ -41,6 +43,27 @@ const props = defineProps({
         type: Boolean,
         default: false
     },
+});
+
+const titleFontClass = computed(() => {
+    return {
+        'md': 'tw-text-lg',
+        'lg': 'tw-text-xl',
+    }[props.size];
+});
+
+const bodyFontClass = computed(() => {
+    return {
+        'md': 'tw-text-base',
+        'lg': 'tw-text-lg',
+    }[props.size];
+});
+
+const checkBoxSize = computed(() => {
+    return {
+        'md': 'md',
+        'lg': 'lg',
+    }[props.size];
 });
 
 function toggleDetail(payload){
