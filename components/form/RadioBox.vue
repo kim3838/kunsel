@@ -1,17 +1,22 @@
 <template>
     <label :for="labelId">
-        <ClientOnly>
-            <Icon v-if="selected == value" :class="[heightClass, 'radio']" name="ic:sharp-radio-button-checked"></Icon>
-            <Icon v-else :class="[heightClass]" class='radio' name="ic:sharp-radio-button-unchecked"></Icon>
-        </ClientOnly>
-        <input
-            type="radio"
-            :value="value"
-            :checked="isChecked"
-            :id="labelId"
-            @change="$emit('update:modelValue', $event.target.value)"
-            name="radio-input"/>
-        <span :class="[fontClass]" class="tw-ml-[0.2rem]">{{label}}</span>
+        <div class="tw-flex tw-items-start tw-justify-start">
+            <ClientOnly>
+                <div :style="{'height': radioBoxSlotHeight}" class="tw-flex tw-items-center">
+                    <Icon v-if="selected == value" :class="[radioSize, 'radio']" name="ic:sharp-radio-button-checked"></Icon>
+                    <Icon v-else :class="[radioSize]" class='radio' name="ic:sharp-radio-button-unchecked"></Icon>
+                </div>
+            </ClientOnly>
+
+            <div v-if="label?.trim()" :class="[fontClass]" class="tw-ml-1 tw-whitespace-pre-line">{{label}}</div>
+            <input
+                type="radio"
+                :value="value"
+                :checked="isChecked"
+                :id="labelId"
+                @change="$emit('update:modelValue', $event.target.value)"
+                name="radio-input"/>
+        </div>
     </label>
 </template>
 
@@ -58,7 +63,15 @@ const isChecked = computed(() => {
     return props.selected === props.value;
 });
 
-const heightClass = computed(() => {
+const radioBoxSlotHeight = computed(()=>{
+    return {
+        'sm': '20px',
+        'md': '24px',
+        'lg': '28px',
+    }[props.size];
+});
+
+const radioSize = computed(() => {
     return {
         'sm': 'tw-h-3.5 tw-w-3.5',
         'md': 'tw-h-5 tw-w-5',
@@ -69,7 +82,7 @@ const heightClass = computed(() => {
 const fontClass = computed(() => {
     return {
         'sm': 'tw-text-sm',
-        'md': 'tw-text-base tw-leading-6',
+        'md': 'tw-text-base',
         'lg': 'tw-text-lg'
     }[props.size]
 });
