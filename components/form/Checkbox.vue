@@ -9,7 +9,7 @@
                 :class="[heightClass, inputClass]"
                 class="tw-form-checkbox checkbox tw-outline-none focus:tw-ring-transparent focus:tw-ring">
         </div>
-        <div v-if="label?.trim()" :class="[fontClass]" class="tw-ml-1 tw-whitespace-pre-wrap">{{label}}</div>
+        <div v-if="label?.trim()" :class="[fontClass]" class="tw-ml-1 tw-whitespace-pre-line">{{label}}</div>
     </span>
 </template>
 
