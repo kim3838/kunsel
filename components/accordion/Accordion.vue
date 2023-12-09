@@ -1,11 +1,12 @@
 <template>
-    <div class="tw-space-y-4">
+    <div>
         <Details
-            v-for="(detail, index) in modelValue"
+            v-for="(detail, index) in modelValue.options"
             :key="detail.title"
             :size="size"
             :active="detail.active"
             :index="index"
+            :single-expand="singleExpand"
             @toggle="toggleDetail"
         >
             <template v-slot:title>
@@ -22,6 +23,12 @@
                         <Checkbox v-model="detailsCheckbox.value" :label="detailsCheckbox.text" :size="checkBoxSize" />
                     </label>
                 </div>
+                <div v-else-if="detail.body.type === 'radio'">
+                    <RadioGroup
+                        :selections="detail.body.value.selection"
+                        :size="radioBoxSize"
+                        v-model="detail.body.value.selected" />
+                </div>
             </template>
         </Details>
     </div>
@@ -34,9 +41,9 @@ const props = defineProps({
         default: 'md'
     },
     modelValue: {
-        type: Array,
+        type: Object,
         default: function(){
-            return [];
+            return {};
         }
     },
     singleExpand: {
@@ -66,13 +73,22 @@ const checkBoxSize = computed(() => {
     }[props.size];
 });
 
+const radioBoxSize = computed(() => {
+    return {
+        'md': 'md',
+        'lg': 'lg',
+    }[props.size];
+});
+
 function toggleDetail(payload){
     if(props.singleExpand){
-        props.modelValue.forEach(item => {
+        props.modelValue.options.forEach(item => {
             item.active = false;
         });
     }
 
-    props.modelValue[payload.index].active = payload.active;
+    props.modelValue.recentActive = payload.index;
+
+    props.modelValue.options[payload.index].active = payload.active;
 }
 </script>
