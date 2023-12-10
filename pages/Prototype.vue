@@ -6,6 +6,7 @@
                     <div>Tailwind Url: <NuxtLink class="tw-text-sky-600" :to="'_tailwind'" target="_blank">{{('http://localhost:3000' + '/_tailwind/')}}</NuxtLink></div>
 
                     <div class="tw-space-y-2">
+                        <!-- Static Single, MultiSelect and DateTime, Date, and Month Picker -->
                         <div v-if="true" class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-8">
                             <div class="tw-block neutral-border">
                                 <InputLabel :size="'sm'" value="Static Multi Select" />
@@ -77,6 +78,7 @@
                             </div>
                         </div>
 
+                        <!-- Paginated Single and MultiSelect -->
                         <div v-if="true" class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-8">
                             <div class="tw-block neutral-border">
                                 <InputLabel :size="'sm'" value="Paginated Multi Select" />
@@ -110,7 +112,8 @@
                             </div>
                         </div>
 
-                        <div v-if="false" class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-8">
+                        <!-- Static Single and MultiSelect with more Custom Configurations -->
+                        <div v-if="true" class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-8">
                             <div class="tw-flex tw-block">
                                 <MultiSelect
                                     :selection-max-content="false"
@@ -199,6 +202,7 @@
                             </div>
                         </div>
 
+                        <!-- Datatables -->
                         <div v-if="true" class="tw-grid tw-gap-2 sm:tw-grid-cols-1 md:tw-grid-cols-2 lg:tw-grid-cols-4">
                             <div class="tw-block tw-col-span-1 sm:tw-col-span-3 md:tw-col-span-2 lg:tw-col-span-2 tw-p-2 neutral-border">
                                 <InputLabel class="tw-mb-2" :size="'md'" value="MD Datatable" />
@@ -364,6 +368,7 @@
                             </div>
                         </div>
 
+                        <!-- Tab Indexed Group -->
                         <div v-if="true">
                             <div class="tw-block tw-p-2 neutral-border">
                                 <InputLabel class="tw-mb-2" :size="'md'" value="Tab Group" />
@@ -446,6 +451,7 @@
                             </div>
                         </div>
 
+                        <!-- Button and Input Grid Spacing Alignments -->
                         <div v-if="true">
                             <div class="tw-block tw-p-2 neutral-border">
                                 <InputLabel class="tw-mb-2" :size="'md'" value="Spacing Aligment Grid" />
@@ -802,6 +808,7 @@
                             </div>
                         </div>
 
+                        <!-- Button and Input Horizontal Alignment -->
                         <div v-if="true">
                             <div class="tw-my-4 tw-flex tw-justify-center tw-space-x-1.5">
                                 <Button :size="tabGroup.size" :icon="tabGroup.icon" :label="'Default'" />
@@ -812,6 +819,7 @@
                             </div>
                         </div>
 
+                        <!-- Default Button -->
                         <div v-if="true" class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-9">
                             <div class="tw-flex tw-items-start tw-justify-start tw-block neutral-border">
                                 <Button :size="'2xs'" :icon="'ic:sharp-send-to-mobile'" :label="'XXS Button'"></Button>
@@ -836,6 +844,7 @@
                             </div>
                         </div>
 
+                        <!-- Outline Button -->
                         <div v-if="true" class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-9">
                             <div class="tw-flex tw-items-start tw-justify-start tw-block neutral-border">
                                 <Button :variant="'outline'" :size="'2xs'" :icon="'ic:sharp-dashboard'" :label="'XXS Button'"></Button>
@@ -860,6 +869,7 @@
                             </div>
                         </div>
 
+                        <!-- Flat Button -->
                         <div v-if="true" class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-9">
                             <div class="tw-flex tw-items-start tw-justify-start tw-block neutral-border">
                                 <Button :variant="'flat'" :size="'2xs'" :icon="'ic:sharp-dashboard'" :label="'XXS Button'"></Button>
@@ -884,6 +894,23 @@
                             </div>
                         </div>
 
+                        <!-- Accordion -->
+                        <div v-if="true" class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-1 lg:tw-grid-cols-3 xl:tw-grid-cols-3 2xl:tw-grid-cols-3">
+                            <div>
+                                <InputLabel :size="'md'" value="MD : Accordion Single Expand" />
+                                <Accordion :size="'md'" :single-expand="true" v-model="accordionSingleExpand" />
+                            </div>
+                            <div>
+                                <InputLabel :size="'md'" value="MD : Accordion Multi Expand" />
+                                <Accordion :size="'md'" class="tw-space-y-4" v-model="accordionMultiExpand" />
+                            </div>
+                            <div>
+                                <InputLabel :size="'md'" value="LG : Accordion Multi Expand" />
+                                <Accordion :size="'lg'" class="tw-space-y-4" v-model="accordionMultiExpand" />
+                            </div>
+                        </div>
+
+                        <!-- Checkbox -->
                         <div v-if="true" class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-8">
                             <div class="neutral-border">
                                 <label>
@@ -907,7 +934,8 @@
                             </div>
                         </div>
 
-                        <div v-if="false" class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-8">
+                        <!-- Checkbox Group -->
+                        <div v-if="true" class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-8">
                             <div class="neutral-border">
                             </div>
                             <div class="neutral-border">
@@ -927,7 +955,8 @@
                             </div>
                         </div>
 
-                        <div v-if="false" class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-8">
+                        <!-- Radio Group -->
+                        <div v-if="true" class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-8">
                             <div class="tw-flex tw-items-start tw-justify-start tw-block neutral-border">
                                 <div>
                                     <InputLabel :size="'md'" value="SM : Gender Group" />
@@ -974,7 +1003,8 @@
                             </div>
                         </div>
 
-                        <div v-if="false" class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-8">
+                        <!-- Default Input -->
+                        <div v-if="true" class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-8">
                             <div class="tw-block neutral-border">
                                 <InputLabel :size="'2xs'" for="form_input_1" value="XXS Label" />
                                 <Input :size="'2xs'" placeholder="Enter username" id="form_input_1" type="text" autocomplete="off" />
@@ -1005,7 +1035,8 @@
                             </div>
                         </div>
 
-                        <div v-if="false" class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-8">
+                        <!-- Input with Icon -->
+                        <div v-if="true" class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-8">
                             <div class="tw-block neutral-border">
                                 <InputLabel :size="'2xs'" for="form_input_1" value="XXS Label" />
                                 <InputWithIcon :size="'2xs'" :icon="'ic:sharp-qr-code'" placeholder="Enter username" id="form_input_1" type="text" autocomplete="off" />
@@ -1036,7 +1067,8 @@
                             </div>
                         </div>
 
-                        <div v-if="false" class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-8">
+                        <!-- Typography -->
+                        <div v-if="true" class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-8">
                             <div class="tw-block neutral-border tw-col-span-2">
                                 <p class="tw-text-sm tw-leading-4">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
                             </div>
@@ -1051,6 +1083,7 @@
                             </div>
                         </div>
 
+                        <!-- Font Weights -->
                         <div v-if="true" class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-8">
                             <div class="tw-block neutral-border tw-col-span-2">
                                 <p class="tw-text-sm tw-font-thin tw-leading-4">Thin: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
@@ -1129,44 +1162,44 @@ let remember4 = ref('1');
 let categorySelection = reactive([
     {text : 'Charms', value: true},
     {text : 'Bracelets', value: true},
-    {text : 'Brooches and Pins', value: false},
+    {text : 'Tab\t\tBrooches\nand\nPins', value: false},
     {text : 'Necklaces', value: true},
     {text : 'Earrings', value: false},
     {text : 'Rings', value: true},
     {text : 'Polyester', value: true},
 ]);
-let statusGroup = ref({
+let statusGroup = reactive({
     selection: [
         {text : 'For Approval', value: 0},
         {text : 'Approved', value: 1},
-        {text : 'Processing', value: 2},
+        {text : 'Tab\t\tProcessing\nNew Line\nNew Line', value: 2},
         {text : 'Rejected', value: 3},
         {text : 'Complete', value: 4},
     ],
     selected: 3
 });
-let transactionGroup = ref({
+let transactionGroup = reactive({
     selection: [
         {text : 'Cash', value: 0},
         {text : 'Pre Paid', value: 1},
-        {text : 'Post Paid', value: 2},
+        {text : 'Tab\t\tPost\nPaid', value: 2},
         {text : 'Card', value: 3},
         {text : 'Debit', value: 4},
     ],
     selected: 3
 });
-let genderGroup = ref({
+let genderGroup = reactive({
     selection: [
         {text : 'Male', value: 0},
         {text : 'Female', value: 1},
     ],
     selected: 1
 });
-let categoryGroup = ref({
+let categoryGroup = reactive({
     selection: [
         {text : 'Charms', value: 0},
         {text : 'Bracelets', value: 1},
-        {text : 'Brooches and Pins', value: 2},
+        {text : 'Tab\t\tBrooches\nand\nPins', value: 2},
         {text : 'Necklaces', value: 3},
         {text : 'Earrings', value: 4},
         {text : 'Rings', value: 5},
@@ -1174,12 +1207,118 @@ let categoryGroup = ref({
     ],
     selected: 3
 });
+let accordionSingleExpand  = reactive({
+    recentActive: 2,
+    options: [
+        {
+            title: 'Check box',
+            body: {
+                type: 'checkbox',
+                value: categorySelection
+            },
+            active: false
+        },
+        {
+            title: 'Radio box',
+            body: {
+                type: 'radio',
+                value: transactionGroup
+            },
+            active: false
+        },
+        {
+            title: 'Coldiron Armor Set, Coldiron Armor Set, Coldiron Armor Set, Coldiron Armor Set',
+            body: {
+                type: 'text',
+                value: 'This armor was forged for the sole purpose of resisting the malignance spreading across the land.'
+            },
+            active: true
+        },
+        {
+            title: 'Coldiron Barding Mount Armor',
+            body: {
+                type: 'text',
+                value: 'Adorn your new steeds with mount armor inspired by the malignance taking over Sanctuary.'
+            },
+            active: false
+        },
+        {
+            title: 'Weapon skins, Mount Trophies, Emotes, Platinum, and more',
+            body: {
+                type: 'text',
+                value: 'Explore a range of cosmetics to earn along the Premium Battle Pass. Collect a weapon transmog for all 19 weapon types. 2 emotes for each class let you threaten your enemies or find a little time to play around with malignant heart cages. 2 headstones even let you die in style. Adorn your horse with 5 new mount trophies.'
+            },
+            active: false
+        },
+        {
+            title: '“On the Warpath” Emote – Accelerated Battle Pass',
+            body: {
+                type: 'text',
+                value: 'Show everyone you’re ready for battle when you slam your banner down, signaling to enemies that you’re ready for a fight. This emote is only included in the Accelerated Battle Pass.'
+            },
+            active: false
+        }
+    ]
+});
+let accordionMultiExpand  = reactive({
+    recentActive: 2,
+    options: [
+        {
+            title: 'Check box',
+            body: {
+                type: 'checkbox',
+                value: categorySelection
+            },
+            active: false
+        },
+        {
+            title: 'Radio box',
+            body: {
+                type: 'radio',
+                value: transactionGroup
+            },
+            active: false
+        },
+        {
+            title: 'Coldiron Armor Set, Coldiron Armor Set, Coldiron Armor Set, Coldiron Armor Set',
+            body: {
+                type: 'text',
+                value: 'This armor was forged for the sole purpose of resisting the malignance spreading across the land.'
+            },
+            active: true
+        },
+        {
+            title: 'Coldiron Barding Mount Armor',
+            body: {
+                type: 'text',
+                value: 'Adorn your new steeds with mount armor inspired by the malignance taking over Sanctuary.'
+            },
+            active: false
+        },
+        {
+            title: 'Weapon skins, Mount Trophies, Emotes, Platinum, and more',
+            body: {
+                type: 'text',
+                value: 'Explore a range of cosmetics to earn along the Premium Battle Pass. Collect a weapon transmog for all 19 weapon types. 2 emotes for each class let you threaten your enemies or find a little time to play around with malignant heart cages. 2 headstones even let you die in style. Adorn your horse with 5 new mount trophies.'
+            },
+            active: false
+        },
+        {
+            title: '“On the Warpath” Emote – Accelerated Battle Pass',
+            body: {
+                type: 'text',
+                value: 'Show everyone you’re ready for battle when you slam your banner down, signaling to enemies that you’re ready for a fight. This emote is only included in the Accelerated Battle Pass.'
+            },
+            active: false
+        }
+    ]
+});
 let category = reactive({
     search: '',
     data: [
         {text : 'Charms', value: 0},
         {text : 'Bracelets', value: 1},
-        {text : 'Brooches\nand\nPins', value: 2},
+        {text : 'Tab\t\tBrooches\nand\nPins', value: 2},
         {text : 'Necklaces', value: 3},
         {text : 'Earrings', value: 4},
         {text : 'Rings', value: 5},
@@ -1188,7 +1327,7 @@ let category = reactive({
     selection: [
         {text : 'Charms', value: 0},
         {text : 'Bracelets', value: 1},
-        {text : 'Brooches\nand\nPins', value: 2},
+        {text : 'Tab\t\tBrooches\nand\nPins', value: 2},
         {text : 'Necklaces', value: 3},
         {text : 'Earrings', value: 4},
         {text : 'Rings', value: 5},
