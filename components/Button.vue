@@ -121,12 +121,12 @@ const labelSpacingClass = computed(() => {
 const iconSpacingClass = computed(() => {
     return {
         '2xs': props.label?.trim() ? '' : 'tw-pl-[0.15rem] tw-mr-[0.1rem]',
-        'xs': props.label?.trim() ? '' : 'tw-pl-[0.15rem] tw-mr-[0.1rem]',
-        'sm': props.label?.trim() ? '' : 'tw-pl-[0.45rem] tw-mr-[0.35rem]',
-        'md': props.label?.trim() ? '' : 'tw-pl-[0.45rem] tw-mr-[0.35rem]',
-        'lg': props.label?.trim() ? '' : 'tw-pl-[0.575rem] tw-mr-[0.3rem]',
-        'xl': props.label?.trim() ? '' : 'tw-pl-[0.675rem] tw-mr-[0.5rem]',
-        '2xl': props.label?.trim() ? '' : 'tw-pl-[0.8rem] tw-mr-[0.7rem]'
+        'xs': props.label?.trim() ? '' : 'tw-pl-[0.15rem] tw-mr-[0.2rem]',
+        'sm': props.label?.trim() ? '' : (props.variant == 'default' ? 'tw-pl-[0.5rem] tw-mr-[0.45rem]' : 'tw-pl-[0.45rem] tw-mr-[0.35rem]'),
+        'md': props.label?.trim() ? '' : (props.variant == 'default' ? 'tw-pl-[0.45rem] tw-mr-[0.4rem]' : 'tw-pl-[0.45rem] tw-mr-[0.35rem]'),
+        'lg': props.label?.trim() ? '' : (props.variant == 'default' ? 'tw-pl-[0.575rem] tw-mr-[0.35rem]' : 'tw-pl-[0.575rem] tw-mr-[0.3rem]'),
+        'xl': props.label?.trim() ? '' : (props.variant == 'default' ? 'tw-pl-[0.675rem] tw-mr-[0.55rem]' : 'tw-pl-[0.675rem] tw-mr-[0.5rem]'),
+        '2xl': props.label?.trim() ? '' : (props.variant == 'default' ? 'tw-pl-[0.8rem] tw-mr-[0.75rem]' : 'tw-pl-[0.8rem] tw-mr-[0.7rem]')
     }[props.size]
 });
 

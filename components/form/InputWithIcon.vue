@@ -112,7 +112,7 @@ defineEmits(['update:modelValue']);
 const iconHolderClass = computed(() => {
     return {
         '2xs': 'tw-w-5',
-        'xs': 'tw-w-[1.485rem]',
+        'xs': 'tw-w-[1.5rem]',
         'sm': 'tw-w-[1.77rem]',
         'md': 'tw-w-[1.75rem]',
         'lg': 'tw-w-[2.85rem]',
@@ -148,7 +148,7 @@ const absoluteTopAllocation = computed(() => {
 const spacingClass = computed(() => {
     return {
         '2xs': props.icon?.trim() ? 'tw-pl-[1.4rem]' : '',
-        'xs': props.icon?.trim() ? 'tw-pl-[1.55rem]' : '',
+        'xs': props.icon?.trim() ? 'tw-pl-[1.65rem]' : '',
         'sm': props.icon?.trim() ? 'tw-pl-[1.875rem]' : '',
         'md': props.icon?.trim() ? 'tw-pl-[1.875rem]' : '',
         'lg': props.icon?.trim() ? 'tw-pl-[3rem]' : '',
