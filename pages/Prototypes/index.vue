@@ -228,13 +228,15 @@ watch(() => {
 function paginate(page = 1, clearSelection = false){
     clearTimeout(filters.search.callback);
 
-    filters.page = page;
-
     if(clearSelection){
         selectedPrototypes.value = [];
     }
 
-    execute();
+    if(filters.page === page){
+        execute();
+    } else {
+        filters.page = page;
+    }
 }
 
 let filtersDateTimePickers = ref([
