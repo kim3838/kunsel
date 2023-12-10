@@ -113,7 +113,7 @@
                         </div>
 
                         <!-- Static Single and MultiSelect with more Custom Configurations -->
-                        <div v-if="true" class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-8">
+                        <div v-if="false" class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-8">
                             <div class="tw-flex tw-block">
                                 <MultiSelect
                                     :selection-max-content="false"
@@ -520,6 +520,7 @@
                                         <div><Button class="" :size="'2xs'" :icon="tabGroup.icon" :variant="'flat'" :label="'Button'" /></div>
                                         <div><InputWithIcon ref="inputValue" :size="'2xs'" :icon="tabGroup.icon" :placeholder="'Enter value'" :type="'text'" autocomplete="off" /></div>
                                         <div><Button class="" :size="'2xs'" :icon="tabGroup.icon" :variant="'flat'" :label="''" /></div>
+                                        <div><Button class="" :size="'2xs'" :icon="tabGroup.icon" :label="''" /></div>
                                     </div>
 
                                     <div v-if="true">
@@ -586,6 +587,7 @@
                                         <div><Button class="" :size="'xs'" :icon="tabGroup.icon" :variant="'flat'" :label="'Button'" /></div>
                                         <div><InputWithIcon ref="inputValue" :size="'xs'" :icon="tabGroup.icon" :placeholder="'Enter value'" :type="'text'" autocomplete="off" /></div>
                                         <div><Button class="" :size="'xs'" :icon="tabGroup.icon" :variant="'flat'" :label="''" /></div>
+                                        <div><Button class="" :size="'xs'" :icon="tabGroup.icon" :label="''" /></div>
                                     </div>
 
                                     <div v-if="true">
@@ -652,6 +654,7 @@
                                         <div><Button class="" :size="'sm'" :icon="tabGroup.icon" :variant="'flat'" :label="'Button'" /></div>
                                         <div><InputWithIcon ref="inputValue" :size="'sm'" :icon="tabGroup.icon" :placeholder="'Enter value'" :type="'text'" autocomplete="off" /></div>
                                         <div><Button class="" :size="'sm'" :icon="tabGroup.icon" :variant="'flat'" :label="''" /></div>
+                                        <div><Button class="" :size="'sm'" :icon="tabGroup.icon" :label="''" /></div>
                                     </div>
 
                                     <div v-if="true">
@@ -718,6 +721,7 @@
                                         <div><Button class="" :size="'md'" :icon="tabGroup.icon" :variant="'flat'" :label="'Button'" /></div>
                                         <div><InputWithIcon ref="inputValue" :size="'md'" :icon="tabGroup.icon" :placeholder="'Enter value'" :type="'text'" autocomplete="off" /></div>
                                         <div><Button class="" :size="'md'" :icon="tabGroup.icon" :variant="'flat'" :label="''" /></div>
+                                        <div><Button class="" :size="'md'" :icon="tabGroup.icon" :label="''" /></div>
                                     </div>
 
                                     <div v-if="true">
@@ -783,6 +787,7 @@
                                         <div><Button class="" :size="'lg'" :icon="tabGroup.icon" :variant="'flat'" :label="'Button'" /></div>
                                         <div><InputWithIcon ref="inputValue" :size="'lg'" :icon="tabGroup.icon" :placeholder="'Enter value'" :type="'text'" autocomplete="off" /></div>
                                         <div><Button class="" :size="'lg'" :icon="tabGroup.icon" :variant="'flat'" :label="''" /></div>
+                                        <div><Button class="" :size="'lg'" :icon="tabGroup.icon" :label="''" /></div>
                                     </div>
 
                                     <div v-if="true">
@@ -793,6 +798,7 @@
                                         <div><Button class="tw-w-1/3" :size="'xl'" :icon="tabGroup.icon" :variant="'flat'" disabled :label="'Button'" /></div>
                                         <div><InputWithIcon ref="inputValue" :size="'xl'" :icon="tabGroup.icon" :placeholder="'Enter value'" :type="'text'" autocomplete="off" /></div>
                                         <div><Button class="" :size="'xl'" :icon="tabGroup.icon" :variant="'flat'" :label="''" /></div>
+                                        <div><Button class="" :size="'xl'" :icon="tabGroup.icon" :label="''" /></div>
                                     </div>
 
                                     <div v-if="true">
@@ -803,6 +809,7 @@
                                         <div><Button class="tw-w-1/3" :size="'2xl'" :icon="tabGroup.icon" :variant="'flat'" disabled :label="'Button'" /></div>
                                         <div><InputWithIcon ref="inputValue" :size="'2xl'" :icon="tabGroup.icon" :placeholder="'Enter value'" :type="'text'" autocomplete="off" /></div>
                                         <div><Button class="" :size="'2xl'" :icon="tabGroup.icon" :variant="'flat'" :label="''" /></div>
+                                        <div><Button class="" :size="'2xl'" :icon="tabGroup.icon" :label="''" /></div>
                                     </div>
                                 </div>
                             </div>
