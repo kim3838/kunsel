@@ -91,7 +91,12 @@ export default defineNuxtConfig({
         '@pinia/nuxt',
         'nuxt-lodash',
         'nuxt-icon',
+        'vue3-carousel-nuxt'
     ],
+
+    carousel: {
+        prefix: 'CarouselModule'
+    },
 
     postcss: {
         plugins: {
