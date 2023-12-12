@@ -1,29 +1,21 @@
 <template>
-    <div>
+    <div ref="scrollable">
         <NuxtLayout :name="$coreStore.layout">
             <template #content>
+                <CarouselModuleCarousel wrap-around>
+                    <CarouselModuleSlide v-for="slide in carouselPayload" :key="slide">
+                        <div class="tw-w-screen tw-h-screen carousel-image" :style="{'background-image': `url(${slide.image.path})`}"></div>
+                    </CarouselModuleSlide>
+
+                    <template #addons>
+                        <CarouselModuleNavigation />
+                        <CarouselModulePagination />
+                    </template>
+                </CarouselModuleCarousel>
                 <div class="tw-mx-auto tw-max-w-screen-2xl tw-space-y-8 tw-flex tw-flex-col">
-                    <article class="tw-mt-4">
-                        <AccentFrame>
-                            <template #content>
-                                <CarouselModuleCarousel class="tw-mt-4" wrap-around :autoplay="4000">
-                                    <CarouselModuleSlide v-for="slide in carouselPayload" :key="slide">
-                                        <div class="tw-w-screen tw-h-[720px] carousel-image" :style="{'background-image': `url(${slide.image.path})`}"></div>
-                                    </CarouselModuleSlide>
-
-                                    <template #addons>
-                                        <CarouselModuleNavigation />
-                                        <CarouselModulePagination />
-                                    </template>
-                                </CarouselModuleCarousel>
-                            </template>
-                        </AccentFrame>
-                    </article>
-
-
                     <article>
                         <div class="tw-text-center tw-text-xl">New Arrivals</div>
-                        <div class="tw-grid tw-grid-cols-1 sm:tw-grid-cols-2 md:tw-grid-cols-3 lg:tw-grid-cols-3 xl:tw-grid-cols-5 tw-gap-2">
+                        <div class="tw-grid tw-grid-cols-1 sm:tw-grid-cols-2 md:tw-grid-cols-3 lg:tw-grid-cols-3 xl:tw-grid-cols-4 2xl:tw-grid-cols-5 tw-gap-2">
                             <Card
                                 class="tw-inline-block tw-w-full"
                                 v-for="newArrival in newArrivals"
@@ -38,7 +30,7 @@
 
                     <article>
                         <div class="tw-text-center tw-text-xl">Latest News</div>
-                        <div class="tw-grid tw-grid-cols-1 sm:tw-grid-cols-2 md:tw-grid-cols-3 lg:tw-grid-cols-3 xl:tw-grid-cols-5 tw-gap-2">
+                        <div class="tw-grid tw-grid-cols-1 sm:tw-grid-cols-2 md:tw-grid-cols-3 lg:tw-grid-cols-3 xl:tw-grid-cols-4 2xl:tw-grid-cols-5 tw-gap-2">
                             <div v-for="blog in news" class="neutral-border">
                                 <figure class="figure">
                                     <img :src="blog.image.path" />
@@ -56,13 +48,12 @@
 
 <script setup lang="ts">
 import {ref,reactive} from "vue";
+const {$coreStore} = useNuxtApp();
+
+$coreStore.setNavigationMode('clear');
 
 definePageMeta({
-    layout: false,
-    middleware: [
-        'auth',
-        'verified'
-    ]
+    layout: false
 });
 
 let newArrivals = reactive([

@@ -3,6 +3,9 @@ import { defineStore } from 'pinia'
 export const useCoreStore = defineStore('core', {
     state: () => ({
         layout: 'landing',
+        navigation: {
+            mode: 'clear'
+        },
         service: {
             error: {
                 prompt: false,
@@ -27,10 +30,19 @@ export const useCoreStore = defineStore('core', {
     getters: {
         getServiceError() {
             return this.service.error;
-        }
+        },
+
+        navigationMode() {
+            return this.navigation.mode;
+        },
     },
 
     actions: {
+        setNavigationMode(mode){
+            if(mode != this.navigation.mode){
+                this.navigation.mode = mode;
+            }
+        },
         setLayout(layout){
             if(layout != this.layout){
                 this.layout = layout;

@@ -41,6 +41,8 @@
 import {ref, reactive, onMounted, nextTick} from 'vue';
 const {$coreStore} = useNuxtApp();
 
+$coreStore.setNavigationMode('solid');
+
 definePageMeta({
     layout: false,
     middleware: [

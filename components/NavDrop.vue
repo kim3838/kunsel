@@ -2,6 +2,7 @@
     <div
         ref="nav"
         tabindex="0"
+        :style="{'text-shadow': navigationTextShadow}"
         :class="[classes, headerFontClass]"
         class="nav tw-px-4 tw-cursor-pointer focus:tw-outline-none focus:tw-ring-transparent focus:tw-ring-1">
         {{title}}
@@ -10,7 +11,7 @@
             v-if="activeComputed"
             :style="navDropOptionsStyleComputed"
             class="nav-drop-options-parent tw-text-base tw-drop-shadow-2xl">
-            <div v-for="dropOption in dropOptions" :key="dropOption.title" class="nav-drop-link tw-cursor-pointer">
+            <div v-for="dropOption in dropOptions" :key="dropOption.title" :style="{'text-shadow': navigationTextShadow}" class="nav-drop-link tw-cursor-pointer">
 
                 <NuxtLink
                     v-if="dropOption.type === 'link'"
@@ -43,7 +44,7 @@ import {computed, ref} from "vue";
 import {useFocusWithin} from '@vueuse/core';
 import {storeToRefs} from 'pinia';
 
-const {$themeStore} = useNuxtApp();
+const {$coreStore, $themeStore} = useNuxtApp();
 const nav = ref();
 const {focused: navigationFocused} = useFocusWithin(nav);
 const {
@@ -54,6 +55,38 @@ const {
     tint: tintColor
 } = storeToRefs($themeStore);
 
+const {
+    navigationMode
+} = storeToRefs($coreStore);
+
+const navigationLinkColor = computed(()=>{
+    if(navigationMode.value === 'clear'){
+        return '#ffffff';
+    }
+
+    return 'auto';
+});
+const navigationTextShadow = computed(()=>{
+    if(navigationMode.value === 'clear'){
+        return '1px 1px #464646';
+    }
+
+    return 'none';
+});
+const dropOptionsParentBackgroundColor = computed(()=>{
+    if(navigationMode.value === 'clear'){
+        return accentColor20.value;
+    }
+
+    return tintColor.value;
+});
+const dropOptionsParentBorderColor = computed(()=>{
+    if(navigationMode.value === 'clear'){
+        return accentColor20.value;
+    }
+
+    return neutralColor.value;
+});
 const navDropIcon = computed(()=>{
    return props.parent ? 'ic:baseline-arrow-drop-down' : 'ic:baseline-arrow-right';
 });
@@ -95,7 +128,7 @@ const navDropOptionsStyleComputed = computed(() => {
 
     let dropDirection = {
         'bottom': {
-            'border-top-width': '0px',
+            'border-top-width': '1px',
             top: 'calc(100% + 1px)',
             [props.dropAlign]: 'calc(-1px)',
         },
@@ -136,6 +169,7 @@ const headerFontClass = computed(() => {
 }
 
 .nav{
+    color: v-bind(navigationLinkColor);
     position: relative;
     box-sizing: border-box;
     display: inline-flex;
@@ -148,10 +182,14 @@ const headerFontClass = computed(() => {
 
 .nav-drop-options-parent{
     position: absolute;
-    border: 1px solid v-bind(neutralColor);
+    border: 1px solid v-bind(dropOptionsParentBorderColor);
     min-width: calc(100% + 2px);
     width: max-content;
-    background-color: v-bind(tintColor);
+    background-color: v-bind(dropOptionsParentBackgroundColor);
+}
+
+.nav-drop-link{
+    color: v-bind(navigationLinkColor);
 }
 
 .nav-drop-link:hover{

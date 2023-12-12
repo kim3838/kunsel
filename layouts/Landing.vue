@@ -1,8 +1,8 @@
 <template>
     <div class="tw-relative">
         <!-- Primary Navigation Menu -->
-        <nav ref="navigation" class="primary-navigation-parent tw-z-40 tw-fixed" :class="{'lg:tw-ml-sidebar': false}">
-            <div class="tw-max-w-screen-2xl tw-mx-auto tw-flex tw-justify-between tw-h-8 lg:tw-h-14">
+        <nav ref="navigation" class="primary-navigation-parent tw-transition-all tw-duration-700 tw-z-40 tw-fixed" :class="{'lg:tw-ml-sidebar': false}">
+            <div class="tw-max-w-screen-2xl tw-mx-auto tw-flex tw-justify-between tw-h-8 lg:tw-h-16">
                 <div class="tw--my-px tw-flex tw-items-center">
                     <NavDrop
                         class="sm:tw-hidden tw-h-full"
@@ -15,7 +15,7 @@
                     <div class="tw--my-px tw-hidden sm:tw-flex">
                         <span class="tw-flex tw-items-center"  v-for="navigation in mainNavigation" :key="navigation.title">
                             <NavLink
-                                class="tw-h-full"
+                                class="tw-h-full "
                                 v-if="navigation.type == 'link'"
                                 :size="navigationHeaderSize"
                                 :to="navigation.to"
@@ -47,7 +47,7 @@
             </div>
         </nav>
         <!-- Main Content -->
-        <main class="tw-relative allocate-navigation">
+        <main class="tw-relative tw-transition-all tw-duration-300 allocate-navigation">
             <slot name="content"/>
         </main>
         <!-- Action Modal -->
@@ -192,10 +192,12 @@
 </template>
 
 <script setup lang="ts">
+import {useWindowScroll} from '@vueuse/core'
 import {storeToRefs} from 'pinia';
 import {computed, nextTick, onMounted, onUnmounted, ref} from "vue";
 
 const navDrop = resolveComponent('navDrop');
+const { y: windowYScroll } = useWindowScroll();
 
 const {$coreStore, $themeStore} = useNuxtApp();
 const {isAuthenticated, user, logout} = useAuth();
@@ -210,21 +212,43 @@ const {
     thread: threadColor
 } = storeToRefs($themeStore);
 
+const {
+    navigationMode
+} = storeToRefs($coreStore);
+
+let navigation = ref(null);
+let navigationHeight = ref(0);
+onMounted(async () => {
+    await nextTick(() => {
+        navigationHeight.value = navigation.value.offsetHeight;
+    });
+});
+
+watch(windowYScroll, value => {
+    if(['index'].indexOf(_toLower(route.name)) >= 0){
+        if(value > (screenHeight.value - navigationHeight.value)){
+            $coreStore.setNavigationMode('solid');
+        } else {
+            $coreStore.setNavigationMode('clear');
+        }
+    }
+});
+
 let navigationHeaderSize = computed(() => {
-    let size = 'md'
+    let size = 'lg'
 
     if (screenWidth.value >= screens['2xl']) {//3xl
-        size = 'md';
+        size = 'lg';
     } else if (screenWidth.value >= screens['xl'] && screenWidth.value < screens['2xl']) {//2xl
-        size = 'md';
+        size = 'lg';
     } else if (screenWidth.value >= screens['lg'] && screenWidth.value < screens['xl']) {//xl
-        size = 'md';
+        size = 'lg';
     } else if (screenWidth.value >= screens['md'] && screenWidth.value < screens['lg']) {//lg
-        size = 'sm';
+        size = 'md';
     } else if (screenWidth.value >= screens['sm'] && screenWidth.value < screens['md']) {//md
-        size = 'sm';
+        size = 'md';
     } else if (screenWidth.value < screens['sm']) {//sm
-        size = 'sm';
+        size = 'md';
     }
 
     return size;
@@ -362,6 +386,24 @@ let menuOptions = computed(() => {
 
     return options;
 });
+let navigationBackground = computed(()=>{
+    if(navigationMode.value === 'clear'){
+        return 'transparent';
+    }
+
+    return bodyColor.value;
+});
+let topAllocation = computed(()=>{
+    if(navigationMode.value === 'clear'){
+        return '0px';
+    }
+
+    if(['index'].indexOf(_toLower(route.name)) >= 0){
+        return '0px';
+    }
+
+    return (navigationHeight.value + 'px');
+});
 
 function isRouteActive(routeSlug: string) {
     return [route.path, _toLower(route.name)].indexOf(_toLower(routeSlug)) >= 0;
@@ -374,13 +416,10 @@ a.footer-link:hover{
 }
 
 .primary-navigation-parent {
-    background-color: v-bind(bodyColor) !important;
+    background-color: v-bind(navigationBackground) !important;
     border-top: none;
     border-left: none;
     border-right: none;
-    border-width: 1px;
-    border-bottom-style: solid;
-    border-bottom-color: v-bind(neutralColor);
     top: 0;
     left: 0;
     right: 0;
@@ -389,7 +428,7 @@ a.footer-link:hover{
 }
 
 .allocate-navigation {
-    margin-top: 57px;
+    margin-top: v-bind(topAllocation);
 }
 
 .ping{

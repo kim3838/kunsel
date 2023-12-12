@@ -197,8 +197,9 @@
 
 <script setup lang="ts">
 import {computed, ref, reactive, watch} from 'vue';
-
 const {$coreStore} = useNuxtApp();
+
+$coreStore.setNavigationMode('solid');
 
 definePageMeta({
     layout: false,

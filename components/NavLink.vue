@@ -1,6 +1,7 @@
 <template>
     <NuxtLink
         :to="to"
+        :style="{'text-shadow': navigationTextShadow}"
         class="tw-box-border tw-inline-flex tw-items-center tw-px-4 focus:tw-outline-none focus:tw-ring-transparent focus:tw-ring-1"
         :class="[classes, headerFontClass, 'nav-link']">
         <slot></slot>
@@ -10,7 +11,7 @@
 <script setup>
 import {computed} from "vue";
 import {storeToRefs} from 'pinia';
-const {$themeStore} = useNuxtApp();
+const {$themeStore, $coreStore} = useNuxtApp();
 
 const {
     hexAlpha,
@@ -19,6 +20,24 @@ const {
     neutral: neutralColor,
 } = storeToRefs($themeStore);
 
+const {
+    navigationMode
+} = storeToRefs($coreStore);
+
+const navigationLinkColor = computed(()=>{
+    if(navigationMode.value === 'clear'){
+        return '#ffffff';
+    }
+
+    return 'auto';
+});
+const navigationTextShadow = computed(()=>{
+    if(navigationMode.value === 'clear'){
+        return '1px 1px #464646';
+    }
+
+    return 'none';
+});
 const primaryColor50 = computed(() => {
     return primaryColor.value + hexAlpha.value['50'];
 });
@@ -70,6 +89,10 @@ const headerFontClass = computed(() => {
 
 .nav{
     border: 1px solid transparent;
+}
+
+.nav-link{
+    color: v-bind(navigationLinkColor);
 }
 
 .nav-link:focus{

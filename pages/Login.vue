@@ -74,6 +74,8 @@ import {ref, onMounted, nextTick} from 'vue';
 const {$coreStore} = useNuxtApp();
 const {isAuthenticated, login, authPending} = useAuth();
 
+$coreStore.setNavigationMode('solid');
+
 definePageMeta({
     layout: false,
     middleware: 'guest'
