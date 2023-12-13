@@ -1146,7 +1146,9 @@
 <script setup lang="ts">
 import {ref, onMounted, reactive} from 'vue';
 import {storeToRefs} from 'pinia';
-const {$themeStore, $formStore} = useNuxtApp();
+const {$themeStore, $coreStore, $formStore} = useNuxtApp();
+
+$coreStore.setNavigationMode('solid');
 
 definePageMeta({
     layout: false,
