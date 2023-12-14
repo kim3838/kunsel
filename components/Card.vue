@@ -70,7 +70,7 @@ const props = defineProps({
         }
     },
     link: {
-        type: String,
+        type: [String, Boolean],
         default: false
     },
     title: {
@@ -81,7 +81,15 @@ const props = defineProps({
         type: String,
         default: ''
     },
+    focused: Boolean
 });
+
+const cardContentHeight = computed(()=>{
+    return props.focused ? '100px' : '180px';
+})
+const cardTitleBottomSpacing = computed(()=>{
+    return props.focused ? '6rem' : '10rem';
+})
 </script>
 <style scoped>
 .card{
@@ -130,10 +138,8 @@ const props = defineProps({
 }
 
 .card-content{
-    height: 180px;
+    height: v-bind(cardContentHeight);
     text-align: center;
-    border-top: 0px solid silver;
-    border-bottom: 0px solid silver;
     background: linear-gradient(
         to bottom,
         v-bind(tintColor),
@@ -144,7 +150,7 @@ const props = defineProps({
     position: absolute;
     left: 1.5rem;
     right: 1.5rem;
-    bottom: 10rem;
+    bottom: v-bind(cardTitleBottomSpacing);
     padding-bottom: 5px;
     font-weight: 500;
     color: v-bind(textColor);
