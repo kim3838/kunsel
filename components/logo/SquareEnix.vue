@@ -1,6 +1,6 @@
 <template>
     <span>
-        <svg version="1.1" xmlns="http://www.w3.org/2000/svg" class="custom-height" width="100%"  viewBox="-5.969 -13 760 95"
+        <svg version="1.1" xmlns="http://www.w3.org/2000/svg" height="100%" width="100%" viewBox="-5.969 -13 760 95"
              enable-background="new -5.969 -13 760 95">
             <path d="M97,0c-6.648,0-12,5.352-12,12v45c0,6.648,5.352,12,12,12h16v9h15v-9h17c6.648,0,12-5.352,12-12V12
 	c0-6.648-5.352-12-12-12H97z M100,12h41v44h-13v-7h-15v7h-13V12z"/>
@@ -24,17 +24,3 @@
         </svg>
     </span>
 </template>
-<script setup>
-const props = defineProps({
-    height: {
-        type: String,
-        default: '25px'
-    }
-})
-</script>
-
-<style>
-.custom-height{
-    height: v-bind(height);
-}
-</style>
