@@ -19,13 +19,13 @@
                             <template #content>
                                 <div class="tw-mt-4 tw-gap-2 tw-flex tw-flex-wrap tw-justify-center">
                                     <Card
-                                        class="tw-inline-block tw-flex-none tw-max-w-[320px]"
+                                        class="tw-inline-block tw-flex-none"
+                                        focused
                                         v-for="newArrival in newArrivals"
                                         :key="newArrival"
                                         :image="newArrival.image"
                                         :title="newArrival.title"
                                         :sub-title="newArrival.subTitle"
-                                        :link="newArrival.link"
                                     />
                                 </div>
                             </template>
