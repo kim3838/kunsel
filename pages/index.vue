@@ -12,27 +12,67 @@
                         <CarouselModulePagination />
                     </template>
                 </CarouselModuleCarousel>
-                <div class="tw-mx-auto tw-max-w-screen-2xl tw-space-y-8 tw-flex tw-flex-col">
-                    <article class="tw-mt-8">
-                        <div class="tw-text-center tw-text-3xl tw-font-semibold">New Arrivals</div>
-                        <AccentFrame class="tw-mt-4">
-                            <template #content>
-                                <div class="tw-mt-4 tw-gap-2 tw-flex tw-flex-wrap tw-justify-center">
-                                    <Card
-                                        class="tw-inline-block tw-flex-none"
-                                        focused
-                                        v-for="newArrival in newArrivals"
-                                        :key="newArrival"
-                                        :image="newArrival.image"
-                                        :title="newArrival.title"
-                                        :sub-title="newArrival.subTitle"
-                                    />
-                                </div>
+                <div class="tw-mx-auto tw-max-w-screen-2xl tw-flex tw-flex-col" >
+
+                    <article class="tw-mt-8 tw-relative" >
+                        <CarouselModuleCarousel v-model="featuredItem" class="tw-w-full lg:tw-w-full" v-bind="featuredItemsSettings" :breakpoints="featuredItemsBreakpoints">
+                            <CarouselModuleSlide class="tw-w-[170px]">
+                                <RegularFrame>
+                                    <template #body>
+                                        <div class="tw-text-center tw-font-['Google_Sans_Text'] tw-text-xl tw-font-semibold">
+                                            Featured Products
+                                        </div>
+                                    </template>
+                                </RegularFrame>
+                            </CarouselModuleSlide>
+                            <CarouselModuleSlide class="tw-w-[270px]" v-for="featuredItem in featuredItems" :key="featuredItem">
+                                <Featured
+                                    focused
+                                    class="tw-mx-2"
+                                    :image="featuredItem.image"
+                                    :title="featuredItem.title"
+                                    :sub-title="featuredItem.subTitle"
+                                    :link="featuredItem.link"
+                                    :button-label="'Details'"
+                                />
+                            </CarouselModuleSlide>
+                            <template #addons>
+                                <CarouselModuleNavigation />
                             </template>
-                        </AccentFrame>
+                        </CarouselModuleCarousel>
                     </article>
 
-                    <article>
+                    <article class="tw-mt-4 w-relative">
+                        <CarouselModuleCarousel class="tw-w-full lg:tw-w-full" v-bind="newArrivalsSettings" :breakpoints="newArrivalsBreakpoints">
+                            <CarouselModuleSlide class="tw-w-[170px]">
+                                <RegularFrame>
+                                    <template #body>
+                                        <div class="tw-text-center tw-font-['Google_Sans_Text'] tw-text-xl tw-font-semibold tw-px-8">
+                                            New Arrivals
+                                        </div>
+                                    </template>
+                                </RegularFrame>
+                            </CarouselModuleSlide>
+
+                            <CarouselModuleSlide :class="[`tw-w-[370px]`]" v-for="newArrival in newArrivals" :key="newArrival">
+                                <Card
+                                    focused
+                                    class="tw-mx-2"
+                                    :image="newArrival.image"
+                                    :title="newArrival.title"
+                                    :sub-title="newArrival.subTitle"
+                                    :link="newArrival.link"
+                                    :button-label="'Details'"
+                                />
+                            </CarouselModuleSlide>
+
+                            <template #addons>
+                                <CarouselModuleNavigation />
+                            </template>
+                        </CarouselModuleCarousel>
+                    </article>
+
+                    <article v-if="false" class="tw-mt-16">
                         <div class="tw-text-center tw-text-3xl tw-font-semibold">Latest News</div>
                         <div class="tw-grid tw-grid-cols-1 sm:tw-grid-cols-2 md:tw-grid-cols-3 lg:tw-grid-cols-3 xl:tw-grid-cols-4 2xl:tw-grid-cols-5 tw-gap-2">
                             <div v-for="blog in news" class="neutral-border">
@@ -53,6 +93,7 @@
 <script setup lang="ts">
 import {ref,reactive} from "vue";
 const {$coreStore} = useNuxtApp();
+const {screens} = useScreen();
 
 $coreStore.setNavigationMode('clear');
 
@@ -60,7 +101,85 @@ definePageMeta({
     layout: false
 });
 
+let featuredItem = ref(0);
+let featuredItems = reactive([
+    {
+        'image':{
+            'path': 'images/product/ebac5037-c3d2-4275-b96b-24f855695841.webp'
+        },
+        'title': 'Motherboard',
+        'subTitle': 'iGame Z790D5 ULTRA V20',
+        'link': '/prototype'
+    },
+    {
+        'image':{
+            'path': 'images/product/f9b5a1a7-d532-4cf8-970c-d812b857a666.webp'
+        },
+        'title': 'Motherboard',
+        'subTitle': 'iGame Z790D5 FLOW V20',
+        'link': '/prototype'
+    },
+    // {
+    //     'image':{
+    //         'path': 'images/product/c7dfc1f1-102a-4ea9-84f6-f87dda2094b8.webp'
+    //     },
+    //     'title': '',
+    //     'subTitle': 'CVN Z790D5 GAMING PRO WIFI V20',
+    //     'link': '/prototype'
+    // },
+    // {
+    //     'image':{
+    //         'path': 'images/product/38131462-2ae0-443e-8555-9e744c532887.webp'
+    //     },
+    //     'title': '',
+    //     'subTitle': 'BATTLE-AX Z790AK-PLUS D5 V20',
+    //     'link': '/prototype'
+    // }
+]);
+
+let featuredItemsSettings = reactive({
+    itemsToShow: 1.5,
+    snapAlign: 'start',
+});
+let featuredItemsBreakpoints = reactive({
+    [screens['sm']]: {
+        itemsToShow: 1.5,
+        snapAlign: 'start',
+    },
+
+    [screens['md']]: {
+        itemsToShow: 2.5,
+        snapAlign: 'start',
+    },
+
+    [screens['lg']]: {
+        itemsToShow: 3.5,
+        snapAlign: 'start',
+    },
+});
 let newArrivals = reactive([
+    {
+        'image':{
+            'path': 'images/hero/21f0a52e-db0a-4108-9405-44a8a548e534.webp'
+        },
+        'title': 'MEOW SET',
+        'subTitle': 'RTX 4060 Ti MEOW-ORG OC 16GB / B760M-MEOW WIFI D5 ORANGE.',
+        'link': '/prototype'
+    },
+    {
+        'image':{
+            'path': 'images/hero/ea05cc1d-1384-47f4-84ab-b3c049f7e13e.webp'
+        },
+        'title': 'AIO PC',
+        'subTitle': 'iGame G-ONE Plus i7-12700H/RTX3060.',
+    },
+    {
+        'image':{
+            'path': 'images/hero/353f5cb4-8113-43fa-b5c4-3a9bf1314474.webp'
+        },
+        'title': 'Laptop',
+        'subTitle': 'Colorful EVOL P15 ',
+    },
     {
         'image':{
             'path': '/images/hero/667a2407-ae78-4e4d-b69e-059552bca96e.webp'
@@ -81,29 +200,28 @@ let newArrivals = reactive([
         },
         'title': 'SSD',
         'subTitle': 'CN700 1TB',
-    },
-    {
-        'image':{
-            'path': 'images/hero/21f0a52e-db0a-4108-9405-44a8a548e534.webp'
-        },
-        'title': 'MEOW SET',
-        'subTitle': 'RTX 4060 Ti MEOW-ORG OC 16GB / B760M-MEOW WIFI D5 ORANGE.',
-    },
-    {
-        'image':{
-            'path': 'images/hero/ea05cc1d-1384-47f4-84ab-b3c049f7e13e.webp'
-        },
-        'title': 'AIO PC',
-        'subTitle': 'iGame G-ONE Plus i7-12700H/RTX3060.',
-    },
-    {
-        'image':{
-            'path': 'images/hero/353f5cb4-8113-43fa-b5c4-3a9bf1314474.webp'
-        },
-        'title': 'Laptop',
-        'subTitle': 'Colorful EVOL P15 ',
-    },
+    }
 ]);
+let newArrivalsSettings = reactive({
+    itemsToShow: 1.5,
+    snapAlign: 'start',
+});
+let newArrivalsBreakpoints = reactive({
+    [screens['sm']]: {
+        itemsToShow: 1.5,
+        snapAlign: 'start',
+    },
+
+    [screens['md']]: {
+        itemsToShow: 2.5,
+        snapAlign: 'start',
+    },
+
+    [screens['lg']]: {
+        itemsToShow: 4.5,
+        snapAlign: 'start',
+    },
+});
 let news = reactive([
     {
         'image':{
