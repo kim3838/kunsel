@@ -14,7 +14,7 @@
                 </CarouselModuleCarousel>
                 <div class="tw-mx-auto tw-max-w-screen-2xl tw-flex tw-flex-col" >
 
-                    <article class="tw-mt-8 tw-relative" >
+                    <article class="tw-mt-4 tw-relative" >
                         <CarouselModuleCarousel v-model="featuredItem" class="tw-w-full lg:tw-w-full" v-bind="featuredItemsSettings" :breakpoints="featuredItemsBreakpoints">
                             <CarouselModuleSlide class="tw-w-[170px]">
                                 <RegularFrame>
@@ -119,22 +119,38 @@ let featuredItems = reactive([
         'subTitle': 'iGame Z790D5 FLOW V20',
         'link': '/prototype'
     },
-    // {
-    //     'image':{
-    //         'path': 'images/product/c7dfc1f1-102a-4ea9-84f6-f87dda2094b8.webp'
-    //     },
-    //     'title': '',
-    //     'subTitle': 'CVN Z790D5 GAMING PRO WIFI V20',
-    //     'link': '/prototype'
-    // },
-    // {
-    //     'image':{
-    //         'path': 'images/product/38131462-2ae0-443e-8555-9e744c532887.webp'
-    //     },
-    //     'title': '',
-    //     'subTitle': 'BATTLE-AX Z790AK-PLUS D5 V20',
-    //     'link': '/prototype'
-    // }
+    {
+        'image':{
+            'path': 'images/product/176a61f6-884b-4def-9c35-5d30cdca686f.webp'
+        },
+        'title': 'Graphics Card',
+        'subTitle': 'iGame GeForce RTX 4080 16GB Ultra W OC-V',
+        'link': '/prototype'
+    },
+    {
+        'image':{
+            'path': 'images/product/cd8f248a-bd3d-4553-bcf7-849ed27c4b36.webp'
+        },
+        'title': 'Graphics Card',
+        'subTitle': 'iGame GeForce RTX 4070 Ti Ultra W OC-V',
+        'link': '/prototype'
+    },
+    {
+        'image':{
+            'path': 'images/product/c7dfc1f1-102a-4ea9-84f6-f87dda2094b8.webp'
+        },
+        'title': 'Motherboard',
+        'subTitle': 'CVN Z790D5 GAMING PRO WIFI V20',
+        'link': '/prototype'
+    },
+    {
+        'image':{
+            'path': 'images/product/38131462-2ae0-443e-8555-9e744c532887.webp'
+        },
+        'title': 'Motherboard',
+        'subTitle': 'BATTLE-AX Z790AK-PLUS D5 V20',
+        'link': '/prototype'
+    }
 ]);
 
 let featuredItemsSettings = reactive({

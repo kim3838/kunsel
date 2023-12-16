@@ -5,7 +5,7 @@
             <div class="tw-max-w-screen-2xl tw-mx-auto tw-flex tw-justify-between tw-h-10 lg:tw-h-20">
                 <div class="tw--my-px tw-flex tw-items-center">
                     <div v-if="['index'].indexOf(_toLower(route.name)) >= 0" class="tw-block sm:tw-hidden md:tw-hidden lg:tw-block tw-h-full tw-flex tw-items-center">
-                        <SpaceX :dark="useNuxtApp().$coreStore.navigationMode === 'clear'" />
+                        <Colorful :dark="useNuxtApp().$coreStore.navigationMode === 'clear'" />
                     </div>
                     <NavDrop
                         class="sm:tw-hidden tw-h-full"
@@ -61,10 +61,10 @@
                 <div class="tw-grid tw-grid-cols-1 lg:tw-grid-cols-4">
                     <div>
                         <div class="tw-flex tw-justify-center sm:tw-justify-start">
-                            <SquareEnix/>
+                            <Colorful class="tw-h-[62px]"/>
                         </div>
 
-                        <p class="tw-mt-5 tw-text-center tw-leading-relaxed sm:tw-max-w-md sm:tw-text-left">
+                        <p v-if="false" class="tw-mt-5 tw-text-center tw-leading-relaxed sm:tw-max-w-md sm:tw-text-left">
                             Lorem ipsum dolor, sit amet consectetur adipisicing elit. Incidunt
                             consequuntur amet culpa cum itaque neque.
                         </p>
