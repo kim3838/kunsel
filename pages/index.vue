@@ -84,6 +84,24 @@
                             </div>
                         </div>
                     </article>
+
+                    <article id="faq" v-if="true" class="tw-w-full tw-mt-16 tw-px-4 tw-flex tw-flex-wrap lg:tw-flex-nowrap tw-justify-center">
+                        <div class="tw-text-center lg:tw-text-start lg:tw-w-1/4">
+                            <div class="tw-text-3xl tw-font-bold">Frequently Answered Questions</div>
+                            <div class="tw-text-xl tw-font-semibold">Have a question? Check out our frequently asked questions to find your answer.</div>
+                            <div class="tw-h-60 tw-w-full tw-bg-contain tw-bg-center lg:tw-bg-left tw-bg-no-repeat" :style="{'background-image': 'url(deco/undraw/undraw_questions_re_1fy7.svg)'}"></div>
+                        </div>
+                        <Accordion
+                            v-model:payload="faqs"
+                            :title-icon="false"
+                            :multi-line-title="true"
+                            :center-content="faqCenterContent"
+                            :size="'lg'"
+                            single-expand
+                            class="tw-mt-4 lg:tw-w-1/2 lg:tw-mt-0 tw-space-y-4"/>
+                    </article>
+
+
                 </div>
             </template>
         </NuxtLayout>
@@ -91,10 +109,9 @@
 </template>
 
 <script setup lang="ts">
-import {ref,reactive} from "vue";
+import {computed,ref,reactive} from "vue";
 const {$coreStore} = useNuxtApp();
-const {screens} = useScreen();
-
+const {screens, width: screenWidth, } = useScreen();
 $coreStore.setNavigationMode('clear');
 
 definePageMeta({
@@ -309,6 +326,46 @@ let carouselPayload = reactive([
         }
     }
 ]);
+let faqs = reactive({
+    recentActive: 0,
+    options: [
+        {
+            title: 'Coldiron Armor Set',
+            body: {
+                type: 'text',
+                value: 'This armor was forged for the sole purpose of resisting the malignance spreading across the land.'
+            },
+            active: true
+        },
+        {
+            title: 'Coldiron Barding Mount Armor',
+            body: {
+                type: 'text',
+                value: 'Adorn your new steeds with mount armor inspired by the malignance taking over Sanctuary.'
+            },
+            active: false
+        },
+        {
+            title: 'Weapon skins, Mount Trophies, Emotes, Platinum, and more - Weapon skins, Mount Trophies, Emotes, Platinum, and more',
+            body: {
+                type: 'text',
+                value: 'Explore a range of cosmetics to earn along the Premium Battle Pass. Collect a weapon transmog for all 19 weapon types. 2 emotes for each class let you threaten your enemies or find a little time to play around with malignant heart cages. 2 headstones even let you die in style. Adorn your horse with 5 new mount trophies.'
+            },
+            active: false
+        },
+        {
+            title: '“On the Warpath” Emote – Accelerated Battle Pass',
+            body: {
+                type: 'text',
+                value: 'Show everyone you’re ready for battle when you slam your banner down, signaling to enemies that you’re ready for a fight. This emote is only included in the Accelerated Battle Pass.'
+            },
+            active: false
+        }
+    ]
+});
+let faqCenterContent = computed(() => {
+    return screenWidth.value < screens['lg'];
+})
 </script>
 <style scoped>
 .figure img{

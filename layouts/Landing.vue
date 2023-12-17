@@ -69,7 +69,7 @@
                             consequuntur amet culpa cum itaque neque.
                         </p>
 
-                        <ul class="tw-mt-2 tw-flex tw-justify-center tw-gap-6 sm:tw-justify-start md:gap-8">
+                        <ul v-if="false" class="tw-mt-2 tw-flex tw-justify-center tw-gap-6 sm:tw-justify-start md:gap-8">
                             <li>
                                 <a href="/" rel="noreferrer" target="_blank">
                                     <ClientOnly><Icon class="tw-h-5 tw-w-5" name="mdi:facebook"></Icon></ClientOnly>
@@ -185,7 +185,7 @@
                             </a>
                         </p>
                         <p class="tw-mt-4 tw-text-sm tw-flex tw-items-center tw-justify-center sm:tw-justify-start sm:tw-order-first sm:tw-mt-0">
-                            <ClientOnly><Icon name="ic:sharp-copyright"></Icon></ClientOnly>2022 Lorem Ipsum
+                            <ClientOnly><Icon name="ic:sharp-copyright"></Icon></ClientOnly>2024
                         </p>
                     </div>
                 </div>
@@ -305,6 +305,7 @@ let mainNavigation = computed(()=>{
                     type: 'link',
                     title: 'FAQ',
                     icon: 'ic:baseline-arrow-right',
+                    to: '/#faq'
                 },
                 {
                     type: 'link',
