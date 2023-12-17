@@ -3,11 +3,11 @@
         <div
             @click="activeComputed = !activeComputed"
             :class="[heightClass, singleExpand && activeComputed ? 'active-border-title' : '']"
-            class="tw-px-2 tw-cursor-pointer tw-flex tw-items-center">
-            <span class="tw-truncate tw-text-base">
+            class="text-type-title-content-alignment tw-px-2 tw-cursor-pointer tw-flex tw-items-center">
+            <div class="tw-text-base" :class="[multiLineTitle ? '' : 'tw-truncate']">
                 <slot name="title"></slot>
-            </span>
-            <Icon class="tw-flex-none tw-h-5 tw-w-5" :name="'ic:baseline-arrow-drop-down'"></Icon>
+            </div>
+            <Icon v-if="titleIcon" class="tw-flex-none tw-h-5 tw-w-5" :name="'ic:baseline-arrow-drop-down'"></Icon>
         </div>
         <div
             v-show="activeComputed"
@@ -46,6 +46,18 @@ const props = defineProps({
         type: Boolean,
         default: false
     },
+    centerContent: {
+        type: Boolean,
+        default: false
+    },
+    titleIcon: {
+        type: Boolean,
+        default: true
+    },
+    multiLineTitle: {
+        type: Boolean,
+        default: false
+    },
 });
 
 const activeBorderComputed = computed(() => {
@@ -54,8 +66,8 @@ const activeBorderComputed = computed(() => {
 
 const heightClass = computed(() => {
     return {
-        'md': 'tw-h-8',
-        'lg': 'tw-h-11'
+        'md': props.multiLineTitle ? '' : 'tw-h-8',
+        'lg': props.multiLineTitle ? '' : 'tw-h-11'
     }[props.size]
 });
 
@@ -72,6 +84,10 @@ const activeComputed = computed({
         });
     }
 });
+
+const textTypeTitleContentAlignment = computed(() => {
+    return props.centerContent ? 'center' : 'left';
+});
 </script>
 <style scoped>
 .active-border-title {
@@ -82,5 +98,9 @@ const activeComputed = computed({
     border-width: 1px;
     border-color: v-bind(activeBorderComputed) !important;
     border-top: none;
+}
+.text-type-title-content-alignment{
+    justify-content: v-bind(textTypeTitleContentAlignment);
+    text-align: v-bind(textTypeTitleContentAlignment);
 }
 </style>
