@@ -19,7 +19,7 @@
                         <NuxtLink
                             v-if="link"
                             :to="link">
-                            <Button :variant="'flat'" :size="'md'" :icon="'ion:newspaper-outline'" :label="buttonLabel"></Button>
+                            <Button :variant="'flat'" :size="'md'" :icon="'octicon:info'" :label="buttonLabel"></Button>
                         </NuxtLink>
                     </div>
                 </div>
