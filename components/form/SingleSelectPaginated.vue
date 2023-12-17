@@ -585,7 +585,7 @@ const { execute} = csrFetch(props.payload.fetch.url, {
 });
 
 watch(selectionScrollBottomReached, (bottomReached) => {
-    if(bottomReached){
+    if(bottomReached && active.value){
         page.value += 1;
         execute();
     }
