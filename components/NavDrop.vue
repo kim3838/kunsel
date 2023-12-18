@@ -68,7 +68,7 @@ const navigationLinkColor = computed(()=>{
 });
 const navigationTextShadow = computed(()=>{
     if(navigationMode.value === 'clear'){
-        return '1px 1px #464646';
+        return '1px 1px 2px #000000';
     }
 
     return 'none';
