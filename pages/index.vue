@@ -1,10 +1,10 @@
 <template>
-    <div ref="scrollable">
+    <div>
         <NuxtLayout :name="$coreStore.layout">
             <template #content>
-                <CarouselModuleCarousel wrap-around>
+                <CarouselModuleCarousel wrap-around class="tw-snap-start tw-snap-always">
                     <CarouselModuleSlide v-for="slide in carouselPayload" :key="slide">
-                        <div class="tw-w-screen tw-h-screen carousel-image" :style="{'background-image': `url(${slide.image.path})`}"></div>
+                        <div class="tw-w-screen tw-h-[calc(100vh-2rem)] carousel-image" :style="{'background-image': `url(${slide.image.path})`}"></div>
                     </CarouselModuleSlide>
 
                     <template #addons>
@@ -12,8 +12,10 @@
                         <CarouselModulePagination />
                     </template>
                 </CarouselModuleCarousel>
-                <div class="tw-mx-auto tw-max-w-screen-2xl tw-flex tw-flex-col" >
 
+
+                <div class="navigation-height tw-w-full tw-snap-start tw-snap-always"></div>
+                <div class="tw-mx-auto tw-max-w-screen-2xl tw-flex tw-flex-col tw-pointer-events-auto">
                     <article class="tw-mt-4 tw-relative" >
                         <CarouselModuleCarousel v-model="featuredItem" class="tw-w-full lg:tw-w-full" v-bind="featuredItemsSettings" :breakpoints="featuredItemsBreakpoints">
                             <CarouselModuleSlide class="tw-w-[170px]">
@@ -71,21 +73,28 @@
                             </template>
                         </CarouselModuleCarousel>
                     </article>
+                </div>
 
-                    <article v-if="false" class="tw-mt-16">
-                        <div class="tw-text-center tw-text-3xl tw-font-semibold">Latest News</div>
-                        <div class="tw-grid tw-grid-cols-1 sm:tw-grid-cols-2 md:tw-grid-cols-3 lg:tw-grid-cols-3 xl:tw-grid-cols-4 2xl:tw-grid-cols-5 tw-gap-2">
-                            <div v-for="blog in news" class="neutral-border">
-                                <figure class="figure">
-                                    <img :src="blog.image.path" />
-                                </figure>
-                                <div class="tw-px-4 tw-pt-2 tw-text-lg tw-font-semibold tw-tracking-normal tw-leading-tigh">{{blog.title}}</div>
-                                <div class="tw-px-4 tw-pt-2 tw-text-base tw-line-clamp-4 tw-leading-tight">{{blog.subTitle}}</div>
+                <div class="navigation-height tw-w-full tw-snap-start tw-snap-always"></div>
+                <div class="tw-mx-auto tw-max-w-screen-2xl tw-flex tw-flex-col" >
+                    <article class="tw-font-['Google_Sans_Text']">
+                        <div class="tw-text-center tw-pt-4 tw-text-3xl tw-font-semibold">Latest News</div>
+
+                        <div class="tw-flex tw-items-center tw-flex-nowrap tw-py-2 tw-space-x-8 tw-scroll-px-8 tw-snap-x tw-snap-mandatory tw-scroll-px-40 tw-w-full tw-overflow-x-scroll">
+                            <div v-for="blog in news" class="tw-snap-center tw-snap-always tw-inline-block tw-w-1/2 tw-flex-none tw-flex tw-justify-center">
+                                <div class="tw-w-[370px] tint-background neutral-border">
+                                    <img :src="blog.image.path">
+                                    <div class="tw-px-8 tw-pt-4 tw-text-lg tw-h-[8rem] tw-line-clamp-4 tw-font-bold tw-tracking-normal tw-leading-tigh">{{blog.title}}</div>
+                                    <div class="tw-px-8 tw-pt-4 tw-text-base tw-h-[7rem] tw-line-clamp-4">{{blog.subTitle}}</div>
+                                </div>
                             </div>
                         </div>
                     </article>
+                </div>
 
-                    <article id="faq" v-if="true" class="tw-w-full tw-mt-16 tw-px-4 tw-flex tw-flex-wrap lg:tw-flex-nowrap tw-justify-center">
+                <div id="faq" class="navigation-height tw-w-full tw-snap-start tw-snap-always"></div>
+                <div class="tw-mx-auto tw-max-w-screen-2xl tw-flex tw-flex-col" >
+                    <article class="tw-w-full tw-px-4 tw-flex tw-flex-wrap lg:tw-flex-nowrap tw-justify-center tw-font-['Google_Sans_Text']">
                         <div class="tw-text-center lg:tw-text-start lg:tw-w-1/4">
                             <div class="tw-text-3xl tw-font-bold">Frequently Answered Questions</div>
                             <div class="tw-text-xl tw-font-semibold">Have a question? Check out our frequently asked questions to find your answer.</div>
@@ -100,8 +109,6 @@
                             single-expand
                             class="tw-mt-4 lg:tw-w-1/2 lg:tw-mt-0 tw-space-y-4"/>
                     </article>
-
-
                 </div>
             </template>
         </NuxtLayout>
@@ -118,22 +125,22 @@ definePageMeta({
     layout: false
 });
 
-let featuredItem = ref(0);
-let featuredItems = reactive([
+const featuredItem = ref(0);
+const featuredItems = reactive([
     {
         'image':{
-            'path': 'images/product/ebac5037-c3d2-4275-b96b-24f855695841.webp'
+            'path': 'images/product/f85a85cd-fa65-48d3-9d36-755b4a6acf87.webp'
         },
-        'title': 'Motherboard',
-        'subTitle': 'iGame Z790D5 ULTRA V20',
+        'title': 'Graphics Card',
+        'subTitle': 'COLORFIRE GeForce RTX 4060 Ti MEOW-ORG 8GB-V',
         'link': '/prototype'
     },
     {
         'image':{
-            'path': 'images/product/f9b5a1a7-d532-4cf8-970c-d812b857a666.webp'
+            'path': 'images/product/7d5178c3-e5dc-4b8f-b8d1-cbe0bbc14e84.webp'
         },
-        'title': 'Motherboard',
-        'subTitle': 'iGame Z790D5 FLOW V20',
+        'title': 'Graphics Card',
+        'subTitle': 'COLORFIRE GeForce RTX 4060 MEOW-ORG 8GB-V',
         'link': '/prototype'
     },
     {
@@ -154,6 +161,22 @@ let featuredItems = reactive([
     },
     {
         'image':{
+            'path': 'images/product/ebac5037-c3d2-4275-b96b-24f855695841.webp'
+        },
+        'title': 'Motherboard',
+        'subTitle': 'iGame Z790D5 ULTRA V20',
+        'link': '/prototype'
+    },
+    {
+        'image':{
+            'path': 'images/product/f9b5a1a7-d532-4cf8-970c-d812b857a666.webp'
+        },
+        'title': 'Motherboard',
+        'subTitle': 'iGame Z790D5 FLOW V20',
+        'link': '/prototype'
+    },
+    {
+        'image':{
             'path': 'images/product/c7dfc1f1-102a-4ea9-84f6-f87dda2094b8.webp'
         },
         'title': 'Motherboard',
@@ -169,12 +192,11 @@ let featuredItems = reactive([
         'link': '/prototype'
     }
 ]);
-
-let featuredItemsSettings = reactive({
+const featuredItemsSettings = reactive({
     itemsToShow: 1.5,
     snapAlign: 'start',
 });
-let featuredItemsBreakpoints = reactive({
+const featuredItemsBreakpoints = reactive({
     [screens['sm']]: {
         itemsToShow: 1.5,
         snapAlign: 'start',
@@ -190,7 +212,7 @@ let featuredItemsBreakpoints = reactive({
         snapAlign: 'start',
     },
 });
-let newArrivals = reactive([
+const newArrivals = reactive([
     {
         'image':{
             'path': 'images/hero/21f0a52e-db0a-4108-9405-44a8a548e534.webp'
@@ -235,11 +257,11 @@ let newArrivals = reactive([
         'subTitle': 'CN700 1TB',
     }
 ]);
-let newArrivalsSettings = reactive({
+const newArrivalsSettings = reactive({
     itemsToShow: 1.5,
     snapAlign: 'start',
 });
-let newArrivalsBreakpoints = reactive({
+const newArrivalsBreakpoints = reactive({
     [screens['sm']]: {
         itemsToShow: 1.5,
         snapAlign: 'start',
@@ -255,7 +277,7 @@ let newArrivalsBreakpoints = reactive({
         snapAlign: 'start',
     },
 });
-let news = reactive([
+const news = reactive([
     {
         'image':{
             'path': '/images/c46535a6-f120-46e3-8bea-4ace73c8eb82.webp'
@@ -295,11 +317,11 @@ let news = reactive([
         'image':{
             'path': 'images/ff4e09cf-c5f9-42fa-9bff-e1490dc1e2fa.webp'
         },
-        'title': 'COLORFUL Launches EVOL X15 AT Gaming Laptop Powered by Intel 13th Gen CPUs and NVIDIA GeForce RTX 4060 GPU',
+        'title': 'COLORFUL Launches EVOL X15 AT Gaming Laptop Powered by Intel 13th Gen CPUs and NVIDIA GeForce RTX 4060 GPU and NVIDIA GeForce RTX 4060 GPU and NVIDIA GeForce RTX 4060 GPU',
         'subTitle': 'The EVOL X15 AT sports a 15.6” QHD (2560x1440) 165Hz display with NVIDIA G-SYNC support for stutter-free and tear-free gaming experience. Aside from Pine Blue and Mist Grey, the new EVOL X15 AT gaming laptop comes in the new Purple Grape color.',
     },
 ]);
-let carouselPayload = reactive([
+const carouselPayload = reactive([
     {
         'image': {
             'path': '/images/carousel/f415740d-5951-4b5d-af98-1404e9c65df5.jpg'
@@ -326,7 +348,7 @@ let carouselPayload = reactive([
         }
     }
 ]);
-let faqs = reactive({
+const faqs = reactive({
     recentActive: 0,
     options: [
         {
@@ -363,7 +385,7 @@ let faqs = reactive({
         }
     ]
 });
-let faqCenterContent = computed(() => {
+const faqCenterContent = computed(() => {
     return screenWidth.value < screens['lg'];
 })
 </script>

@@ -1,5 +1,6 @@
 <template>
-    <div class="nuxt-page">
+    <!-- Nuxt Wrapper -->
+    <div ref="nuxtScroll" class="nuxt-page tw-scroll-smooth tw-h-screen" :class="[$coreStore.enableScrollSnap ? 'tw-overflow-y-scroll tw-snap-y tw-snap-mandatory' : '']">
         <div class="tw-absolute tw-inset-x-0 tw--top-40 tw--z-10 tw-overflow-hidden tw-blur-3xl sm:tw--top-80" aria-hidden="true">
             <div class="top-fragment tw-relative tw-left-[calc(50%-11rem)] tw-aspect-[1155/678] tw-w-[36.125rem] tw--translate-x-1/2 tw-rotate-[30deg] tw-opacity-30 sm:tw-left-[calc(50%-30rem)] sm:tw-w-[72.1875rem]"></div>
         </div>
@@ -7,16 +8,18 @@
             <NuxtPage/>
         </NuxtLayout>
         <div id="datetimepicker-slot"></div>
-        <div class="tw-absolute tw-inset-x-0 tw-top-[calc(100%-13rem)] tw--z-10 tw-overflow-hidden tw-blur-3xl sm:tw-top-[calc(100%-30rem)]" aria-hidden="true">
+        <div class="tw-absolute tw-inset-x-0 tw-top-[calc(20%)] tw--z-10 tw-overflow-hidden tw-blur-3xl sm:tw-top-[calc(0%)]" aria-hidden="true">
             <div class="bottom-fragment tw-relative tw-left-[calc(50%+3rem)] tw-aspect-[1155/678] tw-w-[36.125rem] tw--translate-x-1/2  tw-opacity-30 sm:tw-left-[calc(50%+36rem)] sm:tw-w-[72.1875rem]"></div>
         </div>
     </div>
 </template>
 
 <script setup lang="ts">
+import {watch} from "vue";
 import {storeToRefs} from 'pinia';
+import {useScroll} from '@vueuse/core'
 
-const {$debug, $moment, $themeStore} = useNuxtApp();
+const {$debug, $moment, $themeStore, $coreStore} = useNuxtApp();
 const runtimeConfig = useRuntimeConfig();
 const appConfig = useAppConfig();
 
@@ -31,6 +34,17 @@ const {
     textInvert: textInvertColor,
     textSecondary: textSecondaryColor,
 } = storeToRefs($themeStore);
+
+const nuxtScroll = ref<HTMLElement | null>(null)
+const {arrivedState: nuxtScrollArrivedState } = useScroll(nuxtScroll)
+const {top: nuxtScrollTopReached} = toRefs(nuxtScrollArrivedState);
+watch(nuxtScrollTopReached, (topReached) => {
+    if(topReached){
+        $coreStore.setNavigationMode('clear');
+    } else {
+        $coreStore.setNavigationMode('solid');
+    }
+});
 
 // $debug('runtimeConfig',runtimeConfig);
 // $debug('appConfig', appConfig);
@@ -48,8 +62,16 @@ const {
     color: v-bind(textColor);
 }
 
+.tint-background {
+    background-color: v-bind(tintColor);
+}
+
 .neutral-border{
     border: 1px solid v-bind(neutralColor);
+}
+
+.scaffold{
+    border: 1px solid v-bind(liningColor);
 }
 
 .top-fragment{
@@ -69,10 +91,6 @@ const {
 
 ::-ms-input-placeholder { /* Edge 12-18 */
     color: v-bind(textColor) !important;
-}
-
-.scaffold{
-    border: 1px solid v-bind(liningColor);
 }
 
 .daterangepicker{

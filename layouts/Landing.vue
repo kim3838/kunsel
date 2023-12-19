@@ -1,10 +1,10 @@
 <template>
     <div class="tw-relative">
         <!-- Primary Navigation Menu -->
-        <nav ref="navigation" class="primary-navigation-parent tw-transition-all tw-duration-700 tw-z-40 tw-fixed" :class="{'lg:tw-ml-sidebar': false}">
-            <div class="tw-max-w-screen-2xl tw-mx-auto tw-flex tw-justify-between tw-h-10 lg:tw-h-20">
+        <nav ref="navigation" class="tw-snap-start tw-snap-always primary-navigation-parent tw-transition-all tw-duration-700 tw-z-40 tw-fixed tw-w-full tw-flex tw-justify-center">
+            <div class="tw-max-w-screen-2xl tw-w-full tw-flex tw-justify-between tw-h-10 lg:tw-h-20">
                 <div class="tw--my-px tw-flex tw-items-center">
-                    <div v-if="['index'].indexOf(_toLower(route.name)) >= 0" class="tw-block sm:tw-hidden md:tw-hidden lg:tw-block tw-h-full tw-flex tw-items-center">
+                    <div v-if="['index'].indexOf(_toLower(route.name)) >= 0" class="tw-block sm:tw-hidden md:tw-hidden lg:tw-block tw-h-full tw-w-full tw-flex tw-items-center">
                         <Colorful :dark="useNuxtApp().$coreStore.navigationMode === 'clear'" />
                     </div>
                     <NavDrop
@@ -56,12 +56,12 @@
         <!-- Action Modal -->
         <PromptModal />
         <!-- Footer -->
-        <footer>
-            <div class="tw-mx-auto tw-max-w-screen-2xl tw-px-4 tw-pb-6 tw-pt-16 sm:tw-px-6 lg:tw-px-8 lg:tw-pt-24">
+        <footer :class="[$coreStore.enableScrollSnap ? 'tw-snap-start tw-snap-always' : 'tw-snap-align-none']">
+            <div class="tw-mx-auto tw-max-w-screen-2xl tw-px-4 tw-pb-6 tw-pt-16 sm:tw-px-6 lg:tw-px-8">
                 <div class="tw-grid tw-grid-cols-1 lg:tw-grid-cols-4">
                     <div>
                         <div class="tw-flex tw-justify-center sm:tw-justify-start">
-                            <Colorful class="tw-h-[62px]"/>
+                            <Colorful class="tw-w-max tw-h-[62px]"/>
                         </div>
 
                         <p v-if="false" class="tw-mt-5 tw-text-center tw-leading-relaxed sm:tw-max-w-md sm:tw-text-left">
@@ -197,15 +197,14 @@
 <script setup lang="ts">
 import {useWindowScroll} from '@vueuse/core'
 import {storeToRefs} from 'pinia';
-import {computed, nextTick, onMounted, onUnmounted, ref} from "vue";
+import {computed, nextTick, onMounted, ref, watch} from "vue";
 
-const navDrop = resolveComponent('navDrop');
-const { y: windowYScroll } = useWindowScroll();
-
+const route = useRoute();
 const {$coreStore, $themeStore} = useNuxtApp();
 const {isAuthenticated, user, logout} = useAuth();
-const route = useRoute();
 const {screens, width: screenWidth, height: screenHeight } = useScreen();
+const navDrop = resolveComponent('navDrop');
+const { y: windowYScroll } = useWindowScroll();
 const {
     primary: primaryColor,
     accent: accentColor,
@@ -214,13 +213,26 @@ const {
     body: bodyColor,
     thread: threadColor
 } = storeToRefs($themeStore);
-
 const {
     navigationMode
 } = storeToRefs($coreStore);
+const navigation = ref(null);
+const navigationHeight = ref(0);
+const navigationHeightInPixels = computed(() => {
+    return (navigationHeight.value + 'px');
+});
+const topAllocationInPixels = computed(()=>{
+    if(navigationMode.value === 'clear'){
+        return '0px';
+    }
 
-let navigation = ref(null);
-let navigationHeight = ref(0);
+    if(['index'].indexOf(_toLower(route.name)) >= 0){
+        return '0px';
+    }
+
+    return (navigationHeight.value + 'px');
+});
+
 onMounted(async () => {
     await nextTick(() => {
         navigationHeight.value = navigation.value.offsetHeight;
@@ -236,8 +248,11 @@ watch(windowYScroll, value => {
         }
     }
 });
+watch(screenWidth, value => {
+    navigationHeight.value = navigation.value.offsetHeight;
+});
 
-let navigationHeaderSize = computed(() => {
+const navigationHeaderSize = computed(() => {
     let size = 'lg'
 
     if (screenWidth.value >= screens['2xl']) {//3xl
@@ -256,7 +271,7 @@ let navigationHeaderSize = computed(() => {
 
     return size;
 });
-let mainNavigation = computed(()=>{
+const mainNavigation = computed(()=>{
     let options: object[] = [];
 
     options = options.concat([
@@ -331,7 +346,7 @@ let mainNavigation = computed(()=>{
 
     return options;
 });
-let accountOptions = computed(() => {
+const accountOptions = computed(() => {
     let options: object[] = [];
 
     if(isAuthenticated.value){
@@ -381,7 +396,7 @@ let accountOptions = computed(() => {
 
     return options;
 });
-let menuOptions = computed(() => {
+const menuOptions = computed(() => {
     let options: object[] = [];
 
     options = options.concat(mainNavigation.value);
@@ -390,24 +405,14 @@ let menuOptions = computed(() => {
 
     return options;
 });
-let navigationBackground = computed(()=>{
+const navigationBackground = computed(()=>{
     if(navigationMode.value === 'clear'){
         return 'transparent';
     }
 
     return bodyColor.value;
 });
-let topAllocation = computed(()=>{
-    if(navigationMode.value === 'clear'){
-        return '0px';
-    }
 
-    if(['index'].indexOf(_toLower(route.name)) >= 0){
-        return '0px';
-    }
-
-    return (navigationHeight.value + 'px');
-});
 
 function isRouteActive(routeSlug: string) {
     return [route.path, _toLower(route.name)].indexOf(_toLower(routeSlug)) >= 0;
@@ -421,18 +426,11 @@ a.footer-link:hover{
 
 .primary-navigation-parent {
     background-color: v-bind(navigationBackground) !important;
-    border-top: none;
-    border-left: none;
-    border-right: none;
-    top: 0;
-    left: 0;
-    right: 0;
-    width: 100%;
     z-index: 30;
 }
 
 .allocate-navigation {
-    margin-top: v-bind(topAllocation);
+    padding-top: v-bind(topAllocationInPixels);
 }
 
 .ping{
@@ -454,5 +452,10 @@ a.footer-link:hover{
         v-bind(threadColor) 90%,
         transparent 100%
     );
+}
+</style>
+<style>
+.navigation-height{
+    height: v-bind(navigationHeightInPixels);
 }
 </style>
