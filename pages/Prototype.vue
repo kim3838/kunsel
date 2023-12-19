@@ -905,15 +905,15 @@
                         <div v-if="true" class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-1 lg:tw-grid-cols-3 xl:tw-grid-cols-3 2xl:tw-grid-cols-3">
                             <div>
                                 <InputLabel :size="'md'" value="MD : Accordion Single Expand" />
-                                <Accordion :size="'md'" :single-expand="true" v-model="accordionSingleExpand" />
+                                <Accordion :size="'md'" :single-expand="true" v-model:payload="accordionSingleExpand" />
                             </div>
                             <div>
                                 <InputLabel :size="'md'" value="MD : Accordion Multi Expand" />
-                                <Accordion :size="'md'" class="tw-space-y-4" v-model="accordionMultiExpand" />
+                                <Accordion :size="'md'" class="tw-space-y-4" v-model:payload="accordionMultiExpand" />
                             </div>
                             <div>
                                 <InputLabel :size="'md'" value="LG : Accordion Multi Expand" />
-                                <Accordion :size="'lg'" class="tw-space-y-4" v-model="accordionMultiExpand" />
+                                <Accordion :size="'lg'" class="tw-space-y-4" v-model:payload="accordionMultiExpand" />
                             </div>
                         </div>
 
