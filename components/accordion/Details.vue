@@ -38,7 +38,7 @@ const props = defineProps({
         type: Boolean,
         default: false
     },
-    activeBorder: {
+    activeBorderColor: {
         type: String,
         default: ''
     },
@@ -60,8 +60,8 @@ const props = defineProps({
     },
 });
 
-const activeBorderComputed = computed(() => {
-    return props.activeBorder ? props.activeBorder : liningColor.value;
+const activeBorderColorComputed = computed(() => {
+    return props.activeBorderColor ? props.activeBorderColor : liningColor.value;
 });
 
 const heightClass = computed(() => {
@@ -92,11 +92,11 @@ const textTypeTitleContentAlignment = computed(() => {
 <style scoped>
 .active-border-title {
     border-width: 1px;
-    border-color: v-bind(activeBorderComputed) !important;
+    border-color: v-bind(activeBorderColorComputed) !important;
 }
 .active-border-body {
     border-width: 1px;
-    border-color: v-bind(activeBorderComputed) !important;
+    border-color: v-bind(activeBorderColorComputed) !important;
     border-top: none;
 }
 .text-type-title-content-alignment{

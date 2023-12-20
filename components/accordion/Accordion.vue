@@ -10,6 +10,7 @@
             :center-content="centerContent"
             :title-icon="titleIcon"
             :multi-line-title="multiLineTitle"
+            :active-border-color="activeBorderColor"
             @toggle="toggleDetail"
         >
             <template v-slot:title>
@@ -69,6 +70,10 @@ const props = defineProps({
     singleExpand: {
         type: Boolean,
         default: false
+    },
+    activeBorderColor: {
+        type: String,
+        default: ''
     },
     titleIcon: {
         type: Boolean,
