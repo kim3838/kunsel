@@ -20,6 +20,13 @@
                     <ClientOnly><Icon v-if="dropOption.icon" :name="dropOption.icon" class="tw-mr-1" /></ClientOnly><span>{{dropOption.title}}</span>
                 </NuxtLink>
 
+                <a v-if="dropOption.type == 'anchor-link'" :href="dropOption.to">
+                    <NuxtLink
+                        class="tw-px-4 tw-py-1 tw-w-full tw-inline-flex tw-items-center">
+                        <ClientOnly><Icon v-if="dropOption.icon" :name="dropOption.icon" class="tw-mr-1" /></ClientOnly><span>{{dropOption.title}}</span>
+                    </NuxtLink>
+                </a>
+
                 <div v-if="dropOption.type === 'action'"
                      @click="typeof dropOption.callback == 'function' ? dropOption.callback() : false;"
                      class="tw-px-4 tw-py-1 tw-w-full tw-inline-flex tw-items-center">

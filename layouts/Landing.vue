@@ -18,13 +18,24 @@
                     <div class="tw--my-px tw-hidden sm:tw-flex">
                         <span class="tw-flex tw-items-center"  v-for="navigation in mainNavigation" :key="navigation.title">
                             <NavLink
-                                class="tw-h-full "
+                                class="tw-h-full"
                                 v-if="navigation.type == 'link'"
                                 :size="navigationHeaderSize"
                                 :to="navigation.to"
                                 :active="isRouteActive(navigation.route)">
                                 {{navigation.title}}
                             </NavLink>
+
+                            <a
+                                class="tw-h-full"
+                                v-if="navigation.type == 'anchor-link'"
+                                :href="navigation.to">
+                                <NavLink
+                                    class="tw-h-full"
+                                    :size="navigationHeaderSize">
+                                    {{navigation.title}}
+                                </NavLink>
+                            </a>
 
                             <NavDrop
                                 class="tw-h-full"
@@ -317,7 +328,7 @@ const mainNavigation = computed(()=>{
             icon: 'ic:baseline-arrow-right',
             options: [
                 {
-                    type: 'link',
+                    type: 'anchor-link',
                     title: 'FAQ',
                     icon: 'ic:baseline-arrow-right',
                     to: '/#faq'
