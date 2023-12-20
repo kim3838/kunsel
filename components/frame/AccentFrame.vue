@@ -32,20 +32,20 @@
     </div>
 </template>
 <script setup>
-import {computed, onMounted, ref, watch} from 'vue';
 import {storeToRefs} from 'pinia';
+import {computed} from "vue";
 const {$themeStore} = useNuxtApp();
 
 const {
+    hexAlpha,
     lining: liningColor,
     thread: threadColor,
     neutral: neutralColor,
     tint: tintColor,
-    text: textColor,
 } = storeToRefs($themeStore);
 
-const props = defineProps({
-
+const threadColor20 = computed(() => {
+    return threadColor.value + hexAlpha.value['20'];
 });
 </script>
 <style scoped>
@@ -76,7 +76,7 @@ const props = defineProps({
     bottom: 1rem;
     left: 0rem;
     background-color: v-bind(tintColor);
-    border: 1px solid v-bind(neutralColor);
+    border: 1px solid v-bind(threadColor20);
 }
 
 .frame-thread-1{

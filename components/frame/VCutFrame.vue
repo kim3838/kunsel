@@ -23,27 +23,15 @@
 
 <script setup>
 import {storeToRefs} from 'pinia';
-import {computed} from "vue";
 const {$themeStore} = useNuxtApp();
 
 const {
     hexAlpha,
-    accent: accentColor,
     lining: liningColor,
     thread: threadColor,
     tint: tintColor,
-    shade: shadeColor,
-    text: textColor,
     textInvert: textInvertColor,
 } = storeToRefs($themeStore);
-
-const threadColor50 = computed(() => {
-    return threadColor.value + hexAlpha.value['50'];
-});
-
-const liningColor50 = computed(() => {
-    return liningColor.value + hexAlpha.value['50'];
-});
 </script>
 
 <style scoped>
