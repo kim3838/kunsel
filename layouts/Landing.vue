@@ -1,21 +1,21 @@
 <template>
     <div class="tw-relative">
         <!-- Primary Navigation Menu -->
-        <nav ref="navigation" class="tw-snap-start tw-snap-always primary-navigation-parent tw-transition-all tw-duration-700 tw-z-40 tw-fixed tw-w-full tw-flex tw-justify-center">
-            <div class="tw-max-w-screen-2xl tw-w-full tw-flex tw-justify-between tw-h-10 lg:tw-h-20">
+        <nav ref="navigation" class="tw-snap-start tw-snap-always primary-navigation-parent tw-transition-all tw-duration-700 tw-z-40 tw-fixed tw-flex tw-justify-center">
+            <div class="tw-max-w-screen-2xl tw-w-full tw-flex tw-justify-start lg:tw-justify-around tw-h-10 lg:tw-h-20">
                 <div class="tw--my-px tw-flex tw-items-center">
-                    <div v-if="['index'].indexOf(_toLower(route.name)) >= 0" class="tw-block sm:tw-hidden md:tw-hidden lg:tw-block tw-h-full tw-w-full tw-flex tw-items-center">
+                    <div v-if="['index'].includes(_toLower(route.name))" class="tw-w-max tw-block tw-h-full tw-w-full tw-flex tw-items-center">
                         <Colorful :dark="useNuxtApp().$coreStore.navigationMode === 'clear'" />
                     </div>
                     <NavDrop
-                        class="sm:tw-hidden tw-h-full"
+                        class="lg:tw-hidden tw-h-full"
                         :size="navigationHeaderSize"
                         :title="'Menu'"
                         :drop-options="menuOptions" />
                 </div>
                 <div class="tw-flex">
                     <!-- Navigation Links -->
-                    <div class="tw--my-px tw-hidden sm:tw-flex">
+                    <div class="tw--my-px tw-hidden lg:tw-flex">
                         <span class="tw-flex tw-items-center"  v-for="navigation in mainNavigation" :key="navigation.title">
                             <NavLink
                                 class="tw-h-full"
@@ -237,7 +237,7 @@ const topAllocationInPixels = computed(()=>{
         return '0px';
     }
 
-    if(['index'].indexOf(_toLower(route.name)) >= 0){
+    if(['index'].includes(_toLower(route.name))){
         return '0px';
     }
 
@@ -251,7 +251,7 @@ onMounted(async () => {
 });
 
 watch(windowYScroll, value => {
-    if(['index'].indexOf(_toLower(route.name)) >= 0){
+    if(['index'].includes(_toLower(route.name))){
         if(value > (screenHeight.value - navigationHeight.value)){
             $coreStore.setNavigationMode('solid');
         } else {
@@ -300,21 +300,9 @@ const mainNavigation = computed(()=>{
         },
         {
             type: 'link',
-            title: 'Lab',
-            to: '/lab',
-            route: 'lab'
-        },
-        {
-            type: 'link',
             title: 'Login',
             to: '/login',
             route: 'login'
-        },
-        {
-            type: 'link',
-            title: 'Profile',
-            to: '/profile',
-            route: 'profile'
         },
         {
             type: 'link',
@@ -437,6 +425,8 @@ a.footer-link:hover{
 
 .primary-navigation-parent {
     background-color: v-bind(navigationBackground) !important;
+    left: 0;
+    right: 5px;
     z-index: 30;
 }
 

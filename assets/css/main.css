@@ -9,47 +9,16 @@ html{
     -moz-osx-font-smoothing: grayscale;
 }
 
-/**,*/
-/**::before,*/
-/**::after {*/
-/*    box-sizing: border-box;*/
-/*    margin: 0;*/
-/*}*/
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+}
 
 body{
     text-rendering: optimizeLegibility;
-}
-
-/*.layer:before{*/
-/*    position: absolute;*/
-/*    content: "";*/
-/*    top: 0;*/
-/*    left: 0;*/
-/*    right: 0;*/
-/*    bottom: 0;*/
-/*    background: rgb(186, 198, 204);*/
-/*    background: radial-gradient(circle, rgba(141, 155, 164, 0) 0%, rgba(117, 160, 192, 0) 50%, rgba(120, 151, 173, 0.7) 100%);*/
-/*}*/
-
-::-webkit-scrollbar {
-    width: 10px;
-    height: 10px;
-}
-
-/* Track */
-::-webkit-scrollbar-track {
-    background: rgb(243 244 246);
-    box-shadow: inset 0 0 4px rgba(0, 0, 0, 0.12);
-}
-
-/* Handle */
-::-webkit-scrollbar-thumb {
-    background: rgba(0, 0, 0, 0.12);
-}
-
-/* Handle on hover */
-::-webkit-scrollbar-thumb:hover {
-    background: rgba(0, 0, 0, 0.22);
+    overflow: hidden;
 }
 
 .header-1{

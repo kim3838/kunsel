@@ -1,6 +1,6 @@
 <template>
     <!-- Nuxt Wrapper -->
-    <div ref="nuxtScroll" class="nuxt-page tw-scroll-smooth tw-h-screen" :class="[$coreStore.enableScrollSnap ? 'tw-overflow-y-scroll tw-snap-y tw-snap-mandatory' : '']">
+    <div ref="nuxtScroll" class="nuxt-page tw-scroll-smooth tw-max-h-screen" :class="[$coreStore.enableScrollSnap ? 'tw-overflow-y-scroll tw-snap-y tw-snap-mandatory' : 'tw-overflow-auto']">
         <div class="tw-absolute tw-inset-x-0 tw--top-40 tw--z-10 tw-overflow-hidden tw-blur-3xl sm:tw--top-80" aria-hidden="true">
             <div class="top-fragment tw-relative tw-left-[calc(50%-11rem)] tw-aspect-[1155/678] tw-w-[36.125rem] tw--translate-x-1/2 tw-rotate-[30deg] tw-opacity-30 sm:tw-left-[calc(50%-30rem)] sm:tw-w-[72.1875rem]"></div>
         </div>
@@ -15,19 +15,22 @@
 </template>
 
 <script setup lang="ts">
-import {watch} from "vue";
+import {computed, watch} from "vue";
 import {storeToRefs} from 'pinia';
 import {useScroll} from '@vueuse/core'
 
 const {$debug, $moment, $themeStore, $coreStore} = useNuxtApp();
 const runtimeConfig = useRuntimeConfig();
 const appConfig = useAppConfig();
+const route = useRoute();
 
 const {
+    hexAlpha,
     primary: primaryColor,
     shade: shadeColor,
     accent: accentColor,
     lining: liningColor,
+    thread: threadColor,
     tint: tintColor,
     text: textColor,
     neutral: neutralColor,
@@ -35,11 +38,21 @@ const {
     textSecondary: textSecondaryColor,
 } = storeToRefs($themeStore);
 
+const threadColor10 = computed(() => {
+    return threadColor.value + hexAlpha.value['10'];
+});
+const liningColor10 = computed(() => {
+    return liningColor.value + hexAlpha.value['10'];
+});
+const liningColor70 = computed(() => {
+    return liningColor.value + hexAlpha.value['70'];
+});
+
 const nuxtScroll = ref<HTMLElement | null>(null)
 const {arrivedState: nuxtScrollArrivedState } = useScroll(nuxtScroll)
 const {top: nuxtScrollTopReached} = toRefs(nuxtScrollArrivedState);
 watch(nuxtScrollTopReached, (topReached) => {
-    if(topReached){
+    if(topReached && ['index'].includes(_toLower(route.name))){
         $coreStore.setNavigationMode('clear');
     } else {
         $coreStore.setNavigationMode('solid');
@@ -58,6 +71,25 @@ watch(nuxtScrollTopReached, (topReached) => {
 // const mountains = await $fetch('https://api.nuxtjs.dev/mountains').catch((error) => error.data)
 </script>
 <style>
+
+::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+}
+
+::-webkit-scrollbar-track {
+    background: v-bind(threadColor10);
+    box-shadow: inset 0 0 4px v-bind(liningColor10);
+}
+
+::-webkit-scrollbar-thumb {
+    background: v-bind(liningColor70);
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: v-bind(liningColor);
+}
+
 .nuxt-page {
     color: v-bind(textColor);
 }

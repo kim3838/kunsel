@@ -34,7 +34,7 @@ export const useCoreStore = defineStore('core', () => {
         return navigation.value.mode;
     })
     const enableScrollSnap = computed(() => {
-        return ['index'].indexOf(_toLower(route.name)) >= 0;
+        return ['index'].includes(_toLower(route.name));
     })
 
     function setNavigationMode(mode){
