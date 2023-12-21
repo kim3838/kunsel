@@ -10,6 +10,6 @@ export default defineNuxtPlugin({
     },
 
     hooks: {
-
+        'app:created'(vueApp){}
     },
 });
