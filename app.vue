@@ -1,6 +1,6 @@
 <template>
     <!-- Nuxt Wrapper -->
-    <div ref="nuxtScroll" class="nuxt-page tw-scroll-smooth tw-max-h-screen" :class="[$coreStore.enableScrollSnap ? 'tw-overflow-y-scroll tw-snap-y tw-snap-mandatory' : 'tw-overflow-auto']">
+    <div ref="nuxtWrapper" class="nuxt-page tw-scroll-smooth tw-max-h-screen tw-overflow-y-scroll">
         <div class="tw-absolute tw-inset-x-0 tw--top-40 tw--z-10 tw-overflow-hidden tw-blur-3xl sm:tw--top-80" aria-hidden="true">
             <div class="top-fragment tw-relative tw-left-[calc(50%-11rem)] tw-aspect-[1155/678] tw-w-[36.125rem] tw--translate-x-1/2 tw-rotate-[30deg] tw-opacity-30 sm:tw-left-[calc(50%-30rem)] sm:tw-w-[72.1875rem]"></div>
         </div>
@@ -17,7 +17,7 @@
 <script setup lang="ts">
 import {computed, watch} from "vue";
 import {storeToRefs} from 'pinia';
-import {useScroll} from '@vueuse/core'
+import {useScroll} from '@vueuse/core';
 
 const {$debug, $moment, $themeStore, $coreStore} = useNuxtApp();
 const runtimeConfig = useRuntimeConfig();
@@ -48,16 +48,9 @@ const liningColor70 = computed(() => {
     return liningColor.value + hexAlpha.value['70'];
 });
 
-const nuxtScroll = ref<HTMLElement | null>(null)
-const {arrivedState: nuxtScrollArrivedState } = useScroll(nuxtScroll)
-const {top: nuxtScrollTopReached} = toRefs(nuxtScrollArrivedState);
-watch(nuxtScrollTopReached, (topReached) => {
-    if(topReached && ['index'].includes(_toLower(route.name))){
-        $coreStore.setNavigationMode('clear');
-    } else {
-        $coreStore.setNavigationMode('solid');
-    }
-});
+const nuxtWrapper = ref(null);
+const {x: nuxtWrapperXScroll,y: nuxtWrapperYScroll,arrivedState: nuxtWrapperArrivedState } = useScroll(nuxtWrapper)
+const {top: nuxtWrapperTopReached} = toRefs(nuxtWrapperArrivedState);
 
 // $debug('runtimeConfig',runtimeConfig);
 // $debug('appConfig', appConfig);
