@@ -1,5 +1,6 @@
 <template>
-    <div class="tw-relative">
+    <!--  -->
+    <div ref="snapScroll" class="tw-relative tw-scroll-smooth tw-max-h-screen" :class="[enableScrollSnap ? 'tw-overflow-y-scroll tw-snap-y tw-snap-mandatory' : 'tw-overflow-auto tw-snap-none']">
         <!-- Primary Navigation Menu -->
         <nav ref="navigation" class="tw-snap-start tw-snap-always primary-navigation-parent tw-transition-all tw-duration-700 tw-z-40 tw-fixed tw-flex tw-justify-center">
             <div class="tw-max-w-screen-2xl tw-w-full tw-flex tw-justify-start lg:tw-justify-around tw-h-10 lg:tw-h-20">
@@ -67,7 +68,7 @@
         <!-- Action Modal -->
         <PromptModal />
         <!-- Footer -->
-        <footer :class="[$coreStore.enableScrollSnap ? 'tw-snap-start tw-snap-always' : 'tw-snap-align-none']">
+        <footer :class="[enableScrollSnap ? 'tw-snap-start tw-snap-always' : '']">
             <div class="tw-mx-auto tw-max-w-screen-2xl tw-px-4 tw-pb-6 tw-pt-16 sm:tw-px-6 lg:tw-px-8">
                 <div class="tw-grid tw-grid-cols-1 lg:tw-grid-cols-4">
                     <div>
@@ -206,16 +207,16 @@
 </template>
 
 <script setup lang="ts">
-import {useWindowScroll} from '@vueuse/core'
 import {storeToRefs} from 'pinia';
 import {computed, nextTick, onMounted, ref, watch} from "vue";
+import {useScroll} from '@vueuse/core';
 
 const route = useRoute();
-const {$coreStore, $themeStore} = useNuxtApp();
+const {$coreStore, $layoutStore, $themeStore} = useNuxtApp();
 const {isAuthenticated, user, logout} = useAuth();
 const {screens, width: screenWidth, height: screenHeight } = useScreen();
 const navDrop = resolveComponent('navDrop');
-const { y: windowYScroll } = useWindowScroll();
+
 const {
     primary: primaryColor,
     accent: accentColor,
@@ -227,11 +228,13 @@ const {
 const {
     navigationMode
 } = storeToRefs($coreStore);
+const {
+    navigationHeight,
+    navigationHeightInPixels
+} = storeToRefs($layoutStore);
+
 const navigation = ref(null);
-const navigationHeight = ref(0);
-const navigationHeightInPixels = computed(() => {
-    return (navigationHeight.value + 'px');
-});
+
 const topAllocationInPixels = computed(()=>{
     if(navigationMode.value === 'clear'){
         return '0px';
@@ -246,22 +249,29 @@ const topAllocationInPixels = computed(()=>{
 
 onMounted(async () => {
     await nextTick(() => {
-        navigationHeight.value = navigation.value.offsetHeight;
+        $layoutStore.setNavigationHeight(navigation.value.offsetHeight);
     });
 });
 
-watch(windowYScroll, value => {
-    if(['index'].includes(_toLower(route.name))){
-        if(value > (screenHeight.value - navigationHeight.value)){
-            $coreStore.setNavigationMode('solid');
-        } else {
-            $coreStore.setNavigationMode('clear');
-        }
+watch(screenWidth, value => {
+    $layoutStore.setNavigationHeight(navigation.value.offsetHeight);
+});
+
+const enableScrollSnap = computed(() => {
+    return ['index'].includes(_toLower(route.name));
+});
+const snapScroll = ref<HTMLElement | null>(null)
+const {y: snapYScroll,arrivedState: snapScrollArrivedState } = useScroll(snapScroll)
+const {top: snapScrollTopReached} = toRefs(snapScrollArrivedState);
+
+watch(snapYScroll, (yScroll) => {
+    if(yScroll <= ((screenHeight.value * 2) - navigationHeight.value) && ['index'].includes(_toLower(route.name))){
+        $coreStore.setNavigationMode('clear');
+    } else {
+        $coreStore.setNavigationMode('solid');
     }
 });
-watch(screenWidth, value => {
-    navigationHeight.value = navigation.value.offsetHeight;
-});
+
 
 const navigationHeaderSize = computed(() => {
     let size = 'lg'
@@ -294,15 +304,15 @@ const mainNavigation = computed(()=>{
         },
         {
             type: 'link',
-            title: 'Prototype',
-            to: '/prototype',
-            route: 'prototype'
+            title: 'Lab',
+            to: '/lab',
+            route: 'lab'
         },
         {
             type: 'link',
-            title: 'Login',
-            to: '/login',
-            route: 'login'
+            title: 'Prototype',
+            to: '/prototype',
+            route: 'prototype'
         },
         {
             type: 'link',
