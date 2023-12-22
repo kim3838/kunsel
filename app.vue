@@ -1,6 +1,6 @@
 <template>
     <!-- Nuxt Wrapper -->
-    <div ref="nuxtWrapper" class="nuxt-page tw-scroll-smooth tw-max-h-screen tw-overflow-y-scroll">
+    <div ref="nuxtWrapper" class="nuxt-page tw-scroll-smooth tw-max-h-screen tw-overflow-y-auto">
         <div class="tw-absolute tw-inset-x-0 tw--top-40 tw--z-10 tw-overflow-hidden tw-blur-3xl sm:tw--top-80" aria-hidden="true">
             <div class="top-fragment tw-relative tw-left-[calc(50%-11rem)] tw-aspect-[1155/678] tw-w-[36.125rem] tw--translate-x-1/2 tw-rotate-[30deg] tw-opacity-30 sm:tw-left-[calc(50%-30rem)] sm:tw-w-[72.1875rem]"></div>
         </div>
@@ -58,8 +58,6 @@ const {top: nuxtWrapperTopReached} = toRefs(nuxtWrapperArrivedState);
 // $debug('themeStore', $themeStore['colors']['light']);
 // $debug('moment', $moment().format('YYYY-MM-DD'));
 // $debug('lodash', _upperCase('lodash uppercase'));
-// console.log({'layout': $coreStore.layout});
-// console.log({'layout': $coreStore.service.error.title});
 
 // const mountains = await $fetch('https://api.nuxtjs.dev/mountains').catch((error) => error.data)
 </script>
