@@ -22,9 +22,9 @@ export const useLayoutStore = defineStore('layout', () => {
             navigation.value.mode = mode;
         }
     }
-    function setLayout(layout){
-        if(layout != layout.value){
-            layout.value = layout;
+    function setLayout(value){
+        if(value != layout.value){
+            layout.value = value;
         }
     }
 
