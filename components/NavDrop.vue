@@ -51,7 +51,7 @@ import {computed, ref} from "vue";
 import {useFocusWithin} from '@vueuse/core';
 import {storeToRefs} from 'pinia';
 
-const {$coreStore, $themeStore} = useNuxtApp();
+const {$layoutStore, $themeStore} = useNuxtApp();
 const nav = ref();
 const {focused: navigationFocused} = useFocusWithin(nav);
 const {
@@ -64,7 +64,7 @@ const {
 
 const {
     navigationMode
-} = storeToRefs($coreStore);
+} = storeToRefs($layoutStore);
 
 const navigationLinkColor = computed(()=>{
     if(navigationMode.value === 'clear'){

@@ -1,6 +1,6 @@
 <template>
     <div>
-        <NuxtLayout :name="$coreStore.layout">
+        <NuxtLayout :name="$layoutStore.layout">
             <template #content>
                 <div class="tw-mx-auto tw-pt-4 tw-max-w-screen-2xl">
                     <div>Tailwind Url: <NuxtLink class="tw-text-sky-600" :to="'_tailwind'" target="_blank">{{('http://localhost:3000' + '/_tailwind/')}}</NuxtLink></div>
@@ -1146,9 +1146,9 @@
 <script setup lang="ts">
 import {ref, onMounted, reactive} from 'vue';
 import {storeToRefs} from 'pinia';
-const {$themeStore, $coreStore, $formStore} = useNuxtApp();
+const {$themeStore, $layoutStore, $formStore} = useNuxtApp();
 
-$coreStore.setNavigationMode('solid');
+$layoutStore.setNavigationMode('solid');
 
 definePageMeta({
     layout: false,

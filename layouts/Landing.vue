@@ -6,7 +6,7 @@
             <div class="tw-max-w-screen-2xl tw-w-full tw-flex tw-justify-start lg:tw-justify-around tw-h-10 lg:tw-h-20">
                 <div class="tw--my-px tw-flex tw-items-center">
                     <div v-if="['index'].includes(_toLower(route.name))" class="tw-w-max tw-block tw-h-full tw-w-full tw-flex tw-items-center">
-                        <Colorful :dark="useNuxtApp().$coreStore.navigationMode === 'clear'" />
+                        <Colorful :dark="$layoutStore.navigationMode === 'clear'" />
                     </div>
                     <NavDrop
                         class="lg:tw-hidden tw-h-full"
@@ -212,7 +212,7 @@ import {computed, nextTick, onMounted, ref, watch} from "vue";
 import {useScroll} from '@vueuse/core';
 
 const route = useRoute();
-const {$coreStore, $layoutStore, $themeStore} = useNuxtApp();
+const {$layoutStore, $themeStore} = useNuxtApp();
 const {isAuthenticated, user, logout} = useAuth();
 const {screens, width: screenWidth, height: screenHeight } = useScreen();
 const navDrop = resolveComponent('navDrop');
@@ -226,9 +226,7 @@ const {
     thread: threadColor
 } = storeToRefs($themeStore);
 const {
-    navigationMode
-} = storeToRefs($coreStore);
-const {
+    navigationMode,
     navigationHeight,
     navigationHeightInPixels
 } = storeToRefs($layoutStore);
@@ -266,9 +264,9 @@ const {top: snapScrollTopReached} = toRefs(snapScrollArrivedState);
 
 watch(snapYScroll, (yScroll) => {
     if(yScroll <= ((screenHeight.value * 2) - navigationHeight.value) && ['index'].includes(_toLower(route.name))){
-        $coreStore.setNavigationMode('clear');
+        $layoutStore.setNavigationMode('clear');
     } else {
-        $coreStore.setNavigationMode('solid');
+        $layoutStore.setNavigationMode('solid');
     }
 });
 

@@ -1,6 +1,6 @@
 <template>
     <div>
-        <NuxtLayout :name="$coreStore.layout">
+        <NuxtLayout :name="$layoutStore.layout">
             <template #content>
                 <div class="tw-mx-auto tw-max-w-screen-2xl tw-flex tw-justify-center">
                     <AccentFrame class="tw-my-4">
@@ -71,10 +71,10 @@
 
 <script setup lang="ts">
 import {ref, onMounted, nextTick} from 'vue';
-const {$coreStore} = useNuxtApp();
+const {$coreStore, $layoutStore} = useNuxtApp();
 const {isAuthenticated, login, authPending} = useAuth();
 
-$coreStore.setNavigationMode('solid');
+$layoutStore.setNavigationMode('solid');
 
 definePageMeta({
     layout: false,

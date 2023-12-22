@@ -1,12 +1,6 @@
 import {defineStore} from 'pinia'
 
 export const useCoreStore = defineStore('core', () => {
-    const route = useRoute();
-
-    const layout = ref('landing');
-    const navigation = ref({
-        mode: 'clear'
-    });
     const service = ref({
         error: {
             prompt: false,
@@ -30,20 +24,7 @@ export const useCoreStore = defineStore('core', () => {
     const getServiceError = computed(() => {
         return service.value.error;
     })
-    const navigationMode = computed(() => {
-        return navigation.value.mode;
-    })
 
-    function setNavigationMode(mode){
-        if(mode != navigation.value.mode){
-            navigation.value.mode = mode;
-        }
-    }
-    function setLayout(layout){
-        if(layout != layout.value){
-            layout.value = layout;
-        }
-    }
     function setServiceError(serviceError){
         service.value.error = serviceError;
 
@@ -108,14 +89,9 @@ export const useCoreStore = defineStore('core', () => {
     }
 
     return {
-        layout,
-        navigation,
         service,
         prompt,
         getServiceError,
-        navigationMode,
-        setNavigationMode,
-        setLayout,
         setServiceError,
         setPrompt,
         resetServiceError,

@@ -1,6 +1,6 @@
 <template>
     <div>
-        <NuxtLayout :name="$coreStore.layout">
+        <NuxtLayout :name="$layoutStore.layout">
             <template #content>
                 <div class="tw-mx-auto tw-max-w-screen-2xl">
                     <div class="tw-mx-auto tw-flex tw-flex-col tw-justify-center tw-w-fit">
@@ -197,9 +197,9 @@
 
 <script setup lang="ts">
 import {computed, ref, reactive, watch} from 'vue';
-const {$coreStore} = useNuxtApp();
+const {$coreStore, $layoutStore} = useNuxtApp();
 
-$coreStore.setNavigationMode('solid');
+$layoutStore.setNavigationMode('solid');
 
 definePageMeta({
     layout: false,
