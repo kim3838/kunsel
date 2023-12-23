@@ -1142,8 +1142,6 @@ import {ref, onMounted, reactive} from 'vue';
 import {storeToRefs} from 'pinia';
 const {$themeStore, $layoutStore, $formStore} = useNuxtApp();
 
-definePageMeta({layout: false});
-setPageLayout('default');
 $layoutStore.setNavigationMode('solid');
 
 const {

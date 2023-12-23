@@ -188,8 +188,7 @@
 import {computed, ref, reactive, watch} from 'vue';
 const {$coreStore, $layoutStore} = useNuxtApp();
 
-definePageMeta({layout: false, middleware: 'auth'});
-setPageLayout('default');
+definePageMeta({middleware: 'auth'});
 $layoutStore.setNavigationMode('solid');
 
 const user = ref({

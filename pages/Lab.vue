@@ -113,8 +113,7 @@
 import {computed, ref, reactive, nextTick, onMounted} from "vue";
 const {$layoutStore} = useNuxtApp();
 
-definePageMeta({layout: false, middleware: 'guest'});
-setPageLayout('default');
+definePageMeta({middleware: 'guest'});
 $layoutStore.setNavigationMode('solid');
 
 const layout = ref('default')

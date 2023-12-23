@@ -93,8 +93,8 @@
 import {ref, reactive, watch, nextTick, onMounted} from 'vue';
 const {$layoutStore, $moment} = useNuxtApp();
 
-definePageMeta({layout: false, middleware: ['auth', 'verified']});
-setPageLayout('default')
+definePageMeta({middleware: ['auth', 'verified']});
+
 $layoutStore.setNavigationMode('solid');
 
 let prototypes = reactive({
