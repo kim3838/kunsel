@@ -1,15 +1,14 @@
 <template>
     <!-- Nuxt Wrapper -->
-    <div ref="nuxtWrapper" class="nuxt-page tw-scroll-smooth tw-max-h-screen tw-overflow-y-auto">
-        <div class="tw-absolute tw-inset-x-0 tw--top-40 tw--z-10 tw-overflow-hidden tw-blur-3xl sm:tw--top-80" aria-hidden="true">
-            <div class="top-fragment tw-relative tw-left-[calc(50%-11rem)] tw-aspect-[1155/678] tw-w-[36.125rem] tw--translate-x-1/2 tw-rotate-[30deg] tw-opacity-30 sm:tw-left-[calc(50%-30rem)] sm:tw-w-[72.1875rem]"></div>
+    <div ref="nuxtWrapper" class="nuxt-page tw-relative">
+        <div class="tw-absolute tw-inset-x-0 tw--z-10 tw-overflow-hidden tw--top-40 sm:tw--top-80 tw-blur-3xl" aria-hidden="true">
+            <div class="top-fragment tw-relative tw-w-[36.125rem] sm:tw-w-[72.1875rem] tw-left-[calc(50%-11rem)] sm:tw-left-[calc(50%-30rem)] tw-aspect-[1155/678] tw--translate-x-1/2 tw-rotate-[30deg] tw-opacity-30"></div>
         </div>
         <NuxtLayout>
             <NuxtPage/>
         </NuxtLayout>
-        <div id="datetimepicker-slot"></div>
-        <div class="tw-absolute tw-inset-x-0 tw-top-[calc(20%)] tw--z-10 tw-overflow-hidden tw-blur-3xl sm:tw-top-[calc(0%)]" aria-hidden="true">
-            <div class="bottom-fragment tw-relative tw-left-[calc(50%+3rem)] tw-aspect-[1155/678] tw-w-[36.125rem] tw--translate-x-1/2  tw-opacity-30 sm:tw-left-[calc(50%+36rem)] sm:tw-w-[72.1875rem]"></div>
+        <div class="tw-absolute tw-inset-x-0 tw--z-10 tw-overflow-hidden tw-top-[calc(20%)] sm:tw-top-[calc(0%)] tw-blur-3xl" aria-hidden="true">
+            <div class="bottom-fragment tw-relative tw-w-[36.125rem] sm:tw-w-[72.1875rem] tw-left-[calc(50%+3rem)] sm:tw-left-[calc(50%+36rem)] tw-aspect-[1155/678]  tw--translate-x-1/2  tw-opacity-30"></div>
         </div>
     </div>
 </template>

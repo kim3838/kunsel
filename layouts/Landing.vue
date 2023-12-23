@@ -1,8 +1,10 @@
 <template>
-    <!--  -->
-    <div ref="snapScroll" class="tw-relative tw-scroll-smooth tw-max-h-screen" :class="[enableScrollSnap ? 'tw-overflow-y-scroll tw-snap-y tw-snap-mandatory' : 'tw-overflow-auto tw-snap-none']">
+    <div ref="snapScroll" class="tw-scroll-smooth tw-h-screen tw-max-h-screen" :class="[enableScrollSnap ? 'tw-overflow-y-scroll tw-snap-y tw-snap-mandatory' : 'tw-overflow-auto tw-snap-none']">
         <!-- Primary Navigation Menu -->
-        <nav ref="navigation" class="tw-snap-start tw-snap-always primary-navigation-parent tw-transition-all tw-duration-700 tw-z-40 tw-fixed tw-flex tw-justify-center">
+        <nav
+            ref="landingNavigation"
+            :class="[enableScrollSnap ? 'tw-snap-start tw-snap-always' : '']"
+            class="primary-navigation-parent tw-transition-all tw-duration-700 tw-z-40 tw-fixed tw-flex tw-justify-center">
             <div class="tw-max-w-screen-2xl tw-w-full tw-flex tw-justify-start lg:tw-justify-around tw-h-10 lg:tw-h-20">
                 <div class="tw--my-px tw-flex tw-items-center">
                     <div v-if="['index'].includes(_toLower(route.name))" class="tw-w-max tw-block tw-h-full tw-w-full tw-flex tw-items-center">
@@ -65,6 +67,8 @@
         <main class="tw-relative tw-transition-all tw-duration-300 allocate-navigation">
             <slot name="content"/>
         </main>
+        <!-- DateTime Picker -->
+        <div id="datetimepicker-slot"></div>
         <!-- Action Modal -->
         <PromptModal />
         <!-- Footer -->
@@ -216,7 +220,6 @@ const {$layoutStore, $themeStore} = useNuxtApp();
 const {isAuthenticated, user, logout} = useAuth();
 const {screens, width: screenWidth, height: screenHeight } = useScreen();
 const navDrop = resolveComponent('navDrop');
-
 const {
     primary: primaryColor,
     accent: accentColor,
@@ -231,8 +234,7 @@ const {
     navigationHeightInPixels
 } = storeToRefs($layoutStore);
 
-const navigation = ref(null);
-
+const landingNavigation = ref(null);
 const topAllocationInPixels = computed(()=>{
     if(navigationMode.value === 'clear'){
         return '0px';
@@ -247,12 +249,12 @@ const topAllocationInPixels = computed(()=>{
 
 onMounted(async () => {
     await nextTick(() => {
-        $layoutStore.setNavigationHeight(navigation.value.offsetHeight);
+        $layoutStore.setNavigationHeight(landingNavigation.value.offsetHeight);
     });
 });
 
 watch(screenWidth, value => {
-    $layoutStore.setNavigationHeight(navigation.value.offsetHeight);
+    $layoutStore.setNavigationHeight(landingNavigation.value.offsetHeight);
 });
 
 const enableScrollSnap = computed(() => {
@@ -263,13 +265,12 @@ const {y: snapYScroll,arrivedState: snapScrollArrivedState } = useScroll(snapScr
 const {top: snapScrollTopReached} = toRefs(snapScrollArrivedState);
 
 watch(snapYScroll, (yScroll) => {
-    if(yScroll <= ((screenHeight.value * 2) - navigationHeight.value) && ['index'].includes(_toLower(route.name))){
+    if(yScroll <= ((screenHeight.value * 3) - navigationHeight.value) && ['index'].includes(_toLower(route.name))){
         $layoutStore.setNavigationMode('clear');
     } else {
         $layoutStore.setNavigationMode('solid');
     }
 });
-
 
 const navigationHeaderSize = computed(() => {
     let size = 'lg'
@@ -464,6 +465,7 @@ a.footer-link:hover{
 }
 </style>
 <style>
+/*Used by snap scroll: to allocate space on fixed top navigation*/
 .navigation-height{
     height: v-bind(navigationHeightInPixels);
 }
