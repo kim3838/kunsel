@@ -1,1145 +1,1139 @@
 <template>
-    <div>
-        <NuxtLayout :name="$layoutStore.layout">
-            <template #content>
-                <div class="tw-mx-auto tw-pt-4 tw-max-w-screen-2xl">
-                    <div>Tailwind Url: <NuxtLink class="tw-text-sky-600" :to="'_tailwind'" target="_blank">{{('http://localhost:3000' + '/_tailwind/')}}</NuxtLink></div>
+    <div class="tw-mx-auto tw-pt-4 tw-max-w-screen-2xl">
+        <div>Tailwind Url: <NuxtLink class="tw-text-sky-600" :to="'_tailwind'" target="_blank">{{('http://localhost:3000' + '/_tailwind/')}}</NuxtLink></div>
 
-                    <div class="tw-space-y-2">
-                        <!-- Static Single, MultiSelect and DateTime, Date, and Month Picker -->
-                        <div v-if="true" class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-8">
-                            <div class="tw-block neutral-border">
-                                <InputLabel :size="'sm'" value="Static Multi Select" />
-                                <MultiSelect drop-shadow :selection-max-viewable-line="5" :size="'md'" :options="category" :icon="'ic:sharp-qr-code'"/>
-                            </div>
-                            <div class="tw-block neutral-border">
-                                <InputLabel :size="'sm'" value="Non Searchable Multi Select" />
-                                <MultiSelect drop-shadow :selection-max-viewable-line="5" :searchable="false" :size="'md'" :options="category" :icon="'eos-icons:installing'"/>
-                            </div>
-                            <div class="tw-block neutral-border">
-                                <InputLabel :size="'sm'" value="Static Single Select" />
-                                <SingleSelect drop-shadow :selection-max-viewable-line="4" :always-active="false" :size="'md'" :icon="'emojione-monotone:japanese-no-vacancy-button'" :options="plan"/>
-                            </div>
+        <div class="tw-space-y-2">
+            <!-- Static Single, MultiSelect and DateTime, Date, and Month Picker -->
+            <div v-if="true" class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-8">
+                <div class="tw-block neutral-border">
+                    <InputLabel :size="'sm'" value="Static Multi Select" />
+                    <MultiSelect drop-shadow :selection-max-viewable-line="5" :size="'md'" :options="category" :icon="'ic:sharp-qr-code'"/>
+                </div>
+                <div class="tw-block neutral-border">
+                    <InputLabel :size="'sm'" value="Non Searchable Multi Select" />
+                    <MultiSelect drop-shadow :selection-max-viewable-line="5" :searchable="false" :size="'md'" :options="category" :icon="'eos-icons:installing'"/>
+                </div>
+                <div class="tw-block neutral-border">
+                    <InputLabel :size="'sm'" value="Static Single Select" />
+                    <SingleSelect drop-shadow :selection-max-viewable-line="4" :always-active="false" :size="'md'" :icon="'emojione-monotone:japanese-no-vacancy-button'" :options="plan"/>
+                </div>
 
-                            <div class="tw-block neutral-border">
-                                <InputLabel :size="'sm'" value="Non Searchable Single Select" />
-                                <SingleSelect drop-shadow :selection-max-viewable-line="4" :searchable="false" :size="'md'" :icon="'emojione-monotone:japanese-vacancy-button'" :options="plan"/>
-                            </div>
+                <div class="tw-block neutral-border">
+                    <InputLabel :size="'sm'" value="Non Searchable Single Select" />
+                    <SingleSelect drop-shadow :selection-max-viewable-line="4" :searchable="false" :size="'md'" :icon="'emojione-monotone:japanese-vacancy-button'" :options="plan"/>
+                </div>
 
-                            <div class="tw-block neutral-border">
-                                <InputLabel :size="'sm'" value="Single Select Persist Value" />
-                                <SingleSelect
-                                    drop-shadow
-                                    :selection-max-viewable-line="3"
-                                    :size="'md'"
-                                    :searchable="false"
-                                    :value-persist="true"
-                                    :icon="'emojione-monotone:japanese-dolls'"
-                                    :label="'Select Booking'"
-                                    :options="bookingType"/>
-                            </div>
+                <div class="tw-block neutral-border">
+                    <InputLabel :size="'sm'" value="Single Select Persist Value" />
+                    <SingleSelect
+                        drop-shadow
+                        :selection-max-viewable-line="3"
+                        :size="'md'"
+                        :searchable="false"
+                        :value-persist="true"
+                        :icon="'emojione-monotone:japanese-dolls'"
+                        :label="'Select Booking'"
+                        :options="bookingType"/>
+                </div>
 
-                            <div class="tw-block neutral-border">
-                                <InputLabel :size="'sm'" for="date" value="Date" />
-                                <InputWithIcon
-                                    :icon="'simple-icons:googlecalendar'"
-                                    :size="'md'"
-                                    :type="'text'"
-                                    :id="'date'"
-                                    v-model="formStore.filters.date"
-                                    autocomplete="off"
-                                    readonly
-                                    :disabled="false" />
-                            </div>
-                            <div class="tw-block neutral-border">
-                                <InputLabel :size="'sm'" for="datetime" value="DateTime" />
-                                <InputWithIcon
-                                    :icon="'simple-icons:googlecalendar'"
-                                    :size="'md'"
-                                    :type="'text'"
-                                    :id="'datetime'"
-                                    v-model="formStore.filters.dateTime"
-                                    autocomplete="off"
-                                    readonly
-                                    :disabled="false" />
-                            </div>
+                <div class="tw-block neutral-border">
+                    <InputLabel :size="'sm'" for="date" value="Date" />
+                    <InputWithIcon
+                        :icon="'simple-icons:googlecalendar'"
+                        :size="'md'"
+                        :type="'text'"
+                        :id="'date'"
+                        v-model="formStore.filters.date"
+                        autocomplete="off"
+                        readonly
+                        :disabled="false" />
+                </div>
+                <div class="tw-block neutral-border">
+                    <InputLabel :size="'sm'" for="datetime" value="DateTime" />
+                    <InputWithIcon
+                        :icon="'simple-icons:googlecalendar'"
+                        :size="'md'"
+                        :type="'text'"
+                        :id="'datetime'"
+                        v-model="formStore.filters.dateTime"
+                        autocomplete="off"
+                        readonly
+                        :disabled="false" />
+                </div>
 
-                            <div class="tw-block neutral-border">
-                                <InputLabel :size="'sm'" for="month" value="Month" />
-                                <InputWithIcon
-                                    :icon="'simple-icons:protoncalendar'"
-                                    :size="'md'"
-                                    :type="'text'"
-                                    :id="'month'"
-                                    v-model="formStore.filters.monthLabel"
-                                    autocomplete="off"
-                                    readonly
-                                    :disabled="false" />
+                <div class="tw-block neutral-border">
+                    <InputLabel :size="'sm'" for="month" value="Month" />
+                    <InputWithIcon
+                        :icon="'simple-icons:protoncalendar'"
+                        :size="'md'"
+                        :type="'text'"
+                        :id="'month'"
+                        v-model="formStore.filters.monthLabel"
+                        autocomplete="off"
+                        readonly
+                        :disabled="false" />
+                </div>
+            </div>
+
+            <!-- Paginated Single and MultiSelect -->
+            <div v-if="true" class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-8">
+                <div class="tw-block neutral-border">
+                    <InputLabel :size="'sm'" value="Paginated Multi Select" />
+                    <MultiSelectPaginated
+                        :drop-shadow="true"
+                        :selection-max-content="true"
+                        :selected-max-viewable-line="6"
+                        :selection-max-viewable-line="10"
+                        :searchable="true"
+                        :selection-float="true"
+                        :always-active="false"
+                        :label="'Select Prototypes'"
+                        :size="'md'"
+                        :payload="multiSelectPrototypePayload"
+                        :icon="'ic:sharp-qr-code'"/>
+                </div>
+                <div class="tw-block neutral-border">
+                    <InputLabel :size="'sm'" value="Paginated Single Select" />
+                    <SingleSelectPaginated
+                        :value-persist="true"
+                        :drop-shadow="true"
+                        :selection-max-content="false"
+                        :selection-max-viewable-line="10"
+                        :searchable="true"
+                        :selection-float="true"
+                        :always-active="false"
+                        :label="'Select Prototype'"
+                        :size="'md'"
+                        :payload="singleSelectPrototypePayload"
+                        :icon="'emojione-monotone:japanese-no-vacancy-button'"/>
+                </div>
+            </div>
+
+            <!-- Static Single and MultiSelect with more Custom Configurations -->
+            <div v-if="false" class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-8">
+                <div class="tw-flex tw-block">
+                    <MultiSelect
+                        :selection-max-content="false"
+                        :selection-max-viewable-line="9"
+                        :selection-float="false"
+                        :idle-border="'red'"
+                        :active-border="'red'"
+                        :always-active="true"
+                        :searchable="false"
+                        :label="'Select Category'"
+                        :size="'lg'"
+                        :options="category"
+                        :icon="'ic:sharp-display-settings'"/>
+                </div>
+                <div class="tw-flex tw-block">
+                    <MultiSelect
+                        :selection-max-content="false"
+                        :selection-max-viewable-line="3"
+                        :selection-float="false"
+                        :idle-border="'orange'"
+                        :active-border="'orange'"
+                        :always-active="true"
+                        :searchable="true"
+                        :label="'Filter Category'"
+                        :size="'lg'"
+                        :options="category"
+                        :icon="'ic:sharp-display-settings'"/>
+                </div>
+                <div class="tw-flex tw-block">
+                    <MultiSelect
+                        :selection-max-content="false"
+                        :selection-max-viewable-line="3"
+                        :selection-float="false"
+                        :idle-border="'yellow'"
+                        :active-border="'yellow'"
+                        :always-active="true"
+                        :searchable="false"
+                        :selection-header="false"
+                        :size="'lg'"
+                        :options="category"
+                        :icon="'ic:sharp-display-settings'"/>
+                </div>
+                <div class="tw-flex tw-block">
+                    <SingleSelect
+                        :selection-max-content="false"
+                        :selection-max-viewable-line="5"
+                        :selection-float="false"
+                        :idle-border="'green'"
+                        :active-border="'green'"
+                        :always-active="true"
+                        :searchable="false"
+                        :size="'lg'"
+                        :icon="'eos-icons:installing'"
+                        :label="'Select Plan'"
+                        :options="plan"/>
+                </div>
+                <div class="tw-flex tw-block">
+                    <SingleSelect
+                        :size="'lg'"
+                        :selection-max-content="false"
+                        :selection-max-viewable-line="5"
+                        :selection-float="false"
+                        :idle-border="'blue'"
+                        :active-border="'blue'"
+                        :always-active="true"
+                        :searchable="false"
+                        :value-persist="true"
+                        :icon="'eos-icons:installing'"
+                        :label="'Select Plan'"
+                        :options="plan"/>
+                </div>
+                <div class="tw-flex tw-block">
+                    <SingleSelect
+                        :size="'lg'"
+                        :selection-max-content="false"
+                        :selection-max-viewable-line="3"
+                        :selection-float="false"
+                        :idle-border="'indigo'"
+                        :active-border="'indigo'"
+                        :always-active="true"
+                        :searchable="false"
+                        :value-persist="true"
+                        :icon="'eos-icons:installing'"
+                        :label="'Select Per Page'"
+                        :options="perPage"/>
+                </div>
+            </div>
+
+            <!-- Datatables -->
+            <div v-if="true" class="tw-grid tw-gap-2 sm:tw-grid-cols-1 md:tw-grid-cols-2 lg:tw-grid-cols-4">
+                <div class="tw-block tw-col-span-1 sm:tw-col-span-3 md:tw-col-span-2 lg:tw-col-span-2 tw-p-2 neutral-border">
+                    <InputLabel class="tw-mb-2" :size="'md'" value="MD Datatable" />
+                    <DataTable
+                        :headers="headers_1"
+                        :size="'md'"
+                        :rows="data_1"
+                        v-model="selected_1"
+                        selection>
+                        <template v-slot:cell.name="{cell, index, slot}">
+                            <div class="tw-h-full tw-w-full tw-flex tw-items-center">
+                                <Button class="tw-w-full" :variant="'outline'" :icon="'fe:check-circle'" :size="slot.buttonSize" :label="`[${index}] ${cell.name}`"></Button>
                             </div>
+                        </template>
+                        <template v-slot:cell.category="{cell, slot, scrollReference}">
+                            <MultiSelect
+                                in-horizontal-scrollable
+                                drop-shadow
+                                :scroll-reference="scrollReference"
+                                :size="slot.selectSize"
+                                :options="category"
+                                :icon="'ic:baseline-data-saver-on'"/>
+                        </template>
+                        <template v-slot:cell.datetime_added="{cell, slot, scrollReference}">
+                            <InputWithIcon
+                                :icon="'ion:calendar-number-sharp'"
+                                :id="`datetime_added-` + cell.id"
+                                v-model="cell.datetime_added"
+                                readonly
+                                in-cell
+                                :size="slot.inputSize"
+                                :type="'text'" />
+                        </template>
+                    </DataTable>
+                </div>
+                <div class="tw-block tw-col-span-1 sm:tw-col-span-3 md:tw-col-span-2 lg:tw-col-span-2 tw-p-2 neutral-border">
+                    <InputLabel class="tw-mb-2" :size="'md'" value="LG Datatable with Selection" />
+                    <DataTable
+                        :headers="headers_2"
+                        :size="'lg'"
+                        :rows="data_2"
+                        v-model="selected_2"
+                        selection>
+                        <template v-slot:cell.name="{cell, index, slot}">
+                            <div class="tw-h-full tw-w-full tw-flex tw-items-center">
+                                <Button class="tw-w-full" :variant="'outline'" :icon="'material-symbols:ev-mobiledata-badge-sharp'" :size="slot.buttonSize" :label="`${cell.name}`"></Button>
+                            </div>
+                        </template>
+                        <template v-slot:cell.code="{index, cell, slot}">
+                            <Input v-model="cell.code" readonly :size="slot.inputSize" type="text" />
+                        </template>
+                        <template v-slot:cell.datetime_added="{cell, slot, scrollReference}">
+                            <InputWithIcon
+                                :icon="'ion:calendar-number-sharp'"
+                                :id="`datetime_added-` + cell.id"
+                                v-model="cell.datetime_added"
+                                readonly
+                                in-cell
+                                :size="slot.inputSize"
+                                :type="'text'" />
+                        </template>
+                    </DataTable>
+                </div>
+                <div class="tw-block md:tw-col-span-2 lg:tw-col-span-4 tw-p-2 neutral-border">
+                    <InputLabel class="tw-mb-2" :size="'md'" value="XL Datatable with Selection and Form Foundations" />
+                    <DataTable
+                        :headers="headers_3"
+                        :size="'xl'"
+                        :rows="data_3"
+                        v-model="selected_3"
+                        selection>
+                        <template v-slot:cell.tools="{cell, slot, scrollReference}">
+                            <div class="tw-h-full tw-space-x-0.5 tw-w-full tw-flex tw-items-center">
+                                <Button :size="slot.buttonSize" :icon="'emojione-monotone:envelope-with-arrow'" :label="'Slot I'"></Button>
+                                <Button :variant="'flat'" :size="slot.buttonSize" :icon="'emojione-monotone:envelope'" :label="'Slot II'"></Button>
+                                <Button :variant="'flat'" :size="slot.buttonSize" :icon="'emojione-monotone:incoming-envelope'" :label="'Slot III'"></Button>
+                                <Button :variant="'flat'" :size="slot.buttonSize" :icon="'emojione-monotone:dollar-banknote'"></Button>
+                                <Button :variant="'flat'" :size="slot.buttonSize" :icon="'emojione-monotone:spiral-calendar'"></Button>
+                            </div>
+                        </template>
+                        <template v-slot:cell.input="{cell, index, slot}">
+                            <Input :size="slot.inputSize" class="tw-w-full" placeholder="Enter Amount" type="text" autocomplete="off" />
+                        </template>
+                        <template v-slot:cell.name="{cell, index, slot}">
+                            <div class="tw-h-full tw-w-full tw-flex tw-items-center">
+                                <Button class="tw-w-full" :variant="'flat'" :icon="'ic:baseline-data-saver-on'" :size="slot.buttonSize" :label="`${cell.name}`"></Button>
+                            </div>
+                        </template>
+                        <template v-slot:cell.code="{cell, index, slot}">
+                            <Input :size="slot.inputSize" class="tw-w-full" v-model="cell.code" type="text" autocomplete="off" />
+                        </template>
+                        <template v-slot:cell.single_paginated="{cell, slot, scrollReference}">
+                            <SingleSelectPaginated
+                                in-horizontal-scrollable
+                                :scroll-reference="scrollReference"
+                                :value-persist="true"
+                                :drop-shadow="true"
+                                :selection-max-content="true"
+                                :selection-max-viewable-line="10"
+                                :searchable="true"
+                                :selection-float="true"
+                                :always-active="false"
+                                :label="'Select Prototype'"
+                                :size="slot.selectSize"
+                                :payload="cell.single_select_prototype_payload"
+                                :icon="'emojione-monotone:japanese-no-vacancy-button'"/>
+                        </template>
+                        <template v-slot:cell.multi_paginated="{cell, slot, scrollReference}">
+                            <MultiSelectPaginated
+                                in-horizontal-scrollable
+                                :scroll-reference="scrollReference"
+                                :drop-shadow="true"
+                                :selection-max-content="true"
+                                :selected-max-viewable-line="6"
+                                :selection-max-viewable-line="10"
+                                :searchable="true"
+                                :selection-float="true"
+                                :always-active="false"
+                                :label="'Select Prototypes'"
+                                :size="slot.selectSize"
+                                :payload="cell.multi_select_prototype_payload"
+                                :icon="'ic:sharp-qr-code'"/>
+                        </template>
+                        <template v-slot:cell.single_select="{cell, slot, scrollReference}">
+                            <SingleSelect
+                                in-horizontal-scrollable
+                                drop-shadow
+                                :scroll-reference="scrollReference"
+                                :size="slot.selectSize"
+                                :icon="'emojione-monotone:kaaba'"
+                                :label="'Plan'"
+                                :options="plan" />
+                        </template>
+                        <template v-slot:cell.multi_select="{cell, slot, scrollReference}">
+                            <MultiSelect
+                                in-horizontal-scrollable
+                                drop-shadow
+                                :scroll-reference="scrollReference"
+                                :size="slot.selectSize"
+                                :options="category"
+                                :icon="'emojione-monotone:japanese-post-office'"/>
+                        </template>
+                        <template v-slot:cell.type="{cell, index, slot}">
+                            <Input :size="slot.inputSize" v-model="cell.type" type="number" autocomplete="off" />
+                        </template>
+                        <template v-slot:cell.category="{cell, index, slot}">
+                            <Input :size="slot.inputSize" v-model="cell.category" type="number" autocomplete="off" />
+                        </template>
+                        <template v-slot:cell.capacity="{cell, index, slot}">
+                            <Input :size="slot.inputSize" v-model="cell.capacity" type="number" autocomplete="off" />
+                        </template>
+                        <template v-slot:cell.datetime_added="{cell, slot, scrollReference}">
+                            <InputWithIcon
+                                :icon="'ion:calendar-number-sharp'"
+                                :id="`datetime_added-` + cell.id"
+                                v-model="cell.datetime_added"
+                                readonly
+                                in-cell
+                                :size="slot.inputSize"
+                                :type="'text'" />
+                        </template>
+                    </DataTable>
+                </div>
+            </div>
+
+            <!-- Tab Indexed Group -->
+            <div v-if="false">
+                <div class="tw-block tw-p-2 neutral-border">
+                    <InputLabel class="tw-mb-2" :size="'md'" value="Tab Group" />
+                    <div class="tw-grid tw-gap-1 tw-grid-cols-1 sm:tw-grid-cols-2 md:tw-grid-cols-3 lg:tw-grid-cols-5">
+                        <div>
+                            <Input :tabindex="1" :size="tabGroup.size" :placeholder="'Enter value'" type="text" autocomplete="off" />
                         </div>
+                        <div>
+                            <MultiSelectPaginated
+                                :tabindex="2"
+                                :drop-shadow="true"
+                                :selection-max-content="false"
+                                :selected-max-viewable-line="6"
+                                :selection-max-viewable-line="10"
+                                :searchable="false"
+                                :selection-float="true"
+                                :always-active="false"
+                                :label="'Select Prototypes'"
+                                :size="tabGroup.size"
+                                :payload="multiSelectPrototypePayload"
+                                :icon="tabGroup.icon"/>
+                        </div>
+                        <div>
+                            <InputWithIcon :tabindex="4" :size="tabGroup.size" :icon="tabGroup.icon" :placeholder="'Enter value'" type="text" autocomplete="off" />
+                        </div>
+                        <div>
+                            <MultiSelect
+                                :tabindex="5"
+                                drop-shadow
+                                :searchable="false"
+                                :selection-float="true"
+                                :always-active="false"
+                                :selection-max-viewable-line="5"
+                                :size="tabGroup.size"
+                                :options="category"
+                                :icon="tabGroup.icon"/>
+                        </div>
+                        <div>
+                            <InputWithIcon :tabindex="7" :size="tabGroup.size" :icon="tabGroup.icon" :placeholder="'Enter value'" type="text" autocomplete="off" />
+                        </div>
+                        <div>
+                            <Input :tabindex="8" :size="tabGroup.size" :placeholder="'Enter value'" type="text" autocomplete="off" />
+                        </div>
+                        <div>
+                            <SingleSelectPaginated
+                                :tabindex="9"
+                                :value-persist="true"
+                                :drop-shadow="true"
+                                :selection-max-content="true"
+                                :selection-max-viewable-line="10"
+                                :searchable="false"
+                                :selection-float="true"
+                                :always-active="false"
+                                :label="'Select Prototype'"
+                                :size="tabGroup.size"
+                                :payload="singleSelectPrototypePayload"
+                                :icon="tabGroup.icon"/>
+                        </div>
+                        <div>
+                            <InputWithIcon :tabindex="11" :size="tabGroup.size" :icon="tabGroup.icon" :placeholder="'Enter value'" type="text" autocomplete="off" />
+                        </div>
+                        <div>
+                            <SingleSelect
+                                :tabindex="12"
+                                :value-persist="true"
+                                :drop-shadow="true"
+                                :selection-max-content="true"
+                                :searchable="false"
+                                :selection-float="true"
+                                :always-active="false"
+                                :size="tabGroup.size"
+                                :selection-max-viewable-line="8"
+                                :icon="tabGroup.icon"
+                                :options="singleSelectPrototype"/>
+                        </div>
+                        <div>
+                            <InputWithIcon :tabindex="14" :size="tabGroup.size" :icon="tabGroup.icon" :placeholder="'Enter value'" type="text" autocomplete="off" />
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-                        <!-- Paginated Single and MultiSelect -->
-                        <div v-if="true" class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-8">
-                            <div class="tw-block neutral-border">
-                                <InputLabel :size="'sm'" value="Paginated Multi Select" />
+            <!-- Button and Input Grid Spacing Alignments -->
+            <div v-if="false">
+                <div class="tw-block tw-p-2 neutral-border">
+                    <InputLabel class="tw-mb-2" :size="'md'" value="Spacing Aligment Grid" />
+                    <div class="tw-grid tw-gap-1 tw-grid-cols-7">
+                        <div v-if="true">
+                            <div>
                                 <MultiSelectPaginated
                                     :drop-shadow="true"
-                                    :selection-max-content="true"
+                                    :selection-max-content="false"
                                     :selected-max-viewable-line="6"
                                     :selection-max-viewable-line="10"
-                                    :searchable="true"
+                                    :searchable="false"
+                                    :selection-float="true"
+                                    :always-active="false"
+                                    :label="'Select Prototypes'"
+                                    :size="'2xs'"
+                                    :payload="multiSelectPrototypePayload"
+                                    :icon="tabGroup.icon"/>
+                            </div>
+                            <div>
+                                <InputWithIcon :size="'2xs'" :icon="tabGroup.icon" :placeholder="'Enter value'" type="text" autocomplete="off" />
+                            </div>
+                            <div>
+                                <MultiSelect
+                                    drop-shadow
+                                    :searchable="false"
+                                    :selection-float="true"
+                                    :always-active="false"
+                                    :selection-max-viewable-line="5"
+                                    :size="'2xs'"
+                                    :options="category"
+                                    :icon="tabGroup.icon"/>
+                            </div>
+                            <div>
+                                <SingleSelectPaginated
+                                    :value-persist="true"
+                                    :drop-shadow="true"
+                                    :selection-max-content="true"
+                                    :selection-max-viewable-line="10"
+                                    :searchable="false"
+                                    :selection-float="true"
+                                    :always-active="false"
+                                    :label="'Select Prototype'"
+                                    :size="'2xs'"
+                                    :payload="singleSelectPrototypePayload"
+                                    :icon="tabGroup.icon"/>
+                            </div>
+                            <div>
+                                <SingleSelect
+                                    :value-persist="true"
+                                    :drop-shadow="true"
+                                    :selection-max-content="true"
+                                    :searchable="false"
+                                    :selection-float="true"
+                                    :always-active="false"
+                                    :size="'2xs'"
+                                    :selection-max-viewable-line="8"
+                                    :icon="tabGroup.icon"
+                                    :options="singleSelectPrototype"/>
+                            </div>
+
+                            <div><Button class="tw-w-full" :size="'2xs'" :icon="tabGroup.icon" :label="'Button'" /></div>
+                            <div><Button class="tw-w-3/4" :size="'2xs'" :icon="tabGroup.icon" :variant="'outline'" :label="'Button'" /></div>
+                            <div><Button class="tw-w-1/2" :size="'2xs'" :icon="tabGroup.icon" :variant="'flat'" :label="'Button'" /></div>
+                            <div><Button class="tw-w-1/3" :size="'2xs'" :icon="tabGroup.icon" :variant="'flat'" disabled :label="'Button'" /></div>
+                            <div><Button class="" :size="'2xs'" :icon="tabGroup.icon" :variant="'flat'" :label="'Button'" /></div>
+                            <div><InputWithIcon ref="inputValue" :size="'2xs'" :icon="tabGroup.icon" :placeholder="'Enter value'" :type="'text'" autocomplete="off" /></div>
+                            <div><Button class="" :size="'2xs'" :icon="tabGroup.icon" :variant="'flat'" :label="''" /></div>
+                            <div><Button class="" :size="'2xs'" :icon="tabGroup.icon" :label="''" /></div>
+                        </div>
+
+                        <div v-if="true">
+                            <div>
+                                <MultiSelectPaginated
+                                    :drop-shadow="true"
+                                    :selection-max-content="false"
+                                    :selected-max-viewable-line="6"
+                                    :selection-max-viewable-line="10"
+                                    :searchable="false"
+                                    :selection-float="true"
+                                    :always-active="false"
+                                    :label="'Select Prototypes'"
+                                    :size="'xs'"
+                                    :payload="multiSelectPrototypePayload"
+                                    :icon="tabGroup.icon"/>
+                            </div>
+                            <div>
+                                <InputWithIcon :size="'xs'" :icon="tabGroup.icon" :placeholder="'Enter value'" type="text" autocomplete="off" />
+                            </div>
+                            <div>
+                                <MultiSelect
+                                    drop-shadow
+                                    :searchable="false"
+                                    :selection-float="true"
+                                    :always-active="false"
+                                    :selection-max-viewable-line="5"
+                                    :size="'xs'"
+                                    :options="category"
+                                    :icon="tabGroup.icon"/>
+                            </div>
+                            <div>
+                                <SingleSelectPaginated
+                                    :value-persist="true"
+                                    :drop-shadow="true"
+                                    :selection-max-content="true"
+                                    :selection-max-viewable-line="10"
+                                    :searchable="false"
+                                    :selection-float="true"
+                                    :always-active="false"
+                                    :label="'Select Prototype'"
+                                    :size="'xs'"
+                                    :payload="singleSelectPrototypePayload"
+                                    :icon="tabGroup.icon"/>
+                            </div>
+                            <div>
+                                <SingleSelect
+                                    :value-persist="true"
+                                    :drop-shadow="true"
+                                    :selection-max-content="true"
+                                    :searchable="false"
+                                    :selection-float="true"
+                                    :always-active="false"
+                                    :size="'xs'"
+                                    :selection-max-viewable-line="8"
+                                    :icon="tabGroup.icon"
+                                    :options="singleSelectPrototype"/>
+                            </div>
+
+                            <div><Button class="tw-w-full" :size="'xs'" :icon="tabGroup.icon" :label="'Button'" /></div>
+                            <div><Button class="tw-w-3/4" :size="'xs'" :icon="tabGroup.icon" :variant="'outline'" :label="'Button'" /></div>
+                            <div><Button class="tw-w-1/2" :size="'xs'" :icon="tabGroup.icon" :variant="'flat'" :label="'Button'" /></div>
+                            <div><Button class="tw-w-1/3" :size="'xs'" :icon="tabGroup.icon" :variant="'flat'" disabled :label="'Button'" /></div>
+                            <div><Button class="" :size="'xs'" :icon="tabGroup.icon" :variant="'flat'" :label="'Button'" /></div>
+                            <div><InputWithIcon ref="inputValue" :size="'xs'" :icon="tabGroup.icon" :placeholder="'Enter value'" :type="'text'" autocomplete="off" /></div>
+                            <div><Button class="" :size="'xs'" :icon="tabGroup.icon" :variant="'flat'" :label="''" /></div>
+                            <div><Button class="" :size="'xs'" :icon="tabGroup.icon" :label="''" /></div>
+                        </div>
+
+                        <div v-if="true">
+                            <div>
+                                <MultiSelectPaginated
+                                    :drop-shadow="true"
+                                    :selection-max-content="false"
+                                    :selected-max-viewable-line="6"
+                                    :selection-max-viewable-line="10"
+                                    :searchable="false"
+                                    :selection-float="true"
+                                    :always-active="false"
+                                    :label="'Select Prototypes'"
+                                    :size="'sm'"
+                                    :payload="multiSelectPrototypePayload"
+                                    :icon="tabGroup.icon"/>
+                            </div>
+                            <div>
+                                <InputWithIcon :size="'sm'" :icon="tabGroup.icon" :placeholder="'Enter value'" type="text" autocomplete="off" />
+                            </div>
+                            <div>
+                                <MultiSelect
+                                    drop-shadow
+                                    :searchable="false"
+                                    :selection-float="true"
+                                    :always-active="false"
+                                    :selection-max-viewable-line="5"
+                                    :size="'sm'"
+                                    :options="category"
+                                    :icon="tabGroup.icon"/>
+                            </div>
+                            <div>
+                                <SingleSelectPaginated
+                                    :value-persist="true"
+                                    :drop-shadow="true"
+                                    :selection-max-content="true"
+                                    :selection-max-viewable-line="10"
+                                    :searchable="false"
+                                    :selection-float="true"
+                                    :always-active="false"
+                                    :label="'Select Prototype'"
+                                    :size="'sm'"
+                                    :payload="singleSelectPrototypePayload"
+                                    :icon="tabGroup.icon"/>
+                            </div>
+                            <div>
+                                <SingleSelect
+                                    :value-persist="true"
+                                    :drop-shadow="true"
+                                    :selection-max-content="true"
+                                    :searchable="false"
+                                    :selection-float="true"
+                                    :always-active="false"
+                                    :size="'sm'"
+                                    :selection-max-viewable-line="8"
+                                    :icon="tabGroup.icon"
+                                    :options="singleSelectPrototype"/>
+                            </div>
+
+                            <div><Button class="tw-w-full" :size="'sm'" :icon="tabGroup.icon" :label="'Button'" /></div>
+                            <div><Button class="tw-w-3/4" :size="'sm'" :icon="tabGroup.icon" :variant="'outline'" :label="'Button'" /></div>
+                            <div><Button class="tw-w-1/2" :size="'sm'" :icon="tabGroup.icon" :variant="'flat'" :label="'Button'" /></div>
+                            <div><Button class="tw-w-1/3" :size="'sm'" :icon="tabGroup.icon" :variant="'flat'" disabled :label="'Button'" /></div>
+                            <div><Button class="" :size="'sm'" :icon="tabGroup.icon" :variant="'flat'" :label="'Button'" /></div>
+                            <div><InputWithIcon ref="inputValue" :size="'sm'" :icon="tabGroup.icon" :placeholder="'Enter value'" :type="'text'" autocomplete="off" /></div>
+                            <div><Button class="" :size="'sm'" :icon="tabGroup.icon" :variant="'flat'" :label="''" /></div>
+                            <div><Button class="" :size="'sm'" :icon="tabGroup.icon" :label="''" /></div>
+                        </div>
+
+                        <div v-if="true">
+                            <div>
+                                <MultiSelectPaginated
+                                    :drop-shadow="true"
+                                    :selection-max-content="false"
+                                    :selected-max-viewable-line="6"
+                                    :selection-max-viewable-line="10"
+                                    :searchable="false"
                                     :selection-float="true"
                                     :always-active="false"
                                     :label="'Select Prototypes'"
                                     :size="'md'"
                                     :payload="multiSelectPrototypePayload"
-                                    :icon="'ic:sharp-qr-code'"/>
+                                    :icon="tabGroup.icon"/>
                             </div>
-                            <div class="tw-block neutral-border">
-                                <InputLabel :size="'sm'" value="Paginated Single Select" />
+                            <div>
+                                <InputWithIcon :size="'md'" :icon="tabGroup.icon" :placeholder="'Enter value'" type="text" autocomplete="off" />
+                            </div>
+                            <div>
+                                <MultiSelect
+                                    drop-shadow
+                                    :searchable="false"
+                                    :selection-float="true"
+                                    :always-active="false"
+                                    :selection-max-viewable-line="5"
+                                    :size="'md'"
+                                    :options="category"
+                                    :icon="tabGroup.icon"/>
+                            </div>
+                            <div>
                                 <SingleSelectPaginated
                                     :value-persist="true"
                                     :drop-shadow="true"
-                                    :selection-max-content="false"
+                                    :selection-max-content="true"
                                     :selection-max-viewable-line="10"
-                                    :searchable="true"
+                                    :searchable="false"
                                     :selection-float="true"
                                     :always-active="false"
                                     :label="'Select Prototype'"
                                     :size="'md'"
                                     :payload="singleSelectPrototypePayload"
-                                    :icon="'emojione-monotone:japanese-no-vacancy-button'"/>
+                                    :icon="tabGroup.icon"/>
                             </div>
-                        </div>
-
-                        <!-- Static Single and MultiSelect with more Custom Configurations -->
-                        <div v-if="false" class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-8">
-                            <div class="tw-flex tw-block">
-                                <MultiSelect
-                                    :selection-max-content="false"
-                                    :selection-max-viewable-line="9"
-                                    :selection-float="false"
-                                    :idle-border="'red'"
-                                    :active-border="'red'"
-                                    :always-active="true"
-                                    :searchable="false"
-                                    :label="'Select Category'"
-                                    :size="'lg'"
-                                    :options="category"
-                                    :icon="'ic:sharp-display-settings'"/>
-                            </div>
-                            <div class="tw-flex tw-block">
-                                <MultiSelect
-                                    :selection-max-content="false"
-                                    :selection-max-viewable-line="3"
-                                    :selection-float="false"
-                                    :idle-border="'orange'"
-                                    :active-border="'orange'"
-                                    :always-active="true"
-                                    :searchable="true"
-                                    :label="'Filter Category'"
-                                    :size="'lg'"
-                                    :options="category"
-                                    :icon="'ic:sharp-display-settings'"/>
-                            </div>
-                            <div class="tw-flex tw-block">
-                                <MultiSelect
-                                    :selection-max-content="false"
-                                    :selection-max-viewable-line="3"
-                                    :selection-float="false"
-                                    :idle-border="'yellow'"
-                                    :active-border="'yellow'"
-                                    :always-active="true"
-                                    :searchable="false"
-                                    :selection-header="false"
-                                    :size="'lg'"
-                                    :options="category"
-                                    :icon="'ic:sharp-display-settings'"/>
-                            </div>
-                            <div class="tw-flex tw-block">
+                            <div>
                                 <SingleSelect
-                                    :selection-max-content="false"
-                                    :selection-max-viewable-line="5"
-                                    :selection-float="false"
-                                    :idle-border="'green'"
-                                    :active-border="'green'"
-                                    :always-active="true"
-                                    :searchable="false"
-                                    :size="'lg'"
-                                    :icon="'eos-icons:installing'"
-                                    :label="'Select Plan'"
-                                    :options="plan"/>
-                            </div>
-                            <div class="tw-flex tw-block">
-                                <SingleSelect
-                                    :size="'lg'"
-                                    :selection-max-content="false"
-                                    :selection-max-viewable-line="5"
-                                    :selection-float="false"
-                                    :idle-border="'blue'"
-                                    :active-border="'blue'"
-                                    :always-active="true"
-                                    :searchable="false"
                                     :value-persist="true"
-                                    :icon="'eos-icons:installing'"
-                                    :label="'Select Plan'"
-                                    :options="plan"/>
-                            </div>
-                            <div class="tw-flex tw-block">
-                                <SingleSelect
-                                    :size="'lg'"
-                                    :selection-max-content="false"
-                                    :selection-max-viewable-line="3"
-                                    :selection-float="false"
-                                    :idle-border="'indigo'"
-                                    :active-border="'indigo'"
-                                    :always-active="true"
+                                    :drop-shadow="true"
+                                    :selection-max-content="true"
                                     :searchable="false"
-                                    :value-persist="true"
-                                    :icon="'eos-icons:installing'"
-                                    :label="'Select Per Page'"
-                                    :options="perPage"/>
-                            </div>
-                        </div>
-
-                        <!-- Datatables -->
-                        <div v-if="true" class="tw-grid tw-gap-2 sm:tw-grid-cols-1 md:tw-grid-cols-2 lg:tw-grid-cols-4">
-                            <div class="tw-block tw-col-span-1 sm:tw-col-span-3 md:tw-col-span-2 lg:tw-col-span-2 tw-p-2 neutral-border">
-                                <InputLabel class="tw-mb-2" :size="'md'" value="MD Datatable" />
-                                <DataTable
-                                    :headers="headers_1"
+                                    :selection-float="true"
+                                    :always-active="false"
                                     :size="'md'"
-                                    :rows="data_1"
-                                    v-model="selected_1"
-                                    selection>
-                                    <template v-slot:cell.name="{cell, index, slot}">
-                                        <div class="tw-h-full tw-w-full tw-flex tw-items-center">
-                                            <Button class="tw-w-full" :variant="'outline'" :icon="'fe:check-circle'" :size="slot.buttonSize" :label="`[${index}] ${cell.name}`"></Button>
-                                        </div>
-                                    </template>
-                                    <template v-slot:cell.category="{cell, slot, scrollReference}">
-                                        <MultiSelect
-                                            in-horizontal-scrollable
-                                            drop-shadow
-                                            :scroll-reference="scrollReference"
-                                            :size="slot.selectSize"
-                                            :options="category"
-                                            :icon="'ic:baseline-data-saver-on'"/>
-                                    </template>
-                                    <template v-slot:cell.datetime_added="{cell, slot, scrollReference}">
-                                        <InputWithIcon
-                                            :icon="'ion:calendar-number-sharp'"
-                                            :id="`datetime_added-` + cell.id"
-                                            v-model="cell.datetime_added"
-                                            readonly
-                                            in-cell
-                                            :size="slot.inputSize"
-                                            :type="'text'" />
-                                    </template>
-                                </DataTable>
+                                    :selection-max-viewable-line="8"
+                                    :icon="tabGroup.icon"
+                                    :options="singleSelectPrototype"/>
                             </div>
-                            <div class="tw-block tw-col-span-1 sm:tw-col-span-3 md:tw-col-span-2 lg:tw-col-span-2 tw-p-2 neutral-border">
-                                <InputLabel class="tw-mb-2" :size="'md'" value="LG Datatable with Selection" />
-                                <DataTable
-                                    :headers="headers_2"
+
+                            <div><Button class="tw-w-full" :size="'md'" :icon="tabGroup.icon" :label="'Button'" /></div>
+                            <div><Button class="tw-w-3/4" :size="'md'" :icon="tabGroup.icon" :variant="'outline'" :label="'Button'" /></div>
+                            <div><Button class="tw-w-1/2" :size="'md'" :icon="tabGroup.icon" :variant="'flat'" :label="'Button'" /></div>
+                            <div><Button class="tw-w-1/3" :size="'md'" :icon="tabGroup.icon" :variant="'flat'" disabled :label="'Button'" /></div>
+                            <div><Button class="" :size="'md'" :icon="tabGroup.icon" :variant="'flat'" :label="'Button'" /></div>
+                            <div><InputWithIcon ref="inputValue" :size="'md'" :icon="tabGroup.icon" :placeholder="'Enter value'" :type="'text'" autocomplete="off" /></div>
+                            <div><Button class="" :size="'md'" :icon="tabGroup.icon" :variant="'flat'" :label="''" /></div>
+                            <div><Button class="" :size="'md'" :icon="tabGroup.icon" :label="''" /></div>
+                        </div>
+
+                        <div v-if="true">
+                            <div>
+                                <MultiSelectPaginated
+                                    :drop-shadow="true"
+                                    :selection-max-content="false"
+                                    :selected-max-viewable-line="6"
+                                    :selection-max-viewable-line="10"
+                                    :searchable="false"
+                                    :selection-float="true"
+                                    :always-active="false"
+                                    :label="'Select Prototypes'"
                                     :size="'lg'"
-                                    :rows="data_2"
-                                    v-model="selected_2"
-                                    selection>
-                                    <template v-slot:cell.name="{cell, index, slot}">
-                                        <div class="tw-h-full tw-w-full tw-flex tw-items-center">
-                                            <Button class="tw-w-full" :variant="'outline'" :icon="'material-symbols:ev-mobiledata-badge-sharp'" :size="slot.buttonSize" :label="`${cell.name}`"></Button>
-                                        </div>
-                                    </template>
-                                    <template v-slot:cell.code="{index, cell, slot}">
-                                        <Input v-model="cell.code" readonly :size="slot.inputSize" type="text" />
-                                    </template>
-                                    <template v-slot:cell.datetime_added="{cell, slot, scrollReference}">
-                                        <InputWithIcon
-                                            :icon="'ion:calendar-number-sharp'"
-                                            :id="`datetime_added-` + cell.id"
-                                            v-model="cell.datetime_added"
-                                            readonly
-                                            in-cell
-                                            :size="slot.inputSize"
-                                            :type="'text'" />
-                                    </template>
-                                </DataTable>
-                            </div>
-                            <div class="tw-block md:tw-col-span-2 lg:tw-col-span-4 tw-p-2 neutral-border">
-                                <InputLabel class="tw-mb-2" :size="'md'" value="XL Datatable with Selection and Form Foundations" />
-                                <DataTable
-                                    :headers="headers_3"
-                                    :size="'xl'"
-                                    :rows="data_3"
-                                    v-model="selected_3"
-                                    selection>
-                                    <template v-slot:cell.tools="{cell, slot, scrollReference}">
-                                        <div class="tw-h-full tw-space-x-0.5 tw-w-full tw-flex tw-items-center">
-                                            <Button :size="slot.buttonSize" :icon="'emojione-monotone:envelope-with-arrow'" :label="'Slot I'"></Button>
-                                            <Button :variant="'flat'" :size="slot.buttonSize" :icon="'emojione-monotone:envelope'" :label="'Slot II'"></Button>
-                                            <Button :variant="'flat'" :size="slot.buttonSize" :icon="'emojione-monotone:incoming-envelope'" :label="'Slot III'"></Button>
-                                            <Button :variant="'flat'" :size="slot.buttonSize" :icon="'emojione-monotone:dollar-banknote'"></Button>
-                                            <Button :variant="'flat'" :size="slot.buttonSize" :icon="'emojione-monotone:spiral-calendar'"></Button>
-                                        </div>
-                                    </template>
-                                    <template v-slot:cell.input="{cell, index, slot}">
-                                        <Input :size="slot.inputSize" class="tw-w-full" placeholder="Enter Amount" type="text" autocomplete="off" />
-                                    </template>
-                                    <template v-slot:cell.name="{cell, index, slot}">
-                                        <div class="tw-h-full tw-w-full tw-flex tw-items-center">
-                                            <Button class="tw-w-full" :variant="'flat'" :icon="'ic:baseline-data-saver-on'" :size="slot.buttonSize" :label="`${cell.name}`"></Button>
-                                        </div>
-                                    </template>
-                                    <template v-slot:cell.code="{cell, index, slot}">
-                                        <Input :size="slot.inputSize" class="tw-w-full" v-model="cell.code" type="text" autocomplete="off" />
-                                    </template>
-                                    <template v-slot:cell.single_paginated="{cell, slot, scrollReference}">
-                                        <SingleSelectPaginated
-                                            in-horizontal-scrollable
-                                            :scroll-reference="scrollReference"
-                                            :value-persist="true"
-                                            :drop-shadow="true"
-                                            :selection-max-content="true"
-                                            :selection-max-viewable-line="10"
-                                            :searchable="true"
-                                            :selection-float="true"
-                                            :always-active="false"
-                                            :label="'Select Prototype'"
-                                            :size="slot.selectSize"
-                                            :payload="cell.single_select_prototype_payload"
-                                            :icon="'emojione-monotone:japanese-no-vacancy-button'"/>
-                                    </template>
-                                    <template v-slot:cell.multi_paginated="{cell, slot, scrollReference}">
-                                        <MultiSelectPaginated
-                                            in-horizontal-scrollable
-                                            :scroll-reference="scrollReference"
-                                            :drop-shadow="true"
-                                            :selection-max-content="true"
-                                            :selected-max-viewable-line="6"
-                                            :selection-max-viewable-line="10"
-                                            :searchable="true"
-                                            :selection-float="true"
-                                            :always-active="false"
-                                            :label="'Select Prototypes'"
-                                            :size="slot.selectSize"
-                                            :payload="cell.multi_select_prototype_payload"
-                                            :icon="'ic:sharp-qr-code'"/>
-                                    </template>
-                                    <template v-slot:cell.single_select="{cell, slot, scrollReference}">
-                                        <SingleSelect
-                                            in-horizontal-scrollable
-                                            drop-shadow
-                                            :scroll-reference="scrollReference"
-                                            :size="slot.selectSize"
-                                            :icon="'emojione-monotone:kaaba'"
-                                            :label="'Plan'"
-                                            :options="plan" />
-                                    </template>
-                                    <template v-slot:cell.multi_select="{cell, slot, scrollReference}">
-                                        <MultiSelect
-                                            in-horizontal-scrollable
-                                            drop-shadow
-                                            :scroll-reference="scrollReference"
-                                            :size="slot.selectSize"
-                                            :options="category"
-                                            :icon="'emojione-monotone:japanese-post-office'"/>
-                                    </template>
-                                    <template v-slot:cell.type="{cell, index, slot}">
-                                        <Input :size="slot.inputSize" v-model="cell.type" type="number" autocomplete="off" />
-                                    </template>
-                                    <template v-slot:cell.category="{cell, index, slot}">
-                                        <Input :size="slot.inputSize" v-model="cell.category" type="number" autocomplete="off" />
-                                    </template>
-                                    <template v-slot:cell.capacity="{cell, index, slot}">
-                                        <Input :size="slot.inputSize" v-model="cell.capacity" type="number" autocomplete="off" />
-                                    </template>
-                                    <template v-slot:cell.datetime_added="{cell, slot, scrollReference}">
-                                        <InputWithIcon
-                                            :icon="'ion:calendar-number-sharp'"
-                                            :id="`datetime_added-` + cell.id"
-                                            v-model="cell.datetime_added"
-                                            readonly
-                                            in-cell
-                                            :size="slot.inputSize"
-                                            :type="'text'" />
-                                    </template>
-                                </DataTable>
-                            </div>
-                        </div>
-
-                        <!-- Tab Indexed Group -->
-                        <div v-if="false">
-                            <div class="tw-block tw-p-2 neutral-border">
-                                <InputLabel class="tw-mb-2" :size="'md'" value="Tab Group" />
-                                <div class="tw-grid tw-gap-1 tw-grid-cols-1 sm:tw-grid-cols-2 md:tw-grid-cols-3 lg:tw-grid-cols-5">
-                                    <div>
-                                        <Input :tabindex="1" :size="tabGroup.size" :placeholder="'Enter value'" type="text" autocomplete="off" />
-                                    </div>
-                                    <div>
-                                        <MultiSelectPaginated
-                                            :tabindex="2"
-                                            :drop-shadow="true"
-                                            :selection-max-content="false"
-                                            :selected-max-viewable-line="6"
-                                            :selection-max-viewable-line="10"
-                                            :searchable="false"
-                                            :selection-float="true"
-                                            :always-active="false"
-                                            :label="'Select Prototypes'"
-                                            :size="tabGroup.size"
-                                            :payload="multiSelectPrototypePayload"
-                                            :icon="tabGroup.icon"/>
-                                    </div>
-                                    <div>
-                                        <InputWithIcon :tabindex="4" :size="tabGroup.size" :icon="tabGroup.icon" :placeholder="'Enter value'" type="text" autocomplete="off" />
-                                    </div>
-                                    <div>
-                                        <MultiSelect
-                                            :tabindex="5"
-                                            drop-shadow
-                                            :searchable="false"
-                                            :selection-float="true"
-                                            :always-active="false"
-                                            :selection-max-viewable-line="5"
-                                            :size="tabGroup.size"
-                                            :options="category"
-                                            :icon="tabGroup.icon"/>
-                                    </div>
-                                    <div>
-                                        <InputWithIcon :tabindex="7" :size="tabGroup.size" :icon="tabGroup.icon" :placeholder="'Enter value'" type="text" autocomplete="off" />
-                                    </div>
-                                    <div>
-                                        <Input :tabindex="8" :size="tabGroup.size" :placeholder="'Enter value'" type="text" autocomplete="off" />
-                                    </div>
-                                    <div>
-                                        <SingleSelectPaginated
-                                            :tabindex="9"
-                                            :value-persist="true"
-                                            :drop-shadow="true"
-                                            :selection-max-content="true"
-                                            :selection-max-viewable-line="10"
-                                            :searchable="false"
-                                            :selection-float="true"
-                                            :always-active="false"
-                                            :label="'Select Prototype'"
-                                            :size="tabGroup.size"
-                                            :payload="singleSelectPrototypePayload"
-                                            :icon="tabGroup.icon"/>
-                                    </div>
-                                    <div>
-                                        <InputWithIcon :tabindex="11" :size="tabGroup.size" :icon="tabGroup.icon" :placeholder="'Enter value'" type="text" autocomplete="off" />
-                                    </div>
-                                    <div>
-                                        <SingleSelect
-                                            :tabindex="12"
-                                            :value-persist="true"
-                                            :drop-shadow="true"
-                                            :selection-max-content="true"
-                                            :searchable="false"
-                                            :selection-float="true"
-                                            :always-active="false"
-                                            :size="tabGroup.size"
-                                            :selection-max-viewable-line="8"
-                                            :icon="tabGroup.icon"
-                                            :options="singleSelectPrototype"/>
-                                    </div>
-                                    <div>
-                                        <InputWithIcon :tabindex="14" :size="tabGroup.size" :icon="tabGroup.icon" :placeholder="'Enter value'" type="text" autocomplete="off" />
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Button and Input Grid Spacing Alignments -->
-                        <div v-if="false">
-                            <div class="tw-block tw-p-2 neutral-border">
-                                <InputLabel class="tw-mb-2" :size="'md'" value="Spacing Aligment Grid" />
-                                <div class="tw-grid tw-gap-1 tw-grid-cols-7">
-                                    <div v-if="true">
-                                        <div>
-                                            <MultiSelectPaginated
-                                                :drop-shadow="true"
-                                                :selection-max-content="false"
-                                                :selected-max-viewable-line="6"
-                                                :selection-max-viewable-line="10"
-                                                :searchable="false"
-                                                :selection-float="true"
-                                                :always-active="false"
-                                                :label="'Select Prototypes'"
-                                                :size="'2xs'"
-                                                :payload="multiSelectPrototypePayload"
-                                                :icon="tabGroup.icon"/>
-                                        </div>
-                                        <div>
-                                            <InputWithIcon :size="'2xs'" :icon="tabGroup.icon" :placeholder="'Enter value'" type="text" autocomplete="off" />
-                                        </div>
-                                        <div>
-                                            <MultiSelect
-                                                drop-shadow
-                                                :searchable="false"
-                                                :selection-float="true"
-                                                :always-active="false"
-                                                :selection-max-viewable-line="5"
-                                                :size="'2xs'"
-                                                :options="category"
-                                                :icon="tabGroup.icon"/>
-                                        </div>
-                                        <div>
-                                            <SingleSelectPaginated
-                                                :value-persist="true"
-                                                :drop-shadow="true"
-                                                :selection-max-content="true"
-                                                :selection-max-viewable-line="10"
-                                                :searchable="false"
-                                                :selection-float="true"
-                                                :always-active="false"
-                                                :label="'Select Prototype'"
-                                                :size="'2xs'"
-                                                :payload="singleSelectPrototypePayload"
-                                                :icon="tabGroup.icon"/>
-                                        </div>
-                                        <div>
-                                            <SingleSelect
-                                                :value-persist="true"
-                                                :drop-shadow="true"
-                                                :selection-max-content="true"
-                                                :searchable="false"
-                                                :selection-float="true"
-                                                :always-active="false"
-                                                :size="'2xs'"
-                                                :selection-max-viewable-line="8"
-                                                :icon="tabGroup.icon"
-                                                :options="singleSelectPrototype"/>
-                                        </div>
-
-                                        <div><Button class="tw-w-full" :size="'2xs'" :icon="tabGroup.icon" :label="'Button'" /></div>
-                                        <div><Button class="tw-w-3/4" :size="'2xs'" :icon="tabGroup.icon" :variant="'outline'" :label="'Button'" /></div>
-                                        <div><Button class="tw-w-1/2" :size="'2xs'" :icon="tabGroup.icon" :variant="'flat'" :label="'Button'" /></div>
-                                        <div><Button class="tw-w-1/3" :size="'2xs'" :icon="tabGroup.icon" :variant="'flat'" disabled :label="'Button'" /></div>
-                                        <div><Button class="" :size="'2xs'" :icon="tabGroup.icon" :variant="'flat'" :label="'Button'" /></div>
-                                        <div><InputWithIcon ref="inputValue" :size="'2xs'" :icon="tabGroup.icon" :placeholder="'Enter value'" :type="'text'" autocomplete="off" /></div>
-                                        <div><Button class="" :size="'2xs'" :icon="tabGroup.icon" :variant="'flat'" :label="''" /></div>
-                                        <div><Button class="" :size="'2xs'" :icon="tabGroup.icon" :label="''" /></div>
-                                    </div>
-
-                                    <div v-if="true">
-                                        <div>
-                                            <MultiSelectPaginated
-                                                :drop-shadow="true"
-                                                :selection-max-content="false"
-                                                :selected-max-viewable-line="6"
-                                                :selection-max-viewable-line="10"
-                                                :searchable="false"
-                                                :selection-float="true"
-                                                :always-active="false"
-                                                :label="'Select Prototypes'"
-                                                :size="'xs'"
-                                                :payload="multiSelectPrototypePayload"
-                                                :icon="tabGroup.icon"/>
-                                        </div>
-                                        <div>
-                                            <InputWithIcon :size="'xs'" :icon="tabGroup.icon" :placeholder="'Enter value'" type="text" autocomplete="off" />
-                                        </div>
-                                        <div>
-                                            <MultiSelect
-                                                drop-shadow
-                                                :searchable="false"
-                                                :selection-float="true"
-                                                :always-active="false"
-                                                :selection-max-viewable-line="5"
-                                                :size="'xs'"
-                                                :options="category"
-                                                :icon="tabGroup.icon"/>
-                                        </div>
-                                        <div>
-                                            <SingleSelectPaginated
-                                                :value-persist="true"
-                                                :drop-shadow="true"
-                                                :selection-max-content="true"
-                                                :selection-max-viewable-line="10"
-                                                :searchable="false"
-                                                :selection-float="true"
-                                                :always-active="false"
-                                                :label="'Select Prototype'"
-                                                :size="'xs'"
-                                                :payload="singleSelectPrototypePayload"
-                                                :icon="tabGroup.icon"/>
-                                        </div>
-                                        <div>
-                                            <SingleSelect
-                                                :value-persist="true"
-                                                :drop-shadow="true"
-                                                :selection-max-content="true"
-                                                :searchable="false"
-                                                :selection-float="true"
-                                                :always-active="false"
-                                                :size="'xs'"
-                                                :selection-max-viewable-line="8"
-                                                :icon="tabGroup.icon"
-                                                :options="singleSelectPrototype"/>
-                                        </div>
-
-                                        <div><Button class="tw-w-full" :size="'xs'" :icon="tabGroup.icon" :label="'Button'" /></div>
-                                        <div><Button class="tw-w-3/4" :size="'xs'" :icon="tabGroup.icon" :variant="'outline'" :label="'Button'" /></div>
-                                        <div><Button class="tw-w-1/2" :size="'xs'" :icon="tabGroup.icon" :variant="'flat'" :label="'Button'" /></div>
-                                        <div><Button class="tw-w-1/3" :size="'xs'" :icon="tabGroup.icon" :variant="'flat'" disabled :label="'Button'" /></div>
-                                        <div><Button class="" :size="'xs'" :icon="tabGroup.icon" :variant="'flat'" :label="'Button'" /></div>
-                                        <div><InputWithIcon ref="inputValue" :size="'xs'" :icon="tabGroup.icon" :placeholder="'Enter value'" :type="'text'" autocomplete="off" /></div>
-                                        <div><Button class="" :size="'xs'" :icon="tabGroup.icon" :variant="'flat'" :label="''" /></div>
-                                        <div><Button class="" :size="'xs'" :icon="tabGroup.icon" :label="''" /></div>
-                                    </div>
-
-                                    <div v-if="true">
-                                        <div>
-                                            <MultiSelectPaginated
-                                                :drop-shadow="true"
-                                                :selection-max-content="false"
-                                                :selected-max-viewable-line="6"
-                                                :selection-max-viewable-line="10"
-                                                :searchable="false"
-                                                :selection-float="true"
-                                                :always-active="false"
-                                                :label="'Select Prototypes'"
-                                                :size="'sm'"
-                                                :payload="multiSelectPrototypePayload"
-                                                :icon="tabGroup.icon"/>
-                                        </div>
-                                        <div>
-                                            <InputWithIcon :size="'sm'" :icon="tabGroup.icon" :placeholder="'Enter value'" type="text" autocomplete="off" />
-                                        </div>
-                                        <div>
-                                            <MultiSelect
-                                                drop-shadow
-                                                :searchable="false"
-                                                :selection-float="true"
-                                                :always-active="false"
-                                                :selection-max-viewable-line="5"
-                                                :size="'sm'"
-                                                :options="category"
-                                                :icon="tabGroup.icon"/>
-                                        </div>
-                                        <div>
-                                            <SingleSelectPaginated
-                                                :value-persist="true"
-                                                :drop-shadow="true"
-                                                :selection-max-content="true"
-                                                :selection-max-viewable-line="10"
-                                                :searchable="false"
-                                                :selection-float="true"
-                                                :always-active="false"
-                                                :label="'Select Prototype'"
-                                                :size="'sm'"
-                                                :payload="singleSelectPrototypePayload"
-                                                :icon="tabGroup.icon"/>
-                                        </div>
-                                        <div>
-                                            <SingleSelect
-                                                :value-persist="true"
-                                                :drop-shadow="true"
-                                                :selection-max-content="true"
-                                                :searchable="false"
-                                                :selection-float="true"
-                                                :always-active="false"
-                                                :size="'sm'"
-                                                :selection-max-viewable-line="8"
-                                                :icon="tabGroup.icon"
-                                                :options="singleSelectPrototype"/>
-                                        </div>
-
-                                        <div><Button class="tw-w-full" :size="'sm'" :icon="tabGroup.icon" :label="'Button'" /></div>
-                                        <div><Button class="tw-w-3/4" :size="'sm'" :icon="tabGroup.icon" :variant="'outline'" :label="'Button'" /></div>
-                                        <div><Button class="tw-w-1/2" :size="'sm'" :icon="tabGroup.icon" :variant="'flat'" :label="'Button'" /></div>
-                                        <div><Button class="tw-w-1/3" :size="'sm'" :icon="tabGroup.icon" :variant="'flat'" disabled :label="'Button'" /></div>
-                                        <div><Button class="" :size="'sm'" :icon="tabGroup.icon" :variant="'flat'" :label="'Button'" /></div>
-                                        <div><InputWithIcon ref="inputValue" :size="'sm'" :icon="tabGroup.icon" :placeholder="'Enter value'" :type="'text'" autocomplete="off" /></div>
-                                        <div><Button class="" :size="'sm'" :icon="tabGroup.icon" :variant="'flat'" :label="''" /></div>
-                                        <div><Button class="" :size="'sm'" :icon="tabGroup.icon" :label="''" /></div>
-                                    </div>
-
-                                    <div v-if="true">
-                                        <div>
-                                            <MultiSelectPaginated
-                                                :drop-shadow="true"
-                                                :selection-max-content="false"
-                                                :selected-max-viewable-line="6"
-                                                :selection-max-viewable-line="10"
-                                                :searchable="false"
-                                                :selection-float="true"
-                                                :always-active="false"
-                                                :label="'Select Prototypes'"
-                                                :size="'md'"
-                                                :payload="multiSelectPrototypePayload"
-                                                :icon="tabGroup.icon"/>
-                                        </div>
-                                        <div>
-                                            <InputWithIcon :size="'md'" :icon="tabGroup.icon" :placeholder="'Enter value'" type="text" autocomplete="off" />
-                                        </div>
-                                        <div>
-                                            <MultiSelect
-                                                drop-shadow
-                                                :searchable="false"
-                                                :selection-float="true"
-                                                :always-active="false"
-                                                :selection-max-viewable-line="5"
-                                                :size="'md'"
-                                                :options="category"
-                                                :icon="tabGroup.icon"/>
-                                        </div>
-                                        <div>
-                                            <SingleSelectPaginated
-                                                :value-persist="true"
-                                                :drop-shadow="true"
-                                                :selection-max-content="true"
-                                                :selection-max-viewable-line="10"
-                                                :searchable="false"
-                                                :selection-float="true"
-                                                :always-active="false"
-                                                :label="'Select Prototype'"
-                                                :size="'md'"
-                                                :payload="singleSelectPrototypePayload"
-                                                :icon="tabGroup.icon"/>
-                                        </div>
-                                        <div>
-                                            <SingleSelect
-                                                :value-persist="true"
-                                                :drop-shadow="true"
-                                                :selection-max-content="true"
-                                                :searchable="false"
-                                                :selection-float="true"
-                                                :always-active="false"
-                                                :size="'md'"
-                                                :selection-max-viewable-line="8"
-                                                :icon="tabGroup.icon"
-                                                :options="singleSelectPrototype"/>
-                                        </div>
-
-                                        <div><Button class="tw-w-full" :size="'md'" :icon="tabGroup.icon" :label="'Button'" /></div>
-                                        <div><Button class="tw-w-3/4" :size="'md'" :icon="tabGroup.icon" :variant="'outline'" :label="'Button'" /></div>
-                                        <div><Button class="tw-w-1/2" :size="'md'" :icon="tabGroup.icon" :variant="'flat'" :label="'Button'" /></div>
-                                        <div><Button class="tw-w-1/3" :size="'md'" :icon="tabGroup.icon" :variant="'flat'" disabled :label="'Button'" /></div>
-                                        <div><Button class="" :size="'md'" :icon="tabGroup.icon" :variant="'flat'" :label="'Button'" /></div>
-                                        <div><InputWithIcon ref="inputValue" :size="'md'" :icon="tabGroup.icon" :placeholder="'Enter value'" :type="'text'" autocomplete="off" /></div>
-                                        <div><Button class="" :size="'md'" :icon="tabGroup.icon" :variant="'flat'" :label="''" /></div>
-                                        <div><Button class="" :size="'md'" :icon="tabGroup.icon" :label="''" /></div>
-                                    </div>
-
-                                    <div v-if="true">
-                                        <div>
-                                            <MultiSelectPaginated
-                                                :drop-shadow="true"
-                                                :selection-max-content="false"
-                                                :selected-max-viewable-line="6"
-                                                :selection-max-viewable-line="10"
-                                                :searchable="false"
-                                                :selection-float="true"
-                                                :always-active="false"
-                                                :label="'Select Prototypes'"
-                                                :size="'lg'"
-                                                :payload="multiSelectPrototypePayload"
-                                                :icon="tabGroup.icon"/>
-                                        </div>
-                                        <div>
-                                            <InputWithIcon :size="'lg'" :icon="tabGroup.icon" :placeholder="'Enter value'" type="text" autocomplete="off" />
-                                        </div>
-                                        <div>
-                                            <MultiSelect
-                                                drop-shadow
-                                                :searchable="false"
-                                                :selection-float="true"
-                                                :always-active="false"
-                                                :selection-max-viewable-line="5"
-                                                :size="'lg'"
-                                                :options="category"
-                                                :icon="tabGroup.icon"/>
-                                        </div>
-                                        <div>
-                                            <SingleSelectPaginated
-                                                :value-persist="true"
-                                                :drop-shadow="true"
-                                                :selection-max-content="true"
-                                                :selection-max-viewable-line="10"
-                                                :searchable="false"
-                                                :selection-float="true"
-                                                :always-active="false"
-                                                :label="'Select Prototype'"
-                                                :size="'lg'"
-                                                :payload="singleSelectPrototypePayload"
-                                                :icon="tabGroup.icon"/>
-                                        </div>
-                                        <div>
-                                            <SingleSelect
-                                                :value-persist="true"
-                                                :drop-shadow="true"
-                                                :selection-max-content="true"
-                                                :searchable="false"
-                                                :selection-float="true"
-                                                :always-active="false"
-                                                :size="'lg'"
-                                                :selection-max-viewable-line="8"
-                                                :icon="tabGroup.icon"
-                                                :options="singleSelectPrototype"/>
-                                        </div>
-
-                                        <div><Button class="tw-w-full" :size="'lg'" :icon="tabGroup.icon" :label="'Button'" /></div>
-                                        <div><Button class="tw-w-3/4" :size="'lg'" :icon="tabGroup.icon" :variant="'outline'" :label="'Button'" /></div>
-                                        <div><Button class="tw-w-1/3" :size="'lg'" :icon="tabGroup.icon" :variant="'flat'" disabled :label="'Button'" /></div>
-                                        <div><Button class="" :size="'lg'" :icon="tabGroup.icon" :variant="'flat'" :label="'Button'" /></div>
-                                        <div><InputWithIcon ref="inputValue" :size="'lg'" :icon="tabGroup.icon" :placeholder="'Enter value'" :type="'text'" autocomplete="off" /></div>
-                                        <div><Button class="" :size="'lg'" :icon="tabGroup.icon" :variant="'flat'" :label="''" /></div>
-                                        <div><Button class="" :size="'lg'" :icon="tabGroup.icon" :label="''" /></div>
-                                    </div>
-
-                                    <div v-if="true">
-                                        <div><InputWithIcon :size="'xl'" :icon="tabGroup.icon" :placeholder="'Enter value'" type="text" autocomplete="off" /></div>
-                                        <div><Button class="tw-w-full" :size="'xl'" :icon="tabGroup.icon" :label="'Button'" /></div>
-                                        <div><Button class="tw-w-3/4" :size="'xl'" :icon="tabGroup.icon" :variant="'outline'" :label="'Button'" /></div>
-                                        <div><Button class="tw-w-1/2" :size="'xl'" :icon="tabGroup.icon" :variant="'flat'" :label="'Button'" /></div>
-                                        <div><Button class="tw-w-1/3" :size="'xl'" :icon="tabGroup.icon" :variant="'flat'" disabled :label="'Button'" /></div>
-                                        <div><InputWithIcon ref="inputValue" :size="'xl'" :icon="tabGroup.icon" :placeholder="'Enter value'" :type="'text'" autocomplete="off" /></div>
-                                        <div><Button class="" :size="'xl'" :icon="tabGroup.icon" :variant="'flat'" :label="''" /></div>
-                                        <div><Button class="" :size="'xl'" :icon="tabGroup.icon" :label="''" /></div>
-                                    </div>
-
-                                    <div v-if="true">
-                                        <div><InputWithIcon :size="'2xl'" :icon="tabGroup.icon" :placeholder="'Enter value'" type="text" autocomplete="off" /></div>
-                                        <div><Button class="tw-w-full" :size="'2xl'" :icon="tabGroup.icon" :label="'Button'" /></div>
-                                        <div><Button class="tw-w-3/4" :size="'2xl'" :icon="tabGroup.icon" :variant="'outline'" :label="'Button'" /></div>
-                                        <div><Button class="tw-w-1/2" :size="'2xl'" :icon="tabGroup.icon" :variant="'flat'" :label="'Button'" /></div>
-                                        <div><Button class="tw-w-1/3" :size="'2xl'" :icon="tabGroup.icon" :variant="'flat'" disabled :label="'Button'" /></div>
-                                        <div><InputWithIcon ref="inputValue" :size="'2xl'" :icon="tabGroup.icon" :placeholder="'Enter value'" :type="'text'" autocomplete="off" /></div>
-                                        <div><Button class="" :size="'2xl'" :icon="tabGroup.icon" :variant="'flat'" :label="''" /></div>
-                                        <div><Button class="" :size="'2xl'" :icon="tabGroup.icon" :label="''" /></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Button and Input Horizontal Alignment -->
-                        <div v-if="false">
-                            <div class="tw-my-4 tw-flex tw-justify-center tw-space-x-1.5">
-                                <Button :size="tabGroup.size" :icon="tabGroup.icon" :label="'Default'" />
-                                <Button :size="tabGroup.size" :icon="tabGroup.icon" :variant="'outline'" :label="'Outline'" />
-                                <Button :size="tabGroup.size" :icon="tabGroup.icon" :variant="'flat'" :label="'Flat'" />
-                                <Button :size="tabGroup.size" :icon="tabGroup.icon" :variant="'flat'" disabled :label="'Flat'" />
-                                <InputWithIcon ref="inputValue" :size="tabGroup.size" :icon="tabGroup.icon" :placeholder="'Enter value'" :type="'text'" autocomplete="off" />
-                            </div>
-                        </div>
-
-                        <!-- Default Button -->
-                        <div v-if="true" class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-9">
-                            <div class="tw-flex tw-items-start tw-justify-start tw-block neutral-border">
-                                <Button :size="'2xs'" :icon="'ic:sharp-send-to-mobile'" :label="'XXS Button'"></Button>
-                            </div>
-                            <div class="tw-flex tw-items-start tw-justify-start tw-block neutral-border">
-                                <Button :size="'xs'" :icon="'ic:sharp-send-to-mobile'" :label="'XS Button'"></Button>
-                            </div>
-                            <div class="tw-flex tw-items-start tw-justify-start tw-block neutral-border">
-                                <Button :size="'sm'" :icon="'ic:sharp-send-to-mobile'" :label="'SM Authenticate'"></Button>
-                            </div>
-                            <div class="tw-flex tw-items-start tw-justify-start tw-block neutral-border">
-                                <Button :size="'md'" :icon="'ic:sharp-send-to-mobile'" :label="'MD Authenticate'"></Button>
-                            </div>
-                            <div class="tw-flex tw-items-start tw-justify-start tw-block neutral-border">
-                                <Button :disabled="true" :icon="'eos-icons:compass'" :label="'Disabled'"></Button>
-                            </div>
-                            <div class="tw-col-span-2 tw-flex tw-items-start tw-justify-start tw-block tw-w-full neutral-border">
-                                <Button @click="$themeStore.setTheme('blue')" :size="'lg'" :icon="'mdi:palette-swatch-variant'" :label="'Blue Theme'"></Button>
-                            </div>
-                            <div class="tw-col-span-2 tw-flex tw-items-start tw-justify-start tw-block tw-w-full neutral-border">
-                                <Button :size="'xl'" :icon="'eos-icons:atom-electron'" :label="'XL Authenticate'"></Button>
-                            </div>
-                        </div>
-
-                        <!-- Outline Button -->
-                        <div v-if="true" class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-9">
-                            <div class="tw-flex tw-items-start tw-justify-start tw-block neutral-border">
-                                <Button :variant="'outline'" :size="'2xs'" :icon="'ic:sharp-dashboard'" :label="'XXS Button'"></Button>
-                            </div>
-                            <div class="tw-flex tw-items-start tw-justify-start tw-block neutral-border">
-                                <Button :variant="'outline'" :size="'xs'" :icon="'ic:sharp-dashboard'" :label="'XS Button'"></Button>
-                            </div>
-                            <div class="tw-flex tw-items-start tw-justify-start tw-block neutral-border">
-                                <Button :variant="'outline'" :size="'sm'" :icon="'ic:sharp-dashboard'" :label="'SM Authenticate'"></Button>
-                            </div>
-                            <div class="tw-flex tw-items-start tw-justify-start tw-block neutral-border">
-                                <Button :variant="'outline'" :size="'md'" :icon="'ic:sharp-dashboard'" :label="'MD Authenticate'"></Button>
-                            </div>
-                            <div class="tw-flex tw-items-start tw-justify-start tw-block neutral-border">
-                                <Button :variant="'outline'" :icon="'eos-icons:compass'" :disabled="true" :label="'Disabled'"></Button>
-                            </div>
-                            <div class="tw-col-span-2 tw-flex tw-items-start tw-justify-start tw-block tw-w-full neutral-border">
-                                <Button @click="$themeStore.setTheme('light')" :variant="'outline'" :size="'lg'" :icon="'mdi:palette-swatch-variant'" :label="'Light Theme'"></Button>
-                            </div>
-                            <div class="tw-col-span-2 tw-flex tw-items-start tw-justify-start tw-block tw-w-full">
-                                <Button @click="$themeStore.setTheme('dark')" :variant="'outline'" :size="'xl'" :icon="'eos-icons:atom-electron'" :label="'Dark Theme'"></Button>
-                            </div>
-                        </div>
-
-                        <!-- Flat Button -->
-                        <div v-if="true" class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-9">
-                            <div class="tw-flex tw-items-start tw-justify-start tw-block neutral-border">
-                                <Button :variant="'flat'" :size="'2xs'" :icon="'ic:sharp-dashboard'" :label="'XXS Button'"></Button>
-                            </div>
-                            <div class="tw-flex tw-items-start tw-justify-start tw-block neutral-border">
-                                <Button :variant="'flat'" :size="'xs'" :icon="'ic:sharp-dashboard'" :label="'XS Button'"></Button>
-                            </div>
-                            <div class="tw-flex tw-items-start tw-justify-start tw-block neutral-border">
-                                <Button :variant="'flat'" :size="'sm'" :icon="'ic:sharp-dashboard'" :label="'SM Authenticate'"></Button>
-                            </div>
-                            <div class="tw-flex tw-items-start tw-justify-start tw-block neutral-border">
-                                <Button :variant="'flat'" :size="'md'" :icon="'ic:sharp-dashboard'" :label="'MD Authenticate'"></Button>
-                            </div>
-                            <div class="tw-flex tw-items-start tw-justify-start tw-block neutral-border">
-                                <Button :variant="'flat'" :icon="'eos-icons:compass'" :disabled="true" :label="'Disabled'"></Button>
-                            </div>
-                            <div class="tw-col-span-2 tw-flex tw-items-start tw-justify-start tw-block tw-w-full neutral-border">
-                                <Button @click="$themeStore.setTheme('emerald')" :variant="'flat'" :size="'lg'" :icon="'mdi:palette-swatch-variant'" :label="'Emerald Theme'"></Button>
-                            </div>
-                            <div class="tw-col-span-2 tw-flex tw-items-start tw-justify-start tw-block tw-w-full neutral-border">
-                                <Button :variant="'flat'" :size="'xl'" :icon="'eos-icons:atom-electron'" :label="'XL Authenticate'"></Button>
-                            </div>
-                        </div>
-
-                        <!-- Accordion -->
-                        <div v-if="false" class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-1 lg:tw-grid-cols-3 xl:tw-grid-cols-3 2xl:tw-grid-cols-3">
-                            <div>
-                                <InputLabel :size="'md'" value="MD : Accordion Single Expand" />
-                                <Accordion :size="'md'" :single-expand="true" v-model:payload="accordionSingleExpand" />
+                                    :payload="multiSelectPrototypePayload"
+                                    :icon="tabGroup.icon"/>
                             </div>
                             <div>
-                                <InputLabel :size="'md'" value="MD : Accordion Multi Expand" />
-                                <Accordion :size="'md'" class="tw-space-y-4" v-model:payload="accordionMultiExpand" />
+                                <InputWithIcon :size="'lg'" :icon="tabGroup.icon" :placeholder="'Enter value'" type="text" autocomplete="off" />
                             </div>
                             <div>
-                                <InputLabel :size="'md'" value="LG : Accordion Multi Expand" />
-                                <Accordion :size="'lg'" class="tw-space-y-4" v-model:payload="accordionMultiExpand" />
+                                <MultiSelect
+                                    drop-shadow
+                                    :searchable="false"
+                                    :selection-float="true"
+                                    :always-active="false"
+                                    :selection-max-viewable-line="5"
+                                    :size="'lg'"
+                                    :options="category"
+                                    :icon="tabGroup.icon"/>
                             </div>
+                            <div>
+                                <SingleSelectPaginated
+                                    :value-persist="true"
+                                    :drop-shadow="true"
+                                    :selection-max-content="true"
+                                    :selection-max-viewable-line="10"
+                                    :searchable="false"
+                                    :selection-float="true"
+                                    :always-active="false"
+                                    :label="'Select Prototype'"
+                                    :size="'lg'"
+                                    :payload="singleSelectPrototypePayload"
+                                    :icon="tabGroup.icon"/>
+                            </div>
+                            <div>
+                                <SingleSelect
+                                    :value-persist="true"
+                                    :drop-shadow="true"
+                                    :selection-max-content="true"
+                                    :searchable="false"
+                                    :selection-float="true"
+                                    :always-active="false"
+                                    :size="'lg'"
+                                    :selection-max-viewable-line="8"
+                                    :icon="tabGroup.icon"
+                                    :options="singleSelectPrototype"/>
+                            </div>
+
+                            <div><Button class="tw-w-full" :size="'lg'" :icon="tabGroup.icon" :label="'Button'" /></div>
+                            <div><Button class="tw-w-3/4" :size="'lg'" :icon="tabGroup.icon" :variant="'outline'" :label="'Button'" /></div>
+                            <div><Button class="tw-w-1/3" :size="'lg'" :icon="tabGroup.icon" :variant="'flat'" disabled :label="'Button'" /></div>
+                            <div><Button class="" :size="'lg'" :icon="tabGroup.icon" :variant="'flat'" :label="'Button'" /></div>
+                            <div><InputWithIcon ref="inputValue" :size="'lg'" :icon="tabGroup.icon" :placeholder="'Enter value'" :type="'text'" autocomplete="off" /></div>
+                            <div><Button class="" :size="'lg'" :icon="tabGroup.icon" :variant="'flat'" :label="''" /></div>
+                            <div><Button class="" :size="'lg'" :icon="tabGroup.icon" :label="''" /></div>
                         </div>
 
-                        <!-- Checkbox -->
-                        <div v-if="false" class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-8">
-                            <div class="neutral-border">
-                                <label>
-                                    <Checkbox v-model="remember1" :label="' '" :size="'md'" name="remember" />
-                                </label>
-                            </div>
-                            <div class="neutral-border">
-                                <label>
-                                    <Checkbox v-model="remember2" :size="'sm'" :label="'SM Checkbox'" name="remember" />
-                                </label>
-                            </div>
-                            <div class="neutral-border">
-                                <label>
-                                    <Checkbox v-model="remember3" :size="'md'" :label="'MD Checkbox'" name="remember" />
-                                </label>
-                            </div>
-                            <div class="neutral-border">
-                                <label>
-                                    <Checkbox v-model="remember4" :size="'lg'" :label="'LG Checkbox'" name="remember" />
-                                </label>
-                            </div>
+                        <div v-if="true">
+                            <div><InputWithIcon :size="'xl'" :icon="tabGroup.icon" :placeholder="'Enter value'" type="text" autocomplete="off" /></div>
+                            <div><Button class="tw-w-full" :size="'xl'" :icon="tabGroup.icon" :label="'Button'" /></div>
+                            <div><Button class="tw-w-3/4" :size="'xl'" :icon="tabGroup.icon" :variant="'outline'" :label="'Button'" /></div>
+                            <div><Button class="tw-w-1/2" :size="'xl'" :icon="tabGroup.icon" :variant="'flat'" :label="'Button'" /></div>
+                            <div><Button class="tw-w-1/3" :size="'xl'" :icon="tabGroup.icon" :variant="'flat'" disabled :label="'Button'" /></div>
+                            <div><InputWithIcon ref="inputValue" :size="'xl'" :icon="tabGroup.icon" :placeholder="'Enter value'" :type="'text'" autocomplete="off" /></div>
+                            <div><Button class="" :size="'xl'" :icon="tabGroup.icon" :variant="'flat'" :label="''" /></div>
+                            <div><Button class="" :size="'xl'" :icon="tabGroup.icon" :label="''" /></div>
                         </div>
 
-                        <!-- Checkbox Group -->
-                        <div v-if="false" class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-8">
-                            <div class="neutral-border">
-                            </div>
-                            <div class="neutral-border">
-                                <label v-for="category in categorySelection" :key="category">
-                                    <Checkbox v-model="category.value" :label="category.text" :size="'sm'" />
-                                </label>
-                            </div>
-                            <div class="neutral-border">
-                                <label v-for="category in categorySelection" :key="category">
-                                    <Checkbox v-model="category.value" :label="category.text" :size="'md'" />
-                                </label>
-                            </div>
-                            <div class="neutral-border">
-                                <label v-for="category in categorySelection" :key="category">
-                                    <Checkbox v-model="category.value" :label="category.text" :size="'lg'" />
-                                </label>
-                            </div>
-                        </div>
-
-                        <!-- Radio Group -->
-                        <div v-if="false" class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-8">
-                            <div class="tw-flex tw-items-start tw-justify-start tw-block neutral-border">
-                                <div>
-                                    <InputLabel :size="'md'" value="SM : Gender Group" />
-                                    <RadioGroup
-                                        :selections="genderGroup.selection"
-                                        :size="'sm'"
-                                        class="neutral-border"
-                                        v-model="genderGroup.selected" />
-                                    <div>Selected Option: {{ genderGroup.selected }}</div>
-                                </div>
-                            </div>
-                            <div class="tw-flex tw-items-start tw-justify-start tw-block neutral-border">
-                                <div>
-                                    <InputLabel :size="'md'" value="SM : Status Group" />
-                                    <RadioGroup
-                                        :selections="statusGroup.selection"
-                                        :size="'sm'"
-                                        class="neutral-border"
-                                        v-model="statusGroup.selected" />
-                                    <div>Selected Option: {{ statusGroup.selected }}</div>
-                                </div>
-                            </div>
-                            <div class="tw-flex tw-items-start tw-justify-start tw-block neutral-border">
-                                <div>
-                                    <InputLabel :size="'md'" value="MD : Transaction Group" />
-                                    <RadioGroup
-                                        :selections="transactionGroup.selection"
-                                        :size="'md'"
-                                        class="neutral-border"
-                                        v-model="transactionGroup.selected" />
-                                    <div>Selected Option: {{ transactionGroup.selected }}</div>
-                                </div>
-                            </div>
-                            <div class="tw-flex tw-items-start tw-justify-start tw-block neutral-border">
-                                <div>
-                                    <InputLabel :size="'md'" value="LG : Category Group" />
-                                    <RadioGroup
-                                        :selections="categoryGroup.selection"
-                                        :size="'lg'"
-                                        class="neutral-border"
-                                        v-model="categoryGroup.selected" />
-                                    <div>Selected Option: {{ categoryGroup.selected }}</div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Default Input -->
-                        <div v-if="false" class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-8">
-                            <div class="tw-block neutral-border">
-                                <InputLabel :size="'2xs'" for="form_input_1" value="XXS Label" />
-                                <Input :size="'2xs'" placeholder="Enter username" id="form_input_1" type="text" autocomplete="off" />
-                            </div>
-                            <div class="tw-block neutral-border">
-                                <InputLabel :size="'xs'" for="form_input_2" value="XS Label" />
-                                <Input :size="'xs'" placeholder="Enter username" id="form_input_2" type="text" autocomplete="off" />
-                            </div>
-                            <div class="tw-block neutral-border">
-                                <InputLabel :size="'sm'" for="form_input_3" value="SM Label" />
-                                <Input :size="'sm'" placeholder="Enter username" id="form_input_3" type="text" autocomplete="off" />
-                            </div>
-                            <div class="tw-block neutral-border">
-                                <InputLabel :size="'md'" for="form_input_4" value="MD Label" />
-                                <Input :size="'md'" placeholder="Enter username" id="form_input_4" type="text" autocomplete="off" />
-                            </div>
-                            <div class="tw-block neutral-border">
-                                <InputLabel :size="'md'" for="form_input_5" value="MD Label" />
-                                <Input :size="'md'" disabled placeholder="Disabled" id="form_input_4" type="text" autocomplete="off" />
-                            </div>
-                            <div class="tw-block neutral-border">
-                                <InputLabel :size="'lg'" for="form_input_6" value="LG Label" />
-                                <Input :size="'lg'" placeholder="Enter username" id="form_input_5" type="text" autocomplete="off" />
-                            </div>
-                            <div class="tw-col-span-2 tw-block neutral-border">
-                                <InputLabel :size="'xl'" for="form_input_7" value="XL Label" />
-                                <Input :size="'xl'" placeholder="Enter username" id="form_input_6" type="text" autocomplete="off" />
-                            </div>
-                        </div>
-
-                        <!-- Input with Icon -->
-                        <div v-if="false" class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-8">
-                            <div class="tw-block neutral-border">
-                                <InputLabel :size="'2xs'" for="form_input_1" value="XXS Label" />
-                                <InputWithIcon :size="'2xs'" :icon="'ic:sharp-qr-code'" placeholder="Enter username" id="form_input_1" type="text" autocomplete="off" />
-                            </div>
-                            <div class="tw-block neutral-border">
-                                <InputLabel :size="'xs'" for="form_input_2" value="XS Label" />
-                                <InputWithIcon :size="'xs'" :icon="'ic:sharp-qr-code'" placeholder="Enter username" id="form_input_2" type="text" autocomplete="off" />
-                            </div>
-                            <div class="tw-block neutral-border">
-                                <InputLabel :size="'sm'" for="form_input_3" value="SM Label" />
-                                <InputWithIcon :size="'sm'" :icon="'ic:sharp-qr-code'" placeholder="Enter username" id="form_input_3" type="text" autocomplete="off" />
-                            </div>
-                            <div class="tw-block neutral-border">
-                                <InputLabel :size="'md'" for="form_input_4" value="MD Label" />
-                                <InputWithIcon :size="'md'" :icon="'ic:sharp-qr-code'" placeholder="Enter username" id="form_input_4" type="text" autocomplete="off" />
-                            </div>
-                            <div class="tw-block neutral-border">
-                                <InputLabel :size="'md'" for="form_input_5" value="MD Label" />
-                                <InputWithIcon :size="'md'" :icon="'ic:sharp-qr-code'" disabled placeholder="Disabled" id="form_input_4" type="text" autocomplete="off" />
-                            </div>
-                            <div class="tw-block neutral-border">
-                                <InputLabel :size="'lg'" for="form_input_6" value="LG Label" />
-                                <InputWithIcon :size="'lg'" :icon="'ic:sharp-qr-code'" placeholder="Enter username" id="form_input_5" type="text" autocomplete="off" />
-                            </div>
-                            <div class="tw-col-span-2 tw-block neutral-border">
-                                <InputLabel :size="'xl'" for="form_input_7" value="XL Label" />
-                                <InputWithIcon :size="'xl'" :icon="'ic:sharp-qr-code'" placeholder="Enter username" id="form_input_6" type="text" autocomplete="off" />
-                            </div>
-                        </div>
-
-                        <!-- Typography -->
-                        <div v-if="true" class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-8">
-                            <div class="tw-block neutral-border tw-col-span-2">
-                                <p class="tw-text-sm tw-leading-4">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
-                            </div>
-                            <div class="tw-block neutral-border tw-col-span-2">
-                                <p class="tw-text-base tw-leading-4">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
-                            </div>
-                            <div class="tw-block neutral-border tw-col-span-2">
-                                <p class="tw-text-lg tw-leading-5">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
-                            </div>
-                            <div class="tw-block neutral-border tw-col-span-2">
-                                <p class="tw-text-xl tw-leading-6">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
-                            </div>
-                        </div>
-
-                        <!-- Font Weights -->
-                        <div v-if="true" class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-8">
-                            <div class="tw-block neutral-border tw-col-span-2">
-                                <p class="tw-text-sm tw-font-thin tw-leading-4">Thin: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
-                                <br><p class="tw-text-sm tw-font-extralight tw-leading-4">Extra Light: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
-                                <br><p class="tw-text-sm tw-font-light tw-leading-4">Light: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
-                                <br><p class="tw-text-sm tw-font-normal tw-leading-4">Normal: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
-                                <br><p class="tw-text-sm tw-font-medium tw-leading-4">Medium: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
-                                <br><p class="tw-text-sm tw-font-semibold tw-leading-4">Semibold: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
-                                <br><p class="tw-text-sm tw-font-bold tw-leading-4">Bold: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
-                                <br><p class="tw-text-sm tw-font-extrabold tw-leading-4">Extra Bold: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
-                                <br><p class="tw-text-sm tw-font-black tw-leading-4">Black: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
-                            </div>
-                            <div class="tw-block neutral-border tw-col-span-2">
-                                <p class="tw-text-base tw-font-thin tw-leading-4">Thin: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
-                                <br><p class="tw-text-base tw-font-extralight tw-leading-4">Extra Light: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
-                                <br><p class="tw-text-base tw-font-light tw-leading-4">Light: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
-                                <br><p class="tw-text-base tw-font-normal tw-leading-4">Normal: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
-                                <br><p class="tw-text-base tw-font-medium tw-leading-4">Medium: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
-                                <br><p class="tw-text-base tw-font-semibold tw-leading-4">Semibold: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
-                                <br><p class="tw-text-base tw-font-bold tw-leading-4">Bold: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
-                                <br><p class="tw-text-base tw-font-extrabold tw-leading-4">Extra Bold: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
-                                <br><p class="tw-text-base tw-font-black tw-leading-4">Black: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
-                            </div>
-                            <div class="tw-block neutral-border tw-col-span-2">
-                                <p class="tw-text-lg tw-font-thin tw-leading-5">Thin: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
-                                <br><p class="tw-text-lg tw-font-extralight tw-leading-5">Extra Light: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
-                                <br><p class="tw-text-lg tw-font-light tw-leading-5">Light: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
-                                <br><p class="tw-text-lg tw-font-normal tw-leading-5">Normal: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
-                                <br><p class="tw-text-lg tw-font-medium tw-leading-5">Medium: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
-                                <br><p class="tw-text-lg tw-font-semibold tw-leading-5">Semibold: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
-                                <br><p class="tw-text-lg tw-font-bold tw-leading-5">Bold: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
-                                <br><p class="tw-text-lg tw-font-extrabold tw-leading-5">Extra Bold: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
-                                <br><p class="tw-text-lg tw-font-black tw-leading-5">Black: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
-                            </div>
-                            <div class="tw-block neutral-border tw-col-span-2">
-                                <p class="tw-text-xl tw-font-extralight tw-leading-6">Thin: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
-                                <br><p class="tw-text-xl tw-font-light tw-leading-6">Extra Light: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
-                                <br><p class="tw-text-xl tw-font-normal tw-leading-6">Normal: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
-                                <br><p class="tw-text-xl tw-font-medium tw-leading-6">Medium: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
-                                <br><p class="tw-text-xl tw-font-semibold tw-leading-6">Semibold: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
-                                <br><p class="tw-text-xl tw-font-bold tw-leading-6">Bold: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
-                                <br><p class="tw-text-xl tw-font-extrabold tw-leading-6">Extra Bold: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
-                                <br><p class="tw-text-xl tw-font-black tw-leading-6">Black: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
-                            </div>
+                        <div v-if="true">
+                            <div><InputWithIcon :size="'2xl'" :icon="tabGroup.icon" :placeholder="'Enter value'" type="text" autocomplete="off" /></div>
+                            <div><Button class="tw-w-full" :size="'2xl'" :icon="tabGroup.icon" :label="'Button'" /></div>
+                            <div><Button class="tw-w-3/4" :size="'2xl'" :icon="tabGroup.icon" :variant="'outline'" :label="'Button'" /></div>
+                            <div><Button class="tw-w-1/2" :size="'2xl'" :icon="tabGroup.icon" :variant="'flat'" :label="'Button'" /></div>
+                            <div><Button class="tw-w-1/3" :size="'2xl'" :icon="tabGroup.icon" :variant="'flat'" disabled :label="'Button'" /></div>
+                            <div><InputWithIcon ref="inputValue" :size="'2xl'" :icon="tabGroup.icon" :placeholder="'Enter value'" :type="'text'" autocomplete="off" /></div>
+                            <div><Button class="" :size="'2xl'" :icon="tabGroup.icon" :variant="'flat'" :label="''" /></div>
+                            <div><Button class="" :size="'2xl'" :icon="tabGroup.icon" :label="''" /></div>
                         </div>
                     </div>
                 </div>
-            </template>
-        </NuxtLayout>
+            </div>
+
+            <!-- Button and Input Horizontal Alignment -->
+            <div v-if="false">
+                <div class="tw-my-4 tw-flex tw-justify-center tw-space-x-1.5">
+                    <Button :size="tabGroup.size" :icon="tabGroup.icon" :label="'Default'" />
+                    <Button :size="tabGroup.size" :icon="tabGroup.icon" :variant="'outline'" :label="'Outline'" />
+                    <Button :size="tabGroup.size" :icon="tabGroup.icon" :variant="'flat'" :label="'Flat'" />
+                    <Button :size="tabGroup.size" :icon="tabGroup.icon" :variant="'flat'" disabled :label="'Flat'" />
+                    <InputWithIcon ref="inputValue" :size="tabGroup.size" :icon="tabGroup.icon" :placeholder="'Enter value'" :type="'text'" autocomplete="off" />
+                </div>
+            </div>
+
+            <!-- Default Button -->
+            <div v-if="true" class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-9">
+                <div class="tw-flex tw-items-start tw-justify-start tw-block neutral-border">
+                    <Button :size="'2xs'" :icon="'ic:sharp-send-to-mobile'" :label="'XXS Button'"></Button>
+                </div>
+                <div class="tw-flex tw-items-start tw-justify-start tw-block neutral-border">
+                    <Button :size="'xs'" :icon="'ic:sharp-send-to-mobile'" :label="'XS Button'"></Button>
+                </div>
+                <div class="tw-flex tw-items-start tw-justify-start tw-block neutral-border">
+                    <Button :size="'sm'" :icon="'ic:sharp-send-to-mobile'" :label="'SM Authenticate'"></Button>
+                </div>
+                <div class="tw-flex tw-items-start tw-justify-start tw-block neutral-border">
+                    <Button :size="'md'" :icon="'ic:sharp-send-to-mobile'" :label="'MD Authenticate'"></Button>
+                </div>
+                <div class="tw-flex tw-items-start tw-justify-start tw-block neutral-border">
+                    <Button :disabled="true" :icon="'eos-icons:compass'" :label="'Disabled'"></Button>
+                </div>
+                <div class="tw-col-span-2 tw-flex tw-items-start tw-justify-start tw-block tw-w-full neutral-border">
+                    <Button @click="$themeStore.setTheme('blue')" :size="'lg'" :icon="'mdi:palette-swatch-variant'" :label="'Blue Theme'"></Button>
+                </div>
+                <div class="tw-col-span-2 tw-flex tw-items-start tw-justify-start tw-block tw-w-full neutral-border">
+                    <Button :size="'xl'" :icon="'eos-icons:atom-electron'" :label="'XL Authenticate'"></Button>
+                </div>
+            </div>
+
+            <!-- Outline Button -->
+            <div v-if="true" class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-9">
+                <div class="tw-flex tw-items-start tw-justify-start tw-block neutral-border">
+                    <Button :variant="'outline'" :size="'2xs'" :icon="'ic:sharp-dashboard'" :label="'XXS Button'"></Button>
+                </div>
+                <div class="tw-flex tw-items-start tw-justify-start tw-block neutral-border">
+                    <Button :variant="'outline'" :size="'xs'" :icon="'ic:sharp-dashboard'" :label="'XS Button'"></Button>
+                </div>
+                <div class="tw-flex tw-items-start tw-justify-start tw-block neutral-border">
+                    <Button :variant="'outline'" :size="'sm'" :icon="'ic:sharp-dashboard'" :label="'SM Authenticate'"></Button>
+                </div>
+                <div class="tw-flex tw-items-start tw-justify-start tw-block neutral-border">
+                    <Button :variant="'outline'" :size="'md'" :icon="'ic:sharp-dashboard'" :label="'MD Authenticate'"></Button>
+                </div>
+                <div class="tw-flex tw-items-start tw-justify-start tw-block neutral-border">
+                    <Button :variant="'outline'" :icon="'eos-icons:compass'" :disabled="true" :label="'Disabled'"></Button>
+                </div>
+                <div class="tw-col-span-2 tw-flex tw-items-start tw-justify-start tw-block tw-w-full neutral-border">
+                    <Button @click="$themeStore.setTheme('light')" :variant="'outline'" :size="'lg'" :icon="'mdi:palette-swatch-variant'" :label="'Light Theme'"></Button>
+                </div>
+                <div class="tw-col-span-2 tw-flex tw-items-start tw-justify-start tw-block tw-w-full">
+                    <Button @click="$themeStore.setTheme('dark')" :variant="'outline'" :size="'xl'" :icon="'eos-icons:atom-electron'" :label="'Dark Theme'"></Button>
+                </div>
+            </div>
+
+            <!-- Flat Button -->
+            <div v-if="true" class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-9">
+                <div class="tw-flex tw-items-start tw-justify-start tw-block neutral-border">
+                    <Button :variant="'flat'" :size="'2xs'" :icon="'ic:sharp-dashboard'" :label="'XXS Button'"></Button>
+                </div>
+                <div class="tw-flex tw-items-start tw-justify-start tw-block neutral-border">
+                    <Button :variant="'flat'" :size="'xs'" :icon="'ic:sharp-dashboard'" :label="'XS Button'"></Button>
+                </div>
+                <div class="tw-flex tw-items-start tw-justify-start tw-block neutral-border">
+                    <Button :variant="'flat'" :size="'sm'" :icon="'ic:sharp-dashboard'" :label="'SM Authenticate'"></Button>
+                </div>
+                <div class="tw-flex tw-items-start tw-justify-start tw-block neutral-border">
+                    <Button :variant="'flat'" :size="'md'" :icon="'ic:sharp-dashboard'" :label="'MD Authenticate'"></Button>
+                </div>
+                <div class="tw-flex tw-items-start tw-justify-start tw-block neutral-border">
+                    <Button :variant="'flat'" :icon="'eos-icons:compass'" :disabled="true" :label="'Disabled'"></Button>
+                </div>
+                <div class="tw-col-span-2 tw-flex tw-items-start tw-justify-start tw-block tw-w-full neutral-border">
+                    <Button @click="$themeStore.setTheme('emerald')" :variant="'flat'" :size="'lg'" :icon="'mdi:palette-swatch-variant'" :label="'Emerald Theme'"></Button>
+                </div>
+                <div class="tw-col-span-2 tw-flex tw-items-start tw-justify-start tw-block tw-w-full neutral-border">
+                    <Button :variant="'flat'" :size="'xl'" :icon="'eos-icons:atom-electron'" :label="'XL Authenticate'"></Button>
+                </div>
+            </div>
+
+            <!-- Accordion -->
+            <div v-if="false" class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-1 lg:tw-grid-cols-3 xl:tw-grid-cols-3 2xl:tw-grid-cols-3">
+                <div>
+                    <InputLabel :size="'md'" value="MD : Accordion Single Expand" />
+                    <Accordion :size="'md'" :single-expand="true" v-model:payload="accordionSingleExpand" />
+                </div>
+                <div>
+                    <InputLabel :size="'md'" value="MD : Accordion Multi Expand" />
+                    <Accordion :size="'md'" class="tw-space-y-4" v-model:payload="accordionMultiExpand" />
+                </div>
+                <div>
+                    <InputLabel :size="'md'" value="LG : Accordion Multi Expand" />
+                    <Accordion :size="'lg'" class="tw-space-y-4" v-model:payload="accordionMultiExpand" />
+                </div>
+            </div>
+
+            <!-- Checkbox -->
+            <div v-if="false" class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-8">
+                <div class="neutral-border">
+                    <label>
+                        <Checkbox v-model="remember1" :label="' '" :size="'md'" name="remember" />
+                    </label>
+                </div>
+                <div class="neutral-border">
+                    <label>
+                        <Checkbox v-model="remember2" :size="'sm'" :label="'SM Checkbox'" name="remember" />
+                    </label>
+                </div>
+                <div class="neutral-border">
+                    <label>
+                        <Checkbox v-model="remember3" :size="'md'" :label="'MD Checkbox'" name="remember" />
+                    </label>
+                </div>
+                <div class="neutral-border">
+                    <label>
+                        <Checkbox v-model="remember4" :size="'lg'" :label="'LG Checkbox'" name="remember" />
+                    </label>
+                </div>
+            </div>
+
+            <!-- Checkbox Group -->
+            <div v-if="false" class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-8">
+                <div class="neutral-border">
+                </div>
+                <div class="neutral-border">
+                    <label v-for="category in categorySelection" :key="category">
+                        <Checkbox v-model="category.value" :label="category.text" :size="'sm'" />
+                    </label>
+                </div>
+                <div class="neutral-border">
+                    <label v-for="category in categorySelection" :key="category">
+                        <Checkbox v-model="category.value" :label="category.text" :size="'md'" />
+                    </label>
+                </div>
+                <div class="neutral-border">
+                    <label v-for="category in categorySelection" :key="category">
+                        <Checkbox v-model="category.value" :label="category.text" :size="'lg'" />
+                    </label>
+                </div>
+            </div>
+
+            <!-- Radio Group -->
+            <div v-if="false" class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-8">
+                <div class="tw-flex tw-items-start tw-justify-start tw-block neutral-border">
+                    <div>
+                        <InputLabel :size="'md'" value="SM : Gender Group" />
+                        <RadioGroup
+                            :selections="genderGroup.selection"
+                            :size="'sm'"
+                            class="neutral-border"
+                            v-model="genderGroup.selected" />
+                        <div>Selected Option: {{ genderGroup.selected }}</div>
+                    </div>
+                </div>
+                <div class="tw-flex tw-items-start tw-justify-start tw-block neutral-border">
+                    <div>
+                        <InputLabel :size="'md'" value="SM : Status Group" />
+                        <RadioGroup
+                            :selections="statusGroup.selection"
+                            :size="'sm'"
+                            class="neutral-border"
+                            v-model="statusGroup.selected" />
+                        <div>Selected Option: {{ statusGroup.selected }}</div>
+                    </div>
+                </div>
+                <div class="tw-flex tw-items-start tw-justify-start tw-block neutral-border">
+                    <div>
+                        <InputLabel :size="'md'" value="MD : Transaction Group" />
+                        <RadioGroup
+                            :selections="transactionGroup.selection"
+                            :size="'md'"
+                            class="neutral-border"
+                            v-model="transactionGroup.selected" />
+                        <div>Selected Option: {{ transactionGroup.selected }}</div>
+                    </div>
+                </div>
+                <div class="tw-flex tw-items-start tw-justify-start tw-block neutral-border">
+                    <div>
+                        <InputLabel :size="'md'" value="LG : Category Group" />
+                        <RadioGroup
+                            :selections="categoryGroup.selection"
+                            :size="'lg'"
+                            class="neutral-border"
+                            v-model="categoryGroup.selected" />
+                        <div>Selected Option: {{ categoryGroup.selected }}</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Default Input -->
+            <div v-if="false" class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-8">
+                <div class="tw-block neutral-border">
+                    <InputLabel :size="'2xs'" for="form_input_1" value="XXS Label" />
+                    <Input :size="'2xs'" placeholder="Enter username" id="form_input_1" type="text" autocomplete="off" />
+                </div>
+                <div class="tw-block neutral-border">
+                    <InputLabel :size="'xs'" for="form_input_2" value="XS Label" />
+                    <Input :size="'xs'" placeholder="Enter username" id="form_input_2" type="text" autocomplete="off" />
+                </div>
+                <div class="tw-block neutral-border">
+                    <InputLabel :size="'sm'" for="form_input_3" value="SM Label" />
+                    <Input :size="'sm'" placeholder="Enter username" id="form_input_3" type="text" autocomplete="off" />
+                </div>
+                <div class="tw-block neutral-border">
+                    <InputLabel :size="'md'" for="form_input_4" value="MD Label" />
+                    <Input :size="'md'" placeholder="Enter username" id="form_input_4" type="text" autocomplete="off" />
+                </div>
+                <div class="tw-block neutral-border">
+                    <InputLabel :size="'md'" for="form_input_5" value="MD Label" />
+                    <Input :size="'md'" disabled placeholder="Disabled" id="form_input_4" type="text" autocomplete="off" />
+                </div>
+                <div class="tw-block neutral-border">
+                    <InputLabel :size="'lg'" for="form_input_6" value="LG Label" />
+                    <Input :size="'lg'" placeholder="Enter username" id="form_input_5" type="text" autocomplete="off" />
+                </div>
+                <div class="tw-col-span-2 tw-block neutral-border">
+                    <InputLabel :size="'xl'" for="form_input_7" value="XL Label" />
+                    <Input :size="'xl'" placeholder="Enter username" id="form_input_6" type="text" autocomplete="off" />
+                </div>
+            </div>
+
+            <!-- Input with Icon -->
+            <div v-if="false" class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-8">
+                <div class="tw-block neutral-border">
+                    <InputLabel :size="'2xs'" for="form_input_1" value="XXS Label" />
+                    <InputWithIcon :size="'2xs'" :icon="'ic:sharp-qr-code'" placeholder="Enter username" id="form_input_1" type="text" autocomplete="off" />
+                </div>
+                <div class="tw-block neutral-border">
+                    <InputLabel :size="'xs'" for="form_input_2" value="XS Label" />
+                    <InputWithIcon :size="'xs'" :icon="'ic:sharp-qr-code'" placeholder="Enter username" id="form_input_2" type="text" autocomplete="off" />
+                </div>
+                <div class="tw-block neutral-border">
+                    <InputLabel :size="'sm'" for="form_input_3" value="SM Label" />
+                    <InputWithIcon :size="'sm'" :icon="'ic:sharp-qr-code'" placeholder="Enter username" id="form_input_3" type="text" autocomplete="off" />
+                </div>
+                <div class="tw-block neutral-border">
+                    <InputLabel :size="'md'" for="form_input_4" value="MD Label" />
+                    <InputWithIcon :size="'md'" :icon="'ic:sharp-qr-code'" placeholder="Enter username" id="form_input_4" type="text" autocomplete="off" />
+                </div>
+                <div class="tw-block neutral-border">
+                    <InputLabel :size="'md'" for="form_input_5" value="MD Label" />
+                    <InputWithIcon :size="'md'" :icon="'ic:sharp-qr-code'" disabled placeholder="Disabled" id="form_input_4" type="text" autocomplete="off" />
+                </div>
+                <div class="tw-block neutral-border">
+                    <InputLabel :size="'lg'" for="form_input_6" value="LG Label" />
+                    <InputWithIcon :size="'lg'" :icon="'ic:sharp-qr-code'" placeholder="Enter username" id="form_input_5" type="text" autocomplete="off" />
+                </div>
+                <div class="tw-col-span-2 tw-block neutral-border">
+                    <InputLabel :size="'xl'" for="form_input_7" value="XL Label" />
+                    <InputWithIcon :size="'xl'" :icon="'ic:sharp-qr-code'" placeholder="Enter username" id="form_input_6" type="text" autocomplete="off" />
+                </div>
+            </div>
+
+            <!-- Typography -->
+            <div v-if="true" class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-8">
+                <div class="tw-block neutral-border tw-col-span-2">
+                    <p class="tw-text-sm tw-leading-4">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
+                </div>
+                <div class="tw-block neutral-border tw-col-span-2">
+                    <p class="tw-text-base tw-leading-4">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
+                </div>
+                <div class="tw-block neutral-border tw-col-span-2">
+                    <p class="tw-text-lg tw-leading-5">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
+                </div>
+                <div class="tw-block neutral-border tw-col-span-2">
+                    <p class="tw-text-xl tw-leading-6">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
+                </div>
+            </div>
+
+            <!-- Font Weights -->
+            <div v-if="true" class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-8">
+                <div class="tw-block neutral-border tw-col-span-2">
+                    <p class="tw-text-sm tw-font-thin tw-leading-4">Thin: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
+                    <br><p class="tw-text-sm tw-font-extralight tw-leading-4">Extra Light: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
+                    <br><p class="tw-text-sm tw-font-light tw-leading-4">Light: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
+                    <br><p class="tw-text-sm tw-font-normal tw-leading-4">Normal: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
+                    <br><p class="tw-text-sm tw-font-medium tw-leading-4">Medium: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
+                    <br><p class="tw-text-sm tw-font-semibold tw-leading-4">Semibold: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
+                    <br><p class="tw-text-sm tw-font-bold tw-leading-4">Bold: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
+                    <br><p class="tw-text-sm tw-font-extrabold tw-leading-4">Extra Bold: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
+                    <br><p class="tw-text-sm tw-font-black tw-leading-4">Black: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
+                </div>
+                <div class="tw-block neutral-border tw-col-span-2">
+                    <p class="tw-text-base tw-font-thin tw-leading-4">Thin: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
+                    <br><p class="tw-text-base tw-font-extralight tw-leading-4">Extra Light: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
+                    <br><p class="tw-text-base tw-font-light tw-leading-4">Light: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
+                    <br><p class="tw-text-base tw-font-normal tw-leading-4">Normal: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
+                    <br><p class="tw-text-base tw-font-medium tw-leading-4">Medium: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
+                    <br><p class="tw-text-base tw-font-semibold tw-leading-4">Semibold: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
+                    <br><p class="tw-text-base tw-font-bold tw-leading-4">Bold: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
+                    <br><p class="tw-text-base tw-font-extrabold tw-leading-4">Extra Bold: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
+                    <br><p class="tw-text-base tw-font-black tw-leading-4">Black: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
+                </div>
+                <div class="tw-block neutral-border tw-col-span-2">
+                    <p class="tw-text-lg tw-font-thin tw-leading-5">Thin: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
+                    <br><p class="tw-text-lg tw-font-extralight tw-leading-5">Extra Light: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
+                    <br><p class="tw-text-lg tw-font-light tw-leading-5">Light: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
+                    <br><p class="tw-text-lg tw-font-normal tw-leading-5">Normal: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
+                    <br><p class="tw-text-lg tw-font-medium tw-leading-5">Medium: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
+                    <br><p class="tw-text-lg tw-font-semibold tw-leading-5">Semibold: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
+                    <br><p class="tw-text-lg tw-font-bold tw-leading-5">Bold: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
+                    <br><p class="tw-text-lg tw-font-extrabold tw-leading-5">Extra Bold: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
+                    <br><p class="tw-text-lg tw-font-black tw-leading-5">Black: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
+                </div>
+                <div class="tw-block neutral-border tw-col-span-2">
+                    <p class="tw-text-xl tw-font-extralight tw-leading-6">Thin: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
+                    <br><p class="tw-text-xl tw-font-light tw-leading-6">Extra Light: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
+                    <br><p class="tw-text-xl tw-font-normal tw-leading-6">Normal: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
+                    <br><p class="tw-text-xl tw-font-medium tw-leading-6">Medium: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
+                    <br><p class="tw-text-xl tw-font-semibold tw-leading-6">Semibold: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
+                    <br><p class="tw-text-xl tw-font-bold tw-leading-6">Bold: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
+                    <br><p class="tw-text-xl tw-font-extrabold tw-leading-6">Extra Bold: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
+                    <br><p class="tw-text-xl tw-font-black tw-leading-6">Black: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
+                </div>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -1148,11 +1142,9 @@ import {ref, onMounted, reactive} from 'vue';
 import {storeToRefs} from 'pinia';
 const {$themeStore, $layoutStore, $formStore} = useNuxtApp();
 
+definePageMeta({layout: false});
+setPageLayout('default');
 $layoutStore.setNavigationMode('solid');
-
-definePageMeta({
-    layout: false,
-});
 
 const {
     neutral: neutralColor

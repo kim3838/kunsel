@@ -1,149 +1,233 @@
 <template>
-    <div>
-        <NuxtLayout :name="$coreStore.layout">
-            <template #content>
-                <div class="tw-mx-auto tw-max-w-screen-2xl tw-flex">
-                    <div class="tw-w-full">
-                        <div class="tw-my-4 tw-grid tw-gap-2 tw-grid-cols-5">
-                            <div v-if="false">
-                                <AccentFrame class="tw-w-full">
-                                    <template #content>
-                                        <Input :tabindex="1" :size="size" :placeholder="'Enter value'" type="text" autocomplete="off" />
-                                    </template>
-                                </AccentFrame>
-                            </div>
-                            <div class="tw-col-span-2">
-                                <AccentFrame class="tw-w-full">
-                                    <template #content>
-                                        <MultiSelectPaginated
-                                            :tabindex="2"
-                                            :drop-shadow="true"
-                                            :selection-max-content="false"
-                                            :selected-max-viewable-line="6"
-                                            :selection-max-viewable-line="10"
-                                            :searchable="false"
-                                            :selection-float="true"
-                                            :always-active="false"
-                                            :label="'Select Prototypes'"
-                                            :size="size"
-                                            :payload="multiSelectPrototypePayload"
-                                            :icon="'ic:sharp-qr-code'"/>
-                                    </template>
-                                </AccentFrame>
-                            </div>
-                            <div v-if="false">
-                                <AccentFrame class="tw-w-full">
-                                    <template #content>
-                                        <Input :tabindex="4" :size="size" :placeholder="'Enter value'" type="text" autocomplete="off" />
-                                    </template>
-                                </AccentFrame>
-                            </div>
-                            <div class="tw-col-span-2">
-                                <AccentFrame class="tw-w-full">
-                                    <template #content>
-                                        <MultiSelect
-                                            :tabindex="5"
-                                            drop-shadow
-                                            :searchable="false"
-                                            :selection-float="true"
-                                            :always-active="false"
-                                            :selection-max-viewable-line="5"
-                                            :size="size" :options="category"
-                                            :icon="'ic:sharp-qr-code'"/>
-                                    </template>
-                                </AccentFrame>
-                            </div>
-                            <div>
-                                <AccentFrame class="tw-w-full">
-                                    <template #content>
-                                        <InputWithIcon :tabindex="7" ref="inputValue" :size="size" :icon="'ic:sharp-qr-code'" :placeholder="'Enter value'" type="text" autocomplete="off" />
-                                    </template>
-                                </AccentFrame>
-                            </div>
-                            <div class="tw-col-span-2">
-                                <AccentFrame class="tw-w-full">
-                                    <template #content>
-                                        <SingleSelect
-                                            :tabindex="8"
-                                            :value-persist="true"
-                                            :drop-shadow="true"
-                                            :selection-max-content="true"
-                                            :searchable="false"
-                                            :selection-float="true"
-                                            :always-active="false"
-                                            :size="size"
-                                            :selection-max-viewable-line="8"
-                                            :icon="'ic:sharp-qr-code'"
-                                            :options="singleSelectPrototype"/>
-                                    </template>
-                                </AccentFrame>
-                            </div>
-                            <div v-if="false">
-                                <AccentFrame class="tw-w-full">
-                                    <template #content>
-                                        <label v-for="category in categorySelection" :key="category">
-                                            <Checkbox
-                                                v-model="category.value"
-                                                :label="category.text"
-                                                :size="size" />
-                                        </label>
-                                    </template>
-                                </AccentFrame>
-                            </div>
-                            <div v-if="false">
-                                <AccentFrame class="tw-w-full">
-                                    <template #content>
-                                        <InputWithIcon :tabindex="10" ref="inputValue" :size="size" :icon="'ic:sharp-qr-code'" :placeholder="'Enter value'" type="text" autocomplete="off" />
-                                    </template>
-                                </AccentFrame>
-                            </div>
-                            <div class="tw-col-span-2">
-                                <AccentFrame class="tw-w-full">
-                                    <template #content>
-                                        <SingleSelectPaginated
-                                            :tabindex="13"
-                                            :value-persist="true"
-                                            :drop-shadow="true"
-                                            :selection-max-content="false"
-                                            :selection-max-viewable-line="10"
-                                            :searchable="false"
-                                            :selection-float="true"
-                                            :always-active="false"
-                                            :label="'Select Prototype'"
-                                            :size="size"
-                                            :payload="singleSelectPrototypePayload"
-                                            :icon="'ic:sharp-qr-code'"/>
-                                    </template>
-                                </AccentFrame>
-                            </div>
-                            <div>
-                                <AccentFrame class="tw-w-full">
-                                    <template #content>
-                                        <InputWithIcon :tabindex="15" ref="inputValue" :size="size" :icon="'ic:sharp-qr-code'" :placeholder="'Enter value'" type="text" autocomplete="off" />
-                                    </template>
-                                </AccentFrame>
-                            </div>
-                        </div>
+    <div class="tw-mx-auto tw-max-w-screen-2xl">
+        <div>
+            <AccentFrame>
+                <template #content>
+                    <SampleEmitter
+                        v-model:[dynamicFoo]="fooComputed"
+                        v-model:[dynamicBarCaller]="barComputed"
+                        class="tw-w-[250px]"
+                    />
+                    <Button :variant="'flat'" @click="setPageLayout('default')" :label="'Default Layout'"></Button>
+                    <Button :variant="'flat'" @click="setPageLayout('landing')" :label="'Landing Layout'"></Button>
+                </template>
+            </AccentFrame>
+        </div>
 
-                        <div class="tw-my-4 tw-h-[1px] tw-bg-gradient-to-r tw-from-transparent tw-via-neutral-400 tw-to-transparent"></div>
-                    </div>
+        <div v-if="true">
+            <div>
+                <div class="tw-mx-auto tw-max-w-screen-2xl tw-flex tw-flex-col">
+                    <Featured
+                        focused
+                        class="tw-inline-block tw-mx-2"
+                        :image="{path: 'images/product/ebac5037-c3d2-4275-b96b-24f855695841.webp'}"
+                        :title="'Motherboard'"
+                        :sub-title="'iGame Z790D5 ULTRA V20'"
+                        :link="'/prototype'"
+                        :button-label="'Details'"
+                    />
                 </div>
-            </template>
-        </NuxtLayout>
+                <div class="tw-mx-auto tw-max-w-screen-2xl tw-flex tw-flex-col">
+                    <Card
+                        focused
+                        class="tw-inline-block tw-mx-2"
+                        :image="{path: 'images/product/ebac5037-c3d2-4275-b96b-24f855695841.webp'}"
+                        :title="'Motherboard'"
+                        :sub-title="'iGame Z790D5 ULTRA V20'"
+                        :link="'/prototype'"
+                        :button-label="'Details'"
+                    />
+                </div>
+                <div class="tw-mx-auto tw-max-w-screen-2xl tw-flex tw-flex-col">
+                    <Featured
+                        focused
+                        class="tw-inline-block tw-mx-2"
+                        :image="{path: 'images/product/ebac5037-c3d2-4275-b96b-24f855695841.webp'}"
+                        :title="'Motherboard'"
+                        :sub-title="'iGame Z790D5 ULTRA V20'"
+                        :link="'/prototype'"
+                        :button-label="'Details'"
+                    />
+                </div>
+                <div class="tw-mx-auto tw-max-w-screen-2xl tw-flex tw-flex-col">
+                    <Card
+                        focused
+                        class="tw-inline-block tw-mx-2"
+                        :image="{path: 'images/product/ebac5037-c3d2-4275-b96b-24f855695841.webp'}"
+                        :title="'Motherboard'"
+                        :sub-title="'iGame Z790D5 ULTRA V20'"
+                        :link="'/prototype'"
+                        :button-label="'Details'"
+                    />
+                </div>
+                <div class="tw-mx-auto tw-max-w-screen-2xl tw-flex tw-flex-col">
+                    <Featured
+                        focused
+                        class="tw-inline-block tw-mx-2"
+                        :image="{path: 'images/product/ebac5037-c3d2-4275-b96b-24f855695841.webp'}"
+                        :title="'Motherboard'"
+                        :sub-title="'iGame Z790D5 ULTRA V20'"
+                        :link="'/prototype'"
+                        :button-label="'Details'"
+                    />
+                </div>
+                <div class="tw-mx-auto tw-max-w-screen-2xl tw-flex tw-flex-col">
+                    <Card
+                        focused
+                        class="tw-inline-block tw-mx-2"
+                        :image="{path: 'images/product/ebac5037-c3d2-4275-b96b-24f855695841.webp'}"
+                        :title="'Motherboard'"
+                        :sub-title="'iGame Z790D5 ULTRA V20'"
+                        :link="'/prototype'"
+                        :button-label="'Details'"
+                    />
+                </div>
+                <div class="tw-mx-auto tw-max-w-screen-2xl tw-flex tw-flex-col">
+                    <Featured
+                        focused
+                        class="tw-inline-block tw-mx-2"
+                        :image="{path: 'images/product/ebac5037-c3d2-4275-b96b-24f855695841.webp'}"
+                        :title="'Motherboard'"
+                        :sub-title="'iGame Z790D5 ULTRA V20'"
+                        :link="'/prototype'"
+                        :button-label="'Details'"
+                    />
+                </div>
+                <div class="tw-mx-auto tw-max-w-screen-2xl tw-flex tw-flex-col">
+                    <Card
+                        focused
+                        class="tw-inline-block tw-mx-2"
+                        :image="{path: 'images/product/ebac5037-c3d2-4275-b96b-24f855695841.webp'}"
+                        :title="'Motherboard'"
+                        :sub-title="'iGame Z790D5 ULTRA V20'"
+                        :link="'/prototype'"
+                        :button-label="'Details'"
+                    />
+                </div>
+            </div>
+        </div>
     </div>
 </template>
 
 <script setup lang="ts">
-import {ref, reactive, nextTick, onMounted} from "vue";
+import {computed, ref, reactive, nextTick, onMounted} from "vue";
+const {$layoutStore} = useNuxtApp();
 
-definePageMeta({
-    layout: false,
-    middleware: 'guest'
+definePageMeta({layout: false, middleware: 'guest'});
+setPageLayout('default');
+$layoutStore.setNavigationMode('solid');
+
+const layout = ref('default')
+
+
+const dynamicFoo = ref('foo');
+const dynamicBarCaller = ref('bar');
+const fooProp = ref('');
+const barProp = ref('');
+const barComputed = computed({
+    get () {
+        return barProp.value;
+    },
+
+    set (value) {
+        barProp.value = value;
+    }
+})
+const fooComputed = computed({
+    get () {
+        return fooProp.value;
+    },
+
+    set (value) {
+        fooProp.value = value;
+    }
+})
+watch(fooProp, value => {
+    console.log({'FOO UPDATED' : value});
 });
-let size = ref('lg');
-let icon = ref('simple-icons:googlecalendar');
-let inputValue = ref(null);
+watch(barProp, value => {
+    console.log({'BAR UPDATED' : value});
+});
 
+let categorySelection = reactive([
+    {text : 'Charms', value: false},
+    {text : 'Bracelets', value: false},
+    {text : 'Brooches and Pins', value: false},
+    {text : 'Necklaces', value: false},
+    {text : 'Earrings', value: false},
+    {text : 'Rings', value: false},
+    {text : 'Polyester', value: false},
+]);
+
+let transactionGroup = reactive({
+    selection: [
+        {text : 'Cash', value: 0},
+        {text : 'Pre Paid', value: 1},
+        {text : 'Tab\t\tPost\nPaid', value: 2},
+        {text : 'Card', value: 3},
+        {text : 'Debit', value: 4},
+    ],
+    selected: 3
+});
+
+let accordion = reactive({
+    recentActive: 2,
+    options: [
+        {
+            title: 'Check box',
+            body: {
+                type: 'checkbox',
+                value: categorySelection
+            },
+            active: false
+        },
+        {
+            title: 'Radio box',
+            body: {
+                type: 'radio',
+                value: transactionGroup
+            },
+            active: false
+        },
+        {
+            title: 'Coldiron Armor Set, Coldiron Armor Set, Coldiron Armor Set, Coldiron Armor Set',
+            body: {
+                type: 'text',
+                value: 'This armor was forged for the sole purpose of resisting the malignance spreading across the land.'
+            },
+            active: true
+        },
+        {
+            title: 'Coldiron Barding Mount Armor',
+            body: {
+                type: 'text',
+                value: 'Adorn your new steeds with mount armor inspired by the malignance taking over Sanctuary.'
+            },
+            active: false
+        },
+        {
+            title: 'Weapon skins, Mount Trophies, Emotes, Platinum, and more',
+            body: {
+                type: 'text',
+                value: 'Explore a range of cosmetics to earn along the Premium Battle Pass. Collect a weapon transmog for all 19 weapon types. 2 emotes for each class let you threaten your enemies or find a little time to play around with malignant heart cages. 2 headstones even let you die in style. Adorn your horse with 5 new mount trophies.'
+            },
+            active: false
+        },
+        {
+            title: '“On the Warpath” Emote – Accelerated Battle Pass',
+            body: {
+                type: 'text',
+                value: 'Show everyone you’re ready for battle when you slam your banner down, signaling to enemies that you’re ready for a fight. This emote is only included in the Accelerated Battle Pass.'
+            },
+            active: false
+        }
+    ]
+});
+
+let tabGroup = reactive({
+    'icon' : 'ic:sharp-qr-code',
+    'size' : 'md'
+});
 let multiSelectPrototypePayload = reactive({
     fetch: {
         url: '/api/selections/prototype',
@@ -154,28 +238,20 @@ let multiSelectPrototypePayload = reactive({
             }
         }
     },
-    selected: [1992,1263]//1992,1263
+    selected: [1992,1263]
 });
-// setTimeout(() => {
-//     multiSelectPrototypePayload.selected = [];
-//     multiSelectPrototypePayload.fetch.filters.search.keyword = '1239';
-// }, 10300);
 let singleSelectPrototypePayload = reactive({
     fetch: {
         url: '/api/selections/prototype',
         filters: {
             search: {
-                keyword: '',//1239
+                keyword: '',
                 callback: 1
             }
         }
     },
-    selected: 1263,//1263
+    selected: null,
 });
-// setTimeout(() => {
-//     singleSelectPrototypePayload.selected = 1172;
-//     singleSelectPrototypePayload.fetch.filters.search.keyword = '1239';
-// }, 10300);
 let singleSelectPrototype = reactive({
     search: '',
     data: [
@@ -199,7 +275,7 @@ let category = reactive({
     data: [
         {text : 'Charms', value: 0},
         {text : 'Bracelets', value: 1},
-        {text : 'Brooches and Pins', value: 2},
+        {text : 'Tab\t\tBrooches\nand\nPins', value: 2},
         {text : 'Necklaces', value: 3},
         {text : 'Earrings', value: 4},
         {text : 'Rings', value: 5},
@@ -208,7 +284,7 @@ let category = reactive({
     selection: [
         {text : 'Charms', value: 0},
         {text : 'Bracelets', value: 1},
-        {text : 'Brooches and Pins', value: 2},
+        {text : 'Tab\t\tBrooches\nand\nPins', value: 2},
         {text : 'Necklaces', value: 3},
         {text : 'Earrings', value: 4},
         {text : 'Rings', value: 5},
@@ -216,22 +292,11 @@ let category = reactive({
     ],
     selected: []
 });
-let categorySelection = reactive([
-    {text : 'Charms', value: true},
-    {text : 'Bracelets', value: true},
-    {text : 'Brooches\nand\nPins', value: false},
-    {text : 'Necklaces', value: true},
-    {text : 'Earrings', value: false},
-    {text : 'Rings', value: true},
-    {text : 'Polyester', value: true},
-]);
-
 onMounted(async () => {
     nextTick(() => {
-        inputValue.value.$refs.input.focus();
-    });
-})
 
+    });
+});
 
 </script>
 

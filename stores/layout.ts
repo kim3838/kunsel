@@ -1,7 +1,6 @@
 import {defineStore, storeToRefs} from 'pinia'
 
 export const useLayoutStore = defineStore('layout', () => {
-    const layout = ref('landing');
     const navigationHeight = ref(0);
     const navigation = ref({
         mode: 'clear'
@@ -22,19 +21,12 @@ export const useLayoutStore = defineStore('layout', () => {
             navigation.value.mode = mode;
         }
     }
-    function setLayout(value){
-        if(value != layout.value){
-            layout.value = value;
-        }
-    }
 
     return {
-        layout,
         navigation,
         navigationMode,
         navigationHeight,
         navigationHeightInPixels,
-        setLayout,
         setNavigationHeight,
         setNavigationMode
     }
