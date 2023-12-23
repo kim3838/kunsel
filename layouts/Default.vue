@@ -278,8 +278,3 @@ function isRouteActive(routeSlug: string) {
     padding-top: v-bind(topAllocationInPixels);
 }
 </style>
-<style>
-.navigation-height{
-    height: v-bind(navigationHeightInPixels);
-}
-</style>
