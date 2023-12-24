@@ -1,5 +1,5 @@
 <template>
-    <div ref="snapScroll" class="tw-scroll-smooth tw-h-screen tw-max-h-screen" :class="[enableScrollSnap ? 'tw-overflow-y-scroll tw-snap-y tw-snap-mandatory' : 'tw-overflow-auto tw-snap-none']">
+    <div id="layoutScroll" ref="snapScroll" class="tw-relative tw-scroll-smooth tw-h-screen tw-max-h-screen" :class="[enableScrollSnap ? 'tw-overflow-y-scroll tw-snap-y tw-snap-mandatory' : 'tw-overflow-auto tw-snap-none']">
         <!-- Primary Navigation Menu -->
         <nav
             ref="landingNavigation"
@@ -64,7 +64,7 @@
             </div>
         </nav>
         <!-- Main Content -->
-        <main class="tw-relative tw-transition-all tw-duration-300 allocate-navigation">
+        <main class="tw-transition-all tw-duration-300 allocate-navigation">
             <slot name="content"/>
         </main>
         <!-- DateTime Picker -->

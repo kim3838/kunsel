@@ -1,5 +1,5 @@
 <template>
-    <div ref="layoutScroll" class="tw-scroll-smooth tw-h-screen tw-max-h-screen tw-overflow-auto">
+    <div id="layoutScroll" ref="layoutScroll" class="tw-relative tw-scroll-smooth tw-h-screen tw-max-h-screen tw-overflow-auto">
         <!-- Primary Navigation Menu -->
         <nav
             ref="navigation"
@@ -63,7 +63,7 @@
             </div>
         </nav>
         <!-- Main Content -->
-        <main class="tw-relative tw-transition-all tw-duration-300 allocate-navigation">
+        <main class="tw-transition-all tw-duration-300 allocate-navigation">
             <slot/>
         </main>
         <!-- DateTime Picker -->

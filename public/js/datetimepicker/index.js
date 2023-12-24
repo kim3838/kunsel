@@ -1054,6 +1054,7 @@ console.log("Load Public : Datetimepicker");
                 break;
             default:
                 containerTop = this.element.offset().top + this.element.outerHeight() - parentOffset.top;
+                containerTop += document.getElementById("layoutScroll").scrollTop;
                 break;
             }
 
