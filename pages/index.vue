@@ -99,8 +99,8 @@
 
                 <div class="navigation-height tw-w-full tw-snap-start tw-snap-always"></div>
                 <div class="tw-mx-auto tw-max-w-screen-2xl tw-flex tw-flex-col" >
-                    <article class="">
-                        <div class="tw-text-center tw-pt-4 tw-text-3xl tw-font-semibold tw-font-['Google_Sans_Text']">Latest News</div>
+                    <article class="tw-mt-4 ">
+                        <div class="tw-text-center tw-text-3xl tw-font-semibold tw-font-['Google_Sans_Text']">Latest News</div>
 
                         <div class="tw-flex tw-items-center tw-flex-nowrap tw-py-2 tw-space-x-2 lg:tw-space-x-8 tw-snap-x tw-snap-mandatory tw-scroll-px-40 tw-w-full tw-overflow-x-scroll">
                             <div v-for="blog in news" class="tw-snap-center tw-snap-always tw-inline-block tw-w-full sm:tw-w-1/2 lg:tw-w-1/3 xl:tw-w-1/4 tw-flex-none tw-flex tw-justify-center">
@@ -116,11 +116,11 @@
 
                 <div id="faq" class="navigation-height tw-w-full tw-snap-start tw-snap-always"></div>
                 <div class="tw-mx-auto tw-max-w-screen-2xl tw-flex tw-flex-col" >
-                    <article class="tw-w-full tw-px-4 tw-flex tw-flex-wrap lg:tw-flex-nowrap tw-justify-center">
+                    <article class="tw-mt-4 tw-w-full tw-px-4 tw-flex tw-flex-wrap lg:tw-flex-nowrap tw-justify-center">
                         <div class="tw-text-center lg:tw-text-start lg:tw-w-1/4 tw-font-['Google_Sans_Text']">
                             <div class="tw-text-3xl tw-font-bold">Frequently Answered Questions</div>
                             <div class="tw-text-xl tw-font-semibold">Have a question? Check out our frequently asked questions to find your answer.</div>
-                            <div class="tw-h-60 tw-w-full tw-bg-contain tw-bg-center lg:tw-bg-left tw-bg-no-repeat" :style="{'background-image': 'url(deco/undraw/undraw_questions_re_1fy7.svg)'}"></div>
+                            <div class="tw-h-60 tw-w-full tw-bg-contain tw-bg-center lg:tw-bg-left tw-bg-no-repeat" :style="{'background-image': 'url(deco/undraw/undraw_my_answer_re_k4dv.svg)'}"></div>
                         </div>
                         <Accordion
                             v-model:payload="faqs"
