@@ -2,11 +2,16 @@
     <div>
         <NuxtLayout name="landing">
             <template #content>
-                <div class="tw-mx-auto tw-max-w-screen-2xl tw-flex tw-justify-center">
+                <div class="tw-mx-auto tw-px-4 tw-max-w-screen-2xl tw-flex tw-justify-center">
+                    <div class="tw-hidden sm:tw-block tw-px-4 tw-py-8 tw-h-96 tw-w-96 ">
+                        <div class="tw-w-full tw-h-full tw-bg-contain tw-bg-center tw-bg-no-repeat" :style="{'background-image': 'url(deco/undraw/undraw_access_account_re_8spm.svg)'}"></div>
+                    </div>
+
                     <AccentFrame class="tw-my-4">
                         <template #content>
                             <div class="tw-relative tw-py-4">
-                                <form @submit.prevent="handleLogin" class="tw-w-72">
+                                <label class="tw-text-lg tw-font-semibold">Password Login</label>
+                                <form @submit.prevent="handleLogin" class="tw-mt-4 tw-w-72">
                                     <div class="tw-block">
                                         <InputLabel :size="'md'" for="identifier" value="Username or Email" />
                                         <Input
@@ -57,7 +62,7 @@
                                             :disabled="authPending"
                                             :size="'md'"
                                             :icon="authPending ? 'eos-icons:installing' : 'mdi:key-chain'"
-                                            :label="authPending ? 'Authenticating...' : 'Authenticate'"></Button>
+                                            :label="authPending ? 'Loggin in...' : 'Login'"></Button>
                                     </div>
                                 </form>
                             </div>
