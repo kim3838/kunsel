@@ -1,33 +1,48 @@
 <template>
     <div>
-        <NuxtLayout :name="$coreStore.layout">
+        <NuxtLayout name="landing">
             <template #content>
                 <CarouselModuleCarousel wrap-around class="tw-snap-start tw-snap-always">
                     <CarouselModuleSlide v-for="slide in carouselPayload" :key="slide">
-                        <div class="tw-w-screen tw-h-[calc(100vh-2rem)] carousel-image" :style="{'background-image': `url(${slide.image.path})`}"></div>
+                        <div class="tw-w-screen tw-h-screen carousel-image" :style="{'background-image': `url(${slide.image.path})`}"></div>
                     </CarouselModuleSlide>
 
                     <template #addons>
                         <CarouselModuleNavigation />
-                        <CarouselModulePagination />
+                        <CarouselModulePagination class="tw-absolute tw-left-0 tw-bottom-0 tw-right-0 tw-m-0" />
                     </template>
                 </CarouselModuleCarousel>
 
+                <div class="tw-snap-start tw-snap-always tw-w-full tw-h-screen">
+                    <video :ref="'heroVideo'" muted controls loop class="tw-border-0 tw-object-cover tw-w-full tw-h-full">
+                        <source :src="'videos/weathering_with_you.mp4'" type="video/mp4">
+                    </video>
+                </div>
+
+                <div class="tw-snap-start tw-snap-always tw-w-full tw-h-screen">
+                    <video :ref="'heroVideo2'" muted controls loop class="tw-border-0 tw-object-cover tw-w-full tw-h-full">
+                        <source :src="'videos/weathering_with_you_2.mp4'" type="video/mp4">
+                    </video>
+                </div>
 
                 <div class="navigation-height tw-w-full tw-snap-start tw-snap-always"></div>
-                <div class="tw-mx-auto tw-max-w-screen-2xl tw-flex tw-flex-col tw-pointer-events-auto">
-                    <article class="tw-mt-4 tw-relative" >
-                        <CarouselModuleCarousel v-model="featuredItem" class="tw-w-full lg:tw-w-full" v-bind="featuredItemsSettings" :breakpoints="featuredItemsBreakpoints">
+                <div class="tw-mx-auto tw-max-w-screen-2xl tw-flex tw-flex-col">
+                    <article class="tw-mt-4 tw-relative">
+                        <CarouselModuleCarousel
+                            v-model="carouselFeaturedItem"
+                            v-bind="carouselFeaturedItemsSettings"
+                            :breakpoints="carouselFeaturedItemsBreakpoints"
+                            class="tw-w-full lg:tw-w-full">
                             <CarouselModuleSlide class="tw-w-[170px]">
                                 <RegularFrame>
                                     <template #body>
-                                        <div class="tw-text-center tw-font-['Google_Sans_Text'] tw-text-xl tw-font-semibold">
+                                        <div class="tw-px-2 tw-text-center tw-font-['Google_Sans_Text'] tw-text-xl tw-font-semibold">
                                             Featured Products
                                         </div>
                                     </template>
                                 </RegularFrame>
                             </CarouselModuleSlide>
-                            <CarouselModuleSlide class="tw-w-[270px]" v-for="featuredItem in featuredItems" :key="featuredItem">
+                            <CarouselModuleSlide class="tw-w-[270px]" v-for="featuredItem in carouselFeaturedItems" :key="featuredItem">
                                 <Featured
                                     focused
                                     class="tw-mx-2"
@@ -43,20 +58,27 @@
                             </template>
                         </CarouselModuleCarousel>
                     </article>
+                </div>
 
+                <div class="navigation-height tw-w-full tw-snap-start tw-snap-always"></div>
+                <div class="tw-mx-auto tw-max-w-screen-2xl tw-flex tw-flex-col">
                     <article class="tw-mt-4 w-relative">
-                        <CarouselModuleCarousel class="tw-w-full lg:tw-w-full" v-bind="newArrivalsSettings" :breakpoints="newArrivalsBreakpoints">
+                        <CarouselModuleCarousel
+                            v-model="carouselNewArrival"
+                            v-bind="carouselNewArrivalsSettings"
+                            :breakpoints="carouselNewArrivalsBreakpoints"
+                            class="tw-w-full lg:tw-w-full">
                             <CarouselModuleSlide class="tw-w-[170px]">
                                 <RegularFrame>
                                     <template #body>
-                                        <div class="tw-text-center tw-font-['Google_Sans_Text'] tw-text-xl tw-font-semibold tw-px-8">
+                                        <div class="tw-px-2 tw-text-center tw-font-['Google_Sans_Text'] tw-text-xl tw-font-semibold tw-px-8">
                                             New Arrivals
                                         </div>
                                     </template>
                                 </RegularFrame>
                             </CarouselModuleSlide>
 
-                            <CarouselModuleSlide :class="[`tw-w-[370px]`]" v-for="newArrival in newArrivals" :key="newArrival">
+                            <CarouselModuleSlide :class="[`tw-w-[370px]`]" v-for="newArrival in carouselNewArrivals" :key="newArrival">
                                 <Card
                                     focused
                                     class="tw-mx-2"
@@ -77,13 +99,13 @@
 
                 <div class="navigation-height tw-w-full tw-snap-start tw-snap-always"></div>
                 <div class="tw-mx-auto tw-max-w-screen-2xl tw-flex tw-flex-col" >
-                    <article class="tw-font-['Google_Sans_Text']">
-                        <div class="tw-text-center tw-pt-4 tw-text-3xl tw-font-semibold">Latest News</div>
+                    <article class="">
+                        <div class="tw-text-center tw-pt-4 tw-text-3xl tw-font-semibold tw-font-['Google_Sans_Text']">Latest News</div>
 
-                        <div class="tw-flex tw-items-center tw-flex-nowrap tw-py-2 tw-space-x-8 tw-scroll-px-8 tw-snap-x tw-snap-mandatory tw-scroll-px-40 tw-w-full tw-overflow-x-scroll">
-                            <div v-for="blog in news" class="tw-snap-center tw-snap-always tw-inline-block tw-w-1/2 tw-flex-none tw-flex tw-justify-center">
+                        <div class="tw-flex tw-items-center tw-flex-nowrap tw-py-2 tw-space-x-2 lg:tw-space-x-8 tw-snap-x tw-snap-mandatory tw-scroll-px-40 tw-w-full tw-overflow-x-scroll">
+                            <div v-for="blog in news" class="tw-snap-center tw-snap-always tw-inline-block tw-w-full sm:tw-w-1/2 lg:tw-w-1/3 xl:tw-w-1/4 tw-flex-none tw-flex tw-justify-center">
                                 <div class="tw-w-[370px] tint-background neutral-border">
-                                    <img :src="blog.image.path">
+                                    <img :src="blog.image.path" class="tw-h-[247px] tw-w-full">
                                     <div class="tw-px-8 tw-pt-4 tw-text-lg tw-h-[8rem] tw-line-clamp-4 tw-font-bold tw-tracking-normal tw-leading-tigh">{{blog.title}}</div>
                                     <div class="tw-px-8 tw-pt-4 tw-text-base tw-h-[7rem] tw-line-clamp-4">{{blog.subTitle}}</div>
                                 </div>
@@ -94,8 +116,8 @@
 
                 <div id="faq" class="navigation-height tw-w-full tw-snap-start tw-snap-always"></div>
                 <div class="tw-mx-auto tw-max-w-screen-2xl tw-flex tw-flex-col" >
-                    <article class="tw-w-full tw-px-4 tw-flex tw-flex-wrap lg:tw-flex-nowrap tw-justify-center tw-font-['Google_Sans_Text']">
-                        <div class="tw-text-center lg:tw-text-start lg:tw-w-1/4">
+                    <article class="tw-w-full tw-px-4 tw-flex tw-flex-wrap lg:tw-flex-nowrap tw-justify-center">
+                        <div class="tw-text-center lg:tw-text-start lg:tw-w-1/4 tw-font-['Google_Sans_Text']">
                             <div class="tw-text-3xl tw-font-bold">Frequently Answered Questions</div>
                             <div class="tw-text-xl tw-font-semibold">Have a question? Check out our frequently asked questions to find your answer.</div>
                             <div class="tw-h-60 tw-w-full tw-bg-contain tw-bg-center lg:tw-bg-left tw-bg-no-repeat" :style="{'background-image': 'url(deco/undraw/undraw_questions_re_1fy7.svg)'}"></div>
@@ -104,6 +126,7 @@
                             v-model:payload="faqs"
                             :title-icon="false"
                             :multi-line-title="true"
+                            :active-border-color="'transparent'"
                             :center-content="faqCenterContent"
                             :size="'lg'"
                             single-expand
@@ -116,17 +139,64 @@
 </template>
 
 <script setup lang="ts">
-import {computed,ref,reactive} from "vue";
-const {$coreStore} = useNuxtApp();
+import {computed, ref, reactive, onMounted, nextTick, watch, watchEffect} from "vue";
+const {$layoutStore} = useNuxtApp();
 const {screens, width: screenWidth, } = useScreen();
-$coreStore.setNavigationMode('clear');
+$layoutStore.setNavigationMode('clear');
 
 definePageMeta({
     layout: false
 });
 
-const featuredItem = ref(0);
-const featuredItems = reactive([
+const heroVideo = ref<HTMLElement | null>(null);
+const heroVideo2 = ref<HTMLElement | null>(null);
+
+onMounted(async () => {
+    await nextTick(() => {
+
+        [heroVideo, heroVideo2].forEach(video => {
+            let playPromise = video.value.play();
+
+            if(playPromise !== undefined){
+                playPromise.then(()=>{
+                    let observer = new IntersectionObserver(
+                        (entries) => {
+                            entries.forEach((entry) => {
+                                if (entry.intersectionRatio !== 1 && !video.value.paused) {
+                                    video.value.pause();
+                                } else if (video.value.paused) {
+                                    video.value.play();
+                                }
+                            });
+                        },
+                        {threshold: 1}
+                    );
+
+                    observer.observe(video.value);
+                });
+            }
+        })
+    });
+});
+
+const carouselFeaturedItem = ref(0);
+const carouselFeaturedItems = reactive([
+    {
+        'image':{
+            'path': 'images/product/202306201506003693.webp'
+        },
+        'title': 'PC Case',
+        'subTitle': 'Segotep Memphis-S Meow PC Case (M-ATX / ITX supported)',
+        'link': '/prototype'
+    },
+    {
+        'image':{
+            'path': 'images/product/c76383ac-e6c0-4725-bec0-b171449c5960.webp'
+        },
+        'title': 'Motherboard',
+        'subTitle': 'COLORFIRE B760M-MEOW WIFI D5 ORANGE',
+        'link': '/prototype'
+    },
     {
         'image':{
             'path': 'images/product/f85a85cd-fa65-48d3-9d36-755b4a6acf87.webp'
@@ -157,6 +227,14 @@ const featuredItems = reactive([
         },
         'title': 'Graphics Card',
         'subTitle': 'iGame GeForce RTX 4070 Ti Ultra W OC-V',
+        'link': '/prototype'
+    },
+    {
+        'image':{
+            'path': '/images/product/20220923155420669106.webp'
+        },
+        'title': 'Graphics Card',
+        'subTitle': 'iGame GeForce RTX 4090 Vulcan OC-V',
         'link': '/prototype'
     },
     {
@@ -192,11 +270,11 @@ const featuredItems = reactive([
         'link': '/prototype'
     }
 ]);
-const featuredItemsSettings = reactive({
+const carouselFeaturedItemsSettings = reactive({
     itemsToShow: 1.5,
     snapAlign: 'start',
 });
-const featuredItemsBreakpoints = reactive({
+const carouselFeaturedItemsBreakpoints = reactive({
     [screens['sm']]: {
         itemsToShow: 1.5,
         snapAlign: 'start',
@@ -212,7 +290,9 @@ const featuredItemsBreakpoints = reactive({
         snapAlign: 'start',
     },
 });
-const newArrivals = reactive([
+
+const carouselNewArrival = ref(0);
+const carouselNewArrivals = reactive([
     {
         'image':{
             'path': 'images/hero/21f0a52e-db0a-4108-9405-44a8a548e534.webp'
@@ -257,11 +337,11 @@ const newArrivals = reactive([
         'subTitle': 'CN700 1TB',
     }
 ]);
-const newArrivalsSettings = reactive({
+const carouselNewArrivalsSettings = reactive({
     itemsToShow: 1.5,
     snapAlign: 'start',
 });
-const newArrivalsBreakpoints = reactive({
+const carouselNewArrivalsBreakpoints = reactive({
     [screens['sm']]: {
         itemsToShow: 1.5,
         snapAlign: 'start',
@@ -277,6 +357,7 @@ const newArrivalsBreakpoints = reactive({
         snapAlign: 'start',
     },
 });
+
 const news = reactive([
     {
         'image':{
@@ -323,26 +404,31 @@ const news = reactive([
 ]);
 const carouselPayload = reactive([
     {
+        'key': 1,
         'image': {
             'path': '/images/carousel/f415740d-5951-4b5d-af98-1404e9c65df5.jpg'
         }
     },
     {
+        'key': 2,
         'image': {
             'path': '/images/carousel/60a0ac44-4533-421b-aa6c-cfba7036fb97.webp'
         }
     },
     {
+        'key': 3,
         'image': {
             'path': '/images/carousel/81dbd81d-596d-4500-87d1-1e4fe1b9462c.webp'
         }
     },
     {
+        'key': 4,
         'image': {
             'path': '/images/carousel/202ae924-b777-45a2-94c6-f78134b17020.webp'
         }
     },
     {
+        'key': 5,
         'image': {
             'path': '/images/carousel/2271fbba-86bf-4dc7-93cb-59eb0aab62d8.webp'
         }
