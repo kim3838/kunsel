@@ -899,7 +899,7 @@
             </div>
 
             <!-- Accordion -->
-            <div v-if="false" class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-1 lg:tw-grid-cols-3 xl:tw-grid-cols-3 2xl:tw-grid-cols-3">
+            <div v-if="true" class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-1 lg:tw-grid-cols-3 xl:tw-grid-cols-3 2xl:tw-grid-cols-3">
                 <div>
                     <InputLabel :size="'md'" value="MD : Accordion Single Expand" />
                     <Accordion :size="'md'" :single-expand="true" v-model:payload="accordionSingleExpand" />
@@ -915,7 +915,7 @@
             </div>
 
             <!-- Checkbox -->
-            <div v-if="false" class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-8">
+            <div v-if="true" class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-8">
                 <div class="neutral-border">
                     <label>
                         <Checkbox v-model="remember1" :label="' '" :size="'md'" name="remember" />
@@ -939,7 +939,7 @@
             </div>
 
             <!-- Checkbox Group -->
-            <div v-if="false" class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-8">
+            <div v-if="true" class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-8">
                 <div class="neutral-border">
                 </div>
                 <div class="neutral-border">
@@ -960,7 +960,7 @@
             </div>
 
             <!-- Radio Group -->
-            <div v-if="false" class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-8">
+            <div v-if="true" class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-8">
                 <div class="tw-flex tw-items-start tw-justify-start tw-block neutral-border">
                     <div>
                         <InputLabel :size="'md'" value="SM : Gender Group" />

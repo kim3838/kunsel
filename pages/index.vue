@@ -15,13 +15,13 @@
 
                 <div class="tw-snap-start tw-snap-always tw-w-full tw-h-screen">
                     <video :ref="'heroVideo'" muted controls loop class="tw-border-0 tw-object-cover tw-w-full tw-h-full">
-                        <source :src="'videos/weathering_with_you.mp4'" type="video/mp4">
+                        <source :src="'/videos/weathering_with_you.mp4'" type="video/mp4">
                     </video>
                 </div>
 
                 <div class="tw-snap-start tw-snap-always tw-w-full tw-h-screen">
                     <video :ref="'heroVideo2'" muted controls loop class="tw-border-0 tw-object-cover tw-w-full tw-h-full">
-                        <source :src="'videos/weathering_with_you_2.mp4'" type="video/mp4">
+                        <source :src="'/videos/weathering_with_you_2.mp4'" type="video/mp4">
                     </video>
                 </div>
 
@@ -120,7 +120,7 @@
                         <div class="tw-text-center lg:tw-text-start lg:tw-w-1/4 tw-font-['Google_Sans_Text']">
                             <div class="tw-text-3xl tw-font-bold">Frequently Answered Questions</div>
                             <div class="tw-text-xl tw-font-semibold">Have a question? Check out our frequently asked questions to find your answer.</div>
-                            <div class="tw-h-60 tw-w-full tw-bg-contain tw-bg-center lg:tw-bg-left tw-bg-no-repeat" :style="{'background-image': 'url(deco/undraw/undraw_my_answer_re_k4dv.svg)'}"></div>
+                            <div class="tw-h-60 tw-w-full tw-bg-contain tw-bg-center lg:tw-bg-left tw-bg-no-repeat" :style="{'background-image': 'url(/deco/undraw/undraw_my_answer_re_k4dv.svg)'}"></div>
                         </div>
                         <Accordion
                             v-model:payload="faqs"
@@ -183,7 +183,7 @@ const carouselFeaturedItem = ref(0);
 const carouselFeaturedItems = reactive([
     {
         'image':{
-            'path': 'images/product/202306201506003693.webp'
+            'path': '/images/product/202306201506003693.webp'
         },
         'title': 'PC Case',
         'subTitle': 'Segotep Memphis-S Meow PC Case (M-ATX / ITX supported)',
@@ -191,7 +191,7 @@ const carouselFeaturedItems = reactive([
     },
     {
         'image':{
-            'path': 'images/product/c76383ac-e6c0-4725-bec0-b171449c5960.webp'
+            'path': '/images/product/c76383ac-e6c0-4725-bec0-b171449c5960.webp'
         },
         'title': 'Motherboard',
         'subTitle': 'COLORFIRE B760M-MEOW WIFI D5 ORANGE',
@@ -199,7 +199,7 @@ const carouselFeaturedItems = reactive([
     },
     {
         'image':{
-            'path': 'images/product/f85a85cd-fa65-48d3-9d36-755b4a6acf87.webp'
+            'path': '/images/product/f85a85cd-fa65-48d3-9d36-755b4a6acf87.webp'
         },
         'title': 'Graphics Card',
         'subTitle': 'COLORFIRE GeForce RTX 4060 Ti MEOW-ORG 8GB-V',
@@ -207,7 +207,7 @@ const carouselFeaturedItems = reactive([
     },
     {
         'image':{
-            'path': 'images/product/7d5178c3-e5dc-4b8f-b8d1-cbe0bbc14e84.webp'
+            'path': '/images/product/7d5178c3-e5dc-4b8f-b8d1-cbe0bbc14e84.webp'
         },
         'title': 'Graphics Card',
         'subTitle': 'COLORFIRE GeForce RTX 4060 MEOW-ORG 8GB-V',
@@ -215,7 +215,7 @@ const carouselFeaturedItems = reactive([
     },
     {
         'image':{
-            'path': 'images/product/176a61f6-884b-4def-9c35-5d30cdca686f.webp'
+            'path': '/images/product/176a61f6-884b-4def-9c35-5d30cdca686f.webp'
         },
         'title': 'Graphics Card',
         'subTitle': 'iGame GeForce RTX 4080 16GB Ultra W OC-V',
@@ -223,7 +223,7 @@ const carouselFeaturedItems = reactive([
     },
     {
         'image':{
-            'path': 'images/product/cd8f248a-bd3d-4553-bcf7-849ed27c4b36.webp'
+            'path': '/images/product/cd8f248a-bd3d-4553-bcf7-849ed27c4b36.webp'
         },
         'title': 'Graphics Card',
         'subTitle': 'iGame GeForce RTX 4070 Ti Ultra W OC-V',
@@ -239,7 +239,7 @@ const carouselFeaturedItems = reactive([
     },
     {
         'image':{
-            'path': 'images/product/ebac5037-c3d2-4275-b96b-24f855695841.webp'
+            'path': '/images/product/ebac5037-c3d2-4275-b96b-24f855695841.webp'
         },
         'title': 'Motherboard',
         'subTitle': 'iGame Z790D5 ULTRA V20',
@@ -247,7 +247,7 @@ const carouselFeaturedItems = reactive([
     },
     {
         'image':{
-            'path': 'images/product/f9b5a1a7-d532-4cf8-970c-d812b857a666.webp'
+            'path': '/images/product/f9b5a1a7-d532-4cf8-970c-d812b857a666.webp'
         },
         'title': 'Motherboard',
         'subTitle': 'iGame Z790D5 FLOW V20',
@@ -255,7 +255,7 @@ const carouselFeaturedItems = reactive([
     },
     {
         'image':{
-            'path': 'images/product/c7dfc1f1-102a-4ea9-84f6-f87dda2094b8.webp'
+            'path': '/images/product/c7dfc1f1-102a-4ea9-84f6-f87dda2094b8.webp'
         },
         'title': 'Motherboard',
         'subTitle': 'CVN Z790D5 GAMING PRO WIFI V20',
@@ -263,7 +263,7 @@ const carouselFeaturedItems = reactive([
     },
     {
         'image':{
-            'path': 'images/product/38131462-2ae0-443e-8555-9e744c532887.webp'
+            'path': '/images/product/38131462-2ae0-443e-8555-9e744c532887.webp'
         },
         'title': 'Motherboard',
         'subTitle': 'BATTLE-AX Z790AK-PLUS D5 V20',
@@ -295,7 +295,7 @@ const carouselNewArrival = ref(0);
 const carouselNewArrivals = reactive([
     {
         'image':{
-            'path': 'images/hero/21f0a52e-db0a-4108-9405-44a8a548e534.webp'
+            'path': '/images/hero/21f0a52e-db0a-4108-9405-44a8a548e534.webp'
         },
         'title': 'MEOW SET',
         'subTitle': 'RTX 4060 Ti MEOW-ORG OC 16GB / B760M-MEOW WIFI D5 ORANGE.',
@@ -303,14 +303,14 @@ const carouselNewArrivals = reactive([
     },
     {
         'image':{
-            'path': 'images/hero/ea05cc1d-1384-47f4-84ab-b3c049f7e13e.webp'
+            'path': '/images/hero/ea05cc1d-1384-47f4-84ab-b3c049f7e13e.webp'
         },
         'title': 'AIO PC',
         'subTitle': 'iGame G-ONE Plus i7-12700H/RTX3060.',
     },
     {
         'image':{
-            'path': 'images/hero/353f5cb4-8113-43fa-b5c4-3a9bf1314474.webp'
+            'path': '/images/hero/353f5cb4-8113-43fa-b5c4-3a9bf1314474.webp'
         },
         'title': 'Laptop',
         'subTitle': 'Colorful EVOL P15 ',
@@ -389,14 +389,14 @@ const news = reactive([
     },
     {
         'image':{
-            'path': 'images/a447b48a-2ed6-4c7b-ad81-a7159fd341a7.webp'
+            'path': '/images/a447b48a-2ed6-4c7b-ad81-a7159fd341a7.webp'
         },
         'title': 'PC Game Pass Game Bundle',
         'subTitle': 'Get PC Game Pass for 3 months with select GeForce RTX 40 Series*',
     },
     {
         'image':{
-            'path': 'images/ff4e09cf-c5f9-42fa-9bff-e1490dc1e2fa.webp'
+            'path': '/images/ff4e09cf-c5f9-42fa-9bff-e1490dc1e2fa.webp'
         },
         'title': 'COLORFUL Launches EVOL X15 AT Gaming Laptop Powered by Intel 13th Gen CPUs and NVIDIA GeForce RTX 4060 GPU and NVIDIA GeForce RTX 4060 GPU and NVIDIA GeForce RTX 4060 GPU',
         'subTitle': 'The EVOL X15 AT sports a 15.6” QHD (2560x1440) 165Hz display with NVIDIA G-SYNC support for stutter-free and tear-free gaming experience. Aside from Pine Blue and Mist Grey, the new EVOL X15 AT gaming laptop comes in the new Purple Grape color.',
