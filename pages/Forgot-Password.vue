@@ -2,15 +2,17 @@
     <div>
         <NuxtLayout name="landing">
             <template #content>
-                <div class="tw-mx-auto tw-max-w-screen-2xl tw-flex tw-justify-center">
+                <div class="tw-mx-auto tw-px-4 tw-max-w-screen-2xl tw-flex tw-justify-center">
+                    <div class="tw-hidden sm:tw-block tw-px-4 tw-py-8 tw-h-96 tw-w-96">
+                        <div class="tw-w-full tw-h-full tw-bg-contain tw-bg-center tw-bg-no-repeat" :style="{'background-image': 'url(/deco/undraw/undraw_access_denied_re_awnf.svg)'}"></div>
+                    </div>
                     <AccentFrame class="tw-my-4">
                         <template #content>
                             <div class="tw-relative tw-py-4">
                                 <form @submit.prevent="handleForgotPassword" class="tw-w-72">
-                                    <p class="tw-font-semibold tw-text-lg">
+                                    <p class="tw-font-semibold tw-text-lg tw-mb-4">
                                         Forgot your password? No problem.
                                     </p>
-                                    <br>
                                     <p class="tw-text-base">
                                         Just let us know your email address and we will email you a password reset link that will allow you to choose a new one.
                                     </p>

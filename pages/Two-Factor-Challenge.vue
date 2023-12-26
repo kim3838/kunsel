@@ -2,12 +2,15 @@
     <div>
         <NuxtLayout name="landing">
             <template #content>
-                <div class="tw-mx-auto tw-max-w-screen-2xl tw-flex tw-justify-center">
+                <div class="tw-mx-auto tw-px-4 tw-max-w-screen-2xl tw-flex tw-justify-center">
+                    <div class="tw-hidden sm:tw-block tw-px-4 tw-py-8 tw-h-96 tw-w-96">
+                        <div class="tw-w-full tw-h-full tw-bg-contain tw-bg-center tw-bg-no-repeat" :style="{'background-image': 'url(/deco/undraw/undraw_two_factor_authentication_namy.svg)'}"></div>
+                    </div>
                     <AccentFrame class="tw-my-4">
                         <template #content>
                             <div class="tw-relative tw-py-4">
                                 <form @submit.prevent="handleLogin" class="tw-w-72">
-                                    <div class="tw-block tw-font-medium tw-text-lg">
+                                    <div class="tw-block tw-text-lg tw-font-semibold tw-mb-4">
                                         Enter your code
                                     </div>
                                     <template v-if="! recovery">
@@ -47,7 +50,7 @@
                                             :disabled="authPending"
                                             :size="'md'"
                                             :icon="authPending ? 'eos-icons:installing' : 'mdi:key-chain'"
-                                            :label="authPending ? 'Please wait...' : 'Login'"></Button>
+                                            :label="authPending ? 'Logging in...' : 'Login'"></Button>
                                     </div>
                                 </form>
                             </div>

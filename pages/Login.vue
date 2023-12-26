@@ -3,8 +3,8 @@
         <NuxtLayout name="landing">
             <template #content>
                 <div class="tw-mx-auto tw-px-4 tw-max-w-screen-2xl tw-flex tw-justify-center">
-                    <div class="tw-hidden sm:tw-block tw-px-4 tw-py-8 tw-h-96 tw-w-96 ">
-                        <div class="tw-w-full tw-h-full tw-bg-contain tw-bg-center tw-bg-no-repeat" :style="{'background-image': 'url(deco/undraw/undraw_access_account_re_8spm.svg)'}"></div>
+                    <div class="tw-hidden sm:tw-block tw-px-4 tw-py-8 tw-h-96 tw-w-96">
+                        <div class="tw-w-full tw-h-full tw-bg-contain tw-bg-center tw-bg-no-repeat" :style="{'background-image': 'url(/deco/undraw/undraw_access_account_re_8spm.svg)'}"></div>
                     </div>
 
                     <AccentFrame class="tw-my-4">
@@ -62,7 +62,7 @@
                                             :disabled="authPending"
                                             :size="'md'"
                                             :icon="authPending ? 'eos-icons:installing' : 'mdi:key-chain'"
-                                            :label="authPending ? 'Loggin in...' : 'Login'"></Button>
+                                            :label="authPending ? 'Logging in...' : 'Login'"></Button>
                                     </div>
                                 </form>
                             </div>
@@ -109,12 +109,5 @@ function handleLogin(){
 <style scoped>
 .container {
     @apply tw-flex tw-justify-center tw-items-center tw-text-center tw-mx-auto;
-    /*border: 1px solid silver;*/
-}
-
-.login-hero{
-    background-image: url("/images/hero/667a2407-ae78-4e4d-b69e-059552bca96e.webp");
-    background-repeat: no-repeat;
-    background-size: cover;
 }
 </style>
