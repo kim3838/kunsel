@@ -231,7 +231,8 @@ const {
 const {
     navigationMode,
     navigationHeight,
-    navigationHeightInPixels
+    navigationHeightInPixels,
+    spotlightContentHeight
 } = storeToRefs($layoutStore);
 
 const landingNavigation = ref(null);
@@ -265,7 +266,7 @@ const {y: snapYScroll,arrivedState: snapScrollArrivedState } = useScroll(snapScr
 const {top: snapScrollTopReached} = toRefs(snapScrollArrivedState);
 
 watch(snapYScroll, (yScroll) => {
-    if(yScroll <= ((screenHeight.value * 3) - navigationHeight.value) && ['index'].includes(_toLower(route.name))){
+    if(yScroll <= ((screenHeight.value * 4) - navigationHeight.value) && ['index'].includes(_toLower(route.name))){
         $layoutStore.setNavigationMode('clear');
     } else {
         $layoutStore.setNavigationMode('solid');
@@ -468,5 +469,8 @@ a.footer-link:hover{
 /*Used by snap scroll: to allocate space on fixed top navigation*/
 .navigation-height{
     height: v-bind(navigationHeightInPixels);
+}
+.spotlight-content-height{
+    max-height: v-bind(spotlightContentHeight);
 }
 </style>
