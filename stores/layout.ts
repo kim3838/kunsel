@@ -8,9 +8,12 @@ export const useLayoutStore = defineStore('layout', () => {
 
     const navigationMode = computed(() => {
         return navigation.value.mode;
-    })
+    });
     const navigationHeightInPixels = computed(() => {
         return (navigationHeight.value + 'px');
+    });
+    const spotlightContentHeight = computed(() => {
+        return 'calc(100vh - '+(navigationHeight.value + 'px')+')';
     });
 
     function setNavigationHeight(value){
@@ -27,6 +30,7 @@ export const useLayoutStore = defineStore('layout', () => {
         navigationMode,
         navigationHeight,
         navigationHeightInPixels,
+        spotlightContentHeight,
         setNavigationHeight,
         setNavigationMode
     }
