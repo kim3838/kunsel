@@ -2,7 +2,7 @@
     <div>
         <NuxtLayout name="landing">
             <template #content>
-                <CarouselModuleCarousel wrap-around class="tw-snap-start tw-snap-always">
+                <CarouselModuleCarousel v-if="false" :mouse-drag="true" wrap-around class="tw-snap-start tw-snap-always">
                     <CarouselModuleSlide v-for="slide in carouselPayload" :key="slide">
                         <div class="tw-w-screen tw-h-screen carousel-image" :style="{'background-image': `url(${slide.image.path})`}"></div>
                     </CarouselModuleSlide>
@@ -13,16 +13,138 @@
                     </template>
                 </CarouselModuleCarousel>
 
-                <div class="tw-snap-start tw-snap-always tw-w-full tw-h-screen">
-                    <video :ref="'heroVideo'" muted controls loop class="tw-border-0 tw-object-cover tw-w-full tw-h-full">
-                        <source :src="'/videos/weathering_with_you.mp4'" type="video/mp4">
-                    </video>
+                <!-- Spotlight: Image -->
+                <div class="tw-snap-start tw-snap-always tw-relative tw-w-full tw-h-screen">
+                    <div class="tw-w-full tw-h-full tw-absolute tw-z-30 spotlight-image" :style="{'background-image': `url(/images/carousel/f415740d-5951-4b5d-af98-1404e9c65df5.jpg)`}"></div>
+
+                    <div class="navigation-height tw-w-full tw-relative"></div>
+                    <div class="tw-absolute tw-w-full tw-h-full spotlight-content-height tw-z-40 tw-flex tw-justify-center">
+                        <div class="tw-pb-10 tw-max-w-screen-2xl tw-w-full tw-flex tw-flex-col-reverse">
+
+                            <article class="tw-transition-all tw-duration-700 tw-w-full tw-h-max">
+                                <CarouselModuleCarousel
+                                    dir="rtl"
+                                    class="tw-w-full lg:tw-w-full">
+                                    <CarouselModuleSlide class="tw-w-[270px]" v-for="spotLightItem in spotlight_1" :key="spotLightItem">
+                                        <Featured
+                                            focused
+                                            class="tw-mx-2"
+                                            :image="spotLightItem.image"
+                                            :title="spotLightItem.title"
+                                            :sub-title="spotLightItem.subTitle"
+                                            :link="spotLightItem.link"
+                                            :button-label="'Details'"
+                                        />
+                                    </CarouselModuleSlide>
+                                    <template #addons>
+                                        <CarouselModuleNavigation />
+                                    </template>
+                                </CarouselModuleCarousel>
+                            </article>
+                        </div>
+                    </div>
                 </div>
 
-                <div class="tw-snap-start tw-snap-always tw-w-full tw-h-screen">
-                    <video :ref="'heroVideo2'" muted controls loop class="tw-border-0 tw-object-cover tw-w-full tw-h-full">
-                        <source :src="'/videos/weathering_with_you_2.mp4'" type="video/mp4">
+                <!-- Spotlight: Video -->
+                <div class="tw-snap-start tw-snap-always tw-relative tw-w-full tw-h-screen">
+                    <video :ref="'spotlightVideo_1'" muted loop class="tw-absolute tw-z-30 tw-border-0 tw-object-cover tw-w-full tw-h-full">
+                        <source :src="'/videos/y2mate.is - FUN WITH BOBI graphicscard rtx4060 gameplay-t1W2TPE8Exw-1080pp-1703650110.mp4'" type="video/mp4">
                     </video>
+
+                    <div class="navigation-height tw-w-full tw-relative"></div>
+                    <div class="tw-absolute tw-w-full tw-h-full spotlight-content-height tw-z-40 tw-flex tw-justify-center">
+                        <div class="tw-pb-10 tw-max-w-screen-2xl tw-w-full tw-flex tw-flex-col-reverse">
+
+                            <article class="tw-transition-all tw-duration-700 tw-opacity-50 hover:tw-opacity-100 tw-w-full tw-h-max">
+                                <CarouselModuleCarousel
+                                    dir="rtl"
+                                    class="tw-w-full lg:tw-w-full">
+                                    <CarouselModuleSlide class="tw-w-[270px]" v-for="spotLightItem in spotlight_1" :key="spotLightItem">
+                                        <Featured
+                                            focused
+                                            class="tw-mx-2"
+                                            :image="spotLightItem.image"
+                                            :title="spotLightItem.title"
+                                            :sub-title="spotLightItem.subTitle"
+                                            :link="spotLightItem.link"
+                                            :button-label="'Details'"
+                                        />
+                                    </CarouselModuleSlide>
+                                    <template #addons>
+                                        <CarouselModuleNavigation />
+                                    </template>
+                                </CarouselModuleCarousel>
+                            </article>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Spotlight: Video -->
+                <div class="tw-snap-start tw-snap-always tw-relative tw-w-full tw-h-screen">
+                    <video :ref="'spotlightVideo_2'" muted loop class="tw-absolute tw-z-30 tw-border-0 tw-object-cover tw-w-full tw-h-full">
+                        <source :src="'/videos/GeForce RTX 4090 Vulcan OC.mp4'" type="video/mp4">
+                    </video>
+
+                    <div class="navigation-height tw-w-full tw-relative"></div>
+                    <div class="tw-absolute tw-w-full tw-h-full spotlight-content-height tw-z-40 tw-flex tw-justify-center">
+                        <div class="tw-pb-10 tw-max-w-screen-2xl tw-w-full tw-flex tw-flex-col-reverse">
+
+                            <article class="tw-transition-all tw-duration-700 tw-opacity-50 hover:tw-opacity-100 tw-w-full tw-h-max">
+                                <CarouselModuleCarousel
+                                    dir="rtl"
+                                    class="tw-w-full lg:tw-w-full">
+                                    <CarouselModuleSlide class="tw-w-[270px]" v-for="spotLightItem in spotlight_2" :key="spotLightItem">
+                                        <Featured
+                                            focused
+                                            class="tw-mx-2"
+                                            :image="spotLightItem.image"
+                                            :title="spotLightItem.title"
+                                            :sub-title="spotLightItem.subTitle"
+                                            :link="spotLightItem.link"
+                                            :button-label="'Details'"
+                                        />
+                                    </CarouselModuleSlide>
+                                    <template #addons>
+                                        <CarouselModuleNavigation />
+                                    </template>
+                                </CarouselModuleCarousel>
+                            </article>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Spotlight: Video -->
+                <div class="tw-snap-start tw-snap-always tw-relative tw-w-full tw-h-screen">
+                    <video :ref="'spotlightVideo_3'" muted loop class="tw-absolute tw-z-30 tw-border-0 tw-object-cover tw-w-full tw-h-full">
+                        <source :src="'/videos/y2mate.is - FOR EXCELLENCE z790 intel14th-uIobz4U2HQY-1080pp-1703649877.mp4'" type="video/mp4">
+                    </video>
+
+                    <div class="navigation-height tw-w-full tw-relative"></div>
+                    <div class="tw-absolute tw-w-full tw-h-full spotlight-content-height tw-z-40 tw-flex tw-justify-center">
+                        <div class="tw-pb-10 tw-max-w-screen-2xl tw-w-full tw-flex tw-flex-col-reverse">
+
+                            <article class="tw-transition-all tw-duration-700 tw-opacity-50 hover:tw-opacity-100 tw-w-full tw-h-max">
+                                <CarouselModuleCarousel
+                                    dir="rtl"
+                                    class="tw-w-full lg:tw-w-full">
+                                    <CarouselModuleSlide class="tw-w-[270px]" v-for="spotLightItem in spotlight_3" :key="spotLightItem">
+                                        <Featured
+                                            focused
+                                            class="tw-mx-2"
+                                            :image="spotLightItem.image"
+                                            :title="spotLightItem.title"
+                                            :sub-title="spotLightItem.subTitle"
+                                            :link="spotLightItem.link"
+                                            :button-label="'Details'"
+                                        />
+                                    </CarouselModuleSlide>
+                                    <template #addons>
+                                        <CarouselModuleNavigation />
+                                    </template>
+                                </CarouselModuleCarousel>
+                            </article>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="navigation-height tw-w-full tw-snap-start tw-snap-always"></div>
@@ -32,6 +154,7 @@
                             v-model="carouselFeaturedItem"
                             v-bind="carouselFeaturedItemsSettings"
                             :breakpoints="carouselFeaturedItemsBreakpoints"
+                            :mouse-drag="true"
                             class="tw-w-full lg:tw-w-full">
                             <CarouselModuleSlide class="tw-w-[170px]">
                                 <RegularFrame>
@@ -148,13 +271,14 @@ definePageMeta({
     layout: false
 });
 
-const heroVideo = ref<HTMLElement | null>(null);
-const heroVideo2 = ref<HTMLElement | null>(null);
+const spotlightVideo_1 = ref<HTMLElement | null>(null);
+const spotlightVideo_2 = ref<HTMLElement | null>(null);
+const spotlightVideo_3 = ref<HTMLElement | null>(null);
 
 onMounted(async () => {
     await nextTick(() => {
 
-        [heroVideo, heroVideo2].forEach(video => {
+        [spotlightVideo_1, spotlightVideo_2, spotlightVideo_3].forEach(video => {
             let playPromise = video.value.play();
 
             if(playPromise !== undefined){
@@ -179,8 +303,7 @@ onMounted(async () => {
     });
 });
 
-const carouselFeaturedItem = ref(0);
-const carouselFeaturedItems = reactive([
+const spotlight_1 = ref([
     {
         'image':{
             'path': '/images/product/202306201506003693.webp'
@@ -213,6 +336,28 @@ const carouselFeaturedItems = reactive([
         'subTitle': 'COLORFIRE GeForce RTX 4060 MEOW-ORG 8GB-V',
         'link': '/prototype'
     },
+]);
+const spotlight_2 = ref([
+    {
+        'image':{
+            'path': '/images/product/20220923155420669106.webp'
+        },
+        'title': 'Graphics Card',
+        'subTitle': 'iGame GeForce RTX 4090 Vulcan OC-V',
+        'link': '/prototype'
+    }
+]);
+const spotlight_3 = ref([
+    {
+        'image':{
+            'path': '/images/product/f9b5a1a7-d532-4cf8-970c-d812b857a666.webp'
+        },
+        'title': 'Motherboard',
+        'subTitle': 'iGame Z790D5 FLOW V20',
+        'link': '/prototype'
+    }
+]);
+const featured = ref([
     {
         'image':{
             'path': '/images/product/176a61f6-884b-4def-9c35-5d30cdca686f.webp'
@@ -231,26 +376,10 @@ const carouselFeaturedItems = reactive([
     },
     {
         'image':{
-            'path': '/images/product/20220923155420669106.webp'
-        },
-        'title': 'Graphics Card',
-        'subTitle': 'iGame GeForce RTX 4090 Vulcan OC-V',
-        'link': '/prototype'
-    },
-    {
-        'image':{
             'path': '/images/product/ebac5037-c3d2-4275-b96b-24f855695841.webp'
         },
         'title': 'Motherboard',
         'subTitle': 'iGame Z790D5 ULTRA V20',
-        'link': '/prototype'
-    },
-    {
-        'image':{
-            'path': '/images/product/f9b5a1a7-d532-4cf8-970c-d812b857a666.webp'
-        },
-        'title': 'Motherboard',
-        'subTitle': 'iGame Z790D5 FLOW V20',
         'link': '/prototype'
     },
     {
@@ -270,11 +399,19 @@ const carouselFeaturedItems = reactive([
         'link': '/prototype'
     }
 ]);
-const carouselFeaturedItemsSettings = reactive({
+
+const carouselFeaturedItem = ref(0);
+const carouselFeaturedItems = ref([]);
+carouselFeaturedItems.value = carouselFeaturedItems.value.concat(spotlight_1.value);
+carouselFeaturedItems.value = carouselFeaturedItems.value.concat(spotlight_2.value);
+carouselFeaturedItems.value = carouselFeaturedItems.value.concat(spotlight_3.value);
+carouselFeaturedItems.value = carouselFeaturedItems.value.concat(featured.value);
+
+const carouselFeaturedItemsSettings = ref({
     itemsToShow: 1.5,
     snapAlign: 'start',
 });
-const carouselFeaturedItemsBreakpoints = reactive({
+const carouselFeaturedItemsBreakpoints = ref({
     [screens['sm']]: {
         itemsToShow: 1.5,
         snapAlign: 'start',
@@ -292,7 +429,7 @@ const carouselFeaturedItemsBreakpoints = reactive({
 });
 
 const carouselNewArrival = ref(0);
-const carouselNewArrivals = reactive([
+const carouselNewArrivals = ref([
     {
         'image':{
             'path': '/images/hero/21f0a52e-db0a-4108-9405-44a8a548e534.webp'
@@ -337,11 +474,11 @@ const carouselNewArrivals = reactive([
         'subTitle': 'CN700 1TB',
     }
 ]);
-const carouselNewArrivalsSettings = reactive({
+const carouselNewArrivalsSettings = ref({
     itemsToShow: 1.5,
     snapAlign: 'start',
 });
-const carouselNewArrivalsBreakpoints = reactive({
+const carouselNewArrivalsBreakpoints = ref({
     [screens['sm']]: {
         itemsToShow: 1.5,
         snapAlign: 'start',
@@ -358,7 +495,7 @@ const carouselNewArrivalsBreakpoints = reactive({
     },
 });
 
-const news = reactive([
+const news = ref([
     {
         'image':{
             'path': '/images/c46535a6-f120-46e3-8bea-4ace73c8eb82.webp'
@@ -402,7 +539,7 @@ const news = reactive([
         'subTitle': 'The EVOL X15 AT sports a 15.6” QHD (2560x1440) 165Hz display with NVIDIA G-SYNC support for stutter-free and tear-free gaming experience. Aside from Pine Blue and Mist Grey, the new EVOL X15 AT gaming laptop comes in the new Purple Grape color.',
     },
 ]);
-const carouselPayload = reactive([
+const carouselPayload = ref([
     {
         'key': 1,
         'image': {
@@ -434,7 +571,7 @@ const carouselPayload = reactive([
         }
     }
 ]);
-const faqs = reactive({
+const faqs = ref({
     recentActive: 0,
     options: [
         {
@@ -478,6 +615,11 @@ const faqCenterContent = computed(() => {
 <style scoped>
 .figure img{
     object-fit: cover;
+}
+.spotlight-image{
+    background-position: center center;
+    background-size: cover;
+    background-repeat: no-repeat;
 }
 .carousel-image{
     background-position: center center;
