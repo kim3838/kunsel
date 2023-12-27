@@ -2,7 +2,7 @@
     <button
         ref="button"
         :disabled="disabled"
-        :style="{'border-radius': '2px'}"
+        :style="{'border-radius': '2px', 'direction': 'ltr'}"
         :class="[heightClass, colorClass, borderClass]"
         :type="type"
         class="
