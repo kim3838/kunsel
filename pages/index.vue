@@ -18,7 +18,7 @@
                     <div class="tw-w-full tw-h-full tw-absolute tw-z-30 spotlight-image" :style="{'background-image': `url(/images/carousel/f415740d-5951-4b5d-af98-1404e9c65df5.jpg)`}"></div>
 
                     <div class="navigation-height tw-w-full tw-relative"></div>
-                    <div class="tw-absolute tw-w-full tw-h-full spotlight-content-height tw-z-40 tw-flex tw-justify-center">
+                    <div class="tw-absolute tw-w-full tw-h-full spotlight-content-height tw-z-30 tw-flex tw-justify-center">
                         <div class="tw-pb-10 tw-max-w-screen-2xl tw-w-full tw-flex tw-flex-col-reverse">
 
                             <article class="tw-w-full tw-h-max">
@@ -52,7 +52,7 @@
                     </video>
 
                     <div class="navigation-height tw-w-full tw-relative"></div>
-                    <div class="tw-absolute tw-w-full tw-h-full spotlight-content-height tw-z-40 tw-flex tw-justify-center">
+                    <div class="tw-absolute tw-w-full tw-h-full spotlight-content-height tw-z-30 tw-flex tw-justify-center">
                         <div class="tw-pb-10 tw-max-w-screen-2xl tw-w-full tw-flex tw-flex-col-reverse">
 
                             <article class="tw-transition-all tw-duration-700 tw-opacity-50 hover:tw-opacity-100 tw-w-full tw-h-max">
