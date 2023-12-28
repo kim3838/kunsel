@@ -21,7 +21,7 @@
                     <div class="tw-absolute tw-w-full tw-h-full spotlight-content-height tw-z-40 tw-flex tw-justify-center">
                         <div class="tw-pb-10 tw-max-w-screen-2xl tw-w-full tw-flex tw-flex-col-reverse">
 
-                            <article class="tw-transition-all tw-duration-700 tw-w-full tw-h-max">
+                            <article class="tw-w-full tw-h-max">
                                 <CarouselModuleCarousel
                                     dir="rtl"
                                     class="tw-w-full lg:tw-w-full">
@@ -60,74 +60,6 @@
                                     dir="rtl"
                                     class="tw-w-full lg:tw-w-full">
                                     <CarouselModuleSlide class="tw-w-[270px]" v-for="spotLightItem in spotlight_1" :key="spotLightItem">
-                                        <Featured
-                                            focused
-                                            class="tw-mx-2"
-                                            :image="spotLightItem.image"
-                                            :title="spotLightItem.title"
-                                            :sub-title="spotLightItem.subTitle"
-                                            :link="spotLightItem.link"
-                                            :button-label="'Details'"
-                                        />
-                                    </CarouselModuleSlide>
-                                    <template #addons>
-                                        <CarouselModuleNavigation />
-                                    </template>
-                                </CarouselModuleCarousel>
-                            </article>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Spotlight: Video -->
-                <div class="tw-snap-start tw-snap-always tw-relative tw-w-full tw-h-screen">
-                    <video :ref="'spotlightVideo_2'" muted loop class="tw-absolute tw-z-30 tw-border-0 tw-object-cover tw-w-full tw-h-full">
-                        <source :src="'/videos/GeForce RTX 4090 Vulcan OC.mp4'" type="video/mp4">
-                    </video>
-
-                    <div class="navigation-height tw-w-full tw-relative"></div>
-                    <div class="tw-absolute tw-w-full tw-h-full spotlight-content-height tw-z-40 tw-flex tw-justify-center">
-                        <div class="tw-pb-10 tw-max-w-screen-2xl tw-w-full tw-flex tw-flex-col-reverse">
-
-                            <article class="tw-transition-all tw-duration-700 tw-opacity-50 hover:tw-opacity-100 tw-w-full tw-h-max">
-                                <CarouselModuleCarousel
-                                    dir="rtl"
-                                    class="tw-w-full lg:tw-w-full">
-                                    <CarouselModuleSlide class="tw-w-[270px]" v-for="spotLightItem in spotlight_2" :key="spotLightItem">
-                                        <Featured
-                                            focused
-                                            class="tw-mx-2"
-                                            :image="spotLightItem.image"
-                                            :title="spotLightItem.title"
-                                            :sub-title="spotLightItem.subTitle"
-                                            :link="spotLightItem.link"
-                                            :button-label="'Details'"
-                                        />
-                                    </CarouselModuleSlide>
-                                    <template #addons>
-                                        <CarouselModuleNavigation />
-                                    </template>
-                                </CarouselModuleCarousel>
-                            </article>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Spotlight: Video -->
-                <div class="tw-snap-start tw-snap-always tw-relative tw-w-full tw-h-screen">
-                    <video :ref="'spotlightVideo_3'" muted loop class="tw-absolute tw-z-30 tw-border-0 tw-object-cover tw-w-full tw-h-full">
-                        <source :src="'/videos/y2mate.is - FOR EXCELLENCE z790 intel14th-uIobz4U2HQY-1080pp-1703649877.mp4'" type="video/mp4">
-                    </video>
-
-                    <div class="navigation-height tw-w-full tw-relative"></div>
-                    <div class="tw-absolute tw-w-full tw-h-full spotlight-content-height tw-z-40 tw-flex tw-justify-center">
-                        <div class="tw-pb-10 tw-max-w-screen-2xl tw-w-full tw-flex tw-flex-col-reverse">
-
-                            <article class="tw-transition-all tw-duration-700 tw-opacity-50 hover:tw-opacity-100 tw-w-full tw-h-max">
-                                <CarouselModuleCarousel
-                                    dir="rtl"
-                                    class="tw-w-full lg:tw-w-full">
-                                    <CarouselModuleSlide class="tw-w-[270px]" v-for="spotLightItem in spotlight_3" :key="spotLightItem">
                                         <Featured
                                             focused
                                             class="tw-mx-2"
@@ -272,13 +204,11 @@ definePageMeta({
 });
 
 const spotlightVideo_1 = ref<HTMLElement | null>(null);
-const spotlightVideo_2 = ref<HTMLElement | null>(null);
-const spotlightVideo_3 = ref<HTMLElement | null>(null);
 
 onMounted(async () => {
     await nextTick(() => {
 
-        [spotlightVideo_1, spotlightVideo_2, spotlightVideo_3].forEach(video => {
+        [spotlightVideo_1].forEach(video => {
             let playPromise = video.value.play();
 
             if(playPromise !== undefined){
@@ -337,26 +267,6 @@ const spotlight_1 = ref([
         'link': '/prototype'
     },
 ]);
-const spotlight_2 = ref([
-    {
-        'image':{
-            'path': '/images/product/20220923155420669106.webp'
-        },
-        'title': 'Graphics Card',
-        'subTitle': 'iGame GeForce RTX 4090 Vulcan OC-V',
-        'link': '/prototype'
-    }
-]);
-const spotlight_3 = ref([
-    {
-        'image':{
-            'path': '/images/product/f9b5a1a7-d532-4cf8-970c-d812b857a666.webp'
-        },
-        'title': 'Motherboard',
-        'subTitle': 'iGame Z790D5 FLOW V20',
-        'link': '/prototype'
-    }
-]);
 const featured = ref([
     {
         'image':{
@@ -376,10 +286,10 @@ const featured = ref([
     },
     {
         'image':{
-            'path': '/images/product/ebac5037-c3d2-4275-b96b-24f855695841.webp'
+            'path': '/images/product/20220923155420669106.webp'
         },
-        'title': 'Motherboard',
-        'subTitle': 'iGame Z790D5 ULTRA V20',
+        'title': 'Graphics Card',
+        'subTitle': 'iGame GeForce RTX 4090 Vulcan OC-V',
         'link': '/prototype'
     },
     {
@@ -397,14 +307,28 @@ const featured = ref([
         'title': 'Motherboard',
         'subTitle': 'BATTLE-AX Z790AK-PLUS D5 V20',
         'link': '/prototype'
+    },
+    {
+        'image':{
+            'path': '/images/product/ebac5037-c3d2-4275-b96b-24f855695841.webp'
+        },
+        'title': 'Motherboard',
+        'subTitle': 'iGame Z790D5 ULTRA V20',
+        'link': '/prototype'
+    },
+    {
+        'image':{
+            'path': '/images/product/f9b5a1a7-d532-4cf8-970c-d812b857a666.webp'
+        },
+        'title': 'Motherboard',
+        'subTitle': 'iGame Z790D5 FLOW V20',
+        'link': '/prototype'
     }
 ]);
 
 const carouselFeaturedItem = ref(0);
 const carouselFeaturedItems = ref([]);
 carouselFeaturedItems.value = carouselFeaturedItems.value.concat(spotlight_1.value);
-carouselFeaturedItems.value = carouselFeaturedItems.value.concat(spotlight_2.value);
-carouselFeaturedItems.value = carouselFeaturedItems.value.concat(spotlight_3.value);
 carouselFeaturedItems.value = carouselFeaturedItems.value.concat(featured.value);
 
 const carouselFeaturedItemsSettings = ref({
