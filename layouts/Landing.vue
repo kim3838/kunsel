@@ -1,5 +1,5 @@
 <template>
-    <div id="layoutScroll" ref="snapScroll" class="tw-relative tw-scroll-smooth tw-h-screen tw-max-h-screen" :class="[enableScrollSnap ? 'tw-overflow-y-scroll tw-snap-y tw-snap-mandatory' : 'tw-overflow-auto tw-snap-none']">
+    <div id="layoutScroll" ref="snapScroll" class="tw-relative tw-scroll-smooth tw-h-screen tw-max-h-screen" :class="[enableScrollSnap ? 'tw-overflow-y-scroll tw-overflow-x-hidden tw-snap-y tw-snap-mandatory' : 'tw-overflow-auto tw-snap-none']">
         <!-- Primary Navigation Menu -->
         <nav
             ref="landingNavigation"
@@ -225,11 +225,11 @@ const {
     accent: accentColor,
     neutral: neutralColor,
     tint: tintColor,
-    body: bodyColor,
     thread: threadColor
 } = storeToRefs($themeStore);
 const {
     navigationMode,
+    navigationBackground,
     navigationHeight,
     navigationHeightInPixels,
     spotlightContentHeight
@@ -266,7 +266,7 @@ const {y: snapYScroll,arrivedState: snapScrollArrivedState } = useScroll(snapScr
 const {top: snapScrollTopReached} = toRefs(snapScrollArrivedState);
 
 watch(snapYScroll, (yScroll) => {
-    if(yScroll <= ((screenHeight.value * 4) - navigationHeight.value) && ['index'].includes(_toLower(route.name))){
+    if(yScroll <= ((screenHeight.value * 2) - navigationHeight.value) && ['index'].includes(_toLower(route.name))){
         $layoutStore.setNavigationMode('clear');
     } else {
         $layoutStore.setNavigationMode('solid');
@@ -414,14 +414,6 @@ const menuOptions = computed(() => {
 
     return options;
 });
-const navigationBackground = computed(()=>{
-    if(navigationMode.value === 'clear'){
-        return 'transparent';
-    }
-
-    return bodyColor.value;
-});
-
 
 function isRouteActive(routeSlug: string) {
     return [route.path, _toLower(route.name)].indexOf(_toLower(routeSlug)) >= 0;

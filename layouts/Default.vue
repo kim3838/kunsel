@@ -86,16 +86,14 @@ const navDrop = resolveComponent('navDrop');
 
 const {
     primary: primaryColor,
-    accent: accentColor,
     neutral: neutralColor,
     tint: tintColor,
-    body: bodyColor,
     thread: threadColor
 } = storeToRefs($themeStore);
 const {
     navigationMode,
-    navigationHeight,
-    navigationHeightInPixels
+    navigationBackground,
+    navigationHeight
 } = storeToRefs($layoutStore);
 
 const navigation = ref(null);
@@ -252,13 +250,6 @@ const menuOptions = computed(() => {
     options = options.concat([]);
 
     return options;
-});
-const navigationBackground = computed(()=>{
-    if(navigationMode.value === 'clear'){
-        return 'transparent';
-    }
-
-    return bodyColor.value;
 });
 
 function isRouteActive(routeSlug: string) {

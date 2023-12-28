@@ -1,6 +1,9 @@
 import {defineStore, storeToRefs} from 'pinia'
 
 export const useLayoutStore = defineStore('layout', () => {
+    const $themeStore = useThemeStore();
+    const {body: bodyColor} = storeToRefs($themeStore);
+
     const navigationHeight = ref(0);
     const navigation = ref({
         mode: 'clear'
@@ -8,6 +11,13 @@ export const useLayoutStore = defineStore('layout', () => {
 
     const navigationMode = computed(() => {
         return navigation.value.mode;
+    });
+    const navigationBackground = computed(()=>{
+        if(navigationMode.value == 'clear'){
+            return 'transparent';
+        }
+
+        return bodyColor.value;
     });
     const navigationHeightInPixels = computed(() => {
         return (navigationHeight.value + 'px');
@@ -28,6 +38,7 @@ export const useLayoutStore = defineStore('layout', () => {
     return {
         navigation,
         navigationMode,
+        navigationBackground,
         navigationHeight,
         navigationHeightInPixels,
         spotlightContentHeight,
