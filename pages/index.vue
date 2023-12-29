@@ -24,6 +24,8 @@
                             <article class="tw-w-full tw-h-max">
                                 <CarouselModuleCarousel
                                     dir="rtl"
+                                    v-bind="spotlightSettings"
+                                    :breakpoints="spotlightBreakpoints"
                                     class="tw-w-full lg:tw-w-full">
                                     <CarouselModuleSlide class="tw-w-[270px]" v-for="spotLightItem in spotlight_1" :key="spotLightItem">
                                         <Featured
@@ -58,6 +60,8 @@
                             <article class="tw-transition-all tw-duration-700 tw-opacity-50 hover:tw-opacity-100 tw-w-full tw-h-max">
                                 <CarouselModuleCarousel
                                     dir="rtl"
+                                    v-bind="spotlightSettings"
+                                    :breakpoints="spotlightBreakpoints"
                                     class="tw-w-full lg:tw-w-full">
                                     <CarouselModuleSlide class="tw-w-[270px]" v-for="spotLightItem in spotlight_1" :key="spotLightItem">
                                         <Featured
@@ -231,6 +235,27 @@ onMounted(async () => {
             }
         })
     });
+});
+
+const spotlightSettings = ref({
+    itemsToShow: 1.5,
+    snapAlign: 'start',
+});
+const spotlightBreakpoints = ref({
+    [screens['sm']]: {
+        itemsToShow: 1.5,
+        snapAlign: 'start',
+    },
+
+    [screens['md']]: {
+        itemsToShow: 2.5,
+        snapAlign: 'start',
+    },
+
+    [screens['lg']]: {
+        itemsToShow: 4.5,
+        snapAlign: 'start',
+    },
 });
 
 const spotlight_1 = ref([
