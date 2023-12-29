@@ -66,10 +66,9 @@
 
 <script setup>
 import {ref, reactive, onMounted, nextTick} from 'vue';
-const {$coreStore, $layoutStore} = useNuxtApp();
+const {$coreStore} = useNuxtApp();
+useLayout().setNavigationMode('solid');
 const route = useRoute();
-
-$layoutStore.setNavigationMode('solid');
 
 if (!route.query.email) {
     navigateTo({

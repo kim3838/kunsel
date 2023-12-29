@@ -8,7 +8,7 @@
             <div class="tw-max-w-screen-2xl tw-w-full tw-flex tw-justify-start lg:tw-justify-around tw-h-10 lg:tw-h-20">
                 <div class="tw--my-px tw-flex tw-items-center">
                     <div v-if="['index'].includes(_toLower(route.name))" class="tw-w-max tw-block tw-h-full tw-w-full tw-flex tw-items-center">
-                        <Colorful :dark="$layoutStore.navigationMode === 'clear'" />
+                        <Colorful :dark="navigationMode === 'clear'" />
                     </div>
                     <NavDrop
                         class="lg:tw-hidden tw-h-full"
@@ -216,8 +216,20 @@ import {computed, nextTick, onMounted, ref, watch} from "vue";
 import {useScroll} from '@vueuse/core';
 
 const route = useRoute();
-const {$layoutStore, $themeStore} = useNuxtApp();
+const {$themeStore} = useNuxtApp();
 const {isAuthenticated, user, logout} = useAuth();
+const {
+    enableScrollSnap,
+    navigationMode,
+    navigationHeight,
+    navigationBackground,
+    navigationHeaderSize,
+    navigationHeightInPixels,
+    topAllocationInPixels,
+    spotlightContentHeight,
+    setNavigationHeight,
+    setNavigationMode,
+} = useLayout();
 const {screens, width: screenWidth, height: screenHeight } = useScreen();
 const navDrop = resolveComponent('navDrop');
 const {
@@ -227,71 +239,31 @@ const {
     tint: tintColor,
     thread: threadColor
 } = storeToRefs($themeStore);
-const {
-    navigationMode,
-    navigationBackground,
-    navigationHeight,
-    navigationHeightInPixels,
-    spotlightContentHeight
-} = storeToRefs($layoutStore);
 
 const landingNavigation = ref(null);
-const topAllocationInPixels = computed(()=>{
-    if(navigationMode.value === 'clear'){
-        return '0px';
-    }
-
-    if(['index'].includes(_toLower(route.name))){
-        return '0px';
-    }
-
-    return (navigationHeight.value + 'px');
-});
 
 onMounted(async () => {
     await nextTick(() => {
-        $layoutStore.setNavigationHeight(landingNavigation.value.offsetHeight);
+        setNavigationHeight(landingNavigation.value.offsetHeight);
     });
 });
 
 watch(screenWidth, value => {
-    $layoutStore.setNavigationHeight(landingNavigation.value.offsetHeight);
+    setNavigationHeight(landingNavigation.value.offsetHeight);
 });
 
-const enableScrollSnap = computed(() => {
-    return ['index'].includes(_toLower(route.name));
-});
 const snapScroll = ref<HTMLElement | null>(null)
 const {y: snapYScroll,arrivedState: snapScrollArrivedState } = useScroll(snapScroll)
 const {top: snapScrollTopReached} = toRefs(snapScrollArrivedState);
 
 watch(snapYScroll, (yScroll) => {
     if(yScroll <= ((screenHeight.value * 2) - navigationHeight.value) && ['index'].includes(_toLower(route.name))){
-        $layoutStore.setNavigationMode('clear');
+        setNavigationMode('clear');
     } else {
-        $layoutStore.setNavigationMode('solid');
+        setNavigationMode('solid');
     }
 });
 
-const navigationHeaderSize = computed(() => {
-    let size = 'lg'
-
-    if (screenWidth.value >= screens['2xl']) {//3xl
-        size = 'lg';
-    } else if (screenWidth.value >= screens['xl'] && screenWidth.value < screens['2xl']) {//2xl
-        size = 'lg';
-    } else if (screenWidth.value >= screens['lg'] && screenWidth.value < screens['xl']) {//xl
-        size = 'lg';
-    } else if (screenWidth.value >= screens['md'] && screenWidth.value < screens['lg']) {//lg
-        size = 'md';
-    } else if (screenWidth.value >= screens['sm'] && screenWidth.value < screens['md']) {//md
-        size = 'md';
-    } else if (screenWidth.value < screens['sm']) {//sm
-        size = 'md';
-    }
-
-    return size;
-});
 const mainNavigation = computed(()=>{
     let options: object[] = [];
 

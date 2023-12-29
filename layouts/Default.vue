@@ -7,7 +7,7 @@
             <div class="tw-max-w-screen-2xl tw-w-full tw-flex tw-justify-start lg:tw-justify-around tw-h-10">
                 <div class="tw--my-px tw-flex tw-items-center">
                     <div v-if="['index'].includes(_toLower(route.name))" class="tw-w-max tw-block tw-h-full tw-w-full tw-flex tw-items-center">
-                        <Colorful :dark="$layoutStore.navigationMode === 'clear'" />
+                        <Colorful :dark="navigationMode === 'clear'" />
                     </div>
                     <NavDrop
                         class="lg:tw-hidden tw-h-full"
@@ -79,7 +79,7 @@ import {computed, nextTick, onMounted, ref, watch} from "vue";
 import {useScroll} from '@vueuse/core';
 
 const route = useRoute();
-const {$layoutStore, $themeStore} = useNuxtApp();
+const {$themeStore} = useNuxtApp();
 const {isAuthenticated, user, logout} = useAuth();
 const {screens, width: screenWidth, height: screenHeight } = useScreen();
 const navDrop = resolveComponent('navDrop');
@@ -93,31 +93,20 @@ const {
 const {
     navigationMode,
     navigationBackground,
-    navigationHeight
-} = storeToRefs($layoutStore);
+    topAllocationInPixels,
+    setNavigationHeight
+} = useLayout();
 
 const navigation = ref(null);
 
-const topAllocationInPixels = computed(()=>{
-    if(navigationMode.value === 'clear'){
-        return '0px';
-    }
-
-    if(['index'].includes(_toLower(route.name))){
-        return '0px';
-    }
-
-    return (navigationHeight.value + 'px');
-});
-
 onMounted(async () => {
     await nextTick(() => {
-        $layoutStore.setNavigationHeight(navigation.value.offsetHeight);
+        setNavigationHeight(navigation.value.offsetHeight);
     });
 });
 
 watch(screenWidth, value => {
-    $layoutStore.setNavigationHeight(navigation.value.offsetHeight);
+    setNavigationHeight(navigation.value.offsetHeight);
 });
 
 const layoutScroll = ref<HTMLElement | null>(null)

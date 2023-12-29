@@ -1140,9 +1140,8 @@
 <script setup lang="ts">
 import {ref, onMounted, reactive} from 'vue';
 import {storeToRefs} from 'pinia';
-const {$themeStore, $layoutStore, $formStore} = useNuxtApp();
-
-$layoutStore.setNavigationMode('solid');
+const {$themeStore, $formStore} = useNuxtApp();
+useLayout().setNavigationMode('solid');
 
 const {
     neutral: neutralColor

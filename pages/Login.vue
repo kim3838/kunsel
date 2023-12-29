@@ -76,10 +76,9 @@
 
 <script setup lang="ts">
 import {ref, onMounted, nextTick} from 'vue';
-const {$coreStore, $layoutStore} = useNuxtApp();
+const {$coreStore} = useNuxtApp();
 const {isAuthenticated, login, authPending} = useAuth();
-
-$layoutStore.setNavigationMode('solid');
+useLayout().setNavigationMode('solid');
 
 definePageMeta({
     layout: false,

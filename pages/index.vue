@@ -199,9 +199,8 @@
 
 <script setup lang="ts">
 import {computed, ref, reactive, onMounted, nextTick, watch, watchEffect} from "vue";
-const {$layoutStore} = useNuxtApp();
 const {screens, width: screenWidth, } = useScreen();
-$layoutStore.setNavigationMode('clear');
+useLayout().setNavigationMode('clear');
 
 definePageMeta({
     layout: false

@@ -186,10 +186,10 @@
 
 <script setup lang="ts">
 import {computed, ref, reactive, watch} from 'vue';
-const {$coreStore, $layoutStore} = useNuxtApp();
+const {$coreStore} = useNuxtApp();
+useLayout().setNavigationMode('solid');
 
 definePageMeta({middleware: 'auth'});
-$layoutStore.setNavigationMode('solid');
 
 const user = ref({
     id: null,

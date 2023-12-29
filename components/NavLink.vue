@@ -11,19 +11,17 @@
 <script setup>
 import {computed} from "vue";
 import {storeToRefs} from 'pinia';
-const {$themeStore, $layoutStore} = useNuxtApp();
 
+const {$themeStore} = useNuxtApp();
 const {
     hexAlpha,
     primary: primaryColor,
     accent: accentColor,
     neutral: neutralColor,
 } = storeToRefs($themeStore);
-
 const {
-    navigationMode
-} = storeToRefs($layoutStore);
-
+    navigationMode,
+} = useLayout();
 const navigationLinkColor = computed(()=>{
     if(navigationMode.value === 'clear'){
         return '#ffffff';

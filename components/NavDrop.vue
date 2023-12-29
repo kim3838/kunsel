@@ -51,8 +51,8 @@ import {computed, ref} from "vue";
 import {useFocusWithin} from '@vueuse/core';
 import {storeToRefs} from 'pinia';
 
-const {$layoutStore, $themeStore} = useNuxtApp();
 const nav = ref();
+const {$themeStore} = useNuxtApp();
 const {focused: navigationFocused} = useFocusWithin(nav);
 const {
     hexAlpha,
@@ -61,34 +61,32 @@ const {
     neutral: neutralColor,
     tint: tintColor
 } = storeToRefs($themeStore);
-
 const {
-    navigationMode
-} = storeToRefs($layoutStore);
-
+    navigationMode,
+} = useLayout();
 const navigationLinkColor = computed(()=>{
-    if(navigationMode.value === 'clear'){
+    if(navigationMode.value == 'clear'){
         return '#ffffff';
     }
 
     return 'auto';
 });
 const navigationTextShadow = computed(()=>{
-    if(navigationMode.value === 'clear'){
+    if(navigationMode.value == 'clear'){
         return '1px 1px 2px #000000';
     }
 
     return 'none';
 });
 const dropOptionsParentBackgroundColor = computed(()=>{
-    if(navigationMode.value === 'clear'){
+    if(navigationMode.value == 'clear'){
         return accentColor20.value;
     }
 
     return tintColor.value;
 });
 const dropOptionsParentBorderColor = computed(()=>{
-    if(navigationMode.value === 'clear'){
+    if(navigationMode.value == 'clear'){
         return accentColor20.value;
     }
 

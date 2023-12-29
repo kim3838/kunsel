@@ -51,9 +51,8 @@
 
 <script setup>
 import {ref, computed, onMounted, nextTick} from 'vue';
-const {$coreStore, $layoutStore} = useNuxtApp();
-
-$layoutStore.setNavigationMode('solid');
+const {$coreStore} = useNuxtApp();
+useLayout().setNavigationMode('solid');
 
 definePageMeta({
     layout: false,

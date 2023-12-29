@@ -91,11 +91,10 @@
 
 <script setup lang="ts">
 import {ref, reactive, watch, nextTick, onMounted} from 'vue';
-const {$layoutStore, $moment} = useNuxtApp();
+const {$moment} = useNuxtApp();
+useLayout().setNavigationMode('solid');
 
 definePageMeta({middleware: ['auth', 'verified']});
-
-$layoutStore.setNavigationMode('solid');
 
 let prototypes = reactive({
     'data': [],
