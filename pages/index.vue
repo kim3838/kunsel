@@ -24,6 +24,7 @@
                             <article class="tw-w-full tw-h-max">
                                 <CarouselModuleCarousel
                                     dir="rtl"
+                                    v-model="spotlight_1_index"
                                     v-bind="spotlightSettings"
                                     :breakpoints="spotlightBreakpoints"
                                     class="tw-w-full lg:tw-w-full">
@@ -60,6 +61,7 @@
                             <article class="tw-transition-all tw-duration-700 tw-opacity-50 hover:tw-opacity-100 tw-w-full tw-h-max">
                                 <CarouselModuleCarousel
                                     dir="rtl"
+                                    v-model="spotlight_1_index"
                                     v-bind="spotlightSettings"
                                     :breakpoints="spotlightBreakpoints"
                                     class="tw-w-full lg:tw-w-full">
@@ -210,7 +212,7 @@ const spotlightVideo_1 = ref<HTMLElement | null>(null);
 
 onMounted(async () => {
     await nextTick(() => {
-
+        reIndexSpotlightCarousel();
         [spotlightVideo_1].forEach(video => {
             let playPromise = video.value.play();
 
@@ -236,13 +238,32 @@ onMounted(async () => {
     });
 });
 
+const spotlight_1_index = ref(0);
+watch(screenWidth, value => {
+    reIndexSpotlightCarousel();
+});
+function reIndexSpotlightCarousel(){
+    if (screenWidth.value >= screens['2xl']) {//>=1536
+        spotlight_1_index.value = 0;
+    } else if (screenWidth.value >= screens['xl'] && screenWidth.value < screens['2xl']) {//>=1280 < 1536
+        spotlight_1_index.value = 0;
+    } else if (screenWidth.value >= screens['lg'] && screenWidth.value < screens['xl']) {//>=1024 < 1280
+        spotlight_1_index.value = 0.5;
+    } else if (screenWidth.value >= screens['md'] && screenWidth.value < screens['lg']) {//>=768 < 1024
+        spotlight_1_index.value = 1.5;
+    } else if (screenWidth.value >= screens['sm'] && screenWidth.value < screens['md']) {//>=640 < 768
+        spotlight_1_index.value = 2;
+    } else if (screenWidth.value < screens['sm']) {//<640
+        spotlight_1_index.value = 2;
+    }
+};
 const spotlightSettings = ref({
-    itemsToShow: 1.5,
+    itemsToShow: 2,
     snapAlign: 'start',
 });
 const spotlightBreakpoints = ref({
     [screens['sm']]: {
-        itemsToShow: 1.5,
+        itemsToShow: 2,
         snapAlign: 'start',
     },
 
