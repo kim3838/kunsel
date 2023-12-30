@@ -1,5 +1,4 @@
 import {storeToRefs} from "pinia";
-import {computed, watch} from "vue";
 
 export const useLayout = () => {
     const route = useRoute();
