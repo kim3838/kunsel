@@ -25,7 +25,7 @@
                                 v-if="navigation.type == 'link'"
                                 :size="navigationHeaderSize"
                                 :to="navigation.to"
-                                :active="isRouteActive(navigation.route)">
+                                :active="$isRouteActive(navigation.route)">
                                 {{navigation.title}}
                             </NavLink>
 
@@ -216,7 +216,7 @@ import {computed, nextTick, onMounted, ref, watch} from "vue";
 import {useScroll} from '@vueuse/core';
 
 const route = useRoute();
-const {$themeStore} = useNuxtApp();
+const {$themeStore, $isRouteActive} = useNuxtApp();
 const {isAuthenticated, user, logout} = useAuth();
 const {
     enableScrollSnap,
@@ -386,10 +386,6 @@ const menuOptions = computed(() => {
 
     return options;
 });
-
-function isRouteActive(routeSlug: string) {
-    return [route.path, _toLower(route.name)].indexOf(_toLower(routeSlug)) >= 0;
-}
 
 </script>
 <style scoped>
