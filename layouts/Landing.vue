@@ -56,7 +56,7 @@
                         class="tw-h-full"
                         v-if="isAuthenticated"
                         :size="navigationHeaderSize"
-                        :drop-align="'right'"
+                        :drop-align="rightNavigationDropAlign"
                         :title="user?.name"
                         :drop-options="accountOptions"
                     />
@@ -229,6 +229,7 @@ const {
     spotlightContentHeight,
     setNavigationHeight,
     setNavigationMode,
+    rightNavigationDropAlign
 } = useLayout();
 const {screens, width: screenWidth, height: screenHeight } = useScreen();
 const navDrop = resolveComponent('navDrop');

@@ -55,7 +55,7 @@
                         class="tw-h-full"
                         v-if="isAuthenticated"
                         :size="navigationHeaderSize"
-                        :drop-align="'right'"
+                        :drop-align="rightNavigationDropAlign"
                         :title="user?.name"
                         :drop-options="accountOptions"
                     />
@@ -94,7 +94,8 @@ const {
     navigationMode,
     navigationBackground,
     topAllocationInPixels,
-    setNavigationHeight
+    setNavigationHeight,
+    rightNavigationDropAlign
 } = useLayout();
 
 const navigation = ref(null);

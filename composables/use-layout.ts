@@ -54,6 +54,17 @@ export const useLayout = () => {
 
         return size;
     });
+    const rightNavigationDropAlign = computed(()=>{
+        let dropAlign = 'right';
+
+        if (screenWidth.value >= screens['lg']) {
+            dropAlign = 'right';
+        } else {
+            dropAlign = 'left';
+        }
+
+        return dropAlign;
+    })
 
     function setNavigationHeight(height: any){
         navigationHeight.value = height;
@@ -75,5 +86,6 @@ export const useLayout = () => {
         spotlightContentHeight,
         setNavigationHeight,
         setNavigationMode,
+        rightNavigationDropAlign
     }
 }
