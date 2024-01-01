@@ -377,12 +377,12 @@ carouselFeaturedItems.value = carouselFeaturedItems.value.concat(spotlight_1.val
 carouselFeaturedItems.value = carouselFeaturedItems.value.concat(featured.value);
 
 const carouselFeaturedItemsSettings = ref({
-    itemsToShow: 1.5,
+    itemsToShow: 2,
     snapAlign: 'start',
 });
 const carouselFeaturedItemsBreakpoints = ref({
     [screens['sm']]: {
-        itemsToShow: 1.5,
+        itemsToShow: 2,
         snapAlign: 'start',
     },
 
@@ -392,7 +392,7 @@ const carouselFeaturedItemsBreakpoints = ref({
     },
 
     [screens['lg']]: {
-        itemsToShow: 3.5,
+        itemsToShow: 4.5,
         snapAlign: 'start',
     },
 });
@@ -444,12 +444,12 @@ const carouselNewArrivals = ref([
     }
 ]);
 const carouselNewArrivalsSettings = ref({
-    itemsToShow: 1.5,
+    itemsToShow: 2,
     snapAlign: 'start',
 });
 const carouselNewArrivalsBreakpoints = ref({
     [screens['sm']]: {
-        itemsToShow: 1.5,
+        itemsToShow: 2,
         snapAlign: 'start',
     },
 
