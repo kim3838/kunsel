@@ -42,7 +42,7 @@
                 </div>
             </form>
 
-            <AccentFrame class="tw-mb-32">
+            <AccentFrame>
                 <template #content>
                     <div>
                         <PageInformation
