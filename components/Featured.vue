@@ -150,7 +150,7 @@ const cardTitleBottomSpacing = computed(()=>{
     padding-bottom: 5px;
     font-weight: 500;
     color: v-bind(textColor);
-    text-shadow: 1px 1px 1px v-bind(liningColor50);
+    text-shadow: 2px 2px 1px v-bind(threadColor50);
 }
 
 .card-title:after{
