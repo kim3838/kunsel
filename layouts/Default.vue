@@ -13,12 +13,12 @@
                         class="lg:tw-hidden tw-h-full"
                         :size="navigationHeaderSize"
                         :title="'Menu'"
-                        :drop-options="menuOptions" />
+                        :drop-options="navigationLinks" />
                 </div>
                 <div class="tw-flex">
                     <!-- Navigation Links -->
                     <div class="tw--my-px tw-hidden lg:tw-flex">
-                        <span class="tw-flex tw-items-center"  v-for="navigation in mainNavigation" :key="navigation.title">
+                        <span class="tw-flex tw-items-center"  v-for="navigation in navigationLinks" :key="navigation.title">
                             <NavLink
                                 class="tw-h-full"
                                 v-if="navigation.type == 'link'"
@@ -57,7 +57,7 @@
                         :size="navigationHeaderSize"
                         :drop-align="rightNavigationDropAlign"
                         :title="user?.name"
-                        :drop-options="accountOptions"
+                        :drop-options="navigationAccountLinks"
                     />
                 </div>
             </div>
@@ -91,6 +91,8 @@ const {
     thread: threadColor
 } = storeToRefs($themeStore);
 const {
+    navigationLinks,
+    navigationAccountLinks,
     navigationMode,
     navigationBackground,
     topAllocationInPixels,
@@ -115,133 +117,8 @@ const {x: layoutXScroll,y: layoutYScroll,arrivedState: layoutScrollArrivedState 
 const {top: layoutScrollTopReached} = toRefs(layoutScrollArrivedState);
 
 const navigationHeaderSize = computed(() => {
-    let size = 'sm'
-
-    return size;
+    return 'sm';
 });
-const mainNavigation = computed(()=>{
-    let options: object[] = [];
-
-    options = options.concat([
-        {
-            type: 'link',
-            title: 'Home',
-            to: '/',
-            route: 'index'
-        },
-        {
-            type: 'link',
-            title: 'Lab',
-            to: '/lab',
-            route: 'lab'
-        },
-        {
-            type: 'link',
-            title: 'Prototype',
-            to: '/prototype',
-            route: 'prototype'
-        },
-        {
-            type: 'link',
-            title: 'Prototypes',
-            to: '/prototypes',
-            route: 'prototypes'
-        },
-        {
-            type: 'drop',
-            title: 'Help',
-            icon: 'ic:baseline-arrow-right',
-            options: [
-                {
-                    type: 'anchor-link',
-                    title: 'FAQ',
-                    icon: 'ic:baseline-arrow-right',
-                    to: '/#faq'
-                },
-                {
-                    type: 'link',
-                    title: 'Support',
-                    icon: 'ic:baseline-arrow-right',
-                },
-                {
-                    type: 'link',
-                    title: 'Live Chat',
-                    icon: 'ic:baseline-arrow-right',
-                },
-            ]
-        }
-    ]);
-
-    if(!isAuthenticated.value){
-        options = options.concat([{
-            type: 'drop',
-            title: 'Account',
-            options: accountOptions.value
-        },]);
-    }
-
-    return options;
-});
-const accountOptions = computed(() => {
-    let options: object[] = [];
-
-    if(isAuthenticated.value){
-        options = options.concat([
-            {
-                type: 'link',
-                title: 'Account Settings',
-                icon: 'eos-icons:rotating-gear',
-                to: '/profile',
-            },
-            {
-                type: 'action',
-                title: 'Logout',
-                callback: () => {
-                    logout();
-                },
-            },
-            {
-                type: 'action',
-                title: 'Test Post',
-                icon: 'material-symbols:request-quote-sharp',
-                callback: async () => {
-                    await csrFetch("/api/test-post", {
-                        method: 'POST',
-                    }, {
-                        onResponse: (request, response, options) => {
-                            console.log({'CSR POST RESPONSE' : response._data.code});
-                        }
-                    });
-                },
-            }
-        ]);
-    } else {
-        options.unshift({
-            type: 'link',
-            title: 'Login',
-            to: '/login',
-        });
-    }
-
-    options.push({
-        type: 'link',
-        title: 'Shop',
-        icon: 'ic:sharp-shop',
-        to: '',
-    });
-
-    return options;
-});
-const menuOptions = computed(() => {
-    let options: object[] = [];
-
-    options = options.concat(mainNavigation.value);
-
-    options = options.concat([]);
-
-    return options;
-});
-
 </script>
 <style scoped>
 .primary-navigation-parent {
