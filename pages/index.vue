@@ -44,6 +44,32 @@
                                     </template>
                                 </CarouselModuleCarousel>
                             </article>
+                            <div class="tw-py-4 tw-space-x-2 tw-text-right">
+                                <Button :variant="'outline'" :size="'xl'" :label="'GET BUNDLE'" />
+                            </div>
+                            <div class="tw-text-right" :style="{'color': '#ffffff', 'text-shadow': '1px 1px 2px #000000'}">
+                                <div class="tw-text-3xl">COLORFUL Launches the COLORFIRE Meow Series Graphics Cards and Motherboards</div>
+
+                                <div class="tw-text-xl" :style="{'direction': 'rtl'}">
+                                    <UnorderedList
+                                        class="tw-space-x-2"
+                                        :size="'lg'"
+                                        :icon="'bi:gpu-card'"
+                                        :label="'COLORFIRE GeForce RTX 4060 MEOW-ORG 8GB-V'"/>
+                                    <UnorderedList
+                                        class="tw-space-x-2"
+                                        :size="'lg'"
+                                        :icon="'bi:motherboard'"
+                                        :label="'COLORFIRE B760M-MEOW WIFI D5 ORANGE'"/>
+                                    <UnorderedList
+                                        class="tw-space-x-2"
+                                        :size="'lg'"
+                                        :icon="'lucide:pc-case'"
+                                        :label="'Segotep Memphis-S Meow PC Case (M-ATX / ITX supported)'"/>
+                                </div>
+
+                                <div class="tw-font-mono tw-font-semibold tw-text-4xl">₱28,500.00</div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -57,15 +83,14 @@
                     <div class="navigation-height tw-w-full tw-relative"></div>
                     <div class="tw-absolute tw-w-full tw-h-full spotlight-content-height tw-z-30 tw-flex tw-justify-center">
                         <div class="tw-pb-10 tw-max-w-screen-2xl tw-w-full tw-flex tw-flex-col-reverse">
-
-                            <article class="tw-transition-all tw-duration-700 tw-opacity-50 hover:tw-opacity-100 tw-w-full tw-h-max">
+                            <article class="tw-w-full tw-h-max">
                                 <CarouselModuleCarousel
                                     dir="rtl"
                                     v-model="spotlight_1_index"
                                     v-bind="spotlightSettings"
                                     :breakpoints="spotlightBreakpoints"
                                     class="tw-w-full lg:tw-w-full">
-                                    <CarouselModuleSlide class="tw-w-[270px]" v-for="spotLightItem in spotlight_1" :key="spotLightItem">
+                                    <CarouselModuleSlide class="tw-w-[270px] tw-transition-all tw-duration-700 tw-opacity-50 hover:tw-opacity-100" v-for="spotLightItem in spotlight_1" :key="spotLightItem">
                                         <Featured
                                             focused
                                             class="tw-mx-2"
@@ -81,6 +106,32 @@
                                     </template>
                                 </CarouselModuleCarousel>
                             </article>
+                            <div class="tw-py-4 tw-space-x-2 tw-text-right">
+                                <Button :variant="'outline'" :size="'xl'" :label="'GET BUNDLE'" />
+                            </div>
+                            <div class="tw-text-right" :style="{'color': '#ffffff', 'text-shadow': '1px 1px 2px #000000'}">
+                                <div class="tw-text-3xl">COLORFUL Launches the COLORFIRE Meow Series Graphics Cards and Motherboards</div>
+
+                                <div class="tw-text-xl" :style="{'direction': 'rtl'}">
+                                    <UnorderedList
+                                        class="tw-space-x-2"
+                                        :size="'lg'"
+                                        :icon="'bi:gpu-card'"
+                                        :label="'COLORFIRE GeForce RTX 4060 MEOW-ORG 8GB-V'"/>
+                                    <UnorderedList
+                                        class="tw-space-x-2"
+                                        :size="'lg'"
+                                        :icon="'bi:motherboard'"
+                                        :label="'COLORFIRE B760M-MEOW WIFI D5 ORANGE'"/>
+                                    <UnorderedList
+                                        class="tw-space-x-2"
+                                        :size="'lg'"
+                                        :icon="'lucide:pc-case'"
+                                        :label="'Segotep Memphis-S Meow PC Case (M-ATX / ITX supported)'"/>
+                                </div>
+
+                                <div class="tw-font-mono tw-font-semibold tw-text-4xl">₱28,500.00</div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -297,14 +348,6 @@ const spotlight_1 = ref([
     },
     {
         'image':{
-            'path': '/images/product/f85a85cd-fa65-48d3-9d36-755b4a6acf87.webp'
-        },
-        'title': 'Graphics Card',
-        'subTitle': 'COLORFIRE GeForce RTX 4060 Ti MEOW-ORG 8GB-V',
-        'link': '/prototype'
-    },
-    {
-        'image':{
             'path': '/images/product/7d5178c3-e5dc-4b8f-b8d1-cbe0bbc14e84.webp'
         },
         'title': 'Graphics Card',
@@ -313,6 +356,14 @@ const spotlight_1 = ref([
     },
 ]);
 const featured = ref([
+    {
+        'image':{
+            'path': '/images/product/f85a85cd-fa65-48d3-9d36-755b4a6acf87.webp'
+        },
+        'title': 'Graphics Card',
+        'subTitle': 'COLORFIRE GeForce RTX 4060 Ti MEOW-ORG 8GB-V',
+        'link': '/prototype'
+    },
     {
         'image':{
             'path': '/images/product/176a61f6-884b-4def-9c35-5d30cdca686f.webp'
