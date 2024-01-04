@@ -44,13 +44,15 @@
                                     </template>
                                 </CarouselModuleCarousel>
                             </article>
-                            <div class="tw-py-4 tw-space-x-2 tw-text-right">
+                            <div class="tw-p-4 tw-space-x-2 tw-text-right scaffold">
                                 <Button :variant="'outline'" :size="'xl'" :label="'GET BUNDLE'" />
                             </div>
-                            <div class="tw-text-right" :style="{'color': '#ffffff', 'text-shadow': '1px 1px 2px #000000'}">
-                                <div class="tw-text-3xl">COLORFUL Launches the COLORFIRE Meow Series Graphics Cards and Motherboards</div>
+                            <div class="tw-px-4 tw-text-right scaffold">
+                                <div class="tw-flex tw-justify-end tw-font-[Barlow_Semi_Condensed]">
+                                    <HeroHeader :theme="'strawberry'" :label="'COLORFIRE Meow Series'"/>
+                                </div>
 
-                                <div class="tw-text-xl" :style="{'direction': 'rtl'}">
+                                <div class="tw-text-xl" :style="{'direction': 'rtl', 'color': '#ffffff', 'text-shadow': '1px 1px 2px #000000'}">
                                     <UnorderedList
                                         class="tw-space-x-2"
                                         :size="'lg'"
@@ -66,9 +68,9 @@
                                         :size="'lg'"
                                         :icon="'lucide:pc-case'"
                                         :label="'Segotep Memphis-S Meow PC Case (M-ATX / ITX supported)'"/>
-                                </div>
 
-                                <div class="tw-font-mono tw-font-semibold tw-text-4xl">₱28,500.00</div>
+                                    <div class="tw-font-mono tw-font-semibold tw-text-4xl">₱28,500.00</div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -106,13 +108,15 @@
                                     </template>
                                 </CarouselModuleCarousel>
                             </article>
-                            <div class="tw-py-4 tw-space-x-2 tw-text-right">
+                            <div class="tw-p-4 tw-space-x-2 tw-text-right">
                                 <Button :variant="'outline'" :size="'xl'" :label="'GET BUNDLE'" />
                             </div>
-                            <div class="tw-text-right" :style="{'color': '#ffffff', 'text-shadow': '1px 1px 2px #000000'}">
-                                <div class="tw-text-3xl">COLORFUL Launches the COLORFIRE Meow Series Graphics Cards and Motherboards</div>
+                            <div class="tw-px-4 tw-text-right">
+                                <div class="tw-flex tw-justify-end">
+                                    <HeroHeader :theme="'strawberry'" :label="'COLORFIRE Meow Series'"/>
+                                </div>
 
-                                <div class="tw-text-xl" :style="{'direction': 'rtl'}">
+                                <div class="tw-text-xl" :style="{'direction': 'rtl', 'color': '#ffffff', 'text-shadow': '1px 1px 2px #000000'}">
                                     <UnorderedList
                                         class="tw-space-x-2"
                                         :size="'lg'"
@@ -128,9 +132,8 @@
                                         :size="'lg'"
                                         :icon="'lucide:pc-case'"
                                         :label="'Segotep Memphis-S Meow PC Case (M-ATX / ITX supported)'"/>
+                                    <div class="tw-font-mono tw-font-semibold tw-text-4xl">₱28,500.00</div>
                                 </div>
-
-                                <div class="tw-font-mono tw-font-semibold tw-text-4xl">₱28,500.00</div>
                             </div>
                         </div>
                     </div>
