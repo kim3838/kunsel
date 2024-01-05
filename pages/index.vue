@@ -44,12 +44,12 @@
                                     </template>
                                 </CarouselModuleCarousel>
                             </article>
-                            <div class="tw-p-4 tw-space-x-2 tw-text-right scaffold">
+                            <div class="tw-p-4 tw-space-x-2 tw-text-right">
                                 <Button :variant="'outline'" :size="'xl'" :label="'GET BUNDLE'" />
                             </div>
-                            <div class="tw-px-4 tw-text-right scaffold">
+                            <div class="tw-px-4 tw-text-right">
                                 <div class="tw-flex tw-justify-end tw-font-[Barlow_Semi_Condensed]">
-                                    <HeroHeader :theme="'strawberry'" :label="'COLORFIRE Meow Series'"/>
+                                    <HeroPlate :size="'lg'" :bookmark="'NEW ARRIVAL'" :theme="'tulip'" :label="'COLORFIRE Meow Series'"/>
                                 </div>
 
                                 <div class="tw-text-xl" :style="{'direction': 'rtl', 'color': '#ffffff', 'text-shadow': '1px 1px 2px #000000'}">
@@ -113,7 +113,7 @@
                             </div>
                             <div class="tw-px-4 tw-text-right">
                                 <div class="tw-flex tw-justify-end">
-                                    <HeroHeader :theme="'strawberry'" :label="'COLORFIRE Meow Series'"/>
+                                    <HeroPlate :size="'lg'" :bookmark="'NEW ARRIVAL'" :theme="'gold'" :label="'COLORFIRE Meow Series'"/>
                                 </div>
 
                                 <div class="tw-text-xl" :style="{'direction': 'rtl', 'color': '#ffffff', 'text-shadow': '1px 1px 2px #000000'}">

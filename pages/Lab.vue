@@ -1,6 +1,6 @@
 <template>
     <div class="tw-mx-auto tw-max-w-screen-2xl">
-        <div>
+        <div v-if="false">
             <AccentFrame>
                 <template #content>
                     <SampleEmitter
@@ -14,13 +14,34 @@
             </AccentFrame>
         </div>
 
-        <div v-if="true">
+        <div class="tw-grid tw-gap-1 tw-grid-cols-3">
+            <div class="tw-space-y-2">
+                <HeroPlate :size="'sm'" :label="'Default Hero Plate'"/>
+                <HeroPlate :size="'sm'" :bookmark="'HOT DEALS'" :label="'Default Hero Plate'"/>
+                <HeroPlate :size="'md'" :bookmark="'SALE UP TO 90%'" :label="'Default Hero Plate'"/>
+                <HeroPlate :size="'lg'" :bookmark="'NEW ARRIVAL'" :label="'Default Hero Plate'"/>
+            </div>
+            <div class="tw-space-y-2">
+                <HeroPlate :size="'sm'" :theme="'strawberry'" :label="'Strawberry Hero Plate'"/>
+                <HeroPlate :size="'sm'" :bookmark="'HOT DEALS'" :theme="'strawberry'" :label="'Strawberry Hero Plate'"/>
+                <HeroPlate :size="'md'" :bookmark="'SALE UP TO 90%'" :theme="'strawberry'" :label="'Strawberry Hero Plate'"/>
+                <HeroPlate :size="'lg'" :bookmark="'NEW ARRIVAL'" :theme="'strawberry'" :label="'Strawberry Hero Plate'"/>
+            </div>
+            <div class="tw-space-y-2">
+                <HeroPlate :size="'sm'" :theme="'gold'" :label="'Gold Hero Plate'"/>
+                <HeroPlate :size="'sm'" :bookmark="'HOT DEALS'" :theme="'gold'" :label="'Gold Hero Plate'"/>
+                <HeroPlate :size="'md'" :bookmark="'SALE UP TO 90%'" :theme="'gold'" :label="'Gold Hero Plate'"/>
+                <HeroPlate :size="'lg'" :bookmark="'NEW ARRIVAL'" :theme="'gold'" :label="'Gold Hero Plate'"/>
+            </div>
+        </div>
+
+        <div v-if="false">
             <div>
                 <div class="tw-mx-auto tw-max-w-screen-2xl tw-flex tw-flex-col">
                     <Featured
                         focused
                         class="tw-inline-block tw-mx-2"
-                        :image="{path: 'images/product/ebac5037-c3d2-4275-b96b-24f855695841.webp'}"
+                        :image="{path: '/images/product/ebac5037-c3d2-4275-b96b-24f855695841.webp'}"
                         :title="'Motherboard'"
                         :sub-title="'iGame Z790D5 ULTRA V20'"
                         :link="'/prototype'"
@@ -31,73 +52,7 @@
                     <Card
                         focused
                         class="tw-inline-block tw-mx-2"
-                        :image="{path: 'images/product/ebac5037-c3d2-4275-b96b-24f855695841.webp'}"
-                        :title="'Motherboard'"
-                        :sub-title="'iGame Z790D5 ULTRA V20'"
-                        :link="'/prototype'"
-                        :button-label="'Details'"
-                    />
-                </div>
-                <div class="tw-mx-auto tw-max-w-screen-2xl tw-flex tw-flex-col">
-                    <Featured
-                        focused
-                        class="tw-inline-block tw-mx-2"
-                        :image="{path: 'images/product/ebac5037-c3d2-4275-b96b-24f855695841.webp'}"
-                        :title="'Motherboard'"
-                        :sub-title="'iGame Z790D5 ULTRA V20'"
-                        :link="'/prototype'"
-                        :button-label="'Details'"
-                    />
-                </div>
-                <div class="tw-mx-auto tw-max-w-screen-2xl tw-flex tw-flex-col">
-                    <Card
-                        focused
-                        class="tw-inline-block tw-mx-2"
-                        :image="{path: 'images/product/ebac5037-c3d2-4275-b96b-24f855695841.webp'}"
-                        :title="'Motherboard'"
-                        :sub-title="'iGame Z790D5 ULTRA V20'"
-                        :link="'/prototype'"
-                        :button-label="'Details'"
-                    />
-                </div>
-                <div class="tw-mx-auto tw-max-w-screen-2xl tw-flex tw-flex-col">
-                    <Featured
-                        focused
-                        class="tw-inline-block tw-mx-2"
-                        :image="{path: 'images/product/ebac5037-c3d2-4275-b96b-24f855695841.webp'}"
-                        :title="'Motherboard'"
-                        :sub-title="'iGame Z790D5 ULTRA V20'"
-                        :link="'/prototype'"
-                        :button-label="'Details'"
-                    />
-                </div>
-                <div class="tw-mx-auto tw-max-w-screen-2xl tw-flex tw-flex-col">
-                    <Card
-                        focused
-                        class="tw-inline-block tw-mx-2"
-                        :image="{path: 'images/product/ebac5037-c3d2-4275-b96b-24f855695841.webp'}"
-                        :title="'Motherboard'"
-                        :sub-title="'iGame Z790D5 ULTRA V20'"
-                        :link="'/prototype'"
-                        :button-label="'Details'"
-                    />
-                </div>
-                <div class="tw-mx-auto tw-max-w-screen-2xl tw-flex tw-flex-col">
-                    <Featured
-                        focused
-                        class="tw-inline-block tw-mx-2"
-                        :image="{path: 'images/product/ebac5037-c3d2-4275-b96b-24f855695841.webp'}"
-                        :title="'Motherboard'"
-                        :sub-title="'iGame Z790D5 ULTRA V20'"
-                        :link="'/prototype'"
-                        :button-label="'Details'"
-                    />
-                </div>
-                <div class="tw-mx-auto tw-max-w-screen-2xl tw-flex tw-flex-col">
-                    <Card
-                        focused
-                        class="tw-inline-block tw-mx-2"
-                        :image="{path: 'images/product/ebac5037-c3d2-4275-b96b-24f855695841.webp'}"
+                        :image="{path: '/images/product/ebac5037-c3d2-4275-b96b-24f855695841.webp'}"
                         :title="'Motherboard'"
                         :sub-title="'iGame Z790D5 ULTRA V20'"
                         :link="'/prototype'"
@@ -111,13 +66,9 @@
 
 <script setup lang="ts">
 import {computed, ref, reactive, nextTick, onMounted} from "vue";
-const {$layoutStore} = useNuxtApp();
+useLayout().setNavigationMode('solid');
 
 definePageMeta({middleware: 'guest'});
-$layoutStore.setNavigationMode('solid');
-
-const layout = ref('default')
-
 
 const dynamicFoo = ref('foo');
 const dynamicBarCaller = ref('bar');
