@@ -120,7 +120,7 @@ const textAccent = computed(()=>{
 });
 </script>
 
-<style lang="scss">
+<style scoped lang="scss">
 
 .bookmark{
     padding-right: 0.3rem;
