@@ -139,114 +139,131 @@
                     </div>
                 </div>
 
-                <div class="navigation-height tw-w-full tw-snap-start tw-snap-always"></div>
-                <div class="tw-mx-auto tw-max-w-screen-2xl tw-flex tw-flex-col">
-                    <article class="tw-mt-4 tw-relative">
-                        <CarouselModuleCarousel
-                            v-model="carouselFeaturedItem"
-                            v-bind="carouselFeaturedItemsSettings"
-                            :breakpoints="carouselFeaturedItemsBreakpoints"
-                            :mouse-drag="true"
-                            class="tw-w-full lg:tw-w-full">
-                            <CarouselModuleSlide class="tw-w-[170px]">
-                                <RegularFrame>
-                                    <template #body>
-                                        <div class="tw-px-2 tw-text-center tw-font-['Google_Sans_Text'] tw-text-xl tw-font-semibold">
-                                            Featured Products
-                                        </div>
-                                    </template>
-                                </RegularFrame>
-                            </CarouselModuleSlide>
-                            <CarouselModuleSlide class="tw-w-[270px]" v-for="featuredItem in carouselFeaturedItems" :key="featuredItem">
-                                <Featured
-                                    focused
-                                    class="tw-mx-2"
-                                    :image="featuredItem.image"
-                                    :title="featuredItem.title"
-                                    :sub-title="featuredItem.subTitle"
-                                    :link="featuredItem.link"
-                                    :button-label="'Details'"
-                                />
-                            </CarouselModuleSlide>
-                            <template #addons>
-                                <CarouselModuleNavigation />
-                            </template>
-                        </CarouselModuleCarousel>
-                    </article>
+                <div>
+                    <div class="navigation-height tw-w-full tw-snap-start tw-snap-always"></div>
+                    <div class="tw-mx-auto tw-max-w-screen-2xl tw-flex tw-flex-col">
+                        <article class="tw-mt-4 tw-relative">
+                            <CarouselModuleCarousel
+                                v-model="carouselFeaturedItem"
+                                v-bind="carouselFeaturedItemsSettings"
+                                :breakpoints="carouselFeaturedItemsBreakpoints"
+                                :mouse-drag="true"
+                                class="tw-w-full lg:tw-w-full">
+                                <CarouselModuleSlide class="tw-w-[170px]">
+                                    <RegularFrame>
+                                        <template #body>
+                                            <div class="tw-px-2 tw-text-center tw-font-['Google_Sans_Text'] tw-text-xl tw-font-semibold">
+                                                Featured Products
+                                            </div>
+                                        </template>
+                                    </RegularFrame>
+                                </CarouselModuleSlide>
+                                <CarouselModuleSlide class="tw-w-[270px]" v-for="featuredItem in carouselFeaturedItems" :key="featuredItem">
+                                    <Featured
+                                        focused
+                                        class="tw-mx-2"
+                                        :image="featuredItem.image"
+                                        :title="featuredItem.title"
+                                        :sub-title="featuredItem.subTitle"
+                                        :link="featuredItem.link"
+                                        :button-label="'Details'"
+                                    />
+                                </CarouselModuleSlide>
+                                <template #addons>
+                                    <CarouselModuleNavigation />
+                                </template>
+                            </CarouselModuleCarousel>
+                        </article>
+                    </div>
                 </div>
 
-                <div class="navigation-height tw-w-full tw-snap-start tw-snap-always"></div>
-                <div class="tw-mx-auto tw-max-w-screen-2xl tw-flex tw-flex-col">
-                    <article class="tw-mt-4 w-relative">
-                        <CarouselModuleCarousel
-                            v-model="carouselNewArrival"
-                            v-bind="carouselNewArrivalsSettings"
-                            :breakpoints="carouselNewArrivalsBreakpoints"
-                            class="tw-w-full lg:tw-w-full">
-                            <CarouselModuleSlide class="tw-w-[170px]">
-                                <RegularFrame>
-                                    <template #body>
-                                        <div class="tw-px-2 tw-text-center tw-font-['Google_Sans_Text'] tw-text-xl tw-font-semibold tw-px-8">
-                                            New Arrivals
-                                        </div>
-                                    </template>
-                                </RegularFrame>
-                            </CarouselModuleSlide>
+                <div class="tw-mb-16">
+                    <div class="navigation-height tw-w-full tw-snap-start tw-snap-always"></div>
+                    <div class="tw-mx-auto tw-max-w-screen-2xl tw-flex tw-flex-col">
+                        <article class="tw-mt-4 w-relative">
+                            <CarouselModuleCarousel
+                                v-model="carouselNewArrival"
+                                v-bind="carouselNewArrivalsSettings"
+                                :breakpoints="carouselNewArrivalsBreakpoints"
+                                class="tw-w-full lg:tw-w-full">
+                                <CarouselModuleSlide class="tw-w-[170px]">
+                                    <RegularFrame>
+                                        <template #body>
+                                            <div class="tw-px-2 tw-text-center tw-font-['Google_Sans_Text'] tw-text-xl tw-font-semibold tw-px-8">
+                                                New Arrivals
+                                            </div>
+                                        </template>
+                                    </RegularFrame>
+                                </CarouselModuleSlide>
 
-                            <CarouselModuleSlide :class="[`tw-w-[370px]`]" v-for="newArrival in carouselNewArrivals" :key="newArrival">
-                                <Card
-                                    focused
-                                    class="tw-mx-2"
-                                    :image="newArrival.image"
-                                    :title="newArrival.title"
-                                    :sub-title="newArrival.subTitle"
-                                    :link="newArrival.link"
-                                    :button-label="'Details'"
-                                />
-                            </CarouselModuleSlide>
+                                <CarouselModuleSlide :class="[`tw-w-[370px]`]" v-for="newArrival in carouselNewArrivals" :key="newArrival">
+                                    <Card
+                                        focused
+                                        class="tw-mx-2"
+                                        :image="newArrival.image"
+                                        :title="newArrival.title"
+                                        :sub-title="newArrival.subTitle"
+                                        :link="newArrival.link"
+                                        :button-label="'Details'"
+                                    />
+                                </CarouselModuleSlide>
 
-                            <template #addons>
-                                <CarouselModuleNavigation />
-                            </template>
-                        </CarouselModuleCarousel>
-                    </article>
+                                <template #addons>
+                                    <CarouselModuleNavigation />
+                                </template>
+                            </CarouselModuleCarousel>
+                        </article>
+                    </div>
                 </div>
 
-                <div class="navigation-height tw-w-full tw-snap-start tw-snap-always"></div>
-                <div class="tw-mx-auto tw-max-w-screen-2xl tw-flex tw-flex-col" >
-                    <article class="tw-mt-4 ">
-                        <div class="tw-text-center tw-text-3xl tw-font-semibold tw-font-['Google_Sans_Text']">Latest News</div>
+                <div>
+                    <div class="navigation-height tw-w-full tw-snap-start tw-snap-always"></div>
+                    <div class="tw-mx-auto tw-max-w-screen-2xl tw-flex tw-flex-col" >
+                        <article class="tw-mt-4 ">
+                            <div class="tw-relative tw-flex tw-items-center tw-flex-nowrap tw-py-2 tw-space-x-2 lg:tw-space-x-8 tw-snap-x tw-snap-mandatory tw-scroll-px-40 tw-w-full tw-overflow-x-scroll">
 
-                        <div class="tw-flex tw-items-center tw-flex-nowrap tw-py-2 tw-space-x-2 lg:tw-space-x-8 tw-snap-x tw-snap-mandatory tw-scroll-px-40 tw-w-full tw-overflow-x-scroll">
-                            <div v-for="blog in news" class="tw-snap-center tw-snap-always tw-inline-block tw-w-full sm:tw-w-1/2 lg:tw-w-1/3 xl:tw-w-1/4 tw-flex-none tw-flex tw-justify-center">
-                                <div class="tw-w-[370px] tint-background neutral-border">
-                                    <img :src="blog.image.path" class="tw-h-[247px] tw-w-full">
-                                    <div class="tw-px-8 tw-pt-4 tw-text-lg tw-h-[8rem] tw-line-clamp-4 tw-font-bold tw-tracking-normal tw-leading-tigh">{{blog.title}}</div>
-                                    <div class="tw-px-8 tw-pt-4 tw-text-base tw-h-[7rem] tw-line-clamp-4">{{blog.subTitle}}</div>
+                                <div class="tw-snap-center tw-snap-always tw-inline-block tw-h-[375px] tw-w-full sm:tw-w-1/2 lg:tw-w-1/3 xl:tw-w-1/4 tw-flex-none tw-flex tw-justify-center">
+                                    <div class="tw-w-[370px] tw-h-[247px] tw-relative latest-news-container">
+                                        <div class="latest-news"></div>
+                                        <div class="latest-news-frame tw-z-30 neutral-border"></div>
+                                        <div class="latest-news-inner tint-background tw-z-20 tw-flex tw-justify-center tw-items-center tw-text-3xl tw-font-bold tw-font-['Google_Sans_Text']">
+                                            Latest News
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div v-for="blog in news" class="tw-snap-center tw-snap-always tw-inline-block tw-w-full sm:tw-w-1/2 lg:tw-w-1/3 xl:tw-w-1/4 tw-flex-none tw-flex tw-justify-center">
+                                    <div class="tw-w-[370px] tint-background media-clip-path">
+                                        <img :src="blog.image.path" class="media-clip-path tw-h-[247px] tw-w-full">
+                                        <div class="tw-pl-14 tw-pr-4 tw-pt-2 tw-text-xl tw-h-[4rem] tw-line-clamp-2 tw-font-bold tw-tracking-normal tw-leading-tigh">{{blog.title}}</div>
+                                        <div class="tw-pl-14 tw-pr-4 tw-pt-4 tw-text-base tw-h-[4rem] tw-line-clamp-2">{{blog.subTitle}}</div>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    </article>
+                        </article>
+                    </div>
                 </div>
 
-                <div id="faq" class="navigation-height tw-w-full tw-snap-start tw-snap-always"></div>
-                <div class="tw-mx-auto tw-max-w-screen-2xl tw-flex tw-flex-col" >
-                    <article class="tw-mt-4 tw-w-full tw-px-4 tw-flex tw-flex-wrap lg:tw-flex-nowrap tw-justify-center">
-                        <div class="tw-text-center lg:tw-text-start lg:tw-w-1/4 tw-font-['Google_Sans_Text']">
-                            <div class="tw-text-3xl tw-font-bold">Frequently Answered Questions</div>
-                            <div class="tw-text-xl tw-font-semibold">Have a question? Check out our frequently asked questions to find your answer.</div>
-                            <div class="tw-h-60 tw-w-full tw-bg-contain tw-bg-center lg:tw-bg-left tw-bg-no-repeat" :style="{'background-image': 'url(/deco/undraw/undraw_my_answer_re_k4dv.svg)'}"></div>
-                        </div>
-                        <Accordion
-                            v-model:payload="faqs"
-                            :title-icon="false"
-                            :multi-line-title="true"
-                            :active-border-color="'transparent'"
-                            :center-content="faqCenterContent"
-                            :size="'lg'"
-                            single-expand
-                            class="tw-mt-4 lg:tw-w-1/2 lg:tw-mt-0 tw-space-y-4"/>
-                    </article>
+                <div>
+                    <div id="faq" class="navigation-height tw-w-full tw-snap-start tw-snap-always"></div>
+                    <div class="tw-mx-auto tw-max-w-screen-2xl tw-flex tw-flex-col" >
+                        <article class="tw-mt-4 tw-w-full tw-px-4 tw-flex tw-flex-wrap lg:tw-flex-nowrap tw-justify-center">
+                            <div class="tw-text-center lg:tw-text-start lg:tw-w-1/4 tw-font-['Google_Sans_Text']">
+                                <div class="tw-text-3xl tw-font-bold">Frequently Answered Questions</div>
+                                <div class="tw-text-xl tw-font-semibold">Have a question? Check out our frequently asked questions to find your answer.</div>
+                                <div class="tw-h-60 tw-w-full tw-bg-contain tw-bg-center lg:tw-bg-left tw-bg-no-repeat" :style="{'background-image': 'url(/deco/undraw/undraw_my_answer_re_k4dv.svg)'}"></div>
+                            </div>
+                            <Accordion
+                                v-model:payload="faqs"
+                                :title-icon="false"
+                                :multi-line-title="true"
+                                :active-border-color="'transparent'"
+                                :center-content="faqCenterContent"
+                                :size="'lg'"
+                                single-expand
+                                class="tw-mt-4 lg:tw-w-1/2 lg:tw-mt-0 tw-space-y-4"/>
+                        </article>
+                    </div>
                 </div>
             </template>
         </NuxtLayout>
@@ -255,12 +272,19 @@
 
 <script setup lang="ts">
 import {computed, ref, reactive, onMounted, nextTick, watch, watchEffect} from "vue";
+import {storeToRefs} from "pinia";
+const {$themeStore} = useNuxtApp();
 const {screens, width: screenWidth, } = useScreen();
 useLayout().setNavigationMode('clear');
 
 definePageMeta({
     layout: false
 });
+
+const {
+    hexAlpha,
+    lining: liningColor,
+} = storeToRefs($themeStore);
 
 const spotlightVideo_1 = ref<HTMLElement | null>(null);
 
@@ -635,9 +659,43 @@ const faqCenterContent = computed(() => {
     return screenWidth.value < screens['lg'];
 })
 </script>
-<style scoped>
+<style scoped lang="scss">
 .figure img{
     object-fit: cover;
+}
+.media-clip-path{
+    clip-path: polygon(calc(100% - 70px) 0px, 100% 70px, 100% 100%, 50px 100%, 0 calc(100% - 50px), 0 0);
+}
+@keyframes animate-border {
+    0%{background-position: 0% 50%;}
+    50%{background-position: 100% 50%;}
+    100%{background-position: 0% 50%;}
+}
+.latest-news{
+    width: 100%;
+    height: 100%;
+    clip-path: polygon(calc(100% - 70px) 0px, 100% 70px, 100% 100%, 50px 100%, 0 calc(100% - 50px), 0 0);
+    background-size: 150% 150%;
+    background-image: linear-gradient(225deg, v-bind(liningColor), transparent, v-bind(liningColor), transparent);
+    -webkit-animation: animate-border 3s infinite ease;
+    -moz-animation: animate-border 3s infinite ease;
+    animation: animate-border 4s infinite ease;
+}
+.latest-news-frame{
+    position: absolute;
+    content: "";
+    top: 7px;
+    left: 7px;
+    right: 7px;
+    bottom: 7px;
+}
+.latest-news-inner{
+    clip-path: polygon(calc(100% - 75px) 2px, calc(100% - 2px) 75px, calc(100% - 2px) calc(100% - 2px), 55px calc(100% - 2px), 2px calc(100% - 55px), 2px 2px);
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
 }
 .spotlight-image{
     background-position: center center;

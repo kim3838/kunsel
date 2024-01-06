@@ -138,7 +138,7 @@ const textAccent = computed(()=>{
     }
 }
 
-@keyframes shimmer-border {
+@keyframes animate-border {
     0% { border-image-source: linear-gradient(360deg,   v-bind(primaryColor),   transparent); }
     25% { border-image-source: linear-gradient(90deg,   v-bind(primaryColor),   transparent); }
     50% { border-image-source: linear-gradient(270deg,  v-bind(primaryColor),   transparent); }
@@ -151,7 +151,9 @@ const textAccent = computed(()=>{
     border-image-slice: 1;
     border-width: 1px;
     border-image-source: linear-gradient(360deg, v-bind(primaryColor), transparent);
-    animation: shimmer-border 3s ease-in infinite;
+    -webkit-animation: animate-border 3s ease-in infinite;
+    -moz-animation: animate-border 3s ease-in infinite;
+    animation: animate-border 3s ease-in infinite;
 }
 .base-fragment{
     background:
