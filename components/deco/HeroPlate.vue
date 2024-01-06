@@ -151,7 +151,7 @@ const textAccent = computed(()=>{
     border-image-slice: 1;
     border-width: 1px;
     border-image-source: linear-gradient(360deg, v-bind(primaryColor), transparent);
-    animation: shimmer-border 3s linear infinite;
+    animation: shimmer-border 3s ease-in infinite;
 }
 .base-fragment{
     background:
