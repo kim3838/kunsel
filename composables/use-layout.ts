@@ -90,6 +90,19 @@ export const useLayout = () => {
             },
             {
                 type: 'drop',
+                title: 'About',
+                icon: 'ic:baseline-arrow-right',
+                options: [
+                    {
+                        type: 'anchor-link',
+                        title: 'Latest news',
+                        icon: 'ic:baseline-arrow-right',
+                        to: '/#latest-news'
+                    },
+                ]
+            },
+            {
+                type: 'drop',
                 title: 'Help',
                 icon: 'ic:baseline-arrow-right',
                 options: [
