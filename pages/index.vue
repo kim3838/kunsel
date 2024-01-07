@@ -141,7 +141,7 @@
 
                 <div>
                     <div class="navigation-height tw-w-full tw-snap-start tw-snap-always"></div>
-                    <div class="tw-mx-auto tw-max-w-screen-2xl tw-flex tw-flex-col">
+                    <div class="tw-pl-2 tw-mx-auto tw-max-w-screen-2xl tw-flex tw-flex-col">
                         <article class="tw-mt-4 tw-relative">
                             <CarouselModuleCarousel
                                 v-model="carouselFeaturedItem"
@@ -150,13 +150,14 @@
                                 :mouse-drag="true"
                                 class="tw-w-full lg:tw-w-full">
                                 <CarouselModuleSlide class="tw-w-[170px]">
-                                    <RegularFrame>
+
+                                    <HexagonFrame>
                                         <template #body>
-                                            <div class="tw-px-2 tw-text-center tw-font-['Google_Sans_Text'] tw-text-xl tw-font-semibold">
+                                            <div class="tw-h-full tw-flex tw-items-center tw-px-2 scaffold tw-text-center tw-font-['Google_Sans_Text'] tw-text-xl tw-font-semibold tw-px-8">
                                                 Featured Products
                                             </div>
                                         </template>
-                                    </RegularFrame>
+                                    </HexagonFrame>
                                 </CarouselModuleSlide>
                                 <CarouselModuleSlide class="tw-w-[270px]" v-for="featuredItem in carouselFeaturedItems" :key="featuredItem">
                                     <Featured
@@ -177,9 +178,9 @@
                     </div>
                 </div>
 
-                <div class="tw-mb-16">
+                <div>
                     <div class="navigation-height tw-w-full tw-snap-start tw-snap-always"></div>
-                    <div class="tw-mx-auto tw-max-w-screen-2xl tw-flex tw-flex-col">
+                    <div class="tw-pl-2 tw-mx-auto tw-max-w-screen-2xl tw-flex tw-flex-col">
                         <article class="tw-mt-4 w-relative">
                             <CarouselModuleCarousel
                                 v-model="carouselNewArrival"
@@ -187,16 +188,16 @@
                                 :breakpoints="carouselNewArrivalsBreakpoints"
                                 class="tw-w-full lg:tw-w-full">
                                 <CarouselModuleSlide class="tw-w-[170px]">
-                                    <RegularFrame>
+                                    <HexagonFrame>
                                         <template #body>
-                                            <div class="tw-px-2 tw-text-center tw-font-['Google_Sans_Text'] tw-text-xl tw-font-semibold tw-px-8">
+                                            <div class="tw-h-full tw-flex tw-items-center tw-px-2 scaffold tw-text-center tw-font-['Google_Sans_Text'] tw-text-xl tw-font-semibold tw-px-8">
                                                 New Arrivals
                                             </div>
                                         </template>
-                                    </RegularFrame>
+                                    </HexagonFrame>
                                 </CarouselModuleSlide>
 
-                                <CarouselModuleSlide :class="[`tw-w-[370px]`]" v-for="newArrival in carouselNewArrivals" :key="newArrival">
+                                <CarouselModuleSlide :class="[`tw-w-[340px]`]" v-for="newArrival in carouselNewArrivals" :key="newArrival">
                                     <Card
                                         focused
                                         class="tw-mx-2"
@@ -217,36 +218,42 @@
                 </div>
 
                 <div>
-                    <div class="navigation-height tw-w-full tw-snap-start tw-snap-always"></div>
-                    <div class="tw-mx-auto tw-max-w-screen-2xl tw-flex tw-flex-col" >
-                        <article class="tw-mt-4 ">
-                            <div class="tw-relative tw-flex tw-items-center tw-flex-nowrap tw-py-2 tw-space-x-2 lg:tw-space-x-8 tw-snap-x tw-snap-mandatory tw-scroll-px-40 tw-w-full tw-overflow-x-scroll">
+                    <div id="latest-news" class="navigation-height tw-w-full tw-snap-start tw-snap-always"></div>
+                    <div class="tw-pl-2 tw-mx-auto tw-max-w-screen-2xl tw-flex tw-flex-col" >
+                        <ClientOnly>
+                            <article class="tw-mt-4">
+                                <div v-if="screenWidth < screens['md']" class="tw-text-center tw-text-3xl tw-font-bold tw-font-['Google_Sans_Text']">Latest News</div>
+                                <div :class="[screenWidth >= screens['md'] ? 'tw-flex-nowrap tw-snap-x tw-snap-mandatory tw-overflow-x-scroll' : 'tw-flex-col']" class="tw-relative tw-flex tw-items-center tw-space-x-2 lg:tw-space-x-8 tw-w-full ">
 
-                                <div class="tw-snap-center tw-snap-always tw-inline-block tw-h-[375px] tw-w-full sm:tw-w-1/2 lg:tw-w-1/3 xl:tw-w-1/4 tw-flex-none tw-flex tw-justify-center">
-                                    <div class="tw-w-[370px] tw-h-[247px] tw-relative latest-news-container">
-                                        <div class="latest-news"></div>
-                                        <div class="latest-news-frame tw-z-30 neutral-border"></div>
-                                        <div class="latest-news-inner tint-background tw-z-20 tw-flex tw-justify-center tw-items-center tw-text-3xl tw-font-bold tw-font-['Google_Sans_Text']">
-                                            Latest News
+                                    <div v-if="screenWidth >= screens['md']" class="tw-snap-center tw-snap-always tw-inline-block tw-h-[375px] tw-w-[170px] tw-flex-none tw-flex tw-justify-center">
+                                        <div class="tw-w-[170px] tw-h-[247px] tw-box-border tw-relative">
+                                            <HexagonFrame>
+                                                <template #body>
+                                                    <div class="tw-w-full tw-h-full tw-font-['Google_Sans_Text'] tw-text-xl tw-font-semibold tw-flex tw-justify-center tw-items-center">
+                                                        Latest News
+                                                    </div>
+                                                </template>
+                                            </HexagonFrame>
+                                        </div>
+                                    </div>
+
+                                    <div v-for="blog in news" :class="screenWidth >= screens['md'] ? 'tw-snap-center tw-snap-always tw-inline-block sm:tw-w-1/2 lg:tw-w-1/3 xl:tw-w-1/4 tw-flex-none tw-flex tw-justify-center' : ''" class="tw-cursor-pointer">
+                                        <div v-if="screenWidth < screens['md']" class="tw-mb-4 navigation-height tw-w-full tw-snap-start tw-snap-always"></div>
+                                        <div class="tw-w-[370px] tint-background media-clip-path">
+                                            <img :src="blog.image.path" class="media-clip-path tw-h-[247px] tw-w-full">
+                                            <div class="tw-pl-14 tw-pr-4 tw-pt-2 tw-text-xl tw-h-[3.5rem] tw-line-clamp-2 tw-font-bold tw-tracking-normal tw-leading-tight hover:tw-underline">{{blog.title}}</div>
+                                            <div class="tw-pl-14 tw-pr-4 tw-pt-4 tw-text-base tw-h-[4rem] tw-line-clamp-2">{{blog.subTitle}}</div>
                                         </div>
                                     </div>
                                 </div>
-
-                                <div v-for="blog in news" class="tw-snap-center tw-snap-always tw-inline-block tw-w-full sm:tw-w-1/2 lg:tw-w-1/3 xl:tw-w-1/4 tw-flex-none tw-flex tw-justify-center">
-                                    <div class="tw-w-[370px] tint-background media-clip-path">
-                                        <img :src="blog.image.path" class="media-clip-path tw-h-[247px] tw-w-full">
-                                        <div class="tw-pl-14 tw-pr-4 tw-pt-2 tw-text-xl tw-h-[4rem] tw-line-clamp-2 tw-font-bold tw-tracking-normal tw-leading-tigh">{{blog.title}}</div>
-                                        <div class="tw-pl-14 tw-pr-4 tw-pt-4 tw-text-base tw-h-[4rem] tw-line-clamp-2">{{blog.subTitle}}</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </article>
+                            </article>
+                        </ClientOnly>
                     </div>
                 </div>
 
                 <div>
                     <div id="faq" class="navigation-height tw-w-full tw-snap-start tw-snap-always"></div>
-                    <div class="tw-mx-auto tw-max-w-screen-2xl tw-flex tw-flex-col" >
+                    <div class="tw-px-2 tw-mx-auto tw-max-w-screen-2xl tw-flex tw-flex-col" >
                         <article class="tw-mt-4 tw-w-full tw-px-4 tw-flex tw-flex-wrap lg:tw-flex-nowrap tw-justify-center">
                             <div class="tw-text-center lg:tw-text-start lg:tw-w-1/4 tw-font-['Google_Sans_Text']">
                                 <div class="tw-text-3xl tw-font-bold">Frequently Answered Questions</div>
@@ -665,37 +672,6 @@ const faqCenterContent = computed(() => {
 }
 .media-clip-path{
     clip-path: polygon(calc(100% - 70px) 0px, 100% 70px, 100% 100%, 50px 100%, 0 calc(100% - 50px), 0 0);
-}
-@keyframes animate-border {
-    0%{background-position: 0% 50%;}
-    50%{background-position: 100% 50%;}
-    100%{background-position: 0% 50%;}
-}
-.latest-news{
-    width: 100%;
-    height: 100%;
-    clip-path: polygon(calc(100% - 70px) 0px, 100% 70px, 100% 100%, 50px 100%, 0 calc(100% - 50px), 0 0);
-    background-size: 150% 150%;
-    background-image: linear-gradient(225deg, v-bind(liningColor), transparent, v-bind(liningColor), transparent);
-    -webkit-animation: animate-border 3s infinite ease;
-    -moz-animation: animate-border 3s infinite ease;
-    animation: animate-border 4s infinite ease;
-}
-.latest-news-frame{
-    position: absolute;
-    content: "";
-    top: 7px;
-    left: 7px;
-    right: 7px;
-    bottom: 7px;
-}
-.latest-news-inner{
-    clip-path: polygon(calc(100% - 75px) 2px, calc(100% - 2px) 75px, calc(100% - 2px) calc(100% - 2px), 55px calc(100% - 2px), 2px calc(100% - 55px), 2px 2px);
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
 }
 .spotlight-image{
     background-position: center center;
