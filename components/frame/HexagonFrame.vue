@@ -1,5 +1,5 @@
 <template>
-    <div class="tw-w-full tw-h-full">
+    <div class="tw-relative tw-w-full tw-h-full">
         <div class="clip"></div>
         <div class="clip-frame tw-z-30 neutral-border"></div>
         <div class="clip-inner tint-background tw-z-20">
