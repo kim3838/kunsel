@@ -25,8 +25,8 @@
                                 <CarouselModuleCarousel
                                     dir="rtl"
                                     v-model="spotlight_1_index"
-                                    v-bind="spotlightSettings"
-                                    :breakpoints="spotlightBreakpoints"
+                                    v-bind="carouselSettings"
+                                    :breakpoints="carouselBreakpoints"
                                     class="tw-w-full lg:tw-w-full">
                                     <CarouselModuleSlide class="tw-w-[270px]" v-for="spotLightItem in spotlight_1" :key="spotLightItem">
                                         <Featured
@@ -89,8 +89,8 @@
                                 <CarouselModuleCarousel
                                     dir="rtl"
                                     v-model="spotlight_1_index"
-                                    v-bind="spotlightSettings"
-                                    :breakpoints="spotlightBreakpoints"
+                                    v-bind="carouselSettings"
+                                    :breakpoints="carouselBreakpoints"
                                     class="tw-w-full lg:tw-w-full">
                                     <CarouselModuleSlide class="tw-w-[270px] tw-transition-all tw-duration-700 tw-opacity-50 hover:tw-opacity-100" v-for="spotLightItem in spotlight_1" :key="spotLightItem">
                                         <Featured
@@ -145,15 +145,15 @@
                         <article class="tw-mt-4 tw-relative">
                             <CarouselModuleCarousel
                                 v-model="carouselFeaturedItem"
-                                v-bind="carouselFeaturedItemsSettings"
-                                :breakpoints="carouselFeaturedItemsBreakpoints"
+                                v-bind="carouselSettings"
+                                :breakpoints="carouselBreakpoints"
                                 :mouse-drag="true"
                                 class="tw-w-full lg:tw-w-full">
                                 <CarouselModuleSlide class="tw-w-[170px]">
 
                                     <HexagonFrame>
                                         <template #body>
-                                            <div class="tw-h-full tw-flex tw-items-center tw-px-2 scaffold tw-text-center tw-font-['Google_Sans_Text'] tw-text-xl tw-font-semibold tw-px-8">
+                                            <div class="tw-h-full tw-flex tw-items-center tw-px-2 tw-text-center tw-font-['Google_Sans_Text'] tw-text-xl tw-font-semibold tw-px-8">
                                                 Featured Products
                                             </div>
                                         </template>
@@ -181,16 +181,55 @@
                 <div>
                     <div class="navigation-height tw-w-full tw-snap-start tw-snap-always"></div>
                     <div class="tw-pl-2 tw-mx-auto tw-max-w-screen-2xl tw-flex tw-flex-col">
+                        <article class="tw-mt-4 tw-relative">
+                            <CarouselModuleCarousel
+                                v-model="carouselTrendingItem"
+                                v-bind="carouselSettings"
+                                :breakpoints="carouselBreakpoints"
+                                :mouse-drag="true"
+                                class="tw-w-full lg:tw-w-full">
+                                <CarouselModuleSlide class="tw-w-[170px]">
+
+                                    <HexagonFrame>
+                                        <template #body>
+                                            <div class="tw-h-full tw-flex tw-items-center tw-px-4 tw-text-center tw-font-['Google_Sans_Text'] tw-text-xl tw-font-semibold tw-px-8">
+                                                Trending
+                                            </div>
+                                        </template>
+                                    </HexagonFrame>
+                                </CarouselModuleSlide>
+                                <CarouselModuleSlide class="tw-w-[270px]" v-for="featuredItem in carouselTrendingItems" :key="featuredItem">
+                                    <Featured
+                                        focused
+                                        class="tw-mx-2"
+                                        :image="featuredItem.image"
+                                        :title="featuredItem.title"
+                                        :sub-title="featuredItem.subTitle"
+                                        :link="featuredItem.link"
+                                        :button-label="'Details'"
+                                    />
+                                </CarouselModuleSlide>
+                                <template #addons>
+                                    <CarouselModuleNavigation />
+                                </template>
+                            </CarouselModuleCarousel>
+                        </article>
+                    </div>
+                </div>
+
+                <div>
+                    <div class="navigation-height tw-w-full tw-snap-start tw-snap-always"></div>
+                    <div class="tw-pl-2 tw-mx-auto tw-max-w-screen-2xl tw-flex tw-flex-col">
                         <article class="tw-mt-4 w-relative">
                             <CarouselModuleCarousel
                                 v-model="carouselNewArrival"
-                                v-bind="carouselNewArrivalsSettings"
-                                :breakpoints="carouselNewArrivalsBreakpoints"
+                                v-bind="carouselSettings"
+                                :breakpoints="carouselBreakpoints"
                                 class="tw-w-full lg:tw-w-full">
                                 <CarouselModuleSlide class="tw-w-[170px]">
                                     <HexagonFrame>
                                         <template #body>
-                                            <div class="tw-h-full tw-flex tw-items-center tw-px-2 scaffold tw-text-center tw-font-['Google_Sans_Text'] tw-text-xl tw-font-semibold tw-px-8">
+                                            <div class="tw-h-full tw-flex tw-items-center tw-px-2 tw-text-center tw-font-['Google_Sans_Text'] tw-text-xl tw-font-semibold tw-px-8">
                                                 New Arrivals
                                             </div>
                                         </template>
@@ -226,7 +265,7 @@
                                 <div :class="[screenWidth >= screens['md'] ? 'tw-flex-nowrap tw-snap-x tw-snap-mandatory tw-overflow-x-scroll' : 'tw-flex-col']" class="tw-relative tw-flex tw-items-center tw-space-x-2 lg:tw-space-x-8 tw-w-full ">
 
                                     <div v-if="screenWidth >= screens['md']" class="tw-snap-center tw-snap-always tw-inline-block tw-h-[375px] tw-w-[170px] tw-flex-none tw-flex tw-justify-center">
-                                        <div class="tw-w-[170px] tw-h-[247px] tw-box-border tw-relative">
+                                        <div class="tw-w-[170px] tw-h-[247px]">
                                             <HexagonFrame>
                                                 <template #body>
                                                     <div class="tw-w-full tw-h-full tw-font-['Google_Sans_Text'] tw-text-xl tw-font-semibold tw-flex tw-justify-center tw-items-center">
@@ -342,26 +381,6 @@ function reIndexSpotlightCarousel(){
         spotlight_1_index.value = 2;
     }
 };
-const spotlightSettings = ref({
-    itemsToShow: 2,
-    snapAlign: 'start',
-});
-const spotlightBreakpoints = ref({
-    [screens['sm']]: {
-        itemsToShow: 2,
-        snapAlign: 'start',
-    },
-
-    [screens['md']]: {
-        itemsToShow: 2.5,
-        snapAlign: 'start',
-    },
-
-    [screens['lg']]: {
-        itemsToShow: 4.5,
-        snapAlign: 'start',
-    },
-});
 
 const spotlight_1 = ref([
     {
@@ -421,51 +440,14 @@ const featured = ref([
         'title': 'Graphics Card',
         'subTitle': 'iGame GeForce RTX 4090 Vulcan OC-V',
         'link': '/prototype'
-    },
-    {
-        'image':{
-            'path': '/images/product/c7dfc1f1-102a-4ea9-84f6-f87dda2094b8.webp'
-        },
-        'title': 'Motherboard',
-        'subTitle': 'CVN Z790D5 GAMING PRO WIFI V20',
-        'link': '/prototype'
-    },
-    {
-        'image':{
-            'path': '/images/product/38131462-2ae0-443e-8555-9e744c532887.webp'
-        },
-        'title': 'Motherboard',
-        'subTitle': 'BATTLE-AX Z790AK-PLUS D5 V20',
-        'link': '/prototype'
-    },
-    {
-        'image':{
-            'path': '/images/product/ebac5037-c3d2-4275-b96b-24f855695841.webp'
-        },
-        'title': 'Motherboard',
-        'subTitle': 'iGame Z790D5 ULTRA V20',
-        'link': '/prototype'
-    },
-    {
-        'image':{
-            'path': '/images/product/f9b5a1a7-d532-4cf8-970c-d812b857a666.webp'
-        },
-        'title': 'Motherboard',
-        'subTitle': 'iGame Z790D5 FLOW V20',
-        'link': '/prototype'
     }
 ]);
 
-const carouselFeaturedItem = ref(0);
-const carouselFeaturedItems = ref([]);
-carouselFeaturedItems.value = carouselFeaturedItems.value.concat(spotlight_1.value);
-carouselFeaturedItems.value = carouselFeaturedItems.value.concat(featured.value);
-
-const carouselFeaturedItemsSettings = ref({
+const carouselSettings = ref({
     itemsToShow: 2,
     snapAlign: 'start',
 });
-const carouselFeaturedItemsBreakpoints = ref({
+const carouselBreakpoints = ref({
     [screens['sm']]: {
         itemsToShow: 2,
         snapAlign: 'start',
@@ -482,7 +464,10 @@ const carouselFeaturedItemsBreakpoints = ref({
     },
 });
 
+const carouselFeaturedItem = ref(0);
 const carouselNewArrival = ref(0);
+const carouselTrendingItem = ref(0);
+
 const carouselNewArrivals = ref([
     {
         'image':{
@@ -528,26 +513,44 @@ const carouselNewArrivals = ref([
         'subTitle': 'CN700 1TB',
     }
 ]);
-const carouselNewArrivalsSettings = ref({
-    itemsToShow: 2,
-    snapAlign: 'start',
-});
-const carouselNewArrivalsBreakpoints = ref({
-    [screens['sm']]: {
-        itemsToShow: 2,
-        snapAlign: 'start',
-    },
+const carouselFeaturedItems = ref([]);
+const carouselTrendingItems = ref([
 
-    [screens['md']]: {
-        itemsToShow: 2.5,
-        snapAlign: 'start',
+    {
+        'image':{
+            'path': '/images/product/c7dfc1f1-102a-4ea9-84f6-f87dda2094b8.webp'
+        },
+        'title': 'Motherboard',
+        'subTitle': 'CVN Z790D5 GAMING PRO WIFI V20',
+        'link': '/prototype'
     },
-
-    [screens['lg']]: {
-        itemsToShow: 4.5,
-        snapAlign: 'start',
+    {
+        'image':{
+            'path': '/images/product/38131462-2ae0-443e-8555-9e744c532887.webp'
+        },
+        'title': 'Motherboard',
+        'subTitle': 'BATTLE-AX Z790AK-PLUS D5 V20',
+        'link': '/prototype'
     },
-});
+    {
+        'image':{
+            'path': '/images/product/ebac5037-c3d2-4275-b96b-24f855695841.webp'
+        },
+        'title': 'Motherboard',
+        'subTitle': 'iGame Z790D5 ULTRA V20',
+        'link': '/prototype'
+    },
+    {
+        'image':{
+            'path': '/images/product/f9b5a1a7-d532-4cf8-970c-d812b857a666.webp'
+        },
+        'title': 'Motherboard',
+        'subTitle': 'iGame Z790D5 FLOW V20',
+        'link': '/prototype'
+    }
+]);
+carouselFeaturedItems.value = carouselFeaturedItems.value.concat(spotlight_1.value);
+carouselFeaturedItems.value = carouselFeaturedItems.value.concat(featured.value);
 
 const news = ref([
     {
