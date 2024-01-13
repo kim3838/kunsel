@@ -4,7 +4,7 @@
         <div class="clip-frame tw-z-30 neutral-border">
             <slot name="body"></slot>
         </div>
-        <div class="clip-inner tint-background tw-z-20">
+        <div class="clip-inner tint-background tw-z-20"><!--tint-background-->
         </div>
     </div>
 </template>
@@ -15,25 +15,39 @@ const {$themeStore} = useNuxtApp();
 
 const {
     hexAlpha,
+    primary: primaryColor,
     lining: liningColor,
 } = storeToRefs($themeStore);
 </script>
 
 <style scoped lang="scss">
 @keyframes animate-border {
-    0%{background-position: 0% 50%;}
-    50%{background-position: 100% 50%;}
-    100%{background-position: 0% 50%;}
+    0%{background-position: 0% 0%;}
+    //25%{background-position: 25% 0%;}
+    50%{background-position: 100% 0%;}
+    //75%{background-position: 75% 0%;}
+    100%{background-position: 0% 0%;}
 }
 .clip{
     width: 100%;
     height: 100%;
-    clip-path: polygon(calc(100% - 70px) 0px, 100% 70px, 100% 100%, 50px 100%, 0 calc(100% - 50px), 0 0);
-    background-size: 150% 150%;
-    background-image: linear-gradient(225deg, v-bind(liningColor), transparent, v-bind(liningColor), transparent);
-    -webkit-animation: animate-border 3s infinite ease;
-    -moz-animation: animate-border 3s infinite ease;
-    animation: animate-border 4s infinite ease;
+    clip-path: polygon(calc(100% - 73px) 0px, 100% 73px, 100% 100%, 53px 100%, 0 calc(100% - 53px), 0 0);
+    background-size: 200% 100%;
+    background-position: 0% 0;
+    background-repeat: no-repeat;
+    background-image: linear-gradient(
+            135deg,
+            v-bind(liningColor) 20%,
+            transparent 30%,
+            transparent 40%,
+            v-bind(liningColor) 50%,
+            v-bind(liningColor) 60%,
+            transparent 70%,
+            transparent 80%,
+            v-bind(liningColor) 90%);
+    -webkit-animation: animate-border 10s infinite ease;
+    -moz-animation: animate-border 10s infinite ease;
+    animation: animate-border 10s infinite ease;
 }
 .clip-frame{
     position: absolute;
