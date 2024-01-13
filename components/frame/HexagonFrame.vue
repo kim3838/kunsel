@@ -1,7 +1,7 @@
 <template>
     <div class="tw-relative tw-w-full tw-h-full">
         <div class="clip"></div>
-        <div class="clip-frame tw-z-30 thread-border tw-flex tw-justify-end">
+        <div class="clip-frame tw-z-30 tw-flex tw-justify-end">
             <slot name="body"></slot>
         </div>
         <div class="clip-inner tint-background tw-z-20">
@@ -12,6 +12,7 @@
 
 <script setup>
 import {storeToRefs} from 'pinia';
+import {computed} from "vue";
 const {$themeStore} = useNuxtApp();
 
 const {
@@ -20,6 +21,24 @@ const {
     thread: threadColor,
     lining: liningColor,
 } = storeToRefs($themeStore);
+
+const props = defineProps({
+    frameBorder: {
+        type: String,
+        default: ''
+    },
+    contentBorder: {
+        type: String,
+        default: ''
+    },
+});
+
+const frameBorderColor = computed(() => {
+    return props.frameBorder ? props.frameBorder : threadColor.value;
+});
+const contentBorderColor = computed(() => {
+    return props.contentBorder ? props.contentBorder : liningColor.value;
+});
 </script>
 
 <style scoped lang="scss">
@@ -37,15 +56,16 @@ const {
     background-repeat: repeat;
     background-image: linear-gradient(
             112deg,
-            v-bind(liningColor) 40%,
+            v-bind(contentBorderColor) 40%,
             transparent 50%,
             transparent 55%,
-            v-bind(liningColor) 65%);
+            v-bind(contentBorderColor) 65%);
     -webkit-animation: animate-border 10s infinite ease;
     -moz-animation: animate-border 10s infinite ease;
     animation: animate-border 10s infinite ease;
 }
 .clip-frame{
+    border:1px solid v-bind(frameBorderColor);
     position: absolute;
     content: "";
     top: 7px;
