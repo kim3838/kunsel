@@ -1,5 +1,5 @@
 <template>
-    <div class="tw-mx-auto tw-max-w-screen-2xl">
+    <div class="tw-mx-auto tw-max-w-screen-2xl tw-pt-4">
         <div v-if="false">
             <AccentFrame>
                 <template #content>
@@ -14,25 +14,77 @@
             </AccentFrame>
         </div>
 
-        <div class="tw-grid tw-gap-1 tw-grid-cols-3">
-            <div class="tw-space-y-2">
-                <HeroPlate :size="'sm'" :label="'Default Hero Plate'"/>
-                <HeroPlate :size="'sm'" :bookmark="'HOT DEALS'" :label="'Default Hero Plate'"/>
-                <HeroPlate :size="'md'" :bookmark="'SALE UP TO 90%'" :label="'Default Hero Plate'"/>
-                <HeroPlate :size="'lg'" :bookmark="'NEW ARRIVAL'" :label="'Default Hero Plate'"/>
-            </div>
-            <div class="tw-space-y-2">
-                <HeroPlate :size="'sm'" :theme="'strawberry'" :label="'Strawberry Hero Plate'"/>
-                <HeroPlate :size="'sm'" :bookmark="'HOT DEALS'" :theme="'strawberry'" :label="'Strawberry Hero Plate'"/>
-                <HeroPlate :size="'md'" :bookmark="'SALE UP TO 90%'" :theme="'strawberry'" :label="'Strawberry Hero Plate'"/>
-                <HeroPlate :size="'lg'" :bookmark="'NEW ARRIVAL'" :theme="'strawberry'" :label="'Strawberry Hero Plate'"/>
-            </div>
-            <div class="tw-space-y-2">
-                <HeroPlate :size="'sm'" :theme="'gold'" :label="'Gold Hero Plate'"/>
-                <HeroPlate :size="'sm'" :bookmark="'HOT DEALS'" :theme="'gold'" :label="'Gold Hero Plate'"/>
-                <HeroPlate :size="'md'" :bookmark="'SALE UP TO 90%'" :theme="'gold'" :label="'Gold Hero Plate'"/>
-                <HeroPlate :size="'lg'" :bookmark="'NEW ARRIVAL'" :theme="'gold'" :label="'Gold Hero Plate'"/>
-            </div>
+        <div class="tw-grid tw-gap-2 tw-grid-cols-2 tw-h-[230px]">
+            <Featured
+                v-if="false"
+                class="tw-w-[254px] tw-h-[354px]"
+                focused
+                :image="{path: '/images/product/cd8f248a-bd3d-4553-bcf7-849ed27c4b36.webp'}"
+                :title="'Title'"
+                :sub-title="'Sub Title'"
+                :link="'/prototype'"
+                :button-label="'Details'"
+            />
+            <HexagonFrame
+                v-for="item in leftToRightItems"
+                :frame-border="item.frameBorder"
+                :content-border="item.contentBorder"
+                :direction="'ltr'"
+                :top-right="45"
+                :bottom-left="55">
+                <template #header>
+                    <div class="tw-h-full tw-w-[40%]">
+                        <div
+                            class="tw-h-full tw-w-full tw-bg-cover tw-bg-center tw-bg-no-repeat"
+                            :style="{'background':'url('+item.image.path+')'}"
+                        />
+                    </div>
+                </template>
+                <template #body>
+                    <div class="tw-h-full tw-w-[60%] tw-p-1">
+                        <div class="tw-font-semibold tw-text-lg">iGame Z790D5 FLOW V20 iGame Z790D5 FLOW V20</div>
+                        <Button :label="'Learn more'" :size="'md'" :variant="'flat'"></Button>
+                    </div>
+                </template>
+            </HexagonFrame>
+        </div>
+
+        <div class="tw-mt-6 tw-grid tw-gap-2 tw-grid-cols-5 tw-h-[454px]">
+            <HexagonFrame
+                v-for="item in topToBottomItems"
+                :key="item"
+                :frame-border="item.frameBorder"
+                :content-border="item.contentBorder"
+                :direction="'ttb'"
+                :head-percentage="65"
+                :top-right="55"
+                :bottom-left="45">
+                <template #header>
+                    <div class="tw-h-[65%] tw-w-full">
+                        <div
+                            class="tw-h-full tw-w-full tw-bg-cover tw-bg-center tw-bg-no-repeat"
+                            :style="{'background':'url('+item.image.path+')'}"
+                        />
+                    </div>
+                </template>
+                <template #body>
+                    <div class="tw-h-[35%] tw-w-full tw-p-1">
+                        <div class="tw-font-semibold tw-text-lg">{{item.subTitle}}</div>
+                        <Button :label="'Learn more'" :size="'md'" :variant="'flat'"></Button>
+                    </div>
+                </template>
+            </HexagonFrame>
+        </div>
+
+        <div v-if="false" class="scaffold tw-w-[170px] tw-h-[230px]">
+            <HexagonFrame>
+                <template #body>
+                    <div class="tw-relative tw-h-full tw-flex tw-items-center tw-px-4 tw-text-center tw-font-['Google_Sans_Text'] tw-text-xl tw-font-semibold tw-px-8">
+                        Label
+                        <Button :label="'Click'"></Button>
+                    </div>
+                </template>
+            </HexagonFrame>
         </div>
 
         <div v-if="false">
@@ -242,6 +294,81 @@ let category = reactive({
     ],
     selected: []
 });
+
+const leftToRightItems = ref([
+    {
+        'image':{
+            'path': '/images/product/202306201506003693.webp'
+        },
+        'title': 'PC Case',
+        'subTitle': 'Segotep Memphis-S Meow PC Case (M-ATX / ITX supported)',
+        'link': '/prototype',
+        'frameBorder': '#f9dbbd',
+        'contentBorder': '#f4a261'
+    },
+    {
+        'image':{
+            'path': '/images/product/c76383ac-e6c0-4725-bec0-b171449c5960.webp'
+        },
+        'title': 'Motherboard',
+        'subTitle': 'COLORFIRE B760M-MEOW WIFI D5 ORANGE',
+        'link': '/prototype',
+        'frameBorder': '#f9dbbd',
+        'contentBorder': '#f4a261'
+    },
+    {
+        'image':{
+            'path': '/images/product/7d5178c3-e5dc-4b8f-b8d1-cbe0bbc14e84.webp'
+        },
+        'title': 'Graphics Card',
+        'subTitle': 'COLORFIRE GeForce RTX 4060 MEOW-ORG 8GB-V',
+        'link': '/prototype',
+        'frameBorder': '#f9dbbd',
+        'contentBorder': '#f4a261'
+    },
+]);
+const topToBottomItems = ref([
+    {
+        'image':{
+            'path': '/images/product/c7dfc1f1-102a-4ea9-84f6-f87dda2094b8.webp'
+        },
+        'title': 'Motherboard',
+        'subTitle': 'CVN Z790D5 GAMING PRO WIFI V20',
+        'link': '/prototype',
+        'frameBorder': '#adb5bd',
+        'contentBorder': '#ced4da'
+    },
+    {
+        'image':{
+            'path': '/images/product/38131462-2ae0-443e-8555-9e744c532887.webp'
+        },
+        'title': 'Motherboard',
+        'subTitle': 'BATTLE-AX Z790AK-PLUS D5 V20',
+        'link': '/prototype',
+        'frameBorder': '#adb5bd',
+        'contentBorder': '#ced4da'
+    },
+    {
+        'image':{
+            'path': '/images/product/ebac5037-c3d2-4275-b96b-24f855695841.webp'
+        },
+        'title': 'Motherboard',
+        'subTitle': 'iGame Z790D5 ULTRA V20',
+        'link': '/prototype',
+        'frameBorder': '#a8dadc',
+        'contentBorder': '#457b9d'
+    },
+    {
+        'image':{
+            'path': '/images/product/f9b5a1a7-d532-4cf8-970c-d812b857a666.webp'
+        },
+        'title': 'Motherboard',
+        'subTitle': 'iGame Z790D5 FLOW V20',
+        'link': '/prototype',
+        'frameBorder': '#a8dadc',
+        'contentBorder': '#457b9d'
+    }
+]);
 onMounted(async () => {
     nextTick(() => {
 
@@ -250,8 +377,13 @@ onMounted(async () => {
 
 </script>
 
-<style scoped>
-    #lab{
-        height: calc(100vh - calc(41px) - calc(1rem));
+<style scoped lang="scss">
+@for $i from 1 through 20 {
+    .border-fragment:nth-child(#{$i}) {
+        animation-delay: #{random(5) * 0.5}s !important;
     }
+}
+#lab{
+    height: calc(100vh - calc(41px) - calc(1rem));
+}
 </style>

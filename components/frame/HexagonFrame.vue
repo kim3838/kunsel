@@ -1,18 +1,19 @@
 <template>
     <div class="tw-relative tw-w-full tw-h-full">
         <div class="clip"></div>
-        <div class="clip-frame tw-z-30 tw-flex tw-justify-end">
+        <div class="clip-frame tw-z-30 tw-flex body-direction">
             <slot name="body"></slot>
         </div>
         <div class="clip-inner tint-background tw-z-20">
-            <slot name="head"></slot>
+            <div :style="fadeTransition"></div>
+            <slot name="header"></slot>
         </div>
     </div>
 </template>
 
 <script setup>
 import {storeToRefs} from 'pinia';
-import {ref, computed} from "vue";
+import {ref, reactive, computed} from "vue";
 const {$themeStore} = useNuxtApp();
 
 const {
@@ -20,6 +21,7 @@ const {
     primary: primaryColor,
     thread: threadColor,
     lining: liningColor,
+    tint: tintColor,
 } = storeToRefs($themeStore);
 
 const props = defineProps({
@@ -39,8 +41,19 @@ const props = defineProps({
         type: Number,
         default: 0
     },
+    headPercentage: {
+        type: Number,
+        default: 0
+    },
+    direction: {
+        type: String,
+        default: 'ltr'
+    },
 });
 
+const tintColor50 = computed(() => {
+    return tintColor.value + hexAlpha.value['50'];
+});
 const frameBorderColor = computed(() => {
     return props.frameBorder ? props.frameBorder : threadColor.value;
 });
@@ -53,6 +66,25 @@ const topRightAllocationInPixels = computed(() => {
 const bottomLeftAllocationInPixels = computed(() => {
     return (props.bottomLeft + 'px');
 });
+const bodyFlexDirection = computed(() => {
+    return {
+        'ltr': 'row-reverse',
+        'ttb': 'column-reverse',
+    }[props.direction];
+});
+
+const fadeTransition = computed(() => {
+
+    return {
+        display: (props.headPercentage > 0 ? 'block' : 'none'),
+        position: 'absolute',
+        left: '0',
+        top: '0',
+        width: (props.direction == 'ltr' ? (`${props.headPercentage}%`) : (`100%`)),
+        height: (props.direction == 'ttb' ? (`${props.headPercentage}%`) : (`100%`)),
+        background: 'linear-gradient(to ' + (props.direction == 'ltr' ? 'right' : 'bottom') + ', transparent 50%, ' + tintColor50.value + ' 100%)'
+    };
+})
 </script>
 
 <style scoped lang="scss">
@@ -60,6 +92,9 @@ const bottomLeftAllocationInPixels = computed(() => {
     0%{background-position: 0% 0%;}
     50%{background-position: 600% 0%;}
     100%{background-position: 0% 0%;}
+}
+.body-direction{
+    flex-direction: v-bind(bodyFlexDirection) !important;
 }
 .clip{
     width: 100%;
@@ -81,9 +116,9 @@ const bottomLeftAllocationInPixels = computed(() => {
         transparent 50%,
         transparent 55%,
         v-bind(contentBorderColor) 65%);
-    -webkit-animation: animate-border 10s infinite ease;
-    -moz-animation: animate-border 10s infinite ease;
-    animation: animate-border 10s infinite ease;
+    -webkit-animation: animate-border 15s infinite ease;
+    -moz-animation: animate-border 15s infinite ease;
+    animation: animate-border 15s infinite ease;
 }
 .clip-frame{
     border:1px solid v-bind(frameBorderColor);

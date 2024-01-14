@@ -247,6 +247,8 @@
                                         :button-label="'Details'"
                                     />
                                 </CarouselModuleSlide>
+                                <CarouselModuleSlide :class="[`tw-w-[340px]`]">
+                                </CarouselModuleSlide>
 
                                 <template #addons>
                                     <CarouselModuleNavigation />
@@ -278,10 +280,10 @@
 
                                     <div v-for="blog in news" :class="screenWidth >= screens['md'] ? 'tw-snap-center tw-snap-always tw-inline-block sm:tw-w-1/2 lg:tw-w-1/3 xl:tw-w-1/4 tw-flex-none tw-flex tw-justify-center' : ''" class="tw-cursor-pointer">
                                         <div v-if="screenWidth < screens['md']" class="tw-mb-4 navigation-height tw-w-full tw-snap-start tw-snap-always"></div>
-                                        <div class="tw-w-[370px] tint-background">
+                                        <div class="tw-w-[370px] tint-background thread-border">
                                             <img :src="blog.image.path" class="tw-h-[247px] tw-w-full">
-                                            <div class="tw-pr-4 tw-pt-2 tw-text-xl tw-h-[3.5rem] tw-line-clamp-2 tw-font-bold tw-tracking-normal tw-leading-tight hover:tw-underline">{{blog.title}}</div>
-                                            <div class="tw-pr-4 tw-pt-4 tw-text-base tw-h-[4rem] tw-line-clamp-2">{{blog.subTitle}}</div>
+                                            <div class="tw-px-2 tw-pt-2 tw-text-xl tw-h-[3.5rem] tw-line-clamp-2 tw-font-bold tw-tracking-normal tw-leading-tight hover:tw-underline">{{blog.title}}</div>
+                                            <div class="tw-px-2 tw-pt-4 tw-text-base tw-h-[4rem] tw-line-clamp-2">{{blog.subTitle}}</div>
                                         </div>
                                     </div>
                                 </div>
