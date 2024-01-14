@@ -12,7 +12,7 @@
 
 <script setup>
 import {storeToRefs} from 'pinia';
-import {computed} from "vue";
+import {ref, computed} from "vue";
 const {$themeStore} = useNuxtApp();
 
 const {
@@ -31,6 +31,14 @@ const props = defineProps({
         type: String,
         default: ''
     },
+    topRight: {
+        type: Number,
+        default: 0
+    },
+    bottomLeft: {
+        type: Number,
+        default: 0
+    },
 });
 
 const frameBorderColor = computed(() => {
@@ -38,6 +46,12 @@ const frameBorderColor = computed(() => {
 });
 const contentBorderColor = computed(() => {
     return props.contentBorder ? props.contentBorder : liningColor.value;
+});
+const topRightAllocationInPixels = computed(() => {
+    return (props.topRight + 'px');
+});
+const bottomLeftAllocationInPixels = computed(() => {
+    return (props.bottomLeft + 'px');
 });
 </script>
 
@@ -50,16 +64,23 @@ const contentBorderColor = computed(() => {
 .clip{
     width: 100%;
     height: 100%;
-    clip-path: polygon(calc(100% - 75px) 0px, 100% 75px, 100% 100%, 55px 100%, 0 calc(100% - 55px), 0 0);
+    clip-path: polygon(
+        calc(100% - v-bind(topRightAllocationInPixels)) 0px,
+        100% v-bind(topRightAllocationInPixels),
+        100% 100%,
+        v-bind(bottomLeftAllocationInPixels) 100%,
+        0 calc(100% - v-bind(bottomLeftAllocationInPixels)),
+        0 0
+    );
     background-size: 150% 100%;
     background-position: 0% 0;
     background-repeat: repeat;
     background-image: linear-gradient(
-            112deg,
-            v-bind(contentBorderColor) 40%,
-            transparent 50%,
-            transparent 55%,
-            v-bind(contentBorderColor) 65%);
+        112deg,
+        v-bind(contentBorderColor) 40%,
+        transparent 50%,
+        transparent 55%,
+        v-bind(contentBorderColor) 65%);
     -webkit-animation: animate-border 10s infinite ease;
     -moz-animation: animate-border 10s infinite ease;
     animation: animate-border 10s infinite ease;
@@ -74,7 +95,14 @@ const contentBorderColor = computed(() => {
     bottom: 7px;
 }
 .clip-inner{
-    clip-path: polygon(calc(100% - 75px) 1px, calc(100% - 1px) 75px, calc(100% - 1px) calc(100% - 1px), 55px calc(100% - 1px), 1px calc(100% - 55px), 1px 1px);
+    clip-path: polygon(
+        calc(100% - v-bind(topRightAllocationInPixels)) 1px,
+        calc(100% - 1px) v-bind(topRightAllocationInPixels),
+        calc(100% - 1px) calc(100% - 1px),
+            v-bind(bottomLeftAllocationInPixels) calc(100% - 1px),
+        1px calc(100% - v-bind(bottomLeftAllocationInPixels)),
+        1px 1px
+    );
     position: absolute;
     top: 0;
     left: 0;

@@ -151,9 +151,9 @@
                                 class="tw-w-full lg:tw-w-full">
                                 <CarouselModuleSlide class="tw-w-[170px]">
 
-                                    <HexagonFrame>
+                                    <HexagonFrame :top-right="75" :bottom-left="75">
                                         <template #body>
-                                            <div class="tw-h-full tw-flex tw-items-center tw-px-2 tw-text-center tw-font-['Google_Sans_Text'] tw-text-xl tw-font-semibold tw-px-8">
+                                            <div class="tw-h-full tw-flex tw-items-center tw-text-center tw-font-['Google_Sans_Text'] tw-text-xl tw-font-semibold tw-px-8">
                                                 Featured Products
                                             </div>
                                         </template>
@@ -190,9 +190,9 @@
                                 class="tw-w-full lg:tw-w-full">
                                 <CarouselModuleSlide class="tw-w-[170px]">
 
-                                    <HexagonFrame>
+                                    <HexagonFrame :top-right="75" :bottom-left="75">
                                         <template #body>
-                                            <div class="tw-h-full tw-flex tw-items-center tw-px-4 tw-text-center tw-font-['Google_Sans_Text'] tw-text-xl tw-font-semibold tw-px-8">
+                                            <div class="tw-h-full tw-flex tw-items-center tw-text-center tw-font-['Google_Sans_Text'] tw-text-xl tw-font-semibold tw-px-8">
                                                 Trending
                                             </div>
                                         </template>
@@ -227,9 +227,9 @@
                                 :breakpoints="carouselBreakpoints"
                                 class="tw-w-full lg:tw-w-full">
                                 <CarouselModuleSlide class="tw-w-[170px]">
-                                    <HexagonFrame>
+                                    <HexagonFrame :top-right="75" :bottom-left="75">
                                         <template #body>
-                                            <div class="tw-h-full tw-flex tw-items-center tw-px-2 tw-text-center tw-font-['Google_Sans_Text'] tw-text-xl tw-font-semibold tw-px-8">
+                                            <div class="tw-h-full tw-flex tw-items-center tw-text-center tw-font-['Google_Sans_Text'] tw-text-xl tw-font-semibold tw-px-8">
                                                 New Arrivals
                                             </div>
                                         </template>
@@ -266,7 +266,7 @@
 
                                     <div v-if="screenWidth >= screens['md']" class="tw-snap-center tw-snap-always tw-inline-block tw-h-[375px] tw-w-[170px] tw-flex-none tw-flex tw-justify-center">
                                         <div class="tw-w-[170px] tw-h-[247px]">
-                                            <HexagonFrame>
+                                            <HexagonFrame  :top-right="75" :bottom-left="75">
                                                 <template #body>
                                                     <div class="tw-w-full tw-h-full tw-font-['Google_Sans_Text'] tw-text-xl tw-font-semibold tw-flex tw-justify-center tw-items-center">
                                                         Latest News
@@ -278,10 +278,10 @@
 
                                     <div v-for="blog in news" :class="screenWidth >= screens['md'] ? 'tw-snap-center tw-snap-always tw-inline-block sm:tw-w-1/2 lg:tw-w-1/3 xl:tw-w-1/4 tw-flex-none tw-flex tw-justify-center' : ''" class="tw-cursor-pointer">
                                         <div v-if="screenWidth < screens['md']" class="tw-mb-4 navigation-height tw-w-full tw-snap-start tw-snap-always"></div>
-                                        <div class="tw-w-[370px] tint-background media-clip-path">
-                                            <img :src="blog.image.path" class="media-clip-path tw-h-[247px] tw-w-full">
-                                            <div class="tw-pl-14 tw-pr-4 tw-pt-2 tw-text-xl tw-h-[3.5rem] tw-line-clamp-2 tw-font-bold tw-tracking-normal tw-leading-tight hover:tw-underline">{{blog.title}}</div>
-                                            <div class="tw-pl-14 tw-pr-4 tw-pt-4 tw-text-base tw-h-[4rem] tw-line-clamp-2">{{blog.subTitle}}</div>
+                                        <div class="tw-w-[370px] tint-background">
+                                            <img :src="blog.image.path" class="tw-h-[247px] tw-w-full">
+                                            <div class="tw-pr-4 tw-pt-2 tw-text-xl tw-h-[3.5rem] tw-line-clamp-2 tw-font-bold tw-tracking-normal tw-leading-tight hover:tw-underline">{{blog.title}}</div>
+                                            <div class="tw-pr-4 tw-pt-4 tw-text-base tw-h-[4rem] tw-line-clamp-2">{{blog.subTitle}}</div>
                                         </div>
                                     </div>
                                 </div>
@@ -672,9 +672,6 @@ const faqCenterContent = computed(() => {
 <style scoped lang="scss">
 .figure img{
     object-fit: cover;
-}
-.media-clip-path{
-    clip-path: polygon(calc(100% - 70px) 0px, 100% 70px, 100% 100%, 50px 100%, 0 calc(100% - 50px), 0 0);
 }
 .spotlight-image{
     background-position: center center;
