@@ -92,6 +92,14 @@ const {top: nuxtWrapperTopReached} = toRefs(nuxtWrapperArrivedState);
     border: 1px solid v-bind(neutralColor);
 }
 
+.lining-border{
+    border: 1px solid v-bind(liningColor);
+}
+
+.thread-border{
+    border: 1px solid v-bind(threadColor);
+}
+
 .scaffold{
     border: 1px solid v-bind(liningColor);
 }
