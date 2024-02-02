@@ -22,7 +22,6 @@
                                             class="tw-w-full"
                                             ref="identifierInput"
                                             v-model="identifier"
-                                            autofocus
                                             autocomplete="off" />
                                     </div>
 
