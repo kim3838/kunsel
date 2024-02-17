@@ -73,7 +73,7 @@
         <PromptModal />
         <!-- Footer -->
         <footer :class="[enableScrollSnap ? 'tw-snap-start tw-snap-always' : '']">
-            <div class="tw-mx-auto tw-max-w-screen-2xl tw-px-4 tw-pb-6 tw-pt-16 sm:tw-px-6 lg:tw-px-8">
+            <div class="tw-mx-auto tw-max-w-screen-xl tw-px-4 tw-pb-6 tw-pt-16 sm:tw-px-6 lg:tw-px-8">
                 <div class="tw-grid tw-grid-cols-1 lg:tw-grid-cols-4">
                     <div>
                         <div class="tw-flex tw-justify-center sm:tw-justify-start">
@@ -104,84 +104,103 @@
                         </ul>
                     </div>
 
-                    <div class="tw-grid tw-grid-cols-1 tw-gap-8 tw-mt-8 lg:tw-mt-0 sm:tw-grid-cols-2 md:tw-grid-cols-5 lg:tw-col-span-3">
-                        <div class="tw-text-center sm:tw-text-left md:tw-col-span-2 lg:tw-pl-14">
-                            <p class="tw-text-lg tw-font-medium">Contact Us</p>
+                    <div class="tw-grid tw-grid-cols-1 tw-gap-2 tw-mt-8 lg:tw-mt-0 sm:tw-grid-cols-2 md:tw-grid-cols-5 lg:tw-col-span-3">
+                        <div class="tw-text-center sm:tw-text-left md:tw-col-span-2">
+                            <p class="tw-text-lg tw-font-medium tw-font-['Roboto']">Contact Us</p>
 
-                            <ul class="tw-mt-8 tw-space-y-4 tw-text-sm">
-                                <li>
-                                    <span class="footer-link tw-flex tw-items-center tw-justify-center sm:tw-justify-start" href="/">
-                                        <ClientOnly><Icon name="ic:round-mail-outline"></Icon></ClientOnly>
-                                        <span class="tw-ml-1">mail@domain.com</span>
-                                    </span>
-                                </li>
+                            <div class="tw-mt-8 tw-space-y-2">
+                                <UnorderedList
+                                    class="tw-flex sm:tw-justify-start tw-justify-center"
+                                    :size="'md'"
+                                    :icon="'ic:round-mail-outline'"
+                                    :label="'info@colorful-technology.com'"/>
 
-                                <li>
-                                    <span class="tw-flex tw-items-center tw-justify-center sm:tw-justify-start" href="/">
-                                        <ClientOnly><Icon name="ic:sharp-phone"></Icon></ClientOnly>
-                                        <span>+63 991 9991 991</span>
-                                    </span>
-                                </li>
+                                <UnorderedList
+                                    class="tw-flex sm:tw-justify-start tw-justify-center"
+                                    :size="'md'"
+                                    :icon="'ic:sharp-phone'"
+                                    :label="'+63 99-1999-1991'"/>
 
-                                <li class="tw-flex tw-items-start tw-justify-center sm:tw-justify-start">
-                                    <ClientOnly><Icon name="ic:sharp-location-on"></Icon></ClientOnly>
-                                    <address class="tw--mt-0.5 tw-not-italic">
-                                        Manila, Philippines
-                                    </address>
-                                </li>
-                            </ul>
+                                <UnorderedList
+                                    class="tw-flex sm:tw-justify-start tw-justify-center"
+                                    :size="'md'"
+                                    :icon="'ic:sharp-location-on'"
+                                    :label="'Quezon City, Metro Manila, Philippines'"/>
+                            </div>
                         </div>
 
-                        <div class="tw-text-center sm:tw-text-left">
-                            <p class="tw-text-lg tw-font-medium">Our Services</p>
+                        <div class="tw-text-center tw-mt-12 sm:tw-text-left sm:tw-mt-0">
+                            <p class="tw-text-lg tw-font-medium tw-font-['Roboto']">Our Services</p>
 
-                            <ul class="tw-mt-8 tw-space-y-4 tw-text-sm">
-                                <li>
-                                    <a class="footer-link tw-transition hover:tw-text-gray-700/75" href="/">Web Development</a>
-                                </li>
-                                <li>
-                                    <a class="footer-link tw-transition hover:tw-text-gray-700/75" href="/">Web Design</a>
-                                </li>
-                            </ul>
+                            <div class="tw-mt-8 tw-space-y-2">
+
+                                <UnorderedList
+                                    class="tw-flex sm:tw-justify-start tw-justify-center"
+                                    :size="'md'"
+                                    :label="'Custom Web Applications'"/>
+                                <UnorderedList
+                                    class="tw-flex sm:tw-justify-start tw-justify-center"
+                                    :size="'md'"
+                                    :label="'Mobile Applications'"/>
+                                <UnorderedList
+                                    class="tw-flex sm:tw-justify-start tw-justify-center"
+                                    :size="'md'"
+                                    :label="'Product Landing Page'"/>
+                                <UnorderedList
+                                    class="tw-flex sm:tw-justify-start tw-justify-center"
+                                    :size="'md'"
+                                    :label="'E-Commerce Site'"/>
+                            </div>
                         </div>
 
-                        <div class="tw-text-center sm:tw-text-left">
-                            <p class="tw-text-lg tw-font-medium">Helpful Links</p>
+                        <div class="tw-text-center tw-mt-12 sm:tw-text-left md:tw-mt-0">
+                            <p class="tw-text-lg tw-font-medium tw-font-['Roboto']">Helpful Links</p>
 
-                            <ul class="tw-mt-8 tw-space-y-4 tw-text-sm">
-                                <li>
-                                    <a class="footer-link tw-transition hover:tw-text-gray-700/75" href="/">FAQs</a>
-                                </li>
-                                <li>
-                                    <a class="footer-link tw-transition hover:tw-text-gray-700/75" href="/">Support</a>
-                                </li>
+                            <div class="tw-mt-8 tw-space-y-2">
 
-                                <li>
-                                    <a class="footer-link tw-group tw-flex tw-justify-center tw-gap-1.5 sm:tw-justify-start" href="/">
+                                <UnorderedList
+                                    class="tw-flex sm:tw-justify-start tw-justify-center"
+                                    :size="'md'"
+                                    :icon="'ri:info-i'"
+                                    :label="'FAQs'"/>
+                                <UnorderedList
+                                    class="tw-flex sm:tw-justify-start tw-justify-center"
+                                    :size="'md'"
+                                    :icon="'ri:info-i'"
+                                    :label="'Support'"/>
+                                <UnorderedList
+                                    class="tw-flex sm:tw-justify-start tw-justify-center tw-overflow-visible"
+                                    :icon="'ri:info-i'"
+                                    :size="'md'">
+                                    <div class="tw-flex">
                                         <span class="tw-transition group-hover:tw-text-gray-700/75">
                                             Live Chat
                                         </span>
-                                        <span class="tw-relative tw-flex tw-h-2 tw-w-2">
+                                        <span class="tw-ml-1 tw-relative tw-flex tw-h-2 tw-w-2">
                                             <span class="tw-absolute tw-inline-flex tw-h-full tw-w-full tw-animate-ping tw-rounded-full ping-highlight tw-opacity-75"></span>
                                             <span class="tw-relative tw-inline-flex tw-h-2 tw-w-2 tw-rounded-full ping"></span>
                                         </span>
-                                    </a>
-                                </li>
-                            </ul>
+                                    </div>
+                                </UnorderedList>
+                            </div>
                         </div>
 
-                        <div class="tw-text-center sm:tw-text-left">
-                            <p class="tw-text-lg tw-font-medium">About Us</p>
+                        <div class="tw-text-center tw-mt-12 sm:tw-text-left md:tw-mt-0">
+                            <p class="tw-text-lg tw-font-medium tw-font-['Roboto']">About Us</p>
 
-                            <ul class="tw-mt-8 tw-space-y-4 tw-text-sm">
-                                <li>
-                                    <a class="footer-link tw-transition hover:tw-text-gray-700/75" href="/">Company History</a>
-                                </li>
+                            <div class="tw-mt-8 tw-space-y-2 tw-text-sm">
 
-                                <li>
-                                    <a class="footer-link tw-transition hover:tw-text-gray-700/75" href="/">Meet the Team</a>
-                                </li>
-                            </ul>
+                                <UnorderedList
+                                    class="tw-flex sm:tw-justify-start tw-justify-center"
+                                    :size="'md'"
+                                    :icon="'ri:info-i'"
+                                    :label="'Company History'"/>
+                                <UnorderedList
+                                    class="tw-flex sm:tw-justify-start tw-justify-center"
+                                    :size="'md'"
+                                    :icon="'ri:info-i'"
+                                    :label="'Meet the Team'"/>
+                            </div>
                         </div>
                     </div>
                 </div>
