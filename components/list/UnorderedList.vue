@@ -4,7 +4,7 @@
         <div :style="{'height': iconSlotHeight}" class="tw-flex tw-items-center">
             <ClientOnly><Icon :name="icon" :class="[heightClass]"/></ClientOnly>
         </div>
-        <div :class="[fontClass]" class="tw-ml-1 tw-whitespace-pre-line">{{label}}</div>
+        <div :class="[fontClass]" class="tw-ml-1 tw-whitespace-pre-line">{{label}}<slot></slot></div>
     </div>
 </template>
 
