@@ -209,18 +209,21 @@
 
                 <div class="tw-pt-2 tw-mt-2">
                     <div class="tw-text-center sm:tw-flex sm:tw-justify-between sm:tw-text-left">
-                        <p class="tw-text-sm">
-                            <span class="tw-block sm:tw-inline">All rights reserved.</span>
-                            <a class="tw-inline-block tw-underline" href="/">
+                        <p class="tw-text-base">
+
+                            <a class="tw-inline-block hover:tw-underline" href="/">
                                 Terms & Conditions
                             </a>
-                            <span>&middot;</span>
-                            <a class="tw-inline-block tw-underline" href="/">
+                            <span>&nbsp;.&nbsp;</span>
+                            <a class="tw-inline-block hover:tw-underline" href="/">
                                 Privacy Policy
                             </a>
                         </p>
-                        <p class="tw-mt-4 tw-text-sm tw-flex tw-items-center tw-justify-center sm:tw-justify-start sm:tw-order-first sm:tw-mt-0">
-                            <ClientOnly><Icon name="ic:sharp-copyright"></Icon></ClientOnly>2024
+                        <p class="tw-mt-4 tw-text-base tw-flex tw-items-center tw-justify-center sm:tw-justify-start sm:tw-order-first sm:tw-mt-0">
+                            <ClientOnly><Icon name="ic:sharp-copyright"></Icon></ClientOnly>
+                            2024
+                            &nbsp;
+                            <span class="tw-block sm:tw-inline">All rights reserved.</span>
                         </p>
                     </div>
                 </div>
