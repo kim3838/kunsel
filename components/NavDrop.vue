@@ -47,13 +47,13 @@
     </div>
 </template>
 <script setup>
-import {computed, ref} from "vue";
-import {useFocusWithin} from '@vueuse/core';
+import {computed, ref, watch} from "vue";
+import {useFocus, onClickOutside} from '@vueuse/core'
 import {storeToRefs} from 'pinia';
 
-const nav = ref();
+const nav = ref(null);
 const {$themeStore} = useNuxtApp();
-const {focused: navigationFocused} = useFocusWithin(nav);
+
 const {
     hexAlpha,
     primary: primaryColor,
@@ -126,9 +126,7 @@ const props = defineProps({
     }
 })
 
-const activeComputed = computed(() => {
-    return props.dropOptions.length && navigationFocused.value;
-});
+const activeComputed = ref(false);
 const navDropOptionsStyleComputed = computed(() => {
 
     let dropDirection = {
@@ -150,6 +148,18 @@ const navDropOptionsStyleComputed = computed(() => {
     };
 
     return dropDirection[props.dropJustify]
+});
+
+const { focused: navigationFocused } = useFocus(nav);
+
+onClickOutside(nav, (event) => {
+    activeComputed.value = false;
+});
+
+watch(navigationFocused, value => {
+    if(value && props.dropOptions.length){
+        activeComputed.value = true;
+    }
 });
 
 const classes = computed(() => {

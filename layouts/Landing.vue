@@ -279,7 +279,7 @@ const {y: snapYScroll,arrivedState: snapScrollArrivedState } = useScroll(snapScr
 const {top: snapScrollTopReached} = toRefs(snapScrollArrivedState);
 
 watch(snapYScroll, (yScroll) => {
-    if(yScroll <= ((screenHeight.value * 2) - navigationHeight.value) && ['index'].includes(_toLower(route.name))){
+    if(yScroll <= ((screenHeight.value * 1) - navigationHeight.value) && ['index'].includes(_toLower(route.name))){
         setNavigationMode('clear');
     } else {
         setNavigationMode('solid');
@@ -287,10 +287,6 @@ watch(snapYScroll, (yScroll) => {
 });
 </script>
 <style scoped>
-a.footer-link:hover{
-    text-decoration: underline;
-}
-
 .primary-navigation-parent {
     background-color: v-bind(navigationBackground) !important;
     left: 0;
