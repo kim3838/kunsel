@@ -58,11 +58,25 @@ const {
 } = useLayout();
 
 const navigationLinkColor = computed(()=>{
-    if(navigationMode.value === 'clear'){
+    if(navigationMode.value == 'clear'){
         return '#ffffff';
     }
 
     return 'auto';
+});
+const navDropOptionsParentBackgroundColor = computed(()=>{
+    if(navigationMode.value == 'clear'){
+        return accentColor20.value;
+    }
+
+    return tintColor.value;
+});
+const navDropOptionsParentBorderColor = computed(()=>{
+    if(navigationMode.value == 'clear'){
+        return accentColor20.value;
+    }
+
+    return neutralColor.value;
 });
 
 const nuxtWrapper = ref(null);
@@ -144,6 +158,40 @@ const {top: nuxtWrapperTopReached} = toRefs(nuxtWrapperArrivedState);
 }
 
 .nav-link:hover{
+    background-color: v-bind(accentColor20);
+}
+
+.nav-drop-active{
+    background-color: v-bind(accentColor20);
+    border: 1px solid v-bind(neutralColor);
+    border-bottom-width: 0px;
+}
+
+.nav-drop{
+    color: v-bind(navigationLinkColor);
+    position: relative;
+    box-sizing: border-box;
+    display: inline-flex;
+    align-items: center;
+    border: 1px solid transparent;
+}
+.nav-drop:hover{
+    background-color: v-bind(accentColor20);
+}
+
+.nav-drop-options-parent{
+    position: absolute;
+    border: 1px solid v-bind(navDropOptionsParentBorderColor);
+    min-width: calc(100% + 2px);
+    width: max-content;
+    background-color: v-bind(navDropOptionsParentBackgroundColor);
+}
+
+.nav-drop-link{
+    color: v-bind(navigationLinkColor);
+}
+
+.nav-drop-link:hover{
     background-color: v-bind(accentColor20);
 }
 

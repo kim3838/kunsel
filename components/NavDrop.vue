@@ -1,10 +1,10 @@
 <template>
     <div
-        ref="nav"
+        ref="navDrop"
         tabindex="0"
         :style="{'text-shadow': navigationTextShadow}"
         :class="[classes, headerFontClass]"
-        class="nav tw-px-4 tw-cursor-pointer focus:tw-outline-none focus:tw-ring-transparent focus:tw-ring-1">
+        class="nav-drop tw-px-4 tw-cursor-pointer focus:tw-outline-none focus:tw-ring-transparent focus:tw-ring-1">
         {{title}}
         <ClientOnly><Icon :name="navDropIcon"/></ClientOnly>
         <div
@@ -49,28 +49,13 @@
 <script setup>
 import {computed, ref, watch} from "vue";
 import {useFocus, onClickOutside} from '@vueuse/core'
-import {storeToRefs} from 'pinia';
 
-const nav = ref(null);
-const {$themeStore} = useNuxtApp();
+const navDrop = ref(null);
 
-const {
-    hexAlpha,
-    primary: primaryColor,
-    accent: accentColor,
-    neutral: neutralColor,
-    tint: tintColor
-} = storeToRefs($themeStore);
 const {
     navigationMode,
 } = useLayout();
-const navigationLinkColor = computed(()=>{
-    if(navigationMode.value == 'clear'){
-        return '#ffffff';
-    }
 
-    return 'auto';
-});
 const navigationTextShadow = computed(()=>{
     if(navigationMode.value == 'clear'){
         return '1px 1px 2px #000000';
@@ -78,28 +63,9 @@ const navigationTextShadow = computed(()=>{
 
     return 'none';
 });
-const dropOptionsParentBackgroundColor = computed(()=>{
-    if(navigationMode.value == 'clear'){
-        return accentColor20.value;
-    }
 
-    return tintColor.value;
-});
-const dropOptionsParentBorderColor = computed(()=>{
-    if(navigationMode.value == 'clear'){
-        return accentColor20.value;
-    }
-
-    return neutralColor.value;
-});
 const navDropIcon = computed(()=>{
    return props.parent ? 'ic:baseline-arrow-drop-down' : 'ic:baseline-arrow-right';
-});
-const primaryColor50 = computed(() => {
-    return primaryColor.value + hexAlpha.value['50'];
-});
-const accentColor20 = computed(() => {
-    return accentColor.value + hexAlpha.value['20'];
 });
 
 const props = defineProps({
@@ -150,9 +116,9 @@ const navDropOptionsStyleComputed = computed(() => {
     return dropDirection[props.dropJustify]
 });
 
-const { focused: navigationFocused } = useFocus(nav);
+const { focused: navigationFocused } = useFocus(navDrop);
 
-onClickOutside(nav, (event) => {
+onClickOutside(navDrop, (event) => {
     activeComputed.value = false;
 });
 
@@ -164,7 +130,7 @@ watch(navigationFocused, value => {
 
 const classes = computed(() => {
     return activeComputed.value
-        ? 'nav-active'
+        ? 'nav-drop-active'
         : ''
 });
 
@@ -177,37 +143,5 @@ const headerFontClass = computed(() => {
 });
 </script>
 <style scoped>
-.nav-active{
-    background-color: v-bind(accentColor20);
-    border: 1px solid v-bind(neutralColor);
-    border-bottom-width: 0px;
-}
 
-.nav{
-    color: v-bind(navigationLinkColor);
-    position: relative;
-    box-sizing: border-box;
-    display: inline-flex;
-    align-items: center;
-    border: 1px solid transparent;
-}
-.nav:hover{
-    background-color: v-bind(accentColor20);
-}
-
-.nav-drop-options-parent{
-    position: absolute;
-    border: 1px solid v-bind(dropOptionsParentBorderColor);
-    min-width: calc(100% + 2px);
-    width: max-content;
-    background-color: v-bind(dropOptionsParentBackgroundColor);
-}
-
-.nav-drop-link{
-    color: v-bind(navigationLinkColor);
-}
-
-.nav-drop-link:hover{
-    background-color: v-bind(accentColor20);
-}
 </style>
