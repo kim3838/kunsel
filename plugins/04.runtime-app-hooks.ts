@@ -4,9 +4,16 @@
 */
 export default defineNuxtPlugin((nuxtApp) => {
 
-    //Called on Suspense pending event.
-    nuxtApp.hook('page:start', () => {
-        console.log({'RUNTIME APP HOOK': 'page:start'});
+    //Called when initial vueApp instance is created.
+    nuxtApp.hook('app:created', () => {
+        console.log({'RUNTIME APP HOOK': 'app:created'});
+        const route = useRoute();
+
+        if(['index'].indexOf(_toLower(route.name)) >= 0){
+            useLayout().setNavigationMode('clear');
+        } else {
+            useLayout().setNavigationMode('solid');
+        }
     });
 
     //Called when SSR rendering is done.
