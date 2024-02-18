@@ -46,6 +46,24 @@ const liningColor10 = computed(() => {
 const liningColor70 = computed(() => {
     return liningColor.value + hexAlpha.value['70'];
 });
+const primaryColor50 = computed(() => {
+    return primaryColor.value + hexAlpha.value['50'];
+});
+const accentColor20 = computed(() => {
+    return accentColor.value + hexAlpha.value['20'];
+});
+
+const {
+    navigationMode,
+} = useLayout();
+
+const navigationLinkColor = computed(()=>{
+    if(navigationMode.value === 'clear'){
+        return '#ffffff';
+    }
+
+    return 'auto';
+});
 
 const nuxtWrapper = ref(null);
 const {x: nuxtWrapperXScroll,y: nuxtWrapperYScroll,arrivedState: nuxtWrapperArrivedState } = useScroll(nuxtWrapper)
@@ -102,6 +120,31 @@ const {top: nuxtWrapperTopReached} = toRefs(nuxtWrapperArrivedState);
 
 .scaffold{
     border: 1px solid v-bind(liningColor);
+}
+
+.nav-active{
+    border-style: solid;
+    border-top-color: transparent;
+    border-left-color: transparent;
+    border-right-color: transparent;
+    border-top-width: 1px;
+    border-left-width: 1px;
+    border-right-width: 1px;
+    border-bottom-width: 2px;
+    border-bottom-color: v-bind(primaryColor50);
+    background-color: v-bind(accentColor20);
+}
+
+.nav-link{
+    color: v-bind(navigationLinkColor);
+}
+
+.nav-link:focus{
+    border: 1px solid v-bind(neutralColor);
+}
+
+.nav-link:hover{
+    background-color: v-bind(accentColor20);
 }
 
 .top-fragment{
