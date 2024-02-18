@@ -21,10 +21,11 @@ export default defineNuxtPlugin(nuxtApp => {
     });
 
     /*
-    * Runtime Hooks
+    * App Hooks (runtime)
     * https://nuxt.com/docs/api/advanced/hooks#app-hooks-runtime
-    **/
+    */
     nuxtApp.hook('app:beforeMount', () => {
+        console.log({'HOOK': 'app:beforeMount'});
         const {$themeStore} = useNuxtApp();
 
         const {
