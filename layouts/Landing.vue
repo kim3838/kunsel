@@ -65,7 +65,7 @@
         </nav>
         <!-- Main Content -->
         <main class="tw-transition-all tw-duration-300 allocate-navigation">
-            <slot name="content"/>
+            <slot></slot>
         </main>
         <!-- DateTime Picker -->
         <div id="datetimepicker-slot"></div>
