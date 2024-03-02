@@ -4,7 +4,7 @@
 
         <div class="tw-space-y-2">
             <!-- Static Single, MultiSelect and DateTime, Date, and Month Picker -->
-            <div v-if="true" class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-8">
+            <div v-if="false" class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-8">
                 <div class="tw-block neutral-border">
                     <InputLabel :size="'sm'" value="Static Multi Select" />
                     <MultiSelect drop-shadow :selection-max-viewable-line="5" :size="'md'" :options="category" :icon="'ic:sharp-qr-code'"/>
@@ -76,7 +76,7 @@
             </div>
 
             <!-- Paginated Single and MultiSelect -->
-            <div v-if="true" class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-8">
+            <div v-if="false" class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-8">
                 <div class="tw-block neutral-border">
                     <InputLabel :size="'sm'" value="Paginated Multi Select" />
                     <MultiSelectPaginated
@@ -200,7 +200,7 @@
             </div>
 
             <!-- Datatables -->
-            <div v-if="true" class="tw-grid tw-gap-2 sm:tw-grid-cols-1 md:tw-grid-cols-2 lg:tw-grid-cols-4">
+            <div v-if="false" class="tw-grid tw-gap-2 sm:tw-grid-cols-1 md:tw-grid-cols-2 lg:tw-grid-cols-4">
                 <div class="tw-block tw-col-span-1 sm:tw-col-span-3 md:tw-col-span-2 lg:tw-col-span-2 tw-p-2 neutral-border">
                     <InputLabel class="tw-mb-2" :size="'md'" value="MD Datatable" />
                     <DataTable
@@ -453,7 +453,7 @@
                 <div class="tw-block tw-p-2 neutral-border">
                     <InputLabel class="tw-mb-2" :size="'md'" value="Spacing Aligment Grid" />
                     <div class="tw-grid tw-gap-1 tw-grid-cols-7">
-                        <div v-if="true">
+                        <div v-if="false">
                             <div>
                                 <MultiSelectPaginated
                                     :drop-shadow="true"
@@ -520,7 +520,7 @@
                             <div><Button class="" :size="'2xs'" :icon="tabGroup.icon" :label="''" /></div>
                         </div>
 
-                        <div v-if="true">
+                        <div v-if="false">
                             <div>
                                 <MultiSelectPaginated
                                     :drop-shadow="true"
@@ -587,7 +587,7 @@
                             <div><Button class="" :size="'xs'" :icon="tabGroup.icon" :label="''" /></div>
                         </div>
 
-                        <div v-if="true">
+                        <div v-if="false">
                             <div>
                                 <MultiSelectPaginated
                                     :drop-shadow="true"
@@ -654,7 +654,7 @@
                             <div><Button class="" :size="'sm'" :icon="tabGroup.icon" :label="''" /></div>
                         </div>
 
-                        <div v-if="true">
+                        <div v-if="false">
                             <div>
                                 <MultiSelectPaginated
                                     :drop-shadow="true"
@@ -721,7 +721,7 @@
                             <div><Button class="" :size="'md'" :icon="tabGroup.icon" :label="''" /></div>
                         </div>
 
-                        <div v-if="true">
+                        <div v-if="false">
                             <div>
                                 <MultiSelectPaginated
                                     :drop-shadow="true"
@@ -787,7 +787,7 @@
                             <div><Button class="" :size="'lg'" :icon="tabGroup.icon" :label="''" /></div>
                         </div>
 
-                        <div v-if="true">
+                        <div v-if="false">
                             <div><InputWithIcon :size="'xl'" :icon="tabGroup.icon" :placeholder="'Enter value'" type="text" autocomplete="off" /></div>
                             <div><Button class="tw-w-full" :size="'xl'" :icon="tabGroup.icon" :label="'Button'" /></div>
                             <div><Button class="tw-w-3/4" :size="'xl'" :icon="tabGroup.icon" :variant="'outline'" :label="'Button'" /></div>
@@ -798,7 +798,7 @@
                             <div><Button class="" :size="'xl'" :icon="tabGroup.icon" :label="''" /></div>
                         </div>
 
-                        <div v-if="true">
+                        <div v-if="false">
                             <div><InputWithIcon :size="'2xl'" :icon="tabGroup.icon" :placeholder="'Enter value'" type="text" autocomplete="off" /></div>
                             <div><Button class="tw-w-full" :size="'2xl'" :icon="tabGroup.icon" :label="'Button'" /></div>
                             <div><Button class="tw-w-3/4" :size="'2xl'" :icon="tabGroup.icon" :variant="'outline'" :label="'Button'" /></div>
@@ -813,7 +813,7 @@
             </div>
 
             <!-- Button and Input Horizontal Alignment -->
-            <div v-if="false">
+            <div v-if="true">
                 <div class="tw-my-4 tw-flex tw-justify-center tw-space-x-1.5">
                     <Button :size="tabGroup.size" :icon="tabGroup.icon" :label="'Default'" />
                     <Button :size="tabGroup.size" :icon="tabGroup.icon" :variant="'outline'" :label="'Outline'" />
@@ -898,6 +898,48 @@
                 </div>
             </div>
 
+            <!-- Hero Plate -->
+            <div v-if="true" class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-4">
+                <div>
+                    <HeroPlate :size="'sm'" :bookmark="'FOR YOU'" :label="'B760M-MEOW'"/>
+                </div>
+                <div>
+                    <HeroPlate :size="'sm'" :bookmark="'NEW ARRIVAL'" :theme="'gold'" :label="'COLORFIRE Meow Series'"/>
+                </div>
+                <div>
+                    <HeroPlate :size="'sm'" :bookmark="'TRENDING'" :theme="'strawberry'" :label="'RTX 4060 MEOW-ORG'"/>
+                </div>
+                <div>
+                    <HeroPlate :size="'sm'" :bookmark="'PC CASE'" :theme="'tulip'" :label="'Segotep Memphis-S'"/>
+                </div>
+
+                <div>
+                    <HeroPlate :size="'md'" :bookmark="'FOR YOU'" :label="'B760M-MEOW'"/>
+                </div>
+                <div>
+                    <HeroPlate :size="'md'" :bookmark="'NEW ARRIVAL'" :theme="'gold'" :label="'COLORFIRE Meow Series'"/>
+                </div>
+                <div>
+                    <HeroPlate :size="'md'" :bookmark="'TRENDING'" :theme="'strawberry'" :label="'RTX 4060 MEOW-ORG'"/>
+                </div>
+                <div>
+                    <HeroPlate :size="'md'" :bookmark="'PC CASE'" :theme="'tulip'" :label="'Segotep Memphis-S'"/>
+                </div>
+
+                <div>
+                    <HeroPlate :size="'lg'" :bookmark="'FOR YOU'" :label="'B760M-MEOW'"/>
+                </div>
+                <div>
+                    <HeroPlate :size="'lg'" :bookmark="'NEW ARRIVAL'" :theme="'gold'" :label="'COLORFIRE Meow Series'"/>
+                </div>
+                <div>
+                    <HeroPlate :size="'lg'" :bookmark="'TRENDING'" :theme="'strawberry'" :label="'RTX 4060 MEOW-ORG'"/>
+                </div>
+                <div>
+                    <HeroPlate :size="'lg'" :bookmark="'PC CASE'" :theme="'tulip'" :label="'Segotep Memphis-S'"/>
+                </div>
+            </div>
+
             <!-- Accordion -->
             <div v-if="true" class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-1 lg:tw-grid-cols-3 xl:tw-grid-cols-3 2xl:tw-grid-cols-3">
                 <div>
@@ -915,7 +957,7 @@
             </div>
 
             <!-- Checkbox -->
-            <div v-if="true" class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-8">
+            <div v-if="false" class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-8">
                 <div class="neutral-border">
                     <label>
                         <Checkbox v-model="remember1" :label="' '" :size="'md'" name="remember" />
@@ -939,7 +981,7 @@
             </div>
 
             <!-- Checkbox Group -->
-            <div v-if="true" class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-8">
+            <div v-if="false" class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-8">
                 <div class="neutral-border">
                 </div>
                 <div class="neutral-border">
@@ -960,7 +1002,7 @@
             </div>
 
             <!-- Radio Group -->
-            <div v-if="true" class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-8">
+            <div v-if="false" class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-8">
                 <div class="tw-flex tw-items-start tw-justify-start tw-block neutral-border">
                     <div>
                         <InputLabel :size="'md'" value="SM : Gender Group" />
@@ -1072,7 +1114,7 @@
             </div>
 
             <!-- Typography -->
-            <div v-if="true" class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-8">
+            <div v-if="false" class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-8">
                 <div class="tw-block neutral-border tw-col-span-2">
                     <p class="tw-text-sm tw-leading-4">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
                 </div>
@@ -1088,7 +1130,7 @@
             </div>
 
             <!-- Font Weights -->
-            <div v-if="true" class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-8">
+            <div v-if="false" class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-8">
                 <div class="tw-block neutral-border tw-col-span-2">
                     <p class="tw-text-sm tw-font-thin tw-leading-4">Thin: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
                     <br><p class="tw-text-sm tw-font-extralight tw-leading-4">Extra Light: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
