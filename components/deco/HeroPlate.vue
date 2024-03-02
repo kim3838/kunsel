@@ -2,14 +2,14 @@
     <div class="tw-relative tw-w-max">
 
         <div v-if="bookmark?.trim()" class="tw-relative tw-z-20 tw-w-full tw-flex tw-justify-end">
-            <div class="bookmark tw-w-max tw-text-sm">
+            <div class="bookmark tw-w-max tw-text-sm tw-leading-4">
                 {{bookmark}}
             </div>
         </div>
 
         <div class="border-fragment tw-relative tw-z-30 tw-w-max">
             <div class="base-fragment tw-w-max">
-                <div :class="[textClass]" class="tw-px-1.5 tw-py-1.5 tw-text-transparent tw-bg-clip-text text-fragment">
+                <div :class="[textClass]" class="tw-px-1.5 tw-py-1 tw-text-transparent tw-bg-clip-text text-fragment">
                     {{label}}
                 </div>
             </div>
@@ -44,8 +44,8 @@ const props = defineProps({
 
 const textClass = computed(()=>{
     return {
-        'sm': 'tw-text-lg tw-font-medium',
-        'md': 'tw-text-xl tw-font-semibold',
+        'sm': 'tw-text-xl tw-font-bold',
+        'md': 'tw-text-2xl tw-font-bold',
         'lg': 'tw-text-3xl tw-font-bold',
     }[props.size];
 })
@@ -130,13 +130,14 @@ const textAccent = computed(()=>{
     clip-path: polygon(0.4rem 0, 100% 0, 100% 100%, 0 100%, 0 0.4rem);
     margin-bottom: -1px;
     border-bottom: 1px solid transparent;
+    text-shadow: 0px 1px 2px rgba(0, 0, 0, 0.4);
 }
 
-@for $i from 1 through 20 {
-    .border-fragment:nth-child(#{$i}) {
-        animation-delay: #{random(5) * 0.5}s !important;
-    }
-}
+//@for $i from 1 through 20 {
+//    .border-fragment:nth-child(#{$i}) {
+//        animation-delay: #{random(5) * 0.5}s !important;
+//    }
+//}
 
 @keyframes animate-border {
     0% { border-image-source: linear-gradient(360deg,   v-bind(primaryColor),   transparent); }
