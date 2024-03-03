@@ -31,7 +31,7 @@ export const useLayout = () => {
     const {body: bodyColor} = storeToRefs($themeStore);
 
     const enableScrollSnap = computed(() => {
-        return ['index'].includes(routeTo.name);
+        return ['index'].includes(routeTo.value.name);
     });
     const navigationAccountLinks = computed(() => {
         let links: object[] = [];
@@ -182,7 +182,7 @@ export const useLayout = () => {
             return '0px';
         }
 
-        if(['index'].includes(routeTo.name)){
+        if(['index'].includes(routeTo.value.name)){
             return '0px';
         }
 
@@ -226,6 +226,7 @@ export const useLayout = () => {
         navigationHeight.value = height;
     }
     function setNavigationMode(mode: any){
+        console.log({'CALL non-independent': 'setNavigationMode'});
         if(mode != navigationMode.value){
             navigationMode.value = mode;
         }
