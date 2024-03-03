@@ -1,14 +1,37 @@
 import {storeToRefs} from "pinia";
 
+export const layoutState = () => {
+    return useState('layout-value', () => 'default');
+};
+export const navigationModeState = () => {
+    return useState('navigation-mode', () => 'clear');
+};
+
+export const setLayout = function(layout: any){
+    const layoutValue = layoutState();
+    if(layout != layoutValue.value){
+        layoutValue.value = layout;
+    }
+};
+
+export const setNavigationMode = function(mode: any){
+    const navigationMode = navigationModeState();
+    if(mode != navigationMode.value){
+        navigationMode.value = mode;
+    }
+};
+
 export const useLayout = () => {
-    const route = useRoute();
+    const navigationMode = navigationModeState();
+
+    const routeTo = useRouteTo();
     const {isAuthenticated, logout} = useAuth();
     const {screens, width: screenWidth, height: screenHeight } = useScreen();
     const $themeStore = useThemeStore();
     const {body: bodyColor} = storeToRefs($themeStore);
 
     const enableScrollSnap = computed(() => {
-        return ['index'].includes(_toLower(route.name));
+        return ['index'].includes(routeTo.name);
     });
     const navigationAccountLinks = computed(() => {
         let links: object[] = [];
@@ -84,6 +107,12 @@ export const useLayout = () => {
             },
             {
                 type: 'link',
+                title: 'Example',
+                to: '/example',
+                route: 'example'
+            },
+            {
+                type: 'link',
                 title: 'Prototypes',
                 to: '/prototypes',
                 route: 'prototypes'
@@ -136,7 +165,7 @@ export const useLayout = () => {
 
         return links;
     })
-    const navigationMode = useState('navigation-mode', () => 'clear');
+
     const navigationHeight = ref(0);
     const navigationBackground = computed(()=>{
         if(navigationMode.value == 'clear'){
@@ -153,7 +182,7 @@ export const useLayout = () => {
             return '0px';
         }
 
-        if(['index'].includes(_toLower(route.name))){
+        if(['index'].includes(routeTo.name)){
             return '0px';
         }
 

@@ -6,7 +6,7 @@
             class="primary-navigation-parent tw-transition-all tw-duration-700 tw-z-40 tw-fixed tw-flex tw-justify-center">
             <div class="tw-max-w-screen-2xl tw-w-full tw-flex tw-justify-start lg:tw-justify-around tw-h-10">
                 <div class="tw--my-px tw-flex tw-items-center">
-                    <div v-if="['index'].includes(_toLower(route.name))" class="tw-w-max tw-block tw-h-full tw-w-full tw-flex tw-items-center">
+                    <div v-if="['index'].includes(routeTo.name)" class="tw-w-max tw-block tw-h-full tw-w-full tw-flex tw-items-center">
                         <Colorful :dark="navigationMode === 'clear'" />
                     </div>
                     <NavDrop
@@ -78,7 +78,7 @@ import {storeToRefs} from 'pinia';
 import {computed, nextTick, onMounted, ref, watch} from "vue";
 import {useScroll} from '@vueuse/core';
 
-const route = useRoute();
+const routeTo = useRouteTo();
 const {$themeStore, $isRouteActive} = useNuxtApp();
 const {isAuthenticated, user, logout} = useAuth();
 const {screens, width: screenWidth, height: screenHeight } = useScreen();
