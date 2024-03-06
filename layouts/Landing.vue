@@ -283,7 +283,6 @@ const {top: snapScrollTopReached} = toRefs(snapScrollArrivedState);
 
 watch(snapYScroll, (yScroll) => {
     //Todo: do setNavigationMode only once in 1 second
-    console.log({yScroll:yScroll});
     if(yScroll <= ((screenHeight.value * 1) - navigationHeight.value) && ['index'].includes(routeTo.value.name)){
         setNavigationMode('clear');
     } else {
