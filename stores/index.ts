@@ -1,5 +1,6 @@
 import {defineStore} from 'pinia'
 
+//Todo: Move prompt module into ./stores/prompt.ts
 export const useCoreStore = defineStore('core', () => {
     const service = ref({
         error: {

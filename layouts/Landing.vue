@@ -282,15 +282,13 @@ const {y: snapYScroll,arrivedState: snapScrollArrivedState } = useScroll(snapScr
 const {top: snapScrollTopReached} = toRefs(snapScrollArrivedState);
 
 watch(snapYScroll, (yScroll) => {
-    let debouceSnapYScroll = _debounce(()=>{
-        if(yScroll <= ((screenHeight.value * 1) - navigationHeight.value) && ['index'].includes(routeTo.value.name)){
-            setNavigationMode('clear');
-        } else {
-            setNavigationMode('solid');
-        }
-    }, 5000, { leading: true, trailing: true });
-
-    debouceSnapYScroll();
+    //Todo: do setNavigationMode only once in 1 second
+    console.log({yScroll:yScroll});
+    if(yScroll <= ((screenHeight.value * 1) - navigationHeight.value) && ['index'].includes(routeTo.value.name)){
+        setNavigationMode('clear');
+    } else {
+        setNavigationMode('solid');
+    }
 });
 </script>
 <style scoped>

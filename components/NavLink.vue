@@ -4,6 +4,7 @@
         :style="{'text-shadow': navigationTextShadow}"
         class="tw-box-border tw-inline-flex tw-items-center tw-px-4 focus:tw-outline-none focus:tw-ring-transparent focus:tw-ring-1"
         :class="[classes, headerFontClass, 'nav-link']">
+        <!-- Todo: when navigating pages, the nav-active border bottom indicator doesnt show immediately unless clicked on something -->
         <slot></slot>
     </NuxtLink>
 </template>
