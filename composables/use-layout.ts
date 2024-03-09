@@ -3,9 +3,6 @@ import {storeToRefs} from "pinia";
 export const layoutState = () => {
     return useState('layout-value', () => 'default');
 };
-export const navigationModeState = () => {
-    return useState('navigation-mode', () => 'clear');
-};
 
 export const setLayout = function(layout: any){
     const layoutValue = layoutState();
@@ -14,21 +11,13 @@ export const setLayout = function(layout: any){
     }
 };
 
-export const setNavigationMode = function(mode: any){
-    const navigationMode = navigationModeState();
-    if(mode != navigationMode.value){
-        navigationMode.value = mode;
-    }
-};
-
 export const useLayout = () => {
-    const navigationMode = navigationModeState();
-
     const routeTo = useRouteTo();
     const {isAuthenticated, logout} = useAuth();
     const {screens, width: screenWidth, height: screenHeight } = useScreen();
     const $themeStore = useThemeStore();
     const {body: bodyColor} = storeToRefs($themeStore);
+    const navigationMode = useState('navigation-mode', () => 'clear');
 
     const enableScrollSnap = computed(() => {
         return ['index'].includes(routeTo.value.name);
@@ -226,7 +215,6 @@ export const useLayout = () => {
         navigationHeight.value = height;
     }
     function setNavigationMode(mode: any){
-        console.log({'CALL non-independent': 'setNavigationMode'});
         if(mode != navigationMode.value){
             navigationMode.value = mode;
         }
