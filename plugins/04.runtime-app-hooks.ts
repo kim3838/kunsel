@@ -6,7 +6,7 @@ export default defineNuxtPlugin((nuxtApp) => {
 
     //Called when the setup() of the new page is running.
     nuxtApp.hook('page:loading:start', () => {
-        //console.log({'RUNTIME APP HOOK': 'page:loading:start'});
+        //console.log({'PAGE NAVIGATE': 'page:loading:start'});
     });
 
     //Called when initial vueApp instance is created.
@@ -21,17 +21,17 @@ export default defineNuxtPlugin((nuxtApp) => {
 
     //Called on Suspense pending event.
     nuxtApp.hook('page:start', () => {
-        //console.log({'RUNTIME APP HOOK': 'page:start'});
+        //console.log({'PAGE NAVIGATE': 'page:start'});
     });
 
     //Called on Suspense resolved event.
     nuxtApp.hook('page:finish', () => {
-        //console.log({'RUNTIME APP HOOK': 'page:finish'});
+        //console.log({'PAGE NAVIGATE': 'page:finish'});
     });
 
     //Called after page:finish
     nuxtApp.hook('page:loading:end', () => {
-        //console.log({'RUNTIME APP HOOK': 'page:loading:end'});
+        //console.log({'PAGE NAVIGATE': 'page:loading:end'});
     });
 })
 
