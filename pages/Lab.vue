@@ -1,20 +1,16 @@
 <template>
     <div class="tw-mx-auto tw-max-w-screen-2xl tw-pt-4">
-        <div v-if="false">
-            <AccentFrame>
-                <template #content>
-                    <SampleEmitter
-                        v-model:[dynamicFoo]="fooComputed"
-                        v-model:[dynamicBarCaller]="barComputed"
-                        class="tw-w-[250px]"
-                    />
-                    <Button :variant="'flat'" @click="setPageLayout('default')" :label="'Default Layout'"></Button>
-                    <Button :variant="'flat'" @click="setPageLayout('landing')" :label="'Landing Layout'"></Button>
-                </template>
-            </AccentFrame>
+        <div class="tw-flex tw-mb-4">
+            <SampleEmitter
+                v-model:[dynamicFoo]="fooComputed"
+                v-model:[dynamicBarCaller]="barComputed"
+                class="tw-w-[250px]"
+            />
+            <Button :variant="'flat'" @click="changeLayout('default')" :label="'Default Layout'"></Button>
+            <Button :variant="'flat'" @click="changeLayout('landing')" :label="'Landing Layout'"></Button>
         </div>
 
-        <div class="tw-grid tw-gap-2 tw-grid-cols-2 tw-h-[230px]">
+        <div class="tw-grid tw-gap-2 tw-grid-cols-3 tw-h-[460px]">
             <Featured
                 v-if="false"
                 class="tw-w-[254px] tw-h-[354px]"
@@ -27,6 +23,7 @@
             />
             <HexagonFrame
                 v-for="item in leftToRightItems"
+                class="tw-flex-none"
                 :frame-border="item.frameBorder"
                 :content-border="item.contentBorder"
                 :direction="'ltr'"
@@ -40,16 +37,63 @@
                         />
                     </div>
                 </template>
-                <template #body>
-                    <div class="tw-h-full tw-w-[60%] tw-p-1">
-                        <div class="tw-font-semibold tw-text-lg">iGame Z790D5 FLOW V20 iGame Z790D5 FLOW V20</div>
-                        <Button :label="'Learn more'" :size="'md'" :variant="'flat'"></Button>
+                <template v-slot:body="{frameBorderColor, contentBorderColor}">
+                    <div class="tw-h-full tw-w-[60%] tw-p-1 tw-overflow-hidden tw-relative tw-flex tw-flex-col">
+                        <div class="tw-font-semibold tw-h-max tw-flex-none">
+                            <UnorderedList
+                                class="tw-cursor-pointer hover:tw-underline"
+                                :size="'md'"
+                                :icon="item.listIcon"
+                                :label="'iGame Z790D5 FLOW V20 iGame Z790D5 FLOW V20'"/>
+                        </div>
+
+                        <div class="tw-overflow-auto">
+                            <div v-if="true" class="tw-flex tw-flex-row tw-flex-nowrap">
+                                <div class="tw-w-1/2 tw-flex tw-flex-col tw-flex-wrap">
+                                    <UnorderedList
+                                        :size="'sm'"
+                                        :icon="'eos-icons:commit'"
+                                        :label="'PCIe 5.0 x16'"/>
+                                    <UnorderedList
+                                        :size="'sm'"
+                                        :icon="'eos-icons:commit'"
+                                        :label="'micro-ATX and mini-ITX form factors'"/>
+                                    <UnorderedList
+                                        :size="'sm'"
+                                        :icon="'eos-icons:commit'"
+                                        :label="'Wi-Fi 6'"/>
+                                </div>
+                                <div class="tw-w-1/2 tw-flex tw-flex-col tw-flex-wrap">
+                                    <UnorderedList
+                                        :size="'sm'"
+                                        :icon="'eos-icons:commit'"
+                                        :label="'3 PCIe 4.0 M.2 slots'"/>
+                                    <UnorderedList
+                                        :size="'sm'"
+                                        :icon="'eos-icons:commit'"
+                                        :label="'DDR4 memory support'"/>
+                                    <UnorderedList
+                                        :size="'sm'"
+                                        :icon="'eos-icons:commit'"
+                                        :label="'2 PCIe 4.0 M.2 slots'"/>
+                                </div>
+                            </div>
+
+                            <div>
+                                <Button v-if="true" :label="'Learn more'" :size="'md'" :variant="'flat'"></Button>
+                            </div>
+
+                            <UnorderedList
+                                v-for="description in item.descriptions"
+                                :size="'sm'"
+                                :label="description"/>
+                        </div>
                     </div>
                 </template>
             </HexagonFrame>
         </div>
 
-        <div class="tw-mt-6 tw-grid tw-gap-2 tw-grid-cols-5 tw-h-[454px]">
+        <div v-if="false" class="tw-mt-6 tw-grid tw-gap-2 tw-grid-cols-5 tw-h-[454px]">
             <HexagonFrame
                 v-for="item in topToBottomItems"
                 :key="item"
@@ -76,12 +120,11 @@
             </HexagonFrame>
         </div>
 
-        <div v-if="false" class="scaffold tw-w-[170px] tw-h-[230px]">
+        <div v-if="false" class="tw-w-[170px] tw-h-[230px]">
             <HexagonFrame>
                 <template #body>
                     <div class="tw-relative tw-h-full tw-flex tw-items-center tw-px-4 tw-text-center tw-font-['Google_Sans_Text'] tw-text-xl tw-font-semibold tw-px-8">
-                        Label
-                        <Button :label="'Click'"></Button>
+                        Hexagon Frame Without Corner
                     </div>
                 </template>
             </HexagonFrame>
@@ -118,9 +161,18 @@
 
 <script setup lang="ts">
 import {computed, ref, reactive, nextTick, onMounted} from "vue";
-useLayout().setNavigationMode('solid');
 
-definePageMeta({middleware: 'guest'});
+definePageMeta({
+    middleware: 'guest'
+});
+
+const {
+    setNavigationMode,
+} = useLayout();
+
+function changeLayout(layoutPayload: string){
+    setLayout(layoutPayload);
+}
 
 const dynamicFoo = ref('foo');
 const dynamicBarCaller = ref('bar');
@@ -300,6 +352,7 @@ const leftToRightItems = ref([
         'image':{
             'path': '/images/product/202306201506003693.webp'
         },
+        'listIcon': 'octicon:circuit-board',
         'title': 'PC Case',
         'subTitle': 'Segotep Memphis-S Meow PC Case (M-ATX / ITX supported)',
         'link': '/prototype',
@@ -310,8 +363,24 @@ const leftToRightItems = ref([
         'image':{
             'path': '/images/product/c76383ac-e6c0-4725-bec0-b171449c5960.webp'
         },
+        'listIcon': 'octicon:circuit-board',
         'title': 'Motherboard',
         'subTitle': 'COLORFIRE B760M-MEOW WIFI D5 ORANGE',
+        'descriptions': [
+            'COLORFUL introduces the CVN B760M FROZEN WIFI D5 and CVN B760I FROZEN WIFI motherboards for gamers and enthusiasts.',
+            'The CVN B760 motherboards also come with Wi-Fi 6, three PCIe 4.0 M.2 slots for the CVN B760M FROZEN WIFI D5 and two PCIe 4.0 M.2 slots for the CVN B760I FROZEN WIFI mini-ITX motherboard.',
+            'Coming in a compact micro-ATX and mini-ITX form factors, both motherboards feature PCIe 5.0 x16 slot to support the latest high-end graphics cards.',
+            'COLORFUL also presents the BATTLE-AX B760M-F PRO motherboard with DDR4 memory support and two PCIe 4.0 M.2 slots.'
+        ],
+        'link': '/prototype'
+    },
+    {
+        'image':{
+            'path': '/images/product/7d5178c3-e5dc-4b8f-b8d1-cbe0bbc14e84.webp'
+        },
+        'listIcon': 'bi:gpu-card',
+        'title': 'Graphics Card',
+        'subTitle': 'COLORFIRE GeForce RTX 4060 MEOW-ORG 8GB-V',
         'link': '/prototype',
         'frameBorder': '#f9dbbd',
         'contentBorder': '#f4a261'
@@ -320,6 +389,7 @@ const leftToRightItems = ref([
         'image':{
             'path': '/images/product/7d5178c3-e5dc-4b8f-b8d1-cbe0bbc14e84.webp'
         },
+        'listIcon': 'bi:gpu-card',
         'title': 'Graphics Card',
         'subTitle': 'COLORFIRE GeForce RTX 4060 MEOW-ORG 8GB-V',
         'link': '/prototype',
@@ -378,12 +448,5 @@ onMounted(async () => {
 </script>
 
 <style scoped lang="scss">
-@for $i from 1 through 20 {
-    .border-fragment:nth-child(#{$i}) {
-        animation-delay: #{random(5) * 0.5}s !important;
-    }
-}
-#lab{
-    height: calc(100vh - calc(41px) - calc(1rem));
-}
+
 </style>

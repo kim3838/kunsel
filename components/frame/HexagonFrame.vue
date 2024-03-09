@@ -2,7 +2,13 @@
     <div class="tw-relative tw-w-full tw-h-full">
         <div class="clip"></div>
         <div class="clip-frame tw-z-30 tw-flex body-direction">
-            <slot name="body"></slot>
+            <slot
+                name="body"
+                :slot="{
+                    frameBorderColor: frameBorderColor,
+                    contentBorderColor: contentBorderColor
+                }"
+            ></slot>
         </div>
         <div class="clip-inner tint-background tw-z-20">
             <div :style="fadeTransition"></div>
