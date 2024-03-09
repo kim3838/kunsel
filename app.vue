@@ -4,7 +4,7 @@
         <div class="tw-absolute tw-inset-x-0 tw--z-10 tw-overflow-hidden tw--top-40 sm:tw--top-80 tw-blur-3xl" aria-hidden="true">
             <div class="top-fragment tw-relative tw-w-[36.125rem] sm:tw-w-[72.1875rem] tw-left-[calc(50%-11rem)] sm:tw-left-[calc(50%-30rem)] tw-aspect-[1155/678] tw--translate-x-1/2 tw-rotate-[30deg] tw-opacity-30"></div>
         </div>
-        <NuxtLayout>
+        <NuxtLayout :name="layoutValue">
             <NuxtPage/>
         </NuxtLayout>
         <div class="tw-absolute tw-inset-x-0 tw--z-10 tw-overflow-hidden tw-top-[calc(20%)] sm:tw-top-[calc(0%)] tw-blur-3xl" aria-hidden="true">
@@ -21,7 +21,7 @@ import {useScroll} from '@vueuse/core';
 const {$debug, $moment, $themeStore, $coreStore} = useNuxtApp();
 const runtimeConfig = useRuntimeConfig();
 const appConfig = useAppConfig();
-const route = useRoute();
+const layoutValue = layoutState();
 
 const {
     hexAlpha,
@@ -93,7 +93,15 @@ const {top: nuxtWrapperTopReached} = toRefs(nuxtWrapperArrivedState);
 // const mountains = await $fetch('https://api.nuxtjs.dev/mountains').catch((error) => error.data)
 </script>
 <style>
-
+/*.page-enter-active,*/
+/*.page-leave-active {*/
+/*    transition: all 0.4s;*/
+/*}*/
+/*.page-enter-from,*/
+/*.page-leave-to {*/
+/*    opacity: 0;*/
+/*    filter: blur(5rem);*/
+/*}*/
 ::-webkit-scrollbar {
     width: 5px;
     height: 5px;
