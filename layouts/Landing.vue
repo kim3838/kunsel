@@ -1,10 +1,13 @@
 <template>
-    <div id="layoutScroll" ref="layoutScroll" class="tw-relative tw-scroll-smooth tw-h-screen tw-max-h-screen tw-overflow-auto">
+    <div
+        id="layoutScroll"
+        ref="snapScroll"
+        class="tw-relative tw-scroll-smooth tw-h-screen tw-max-h-screen tw-overflow-auto tw-snap-none">
         <!-- Primary Navigation Menu -->
         <nav
-            ref="navigation"
+            ref="landingNavigation"
             class="primary-navigation-parent tw-transition-all tw-duration-700 tw-z-40 tw-fixed tw-flex tw-justify-center">
-            <div class="tw-max-w-screen-2xl tw-w-full tw-flex tw-justify-start lg:tw-justify-around tw-h-10">
+            <div class="tw-max-w-screen-2xl tw-w-full tw-flex tw-justify-start lg:tw-justify-around tw-h-10 lg:tw-h-20">
                 <div class="tw--my-px tw-flex tw-items-center">
                     <NavDrop
                         class="lg:tw-hidden tw-h-full"
@@ -12,6 +15,7 @@
                         :title="'Menu'"
                         :drop-options="navigationLinks" />
                 </div>
+
                 <div class="tw-flex">
                     <!-- Navigation Links -->
                     <div class="tw--my-px tw-hidden lg:tw-flex">
@@ -67,54 +71,73 @@
         <div id="datetimepicker-slot"></div>
         <!-- Action Modal -->
         <PromptModal />
+        <!-- Footer -->
+        <LandingFooter/>
     </div>
 </template>
 
 <script setup lang="ts">
 import {storeToRefs} from 'pinia';
-import {computed, nextTick, onMounted, ref, watch} from "vue";
 import {useScroll} from '@vueuse/core';
 
 const routeTo = useRouteTo();
 const {$themeStore, $isRouteActive} = useNuxtApp();
 const {isAuthenticated, user, logout} = useAuth();
-const {screens, width: screenWidth, height: screenHeight } = useScreen();
-const navDrop = resolveComponent('navDrop');
-
-const {
-    primary: primaryColor,
-    neutral: neutralColor,
-    tint: tintColor,
-    thread: threadColor
-} = storeToRefs($themeStore);
 const {
     navigationLinks,
     navigationAccountLinks,
     navigationMode,
+    navigationHeight,
     navigationBackground,
+    navigationHeaderSize,
+    navigationHeightInPixels,
     topAllocationInPixels,
+    spotlightContentHeight,
     setNavigationHeight,
+    setNavigationMode,
     rightNavigationDropAlign
 } = useLayout();
+const {screens, width: screenWidth, height: screenHeight } = useScreen();
+const navDrop = resolveComponent('navDrop');
+const {
+    primary: primaryColor,
+    accent: accentColor,
+    neutral: neutralColor,
+    tint: tintColor,
+    thread: threadColor
+} = storeToRefs($themeStore);
 
-const navigation = ref(null);
+const landingNavigation = ref(null);
 
 onMounted(async () => {
     await nextTick(() => {
-        setNavigationHeight(navigation.value.offsetHeight);
+        setNavigationHeight(landingNavigation.value.offsetHeight);
     });
 });
 
 watch(screenWidth, value => {
-    setNavigationHeight(navigation.value.offsetHeight);
+    setNavigationHeight(landingNavigation.value.offsetHeight);
 });
 
-const layoutScroll = ref<HTMLElement | null>(null)
-const {x: layoutXScroll,y: layoutYScroll,arrivedState: layoutScrollArrivedState } = useScroll(layoutScroll)
-const {top: layoutScrollTopReached} = toRefs(layoutScrollArrivedState);
+const snapScroll = ref<HTMLElement | null>(null)
+const {y: snapYScroll,arrivedState: snapScrollArrivedState } = useScroll(snapScroll)
+const {top: snapScrollTopReached} = toRefs(snapScrollArrivedState);
 
-const navigationHeaderSize = computed(() => {
-    return 'sm';
+watch(topAllocationInPixels, (value) => {
+    console.log({topAllocationInPixelsChanges:value});
+});
+
+watch(snapYScroll, (yScroll) => {
+    //Todo: do setNavigationMode only once in 1 second
+    if(!['index'].includes(routeTo.value.name)) return false;
+
+    if(yScroll <= ((screenHeight.value * 2) - navigationHeight.value)){
+        console.log({yScroll:yScroll});
+        setNavigationMode('clear');
+    } else {
+        console.log({yScroll:yScroll});
+        setNavigationMode('solid');
+    }
 });
 </script>
 <style scoped>
@@ -127,5 +150,35 @@ const navigationHeaderSize = computed(() => {
 
 .allocate-navigation {
     padding-top: v-bind(topAllocationInPixels);
+}
+
+.ping{
+    background-color: v-bind(primaryColor);
+}
+
+.ping-highlight{
+    background-color: v-bind(accentColor);
+}
+
+.footer-rule{
+    height: 1px;
+    width: 100%;
+    background: linear-gradient(
+        to right,
+        transparent 0%,
+        v-bind(threadColor) 10%,
+        transparent 50%,
+        v-bind(threadColor) 90%,
+        transparent 100%
+    );
+}
+</style>
+<style>
+/*Used by snap scroll: to allocate space on fixed top navigation*/
+.navigation-height{
+    height: v-bind(navigationHeightInPixels);
+}
+.spotlight-content-height{
+    max-height: v-bind(spotlightContentHeight);
 }
 </style>

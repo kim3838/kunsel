@@ -14,7 +14,6 @@
 </template>
 
 <script setup lang="ts">
-import {computed, watch} from "vue";
 import {storeToRefs} from 'pinia';
 import {useScroll} from '@vueuse/core';
 
@@ -93,15 +92,6 @@ const {top: nuxtWrapperTopReached} = toRefs(nuxtWrapperArrivedState);
 // const mountains = await $fetch('https://api.nuxtjs.dev/mountains').catch((error) => error.data)
 </script>
 <style>
-/*.page-enter-active,*/
-/*.page-leave-active {*/
-/*    transition: all 0.4s;*/
-/*}*/
-/*.page-enter-from,*/
-/*.page-leave-to {*/
-/*    opacity: 0;*/
-/*    filter: blur(5rem);*/
-/*}*/
 ::-webkit-scrollbar {
     width: 5px;
     height: 5px;

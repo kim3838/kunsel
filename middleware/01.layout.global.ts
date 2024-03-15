@@ -7,15 +7,18 @@ export default defineNuxtRouteMiddleware((to, from) => {
         setNavigationMode,
     } = useLayout();
 
-    if(_includes(['index'],_lowerCase(to.name))){
-        setNavigationMode('clear');
-    } else {
+    if(!_includes(['index'],_lowerCase(to.name))){
         setNavigationMode('solid');
     }
 
-    if(_includes(['index','login'],_lowerCase(to.name))){
-        setLayout('snap-landing');
-    } else {
-        setLayout('default');
+    switch (_lowerCase(to.name)) {
+        case 'index':
+            setNavigationMode('clear');
+            setLayout('snap-landing');
+            break;
+        case 'login':
+            setLayout('landing');
+            break;
+        default:setLayout('default');
     }
 })

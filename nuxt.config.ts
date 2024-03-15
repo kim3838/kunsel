@@ -41,8 +41,8 @@ export default defineNuxtConfig({
                 class: 'tw-font-sans'
             }
         },
-        layoutTransition: false,//{ name: 'page', mode: 'out-in' }
-        pageTransition: false,//{ name: 'page', mode: 'out-in' }
+        layoutTransition: false,
+        pageTransition: false,
         rootId: "__nuxt",
         rootTag: "div"
     },

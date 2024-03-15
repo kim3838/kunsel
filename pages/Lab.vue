@@ -7,7 +7,7 @@
                 class="tw-w-[250px]"
             />
             <Button :variant="'flat'" @click="changeLayout('default')" :label="'Default Layout'"></Button>
-            <Button :variant="'flat'" @click="changeLayout('snap-landing')" :label="'Landing Layout'"></Button>
+            <Button :variant="'flat'" @click="changeLayout('landing')" :label="'Landing Layout'"></Button>
         </div>
 
         <div class="tw-grid tw-gap-2 tw-grid-cols-3 tw-h-[460px]">

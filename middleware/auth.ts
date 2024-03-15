@@ -6,7 +6,7 @@ export default defineNuxtRouteMiddleware((to, from) => {
 
     if(!user.value && to.path !== '/login'){
         setNavigationMode('solid');
-        setLayout('snap-landing');
+        setLayout('landing');
 
         return navigateTo("/login", {replace: true});
     }
