@@ -1,86 +1,81 @@
 <template>
-    <div>
-        <NuxtLayout name="landing">
-            <template #content>
-                <div class="tw-mx-auto tw-px-4 tw-max-w-screen-2xl tw-flex tw-justify-center">
-                    <div class="tw-hidden sm:tw-block tw-px-4 tw-py-8 tw-h-96 tw-w-96">
-                        <div class="tw-w-full tw-h-full tw-bg-contain tw-bg-center tw-bg-no-repeat" :style="{'background-image': 'url(/deco/undraw/undraw_access_account_re_8spm.svg)'}"></div>
-                    </div>
+    <div class="tw-mx-auto tw-pt-4 tw-max-w-screen-2xl">
+        <div class="tw-flex tw-justify-center">
+            <div class="tw-hidden sm:tw-block tw-px-4 tw-py-8 tw-h-96 tw-w-96">
+                <div class="tw-w-full tw-h-full tw-bg-contain tw-bg-center tw-bg-no-repeat" :style="{'background-image': 'url(/deco/undraw/undraw_access_account_re_8spm.svg)'}"></div>
+            </div>
 
-                    <AccentFrame class="tw-my-4">
-                        <template #content>
-                            <div class="tw-relative tw-py-4">
-                                <label class="tw-text-lg tw-font-semibold">Password Login</label>
-                                <form @submit.prevent="handleLogin" class="tw-mt-4 tw-w-72">
-                                    <div class="tw-block">
-                                        <InputLabel :size="'md'" for="identifier" value="Username or Email" />
-                                        <Input
-                                            :disabled="authPending"
-                                            :size="'md'"
-                                            id="identifier"
-                                            type="text"
-                                            class="tw-w-full"
-                                            ref="identifierInput"
-                                            v-model="identifier"
-                                            autocomplete="off" />
-                                    </div>
-
-                                    <div class="tw-block tw-mt-4">
-                                        <InputLabel :size="'md'" for="password" value="Password" />
-                                        <Input
-                                            :disabled="authPending"
-                                            :size="'md'"
-                                            id="password"
-                                            type="password"
-                                            class="tw-w-full"
-                                            v-model="password"
-                                            required
-                                            autocomplete="current-password" />
-                                    </div>
-
-                                    <div class="tw-block tw-mt-4">
-                                        <label class="tw-flex tw-items-center">
-                                            <Checkbox
-                                                :disabled="authPending"
-                                                name="remember"
-                                                v-model="remember"
-                                                :size="'md'"
-                                                :label="'Remember me'" />
-                                        </label>
-                                    </div>
-
-                                    <div v-if="$coreStore.service.error.payload && !useNuxtApp().$coreStore.service.error.prompt" class="tw-block tw-text-sm tw-text-red-400">
-                                        <span>{{ $coreStore.service.error.payload.message }}</span>
-                                    </div>
-
-                                    <div v-if="!isAuthenticated" class="tw-flex tw-mt-4 tw-items-center tw-justify-between">
-                                        <div class="tw-block tw-text-sm tw-self-end">
-                                            <NuxtLink class="hover:tw-underline" :to="'forgot-password'">Forgot password.</NuxtLink>
-                                        </div>
-                                        <Button
-                                            :disabled="authPending"
-                                            :size="'md'"
-                                            :icon="authPending ? 'eos-icons:installing' : 'mdi:key-chain'"
-                                            :label="authPending ? 'Logging in...' : 'Login'"></Button>
-                                    </div>
-                                </form>
+            <AccentFrame class="tw-my-4">
+                <template #content>
+                    <div class="tw-relative tw-py-4">
+                        <label class="tw-text-lg tw-font-semibold">Password Login</label>
+                        <form @submit.prevent="handleLogin" class="tw-mt-4 tw-w-72">
+                            <div class="tw-block">
+                                <InputLabel :size="'md'" for="identifier" value="Username or Email" />
+                                <Input
+                                    :disabled="authPending"
+                                    :size="'md'"
+                                    id="identifier"
+                                    type="text"
+                                    class="tw-w-full"
+                                    ref="identifierInput"
+                                    v-model="identifier"
+                                    autocomplete="off" />
                             </div>
-                        </template>
-                    </AccentFrame>
-                </div>
-            </template>
-        </NuxtLayout>
+
+                            <div class="tw-block tw-mt-4">
+                                <InputLabel :size="'md'" for="password" value="Password" />
+                                <Input
+                                    :disabled="authPending"
+                                    :size="'md'"
+                                    id="password"
+                                    type="password"
+                                    class="tw-w-full"
+                                    v-model="password"
+                                    required
+                                    autocomplete="current-password" />
+                            </div>
+
+                            <div class="tw-block tw-mt-4">
+                                <label class="tw-flex tw-items-center">
+                                    <Checkbox
+                                        :disabled="authPending"
+                                        name="remember"
+                                        v-model="remember"
+                                        :size="'md'"
+                                        :label="'Remember me'" />
+                                </label>
+                            </div>
+
+                            <div v-if="$coreStore.service.error.payload && !useNuxtApp().$coreStore.service.error.prompt" class="tw-block tw-text-sm tw-text-red-400">
+                                <span>{{ $coreStore.service.error.payload.message }}</span>
+                            </div>
+
+                            <div v-if="!isAuthenticated" class="tw-flex tw-mt-4 tw-items-center tw-justify-between">
+                                <div class="tw-block tw-text-sm tw-self-end">
+                                    <NuxtLink class="hover:tw-underline" :to="'forgot-password'">Forgot password.</NuxtLink>
+                                </div>
+                                <Button
+                                    :disabled="authPending"
+                                    :size="'md'"
+                                    :icon="authPending ? 'eos-icons:installing' : 'mdi:key-chain'"
+                                    :label="authPending ? 'Logging in...' : 'Login'"></Button>
+                            </div>
+                        </form>
+                    </div>
+                </template>
+            </AccentFrame>
+        </div>
     </div>
 </template>
 
 <script setup lang="ts">
-import {ref, onMounted, nextTick} from 'vue';
+import {ref, onMounted, nextTick, computed} from 'vue';
 const {$coreStore} = useNuxtApp();
 const {isAuthenticated, login, authPending} = useAuth();
-useLayout().setNavigationMode('solid');
+const {screens, width: screenWidth, } = useScreen();
 
 definePageMeta({
-    layout: false,
     middleware: 'guest'
 });
 

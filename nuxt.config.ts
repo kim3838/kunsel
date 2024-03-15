@@ -41,8 +41,8 @@ export default defineNuxtConfig({
                 class: 'tw-font-sans'
             }
         },
-        layoutTransition: false,
-        pageTransition: false,
+        layoutTransition: false,//{ name: 'page', mode: 'out-in' }
+        pageTransition: false,//{ name: 'page', mode: 'out-in' }
         rootId: "__nuxt",
         rootTag: "div"
     },
@@ -77,6 +77,7 @@ export default defineNuxtConfig({
         {path: '~/components/logo'},
         {path: '~/components/frame'},
         {path: '~/components/list'},
+        {path: '~/components/layout'},
     ],
 
     lodash: {

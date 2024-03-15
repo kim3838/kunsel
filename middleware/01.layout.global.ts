@@ -14,7 +14,7 @@ export default defineNuxtRouteMiddleware((to, from) => {
     }
 
     if(_includes(['index','login'],_lowerCase(to.name))){
-        setLayout('landing');
+        setLayout('snap-landing');
     } else {
         setLayout('default');
     }

@@ -1,333 +1,323 @@
 <template>
     <div>
-        <NuxtLayout name="landing">
-            <template #content>
-                <CarouselModuleCarousel v-if="false" :mouse-drag="true" wrap-around class="tw-snap-start tw-snap-always">
-                    <CarouselModuleSlide v-for="slide in carouselPayload" :key="slide">
-                        <div class="tw-w-screen tw-h-screen carousel-image" :style="{'background-image': `url(${slide.image.path})`}"></div>
-                    </CarouselModuleSlide>
+        <CarouselModuleCarousel v-if="false" :mouse-drag="true" wrap-around class="tw-snap-start tw-snap-always">
+            <CarouselModuleSlide v-for="slide in carouselPayload" :key="slide">
+                <div class="tw-w-screen tw-h-screen carousel-image" :style="{'background-image': `url(${slide.image.path})`}"></div>
+            </CarouselModuleSlide>
 
-                    <template #addons>
-                        <CarouselModuleNavigation />
-                        <CarouselModulePagination class="tw-absolute tw-left-0 tw-bottom-0 tw-right-0 tw-m-0" />
-                    </template>
-                </CarouselModuleCarousel>
-
-                <!-- Spotlight: Image -->
-                <div class="tw-snap-start tw-snap-always tw-relative tw-w-full tw-h-screen">
-                    <div class="tw-w-full tw-h-full tw-absolute tw-z-30 spotlight-image" :style="{'background-image': `url(/images/carousel/f415740d-5951-4b5d-af98-1404e9c65df5.jpg)`}"></div>
-
-                    <div class="navigation-height tw-w-full tw-relative"></div>
-                    <div class="tw-absolute tw-w-full tw-h-full spotlight-content-height tw-z-30 tw-flex tw-justify-center">
-                        <div class="tw-pb-10 tw-max-w-screen-2xl tw-w-full tw-flex tw-flex-col-reverse">
-
-                            <article class="tw-w-full tw-h-max">
-                                <CarouselModuleCarousel
-                                    dir="rtl"
-                                    v-model="spotlight_1_index"
-                                    v-bind="carouselSettings"
-                                    :breakpoints="carouselBreakpoints"
-                                    class="tw-w-full lg:tw-w-full">
-                                    <CarouselModuleSlide class="tw-w-[270px]" v-for="spotLightItem in spotlight_1" :key="spotLightItem">
-                                        <Featured
-                                            focused
-                                            class="tw-mx-2"
-                                            :image="spotLightItem.image"
-                                            :title="spotLightItem.title"
-                                            :sub-title="spotLightItem.subTitle"
-                                            :link="spotLightItem.link"
-                                            :button-label="'Details'"
-                                        />
-                                    </CarouselModuleSlide>
-                                    <template #addons>
-                                        <CarouselModuleNavigation />
-                                    </template>
-                                </CarouselModuleCarousel>
-                            </article>
-                            <div class="tw-p-4 tw-space-x-2 tw-text-right">
-                                <Button :variant="'outline'" :size="'xl'" :label="'GET BUNDLE'" />
-                            </div>
-                            <div class="tw-px-4 tw-text-right">
-                                <div class="tw-flex tw-justify-end tw-font-[Barlow_Semi_Condensed]">
-                                    <HeroPlate :size="'lg'" :bookmark="'NEW ARRIVAL'" :theme="'tulip'" :label="'COLORFIRE Meow Series'"/>
-                                </div>
-
-                                <div class="tw-text-xl" :style="{'direction': 'rtl', 'color': '#ffffff', 'text-shadow': '1px 1px 2px #000000'}">
-                                    <UnorderedList
-                                        class="tw-space-x-2"
-                                        :size="'lg'"
-                                        :icon="'bi:gpu-card'"
-                                        :label="'COLORFIRE GeForce RTX 4060 MEOW-ORG 8GB-V'"/>
-                                    <UnorderedList
-                                        class="tw-space-x-2"
-                                        :size="'lg'"
-                                        :icon="'bi:motherboard'"
-                                        :label="'COLORFIRE B760M-MEOW WIFI D5 ORANGE'"/>
-                                    <UnorderedList
-                                        class="tw-space-x-2"
-                                        :size="'lg'"
-                                        :icon="'lucide:pc-case'"
-                                        :label="'Segotep Memphis-S Meow PC Case (M-ATX / ITX supported)'"/>
-
-                                    <div class="tw-font-mono tw-font-semibold tw-text-4xl">₱28,500.00</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Spotlight: Video -->
-                <div class="tw-snap-start tw-snap-always tw-relative tw-w-full tw-h-screen">
-                    <video :ref="'spotlightVideo_1'" muted loop class="tw-absolute tw-z-30 tw-border-0 tw-object-cover tw-w-full tw-h-full">
-                        <source :src="'/videos/y2mate.is - FUN WITH BOBI graphicscard rtx4060 gameplay-t1W2TPE8Exw-1080pp-1703650110.mp4'" type="video/mp4">
-                    </video>
-
-                    <div class="navigation-height tw-w-full tw-relative"></div>
-                    <div class="tw-absolute tw-w-full tw-h-full spotlight-content-height tw-z-30 tw-flex tw-justify-center">
-                        <div class="tw-pb-10 tw-max-w-screen-2xl tw-w-full tw-flex tw-flex-col-reverse">
-                            <article class="tw-w-full tw-h-max">
-                                <CarouselModuleCarousel
-                                    dir="rtl"
-                                    v-model="spotlight_1_index"
-                                    v-bind="carouselSettings"
-                                    :breakpoints="carouselBreakpoints"
-                                    class="tw-w-full lg:tw-w-full">
-                                    <CarouselModuleSlide class="tw-w-[270px] tw-transition-all tw-duration-700 tw-opacity-50 hover:tw-opacity-100" v-for="spotLightItem in spotlight_1" :key="spotLightItem">
-                                        <Featured
-                                            focused
-                                            class="tw-mx-2"
-                                            :image="spotLightItem.image"
-                                            :title="spotLightItem.title"
-                                            :sub-title="spotLightItem.subTitle"
-                                            :link="spotLightItem.link"
-                                            :button-label="'Details'"
-                                        />
-                                    </CarouselModuleSlide>
-                                    <template #addons>
-                                        <CarouselModuleNavigation />
-                                    </template>
-                                </CarouselModuleCarousel>
-                            </article>
-                            <div class="tw-p-4 tw-space-x-2 tw-text-right">
-                                <Button :variant="'outline'" :size="'xl'" :label="'GET BUNDLE'" />
-                            </div>
-                            <div class="tw-px-4 tw-text-right">
-                                <div class="tw-flex tw-justify-end">
-                                    <HeroPlate :size="'lg'" :bookmark="'NEW ARRIVAL'" :theme="'gold'" :label="'COLORFIRE Meow Series'"/>
-                                </div>
-
-                                <div class="tw-text-xl" :style="{'direction': 'rtl', 'color': '#ffffff', 'text-shadow': '1px 1px 2px #000000'}">
-                                    <UnorderedList
-                                        class="tw-space-x-2"
-                                        :size="'lg'"
-                                        :icon="'bi:gpu-card'"
-                                        :label="'COLORFIRE GeForce RTX 4060 MEOW-ORG 8GB-V'"/>
-                                    <UnorderedList
-                                        class="tw-space-x-2"
-                                        :size="'lg'"
-                                        :icon="'bi:motherboard'"
-                                        :label="'COLORFIRE B760M-MEOW WIFI D5 ORANGE'"/>
-                                    <UnorderedList
-                                        class="tw-space-x-2"
-                                        :size="'lg'"
-                                        :icon="'lucide:pc-case'"
-                                        :label="'Segotep Memphis-S Meow PC Case (M-ATX / ITX supported)'"/>
-                                    <div class="tw-font-mono tw-font-semibold tw-text-4xl">₱28,500.00</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div>
-                    <div class="navigation-height tw-w-full tw-snap-start tw-snap-always"></div>
-                    <div class="tw-pl-2 tw-mx-auto tw-max-w-screen-2xl tw-flex tw-flex-col">
-                        <article class="tw-mt-4 tw-relative">
-                            <CarouselModuleCarousel
-                                v-model="carouselFeaturedItem"
-                                v-bind="carouselSettings"
-                                :breakpoints="carouselBreakpoints"
-                                :mouse-drag="true"
-                                class="tw-w-full lg:tw-w-full">
-                                <CarouselModuleSlide class="tw-w-[170px]">
-
-                                    <HexagonFrame :top-right="75" :bottom-left="75">
-                                        <template #body>
-                                            <div class="tw-h-full tw-flex tw-items-center tw-text-center tw-font-['Google_Sans_Text'] tw-text-xl tw-font-semibold tw-px-8">
-                                                Featured Products
-                                            </div>
-                                        </template>
-                                    </HexagonFrame>
-                                </CarouselModuleSlide>
-                                <CarouselModuleSlide class="tw-w-[270px]" v-for="featuredItem in carouselFeaturedItems" :key="featuredItem">
-                                    <Featured
-                                        focused
-                                        class="tw-mx-2"
-                                        :image="featuredItem.image"
-                                        :title="featuredItem.title"
-                                        :sub-title="featuredItem.subTitle"
-                                        :link="featuredItem.link"
-                                        :button-label="'Details'"
-                                    />
-                                </CarouselModuleSlide>
-                                <template #addons>
-                                    <CarouselModuleNavigation />
-                                </template>
-                            </CarouselModuleCarousel>
-                        </article>
-                    </div>
-                </div>
-
-                <div>
-                    <div class="navigation-height tw-w-full tw-snap-start tw-snap-always"></div>
-                    <div class="tw-pl-2 tw-mx-auto tw-max-w-screen-2xl tw-flex tw-flex-col">
-                        <article class="tw-mt-4 tw-relative">
-                            <CarouselModuleCarousel
-                                v-model="carouselTrendingItem"
-                                v-bind="carouselSettings"
-                                :breakpoints="carouselBreakpoints"
-                                :mouse-drag="true"
-                                class="tw-w-full lg:tw-w-full">
-                                <CarouselModuleSlide class="tw-w-[170px]">
-
-                                    <HexagonFrame :top-right="75" :bottom-left="75">
-                                        <template #body>
-                                            <div class="tw-h-full tw-flex tw-items-center tw-text-center tw-font-['Google_Sans_Text'] tw-text-xl tw-font-semibold tw-px-8">
-                                                Trending
-                                            </div>
-                                        </template>
-                                    </HexagonFrame>
-                                </CarouselModuleSlide>
-                                <CarouselModuleSlide class="tw-w-[270px]" v-for="featuredItem in carouselTrendingItems" :key="featuredItem">
-                                    <Featured
-                                        focused
-                                        class="tw-mx-2"
-                                        :image="featuredItem.image"
-                                        :title="featuredItem.title"
-                                        :sub-title="featuredItem.subTitle"
-                                        :link="featuredItem.link"
-                                        :button-label="'Details'"
-                                    />
-                                </CarouselModuleSlide>
-                                <template #addons>
-                                    <CarouselModuleNavigation />
-                                </template>
-                            </CarouselModuleCarousel>
-                        </article>
-                    </div>
-                </div>
-
-                <div>
-                    <div class="navigation-height tw-w-full tw-snap-start tw-snap-always"></div>
-                    <div class="tw-pl-2 tw-mx-auto tw-max-w-screen-2xl tw-flex tw-flex-col">
-                        <article class="tw-mt-4 w-relative">
-                            <CarouselModuleCarousel
-                                v-model="carouselNewArrival"
-                                v-bind="carouselSettings"
-                                :breakpoints="carouselBreakpoints"
-                                class="tw-w-full lg:tw-w-full">
-                                <CarouselModuleSlide class="tw-w-[170px]">
-                                    <HexagonFrame :top-right="75" :bottom-left="75">
-                                        <template #body>
-                                            <div class="tw-h-full tw-flex tw-items-center tw-text-center tw-font-['Google_Sans_Text'] tw-text-xl tw-font-semibold tw-px-8">
-                                                New Arrivals
-                                            </div>
-                                        </template>
-                                    </HexagonFrame>
-                                </CarouselModuleSlide>
-
-                                <CarouselModuleSlide :class="[`tw-w-[340px]`]" v-for="newArrival in carouselNewArrivals" :key="newArrival">
-                                    <Card
-                                        focused
-                                        class="tw-mx-2"
-                                        :image="newArrival.image"
-                                        :title="newArrival.title"
-                                        :sub-title="newArrival.subTitle"
-                                        :link="newArrival.link"
-                                        :button-label="'Details'"
-                                    />
-                                </CarouselModuleSlide>
-                                <CarouselModuleSlide :class="[`tw-w-[340px]`]">
-                                </CarouselModuleSlide>
-
-                                <template #addons>
-                                    <CarouselModuleNavigation />
-                                </template>
-                            </CarouselModuleCarousel>
-                        </article>
-                    </div>
-                </div>
-
-                <div>
-                    <div id="latest-news" class="navigation-height tw-w-full tw-snap-start tw-snap-always"></div>
-                    <div class="tw-pl-2 tw-mx-auto tw-max-w-screen-2xl tw-flex tw-flex-col" >
-                        <ClientOnly>
-                            <article class="tw-mt-4">
-                                <div v-if="screenWidth < screens['md']" class="tw-text-center tw-text-3xl tw-font-bold tw-font-['Google_Sans_Text']">Latest News</div>
-                                <div :class="[screenWidth >= screens['md'] ? 'tw-flex-nowrap tw-snap-x tw-snap-mandatory tw-overflow-x-scroll' : 'tw-flex-col']" class="tw-relative tw-flex tw-items-center tw-space-x-2 lg:tw-space-x-8 tw-w-full ">
-
-                                    <div v-if="screenWidth >= screens['md']" class="tw-snap-center tw-snap-always tw-inline-block tw-h-[375px] tw-w-[170px] tw-flex-none tw-flex tw-justify-center">
-                                        <div class="tw-w-[170px] tw-h-[247px]">
-                                            <HexagonFrame  :top-right="75" :bottom-left="75">
-                                                <template #body>
-                                                    <div class="tw-w-full tw-h-full tw-font-['Google_Sans_Text'] tw-text-xl tw-font-semibold tw-flex tw-justify-center tw-items-center">
-                                                        Latest News
-                                                    </div>
-                                                </template>
-                                            </HexagonFrame>
-                                        </div>
-                                    </div>
-
-                                    <div v-for="blog in news" :class="screenWidth >= screens['md'] ? 'tw-snap-center tw-snap-always tw-inline-block sm:tw-w-1/2 lg:tw-w-1/3 xl:tw-w-1/4 tw-flex-none tw-flex tw-justify-center' : ''" class="tw-cursor-pointer">
-                                        <div v-if="screenWidth < screens['md']" class="tw-mb-4 navigation-height tw-w-full tw-snap-start tw-snap-always"></div>
-                                        <div class="tw-w-[370px] tint-background thread-border">
-                                            <img :src="blog.image.path" class="tw-h-[247px] tw-w-full">
-                                            <div class="tw-px-2 tw-pt-2 tw-text-xl tw-h-[3.5rem] tw-line-clamp-2 tw-font-bold tw-tracking-normal tw-leading-tight hover:tw-underline">{{blog.title}}</div>
-                                            <div class="tw-px-2 tw-pt-4 tw-text-base tw-h-[4rem] tw-line-clamp-2">{{blog.subTitle}}</div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </article>
-                        </ClientOnly>
-                    </div>
-                </div>
-
-                <div>
-                    <div id="faq" class="navigation-height tw-w-full tw-snap-start tw-snap-always"></div>
-                    <div class="tw-px-2 tw-mx-auto tw-max-w-screen-2xl tw-flex tw-flex-col" >
-                        <article class="tw-mt-4 tw-w-full tw-px-4 tw-flex tw-flex-wrap lg:tw-flex-nowrap tw-justify-center">
-                            <div class="tw-text-center lg:tw-text-start lg:tw-w-1/4 tw-font-['Google_Sans_Text']">
-                                <div class="tw-text-3xl tw-font-bold">Frequently Answered Questions</div>
-                                <div class="tw-text-xl tw-font-semibold">Have a question? Check out our frequently asked questions to find your answer.</div>
-                                <div class="tw-h-60 tw-w-full tw-bg-contain tw-bg-center lg:tw-bg-left tw-bg-no-repeat" :style="{'background-image': 'url(/deco/undraw/undraw_my_answer_re_k4dv.svg)'}"></div>
-                            </div>
-                            <Accordion
-                                v-model:payload="faqs"
-                                :title-icon="false"
-                                :multi-line-title="true"
-                                :active-border-color="'transparent'"
-                                :center-content="faqCenterContent"
-                                :size="'lg'"
-                                single-expand
-                                class="tw-mt-4 lg:tw-w-1/2 lg:tw-mt-0 tw-space-y-4"/>
-                        </article>
-                    </div>
-                </div>
+            <template #addons>
+                <CarouselModuleNavigation />
+                <CarouselModulePagination class="tw-absolute tw-left-0 tw-bottom-0 tw-right-0 tw-m-0" />
             </template>
-        </NuxtLayout>
+        </CarouselModuleCarousel>
+
+        <!-- Spotlight: Video -->
+        <div v-if="true" class="tw-snap-start tw-snap-always tw-relative tw-w-full tw-h-screen">
+            <video :ref="'spotlightVideo_1'" preload="none" muted loop class="tw-absolute tw-z-30 tw-border-0 tw-object-cover tw-w-full tw-h-full">
+                <source :src="'videos/weathering_with_you.mp4'" type="video/mp4">
+            </video>
+
+            <div class="navigation-height tw-w-full tw-relative"></div>
+            <div v-if="false" class="tw-absolute tw-w-full tw-h-full spotlight-content-height tw-z-30 tw-flex tw-justify-center">
+                <div class="tw-pb-10 tw-max-w-screen-2xl tw-w-full tw-flex tw-flex-col-reverse">
+                    <article class="tw-w-full tw-h-max">
+                        <CarouselModuleCarousel
+                            dir="rtl"
+                            v-model="spotlight_1_index"
+                            v-bind="carouselSettings"
+                            :breakpoints="carouselBreakpoints"
+                            class="tw-w-full lg:tw-w-full">
+                            <CarouselModuleSlide class="tw-w-[270px] tw-transition-all tw-duration-700 tw-opacity-50 hover:tw-opacity-100" v-for="spotLightItem in spotlight_1" :key="spotLightItem">
+                                <Featured
+                                    focused
+                                    class="tw-mx-2"
+                                    :image="spotLightItem.image"
+                                    :title="spotLightItem.title"
+                                    :sub-title="spotLightItem.subTitle"
+                                    :link="spotLightItem.link"
+                                    :button-label="'Details'"
+                                />
+                            </CarouselModuleSlide>
+                            <template #addons>
+                                <CarouselModuleNavigation />
+                            </template>
+                        </CarouselModuleCarousel>
+                    </article>
+                    <div class="tw-p-4 tw-space-x-2 tw-text-right">
+                        <Button :variant="'outline'" :size="'xl'" :label="'GET BUNDLE'" />
+                    </div>
+                    <div class="tw-px-4 tw-text-right">
+                        <div class="tw-flex tw-justify-end">
+                            <HeroPlate :size="'lg'" :bookmark="'NEW ARRIVAL'" :theme="'gold'" :label="'COLORFIRE Meow Series'"/>
+                        </div>
+
+                        <div class="tw-text-xl" :style="{'direction': 'rtl', 'color': '#ffffff', 'text-shadow': '1px 1px 2px #000000'}">
+                            <UnorderedList
+                                class="tw-space-x-2"
+                                :size="'lg'"
+                                :icon="'bi:gpu-card'"
+                                :label="'COLORFIRE GeForce RTX 4060 MEOW-ORG 8GB-V'"/>
+                            <UnorderedList
+                                class="tw-space-x-2"
+                                :size="'lg'"
+                                :icon="'bi:motherboard'"
+                                :label="'COLORFIRE B760M-MEOW WIFI D5 ORANGE'"/>
+                            <UnorderedList
+                                class="tw-space-x-2"
+                                :size="'lg'"
+                                :icon="'lucide:pc-case'"
+                                :label="'Segotep Memphis-S Meow PC Case (M-ATX / ITX supported)'"/>
+                            <div class="tw-font-mono tw-font-semibold tw-text-4xl">₱28,500.00</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Spotlight: Image -->
+        <div v-if="true" class="tw-snap-start tw-snap-always tw-relative tw-w-full tw-h-screen">
+            <div class="tw-w-full tw-h-full tw-absolute tw-z-30 spotlight-image" :style="{'background-image': `url(/images/carousel/f415740d-5951-4b5d-af98-1404e9c65df5.jpg)`}"></div>
+
+            <div class="navigation-height tw-w-full tw-relative"></div>
+            <div v-if="false" class="tw-absolute tw-w-full tw-h-full spotlight-content-height tw-z-30 tw-flex tw-justify-center">
+                <div class="tw-pb-10 tw-max-w-screen-2xl tw-w-full tw-flex tw-flex-col-reverse">
+
+                    <article class="tw-w-full tw-h-max">
+                        <CarouselModuleCarousel
+                            dir="rtl"
+                            v-model="spotlight_1_index"
+                            v-bind="carouselSettings"
+                            :breakpoints="carouselBreakpoints"
+                            class="tw-w-full lg:tw-w-full">
+                            <CarouselModuleSlide class="tw-w-[270px]" v-for="spotLightItem in spotlight_1" :key="spotLightItem">
+                                <Featured
+                                    focused
+                                    class="tw-mx-2"
+                                    :image="spotLightItem.image"
+                                    :title="spotLightItem.title"
+                                    :sub-title="spotLightItem.subTitle"
+                                    :link="spotLightItem.link"
+                                    :button-label="'Details'"
+                                />
+                            </CarouselModuleSlide>
+                            <template #addons>
+                                <CarouselModuleNavigation />
+                            </template>
+                        </CarouselModuleCarousel>
+                    </article>
+                    <div class="tw-p-4 tw-space-x-2 tw-text-right">
+                        <Button :variant="'outline'" :size="'xl'" :label="'GET BUNDLE'" />
+                    </div>
+                    <div class="tw-px-4 tw-text-right">
+                        <div class="tw-flex tw-justify-end tw-font-[Barlow_Semi_Condensed]">
+                            <HeroPlate :size="'lg'" :bookmark="'NEW ARRIVAL'" :theme="'tulip'" :label="'COLORFIRE Meow Series'"/>
+                        </div>
+
+                        <div class="tw-text-xl" :style="{'direction': 'rtl', 'color': '#ffffff', 'text-shadow': '1px 1px 2px #000000'}">
+                            <UnorderedList
+                                class="tw-space-x-2"
+                                :size="'lg'"
+                                :icon="'bi:gpu-card'"
+                                :label="'COLORFIRE GeForce RTX 4060 MEOW-ORG 8GB-V'"/>
+                            <UnorderedList
+                                class="tw-space-x-2"
+                                :size="'lg'"
+                                :icon="'bi:motherboard'"
+                                :label="'COLORFIRE B760M-MEOW WIFI D5 ORANGE'"/>
+                            <UnorderedList
+                                class="tw-space-x-2"
+                                :size="'lg'"
+                                :icon="'lucide:pc-case'"
+                                :label="'Segotep Memphis-S Meow PC Case (M-ATX / ITX supported)'"/>
+
+                            <div class="tw-font-mono tw-font-semibold tw-text-4xl">₱28,500.00</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div>
+            <div class="navigation-height tw-w-full tw-snap-start tw-snap-always"></div>
+            <div class="tw-pl-2 tw-mx-auto tw-max-w-screen-2xl tw-flex tw-flex-col">
+                <article class="tw-mt-4 tw-relative">
+                    <CarouselModuleCarousel
+                        v-model="carouselFeaturedItem"
+                        v-bind="carouselSettings"
+                        :breakpoints="carouselBreakpoints"
+                        :mouse-drag="true"
+                        class="tw-w-full lg:tw-w-full">
+                        <CarouselModuleSlide class="tw-w-[170px]">
+
+                            <HexagonFrame :top-right="75" :bottom-left="75">
+                                <template #body>
+                                    <div class="tw-h-full tw-flex tw-items-center tw-text-center tw-font-['Google_Sans_Text'] tw-text-xl tw-font-semibold tw-px-8">
+                                        Featured Products
+                                    </div>
+                                </template>
+                            </HexagonFrame>
+                        </CarouselModuleSlide>
+                        <CarouselModuleSlide class="tw-w-[270px]" v-for="featuredItem in carouselFeaturedItems" :key="featuredItem">
+                            <Featured
+                                focused
+                                class="tw-mx-2"
+                                :image="featuredItem.image"
+                                :title="featuredItem.title"
+                                :sub-title="featuredItem.subTitle"
+                                :link="featuredItem.link"
+                                :button-label="'Details'"
+                            />
+                        </CarouselModuleSlide>
+                        <template #addons>
+                            <CarouselModuleNavigation />
+                        </template>
+                    </CarouselModuleCarousel>
+                </article>
+            </div>
+        </div>
+
+        <div>
+            <div class="navigation-height tw-w-full tw-snap-start tw-snap-always"></div>
+            <div class="tw-pl-2 tw-mx-auto tw-max-w-screen-2xl tw-flex tw-flex-col">
+                <article class="tw-mt-4 tw-relative">
+                    <CarouselModuleCarousel
+                        v-model="carouselTrendingItem"
+                        v-bind="carouselSettings"
+                        :breakpoints="carouselBreakpoints"
+                        :mouse-drag="true"
+                        class="tw-w-full lg:tw-w-full">
+                        <CarouselModuleSlide class="tw-w-[170px]">
+
+                            <HexagonFrame :top-right="75" :bottom-left="75">
+                                <template #body>
+                                    <div class="tw-h-full tw-flex tw-items-center tw-text-center tw-font-['Google_Sans_Text'] tw-text-xl tw-font-semibold tw-px-8">
+                                        Trending
+                                    </div>
+                                </template>
+                            </HexagonFrame>
+                        </CarouselModuleSlide>
+                        <CarouselModuleSlide class="tw-w-[270px]" v-for="featuredItem in carouselTrendingItems" :key="featuredItem">
+                            <Featured
+                                focused
+                                class="tw-mx-2"
+                                :image="featuredItem.image"
+                                :title="featuredItem.title"
+                                :sub-title="featuredItem.subTitle"
+                                :link="featuredItem.link"
+                                :button-label="'Details'"
+                            />
+                        </CarouselModuleSlide>
+                        <template #addons>
+                            <CarouselModuleNavigation />
+                        </template>
+                    </CarouselModuleCarousel>
+                </article>
+            </div>
+        </div>
+
+        <div>
+            <div class="navigation-height tw-w-full tw-snap-start tw-snap-always"></div>
+            <div class="tw-pl-2 tw-mx-auto tw-max-w-screen-2xl tw-flex tw-flex-col">
+                <article class="tw-mt-4 w-relative">
+                    <CarouselModuleCarousel
+                        v-model="carouselNewArrival"
+                        v-bind="carouselSettings"
+                        :breakpoints="carouselBreakpoints"
+                        class="tw-w-full lg:tw-w-full">
+                        <CarouselModuleSlide class="tw-w-[170px]">
+                            <HexagonFrame :top-right="75" :bottom-left="75">
+                                <template #body>
+                                    <div class="tw-h-full tw-flex tw-items-center tw-text-center tw-font-['Google_Sans_Text'] tw-text-xl tw-font-semibold tw-px-8">
+                                        New Arrivals
+                                    </div>
+                                </template>
+                            </HexagonFrame>
+                        </CarouselModuleSlide>
+
+                        <CarouselModuleSlide :class="[`tw-w-[340px]`]" v-for="newArrival in carouselNewArrivals" :key="newArrival">
+                            <Card
+                                focused
+                                class="tw-mx-2"
+                                :image="newArrival.image"
+                                :title="newArrival.title"
+                                :sub-title="newArrival.subTitle"
+                                :link="newArrival.link"
+                                :button-label="'Learn more'"
+                            />
+                        </CarouselModuleSlide>
+                        <CarouselModuleSlide :class="[`tw-w-[340px]`]">
+                        </CarouselModuleSlide>
+
+                        <template #addons>
+                            <CarouselModuleNavigation />
+                        </template>
+                    </CarouselModuleCarousel>
+                </article>
+            </div>
+        </div>
+
+        <div>
+            <div id="latest-news" class="navigation-height tw-w-full tw-snap-start tw-snap-always"></div>
+            <div class="tw-pl-2 tw-mx-auto tw-max-w-screen-2xl tw-flex tw-flex-col" >
+                <ClientOnly>
+                    <article class="tw-mt-4">
+                        <div v-if="screenWidth < screens['md']" class="tw-text-center tw-text-3xl tw-font-bold tw-font-['Google_Sans_Text']">Latest News</div>
+                        <div :class="[screenWidth >= screens['md'] ? 'tw-flex-nowrap tw-snap-x tw-snap-mandatory tw-overflow-x-scroll' : 'tw-flex-col']" class="tw-relative tw-flex tw-items-center tw-space-x-2 lg:tw-space-x-8 tw-w-full ">
+
+                            <div v-if="screenWidth >= screens['md']" class="tw-snap-center tw-snap-always tw-inline-block tw-h-[375px] tw-w-[170px] tw-flex-none tw-flex tw-justify-center">
+                                <div class="tw-w-[170px] tw-h-[247px]">
+                                    <HexagonFrame  :top-right="75" :bottom-left="75">
+                                        <template #body>
+                                            <div class="tw-w-full tw-h-full tw-font-['Google_Sans_Text'] tw-text-xl tw-font-semibold tw-flex tw-justify-center tw-items-center">
+                                                Latest News
+                                            </div>
+                                        </template>
+                                    </HexagonFrame>
+                                </div>
+                            </div>
+
+                            <div v-for="blog in news" :class="screenWidth >= screens['md'] ? 'tw-snap-center tw-snap-always tw-inline-block sm:tw-w-1/2 lg:tw-w-1/3 xl:tw-w-1/4 tw-flex-none tw-flex tw-justify-center' : ''" class="tw-cursor-pointer">
+                                <div v-if="screenWidth < screens['md']" class="tw-mb-4 navigation-height tw-w-full tw-snap-start tw-snap-always"></div>
+                                <div class="tw-w-[370px] tint-background thread-border">
+                                    <img :src="blog.image.path" class="tw-h-[247px] tw-w-full">
+                                    <div class="tw-px-2 tw-pt-2 tw-text-xl tw-h-[3.5rem] tw-line-clamp-2 tw-font-bold tw-tracking-normal tw-leading-tight hover:tw-underline">{{blog.title}}</div>
+                                    <div class="tw-px-2 tw-pt-4 tw-text-base tw-h-[4rem] tw-line-clamp-2">{{blog.subTitle}}</div>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+                </ClientOnly>
+            </div>
+        </div>
+
+        <div>
+            <div id="faq" class="navigation-height tw-w-full tw-snap-start tw-snap-always"></div>
+            <div class="tw-px-2 tw-mx-auto tw-max-w-screen-2xl tw-flex tw-flex-col" >
+                <article class="tw-mt-4 tw-w-full tw-px-4 tw-flex tw-flex-wrap lg:tw-flex-nowrap tw-justify-center">
+                    <div class="tw-text-center lg:tw-text-start lg:tw-w-1/4 tw-font-['Google_Sans_Text']">
+                        <div class="tw-text-3xl tw-font-bold">Frequently Answered Questions</div>
+                        <div class="tw-text-xl tw-font-semibold">Have a question? Check out our frequently asked questions to find your answer.</div>
+                        <div class="tw-h-60 tw-w-full tw-bg-contain tw-bg-center lg:tw-bg-left tw-bg-no-repeat" :style="{'background-image': 'url(/deco/undraw/undraw_my_answer_re_k4dv.svg)'}"></div>
+                    </div>
+                    <Accordion
+                        v-model:payload="faqs"
+                        :title-icon="false"
+                        :multi-line-title="true"
+                        :active-border-color="'transparent'"
+                        :center-content="faqCenterContent"
+                        :size="'lg'"
+                        single-expand
+                        class="tw-mt-4 lg:tw-w-1/2 lg:tw-mt-0 tw-space-y-4"/>
+                </article>
+            </div>
+        </div>
     </div>
 </template>
 
 <script setup lang="ts">
-import {computed, ref, reactive, onMounted, nextTick, watch, watchEffect} from "vue";
 import {storeToRefs} from "pinia";
 const {$themeStore} = useNuxtApp();
 const {screens, width: screenWidth, } = useScreen();
-useLayout().setNavigationMode('clear');
-
-definePageMeta({
-    layout: false
-});
 
 const {
     hexAlpha,
@@ -340,25 +330,29 @@ onMounted(async () => {
     await nextTick(() => {
         reIndexSpotlightCarousel();
         [spotlightVideo_1].forEach(video => {
-            let playPromise = video.value.play();
+            if(video.value != null){
+                let playPromise = video.value.play();
 
-            if(playPromise !== undefined){
-                playPromise.then(()=>{
-                    let observer = new IntersectionObserver(
-                        (entries) => {
-                            entries.forEach((entry) => {
-                                if (entry.intersectionRatio !== 1 && !video.value.paused) {
-                                    video.value.pause();
-                                } else if (video.value.paused) {
-                                    video.value.play();
-                                }
-                            });
-                        },
-                        {threshold: 1}
-                    );
+                if(playPromise != undefined){
+                    playPromise.then(()=>{
+                        let observer = new IntersectionObserver(
+                            (entries) => {
+                                entries.forEach((entry) => {
+                                    if (entry.intersectionRatio !== 1 && !video.value.paused) {
+                                        video.value.pause();
+                                    } else if (video.value.paused) {
+                                        video.value.play();
+                                    }
+                                });
+                            },
+                            {threshold: 1}
+                        );
 
-                    observer.observe(video.value);
-                });
+                        observer.observe(video.value);
+                    }).catch((error: any) => {
+
+                    });
+                }
             }
         })
     });
@@ -477,7 +471,7 @@ const carouselNewArrivals = ref([
         },
         'title': 'MEOW SET',
         'subTitle': 'RTX 4060 Ti MEOW-ORG OC 16GB / B760M-MEOW WIFI D5 ORANGE.',
-        'link': '/prototype'
+        'link': '/'
     },
     {
         'image':{
@@ -485,6 +479,7 @@ const carouselNewArrivals = ref([
         },
         'title': 'AIO PC',
         'subTitle': 'iGame G-ONE Plus i7-12700H/RTX3060.',
+        'link': '/'
     },
     {
         'image':{
@@ -492,6 +487,7 @@ const carouselNewArrivals = ref([
         },
         'title': 'Laptop',
         'subTitle': 'Colorful EVOL P15 ',
+        'link': '/'
     },
     {
         'image':{
@@ -499,6 +495,7 @@ const carouselNewArrivals = ref([
         },
         'title': 'Graphics Card',
         'subTitle': 'iGame GeForce RTX 4090 Vulcan OC-V',
+        'link': '/'
     },
     {
         'image':{
@@ -506,6 +503,7 @@ const carouselNewArrivals = ref([
         },
         'title': 'Motherboard',
         'subTitle': 'CVN B760I FROZEN WIFI D5 V20',
+        'link': '/'
     },
     {
         'image':{
@@ -513,6 +511,7 @@ const carouselNewArrivals = ref([
         },
         'title': 'SSD',
         'subTitle': 'CN700 1TB',
+        'link': '/'
     }
 ]);
 const carouselFeaturedItems = ref([]);
