@@ -72,7 +72,6 @@
 
 <script setup lang="ts">
 import {storeToRefs} from 'pinia';
-import {computed, nextTick, onMounted, ref, watch} from "vue";
 import {useScroll} from '@vueuse/core';
 
 const routeTo = useRouteTo();
@@ -101,11 +100,15 @@ const navigation = ref(null);
 
 onMounted(async () => {
     await nextTick(() => {
+        console.log({'setNavigationHeight':navigation.value.offsetHeight});
+
         setNavigationHeight(navigation.value.offsetHeight);
     });
 });
 
 watch(screenWidth, value => {
+    console.log({'setNavigationHeight':navigation.value.offsetHeight});
+
     setNavigationHeight(navigation.value.offsetHeight);
 });
 

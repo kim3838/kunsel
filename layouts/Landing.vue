@@ -1,7 +1,6 @@
 <template>
     <div
         id="layoutScroll"
-        ref="snapScroll"
         class="tw-relative tw-scroll-smooth tw-h-screen tw-max-h-screen tw-overflow-auto tw-snap-none">
         <!-- Primary Navigation Menu -->
         <nav
@@ -78,21 +77,15 @@
 
 <script setup lang="ts">
 import {storeToRefs} from 'pinia';
-import {useScroll} from '@vueuse/core';
 
-const routeTo = useRouteTo();
 const {$themeStore, $isRouteActive} = useNuxtApp();
 const {isAuthenticated, user, logout} = useAuth();
 const {
     navigationLinks,
     navigationAccountLinks,
-    navigationMode,
-    navigationHeight,
     navigationBackground,
     navigationHeaderSize,
-    navigationHeightInPixels,
     topAllocationInPixels,
-    spotlightContentHeight,
     setNavigationHeight,
     setNavigationMode,
     rightNavigationDropAlign
@@ -117,27 +110,6 @@ onMounted(async () => {
 
 watch(screenWidth, value => {
     setNavigationHeight(landingNavigation.value.offsetHeight);
-});
-
-const snapScroll = ref<HTMLElement | null>(null)
-const {y: snapYScroll,arrivedState: snapScrollArrivedState } = useScroll(snapScroll)
-const {top: snapScrollTopReached} = toRefs(snapScrollArrivedState);
-
-watch(topAllocationInPixels, (value) => {
-    console.log({topAllocationInPixelsChanges:value});
-});
-
-watch(snapYScroll, (yScroll) => {
-    //Todo: do setNavigationMode only once in 1 second
-    if(!['index'].includes(routeTo.value.name)) return false;
-
-    if(yScroll <= ((screenHeight.value * 2) - navigationHeight.value)){
-        console.log({yScroll:yScroll});
-        setNavigationMode('clear');
-    } else {
-        console.log({yScroll:yScroll});
-        setNavigationMode('solid');
-    }
 });
 </script>
 <style scoped>
@@ -171,14 +143,5 @@ watch(snapYScroll, (yScroll) => {
         v-bind(threadColor) 90%,
         transparent 100%
     );
-}
-</style>
-<style>
-/*Used by snap scroll: to allocate space on fixed top navigation*/
-.navigation-height{
-    height: v-bind(navigationHeightInPixels);
-}
-.spotlight-content-height{
-    max-height: v-bind(spotlightContentHeight);
 }
 </style>

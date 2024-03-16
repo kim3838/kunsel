@@ -131,7 +131,7 @@ watch(clientReadyState, async (clientReady) => {
         await nextTick(() => {
             let navigationHeight = landingNavigation.value?.offsetHeight;
             if(landingNavigation.value !== null &&  navigationHeight !== undefined){
-                setNavigationHeight(landingNavigation.value.offsetHeight);
+                setNavigationHeight(navigationHeight);
             }
         });
     }
@@ -143,21 +143,16 @@ watch(screenWidth, value => {
 
 const snapScroll = ref<HTMLElement | null>(null)
 const {y: snapYScroll,arrivedState: snapScrollArrivedState } = useScroll(snapScroll)
-const {top: snapScrollTopReached} = toRefs(snapScrollArrivedState);
-
-watch(topAllocationInPixels, (value) => {
-    console.log({topAllocationInPixelsChanges:value});
-});
 
 watch(snapYScroll, (yScroll) => {
     //Todo: do setNavigationMode only once in 1 second
     if(!['index'].includes(routeTo.value.name)) return false;
 
     if(yScroll <= ((screenHeight.value * 2) - navigationHeight.value)){
-        console.log({yScroll:yScroll});
+        //console.log({yScroll:yScroll});
         setNavigationMode('clear');
     } else {
-        console.log({yScroll:yScroll});
+        //console.log({yScroll:yScroll});
         setNavigationMode('solid');
     }
 });

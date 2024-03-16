@@ -7,11 +7,11 @@ export default defineNitroPlugin((nitroApp) => {
 
     //Called before constructing the HTML.
     nitroApp.hooks.hook('render:html', (html, { event }) => {
-        console.log({'RUNTIME SERVER HOOK': 'render:html'});
+        //console.log({'RUNTIME SERVER HOOK': 'render:html'});
     });
 
     //Called before sending the response.
     nitroApp.hooks.hook('render:response', (response, { event }) => {
-        console.log({'RUNTIME SERVER HOOK': 'render:response'});
+        //console.log({'RUNTIME SERVER HOOK': 'render:response'});
     });
 })
