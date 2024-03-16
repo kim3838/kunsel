@@ -1,5 +1,6 @@
 <template>
     <div
+        v-if="clientReadyState"
         id="layoutScroll"
         ref="snapScroll"
         class="tw-relative tw-scroll-smooth tw-h-screen tw-max-h-screen"
@@ -7,7 +8,7 @@
         <!-- Primary Navigation Menu -->
         <nav
             ref="landingNavigation"
-                :class="[enableScrollSnap ? 'tw-snap-start tw-snap-always' : '']"
+            :class="[enableScrollSnap ? 'tw-snap-start tw-snap-always' : '']"
             class="primary-navigation-parent tw-transition-all tw-duration-700 tw-z-40 tw-fixed tw-flex tw-justify-center">
             <div class="tw-max-w-screen-2xl tw-w-full tw-flex tw-justify-start lg:tw-justify-around tw-h-10 lg:tw-h-20">
                 <div class="tw--my-px tw-flex tw-items-center">
@@ -84,6 +85,7 @@
 <script setup lang="ts">
 import {storeToRefs} from 'pinia';
 import {useScroll} from '@vueuse/core';
+const clientReadyState = useClientReadyState();
 
 const routeTo = useRouteTo();
 const {$themeStore, $isRouteActive} = useNuxtApp();
@@ -117,9 +119,23 @@ const landingNavigation = ref(null);
 
 onMounted(async () => {
     await nextTick(() => {
-        setNavigationHeight(landingNavigation.value.offsetHeight);
+        let navigationHeight = landingNavigation.value?.offsetHeight;
+        if(landingNavigation.value !== null &&  navigationHeight !== undefined){
+            setNavigationHeight(navigationHeight);
+        }
     });
 });
+
+watch(clientReadyState, async (clientReady) => {
+    if(clientReady){
+        await nextTick(() => {
+            let navigationHeight = landingNavigation.value?.offsetHeight;
+            if(landingNavigation.value !== null &&  navigationHeight !== undefined){
+                setNavigationHeight(landingNavigation.value.offsetHeight);
+            }
+        });
+    }
+})
 
 watch(screenWidth, value => {
     setNavigationHeight(landingNavigation.value.offsetHeight);

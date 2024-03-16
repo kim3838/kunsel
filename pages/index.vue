@@ -318,6 +318,7 @@
 import {storeToRefs} from "pinia";
 const {$themeStore} = useNuxtApp();
 const {screens, width: screenWidth, } = useScreen();
+const clientReadyState = useClientReadyState();
 
 const {
     hexAlpha,
@@ -329,32 +330,7 @@ const spotlightVideo_1 = ref<HTMLElement | null>(null);
 onMounted(async () => {
     await nextTick(() => {
         reIndexSpotlightCarousel();
-        [spotlightVideo_1].forEach(video => {
-            if(video.value != null){
-                let playPromise = video.value.play();
-
-                if(playPromise != undefined){
-                    playPromise.then(()=>{
-                        let observer = new IntersectionObserver(
-                            (entries) => {
-                                entries.forEach((entry) => {
-                                    if (entry.intersectionRatio !== 1 && !video.value.paused) {
-                                        video.value.pause();
-                                    } else if (video.value.paused) {
-                                        video.value.play();
-                                    }
-                                });
-                            },
-                            {threshold: 1}
-                        );
-
-                        observer.observe(video.value);
-                    }).catch((error: any) => {
-
-                    });
-                }
-            }
-        })
+        autoPlayVideoSpotlights();
     });
 });
 
@@ -362,6 +338,34 @@ const spotlight_1_index = ref(0);
 watch(screenWidth, value => {
     reIndexSpotlightCarousel();
 });
+function autoPlayVideoSpotlights(){
+    [spotlightVideo_1].forEach(video => {
+        if(video.value != null){
+            let playPromise = video.value.play();
+
+            if(playPromise != undefined){
+                playPromise.then(()=>{
+                    let observer = new IntersectionObserver(
+                        (entries) => {
+                            entries.forEach((entry) => {
+                                if (entry.intersectionRatio !== 1 && !video.value.paused) {
+                                    video.value.pause();
+                                } else if (video.value.paused) {
+                                    video.value.play();
+                                }
+                            });
+                        },
+                        {threshold: 1}
+                    );
+
+                    observer.observe(video.value);
+                }).catch((error: any) => {
+
+                });
+            }
+        }
+    })
+};
 function reIndexSpotlightCarousel(){
     if (screenWidth.value >= screens['2xl']) {//>=1536
         spotlight_1_index.value = 0;

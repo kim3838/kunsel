@@ -1,31 +1,15 @@
 <template>
-    <transition leave-active-class="tw-duration-200">
-        <div v-show="show" class="tw-fixed tw-inset-0 tw-overflow-y-auto tw-px-4 tw-py-6 sm:tw-px-0 tw-z-50">
-            <transition
-                enter-active-class="tw-ease-out tw-duration-300"
-                enter-class="tw-opacity-0"
-                enter-to-class="tw-opacity-100"
-                leave-active-class="tw-ease-in tw-duration-200"
-                leave-class="tw-opacity-100"
-                leave-to-class="tw-opacity-0">
-                <div v-show="show" class="tw-fixed tw-inset-0 tw-transform tw-transition-all" @click="close">
-                    <div class="tw-absolute tw-inset-0 modal-layer tw-opacity-75"></div>
-                </div>
-            </transition>
+    <transition name="fade">
+        <div v-show="show" class="tw-fixed tw-inset-0 tw-overflow-y-auto tw-px-0 tw-z-50">
+            <div v-show="show" class="tw-fixed tw-inset-0" @click="close">
+                <div class="tw-absolute tw-inset-0 modal-layer tw-opacity-75"></div>
+            </div>
 
-            <transition
-                enter-active-class="tw-ease-out tw-duration-300"
-                enter-class="tw-opacity-0 tw-translate-y-4 sm:tw-translate-y-0 sm:tw-scale-95"
-                enter-to-class="tw-opacity-100 tw-translate-y-0 sm:tw-scale-100"
-                leave-active-class="tw-ease-in tw-duration-200"
-                leave-class="tw-opacity-100 tw-translate-y-0 sm:tw-scale-100"
-                leave-to-class="tw-opacity-0 tw-translate-y-4 sm:tw-translate-y-0 sm:tw-scale-95">
-                <div class="tw-h-full tw-flex tw-items-center">
-                    <div v-show="show" class="tw-mb-6 modal-body tw-rounded-sm tw-overflow-hidden tw-transform tw-transition-all tw-w-full sm:tw-w-full sm:tw-mx-auto" :class="maxWidthClass">
-                        <slot></slot>
-                    </div>
+            <div v-show="show" class="tw-h-full tw-flex tw-items-center thread-border">
+                <div  class="modal-body tw-rounded-sm tw-overflow-hidden tw-w-full sm:tw-w-full sm:tw-mx-auto" :class="maxWidthClass">
+                    <slot></slot>
                 </div>
-            </transition>
+            </div>
         </div>
     </transition>
 </template>
@@ -92,6 +76,16 @@ export default {
 }
 </script>
 <style scoped>
+.fade-enter-active,
+.fade-leave-active {
+    transition: opacity 0.5s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+    opacity: 0;
+}
+
 .modal-layer{
     background-color: transparent;
 }
