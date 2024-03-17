@@ -1,52 +1,43 @@
 <template>
-    <div>
-        <NuxtLayout name="landing">
+    <div class="tw-mx-auto tw-px-4 tw-max-w-screen-2xl tw-flex tw-justify-center">
+        <div class="tw-hidden sm:tw-block tw-px-4 tw-py-8 tw-h-96 tw-w-96">
+            <div class="tw-w-full tw-h-full tw-bg-contain tw-bg-center tw-bg-no-repeat" :style="{'background-image': 'url(/deco/undraw/undraw_secure_login_pdn4.svg)'}"></div>
+        </div>
+
+        <AccentFrame class="tw-my-4">
             <template #content>
-                <div class="tw-mx-auto tw-px-4 tw-max-w-screen-2xl tw-flex tw-justify-center">
-                    <div class="tw-hidden sm:tw-block tw-px-4 tw-py-8 tw-h-96 tw-w-96">
-                        <div class="tw-w-full tw-h-full tw-bg-contain tw-bg-center tw-bg-no-repeat" :style="{'background-image': 'url(/deco/undraw/undraw_secure_login_pdn4.svg)'}"></div>
-                    </div>
+                <div class="tw-relative tw-py-4">
+                    <form @submit.prevent="execute" class="tw-w-72">
+                        <p class="tw-text-lg tw-font-semibold tw-mb-4">
+                            Verify your email.
+                        </p>
+                        <p class="tw-text-base">
+                            Please click the verification button sent to your email address.
+                        </p>
+                        <p class="tw-text-sm tw-mt-4">
+                            Use the button below to resend the verification.
+                            Dont forget to check your email spam category.
+                        </p>
 
-                    <AccentFrame class="tw-my-4">
-                        <template #content>
-                            <div class="tw-relative tw-py-4">
-                                <form @submit.prevent="execute" class="tw-w-72">
-                                    <p class="tw-text-lg tw-font-semibold tw-mb-4">
-                                        Verify your email.
-                                    </p>
-                                    <p class="tw-text-base">
-                                        Please click the verification button sent to your email address.
-                                    </p>
-                                    <p class="tw-text-sm tw-mt-4">
-                                        Use the button below to resend the verification.
-                                        Dont forget to check your email spam category.
-                                    </p>
-
-                                    <div class="tw-flex tw-mt-4 tw-items-center tw-justify-end">
-                                        <Button
-                                            :disabled="pending"
-                                            :size="'md'"
-                                            :variant="'flat'"
-                                            :icon="pending ? 'eos-icons:installing' : 'ic:round-mail-outline'"
-                                            :label="pending ? 'Requesting...' : 'Send Email Verification'"></Button>
-                                    </div>
-                                </form>
-                            </div>
-                        </template>
-                    </AccentFrame>
+                        <div class="tw-flex tw-mt-4 tw-items-center tw-justify-end">
+                            <Button
+                                :disabled="pending"
+                                :size="'md'"
+                                :variant="'flat'"
+                                :icon="pending ? 'eos-icons:installing' : 'ic:round-mail-outline'"
+                                :label="pending ? 'Requesting...' : 'Send Email Verification'"></Button>
+                        </div>
+                    </form>
                 </div>
             </template>
-        </NuxtLayout>
+        </AccentFrame>
     </div>
 </template>
 
 <script setup>
-import {ref, reactive, onMounted, nextTick} from 'vue';
 const {$coreStore} = useNuxtApp();
-useLayout().setNavigationMode('solid');
 
 definePageMeta({
-    layout: false,
     middleware: [
         'auth',
         'not-verified'

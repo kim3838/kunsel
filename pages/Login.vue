@@ -70,7 +70,6 @@
 </template>
 
 <script setup lang="ts">
-import {ref, onMounted, nextTick, computed} from 'vue';
 const {$coreStore} = useNuxtApp();
 const {isAuthenticated, login, authPending} = useAuth();
 const {screens, width: screenWidth, } = useScreen();

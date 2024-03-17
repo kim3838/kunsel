@@ -90,9 +90,7 @@
 </template>
 
 <script setup lang="ts">
-import {ref, reactive, watch, nextTick, onMounted} from 'vue';
 const {$moment} = useNuxtApp();
-useLayout().setNavigationMode('solid');
 
 definePageMeta({middleware: ['auth', 'verified']});
 
