@@ -5,7 +5,7 @@
         <!-- Primary Navigation Menu -->
         <nav
             ref="landingNavigation"
-            class="primary-navigation-parent tw-transition-all tw-duration-700 tw-z-40 tw-fixed tw-flex tw-justify-center">
+            class="primary-navigation-parent tw-z-40 tw-fixed tw-flex tw-justify-center">
             <div class="tw-max-w-screen-2xl tw-w-full tw-flex tw-justify-start lg:tw-justify-around tw-h-10 lg:tw-h-20">
                 <div class="tw--my-px tw-flex tw-items-center">
                     <NavDrop
