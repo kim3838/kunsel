@@ -1,5 +1,9 @@
 <template>
-    <div id="layoutScroll" ref="layoutScroll" class="tw-relative tw-scroll-smooth tw-h-screen tw-max-h-screen tw-overflow-auto">
+    <div
+        v-if="clientReadyState"
+        id="layoutScroll"
+        ref="layoutScroll"
+        class="tw-relative tw-scroll-smooth tw-h-screen tw-max-h-screen tw-overflow-auto">
         <!-- Primary Navigation Menu -->
         <nav
             ref="navigation"
@@ -73,6 +77,7 @@
 <script setup lang="ts">
 import {storeToRefs} from 'pinia';
 import {useScroll} from '@vueuse/core';
+const clientReadyState = useClientReadyState();
 
 const routeTo = useRouteTo();
 const {$themeStore, $isRouteActive} = useNuxtApp();
@@ -99,12 +104,28 @@ const {
 const navigation = ref(null);
 
 onMounted(async () => {
+    console.log({'Default.vue': 'Mounted'});
     await nextTick(() => {
-        console.log({'setNavigationHeight':navigation.value.offsetHeight});
-
-        setNavigationHeight(navigation.value.offsetHeight);
+        let navigationHeight = navigation.value?.offsetHeight;
+        console.log({'Await NextTick Default navigationHeight':navigationHeight});
+        if(navigation.value !== null &&  navigationHeight !== undefined){
+            setNavigationHeight(navigationHeight);
+        }
     });
 });
+
+watch(clientReadyState, async (clientReady) => {
+    console.log({'Default.vue Watch clientReadyState':clientReady});
+    if(clientReady){
+        await nextTick(() => {
+            let navigationHeight = navigation.value?.offsetHeight;
+            console.log({'Await NextTick Default.vue navigationHeight':navigationHeight});
+            if(navigation.value !== null &&  navigationHeight !== undefined){
+                setNavigationHeight(navigationHeight);
+            }
+        });
+    }
+})
 
 watch(screenWidth, value => {
     console.log({'setNavigationHeight':navigation.value.offsetHeight});

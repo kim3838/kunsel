@@ -1,12 +1,13 @@
 <template>
     <div
+        v-if="clientReadyState"
         id="layoutScroll"
         class="tw-relative tw-scroll-smooth tw-h-screen tw-max-h-screen tw-overflow-auto tw-snap-none">
         <!-- Primary Navigation Menu -->
         <nav
             ref="landingNavigation"
             class="primary-navigation-parent tw-z-40 tw-fixed tw-flex tw-justify-center">
-            <div class="tw-max-w-screen-2xl tw-w-full tw-flex tw-justify-start lg:tw-justify-around tw-h-10 lg:tw-h-20">
+            <div class="tw-max-w-screen-2xl tw-w-full tw-flex tw-justify-start lg:tw-justify-around tw-h-10 lg:tw-h-20 tw-font-">
                 <div class="tw--my-px tw-flex tw-items-center">
                     <NavDrop
                         class="lg:tw-hidden tw-h-full"
@@ -77,6 +78,7 @@
 
 <script setup lang="ts">
 import {storeToRefs} from 'pinia';
+const clientReadyState = useClientReadyState();
 
 const {$themeStore, $isRouteActive} = useNuxtApp();
 const {isAuthenticated, user, logout} = useAuth();
@@ -103,10 +105,28 @@ const {
 const landingNavigation = ref(null);
 
 onMounted(async () => {
+    console.log({'Landing.vue': 'Mounted'});
     await nextTick(() => {
-        setNavigationHeight(landingNavigation.value.offsetHeight);
+        let navigationHeight = landingNavigation.value?.offsetHeight;
+        console.log({'Await NextTick Landing navigationHeight':navigationHeight});
+        if(landingNavigation.value !== null &&  navigationHeight !== undefined){
+            setNavigationHeight(navigationHeight);
+        }
     });
 });
+
+watch(clientReadyState, async (clientReady) => {
+    console.log({'Landing.vue Watch clientReadyState':clientReady});
+    if(clientReady){
+        await nextTick(() => {
+            let navigationHeight = landingNavigation.value?.offsetHeight;
+            console.log({'Await NextTick Landing.vue navigationHeight':navigationHeight});
+            if(landingNavigation.value !== null &&  navigationHeight !== undefined){
+                setNavigationHeight(navigationHeight);
+            }
+        });
+    }
+})
 
 watch(screenWidth, value => {
     setNavigationHeight(landingNavigation.value.offsetHeight);

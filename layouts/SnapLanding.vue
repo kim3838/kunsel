@@ -118,8 +118,10 @@ const {
 const landingNavigation = ref(null);
 
 onMounted(async () => {
+    console.log({'SnapLanding.vue': 'Mounted'});
     await nextTick(() => {
         let navigationHeight = landingNavigation.value?.offsetHeight;
+        console.log({'Await NextTick SnapLanding navigationHeight':navigationHeight});
         if(landingNavigation.value !== null &&  navigationHeight !== undefined){
             setNavigationHeight(navigationHeight);
         }
@@ -127,9 +129,11 @@ onMounted(async () => {
 });
 
 watch(clientReadyState, async (clientReady) => {
+    console.log({'SnapLanding.vue Watch clientReadyState':clientReady});
     if(clientReady){
         await nextTick(() => {
             let navigationHeight = landingNavigation.value?.offsetHeight;
+            console.log({'Await NextTick SnapLanding.vue navigationHeight':navigationHeight});
             if(landingNavigation.value !== null &&  navigationHeight !== undefined){
                 setNavigationHeight(navigationHeight);
             }
