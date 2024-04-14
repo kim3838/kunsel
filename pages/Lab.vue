@@ -1,5 +1,5 @@
 <template>
-    <div class="tw-mx-auto tw-max-w-screen-2xl tw-pt-4">
+    <div v-show="clientReadyState" class="tw-mx-auto tw-max-w-screen-2xl tw-pt-4">
         <div class="tw-flex tw-mb-4">
             <SampleEmitter
                 v-model:[dynamicFoo]="fooComputed"
@@ -160,13 +160,15 @@
 </template>
 
 <script setup lang="ts">
-definePageMeta({
-    middleware: 'guest'
-});
+bootRedirectRule(['guest']);
+const clientReadyState = useClientReadyState();
 
 const {
     setNavigationMode,
 } = useLayout();
+
+setNavigationMode('solid', 'Lab.vue');
+setLayout('default', 'Lab.vue');
 
 function changeLayout(layoutPayload: string){
     setLayout(layoutPayload);

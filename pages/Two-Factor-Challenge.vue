@@ -57,12 +57,11 @@
 </template>
 
 <script setup lang="ts">
+bootRedirectRule(['guest']);
+const clientReadyState = useClientReadyState();
+
 const {$coreStore} = useNuxtApp();
 const {twoFactorLogin, isAuthenticated, authPending} = useAuth();
-
-definePageMeta({
-    middleware: 'guest'
-});
 
 const recovery = ref(false);
 const codeInput = ref(null);

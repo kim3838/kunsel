@@ -1,5 +1,5 @@
 <template>
-    <div class="tw-mx-auto tw-px-4 tw-max-w-screen-2xl tw-flex tw-justify-center">
+    <div v-show="clientReadyState" class="tw-mx-auto tw-px-4 tw-max-w-screen-2xl tw-flex tw-justify-center">
         <div class="tw-hidden sm:tw-block tw-px-4 tw-py-8 tw-h-96 tw-w-96">
             <div class="tw-w-full tw-h-full tw-bg-contain tw-bg-center tw-bg-no-repeat" :style="{'background-image': 'url(/deco/undraw/undraw_access_denied_re_awnf.svg)'}"></div>
         </div>
@@ -59,6 +59,9 @@
 </template>
 
 <script setup>
+bootRedirectRule(['guest']);
+const clientReadyState = useClientReadyState();
+
 const {$coreStore} = useNuxtApp();
 const route = useRoute();
 
@@ -68,10 +71,6 @@ if (!route.query.email) {
         replace: true
     });
 }
-
-definePageMeta({
-    middleware: 'guest'
-});
 
 let password = ref(null);
 

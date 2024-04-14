@@ -315,10 +315,18 @@
 </template>
 
 <script setup lang="ts">
+bootRedirectRule(['sample-middleware']);
 import {storeToRefs} from "pinia";
 const {$themeStore} = useNuxtApp();
 const {screens, width: screenWidth, } = useScreen();
 const clientReadyState = useClientReadyState();
+
+const {
+    setNavigationMode,
+} = useLayout();
+
+setNavigationMode('clear', 'index.vue');
+setLayout('snap-landing', 'index.vue');
 
 const {
     hexAlpha,

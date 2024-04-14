@@ -1,5 +1,5 @@
 <template>
-    <div class="tw-mx-auto tw-pt-4 tw-max-w-screen-2xl">
+    <div v-show="clientReadyState" class="tw-mx-auto tw-pt-4 tw-max-w-screen-2xl">
         <div>Tailwind Url: <NuxtLink class="tw-text-sky-600" :to="'_tailwind'" target="_blank">{{('http://localhost:3000' + '/_tailwind/')}}</NuxtLink></div>
 
         <div class="tw-space-y-2">
@@ -1180,6 +1180,16 @@
 </template>
 
 <script setup lang="ts">
+bootRedirectRule(['guest']);
+const clientReadyState = useClientReadyState();
+
+const {
+    setNavigationMode,
+} = useLayout();
+
+setNavigationMode('solid', 'Prototype.vue');
+setLayout('default', 'Prototype.vue');
+
 import {storeToRefs} from 'pinia';
 const {$themeStore, $formStore} = useNuxtApp();
 
