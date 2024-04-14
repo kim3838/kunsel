@@ -172,27 +172,6 @@ watch(snapYScroll, (yScroll) => {
 .allocate-navigation {
     padding-top: v-bind(topAllocationInPixels);
 }
-
-.ping{
-    background-color: v-bind(primaryColor);
-}
-
-.ping-highlight{
-    background-color: v-bind(accentColor);
-}
-
-.footer-rule{
-    height: 1px;
-    width: 100%;
-    background: linear-gradient(
-        to right,
-        transparent 0%,
-        v-bind(threadColor) 10%,
-        transparent 50%,
-        v-bind(threadColor) 90%,
-        transparent 100%
-    );
-}
 </style>
 <style>
 /*Used by snap scroll: to allocate space on fixed top navigation*/
