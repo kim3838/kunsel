@@ -1,16 +1,5 @@
 import {storeToRefs} from "pinia";
 
-export const layoutState = () => {
-    return useState('layout-value', () => 'default');
-};
-
-export const setLayout = function(layout: any){
-    const layoutValue = layoutState();
-    if(layout != layoutValue.value){
-        layoutValue.value = layout;
-    }
-};
-
 export const useLayout = () => {
     const routeTo = useRouteTo();
     const {isAuthenticated, logout} = useAuth();
