@@ -203,8 +203,10 @@ export const useLayout = () => {
     function setNavigationHeight(height: any){
         navigationHeight.value = height;
     }
-    function setNavigationMode(mode: any){
+    function setNavigationMode(mode: any, callie = ''){
         if(mode != navigationMode.value){
+            console.log({[(callie ? (callie + ' ') : '') + 'setNavigationMode']: mode});
+            
             navigationMode.value = mode;
         }
     }

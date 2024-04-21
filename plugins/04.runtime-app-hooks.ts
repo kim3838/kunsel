@@ -6,12 +6,12 @@ export default defineNuxtPlugin((nuxtApp) => {
 
     //Called when the setup() of the new page is running.
     nuxtApp.hook('page:loading:start', () => {
-        //console.log({'PAGE NAVIGATE': 'page:loading:start'});
+        console.log({'PAGE NAVIGATE': 'page:loading:start'});
     });
 
     //Called when initial vueApp instance is created.
     nuxtApp.hook('app:created', () => {
-        //console.log({'RUNTIME APP HOOK': 'app:created'});
+        console.log({'RUNTIME APP HOOK': 'app:created'});
         useClientReadyState().value = false;
     });
 
@@ -37,7 +37,17 @@ export default defineNuxtPlugin((nuxtApp) => {
 
     //Called after page:finish
     nuxtApp.hook('page:loading:end', () => {
-        //console.log({'PAGE NAVIGATE': 'page:loading:end'});
+        console.log({'PAGE NAVIGATE': 'page:loading:end'});
+
+        const {
+            setNavigationMode,
+        } = useLayout();
+
+        if(['index'].includes(useRouteTo().value.name)){
+            setNavigationMode('clear', 'Runtime Hook page:loading:end');
+        } else {
+            setNavigationMode('solid', 'Runtime Hook page:loading:end');
+        }
     });
 })
 
