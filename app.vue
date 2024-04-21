@@ -6,9 +6,7 @@
             <div class="top-fragment tw-relative tw-w-[36.125rem] sm:tw-w-[72.1875rem] tw-left-[calc(50%-11rem)] sm:tw-left-[calc(50%-30rem)] tw-aspect-[1155/678] tw--translate-x-1/2 tw-rotate-[30deg] tw-opacity-30"></div>
         </div>
         <NuxtLoadingIndicator />
-        <NuxtLayout :name="layoutValue">
-            <NuxtPage/>
-        </NuxtLayout>
+        <NuxtPage/>
         <div class="tw-absolute tw-inset-x-0 tw--z-10 tw-overflow-hidden tw-top-[calc(20%)] sm:tw-top-[calc(0%)] tw-blur-3xl" aria-hidden="true">
             <div class="bottom-fragment tw-relative tw-w-[36.125rem] sm:tw-w-[72.1875rem] tw-left-[calc(50%+3rem)] sm:tw-left-[calc(50%+36rem)] tw-aspect-[1155/678]  tw--translate-x-1/2  tw-opacity-30"></div>
         </div>
@@ -17,12 +15,10 @@
 
 <script setup lang="ts">
 import {storeToRefs} from 'pinia';
-import {useScroll} from '@vueuse/core';
 
 const {$debug, $moment, $themeStore, $coreStore} = useNuxtApp();
 const runtimeConfig = useRuntimeConfig();
 const appConfig = useAppConfig();
-const layoutValue = layoutState();
 
 const {
     hexAlpha,
@@ -80,9 +76,9 @@ const navDropOptionsParentBorderColor = computed(()=>{
     return neutralColor.value;
 });
 
-const nuxtWrapper = ref(null);
-const {x: nuxtWrapperXScroll,y: nuxtWrapperYScroll,arrivedState: nuxtWrapperArrivedState } = useScroll(nuxtWrapper)
-const {top: nuxtWrapperTopReached} = toRefs(nuxtWrapperArrivedState);
+//const nuxtWrapper = ref(null);
+//const {x: nuxtWrapperXScroll,y: nuxtWrapperYScroll,arrivedState: nuxtWrapperArrivedState } = useScroll(nuxtWrapper)
+//const {top: nuxtWrapperTopReached} = toRefs(nuxtWrapperArrivedState);
 
 // $debug('runtimeConfig',runtimeConfig);
 // $debug('appConfig', appConfig);
@@ -163,17 +159,15 @@ const {top: nuxtWrapperTopReached} = toRefs(nuxtWrapperArrivedState);
 
 .nav-drop-active{
     background-color: v-bind(accentColor20);
-    border: 1px solid v-bind(neutralColor);
-    border-bottom-width: 0px;
+    /*border: 1px solid v-bind(neutralColor);*/
+    /*border-bottom-width: 0px;*/
 }
 
 .nav-drop{
     color: v-bind(navigationLinkColor);
     position: relative;
-    box-sizing: border-box;
     display: inline-flex;
     align-items: center;
-    border: 1px solid transparent;
 }
 .nav-drop:hover{
     background-color: v-bind(accentColor20);
@@ -182,7 +176,7 @@ const {top: nuxtWrapperTopReached} = toRefs(nuxtWrapperArrivedState);
 .nav-drop-options-parent{
     position: absolute;
     border: 1px solid v-bind(navDropOptionsParentBorderColor);
-    min-width: calc(100% + 2px);
+    min-width: calc(100% + 0px);
     width: max-content;
     background-color: v-bind(navDropOptionsParentBackgroundColor);
 }

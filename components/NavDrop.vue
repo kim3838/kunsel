@@ -3,33 +3,36 @@
         ref="navDrop"
         tabindex="0"
         :style="{'text-shadow': navigationTextShadow}"
-        :class="[classes, headerFontClass]"
-        class="nav-drop tw-px-4 tw-cursor-pointer focus:tw-outline-none focus:tw-ring-transparent focus:tw-ring-1">
-        {{title}}
+        :class="[classes]"
+        class="nav-drop tw-px-4 tw-py-1 tw-cursor-pointer focus:tw-outline-none focus:tw-ring-transparent focus:tw-ring-1">
+        <span :class="[headerFontClass]">{{title}}</span>
         <ClientOnly><Icon :name="navDropIcon"/></ClientOnly>
         <div
             v-if="activeComputed"
             :style="navDropOptionsStyleComputed"
-            class="nav-drop-options-parent tw-transition-all tw-duration-700 tw-text-base tw-drop-shadow-2xl">
+            class="nav-drop-options-parent tw-drop-shadow-sm">
             <div v-for="dropOption in dropOptions" :key="dropOption.title" :style="{'text-shadow': navigationTextShadow}" class="nav-drop-link tw-cursor-pointer">
 
                 <NuxtLink
                     v-if="dropOption.type === 'link'"
                     :to="dropOption.to"
-                    class="tw-px-4 tw-py-1 tw-w-full tw-inline-flex tw-items-center">
+                    class="tw-px-4 tw-py-1 tw-w-full tw-inline-flex tw-items-center"
+                    :class="[childNonDropFontClass]">
                     <ClientOnly><Icon v-if="dropOption.icon" :name="dropOption.icon" class="tw-mr-1" /></ClientOnly><span>{{dropOption.title}}</span>
                 </NuxtLink>
 
                 <a v-if="dropOption.type == 'anchor-link'" :href="dropOption.to">
                     <NuxtLink
-                        class="tw-px-4 tw-py-1 tw-w-full tw-inline-flex tw-items-center">
+                        class="tw-px-4 tw-py-1 tw-w-full tw-inline-flex tw-items-center"
+                        :class="[childNonDropFontClass]">
                         <ClientOnly><Icon v-if="dropOption.icon" :name="dropOption.icon" class="tw-mr-1" /></ClientOnly><span>{{dropOption.title}}</span>
                     </NuxtLink>
                 </a>
 
                 <div v-if="dropOption.type === 'action'"
                      @click="typeof dropOption.callback == 'function' ? dropOption.callback() : false;"
-                     class="tw-px-4 tw-py-1 tw-w-full tw-inline-flex tw-items-center">
+                     class="tw-px-4 tw-py-1 tw-w-full tw-inline-flex tw-items-center"
+                    :class="[childNonDropFontClass]">
                     <ClientOnly><Icon v-if="dropOption.icon" :name="dropOption.icon" class="tw-mr-1" /></ClientOnly><span>{{dropOption.title}}</span>
                 </div>
 
@@ -37,7 +40,7 @@
                     class="tw-w-full"
                     v-if="dropOption.type === 'drop'"
                     :parent="false"
-                    :size="'sm'"
+                    :size="childDropSize"
                     :drop-justify="'right'"
                     :title="dropOption.title"
                     :drop-options="dropOption.options"
@@ -97,19 +100,16 @@ const navDropOptionsStyleComputed = computed(() => {
 
     let dropDirection = {
         'bottom': {
-            'border-top-width': '1px',
-            top: 'calc(100% + 1px)',
-            [props.dropAlign]: 'calc(-1px)',
+            top: 'calc(100% + 0px)',
+            [props.dropAlign]: 'calc(0px)',
         },
         'right': {
-            'border-top-width': '1px',
             top: '-1px',
-            left: 'calc(100% + 1px)',
+            left: 'calc(100% + 0px)',
         },
         'left': {
-            'border-top-width': '1px',
             top: '-1px',
-            right: 'calc(100% + 1px)',
+            right: 'calc(100% + 0px)',
         },
     };
 
@@ -136,9 +136,26 @@ const classes = computed(() => {
 
 const headerFontClass = computed(() => {
     return {
+        'xs': 'tw-text-sm tw-font-medium',
         'sm': 'tw-text-base tw-font-medium',
         'md': 'tw-text-lg tw-font-medium',
         'lg': 'tw-text-xl tw-font-medium',
+    }[props.size]
+});
+const childNonDropFontClass = computed(() => {
+    return {
+        'xs': 'tw-text-sm tw-font-medium',
+        'sm': 'w-text-sm tw-font-medium',
+        'md': 'tw-text-base tw-font-medium',
+        'lg': 'tw-text-lg tw-font-medium',
+    }[props.size]
+});
+const childDropSize = computed(() => {
+    return {
+        'xs': 'xs',
+        'sm': 'xs',
+        'md': 'sm',
+        'lg': 'md',
     }[props.size]
 });
 </script>

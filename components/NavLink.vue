@@ -46,6 +46,7 @@ const classes = computed(() => {
 
 const headerFontClass = computed(() => {
     return {
+        'xs': 'tw-text-sm tw-font-medium',
         'sm': 'tw-text-base tw-font-medium',
         'md': 'tw-text-lg tw-font-medium',
         'lg': 'tw-text-xl tw-font-medium',
