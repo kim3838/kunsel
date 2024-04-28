@@ -18,8 +18,8 @@ module.exports = {
     theme: {
         extend: {
             fontFamily : {
-                sans : ['Sofia Sans Semi Condensed', 'Spline Sans', 'Google Sans Text', 'Barlow Semi Condensed', 'Source Sans Pro', 'Roboto', 'Roboto Condensed', 'Inter', 'sans-serif'],
-                serif : ['Prociono', 'Almendra', 'Oranienbaum', 'Instrument Serif', 'Gupter', 'Kotta One', 'serif'],
+                sans : ['Sofia Sans Semi Condensed', 'Source Sans Pro', 'Roboto', 'IBM Plex Sans Condensed', 'Spline Sans', 'Google Sans Text', 'Barlow Semi Condensed', 'Roboto Condensed', 'Inter', 'sans-serif'],
+                serif : ['Oranienbaum', 'Instrument Serif', 'Almendra', 'Prociono', 'Gupter', 'Kotta One', 'serif'],
                 mono : ['Roboto Mono', 'Spline Sans Mono', 'monospace'],
             },
             spacing: {
