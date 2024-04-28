@@ -38,16 +38,6 @@ export default defineNuxtPlugin((nuxtApp) => {
     //Called after page:finish
     nuxtApp.hook('page:loading:end', () => {
         console.log({'PAGE NAVIGATE': 'page:loading:end'});
-
-        const {
-            setNavigationMode,
-        } = useLayout();
-
-        if(['index'].includes(useRouteTo().value.name)){
-            setNavigationMode('clear', 'Runtime Hook page:loading:end');
-        } else {
-            setNavigationMode('solid', 'Runtime Hook page:loading:end');
-        }
     });
 })
 
