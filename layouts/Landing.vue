@@ -85,7 +85,6 @@ const {isAuthenticated, user, logout} = useAuth();
 const {
     navigationLinks,
     navigationAccountLinks,
-    navigationBackground,
     navigationHeaderSize,
     topAllocationInPixels,
     setNavigationHeight,
@@ -96,6 +95,7 @@ const {screens, width: screenWidth, height: screenHeight } = useScreen();
 const navDrop = resolveComponent('navDrop');
 const {
     primary: primaryColor,
+    body: bodyColor,
     accent: accentColor,
     neutral: neutralColor,
     tint: tintColor,
@@ -134,7 +134,7 @@ watch(screenWidth, value => {
 </script>
 <style scoped>
 .primary-navigation-parent {
-    background-color: v-bind(navigationBackground) !important;
+    background-color: v-bind(bodyColor) !important;
     left: 0;
     right: 5px;
     z-index: 30;

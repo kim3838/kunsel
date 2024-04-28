@@ -1,178 +1,173 @@
 <template>
-    <div v-show="clientReadyState" class="tw-mx-auto tw-max-w-screen-2xl tw-pt-4">
-        <div class="tw-flex tw-mb-4">
-            <SampleEmitter
-                v-model:[dynamicFoo]="fooComputed"
-                v-model:[dynamicBarCaller]="barComputed"
-                class="tw-w-[250px]"
-            />
-            <Button :variant="'flat'" @click="changeLayout('default')" :label="'Default Layout'"></Button>
-            <Button :variant="'flat'" @click="changeLayout('landing')" :label="'Landing Layout'"></Button>
-        </div>
-
-        <div class="tw-grid tw-gap-2 tw-grid-cols-3 tw-h-[460px]">
-            <Featured
-                v-if="false"
-                class="tw-w-[254px] tw-h-[354px]"
-                focused
-                :image="{path: '/images/product/cd8f248a-bd3d-4553-bcf7-849ed27c4b36.webp'}"
-                :title="'Title'"
-                :sub-title="'Sub Title'"
-                :link="'/prototype'"
-                :button-label="'Details'"
-            />
-            <HexagonFrame
-                v-for="item in leftToRightItems"
-                class="tw-flex-none"
-                :frame-border="item.frameBorder"
-                :content-border="item.contentBorder"
-                :direction="'ltr'"
-                :top-right="45"
-                :bottom-left="55">
-                <template #header>
-                    <div class="tw-h-full tw-w-[40%]">
-                        <div
-                            class="tw-h-full tw-w-full tw-bg-cover tw-bg-center tw-bg-no-repeat"
-                            :style="{'background':'url('+item.image.path+')'}"
-                        />
-                    </div>
-                </template>
-                <template v-slot:body="{frameBorderColor, contentBorderColor}">
-                    <div class="tw-h-full tw-w-[60%] tw-p-1 tw-overflow-hidden tw-relative tw-flex tw-flex-col">
-                        <div class="tw-font-semibold tw-h-max tw-flex-none">
-                            <UnorderedList
-                                class="tw-cursor-pointer hover:tw-underline"
-                                :size="'md'"
-                                :icon="item.listIcon"
-                                :label="'iGame Z790D5 FLOW V20 iGame Z790D5 FLOW V20'"/>
-                        </div>
-
-                        <div class="tw-overflow-auto">
-                            <div v-if="true" class="tw-flex tw-flex-row tw-flex-nowrap">
-                                <div class="tw-w-1/2 tw-flex tw-flex-col tw-flex-wrap">
-                                    <UnorderedList
-                                        :size="'sm'"
-                                        :icon="'eos-icons:commit'"
-                                        :label="'PCIe 5.0 x16'"/>
-                                    <UnorderedList
-                                        :size="'sm'"
-                                        :icon="'eos-icons:commit'"
-                                        :label="'micro-ATX and mini-ITX form factors'"/>
-                                    <UnorderedList
-                                        :size="'sm'"
-                                        :icon="'eos-icons:commit'"
-                                        :label="'Wi-Fi 6'"/>
-                                </div>
-                                <div class="tw-w-1/2 tw-flex tw-flex-col tw-flex-wrap">
-                                    <UnorderedList
-                                        :size="'sm'"
-                                        :icon="'eos-icons:commit'"
-                                        :label="'3 PCIe 4.0 M.2 slots'"/>
-                                    <UnorderedList
-                                        :size="'sm'"
-                                        :icon="'eos-icons:commit'"
-                                        :label="'DDR4 memory support'"/>
-                                    <UnorderedList
-                                        :size="'sm'"
-                                        :icon="'eos-icons:commit'"
-                                        :label="'2 PCIe 4.0 M.2 slots'"/>
-                                </div>
-                            </div>
-
-                            <div>
-                                <Button v-if="true" :label="'Learn more'" :size="'md'" :variant="'flat'"></Button>
-                            </div>
-
-                            <UnorderedList
-                                v-for="description in item.descriptions"
-                                :size="'sm'"
-                                :label="description"/>
-                        </div>
-                    </div>
-                </template>
-            </HexagonFrame>
-        </div>
-
-        <div v-if="false" class="tw-mt-6 tw-grid tw-gap-2 tw-grid-cols-5 tw-h-[454px]">
-            <HexagonFrame
-                v-for="item in topToBottomItems"
-                :key="item"
-                :frame-border="item.frameBorder"
-                :content-border="item.contentBorder"
-                :direction="'ttb'"
-                :head-percentage="65"
-                :top-right="55"
-                :bottom-left="45">
-                <template #header>
-                    <div class="tw-h-[65%] tw-w-full">
-                        <div
-                            class="tw-h-full tw-w-full tw-bg-cover tw-bg-center tw-bg-no-repeat"
-                            :style="{'background':'url('+item.image.path+')'}"
-                        />
-                    </div>
-                </template>
-                <template #body>
-                    <div class="tw-h-[35%] tw-w-full tw-p-1">
-                        <div class="tw-font-semibold tw-text-lg">{{item.subTitle}}</div>
-                        <Button :label="'Learn more'" :size="'md'" :variant="'flat'"></Button>
-                    </div>
-                </template>
-            </HexagonFrame>
-        </div>
-
-        <div v-if="false" class="tw-w-[170px] tw-h-[230px]">
-            <HexagonFrame>
-                <template #body>
-                    <div class="tw-relative tw-h-full tw-flex tw-items-center tw-px-4 tw-text-center tw-font-['Google_Sans_Text'] tw-text-xl tw-font-semibold tw-px-8">
-                        Hexagon Frame Without Corner
-                    </div>
-                </template>
-            </HexagonFrame>
-        </div>
-
-        <div v-if="false">
-            <div>
-                <div class="tw-mx-auto tw-max-w-screen-2xl tw-flex tw-flex-col">
-                    <Featured
-                        focused
-                        class="tw-inline-block tw-mx-2"
-                        :image="{path: '/images/product/ebac5037-c3d2-4275-b96b-24f855695841.webp'}"
-                        :title="'Motherboard'"
-                        :sub-title="'iGame Z790D5 ULTRA V20'"
-                        :link="'/prototype'"
-                        :button-label="'Details'"
+    <div>
+        <LandingWrapper>
+            <div class="tw-mx-auto tw-max-w-screen-2xl tw-pt-4">
+                <div class="tw-flex tw-mb-4">
+                    <SampleEmitter
+                        v-model:[dynamicFoo]="fooComputed"
+                        v-model:[dynamicBarCaller]="barComputed"
+                        class="tw-w-[250px]"
                     />
+                    <Button :variant="'flat'" @click="changeLayout('default')" :label="'Default Layout'"></Button>
+                    <Button :variant="'flat'" @click="changeLayout('landing')" :label="'Landing Layout'"></Button>
                 </div>
-                <div class="tw-mx-auto tw-max-w-screen-2xl tw-flex tw-flex-col">
-                    <Card
+
+                <div class="tw-grid tw-gap-2 tw-grid-cols-3 tw-h-[460px]">
+                    <Featured
+                        v-if="false"
+                        class="tw-w-[254px] tw-h-[354px]"
                         focused
-                        class="tw-inline-block tw-mx-2"
-                        :image="{path: '/images/product/ebac5037-c3d2-4275-b96b-24f855695841.webp'}"
-                        :title="'Motherboard'"
-                        :sub-title="'iGame Z790D5 ULTRA V20'"
+                        :image="{path: '/images/product/cd8f248a-bd3d-4553-bcf7-849ed27c4b36.webp'}"
+                        :title="'Title'"
+                        :sub-title="'Sub Title'"
                         :link="'/prototype'"
                         :button-label="'Details'"
                     />
+                    <HexagonFrame
+                        v-for="item in leftToRightItems"
+                        class="tw-flex-none"
+                        :frame-border="item.frameBorder"
+                        :content-border="item.contentBorder"
+                        :direction="'ltr'"
+                        :top-right="45"
+                        :bottom-left="55">
+                        <template #header>
+                            <div class="tw-h-full tw-w-[40%]">
+                                <div
+                                    class="tw-h-full tw-w-full tw-bg-cover tw-bg-center tw-bg-no-repeat"
+                                    :style="{'background':'url('+item.image.path+')'}"
+                                />
+                            </div>
+                        </template>
+                        <template v-slot:body="{frameBorderColor, contentBorderColor}">
+                            <div class="tw-h-full tw-w-[60%] tw-p-1 tw-overflow-hidden tw-relative tw-flex tw-flex-col">
+                                <div class="tw-font-semibold tw-h-max tw-flex-none">
+                                    <UnorderedList
+                                        class="tw-cursor-pointer hover:tw-underline"
+                                        :size="'md'"
+                                        :icon="item.listIcon"
+                                        :label="'iGame Z790D5 FLOW V20 iGame Z790D5 FLOW V20'"/>
+                                </div>
+
+                                <div class="tw-overflow-auto">
+                                    <div v-if="true" class="tw-flex tw-flex-row tw-flex-nowrap">
+                                        <div class="tw-w-1/2 tw-flex tw-flex-col tw-flex-wrap">
+                                            <UnorderedList
+                                                :size="'sm'"
+                                                :icon="'eos-icons:commit'"
+                                                :label="'PCIe 5.0 x16'"/>
+                                            <UnorderedList
+                                                :size="'sm'"
+                                                :icon="'eos-icons:commit'"
+                                                :label="'micro-ATX and mini-ITX form factors'"/>
+                                            <UnorderedList
+                                                :size="'sm'"
+                                                :icon="'eos-icons:commit'"
+                                                :label="'Wi-Fi 6'"/>
+                                        </div>
+                                        <div class="tw-w-1/2 tw-flex tw-flex-col tw-flex-wrap">
+                                            <UnorderedList
+                                                :size="'sm'"
+                                                :icon="'eos-icons:commit'"
+                                                :label="'3 PCIe 4.0 M.2 slots'"/>
+                                            <UnorderedList
+                                                :size="'sm'"
+                                                :icon="'eos-icons:commit'"
+                                                :label="'DDR4 memory support'"/>
+                                            <UnorderedList
+                                                :size="'sm'"
+                                                :icon="'eos-icons:commit'"
+                                                :label="'2 PCIe 4.0 M.2 slots'"/>
+                                        </div>
+                                    </div>
+
+                                    <div>
+                                        <Button v-if="true" :label="'Learn more'" :size="'md'" :variant="'flat'"></Button>
+                                    </div>
+
+                                    <UnorderedList
+                                        v-for="description in item.descriptions"
+                                        :size="'sm'"
+                                        :label="description"/>
+                                </div>
+                            </div>
+                        </template>
+                    </HexagonFrame>
+                </div>
+
+                <div v-if="false" class="tw-mt-6 tw-grid tw-gap-2 tw-grid-cols-5 tw-h-[454px]">
+                    <HexagonFrame
+                        v-for="item in topToBottomItems"
+                        :key="item"
+                        :frame-border="item.frameBorder"
+                        :content-border="item.contentBorder"
+                        :direction="'ttb'"
+                        :head-percentage="65"
+                        :top-right="55"
+                        :bottom-left="45">
+                        <template #header>
+                            <div class="tw-h-[65%] tw-w-full">
+                                <div
+                                    class="tw-h-full tw-w-full tw-bg-cover tw-bg-center tw-bg-no-repeat"
+                                    :style="{'background':'url('+item.image.path+')'}"
+                                />
+                            </div>
+                        </template>
+                        <template #body>
+                            <div class="tw-h-[35%] tw-w-full tw-p-1">
+                                <div class="tw-font-semibold tw-text-lg">{{item.subTitle}}</div>
+                                <Button :label="'Learn more'" :size="'md'" :variant="'flat'"></Button>
+                            </div>
+                        </template>
+                    </HexagonFrame>
+                </div>
+
+                <div v-if="false" class="tw-w-[170px] tw-h-[230px]">
+                    <HexagonFrame>
+                        <template #body>
+                            <div class="tw-relative tw-h-full tw-flex tw-items-center tw-px-4 tw-text-center tw-font-['Google_Sans_Text'] tw-text-xl tw-font-semibold tw-px-8">
+                                Hexagon Frame Without Corner
+                            </div>
+                        </template>
+                    </HexagonFrame>
+                </div>
+
+                <div v-if="false">
+                    <div>
+                        <div class="tw-mx-auto tw-max-w-screen-2xl tw-flex tw-flex-col">
+                            <Featured
+                                focused
+                                class="tw-inline-block tw-mx-2"
+                                :image="{path: '/images/product/ebac5037-c3d2-4275-b96b-24f855695841.webp'}"
+                                :title="'Motherboard'"
+                                :sub-title="'iGame Z790D5 ULTRA V20'"
+                                :link="'/prototype'"
+                                :button-label="'Details'"
+                            />
+                        </div>
+                        <div class="tw-mx-auto tw-max-w-screen-2xl tw-flex tw-flex-col">
+                            <Card
+                                focused
+                                class="tw-inline-block tw-mx-2"
+                                :image="{path: '/images/product/ebac5037-c3d2-4275-b96b-24f855695841.webp'}"
+                                :title="'Motherboard'"
+                                :sub-title="'iGame Z790D5 ULTRA V20'"
+                                :link="'/prototype'"
+                                :button-label="'Details'"
+                            />
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
+        </LandingWrapper>
     </div>
 </template>
 
 <script setup lang="ts">
-bootRedirectRule(['guest']);
-const clientReadyState = useClientReadyState();
+definePageMeta({middleware: 'auth'});
+useLayout().setNavigationMode('solid', 'Lab.vue');
 
-const {
-    setNavigationMode,
-} = useLayout();
-
-setNavigationMode('solid', 'Lab.vue');
-setLayout('default', 'Lab.vue');
-
-function changeLayout(layoutPayload: string){
-    setLayout(layoutPayload);
-}
+function changeLayout(layoutPayload: string){}
 
 const dynamicFoo = ref('foo');
 const dynamicBarCaller = ref('bar');

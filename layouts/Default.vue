@@ -87,6 +87,7 @@ const navDrop = resolveComponent('navDrop');
 
 const {
     primary: primaryColor,
+    body: bodyColor,
     neutral: neutralColor,
     tint: tintColor,
     thread: threadColor
@@ -94,8 +95,6 @@ const {
 const {
     navigationLinks,
     navigationAccountLinks,
-    navigationMode,
-    navigationBackground,
     topAllocationInPixels,
     setNavigationHeight,
     rightNavigationDropAlign
@@ -143,7 +142,7 @@ const navigationHeaderSize = computed(() => {
 </script>
 <style scoped>
 .primary-navigation-parent {
-    background-color: v-bind(navigationBackground) !important;
+    background-color: v-bind(bodyColor) !important;
     left: 0;
     right: 5px;
     z-index: 30;

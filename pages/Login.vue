@@ -1,79 +1,77 @@
 <template>
-    <div v-show="clientReadyState" class="tw-mx-auto tw-pt-4 tw-max-w-screen-2xl">
-        <div class="tw-flex tw-justify-center">
-            <AccentFrame class="tw-my-4">
-                <template #content>
-                    <div class="tw-relative tw-py-4">
-                        <label class="tw-text-lg tw-font-semibold">Password Login</label>
-                        <form @submit.prevent="handleLogin" class="tw-mt-4 tw-w-72">
-                            <div class="tw-block">
-                                <InputLabel :size="'md'" for="identifier" value="Username or Email" />
-                                <Input
-                                    :disabled="authPending"
-                                    :size="'md'"
-                                    id="identifier"
-                                    type="text"
-                                    class="tw-w-full"
-                                    ref="identifierInput"
-                                    v-model="identifier"
-                                    autocomplete="off" />
-                            </div>
+    <div>
+        <LandingWrapper>
+            <div class="tw-mx-auto tw-pt-4 tw-max-w-screen-2xl">
+                <div class="tw-flex tw-justify-center">
+                    <AccentFrame class="tw-my-4">
+                        <template #content>
+                            <div class="tw-relative tw-py-4">
+                                <label class="tw-text-lg tw-font-semibold">Password Login</label>
+                                <form @submit.prevent="handleLogin" class="tw-mt-4 tw-w-72">
+                                    <div class="tw-block">
+                                        <InputLabel :size="'md'" for="identifier" value="Username or Email" />
+                                        <Input
+                                            :disabled="authPending"
+                                            :size="'md'"
+                                            id="identifier"
+                                            type="text"
+                                            class="tw-w-full"
+                                            ref="identifierInput"
+                                            v-model="identifier"
+                                            autocomplete="off" />
+                                    </div>
 
-                            <div class="tw-block tw-mt-4">
-                                <InputLabel :size="'md'" for="password" value="Password" />
-                                <Input
-                                    :disabled="authPending"
-                                    :size="'md'"
-                                    id="password"
-                                    type="password"
-                                    class="tw-w-full"
-                                    v-model="password"
-                                    required
-                                    autocomplete="current-password" />
-                            </div>
+                                    <div class="tw-block tw-mt-4">
+                                        <InputLabel :size="'md'" for="password" value="Password" />
+                                        <Input
+                                            :disabled="authPending"
+                                            :size="'md'"
+                                            id="password"
+                                            type="password"
+                                            class="tw-w-full"
+                                            v-model="password"
+                                            required
+                                            autocomplete="current-password" />
+                                    </div>
 
-                            <div class="tw-block tw-mt-4">
-                                <label class="tw-flex tw-items-center">
-                                    <Checkbox
-                                        :disabled="authPending"
-                                        name="remember"
-                                        v-model="remember"
-                                        :size="'md'"
-                                        :label="'Remember me'" />
-                                </label>
-                            </div>
+                                    <div class="tw-block tw-mt-4">
+                                        <label class="tw-flex tw-items-center">
+                                            <Checkbox
+                                                :disabled="authPending"
+                                                name="remember"
+                                                v-model="remember"
+                                                :size="'md'"
+                                                :label="'Remember me'" />
+                                        </label>
+                                    </div>
 
-                            <div v-if="$coreStore.service.error.payload && !useNuxtApp().$coreStore.service.error.prompt" class="tw-block tw-text-sm tw-text-red-400">
-                                <span>{{ $coreStore.service.error.payload.message }}</span>
-                            </div>
+                                    <div v-if="$coreStore.service.error.payload && !useNuxtApp().$coreStore.service.error.prompt" class="tw-block tw-text-sm tw-text-red-400">
+                                        <span>{{ $coreStore.service.error.payload.message }}</span>
+                                    </div>
 
-                            <div v-if="!isAuthenticated" class="tw-flex tw-mt-4 tw-items-center tw-justify-between">
-                                <div class="tw-block tw-text-sm tw-self-end">
-                                    <NuxtLink class="hover:tw-underline" :to="'forgot-password'">Forgot password.</NuxtLink>
-                                </div>
-                                <Button
-                                    :disabled="authPending"
-                                    :size="'md'"
-                                    :icon="authPending ? 'eos-icons:installing' : 'mdi:key-chain'"
-                                    :label="authPending ? 'Logging in...' : 'Login'"></Button>
+                                    <div v-if="!isAuthenticated" class="tw-flex tw-mt-4 tw-items-center tw-justify-between">
+                                        <div class="tw-block tw-text-sm tw-self-end">
+                                            <NuxtLink class="hover:tw-underline" :to="'forgot-password'">Forgot password.</NuxtLink>
+                                        </div>
+                                        <Button
+                                            :disabled="authPending"
+                                            :size="'md'"
+                                            :icon="authPending ? 'eos-icons:installing' : 'mdi:key-chain'"
+                                            :label="authPending ? 'Logging in...' : 'Login'"></Button>
+                                    </div>
+                                </form>
                             </div>
-                        </form>
-                    </div>
-                </template>
-            </AccentFrame>
-        </div>
+                        </template>
+                    </AccentFrame>
+                </div>
+            </div>
+        </LandingWrapper>
     </div>
 </template>
 
 <script setup lang="ts">
-bootRedirectRule(['guest']);
-const clientReadyState = useClientReadyState();
-const {
-    setNavigationMode,
-} = useLayout();
-
-setNavigationMode('solid', 'Login.vue');
-setLayout('landing', 'Login.vue');
+definePageMeta({middleware: 'guest'});
+useLayout().setNavigationMode('solid', 'Login.vue');
 
 const {$coreStore} = useNuxtApp();
 const {isAuthenticated, login, authPending} = useAuth();

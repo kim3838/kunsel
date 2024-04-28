@@ -1,49 +1,52 @@
 <template>
-    <div v-show="clientReadyState" class="tw-mx-auto tw-px-4 tw-max-w-screen-2xl tw-flex tw-justify-center">
-        <AccentFrame class="tw-my-4">
-            <template #content>
-                <div class="tw-relative tw-py-4">
-                    <form @submit.prevent="handleForgotPassword" class="tw-w-72">
-                        <p class="tw-font-semibold tw-text-lg tw-mb-4">
-                            Forgot your password? No problem.
-                        </p>
-                        <p class="tw-text-base">
-                            Just let us know your email address and we will email you a password reset link that will allow you to choose a new one.
-                        </p>
+    <div>
+        <LandingWrapper>
+            <div class="tw-mx-auto tw-px-4 tw-max-w-screen-2xl tw-flex tw-justify-center">
+                <AccentFrame class="tw-my-4">
+                    <template #content>
+                        <div class="tw-relative tw-py-4">
+                            <form @submit.prevent="handleForgotPassword" class="tw-w-72">
+                                <p class="tw-font-semibold tw-text-lg tw-mb-4">
+                                    Forgot your password? No problem.
+                                </p>
+                                <p class="tw-text-base">
+                                    Just let us know your email address and we will email you a password reset link that will allow you to choose a new one.
+                                </p>
 
-                        <div class="tw-block tw-mt-4">
-                            <InputWithIcon
-                                :icon="'ic:round-mail-outline'"
-                                :disabled="pending"
-                                :size="'md'"
-                                id="email"
-                                type="email"
-                                class="tw-w-full"
-                                ref="emailInput"
-                                v-model="email"
-                                autofocus
-                                autocomplete="off" />
-                        </div>
+                                <div class="tw-block tw-mt-4">
+                                    <InputWithIcon
+                                        :icon="'ic:round-mail-outline'"
+                                        :disabled="pending"
+                                        :size="'md'"
+                                        id="email"
+                                        type="email"
+                                        class="tw-w-full"
+                                        ref="emailInput"
+                                        v-model="email"
+                                        autofocus
+                                        autocomplete="off" />
+                                </div>
 
-                        <div class="tw-flex tw-mt-4 tw-items-center tw-justify-end">
-                            <Button
-                                :disabled="pending"
-                                :size="'md'"
-                                :variant="'flat'"
-                                :icon="pending ? 'eos-icons:installing' : 'ic:round-mail-outline'"
-                                :label="pending ? 'Requesting...' : 'Email Password Reset Link'"></Button>
+                                <div class="tw-flex tw-mt-4 tw-items-center tw-justify-end">
+                                    <Button
+                                        :disabled="pending"
+                                        :size="'md'"
+                                        :variant="'flat'"
+                                        :icon="pending ? 'eos-icons:installing' : 'ic:round-mail-outline'"
+                                        :label="pending ? 'Requesting...' : 'Email Password Reset Link'"></Button>
+                                </div>
+                            </form>
                         </div>
-                    </form>
-                </div>
-            </template>
-        </AccentFrame>
+                    </template>
+                </AccentFrame>
+            </div>
+        </LandingWrapper>
     </div>
 </template>
 
-<script setup>
-bootRedirectRule(['guest']);
-const clientReadyState = useClientReadyState();
-
+<script setup lang="ts">
+definePageMeta({middleware: 'guest'});
+useLayout().setNavigationMode('solid', 'Forgot-Password.vue');
 const {$coreStore} = useNuxtApp();
 
 let emailInput = ref(null);
