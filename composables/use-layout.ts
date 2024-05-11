@@ -156,14 +156,6 @@ export const useLayout = () => {
         return (navigationHeight.value + 'px');
     });
     const topAllocationInPixels = computed(()=>{
-        if(navigationMode.value == 'clear'){
-            return '0px';
-        }
-
-        if(['index'].includes(routeTo.value.name)){
-            return '0px';
-        }
-
         return (navigationHeight.value + 'px');
     });
     const spotlightContentHeight = computed(() => {

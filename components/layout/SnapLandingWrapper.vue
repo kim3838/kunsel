@@ -70,7 +70,7 @@
             </div>
         </nav>
         <!-- Main Content -->
-        <main class="tw-transition-all tw-duration-300 allocate-navigation">
+        <main class="tw-transition-all tw-duration-300">
             <slot></slot>
         </main>
         <!-- DateTime Picker -->
@@ -168,13 +168,8 @@ watch(snapYScroll, (yScroll) => {
     right: 5px;
     z-index: 30;
 }
-
-.allocate-navigation {
-    padding-top: v-bind(topAllocationInPixels);
-}
 </style>
 <style>
-/*Used by snap scroll: to allocate space on fixed top navigation*/
 .navigation-height{
     height: v-bind(navigationHeightInPixels);
 }
