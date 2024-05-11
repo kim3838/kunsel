@@ -47,15 +47,33 @@
 <script setup lang="ts">
 definePageMeta({middleware: 'guest'});
 useLayout().setNavigationMode('solid', 'Forgot-Password.vue');
+const clientReadyState = useClientReadyState();
 const {$coreStore} = useNuxtApp();
 
 let emailInput = ref(null);
 let pending = ref(false);
 let email = ref("luxere20@gmail.com1");
 
-onMounted(async () => {
-    await nextTick();
-    emailInput.value.$refs.input.focus();
+//On navigate, focus on email input
+if(clientReadyState.value){
+    onMounted(async () => {
+        await nextTick(()=>{
+            if(emailInput.value){
+                emailInput.value.$refs.input.focus();
+            }
+        });
+    })
+}
+
+//On page load, focus on email input
+watch(clientReadyState, async (clientReady) => {
+    if(clientReady){
+        await nextTick(() => {
+            if(emailInput.value){
+                emailInput.value.$refs.input.focus();
+            }
+        });
+    }
 });
 
 let bodyComputed = computed(() => {

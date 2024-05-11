@@ -65,6 +65,7 @@
 <script setup lang="ts">
 definePageMeta({middleware: 'guest'});
 useLayout().setNavigationMode('solid', 'Password-Reset[token].vue');
+const clientReadyState = useClientReadyState();
 const {$coreStore} = useNuxtApp();
 
 //Todo: Query email check on route could also use bootRedirectRule
@@ -85,9 +86,26 @@ const data = reactive({
     password_confirmation: "",
 });
 
-onMounted(async () => {
-    await nextTick();
-    password.value.$refs.input.focus();
+//On navigate, focus on identifier input
+if(clientReadyState.value){
+    onMounted(async () => {
+        await nextTick(()=>{
+            if(password.value){
+                password.value.$refs.input.focus();
+            }
+        });
+    })
+}
+
+//On page load, focus on password input
+watch(clientReadyState, async (clientReady) => {
+    if(clientReady){
+        await nextTick(() => {
+            if(password.value){
+                password.value.$refs.input.focus();
+            }
+        });
+    }
 });
 
 async function handleResetPassword() {

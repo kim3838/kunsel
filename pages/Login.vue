@@ -72,17 +72,35 @@
 <script setup lang="ts">
 definePageMeta({middleware: 'guest'});
 useLayout().setNavigationMode('solid', 'Login.vue');
-
+const clientReadyState = useClientReadyState();
 const {$coreStore} = useNuxtApp();
 const {isAuthenticated, login, authPending} = useAuth();
 const {screens, width: screenWidth, } = useScreen();
 
 let identifierInput = ref(null);
 
-onMounted(async () => {
-    await nextTick();
-    identifierInput.value.$refs.input.focus();
-})
+//On navigate, focus on identifier input
+if(clientReadyState.value){
+    onMounted(async () => {
+        await nextTick(()=>{
+            if(identifierInput.value){
+                identifierInput.value.$refs.input.focus();
+            }
+        });
+    })
+}
+
+//On page load, focus on identifier input
+watch(clientReadyState, async (clientReady) => {
+    console.log({'Login.vue Watch clientReadyState':clientReady});
+    if(clientReady){
+        await nextTick(() => {
+            if(identifierInput.value){
+                identifierInput.value.$refs.input.focus();
+            }
+        });
+    }
+});
 
 const identifier = ref("kim.123");
 const password = ref("password");

@@ -63,6 +63,7 @@
 <script setup lang="ts">
 definePageMeta({middleware: 'guest'});
 useLayout().setNavigationMode('solid', 'Two-Factor-Challenge.vue');
+const clientReadyState = useClientReadyState();
 const {$coreStore} = useNuxtApp();
 const {twoFactorLogin, isAuthenticated, authPending} = useAuth();
 
@@ -75,9 +76,26 @@ const twoFactorLoginComputed = computed(() => {
     }
 });
 
-onMounted(async () => {
-    await nextTick();
-    codeInput.value.$refs.input.focus();
+//On navigate, focus on identifier input
+if(clientReadyState.value){
+    onMounted(async () => {
+        await nextTick(()=>{
+            if(codeInput.value){
+                codeInput.value.$refs.input.focus();
+            }
+        });
+    })
+}
+
+//On page load, focus on code input
+watch(clientReadyState, async (clientReady) => {
+    if(clientReady){
+        await nextTick(() => {
+            if(codeInput.value){
+                codeInput.value.$refs.input.focus();
+            }
+        });
+    }
 });
 
 const toggleRecovery = async () => {
