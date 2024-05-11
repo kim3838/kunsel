@@ -1,98 +1,103 @@
 <template>
-    <div class="tw-mx-auto tw-max-w-screen-2xl tw-flex tw-justify-center">
-        <div class="tw-w-full">
-            <form @submit.prevent="paginate(1, true)" class="tw-space-y-0.5 tw-my-4 tw-p-[1.5rem] neutral-border">
-                <div class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-8">
-                    <div class="tw-block">
-                        <InputLabel :size="'md'" value="Search"/>
-                        <Input :size="'md'" ref="searchInput" v-model="filters.search.keyword" class="tw-w-full" placeholder="Search something" type="text" autocomplete="off"/>
-                    </div>
-                    <div class="tw-block">
-                        <InputLabel :size="'md'" value="_" class="tw-text-transparent"/>
-                        <Button type="button" :variant="'flat'" @click="filters.search.keyword += '.';" :size="'md'" :icon="'ic:sharp-join-left'" :label="'Concat &quot;.&quot;'"></Button>
-                    </div>
-                </div>
+    <div>
+        <DefaultWrapper>
+            <div class="tw-mx-auto tw-max-w-screen-2xl tw-flex tw-justify-center">
+                <div class="tw-w-full">
+                    <form @submit.prevent="paginate(1, true)" class="tw-space-y-0.5 tw-my-4 tw-p-[1.5rem] neutral-border">
+                        <div class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-8">
+                            <div class="tw-block">
+                                <InputLabel :size="'md'" value="Search"/>
+                                <Input :size="'md'" ref="searchInput" v-model="filters.search.keyword" class="tw-w-full" placeholder="Search something" type="text" autocomplete="off"/>
+                            </div>
+                            <div class="tw-block">
+                                <InputLabel :size="'md'" value="_" class="tw-text-transparent"/>
+                                <Button type="button" :variant="'flat'" @click="filters.search.keyword += '.';" :size="'md'" :icon="'ic:sharp-join-left'" :label="'Concat &quot;.&quot;'"></Button>
+                            </div>
+                        </div>
 
-                <div class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-8">
-                    <div class="tw-block">
-                        <InputLabel :size="'md'" value="Code"/>
-                        <Input :size="'md'" readonly v-model="filters.code" class="tw-w-full" placeholder="Search something" type="text" autocomplete="off"/>
-                    </div>
-                    <div class="tw-block">
-                        <InputLabel :size="'md'" value="_" class="tw-text-transparent"/>
-                        <Button type="button" :variant="'flat'" @click="filters.code += '.';" :size="'md'" :icon="'ic:sharp-join-left'" :label="'Concat &quot;.&quot;'"></Button>
-                    </div>
-                </div>
+                        <div class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-8">
+                            <div class="tw-block">
+                                <InputLabel :size="'md'" value="Code"/>
+                                <Input :size="'md'" readonly v-model="filters.code" class="tw-w-full" placeholder="Search something" type="text" autocomplete="off"/>
+                            </div>
+                            <div class="tw-block">
+                                <InputLabel :size="'md'" value="_" class="tw-text-transparent"/>
+                                <Button type="button" :variant="'flat'" @click="filters.code += '.';" :size="'md'" :icon="'ic:sharp-join-left'" :label="'Concat &quot;.&quot;'"></Button>
+                            </div>
+                        </div>
 
-                <div class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-8">
-                    <div class="tw-bloc">
-                        <InputLabel :size="'md'" value="Date Added: From"/>
-                        <InputWithIcon :icon="'ion:calendar-number-sharp'" :id="'datetimefrom'" readonly v-model="filters.datetimeFrom" :size="'md'" class="tw-w-full" :type="'text'"/>
-                    </div>
-                    <div class="tw-block">
-                        <InputLabel :size="'md'" value="Date Added: To"/>
-                        <InputWithIcon :icon="'ion:calendar-number-sharp'" :id="'datetimeto'" readonly v-model="filters.datetimeTo" :size="'md'" class="tw-w-full" :type="'text'"/>
-                    </div>
-                </div>
+                        <div class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-8">
+                            <div class="tw-bloc">
+                                <InputLabel :size="'md'" value="Date Added: From"/>
+                                <InputWithIcon :icon="'ion:calendar-number-sharp'" :id="'datetimefrom'" readonly v-model="filters.datetimeFrom" :size="'md'" class="tw-w-full" :type="'text'"/>
+                            </div>
+                            <div class="tw-block">
+                                <InputLabel :size="'md'" value="Date Added: To"/>
+                                <InputWithIcon :icon="'ion:calendar-number-sharp'" :id="'datetimeto'" readonly v-model="filters.datetimeTo" :size="'md'" class="tw-w-full" :type="'text'"/>
+                            </div>
+                        </div>
 
-                <div class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-8">
-                    <div class="tw-block">
-                        <Button ref="submitButton" type="submit" :disabled="pending" :size="'md'" :icon="pending ? 'eos-icons:loading' : 'mdi:data'" :label="pending ? 'Loading' : 'Process'"></Button>
-                    </div>
-                </div>
-            </form>
+                        <div class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-8">
+                            <div class="tw-block">
+                                <Button ref="submitButton" type="submit" :disabled="pending" :size="'md'" :icon="pending ? 'eos-icons:loading' : 'mdi:data'" :label="pending ? 'Loading' : 'Process'"></Button>
+                            </div>
+                        </div>
+                    </form>
 
-            <AccentFrame>
-                <template #content>
-                    <div>
-                        <PageInformation
-                            v-if="prototypes.meta.pagination.total > 0"
-                            :pagination="prototypes.meta.pagination"
-                            :no-record-label="'No Record Found'"/>
-                        <Pagination
-                            :size="'lg'"
-                            :pagination="prototypes.meta.pagination"
-                            :pending="pending"
-                            v-model="pageComputed"
-                        />
-                        <DataTable
-                            class="tw-mt-0.5"
-                            :headers="prototypeHeaders"
-                            :size="'lg'"
-                            :rows="prototypes.data"
-                            :no-data-label="pending ? 'Loading' : 'No Prototype Found'"
-                            v-model="selectedPrototypes"
-                            selection>
-                            <template v-slot:cell.datetime_added="{cell, slot}">
-                                <InputWithIcon
-                                    :icon="'ion:calendar-number-sharp'"
-                                    :id="`datetime_added-` + cell.id"
-                                    v-model="cell.datetime_added"
-                                    readonly
-                                    in-cell
-                                    :size="slot.inputSize"
-                                    class="tw-w-full"
-                                    :type="'text'" />
-                            </template>
-                            <template v-slot:cell.actions="{cell, slot, scrollReference}">
-                                <div class="tw-h-full tw-space-x-0.5 tw-w-full tw-flex tw-items-center">
-                                    <Button type="button" :variant="'flat'" :size="slot.buttonSize" :label="'Details'" :icon="'ci:list-checklist-alt'"></Button>
-                                    <Button type="button" :variant="'flat'" :size="slot.buttonSize" :label="'Approve'" :icon="'fe:check-circle'"></Button>
-                                    <Button type="button" :variant="'flat'" :size="slot.buttonSize" :label="'Deny'" :icon="'icon-park-outline:reject'"></Button>
-                                </div>
-                            </template>
-                        </DataTable>
-                    </div>
-                </template>
-            </AccentFrame>
-        </div>
+                    <AccentFrame>
+                        <template #content>
+                            <div>
+                                <PageInformation
+                                    v-if="prototypes.meta.pagination.total > 0"
+                                    :pagination="prototypes.meta.pagination"
+                                    :no-record-label="'No Record Found'"/>
+                                <Pagination
+                                    :size="'lg'"
+                                    :pagination="prototypes.meta.pagination"
+                                    :pending="pending"
+                                    v-model="pageComputed"
+                                />
+                                <DataTable
+                                    class="tw-mt-0.5"
+                                    :headers="prototypeHeaders"
+                                    :size="'lg'"
+                                    :rows="prototypes.data"
+                                    :no-data-label="pending ? 'Loading' : 'No Prototype Found'"
+                                    v-model="selectedPrototypes"
+                                    selection>
+                                    <template v-slot:cell.datetime_added="{cell, slot}">
+                                        <InputWithIcon
+                                            :icon="'ion:calendar-number-sharp'"
+                                            :id="`datetime_added-` + cell.id"
+                                            v-model="cell.datetime_added"
+                                            readonly
+                                            in-cell
+                                            :size="slot.inputSize"
+                                            class="tw-w-full"
+                                            :type="'text'" />
+                                    </template>
+                                    <template v-slot:cell.actions="{cell, slot, scrollReference}">
+                                        <div class="tw-h-full tw-space-x-0.5 tw-w-full tw-flex tw-items-center">
+                                            <Button type="button" :variant="'flat'" :size="slot.buttonSize" :label="'Details'" :icon="'ci:list-checklist-alt'"></Button>
+                                            <Button type="button" :variant="'flat'" :size="slot.buttonSize" :label="'Approve'" :icon="'fe:check-circle'"></Button>
+                                            <Button type="button" :variant="'flat'" :size="slot.buttonSize" :label="'Deny'" :icon="'icon-park-outline:reject'"></Button>
+                                        </div>
+                                    </template>
+                                </DataTable>
+                            </div>
+                        </template>
+                    </AccentFrame>
+                </div>
+            </div>
+        </DefaultWrapper>
     </div>
 </template>
 
 <script setup lang="ts">
 const {$moment} = useNuxtApp();
 
-definePageMeta({middleware: ['auth', 'verified']});
+definePageMeta({middleware: ['auth']});
+useLayout().setNavigationMode('solid', 'Prototypes/index.vue');
 
 let prototypes = reactive({
     'data': [],
