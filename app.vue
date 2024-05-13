@@ -14,6 +14,18 @@
 </template>
 
 <script setup lang="ts">
+//If authenticated is fetched via node with ssr, authenticated is remembered
+//On client first load, we refresh XSRF-TOKEN
+if(useAuth().isAuthenticated.value && process.client){
+    await new Promise((resolve, reject)=>{
+        setTimeout(()=>{
+            resolve(1);
+        }, 2000);
+    });
+    console.log('GET /sanctum/csrf-cookie');
+    await csrFetch("/sanctum/csrf-cookie");
+}
+
 import {storeToRefs} from 'pinia';
 
 const {$debug, $moment, $themeStore, $coreStore} = useNuxtApp();
