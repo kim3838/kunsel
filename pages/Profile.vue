@@ -311,7 +311,9 @@ const {execute: executeLogoutOtherDevice} = csrFetch("/api/logout-other-device",
     }
 });
 
-let sessions = ref([]);
+const sessions = useState('profile-sessions', ()=>{
+    return [];
+});
 const {pending:pendingBrowserSessions} = await ssrFetch("/api/sessions", {
     method: 'GET'
 }, {
