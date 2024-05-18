@@ -243,8 +243,6 @@ await ssrFetch("/api/user", {
             executeTwoFactorQrCode();
             executeTwoFactorRecoveryCodes();
         }
-
-        console.log({'DEBUG Profile.vue user': user.value});
     }
 });
 
