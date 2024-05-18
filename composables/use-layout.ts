@@ -31,7 +31,7 @@ export const useLayout = () => {
                 },
                 {
                     type: 'action',
-                    title: 'Test Post',
+                    title: 'CSR Post',
                     icon: 'material-symbols:request-quote-sharp',
                     callback: async () => {
                         await csrFetch("/api/test-post", {
@@ -39,6 +39,62 @@ export const useLayout = () => {
                         }, {
                             onResponse: (request, response, options) => {
                                 console.log({'CSR POST RESPONSE' : response._data.code});
+                            }
+                        });
+                    },
+                },
+                {
+                    type: 'action',
+                    title: 'CSR Get',
+                    icon: 'material-symbols:request-quote-sharp',
+                    callback: async () => {
+                        await csrFetch("/api/user", {
+                            method: 'GET',
+                        }, {
+                            onResponse: (request, response, options) => {
+                                console.log({'CSR GET RESPONSE' : response._data.code});
+                            }
+                        });
+                    },
+                },
+                {
+                    type: 'action',
+                    title: 'CSR Get CSRF',
+                    icon: 'material-symbols:request-quote-sharp',
+                    callback: async () => {
+                        await csrFetch("/sanctum/csrf-cookie", {
+                            method: 'GET',
+                        }, {
+                            onResponse: (request, response, options) => {
+                                console.log({'CSR GET CSRF' : response._data.code});
+                            }
+                        });
+                    },
+                },
+                {
+                    type: 'action',
+                    title: 'SSR Post',
+                    icon: 'material-symbols:request-quote-sharp',
+                    callback: async () => {
+                        await ssrFetch("/api/test-post", {
+                            method: 'POST',
+                        }, {
+                            onResponse: (request, response, options) => {
+                                console.log({'SSR POST RESPONSE' : response._data.code});
+                            }
+                        });
+                    },
+                },
+                {
+                    type: 'action',
+                    title: 'SSR Get',
+                    icon: 'material-symbols:request-quote-sharp',
+                    callback: async () => {
+                        await ssrFetch("/api/user", {
+                            method: 'GET',
+                        }, {
+                            onResponse: (request, response, options) => {
+                                console.log({'SSR GET RESPONSE' : response._data.code});
                             }
                         });
                     },
