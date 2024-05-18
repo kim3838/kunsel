@@ -143,7 +143,7 @@
                 <div class="tw-w-full tw-h-full tw-absolute tw-z-30 spotlight-image" :style="{'background-image': `url(/images/carousel/d519b14b-0289-43af-ae15-9d7446d4f914.webp)`}"></div>
             </div>
 
-            <div v-if="false">
+            <div v-if="true">
                 <div class="navigation-height tw-w-full tw-snap-start tw-snap-always"></div>
                 <div class="tw-pl-2 tw-mx-auto tw-max-w-screen-2xl tw-flex tw-flex-col">
                     <article class="tw-mt-4 tw-relative">
@@ -182,7 +182,7 @@
                 </div>
             </div>
 
-            <div v-if="false">
+            <div v-if="true">
                 <div class="navigation-height tw-w-full tw-snap-start tw-snap-always"></div>
                 <div class="tw-pl-2 tw-mx-auto tw-max-w-screen-2xl tw-flex tw-flex-col">
                     <article class="tw-mt-4 tw-relative">
