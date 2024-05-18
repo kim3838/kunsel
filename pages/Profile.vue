@@ -191,14 +191,21 @@
 definePageMeta({middleware: 'auth'});
 const {$coreStore} = useNuxtApp();
 
-const user = ref({
+const user = useState ('profile-user', () => {return {
     id: null,
     name: null,
     email: null,
     email_verified_at: null,
     two_factor_enabled: false,
     two_factor_confirmed: false,
-});
+};});
+const twoFactorEnabled = computed(() => user.value.two_factor_enabled);
+const twoFactorConfirmed = computed(() => user.value.two_factor_confirmed);
+const twoFactorConfirming = ref(false);
+const setupKey = ref(null);
+const qrCode = ref(null);
+const recoveryCodes = ref([]);
+const twoFactorConfirmationCode = ref('');
 
 let updatePassword = reactive({
     currentPassword: 'password',
@@ -229,10 +236,17 @@ await ssrFetch("/api/user", {
             two_factor_enabled: two_factor_enabled,
             two_factor_confirmed: two_factor_confirmed,
         };
+
+        if(two_factor_enabled && !two_factor_confirmed){
+            twoFactorConfirming.value = true;
+            executeTwoFactorSetupKey();
+            executeTwoFactorQrCode();
+            executeTwoFactorRecoveryCodes();
+        }
+
+        console.log({'DEBUG Profile.vue user': user.value});
     }
 });
-
-useLayout().setNavigationMode('solid', 'Profile.vue');
 
 let updatePasswordPending = ref(false);
 const {execute: executeUpdatePassword} = csrFetch("/api/update-password", {
@@ -298,7 +312,7 @@ const {execute: executeLogoutOtherDevice} = csrFetch("/api/logout-other-device",
 });
 
 let sessions = ref([]);
-const {pending:pendingBrowserSessions} = csrFetch("/api/sessions", {
+const {pending:pendingBrowserSessions} = await ssrFetch("/api/sessions", {
     method: 'GET'
 }, {
     onSuccessResponse: (request, response, options) => {
@@ -306,29 +320,7 @@ const {pending:pendingBrowserSessions} = csrFetch("/api/sessions", {
     }
 });
 
-const twoFactorEnabled = computed(() => user.value.two_factor_enabled);
-const twoFactorConfirmed = computed(() => user.value.two_factor_confirmed);
-const twoFactorConfirming = ref(false);
-const setupKey = ref(null);
-const qrCode = ref(null);
-const recoveryCodes = ref([]);
-const twoFactorConfirmationCode = ref('');
-
-csrFetch("/api/user", {
-    method: 'GET',
-}, {
-    onSuccessResponse: (request, response, options) => {
-        let two_factor_enabled = _get(response, '_data.values.two_factor_enabled', null)
-        let two_factor_confirmed = _get(response, '_data.values.two_factor_confirmed', null)
-
-        if(two_factor_enabled && !two_factor_confirmed){
-            twoFactorConfirming.value = true;
-            executeTwoFactorSetupKey();
-            executeTwoFactorQrCode();
-            executeTwoFactorRecoveryCodes();
-        }
-    }
-});
+useLayout().setNavigationMode('solid', 'Profile.vue');
 
 const enableTwoFactorPending = ref(false);
 const {execute: executeEnableTwoFactor} = csrFetch("/api/two-factor-authentication", {
