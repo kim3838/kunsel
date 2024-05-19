@@ -1,28 +1,44 @@
 
 import type {UseFetchOptions} from "nuxt/app";
 
-export function csrFetch<T>(
+export async function csrFetch<T>(
     path: string,
     options: UseFetchOptions<T> = {},
     callbacks: Object = {},
     promptResponse = true
 ){
-    const runtimeConfig = useRuntimeConfig();
+    const {baseURL,frontendURL} = useRuntimeConfig().public;
     const {$coreStore} = useNuxtApp();
     const user = userState();
+    const CSRF_COOKIE = "XSRF-TOKEN";
+    const CSRF_HEADER = "X-XSRF-TOKEN";
 
     let headers: any = {
-        referer: runtimeConfig.public.frontendURL,
+        referer: frontendURL,
         accept: 'application/json, text/plain, */*'
     };
 
-    const XSRF_TOKEN = useCookie('XSRF-TOKEN', {
+    let token = useCookie(CSRF_COOKIE, {
         secure: true,
         sameSite: 'lax'
     });
 
-    if(XSRF_TOKEN.value){
-        headers['X-XSRF-TOKEN'] = XSRF_TOKEN.value;
+    if (process.client && ["post", "delete", "put", "patch"].includes(
+        options?.method?.toLowerCase() ?? ""
+    )) {
+        await $fetch("/sanctum/csrf-cookie", {
+            baseURL: baseURL,
+            credentials: "include",
+        });
+
+        token = useCookie(CSRF_COOKIE, {
+            secure: true,
+            sameSite: 'lax'
+        });
+    }
+
+    if(token){
+        headers[CSRF_HEADER] = token;
     }
 
     function setResponse(icon: String, title: String, payload: Object){
@@ -34,21 +50,14 @@ export function csrFetch<T>(
         });
     }
 
-    /*
-    * When using immediate: false
-    *
-    * Dont use its pending,
-    * as it will start as true: meaning the data isn't received yet,
-    * use custom pending instead
-    **/
-    return useFetch(runtimeConfig.public.baseURL + path, {
+    useFetch(baseURL + path, {
         credentials: 'include',
         watch: false,
         immediate: true,
         lazy: true,
         server: false,
         async onRequest(){
-            console.log({'CSR FETCH' : 'START'})
+            console.log({'CSR FETCH' : 'START: ' + baseURL + path})
 
             if(callbacks.onRequest && typeof callbacks.onRequest == 'function'){
                 await callbacks.onRequest();
