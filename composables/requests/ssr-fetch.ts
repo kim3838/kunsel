@@ -33,7 +33,7 @@ export function ssrFetch<T>(
         credentials: 'include',
         watch: false,
         async onRequest(){
-            console.log({'SSR FETCH' : 'START'})
+            console.log({'SSR FETCH' : 'START: ' + runtimeConfig.public.baseURL + path})
 
             if(callbacks.onRequest && typeof callbacks.onRequest == 'function'){
                 await callbacks.onRequest();
