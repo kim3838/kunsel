@@ -95,7 +95,7 @@
 
 <script setup lang="ts">
 const {$moment} = useNuxtApp();
-
+const clientReadyState = useClientReadyState();
 definePageMeta({middleware: ['auth']});
 useLayout().setNavigationMode('solid', 'Prototypes/index.vue');
 
@@ -166,35 +166,35 @@ let paramsComputed = computed(() => {
 });
 
 let pending = ref(false);
-const {execute} = csrFetch("/api/v1/prototypes", {
-    method: 'GET',
-    params: paramsComputed,
-    immediate: false,
-},{
-    onRequest: () => {
-        pending.value = true;
-        clearTimeout(filters.search.callback);
-    },
-    onRequestError: () => {
-        pending.value = false;
-    },
-    onResponse: () => {
-        pending.value = false;
-    },
-    onSuccessResponse: (request, response, options) => {
-        prototypes.data = _get(response, '_data.values.data', []);
-        prototypes.meta = _get(response, '_data.values.meta', {
-            pagination: {
-                total: 0,
-                count: 0,
-                per_page: 0,
-                current_page: 0,
-                total_pages: 0
-            }
-        });
-        renderDateTimePickers();
-    }
-});
+let execute = async () => {
+    pending.value = true;
+    clearTimeout(filters.search.callback);
+
+    await csrFetch("/api/v1/prototypes", {
+        method: 'GET',
+        params: paramsComputed
+    },{
+        onRequestError: () => {
+            pending.value = false;
+        },
+        onResponse: () => {
+            pending.value = false;
+        },
+        onSuccessResponse: (request, response, options) => {
+            prototypes.data = _get(response, '_data.values.data', []);
+            prototypes.meta = _get(response, '_data.values.meta', {
+                pagination: {
+                    total: 0,
+                    count: 0,
+                    per_page: 0,
+                    current_page: 0,
+                    total_pages: 0
+                }
+            });
+            renderDateTimePickers();
+        }
+    });
+}
 
 watch(pending, async (newPending, oldPending) => {
     if (!newPending) {
@@ -270,7 +270,19 @@ function renderDateTimePickers(){
     render(dateTimePickers);
 }
 
+//Render date time pickers on navigate
 onMounted(async () => {
-    render(filtersDateTimePickers.value);
+    await nextTick(() => {
+        render(filtersDateTimePickers.value);
+    });
 });
+
+//Render date time pickers on load
+watch(clientReadyState, async (clientReady) => {
+    if(clientReady){
+        await nextTick(() => {
+            render(filtersDateTimePickers.value);
+        });
+    }
+})
 </script>
