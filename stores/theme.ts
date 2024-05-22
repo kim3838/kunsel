@@ -81,7 +81,7 @@ export const useThemeStore = defineStore('theme', {
                 'lining': '#F08080',
                 'thread': '#F8AD9D',
 
-                'neutral': '#e5e5e5',
+                'neutral': '#fff8e0',
 
                 'tint': '#ffead7',
                 'body': '#ffeee0',
