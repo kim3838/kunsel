@@ -91,10 +91,9 @@
 
 <script setup lang="ts">
 import {useFocus, useScroll} from '@vueuse/core';
-import {ref, reactive, toRef, computed, nextTick, watch, onMounted} from 'vue';
 import {storeToRefs} from 'pinia';
-
 const {$coreStore,$themeStore} = useNuxtApp();
+const clientReadyState = useClientReadyState();
 
 const {
     lining: liningColor,
@@ -543,46 +542,48 @@ function handleBackTab() {
 }
 
 const pending = ref(false);
-const { execute} = csrFetch(props.payload.fetch.url, {
-    method: 'GET',
-    immediate: false,
-    params: paramsComputed,
-}, {
-    onRequest: () => {
-        pending.value = true;
-        selectionEndResult.icon = 'eos-icons:loading';
-        selectionEndResult.label = 'Loading...';
-    },
-    onRequestError: () => {
-        pending.value = false;
-        selectionEndResult.icon = 'eos-icons:loading';
-        selectionEndResult.label = 'Loading failed.';
-    },
-    onResponse: () => {
-        pending.value = false;
-        selectionEndResult.icon = 'eos-icons:loading';
-        selectionEndResult.label = 'Please wait...';
-    },
-    onSuccessResponse: async (request, response, options) => {
-        if(searchTriggered.value){
-            selection.value = [];
-        }
+const execute = async () => {
+    pending.value = true;
+    selectionEndResult.icon = 'eos-icons:loading';
+    selectionEndResult.label = 'Loading...';
 
-        let data = _get(response, '_data.values.selection.data', []);
-        selection.value = selection.value.concat(data);
+    await csrFetch(props.payload.fetch.url, {
+        method: 'GET',
+        params: paramsComputed,
+    }, {
+        onRequestError: () => {
+            pending.value = false;
+            selectionEndResult.icon = 'eos-icons:loading';
+            selectionEndResult.label = 'Loading failed.';
+        },
+        onResponse: () => {
+            pending.value = false;
+            selectionEndResult.icon = 'eos-icons:loading';
+            selectionEndResult.label = 'Please wait...';
+        },
+        onSuccessResponse: async (request, response, options) => {
+            if(searchTriggered.value){
+                selection.value = [];
+            }
 
-        if(searchTriggered.value){
-            searchTriggered.value = false;
-            await nextTick();
-            selectionScrollY.value = 0;
-        }
+            let data = _get(response, '_data.values.selection.data', []);
+            selection.value = selection.value.concat(data);
 
-        if(selection.value.length && data.length == 0){
-            selectionEndResult.icon = 'radix-icons:dot';
-            selectionEndResult.label = 'End of result.';
+            if(searchTriggered.value){
+                searchTriggered.value = false;
+
+                await nextTick(() => {
+                    selectionScrollY.value = 0;
+                });
+            }
+
+            if(selection.value.length && data.length == 0){
+                selectionEndResult.icon = 'radix-icons:dot';
+                selectionEndResult.label = 'End of result.';
+            }
         }
-    }
-});
+    });
+}
 
 watch(selectionScrollBottomReached, (bottomReached) => {
     if(bottomReached && active.value){
@@ -603,26 +604,52 @@ watch(() => {
     }, 1500);
 });
 
-const {execute: selectedExecute} = csrFetch(props.payload.fetch.url, {
-    method: 'GET',
-    immediate: false,
-    params: selectedParamsComputed,
-}, {
-    onSuccessResponse: (request, response, options) => {
-        let data = _get(response, '_data.values.selection.data', {});
+const selectedExecute = async () => {
+    pending.value = true;
 
-        selected.value = Array.isArray(data) ? data[0] : {};
-    }
-});
+    await csrFetch(props.payload.fetch.url, {
+        method: 'GET',
+        params: selectedParamsComputed,
+    }, {
+        onRequestError: () => {
+            pending.value = false;
+        },
+        onResponse: () => {
+            pending.value = false;
+        },
+        onSuccessResponse: (request, response, options) => {
+            let data = _get(response, '_data.values.selection.data', {});
+
+            selected.value = Array.isArray(data) ? data[0] : {};
+        }
+    });
+}
 
 if(props.payload.selected){
     selectedExecute();
 }
 
 onMounted(async () => {
-    await nextTick();
-    selectionWidth.value = selectHeader.value.offsetWidth;
+    await nextTick(() => {
+        let selectionOffsetWidth = selectHeader.value?.offsetWidth;
+
+        if(selectionOffsetWidth !== null &&  selectionOffsetWidth !== undefined){
+            selectionWidth.value = selectionOffsetWidth;
+        }
+    });
 });
+
+watch(clientReadyState, async (clientReady) => {
+    if(clientReady){
+        await nextTick(() => {
+            let selectionOffsetWidth = selectHeader.value?.offsetWidth;
+
+            if(selectionOffsetWidth !== null &&  selectionOffsetWidth !== undefined){
+                selectionWidth.value = selectionOffsetWidth;
+            }
+        });
+    }
+})
 </script>
 <style scoped>
 .background {
