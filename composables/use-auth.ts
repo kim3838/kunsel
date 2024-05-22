@@ -51,8 +51,6 @@ export const useAuth = () => {
         $coreStore.resetServiceError();
         authPending.value = true;
 
-        await csrFetch("/sanctum/csrf-cookie");
-
         await csrFetch("/api/login", {
             method: 'POST',
             body: credentials
