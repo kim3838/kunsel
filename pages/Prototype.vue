@@ -6,7 +6,7 @@
 
                 <div class="tw-space-y-2">
                     <!-- Static Single, MultiSelect and DateTime, Date, and Month Picker -->
-                    <div v-if="false" class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-8">
+                    <div v-if="true" class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-8">
                         <div class="tw-block neutral-border">
                             <InputLabel :size="'sm'" value="Static Multi Select" />
                             <MultiSelect drop-shadow :selection-max-viewable-line="5" :size="'md'" :options="category" :icon="'ic:sharp-qr-code'"/>
@@ -78,7 +78,7 @@
                     </div>
 
                     <!-- Paginated Single and MultiSelect -->
-                    <div v-if="false" class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-8">
+                    <div v-if="true" class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-8">
                         <div class="tw-block neutral-border">
                             <InputLabel :size="'sm'" value="Paginated Multi Select" />
                             <MultiSelectPaginated
@@ -455,7 +455,7 @@
                         <div class="tw-block tw-p-2 neutral-border">
                             <InputLabel class="tw-mb-2" :size="'md'" value="Spacing Aligment Grid" />
                             <div class="tw-grid tw-gap-1 tw-grid-cols-7">
-                                <div v-if="false">
+                                <div v-if="true">
                                     <div>
                                         <MultiSelectPaginated
                                             :drop-shadow="true"
@@ -522,7 +522,7 @@
                                     <div><Button class="" :size="'2xs'" :icon="tabGroup.icon" :label="''" /></div>
                                 </div>
 
-                                <div v-if="false">
+                                <div v-if="true">
                                     <div>
                                         <MultiSelectPaginated
                                             :drop-shadow="true"
@@ -589,7 +589,7 @@
                                     <div><Button class="" :size="'xs'" :icon="tabGroup.icon" :label="''" /></div>
                                 </div>
 
-                                <div v-if="false">
+                                <div v-if="true">
                                     <div>
                                         <MultiSelectPaginated
                                             :drop-shadow="true"
@@ -656,7 +656,7 @@
                                     <div><Button class="" :size="'sm'" :icon="tabGroup.icon" :label="''" /></div>
                                 </div>
 
-                                <div v-if="false">
+                                <div v-if="true">
                                     <div>
                                         <MultiSelectPaginated
                                             :drop-shadow="true"
@@ -723,7 +723,7 @@
                                     <div><Button class="" :size="'md'" :icon="tabGroup.icon" :label="''" /></div>
                                 </div>
 
-                                <div v-if="false">
+                                <div v-if="true">
                                     <div>
                                         <MultiSelectPaginated
                                             :drop-shadow="true"
@@ -789,7 +789,7 @@
                                     <div><Button class="" :size="'lg'" :icon="tabGroup.icon" :label="''" /></div>
                                 </div>
 
-                                <div v-if="false">
+                                <div v-if="true">
                                     <div><InputWithIcon :size="'xl'" :icon="tabGroup.icon" :placeholder="'Enter value'" type="text" autocomplete="off" /></div>
                                     <div><Button class="tw-w-full" :size="'xl'" :icon="tabGroup.icon" :label="'Button'" /></div>
                                     <div><Button class="tw-w-3/4" :size="'xl'" :icon="tabGroup.icon" :variant="'outline'" :label="'Button'" /></div>
@@ -800,7 +800,7 @@
                                     <div><Button class="" :size="'xl'" :icon="tabGroup.icon" :label="''" /></div>
                                 </div>
 
-                                <div v-if="false">
+                                <div v-if="true">
                                     <div><InputWithIcon :size="'2xl'" :icon="tabGroup.icon" :placeholder="'Enter value'" type="text" autocomplete="off" /></div>
                                     <div><Button class="tw-w-full" :size="'2xl'" :icon="tabGroup.icon" :label="'Button'" /></div>
                                     <div><Button class="tw-w-3/4" :size="'2xl'" :icon="tabGroup.icon" :variant="'outline'" :label="'Button'" /></div>
@@ -815,7 +815,7 @@
                     </div>
 
                     <!-- Button and Input Horizontal Alignment -->
-                    <div v-if="true">
+                    <div v-if="false">
                         <div class="tw-my-4 tw-flex tw-justify-center tw-space-x-1.5">
                             <Button :size="tabGroup.size" :icon="tabGroup.icon" :label="'Default'" />
                             <Button :size="tabGroup.size" :icon="tabGroup.icon" :variant="'outline'" :label="'Outline'" />
@@ -1436,7 +1436,7 @@ let multiSelectPrototypePayload = reactive({
             }
         }
     },
-    selected: [1992,1263]
+    selected: [400, 476]
 });
 let singleSelectPrototype = reactive({
     search: '',
@@ -1466,7 +1466,7 @@ let singleSelectPrototypePayload = reactive({
             }
         }
     },
-    selected: null,
+    selected: 400,
 });
 
 let selected_1 = ref([1001,1002]);
@@ -1798,7 +1798,19 @@ dateTimePickers.value = dateTimePickers.value
 
 const {render} = dateTimePicker();
 
+//Render date time pickers on navigate
 onMounted(async () => {
-    render(dateTimePickers.value);
+    await nextTick(() => {
+        render(dateTimePickers.value);
+    });
 });
+
+//Render date time pickers on load
+watch(clientReadyState, async (clientReady) => {
+    if(clientReady){
+        await nextTick(() => {
+            render(dateTimePickers.value);
+        });
+    }
+})
 </script>
