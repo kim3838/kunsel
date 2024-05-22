@@ -236,6 +236,11 @@ const navDropOptionsParentBorderColor = computed(()=>{
     color: v-bind(textInvertColor);
 }
 
+.daterangepicker th.available:hover {
+    background-color: v-bind(textColor);
+    color: v-bind(textInvertColor);
+}
+
 .daterangepicker::before {
     border-bottom: 7px solid v-bind(liningColor);
 }
