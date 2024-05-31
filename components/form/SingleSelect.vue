@@ -216,9 +216,9 @@ const borderClass = computed(() => {
 
 const selectionItemSize = computed(() => {
     return {
-        '2xs': 'md',
-        'xs': 'md',
-        'sm': 'md',
+        '2xs': 'sm',
+        'xs': 'sm',
+        'sm': 'sm',
         'md': 'md',
         'lg': 'lg'
     }[props.size];
@@ -266,14 +266,14 @@ const dropDownIconClass = computed(() => {
 
 const selectionMaxHeight = computed(() => {
     let rowSize = {
-        '2xs': 24,
-        'xs': 24,
-        'sm': 24,
-        'md': 24,
-        'lg': 28
+        '2xs': 17.5,
+        'xs': 17.5,
+        'sm': 17.5,
+        'md': 21,
+        'lg': 24.5
     }[props.size];
 
-    return `${(rowSize ?? 24) * props.selectionMaxViewableLine}px`;
+    return `${(rowSize ?? 21) * props.selectionMaxViewableLine}px`;
 });
 
 const selectionClass = computed(() => {
