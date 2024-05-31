@@ -13,7 +13,7 @@
             </CarouselModuleCarousel>
 
             <!-- Spotlight: Video -->
-            <div class="tw-snap-start tw-snap-always tw-relative tw-w-full tw-h-screen">
+            <div v-if="false" class="tw-snap-start tw-snap-always tw-relative tw-w-full tw-h-screen">
                 <video :ref="'spotlightVideo_1'" preload="none" muted loop class="tw-absolute tw-z-30 tw-border-0 tw-object-cover tw-w-full tw-h-full">
                     <source :src="'videos/your_name_4.mp4'" type="video/mp4">
                 </video>
