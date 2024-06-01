@@ -6,7 +6,7 @@
                     <AccentFrame class="tw-my-4">
                         <template #content>
                             <div class="tw-relative tw-py-4">
-                                <label class="tw-text-xl">Password Login</label>
+                                <label class="tw-text-lg tw-font-semibold">Password Login</label>
                                 <form @submit.prevent="handleLogin" class="tw-mt-4 tw-w-80">
                                     <div class="tw-block">
                                         <InputLabel :size="'md'" for="identifier" value="Username or Email" />
@@ -40,7 +40,7 @@
                                                 :disabled="authPending"
                                                 name="remember"
                                                 v-model="remember"
-                                                :size="'lg'"
+                                                :size="'md'"
                                                 :label="'Remember me'" />
                                         </label>
                                     </div>
@@ -55,7 +55,7 @@
                                         </div>
                                         <Button
                                             :disabled="authPending"
-                                            :size="'lg'"
+                                            :size="'md'"
                                             :icon="authPending ? 'eos-icons:installing' : 'mdi:key-chain'"
                                             :label="authPending ? 'Logging in...' : 'Login'"></Button>
                                     </div>
