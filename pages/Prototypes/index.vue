@@ -6,33 +6,33 @@
                     <form @submit.prevent="paginate(1, true)" class="tw-space-y-0.5 tw-my-4 tw-p-[1.5rem] neutral-border">
                         <div class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-8">
                             <div class="tw-block">
-                                <InputLabel :size="'md'" value="Search"/>
+                                <InputLabel :size="'sm'" value="Search"/>
                                 <Input :size="'md'" ref="searchInput" v-model="filters.search.keyword" class="tw-w-full" placeholder="Search something" type="text" autocomplete="off"/>
                             </div>
                             <div class="tw-block">
-                                <InputLabel :size="'md'" value="_" class="tw-text-transparent"/>
+                                <InputLabel :size="'sm'" value="_" class="tw-text-transparent"/>
                                 <Button type="button" :variant="'flat'" @click="filters.search.keyword += '.';" :size="'md'" :icon="'ic:sharp-join-left'" :label="'Concat &quot;.&quot;'"></Button>
                             </div>
                         </div>
 
                         <div class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-8">
                             <div class="tw-block">
-                                <InputLabel :size="'md'" value="Code"/>
+                                <InputLabel :size="'sm'" value="Code"/>
                                 <Input :size="'md'" readonly v-model="filters.code" class="tw-w-full" placeholder="Search something" type="text" autocomplete="off"/>
                             </div>
                             <div class="tw-block">
-                                <InputLabel :size="'md'" value="_" class="tw-text-transparent"/>
+                                <InputLabel :size="'sm'" value="_" class="tw-text-transparent"/>
                                 <Button type="button" :variant="'flat'" @click="filters.code += '.';" :size="'md'" :icon="'ic:sharp-join-left'" :label="'Concat &quot;.&quot;'"></Button>
                             </div>
                         </div>
 
                         <div class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-8">
                             <div class="tw-bloc">
-                                <InputLabel :size="'md'" value="Date Added: From"/>
+                                <InputLabel :size="'sm'" value="Date Added: From"/>
                                 <InputWithIcon :icon="'ion:calendar-number-sharp'" :id="'datetimefrom'" readonly v-model="filters.datetimeFrom" :size="'md'" class="tw-w-full" :type="'text'"/>
                             </div>
                             <div class="tw-block">
-                                <InputLabel :size="'md'" value="Date Added: To"/>
+                                <InputLabel :size="'sm'" value="Date Added: To"/>
                                 <InputWithIcon :icon="'ion:calendar-number-sharp'" :id="'datetimeto'" readonly v-model="filters.datetimeTo" :size="'md'" class="tw-w-full" :type="'text'"/>
                             </div>
                         </div>
