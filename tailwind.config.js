@@ -19,11 +19,11 @@ module.exports = {
         extend: {
             fontFamily : {
                 sans : [
-                    'Hedvig Letters Sans',
-                    'Sofia Sans Semi Condensed',
-                    'Source Sans Pro',
+                    'Sofia Sans Semi Condensed',//Data
+                    'Hedvig Letters Sans',//Paragraph
+                    'Source Sans Pro',//Paragraph
                     'Roboto',
-                    'IBM Plex Sans Condensed',
+                    'IBM Plex Sans Condensed',//Headers
                     'Spline Sans',
                     'Google Sans Text',
                     'Barlow Semi Condensed',

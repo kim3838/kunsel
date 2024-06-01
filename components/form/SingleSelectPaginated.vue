@@ -285,14 +285,14 @@ const dropDownIconClass = computed(() => {
 
 const selectionMaxHeight = computed(() => {
     let rowSize = {
-        '2xs': 17.5,
-        'xs': 17.5,
-        'sm': 17.5,
-        'md': 21,
-        'lg': 24.5
+        '2xs': 20,
+        'xs': 20,
+        'sm': 20,
+        'md': 24,
+        'lg': 28
     }[props.size];
 
-    return `${(rowSize ?? 21) * props.selectionMaxViewableLine}px`;
+    return `${(rowSize ?? 24) * props.selectionMaxViewableLine}px`;
 });
 
 const selectionClass = computed(() => {
@@ -307,10 +307,10 @@ const selectionClass = computed(() => {
 
 const optionsFontClass = computed(() => {
     return {
-        '2xs': 'tw-text-sm',
-        'xs': 'tw-text-sm',
-        'sm': 'tw-text-sm',
-        'md': 'tw-text-sm',
+        '2xs': 'tw-text-base',
+        'xs': 'tw-text-base',
+        'sm': 'tw-text-base',
+        'md': 'tw-text-base',
         'lg': 'tw-text-lg'
     }[props.size];
 });
