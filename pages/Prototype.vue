@@ -85,7 +85,7 @@
                                 :drop-shadow="true"
                                 :selection-max-content="true"
                                 :selected-max-viewable-line="6"
-                                :selection-max-viewable-line="10"
+                                :selection-max-viewable-line="8"
                                 :searchable="true"
                                 :selection-float="true"
                                 :always-active="false"
@@ -116,14 +116,14 @@
                         <div class="tw-flex tw-block">
                             <MultiSelect
                                 :selection-max-content="false"
-                                :selection-max-viewable-line="9"
+                                :selection-max-viewable-line="6"
                                 :selection-float="false"
                                 :idle-border="'red'"
                                 :active-border="'red'"
                                 :always-active="true"
                                 :searchable="false"
                                 :label="'Select Category'"
-                                :size="'lg'"
+                                :size="'sm'"
                                 :options="category"
                                 :icon="'ic:sharp-display-settings'"/>
                         </div>
@@ -137,7 +137,7 @@
                                 :always-active="true"
                                 :searchable="true"
                                 :label="'Filter Category'"
-                                :size="'lg'"
+                                :size="'md'"
                                 :options="category"
                                 :icon="'ic:sharp-display-settings'"/>
                         </div>
@@ -178,7 +178,7 @@
                                 :idle-border="'blue'"
                                 :active-border="'blue'"
                                 :always-active="true"
-                                :searchable="false"
+                                :searchable="true"
                                 :value-persist="true"
                                 :icon="'eos-icons:installing'"
                                 :label="'Select Plan'"
@@ -202,7 +202,7 @@
                     </div>
 
                     <!-- Datatables -->
-                    <div v-if="false" class="tw-grid tw-gap-2 sm:tw-grid-cols-1 md:tw-grid-cols-2 lg:tw-grid-cols-4">
+                    <div v-if="true" class="tw-grid tw-gap-2 sm:tw-grid-cols-1 md:tw-grid-cols-2 lg:tw-grid-cols-4">
                         <div class="tw-block tw-col-span-1 sm:tw-col-span-3 md:tw-col-span-2 lg:tw-col-span-2 tw-p-2 neutral-border">
                             <InputLabel class="tw-mb-2" :size="'md'" value="MD Datatable" />
                             <DataTable
@@ -247,7 +247,7 @@
                                 selection>
                                 <template v-slot:cell.name="{cell, index, slot}">
                                     <div class="tw-h-full tw-w-full tw-flex tw-items-center">
-                                        <Button class="tw-w-full" :variant="'outline'" :icon="'material-symbols:ev-mobiledata-badge-sharp'" :size="slot.buttonSize" :label="`${cell.name}`"></Button>
+                                        <Button class="tw-w-full" :variant="'default'" :icon="'material-symbols:ev-mobiledata-badge-sharp'" :size="slot.buttonSize" :label="`${cell.name}`"></Button>
                                     </div>
                                 </template>
                                 <template v-slot:cell.code="{index, cell, slot}">
@@ -368,7 +368,7 @@
                     </div>
 
                     <!-- Tab Indexed Group -->
-                    <div v-if="false">
+                    <div v-if="true">
                         <div class="tw-block tw-p-2 neutral-border">
                             <InputLabel class="tw-mb-2" :size="'md'" value="Tab Group" />
                             <div class="tw-grid tw-gap-1 tw-grid-cols-1 sm:tw-grid-cols-2 md:tw-grid-cols-3 lg:tw-grid-cols-5">
@@ -826,7 +826,7 @@
                     </div>
 
                     <!-- Default Button -->
-                    <div v-if="true" class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-9">
+                    <div v-if="false" class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-9">
                         <div class="tw-flex tw-items-start tw-justify-start tw-block neutral-border">
                             <Button :size="'2xs'" :icon="'ic:sharp-send-to-mobile'" :label="'XXS Button'"></Button>
                         </div>
@@ -851,7 +851,7 @@
                     </div>
 
                     <!-- Outline Button -->
-                    <div v-if="true" class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-9">
+                    <div v-if="false" class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-9">
                         <div class="tw-flex tw-items-start tw-justify-start tw-block neutral-border">
                             <Button :variant="'outline'" :size="'2xs'" :icon="'ic:sharp-dashboard'" :label="'XXS Button'"></Button>
                         </div>
@@ -876,7 +876,7 @@
                     </div>
 
                     <!-- Flat Button -->
-                    <div v-if="true" class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-9">
+                    <div v-if="false" class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-9">
                         <div class="tw-flex tw-items-start tw-justify-start tw-block neutral-border">
                             <Button :variant="'flat'" :size="'2xs'" :icon="'ic:sharp-dashboard'" :label="'XXS Button'"></Button>
                         </div>
@@ -901,7 +901,7 @@
                     </div>
 
                     <!-- Hero Plate -->
-                    <div v-if="true" class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-4">
+                    <div v-if="false" class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-4">
                         <div>
                             <HeroPlate :size="'sm'" :bookmark="'FOR YOU'" :label="'B760M-MEOW'"/>
                         </div>
@@ -943,7 +943,7 @@
                     </div>
 
                     <!-- Accordion -->
-                    <div v-if="true" class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-1 lg:tw-grid-cols-3 xl:tw-grid-cols-3 2xl:tw-grid-cols-3">
+                    <div v-if="false" class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-1 lg:tw-grid-cols-3 xl:tw-grid-cols-3 2xl:tw-grid-cols-3">
                         <div>
                             <InputLabel :size="'md'" value="MD : Accordion Single Expand" />
                             <Accordion :size="'md'" :single-expand="true" v-model:payload="accordionSingleExpand" />
@@ -1116,65 +1116,65 @@
                     </div>
 
                     <!-- Typography -->
-                    <div v-if="true" class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-8">
+                    <div v-if="false" class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-8">
                         <div class="tw-block neutral-border tw-col-span-2">
-                            <p class="tw-text-sm tw-leading-4">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
+                            <p class="tw-text-sm tw-leading-4">0123456789 (){}[] +-*/= .,;:!? #&$%@|^#[ |||> |= ~@/\\/* Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
                         </div>
                         <div class="tw-block neutral-border tw-col-span-2">
-                            <p class="tw-text-base tw-leading-4">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
+                            <p class="tw-text-base tw-leading-4">0123456789 (){}[] +-*/= .,;:!? #&$%@|^#[ |||> |= ~@/\\/* Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
                         </div>
                         <div class="tw-block neutral-border tw-col-span-2">
-                            <p class="tw-text-lg tw-leading-5">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
+                            <p class="tw-text-lg tw-leading-5">0123456789 (){}[] +-*/= .,;:!? #&$%@|^#[ |||> |= ~@/\\/* Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
                         </div>
                         <div class="tw-block neutral-border tw-col-span-2">
-                            <p class="tw-text-xl tw-leading-6">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
+                            <p class="tw-text-xl tw-leading-6">0123456789 (){}[] +-*/= .,;:!? #&$%@|^#[ |||> |= ~@/\\/* Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
                         </div>
                     </div>
 
                     <!-- Font Weights -->
-                    <div v-if="true" class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-8">
+                    <div v-if="false" class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-8">
                         <div class="tw-block neutral-border tw-col-span-2">
-                            <p class="tw-text-sm tw-font-thin tw-leading-4">Thin: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
-                            <br><p class="tw-text-sm tw-font-extralight tw-leading-4">Extra Light: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
-                            <br><p class="tw-text-sm tw-font-light tw-leading-4">Light: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
-                            <br><p class="tw-text-sm tw-font-normal tw-leading-4">Normal: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
-                            <br><p class="tw-text-sm tw-font-medium tw-leading-4">Medium: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
-                            <br><p class="tw-text-sm tw-font-semibold tw-leading-4">Semibold: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
-                            <br><p class="tw-text-sm tw-font-bold tw-leading-4">Bold: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
-                            <br><p class="tw-text-sm tw-font-extrabold tw-leading-4">Extra Bold: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
-                            <br><p class="tw-text-sm tw-font-black tw-leading-4">Black: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
+                            <p class="tw-text-sm tw-font-thin tw-leading-4">Thin: 0123456789 (){}[] +-*/= .,;:!? #&$%@|^#[ |||> |= ~@/\\/* Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
+                            <br><p class="tw-text-sm tw-font-extralight tw-leading-4">Extra Light: 0123456789 (){}[] +-*/= .,;:!? #&$%@|^#[ |||> |= ~@/\\/* Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
+                            <br><p class="tw-text-sm tw-font-light tw-leading-4">Light: 0123456789 (){}[] +-*/= .,;:!? #&$%@|^#[ |||> |= ~@/\\/* Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
+                            <br><p class="tw-text-sm tw-font-normal tw-leading-4">Normal: 0123456789 (){}[] +-*/= .,;:!? #&$%@|^#[ |||> |= ~@/\\/* Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
+                            <br><p class="tw-text-sm tw-font-medium tw-leading-4">Medium: 0123456789 (){}[] +-*/= .,;:!? #&$%@|^#[ |||> |= ~@/\\/* Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
+                            <br><p class="tw-text-sm tw-font-semibold tw-leading-4">Semibold: 0123456789 (){}[] +-*/= .,;:!? #&$%@|^#[ |||> |= ~@/\\/* Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
+                            <br><p class="tw-text-sm tw-font-bold tw-leading-4">Bold: 0123456789 (){}[] +-*/= .,;:!? #&$%@|^#[ |||> |= ~@/\\/* Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
+                            <br><p class="tw-text-sm tw-font-extrabold tw-leading-4">Extra Bold: 0123456789 (){}[] +-*/= .,;:!? #&$%@|^#[ |||> |= ~@/\\/* Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
+                            <br><p class="tw-text-sm tw-font-black tw-leading-4">Black: 0123456789 (){}[] +-*/= .,;:!? #&$%@|^#[ |||> |= ~@/\\/* Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
                         </div>
                         <div class="tw-block neutral-border tw-col-span-2">
-                            <p class="tw-text-base tw-font-thin tw-leading-4">Thin: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
-                            <br><p class="tw-text-base tw-font-extralight tw-leading-4">Extra Light: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
-                            <br><p class="tw-text-base tw-font-light tw-leading-4">Light: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
-                            <br><p class="tw-text-base tw-font-normal tw-leading-4">Normal: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
-                            <br><p class="tw-text-base tw-font-medium tw-leading-4">Medium: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
-                            <br><p class="tw-text-base tw-font-semibold tw-leading-4">Semibold: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
-                            <br><p class="tw-text-base tw-font-bold tw-leading-4">Bold: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
-                            <br><p class="tw-text-base tw-font-extrabold tw-leading-4">Extra Bold: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
-                            <br><p class="tw-text-base tw-font-black tw-leading-4">Black: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
+                            <p class="tw-text-base tw-font-thin tw-leading-4">Thin: 0123456789 (){}[] +-*/= .,;:!? #&$%@|^#[ |||> |= ~@/\\/* Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
+                            <br><p class="tw-text-base tw-font-extralight tw-leading-4">Extra Light: 0123456789 (){}[] +-*/= .,;:!? #&$%@|^#[ |||> |= ~@/\\/* Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
+                            <br><p class="tw-text-base tw-font-light tw-leading-4">Light: 0123456789 (){}[] +-*/= .,;:!? #&$%@|^#[ |||> |= ~@/\\/* Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
+                            <br><p class="tw-text-base tw-font-normal tw-leading-4">Normal: 0123456789 (){}[] +-*/= .,;:!? #&$%@|^#[ |||> |= ~@/\\/* Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
+                            <br><p class="tw-text-base tw-font-medium tw-leading-4">Medium: 0123456789 (){}[] +-*/= .,;:!? #&$%@|^#[ |||> |= ~@/\\/* Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
+                            <br><p class="tw-text-base tw-font-semibold tw-leading-4">Semibold: 0123456789 (){}[] +-*/= .,;:!? #&$%@|^#[ |||> |= ~@/\\/* Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
+                            <br><p class="tw-text-base tw-font-bold tw-leading-4">Bold: 0123456789 (){}[] +-*/= .,;:!? #&$%@|^#[ |||> |= ~@/\\/* Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
+                            <br><p class="tw-text-base tw-font-extrabold tw-leading-4">Extra Bold: 0123456789 (){}[] +-*/= .,;:!? #&$%@|^#[ |||> |= ~@/\\/* Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
+                            <br><p class="tw-text-base tw-font-black tw-leading-4">Black: 0123456789 (){}[] +-*/= .,;:!? #&$%@|^#[ |||> |= ~@/\\/* Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
                         </div>
                         <div class="tw-block neutral-border tw-col-span-2">
-                            <p class="tw-text-lg tw-font-thin tw-leading-5">Thin: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
-                            <br><p class="tw-text-lg tw-font-extralight tw-leading-5">Extra Light: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
-                            <br><p class="tw-text-lg tw-font-light tw-leading-5">Light: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
-                            <br><p class="tw-text-lg tw-font-normal tw-leading-5">Normal: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
-                            <br><p class="tw-text-lg tw-font-medium tw-leading-5">Medium: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
-                            <br><p class="tw-text-lg tw-font-semibold tw-leading-5">Semibold: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
-                            <br><p class="tw-text-lg tw-font-bold tw-leading-5">Bold: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
-                            <br><p class="tw-text-lg tw-font-extrabold tw-leading-5">Extra Bold: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
-                            <br><p class="tw-text-lg tw-font-black tw-leading-5">Black: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
+                            <p class="tw-text-lg tw-font-thin tw-leading-5">Thin: 0123456789 (){}[] +-*/= .,;:!? #&$%@|^#[ |||> |= ~@/\\/* Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
+                            <br><p class="tw-text-lg tw-font-extralight tw-leading-5">Extra Light: 0123456789 (){}[] +-*/= .,;:!? #&$%@|^#[ |||> |= ~@/\\/* Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
+                            <br><p class="tw-text-lg tw-font-light tw-leading-5">Light: 0123456789 (){}[] +-*/= .,;:!? #&$%@|^#[ |||> |= ~@/\\/* Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
+                            <br><p class="tw-text-lg tw-font-normal tw-leading-5">Normal: 0123456789 (){}[] +-*/= .,;:!? #&$%@|^#[ |||> |= ~@/\\/* Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
+                            <br><p class="tw-text-lg tw-font-medium tw-leading-5">Medium: 0123456789 (){}[] +-*/= .,;:!? #&$%@|^#[ |||> |= ~@/\\/* Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
+                            <br><p class="tw-text-lg tw-font-semibold tw-leading-5">Semibold: 0123456789 (){}[] +-*/= .,;:!? #&$%@|^#[ |||> |= ~@/\\/* Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
+                            <br><p class="tw-text-lg tw-font-bold tw-leading-5">Bold: 0123456789 (){}[] +-*/= .,;:!? #&$%@|^#[ |||> |= ~@/\\/* Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
+                            <br><p class="tw-text-lg tw-font-extrabold tw-leading-5">Extra Bold: 0123456789 (){}[] +-*/= .,;:!? #&$%@|^#[ |||> |= ~@/\\/* Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
+                            <br><p class="tw-text-lg tw-font-black tw-leading-5">Black: 0123456789 (){}[] +-*/= .,;:!? #&$%@|^#[ |||> |= ~@/\\/* Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
                         </div>
                         <div class="tw-block neutral-border tw-col-span-2">
-                            <p class="tw-text-xl tw-font-extralight tw-leading-6">Thin: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
-                            <br><p class="tw-text-xl tw-font-light tw-leading-6">Extra Light: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
-                            <br><p class="tw-text-xl tw-font-normal tw-leading-6">Normal: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
-                            <br><p class="tw-text-xl tw-font-medium tw-leading-6">Medium: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
-                            <br><p class="tw-text-xl tw-font-semibold tw-leading-6">Semibold: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
-                            <br><p class="tw-text-xl tw-font-bold tw-leading-6">Bold: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
-                            <br><p class="tw-text-xl tw-font-extrabold tw-leading-6">Extra Bold: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
-                            <br><p class="tw-text-xl tw-font-black tw-leading-6">Black: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
+                            <p class="tw-text-xl tw-font-extralight tw-leading-6">Thin: 0123456789 (){}[] +-*/= .,;:!? #&$%@|^#[ |||> |= ~@/\\/* Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
+                            <br><p class="tw-text-xl tw-font-light tw-leading-6">Extra Light: 0123456789 (){}[] +-*/= .,;:!? #&$%@|^#[ |||> |= ~@/\\/* Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
+                            <br><p class="tw-text-xl tw-font-normal tw-leading-6">Normal: 0123456789 (){}[] +-*/= .,;:!? #&$%@|^#[ |||> |= ~@/\\/* Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
+                            <br><p class="tw-text-xl tw-font-medium tw-leading-6">Medium: 0123456789 (){}[] +-*/= .,;:!? #&$%@|^#[ |||> |= ~@/\\/* Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
+                            <br><p class="tw-text-xl tw-font-semibold tw-leading-6">Semibold: 0123456789 (){}[] +-*/= .,;:!? #&$%@|^#[ |||> |= ~@/\\/* Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
+                            <br><p class="tw-text-xl tw-font-bold tw-leading-6">Bold: 0123456789 (){}[] +-*/= .,;:!? #&$%@|^#[ |||> |= ~@/\\/* Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
+                            <br><p class="tw-text-xl tw-font-extrabold tw-leading-6">Extra Bold: 0123456789 (){}[] +-*/= .,;:!? #&$%@|^#[ |||> |= ~@/\\/* Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
+                            <br><p class="tw-text-xl tw-font-black tw-leading-6">Black: 0123456789 (){}[] +-*/= .,;:!? #&$%@|^#[ |||> |= ~@/\\/* Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
                         </div>
                     </div>
                 </div>
@@ -1184,7 +1184,7 @@
 </template>
 
 <script setup lang="ts">
-definePageMeta({middleware: 'guest'});
+definePageMeta({middleware: 'auth'});
 useLayout().setNavigationMode('solid', 'Prototype.vue');
 
 const clientReadyState = useClientReadyState();
