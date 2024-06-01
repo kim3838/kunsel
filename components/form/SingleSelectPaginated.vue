@@ -307,10 +307,10 @@ const selectionClass = computed(() => {
 
 const optionsFontClass = computed(() => {
     return {
-        '2xs': 'tw-text-base',
-        'xs': 'tw-text-base',
-        'sm': 'tw-text-base',
-        'md': 'tw-text-base',
+        '2xs': 'tw-text-sm',
+        'xs': 'tw-text-sm',
+        'sm': 'tw-text-sm',
+        'md': 'tw-text-sm',
         'lg': 'tw-text-lg'
     }[props.size];
 });
