@@ -6,13 +6,13 @@
                     <AccentFrame class="tw-my-4">
                         <template #content>
                             <div class="tw-relative tw-py-4">
-                                <label class="tw-text-lg tw-font-semibold">Password Login</label>
-                                <form @submit.prevent="handleLogin" class="tw-mt-4 tw-w-72">
+                                <label class="tw-text-xl">Password Login</label>
+                                <form @submit.prevent="handleLogin" class="tw-mt-4 tw-w-80">
                                     <div class="tw-block">
                                         <InputLabel :size="'md'" for="identifier" value="Username or Email" />
                                         <Input
                                             :disabled="authPending"
-                                            :size="'md'"
+                                            :size="'lg'"
                                             id="identifier"
                                             type="text"
                                             class="tw-w-full"
@@ -25,10 +25,10 @@
                                         <InputLabel :size="'md'" for="password" value="Password" />
                                         <Input
                                             :disabled="authPending"
-                                            :size="'md'"
+                                            :size="'lg'"
                                             id="password"
                                             type="password"
-                                            class="tw-w-full"
+                                            class="tw-w-full tw-tracking-widest"
                                             v-model="password"
                                             required
                                             autocomplete="current-password" />
@@ -40,7 +40,7 @@
                                                 :disabled="authPending"
                                                 name="remember"
                                                 v-model="remember"
-                                                :size="'md'"
+                                                :size="'lg'"
                                                 :label="'Remember me'" />
                                         </label>
                                     </div>
@@ -55,7 +55,7 @@
                                         </div>
                                         <Button
                                             :disabled="authPending"
-                                            :size="'md'"
+                                            :size="'lg'"
                                             :icon="authPending ? 'eos-icons:installing' : 'mdi:key-chain'"
                                             :label="authPending ? 'Logging in...' : 'Login'"></Button>
                                     </div>
