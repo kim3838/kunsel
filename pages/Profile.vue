@@ -94,7 +94,7 @@
                         </div>
                     </form>
 
-                    <ClientOnly v-if="false">
+                    <ClientOnly>
                         <div class="tw-max-w-screen-sm tw-mt-4 tw-p-[1.5rem] neutral-border">
                             <p class="tw-font-medium tw-text-lg">Two Factor Authentication</p>
                             <p class="tw-text-base">Add additional security to your account using two factor authentication.</p>
@@ -121,7 +121,7 @@
                                             :label="'Loading QR code, please wait...'"/>
 
                                         <div v-if="setupKey && !pendingTwoFactorSetupKey" class="tw-mt-4 tw-font-medium">
-                                            Setup Key: <span>{{setupKey}}</span>
+                                            Setup Key: <span class="tw-font-mono">{{setupKey}}</span>
                                         </div>
                                         <UnorderedList
                                             v-else-if="pendingTwoFactorSetupKey"
@@ -239,15 +239,39 @@ await ssrFetch("/api/user", {
 
         if(two_factor_enabled && !two_factor_confirmed){
             twoFactorConfirming.value = true;
-            // executeTwoFactorSetupKey();
-            // executeTwoFactorQrCode();
-            // executeTwoFactorRecoveryCodes();
         }
     }
 });
 
-let updatePasswordPending = ref(false);
-let executeUpdatePassword = async () => {
+if(twoFactorEnabled.value && !twoFactorConfirmed.value){
+    await ssrFetch("/api/two-factor-secret-key", {
+        method: 'GET',
+    }, {
+        onSuccessResponse: (request, response, options) => {
+            setupKey.value = _get(response, '_data.values.secret_key', null);
+        }
+    });
+
+    await ssrFetch("/api/two-factor-qr-code", {
+        method: 'GET',
+    }, {
+        onSuccessResponse: (request, response, options) => {
+            qrCode.value = _get(response, '_data.values.svg', null);
+        }
+    });
+
+    await ssrFetch("/api/two-factor-recovery-codes", {
+        method: 'GET',
+    }, {
+        onSuccessResponse: (request, response, options) => {
+            recoveryCodes.value = _get(response, '_data.values.recovery_codes', []);
+        }
+    });
+}
+
+
+const updatePasswordPending = ref(false);
+const executeUpdatePassword = async () => {
     updatePasswordPending.value = true;
 
     await csrFetch("/api/update-password", {
@@ -278,10 +302,9 @@ let executeUpdatePassword = async () => {
     });
 }
 
-
-let confirmPassword = ref('password');
-let logoutOtherDevicePending = ref(false);
-let executeLogoutOtherDevice = async () => {
+const confirmPassword = ref('password');
+const logoutOtherDevicePending = ref(false);
+const executeLogoutOtherDevice = async () => {
     logoutOtherDevicePending.value = true;
 
     await csrFetch("/api/logout-other-device", {
@@ -323,116 +346,142 @@ const {pending:pendingBrowserSessions} = await ssrFetch("/api/sessions", {
 
 useLayout().setNavigationMode('solid', 'Profile.vue');
 
-// const enableTwoFactorPending = ref(false);
-// const {execute: executeEnableTwoFactor} = csrFetch("/api/two-factor-authentication", {
-//     method: 'POST',
-//     immediate: false,
-// }, {
-//     onRequest: () => {
-//         enableTwoFactorPending.value = true;
-//     },
-//     onRequestError: () => {
-//         enableTwoFactorPending.value = false;
-//     },
-//     onResponse: () => {
-//         enableTwoFactorPending.value = false;
-//     },
-//     onSuccessResponse: (request, response, options) => {
-//         user.value.two_factor_enabled = true;
-//         twoFactorConfirming.value = true;
-//         executeTwoFactorSetupKey();
-//         executeTwoFactorQrCode();
-//         executeTwoFactorRecoveryCodes();
-//     }
-// });
-//
-// const {pending:pendingTwoFactorSetupKey, execute: executeTwoFactorSetupKey} = csrFetch("/api/two-factor-secret-key", {
-//     method: 'GET',
-//     immediate: false,
-// }, {
-//     onSuccessResponse: (request, response, options) => {
-//         setupKey.value = _get(response, '_data.values.secret_key', null);
-//     }
-// });
-// const {pending:pendingTwoFactorQrCode, execute: executeTwoFactorQrCode} = csrFetch("/api/two-factor-qr-code", {
-//     method: 'GET',
-//     immediate: false,
-// }, {
-//     onSuccessResponse: (request, response, options) => {
-//         qrCode.value = _get(response, '_data.values.svg', null);
-//     }
-// });
-// const pendingTwoFactorRecoveryCodes = ref(false);
-// const {execute: executeTwoFactorRecoveryCodes} = csrFetch("/api/two-factor-recovery-codes", {
-//     method: 'GET',
-//     immediate: false,
-// }, {
-//     onRequest: () => {
-//         pendingTwoFactorRecoveryCodes.value = true;
-//     },
-//     onRequestError: () => {
-//         pendingTwoFactorRecoveryCodes.value = false;
-//     },
-//     onResponse: () => {
-//         pendingTwoFactorRecoveryCodes.value = false;
-//     },
-//     onSuccessResponse: (request, response, options) => {
-//         recoveryCodes.value = _get(response, '_data.values.recovery_codes', []);
-//     }
-// });
-//
-// const confirmTwoFactorPending = ref(false);
-// const {execute: executeConfirmTwoFactor} = csrFetch("/api/confirmed-two-factor-authentication", {
-//     method: 'POST',
-//     body: {
-//         'code': twoFactorConfirmationCode
-//     },
-//     immediate: false,
-// }, {
-//     onRequest: () => {
-//         confirmTwoFactorPending.value = true;
-//     },
-//     onRequestError: () => {
-//         confirmTwoFactorPending.value = false;
-//     },
-//     onResponse: () => {
-//         confirmTwoFactorPending.value = false;
-//     },
-//     onSuccessResponse: (request, response, options) => {
-//         twoFactorConfirming.value = false;
-//         user.value.two_factor_confirmed = true;
-//         setupKey.value = null;
-//         qrCode.value = null;
-//
-//         $coreStore.setPrompt({
-//             icon: 'ic:outline-mark-email-read',
-//             title: 'Two-Factor Confirmed',
-//             message: _get(response, '_data.message', ''),
-//             action: {
-//                 label: 'Close'
-//             }
-//         });
-//     }
-// });
-//
-// const disableTwoFactorPending = ref(false);
-// const {execute: executeDisableTwoFactor} = csrFetch("/api/two-factor-authentication", {
-//     method: 'DELETE',
-//     immediate: false,
-// }, {
-//     onRequest: () => {
-//         disableTwoFactorPending.value = true;
-//     },
-//     onRequestError: () => {
-//         disableTwoFactorPending.value = false;
-//     },
-//     onResponse: () => {
-//         disableTwoFactorPending.value = false;
-//     },
-//     onSuccessResponse: (request, response, options) => {
-//         user.value.two_factor_enabled = false;
-//         user.value.two_factor_confirmed = false;
-//         twoFactorConfirming.value = false;
-//     }
-// });
+const enableTwoFactorPending = ref(false);
+const executeEnableTwoFactor = async () => {
+    enableTwoFactorPending.value = true;
+
+    await csrFetch("/api/two-factor-authentication", {
+        method: 'POST',
+    }, {
+        onRequestError: () => {
+            enableTwoFactorPending.value = false;
+        },
+        onResponse: () => {
+            enableTwoFactorPending.value = false;
+        },
+        onSuccessResponse: (request, response, options) => {
+            user.value.two_factor_enabled = true;
+            twoFactorConfirming.value = true;
+            executeTwoFactorSetupKey();
+            executeTwoFactorQrCode();
+            executeTwoFactorRecoveryCodes();
+        }
+    });
+}
+
+const pendingTwoFactorSetupKey = ref(false);
+const executeTwoFactorSetupKey = async () => {
+    pendingTwoFactorSetupKey.value = true;
+
+    await csrFetch("/api/two-factor-secret-key", {
+        method: 'GET',
+    }, {
+        onRequestError: () => {
+            pendingTwoFactorSetupKey.value = false;
+        },
+        onResponse: () => {
+            pendingTwoFactorSetupKey.value = false;
+        },
+        onSuccessResponse: (request, response, options) => {
+            setupKey.value = _get(response, '_data.values.secret_key', null);
+        }
+    });
+
+}
+
+const pendingTwoFactorQrCode = ref(false);
+const executeTwoFactorQrCode = async () => {
+    pendingTwoFactorQrCode.value = true;
+
+    await csrFetch("/api/two-factor-qr-code", {
+        method: 'GET',
+    }, {
+        onRequestError: () => {
+            pendingTwoFactorQrCode.value = false;
+        },
+        onResponse: () => {
+            pendingTwoFactorQrCode.value = false;
+        },
+        onSuccessResponse: (request, response, options) => {
+            qrCode.value = _get(response, '_data.values.svg', null);
+        }
+    });
+}
+
+
+const pendingTwoFactorRecoveryCodes = ref(false);
+const executeTwoFactorRecoveryCodes = async () => {
+    pendingTwoFactorRecoveryCodes.value = true;
+
+    await csrFetch("/api/two-factor-recovery-codes", {
+        method: 'GET',
+    }, {
+        onRequestError: () => {
+            pendingTwoFactorRecoveryCodes.value = false;
+        },
+        onResponse: () => {
+            pendingTwoFactorRecoveryCodes.value = false;
+        },
+        onSuccessResponse: (request, response, options) => {
+            recoveryCodes.value = _get(response, '_data.values.recovery_codes', []);
+        }
+    });
+}
+
+
+const confirmTwoFactorPending = ref(false);
+const executeConfirmTwoFactor = async () => {
+    confirmTwoFactorPending.value = true;
+
+    await csrFetch("/api/confirmed-two-factor-authentication", {
+        method: 'POST',
+        body: {
+            'code': twoFactorConfirmationCode
+        }
+    }, {
+        onRequestError: () => {
+            confirmTwoFactorPending.value = false;
+        },
+        onResponse: () => {
+            confirmTwoFactorPending.value = false;
+        },
+        onSuccessResponse: (request, response, options) => {
+            twoFactorConfirming.value = false;
+            user.value.two_factor_confirmed = true;
+            setupKey.value = null;
+            qrCode.value = null;
+
+            $coreStore.setPrompt({
+                icon: 'ic:outline-mark-email-read',
+                title: 'Two-Factor Confirmed',
+                message: _get(response, '_data.message', ''),
+                action: {
+                    label: 'Close'
+                }
+            });
+        }
+    });
+}
+
+
+const disableTwoFactorPending = ref(false);
+const executeDisableTwoFactor = async () => {
+    disableTwoFactorPending.value = true;
+
+    await csrFetch("/api/two-factor-authentication", {
+        method: 'DELETE',
+    }, {
+        onRequestError: () => {
+            disableTwoFactorPending.value = false;
+        },
+        onResponse: () => {
+            disableTwoFactorPending.value = false;
+        },
+        onSuccessResponse: (request, response, options) => {
+            user.value.two_factor_enabled = false;
+            user.value.two_factor_confirmed = false;
+            twoFactorConfirming.value = false;
+        }
+    });
+}
 </script>

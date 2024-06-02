@@ -10,14 +10,15 @@
             :closeable="false"
             @close="closeModal">
             <template #title>
-                {{ title }}
+                {{ (confirmingPasswordPending && confirmingPassword ? titlePending : title) }}
             </template>
 
             <template #content>
-                {{ content }}
+                {{ (confirmingPasswordPending && confirmingPassword ? '' : content) }}
 
                 <div class="tw-mt-4">
                     <Input
+                        v-if="!confirmingPasswordPending"
                         ref="passwordInput"
                         :disabled="confirmPasswordPending"
                         v-model="form.password"
@@ -30,9 +31,18 @@
             </template>
 
             <template #footer>
-                <Button @click="closeModal" :label="'Cancel'" />
+                <UnorderedList
+                    v-if="confirmingPasswordPending && confirmingPassword"
+                    :icon="'eos-icons:loading'"
+                    :size="'md'"
+                    :label="'Please wait...'"/>
+                <Button
+                    v-show="!confirmingPasswordPending"
+                    :disabled="confirmPasswordPending"
+                    @click="closeModal" :label="'Cancel'" />
 
                 <Button
+                    v-show="!confirmingPasswordPending"
                     class="tw-ms-2"
                     :disabled="confirmPasswordPending"
                     @click="confirmPassword"
@@ -43,14 +53,16 @@
 </template>
 
 <script setup>
-import { ref, reactive, nextTick } from 'vue';
-
 const emit = defineEmits(['confirmed']);
 
 defineProps({
     title: {
         type: String,
         default: 'Confirm Password',
+    },
+    titlePending: {
+        type: String,
+        default: 'Confirming Password',
     },
     content: {
         type: String,
@@ -62,44 +74,60 @@ defineProps({
     },
 });
 
-const confirmingPassword = ref(false);
+
 
 const form = reactive({
     password: ''
 });
 
 const passwordInput = ref(null);
+const confirmingPassword = ref(false);
 
-const startConfirmingPassword = () => {
-    csrFetch('/api/confirmed-password-status', {
+const confirmingPasswordPending = ref(false);
+const startConfirmingPassword = async () => {
+    confirmingPassword.value = true;
+    confirmingPasswordPending.value = true;
+
+    await csrFetch('/api/confirmed-password-status', {
         method: 'GET',
     }, {
+        onRequestError: () => {
+            confirmingPasswordPending.value = false;
+        },
         onResponse: () => {
+            confirmingPasswordPending.value = false;
         },
         onSuccessResponse: (request, response, options) => {
             if(_get(response, '_data.values.confirmed', false)){
+                confirmingPassword.value = false;
                 emit('confirmed');
             } else {
-                confirmingPassword.value = true;
-
-                setTimeout(() => passwordInput.value.$refs.input.focus(), 250);
+                passwordInput.value.$refs.input.focus()
             }
         }
     });
-
 };
 
 const confirmPasswordPending = ref(false);
-const { execute: confirmPassword} = csrFetch('/api/confirm-password', {
-    method: 'POST',
-    body: form,
-    immediate: false,
-}, {
-    onSuccessResponse: (request, response, options) => {
-        closeModal();
-        nextTick().then(() => emit('confirmed'));
-    }
-});
+const confirmPassword = async () => {
+    confirmPasswordPending.value = true;
+
+    await csrFetch('/api/confirm-password', {
+        method: 'POST',
+        body: form,
+    }, {
+        onRequestError: () => {
+            confirmPasswordPending.value = false;
+        },
+        onResponse: () => {
+            confirmPasswordPending.value = false;
+        },
+        onSuccessResponse: (request, response, options) => {
+            closeModal();
+            nextTick().then(() => emit('confirmed'));
+        }
+    });
+}
 
 const closeModal = () => {
     confirmingPassword.value = false;

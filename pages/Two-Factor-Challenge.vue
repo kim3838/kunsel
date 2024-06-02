@@ -24,7 +24,7 @@
                                     <InputLabel :size="'md'" for="code" :value="recovery ? 'Enter Recovery Code' : 'Enter Authentication Code'" />
                                     <Input
                                         :disabled="authPending"
-                                        :size="'md'"
+                                        :size="'lg'"
                                         id="code"
                                         type="text"
                                         v-model="code"
@@ -99,7 +99,7 @@ watch(clientReadyState, async (clientReady) => {
 });
 
 const toggleRecovery = async () => {
-    recovery.value ^= true;
+    recovery.value = true;
 
     await nextTick();
 
