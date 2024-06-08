@@ -6,18 +6,12 @@
                     <template #content>
                         <div class="tw-relative tw-py-4">
                             <form @submit.prevent="handleForgotPassword" class="tw-w-72">
-                                <p class="tw-font-semibold tw-text-lg tw-mb-4">
-                                    Forgot your password? No problem.
-                                </p>
-                                <p class="tw-text-base">
-                                    Just let us know your email address and we will email you a password reset link that will allow you to choose a new one.
-                                </p>
-
                                 <div class="tw-block tw-mt-4">
+                                    <InputLabel :size="'md'" for="identifier" value="Enter account email" />
                                     <InputWithIcon
                                         :icon="'ic:round-mail-outline'"
                                         :disabled="pending"
-                                        :size="'md'"
+                                        :size="'lg'"
                                         id="email"
                                         type="email"
                                         class="tw-w-full"
@@ -31,7 +25,7 @@
                                     <Button
                                         :disabled="pending"
                                         :size="'md'"
-                                        :variant="'flat'"
+                                        :variant="'default'"
                                         :icon="pending ? 'eos-icons:installing' : 'ic:round-mail-outline'"
                                         :label="pending ? 'Requesting...' : 'Email Password Reset Link'"></Button>
                                 </div>
@@ -52,7 +46,7 @@ const {$coreStore} = useNuxtApp();
 
 let emailInput = ref(null);
 let pending = ref(false);
-let email = ref("luxere20@gmail.com1");
+let email = ref("luxere20@gmail.com");
 
 //On navigate, focus on email input
 if(clientReadyState.value){
@@ -87,35 +81,35 @@ async function handleForgotPassword(){
     await executeForgotPassword();
 }
 
-const {execute: executeForgotPassword} = csrFetch("/forgot-password", {
-    method: 'POST',
-    body: bodyComputed,
-    immediate: false
-}, {
-    onRequest: () => {
-        pending.value = true;
-    },
-    onRequestError: () => {
-        pending.value = false;
-    },
-    onResponse: () => {
-        pending.value = false;
-    },
-    onSuccessResponse: (request, response, options) => {
-        $coreStore.setPrompt({
-            icon: 'ic:outline-mark-email-read',
-            title: 'Password Reset',
-            message: _get(response, '_data.message', ''),
-            action: {
-                callback: () => {
-                    navigateTo({
-                        path: '/login',
-                        replace: true
-                    });
-                },
-                label: 'Close'
-            }
-        });
-    }
-});
+const executeForgotPassword = async () => {
+    pending.value = true;
+
+    await csrFetch("/forgot-password", {
+        method: 'POST',
+        body: bodyComputed
+    }, {
+        onRequestError: () => {
+            pending.value = false;
+        },
+        onResponse: () => {
+            pending.value = false;
+        },
+        onSuccessResponse: (request, response, options) => {
+            $coreStore.setPrompt({
+                icon: 'ic:outline-mark-email-read',
+                title: 'Password Reset',
+                message: _get(response, '_data.message', ''),
+                action: {
+                    callback: () => {
+                        navigateTo({
+                            path: '/login',
+                            replace: true
+                        });
+                    },
+                    label: 'Close'
+                }
+            });
+        }
+    });
+}
 </script>

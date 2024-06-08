@@ -2,9 +2,6 @@
     <div>
         <LandingWrapper>
             <div class="tw-mx-auto tw-px-4 tw-max-w-screen-2xl tw-flex tw-justify-center">
-                <div class="tw-hidden sm:tw-block tw-px-4 tw-py-8 tw-h-96 tw-w-96">
-                    <div class="tw-w-full tw-h-full tw-bg-contain tw-bg-center tw-bg-no-repeat" :style="{'background-image': 'url(/deco/undraw/undraw_access_denied_re_awnf.svg)'}"></div>
-                </div>
                 <AccentFrame class="tw-my-4">
                     <template #content>
                         <div class="tw-relative tw-py-4">
@@ -13,7 +10,7 @@
                                     <InputWithIcon
                                         :icon="'ic:round-mail-outline'"
                                         readonly
-                                        :size="'md'"
+                                        :size="'lg'"
                                         id="email"
                                         type="email"
                                         class="tw-w-full"
@@ -27,7 +24,7 @@
                                     <Input
                                         ref="password"
                                         :disabled="pending"
-                                        :size="'md'"
+                                        :size="'lg'"
                                         id="password"
                                         type="password"
                                         class="tw-w-full"
@@ -38,7 +35,7 @@
                                     <InputLabel :size="'md'" for="password_confirmation" value="Confirm Password" />
                                     <Input
                                         :disabled="pending"
-                                        :size="'md'"
+                                        :size="'lg'"
                                         id="password_confirmation"
                                         type="password"
                                         class="tw-w-full"
@@ -49,7 +46,7 @@
                                     <Button
                                         :disabled="pending"
                                         :size="'md'"
-                                        :variant="'flat'"
+                                        :variant="'default'"
                                         :icon="pending ? 'eos-icons:installing' : 'mdi:key-chain'"
                                         :label="pending ? 'Please wait...' : 'Reset Password'"></Button>
                                 </div>
@@ -57,6 +54,7 @@
                         </div>
                     </template>
                 </AccentFrame>
+
             </div>
         </LandingWrapper>
     </div>
@@ -82,8 +80,8 @@ let password = ref(null);
 const data = reactive({
     email: route.query.email,
     token: route.params.token,
-    password: "",
-    password_confirmation: "",
+    password: "password",
+    password_confirmation: "password",
 });
 
 //On navigate, focus on identifier input
@@ -114,35 +112,35 @@ async function handleResetPassword() {
 }
 
 const pending = ref(false);
-const {execute: executeResetPassword} = csrFetch("/reset-password", {
-    method: 'POST',
-    body: data,
-    immediate: false
-}, {
-    onRequest: () => {
-        pending.value = true;
-    },
-    onRequestError: () => {
-        pending.value = false;
-    },
-    onResponse: () => {
-        pending.value = false;
-    },
-    onSuccessResponse: (request, response, options) => {
-        $coreStore.setPrompt({
-            icon: 'mdi:key-chain',
-            title: 'Password Reset',
-            message: _get(response, '_data.message', ''),
-            action: {
-                callback: ()=>{
-                    navigateTo({
-                        path: '/login',
-                        replace: true
-                    });
-                },
-                label: 'Close'
-            }
-        });
-    }
-});
+const executeResetPassword = async () => {
+    pending.value = true;
+
+    await csrFetch("/reset-password", {
+        method: 'POST',
+        body: data
+    }, {
+        onRequestError: () => {
+            pending.value = false;
+        },
+        onResponse: () => {
+            pending.value = false;
+        },
+        onSuccessResponse: (request, response, options) => {
+            $coreStore.setPrompt({
+                icon: 'mdi:key-chain',
+                title: 'Password Reset',
+                message: _get(response, '_data.message', ''),
+                action: {
+                    callback: ()=>{
+                        navigateTo({
+                            path: '/login',
+                            replace: true
+                        });
+                    },
+                    label: 'Close'
+                }
+            });
+        }
+    });
+}
 </script>
