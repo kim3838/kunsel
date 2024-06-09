@@ -5,7 +5,7 @@
                 <AccentFrame class="tw-my-4">
                     <template #content>
                         <div class="tw-relative tw-py-4">
-                            <form @submit.prevent="handleForgotPassword" class="tw-w-72">
+                            <form @submit.prevent="handleForgotPassword" class="tw-w-80">
                                 <div class="tw-block tw-mt-4">
                                     <InputLabel :size="'md'" for="identifier" value="Enter account email" />
                                     <InputWithIcon
