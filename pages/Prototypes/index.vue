@@ -96,7 +96,7 @@
 <script setup lang="ts">
 const {$moment} = useNuxtApp();
 const clientReadyState = useClientReadyState();
-definePageMeta({middleware: ['auth']});
+definePageMeta({middleware: ['auth', 'verified']});
 useLayout().setNavigationMode('solid', 'Prototypes/index.vue');
 
 let prototypes = reactive({
