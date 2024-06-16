@@ -55,6 +55,10 @@ const props = defineProps({
         type: String,
         default: 'ltr'
     },
+    headerFade: {
+        type: Boolean,
+        default: true
+    }
 });
 
 const tintColor50 = computed(() => {
@@ -80,6 +84,10 @@ const bodyFlexDirection = computed(() => {
 });
 
 const fadeTransition = computed(() => {
+
+    if(!props.headerFade){
+        return {};
+    }
 
     return {
         display: (props.headPercentage > 0 ? 'block' : 'none'),
