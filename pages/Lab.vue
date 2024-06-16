@@ -12,7 +12,7 @@
                     <Button :variant="'flat'" @click="changeLayout('landing')" :label="'Landing Layout'"></Button>
                 </div>
 
-                <div class="tw-grid tw-gap-2 tw-grid-cols-3 tw-h-[460px]">
+                <div v-if="true" class="tw-grid tw-gap-2 tw-grid-cols-3 tw-h-[230px]">
                     <Featured
                         v-if="false"
                         class="tw-w-[254px] tw-h-[354px]"
@@ -40,13 +40,13 @@
                             </div>
                         </template>
                         <template v-slot:body="{frameBorderColor, contentBorderColor}">
-                            <div class="tw-h-full tw-w-[60%] tw-p-1 tw-overflow-hidden tw-relative tw-flex tw-flex-col">
+                            <div class="tw-h-full tw-w-[60%] tw-p-4 tw-overflow-hidden tw-relative tw-flex tw-flex-col">
                                 <div class="tw-font-semibold tw-h-max tw-flex-none">
                                     <UnorderedList
                                         class="tw-cursor-pointer hover:tw-underline"
                                         :size="'md'"
                                         :icon="item.listIcon"
-                                        :label="'iGame Z790D5 FLOW V20 iGame Z790D5 FLOW V20'"/>
+                                        :label="item.subTitle"/>
                                 </div>
 
                                 <div class="tw-overflow-auto">
@@ -95,31 +95,85 @@
                     </HexagonFrame>
                 </div>
 
-                <div v-if="false" class="tw-mt-6 tw-grid tw-gap-2 tw-grid-cols-5 tw-h-[454px]">
-                    <HexagonFrame
-                        v-for="item in topToBottomItems"
-                        :key="item"
-                        :frame-border="item.frameBorder"
-                        :content-border="item.contentBorder"
-                        :direction="'ttb'"
-                        :head-percentage="65"
-                        :top-right="55"
-                        :bottom-left="45">
-                        <template #header>
-                            <div class="tw-h-[65%] tw-w-full">
-                                <div
-                                    class="tw-h-full tw-w-full tw-bg-cover tw-bg-center tw-bg-no-repeat"
-                                    :style="{'background':'url('+item.image.path+')'}"
-                                />
-                            </div>
-                        </template>
-                        <template #body>
-                            <div class="tw-h-[35%] tw-w-full tw-p-1">
-                                <div class="tw-font-semibold tw-text-lg">{{item.subTitle}}</div>
-                                <Button :label="'Learn more'" :size="'md'" :variant="'flat'"></Button>
-                            </div>
-                        </template>
-                    </HexagonFrame>
+                <div v-if="true" class="tw-mx-auto tw-w-11/12">
+                    <div class="tw-mt-6 tw-grid tw-gap-4 tw-grid-cols-4 tw-h-[445px]">
+                        <HexagonFrame
+                            v-for="item in topToBottomItems"
+                            :key="item"
+                            :frame-border="item.frameBorder"
+                            :content-border="item.contentBorder"
+                            :direction="'ttb'"
+                            :head-percentage="50"
+                            :top-right="75"
+                            :bottom-left="55"
+                            :header-fade="false">
+                            <template #header>
+                                <div class="tw-h-[50%] tw-w-full">
+                                    <div
+                                        class="tw-h-full tw-w-full tw-bg-cover tw-bg-center tw-bg-no-repeat"
+                                        :style="{'background':'url('+item.image.path+')'}"
+                                    />
+                                </div>
+                                <div class="tw-h-[50%] tw-w-full tw-bg-black">
+                                    <div
+                                        class="tw-h-full tw-w-full tw-bg-cover tw-bg-center tw-bg-no-repeat tw-opacity-90 tw-blur-2xl"
+                                        :style="{'background':'url('+item.image.path+')'}"
+                                    />
+                                </div>
+                            </template>
+                            <template #body>
+                                <div class="tw-h-[50%] tw-w-full tw-p-4 tw-overflow-hidden tw-relative tw-flex tw-flex-col">
+                                    <div class="tw-font-semibold tw-h-max tw-flex-none tw-text-white">
+                                        <UnorderedList
+                                            class="tw-cursor-pointer hover:tw-underline"
+                                            :size="'md'"
+                                            :icon="item.listIcon"
+                                            :label="item.subTitle"/>
+                                    </div>
+
+                                    <div class="tw-overflow-auto tw-text-white">
+                                        <div v-if="true" class="tw-flex tw-flex-row tw-flex-nowrap">
+                                            <div class="tw-w-1/2 tw-flex tw-flex-col tw-flex-wrap">
+                                                <UnorderedList
+                                                    :size="'sm'"
+                                                    :icon="'eos-icons:commit'"
+                                                    :label="'PCIe 5.0 x16'"/>
+                                                <UnorderedList
+                                                    :size="'sm'"
+                                                    :icon="'eos-icons:commit'"
+                                                    :label="'micro-ATX and mini-ITX form factors'"/>
+                                                <UnorderedList
+                                                    :size="'sm'"
+                                                    :icon="'eos-icons:commit'"
+                                                    :label="'Wi-Fi 6'"/>
+                                            </div>
+                                            <div class="tw-w-1/2 tw-flex tw-flex-col tw-flex-wrap">
+                                                <UnorderedList
+                                                    :size="'sm'"
+                                                    :icon="'eos-icons:commit'"
+                                                    :label="'3 PCIe 4.0 M.2 slots'"/>
+                                                <UnorderedList
+                                                    :size="'sm'"
+                                                    :icon="'eos-icons:commit'"
+                                                    :label="'DDR4 memory support'"/>
+                                                <UnorderedList
+                                                    :size="'sm'"
+                                                    :icon="'eos-icons:commit'"
+                                                    :label="'2 PCIe 4.0 M.2 slots'"/>
+                                            </div>
+                                        </div>
+
+                                        <hr>
+
+                                        <UnorderedList
+                                            v-for="description in item.descriptions"
+                                            :size="'sm'"
+                                            :label="description"/>
+                                    </div>
+                                </div>
+                            </template>
+                        </HexagonFrame>
+                    </div>
                 </div>
 
                 <div v-if="false" class="tw-w-[170px] tw-h-[230px]">
@@ -164,7 +218,7 @@
 </template>
 
 <script setup lang="ts">
-definePageMeta({middleware: 'auth'});
+definePageMeta({middleware: 'guest'});
 useLayout().setNavigationMode('solid', 'Lab.vue');
 
 function changeLayout(layoutPayload: string){}
@@ -380,59 +434,89 @@ const leftToRightItems = ref([
         'frameBorder': '#f9dbbd',
         'contentBorder': '#f4a261'
     },
-    {
-        'image':{
-            'path': '/images/product/7d5178c3-e5dc-4b8f-b8d1-cbe0bbc14e84.webp'
-        },
-        'listIcon': 'bi:gpu-card',
-        'title': 'Graphics Card',
-        'subTitle': 'COLORFIRE GeForce RTX 4060 MEOW-ORG 8GB-V',
-        'link': '/prototype',
-        'frameBorder': '#f9dbbd',
-        'contentBorder': '#f4a261'
-    },
 ]);
 const topToBottomItems = ref([
     {
         'image':{
-            'path': '/images/product/c7dfc1f1-102a-4ea9-84f6-f87dda2094b8.webp'
+            'path': '/images/spotlight/w635.jpg'
         },
+        'listIcon': 'octicon:circuit-board',
         'title': 'Motherboard',
         'subTitle': 'CVN Z790D5 GAMING PRO WIFI V20',
         'link': '/prototype',
+        'descriptions': [
+            'COLORFUL introduces the CVN B760M FROZEN WIFI D5 and CVN B760I FROZEN WIFI motherboards for gamers and enthusiasts.',
+            'The CVN B760 motherboards also come with Wi-Fi 6, three PCIe 4.0 M.2 slots for the CVN B760M FROZEN WIFI D5 and two PCIe 4.0 M.2 slots for the CVN B760I FROZEN WIFI mini-ITX motherboard.',
+            'Coming in a compact micro-ATX and mini-ITX form factors, both motherboards feature PCIe 5.0 x16 slot to support the latest high-end graphics cards.',
+            'COLORFUL also presents the BATTLE-AX B760M-F PRO motherboard with DDR4 memory support and two PCIe 4.0 M.2 slots.'
+        ],
         'frameBorder': '#adb5bd',
         'contentBorder': '#ced4da'
     },
     {
         'image':{
-            'path': '/images/product/38131462-2ae0-443e-8555-9e744c532887.webp'
+            'path': '/images/spotlight/w636.jpg'
         },
+        'listIcon': 'octicon:circuit-board',
         'title': 'Motherboard',
         'subTitle': 'BATTLE-AX Z790AK-PLUS D5 V20',
         'link': '/prototype',
+        'descriptions': [
+            'COLORFUL introduces the CVN B760M FROZEN WIFI D5 and CVN B760I FROZEN WIFI motherboards for gamers and enthusiasts.',
+            'The CVN B760 motherboards also come with Wi-Fi 6, three PCIe 4.0 M.2 slots for the CVN B760M FROZEN WIFI D5 and two PCIe 4.0 M.2 slots for the CVN B760I FROZEN WIFI mini-ITX motherboard.',
+            'Coming in a compact micro-ATX and mini-ITX form factors, both motherboards feature PCIe 5.0 x16 slot to support the latest high-end graphics cards.',
+            'COLORFUL also presents the BATTLE-AX B760M-F PRO motherboard with DDR4 memory support and two PCIe 4.0 M.2 slots.'
+        ],
         'frameBorder': '#adb5bd',
         'contentBorder': '#ced4da'
     },
     {
         'image':{
-            'path': '/images/product/ebac5037-c3d2-4275-b96b-24f855695841.webp'
+            'path': '/images/spotlight/w637.jpg'
         },
+        'listIcon': 'octicon:circuit-board',
         'title': 'Motherboard',
         'subTitle': 'iGame Z790D5 ULTRA V20',
         'link': '/prototype',
+        'descriptions': [
+            'COLORFUL introduces the CVN B760M FROZEN WIFI D5 and CVN B760I FROZEN WIFI motherboards for gamers and enthusiasts.',
+            'The CVN B760 motherboards also come with Wi-Fi 6, three PCIe 4.0 M.2 slots for the CVN B760M FROZEN WIFI D5 and two PCIe 4.0 M.2 slots for the CVN B760I FROZEN WIFI mini-ITX motherboard.',
+            'Coming in a compact micro-ATX and mini-ITX form factors, both motherboards feature PCIe 5.0 x16 slot to support the latest high-end graphics cards.',
+            'COLORFUL also presents the BATTLE-AX B760M-F PRO motherboard with DDR4 memory support and two PCIe 4.0 M.2 slots.'
+        ],
         'frameBorder': '#a8dadc',
         'contentBorder': '#457b9d'
     },
     {
         'image':{
-            'path': '/images/product/f9b5a1a7-d532-4cf8-970c-d812b857a666.webp'
+            'path': '/images/spotlight/w638.jpg'
         },
+        'listIcon': 'octicon:circuit-board',
         'title': 'Motherboard',
         'subTitle': 'iGame Z790D5 FLOW V20',
         'link': '/prototype',
+        'descriptions': [
+            'COLORFUL introduces the CVN B760M FROZEN WIFI D5 and CVN B760I FROZEN WIFI motherboards for gamers and enthusiasts.',
+            'The CVN B760 motherboards also come with Wi-Fi 6, three PCIe 4.0 M.2 slots for the CVN B760M FROZEN WIFI D5 and two PCIe 4.0 M.2 slots for the CVN B760I FROZEN WIFI mini-ITX motherboard.',
+            'Coming in a compact micro-ATX and mini-ITX form factors, both motherboards feature PCIe 5.0 x16 slot to support the latest high-end graphics cards.',
+            'COLORFUL also presents the BATTLE-AX B760M-F PRO motherboard with DDR4 memory support and two PCIe 4.0 M.2 slots.'
+        ],
         'frameBorder': '#a8dadc',
         'contentBorder': '#457b9d'
     }
+]);
+
+const spotlights = ref([
+    {
+        'image':{
+            'path': '/images/spotlight/w635.jpg'
+        },
+        'title': 'ASUS 500 and 400 Series- Dominate the Game',
+        'subTitle': 'With the AMD Socket AM4 platform, ASUS X570, B550, and B450 motherboards are ready for the latest AMD Ryzen™ 5000 Series desktop processors. Choose your AMD motherboard, and check out the motherboard compatibility and BIOS update lists.',
+        'link': '/prototype',
+        'frameBorder': '#adb5bd',
+        'contentBorder': '#ced4da'
+    },
 ]);
 onMounted(async () => {
     nextTick(() => {
