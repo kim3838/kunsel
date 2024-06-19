@@ -202,7 +202,7 @@
                     </div>
 
                     <!-- Datatables -->
-                    <div v-if="true" class="tw-grid tw-gap-2 sm:tw-grid-cols-1 md:tw-grid-cols-2 lg:tw-grid-cols-4">
+                    <div v-if="false" class="tw-grid tw-gap-2 sm:tw-grid-cols-1 md:tw-grid-cols-2 lg:tw-grid-cols-4">
                         <div class="tw-block tw-col-span-1 sm:tw-col-span-3 md:tw-col-span-2 lg:tw-col-span-2 tw-p-2 neutral-border">
                             <InputLabel class="tw-mb-2" :size="'md'" value="MD Datatable" />
                             <DataTable
@@ -451,7 +451,7 @@
                     </div>
 
                     <!-- Button and Input Grid Spacing Alignments -->
-                    <div v-if="false">
+                    <div v-if="true">
                         <div class="tw-block tw-p-2 neutral-border">
                             <InputLabel class="tw-mb-2" :size="'md'" value="Spacing Aligment Grid" />
                             <div class="tw-grid tw-gap-1 tw-grid-cols-7">
@@ -815,7 +815,7 @@
                     </div>
 
                     <!-- Button and Input Horizontal Alignment -->
-                    <div v-if="false">
+                    <div v-if="true">
                         <div class="tw-my-4 tw-flex tw-justify-center tw-space-x-1.5">
                             <Button :size="tabGroup.size" :icon="tabGroup.icon" :label="'Default'" />
                             <Button :size="tabGroup.size" :icon="tabGroup.icon" :variant="'outline'" :label="'Outline'" />
@@ -887,13 +887,13 @@
                             <Button :variant="'flat'" :size="'sm'" :icon="'ic:sharp-dashboard'" :label="'SM Authenticate'"></Button>
                         </div>
                         <div class="tw-flex tw-items-start tw-justify-start tw-block neutral-border">
-                            <Button :variant="'flat'" :size="'md'" :icon="'ic:sharp-dashboard'" :label="'MD Authenticate'"></Button>
+                            <Button :variant="'flat'" :flat-border-color="threadColor.value" :size="'md'" :icon="'ic:sharp-dashboard'" :label="'MD Authenticate'"></Button>
                         </div>
                         <div class="tw-flex tw-items-start tw-justify-start tw-block neutral-border">
-                            <Button :variant="'flat'" :icon="'eos-icons:compass'" :disabled="true" :label="'Disabled'"></Button>
+                            <Button :variant="'flat'" :flat-border-color="liningColor.value" :icon="'eos-icons:compass'" :label="'Disabled'"></Button>
                         </div>
                         <div class="tw-col-span-2 tw-flex tw-items-start tw-justify-start tw-block tw-w-full neutral-border">
-                            <Button @click="$themeStore.setTheme('emerald')" :variant="'flat'" :size="'lg'" :icon="'mdi:palette-swatch-variant'" :label="'Emerald Theme'"></Button>
+                            <Button @click="$themeStore.setTheme('emerald')" :variant="'flat'" :size="'lg'" :icon="'mdi:palette-swatch-variant'" :disabled="true" :label="'Emerald Theme'"></Button>
                         </div>
                         <div class="tw-col-span-2 tw-flex tw-items-start tw-justify-start tw-block tw-w-full neutral-border">
                             <Button :variant="'flat'" :size="'xl'" :icon="'eos-icons:atom-electron'" :label="'XL Authenticate'"></Button>
@@ -1191,6 +1191,8 @@ const clientReadyState = useClientReadyState();
 import {storeToRefs} from 'pinia';
 const {$themeStore, $formStore} = useNuxtApp();
 const {
+    thread: threadColor,
+    lining: liningColor,
     neutral: neutralColor
 } = storeToRefs($themeStore);
 
