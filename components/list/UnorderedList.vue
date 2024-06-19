@@ -4,7 +4,7 @@
         <div :style="{'height': iconSlotHeight}" class=" tw-box-border tw-flex tw-items-center">
             <ClientOnly><Icon :name="icon" :class="[heightClass]"/></ClientOnly>
         </div>
-        <div :class="[fontClass]" class="tw-ml-1 tw-whitespace-pre-line">{{label}}<slot></slot></div>
+        <div :class="[fontClass]" :style="{'font-family': fontFamily}" class="tw-ml-1 tw-whitespace-pre-line">{{label}}<slot></slot></div>
     </div>
 </template>
 
@@ -29,6 +29,10 @@ const props = defineProps({
     size: {
         type: String,
         default: 'md'
+    },
+    fontFamily: {
+        type: String,
+        default: 'inherit'
     },
     icon: {
         type: String,
