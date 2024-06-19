@@ -2,8 +2,8 @@
     <button
         ref="button"
         :disabled="disabled"
-        :style="{'border-radius': '2px', 'direction': 'ltr'}"
-        :class="[heightClass, colorClass, borderClass]"
+        :style="{'border-radius': '2px', 'direction': 'ltr', 'border': borderStyle}"
+        :class="[heightClass, colorClass]"
         :type="type"
         class="
             tw-font-medium
@@ -85,6 +85,10 @@ const props = defineProps({
         default: false
     },
     icon: {
+        type: String,
+        default: null,
+    },
+    flatBorderColor: {
         type: String,
         default: null,
     },
@@ -174,11 +178,11 @@ const colorClass = computed(() => {
     }[props.variant]
 });
 
-const borderClass = computed(() => {
+const borderStyle = computed(() => {
     return {
-        'default': '',
-        'outline': 'outlined-border',
-        'flat': 'flat-border',
+        'default': 'auto',
+        'outline': '1px solid ' + threadColor.value,
+        'flat': '1px solid ' + ((props.flatBorderColor !== null) ? props.flatBorderColor : threadColor.value),
     }[props.variant]
 });
 
@@ -216,10 +220,6 @@ const shadeClass = computed(() => {
     background: linear-gradient( to bottom right, v-bind(accentColor80) 0%, transparent 55%, v-bind(accentColor70) 100%) !important;
 }
 
-.outlined-border{
-    border: 1px solid v-bind(threadColor);
-}
-
 .outlined{
     background-color: v-bind(tintColor) !important;
     color: v-bind(textColor) !important;
@@ -242,9 +242,6 @@ const shadeClass = computed(() => {
 .flat{
     background-color: v-bind(tintColor) !important;
     color: v-bind(textColor) !important;
-}
-.flat-border{
-    border: 1px solid v-bind(threadColor);
 }
 
 </style>
