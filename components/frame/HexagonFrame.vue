@@ -10,7 +10,7 @@
                 }"
             ></slot>
         </div>
-        <div class="clip-inner tint-background tw-z-20">
+        <div class="clip-inner tint-background tw-z-20 tw-flex" :class="[direction === 'ltr' ? 'tw-flex-row' : 'tw-flex-col']">
             <div :style="fadeTransition"></div>
             <slot name="header"></slot>
         </div>
@@ -58,7 +58,11 @@ const props = defineProps({
     headerFade: {
         type: Boolean,
         default: true
-    }
+    },
+    headerFadeColor: {
+        type: String,
+        default: ''
+    },
 });
 
 const tintColor50 = computed(() => {
@@ -89,14 +93,14 @@ const fadeTransition = computed(() => {
         return {};
     }
 
+    var headerFadeColor = props.headerFadeColor ? props.headerFadeColor: tintColor50.value;
+
     return {
         display: (props.headPercentage > 0 ? 'block' : 'none'),
         position: 'absolute',
-        left: '0',
-        top: '0',
-        width: (props.direction == 'ltr' ? (`${props.headPercentage}%`) : (`100%`)),
-        height: (props.direction == 'ttb' ? (`${props.headPercentage}%`) : (`100%`)),
-        background: 'linear-gradient(to ' + (props.direction == 'ltr' ? 'right' : 'bottom') + ', transparent 50%, ' + tintColor50.value + ' 100%)'
+        width: (props.direction === 'ltr' ? (`${props.headPercentage}%`) : (`100%`)),
+        height: (props.direction === 'ttb' ? (`${props.headPercentage}%`) : (`100%`)),
+        background: 'linear-gradient(to ' + (props.direction === 'ltr' ? 'right' : 'bottom') + ', transparent 50%, ' + headerFadeColor + ' 100%)'
     };
 })
 </script>
