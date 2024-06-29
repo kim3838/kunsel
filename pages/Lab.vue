@@ -12,89 +12,110 @@
                     <Button :variant="'flat'" @click="changeLayout('landing')" :label="'Landing Layout'"></Button>
                 </div>
 
-                <div v-if="true" class="tw-grid tw-gap-2 tw-grid-cols-3 tw-h-[230px]">
-                    <Featured
-                        v-if="false"
-                        class="tw-w-[254px] tw-h-[354px]"
-                        focused
-                        :image="{path: '/images/product/cd8f248a-bd3d-4553-bcf7-849ed27c4b36.webp'}"
-                        :title="'Title'"
-                        :sub-title="'Sub Title'"
-                        :link="'/prototype'"
-                        :button-label="'Details'"
+                <div v-if="true" class="tw-mb-4 tw-relative tw-w-[370px] tw-h-[530px]">
+                    <InformationCard
+                        :image="'/images/spotlight/1697501586302.jpg'"
+                        :title="'FORGE YOUR FUTURE'"
+                        :sub-title="'New Z790 motherboards from ROG pave the way for 14th Gen Intel Core CPUs'"
+                        :body-color="''"
+                        :fade-color="''"
+                        :inner-border="'silver'"
+                        :outer-border="'gray'"
                     />
-                    <HexagonFrame
-                        v-for="item in leftToRightItems"
-                        class="tw-flex-none"
-                        :frame-border="item.frameBorder"
-                        :content-border="item.contentBorder"
-                        :direction="'ltr'"
-                        :head-percentage="50"
-                        :top-right="45"
-                        :bottom-left="55"
-                        :header-fade="true"
-                        :header-fade-color="'rgba(25,25,25,0.1)'">
-                        <template #header>
-                            <div class="tw-h-full tw-w-[50%]">
-                                <div
-                                    class="tw-h-full tw-w-full tw-bg-cover tw-bg-center tw-bg-no-repeat"
-                                    :style="{'background':'url('+item.image.path+')'}"
-                                />
-                            </div>
-                            <div class="tw-h-full tw-w-[50%]">
-                                <div
-                                    class="tw-h-full tw-w-full tw-bg-cover tw-bg-center tw-bg-no-repeat tw-opacity-10"
-                                    :style="{'background':'url('+item.image.path+')'}"
-                                />
-                            </div>
-                        </template>
-                        <template v-slot:body="{frameBorderColor, contentBorderColor}">
-                            <div class="tw-h-full tw-w-[50%] tw-p-4 tw-overflow-hidden tw-relative tw-flex tw-flex-col tw-text[#5A5A5A]">
+                </div>
 
-                                <div class="tw-overflow-auto tw-space-y-0.5">
-                                    <div class="tw-font-semibold tw-h-max tw-flex-none">
-                                        <UnorderedList
-                                            class="tw-cursor-pointer hover:tw-underline"
-                                            :size="'md'"
-                                            :icon="item.listIcon"
-                                            :label="item.title"/>
-                                    </div>
+                <a v-if="false" class="hub-card" href="https://www.callofduty.com/blackcell" style="width: 400px; height: 200px; background-color: #ececec;">
+                    <span class="glint"></span>
+                    <span class="glint"></span>
+                    <span class="glint"></span>
+                    <span class="glint"></span>
+                </a>
 
-                                    <div class="horizontal-rule"></div>
-
-                                    <div v-if="item?.bullets?.value?.length" class="tw-flex tw-flex-row tw-flex-nowrap">
-                                        <div class="tw-w-full" :style="{'columns': (item.bullets.column ? item.bullets.column : 1)}">
-                                            <UnorderedList
-                                                v-for="bullet in item.bullets.value"
-                                                :size="'sm'"
-                                                :icon="'eos-icons:commit'"
-                                                :label="bullet"/>
-                                        </div>
-                                    </div>
-
-                                    <div
-                                        v-if="item.description"
-                                        v-html="item.description"
-                                        class="tw-text-base tw-leading-5 tw-line-clamp-3"
-                                        :style="{'font-family': 'Source Sans Pro'}"
-                                    ></div>
-
-                                    <UnorderedList
-                                        class="tw-cursor-pointer hover:tw-underline"
-                                        :font-family="'Source Sans Pro'"
-                                        :size="'sm'"
-                                        :label="'Read more'"/>
-                                </div>
+                <div v-if="false" class="tw-w-[170px] tw-h-[230px] tw-mb-4">
+                    <!-- Todo: make hexagon frame individual lines -->
+                    <HexagonFrame>
+                        <template #body>
+                            <div class="tw-relative tw-h-full tw-flex tw-items-center tw-px-4 tw-text-center tw-font-['Google_Sans_Text'] tw-text-xl tw-font-semibold tw-px-8">
+                                Hexagon Frame Without Corner
                             </div>
                         </template>
                     </HexagonFrame>
                 </div>
 
-                <div v-if="true" class="tw-mx-auto tw-w-11/12">
-                    <!-- style="height:calc(calc(430px * 2) + calc(1rem));" -->
-                    <div class="tw-mt-6 tw-grid tw-gap-[1rem] tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-3 xl:tw-grid-cols-4">
+                <div v-if="false" class="tw-grid tw-gap-4 tw-grid-cols-1 md:tw-grid-cols-2 xl:tw-grid-cols-3">
+                    <div
+                        v-for="item in leftToRightItems"
+                        class="tw-h-[230px]">
+                        <HexagonFrame
+                            :frame-border="item.frameBorder"
+                            :content-border="item.contentBorder"
+                            :direction="'ltr'"
+                            :head-percentage="50"
+                            :top-right="45"
+                            :bottom-left="55"
+                            :header-fade="true"
+                            :header-fade-color="'rgba(25,25,25,0.1)'">
+                            <template #header>
+                                <div class="tw-h-full tw-w-[50%]">
+                                    <div
+                                        class="tw-h-full tw-w-full tw-bg-cover tw-bg-center tw-bg-no-repeat"
+                                        :style="{'background':'url('+item.image.path+')'}"
+                                    />
+                                </div>
+                                <div class="tw-h-full tw-w-[50%]">
+                                    <div
+                                        class="tw-h-full tw-w-full tw-bg-cover tw-bg-center tw-bg-no-repeat tw-opacity-10"
+                                        :style="{'background':'url('+item.image.path+')'}"
+                                    />
+                                </div>
+                            </template>
+                            <template v-slot:body="{frameBorderColor, contentBorderColor}">
+                                <div class="tw-h-full tw-w-[50%] tw-p-4 tw-overflow-hidden tw-relative tw-flex tw-flex-col tw-text[#5A5A5A]">
+
+                                    <div class="tw-overflow-auto tw-space-y-0.5">
+                                        <div class="tw-font-semibold tw-h-max tw-flex-none">
+                                            <UnorderedList
+                                                class="tw-cursor-pointer hover:tw-underline"
+                                                :size="'md'"
+                                                :icon="item.listIcon"
+                                                :label="item.title"/>
+                                        </div>
+
+                                        <div class="horizontal-rule"></div>
+
+                                        <div v-if="item?.bullets?.value?.length" class="tw-flex tw-flex-row tw-flex-nowrap">
+                                            <div class="tw-w-full" :style="{'columns': (item.bullets.column ? item.bullets.column : 1)}">
+                                                <UnorderedList
+                                                    v-for="bullet in item.bullets.value"
+                                                    :size="'sm'"
+                                                    :icon="'eos-icons:commit'"
+                                                    :label="bullet"/>
+                                            </div>
+                                        </div>
+
+                                        <div
+                                            v-if="item.description"
+                                            v-html="item.description"
+                                            class="tw-text-base tw-leading-5 tw-line-clamp-3"
+                                            :style="{'font-family': 'Source Sans Pro'}"
+                                        ></div>
+
+                                        <UnorderedList
+                                            class="tw-cursor-pointer hover:tw-underline"
+                                            :font-family="'Source Sans Pro'"
+                                            :size="'sm'"
+                                            :label="'Read more'"/>
+                                    </div>
+                                </div>
+                            </template>
+                        </HexagonFrame>
+                    </div>
+                </div>
+
+                <div v-if="false" class="tw-mt-6 tw-mx-auto tw-w-11/12">
+                    <div class="tw-grid tw-gap-[1rem] tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-3 xl:tw-grid-cols-4">
                         <div
-                            v-for="item in topToBottomItems" :key="item" class="tw-h-[430px]">
+                            v-for="item in topToBottomItems" class="tw-h-[430px]">
                             <HexagonFrame
                                 :frame-border="item.frameBorder"
                                 :content-border="item.contentBorder"
@@ -125,7 +146,6 @@
                                             <div class="tw-font-semibold tw-h-max tw-flex-none">
                                                 <UnorderedList
                                                     class="tw-cursor-pointer hover:tw-underline"
-                                                    :font-family="'IBM Plex Sans Condensed'"
                                                     :size="'lg'"
                                                     :icon="item.listIcon"
                                                     :label="item.title"/>
@@ -147,7 +167,6 @@
                                                 v-if="item.description"
                                                 v-html="item.description"
                                                 class="tw-text-base tw-leading-5 tw-line-clamp-3"
-                                                :style="{'font-family': 'Source Sans Pro'}"
                                             ></div>
 
                                             <UnorderedList
@@ -163,42 +182,6 @@
                     </div>
                 </div>
 
-                <div v-if="false" class="tw-w-[170px] tw-h-[230px]">
-                    <HexagonFrame>
-                        <template #body>
-                            <div class="tw-relative tw-h-full tw-flex tw-items-center tw-px-4 tw-text-center tw-font-['Google_Sans_Text'] tw-text-xl tw-font-semibold tw-px-8">
-                                Hexagon Frame Without Corner
-                            </div>
-                        </template>
-                    </HexagonFrame>
-                </div>
-
-                <div v-if="false">
-                    <div>
-                        <div class="tw-mx-auto tw-max-w-screen-2xl tw-flex tw-flex-col">
-                            <Featured
-                                focused
-                                class="tw-inline-block tw-mx-2"
-                                :image="{path: '/images/product/ebac5037-c3d2-4275-b96b-24f855695841.webp'}"
-                                :title="'Motherboard'"
-                                :sub-title="'iGame Z790D5 ULTRA V20'"
-                                :link="'/prototype'"
-                                :button-label="'Details'"
-                            />
-                        </div>
-                        <div class="tw-mx-auto tw-max-w-screen-2xl tw-flex tw-flex-col">
-                            <Card
-                                focused
-                                class="tw-inline-block tw-mx-2"
-                                :image="{path: '/images/product/ebac5037-c3d2-4275-b96b-24f855695841.webp'}"
-                                :title="'Motherboard'"
-                                :sub-title="'iGame Z790D5 ULTRA V20'"
-                                :link="'/prototype'"
-                                :button-label="'Details'"
-                            />
-                        </div>
-                    </div>
-                </div>
             </div>
         </LandingWrapper>
     </div>
@@ -239,150 +222,6 @@ watch(barProp, value => {
     console.log({'BAR UPDATED' : value});
 });
 
-let categorySelection = reactive([
-    {text : 'Charms', value: false},
-    {text : 'Bracelets', value: false},
-    {text : 'Brooches and Pins', value: false},
-    {text : 'Necklaces', value: false},
-    {text : 'Earrings', value: false},
-    {text : 'Rings', value: false},
-    {text : 'Polyester', value: false},
-]);
-
-let transactionGroup = reactive({
-    selection: [
-        {text : 'Cash', value: 0},
-        {text : 'Pre Paid', value: 1},
-        {text : 'Tab\t\tPost\nPaid', value: 2},
-        {text : 'Card', value: 3},
-        {text : 'Debit', value: 4},
-    ],
-    selected: 3
-});
-
-let accordion = reactive({
-    recentActive: 2,
-    options: [
-        {
-            title: 'Check box',
-            body: {
-                type: 'checkbox',
-                value: categorySelection
-            },
-            active: false
-        },
-        {
-            title: 'Radio box',
-            body: {
-                type: 'radio',
-                value: transactionGroup
-            },
-            active: false
-        },
-        {
-            title: 'Coldiron Armor Set, Coldiron Armor Set, Coldiron Armor Set, Coldiron Armor Set',
-            body: {
-                type: 'text',
-                value: 'This armor was forged for the sole purpose of resisting the malignance spreading across the land.'
-            },
-            active: true
-        },
-        {
-            title: 'Coldiron Barding Mount Armor',
-            body: {
-                type: 'text',
-                value: 'Adorn your new steeds with mount armor inspired by the malignance taking over Sanctuary.'
-            },
-            active: false
-        },
-        {
-            title: 'Weapon skins, Mount Trophies, Emotes, Platinum, and more',
-            body: {
-                type: 'text',
-                value: 'Explore a range of cosmetics to earn along the Premium Battle Pass. Collect a weapon transmog for all 19 weapon types. 2 emotes for each class let you threaten your enemies or find a little time to play around with malignant heart cages. 2 headstones even let you die in style. Adorn your horse with 5 new mount trophies.'
-            },
-            active: false
-        },
-        {
-            title: '“On the Warpath” Emote – Accelerated Battle Pass',
-            body: {
-                type: 'text',
-                value: 'Show everyone you’re ready for battle when you slam your banner down, signaling to enemies that you’re ready for a fight. This emote is only included in the Accelerated Battle Pass.'
-            },
-            active: false
-        }
-    ]
-});
-
-let tabGroup = reactive({
-    'icon' : 'ic:sharp-qr-code',
-    'size' : 'md'
-});
-let multiSelectPrototypePayload = reactive({
-    fetch: {
-        url: '/api/selections/prototype',
-        filters: {
-            search: {
-                keyword: '',
-                callback: 1
-            }
-        }
-    },
-    selected: [1992,1263]
-});
-let singleSelectPrototypePayload = reactive({
-    fetch: {
-        url: '/api/selections/prototype',
-        filters: {
-            search: {
-                keyword: '',
-                callback: 1
-            }
-        }
-    },
-    selected: null,
-});
-let singleSelectPrototype = reactive({
-    search: '',
-    data: [
-        {text : 'PRT3221289642 005-5RZX3-MPJ-9GRRWA', value: 0},
-        {text : 'PRT3224439642 005-5RZX3-MPJ-9GRRWA', value: 1},
-        {text : 'PRT3222219642 005-5RZX3-MPJ-9GRRWA', value: 2},
-        {text : 'PRT3224324642 005-5RZX3-MPJ-9GRRWA', value: 3},
-        {text : 'PRT3221285552 005-5RZX3-MPJ-9GRRWA', value: 4},
-    ],
-    selection: [
-        {text : 'PRT3221289642 005-5RZX3-MPJ-9GRRWA', value: 0},
-        {text : 'PRT3224439642 005-5RZX3-MPJ-9GRRWA', value: 1},
-        {text : 'PRT3222219642 005-5RZX3-MPJ-9GRRWA', value: 2},
-        {text : 'PRT3224324642 005-5RZX3-MPJ-9GRRWA', value: 3},
-        {text : 'PRT3221285552 005-5RZX3-MPJ-9GRRWA', value: 4},
-    ],
-    selected: null
-});
-let category = reactive({
-    search: '',
-    data: [
-        {text : 'Charms', value: 0},
-        {text : 'Bracelets', value: 1},
-        {text : 'Tab\t\tBrooches\nand\nPins', value: 2},
-        {text : 'Necklaces', value: 3},
-        {text : 'Earrings', value: 4},
-        {text : 'Rings', value: 5},
-        {text : 'Polyester', value: 6},
-    ],
-    selection: [
-        {text : 'Charms', value: 0},
-        {text : 'Bracelets', value: 1},
-        {text : 'Tab\t\tBrooches\nand\nPins', value: 2},
-        {text : 'Necklaces', value: 3},
-        {text : 'Earrings', value: 4},
-        {text : 'Rings', value: 5},
-        {text : 'Polyester', value: 6},
-    ],
-    selected: []
-});
-
 const leftToRightItems = ref([
     {
         'image':{
@@ -393,6 +232,7 @@ const leftToRightItems = ref([
         'description': 'Designed in collaboration with Segotep, the MEOW Series chassis is a micro-ATX tower featuring panel art inspired by Bobi the orange tabby cat. The chassis features a semi-mesh front and side panels to allow airflow and improve cooling. The tempered glass side panel provides a clear view of the interior and the rest of the MEOW ORANGE Series components.',
         'bullets': {
             'value': [
+                'COLORFIRE Series',
                 'Supports mini-ITX and micro-ATX motherboards',
                 'Up to three 2.5" SSDs and one 3.5" HDD',
                 'Up to 240mm radiators of AIO liquid coolers Supports up to 170mm tall CPU coolers',
@@ -412,11 +252,11 @@ const leftToRightItems = ref([
         'description': 'COLORFUL introduces the CVN B760M FROZEN WIFI D5 and CVN B760I FROZEN WIFI motherboards for gamers and enthusiasts.',
         'bullets': {
             'value': [
-                'PCIe 5.0 x16',
-                '3 PCIe 4.0 M.2 slots',
-                'micro-ATX and mini-ITX form factors',
-                'Wi-Fi 6',
-                'DDR4 memory support'
+                'COLORFIRE Series',
+                'Support the 14th/13th and 12th generation Intel adapting to the LGA 1700 slot of the motherboard ® Core TM, Pentium ® And Cylon ® processor',
+                'Support dual channel DDR5-7200 (OC) MHz memory',
+                'Provide 3 PCIe 4.0 x4 M.2 SSD slots',
+                'Provide one USB 3.2 Gen 2 Type-C and two USB 3.2 Gen 1 Type-A high-speed rear interfaces'
             ]
         },
         'link': '/prototype',
@@ -425,13 +265,18 @@ const leftToRightItems = ref([
     },
     {
         'image':{
-            'path': '/images/product/7d5178c3-e5dc-4b8f-b8d1-cbe0bbc14e84.webp'
+            'path': '/images/product/d942910a-ffe9-461c-8847-a6fdb4ab480c.webp'
         },
         'listIcon': 'bi:gpu-card',
-        'title': 'COLORFIRE GeForce RTX 4060 MEOW-ORG 8GB-V',
+        'title': 'COLORFIRE GeForce RTX 4070 SUPER MEOW-ORG 12GB-V',
         'description': '',
         'bullets': {
-            'value': []
+            'value': [
+                'COLORFIRE Series',
+                'Efficient and durable heat dissipation.',
+                'With triple fans to enhance air pressure and air input, supporting auto-stop technology.',
+                'Adjustable lighting effects via iGame Center.'
+            ]
         },
         'link': '/prototype',
         'frameBorder': '#dedede',
@@ -545,18 +390,7 @@ const topToBottomItems = ref([
     },
 ]);
 
-const spotlights = ref([
-    {
-        'image':{
-            'path': '/images/spotlight/w635.jpg'
-        },
-        'title': 'ASUS 500 and 400 Series- Dominate the Game',
-        'subTitle': 'With the AMD Socket AM4 platform, ASUS X570, B550, and B450 motherboards are ready for the latest AMD Ryzen™ 5000 Series desktop processors. Choose your AMD motherboard, and check out the motherboard compatibility and BIOS update lists.',
-        'link': '/prototype',
-        'frameBorder': '#adb5bd',
-        'contentBorder': '#ced4da'
-    },
-]);
+
 onMounted(async () => {
     nextTick(() => {
 

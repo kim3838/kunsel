@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="tw-relative tw-h-full tw-w-full">
         <slot name="header"></slot>
 
         <div class="frame-outer">
@@ -23,6 +23,7 @@
 
 <script setup>
 import {storeToRefs} from 'pinia';
+import {computed} from "vue";
 const {$themeStore} = useNuxtApp();
 
 const {
@@ -32,6 +33,24 @@ const {
     tint: tintColor,
     textInvert: textInvertColor,
 } = storeToRefs($themeStore);
+
+const props = defineProps({
+    innerBorder: {
+        type: String,
+        default: ''
+    },
+    outerBorder: {
+        type: String,
+        default: ''
+    },
+});
+
+const innerBorderComputed = computed(() => {
+    return props.innerBorder ? props.innerBorder: threadColor.value;
+})
+const outerBorderComputed = computed(() => {
+    return props.outerBorder ? props.outerBorder: liningColor.value;
+})
 </script>
 
 <style scoped>
@@ -51,7 +70,7 @@ const {
     left: 0;
     right: 0;
     content: "";
-    border: 1px solid v-bind(threadColor);
+    border: 1px solid v-bind(innerBorderComputed);
     border-top: none;
 }
 
@@ -62,7 +81,7 @@ const {
     left: -0.5rem;
     right: -0.5rem;
     content: "";
-    border: 1px solid v-bind(liningColor);
+    border: 1px solid v-bind(outerBorderComputed);
     border-top: none;
 }
 
@@ -83,7 +102,7 @@ const {
     height: .5rem;
     width: .5rem;
     border-radius: 50%;
-    border: 1px solid v-bind(threadColor);/*#99664d*/
+    border: 1px solid v-bind(innerBorderComputed);
     box-sizing: border-box;
 }
 .frame-pin:after{
@@ -94,7 +113,7 @@ const {
     height: .5rem;
     width: .5rem;
     border-radius: 50%;
-    border:1px solid v-bind(threadColor);/*#99664d*/
+    border:1px solid v-bind(innerBorderComputed);
     box-sizing: border-box;
 }
 
@@ -111,7 +130,7 @@ const {
     top: -2rem;
     width: 4rem;
     height: 4rem;
-    border: 1px solid v-bind(threadColor);/*#68482c*/
+    border: 1px solid v-bind(innerBorderComputed);
     border-radius: 50%;
     box-sizing: border-box;
 }
@@ -122,7 +141,7 @@ const {
     top: -2rem;
     width: 4rem;
     height: 4rem;
-    border: 1px solid v-bind(threadColor);/*#68482c*/
+    border: 1px solid v-bind(innerBorderComputed);
     border-radius: 50%;
     box-sizing: border-box;
 }
@@ -143,7 +162,7 @@ const {
     left: 0;
     width: calc(50% - 1rem);
     height: 1px;
-    background: v-bind(threadColor);
+    background: v-bind(innerBorderComputed);
 }
 .frame-inner:after{
     content: "";
@@ -151,7 +170,7 @@ const {
     right: 0;
     width: calc(50% - 1rem);
     height: 1px;
-    background: v-bind(threadColor);
+    background: v-bind(innerBorderComputed);
 }
 .frame-inner-v-cut{
     position: absolute;
@@ -169,7 +188,7 @@ const {
     bottom: 0;
     left: 0;
     right: 0;
-    border: 1px solid v-bind(threadColor);
+    border: 1px solid v-bind(innerBorderComputed);
     transform: rotate(45deg);
 }
 
@@ -196,7 +215,7 @@ const {
     content: "";
     width: calc(50% - 2rem);
     height: 1px;
-    background: v-bind(liningColor);
+    background: v-bind(outerBorderComputed);
 }
 .frame-outer-sub-border-top:after{
     position: absolute;
@@ -204,7 +223,7 @@ const {
     content: "";
     width: calc(50% - 2rem);
     height: 1px;
-    background: v-bind(liningColor);
+    background: v-bind(outerBorderComputed);
 }
 
 .frame-outer-sub-v-cut{
@@ -223,7 +242,7 @@ const {
     bottom: 0;
     left: 0;
     right: 0;
-    border: 1px solid v-bind(liningColor);
+    border: 1px solid v-bind(outerBorderComputed);
     transform: rotate(45deg);
     content: "";
 }
@@ -242,7 +261,7 @@ const {
     top: -3rem;
     width: 6rem;
     height: 6rem;
-    border: 1px solid v-bind(liningColor);
+    border: 1px solid v-bind(outerBorderComputed);
     border-radius: 45%;
     box-sizing: border-box;
 }
@@ -253,7 +272,7 @@ const {
     top: -3rem;
     width: 6rem;
     height: 6rem;
-    border: 1px solid v-bind(liningColor);
+    border: 1px solid v-bind(outerBorderComputed);
     border-radius: 45%;
     box-sizing: border-box;
 }

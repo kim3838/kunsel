@@ -240,16 +240,15 @@
                                 </HexagonFrame>
                             </CarouselModuleSlide>
 
-                            <CarouselModuleSlide :class="[`tw-w-[340px]`]" v-for="newArrival in carouselNewArrivals" :key="newArrival">
-                                <Card
-                                    focused
-                                    class="tw-mx-2"
-                                    :image="newArrival.image"
-                                    :title="newArrival.title"
-                                    :sub-title="newArrival.subTitle"
-                                    :link="newArrival.link"
-                                    :button-label="'Learn more'"
-                                />
+                            <CarouselModuleSlide v-for="newArrival in carouselNewArrivals" :key="newArrival">
+                                <div class="tw-mx-2 tw-w-[440px] tw-h-[500px]">
+                                    <InformationCard
+                                        :image="newArrival.image"
+                                        :title="newArrival.title"
+                                        :sub-title="newArrival.subTitle"
+                                    />
+                                </div>
+
                             </CarouselModuleSlide>
                             <CarouselModuleSlide :class="[`tw-w-[340px]`]">
                             </CarouselModuleSlide>
@@ -405,25 +404,19 @@ function reIndexSpotlightCarousel(){
 
 const spotlight_1 = ref([
     {
-        'image':{
-            'path': '/images/product/202306201506003693.webp'
-        },
+        'image': '/images/product/202306201506003693.webp',
         'title': 'PC Case',
         'subTitle': 'Segotep Memphis-S Meow PC Case (M-ATX / ITX supported)',
         'link': '/prototype'
     },
     {
-        'image':{
-            'path': '/images/product/c76383ac-e6c0-4725-bec0-b171449c5960.webp'
-        },
+        'image': '/images/product/c76383ac-e6c0-4725-bec0-b171449c5960.webp',
         'title': 'Motherboard',
         'subTitle': 'COLORFIRE B760M-MEOW WIFI D5 ORANGE',
         'link': '/prototype'
     },
     {
-        'image':{
-            'path': '/images/product/7d5178c3-e5dc-4b8f-b8d1-cbe0bbc14e84.webp'
-        },
+        'image': '/images/product/7d5178c3-e5dc-4b8f-b8d1-cbe0bbc14e84.webp',
         'title': 'Graphics Card',
         'subTitle': 'COLORFIRE GeForce RTX 4060 MEOW-ORG 8GB-V',
         'link': '/prototype'
@@ -431,33 +424,25 @@ const spotlight_1 = ref([
 ]);
 const featured = ref([
     {
-        'image':{
-            'path': '/images/product/f85a85cd-fa65-48d3-9d36-755b4a6acf87.webp'
-        },
+        'image': '/images/product/f85a85cd-fa65-48d3-9d36-755b4a6acf87.webp',
         'title': 'Graphics Card',
         'subTitle': 'COLORFIRE GeForce RTX 4060 Ti MEOW-ORG 8GB-V',
         'link': '/prototype'
     },
     {
-        'image':{
-            'path': '/images/product/176a61f6-884b-4def-9c35-5d30cdca686f.webp'
-        },
+        'image': '/images/product/176a61f6-884b-4def-9c35-5d30cdca686f.webp',
         'title': 'Graphics Card',
         'subTitle': 'iGame GeForce RTX 4080 16GB Ultra W OC-V',
         'link': '/prototype'
     },
     {
-        'image':{
-            'path': '/images/product/cd8f248a-bd3d-4553-bcf7-849ed27c4b36.webp'
-        },
+        'image': '/images/product/cd8f248a-bd3d-4553-bcf7-849ed27c4b36.webp',
         'title': 'Graphics Card',
         'subTitle': 'iGame GeForce RTX 4070 Ti Ultra W OC-V',
         'link': '/prototype'
     },
     {
-        'image':{
-            'path': '/images/product/20220923155420669106.webp'
-        },
+        'image': '/images/product/20220923155420669106.webp',
         'title': 'Graphics Card',
         'subTitle': 'iGame GeForce RTX 4090 Vulcan OC-V',
         'link': '/prototype'
@@ -491,49 +476,37 @@ const carouselTrendingItem = ref(0);
 
 const carouselNewArrivals = ref([
     {
-        'image':{
-            'path': '/images/hero/21f0a52e-db0a-4108-9405-44a8a548e534.webp'
-        },
+        'image': '/images/hero/21f0a52e-db0a-4108-9405-44a8a548e534.webp',
         'title': 'MEOW SET',
         'subTitle': 'RTX 4060 Ti MEOW-ORG OC 16GB / B760M-MEOW WIFI D5 ORANGE.',
         'link': '/'
     },
     {
-        'image':{
-            'path': '/images/hero/ea05cc1d-1384-47f4-84ab-b3c049f7e13e.webp'
-        },
+        'image': '/images/hero/ea05cc1d-1384-47f4-84ab-b3c049f7e13e.webp',
         'title': 'AIO PC',
         'subTitle': 'iGame G-ONE Plus i7-12700H/RTX3060.',
         'link': '/'
     },
     {
-        'image':{
-            'path': '/images/hero/353f5cb4-8113-43fa-b5c4-3a9bf1314474.webp'
-        },
+        'image': '/images/hero/353f5cb4-8113-43fa-b5c4-3a9bf1314474.webp',
         'title': 'Laptop',
         'subTitle': 'Colorful EVOL P15 ',
         'link': '/'
     },
     {
-        'image':{
-            'path': '/images/hero/667a2407-ae78-4e4d-b69e-059552bca96e.webp'
-        },
+        'image': '/images/hero/667a2407-ae78-4e4d-b69e-059552bca96e.webp',
         'title': 'Graphics Card',
         'subTitle': 'iGame GeForce RTX 4090 Vulcan OC-V',
         'link': '/'
     },
     {
-        'image':{
-            'path': '/images/hero/a5a3aa00-67ea-4c3e-b6b4-6b9b92a0a50a.webp'
-        },
+        'image': '/images/hero/a5a3aa00-67ea-4c3e-b6b4-6b9b92a0a50a.webp',
         'title': 'Motherboard',
         'subTitle': 'CVN B760I FROZEN WIFI D5 V20',
         'link': '/'
     },
     {
-        'image':{
-            'path': '/images/hero/607742af-81ec-4893-b94c-1b49c228fbde.webp'
-        },
+        'image': '/images/hero/607742af-81ec-4893-b94c-1b49c228fbde.webp',
         'title': 'SSD',
         'subTitle': 'CN700 1TB',
         'link': '/'
@@ -543,39 +516,31 @@ const carouselFeaturedItems = ref([]);
 const carouselTrendingItems = ref([
 
     {
-        'image':{
-            'path': '/images/product/c7dfc1f1-102a-4ea9-84f6-f87dda2094b8.webp'
-        },
+        'image': '/images/product/c7dfc1f1-102a-4ea9-84f6-f87dda2094b8.webp',
         'title': 'Motherboard',
         'subTitle': 'CVN Z790D5 GAMING PRO WIFI V20',
         'link': '/prototype'
     },
     {
-        'image':{
-            'path': '/images/product/38131462-2ae0-443e-8555-9e744c532887.webp'
-        },
+        'image': '/images/product/38131462-2ae0-443e-8555-9e744c532887.webp',
         'title': 'Motherboard',
         'subTitle': 'BATTLE-AX Z790AK-PLUS D5 V20',
         'link': '/prototype'
     },
     {
-        'image':{
-            'path': '/images/product/ebac5037-c3d2-4275-b96b-24f855695841.webp'
-        },
+        'image': '/images/product/ebac5037-c3d2-4275-b96b-24f855695841.webp',
         'title': 'Motherboard',
         'subTitle': 'iGame Z790D5 ULTRA V20',
         'link': '/prototype'
     },
     {
-        'image':{
-            'path': '/images/product/f9b5a1a7-d532-4cf8-970c-d812b857a666.webp'
-        },
+        'image': '/images/product/f9b5a1a7-d532-4cf8-970c-d812b857a666.webp',
         'title': 'Motherboard',
         'subTitle': 'iGame Z790D5 FLOW V20',
         'link': '/prototype'
     }
 ]);
-carouselFeaturedItems.value = carouselFeaturedItems.value.concat(spotlight_1.value);
+carouselFeaturedItems.value = carouselFeaturedItems.value;//concat(spotlight_1.value);
 carouselFeaturedItems.value = carouselFeaturedItems.value.concat(featured.value);
 
 const news = ref([
