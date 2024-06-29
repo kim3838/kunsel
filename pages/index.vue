@@ -19,7 +19,7 @@
                 </video>
 
                 <div class="navigation-height tw-w-full tw-relative"></div>
-                <div v-if="false" class="tw-absolute tw-w-full tw-h-full spotlight-content-height tw-z-30 tw-flex tw-justify-center">
+                <div v-if="true" class="tw-absolute tw-w-full tw-h-full spotlight-content-height tw-z-30 tw-flex tw-justify-center">
                     <div class="tw-pb-10 tw-max-w-screen-2xl tw-w-full tw-flex tw-flex-col-reverse">
                         <article class="tw-w-full tw-h-max">
                             <CarouselModuleCarousel
@@ -28,16 +28,53 @@
                                 v-bind="carouselSettings"
                                 :breakpoints="carouselBreakpoints"
                                 class="tw-w-full lg:tw-w-full">
-                                <CarouselModuleSlide class="tw-w-[270px] tw-transition-all tw-duration-700 tw-opacity-50 hover:tw-opacity-100" v-for="spotLightItem in spotlight_1" :key="spotLightItem">
-                                    <Featured
-                                        focused
-                                        class="tw-mx-2"
-                                        :image="spotLightItem.image"
-                                        :title="spotLightItem.title"
-                                        :sub-title="spotLightItem.subTitle"
-                                        :link="spotLightItem.link"
-                                        :button-label="'Details'"
-                                    />
+                                <CarouselModuleSlide class="tw-w-[270px] tw-transition-all tw-duration-700 tw-opacity-70 hover:tw-opacity-100" v-for="spotLightItem in spotlight_1" :key="spotLightItem">
+                                    <div class="tw-w-full tw-h-[350px] tw-mx-2">
+                                        <HexagonFrame
+                                            :frame-border="'#dedede'"
+                                            :content-border="'#b7b7b7'"
+                                            :direction="'ttb'"
+                                            :head-percentage="70"
+                                            :top-right="45"
+                                            :bottom-left="45"
+                                            :header-fade="true"
+                                            :header-fade-color="'rgba(5,5,5,0.1)'">
+                                            <template #header>
+                                                <div class="tw-h-[70%] tw-w-full tw-p-[6px] tw-box-border">
+                                                    <div
+                                                        class="tw-h-full tw-w-full tw-bg-cover tw-bg-center tw-bg-no-repeat"
+                                                        :style="{'background':'url('+spotLightItem.image+')'}"
+                                                    />
+                                                </div>
+                                                <div class="tw-h-[30%] tw-w-full tw-box-border">
+                                                    <div
+                                                        class="tw-h-full tw-w-full tw-bg-cover tw-bg-center tw-bg-no-repeat tw-grayscale tw-opacity-20"
+                                                        :style="{'background':'url('+spotLightItem.image+')'}"
+                                                    />
+                                                </div>
+                                            </template>
+                                            <template #body>
+                                                <div class="tw-h-[30%] tw-w-full tw-pt-2 tw-pl-8 tw-overflow-hidden tw-flex tw-flex-col">
+
+                                                    <div class="tw-overflow-auto tw-space-y-2">
+
+                                                        <div class="tw-font-semibold tw-h-max tw-flex-none" style="text-align: left;">
+                                                            <div class="tw-text-lg tw-font-semibold" v-text="spotLightItem.subTitle"></div>
+
+                                                            <NuxtLink
+                                                                v-if="spotLightItem.link"
+                                                                :to="spotLightItem.link">
+                                                                <UnorderedList
+                                                                    class="tw-cursor-pointer hover:tw-underline"
+                                                                    :size="'md'"
+                                                                    :label="'Read more'"/>
+                                                            </NuxtLink>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </template>
+                                        </HexagonFrame>
+                                    </div>
                                 </CarouselModuleSlide>
                                 <template #addons>
                                     <CarouselModuleNavigation />
@@ -91,15 +128,52 @@
                                 :breakpoints="carouselBreakpoints"
                                 class="tw-w-full lg:tw-w-full">
                                 <CarouselModuleSlide class="tw-w-[270px]" v-for="spotLightItem in spotlight_1" :key="spotLightItem">
-                                    <Featured
-                                        focused
-                                        class="tw-mx-2"
-                                        :image="spotLightItem.image"
-                                        :title="spotLightItem.title"
-                                        :sub-title="spotLightItem.subTitle"
-                                        :link="spotLightItem.link"
-                                        :button-label="'Details'"
-                                    />
+                                    <div class="tw-w-full tw-h-[350px] tw-mx-2">
+                                        <HexagonFrame
+                                            :frame-border="'#dedede'"
+                                            :content-border="'#b7b7b7'"
+                                            :direction="'ttb'"
+                                            :head-percentage="70"
+                                            :top-right="45"
+                                            :bottom-left="45"
+                                            :header-fade="true"
+                                            :header-fade-color="'rgba(5,5,5,0.1)'">
+                                            <template #header>
+                                                <div class="tw-h-[70%] tw-w-full tw-p-[6px] tw-box-border">
+                                                    <div
+                                                        class="tw-h-full tw-w-full tw-bg-cover tw-bg-center tw-bg-no-repeat"
+                                                        :style="{'background':'url('+spotLightItem.image+')'}"
+                                                    />
+                                                </div>
+                                                <div class="tw-h-[30%] tw-w-full tw-box-border">
+                                                    <div
+                                                        class="tw-h-full tw-w-full tw-bg-cover tw-bg-center tw-bg-no-repeat tw-grayscale tw-opacity-20"
+                                                        :style="{'background':'url('+spotLightItem.image+')'}"
+                                                    />
+                                                </div>
+                                            </template>
+                                            <template #body>
+                                                <div class="tw-h-[30%] tw-w-full tw-pt-2 tw-pl-8 tw-overflow-hidden tw-flex tw-flex-col">
+
+                                                    <div class="tw-overflow-auto tw-space-y-2">
+
+                                                        <div class="tw-font-semibold tw-h-max tw-flex-none" style="text-align: left;">
+                                                            <div class="tw-text-lg tw-font-semibold" v-text="spotLightItem.subTitle"></div>
+
+                                                            <NuxtLink
+                                                                v-if="spotLightItem.link"
+                                                                :to="spotLightItem.link">
+                                                                <UnorderedList
+                                                                    class="tw-cursor-pointer hover:tw-underline"
+                                                                    :size="'md'"
+                                                                    :label="'Read more'"/>
+                                                            </NuxtLink>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </template>
+                                        </HexagonFrame>
+                                    </div>
                                 </CarouselModuleSlide>
                                 <template #addons>
                                     <CarouselModuleNavigation />
@@ -155,7 +229,7 @@
                             class="tw-w-full lg:tw-w-full">
                             <CarouselModuleSlide class="tw-w-[170px]">
 
-                                <HexagonFrame :top-right="75" :bottom-left="75">
+                                <HexagonFrame :top-right="45" :bottom-left="45">
                                     <template #body>
                                         <div class="tw-h-full tw-flex tw-items-center tw-text-center tw-font-['Google_Sans_Text'] tw-text-xl tw-font-semibold tw-px-8">
                                             Featured Products
@@ -164,15 +238,52 @@
                                 </HexagonFrame>
                             </CarouselModuleSlide>
                             <CarouselModuleSlide class="tw-w-[270px]" v-for="featuredItem in carouselFeaturedItems" :key="featuredItem">
-                                <Featured
-                                    focused
-                                    class="tw-mx-2"
-                                    :image="featuredItem.image"
-                                    :title="featuredItem.title"
-                                    :sub-title="featuredItem.subTitle"
-                                    :link="featuredItem.link"
-                                    :button-label="'Details'"
-                                />
+                                <div class="tw-w-full tw-h-[350px] tw-mx-2">
+                                    <HexagonFrame
+                                        :frame-border="'#dedede'"
+                                        :content-border="'#b7b7b7'"
+                                        :direction="'ttb'"
+                                        :head-percentage="70"
+                                        :top-right="45"
+                                        :bottom-left="45"
+                                        :header-fade="true"
+                                        :header-fade-color="'rgba(5,5,5,0.1)'">
+                                        <template #header>
+                                            <div class="tw-h-[70%] tw-w-full tw-p-[6px] tw-box-border">
+                                                <div
+                                                    class="tw-h-full tw-w-full tw-bg-cover tw-bg-center tw-bg-no-repeat"
+                                                    :style="{'background':'url('+featuredItem.image+')'}"
+                                                />
+                                            </div>
+                                            <div class="tw-h-[30%] tw-w-full tw-box-border">
+                                                <div
+                                                    class="tw-h-full tw-w-full tw-bg-cover tw-bg-center tw-bg-no-repeat tw-grayscale tw-opacity-20"
+                                                    :style="{'background':'url('+featuredItem.image+')'}"
+                                                />
+                                            </div>
+                                        </template>
+                                        <template #body>
+                                            <div class="tw-h-[30%] tw-w-full tw-pt-2 tw-pl-8 tw-overflow-hidden tw-flex tw-flex-col">
+
+                                                <div class="tw-overflow-auto tw-space-y-2">
+
+                                                    <div class="tw-font-semibold tw-h-max tw-flex-none" style="text-align: left;">
+                                                        <div class="tw-text-lg tw-font-semibold" v-text="featuredItem.subTitle"></div>
+
+                                                        <NuxtLink
+                                                            v-if="featuredItem.link"
+                                                            :to="featuredItem.link">
+                                                            <UnorderedList
+                                                                class="tw-cursor-pointer hover:tw-underline"
+                                                                :size="'md'"
+                                                                :label="'Read more'"/>
+                                                        </NuxtLink>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </template>
+                                    </HexagonFrame>
+                                </div>
                             </CarouselModuleSlide>
                             <template #addons>
                                 <CarouselModuleNavigation />
@@ -194,7 +305,7 @@
                             class="tw-w-full lg:tw-w-full">
                             <CarouselModuleSlide class="tw-w-[170px]">
 
-                                <HexagonFrame :top-right="75" :bottom-left="75">
+                                <HexagonFrame :top-right="45" :bottom-left="45">
                                     <template #body>
                                         <div class="tw-h-full tw-flex tw-items-center tw-text-center tw-font-['Google_Sans_Text'] tw-text-xl tw-font-semibold tw-px-8">
                                             Trending
@@ -203,15 +314,52 @@
                                 </HexagonFrame>
                             </CarouselModuleSlide>
                             <CarouselModuleSlide class="tw-w-[270px]" v-for="featuredItem in carouselTrendingItems" :key="featuredItem">
-                                <Featured
-                                    focused
-                                    class="tw-mx-2"
-                                    :image="featuredItem.image"
-                                    :title="featuredItem.title"
-                                    :sub-title="featuredItem.subTitle"
-                                    :link="featuredItem.link"
-                                    :button-label="'Details'"
-                                />
+                                <div class="tw-w-full tw-h-[350px] tw-mx-2">
+                                    <HexagonFrame
+                                        :frame-border="'#dedede'"
+                                        :content-border="'#b7b7b7'"
+                                        :direction="'ttb'"
+                                        :head-percentage="70"
+                                        :top-right="45"
+                                        :bottom-left="45"
+                                        :header-fade="true"
+                                        :header-fade-color="'rgba(5,5,5,0.1)'">
+                                        <template #header>
+                                            <div class="tw-h-[70%] tw-w-full tw-p-[6px] tw-box-border">
+                                                <div
+                                                    class="tw-h-full tw-w-full tw-bg-cover tw-bg-center tw-bg-no-repeat"
+                                                    :style="{'background':'url('+featuredItem.image+')'}"
+                                                />
+                                            </div>
+                                            <div class="tw-h-[30%] tw-w-full tw-box-border">
+                                                <div
+                                                    class="tw-h-full tw-w-full tw-bg-cover tw-bg-center tw-bg-no-repeat tw-grayscale tw-opacity-20"
+                                                    :style="{'background':'url('+featuredItem.image+')'}"
+                                                />
+                                            </div>
+                                        </template>
+                                        <template #body>
+                                            <div class="tw-h-[30%] tw-w-full tw-pt-2 tw-pl-8 tw-overflow-hidden tw-flex tw-flex-col">
+
+                                                <div class="tw-overflow-auto tw-space-y-2">
+
+                                                    <div class="tw-font-semibold tw-h-max tw-flex-none" style="text-align: left;">
+                                                        <div class="tw-text-lg tw-font-semibold" v-text="featuredItem.subTitle"></div>
+
+                                                        <NuxtLink
+                                                            v-if="featuredItem.link"
+                                                            :to="featuredItem.link">
+                                                            <UnorderedList
+                                                                class="tw-cursor-pointer hover:tw-underline"
+                                                                :size="'md'"
+                                                                :label="'Read more'"/>
+                                                        </NuxtLink>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </template>
+                                    </HexagonFrame>
+                                </div>
                             </CarouselModuleSlide>
                             <template #addons>
                                 <CarouselModuleNavigation />
@@ -221,7 +369,7 @@
                 </div>
             </div>
 
-            <div v-if="false">
+            <div v-if="true">
                 <div class="navigation-height tw-w-full tw-snap-start tw-snap-always"></div>
                 <div class="tw-pl-2 tw-mx-auto tw-max-w-screen-2xl tw-flex tw-flex-col">
                     <article class="tw-mt-4 w-relative">
@@ -406,7 +554,7 @@ const spotlight_1 = ref([
     {
         'image': '/images/product/202306201506003693.webp',
         'title': 'PC Case',
-        'subTitle': 'Segotep Memphis-S Meow PC Case (M-ATX / ITX supported)',
+        'subTitle': 'Segotep Memphis-S Meow',
         'link': '/prototype'
     },
     {
