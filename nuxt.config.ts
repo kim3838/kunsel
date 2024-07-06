@@ -70,7 +70,6 @@ export default defineNuxtConfig({
 
     css: [
         '@/assets/css/main.css',
-        '@/assets/css/tailwind.css',
         '@/assets/css/fonts.css',
         '@/assets/css/datetimepicker.css'
     ],
@@ -114,6 +113,11 @@ export default defineNuxtConfig({
             tailwindcss: {},
             autoprefixer: {},
         },
+    },
+
+    tailwindcss: {
+        cssPath: ['@/assets/css/tailwind.css', { injectPosition: "first" }],
+        viewer: true
     },
 
     runtimeConfig: {
