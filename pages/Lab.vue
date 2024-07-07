@@ -2,10 +2,10 @@
     <div>
         <LandingWrapper>
             <div class="tw-mx-auto tw-max-w-screen-2xl tw-pt-4">
-                <div v-if="false" class="tw-flex tw-mb-4">
+                <div v-if="true" class="tw-flex tw-mb-4">
                     <SampleEmitter
-                        v-model:[dynamicFoo]="fooComputed"
-                        v-model:[dynamicBarCaller]="barComputed"
+                        v-model:[dynamicFoo].capitalizeEveryWord ="fooComputed"
+                        v-model:[dynamicBarCaller].capitalize="barComputed"
                         class="tw-w-[250px]"
                     />
                     <Button :variant="'flat'" @click="changeLayout('default')" :label="'Default Layout'"></Button>
