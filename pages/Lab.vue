@@ -8,11 +8,9 @@
                         v-model:[dynamicBarCaller].capitalize="barComputed"
                         class="tw-w-[250px]"
                     />
-                    <Button :variant="'flat'" @click="changeLayout('default')" :label="'Default Layout'"></Button>
-                    <Button :variant="'flat'" @click="changeLayout('landing')" :label="'Landing Layout'"></Button>
                 </div>
 
-                <div v-if="true" class="tw-mb-4 tw-relative tw-w-[370px] tw-h-[530px]">
+                <div v-if="false" class="tw-mb-4 tw-relative tw-w-[370px] tw-h-[530px]">
                     <InformationCard
                         :image="'/images/spotlight/1697501586302.jpg'"
                         :title="'FORGE YOUR FUTURE'"
@@ -190,8 +188,6 @@
 <script setup lang="ts">
 definePageMeta({middleware: 'guest'});
 useLayout().setNavigationMode('solid', 'Lab.vue');
-
-function changeLayout(layoutPayload: string){}
 
 const dynamicFoo = ref('foo');
 const dynamicBarCaller = ref('bar');
