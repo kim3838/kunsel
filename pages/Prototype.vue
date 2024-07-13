@@ -206,10 +206,10 @@
                         <div class="tw-block tw-col-span-1 sm:tw-col-span-3 md:tw-col-span-2 lg:tw-col-span-2 tw-p-2 neutral-border">
                             <InputLabel class="tw-mb-2" :size="'md'" value="MD Datatable" />
                             <DataTable
-                                :headers="headers_1"
+                                :headers="dataTable1Headers"
                                 :size="'md'"
-                                :rows="data_1"
-                                v-model="selected_1"
+                                :rows="dataTable1Data"
+                                v-model="dataTable1Selected"
                                 selection>
                                 <template v-slot:cell.name="{cell, index, slot}">
                                     <div class="tw-h-full tw-w-full tw-flex tw-items-center">
@@ -240,10 +240,10 @@
                         <div class="tw-block tw-col-span-1 sm:tw-col-span-3 md:tw-col-span-2 lg:tw-col-span-2 tw-p-2 neutral-border">
                             <InputLabel class="tw-mb-2" :size="'md'" value="LG Datatable with Selection" />
                             <DataTable
-                                :headers="headers_2"
+                                :headers="dataTable2Headers"
                                 :size="'lg'"
-                                :rows="data_2"
-                                v-model="selected_2"
+                                :rows="dataTable2Data"
+                                v-model="dataTable2Selected"
                                 selection>
                                 <template v-slot:cell.name="{cell, index, slot}">
                                     <div class="tw-h-full tw-w-full tw-flex tw-items-center">
@@ -268,10 +268,10 @@
                         <div class="tw-block md:tw-col-span-2 lg:tw-col-span-4 tw-p-2 neutral-border">
                             <InputLabel class="tw-mb-2" :size="'md'" value="XL Datatable with Selection and Form Foundations" />
                             <DataTable
-                                :headers="headers_3"
+                                :headers="dataTable3Headers"
                                 :size="'xl'"
-                                :rows="data_3"
-                                v-model="selected_3"
+                                :rows="dataTable3Data"
+                                v-model="dataTable3Selected"
                                 selection>
                                 <template v-slot:cell.tools="{cell, slot, scrollReference}">
                                     <div class="tw-h-full tw-space-x-0.5 tw-w-full tw-flex tw-items-center">
@@ -1116,7 +1116,7 @@
                     </div>
 
                     <!-- Typography -->
-                    <div v-if="false" class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-8">
+                    <div v-if="true" class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-8">
                         <div class="tw-block neutral-border tw-col-span-2">
                             <p class="tw-text-sm tw-leading-4">0123456789 (){}[] +-*/= .,;:!? #&$%@|^#[ |||> |= ~@/\\/* Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
                         </div>
@@ -1184,6 +1184,7 @@
 </template>
 
 <script setup lang="ts">
+import dataPayload from '@/public/data/payload.js';
 definePageMeta({middleware: 'guest'});
 useLayout().setNavigationMode('solid', 'Prototype.vue');
 
@@ -1206,528 +1207,34 @@ let remember1 = ref(null);
 let remember2 = ref(true);
 let remember3 = ref(1);
 let remember4 = ref('1');
-let categorySelection = reactive([
-    {text : 'Charms', value: true},
-    {text : 'Bracelets', value: true},
-    {text : 'Tab\t\tBrooches\nand\nPins', value: false},
-    {text : 'Necklaces', value: true},
-    {text : 'Earrings', value: false},
-    {text : 'Rings', value: true},
-    {text : 'Polyester', value: true},
-]);
-let statusGroup = reactive({
-    selection: [
-        {text : 'For Approval', value: 0},
-        {text : 'Approved', value: 1},
-        {text : 'Tab\t\tProcessing\nNew Line\nNew Line', value: 2},
-        {text : 'Rejected', value: 3},
-        {text : 'Complete', value: 4},
-    ],
-    selected: 3
-});
-let transactionGroup = reactive({
-    selection: [
-        {text : 'Cash', value: 0},
-        {text : 'Pre Paid', value: 1},
-        {text : 'Tab\t\tPost\nPaid', value: 2},
-        {text : 'Card', value: 3},
-        {text : 'Debit', value: 4},
-    ],
-    selected: 3
-});
-let genderGroup = reactive({
-    selection: [
-        {text : 'Male', value: 0},
-        {text : 'Female', value: 1},
-    ],
-    selected: 1
-});
-let categoryGroup = reactive({
-    selection: [
-        {text : 'Charms', value: 0},
-        {text : 'Bracelets', value: 1},
-        {text : 'Tab\t\tBrooches\nand\nPins', value: 2},
-        {text : 'Necklaces', value: 3},
-        {text : 'Earrings', value: 4},
-        {text : 'Rings', value: 5},
-        {text : 'Polyester', value: 6},
-    ],
-    selected: 3
-});
-let accordionSingleExpand  = reactive({
-    recentActive: 2,
-    options: [
-        {
-            title: 'Check box',
-            body: {
-                type: 'checkbox',
-                value: categorySelection
-            },
-            active: false
-        },
-        {
-            title: 'Radio box',
-            body: {
-                type: 'radio',
-                value: transactionGroup
-            },
-            active: false
-        },
-        {
-            title: 'Coldiron Armor Set, Coldiron Armor Set, Coldiron Armor Set, Coldiron Armor Set',
-            body: {
-                type: 'text',
-                value: 'This armor was forged for the sole purpose of resisting the malignance spreading across the land.'
-            },
-            active: true
-        },
-        {
-            title: 'Coldiron Barding Mount Armor',
-            body: {
-                type: 'text',
-                value: 'Adorn your new steeds with mount armor inspired by the malignance taking over Sanctuary.'
-            },
-            active: false
-        },
-        {
-            title: 'Weapon skins, Mount Trophies, Emotes, Platinum, and more',
-            body: {
-                type: 'text',
-                value: 'Explore a range of cosmetics to earn along the Premium Battle Pass. Collect a weapon transmog for all 19 weapon types. 2 emotes for each class let you threaten your enemies or find a little time to play around with malignant heart cages. 2 headstones even let you die in style. Adorn your horse with 5 new mount trophies.'
-            },
-            active: false
-        },
-        {
-            title: '“On the Warpath” Emote – Accelerated Battle Pass',
-            body: {
-                type: 'text',
-                value: 'Show everyone you’re ready for battle when you slam your banner down, signaling to enemies that you’re ready for a fight. This emote is only included in the Accelerated Battle Pass.'
-            },
-            active: false
-        }
-    ]
-});
-let accordionMultiExpand  = reactive({
-    recentActive: 2,
-    options: [
-        {
-            title: 'Check box',
-            body: {
-                type: 'checkbox',
-                value: categorySelection
-            },
-            active: false
-        },
-        {
-            title: 'Radio box',
-            body: {
-                type: 'radio',
-                value: transactionGroup
-            },
-            active: false
-        },
-        {
-            title: 'Coldiron Armor Set, Coldiron Armor Set, Coldiron Armor Set, Coldiron Armor Set',
-            body: {
-                type: 'text',
-                value: 'This armor was forged for the sole purpose of resisting the malignance spreading across the land.'
-            },
-            active: true
-        },
-        {
-            title: 'Coldiron Barding Mount Armor',
-            body: {
-                type: 'text',
-                value: 'Adorn your new steeds with mount armor inspired by the malignance taking over Sanctuary.'
-            },
-            active: false
-        },
-        {
-            title: 'Weapon skins, Mount Trophies, Emotes, Platinum, and more',
-            body: {
-                type: 'text',
-                value: 'Explore a range of cosmetics to earn along the Premium Battle Pass. Collect a weapon transmog for all 19 weapon types. 2 emotes for each class let you threaten your enemies or find a little time to play around with malignant heart cages. 2 headstones even let you die in style. Adorn your horse with 5 new mount trophies.'
-            },
-            active: false
-        },
-        {
-            title: '“On the Warpath” Emote – Accelerated Battle Pass',
-            body: {
-                type: 'text',
-                value: 'Show everyone you’re ready for battle when you slam your banner down, signaling to enemies that you’re ready for a fight. This emote is only included in the Accelerated Battle Pass.'
-            },
-            active: false
-        }
-    ]
-});
-let category = reactive({
-    search: '',
-    data: [
-        {text : 'Charms', value: 0},
-        {text : 'Bracelets', value: 1},
-        {text : 'Tab\t\tBrooches\nand\nPins', value: 2},
-        {text : 'Necklaces', value: 3},
-        {text : 'Earrings', value: 4},
-        {text : 'Rings', value: 5},
-        {text : 'Polyester', value: 6},
-    ],
-    selection: [
-        {text : 'Charms', value: 0},
-        {text : 'Bracelets', value: 1},
-        {text : 'Tab\t\tBrooches\nand\nPins', value: 2},
-        {text : 'Necklaces', value: 3},
-        {text : 'Earrings', value: 4},
-        {text : 'Rings', value: 5},
-        {text : 'Polyester', value: 6},
-    ],
-    selected: []
-});
-let plan = reactive({
-    search: '',
-    data: [
-        {text : 'Free', value: 0},
-        {text : 'Individual', value: 1},
-        {text : 'Standard Corporate', value: 2},
-        {text : 'Custom Corporate', value: 3},
-        {text : 'Evaluator', value: 4},
-    ],
-    selection: [
-        {text : 'Free', value: 0},
-        {text : 'Individual', value: 1},
-        {text : 'Standard Corporate', value: 2},
-        {text : 'Custom Corporate', value: 3},
-        {text : 'Evaluator', value: 4},
-    ],
-    selected: null
-});
-let perPage = reactive({
-    search: '',
-    data: [
-        {text : '10 per page', value: 10},
-        {text : '25 per page', value: 25},
-        {text : '100 per page', value: 100},
-    ],
-    selection: [
-        {text : '10 per page', value: 10},
-        {text : '25 per page', value: 25},
-        {text : '100 per page', value: 100},
-    ],
-    selected: 10
-});
-let bookingType = reactive({
-    search: '',
-    data: [
-        {text : 'Individual', value: 1},
-        {text : 'Spouse/Co-Owner', value: 2},
-        {text : 'Corporation/Partnership', value: 3}
-    ],
-    selection: [
-        {text : 'Individual', value: 1},
-        {text : 'Spouse/Co-Owner', value: 2},
-        {text : 'Corporation/Partnership', value: 3}
-    ],
-    selected: 1
-});
-let multiSelectPrototypePayload = reactive({
-    fetch: {
-        url: '/api/selections/prototype',
-        filters: {
-            search: {
-                keyword: '',
-                callback: 1
-            }
-        }
-    },
-    selected: [400, 476]
-});
-let singleSelectPrototype = reactive({
-    search: '',
-    data: [
-        {text : 'PRT3221289642 005-5RZX3-MPJ-9GRRWA', value: 0},
-        {text : 'PRT3224439642 005-5RZX3-MPJ-9GRRWA', value: 1},
-        {text : 'PRT3222219642 005-5RZX3-MPJ-9GRRWA', value: 2},
-        {text : 'PRT3224324642 005-5RZX3-MPJ-9GRRWA', value: 3},
-        {text : 'PRT3221285552 005-5RZX3-MPJ-9GRRWA', value: 4},
-    ],
-    selection: [
-        {text : 'PRT3221289642 005-5RZX3-MPJ-9GRRWA', value: 0},
-        {text : 'PRT3224439642 005-5RZX3-MPJ-9GRRWA', value: 1},
-        {text : 'PRT3222219642 005-5RZX3-MPJ-9GRRWA', value: 2},
-        {text : 'PRT3224324642 005-5RZX3-MPJ-9GRRWA', value: 3},
-        {text : 'PRT3221285552 005-5RZX3-MPJ-9GRRWA', value: 4},
-    ],
-    selected: null
-});
-let singleSelectPrototypePayload = reactive({
-    fetch: {
-        url: '/api/selections/prototype',
-        filters: {
-            search: {
-                keyword: '',
-                callback: 1
-            }
-        }
-    },
-    selected: 400,
-});
+let categorySelection = reactive(dataPayload['prototype']['categorySelection']);
+let statusGroup = reactive(dataPayload['prototype']['statusGroup']);
+let transactionGroup = reactive(dataPayload['prototype']['transactionGroup']);
+let genderGroup = reactive(dataPayload['prototype']['genderGroup']);
+let categoryGroup = reactive(dataPayload['prototype']['categoryGroup']);
+let accordionSingleExpand  = reactive(dataPayload['prototype']['accordionSingleExpand']);
+let accordionMultiExpand  = reactive(dataPayload['prototype']['accordionMultiExpand']);
+let category = reactive(dataPayload['prototype']['category']);
+let plan = reactive(dataPayload['prototype']['plan']);
+let perPage = reactive(dataPayload['prototype']['perPage']);
+let bookingType = reactive(dataPayload['prototype']['bookingType']);
+let multiSelectPrototypePayload = reactive(dataPayload['prototype']['multiSelectPrototypePayload']);
+let singleSelectPrototype = reactive(dataPayload['prototype']['singleSelectPrototype']);
+let singleSelectPrototypePayload = reactive(dataPayload['prototype']['singleSelectPrototypePayload']);
 
-let selected_1 = ref([1001,1002]);
-let selected_2 = ref([1001,1002]);
-let selected_3 = ref([1001,1002]);
-let headers_1 = reactive([
-    { text: 'ID', value: 'id'},
-    { text: 'NAME', value: 'name'},
-    { text: 'CATEGORY', alignData: 'right', value: 'category', width: '140px'},
-    { text: 'DATE ADDED', alignData: 'right', value: 'datetime_added', width: '145px'},
-    { text: 'DATE CREATED', alignData: 'right', value: 'created_at'},
-    { text: 'DATE UPDATED', alignData: 'right', value: 'updated_at'},
-]);
-let headers_2 = reactive([
-    { text: 'ID', value: 'id'},
-    { text: 'NAME', value: 'name'},
-    { text: 'CODE', alignHeader: 'center', value: 'code'},
-    { text: 'DATE ADDED', alignData: 'right', value: 'datetime_added'},
-    { text: 'CATEGORY', alignData: 'right', value: 'category'},
-    { text: 'CAPACITY', alignData: 'left', value: 'capacity'},
-    { text: 'TYPE', value: 'type'}
-]);
-let headers_3 = reactive([
-    { text: '#', value: 'row_number'},
-    { text: 'TOOLS', value: 'tools'},
-    { text: 'ID', value: 'id'},
-    { text: 'NAME', value: 'name', width: '120px'},
-    { text: 'CODE', alignHeader: 'center', value: 'code', width: '100px'},
-    { text: 'SINGLE PAGINATED', value: 'single_paginated', width: '170px'},
-    { text: 'MULTI PAGINATED', value: 'multi_paginated', width: '170px'},
-    { text: 'SINGLE SELECT', value: 'single_select', width: '170px'},
-    { text: 'MULTI SELECT', value: 'multi_select', width: '170px'},
-    { text: 'TYPE', value: 'type'},
-    { text: 'CATEGORY', alignData: 'right', value: 'category'},
-    { text: 'CAPACITY', alignData: 'left', value: 'capacity'},
-    { text: 'DATE ADDED', alignData: 'right', value: 'datetime_added', width: '170px'},
-    { text: 'DATE CREATED', alignData: 'right', value: 'created_at'},
-    { text: 'DATE UPDATED', alignData: 'right', value: 'updated_at'},
-]);
-let data_1 = ref([
-    {
-        "id": 45,
-        "name": "Jamaal Hodkiewicz",
-        "code": "PRT0451171313",
-        "type": 1,
-        "category": null,
-        "capacity": 33,
-        "datetime_added": "2023-08-22 17:44:03",
-        "created_at": "2023-08-22 17:44:03",
-        "updated_at": "2023-08-22 17:44:03"
-    },
-    {
-        "id": 67,
-        "name": "Tracy Ward",
-        "code": "PRT9284750057",
-        "type": 1,
-        "category": 114,
-        "capacity": 23,
-        "datetime_added": "2023-08-22 17:44:03",
-        "created_at": "2023-08-22 17:44:03",
-        "updated_at": "2023-08-22 17:44:03"
-    },
-    {
-        "id": 88,
-        "name": "Amari Gerlach",
-        "code": "PRT9249091497",
-        "type": 5,
-        "category": null,
-        "capacity": 22,
-        "datetime_added": "2023-08-22 17:44:03",
-        "created_at": "2023-08-22 17:44:03",
-        "updated_at": "2023-08-22 17:44:03"
-    },
-]);
+let dataTable1Selected = ref(dataPayload['prototype']['dataTables']['1']['selected']);
+let dataTable1Headers = reactive(dataPayload['prototype']['dataTables']['1']['headers']);
+let dataTable1Data = ref(dataPayload['prototype']['dataTables']['1']['data']);
 
-let data_2 = ref([
-    {
-        "id": 246,
-        "name": "Imani Lang",
-        "code": "PRT3041670860",
-        "type": 4,
-        "category": 89,
-        "capacity": 26,
-        "datetime_added": "2023-08-22 17:44:03",
-        "created_at": "2023-08-22 17:44:03",
-        "updated_at": "2023-08-22 17:44:03"
-    },
-    {
-        "id": 273,
-        "name": "Fae Torp",
-        "code": "PRT9023387510",
-        "type": 1,
-        "category": null,
-        "capacity": 3,
-        "datetime_added": "2023-08-22 17:44:03",
-        "created_at": "2023-08-22 17:44:03",
-        "updated_at": "2023-08-22 17:44:03"
-    },
-    {
-        "id": 384,
-        "name": "Katarina Shanahan",
-        "code": "PRT0920672517",
-        "type": 5,
-        "category": null,
-        "capacity": 8,
-        "datetime_added": "2023-08-22 17:44:03",
-        "created_at": "2023-08-22 17:44:03",
-        "updated_at": "2023-08-22 17:44:03"
-    },
-]);
+let dataTable2Selected = ref(dataPayload['prototype']['dataTables']['2']['selected']);
+let dataTable2Headers = reactive(dataPayload['prototype']['dataTables']['2']['headers']);
+let dataTable2Data = ref(dataPayload['prototype']['dataTables']['2']['data']);
 
-let data_3 = ref([
-    {
-        "row_number": '#1',
-        "id": 418,
-        "name": "Imani Lang",
-        "code": "PRT1915550179",
-        "type": 3,
-        "category": null,
-        "capacity": 19,
-        "single_select_prototype_payload": {
-            fetch: {
-                url: '/api/selections/prototype',
-                filters: {
-                    search: {
-                        keyword: '',
-                        callback: 1
-                    }
-                }
-            },
-            selected: null,
-        },
-        "multi_select_prototype_payload": {
-            fetch: {
-                url: '/api/selections/prototype',
-                filters: {
-                    search: {
-                        keyword: '',
-                        callback: 1
-                    }
-                }
-            },
-            selected: []
-        },
-        "datetime_added": "2023-08-22 17:44:03",
-        "created_at": "2023-08-22 17:44:03",
-        "updated_at": "2023-08-22 17:44:03"
-    },
-    {
-        "row_number": '#2',
-        "id": 478,
-        "name": "Fae Torp",
-        "code": "PRT4902978961",
-        "type": 2,
-        "category": 68,
-        "capacity": 15,
-        "single_select_prototype_payload": {
-            fetch: {
-                url: '/api/selections/prototype',
-                filters: {
-                    search: {
-                        keyword: '',
-                        callback: 1
-                    }
-                }
-            },
-            selected: null,
-        },
-        "multi_select_prototype_payload": {
-            fetch: {
-                url: '/api/selections/prototype',
-                filters: {
-                    search: {
-                        keyword: '',
-                        callback: 1
-                    }
-                }
-            },
-            selected: []
-        },
-        "datetime_added": "2023-08-22 17:44:03",
-        "created_at": "2023-08-22 17:44:03",
-        "updated_at": "2023-08-22 17:44:03"
-    },
-    {
-        "row_number": '#3',
-        "id": 552,
-        "name": "Katarina Shanahan",
-        "code": "PRT3932126979",
-        "type": 1,
-        "category": 4,
-        "capacity": 15,
-        "single_select_prototype_payload": {
-            fetch: {
-                url: '/api/selections/prototype',
-                filters: {
-                    search: {
-                        keyword: '',
-                        callback: 1
-                    }
-                }
-            },
-            selected: null,
-        },
-        "multi_select_prototype_payload": {
-            fetch: {
-                url: '/api/selections/prototype',
-                filters: {
-                    search: {
-                        keyword: '',
-                        callback: 1
-                    }
-                }
-            },
-            selected: []
-        },
-        "datetime_added": "2023-08-22 17:44:03",
-        "created_at": "2023-08-22 17:44:03",
-        "updated_at": "2023-08-22 17:44:03"
-    },
-    {
-        "row_number": '#4',
-        "id": 702,
-        "name": "Janice Doe",
-        "code": "PRT2563775044",
-        "type": 5,
-        "category": 79,
-        "capacity": 35,
-        "single_select_prototype_payload": {
-            fetch: {
-                url: '/api/selections/prototype',
-                filters: {
-                    search: {
-                        keyword: '',
-                        callback: 1
-                    }
-                }
-            },
-            selected: null,
-        },
-        "multi_select_prototype_payload": {
-            fetch: {
-                url: '/api/selections/prototype',
-                filters: {
-                    search: {
-                        keyword: '',
-                        callback: 1
-                    }
-                }
-            },
-            selected: []
-        },
-        "datetime_added": "2023-08-22 17:44:03",
-        "created_at": "2023-08-22 17:44:03",
-        "updated_at": "2023-08-22 17:44:03"
-    }
-]);
+let dataTable3Selected = ref(dataPayload['prototype']['dataTables']['3']['selected']);
+let dataTable3Headers = reactive(dataPayload['prototype']['dataTables']['3']['headers']);
+let dataTable3Data = ref(dataPayload['prototype']['dataTables']['3']['data']);
 
-let data_1_DateTimePickers = data_1.value.map(record => {
+let data_1_DateTimePickers = dataTable1Data.value.map(record => {
     return {
         id: `datetime_added-` + record.id,
         type: 'datetime',
@@ -1736,8 +1243,7 @@ let data_1_DateTimePickers = data_1.value.map(record => {
         }
     }
 });
-
-let data_2_DateTimePickers = data_2.value.map(record => {
+let data_2_DateTimePickers = dataTable2Data.value.map(record => {
     return {
         id: `datetime_added-` + record.id,
         type: 'datetime',
@@ -1746,8 +1252,7 @@ let data_2_DateTimePickers = data_2.value.map(record => {
         }
     }
 });
-
-let data_3_DateTimePickers = data_3.value.map(record => {
+let data_3_DateTimePickers = dataTable3Data.value.map(record => {
     return {
         id: `datetime_added-` + record.id,
         type: 'datetime',
