@@ -45,12 +45,12 @@ const threadColor50 = computed(() => {
 
 const props = defineProps({
     image: {
-        type: Object,
+        type: String,
         default: null
     },
     link: {
-        type: [String, Boolean],
-        default: false
+        type: [String],
+        default: ''
     },
     title: {
         type: String,
