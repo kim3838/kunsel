@@ -368,7 +368,7 @@
                     </div>
 
                     <!-- Tab Indexed Group -->
-                    <div v-if="true">
+                    <div v-if="false">
                         <div class="tw-block tw-p-2 neutral-border">
                             <InputLabel class="tw-mb-2" :size="'md'" value="Tab Group" />
                             <div class="tw-grid tw-gap-1 tw-grid-cols-1 sm:tw-grid-cols-2 md:tw-grid-cols-3 lg:tw-grid-cols-5">
@@ -451,7 +451,7 @@
                     </div>
 
                     <!-- Button and Input Grid Spacing Alignments -->
-                    <div v-if="true">
+                    <div v-if="false">
                         <div class="tw-block tw-p-2 neutral-border">
                             <InputLabel class="tw-mb-2" :size="'md'" value="Spacing Aligment Grid" />
                             <div class="tw-grid tw-gap-1 tw-grid-cols-7">
@@ -1184,7 +1184,7 @@
 </template>
 
 <script setup lang="ts">
-definePageMeta({middleware: 'auth'});
+definePageMeta({middleware: 'guest'});
 useLayout().setNavigationMode('solid', 'Prototype.vue');
 
 const clientReadyState = useClientReadyState();
