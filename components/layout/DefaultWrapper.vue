@@ -102,10 +102,10 @@ const {
 const navigation = ref(null);
 
 onMounted(async () => {
-    console.log({'DefaultWrapper.vue': 'Mounted'});
+    //console.log({'DefaultWrapper.vue': 'Mounted'});
     await nextTick(() => {
         let navigationHeight = navigation.value?.offsetHeight;
-        console.log({'Await NextTick Default navigationHeight':navigationHeight});
+        //console.log({'Await NextTick Default navigationHeight':navigationHeight});
         if(navigation.value !== null &&  navigationHeight !== undefined){
             setNavigationHeight(navigationHeight);
         }
@@ -113,11 +113,11 @@ onMounted(async () => {
 });
 
 watch(clientReadyState, async (clientReady) => {
-    console.log({'DefaultWrapper.vue Watch clientReadyState':clientReady});
+    //console.log({'DefaultWrapper.vue Watch clientReadyState':clientReady});
     if(clientReady){
         await nextTick(() => {
             let navigationHeight = navigation.value?.offsetHeight;
-            console.log({'Await NextTick Default.vue navigationHeight':navigationHeight});
+            //console.log({'Await NextTick Default.vue navigationHeight':navigationHeight});
             if(navigation.value !== null &&  navigationHeight !== undefined){
                 setNavigationHeight(navigationHeight);
             }
@@ -126,7 +126,7 @@ watch(clientReadyState, async (clientReady) => {
 })
 
 watch(screenWidth, value => {
-    console.log({'setNavigationHeight':navigation.value.offsetHeight});
+    //console.log({'setNavigationHeight':navigation.value.offsetHeight});
 
     setNavigationHeight(navigation.value.offsetHeight);
 });

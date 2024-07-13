@@ -105,10 +105,10 @@ const {
 const landingNavigation = ref(null);
 
 onMounted(async () => {
-    console.log({'LandingWrapper.vue': 'Mounted'});
+    //console.log({'LandingWrapper.vue': 'Mounted'});
     await nextTick(() => {
         let navigationHeight = landingNavigation.value?.offsetHeight;
-        console.log({'Await NextTick Landing navigationHeight':navigationHeight});
+        //console.log({'Await NextTick Landing navigationHeight':navigationHeight});
         if(landingNavigation.value !== null &&  navigationHeight !== undefined){
             setNavigationHeight(navigationHeight);
         }
@@ -116,11 +116,11 @@ onMounted(async () => {
 });
 
 watch(clientReadyState, async (clientReady) => {
-    console.log({'LandingWrapper.vue Watch clientReadyState':clientReady});
+    //console.log({'LandingWrapper.vue Watch clientReadyState':clientReady});
     if(clientReady){
         await nextTick(() => {
             let navigationHeight = landingNavigation.value?.offsetHeight;
-            console.log({'Await NextTick LandingWrapper.vue navigationHeight':navigationHeight});
+            //console.log({'Await NextTick LandingWrapper.vue navigationHeight':navigationHeight});
             if(landingNavigation.value !== null &&  navigationHeight !== undefined){
                 setNavigationHeight(navigationHeight);
             }
