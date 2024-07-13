@@ -22,7 +22,7 @@ export const useThemeStore = defineStore('theme', {
                 'accent': '#c9c9c9',
 
                 'lining': '#b4b4b4',
-                'thread': '#e5e5e5',
+                'thread': '#c7c7c7',
 
                 'neutral': '#e5e5e5',
 
