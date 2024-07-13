@@ -117,7 +117,7 @@
                 <div class="tw-w-full tw-h-full tw-absolute tw-z-30 spotlight-image" :style="{'background-image': `url(/images/carousel/c12d1eba-e8c2-4827-a0d2-5298c4b0f421.webp)`}"></div>
 
                 <div class="navigation-height tw-w-full tw-relative"></div>
-                <div v-if="false" class="tw-absolute tw-w-full tw-h-full spotlight-content-height tw-z-30 tw-flex tw-justify-center">
+                <div v-if="true" class="tw-absolute tw-w-full tw-h-full spotlight-content-height tw-z-30 tw-flex tw-justify-center">
                     <div class="tw-pb-10 tw-max-w-screen-2xl tw-w-full tw-flex tw-flex-col-reverse">
 
                         <article class="tw-w-full tw-h-max">
@@ -411,7 +411,7 @@
 
             <div v-if="false">
                 <div id="latest-news" class="navigation-height tw-w-full tw-snap-start tw-snap-always"></div>
-                <div class="tw-pl-2 tw-mx-auto tw-max-w-screen-2xl tw-flex tw-flex-col" >
+                <div class="tw-pl-2 tw-mx-auto tw-max-w-screen-2xl tw-flex tw-flex-col">
                     <ClientOnly>
                         <article class="tw-mt-4">
                             <div v-if="screenWidth < screens['md']" class="tw-text-center tw-text-3xl tw-font-bold tw-font-['Google_Sans_Text']">Latest News</div>
