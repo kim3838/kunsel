@@ -12,7 +12,7 @@
             focus:tw-outline-none
             focus:tw-ring
             focus:tw-ring-transparent
-            disabled:tw-opacity-60
+            disabled:tw-cursor-not-allowed
             tw-transition
             tw-ease-in-out
             tw-duration-300
@@ -21,6 +21,7 @@
         <slot :fontClass="fontClass">
             <div class="tw-w-full tw-h-full tw-flex" :class="[fontClass]">
                 <div
+                    :style="{'filter': variant === 'default' ? 'drop-shadow(rgba(0, 0, 0, 0.3) 0px 1px 1px)' : 'none'}"
                     v-if="icon?.trim()"
                     :class="[iconHolderClass, iconSpacingClass, label?.trim() ? 'tw-justify-end' : 'tw-justify-center']"
                     class="tw-flex-none tw-flex tw-items-center">
@@ -52,8 +53,14 @@ const {
 const primaryColor90 = computed(() => {
     return primaryColor.value + hexAlpha.value['90'];
 });
+const primaryColor80 = computed(() => {
+    return primaryColor.value + hexAlpha.value['80'];
+});
 const primaryColor70 = computed(() => {
     return primaryColor.value + hexAlpha.value['70'];
+});
+const primaryColor50 = computed(() => {
+    return primaryColor.value + hexAlpha.value['50'];
 });
 const accentColor80 = computed(() => {
     return accentColor.value + hexAlpha.value['80'];
@@ -207,17 +214,19 @@ const shadeClass = computed(() => {
 }
 
 .default-background{
-    background-color: v-bind(primaryColor) !important;
+    background: linear-gradient(to right, v-bind(primaryColor80) 20%, v-bind(primaryColor) 50%, v-bind(primaryColor90) 100%);
     color: v-bind(textInvertColor) !important;
+    text-shadow: rgba(0, 0, 0, 0.5) 0 1px 2px;
 }
 
 .default-background:hover, .default-background:active{
-    background-color: v-bind(primaryColor90) !important;
+    background: linear-gradient(to right, v-bind(primaryColor) 20%, v-bind(primaryColor80) 50%, v-bind(primaryColor) 100%);
 }
 
 .default-shade{
-    background: transparent;
-    background: linear-gradient( to bottom right, v-bind(accentColor80) 0%, transparent 55%, v-bind(accentColor70) 100%) !important;
+    background-image: url('/images/deco/ripple_texture.png'), linear-gradient(to right, transparent, v-bind(primaryColor));
+    background-size: cover;
+    opacity: 0.2;
 }
 
 .outlined{
@@ -226,17 +235,19 @@ const shadeClass = computed(() => {
 }
 
 .outlined:hover{
-    background-color: v-bind(primaryColor) !important;
+    background: linear-gradient(to right, v-bind(primaryColor80) 20%, v-bind(primaryColor) 50%, v-bind(primaryColor90) 100%);
     color: v-bind(textInvertColor) !important;
+    text-shadow: rgba(0, 0, 0, 0.5) 0 1px 2px;
 }
 
 .outline-shade{
-    background: transparent;
-    background: linear-gradient( to bottom right, v-bind(threadColor90) 0%, transparent 25%, v-bind(threadColor50) 100%) !important;
+
 }
 
 .outline-shade:hover{
-    background: linear-gradient( to bottom right, v-bind(accentColor80) 0%, transparent 55%, v-bind(accentColor70) 100%) !important;
+    background-image: url('/deco/ripple_texture.png'), linear-gradient(to right, transparent, v-bind(primaryColor));
+    background-size: cover;
+    opacity: 0.2;
 }
 
 .flat{
