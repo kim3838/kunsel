@@ -1234,6 +1234,7 @@ let dataTable3Selected = ref(dataPayload['prototype']['dataTables']['3']['select
 let dataTable3Headers = reactive(dataPayload['prototype']['dataTables']['3']['headers']);
 let dataTable3Data = ref(dataPayload['prototype']['dataTables']['3']['data']);
 
+//Render datetime picker for dataTable1Data row datetime added
 let data_1_DateTimePickers = dataTable1Data.value.map(record => {
     return {
         id: `datetime_added-` + record.id,
@@ -1243,6 +1244,7 @@ let data_1_DateTimePickers = dataTable1Data.value.map(record => {
         }
     }
 });
+//Render datetime picker for dataTable2Data row datetime added
 let data_2_DateTimePickers = dataTable2Data.value.map(record => {
     return {
         id: `datetime_added-` + record.id,
@@ -1252,6 +1254,7 @@ let data_2_DateTimePickers = dataTable2Data.value.map(record => {
         }
     }
 });
+//Render datetime picker for dataTable3Data row datetime added
 let data_3_DateTimePickers = dataTable3Data.value.map(record => {
     return {
         id: `datetime_added-` + record.id,
@@ -1262,6 +1265,7 @@ let data_3_DateTimePickers = dataTable3Data.value.map(record => {
     }
 });
 
+//Render sample datetime pickers
 let dateTimePickers = ref([
     {
         id: 'datetime',
@@ -1298,6 +1302,7 @@ let dateTimePickers = ref([
     }
 ]);
 
+//Concat sample datetime pickers with sample datatable's datetime added
 dateTimePickers.value = dateTimePickers.value
     .concat(data_1_DateTimePickers)
     .concat(data_2_DateTimePickers)
