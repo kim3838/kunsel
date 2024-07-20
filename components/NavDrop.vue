@@ -51,7 +51,6 @@
 </template>
 <script setup>
 import {computed, ref, watch} from "vue";
-import {useFocus, onClickOutside} from '@vueuse/core'
 
 const navDrop = ref(null);
 

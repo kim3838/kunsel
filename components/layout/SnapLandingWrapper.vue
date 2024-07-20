@@ -84,7 +84,6 @@
 
 <script setup lang="ts">
 import {storeToRefs} from 'pinia';
-import {useScroll} from '@vueuse/core';
 const clientReadyState = useClientReadyState();
 
 const routeTo = useRouteTo();

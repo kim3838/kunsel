@@ -1,5 +1,3 @@
-import {useWindowSize } from '@vueuse/core'
-
 export const useScreen = () => {
     const screens = {
         'sm': 640,

@@ -90,7 +90,6 @@
 </template>
 
 <script setup lang="ts">
-import {useFocus, useScroll} from '@vueuse/core';
 import {storeToRefs} from 'pinia';
 const {$coreStore,$themeStore} = useNuxtApp();
 const clientReadyState = useClientReadyState();

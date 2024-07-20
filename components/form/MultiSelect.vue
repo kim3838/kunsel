@@ -90,7 +90,6 @@
 </template>
 
 <script setup lang="ts">
-import {useFocus} from '@vueuse/core';
 import {ref, reactive, toRef, computed, nextTick, watch, onMounted} from 'vue';
 import {storeToRefs} from 'pinia';
 const {$themeStore} = useNuxtApp();
