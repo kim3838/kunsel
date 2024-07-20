@@ -245,7 +245,7 @@ const shadeClass = computed(() => {
 }
 
 .outline-shade:hover{
-    background-image: url('/deco/ripple_texture.png'), linear-gradient(to right, transparent, v-bind(primaryColor));
+    background-image: url('/images/deco/ripple_texture.png'), linear-gradient(to right, transparent, v-bind(primaryColor));
     background-size: cover;
     opacity: 0.2;
 }
