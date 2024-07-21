@@ -129,6 +129,12 @@ export const useLayout = () => {
             },
             {
                 type: 'link',
+                title: 'Featured',
+                to: '/featured',
+                route: 'featured'
+            },
+            {
+                type: 'link',
                 title: 'Lab',
                 to: '/lab',
                 route: 'lab'
