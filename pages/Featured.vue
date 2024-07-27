@@ -1,74 +1,12 @@
 <template>
     <div
         v-if="clientReadyState"
-        id="layoutScroll"
         ref="layoutScroll"
         class="tw-h-screen tw-max-h-screen tw-overflow-y-scroll tw-overflow-x-hidden">
         <!-- Primary Navigation Menu -->
-        <nav
-            ref="landingNavigation"
-            class="primary-navigation-parent tw-z-40 tw-fixed tw-flex tw-justify-center tw-font-['IBM_Plex_Sans_Condensed']">
-            <div class="tw-max-w-screen-2xl tw-w-full tw-flex tw-justify-start lg:tw-justify-around tw-h-10 lg:tw-h-20">
-                <div class="tw--my-px tw-flex tw-items-center">
-                    <div class="tw-w-max tw-block tw-h-full tw-w-full tw-flex tw-items-center">
-                        <KettleFoods :dark="navigationMode === 'clear'" />
-                    </div>
-                    <NavDrop
-                        class="lg:tw-hidden tw-h-full"
-                        :size="navigationHeaderSize"
-                        :title="'Menu'"
-                        :drop-options="navigationLinks" />
-                </div>
-
-                <div class="tw-flex">
-                    <!-- Navigation Links -->
-                    <div class="tw--my-px tw-hidden lg:tw-flex">
-                        <span class="tw-flex tw-items-center"  v-for="navigation in navigationLinks" :key="navigation.title">
-                            <NavLink
-                                class="tw-h-full"
-                                v-if="navigation.type == 'link'"
-                                :size="navigationHeaderSize"
-                                :to="navigation.to"
-                                :active="$isRouteActive(navigation.route)">
-                                {{navigation.title}}
-                            </NavLink>
-
-                            <a
-                                class="tw-h-full"
-                                v-if="navigation.type == 'anchor-link'"
-                                :href="navigation.to">
-                                <NavLink
-                                    class="tw-h-full"
-                                    :size="navigationHeaderSize">
-                                    {{navigation.title}}
-                                </NavLink>
-                            </a>
-
-                            <NavDrop
-                                class="tw-h-full"
-                                v-if="navigation.type === 'drop'"
-                                :size="navigationHeaderSize"
-                                :title="navigation.title"
-                                :drop-options="navigation.options"
-                            />
-                        </span>
-                    </div>
-                </div>
-                <div class="tw--my-px tw-flex tw-items-center">
-                    <component
-                        :is="navDrop"
-                        class="tw-h-full"
-                        v-if="isAuthenticated"
-                        :size="navigationHeaderSize"
-                        :drop-align="rightNavigationDropAlign"
-                        :title="user?.name"
-                        :drop-options="navigationAccountLinks"
-                    />
-                </div>
-            </div>
-        </nav>
+        <LandingNavigation />
         <!-- Main Content -->
-        <main class="tw-transition-all tw-duration-300">
+        <main>
             <section id="section1">
                 {{layoutScrollY}}&nbsp;:&nbsp;1
             </section>
@@ -91,62 +29,8 @@
 
 <script setup lang="ts">
 useLayout().setNavigationMode('clear', 'index.vue');
+
 const clientReadyState = useClientReadyState();
-
-import {storeToRefs} from 'pinia';
-const routeTo = useRouteTo();
-const {$themeStore, $isRouteActive} = useNuxtApp();
-const {isAuthenticated, user, logout} = useAuth();
-const {
-    enableScrollSnap,
-    navigationLinks,
-    navigationAccountLinks,
-    navigationMode,
-    navigationHeight,
-    navigationBackground,
-    navigationHeaderSize,
-    navigationHeightInPixels,
-    topAllocationInPixels,
-    spotlightContentHeight,
-    setNavigationHeight,
-    setNavigationMode,
-    rightNavigationDropAlign
-} = useLayout();
-const {screens, width: screenWidth, height: screenHeight } = useScreen();
-const navDrop = resolveComponent('navDrop');
-const {
-    primary: primaryColor,
-    accent: accentColor,
-    neutral: neutralColor,
-    tint: tintColor,
-    thread: threadColor
-} = storeToRefs($themeStore);
-
-const landingNavigation = ref(null);
-
-onMounted(async () => {
-    //console.log({'SnapLandingWrapper.vue': 'Mounted'});
-    await nextTick(() => {
-        let navigationHeight = landingNavigation.value?.offsetHeight;
-        //console.log({'Await NextTick SnapLandingWrapper navigationHeight':navigationHeight});
-        if(landingNavigation.value !== null &&  navigationHeight !== undefined){
-            setNavigationHeight(navigationHeight);
-        }
-    });
-});
-
-watch(clientReadyState, async (clientReady) => {
-    //console.log({'SnapLandingWrapper.vue Watch clientReadyState':clientReady});
-    if(clientReady){
-        await nextTick(() => {
-            let navigationHeight = landingNavigation.value?.offsetHeight;
-            //console.log({'Await NextTick SnapLandingWrapper.vue navigationHeight':navigationHeight});
-            if(landingNavigation.value !== null &&  navigationHeight !== undefined){
-                setNavigationHeight(navigationHeight);
-            }
-        });
-    }
-})
 
 //On navigate
 if(clientReadyState.value){
@@ -236,18 +120,8 @@ function smoothScroll(target, duration, easingFunction, snap = false) {
 
     requestAnimationFrame(scroll);
 }
-
-watch(screenWidth, value => {
-    setNavigationHeight(landingNavigation.value.offsetHeight);
-});
 </script>
 <style scoped>
-.primary-navigation-parent {
-    background-color: v-bind(navigationBackground) !important;
-    left: 0;
-    right: 5px;
-    z-index: 30;
-}
 section {
     height: 100vh;
     display: flex;
