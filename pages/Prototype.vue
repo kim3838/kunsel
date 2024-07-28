@@ -2,7 +2,7 @@
     <div>
         <LandingWrapper>
             <div class="tw-mx-auto tw-pt-4 tw-max-w-screen-2xl">
-                <div>Tailwind Url: <NuxtLink class="tw-text-sky-600" :to="'_tailwind'" target="_blank">{{('http://localhost:3000' + '/_tailwind/')}}</NuxtLink></div>
+                <div>Tailwind Url: <a class="tw-text-sky-600" href="_tailwind" target="_blank">{{('http://localhost:3000' + '/_tailwind/')}}</a></div>
 
                 <div class="tw-space-y-2">
                     <!-- Static Single, MultiSelect and DateTime, Date, and Month Picker -->
