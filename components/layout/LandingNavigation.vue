@@ -72,18 +72,14 @@ const navDrop = resolveComponent('navDrop');
 const navigationHeightInPixelsModel = defineModel('navigationHeightInPixels');
 const landingNavigation = ref(null);
 const {
-    enableScrollSnap,
     navigationLinks,
     navigationAccountLinks,
-    navigationMode,
-    navigationHeight,
     navigationBackground,
     navigationHeaderSize,
     navigationHeightInPixels,
     topAllocationInPixels,
     spotlightContentHeight,
     setNavigationHeight,
-    setNavigationMode,
     rightNavigationDropAlign
 } = useLayout();
 
