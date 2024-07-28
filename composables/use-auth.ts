@@ -75,7 +75,7 @@ export const useAuth = () => {
                 } else {
                     await fetchUser();
                     await navigateTo({
-                        path: '/',
+                        path: '/featured',
                         replace: true
                     });
                 }
