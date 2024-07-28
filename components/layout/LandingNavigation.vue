@@ -1,14 +1,14 @@
 <template>
     <nav
         ref="landingNavigation"
-        class="primary-navigation-parent tw-z-40 tw-fixed tw-flex tw-justify-center tw-font-['IBM_Plex_Sans_Condensed']">
+        class="primary-navigation-parent tw-z-40 tw-fixed tw-flex tw-justify-center">
         <div class="tw-max-w-screen-2xl tw-w-full tw-flex tw-justify-start lg:tw-justify-around tw-h-10 lg:tw-h-20">
             <div class="tw--my-px tw-flex tw-items-center">
                 <div class="tw-w-max tw-block tw-h-full tw-w-full tw-flex tw-items-center">
                     <Sega :dark="navigationMode === 'clear'" />
                 </div>
                 <NavDrop
-                    class="lg:tw-hidden tw-h-full"
+                    class="xl:tw-hidden tw-h-full"
                     :size="navigationHeaderSize"
                     :title="'Menu'"
                     :drop-options="navigationLinks" />
@@ -16,7 +16,7 @@
 
             <div class="tw-flex">
                 <!-- Navigation Links -->
-                <div class="tw--my-px tw-hidden lg:tw-flex">
+                <div class="tw--my-px tw-hidden xl:tw-flex">
                     <span class="tw-flex tw-items-center"  v-for="navigation in navigationLinks" :key="navigation.title">
                         <NavLink
                             class="tw-h-full"
@@ -77,6 +77,7 @@ const {
     navigationBackground,
     navigationHeaderSize,
     navigationHeightInPixels,
+    navigationMode,
     topAllocationInPixels,
     spotlightContentHeight,
     setNavigationHeight,

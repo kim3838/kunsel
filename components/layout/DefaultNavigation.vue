@@ -5,14 +5,14 @@
         <div class="tw-max-w-screen-2xl tw-w-full tw-flex tw-justify-start lg:tw-justify-around tw-h-10">
             <div class="tw--my-px tw-flex tw-items-center">
                 <NavDrop
-                    class="lg:tw-hidden tw-h-full"
+                    class="xl:tw-hidden tw-h-full"
                     :size="navigationHeaderSize"
                     :title="'Menu'"
                     :drop-options="navigationLinks" />
             </div>
             <div class="tw-flex">
                 <!-- Navigation Links -->
-                <div class="tw--my-px tw-hidden lg:tw-flex">
+                <div class="tw--my-px tw-hidden xl:tw-flex">
                         <span class="tw-flex tw-items-center"  v-for="navigation in navigationLinks" :key="navigation.title">
                             <NavLink
                                 class="tw-h-full"
