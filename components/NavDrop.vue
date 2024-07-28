@@ -144,17 +144,17 @@ const headerFontClass = computed(() => {
 const childNonDropFontClass = computed(() => {
     return {
         'xs': 'tw-text-sm tw-font-medium',
-        'sm': 'w-text-sm tw-font-medium',
-        'md': 'tw-text-base tw-font-medium',
-        'lg': 'tw-text-lg tw-font-medium',
+        'sm': 'w-text-base tw-font-medium',
+        'md': 'tw-text-lg tw-font-medium',
+        'lg': 'tw-text-xl tw-font-medium',
     }[props.size]
 });
 const childDropSize = computed(() => {
     return {
         'xs': 'xs',
-        'sm': 'xs',
-        'md': 'sm',
-        'lg': 'md',
+        'sm': 'sm',
+        'md': 'md',
+        'lg': 'lg',
     }[props.size]
 });
 </script>
