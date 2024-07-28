@@ -1,6 +1,7 @@
 <template>
     <div
         v-if="clientReadyState"
+        id="layoutScroll"
         class="tw-relative tw-scroll-smooth tw-h-screen tw-max-h-screen tw-overflow-auto">
         <!-- Primary Navigation Menu -->
         <DefaultNavigation v-model:navigation-height-in-pixels="topAllocation"/>
