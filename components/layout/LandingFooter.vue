@@ -4,7 +4,7 @@
             <div class="tw-grid tw-grid-cols-1 lg:tw-grid-cols-4">
                 <div>
                     <div class="tw-flex tw-justify-center lg:tw-justify-start">
-                        <KettleFoods class="lg:tw-w-max tw-w-1/2"/>
+                        <GlobalFoundries class="lg:tw-w-max tw-w-1/2"/>
                     </div>
 
                     <p v-if="false" class="tw-mt-5 tw-text-center tw-leading-relaxed sm:tw-max-w-md sm:tw-text-left">
@@ -33,9 +33,9 @@
 
                 <div class="tw-grid tw-grid-cols-1 tw-gap-2 tw-mt-8 lg:tw-mt-0 sm:tw-grid-cols-2 md:tw-grid-cols-5 lg:tw-col-span-3">
                     <div class="tw-text-center sm:tw-text-left md:tw-col-span-2">
-                        <p class="tw-text-lg tw-font-medium tw-font-['Roboto']">Contact Us</p>
+                        <p class="tw-text-lg tw-font-semibold tw-font-['Google_Sans_Text']">Contact Us</p>
 
-                        <div class="tw-mt-8 tw-space-y-2">
+                        <div class="tw-mt-2 tw-space-y-2">
                             <UnorderedList
                                 class="tw-flex sm:tw-justify-start tw-justify-center"
                                 :size="'md'"
@@ -57,9 +57,9 @@
                     </div>
 
                     <div class="tw-text-center tw-mt-12 sm:tw-text-left sm:tw-mt-0">
-                        <p class="tw-text-lg tw-font-medium tw-font-['Roboto']">Our Services</p>
+                        <p class="tw-text-lg tw-font-semibold tw-font-['Google_Sans_Text']">Our Services</p>
 
-                        <div class="tw-mt-8 tw-space-y-2">
+                        <div class="tw-mt-2 tw-space-y-2">
 
                             <UnorderedList
                                 class="tw-flex sm:tw-justify-start tw-justify-center"
@@ -81,9 +81,9 @@
                     </div>
 
                     <div class="tw-text-center tw-mt-12 sm:tw-text-left md:tw-mt-0">
-                        <p class="tw-text-lg tw-font-medium tw-font-['Roboto']">Helpful Links</p>
+                        <p class="tw-text-lg tw-font-semibold tw-font-['Google_Sans_Text']">Helpful Links</p>
 
-                        <div class="tw-mt-8 tw-space-y-2">
+                        <div class="tw-mt-2 tw-space-y-2">
 
                             <UnorderedList
                                 class="tw-flex sm:tw-justify-start tw-justify-center"
@@ -113,9 +113,9 @@
                     </div>
 
                     <div class="tw-text-center tw-mt-12 sm:tw-text-left md:tw-mt-0">
-                        <p class="tw-text-lg tw-font-medium tw-font-['Roboto']">About Us</p>
+                        <p class="tw-text-lg tw-font-semibold tw-font-['Google_Sans_Text']">About Us</p>
 
-                        <div class="tw-mt-8 tw-space-y-2 tw-text-sm">
+                        <div class="tw-mt-2 tw-space-y-2 tw-text-sm">
 
                             <UnorderedList
                                 class="tw-flex sm:tw-justify-start tw-justify-center"
@@ -147,10 +147,7 @@
                         </a>
                     </p>
                     <p class="tw-mt-4 tw-text-base tw-flex tw-items-center tw-justify-center sm:tw-justify-start sm:tw-order-first sm:tw-mt-0">
-                        <ClientOnly><Icon name="ic:sharp-copyright"></Icon></ClientOnly>
-                        2024
-                        &nbsp;
-                        <span class="tw-block sm:tw-inline">All rights reserved.</span>
+                        Copyright © GLOBAL FOUNDRIES inc.&nbsp;<span class="tw-block sm:tw-inline">All Rights Reserved.</span>
                     </p>
                 </div>
             </div>

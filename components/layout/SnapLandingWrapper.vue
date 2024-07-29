@@ -13,7 +13,7 @@
             <div class="tw-max-w-screen-2xl tw-w-full tw-flex tw-justify-start lg:tw-justify-around tw-h-10 lg:tw-h-20">
                 <div class="tw--my-px tw-flex tw-items-center">
                     <div class="tw-w-max tw-block tw-h-full tw-w-full tw-flex tw-items-center">
-                        <KettleFoods :dark="navigationMode === 'clear'" />
+                        <GlobalFoundries :dark="navigationMode === 'clear'" />
                     </div>
                     <NavDrop
                         class="lg:tw-hidden tw-h-full"
