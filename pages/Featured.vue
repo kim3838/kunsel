@@ -6,18 +6,39 @@
         <!-- Primary Navigation Menu -->
         <LandingNavigation />
         <!-- Main Content -->
-        <main>
-            <section id="section1">
-                {{layoutScrollY}}&nbsp;:&nbsp;1
+        <main class="tw-text-white">
+            <section>
+                <div class="tw-relative tw-w-full tw-h-screen tw-flex tw-justify-center tw-items-center tw-overflow-hidden">
+                    <div class="tw-w-full tw-h-full tw-absolute tw-z-30 spotlight-image" :style="{'background-image': `url(/images/carousel/c12d1eba-e8c2-4827-a0d2-5298c4b0f421.webp)`}"></div>
+
+                    <div class="tw-z-40 tw-font-semibold tw-text-2xl">
+                        {{layoutScrollY}}&nbsp;:&nbsp;1
+                    </div>
+                </div>
             </section>
-            <section id="section2">
-                {{layoutScrollY}}&nbsp;:&nbsp;2
+            <section>
+                <div class="tw-relative tw-w-full tw-h-screen tw-flex tw-justify-center tw-items-center tw-overflow-hidden">
+                    <div class="tw-w-full tw-h-full tw-absolute tw-z-30 spotlight-image" :style="{'background-image': `url(/images/carousel/79e97448-7388-4f71-876e-d33c92091910.webp)`}"></div>
+                    <div class="tw-z-40 tw-font-semibold tw-text-2xl">
+                        {{layoutScrollY}}&nbsp;:&nbsp;2
+                    </div>
+                </div>
             </section>
-            <section id="section3">
-                {{layoutScrollY}}&nbsp;:&nbsp;3
+            <section>
+                <div class="tw-relative tw-w-full tw-h-screen tw-flex tw-justify-center tw-items-center tw-overflow-hidden">
+                    <div class="tw-w-full tw-h-full tw-absolute tw-z-30 spotlight-image" :style="{'background-image': `url(/images/carousel/202ae924-b777-45a2-94c6-f78134b17020.webp)`}"></div>
+                    <div class="tw-z-40 tw-font-semibold tw-text-2xl">
+                        {{layoutScrollY}}&nbsp;:&nbsp;3
+                    </div>
+                </div>
             </section>
-            <section id="section4">
-                {{layoutScrollY}}&nbsp;:&nbsp;4
+            <section>
+                <div class="tw-relative tw-w-full tw-h-screen tw-flex tw-justify-center tw-items-center tw-overflow-hidden">
+                    <div class="tw-w-full tw-h-full tw-absolute tw-z-30 spotlight-image" :style="{'background-image': `url(/images/carousel/2271fbba-86bf-4dc7-93cb-59eb0aab62d8.webp)`}"></div>
+                    <div class="tw-z-40 tw-font-semibold tw-text-2xl">
+                        {{layoutScrollY}}&nbsp;:&nbsp;4
+                    </div>
+                </div>
             </section>
         </main>
         <!-- DateTime Picker -->
@@ -32,20 +53,20 @@ useLayout().setNavigationMode('clear', 'index.vue');
 
 const clientReadyState = useClientReadyState();
 
-//On navigate
+//Boot full page scroll on navigate
 if(clientReadyState.value){
     onMounted(async () => {
         await nextTick(()=>{
-            bootFullPageScroll("ON NAVIGATE");
+            bootFullPageScroll();
         });
     })
 }
 
-//On page load
+//Boot full page scroll on page load
 watch(clientReadyState, async (clientReady) => {
     if(clientReady){
         await nextTick(() => {
-            bootFullPageScroll("ON PAGE LOAD");
+            bootFullPageScroll();
         });
     }
 });
@@ -56,7 +77,7 @@ let proximityThreshold = 0;
 let scrollSpeed = 200;
 const layoutScroll = ref<HTMLElement | null>(null)
 const { y: layoutScrollY } = useScroll(layoutScroll)
-function bootFullPageScroll(caller){
+function bootFullPageScroll(){
     sections = document.querySelectorAll('section');
     proximityThreshold = layoutScroll.value.offsetHeight / 2;
 
@@ -124,9 +145,11 @@ function smoothScroll(target, duration, easingFunction, snap = false) {
 <style scoped>
 section {
     height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 2em;
+}
+
+.spotlight-image{
+    background-position: center center;
+    background-size: cover;
+    background-repeat: no-repeat;
 }
 </style>
