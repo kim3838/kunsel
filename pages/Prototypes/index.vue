@@ -52,7 +52,7 @@
                                     :pagination="prototypes.meta.pagination"
                                     :no-record-label="'No Record Found'"/>
                                 <Pagination
-                                    :size="'lg'"
+                                    :size="'xl'"
                                     :pagination="prototypes.meta.pagination"
                                     :pending="pending"
                                     v-model="pageComputed"
@@ -60,7 +60,7 @@
                                 <DataTable
                                     class="tw-mt-0.5"
                                     :headers="prototypeHeaders"
-                                    :size="'lg'"
+                                    :size="'xl'"
                                     :rows="prototypes.data"
                                     :no-data-label="pending ? 'Loading' : 'No Prototype Found'"
                                     v-model="selectedPrototypes"
