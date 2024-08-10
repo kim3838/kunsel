@@ -1,14 +1,16 @@
 <template>
     <div class="tw-relative tw-w-full tw-h-full">
         <div class="clip"></div>
-        <div class="clip-frame tw-z-30 tw-flex body-direction">
-            <slot
-                name="body"
-                :slot="{
+        <div class="clip-frame tw-z-30">
+            <div class="clip-body tw-flex body-direction">
+                <slot
+                    name="body"
+                    :slot="{
                     frameBorderColor: frameBorderColor,
                     contentBorderColor: contentBorderColor
                 }"
-            ></slot>
+                ></slot>
+            </div>
         </div>
         <div class="clip-inner tint-background tw-z-20 tw-flex" :class="[direction === 'ltr' ? 'tw-flex-row' : 'tw-flex-col']">
             <div :style="fadeTransition"></div>
@@ -155,6 +157,21 @@ const fadeTransition = computed(() => {
             v-bind(bottomLeftAllocationInPixels) calc(100% - 1px),
         1px calc(100% - v-bind(bottomLeftAllocationInPixels)),
         1px 1px
+    );
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+.clip-body{
+    clip-path: polygon(
+        calc(100% - v-bind(topRightAllocationInPixels) + 14px + 1px) 0px,
+        calc(100%) calc(v-bind(topRightAllocationInPixels) - 14px - 1px),
+        calc(100%) calc(100%),
+        calc(v-bind(bottomLeftAllocationInPixels) - 14px - 1px) calc(100%),
+        0px calc(100% - v-bind(bottomLeftAllocationInPixels) + 14px + 1px),
+        0px 0px
     );
     position: absolute;
     top: 0;
