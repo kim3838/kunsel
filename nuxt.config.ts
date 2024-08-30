@@ -51,11 +51,8 @@ export default defineNuxtConfig({
         rootTag: "div"
     },
 
-    debug: false,//prints out hook names and timings on the server, and logs hook arguments as well in the browser.
-
-    alias: {
-        pinia: "/node_modules/@pinia/nuxt/node_modules/pinia/dist/pinia.mjs"
-    },
+  //prints out hook names and timings on the server, and logs hook arguments as well in the browser.
+  debug: false,
 
     imports: {
         dirs: [
