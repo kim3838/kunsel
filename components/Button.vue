@@ -13,22 +13,18 @@
             focus:tw-ring
             focus:tw-ring-transparent
             disabled:tw-cursor-not-allowed
-            tw-transition
-            tw-ease-in-out
-            tw-duration-300
             tw-relative">
-        <div :class="[shadeClass]" class="shade"></div>
         <slot :fontClass="fontClass">
             <div class="tw-w-full tw-h-full tw-flex" :class="[fontClass]">
                 <div
                     :style="{'filter': variant === 'default' ? 'drop-shadow(rgba(0, 0, 0, 0.3) 0px 1px 1px)' : 'none'}"
                     v-if="icon?.trim()"
                     :class="[iconHolderClass, iconSpacingClass, label?.trim() ? 'tw-justify-end' : 'tw-justify-center']"
-                    class="tw-flex-none tw-flex tw-items-center">
+                    class="tw-flex-none tw-flex tw-items-center tw-z-10">
                     <ClientOnly><Icon v-if="icon?.trim()" :class="[iconClass]" :name="icon"></Icon></ClientOnly>
                 </div>
 
-                <div v-if="label?.trim()" :class="['tw-w-full tw-flex tw-items-center tw-truncate', labelSpacingClass]">{{label}}</div>
+                <div v-if="label?.trim()" :class="['tw-w-full tw-flex tw-items-center tw-truncate tw-z-10', labelSpacingClass]">{{label}}</div>
             </div>
         </slot>
     </button>
@@ -193,14 +189,6 @@ const borderStyle = computed(() => {
     }[props.variant]
 });
 
-const shadeClass = computed(() => {
-    return {
-        'default': 'default-shade',
-        'outline': props.disabled ? '' : 'outline-shade',
-        'flat': '',
-    }[props.variant]
-});
-
 </script>
 
 <style scoped>
@@ -214,42 +202,92 @@ const shadeClass = computed(() => {
 }
 
 .default-background{
-    background: linear-gradient(to right, v-bind(primaryColor80) 20%, v-bind(primaryColor) 50%, v-bind(primaryColor90) 100%);
     color: v-bind(textInvertColor) !important;
     text-shadow: rgba(0, 0, 0, 0.5) 0 1px 2px;
+    background: linear-gradient(to right, v-bind(primaryColor80) 20%, v-bind(primaryColor) 50%, v-bind(primaryColor90) 100%);
+    overflow: hidden;
 }
 
-.default-background:hover, .default-background:active{
-    background: linear-gradient(to right, v-bind(primaryColor) 20%, v-bind(primaryColor80) 50%, v-bind(primaryColor) 100%);
-}
-
-.default-shade{
+.default-background::before{
+    content: '';
+    position: absolute;
+    top:0;
+    bottom: 0;
+    left:0;
+    right:0;
+    width: 120%;
     background-image: url('/images/deco/ripple_texture.png'), linear-gradient(to right, transparent, v-bind(primaryColor));
     background-size: cover;
     opacity: 0.2;
+    transition: all 200ms cubic-bezier(0.645, 0.045, 0.355, 1);
+}
+.default-background::after{
+    content: '';
+    position: absolute;
+    top:0;
+    bottom: 0;
+    left:0;
+    right:0;
+    width: 140%;
+    background-image: url('/images/deco/ripple_texture.png'), linear-gradient(to right, transparent, v-bind(primaryColor));
+    background-size: cover;
+    opacity: 0;
+    transition: all 200ms linear;
+}
+.default-background:hover::before, .default-background:active::before{
+    left: -20%;
+    opacity: 0.1;
+
+}
+.default-background:hover::after, .default-background:active::after{
+    animation: slideTransition 6s linear infinite;
+    opacity: 0.2;
+}
+
+@keyframes slideTransition {
+    0% {left: 0;}
+    50% {left: -40%;}
+    100% {left: 0;}
 }
 
 .outlined{
     background-color: v-bind(tintColor) !important;
     color: v-bind(textColor) !important;
+    overflow: hidden;
 }
-
 .outlined:hover{
-    background: linear-gradient(to right, v-bind(primaryColor80) 20%, v-bind(primaryColor) 50%, v-bind(primaryColor90) 100%);
     color: v-bind(textInvertColor) !important;
     text-shadow: rgba(0, 0, 0, 0.5) 0 1px 2px;
 }
-
-.outline-shade{
-
+.outlined::before{
+    content: '';
+    position: absolute;
+    top:0;
+    bottom: 0;
+    left:0;
+    right:0;
+    background: linear-gradient(to right, v-bind(primaryColor80) 20%, v-bind(primaryColor) 50%, v-bind(primaryColor90) 100%);
+    opacity: 0;
+    transition: all 400ms cubic-bezier(0.645, 0.045, 0.355, 1);
 }
-
-.outline-shade:hover{
+.outlined::after{
+    content: '';
+    position: absolute;
+    top:0;
+    bottom: 0;
+    left:0;
+    right:0;
     background-image: url('/images/deco/ripple_texture.png'), linear-gradient(to right, transparent, v-bind(primaryColor));
     background-size: cover;
+    opacity: 0;
+    transition: all 400ms cubic-bezier(0.645, 0.045, 0.355, 1);
+}
+.outlined:hover::before{
+    opacity: 1;
+}
+.outlined:hover::after{
     opacity: 0.2;
 }
-
 .flat{
     background-color: v-bind(tintColor) !important;
     color: v-bind(textColor) !important;
