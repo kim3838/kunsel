@@ -71,6 +71,7 @@
                                             :id="`datetime_added-` + cell.id"
                                             v-model="cell.datetime_added"
                                             readonly
+                                            :override="{font_size: slot.datepickerFontSize}"
                                             in-cell
                                             :size="slot.inputSize"
                                             class="tw-w-full"
@@ -78,9 +79,9 @@
                                     </template>
                                     <template v-slot:cell.actions="{cell, slot, scrollReference}">
                                         <div class="tw-h-full tw-space-x-0.5 tw-w-full tw-flex tw-items-center">
-                                            <Button type="button" :variant="'flat'" :size="slot.buttonSize" :label="'Details'"></Button>
-                                            <Button type="button" :variant="'flat'" :size="slot.buttonSize" :label="'Approve'"></Button>
-                                            <Button type="button" :variant="'flat'" :size="slot.buttonSize" :label="'Deny'"></Button>
+                                            <Button type="button" :size="slot.buttonSize" :label="'Details'"></Button>
+                                            <Button type="button" :size="slot.buttonSize" :label="'Approve'"></Button>
+                                            <Button type="button" :size="slot.buttonSize" :label="'Deny'"></Button>
                                         </div>
                                     </template>
                                 </DataTable>
