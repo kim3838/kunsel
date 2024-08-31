@@ -104,6 +104,14 @@ const props = defineProps({
     rounded: {
         type: Boolean,
         default: true
+    },
+    override: {
+        type: Object,
+        default: function () {
+            return {
+                font_size: false
+            }
+        }
     }
 });
 
@@ -171,6 +179,11 @@ const heightClass = computed(() => {
 });
 
 const fontClass = computed(() => {
+
+    if(props.override.font_size){
+        return props.override.font_size;
+    }
+
     return {
         '2xs': 'tw-text-xs',
         'xs': 'tw-text-xs',
