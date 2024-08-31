@@ -453,7 +453,7 @@
                     <!-- Button and Input Grid Spacing Alignments -->
                     <div v-if="false">
                         <div class="tw-block tw-p-2 neutral-border">
-                            <InputLabel class="tw-mb-2" :size="'md'" value="Spacing Aligment Grid" />
+                            <InputLabel class="tw-mb-2" :size="'md'" value="Spacing Alignment Grid" />
                             <div class="tw-grid tw-gap-1 tw-grid-cols-7">
                                 <div v-if="true">
                                     <div>
