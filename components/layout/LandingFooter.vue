@@ -4,7 +4,7 @@
             <div class="tw-grid tw-grid-cols-1 lg:tw-grid-cols-4">
                 <div>
                     <div class="tw-flex tw-justify-center lg:tw-justify-start">
-                        <GlobalFoundries class="lg:tw-w-max tw-w-1/2"/>
+                        <GlobalFoundries class="lg:tw-w-max"/>
                     </div>
 
                     <p v-if="false" class="tw-mt-5 tw-text-center tw-leading-relaxed sm:tw-max-w-md sm:tw-text-left">
@@ -32,101 +32,96 @@
                 </div>
 
                 <div class="tw-grid tw-grid-cols-1 tw-gap-2 tw-mt-8 lg:tw-mt-0 sm:tw-grid-cols-2 md:tw-grid-cols-5 lg:tw-col-span-3">
-                    <div class="tw-text-center sm:tw-text-left md:tw-col-span-2">
-                        <p class="tw-text-lg tw-font-semibold tw-font-['Google_Sans_Text']">Contact Us</p>
+                    <div class="tw-text-center sm:tw-text-left lg:tw-pl-28 md:tw-col-span-2">
+                        <p class="tw-font-medium">Contact Us</p>
 
                         <div class="tw-mt-2 tw-space-y-2">
                             <UnorderedList
                                 class="tw-flex sm:tw-justify-start tw-justify-center"
-                                :size="'md'"
+                                :size="'sm'"
                                 :icon="'ic:round-mail-outline'"
-                                :label="'info@colorful-technology.com'"/>
+                                :label="'info@globalfoundries.com'"/>
 
                             <UnorderedList
                                 class="tw-flex sm:tw-justify-start tw-justify-center"
-                                :size="'md'"
+                                :size="'sm'"
                                 :icon="'ic:sharp-phone'"
                                 :label="'+63 99-1999-1991'"/>
 
                             <UnorderedList
                                 class="tw-flex sm:tw-justify-start tw-justify-center"
-                                :size="'md'"
+                                :size="'sm'"
                                 :icon="'ic:sharp-location-on'"
                                 :label="'Quezon City, Metro Manila, Philippines'"/>
                         </div>
                     </div>
 
                     <div class="tw-text-center tw-mt-12 sm:tw-text-left sm:tw-mt-0">
-                        <p class="tw-text-lg tw-font-semibold tw-font-['Google_Sans_Text']">Our Services</p>
+                        <p class="tw-font-medium">Our Services</p>
 
                         <div class="tw-mt-2 tw-space-y-2">
 
                             <UnorderedList
                                 class="tw-flex sm:tw-justify-start tw-justify-center"
-                                :size="'md'"
-                                :label="'Custom Web Applications'"/>
+                                :size="'sm'"
+                                :label="'Custom Web Services'"/>
                             <UnorderedList
                                 class="tw-flex sm:tw-justify-start tw-justify-center"
-                                :size="'md'"
-                                :label="'Mobile Applications'"/>
-                            <UnorderedList
-                                class="tw-flex sm:tw-justify-start tw-justify-center"
-                                :size="'md'"
+                                :size="'sm'"
                                 :label="'Product Landing Page'"/>
-                            <UnorderedList
-                                class="tw-flex sm:tw-justify-start tw-justify-center"
-                                :size="'md'"
-                                :label="'E-Commerce Site'"/>
                         </div>
                     </div>
 
                     <div class="tw-text-center tw-mt-12 sm:tw-text-left md:tw-mt-0">
-                        <p class="tw-text-lg tw-font-semibold tw-font-['Google_Sans_Text']">Helpful Links</p>
+                        <p class="tw-font-medium">Helpful Links</p>
 
                         <div class="tw-mt-2 tw-space-y-2">
 
                             <UnorderedList
                                 class="tw-flex sm:tw-justify-start tw-justify-center"
-                                :size="'md'"
+                                :size="'sm'"
                                 :icon="'ri:info-i'"
                                 :label="'FAQs'"/>
                             <UnorderedList
-                                class="tw-flex sm:tw-justify-start tw-justify-center"
-                                :size="'md'"
-                                :icon="'ri:info-i'"
-                                :label="'Support'"/>
-                            <UnorderedList
                                 class="tw-flex sm:tw-justify-start tw-justify-center tw-overflow-visible"
                                 :icon="'ri:info-i'"
-                                :size="'md'">
+                                :size="'sm'">
                                 <div class="tw-flex">
+                                    <a class="tw-inline-block hover:tw-underline" href="/">
                                         <span class="tw-transition group-hover:tw-text-gray-700/75">
-                                            Live Chat
+                                        Support
                                         </span>
+                                    </a>
+
                                     <span class="tw-ml-1 tw-relative tw-flex tw-h-2 tw-w-2">
-                                            <span class="tw-absolute tw-inline-flex tw-h-full tw-w-full tw-animate-ping tw-rounded-full ping-highlight tw-opacity-75"></span>
-                                            <span class="tw-relative tw-inline-flex tw-h-2 tw-w-2 tw-rounded-full ping"></span>
-                                        </span>
+                                        <span class="tw-absolute tw-inline-flex tw-h-full tw-w-full tw-animate-ping tw-rounded-full ping-highlight tw-opacity-75"></span>
+                                        <span class="tw-relative tw-inline-flex tw-h-2 tw-w-2 tw-rounded-full ping"></span>
+                                    </span>
                                 </div>
                             </UnorderedList>
                         </div>
                     </div>
 
                     <div class="tw-text-center tw-mt-12 sm:tw-text-left md:tw-mt-0">
-                        <p class="tw-text-lg tw-font-semibold tw-font-['Google_Sans_Text']">About Us</p>
+                        <p class="tw-font-medium">About Us</p>
 
                         <div class="tw-mt-2 tw-space-y-2 tw-text-sm">
 
                             <UnorderedList
                                 class="tw-flex sm:tw-justify-start tw-justify-center"
-                                :size="'md'"
+                                :size="'sm'"
                                 :icon="'ri:info-i'"
-                                :label="'Company History'"/>
+                                :label="'News'"/>
                             <UnorderedList
                                 class="tw-flex sm:tw-justify-start tw-justify-center"
-                                :size="'md'"
+                                :size="'sm'"
                                 :icon="'ri:info-i'"
-                                :label="'Meet the Team'"/>
+                                :label="'History'"/>
+                            <UnorderedList
+                                class="tw-flex sm:tw-justify-start tw-justify-center"
+                                :size="'sm'"
+                                :icon="'ri:info-i'"
+                                :label="'Leadership'"/>
                         </div>
                     </div>
                 </div>
@@ -136,7 +131,7 @@
 
             <div class="tw-pt-2 tw-mt-2">
                 <div class="tw-text-center sm:tw-flex sm:tw-justify-between sm:tw-text-left">
-                    <p class="tw-text-base">
+                    <p class="tw-text-sm">
 
                         <a class="tw-inline-block hover:tw-underline" href="/">
                             Terms & Conditions
@@ -146,7 +141,7 @@
                             Privacy Policy
                         </a>
                     </p>
-                    <p class="tw-mt-4 tw-text-base tw-flex tw-items-center tw-justify-center sm:tw-justify-start sm:tw-order-first sm:tw-mt-0">
+                    <p class="tw-mt-4 tw-text-sm tw-flex tw-items-center tw-justify-center sm:tw-justify-start sm:tw-order-first sm:tw-mt-0">
                         Copyright © GLOBAL FOUNDRIES inc.&nbsp;<span class="tw-block sm:tw-inline">All Rights Reserved.</span>
                     </p>
                 </div>
