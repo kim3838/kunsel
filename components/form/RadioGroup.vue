@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="tw-font-data ">
         <RadioBox
             class="tw-flex tw-items-center"
             v-for="selection in selections"

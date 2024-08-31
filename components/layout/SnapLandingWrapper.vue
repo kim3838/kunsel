@@ -74,7 +74,7 @@
             <slot></slot>
         </main>
         <!-- DateTime Picker -->
-        <div id="datetimepicker-slot"></div>
+        <div id="datetimepicker-slot" class="tw-font-data"></div>
         <!-- Action Modal -->
         <PromptModal />
         <!-- Footer -->

@@ -1,5 +1,5 @@
 <template>
-    <label :for="labelId">
+    <label :for="labelId" class="tw-font-data ">
         <div class="tw-flex tw-items-start tw-justify-start">
             <ClientOnly>
                 <div :style="{'height': radioBoxSlotHeight}" class="tw-flex tw-items-center">

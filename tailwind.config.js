@@ -18,10 +18,6 @@ module.exports = {
         extend: {
             fontFamily : {
                 sans : [
-                    'Sofia Sans Semi Condensed',//Data
-                    'Hedvig Letters Sans',//Paragraph
-                    'Source Sans Pro',//Paragraph
-                    'Roboto',
                     'IBM Plex Sans Condensed',//Headers
                     'Spline Sans',
                     'Google Sans Text',
@@ -33,6 +29,14 @@ module.exports = {
                     'Protest Revolution',
                     'sans-serif'
                 ],
+                data: [
+                    'Sofia Sans Semi Condensed'
+                ],
+                paragraph: [
+                    'Roboto',
+                    'Hedvig Letters Sans',
+                    'Source Sans Pro',
+                ],
                 serif : [
                     'Oranienbaum',
                     'Instrument Serif',
@@ -43,8 +47,8 @@ module.exports = {
                     'serif'
                 ],
                 mono : [
-                    'Roboto Mono',
                     'Spline Sans Mono',
+                    'Roboto Mono',
                     'monospace'
                 ],
             },

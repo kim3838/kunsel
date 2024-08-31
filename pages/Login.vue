@@ -6,7 +6,7 @@
                     <AccentFrame class="tw-my-4">
                         <template #content>
                             <div class="tw-relative tw-py-4">
-                                <label class="tw-text-lg tw-font-semibold">Password Login</label>
+                                <label class="tw-text-lg tw-font-medium">Password Login</label>
                                 <form @submit.prevent="handleLogin" class="tw-mt-4 tw-w-80">
                                     <div class="tw-block">
                                         <InputLabel :size="'md'" for="identifier" value="Username or Email" />

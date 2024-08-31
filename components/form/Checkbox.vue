@@ -1,5 +1,5 @@
 <template>
-    <span class="tw-box-border tw-overflow-hidden tw-flex tw-items-start tw-justify-start tw-cursor-pointer">
+    <span class="tw-font-data tw-box-border tw-overflow-hidden tw-flex tw-items-start tw-justify-start tw-cursor-pointer">
         <div :style="{'height': checkBoxSlotHeight}" class="tw-flex tw-items-center">
             <input
                 :disabled="disabled"

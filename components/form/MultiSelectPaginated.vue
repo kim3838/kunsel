@@ -3,7 +3,7 @@
         ref="selectParent"
         :tabindex="tabindexComputed"
         :style="{width: width}"
-        class="focus:tw-outline-none">
+        class="tw-font-data focus:tw-outline-none">
         <div
             ref="selectHeader"
             :style="{'border-radius': '2px'}"

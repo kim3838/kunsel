@@ -10,7 +10,7 @@
             focusRing ? 'focus-ring' : '',
             withBorder ? 'bordered' : 'borderless',
             rounded ? 'tw-rounded-sm': '']"
-        class="tw-pl-1 tw-form-input tw-w-full"
+        class="tw-font-data tw-pl-1 tw-form-input tw-w-full"
         :value="modelValue"
         @input="$emit('update:modelValue', $event.target.value)"
         ref="input">

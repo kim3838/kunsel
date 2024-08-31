@@ -1,6 +1,6 @@
 <template>
     <div id="table-division" ref="dataTableScroll">
-        <table class="tw-border-collapse">
+        <table class="tw-border-collapse tw-font-data">
             <thead>
                 <tr>
                     <td v-if="selection" style="padding:3px 0.5rem;">

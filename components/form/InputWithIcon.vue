@@ -1,5 +1,5 @@
 <template>
-    <div class="tw-relative tw-box-border" :class="[heightClass]">
+    <div class="tw-font-data tw-relative tw-box-border" :class="[heightClass]">
         <div v-if="icon?.trim()" class="tw-absolute tw-w-full tw-h-full tw-z-20 tw-flex tw-pointer-events-none">
             <div :class="[iconHolderClass]" class="tw-flex-none tw-h-full tw-flex tw-justify-end tw-items-center">
                 <ClientOnly><Icon :class="[iconClass]" :name="icon" /></ClientOnly>

@@ -1,5 +1,5 @@
 <template>
-    <span class="tw-relative tw-overflow-hidden tw-flex tw-items-start tw-justify-start tw-cursor-pointer">
+    <span class="tw-font-data tw-relative tw-overflow-hidden tw-flex tw-items-start tw-justify-start tw-cursor-pointer">
         <div class="tw-absolute tw-h-full tw-w-full"></div>
         <div :style="{'height': checkBoxSlotHeight}" class="tw-flex tw-items-center">
             <input
