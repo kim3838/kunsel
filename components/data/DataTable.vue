@@ -35,7 +35,7 @@
                         <slot
                             :name="`cell.${header.value}`"
                             :scrollReference="dataTableScroll"
-                            :slot="{buttonSize: buttonSize, inputSize: inputSize, selectSize: selectSize}"
+                            :slot="{buttonSize: buttonSize, inputSize: inputSize, datepickerFontSize: datepickerFontSize, selectSize: selectSize}"
                             :cell="row"
                             :index="index">
                             <div class="tw-p-[3px]">{{row[header.value]}}</div>
@@ -192,6 +192,15 @@ const inputSize = computed(() => {
         'md': 'xs',
         'lg': 'sm',
         'xl': 'md',
+    }[props.size]
+});
+
+const datepickerFontSize = computed(() => {
+    return {
+        'sm': 'tw-text-xs',
+        'md': 'tw-text-sm',
+        'lg': 'tw-text-sm',
+        'xl': 'tw-text-lg',
     }[props.size]
 });
 
