@@ -2,7 +2,7 @@
     <NuxtLink
         :to="to"
         :style="{'text-shadow': navigationTextShadow}"
-        class="tw-box-border tw-inline-flex tw-items-center tw-px-4 focus:tw-outline-none focus:tw-ring-transparent focus:tw-ring-1"
+        class="tw-font-data tw-box-border tw-inline-flex tw-items-center tw-px-2 focus:tw-outline-none focus:tw-ring-transparent focus:tw-ring-1"
         :class="[classes, headerFontClass, 'nav-link']">
         <slot></slot>
     </NuxtLink>
@@ -45,10 +45,10 @@ const classes = computed(() => {
 
 const headerFontClass = computed(() => {
     return {
-        'xs': 'tw-text-sm tw-font-medium',
-        'sm': 'tw-text-base tw-font-medium',
-        'md': 'tw-text-lg tw-font-medium',
-        'lg': 'tw-text-xl tw-font-medium',
+        'xs': 'tw-text-sm tw-font-normal',
+        'sm': 'tw-text-base tw-font-normal',
+        'md': 'tw-text-lg tw-font-normal',
+        'lg': 'tw-text-xl tw-font-normal',
     }[props.size]
 });
 </script>
