@@ -130,9 +130,11 @@ export default defineNuxtConfig({
         apiKey: '' // Default to an empty string, automatically set at runtime using process.env.NUXT_API_KEY
     },
 
-    devServer: {
-        host: 'client.server.local',
-        https: false,
-        port: 3000,
-    }
+  devServer: {
+      host: 'client.server.local',
+      https: false,
+      port: 3000,
+  },
+
+  compatibilityDate: '2024-08-30'
 })
