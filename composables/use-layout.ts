@@ -227,13 +227,13 @@ export const useLayout = () => {
         let size = 'lg'
 
         if (screenWidth.value >= screens['2xl']) {//3xl
-            size = 'lg';
+            size = 'md';
         } else if (screenWidth.value >= screens['xl'] && screenWidth.value < screens['2xl']) {//2xl
-            size = 'lg';
+            size = 'md';
         } else if (screenWidth.value >= screens['lg'] && screenWidth.value < screens['xl']) {//xl
             size = 'md';
         } else if (screenWidth.value >= screens['md'] && screenWidth.value < screens['lg']) {//lg
-            size = 'md';
+            size = 'sm';
         } else if (screenWidth.value >= screens['sm'] && screenWidth.value < screens['md']) {//md
             size = 'sm';
         } else if (screenWidth.value < screens['sm']) {//sm
