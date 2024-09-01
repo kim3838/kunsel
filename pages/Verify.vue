@@ -36,7 +36,7 @@
 </template>
 
 <script setup>
-const {$coreStore} = useNuxtApp();
+const {$promptStore} = useNuxtApp();
 definePageMeta({middleware: ['auth', 'not-verified']});
 useLayout().setNavigationMode('solid', 'Verify.vue');
 let pending = ref(false);
@@ -54,7 +54,7 @@ const execute = async () => {
             pending.value = false;
         },
         onSuccessResponse: (request, response, options) => {
-            $coreStore.setPrompt({
+            $promptStore.setPrompt({
                 icon: 'ic:outline-mark-email-read',
                 title: 'Email Verification',
                 message: _get(response, '_data.message', ''),

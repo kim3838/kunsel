@@ -2,31 +2,31 @@
     <ConfirmationModal
         :closeable="false"
         :max-width="'lg'"
-        :show="prompt.show"
-        @close="$coreStore.promptAction()">
+        :show="show"
+        @close="$promptStore.promptAction()">
         <template #icon>
             <ClientOnly>
                 <Icon
-                    v-if="prompt.icon"
+                    v-if="icon"
                     class="tw-h-full tw-w-full"
-                    :name="prompt.icon">
+                    :name="icon">
                 </Icon>
             </ClientOnly>
         </template>
 
         <template #title>
-            <span v-text="prompt.title"></span>
+            <span v-text="title"></span>
         </template>
 
         <template #content>
-            <div v-if="prompt.message">
-                <div v-text="prompt.message"></div>
+            <div v-if="message">
+                <div v-text="message"></div>
             </div>
-            <div v-if="prompt.messageList.length">
+            <div v-if="messageList.length">
                 <ul>
                     <ClientOnly>
-                        <li v-for="message in prompt.messageList" :key="message">
-                            <Icon name="radix-icons:dot"></Icon>&nbsp;{{message}}
+                        <li v-for="messageNode in messageList" :key="messageNode">
+                            <Icon name="radix-icons:dot"></Icon>&nbsp;{{messageNode}}
                         </li>
                     </ClientOnly>
                 </ul>
@@ -34,13 +34,20 @@
         </template>
 
         <template #footer>
-            <Button :size="'md'" @click.native="$coreStore.promptAction()" :label="prompt.action.label"></Button>
+            <Button :size="'md'" @click.native="$promptStore.promptAction()" :label="action.label"></Button>
         </template>
     </ConfirmationModal>
 </template>
 
 <script setup>
 import {storeToRefs} from 'pinia';
-const {$coreStore} = useNuxtApp();
-const {prompt} = storeToRefs($coreStore);
+const {$promptStore} = useNuxtApp();
+const {
+    show,
+    icon,
+    title,
+    message,
+    messageList,
+    action
+} = storeToRefs($promptStore);
 </script>

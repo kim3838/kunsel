@@ -8,7 +8,7 @@ export async function csrFetch<T>(
     promptResponse = true
 ){
     const {baseURL,frontendURL} = useRuntimeConfig().public;
-    const {$coreStore} = useNuxtApp();
+    const {$coreStore, $promptStore} = useNuxtApp();
     const user = userState();
     const CSRF_COOKIE = "XSRF-TOKEN";
     const CSRF_HEADER = "X-XSRF-TOKEN";
@@ -91,7 +91,7 @@ export async function csrFetch<T>(
                 switch (responseCode.toString()) {
                     case '401':
                         if(user.value){
-                            $coreStore.setPrompt({
+                            $promptStore.setPrompt({
                                 icon: 'mdi:connection',
                                 title: _get(response, '_data.message', ''),
                                 message: 'Session have been ended, login again to restore session.',

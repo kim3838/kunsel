@@ -42,7 +42,7 @@
 definePageMeta({middleware: 'guest'});
 useLayout().setNavigationMode('solid', 'Forgot-Password.vue');
 const clientReadyState = useClientReadyState();
-const {$coreStore} = useNuxtApp();
+const {$promptStore} = useNuxtApp();
 
 let emailInput = ref(null);
 let pending = ref(false);
@@ -95,7 +95,7 @@ const executeForgotPassword = async () => {
             pending.value = false;
         },
         onSuccessResponse: (request, response, options) => {
-            $coreStore.setPrompt({
+            $promptStore.setPrompt({
                 icon: 'ic:outline-mark-email-read',
                 title: 'Password Reset',
                 message: _get(response, '_data.message', ''),

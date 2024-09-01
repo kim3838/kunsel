@@ -64,7 +64,7 @@
 definePageMeta({middleware: 'guest'});
 useLayout().setNavigationMode('solid', 'Password-Reset[token].vue');
 const clientReadyState = useClientReadyState();
-const {$coreStore} = useNuxtApp();
+const {$promptStore} = useNuxtApp();
 
 //Todo: Query email check on route could also use bootRedirectRule
 const route = useRoute();
@@ -126,7 +126,7 @@ const executeResetPassword = async () => {
             pending.value = false;
         },
         onSuccessResponse: (request, response, options) => {
-            $coreStore.setPrompt({
+            $promptStore.setPrompt({
                 icon: 'mdi:key-chain',
                 title: 'Password Reset',
                 message: _get(response, '_data.message', ''),

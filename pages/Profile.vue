@@ -189,7 +189,7 @@
 
 <script setup lang="ts">
 definePageMeta({middleware: 'auth'});
-const {$coreStore} = useNuxtApp();
+const {$promptStore} = useNuxtApp();
 
 const user = useState ('profile-user', () => {return {
     id: null,
@@ -285,7 +285,7 @@ const executeUpdatePassword = async () => {
             updatePasswordPending.value = false;
         },
         onSuccessResponse: (request, response, options) => {
-            $coreStore.setPrompt({
+            $promptStore.setPrompt({
                 icon: 'mdi:key-chain',
                 title: 'Update Password',
                 message: _get(response, '_data.message', ''),
@@ -318,7 +318,7 @@ const executeLogoutOtherDevice = async () => {
             logoutOtherDevicePending.value = false;
         },
         onSuccessResponse: (request, response, options) => {
-            $coreStore.setPrompt({
+            $promptStore.setPrompt({
                 icon: 'mdi:key-chain',
                 title: 'Logout other device',
                 message: _get(response, '_data.message', ''),
@@ -451,7 +451,7 @@ const executeConfirmTwoFactor = async () => {
             setupKey.value = null;
             qrCode.value = null;
 
-            $coreStore.setPrompt({
+            $promptStore.setPrompt({
                 icon: 'ic:outline-mark-email-read',
                 title: 'Two-Factor Confirmed',
                 message: _get(response, '_data.message', ''),
