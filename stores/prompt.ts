@@ -17,7 +17,7 @@ export const usePromptStore = defineStore('prompt', () => {
         icon.value = promptPayload.icon;
         title.value = promptPayload.title;
         message.value = promptPayload.message;
-        messageList.value = promptPayload.messageList;
+        messageList.value = _get(promptPayload, 'messageList', []);
         action.value = {
             callback: promptPayload.action.callback,
             label: promptPayload.action.label
