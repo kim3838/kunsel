@@ -38,7 +38,7 @@ export async function csrFetch<T>(
     }
 
     if(token){
-        headers[CSRF_HEADER] = token;
+        headers[CSRF_HEADER] = token.value;
     }
 
     function setResponse(icon: String, title: String, payload: Object){
