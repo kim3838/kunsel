@@ -173,7 +173,7 @@ let execute = async () => {
 
     await csrFetch("/api/v1/prototypes", {
         method: 'GET',
-        params: paramsComputed
+        params: paramsComputed.value
     },{
         onRequestError: () => {
             pending.value = false;

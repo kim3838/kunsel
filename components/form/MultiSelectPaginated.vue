@@ -662,7 +662,7 @@ const execute = async () => {
 
     await csrFetch(props.payload.fetch.url, {
         method: 'GET',
-        params: paramsComputed,
+        params: paramsComputed.value,
     }, {
         onRequestError: () => {
             pending.value = false;
@@ -723,7 +723,7 @@ const selectedExecute = async () => {
 
     await csrFetch(props.payload.fetch.url, {
         method: 'GET',
-        params: selectedParamsComputed
+        params: selectedParamsComputed.value
     }, {
         onRequestError: () => {
             pending.value = false;

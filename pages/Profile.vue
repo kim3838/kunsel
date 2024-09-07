@@ -10,11 +10,11 @@
                                 <div class="tw-mt-4 tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2">
                                     <div>
                                         <InputLabel :size="'sm'" value="Username" />
-                                        <InputWithIcon class="tw-w-full" :icon="'ic:sharp-person-pin'" v-model="user.name" readonly />
+                                        <InputWithIcon class="tw-w-full" :icon="'ic:sharp-person-pin'" v-model="userName" readonly />
                                     </div>
                                     <div>
                                         <InputLabel :size="'sm'" value="Email" />
-                                        <InputWithIcon class="tw-w-full" :icon="'ic:round-mail-outline'" v-model="user.email" readonly />
+                                        <InputWithIcon class="tw-w-full" :icon="'ic:round-mail-outline'" v-model="userEmail" readonly />
                                     </div>
                                     <div>
                                         <InputWithIcon
@@ -94,93 +94,91 @@
                         </div>
                     </form>
 
-                    <ClientOnly>
-                        <div class="tw-max-w-screen-sm tw-mt-4 tw-p-[1.5rem] neutral-border">
-                            <p class="tw-font-medium tw-text-lg">Two Factor Authentication</p>
-                            <p class="tw-text-base">Add additional security to your account using two factor authentication.</p>
+                    <div class="tw-max-w-screen-sm tw-mt-4 tw-p-[1.5rem] neutral-border">
+                        <p class="tw-font-medium tw-text-lg">Two Factor Authentication</p>
+                        <p class="tw-text-base">Add additional security to your account using two factor authentication.</p>
 
-                            <div class="tw-mt-4 tw-pt-4">
-                                <p v-if="twoFactorEnabled && twoFactorConfirmed" class="tw-font-medium tw-text-lg">You have enabled two factor authentication.</p>
-                                <p v-else-if="twoFactorEnabled && !twoFactorConfirmed" class="tw-font-medium tw-text-lg">Finish enabling two factor authentication.</p>
-                                <p v-else class="tw-font-medium tw-text-lg">You have not enabled two factor authentication. </p>
+                        <div class="tw-mt-4 tw-pt-4">
+                            <p v-if="twoFactorEnabled && twoFactorConfirmed" class="tw-font-medium tw-text-lg">You have enabled two factor authentication.</p>
+                            <p v-else-if="twoFactorEnabled && !twoFactorConfirmed" class="tw-font-medium tw-text-lg">Finish enabling two factor authentication.</p>
+                            <p v-else class="tw-font-medium tw-text-lg">You have not enabled two factor authentication. </p>
 
-                                <p class="tw-text-base">When two factor authentication is enabled, you will be prompted for a secure, random token during authentication. You may retrieve this token from <b>your phone's Google Authenticator application</b>.</p>
+                            <p class="tw-text-base">When two factor authentication is enabled, you will be prompted for a secure, random token during authentication. You may retrieve this token from <b>your phone's Google Authenticator application</b>.</p>
 
-                                <div v-if="twoFactorEnabled">
-                                    <p v-if="twoFactorConfirming" class="tw-mt-4 tw-text-sm">
-                                        To finish enabling two factor authentication, scan the following QR code using your phone's authenticator application or enter the setup key and provide the generated OTP code.
-                                    </p>
+                            <div v-if="twoFactorEnabled">
+                                <p v-if="twoFactorConfirming" class="tw-mt-4 tw-text-sm">
+                                    To finish enabling two factor authentication, scan the following QR code using your phone's authenticator application or enter the setup key and provide the generated OTP code.
+                                </p>
 
-                                    <div v-if="twoFactorConfirming">
-                                        <div v-if="qrCode && !pendingTwoFactorQrCode" class="tw-mt-4 tw-p-2 tw-bg-white" v-html="qrCode" />
-                                        <UnorderedList
-                                            class="tw-mt-4"
-                                            v-else-if="pendingTwoFactorQrCode"
-                                            :icon="'eos-icons:loading'"
-                                            :size="'md'"
-                                            :label="'Loading QR code, please wait...'"/>
+                                <div v-if="twoFactorConfirming">
+                                    <div v-if="qrCode && !pendingTwoFactorQrCode" class="tw-mt-4 tw-p-2 tw-bg-white" v-html="qrCode" />
+                                    <UnorderedList
+                                        class="tw-mt-4"
+                                        v-else-if="pendingTwoFactorQrCode"
+                                        :icon="'eos-icons:loading'"
+                                        :size="'md'"
+                                        :label="'Loading QR code, please wait...'"/>
 
-                                        <div v-if="setupKey && !pendingTwoFactorSetupKey" class="tw-mt-4 tw-font-medium">
-                                            Setup Key: <span class="tw-font-mono">{{setupKey}}</span>
-                                        </div>
-                                        <UnorderedList
-                                            v-else-if="pendingTwoFactorSetupKey"
-                                            :icon="'eos-icons:loading'"
-                                            :size="'md'"
-                                            :label="'Loading setup key, please wait...'"/>
-
-                                        <div class="tw-mt-4 tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2">
-                                            <div>
-                                                <InputWithIcon @keyup.enter="executeConfirmTwoFactor" :icon="'mdi:key-chain'" type="text" placeholder="Confirmation Code" v-model="twoFactorConfirmationCode" />
-                                            </div>
-                                            <div>
-                                                <Button @click="executeConfirmTwoFactor" type="button" :disabled="confirmTwoFactorPending" :label="'Confirm'" />
-                                            </div>
-                                        </div>
+                                    <div v-if="setupKey && !pendingTwoFactorSetupKey" class="tw-mt-4 tw-font-medium">
+                                        Setup Key: <span class="tw-font-mono">{{setupKey}}</span>
                                     </div>
+                                    <UnorderedList
+                                        v-else-if="pendingTwoFactorSetupKey"
+                                        :icon="'eos-icons:loading'"
+                                        :size="'md'"
+                                        :label="'Loading setup key, please wait...'"/>
 
-                                    <div v-if="!twoFactorConfirming">
-                                        <div v-if="recoveryCodes.length" class="tw-mt-4 tw-text-sm">
-                                            <p class="tw-font-medium">
-                                                Store these recovery codes in a secure password manager. They can be used to recover access to your account if your two factor authentication device is lost.
-                                            </p>
+                                    <div class="tw-mt-4 tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2">
+                                        <div>
+                                            <InputWithIcon @keyup.enter="executeConfirmTwoFactor" :icon="'mdi:key-chain'" type="text" placeholder="Confirmation Code" v-model="twoFactorConfirmationCode" />
                                         </div>
-
-                                        <UnorderedList
-                                            class="tw-mt-4"
-                                            v-if="pendingTwoFactorRecoveryCodes"
-                                            :icon="'eos-icons:loading'"
-                                            :size="'md'"
-                                            :label="'Loading recovery codes, please wait...'"/>
-                                        <div class="tw-grid tw-gap-1 tw-mt-4 tw-font-mono tw-text-sm">
-                                            <div v-for="code in recoveryCodes" :key="code">
-                                                {{ code }}
-                                            </div>
+                                        <div>
+                                            <Button @click="executeConfirmTwoFactor" type="button" :disabled="confirmTwoFactorPending" :label="'Confirm'" />
                                         </div>
                                     </div>
                                 </div>
-                            </div>
 
-                            <div class="tw-mt-4 tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2">
-                                <div v-if="twoFactorEnabled && twoFactorConfirmed">
-                                    <ConfirmsPassword v-if="!recoveryCodes.length" @confirmed="executeTwoFactorRecoveryCodes">
-                                        <Button :variant="'flat'" @click="" type="button" :disabled="pendingTwoFactorRecoveryCodes" :label="'Show Recovery Codes'" />
-                                    </ConfirmsPassword>
-                                </div>
-                                <div v-if="twoFactorEnabled && twoFactorConfirmed"></div>
-                                <div>
-                                    <ConfirmsPassword v-if="twoFactorEnabled" @confirmed="executeDisableTwoFactor">
-                                        <Button :variant="'flat'" type="button" :disabled="disableTwoFactorPending" :label="'Disable 2 Factor Authentication'" />
-                                    </ConfirmsPassword>
-                                </div>
-                                <div>
-                                    <ConfirmsPassword v-if="!twoFactorEnabled" @confirmed="executeEnableTwoFactor">
-                                        <Button type="button" :disabled="enableTwoFactorPending" :label="'Enable 2 Factor Authentication'" />
-                                    </ConfirmsPassword>
+                                <div v-if="!twoFactorConfirming">
+                                    <div v-if="recoveryCodes.length" class="tw-mt-4 tw-text-sm">
+                                        <p class="tw-font-medium">
+                                            Store these recovery codes in a secure password manager. They can be used to recover access to your account if your two factor authentication device is lost.
+                                        </p>
+                                    </div>
+
+                                    <UnorderedList
+                                        class="tw-mt-4"
+                                        v-if="pendingTwoFactorRecoveryCodes"
+                                        :icon="'eos-icons:loading'"
+                                        :size="'md'"
+                                        :label="'Loading recovery codes, please wait...'"/>
+                                    <div class="tw-grid tw-gap-1 tw-mt-4 tw-font-mono tw-text-sm">
+                                        <div v-for="code in recoveryCodes" :key="code">
+                                            {{ code }}
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </ClientOnly>
+
+                        <div class="tw-mt-4 tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2">
+                            <div v-if="twoFactorEnabled && twoFactorConfirmed">
+                                <ConfirmsPassword v-if="!recoveryCodes.length" @confirmed="executeTwoFactorRecoveryCodes">
+                                    <Button :variant="'flat'" @click="" type="button" :disabled="pendingTwoFactorRecoveryCodes" :label="'Show Recovery Codes'" />
+                                </ConfirmsPassword>
+                            </div>
+                            <div v-if="twoFactorEnabled && twoFactorConfirmed"></div>
+                            <div>
+                                <ConfirmsPassword v-if="twoFactorEnabled" @confirmed="executeDisableTwoFactor">
+                                    <Button :variant="'flat'" type="button" :disabled="disableTwoFactorPending" :label="'Disable 2 Factor Authentication'" />
+                                </ConfirmsPassword>
+                            </div>
+                            <div>
+                                <ConfirmsPassword v-if="!twoFactorEnabled" @confirmed="executeEnableTwoFactor">
+                                    <Button type="button" :disabled="enableTwoFactorPending" :label="'Enable 2 Factor Authentication'" />
+                                </ConfirmsPassword>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </DefaultWrapper>
@@ -191,21 +189,20 @@
 definePageMeta({middleware: 'auth'});
 const {$promptStore} = useNuxtApp();
 
-const user = useState ('profile-user', () => {return {
-    id: null,
-    name: null,
-    email: null,
-    email_verified_at: null,
-    two_factor_enabled: false,
-    two_factor_confirmed: false,
-};});
-const twoFactorEnabled = computed(() => user.value.two_factor_enabled);
-const twoFactorConfirmed = computed(() => user.value.two_factor_confirmed);
+const user = userState();
+const userName = computed(() => _get(user.value, 'name', null));
+const userEmail = computed(() => _get(user.value, 'email', null));
+const twoFactorEnabled = computed(() => _get(user.value, 'two_factor_enabled', null));
+const twoFactorConfirmed = computed(() => _get(user.value, 'two_factor_confirmed', null));
 const twoFactorConfirming = ref(false);
 const setupKey = ref(null);
 const qrCode = ref(null);
 const recoveryCodes = ref([]);
 const twoFactorConfirmationCode = ref('');
+
+if(twoFactorEnabled.value && !twoFactorConfirmed.value){
+    twoFactorConfirming.value = true;
+}
 
 let updatePassword = reactive({
     currentPassword: 'password',
@@ -221,54 +218,16 @@ let updatePasswordDataComputed = computed(() => {
     }
 });
 
-await ssrFetch("/api/user", {
-    method: 'GET',
-}, {
-    onSuccessResponse: (request, response, options) => {
-        let two_factor_enabled = _get(response, '_data.values.two_factor_enabled', null)
-        let two_factor_confirmed = _get(response, '_data.values.two_factor_confirmed', null)
+if(twoFactorConfirming.value){
+    const {data: twoFactorSecretKeyData} = await ssrFetch("/api/two-factor-secret-key");
+    setupKey.value = _get(twoFactorSecretKeyData.value, 'values.secret_key', null);
 
-        user.value = {
-            id: _get(response, '_data.values.id', null),
-            name: _get(response, '_data.values.name', null),
-            email: _get(response, '_data.values.email', null),
-            email_verified_at: _get(response, '_data.values.email_verified_at', null),
-            two_factor_enabled: two_factor_enabled,
-            two_factor_confirmed: two_factor_confirmed,
-        };
+    const {data: twoFactorQrCodeData} = await ssrFetch("/api/two-factor-qr-code");
+    qrCode.value = _get(twoFactorQrCodeData.value, 'values.svg', null);
 
-        if(two_factor_enabled && !two_factor_confirmed){
-            twoFactorConfirming.value = true;
-        }
-    }
-});
-
-if(twoFactorEnabled.value && !twoFactorConfirmed.value){
-    await ssrFetch("/api/two-factor-secret-key", {
-        method: 'GET',
-    }, {
-        onSuccessResponse: (request, response, options) => {
-            setupKey.value = _get(response, '_data.values.secret_key', null);
-        }
-    });
-
-    await ssrFetch("/api/two-factor-qr-code", {
-        method: 'GET',
-    }, {
-        onSuccessResponse: (request, response, options) => {
-            qrCode.value = _get(response, '_data.values.svg', null);
-        }
-    });
-
-    await ssrFetch("/api/two-factor-recovery-codes", {
-        method: 'GET',
-    }, {
-        onSuccessResponse: (request, response, options) => {
-            recoveryCodes.value = _get(response, '_data.values.recovery_codes', []);
-        }
-    });
+    const {data: twoFactorRecoveryCodesData} = await ssrFetch("/api/two-factor-recovery-codes");
+    recoveryCodes.value = _get(twoFactorRecoveryCodesData.value, 'values.recovery_codes', []);
 }
-
 
 const updatePasswordPending = ref(false);
 const executeUpdatePassword = async () => {
@@ -276,7 +235,7 @@ const executeUpdatePassword = async () => {
 
     await csrFetch("/api/update-password", {
         method: 'POST',
-        body: updatePasswordDataComputed,
+        body: updatePasswordDataComputed.value,
     }, {
         onRequestError: () => {
             updatePasswordPending.value = false;
@@ -309,7 +268,7 @@ const executeLogoutOtherDevice = async () => {
 
     await csrFetch("/api/logout-other-device", {
         method: 'POST',
-        body: {password: confirmPassword},
+        body: {password: confirmPassword.value},
     }, {
         onRequestError: () => {
             logoutOtherDevicePending.value = false;
@@ -436,7 +395,7 @@ const executeConfirmTwoFactor = async () => {
     await csrFetch("/api/confirmed-two-factor-authentication", {
         method: 'POST',
         body: {
-            'code': twoFactorConfirmationCode
+            'code': twoFactorConfirmationCode.value
         }
     }, {
         onRequestError: () => {

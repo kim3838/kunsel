@@ -108,9 +108,9 @@ const remember = ref(false);
 
 function handleLogin(){
     login({
-        identifier: identifier,
-        password: password,
-        remember: remember
+        identifier: identifier.value,
+        password: password.value,
+        remember: remember.value
     });
 }
 </script>

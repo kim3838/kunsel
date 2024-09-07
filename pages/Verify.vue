@@ -6,9 +6,9 @@
                     <template #content>
                         <div class="tw-relative tw-py-4">
                             <form @submit.prevent="execute" class="tw-w-80">
-                                <p class="tw-text-lg tw-font-semibold tw-mb-4">
+                                <div class="tw-text-lg tw-font-medium tw-mb-4">
                                     Verify your email.
-                                </p>
+                                </div>
 
                                 <p class="tw-text-base">
                                     Please click the verification button sent to your email address.

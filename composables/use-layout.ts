@@ -71,34 +71,6 @@ export const useLayout = () => {
                         });
                     },
                 },
-                {
-                    type: 'action',
-                    title: 'SSR Post',
-                    icon: 'material-symbols:request-quote-sharp',
-                    callback: async () => {
-                        await ssrFetch("/api/test-post", {
-                            method: 'POST',
-                        }, {
-                            onResponse: (request, response, options) => {
-                                console.log({'SSR POST RESPONSE' : response._data.code});
-                            }
-                        });
-                    },
-                },
-                {
-                    type: 'action',
-                    title: 'SSR Get',
-                    icon: 'material-symbols:request-quote-sharp',
-                    callback: async () => {
-                        await ssrFetch("/api/user", {
-                            method: 'GET',
-                        }, {
-                            onResponse: (request, response, options) => {
-                                console.log({'SSR GET RESPONSE' : response._data.code});
-                            }
-                        });
-                    },
-                }
             ]);
         } else {
             links.unshift({

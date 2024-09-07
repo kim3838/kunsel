@@ -50,12 +50,8 @@ export async function csrFetch<T>(
         });
     }
 
-    useFetch(baseURL + path, {
+    await $fetch(baseURL + path, {
         credentials: 'include',
-        watch: false,
-        immediate: true,
-        lazy: true,
-        server: false,
         async onRequest(){
             console.log({'CSR FETCH' : 'START: ' + baseURL + path})
 
@@ -133,5 +129,5 @@ export async function csrFetch<T>(
             ...headers,
             ...options?.headers
         },
-    });
+    }).catch((error) => console.log({'ofetch error': error}));
 }

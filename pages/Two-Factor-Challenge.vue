@@ -8,8 +8,8 @@
                 <AccentFrame class="tw-my-4">
                     <template #content>
                         <div class="tw-relative tw-py-4">
-                            <form @submit.prevent="handleLogin" class="tw-w-72">
-                                <div class="tw-block tw-text-lg tw-font-semibold tw-mb-4">
+                            <form @submit.prevent="handleLogin" class="tw-w-80">
+                                <div class="tw-block tw-text-lg tw-font-medium tw-mb-4">
                                     Enter your code
                                 </div>
                                 <template v-if="! recovery">
@@ -99,7 +99,7 @@ watch(clientReadyState, async (clientReady) => {
 });
 
 const toggleRecovery = async () => {
-    recovery.value = true;
+    recovery.value = !recovery.value;
 
     await nextTick();
 
@@ -107,6 +107,6 @@ const toggleRecovery = async () => {
 };
 
 function handleLogin(){
-    twoFactorLogin(twoFactorLoginComputed);
+    twoFactorLogin(twoFactorLoginComputed.value);
 }
 </script>

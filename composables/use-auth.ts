@@ -22,20 +22,21 @@ export const useAuth = () => {
     const isAuthenticated = computed(() => !!user.value);
     const authPending = ref(false);
 
-    async function fetchUser() {
-        await ssrFetch("/api/user", {
-            method: 'GET'
-        }, {
-            onSuccessResponse: async (request, response, options) => {
-                user.value = {
-                    id: _get(response, '_data.values.id', null),
-                    name: _get(response, '_data.values.name', null),
-                    email: _get(response, '_data.values.email', null),
-                    email_verified_at: _get(response, '_data.values.email_verified_at', null),
-                };
-            }
-        });
-    }
+    const {execute: fetchUser} = ssrFetch("/api/user", {
+        method: 'GET',
+        immediate: false
+    }, {
+        onSuccessResponse: async (request, response, options) => {
+            user.value = {
+                id: _get(response, '_data.values.id', null),
+                name: _get(response, '_data.values.name', null),
+                email: _get(response, '_data.values.email', null),
+                email_verified_at: _get(response, '_data.values.email_verified_at', null),
+                two_factor_enabled: _get(response, '_data.values.two_factor_enabled', null),
+                two_factor_confirmed: _get(response, '_data.values.two_factor_confirmed', null),
+            };
+        }
+    });
 
     /*
     * options: UseFetchOptions can consist of

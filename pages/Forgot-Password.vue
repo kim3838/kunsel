@@ -86,7 +86,7 @@ const executeForgotPassword = async () => {
 
     await csrFetch("/forgot-password", {
         method: 'POST',
-        body: bodyComputed
+        body: bodyComputed.value
     }, {
         onRequestError: () => {
             pending.value = false;
