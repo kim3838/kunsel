@@ -1,14 +1,14 @@
-import {UseFetchOptions} from "nuxt/app";
-
 export type User = {
     id: number | null,
     name: string | null,
     email: string | null,
     email_verified_at: string | null,
+    two_factor_enabled: boolean | null,
+    two_factor_confirmed: boolean | null,
 };
 
 type LoginCredentials = {
-    email: string,
+    identifier: string,
     password: string,
     remember: boolean
 };
