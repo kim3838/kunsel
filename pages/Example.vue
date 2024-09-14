@@ -10,13 +10,5 @@
 
 <script setup lang="ts">
 definePageMeta({middleware: 'auth'});
-// await new Promise((resolve, reject)=>{
-//     setTimeout(()=>{
-//         resolve(1);
-//     }, 2000);
-// });
-// await ssrFetch("/api/user", {
-//     method: 'GET',
-// });
 useLayout().setNavigationMode('solid', 'Example.vue');
 </script>
