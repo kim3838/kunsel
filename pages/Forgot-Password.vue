@@ -84,7 +84,7 @@ async function handleForgotPassword(){
 const executeForgotPassword = async () => {
     pending.value = true;
 
-    await csrFetch("/forgot-password", {
+    await laraFetch("/forgot-password", {
         method: 'POST',
         body: bodyComputed.value
     }, {

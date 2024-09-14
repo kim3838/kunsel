@@ -88,7 +88,7 @@ const startConfirmingPassword = async () => {
     confirmingPassword.value = true;
     confirmingPasswordPending.value = true;
 
-    await csrFetch('/api/confirmed-password-status', {
+    await laraFetch('/api/confirmed-password-status', {
         method: 'GET',
     }, {
         onRequestError: () => {
@@ -112,7 +112,7 @@ const confirmPasswordPending = ref(false);
 const confirmPassword = async () => {
     confirmPasswordPending.value = true;
 
-    await csrFetch('/api/confirm-password', {
+    await laraFetch('/api/confirm-password', {
         method: 'POST',
         body: form,
     }, {

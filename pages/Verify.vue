@@ -44,7 +44,7 @@ let pending = ref(false);
 const execute = async () => {
     pending.value = true;
 
-    await csrFetch("/api/email/verification-notification", {
+    await laraFetch("/api/email/verification-notification", {
         method: 'POST',
     }, {
         onRequestError: () => {

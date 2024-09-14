@@ -1,12 +1,15 @@
 
 import type {UseFetchOptions} from "nuxt/app";
 
-export function ssrFetch<T>(
+export function laraSsrFetch<T>(
     path: string,
     options: UseFetchOptions<T> = {},
     callbacks: Object = {},
+    promptResponse = true
 ){
     const runtimeConfig = useRuntimeConfig();
+    const {$coreStore, $promptStore} = useNuxtApp();
+    const user = userState();
 
     let headers: any = {
         referer: runtimeConfig.public.frontendURL,
@@ -27,6 +30,16 @@ export function ssrFetch<T>(
             ...headers,
             ...useRequestHeaders(['cookie'])
         }
+    }
+
+    //Todo: Request response handler for laraFetch and laraSsrFetch
+    function setResponse(icon: String, title: String, payload: Object){
+        $coreStore.setServiceError({
+            prompt: promptResponse,
+            icon: icon,
+            title: title,
+            payload: payload
+        });
     }
 
     return useFetch(runtimeConfig.public.baseURL + path, {
@@ -55,7 +68,42 @@ export function ssrFetch<T>(
 
             if (response._data.code >= 500 && response._data.code < 600) {
 
+                setResponse('ic:sharp-error-outline', 'Something Went Wrong', response._data);
             } else if(response?._data?.code >= 400 && response?._data?.code < 499){
+
+                let responseCode = response?._data?.code;
+
+                switch (responseCode.toString()) {
+                    case '401':
+                        if(user.value){
+                            $promptStore.setPrompt({
+                                icon: 'mdi:connection',
+                                title: _get(response, '_data.message', ''),
+                                message: 'Session have been ended, login again to restore session.',
+                                action: {
+                                    callback: () => {
+                                        user.value = undefined;
+                                        navigateTo("/login", {replace: true});
+                                    },
+                                    label: 'Okay'
+                                }
+                            });
+                        } else {
+                            setResponse('ic:sharp-error-outline', 'Request failed', response._data);
+                        }
+                        break;
+                    case '406':
+
+                        if(callbacks.onNotAcceptableResponse && typeof callbacks.onNotAcceptableResponse == 'function'){
+                            await callbacks.onNotAcceptableResponse(request, response, options);
+                        } else {
+                            setResponse('ic:sharp-error-outline', 'Request failed', response._data);
+                        }
+
+                        break;
+                    default:
+                        setResponse('ic:sharp-error-outline', 'Request failed', response._data);
+                }
 
             } else {
                 console.log({'SSR FETCH': 'SUCCESS' });

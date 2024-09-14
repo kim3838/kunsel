@@ -1,7 +1,7 @@
 
 import type {UseFetchOptions} from "nuxt/app";
 
-export async function csrFetch<T>(
+export async function laraFetch<T>(
     path: string,
     options: UseFetchOptions<T> = {},
     callbacks: Object = {},

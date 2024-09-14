@@ -34,7 +34,7 @@ export const useLayout = () => {
                     title: 'CSR Post',
                     icon: 'material-symbols:request-quote-sharp',
                     callback: async () => {
-                        await csrFetch("/api/test-post", {
+                        await laraFetch("/api/test-post", {
                             method: 'POST',
                         }, {
                             onResponse: (request, response, options) => {
@@ -48,7 +48,7 @@ export const useLayout = () => {
                     title: 'CSR Get',
                     icon: 'material-symbols:request-quote-sharp',
                     callback: async () => {
-                        await csrFetch("/api/user", {
+                        await laraFetch("/api/user", {
                             method: 'GET',
                         }, {
                             onResponse: (request, response, options) => {
@@ -62,7 +62,7 @@ export const useLayout = () => {
                     title: 'CSR Get CSRF',
                     icon: 'material-symbols:request-quote-sharp',
                     callback: async () => {
-                        await csrFetch("/sanctum/csrf-cookie", {
+                        await laraFetch("/sanctum/csrf-cookie", {
                             method: 'GET',
                         }, {
                             onResponse: (request, response, options) => {

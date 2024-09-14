@@ -660,7 +660,7 @@ const execute = async () => {
     selectionEndResult.icon = 'eos-icons:loading';
     selectionEndResult.label = 'Loading...';
 
-    await csrFetch(props.payload.fetch.url, {
+    await laraFetch(props.payload.fetch.url, {
         method: 'GET',
         params: paramsComputed.value,
     }, {
@@ -721,7 +721,7 @@ watch(() => {
 const selectedExecute = async () => {
     pending.value = true;
 
-    await csrFetch(props.payload.fetch.url, {
+    await laraFetch(props.payload.fetch.url, {
         method: 'GET',
         params: selectedParamsComputed.value
     }, {

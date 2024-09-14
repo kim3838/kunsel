@@ -115,7 +115,7 @@ const pending = ref(false);
 const executeResetPassword = async () => {
     pending.value = true;
 
-    await csrFetch("/reset-password", {
+    await laraFetch("/reset-password", {
         method: 'POST',
         body: data
     }, {

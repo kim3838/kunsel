@@ -22,7 +22,7 @@ export const useAuth = () => {
     const isAuthenticated = computed(() => !!user.value);
     const authPending = ref(false);
 
-    const {execute: fetchUser} = ssrFetch("/api/user", {
+    const {execute: fetchUser} = laraSsrFetch("/api/user", {
         method: 'GET',
         immediate: false
     }, {
@@ -52,7 +52,7 @@ export const useAuth = () => {
         $coreStore.resetServiceError();
         authPending.value = true;
 
-        await csrFetch("/api/login", {
+        await laraFetch("/api/login", {
             method: 'POST',
             body: credentials
         }, {
@@ -91,7 +91,7 @@ export const useAuth = () => {
         $coreStore.resetServiceError();
         authPending.value = true;
 
-        await csrFetch("/api/two-factor-login", {
+        await laraFetch("/api/two-factor-login", {
             method: 'POST',
             body: form
         }, {
@@ -126,7 +126,7 @@ export const useAuth = () => {
         const {$coreStore} = useNuxtApp();
         $coreStore.resetServiceError();
 
-        await csrFetch("/api/logout", {
+        await laraFetch("/api/logout", {
             method: 'POST'
         },{
             onSuccessResponse: (request, response, options) => {

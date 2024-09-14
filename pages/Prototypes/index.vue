@@ -171,7 +171,7 @@ let execute = async () => {
     pending.value = true;
     clearTimeout(filters.search.callback);
 
-    await csrFetch("/api/v1/prototypes", {
+    await laraFetch("/api/v1/prototypes", {
         method: 'GET',
         params: paramsComputed.value
     },{

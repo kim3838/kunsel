@@ -130,18 +130,18 @@
 
                                     <div class="tw-mt-4 tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2">
                                         <div>
-                                            <InputWithIcon @keyup.enter="executeConfirmTwoFactor" :icon="'mdi:key-chain'" type="text" placeholder="Confirmation Code" v-model="twoFactorConfirmationCode" />
+                                            <InputWithIcon :disabled="confirmTwoFactorPending || disableTwoFactorPending" @keyup.enter="executeConfirmTwoFactor" :icon="'mdi:key-chain'" type="text" placeholder="Confirmation Code" v-model="twoFactorConfirmationCode" />
                                         </div>
                                         <div>
-                                            <Button @click="executeConfirmTwoFactor" type="button" :disabled="confirmTwoFactorPending" :label="'Confirm'" />
+                                            <Button @click="executeConfirmTwoFactor" type="button" :disabled="confirmTwoFactorPending || disableTwoFactorPending" :label="'Confirm'" />
                                         </div>
                                     </div>
                                 </div>
 
                                 <div v-if="!twoFactorConfirming">
                                     <div v-if="recoveryCodes.length" class="tw-mt-4 tw-text-sm">
-                                        <p class="tw-font-medium">
-                                            Store these recovery codes in a secure password manager. They can be used to recover access to your account if your two factor authentication device is lost.
+                                        <p class="tw-font-normal tw-text-base">
+                                            Store these recovery codes somewhere safe. They can be used to recover access to your account if your two factor authentication device is lost.
                                         </p>
                                     </div>
 
@@ -169,7 +169,7 @@
                             <div v-if="twoFactorEnabled && twoFactorConfirmed"></div>
                             <div>
                                 <ConfirmsPassword v-if="twoFactorEnabled" @confirmed="executeDisableTwoFactor">
-                                    <Button :variant="'flat'" type="button" :disabled="disableTwoFactorPending" :label="'Disable 2 Factor Authentication'" />
+                                    <Button :variant="'flat'" type="button" :disabled="confirmTwoFactorPending || disableTwoFactorPending" :label="'Disable 2 Factor Authentication'" />
                                 </ConfirmsPassword>
                             </div>
                             <div>
@@ -218,22 +218,11 @@ let updatePasswordDataComputed = computed(() => {
     }
 });
 
-if(twoFactorConfirming.value){
-    const {data: twoFactorSecretKeyData} = await ssrFetch("/api/two-factor-secret-key");
-    setupKey.value = _get(twoFactorSecretKeyData.value, 'values.secret_key', null);
-
-    const {data: twoFactorQrCodeData} = await ssrFetch("/api/two-factor-qr-code");
-    qrCode.value = _get(twoFactorQrCodeData.value, 'values.svg', null);
-
-    const {data: twoFactorRecoveryCodesData} = await ssrFetch("/api/two-factor-recovery-codes");
-    recoveryCodes.value = _get(twoFactorRecoveryCodesData.value, 'values.recovery_codes', []);
-}
-
 const updatePasswordPending = ref(false);
 const executeUpdatePassword = async () => {
     updatePasswordPending.value = true;
 
-    await csrFetch("/api/update-password", {
+    await laraFetch("/api/update-password", {
         method: 'POST',
         body: updatePasswordDataComputed.value,
     }, {
@@ -266,7 +255,7 @@ const logoutOtherDevicePending = ref(false);
 const executeLogoutOtherDevice = async () => {
     logoutOtherDevicePending.value = true;
 
-    await csrFetch("/api/logout-other-device", {
+    await laraFetch("/api/logout-other-device", {
         method: 'POST',
         body: {password: confirmPassword.value},
     }, {
@@ -295,8 +284,8 @@ const executeLogoutOtherDevice = async () => {
 const sessions = useState('profile-sessions', ()=>{
     return [];
 });
-const {pending:pendingBrowserSessions} = await ssrFetch("/api/sessions", {
-    method: 'GET'
+const {pending:pendingBrowserSessions} = laraSsrFetch("/api/sessions", {
+    lazy: true
 }, {
     onSuccessResponse: (request, response, options) => {
         sessions.value = _get(response, '_data.values', []);
@@ -309,7 +298,7 @@ const enableTwoFactorPending = ref(false);
 const executeEnableTwoFactor = async () => {
     enableTwoFactorPending.value = true;
 
-    await csrFetch("/api/two-factor-authentication", {
+    await laraFetch("/api/two-factor-authentication", {
         method: 'POST',
     }, {
         onRequestError: () => {
@@ -332,7 +321,7 @@ const pendingTwoFactorSetupKey = ref(false);
 const executeTwoFactorSetupKey = async () => {
     pendingTwoFactorSetupKey.value = true;
 
-    await csrFetch("/api/two-factor-secret-key", {
+    await laraFetch("/api/two-factor-secret-key", {
         method: 'GET',
     }, {
         onRequestError: () => {
@@ -345,14 +334,13 @@ const executeTwoFactorSetupKey = async () => {
             setupKey.value = _get(response, '_data.values.secret_key', null);
         }
     });
-
 }
 
 const pendingTwoFactorQrCode = ref(false);
 const executeTwoFactorQrCode = async () => {
     pendingTwoFactorQrCode.value = true;
 
-    await csrFetch("/api/two-factor-qr-code", {
+    await laraFetch("/api/two-factor-qr-code", {
         method: 'GET',
     }, {
         onRequestError: () => {
@@ -367,12 +355,16 @@ const executeTwoFactorQrCode = async () => {
     });
 }
 
+if(twoFactorConfirming.value){
+    executeTwoFactorSetupKey();
+    executeTwoFactorQrCode();
+}
 
 const pendingTwoFactorRecoveryCodes = ref(false);
 const executeTwoFactorRecoveryCodes = async () => {
     pendingTwoFactorRecoveryCodes.value = true;
 
-    await csrFetch("/api/two-factor-recovery-codes", {
+    await laraFetch("/api/two-factor-recovery-codes", {
         method: 'GET',
     }, {
         onRequestError: () => {
@@ -392,7 +384,7 @@ const confirmTwoFactorPending = ref(false);
 const executeConfirmTwoFactor = async () => {
     confirmTwoFactorPending.value = true;
 
-    await csrFetch("/api/confirmed-two-factor-authentication", {
+    await laraFetch("/api/confirmed-two-factor-authentication", {
         method: 'POST',
         body: {
             'code': twoFactorConfirmationCode.value
@@ -409,25 +401,24 @@ const executeConfirmTwoFactor = async () => {
             user.value.two_factor_confirmed = true;
             setupKey.value = null;
             qrCode.value = null;
-
+            executeTwoFactorRecoveryCodes();
             $promptStore.setPrompt({
-                icon: 'ic:outline-mark-email-read',
+                icon: 'tabler:auth-2fa',
                 title: 'Two-Factor Confirmed',
                 message: _get(response, '_data.message', ''),
                 action: {
-                    label: 'Close'
+                    label: 'Okay'
                 }
             });
         }
     });
 }
 
-
 const disableTwoFactorPending = ref(false);
 const executeDisableTwoFactor = async () => {
     disableTwoFactorPending.value = true;
 
-    await csrFetch("/api/two-factor-authentication", {
+    await laraFetch("/api/two-factor-authentication", {
         method: 'DELETE',
     }, {
         onRequestError: () => {
