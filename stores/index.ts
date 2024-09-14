@@ -1,5 +1,12 @@
 import {defineStore} from 'pinia'
 
+type serviceErrorType = {
+    prompt: boolean,
+    icon: string | null,
+    title: string | null,
+    payload: object | null
+}
+
 export const useCoreStore = defineStore('core', () => {
     const service = ref({
         error: {
@@ -14,7 +21,7 @@ export const useCoreStore = defineStore('core', () => {
         return service.value.error;
     })
 
-    function setServiceError(serviceError){
+    function setServiceError(serviceError: serviceErrorType){
 
         service.value.error = serviceError;
 
