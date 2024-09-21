@@ -1,19 +1,4 @@
 
-function setResponse(
-    store,
-    icon: String,
-    title: String,
-    payload: Object,
-    promptErrorResponse: Boolean = false)
-{
-    store.setServiceError({
-        prompt: promptErrorResponse,
-        icon: icon,
-        title: title,
-        payload: payload
-    });
-}
-
 export const laraInterceptor = async (interceptor, callbacks, promptErrorResponse = false, interceptorParameters = {}) => {
     const {$coreStore, $promptStore} = useNuxtApp();
     const user = userState();
@@ -40,15 +25,14 @@ export const laraInterceptor = async (interceptor, callbacks, promptErrorRespons
                 );
             }
 
-            setResponse(
-                $coreStore,
-                'ic:sharp-error-outline',
-                'Request failed',
-                {
+            $coreStore.setServiceError({
+                prompt: promptErrorResponse,
+                icon: 'ic:sharp-error-outline',
+                title: 'Request failed',
+                payload: {
                     message: interceptorParameters?.error?.message ?? null
-                },
-                promptErrorResponse
-            );
+                }
+            });
 
             break;
         case "onResponse":
@@ -88,12 +72,22 @@ export const laraInterceptor = async (interceptor, callbacks, promptErrorRespons
                                 }
                             });
                         } else {
-                            setResponse($coreStore, 'ic:sharp-error-outline', 'Request failed', response?._data, promptErrorResponse);
+                            $coreStore.setServiceError({
+                                prompt: promptErrorResponse,
+                                icon: 'ic:sharp-error-outline',
+                                title: 'Request failed',
+                                payload: response?._data
+                            });
                         }
                         break;
                     case '406':
 
-                        setResponse($coreStore, 'ic:sharp-error-outline', 'Request failed', response?._data, promptErrorResponse);
+                        $coreStore.setServiceError({
+                            prompt: promptErrorResponse,
+                            icon: 'ic:sharp-error-outline',
+                            title: 'Request failed',
+                            payload: response?._data
+                        });
 
                         //Perform not acceptable response callback
                         if(callbacks.onNotAcceptableResponse && typeof callbacks.onNotAcceptableResponse == 'function'){
@@ -102,18 +96,22 @@ export const laraInterceptor = async (interceptor, callbacks, promptErrorRespons
 
                         break;
                     default:
-                        setResponse($coreStore, 'ic:sharp-error-outline', 'Request failed', response?._data, promptErrorResponse);
+                        $coreStore.setServiceError({
+                            prompt: promptErrorResponse,
+                            icon: 'ic:sharp-error-outline',
+                            title: 'Request failed',
+                            payload: response?._data
+                        });
                 }
             }
 
             if(responseCode >= 500 && responseCode < 600){
-                setResponse(
-                    $coreStore,
-                    'ic:sharp-error-outline',
-                    'Something Went Wrong',
-                    response?._data,
-                    promptErrorResponse
-                );
+                $coreStore.setServiceError({
+                    prompt: promptErrorResponse,
+                    icon: 'ic:sharp-error-outline',
+                    title: 'Something Went Wrong',
+                    payload: response?._data
+                });
             }
 
             break;
