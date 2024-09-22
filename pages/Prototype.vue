@@ -367,6 +367,30 @@
                         </div>
                     </div>
 
+                    <!-- Lara Fetch Group -->
+                    <div v-if="true">
+                        <div class="tw-block tw-p-2 neutral-border">
+                            <InputLabel class="tw-mb-2" :size="'md'" value="Lara Fetch Group" />
+                            <div class="tw-grid tw-gap-1 tw-grid-cols-1 sm:tw-grid-cols-2 md:tw-grid-cols-2 lg:tw-grid-cols-3">
+                                <div class="neutral-border tw-p-1">
+                                    <pre>CSR PENDING: {{csrPending}}</pre>
+                                    <pre>CSR DATA: {{csrData}}</pre>
+                                    <Button @click="csrPost" :label="'CSR Post'" />
+                                </div>
+                                <div class="neutral-border tw-p-1">
+                                    <pre>CSR NO ERROR PROMPT PENDING: {{csrNoPromptPending}}</pre>
+                                    <pre>CSR NO ERROR PROMPT DATA: {{csrNoPromptData}}</pre>
+                                    <Button @click="csrNoPromptPost" :label="'CSR NO PROMPT Post'" />
+                                </div>
+                                <div class="neutral-border tw-p-1">
+                                    <pre>SSR LAZY FETCH PENDING: {{ssrPending}}</pre>
+                                    <pre>SSR LAZY FETCH DATA: {{ssrData}}</pre>
+                                    <Button @click="ssrPost" :label="'SSR Post'" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                     <!-- Tab Indexed Group -->
                     <div v-if="true">
                         <div class="tw-block tw-p-2 neutral-border">
@@ -826,18 +850,18 @@
                     </div>
 
                     <!-- Default Button -->
-                    <div v-if="true" class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-9">
+                    <div v-if="true" class="tw-grid tw-gap-2 tw-grid-cols-3 sm:tw-grid-cols-4 lg:tw-grid-cols-6 xl:tw-grid-cols-12 2xl:tw-grid-cols-12">
                         <div class="tw-flex tw-items-start tw-justify-start tw-block neutral-border">
                             <Button :size="'2xs'" :icon="'ic:sharp-send-to-mobile'" :label="'XXS Button'"></Button>
                         </div>
                         <div class="tw-flex tw-items-start tw-justify-start tw-block neutral-border">
                             <Button :size="'xs'" :icon="'ic:sharp-send-to-mobile'" :label="'XS Button'"></Button>
                         </div>
-                        <div class="tw-flex tw-items-start tw-justify-start tw-block neutral-border">
-                            <Button :size="'sm'" :icon="'ic:sharp-send-to-mobile'" :label="'SM Authenticate'"></Button>
+                        <div class="tw-col-span-2 tw-flex tw-items-start tw-justify-start tw-block neutral-border">
+                            <Button :size="'sm'" :icon="'ic:sharp-send-to-mobile'" @click="showPrompt" :label="'SM Show Prompt'"></Button>
                         </div>
-                        <div class="tw-flex tw-items-start tw-justify-start tw-block neutral-border">
-                            <Button :size="'md'" :icon="'ic:sharp-send-to-mobile'" :label="'MD Authenticate'"></Button>
+                        <div class="tw-col-span-2 tw-flex tw-items-start tw-justify-start tw-block neutral-border">
+                            <Button :size="'md'" :icon="'ic:sharp-send-to-mobile'" @click="showServiceError" :label="'MD Show Service Error'"></Button>
                         </div>
                         <div class="tw-flex tw-items-start tw-justify-start tw-block neutral-border">
                             <Button :disabled="true" :icon="'eos-icons:compass'" :label="'Disabled'"></Button>
@@ -845,7 +869,7 @@
                         <div class="tw-col-span-2 tw-flex tw-items-start tw-justify-start tw-block tw-w-full neutral-border">
                             <Button @click="$themeStore.setTheme('blue')" :size="'lg'" :icon="'mdi:palette-swatch-variant'" :label="'Blue Theme'"></Button>
                         </div>
-                        <div class="tw-col-span-2 tw-flex tw-items-start tw-justify-start tw-block tw-w-full neutral-border">
+                        <div class="tw-col-span-3 tw-flex tw-items-start tw-justify-start tw-block tw-w-full neutral-border">
                             <Button :size="'xl'" :icon="'eos-icons:atom-electron'" :label="'XL Authenticate'"></Button>
                         </div>
                     </div>
@@ -1201,6 +1225,108 @@ let tabGroup = reactive({
     'icon' : 'ic:sharp-qr-code',
     'size' : 'md'
 });
+
+function showPrompt(){
+    useNuxtApp().$promptStore.setPrompt({
+        icon: 'mdi:connection',
+        title: 'Title',
+        message: 'Message.',
+        action: {
+            callback: () => {
+                alert('Prompt callback');
+            },
+            label: 'Close'
+        }
+    });
+}
+function showServiceError(){
+    useNuxtApp().$coreStore.setServiceError({
+        prompt: true,
+        icon: 'mdi:connection',
+        title: 'Service Error',
+        payload: {
+            'message': 'Example message',
+            'errors': [
+                'error 1',
+                'error 2',
+            ]
+        }
+    });
+}
+
+const csrData = ref('');
+const csrPending = ref(false);
+const csrNoPromptData = ref('');
+const csrNoPromptPending = ref(false);
+
+async function csrPost(){
+    csrData.value = '';
+    csrPending.value = true;
+
+    await laraFetch("/api/test-post", {
+        method: 'POST',
+    }, {
+        onRequest: () => {
+            console.log("CALLBACK ON REQUEST");
+        },
+        onRequestError: () => {
+            console.log("CALLBACK ON REQUEST ERROR");
+            csrPending.value = false;
+        },
+        onResponse: (request, response, options) => {
+            console.log("CALLBACK ON RESPONSE");
+            csrPending.value = false;
+            csrData.value = response._data;
+        },
+        onSuccessResponse: (request, response, options) => {
+            console.log("CALLBACK ON SUCCESS RESPONSE");
+        },
+        onNotAcceptableResponse: (request, response, options) => {
+            console.log("CALLBACK ON NOT ACCEPTABLE RESPONSE");
+        }
+    });
+}
+async function csrNoPromptPost(){
+    csrNoPromptData.value = '';
+    csrNoPromptPending.value = true;
+
+    await laraFetch("/api/test-post", {
+        method: 'POST',
+    }, {
+        onRequestError: () => {
+            csrNoPromptPending.value = false;
+        },
+        onResponse: (request, response, options) => {
+            csrNoPromptPending.value = false;
+            csrNoPromptData.value = response._data;
+        }
+    }, false);
+}
+
+const {
+    data: ssrData,
+    pending: ssrPending,
+    execute: ssrPost,
+} = laraSsrFetch("/api/test-post", {
+    lazy: true,
+    method: 'POST',
+}, {
+    onRequest: () => {
+        console.log("CALLBACK ON REQUEST");
+    },
+    onRequestError: () => {
+        console.log("CALLBACK ON REQUEST ERROR");
+    },
+    onResponse: (request, response, options) => {
+        console.log("CALLBACK ON RESPONSE");
+    },
+    onSuccessResponse: (request, response, options) => {
+        console.log("CALLBACK ON SUCCESS RESPONSE");
+    },
+    onNotAcceptableResponse: (request, response, options) => {
+        console.log("CALLBACK ON NOT ACCEPTABLE RESPONSE");
+    }
+}, true);
 
 let formStore = $formStore;
 let remember1 = ref(null);
