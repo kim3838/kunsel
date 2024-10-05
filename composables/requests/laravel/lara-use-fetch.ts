@@ -1,7 +1,7 @@
 
 import type {UseFetchOptions} from "nuxt/app";
 
-export async function laraFetch<T>(
+export function laraUseFetch<T>(
     path: string,
     options: UseFetchOptions<T> = {},
     callbacks: Object = {},
@@ -14,28 +14,17 @@ export async function laraFetch<T>(
     } = laraInterceptor();
     const {baseURL} = useRuntimeConfig().public;
 
-    //Re-fetch csrf token when performing modifying action
-    if (process.client && ["post", "delete", "put", "patch"].includes(
-        options?.method?.toLowerCase() ?? ""
-    )) {
-        await $fetch("/sanctum/csrf-cookie", {
-            baseURL: baseURL,
-            credentials: "include",
-        });
-    }
-
-    await $fetch(baseURL + path, {
+    return useFetch(baseURL + path, {
         credentials: 'include',
+        watch: false,
+        server: false,
         async onRequest(){
-            console.log({'LARA 0FETCH' : 'START: ' + baseURL + path})
+            console.log({'LARA USEFETCH' : 'START: ' + baseURL + path})
 
-            await laraInterceptorOnRequest(
-                callbacks,
-                promptErrorResponse
-            );
+            await laraInterceptorOnRequest(callbacks, promptErrorResponse);
         },
         async onRequestError({ request, options, error }) {
-            console.log({'LARA 0FETCH ERROR' : error.message})
+            console.log({'LARA USEFETCH ERROR' : error.message});
 
             await laraInterceptorOnRequestError(
                 callbacks,
@@ -44,7 +33,7 @@ export async function laraFetch<T>(
             );
         },
         async onResponse({request, response, options}) {
-            console.log({'LARA 0FETCH RESPONSE CODE' : response?._data?.code})
+            console.log({'LARA USEFETCH ON-RESPONSE CODE' : response?._data?.code});
 
             await laraInterceptorOnResponse(
                 callbacks,
@@ -56,6 +45,6 @@ export async function laraFetch<T>(
         headers: {
             ...laraHeaders(),
             ...options?.headers
-        },
-    }).catch((error) => console.log({'LARA 0FETCH ERROR': error}));
+        }
+    });
 }
