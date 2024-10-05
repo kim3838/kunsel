@@ -373,19 +373,19 @@
                             <InputLabel class="tw-mb-2" :size="'md'" value="Lara Fetch Group" />
                             <div class="tw-grid tw-gap-1 tw-grid-cols-1 sm:tw-grid-cols-2 md:tw-grid-cols-2 lg:tw-grid-cols-3">
                                 <div class="neutral-border tw-p-1">
-                                    <pre>CSR PENDING: {{csrPending}}</pre>
-                                    <pre>CSR DATA: {{csrData}}</pre>
-                                    <Button @click="csrPost" :label="'CSR Post'" />
+                                    <pre>OFETCH PENDING: {{ofetchPending}}</pre>
+                                    <pre>OFETCH DATA: {{ofetchData}}</pre>
+                                    <Button @click="oFetchPost" :label="'OFetch Post'" />
                                 </div>
                                 <div class="neutral-border tw-p-1">
-                                    <pre>CSR NO ERROR PROMPT PENDING: {{csrNoPromptPending}}</pre>
-                                    <pre>CSR NO ERROR PROMPT DATA: {{csrNoPromptData}}</pre>
-                                    <Button @click="csrNoPromptPost" :label="'CSR NO PROMPT Post'" />
+                                    <pre>OFETCH NO ERROR PROMPT PENDING: {{ofetchNoPromptPending}}</pre>
+                                    <pre>OFETCH NO ERROR PROMPT DATA: {{ofetchNoPromptData}}</pre>
+                                    <Button @click="oFetchNoPromptPost" :label="'OFetch NO PROMPT Post'" />
                                 </div>
                                 <div class="neutral-border tw-p-1">
-                                    <pre>SSR LAZY FETCH PENDING: {{ssrPending}}</pre>
-                                    <pre>SSR LAZY FETCH DATA: {{ssrData}}</pre>
-                                    <Button @click="ssrPost" :label="'SSR Post'" />
+                                    <pre>USEFETCH LAZY FETCH PENDING: {{useFetchPending}}</pre>
+                                    <pre>USEFETCH LAZY FETCH DATA: {{!useFetchPending ? useFetchData : null}}</pre>
+                                    <Button @click="useFetchPost" :label="'useFetch Post'" />
                                 </div>
                             </div>
                         </div>
@@ -1209,7 +1209,7 @@
 
 <script setup lang="ts">
 import dataPayload from '@/public/data/payload.js';
-definePageMeta({middleware: 'guest'});
+definePageMeta({middleware: 'auth'});
 useLayout().setNavigationMode('solid', 'Prototype.vue');
 
 const clientReadyState = useClientReadyState();
@@ -1254,14 +1254,14 @@ function showServiceError(){
     });
 }
 
-const csrData = ref('');
-const csrPending = ref(false);
-const csrNoPromptData = ref('');
-const csrNoPromptPending = ref(false);
+const ofetchData = ref('');
+const ofetchPending = ref(false);
+const ofetchNoPromptData = ref('');
+const ofetchNoPromptPending = ref(false);
 
-async function csrPost(){
-    csrData.value = '';
-    csrPending.value = true;
+async function oFetchPost(){
+    ofetchData.value = '';
+    ofetchPending.value = true;
 
     await laraFetch("/api/test-post", {
         method: 'POST',
@@ -1271,12 +1271,12 @@ async function csrPost(){
         },
         onRequestError: () => {
             console.log("CALLBACK ON REQUEST ERROR");
-            csrPending.value = false;
+            ofetchPending.value = false;
         },
         onResponse: (request, response, options) => {
             console.log("CALLBACK ON RESPONSE");
-            csrPending.value = false;
-            csrData.value = response._data;
+            ofetchPending.value = false;
+            ofetchData.value = response._data;
         },
         onSuccessResponse: (request, response, options) => {
             console.log("CALLBACK ON SUCCESS RESPONSE");
@@ -1286,45 +1286,47 @@ async function csrPost(){
         }
     });
 }
-async function csrNoPromptPost(){
-    csrNoPromptData.value = '';
-    csrNoPromptPending.value = true;
+async function oFetchNoPromptPost(){
+    ofetchNoPromptData.value = '';
+    ofetchNoPromptPending.value = true;
 
     await laraFetch("/api/test-post", {
         method: 'POST',
     }, {
         onRequestError: () => {
-            csrNoPromptPending.value = false;
+            ofetchNoPromptPending.value = false;
         },
         onResponse: (request, response, options) => {
-            csrNoPromptPending.value = false;
-            csrNoPromptData.value = response._data;
+            ofetchNoPromptPending.value = false;
+            ofetchNoPromptData.value = response._data;
         }
     }, false);
 }
 
+const useFetchData = ref('');
 const {
-    data: ssrData,
-    pending: ssrPending,
-    execute: ssrPost,
-} = laraSsrFetch("/api/test-post", {
-    lazy: true,
+    pending: useFetchPending,
+    execute: useFetchPost,
+} = await laraUseFetch("/api/test-post", {
+    lazy: false,
     method: 'POST',
 }, {
-    onRequest: () => {
+    onRequest: async () => {
         console.log("CALLBACK ON REQUEST");
     },
-    onRequestError: () => {
+    onRequestError: async () => {
         console.log("CALLBACK ON REQUEST ERROR");
     },
-    onResponse: (request, response, options) => {
+    onResponse: async (request, response, options) => {
         console.log("CALLBACK ON RESPONSE");
     },
-    onSuccessResponse: (request, response, options) => {
+    onSuccessResponse: async (request, response, options) => {
         console.log("CALLBACK ON SUCCESS RESPONSE");
+        useFetchData.value = _get(response, "_data", '');
     },
-    onNotAcceptableResponse: (request, response, options) => {
+    onNotAcceptableResponse: async (request, response, options) => {
         console.log("CALLBACK ON NOT ACCEPTABLE RESPONSE");
+        useFetchData.value = _get(response, "_data", '');
     }
 }, true);
 
