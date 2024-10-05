@@ -56,8 +56,8 @@
                         <p class="tw-font-medium tw-text-lg">Browser Sessions</p>
                         <p class="tw-text-base">Manage and log out your active sessions on other browsers and devices. </p>
 
-                        <div v-if="!pendingBrowserSessions && sessions.length > 0" class="tw-mt-5 tw-space-y-6">
-                            <div v-for="(session, i) in sessions" :key="i" class="tw-flex tw-items-center">
+                        <div v-if="!pendingBrowserSessions && browserSessions.length > 0" class="tw-mt-5 tw-space-y-6">
+                            <div v-for="(session, i) in browserSessions" :key="i" class="tw-flex tw-items-center">
                                 <div>
                                     <ClientOnly><Icon class="tw-h-8 tw-w-8" :name="session.agent.platform ? 'zondicons:computer-desktop' : 'material-symbols:question-mark'"></Icon></ClientOnly>
                                 </div>
@@ -187,6 +187,7 @@
 
 <script setup lang="ts">
 definePageMeta({middleware: 'auth'});
+useLayout().setNavigationMode('solid', 'Profile.vue');
 const {$promptStore} = useNuxtApp();
 
 const user = userState();
@@ -195,6 +196,8 @@ const userEmail = computed(() => _get(user.value, 'email', null));
 const twoFactorEnabled = computed(() => _get(user.value, 'two_factor_enabled', null));
 const twoFactorConfirmed = computed(() => _get(user.value, 'two_factor_confirmed', null));
 const twoFactorConfirming = ref(false);
+const pendingBrowserSessions = ref(false);
+const browserSessions = ref([]);
 const setupKey = ref(null);
 const qrCode = ref(null);
 const recoveryCodes = ref([]);
@@ -281,19 +284,6 @@ const executeLogoutOtherDevice = async () => {
     });
 }
 
-const sessions = useState('profile-sessions', ()=>{
-    return [];
-});
-const {pending:pendingBrowserSessions} = laraSsrFetch("/api/sessions", {
-    lazy: true
-}, {
-    onSuccessResponse: (request, response, options) => {
-        sessions.value = _get(response, '_data.values', []);
-    }
-});
-
-useLayout().setNavigationMode('solid', 'Profile.vue');
-
 const enableTwoFactorPending = ref(false);
 const executeEnableTwoFactor = async () => {
     enableTwoFactorPending.value = true;
@@ -355,10 +345,28 @@ const executeTwoFactorQrCode = async () => {
     });
 }
 
-if(twoFactorConfirming.value){
-    executeTwoFactorSetupKey();
-    executeTwoFactorQrCode();
-}
+onNuxtReady(async () => {
+    pendingBrowserSessions.value = true;
+
+    await laraFetch("/api/sessions", {
+        method: 'GET',
+    }, {
+        onRequestError: () => {
+            pendingBrowserSessions.value = false;
+        },
+        onResponse: () => {
+            pendingBrowserSessions.value = false;
+        },
+        onSuccessResponse: (request, response, options) => {
+            browserSessions.value = _get(response, "_data.values", []);
+        }
+    });
+
+    if(twoFactorConfirming.value){
+        executeTwoFactorSetupKey();
+        executeTwoFactorQrCode();
+    }
+});
 
 const pendingTwoFactorRecoveryCodes = ref(false);
 const executeTwoFactorRecoveryCodes = async () => {
