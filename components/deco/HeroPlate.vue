@@ -1,7 +1,7 @@
 <template>
     <div class="tw-relative tw-w-max">
 
-        <div v-if="bookmark?.trim()" class="tw-relative tw-z-20 tw-w-full tw-flex tw-justify-end">
+        <div v-if="bookmark?.trim()" class="tw-relative tw-z-20 tw-w-full tw-flex tw-justify-end tw-font-data">
             <div class="bookmark tw-w-max tw-text-sm tw-leading-4">
                 {{bookmark}}
             </div>
@@ -62,6 +62,7 @@ const primaryColor = computed(() => {
         'tulip': palletes.value.tulip.primary,
         'gold': '#a67c00',
         'strawberry': '#ffbbbb',
+        'emerald': '#058743',
     }[props.theme];
 });
 const primaryColor30 = computed(() => {
@@ -70,6 +71,7 @@ const primaryColor30 = computed(() => {
         'tulip': palletes.value.tulip.primary,
         'gold': '#ffbf00',
         'strawberry': '#ffbbbb',
+        'emerald': '#00d062',
     }[props.theme];
 
     return primaryColor + hexAlpha.value['30'];
@@ -80,6 +82,7 @@ const primaryColor50 = computed(() => {
         'tulip': palletes.value.tulip.primary,
         'gold': '#ffbf00',
         'strawberry': '#ffe4e4',
+        'emerald': '#00d062',
     }[props.theme];
 
     return primaryColor + hexAlpha.value['50'];
@@ -90,6 +93,7 @@ const primaryColor70 = computed(() => {
         'tulip': palletes.value.tulip.primary,
         'gold': '#a67c00',
         'strawberry': '#ffe4e4',
+        'emerald': '#009c4a',
     }[props.theme];
 
     return primaryColor + hexAlpha.value['70'];
@@ -100,6 +104,7 @@ const bookmarkText = computed(()=>{
         'tulip': '#ffffff',
         'gold': '#ffffff',
         'strawberry': '#ffffff',
+        'emerald': '#ffffff',
     }[props.theme];
 });
 const textPrimary = computed(()=>{
@@ -108,14 +113,7 @@ const textPrimary = computed(()=>{
         'tulip': '#ffffff',
         'gold': '#ffffff',
         'strawberry': '#ab3030',
-    }[props.theme];
-});
-const textAccent = computed(()=>{
-    return {
-        null: '#c0c0c0',
-        'tulip': '#ffdab9',
-        'gold': '#ffefc8',
-        'strawberry': '#af4949',
+        'emerald': '#ffffff',
     }[props.theme];
 });
 </script>
@@ -133,45 +131,43 @@ const textAccent = computed(()=>{
     text-shadow: 0px 1px 2px rgba(0, 0, 0, 0.4);
 }
 
-//@for $i from 1 through 20 {
-//    .border-fragment:nth-child(#{$i}) {
-//        animation-delay: #{random(5) * 0.5}s !important;
-//    }
-//}
-
-@keyframes animate-border {
-    0% { border-image-source: linear-gradient(360deg,   v-bind(primaryColor),   transparent); }
-    25% { border-image-source: linear-gradient(90deg,   v-bind(primaryColor),   transparent); }
-    50% { border-image-source: linear-gradient(270deg,  v-bind(primaryColor),   transparent); }
-    75% { border-image-source: linear-gradient(180deg,  v-bind(primaryColor),   transparent); }
-    100% { border-image-source: linear-gradient(360deg, v-bind(primaryColor),   transparent); }
-}
-
 .border-fragment{
     box-sizing: border-box;
     border-image-slice: 1;
     border-width: 1px;
-    border-image-source: linear-gradient(360deg, v-bind(primaryColor), transparent);
-    -webkit-animation: animate-border 3s ease-in infinite;
-    -moz-animation: animate-border 3s ease-in infinite;
-    animation: animate-border 3s ease-in infinite;
+    border-image-source: linear-gradient(180deg, v-bind(primaryColor), transparent);
 }
+
 .base-fragment{
     background:
         linear-gradient(
-            to right,
-            v-bind(primaryColor30) 0%,
-            v-bind(primaryColor70) 10%,
-            v-bind(primaryColor50) 50%,
-            v-bind(primaryColor) 90%,
-            v-bind(primaryColor30) 100%
+                to right,
+                v-bind(primaryColor50) 0%,
+                v-bind(primaryColor) 10%,
+                v-bind(primaryColor70) 50%,
+                v-bind(primaryColor) 90%,
+                v-bind(primaryColor50) 100%
         );
+}
+
+.base-fragment::before{
+    content: '';
+    position: absolute;
+    top:0;
+    bottom: 0;
+    left:0;
+    right:0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.4;
+    background-image: url('/images/deco/ripple_texture.png'), linear-gradient(to right, transparent, v-bind(primaryColor));
+    background-size: cover;
 }
 .text-fragment{
     background: linear-gradient(
         to right,
         v-bind(textPrimary) 0%,
-        v-bind(textAccent) 50%,
+        v-bind(textPrimary) 50%,
         v-bind(textPrimary) 100%
     );
 }
