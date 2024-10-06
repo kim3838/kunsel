@@ -925,44 +925,68 @@
                     </div>
 
                     <!-- Hero Plate -->
-                    <div v-if="false" class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-4">
-                        <div>
-                            <HeroPlate :size="'sm'" :bookmark="'FOR YOU'" :label="'B760M-MEOW'"/>
-                        </div>
-                        <div>
-                            <HeroPlate :size="'sm'" :bookmark="'NEW ARRIVAL'" :theme="'gold'" :label="'COLORFIRE Meow Series'"/>
-                        </div>
-                        <div>
-                            <HeroPlate :size="'sm'" :bookmark="'TRENDING'" :theme="'strawberry'" :label="'RTX 4060 MEOW-ORG'"/>
-                        </div>
-                        <div>
-                            <HeroPlate :size="'sm'" :bookmark="'PC CASE'" :theme="'tulip'" :label="'Segotep Memphis-S'"/>
-                        </div>
+                    <div v-if="true" class=" tw-p-2 neutral-border">
+                        <InputLabel class="tw-mb-2" :size="'md'" value="Hero Plate" />
+                        <div class="tw-gap-2 tw-flex tw-items-start tw-justify-start tw-flex-wrap">
+                            <div >
+                                <div>
+                                    <HeroPlate :size="'sm'" :bookmark="'FOR YOU'" :label="'B760M-MEOW'"/>
+                                </div>
+                                <div>
+                                    <HeroPlate :size="'md'" :bookmark="'FOR YOU'" :label="'B760M-MEOW'"/>
+                                </div>
+                                <div>
+                                    <HeroPlate :size="'lg'" :bookmark="'FOR YOU'" :label="'B760M-MEOW'"/>
+                                </div>
+                            </div>
 
-                        <div>
-                            <HeroPlate :size="'md'" :bookmark="'FOR YOU'" :label="'B760M-MEOW'"/>
-                        </div>
-                        <div>
-                            <HeroPlate :size="'md'" :bookmark="'NEW ARRIVAL'" :theme="'gold'" :label="'COLORFIRE Meow Series'"/>
-                        </div>
-                        <div>
-                            <HeroPlate :size="'md'" :bookmark="'TRENDING'" :theme="'strawberry'" :label="'RTX 4060 MEOW-ORG'"/>
-                        </div>
-                        <div>
-                            <HeroPlate :size="'md'" :bookmark="'PC CASE'" :theme="'tulip'" :label="'Segotep Memphis-S'"/>
-                        </div>
+                            <div>
+                                <div>
+                                    <HeroPlate :size="'sm'" :bookmark="'NEW ARRIVAL'" :theme="'gold'" :label="'COLORFIRE Meow Series'"/>
+                                </div>
+                                <div>
+                                    <HeroPlate :size="'md'" :bookmark="'NEW ARRIVAL'" :theme="'gold'" :label="'COLORFIRE Meow Series'"/>
+                                </div>
+                                <div>
+                                    <HeroPlate :size="'lg'" :bookmark="'NEW ARRIVAL'" :theme="'gold'" :label="'COLORFIRE Meow Series'"/>
+                                </div>
+                            </div>
 
-                        <div>
-                            <HeroPlate :size="'lg'" :bookmark="'FOR YOU'" :label="'B760M-MEOW'"/>
-                        </div>
-                        <div>
-                            <HeroPlate :size="'lg'" :bookmark="'NEW ARRIVAL'" :theme="'gold'" :label="'COLORFIRE Meow Series'"/>
-                        </div>
-                        <div>
-                            <HeroPlate :size="'lg'" :bookmark="'TRENDING'" :theme="'strawberry'" :label="'RTX 4060 MEOW-ORG'"/>
-                        </div>
-                        <div>
-                            <HeroPlate :size="'lg'" :bookmark="'PC CASE'" :theme="'tulip'" :label="'Segotep Memphis-S'"/>
+                            <div>
+                                <div>
+                                    <HeroPlate :size="'sm'" :bookmark="'TRENDING'" :theme="'strawberry'" :label="'RTX 4060 MEOW-ORG'"/>
+                                </div>
+                                <div>
+                                    <HeroPlate :size="'md'" :bookmark="'TRENDING'" :theme="'strawberry'" :label="'RTX 4060 MEOW-ORG'"/>
+                                </div>
+                                <div>
+                                    <HeroPlate :size="'lg'" :bookmark="'TRENDING'" :theme="'strawberry'" :label="'RTX 4060 MEOW-ORG'"/>
+                                </div>
+                            </div>
+
+                            <div>
+                                <div>
+                                    <HeroPlate :size="'sm'" :bookmark="'PC CASE'" :theme="'tulip'" :label="'Segotep Memphis-S'"/>
+                                </div>
+                                <div>
+                                    <HeroPlate :size="'md'" :bookmark="'PC CASE'" :theme="'tulip'" :label="'Segotep Memphis-S'"/>
+                                </div>
+                                <div>
+                                    <HeroPlate :size="'lg'" :bookmark="'PC CASE'" :theme="'tulip'" :label="'Segotep Memphis-S'"/>
+                                </div>
+                            </div>
+
+                            <div>
+                                <div>
+                                    <HeroPlate :size="'sm'" :bookmark="'PC CASE'" :theme="'emerald'" :label="'Segotep Memphis-S'"/>
+                                </div>
+                                <div>
+                                    <HeroPlate :size="'md'" :bookmark="'PC CASE'" :theme="'emerald'" :label="'Segotep Memphis-S'"/>
+                                </div>
+                                <div>
+                                    <HeroPlate :size="'lg'" :bookmark="'PC CASE'" :theme="'emerald'" :label="'Segotep Memphis-S'"/>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
