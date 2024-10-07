@@ -75,12 +75,11 @@ const glint4TransitionDelay = computed(() => {
 .glint-trail {
     overflow: hidden;
     position: relative;
-    z-index: 50;
 }
 .glint-trail .glint {
     position: absolute;
     display: block;
-    z-index: 50;
+    z-index: 30;
     border-radius: 2px;
 }
 .glint-trail .glint:nth-child(1),
