@@ -446,6 +446,11 @@ const selectionHeaderSummary = computed(()=>{
 });
 
 const selectionSummary = computed(() => {
+
+    if(pending.value){
+        return 'Loading...';
+    }
+
     if(props.payload.selected.length === 0){
         return "None Selected";
     } else if(props.payload.selected.length < 5) {
@@ -708,7 +713,6 @@ watch(selectionScrollBottomReached, (bottomReached) => {
 watch(() => {
     return props.payload.fetch.filters.search.keyword;
 }, (keyword) => {
-    console.log({'Search keyword': keyword});
     clearTimeout(props.payload.fetch.filters.search.callback);
 
     props.payload.fetch.filters.search.callback = setTimeout(() => {

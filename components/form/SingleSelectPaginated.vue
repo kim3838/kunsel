@@ -377,6 +377,11 @@ const selectionHeaderSummary = computed(()=>{
 });
 
 const selectionSummary = computed(() => {
+
+    if(pending.value){
+        return 'Loading...';
+    }
+
     if(props.payload.selected == null){
         return "None Selected";
     } else {
