@@ -1,5 +1,5 @@
 <template>
-    <div class="glint-trail tw-w-full tw-h-full">
+    <div :class="[glintRootClass]" class="tw-w-full tw-h-full">
         <span class="glint"></span>
         <span class="glint"></span>
         <span class="glint"></span>
@@ -18,6 +18,10 @@ const {
 } = storeToRefs($themeStore);
 
 const props = defineProps({
+    enable: {
+        type: Boolean,
+        default: true
+    },
     orientation: {
         type: String,
         default: 'portrait'
@@ -26,6 +30,10 @@ const props = defineProps({
         type: String,
         default: ''
     }
+});
+
+const glintRootClass = computed(() => {
+    return props.enable ? 'glint-trail' : '';
 });
 
 const glintColor = computed(() => {
