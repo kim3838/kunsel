@@ -4,58 +4,60 @@
         :tabindex="tabindexComputed"
         :style="{width: width}"
         class="tw-font-data focus:tw-outline-none">
-        <div
-            ref="selectHeader"
-            :style="{'border-radius': '2px'}"
-            class="tw-w-full tw-flex tw-justify-start background"
-            :class="[heightClass, borderClass]">
-            <div :style="{display: !active ? 'inline-block' : 'none'}" :class="[iconHolderClass]" class="tw-flex-none tw-flex tw-justify-end tw-items-center">
-                <ClientOnly><Icon :class="[iconClass]" :name="pending ? 'eos-icons:loading' : icon"/></ClientOnly>
-            </div>
-            <div :style="{display: !active ? 'inline-block' : 'none'}" class="tw-w-full tw-relative tw-cursor-pointer">
-                <div :class="[selectionClass]" class="tw-absolute tw-truncate tw-flex tw-items-center">
-                    {{selectionSummary}}
+        <Glint :enable="glint" :orientation="'landscape'" :color="activeBorderComputed">
+            <div
+                ref="selectHeader"
+                :style="{'border-radius': '2px'}"
+                class="tw-w-full tw-flex tw-justify-start background"
+                :class="[heightClass, borderClass]">
+                <div :style="{display: !active ? 'inline-block' : 'none'}" :class="[iconHolderClass]" class="tw-flex-none tw-flex tw-justify-end tw-items-center">
+                    <ClientOnly><Icon :class="[iconClass]" :name="pending ? 'eos-icons:loading' : icon"/></ClientOnly>
                 </div>
-                <div :class="[dropDownIconHolderClass]" class="tw-absolute tw-right-0 tw-top-0 tw-flex tw-justify-center tw-items-center">
-                    <ClientOnly><Icon :class="[dropDownIconClass]" name="ic:baseline-arrow-drop-down" /></ClientOnly>
+                <div :style="{display: !active ? 'inline-block' : 'none'}" class="tw-w-full tw-relative tw-cursor-pointer">
+                    <div :class="[selectionClass]" class="tw-absolute tw-truncate tw-flex tw-items-center">
+                        {{selectionSummary}}
+                    </div>
+                    <div :class="[dropDownIconHolderClass]" class="tw-absolute tw-right-0 tw-top-0 tw-flex tw-justify-center tw-items-center">
+                        <ClientOnly><Icon :class="[dropDownIconClass]" name="ic:baseline-arrow-drop-down" /></ClientOnly>
+                    </div>
                 </div>
-            </div>
 
-            <div :style="{display: active ? 'block' : 'none'}" class="tw-w-full tw-h-full tw-relative tw-overflow-hidden">
-                <div v-if="searchable" :class="[inputHolderClass]" class="tw-absolute tw-left-0 tw-h-full tw-flex tw-items-center">
-                    <Input
-                        v-if="active"
-                        :tabindex="tabindexInput"
-                        :readonly="!searchable"
-                        autocomplete="off"
-                        ref="selectionSearch"
-                        type="text"
-                        :placeholder="searchable ? 'Search...' : selectionSummary"
-                        @keydown="keyHandler"
-                        v-model="props.payload.fetch.filters.search.keyword"
-                        :size="inputSize"
-                        :withBorder="false"
-                        :rounded="false"
-                        :focusRing="false"
-                        :disabled="false" />
-                </div>
-                <div v-else :class="[selectionClass]" class="tw-absolute tw-truncate tw-flex tw-items-center">
-                    {{selectionSummary}}
-                </div>
-                <div
-                    :class="[dropDownIconHolderClass]"
-                    class="tw-absolute tw-right-0 tw-top-0 tw-flex tw-justify-center tw-items-center">
-                    <ClientOnly>
-                        <Icon
-                            v-if="searchable"
-                            @click="clearSearch"
-                            :class="[dropDownIconClass]"
-                            class="tw-cursor-pointer"
-                            :name="pending ? 'eos-icons:loading' : 'ic:baseline-clear'" />
-                    </ClientOnly>
+                <div :style="{display: active ? 'block' : 'none'}" class="tw-w-full tw-h-full tw-relative tw-overflow-hidden">
+                    <div v-if="searchable" :class="[inputHolderClass]" class="tw-absolute tw-left-0 tw-h-full tw-flex tw-items-center">
+                        <Input
+                            v-if="active"
+                            :tabindex="tabindexInput"
+                            :readonly="!searchable"
+                            autocomplete="off"
+                            ref="selectionSearch"
+                            type="text"
+                            :placeholder="searchable ? 'Search...' : selectionSummary"
+                            @keydown="keyHandler"
+                            v-model="props.payload.fetch.filters.search.keyword"
+                            :size="inputSize"
+                            :withBorder="false"
+                            :rounded="false"
+                            :focusRing="false"
+                            :disabled="false" />
+                    </div>
+                    <div v-else :class="[selectionClass]" class="tw-absolute tw-truncate tw-flex tw-items-center">
+                        {{selectionSummary}}
+                    </div>
+                    <div
+                        :class="[dropDownIconHolderClass]"
+                        class="tw-absolute tw-right-0 tw-top-0 tw-flex tw-justify-center tw-items-center">
+                        <ClientOnly>
+                            <Icon
+                                v-if="searchable"
+                                @click="clearSearch"
+                                :class="[dropDownIconClass]"
+                                class="tw-cursor-pointer"
+                                :name="pending ? 'eos-icons:loading' : 'ic:baseline-clear'" />
+                        </ClientOnly>
+                    </div>
                 </div>
             </div>
-        </div>
+        </Glint>
 
         <div
             v-show="active"
@@ -127,6 +129,10 @@ const props = defineProps({
     inHorizontalScrollable: Boolean,
     dropShadow: Boolean,
     alwaysActive: Boolean,
+    glint: {
+        type: Boolean,
+        default: false
+    },
     valuePersist: {
         type: Boolean,
         default: false
