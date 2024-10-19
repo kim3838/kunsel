@@ -15,6 +15,7 @@
                     rounded ? 'tw-rounded-sm': '']"
                 class="tw-font-data tw-pl-1 tw-form-input tw-w-full"
                 :value="modelValue"
+                :placeholder="placeholder"
                 @input="$emit('update:modelValue', $event.target.value)"
                 ref="input">
         </Glint>
@@ -49,6 +50,10 @@ const props = defineProps({
     type: {
         type: String,
         default: 'text'
+    },
+    placeholder: {
+        type: String,
+        default: ''
     },
     size: {
         default: 'md'
