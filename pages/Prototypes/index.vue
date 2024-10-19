@@ -29,11 +29,11 @@
                         <div class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-8">
                             <div class="tw-bloc">
                                 <InputLabel :size="'sm'" value="Date Added: From"/>
-                                <InputWithIcon :icon="'ion:calendar-number-sharp'" :id="'datetimefrom'" readonly v-model="filters.datetimeFrom" :size="'md'" class="tw-w-full" :type="'text'"/>
+                                <InputWithIcon :icon="'ion:calendar-number-sharp'" :id="'datetimefrom'" readonly v-model="filters.datetimeFrom" :size="'md'" class="tw-w-full" />
                             </div>
                             <div class="tw-block">
                                 <InputLabel :size="'sm'" value="Date Added: To"/>
-                                <InputWithIcon :icon="'ion:calendar-number-sharp'" :id="'datetimeto'" readonly v-model="filters.datetimeTo" :size="'md'" class="tw-w-full" :type="'text'"/>
+                                <InputWithIcon :icon="'ion:calendar-number-sharp'" :id="'datetimeto'" readonly v-model="filters.datetimeTo" :size="'md'" class="tw-w-full" />
                             </div>
                         </div>
 
@@ -74,8 +74,7 @@
                                             :override="{font_size: slot.datepickerFontSize}"
                                             in-cell
                                             :size="slot.inputSize"
-                                            class="tw-w-full"
-                                            :type="'text'" />
+                                            class="tw-w-full" />
                                     </template>
                                     <template v-slot:cell.actions="{cell, slot, scrollReference}">
                                         <div class="tw-h-full tw-space-x-0.5 tw-w-full tw-flex tw-items-center">

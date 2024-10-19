@@ -43,7 +43,6 @@
                             <InputWithIcon
                                 :icon="'simple-icons:googlecalendar'"
                                 :size="'md'"
-                                :type="'text'"
                                 :id="'date'"
                                 v-model="formStore.filters.date"
                                 autocomplete="off"
@@ -55,7 +54,6 @@
                             <InputWithIcon
                                 :icon="'simple-icons:googlecalendar'"
                                 :size="'md'"
-                                :type="'text'"
                                 :id="'datetime'"
                                 v-model="formStore.filters.dateTime"
                                 autocomplete="off"
@@ -68,7 +66,6 @@
                             <InputWithIcon
                                 :icon="'simple-icons:protoncalendar'"
                                 :size="'md'"
-                                :type="'text'"
                                 :id="'month'"
                                 v-model="formStore.filters.monthLabel"
                                 autocomplete="off"
@@ -232,8 +229,7 @@
                                         v-model="cell.datetime_added"
                                         readonly
                                         in-cell
-                                        :size="slot.inputSize"
-                                        :type="'text'" />
+                                        :size="slot.inputSize" />
                                 </template>
                             </DataTable>
                         </div>
@@ -260,8 +256,7 @@
                                         v-model="cell.datetime_added"
                                         readonly
                                         in-cell
-                                        :size="slot.inputSize"
-                                        :type="'text'" />
+                                        :size="slot.inputSize" />
                                 </template>
                             </DataTable>
                         </div>
@@ -360,8 +355,7 @@
                                         v-model="cell.datetime_added"
                                         readonly
                                         in-cell
-                                        :size="slot.inputSize"
-                                        :type="'text'" />
+                                        :size="slot.inputSize" />
                                 </template>
                             </DataTable>
                         </div>
@@ -415,7 +409,7 @@
                                         :icon="tabGroup.icon"/>
                                 </div>
                                 <div>
-                                    <InputWithIcon :tabindex="4" :size="tabGroup.size" :icon="tabGroup.icon" :placeholder="'Enter value'" type="text" autocomplete="off" />
+                                    <InputWithIcon :tabindex="4" :size="tabGroup.size" :icon="tabGroup.icon" :placeholder="'Enter value'" autocomplete="off" />
                                 </div>
                                 <div>
                                     <MultiSelect
@@ -430,7 +424,7 @@
                                         :icon="tabGroup.icon"/>
                                 </div>
                                 <div>
-                                    <InputWithIcon :tabindex="7" :size="tabGroup.size" :icon="tabGroup.icon" :placeholder="'Enter value'" type="text" autocomplete="off" />
+                                    <InputWithIcon :tabindex="7" :size="tabGroup.size" :icon="tabGroup.icon" :placeholder="'Enter value'" autocomplete="off" />
                                 </div>
                                 <div>
                                     <Input :tabindex="8" :size="tabGroup.size" :placeholder="'Enter value'" type="text" autocomplete="off" />
@@ -451,7 +445,7 @@
                                         :icon="tabGroup.icon"/>
                                 </div>
                                 <div>
-                                    <InputWithIcon :tabindex="11" :size="tabGroup.size" :icon="tabGroup.icon" :placeholder="'Enter value'" type="text" autocomplete="off" />
+                                    <InputWithIcon :tabindex="11" :size="tabGroup.size" :icon="tabGroup.icon" :placeholder="'Enter value'" autocomplete="off" />
                                 </div>
                                 <div>
                                     <SingleSelect
@@ -468,7 +462,7 @@
                                         :options="singleSelectPrototype"/>
                                 </div>
                                 <div>
-                                    <InputWithIcon :tabindex="14" :size="tabGroup.size" :icon="tabGroup.icon" :placeholder="'Enter value'" type="text" autocomplete="off" />
+                                    <InputWithIcon :tabindex="14" :size="tabGroup.size" :icon="tabGroup.icon" :placeholder="'Enter value'" autocomplete="off" />
                                 </div>
                             </div>
                         </div>
@@ -495,7 +489,7 @@
                                             :icon="tabGroup.icon"/>
                                     </div>
                                     <div>
-                                        <InputWithIcon :size="'2xs'" :icon="tabGroup.icon" :placeholder="'Enter value'" type="text" autocomplete="off" />
+                                        <InputWithIcon :size="'2xs'" :icon="tabGroup.icon" :placeholder="'Enter value'" autocomplete="off" />
                                     </div>
                                     <div>
                                         <MultiSelect
@@ -541,7 +535,7 @@
                                     <div><Button class="tw-w-1/2" :size="'2xs'" :icon="tabGroup.icon" :variant="'flat'" :label="'Button'" /></div>
                                     <div><Button class="tw-w-1/3" :size="'2xs'" :icon="tabGroup.icon" :variant="'flat'" disabled :label="'Button'" /></div>
                                     <div><Button class="" :size="'2xs'" :icon="tabGroup.icon" :variant="'flat'" :label="'Button'" /></div>
-                                    <div><InputWithIcon ref="inputValue" :size="'2xs'" :icon="tabGroup.icon" :placeholder="'Enter value'" :type="'text'" autocomplete="off" /></div>
+                                    <div><InputWithIcon ref="inputValue" :size="'2xs'" :icon="tabGroup.icon" :placeholder="'Enter value'" autocomplete="off" /></div>
                                     <div><Button class="" :size="'2xs'" :icon="tabGroup.icon" :variant="'flat'" :label="''" /></div>
                                     <div><Button class="" :size="'2xs'" :icon="tabGroup.icon" :label="''" /></div>
                                 </div>
@@ -562,7 +556,7 @@
                                             :icon="tabGroup.icon"/>
                                     </div>
                                     <div>
-                                        <InputWithIcon :size="'xs'" :icon="tabGroup.icon" :placeholder="'Enter value'" type="text" autocomplete="off" />
+                                        <InputWithIcon :size="'xs'" :icon="tabGroup.icon" :placeholder="'Enter value'" autocomplete="off" />
                                     </div>
                                     <div>
                                         <MultiSelect
@@ -608,7 +602,7 @@
                                     <div><Button class="tw-w-1/2" :size="'xs'" :icon="tabGroup.icon" :variant="'flat'" :label="'Button'" /></div>
                                     <div><Button class="tw-w-1/3" :size="'xs'" :icon="tabGroup.icon" :variant="'flat'" disabled :label="'Button'" /></div>
                                     <div><Button class="" :size="'xs'" :icon="tabGroup.icon" :variant="'flat'" :label="'Button'" /></div>
-                                    <div><InputWithIcon ref="inputValue" :size="'xs'" :icon="tabGroup.icon" :placeholder="'Enter value'" :type="'text'" autocomplete="off" /></div>
+                                    <div><InputWithIcon ref="inputValue" :size="'xs'" :icon="tabGroup.icon" :placeholder="'Enter value'" autocomplete="off" /></div>
                                     <div><Button class="" :size="'xs'" :icon="tabGroup.icon" :variant="'flat'" :label="''" /></div>
                                     <div><Button class="" :size="'xs'" :icon="tabGroup.icon" :label="''" /></div>
                                 </div>
@@ -629,7 +623,7 @@
                                             :icon="tabGroup.icon"/>
                                     </div>
                                     <div>
-                                        <InputWithIcon :size="'sm'" :icon="tabGroup.icon" :placeholder="'Enter value'" type="text" autocomplete="off" />
+                                        <InputWithIcon :size="'sm'" :icon="tabGroup.icon" :placeholder="'Enter value'" autocomplete="off" />
                                     </div>
                                     <div>
                                         <MultiSelect
@@ -675,7 +669,7 @@
                                     <div><Button class="tw-w-1/2" :size="'sm'" :icon="tabGroup.icon" :variant="'flat'" :label="'Button'" /></div>
                                     <div><Button class="tw-w-1/3" :size="'sm'" :icon="tabGroup.icon" :variant="'flat'" disabled :label="'Button'" /></div>
                                     <div><Button class="" :size="'sm'" :icon="tabGroup.icon" :variant="'flat'" :label="'Button'" /></div>
-                                    <div><InputWithIcon ref="inputValue" :size="'sm'" :icon="tabGroup.icon" :placeholder="'Enter value'" :type="'text'" autocomplete="off" /></div>
+                                    <div><InputWithIcon ref="inputValue" :size="'sm'" :icon="tabGroup.icon" :placeholder="'Enter value'" autocomplete="off" /></div>
                                     <div><Button class="" :size="'sm'" :icon="tabGroup.icon" :variant="'flat'" :label="''" /></div>
                                     <div><Button class="" :size="'sm'" :icon="tabGroup.icon" :label="''" /></div>
                                 </div>
@@ -696,7 +690,7 @@
                                             :icon="tabGroup.icon"/>
                                     </div>
                                     <div>
-                                        <InputWithIcon :size="'md'" :icon="tabGroup.icon" :placeholder="'Enter value'" type="text" autocomplete="off" />
+                                        <InputWithIcon :size="'md'" :icon="tabGroup.icon" :placeholder="'Enter value'" autocomplete="off" />
                                     </div>
                                     <div>
                                         <MultiSelect
@@ -742,7 +736,7 @@
                                     <div><Button class="tw-w-1/2" :size="'md'" :icon="tabGroup.icon" :variant="'flat'" :label="'Button'" /></div>
                                     <div><Button class="tw-w-1/3" :size="'md'" :icon="tabGroup.icon" :variant="'flat'" disabled :label="'Button'" /></div>
                                     <div><Button class="" :size="'md'" :icon="tabGroup.icon" :variant="'flat'" :label="'Button'" /></div>
-                                    <div><InputWithIcon ref="inputValue" :size="'md'" :icon="tabGroup.icon" :placeholder="'Enter value'" :type="'text'" autocomplete="off" /></div>
+                                    <div><InputWithIcon ref="inputValue" :size="'md'" :icon="tabGroup.icon" :placeholder="'Enter value'" autocomplete="off" /></div>
                                     <div><Button class="" :size="'md'" :icon="tabGroup.icon" :variant="'flat'" :label="''" /></div>
                                     <div><Button class="" :size="'md'" :icon="tabGroup.icon" :label="''" /></div>
                                 </div>
@@ -763,7 +757,7 @@
                                             :icon="tabGroup.icon"/>
                                     </div>
                                     <div>
-                                        <InputWithIcon :size="'lg'" :icon="tabGroup.icon" :placeholder="'Enter value'" type="text" autocomplete="off" />
+                                        <InputWithIcon :size="'lg'" :icon="tabGroup.icon" :placeholder="'Enter value'" autocomplete="off" />
                                     </div>
                                     <div>
                                         <MultiSelect
@@ -808,29 +802,29 @@
                                     <div><Button class="tw-w-3/4" :size="'lg'" :icon="tabGroup.icon" :variant="'outline'" :label="'Button'" /></div>
                                     <div><Button class="tw-w-1/3" :size="'lg'" :icon="tabGroup.icon" :variant="'flat'" disabled :label="'Button'" /></div>
                                     <div><Button class="" :size="'lg'" :icon="tabGroup.icon" :variant="'flat'" :label="'Button'" /></div>
-                                    <div><InputWithIcon ref="inputValue" :size="'lg'" :icon="tabGroup.icon" :placeholder="'Enter value'" :type="'text'" autocomplete="off" /></div>
+                                    <div><InputWithIcon ref="inputValue" :size="'lg'" :icon="tabGroup.icon" :placeholder="'Enter value'" autocomplete="off" /></div>
                                     <div><Button class="" :size="'lg'" :icon="tabGroup.icon" :variant="'flat'" :label="''" /></div>
                                     <div><Button class="" :size="'lg'" :icon="tabGroup.icon" :label="''" /></div>
                                 </div>
 
                                 <div v-if="true">
-                                    <div><InputWithIcon :size="'xl'" :icon="tabGroup.icon" :placeholder="'Enter value'" type="text" autocomplete="off" /></div>
+                                    <div><InputWithIcon :size="'xl'" :icon="tabGroup.icon" :placeholder="'Enter value'" autocomplete="off" /></div>
                                     <div><Button class="tw-w-full" :size="'xl'" :icon="tabGroup.icon" :label="'Button'" /></div>
                                     <div><Button class="tw-w-3/4" :size="'xl'" :icon="tabGroup.icon" :variant="'outline'" :label="'Button'" /></div>
                                     <div><Button class="tw-w-1/2" :size="'xl'" :icon="tabGroup.icon" :variant="'flat'" :label="'Button'" /></div>
                                     <div><Button class="tw-w-1/3" :size="'xl'" :icon="tabGroup.icon" :variant="'flat'" disabled :label="'Button'" /></div>
-                                    <div><InputWithIcon ref="inputValue" :size="'xl'" :icon="tabGroup.icon" :placeholder="'Enter value'" :type="'text'" autocomplete="off" /></div>
+                                    <div><InputWithIcon ref="inputValue" :size="'xl'" :icon="tabGroup.icon" :placeholder="'Enter value'" autocomplete="off" /></div>
                                     <div><Button class="" :size="'xl'" :icon="tabGroup.icon" :variant="'flat'" :label="''" /></div>
                                     <div><Button class="" :size="'xl'" :icon="tabGroup.icon" :label="''" /></div>
                                 </div>
 
                                 <div v-if="true">
-                                    <div><InputWithIcon :size="'2xl'" :icon="tabGroup.icon" :placeholder="'Enter value'" type="text" autocomplete="off" /></div>
+                                    <div><InputWithIcon :size="'2xl'" :icon="tabGroup.icon" :placeholder="'Enter value'" autocomplete="off" /></div>
                                     <div><Button class="tw-w-full" :size="'2xl'" :icon="tabGroup.icon" :label="'Button'" /></div>
                                     <div><Button class="tw-w-3/4" :size="'2xl'" :icon="tabGroup.icon" :variant="'outline'" :label="'Button'" /></div>
                                     <div><Button class="tw-w-1/2" :size="'2xl'" :icon="tabGroup.icon" :variant="'flat'" :label="'Button'" /></div>
                                     <div><Button class="tw-w-1/3" :size="'2xl'" :icon="tabGroup.icon" :variant="'flat'" disabled :label="'Button'" /></div>
-                                    <div><InputWithIcon ref="inputValue" :size="'2xl'" :icon="tabGroup.icon" :placeholder="'Enter value'" :type="'text'" autocomplete="off" /></div>
+                                    <div><InputWithIcon ref="inputValue" :size="'2xl'" :icon="tabGroup.icon" :placeholder="'Enter value'" autocomplete="off" /></div>
                                     <div><Button class="" :size="'2xl'" :icon="tabGroup.icon" :variant="'flat'" :label="''" /></div>
                                     <div><Button class="" :size="'2xl'" :icon="tabGroup.icon" :label="''" /></div>
                                 </div>
@@ -845,7 +839,7 @@
                             <Button :size="tabGroup.size" :icon="tabGroup.icon" :variant="'outline'" :label="'Outline'" />
                             <Button :size="tabGroup.size" :icon="tabGroup.icon" :variant="'flat'" :label="'Flat'" />
                             <Button :size="tabGroup.size" :icon="tabGroup.icon" :variant="'flat'" disabled :label="'Flat'" />
-                            <InputWithIcon ref="inputValue" :size="tabGroup.size" :icon="tabGroup.icon" :placeholder="'Enter value'" :type="'text'" autocomplete="off" />
+                            <InputWithIcon ref="inputValue" :size="tabGroup.size" :icon="tabGroup.icon" :placeholder="'Enter value'" autocomplete="off" />
                         </div>
                     </div>
 
@@ -1135,31 +1129,31 @@
                     <div v-if="false" class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-8">
                         <div class="tw-block neutral-border">
                             <InputLabel :size="'2xs'" for="form_input_1" value="XXS Label" />
-                            <InputWithIcon :size="'2xs'" :icon="'ic:sharp-qr-code'" placeholder="Enter username" id="form_input_1" type="text" autocomplete="off" />
+                            <InputWithIcon :size="'2xs'" :icon="'ic:sharp-qr-code'" placeholder="Enter username" id="form_input_1" autocomplete="off" />
                         </div>
                         <div class="tw-block neutral-border">
                             <InputLabel :size="'xs'" for="form_input_2" value="XS Label" />
-                            <InputWithIcon :size="'xs'" :icon="'ic:sharp-qr-code'" placeholder="Enter username" id="form_input_2" type="text" autocomplete="off" />
+                            <InputWithIcon :size="'xs'" :icon="'ic:sharp-qr-code'" placeholder="Enter username" id="form_input_2" autocomplete="off" />
                         </div>
                         <div class="tw-block neutral-border">
                             <InputLabel :size="'sm'" for="form_input_3" value="SM Label" />
-                            <InputWithIcon :size="'sm'" :icon="'ic:sharp-qr-code'" placeholder="Enter username" id="form_input_3" type="text" autocomplete="off" />
+                            <InputWithIcon :size="'sm'" :icon="'ic:sharp-qr-code'" placeholder="Enter username" id="form_input_3" autocomplete="off" />
                         </div>
                         <div class="tw-block neutral-border">
                             <InputLabel :size="'md'" for="form_input_4" value="MD Label" />
-                            <InputWithIcon :size="'md'" :icon="'ic:sharp-qr-code'" placeholder="Enter username" id="form_input_4" type="text" autocomplete="off" />
+                            <InputWithIcon :size="'md'" :icon="'ic:sharp-qr-code'" placeholder="Enter username" id="form_input_4" autocomplete="off" />
                         </div>
                         <div class="tw-block neutral-border">
                             <InputLabel :size="'md'" for="form_input_5" value="MD Label" />
-                            <InputWithIcon :size="'md'" :icon="'ic:sharp-qr-code'" disabled placeholder="Disabled" id="form_input_4" type="text" autocomplete="off" />
+                            <InputWithIcon :size="'md'" :icon="'ic:sharp-qr-code'" disabled placeholder="Disabled" id="form_input_4" autocomplete="off" />
                         </div>
                         <div class="tw-block neutral-border">
                             <InputLabel :size="'lg'" for="form_input_6" value="LG Label" />
-                            <InputWithIcon :size="'lg'" :icon="'ic:sharp-qr-code'" placeholder="Enter username" id="form_input_5" type="text" autocomplete="off" />
+                            <InputWithIcon :size="'lg'" :icon="'ic:sharp-qr-code'" placeholder="Enter username" id="form_input_5" autocomplete="off" />
                         </div>
                         <div class="tw-col-span-2 tw-block neutral-border">
                             <InputLabel :size="'xl'" for="form_input_7" value="XL Label" />
-                            <InputWithIcon :size="'xl'" :icon="'ic:sharp-qr-code'" placeholder="Enter username" id="form_input_6" type="text" autocomplete="off" />
+                            <InputWithIcon :size="'xl'" :icon="'ic:sharp-qr-code'" placeholder="Enter username" id="form_input_6" autocomplete="off" />
                         </div>
                     </div>
 

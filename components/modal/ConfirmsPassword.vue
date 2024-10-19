@@ -24,7 +24,7 @@
                         v-model="form.password"
                         :type="'password'"
                         class="tw-block"
-                        placeholder="Password"
+                        :placeholder="'Password'"
                         @keyup.enter="confirmPassword"
                     />
                 </div>

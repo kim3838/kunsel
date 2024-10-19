@@ -12,7 +12,7 @@
                                         readonly
                                         :size="'lg'"
                                         id="email"
-                                        type="email"
+                                        :type="'email'"
                                         class="tw-w-full"
                                         v-model="data.email"
                                         autofocus
@@ -26,7 +26,7 @@
                                         :disabled="pending"
                                         :size="'lg'"
                                         id="password"
-                                        type="password"
+                                        :type="'password'"
                                         class="tw-w-full"
                                         v-model="data.password" />
                                 </div>
@@ -37,7 +37,7 @@
                                         :disabled="pending"
                                         :size="'lg'"
                                         id="password_confirmation"
-                                        type="password"
+                                        :type="'password'"
                                         class="tw-w-full"
                                         v-model="data.password_confirmation" />
                                 </div>

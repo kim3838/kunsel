@@ -35,15 +35,15 @@
                         <div class="tw-mt-4 tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2">
                             <div class="tw-col-span-1 sm:tw-col-span-2">
                                 <InputLabel :size="'sm'" value="Current Password" />
-                                <InputWithIcon class="tw-w-full" :disabled="updatePasswordPending" :icon="'mdi:key-chain'" type="password" placeholder="Enter current password" v-model="updatePassword.currentPassword" required />
+                                <InputWithIcon class="tw-w-full" :disabled="updatePasswordPending" :icon="'mdi:key-chain'" :type="'password'" placeholder="Enter current password" v-model="updatePassword.currentPassword" required />
                             </div>
                             <div>
                                 <InputLabel :size="'sm'" value="New Password" />
-                                <InputWithIcon class="tw-w-full" :disabled="updatePasswordPending" :icon="'ph:password-fill'" type="password" placeholder="Enter new password" v-model="updatePassword.newPassword" required />
+                                <InputWithIcon class="tw-w-full" :disabled="updatePasswordPending" :icon="'ph:password-fill'" :type="'password'" placeholder="Enter new password" v-model="updatePassword.newPassword" required />
                             </div>
                             <div>
                                 <InputLabel :size="'sm'" value="Confirm New Password" />
-                                <InputWithIcon class="tw-w-full" :disabled="updatePasswordPending" :icon="'ph:password-fill'" type="password" placeholder="Re-enter new password" v-model="updatePassword.confirmNewPassword" required />
+                                <InputWithIcon class="tw-w-full" :disabled="updatePasswordPending" :icon="'ph:password-fill'" :type="'password'" placeholder="Re-enter new password" v-model="updatePassword.confirmNewPassword" required />
                             </div>
                             <div></div>
                             <div>
@@ -86,7 +86,7 @@
 
                         <div class="tw-mt-4 tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2">
                             <div>
-                                <InputWithIcon :disabled="logoutOtherDevicePending" :icon="'mdi:key-chain'" type="password" placeholder="Enter password" v-model="confirmPassword" required />
+                                <InputWithIcon :disabled="logoutOtherDevicePending" :icon="'mdi:key-chain'" :type="'password'" placeholder="Enter password" v-model="confirmPassword" required />
                             </div>
                             <div>
                                 <Button :disabled="logoutOtherDevicePending" :label="'Log Out Other Devices'" />
@@ -130,7 +130,7 @@
 
                                     <div class="tw-mt-4 tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2">
                                         <div>
-                                            <InputWithIcon :disabled="confirmTwoFactorPending || disableTwoFactorPending" @keyup.enter="executeConfirmTwoFactor" :icon="'mdi:key-chain'" type="text" placeholder="Confirmation Code" v-model="twoFactorConfirmationCode" />
+                                            <InputWithIcon :disabled="confirmTwoFactorPending || disableTwoFactorPending" @keyup.enter="executeConfirmTwoFactor" :icon="'mdi:key-chain'" placeholder="Confirmation Code" v-model="twoFactorConfirmationCode" />
                                         </div>
                                         <div>
                                             <Button @click="executeConfirmTwoFactor" type="button" :disabled="confirmTwoFactorPending || disableTwoFactorPending" :label="'Confirm'" />

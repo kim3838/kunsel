@@ -13,7 +13,7 @@
                                         :disabled="pending"
                                         :size="'lg'"
                                         id="email"
-                                        type="email"
+                                        :type="'email'"
                                         class="tw-w-full"
                                         ref="emailInput"
                                         v-model="email"
