@@ -1,26 +1,33 @@
 <template>
-    <input
-        :tabindex="tabindex"
-        :disabled="disabled"
-        :class="[
-            fontClass,
-            heightClass,
-            backgroundClass,
-            'focus:tw-ring-transparent focus:tw-ring',
-            focusRing ? 'focus-ring' : '',
-            withBorder ? 'bordered' : 'borderless',
-            rounded ? 'tw-rounded-sm': '']"
-        class="tw-font-data tw-pl-1 tw-form-input tw-w-full"
-        :value="modelValue"
-        @input="$emit('update:modelValue', $event.target.value)"
-        ref="input">
+    <div class="tw-relative tw-box-border">
+        <Glint :enable="glint" :orientation="'landscape'" :color="activeBorderComputed">
+            <input
+                :tabindex="tabindex"
+                :type="type"
+                :disabled="disabled"
+                :class="[
+                    fontClass,
+                    heightClass,
+                    backgroundClass,
+                    'focus:tw-ring-transparent focus:tw-ring',
+                    focusRing ? 'focus-ring' : '',
+                    withBorder ? 'bordered' : 'borderless',
+                    rounded ? 'tw-rounded-sm': '']"
+                class="tw-font-data tw-pl-1 tw-form-input tw-w-full"
+                :value="modelValue"
+                @input="$emit('update:modelValue', $event.target.value)"
+                ref="input">
+        </Glint>
+    </div>
 </template>
 
 <script setup>
-import {ref, computed} from 'vue';
+import {ref, computed, watch} from 'vue';
 import {storeToRefs} from 'pinia';
-const {$themeStore} = useNuxtApp();
 
+const {$themeStore} = useNuxtApp();
+const input = ref(null);
+const {focused: inputFocused} = useFocus(input);
 const {
     hexAlpha,
     type: themeType,
@@ -39,6 +46,10 @@ const disabledBackgroundColor = computed(() => {
 
 const props = defineProps({
     modelValue: [String, Number],
+    type: {
+        type: String,
+        default: 'text'
+    },
     size: {
         default: 'md'
     },
@@ -62,13 +73,21 @@ const props = defineProps({
         type: Boolean,
         default: true
     },
+    activeBorder: {
+        type: String,
+        default: ''
+    },
     rounded: {
         type: Boolean,
         default: true
-    }
+    },
+    glint: {
+        type: Boolean,
+        default: false
+    },
 });
 
-defineEmits(['update:modelValue']);
+const emit = defineEmits(['update:modelValue', 'focusStateChanged']);
 
 const heightClass = computed(() => {
     return {
@@ -100,6 +119,14 @@ const backgroundClass = computed(() => {
     return props.disabled ? 'input-disabled' : 'input-background';
 });
 
+const activeBorderComputed = computed(() => {
+    return props.activeBorder ? props.activeBorder : liningColor.value;
+});
+
+watch(inputFocused, (focused) => {
+    emit('focusStateChanged', focused);
+});
+
 </script>
 <style scoped>
 .input-disabled{
@@ -111,7 +138,7 @@ const backgroundClass = computed(() => {
 }
 
 .focus-ring:focus{
-    border-color: v-bind(liningColor) !important;
+    border-color: v-bind(activeBorderComputed) !important;
 }
 
 .bordered{
