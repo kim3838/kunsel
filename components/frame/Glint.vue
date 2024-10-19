@@ -1,9 +1,9 @@
 <template>
-    <div :class="[glintRootClass]" class="tw-w-full tw-h-full">
-        <span class="glint"></span>
-        <span class="glint"></span>
-        <span class="glint"></span>
-        <span class="glint"></span>
+    <div class="tw-w-full tw-h-full glint-trail">
+        <span v-if="enable" class="glint"></span>
+        <span v-if="enable" class="glint"></span>
+        <span v-if="enable" class="glint"></span>
+        <span v-if="enable" class="glint"></span>
         <slot></slot>
     </div>
 </template>
@@ -30,10 +30,6 @@ const props = defineProps({
         type: String,
         default: ''
     }
-});
-
-const glintRootClass = computed(() => {
-    return props.enable ? 'glint-trail' : '';
 });
 
 const glintColor = computed(() => {
