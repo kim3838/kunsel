@@ -1,41 +1,44 @@
 <template>
     <div class="tw-font-data tw-relative tw-box-border" :class="[heightClass]">
-        <div v-if="icon?.trim()" class="tw-absolute tw-w-full tw-h-full tw-z-20 tw-flex tw-pointer-events-none">
-            <div :class="[iconHolderClass]" class="tw-flex-none tw-h-full tw-flex tw-justify-end tw-items-center">
-                <ClientOnly><Icon :class="[iconClass]" :name="icon" /></ClientOnly>
+        <Glint :enable="glint" :orientation="'landscape'" :color="activeBorderComputed">
+            <div v-if="icon?.trim()" class="tw-absolute tw-w-full tw-h-full tw-z-20 tw-flex tw-pointer-events-none">
+                <div :class="[iconHolderClass]" class="tw-flex-none tw-h-full tw-flex tw-justify-end tw-items-center">
+                    <ClientOnly><Icon :class="[iconClass]" :name="icon" /></ClientOnly>
+                </div>
+                <div class="tw-w-full tw-relative"></div>
             </div>
-            <div class="tw-w-full tw-relative"></div>
-        </div>
-        <input
-            :id="id"
-            :tabindex="tabindex"
-            :disabled="disabled"
-            :class="[
-                fontClass,
-                spacingClass,
-                backgroundClass,
-                'focus:tw-ring-transparent focus:tw-ring',
-                focusRing ? 'focus-ring' : '',
-                withBorder ? 'bordered' : 'borderless',
-                rounded ? 'tw-rounded-sm': ''
-            ]"
-            :style="{'top': absoluteTopAllocation}"
-            class="tw-relative tw-w-full tw-h-full tw-z-10 tw-form-input tw-box-border"
-            :value="modelValue"
-            :placeholder="placeholder"
-            :type="type"
-            :readonly="readonly"
-            @input="$emit('update:modelValue', $event.target.value)"
-            ref="input">
+            <input
+                :id="id"
+                :tabindex="tabindex"
+                :disabled="disabled"
+                :class="[
+                    fontClass,
+                    spacingClass,
+                    backgroundClass,
+                    'focus:tw-ring-transparent focus:tw-ring',
+                    focusRing ? 'focus-ring' : '',
+                    withBorder ? 'bordered' : 'borderless',
+                    rounded ? 'tw-rounded-sm': ''
+                ]"
+                :style="{'top': absoluteTopAllocation}"
+                class="tw-relative tw-w-full tw-h-full tw-z-10 tw-form-input tw-box-border"
+                :value="modelValue"
+                :placeholder="placeholder"
+                :type="type"
+                :readonly="readonly"
+                @input="$emit('update:modelValue', $event.target.value)"
+                ref="input">
+        </Glint>
     </div>
-
 </template>
 
 <script setup>
-import {ref, computed} from 'vue';
+import {ref, computed, watch} from 'vue';
 import {storeToRefs} from 'pinia';
-const {$themeStore} = useNuxtApp();
 
+const {$themeStore} = useNuxtApp();
+const input = ref(null);
+const {focused: inputFocused} = useFocus(input);
 const {
     hexAlpha,
     type: themeType,
@@ -101,6 +104,10 @@ const props = defineProps({
         type: Boolean,
         default: true
     },
+    activeBorder: {
+        type: String,
+        default: ''
+    },
     rounded: {
         type: Boolean,
         default: true
@@ -112,10 +119,14 @@ const props = defineProps({
                 font_size: false
             }
         }
-    }
+    },
+    glint: {
+        type: Boolean,
+        default: false
+    },
 });
 
-defineEmits(['update:modelValue']);
+const emit = defineEmits(['update:modelValue', 'focusStateChanged']);
 
 const iconHolderClass = computed(() => {
     return {
@@ -200,6 +211,14 @@ const backgroundClass = computed(() => {
     return props.disabled ? 'input-disabled' : 'input-background';
 });
 
+const activeBorderComputed = computed(() => {
+    return props.activeBorder ? props.activeBorder : liningColor.value;
+});
+
+watch(inputFocused, (focused) => {
+    emit('focusStateChanged', focused);
+});
+
 </script>
 <style scoped>
 .input-disabled{
@@ -211,7 +230,7 @@ const backgroundClass = computed(() => {
 }
 
 .focus-ring:focus{
-    border-color: v-bind(liningColor) !important;
+    border-color: v-bind(activeBorderComputed) !important;
 }
 
 .bordered{
