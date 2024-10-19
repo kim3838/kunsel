@@ -10,7 +10,7 @@
                 :style="{'border-radius': '2px'}"
                 class="tw-w-full tw-flex tw-justify-start background"
                 :class="[heightClass, borderClass]">
-                <div v-if="!active" :class="[iconHolderClass]" class="tw-flex-none tw-flex tw-justify-end tw-items-center">
+                <div :class="[iconHolderClass]" class="tw-flex-none tw-flex tw-justify-end tw-items-center">
                     <ClientOnly><Icon :class="[iconClass]" :name="pending ? 'eos-icons:loading' : icon"/></ClientOnly>
                 </div>
                 <div v-if="!active" class="tw-w-full tw-relative tw-cursor-pointer">
@@ -30,9 +30,9 @@
                             :readonly="!searchable"
                             autocomplete="off"
                             ref="selectionSearch"
-                            type="text"
                             :placeholder="searchable ? 'Search...' : selectionSummary"
                             @keydown="keyHandler"
+                            @focusStateChanged="searchInputFocusStateChangedHandler"
                             v-model="props.payload.fetch.filters.search.keyword"
                             :size="inputSize"
                             :withBorder="false"
@@ -246,7 +246,6 @@ let selectionOffset = reactive({
 });
 
 const { focused: selectParentFocused } = useFocus(selectParent);
-const { focused: selectionSearchFocused } = useFocus(selectionSearch);
 const { focused: toggleSelectedButtonVisibilityFocused } = useFocus(toggleSelectedButtonVisibility);
 const { focused: clearSelectedButtonFocused } = useFocus(clearSelectedButton);
 const { focused: selectionScrollFocused } = useFocus(selectionScroll);
@@ -637,13 +636,14 @@ watch(clearSelectedButtonFocused, (focused) => {
         loseFocus();
     }
 });
-watch(selectionSearchFocused, (focused) => {
+
+function searchInputFocusStateChangedHandler(focused: boolean) {
     if (focused) {
         keepFocusAlive();
     } else {
         loseFocus();
     }
-});
+}
 
 function keyHandler(event) {
     let key = event.which;

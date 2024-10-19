@@ -34,9 +34,9 @@
                             autocomplete="off"
                             class="tw-w-full"
                             ref="selectionSearch"
-                            type="text"
                             :placeholder="searchable ? 'Search...' : selectionSummary"
                             @keydown="keyHandler"
+                            @focusStateChanged="searchInputFocusStateChangedHandler"
                             v-on:input="searchSelection"
                             v-model="props.options.search"
                             :size="inputSize"
@@ -191,7 +191,6 @@ let selectionOffset = reactive({
 });
 
 const { focused: selectParentFocused } = useFocus(selectParent);
-const { focused: selectionSearchFocused } = useFocus(selectionSearch);
 const { focused: selectionScrollFocused } = useFocus(selectionScroll);
 
 let searchPool = ref([]);
@@ -516,13 +515,14 @@ watch(selectionScrollFocused, (focused) => {
         loseFocus();
     }
 });
-watch(selectionSearchFocused, (focused) => {
+
+function searchInputFocusStateChangedHandler(focused: boolean) {
     if (focused) {
         keepFocusAlive();
     } else {
         loseFocus();
     }
-});
+}
 
 function keyHandler(event) {
     let key = event.which;

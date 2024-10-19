@@ -10,10 +10,10 @@
                 :style="{'border-radius': '2px'}"
                 class="tw-w-full tw-flex tw-justify-start background"
                 :class="[heightClass, borderClass]">
-                <div :style="{display: !active ? 'inline-block' : 'none'}" :class="[iconHolderClass]" class="tw-flex-none tw-flex tw-justify-end tw-items-center">
+                <div :class="[iconHolderClass]" class="tw-flex-none tw-flex tw-justify-end tw-items-center">
                     <ClientOnly><Icon :class="[iconClass]" :name="icon"/></ClientOnly>
                 </div>
-                <div :style="{display: !active ? 'inline-block' : 'none'}" class="tw-w-full tw-relative tw-cursor-pointer">
+                <div v-if="!active" class="tw-w-full tw-relative tw-cursor-pointer">
                     <div :class="[selectionClass]" class="tw-absolute tw-truncate tw-flex tw-items-center">
                         {{selectionSummary}}
                     </div>
@@ -22,7 +22,7 @@
                     </div>
                 </div>
 
-                <div :style="{display: active ? 'block' : 'none'}" class="tw-w-full tw-h-full tw-relative tw-overflow-hidden">
+                <div :class="[active ? 'tw-block' : 'tw-hidden']" class="tw-w-full tw-h-full tw-relative tw-overflow-hidden">
                     <div v-if="searchable" :class="[inputHolderClass]" class="tw-absolute tw-left-0 tw-h-full tw-flex tw-items-center">
                         <Input
                             v-if="active"
@@ -31,9 +31,9 @@
                             autocomplete="off"
                             class="tw-w-full"
                             ref="selectionSearch"
-                            type="text"
                             :placeholder="searchable ? 'Search...' : selectionSummary"
                             @keydown="keyHandler"
+                            @focusStateChanged="searchInputFocusStateChangedHandler"
                             v-on:input="searchSelection"
                             v-model="props.options.search"
                             :size="inputSize"
@@ -191,7 +191,6 @@ let selectionOffset = reactive({
 });
 
 const { focused: selectParentFocused } = useFocus(selectParent);
-const { focused: selectionSearchFocused } = useFocus(selectionSearch);
 const { focused: selectionScrollFocused } = useFocus(selectionScroll);
 
 let searchPool = ref([]);
@@ -449,13 +448,14 @@ watch(selectionScrollFocused, (focused) => {
         loseFocus();
     }
 });
-watch(selectionSearchFocused, (focused) => {
+
+function searchInputFocusStateChangedHandler(focused: boolean) {
     if (focused) {
         keepFocusAlive();
     } else {
         loseFocus();
     }
-});
+}
 
 function keyHandler(event) {
     let key = event.which;
