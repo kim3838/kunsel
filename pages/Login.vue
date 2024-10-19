@@ -14,7 +14,6 @@
                                             :disabled="authPending"
                                             :size="'lg'"
                                             id="identifier"
-                                            type="text"
                                             class="tw-w-full"
                                             ref="identifierInput"
                                             v-model="identifier"
@@ -27,7 +26,7 @@
                                             :disabled="authPending"
                                             :size="'lg'"
                                             id="password"
-                                            type="password"
+                                            :type="'password'"
                                             class="tw-w-full tw-tracking-widest"
                                             v-model="password"
                                             required

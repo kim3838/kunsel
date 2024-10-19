@@ -22,7 +22,7 @@
                         ref="passwordInput"
                         :disabled="confirmPasswordPending"
                         v-model="form.password"
-                        type="password"
+                        :type="'password'"
                         class="tw-block"
                         placeholder="Password"
                         @keyup.enter="confirmPassword"
