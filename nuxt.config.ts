@@ -113,6 +113,16 @@ export default defineNuxtConfig({
         },
     },
 
+    vite: {
+        css: {
+            preprocessorOptions: {
+                scss: {
+                    api: 'modern-compiler', // or "modern", "legacy"
+                },
+            },
+        },
+    },
+
     tailwindcss: {
         cssPath: ['@/assets/css/tailwind.css', {injectPosition: "first"}],
         viewer: true
