@@ -1,4 +1,4 @@
-import { defineStore } from 'pinia';
+import {defineStore} from 'pinia';
 import moment from "moment";
 
 export const useFormStore = defineStore('form', {

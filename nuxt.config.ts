@@ -54,6 +54,10 @@ export default defineNuxtConfig({
     //prints out hook names and timings on the server, and logs hook arguments as well in the browser.
     debug: false,
 
+    alias: {
+        pinia: "@/node_modules/@pinia/nuxt/node_modules/pinia/dist/pinia.mjs"
+    },
+
     imports: {
         dirs: [
             'composables/**',
