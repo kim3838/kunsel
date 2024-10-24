@@ -1,33 +1,37 @@
 <template>
-    <button
-        ref="button"
-        :disabled="disabled"
-        :style="{'border-radius': '2px', 'direction': 'ltr', 'border': borderStyle}"
-        :class="[heightClass, colorClass]"
-        :type="type"
-        class="
-            tw-font-medium
-            tw-tracking-wide
-            tw-box-border
-            focus:tw-outline-none
-            focus:tw-ring
-            focus:tw-ring-transparent
-            disabled:tw-cursor-not-allowed
-            tw-relative">
-        <slot :fontClass="fontClass">
-            <div class="tw-w-full tw-h-full tw-flex" :class="[fontClass]">
-                <div
-                    :style="{'filter': variant === 'default' ? 'drop-shadow(rgba(0, 0, 0, 0.3) 0px 1px 1px)' : 'none'}"
-                    v-if="icon?.trim()"
-                    :class="[iconHolderClass, iconSpacingClass, label?.trim() ? 'tw-justify-end' : 'tw-justify-center']"
-                    class="tw-flex-none tw-flex tw-items-center tw-z-10">
-                    <ClientOnly><Icon v-if="icon?.trim()" :class="[iconClass]" :name="icon"></Icon></ClientOnly>
-                </div>
+    <div class="tw-inline-block tw-relative tw-box-border">
+        <Glint :enable="glint" :orientation="'landscape'" :color="activeBorderComputed">
+            <button
+                ref="button"
+                :disabled="disabled"
+                :style="{'border-radius': '2px', 'direction': 'ltr', 'border': borderStyle}"
+                :class="[
+                    focusRing ? 'focus-ring-enable' : 'focus-ring-disable',
+                    heightClass,
+                    colorClass]"
+                :type="type"
+                class="
+                    tw-font-medium
+                    tw-tracking-wide
+                    tw-box-border
+                    disabled:tw-cursor-not-allowed
+                    tw-relative">
+                <slot :fontClass="fontClass">
+                    <div class="tw-w-full tw-h-full tw-flex" :class="[fontClass]">
+                        <div
+                            :style="{'filter': variant === 'default' ? 'drop-shadow(rgba(0, 0, 0, 0.3) 0px 1px 1px)' : 'none'}"
+                            v-if="icon?.trim()"
+                            :class="[iconHolderClass, iconSpacingClass, label?.trim() ? 'tw-justify-end' : 'tw-justify-center']"
+                            class="tw-flex-none tw-flex tw-items-center tw-z-10">
+                            <ClientOnly><Icon v-if="icon?.trim()" :class="[iconClass]" :name="icon"></Icon></ClientOnly>
+                        </div>
 
-                <div v-if="label?.trim()" :class="['tw-w-full tw-flex tw-items-center tw-truncate tw-z-10', labelSpacingClass]">{{label}}</div>
-            </div>
-        </slot>
-    </button>
+                        <div v-if="label?.trim()" :class="['tw-w-full tw-flex tw-items-center tw-truncate tw-z-10', labelSpacingClass]">{{label}}</div>
+                    </div>
+                </slot>
+            </button>
+        </Glint>
+    </div>
 </template>
 
 <script setup>
@@ -87,6 +91,10 @@ const props = defineProps({
         type: Boolean,
         default: false
     },
+    focusRing: {
+        type: Boolean,
+        default: true
+    },
     icon: {
         type: String,
         default: null,
@@ -95,9 +103,17 @@ const props = defineProps({
         type: String,
         default: null,
     },
+    activeBorder: {
+        type: String,
+        default: ''
+    },
     label: {
         type: String,
         default: '',
+    },
+    glint: {
+        type: Boolean,
+        default: false
     },
 });
 
@@ -183,15 +199,31 @@ const colorClass = computed(() => {
 
 const borderStyle = computed(() => {
     return {
-        'default': 'auto',
+        'default': '1px solid transparent',
         'outline': '1px solid ' + threadColor.value,
         'flat': '1px solid ' + ((props.flatBorderColor !== null) ? props.flatBorderColor : threadColor.value),
     }[props.variant]
 });
 
+const activeBorderComputed = computed(() => {
+    return props.activeBorder ? props.activeBorder : liningColor.value;
+});
+
 </script>
 
 <style scoped>
+
+.focus-ring-enable:focus{
+    border-color: v-bind(activeBorderComputed) !important;
+    outline: 2px solid transparent !important;
+    outline-offset: 2px !important;
+}
+
+.focus-ring-disable:focus{
+    outline: 2px solid transparent !important;
+    outline-offset: 2px !important;
+}
+
 .shade{
     position: absolute;
     top: 0;
