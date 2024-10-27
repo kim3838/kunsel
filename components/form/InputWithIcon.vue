@@ -134,7 +134,7 @@ const iconHolderClass = computed(() => {
         'xs': 'tw-w-[1.5rem]',
         'sm': 'tw-w-[1.77rem]',
         'md': 'tw-w-[1.75rem]',
-        'lg': 'tw-w-[2.85rem]',
+        'lg': 'tw-w-[2.8rem]',
         'xl': 'tw-w-[3rem]',
         '2xl': 'tw-w-[4rem]',
     }[props.size];
