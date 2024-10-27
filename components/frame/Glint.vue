@@ -1,5 +1,5 @@
 <template>
-    <div class="tw-w-full glint-trail" :class="[heightClass]">
+    <div class="tw-w-full glint-trail" :style="{'height': heightStyle}" :class="glintClass">
         <span v-if="enable" class="glint"></span>
         <span v-if="enable" class="glint"></span>
         <span v-if="enable" class="glint"></span>
@@ -30,14 +30,17 @@ const props = defineProps({
         type: String,
         default: ''
     },
-    heightClass: {
+    heightStyle: {
         type: String,
-        default: 'tw-h-full'
+        default: '100%'
     }
 });
 
 const glintColor = computed(() => {
     return props.color ? props.color: accentColor.value;
+});
+const glintClass = computed(() => {
+    return props.enable ? 'tw-overflow-hidden' : '';
 });
 
 const verticalGlintTransitionDuration = computed(() => {
@@ -81,7 +84,6 @@ const glint4TransitionDelay = computed(() => {
 
 <style scoped>
 .glint-trail {
-    overflow: hidden;
     position: relative;
 }
 .glint-trail .glint {
