@@ -1,9 +1,9 @@
 <template>
     <div class="tw-font-data tw-relative tw-box-border" :class="[heightClass]">
-        <Glint :enable="glint" :orientation="'landscape'" :color="activeBorderComputed">
+        <Glint :height-style="glintHeightStyle" :enable="glint" :orientation="'landscape'" :color="activeBorderComputed">
             <div v-if="icon?.trim()" class="tw-absolute tw-w-full tw-h-full tw-z-20 tw-flex tw-pointer-events-none">
                 <div :class="[iconHolderClass]" class="tw-flex-none tw-h-full tw-flex tw-justify-end tw-items-center">
-                    <ClientOnly><Icon :class="[iconClass]" :name="icon" /></ClientOnly>
+                    <Icon :class="[iconClass]" :name="icon" />
                 </div>
                 <div class="tw-w-full tw-relative"></div>
             </div>
@@ -154,7 +154,7 @@ const iconClass = computed(() => {
 
 const absoluteTopAllocation = computed(() => {
     return {
-        '2xs': props.inCell ? '0' : '-0.2rem',
+        '2xs': props.inCell ? '0' : '-3px',
         'xs': props.inCell ? '0' : '-1px',
         'sm': '0',
         'md': '0',
@@ -166,13 +166,13 @@ const absoluteTopAllocation = computed(() => {
 
 const spacingClass = computed(() => {
     return {
-        '2xs': props.icon?.trim() ? 'tw-pl-[1.4rem]' : '',
-        'xs': props.icon?.trim() ? 'tw-pl-[1.65rem]' : '',
-        'sm': props.icon?.trim() ? 'tw-pl-[1.875rem]' : '',
-        'md': props.icon?.trim() ? 'tw-pl-[1.875rem]' : '',
-        'lg': props.icon?.trim() ? 'tw-pl-[3rem]' : '',
-        'xl': props.icon?.trim() ? 'tw-pl-[3.2rem]' : '',
-        '2xl': props.icon?.trim() ? 'tw-pl-[4.3rem]' : ''
+        '2xs': props.icon?.trim() ? 'tw-pl-[1.4rem] tw-p-0' : '',
+        'xs': props.icon?.trim() ? 'tw-pl-[1.65rem] tw-p-0' : '',
+        'sm': props.icon?.trim() ? 'tw-pl-[1.875rem] tw-p-0' : '',
+        'md': props.icon?.trim() ? 'tw-pl-[1.875rem] tw-p-0' : '',
+        'lg': props.icon?.trim() ? 'tw-pl-[3rem] tw-p-0' : '',
+        'xl': props.icon?.trim() ? 'tw-pl-[3.2rem] tw-p-0' : '',
+        '2xl': props.icon?.trim() ? 'tw-pl-[4.3rem] tw-p-0' : ''
     }[props.size]
 });
 
@@ -186,6 +186,19 @@ const heightClass = computed(() => {
         'xl': 'tw-h-14',
         '2xl' : 'tw-h-16',
         '3xl' : 'tw-h-20',
+    }[props.size]
+});
+
+const glintHeightStyle = computed(() => {
+    return {
+        '2xs': '1.25rem',
+        'xs': '1.5rem',
+        'sm': '1.75rem',
+        'md': '2rem',
+        'lg': '2.75rem',
+        'xl': '3.5rem',
+        '2xl' : '4rem',
+        '3xl' : '5rem',
     }[props.size]
 });
 

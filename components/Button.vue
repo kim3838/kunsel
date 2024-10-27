@@ -1,6 +1,6 @@
 <template>
     <div class="tw-relative tw-box-border">
-        <Glint :height-class="heightClass" :enable="glint" :orientation="'landscape'" :color="activeBorderComputed">
+        <Glint :height-style="glintHeightStyle" :enable="glint" :orientation="'landscape'" :color="activeBorderComputed">
             <button
                 ref="button"
                 :disabled="disabled"
@@ -134,6 +134,19 @@ const heightClass = computed(() => {
     }[props.size]
 });
 
+const glintHeightStyle = computed(() => {
+    return {
+        '2xs': '1.25rem',
+        'xs': '1.5rem',
+        'sm': '1.75rem',
+        'md': '2rem',
+        'lg': '2.75rem',
+        'xl': '3.5rem',
+        '2xl' : '4rem',
+        '3xl' : '5rem',
+    }[props.size]
+});
+
 const labelSpacingClass = computed(() => {
     return {
         '2xs': props.icon?.trim() ? 'tw-pl-[0.2rem] tw-pr-[0.5rem]' : 'tw-px-[0.3rem]',
@@ -162,7 +175,7 @@ const iconHolderClass = computed(() => {
     return {
         '2xs': props.variant == 'default' ? 'tw-w-[1.2rem]': 'tw-w-[1.2rem]',
         'xs': props.variant == 'default' ? 'tw-w-[1.45rem]': 'tw-w-[1.45rem]',
-        'sm': props.variant == 'default' ? 'tw-w-[1.75rem]': 'tw-w-[1.7rem]',
+        'sm': props.variant == 'default' ? 'tw-w-[1.7rem]': 'tw-w-[1.7rem]',
         'md': props.variant == 'default' ? 'tw-w-[1.7rem]': 'tw-w-[1.7rem]',
         'lg': props.variant == 'default' ? 'tw-w-[2.75rem]' : 'tw-w-[2.75rem]',
         'xl': props.variant == 'default' ? 'tw-w-[2.95rem]' : 'tw-w-[2.95rem]',

@@ -1,21 +1,24 @@
 <template>
-    <div class="tw-relative tw-box-border">
-        <Glint :enable="glint" :orientation="'landscape'" :color="activeBorderComputed">
+    <div class="tw-font-data tw-relative tw-box-border" :class="[heightClass]">
+        <Glint :height-style="glintHeightStyle" :enable="glint" :orientation="'landscape'" :color="activeBorderComputed">
             <input
                 :tabindex="tabindex"
-                :type="type"
                 :disabled="disabled"
                 :class="[
                     fontClass,
-                    heightClass,
+                    spacingClass,
                     backgroundClass,
                     'focus:tw-ring-transparent focus:tw-ring',
                     focusRing ? 'focus-ring' : '',
                     withBorder ? 'bordered' : 'borderless',
-                    rounded ? 'tw-rounded-sm': '']"
-                class="tw-font-data tw-pl-1 tw-form-input tw-w-full"
+                    rounded ? 'tw-rounded-sm': ''
+                ]"
+                :style="{'top': absoluteTopAllocation}"
+                class="tw-relative tw-form-input tw-h-full tw-w-full tw-box-border"
                 :value="modelValue"
                 :placeholder="placeholder"
+                :type="type"
+                :readonly="readonly"
                 @input="$emit('update:modelValue', $event.target.value)"
                 ref="input">
         </Glint>
@@ -55,6 +58,10 @@ const props = defineProps({
         type: String,
         default: ''
     },
+    inCell: {
+        type: Boolean,
+        default: false
+    },
     size: {
         default: 'md'
     },
@@ -63,6 +70,10 @@ const props = defineProps({
         default: 0
     },
     disabled: {
+        type: Boolean,
+        default: false
+    },
+    readonly: {
         type: Boolean,
         default: false
     },
@@ -104,6 +115,43 @@ const heightClass = computed(() => {
         'xl': 'tw-h-14',
         '2xl' : 'tw-h-16',
         '3xl' : 'tw-h-20',
+    }[props.size]
+});
+
+const absoluteTopAllocation = computed(() => {
+    return {
+        '2xs': props.inCell ? '0' : '-3px',
+        'xs': props.inCell ? '0' : '-1px',
+        'sm': '0',
+        'md': '0',
+        'lg': '0',
+        'xl': '0',
+        '2xl': '0',
+    }[props.size]
+});
+
+const spacingClass = computed(() => {
+    return {
+        '2xs': 'tw-pl-[0.3rem] tw-p-0',
+        'xs': 'tw-pl-[0.3rem] tw-p-0',
+        'sm': 'tw-pl-[0.65rem] tw-p-0',
+        'md': 'tw-pl-[0.65rem] tw-p-0',
+        'lg': 'tw-pl-[0.95rem] tw-p-0',
+        'xl': 'tw-pl-[1rem] tw-p-0',
+        '2xl': 'tw-pl-[1.25rem] tw-p-0'
+    }[props.size]
+});
+
+const glintHeightStyle = computed(() => {
+    return {
+        '2xs': '1.25rem',
+        'xs': '1.5rem',
+        'sm': '1.75rem',
+        'md': '2rem',
+        'lg': '2.75rem',
+        'xl': '3.5rem',
+        '2xl' : '4rem',
+        '3xl' : '5rem',
     }[props.size]
 });
 
