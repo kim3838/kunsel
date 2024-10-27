@@ -1,5 +1,5 @@
 <template>
-    <div class="tw-w-full tw-h-full glint-trail">
+    <div class="tw-w-full glint-trail" :class="[heightClass]">
         <span v-if="enable" class="glint"></span>
         <span v-if="enable" class="glint"></span>
         <span v-if="enable" class="glint"></span>
@@ -29,6 +29,10 @@ const props = defineProps({
     color: {
         type: String,
         default: ''
+    },
+    heightClass: {
+        type: String,
+        default: 'tw-h-full'
     }
 });
 
