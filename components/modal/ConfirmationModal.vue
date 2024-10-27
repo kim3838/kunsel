@@ -22,7 +22,7 @@
             </div>
         </div>
 
-        <div class="tw-px-3 tw-py-2.5 tw-text-end">
+        <div class="tw-px-3 tw-py-2.5">
             <slot name="footer">
             </slot>
         </div>

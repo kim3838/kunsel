@@ -31,22 +31,23 @@
             </template>
 
             <template #footer>
-                <UnorderedList
-                    v-if="confirmingPasswordPending && confirmingPassword"
-                    :icon="'eos-icons:loading'"
-                    :size="'md'"
-                    :label="'Please wait...'"/>
-                <Button
-                    v-show="!confirmingPasswordPending"
-                    :disabled="confirmPasswordPending"
-                    @click="closeModal" :label="'Cancel'" />
+                <div class="tw-flex tw-space-x-2 tw-justify-end">
+                    <UnorderedList
+                        v-if="confirmingPasswordPending && confirmingPassword"
+                        :icon="'eos-icons:loading'"
+                        :size="'md'"
+                        :label="'Please wait...'"/>
+                    <Button
+                        v-show="!confirmingPasswordPending"
+                        :disabled="confirmPasswordPending"
+                        @click="closeModal" :label="'Cancel'" />
 
-                <Button
-                    v-show="!confirmingPasswordPending"
-                    class="tw-ms-2"
-                    :disabled="confirmPasswordPending"
-                    @click="confirmPassword"
-                    :label="button"/>
+                    <Button
+                        v-show="!confirmingPasswordPending"
+                        :disabled="confirmPasswordPending"
+                        @click="confirmPassword"
+                        :label="button"/>
+                </div>
             </template>
         </DialogModal>
     </span>

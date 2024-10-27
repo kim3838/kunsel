@@ -34,7 +34,9 @@
         </template>
 
         <template #footer>
-            <Button :size="'md'" @click.native="$promptStore.promptAction()" :label="action.label"></Button>
+            <div class="tw-flex tw-space-x-2 tw-justify-end">
+                <Button :size="'md'" @click.native="$promptStore.promptAction()" :label="action.label"></Button>
+            </div>
         </template>
     </ConfirmationModal>
 </template>

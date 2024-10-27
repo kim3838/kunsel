@@ -52,11 +52,14 @@
                                         <div class="tw-block tw-text-sm tw-self-end">
                                             <NuxtLink class="hover:tw-underline" :to="'forgot-password'">Forgot password.</NuxtLink>
                                         </div>
-                                        <Button
-                                            :disabled="authPending"
-                                            :size="'md'"
-                                            :icon="authPending ? 'eos-icons:installing' : 'mdi:key-chain'"
-                                            :label="authPending ? 'Logging in...' : 'Login'"></Button>
+                                        <div class="tw-flex-grow-[0.5]">
+                                            <Button
+                                                :justify-content="'center'"
+                                                :disabled="authPending"
+                                                :size="'md'"
+                                                :icon="authPending ? 'eos-icons:installing' : 'mdi:key-chain'"
+                                                :label="authPending ? 'Logging in...' : 'Login'"></Button>
+                                        </div>
                                     </div>
                                 </form>
                             </div>
