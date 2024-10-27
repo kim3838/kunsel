@@ -1,6 +1,6 @@
 <template>
-    <div class="tw-inline-block tw-relative tw-box-border">
-        <Glint :enable="glint" :orientation="'landscape'" :color="activeBorderComputed">
+    <div class="tw-relative tw-box-border">
+        <Glint :height-class="heightClass" :enable="glint" :orientation="'landscape'" :color="activeBorderComputed">
             <button
                 ref="button"
                 :disabled="disabled"
@@ -11,22 +11,23 @@
                     colorClass]"
                 :type="type"
                 class="
+                    tw-w-full
                     tw-font-medium
                     tw-tracking-wide
                     tw-box-border
                     disabled:tw-cursor-not-allowed
                     tw-relative">
                 <slot :fontClass="fontClass">
-                    <div class="tw-w-full tw-h-full tw-flex" :class="[fontClass]">
+                    <div class="tw-w-full tw-h-full tw-flex" :style="[contentSyle]">
                         <div
                             :style="{'filter': variant === 'default' ? 'drop-shadow(rgba(0, 0, 0, 0.3) 0px 1px 1px)' : 'none'}"
                             v-if="icon?.trim()"
                             :class="[iconHolderClass, iconSpacingClass, label?.trim() ? 'tw-justify-end' : 'tw-justify-center']"
                             class="tw-flex-none tw-flex tw-items-center tw-z-10">
-                            <ClientOnly><Icon v-if="icon?.trim()" :class="[iconClass]" :name="icon"></Icon></ClientOnly>
+                            <Icon v-if="icon?.trim()" :class="[iconClass]" :name="icon"></Icon>
                         </div>
 
-                        <div v-if="label?.trim()" :class="['tw-w-full tw-flex tw-items-center tw-truncate tw-z-10', labelSpacingClass]">{{label}}</div>
+                        <div v-if="label?.trim()" :class="['tw-flex tw-items-center tw-truncate tw-z-10', fontClass, labelSpacingClass]">{{label}}</div>
                     </div>
                 </slot>
             </button>
@@ -115,6 +116,10 @@ const props = defineProps({
         type: Boolean,
         default: false
     },
+    justifyContent: {
+        type: String,
+        default: 'start',
+    },
 });
 
 const heightClass = computed(() => {
@@ -131,13 +136,13 @@ const heightClass = computed(() => {
 
 const labelSpacingClass = computed(() => {
     return {
-        '2xs': props.icon?.trim() ? 'tw-pl-[0.2rem] tw-pr-[0.5rem]' : 'tw-px-1',
-        'xs': props.icon?.trim() ? 'tw-pl-[0.2rem] tw-pr-[0.5rem]' : 'tw-px-1',
-        'sm': props.icon?.trim() ? 'tw-pl-[0.2rem] tw-pr-[0.5rem]' : 'tw-px-2',
-        'md': props.icon?.trim() ? 'tw-pl-1 tw-pr-[0.5rem]' : 'tw-px-2',
-        'lg': props.icon?.trim() ? 'tw-pl-1 tw-pr-[0.5rem]' : 'tw-px-2',
-        'xl': props.icon?.trim() ? 'tw-pl-1 tw-pr-[0.5rem]' : 'tw-px-4',
-        '2xl': props.icon?.trim() ? 'tw-pl-1 tw-pr-[0.5rem]' : 'tw-px-4'
+        '2xs': props.icon?.trim() ? 'tw-pl-[0.2rem] tw-pr-[0.5rem]' : 'tw-px-[0.3rem]',
+        'xs': props.icon?.trim() ? 'tw-pl-[0.2rem] tw-pr-[0.5rem]' : 'tw-px-[0.3rem]',
+        'sm': props.icon?.trim() ? 'tw-pl-[0.2rem] tw-pr-[0.5rem]' : 'tw-px-[0.6rem]',
+        'md': props.icon?.trim() ? 'tw-pl-[0.2rem] tw-pr-[0.5rem]' : 'tw-px-[0.6rem]',
+        'lg': props.icon?.trim() ? 'tw-pl-1 tw-pr-[0.5rem]' : 'tw-px-[0.85rem]',
+        'xl': props.icon?.trim() ? 'tw-pl-1 tw-pr-[0.5rem]' : 'tw-px-[0.85rem]',
+        '2xl': props.icon?.trim() ? 'tw-pl-1 tw-pr-[0.5rem]' : 'tw-px-[1.25rem]'
     }[props.size]
 });
 
@@ -145,23 +150,23 @@ const iconSpacingClass = computed(() => {
     return {
         '2xs': props.label?.trim() ? '' : 'tw-pl-[0.15rem] tw-mr-[0.1rem]',
         'xs': props.label?.trim() ? '' : 'tw-pl-[0.15rem] tw-mr-[0.2rem]',
-        'sm': props.label?.trim() ? '' : (props.variant == 'default' ? 'tw-pl-[0.5rem] tw-mr-[0.45rem]' : 'tw-pl-[0.45rem] tw-mr-[0.35rem]'),
-        'md': props.label?.trim() ? '' : (props.variant == 'default' ? 'tw-pl-[0.45rem] tw-mr-[0.4rem]' : 'tw-pl-[0.45rem] tw-mr-[0.35rem]'),
-        'lg': props.label?.trim() ? '' : (props.variant == 'default' ? 'tw-pl-[0.575rem] tw-mr-[0.35rem]' : 'tw-pl-[0.575rem] tw-mr-[0.3rem]'),
-        'xl': props.label?.trim() ? '' : (props.variant == 'default' ? 'tw-pl-[0.675rem] tw-mr-[0.55rem]' : 'tw-pl-[0.675rem] tw-mr-[0.5rem]'),
-        '2xl': props.label?.trim() ? '' : (props.variant == 'default' ? 'tw-pl-[0.8rem] tw-mr-[0.75rem]' : 'tw-pl-[0.8rem] tw-mr-[0.7rem]')
+        'sm': props.label?.trim() ? '' : (props.variant == 'default' ? 'tw-pl-[0.5rem] tw-mr-[0.4rem]' : 'tw-pl-[0.45rem] tw-mr-[0.45rem]'),
+        'md': props.label?.trim() ? '' : (props.variant == 'default' ? 'tw-pl-[0.45rem] tw-mr-[0.4rem]' : 'tw-pl-[0.45rem] tw-mr-[0.4rem]'),
+        'lg': props.label?.trim() ? '' : (props.variant == 'default' ? 'tw-pl-[0.7rem] tw-mr-[0.65rem]' : 'tw-pl-[0.7rem] tw-mr-[0.7rem]'),
+        'xl': props.label?.trim() ? '' : (props.variant == 'default' ? 'tw-pl-[0.65rem] tw-mr-[0.6rem]' : 'tw-pl-[0.65rem] tw-mr-[0.65rem]'),
+        '2xl': props.label?.trim() ? '' : (props.variant == 'default' ? 'tw-pl-[1rem] tw-mr-[0.85rem]' : 'tw-pl-[1rem] tw-mr-[0.9rem]')
     }[props.size]
 });
 
 const iconHolderClass = computed(() => {
     return {
-        '2xs': props.variant == 'default' ? 'tw-w-[1.25rem]': 'tw-w-[1.2rem]',
-        'xs': props.variant == 'default' ? 'tw-w-[1.5rem]': 'tw-w-[1.4rem]',
+        '2xs': props.variant == 'default' ? 'tw-w-[1.2rem]': 'tw-w-[1.2rem]',
+        'xs': props.variant == 'default' ? 'tw-w-[1.45rem]': 'tw-w-[1.45rem]',
         'sm': props.variant == 'default' ? 'tw-w-[1.75rem]': 'tw-w-[1.7rem]',
-        'md': props.variant == 'default' ? 'tw-w-[1.75rem]': 'tw-w-[1.7rem]',
-        'lg': props.variant == 'default' ? 'tw-w-[2.85rem]' : 'tw-w-[2.75rem]',
-        'xl': props.variant == 'default' ? 'tw-w-[3rem]' : 'tw-w-[2.9rem]',
-        '2xl': props.variant == 'default' ? 'tw-w-[4rem]' : 'tw-w-[3.95rem]',
+        'md': props.variant == 'default' ? 'tw-w-[1.7rem]': 'tw-w-[1.7rem]',
+        'lg': props.variant == 'default' ? 'tw-w-[2.75rem]' : 'tw-w-[2.75rem]',
+        'xl': props.variant == 'default' ? 'tw-w-[2.95rem]' : 'tw-w-[2.95rem]',
+        '2xl': props.variant == 'default' ? 'tw-w-[3.95rem]' : 'tw-w-[3.95rem]',
     }[props.size];
 });
 
@@ -203,6 +208,12 @@ const borderStyle = computed(() => {
         'outline': '1px solid ' + threadColor.value,
         'flat': '1px solid ' + ((props.flatBorderColor !== null) ? props.flatBorderColor : threadColor.value),
     }[props.variant]
+});
+
+const contentSyle = computed(() => {
+    return {
+        'justify-content': props.justifyContent
+    }
 });
 
 const activeBorderComputed = computed(() => {
