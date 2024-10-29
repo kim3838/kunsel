@@ -26,7 +26,6 @@
 </template>
 
 <script setup>
-import {ref, computed, watch} from 'vue';
 import {storeToRefs} from 'pinia';
 
 const {$themeStore} = useNuxtApp();
@@ -97,6 +96,12 @@ const props = defineProps({
         type: Boolean,
         default: true
     },
+    override: {
+        type: Object,
+        default: function () {
+            return {}
+        }
+    },
     glint: {
         type: Boolean,
         default: false
@@ -131,6 +136,11 @@ const absoluteTopAllocation = computed(() => {
 });
 
 const spacingClass = computed(() => {
+
+    if(props.override.spacing){
+        return props.override.spacing;
+    }
+
     return {
         '2xs': 'tw-pl-[0.3rem] tw-p-0',
         'xs': 'tw-pl-[0.3rem] tw-p-0',
@@ -156,6 +166,11 @@ const glintHeightStyle = computed(() => {
 });
 
 const fontClass = computed(() => {
+
+    if(props.override.font_size){
+        return props.override.font_size;
+    }
+
     return {
         '2xs': 'tw-text-xs',
         'xs': 'tw-text-xs',
