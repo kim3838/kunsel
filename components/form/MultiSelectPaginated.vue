@@ -71,14 +71,14 @@
 
             <div v-show="selectedComputed.length" class="tw-px-2 tw-py-2 tw-gap-1 tw-flex tw-overflow-x-scroll" :class="[optionsFontClass]">
                 <Button
-                    ref="toggleSelectedButtonVisibility"
+                    @focus-state-changed="toggleSelectedButtonVisibilityFocusStateChangedHandler"
                     @click="toggleSelectedVisibility"
                     :disabled="!selectedComputed.length"
                     :size="headerActionSize"
                     :icon="showSelectedToggleButton.icon"
                     :label="showSelectedToggleButton.label" />
                 <Button
-                    ref="clearSelectedButton"
+                    @focus-state-changed="clearSelectedButtonFocusStateChangedHandler"
                     @click="clearSelected"
                     :size="headerActionSize"
                     :icon="'ic:baseline-clear'"
@@ -227,8 +227,6 @@ let perPage = computed(() => {
 let selectParent = ref(null);
 let selectionSearch = ref(null);
 let selectionScroll = ref<HTMLElement | null>(null);
-let toggleSelectedButtonVisibility = ref(null);
-let clearSelectedButton = ref(null);
 let selectionEndResult = reactive({
     'icon': 'eos-icons:loading',
     'label': 'Loading...',
@@ -247,8 +245,6 @@ let selectionOffset = reactive({
 });
 
 const { focused: selectParentFocused } = useFocus(selectParent);
-const { focused: toggleSelectedButtonVisibilityFocused } = useFocus(toggleSelectedButtonVisibility);
-const { focused: clearSelectedButtonFocused } = useFocus(clearSelectedButton);
 const { focused: selectionScrollFocused } = useFocus(selectionScroll);
 
 const idleBorderComputed = computed(() => {
@@ -623,20 +619,22 @@ watch(selectionScrollFocused, (focused) => {
         loseFocus();
     }
 });
-watch(toggleSelectedButtonVisibilityFocused, (focused) => {
+
+function toggleSelectedButtonVisibilityFocusStateChangedHandler(focused: boolean){
     if (focused) {
         keepFocusAlive();
     } else {
         loseFocus();
     }
-});
-watch(clearSelectedButtonFocused, (focused) => {
+}
+
+function clearSelectedButtonFocusStateChangedHandler(focused: boolean){
     if (focused) {
         keepFocusAlive();
     } else {
         loseFocus();
     }
-});
+}
 
 function searchInputFocusStateChangedHandler(focused: boolean) {
     if (focused) {
