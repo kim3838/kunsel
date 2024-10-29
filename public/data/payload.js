@@ -901,39 +901,42 @@ export default {
     ],
     'featured': [
         {
-            'type': 'full',
-            'title': 'Featured',
-            'image': '/images/carousel/c12d1eba-e8c2-4827-a0d2-5298c4b0f421.webp'
-        },
-        {
+            'id': 'feature_1',
             'type': 'full',
             'title': 'Top Seller',
-            'image': '/images/carousel/c12d1eba-e8c2-4827-a0d2-5298c4b0f421.webp'
+            'media': {
+                'type': 'image',
+                'source': '/images/carousel/719ed6d6-421b-4b73-8cfe-82fb718c37ce.webp'
+            }
         },
         {
+            'id': 'feature_2',
+            'type': 'full',
+            'title': 'Featured',
+            'media': {
+                'type': 'video',
+                'source': '/videos/weathering_with_you.mp4',
+                'source_type': 'video/mp4'
+            }
+        },
+        {
+            'id': 'feature_3',
             'type': 'full',
             'title': 'Trending',
-            'image': '/images/carousel/c12d1eba-e8c2-4827-a0d2-5298c4b0f421.webp'
+            'media': {
+                'type': 'image',
+                'source': '/images/carousel/719ed6d6-421b-4b73-8cfe-82fb718c37ce.webp'
+            }
         },
         {
+            'id': 'feature_4',
             'type': 'full',
             'title': 'Battle Pass',
-            'image': '/images/carousel/c12d1eba-e8c2-4827-a0d2-5298c4b0f421.webp'
-        },
-        // {
-        //     'type': 'full',
-        //     'title': 'FEATURED',
-        //     'image': '/images/carousel/79e97448-7388-4f71-876e-d33c92091910.webp'
-        // },
-        // {
-        //     'type': 'full',
-        //     'title': 'TOP SELLER',
-        //     'image': '/images/carousel/202ae924-b777-45a2-94c6-f78134b17020.webp'
-        // },
-        // {
-        //     'type': 'full',
-        //     'title': 'TRENDING',
-        //     'image': '/images/carousel/2271fbba-86bf-4dc7-93cb-59eb0aab62d8.webp'
-        // },
+            'media': {
+                'type': 'video',
+                'source': '/videos/your_name_4.mp4',
+                'source_type': 'video/mp4'
+            }
+        }
     ]
 };
