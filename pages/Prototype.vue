@@ -6,7 +6,7 @@
 
                 <div class="tw-space-y-2">
                     <!-- Static Single, MultiSelect and DateTime, Date, and Month Picker -->
-                    <div v-if="true" class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-8">
+                    <div v-if="false" class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-8">
                         <div class="tw-block neutral-border">
                             <InputLabel :size="'sm'" value="Static Multi Select" />
                             <MultiSelect drop-shadow :selection-max-viewable-line="5" :size="'md'" :options="category" :icon="'ic:sharp-qr-code'"/>
@@ -75,7 +75,7 @@
                     </div>
 
                     <!-- Paginated Single and MultiSelect -->
-                    <div v-if="true" class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-8">
+                    <div v-if="false" class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-8">
                         <div class="tw-block neutral-border">
                             <InputLabel :size="'sm'" value="Paginated Multi Select" />
                             <MultiSelectPaginated
@@ -199,7 +199,7 @@
                     </div>
 
                     <!-- Datatables -->
-                    <div v-if="false" class="tw-grid tw-gap-2 sm:tw-grid-cols-1 md:tw-grid-cols-2 lg:tw-grid-cols-4">
+                    <div v-if="true" class="tw-grid tw-gap-2 sm:tw-grid-cols-1 md:tw-grid-cols-2 lg:tw-grid-cols-4">
                         <div class="tw-block tw-col-span-1 sm:tw-col-span-3 md:tw-col-span-2 lg:tw-col-span-2 tw-p-2 neutral-border">
                             <InputLabel class="tw-mb-2" :size="'md'" value="MD Datatable" />
                             <DataTable
@@ -210,7 +210,7 @@
                                 selection>
                                 <template v-slot:cell.name="{cell, index, slot}">
                                     <div class="tw-h-full tw-w-full tw-flex tw-items-center">
-                                        <Button class="tw-w-full" :variant="'outline'" :icon="'fe:check-circle'" :size="slot.buttonSize" :label="`[${index}] ${cell.name}`"></Button>
+                                        <Button class="tw-w-full" :variant="'outline'" :icon="'ic:sharp-check-box-outline-blank'" :size="slot.buttonSize" :label="`[${index}] ${cell.name}`"></Button>
                                     </div>
                                 </template>
                                 <template v-slot:cell.category="{cell, slot, scrollReference}">
@@ -220,7 +220,7 @@
                                         :scroll-reference="scrollReference"
                                         :size="slot.selectSize"
                                         :options="category"
-                                        :icon="'ic:baseline-data-saver-on'"/>
+                                        :icon="'ic:sharp-check-box-outline-blank'"/>
                                 </template>
                                 <template v-slot:cell.datetime_added="{cell, slot, scrollReference}">
                                     <InputWithIcon
@@ -243,7 +243,7 @@
                                 selection>
                                 <template v-slot:cell.name="{cell, index, slot}">
                                     <div class="tw-h-full tw-w-full tw-flex tw-items-center">
-                                        <Button class="tw-w-full" :variant="'default'" :icon="'material-symbols:ev-mobiledata-badge-sharp'" :size="slot.buttonSize" :label="`${cell.name}`"></Button>
+                                        <Button class="tw-w-full" :variant="'default'" :icon="'ic:sharp-check-box-outline-blank'" :size="slot.buttonSize" :label="`${cell.name}`"></Button>
                                     </div>
                                 </template>
                                 <template v-slot:cell.code="{index, cell, slot}">
@@ -270,11 +270,11 @@
                                 selection>
                                 <template v-slot:cell.tools="{cell, slot, scrollReference}">
                                     <div class="tw-h-full tw-space-x-0.5 tw-w-full tw-flex tw-items-center">
-                                        <Button :size="slot.buttonSize" :icon="'emojione-monotone:envelope-with-arrow'" :label="'Slot I'"></Button>
-                                        <Button :variant="'flat'" :size="slot.buttonSize" :icon="'emojione-monotone:envelope'" :label="'Slot II'"></Button>
-                                        <Button :variant="'flat'" :size="slot.buttonSize" :icon="'emojione-monotone:incoming-envelope'" :label="'Slot III'"></Button>
-                                        <Button :variant="'flat'" :size="slot.buttonSize" :icon="'emojione-monotone:dollar-banknote'"></Button>
-                                        <Button :variant="'flat'" :size="slot.buttonSize" :icon="'emojione-monotone:spiral-calendar'"></Button>
+                                        <Button :size="slot.buttonSize" :icon="'ic:sharp-check-box-outline-blank'" :label="'Slot I'"></Button>
+                                        <Button :variant="'flat'" :size="slot.buttonSize" :icon="'ic:sharp-check-box-outline-blank'" :label="'Slot II'"></Button>
+                                        <Button :variant="'flat'" :size="slot.buttonSize" :icon="'ic:sharp-check-box-outline-blank'" :label="'Slot III'"></Button>
+                                        <Button :variant="'flat'" :size="slot.buttonSize" :icon="'ic:sharp-check-box-outline-blank'"></Button>
+                                        <Button :variant="'flat'" :size="slot.buttonSize" :icon="'ic:sharp-check-box-outline-blank'"></Button>
                                     </div>
                                 </template>
                                 <template v-slot:cell.input="{cell, index, slot}">
@@ -282,7 +282,7 @@
                                 </template>
                                 <template v-slot:cell.name="{cell, index, slot}">
                                     <div class="tw-h-full tw-w-full tw-flex tw-items-center">
-                                        <Button class="tw-w-full" :variant="'flat'" :icon="'ic:baseline-data-saver-on'" :size="slot.buttonSize" :label="`${cell.name}`"></Button>
+                                        <Button class="tw-w-full" :variant="'flat'" :icon="'ic:sharp-check-box-outline-blank'" :size="slot.buttonSize" :label="`${cell.name}`"></Button>
                                     </div>
                                 </template>
                                 <template v-slot:cell.code="{cell, index, slot}">
@@ -302,7 +302,7 @@
                                         :label="'Select Prototype'"
                                         :size="slot.selectSize"
                                         :payload="cell.single_select_prototype_payload"
-                                        :icon="'emojione-monotone:japanese-no-vacancy-button'"/>
+                                        :icon="'ic:sharp-check-box-outline-blank'"/>
                                 </template>
                                 <template v-slot:cell.multi_paginated="{cell, slot, scrollReference}">
                                     <MultiSelectPaginated
@@ -318,7 +318,7 @@
                                         :label="'Select Prototypes'"
                                         :size="slot.selectSize"
                                         :payload="cell.multi_select_prototype_payload"
-                                        :icon="'ic:sharp-qr-code'"/>
+                                        :icon="'ic:sharp-check-box-outline-blank'"/>
                                 </template>
                                 <template v-slot:cell.single_select="{cell, slot, scrollReference}">
                                     <SingleSelect
@@ -326,7 +326,7 @@
                                         drop-shadow
                                         :scroll-reference="scrollReference"
                                         :size="slot.selectSize"
-                                        :icon="'emojione-monotone:kaaba'"
+                                        :icon="'ic:sharp-check-box-outline-blank'"
                                         :label="'Plan'"
                                         :options="plan" />
                                 </template>
@@ -337,7 +337,7 @@
                                         :scroll-reference="scrollReference"
                                         :size="slot.selectSize"
                                         :options="category"
-                                        :icon="'emojione-monotone:japanese-post-office'"/>
+                                        :icon="'ic:sharp-check-box-outline-blank'"/>
                                 </template>
                                 <template v-slot:cell.type="{cell, index, slot}">
                                     <Input :size="slot.inputSize" v-model="cell.type" type="number" autocomplete="off" />
@@ -369,17 +369,17 @@
                                 <div class="neutral-border tw-p-1">
                                     <pre>OFETCH PENDING: {{ofetchPending}}</pre>
                                     <pre>OFETCH DATA: {{ofetchData}}</pre>
-                                    <Button @click="oFetchPost" :label="'OFetch Post'" />
+                                    <Button class="tw-inline-block" @click="oFetchPost" :label="'OFetch Post'" />
                                 </div>
                                 <div class="neutral-border tw-p-1">
                                     <pre>OFETCH NO ERROR PROMPT PENDING: {{ofetchNoPromptPending}}</pre>
                                     <pre>OFETCH NO ERROR PROMPT DATA: {{ofetchNoPromptData}}</pre>
-                                    <Button @click="oFetchNoPromptPost" :label="'OFetch NO PROMPT Post'" />
+                                    <Button class="tw-inline-block" @click="oFetchNoPromptPost" :label="'OFetch NO PROMPT Post'" />
                                 </div>
                                 <div class="neutral-border tw-p-1">
                                     <pre>USEFETCH LAZY FETCH PENDING: {{useFetchPending}}</pre>
                                     <pre>USEFETCH LAZY FETCH DATA: {{!useFetchPending ? useFetchData : null}}</pre>
-                                    <Button @click="useFetchPost" :label="'useFetch Post'" />
+                                    <Button class="tw-w-min" @click="useFetchPost" :label="'useFetch Post'" />
                                 </div>
                             </div>
                         </div>
@@ -473,9 +473,13 @@
                         <div class="tw-block tw-p-2 neutral-border">
                             <InputLabel class="tw-mb-2" :size="'md'" value="Spacing Alignment Grid" />
                             <div class="tw-grid tw-gap-1 tw-grid-cols-7">
-                                <div v-if="true">
-                                    <div>
+                                <div v-if="true" class="tw-relative">
+                                    <div v-if="true" class="tw-absolute tw-w-[0.2px] tw-top-0 tw-bottom-0 tw-bg-slate-400 tw-z-50 tw-ml-[0.35rem]"></div>
+                                    <div v-if="true" class="tw-absolute tw-w-[0.2px] tw-top-0 tw-bottom-0 tw-bg-slate-400 tw-z-50 tw-ml-[1.1rem]"></div>
+
+                                    <div class="tw-space-y-1">
                                         <MultiSelectPaginated
+                                            :glint="true"
                                             :drop-shadow="true"
                                             :selection-max-content="false"
                                             :selected-max-viewable-line="6"
@@ -487,12 +491,9 @@
                                             :size="'2xs'"
                                             :payload="multiSelectPrototypePayload"
                                             :icon="tabGroup.icon"/>
-                                    </div>
-                                    <div>
-                                        <InputWithIcon :size="'2xs'" :icon="tabGroup.icon" :placeholder="'Enter value'" autocomplete="off" />
-                                    </div>
-                                    <div>
+                                        <InputWithIcon :glint="false" :size="'2xs'" :icon="tabGroup.icon" :placeholder="'Enter value'" autocomplete="off" />
                                         <MultiSelect
+                                            :glint="true"
                                             drop-shadow
                                             :searchable="false"
                                             :selection-float="true"
@@ -501,9 +502,8 @@
                                             :size="'2xs'"
                                             :options="category"
                                             :icon="tabGroup.icon"/>
-                                    </div>
-                                    <div>
                                         <SingleSelectPaginated
+                                            :glint="true"
                                             :value-persist="true"
                                             :drop-shadow="true"
                                             :selection-max-content="true"
@@ -515,9 +515,8 @@
                                             :size="'2xs'"
                                             :payload="singleSelectPrototypePayload"
                                             :icon="tabGroup.icon"/>
-                                    </div>
-                                    <div>
                                         <SingleSelect
+                                            :glint="true"
                                             :value-persist="true"
                                             :drop-shadow="true"
                                             :selection-max-content="true"
@@ -528,21 +527,42 @@
                                             :selection-max-viewable-line="8"
                                             :icon="tabGroup.icon"
                                             :options="singleSelectPrototype"/>
-                                    </div>
 
-                                    <div><Button class="tw-w-full" :size="'2xs'" :icon="tabGroup.icon" :label="'Button'" /></div>
-                                    <div><Button class="tw-w-3/4" :size="'2xs'" :icon="tabGroup.icon" :variant="'outline'" :label="'Button'" /></div>
-                                    <div><Button class="tw-w-1/2" :size="'2xs'" :icon="tabGroup.icon" :variant="'flat'" :label="'Button'" /></div>
-                                    <div><Button class="tw-w-1/3" :size="'2xs'" :icon="tabGroup.icon" :variant="'flat'" disabled :label="'Button'" /></div>
-                                    <div><Button class="" :size="'2xs'" :icon="tabGroup.icon" :variant="'flat'" :label="'Button'" /></div>
-                                    <div><InputWithIcon ref="inputValue" :size="'2xs'" :icon="tabGroup.icon" :placeholder="'Enter value'" autocomplete="off" /></div>
-                                    <div><Button class="" :size="'2xs'" :icon="tabGroup.icon" :variant="'flat'" :label="''" /></div>
-                                    <div><Button class="" :size="'2xs'" :icon="tabGroup.icon" :label="''" /></div>
+                                        <!-- Input -->
+                                        <Input :glint="false" :placeholder="'Enter value'" :size="'2xs'" type="text" autocomplete="off" />
+
+                                        <!-- Input with icon -->
+                                        <InputWithIcon
+                                            :glint="false"
+                                            :size="'2xs'"
+                                            :icon="tabGroup.icon"
+                                            :placeholder="'Enter value'"
+                                            autocomplete="off" />
+
+                                        <!-- Button with icon, label -->
+                                        <Button :glint="true" class="tw-w-full" :size="'2xs'" :icon="tabGroup.icon" :variant="'default'" :label="'Button'" />
+                                        <Button :glint="true" class="tw-w-3/4"  :size="'2xs'" :icon="tabGroup.icon" :variant="'flat'" :label="'Button'" />
+                                        <Button :glint="true" class="tw-w-1/2"  :size="'2xs'" :icon="tabGroup.icon" :variant="'outline'" :label="'Button'" />
+
+                                        <!-- Button with icon, no label -->
+                                        <Button :glint="true" class="tw-w-full" :size="'2xs'" :icon="tabGroup.icon" :variant="'default'" :label="''" />
+                                        <Button :glint="true" class="tw-w-3/4"  :size="'2xs'" :icon="tabGroup.icon" :variant="'flat'" :label="''" />
+                                        <Button :glint="true" class="tw-w-1/2"  :size="'2xs'" :icon="tabGroup.icon" :variant="'outline'" :label="''" />
+
+                                        <!-- Button with icon, no label, minimum width -->
+                                        <div class="tw-w-min"><Button :glint="true" :size="'2xs'" :icon="tabGroup.icon" :variant="'default'" :label="''" /></div>
+                                        <div class="tw-w-min"><Button :glint="true" :size="'2xs'" :icon="tabGroup.icon" :variant="'outline'" :label="''" /></div>
+                                        <div class="tw-w-min"><Button :glint="true" :size="'2xs'" :icon="tabGroup.icon" :variant="'flat'" :label="''" /></div>
+                                    </div>
                                 </div>
 
-                                <div v-if="true">
-                                    <div>
+                                <div v-if="true" class="tw-relative">
+                                    <div v-if="true" class="tw-absolute tw-w-[0.2px] tw-top-0 tw-bottom-0 tw-bg-slate-400 tw-z-50 tw-ml-[0.40rem]"></div>
+                                    <div v-if="true" class="tw-absolute tw-w-[0.2px] tw-top-0 tw-bottom-0 tw-bg-slate-400 tw-z-50 tw-ml-[1.35rem]"></div>
+
+                                    <div class="tw-space-y-1">
                                         <MultiSelectPaginated
+                                            :glint="true"
                                             :drop-shadow="true"
                                             :selection-max-content="false"
                                             :selected-max-viewable-line="6"
@@ -554,12 +574,9 @@
                                             :size="'xs'"
                                             :payload="multiSelectPrototypePayload"
                                             :icon="tabGroup.icon"/>
-                                    </div>
-                                    <div>
-                                        <InputWithIcon :size="'xs'" :icon="tabGroup.icon" :placeholder="'Enter value'" autocomplete="off" />
-                                    </div>
-                                    <div>
+                                        <InputWithIcon :glint="false" :size="'xs'" :icon="tabGroup.icon" :placeholder="'Enter value'" autocomplete="off" />
                                         <MultiSelect
+                                            :glint="true"
                                             drop-shadow
                                             :searchable="false"
                                             :selection-float="true"
@@ -568,9 +585,8 @@
                                             :size="'xs'"
                                             :options="category"
                                             :icon="tabGroup.icon"/>
-                                    </div>
-                                    <div>
                                         <SingleSelectPaginated
+                                            :glint="true"
                                             :value-persist="true"
                                             :drop-shadow="true"
                                             :selection-max-content="true"
@@ -582,9 +598,8 @@
                                             :size="'xs'"
                                             :payload="singleSelectPrototypePayload"
                                             :icon="tabGroup.icon"/>
-                                    </div>
-                                    <div>
                                         <SingleSelect
+                                            :glint="true"
                                             :value-persist="true"
                                             :drop-shadow="true"
                                             :selection-max-content="true"
@@ -595,21 +610,42 @@
                                             :selection-max-viewable-line="8"
                                             :icon="tabGroup.icon"
                                             :options="singleSelectPrototype"/>
-                                    </div>
 
-                                    <div><Button class="tw-w-full" :size="'xs'" :icon="tabGroup.icon" :label="'Button'" /></div>
-                                    <div><Button class="tw-w-3/4" :size="'xs'" :icon="tabGroup.icon" :variant="'outline'" :label="'Button'" /></div>
-                                    <div><Button class="tw-w-1/2" :size="'xs'" :icon="tabGroup.icon" :variant="'flat'" :label="'Button'" /></div>
-                                    <div><Button class="tw-w-1/3" :size="'xs'" :icon="tabGroup.icon" :variant="'flat'" disabled :label="'Button'" /></div>
-                                    <div><Button class="" :size="'xs'" :icon="tabGroup.icon" :variant="'flat'" :label="'Button'" /></div>
-                                    <div><InputWithIcon ref="inputValue" :size="'xs'" :icon="tabGroup.icon" :placeholder="'Enter value'" autocomplete="off" /></div>
-                                    <div><Button class="" :size="'xs'" :icon="tabGroup.icon" :variant="'flat'" :label="''" /></div>
-                                    <div><Button class="" :size="'xs'" :icon="tabGroup.icon" :label="''" /></div>
+                                        <!-- Input -->
+                                        <Input :glint="false" :placeholder="'Enter value'" :size="'xs'" type="text" autocomplete="off" />
+
+                                        <!-- Input with icon -->
+                                        <InputWithIcon
+                                            :glint="false"
+                                            :size="'xs'"
+                                            :icon="tabGroup.icon"
+                                            :placeholder="'Enter value'"
+                                            autocomplete="off" />
+
+                                        <!-- Button with icon, label -->
+                                        <Button :glint="true" class="tw-w-full" :size="'xs'" :icon="tabGroup.icon" :variant="'default'" :label="'Button'" />
+                                        <Button :glint="true" class="tw-w-3/4"  :size="'xs'" :icon="tabGroup.icon" :variant="'flat'" :label="'Button'" />
+                                        <Button :glint="true" class="tw-w-1/2"  :size="'xs'" :icon="tabGroup.icon" :variant="'outline'" :label="'Button'" />
+
+                                        <!-- Button with icon, no label -->
+                                        <Button :glint="true" class="tw-w-full" :size="'xs'" :icon="tabGroup.icon" :variant="'default'" :label="''" />
+                                        <Button :glint="true" class="tw-w-3/4"  :size="'xs'" :icon="tabGroup.icon" :variant="'flat'" :label="''" />
+                                        <Button :glint="true" class="tw-w-1/2"  :size="'xs'" :icon="tabGroup.icon" :variant="'outline'" :label="''" />
+
+                                        <!-- Button with icon, no label, minimum width -->
+                                        <div class="tw-w-min"><Button :glint="true" :size="'xs'" :icon="tabGroup.icon" :variant="'default'" :label="''" /></div>
+                                        <div class="tw-w-min"><Button :glint="true" :size="'xs'" :icon="tabGroup.icon" :variant="'outline'" :label="''" /></div>
+                                        <div class="tw-w-min"><Button :glint="true" :size="'xs'" :icon="tabGroup.icon" :variant="'flat'" :label="''" /></div>
+                                    </div>
                                 </div>
 
-                                <div v-if="true">
-                                    <div>
+                                <div v-if="true" class="tw-relative">
+                                    <div v-if="true" class="tw-absolute tw-w-[0.2px] tw-top-0 tw-bottom-0 tw-bg-slate-400 tw-z-50 tw-ml-[0.65rem]"></div>
+                                    <div v-if="true" class="tw-absolute tw-w-[0.2px] tw-top-0 tw-bottom-0 tw-bg-slate-400 tw-z-50 tw-ml-[1.6rem]"></div>
+
+                                    <div class="tw-space-y-1">
                                         <MultiSelectPaginated
+                                            :glint="true"
                                             :drop-shadow="true"
                                             :selection-max-content="false"
                                             :selected-max-viewable-line="6"
@@ -621,12 +657,10 @@
                                             :size="'sm'"
                                             :payload="multiSelectPrototypePayload"
                                             :icon="tabGroup.icon"/>
-                                    </div>
-                                    <div>
-                                        <InputWithIcon :size="'sm'" :icon="tabGroup.icon" :placeholder="'Enter value'" autocomplete="off" />
-                                    </div>
-                                    <div>
+
+                                        <InputWithIcon :glint="true" :size="'sm'" :icon="tabGroup.icon" :placeholder="'Enter value'" autocomplete="off" />
                                         <MultiSelect
+                                            :glint="true"
                                             drop-shadow
                                             :searchable="false"
                                             :selection-float="true"
@@ -635,9 +669,8 @@
                                             :size="'sm'"
                                             :options="category"
                                             :icon="tabGroup.icon"/>
-                                    </div>
-                                    <div>
                                         <SingleSelectPaginated
+                                            :glint="true"
                                             :value-persist="true"
                                             :drop-shadow="true"
                                             :selection-max-content="true"
@@ -649,9 +682,8 @@
                                             :size="'sm'"
                                             :payload="singleSelectPrototypePayload"
                                             :icon="tabGroup.icon"/>
-                                    </div>
-                                    <div>
                                         <SingleSelect
+                                            :glint="true"
                                             :value-persist="true"
                                             :drop-shadow="true"
                                             :selection-max-content="true"
@@ -662,21 +694,43 @@
                                             :selection-max-viewable-line="8"
                                             :icon="tabGroup.icon"
                                             :options="singleSelectPrototype"/>
-                                    </div>
 
-                                    <div><Button class="tw-w-full" :size="'sm'" :icon="tabGroup.icon" :label="'Button'" /></div>
-                                    <div><Button class="tw-w-3/4" :size="'sm'" :icon="tabGroup.icon" :variant="'outline'" :label="'Button'" /></div>
-                                    <div><Button class="tw-w-1/2" :size="'sm'" :icon="tabGroup.icon" :variant="'flat'" :label="'Button'" /></div>
-                                    <div><Button class="tw-w-1/3" :size="'sm'" :icon="tabGroup.icon" :variant="'flat'" disabled :label="'Button'" /></div>
-                                    <div><Button class="" :size="'sm'" :icon="tabGroup.icon" :variant="'flat'" :label="'Button'" /></div>
-                                    <div><InputWithIcon ref="inputValue" :size="'sm'" :icon="tabGroup.icon" :placeholder="'Enter value'" autocomplete="off" /></div>
-                                    <div><Button class="" :size="'sm'" :icon="tabGroup.icon" :variant="'flat'" :label="''" /></div>
-                                    <div><Button class="" :size="'sm'" :icon="tabGroup.icon" :label="''" /></div>
+                                        <!-- Input -->
+                                        <Input :glint="true" :placeholder="'Enter value'" :size="'sm'" type="text" autocomplete="off" />
+
+                                        <!-- Input with icon -->
+                                        <InputWithIcon
+                                            :glint="true"
+                                            :size="'sm'"
+                                            :icon="tabGroup.icon"
+                                            :placeholder="'Enter value'"
+                                            autocomplete="off" />
+
+                                        <!-- Button with icon, label -->
+                                        <Button :glint="true" class="tw-w-full" :size="'sm'" :icon="tabGroup.icon" :variant="'default'" :label="'Button'" />
+                                        <Button :glint="true" class="tw-w-3/4"  :size="'sm'" :icon="tabGroup.icon" :variant="'flat'" :label="'Button'" />
+                                        <Button :glint="true" class="tw-w-1/2"  :size="'sm'" :icon="tabGroup.icon" :variant="'outline'" :label="'Button'" />
+
+                                        <!-- Button with icon, no label -->
+                                        <Button :glint="true" class="tw-w-full" :size="'sm'" :icon="tabGroup.icon" :variant="'default'" :label="''" />
+                                        <Button :glint="true" class="tw-w-3/4"  :size="'sm'" :icon="tabGroup.icon" :variant="'flat'" :label="''" />
+                                        <Button :glint="true" class="tw-w-1/2"  :size="'sm'" :icon="tabGroup.icon" :variant="'outline'" :label="''" />
+
+                                        <!-- Button with icon, no label, minimum width -->
+                                        <div class="tw-w-min"><Button :glint="true" :size="'sm'" :icon="tabGroup.icon" :variant="'default'" :label="''" /></div>
+                                        <div class="tw-w-min"><Button :glint="true" :size="'sm'" :icon="tabGroup.icon" :variant="'outline'" :label="''" /></div>
+                                        <div class="tw-w-min"><Button :glint="true" :size="'sm'" :icon="tabGroup.icon" :variant="'flat'" :label="''" /></div>
+                                    </div>
                                 </div>
 
-                                <div v-if="true">
-                                    <div>
+                                <div v-if="true" class="tw-relative">
+                                    <div v-if="true" class="tw-absolute tw-w-[0.2px] tw-top-0 tw-bottom-0 tw-bg-slate-400 tw-z-50 tw-ml-[0.65rem]"></div>
+                                    <div v-if="true" class="tw-absolute tw-w-[0.2px] tw-top-0 tw-bottom-0 tw-bg-slate-400 tw-z-50 tw-ml-[1.6rem]"></div>
+
+                                    <div class="tw-space-y-1">
+                                        <!-- Selects -->
                                         <MultiSelectPaginated
+                                            :glint="true"
                                             :drop-shadow="true"
                                             :selection-max-content="false"
                                             :selected-max-viewable-line="6"
@@ -688,12 +742,9 @@
                                             :size="'md'"
                                             :payload="multiSelectPrototypePayload"
                                             :icon="tabGroup.icon"/>
-                                    </div>
-                                    <div>
-                                        <InputWithIcon :size="'md'" :icon="tabGroup.icon" :placeholder="'Enter value'" autocomplete="off" />
-                                    </div>
-                                    <div>
+                                        <InputWithIcon :glint="true" :size="'md'" :icon="tabGroup.icon" :placeholder="'Enter value'" autocomplete="off" />
                                         <MultiSelect
+                                            :glint="true"
                                             drop-shadow
                                             :searchable="false"
                                             :selection-float="true"
@@ -702,9 +753,8 @@
                                             :size="'md'"
                                             :options="category"
                                             :icon="tabGroup.icon"/>
-                                    </div>
-                                    <div>
                                         <SingleSelectPaginated
+                                            :glint="true"
                                             :value-persist="true"
                                             :drop-shadow="true"
                                             :selection-max-content="true"
@@ -716,9 +766,8 @@
                                             :size="'md'"
                                             :payload="singleSelectPrototypePayload"
                                             :icon="tabGroup.icon"/>
-                                    </div>
-                                    <div>
                                         <SingleSelect
+                                            :glint="true"
                                             :value-persist="true"
                                             :drop-shadow="true"
                                             :selection-max-content="true"
@@ -729,21 +778,42 @@
                                             :selection-max-viewable-line="8"
                                             :icon="tabGroup.icon"
                                             :options="singleSelectPrototype"/>
-                                    </div>
 
-                                    <div><Button class="tw-w-full" :size="'md'" :icon="tabGroup.icon" :label="'Button'" /></div>
-                                    <div><Button class="tw-w-3/4" :size="'md'" :icon="tabGroup.icon" :variant="'outline'" :label="'Button'" /></div>
-                                    <div><Button class="tw-w-1/2" :size="'md'" :icon="tabGroup.icon" :variant="'flat'" :label="'Button'" /></div>
-                                    <div><Button class="tw-w-1/3" :size="'md'" :icon="tabGroup.icon" :variant="'flat'" disabled :label="'Button'" /></div>
-                                    <div><Button class="" :size="'md'" :icon="tabGroup.icon" :variant="'flat'" :label="'Button'" /></div>
-                                    <div><InputWithIcon ref="inputValue" :size="'md'" :icon="tabGroup.icon" :placeholder="'Enter value'" autocomplete="off" /></div>
-                                    <div><Button class="" :size="'md'" :icon="tabGroup.icon" :variant="'flat'" :label="''" /></div>
-                                    <div><Button class="" :size="'md'" :icon="tabGroup.icon" :label="''" /></div>
+                                        <!-- Input -->
+                                        <Input :glint="true" :placeholder="'Enter value'" :size="'md'" type="text" autocomplete="off" />
+
+                                        <!-- Input with icon -->
+                                        <InputWithIcon
+                                            :glint="true"
+                                            :size="'md'"
+                                            :icon="tabGroup.icon"
+                                            :placeholder="'Enter value'"
+                                            autocomplete="off" />
+
+                                        <!-- Button with icon, label -->
+                                        <Button :glint="true" class="tw-w-full" :size="'md'" :icon="tabGroup.icon" :variant="'default'" :label="'Button'" />
+                                        <Button :glint="true" class="tw-w-3/4"  :size="'md'" :icon="tabGroup.icon" :variant="'flat'" :label="'Button'" />
+                                        <Button :glint="true" class="tw-w-1/2"  :size="'md'" :icon="tabGroup.icon" :variant="'outline'" :label="'Button'" />
+
+                                        <!-- Button with icon, no label -->
+                                        <Button :glint="true" class="tw-w-full" :size="'md'" :icon="tabGroup.icon" :variant="'default'" :label="''" />
+                                        <Button :glint="true" class="tw-w-3/4"  :size="'md'" :icon="tabGroup.icon" :variant="'flat'" :label="''" />
+                                        <Button :glint="true" class="tw-w-1/2"  :size="'md'" :icon="tabGroup.icon" :variant="'outline'" :label="''" />
+
+                                        <!-- Button with icon, no label, minimum width -->
+                                        <div class="tw-w-min"><Button :glint="true" :size="'md'" :icon="tabGroup.icon" :variant="'default'" :label="''" /></div>
+                                        <div class="tw-w-min"><Button :glint="true" :size="'md'" :icon="tabGroup.icon" :variant="'outline'" :label="''" /></div>
+                                        <div class="tw-w-min"><Button :glint="true" :size="'md'" :icon="tabGroup.icon" :variant="'flat'" :label="''" /></div>
+                                    </div>
                                 </div>
 
-                                <div v-if="true">
-                                    <div>
+                                <div v-if="true" class="tw-relative">
+                                    <div v-if="true" class="tw-absolute tw-w-[0.2px] tw-top-0 tw-bottom-0 tw-bg-slate-400 tw-z-50 tw-ml-[0.95rem]"></div>
+                                    <div v-if="true" class="tw-absolute tw-w-[0.2px] tw-top-0 tw-bottom-0 tw-bg-slate-400 tw-z-50 tw-ml-[2.59rem]"></div>
+
+                                    <div class="tw-space-y-1">
                                         <MultiSelectPaginated
+                                            :glint="true"
                                             :drop-shadow="true"
                                             :selection-max-content="false"
                                             :selected-max-viewable-line="6"
@@ -755,12 +825,9 @@
                                             :size="'lg'"
                                             :payload="multiSelectPrototypePayload"
                                             :icon="tabGroup.icon"/>
-                                    </div>
-                                    <div>
-                                        <InputWithIcon :size="'lg'" :icon="tabGroup.icon" :placeholder="'Enter value'" autocomplete="off" />
-                                    </div>
-                                    <div>
+                                        <InputWithIcon :glint="true" :size="'lg'" :icon="tabGroup.icon" :placeholder="'Enter value'" autocomplete="off" />
                                         <MultiSelect
+                                            :glint="true"
                                             drop-shadow
                                             :searchable="false"
                                             :selection-float="true"
@@ -769,9 +836,8 @@
                                             :size="'lg'"
                                             :options="category"
                                             :icon="tabGroup.icon"/>
-                                    </div>
-                                    <div>
                                         <SingleSelectPaginated
+                                            :glint="true"
                                             :value-persist="true"
                                             :drop-shadow="true"
                                             :selection-max-content="true"
@@ -783,9 +849,8 @@
                                             :size="'lg'"
                                             :payload="singleSelectPrototypePayload"
                                             :icon="tabGroup.icon"/>
-                                    </div>
-                                    <div>
                                         <SingleSelect
+                                            :glint="true"
                                             :value-persist="true"
                                             :drop-shadow="true"
                                             :selection-max-content="true"
@@ -796,37 +861,99 @@
                                             :selection-max-viewable-line="8"
                                             :icon="tabGroup.icon"
                                             :options="singleSelectPrototype"/>
+
+                                        <!-- Input -->
+                                        <Input :glint="true" :placeholder="'Enter value'" :size="'lg'" type="text" autocomplete="off" />
+
+                                        <!-- Input with icon -->
+                                        <InputWithIcon
+                                            :glint="true"
+                                            :size="'lg'"
+                                            :icon="tabGroup.icon"
+                                            :placeholder="'Enter value'"
+                                            autocomplete="off" />
+
+                                        <!-- Button with icon, label -->
+                                        <Button :glint="true" class="tw-w-full" :size="'lg'" :icon="tabGroup.icon" :variant="'default'" :label="'Button'" />
+                                        <Button :glint="true" class="tw-w-3/4"  :size="'lg'" :icon="tabGroup.icon" :variant="'flat'" :label="'Button'" />
+                                        <Button :glint="true" class="tw-w-1/2"  :size="'lg'" :icon="tabGroup.icon" :variant="'outline'" :label="'Button'" />
+
+                                        <!-- Button with icon, no label -->
+                                        <Button :glint="true" class="tw-w-full" :size="'lg'" :icon="tabGroup.icon" :variant="'default'" :label="''" />
+                                        <Button :glint="true" class="tw-w-3/4"  :size="'lg'" :icon="tabGroup.icon" :variant="'flat'" :label="''" />
+                                        <Button :glint="true" class="tw-w-1/2"  :size="'lg'" :icon="tabGroup.icon" :variant="'outline'" :label="''" />
+
+                                        <!-- Button with icon, no label, minimum width -->
+                                        <div class="tw-w-min"><Button :glint="true" :size="'lg'" :icon="tabGroup.icon" :variant="'default'" :label="''" /></div>
+                                        <div class="tw-w-min"><Button :glint="true" :size="'lg'" :icon="tabGroup.icon" :variant="'outline'" :label="''" /></div>
+                                        <div class="tw-w-min"><Button :glint="true" :size="'lg'" :icon="tabGroup.icon" :variant="'flat'" :label="''" /></div>
                                     </div>
-
-                                    <div><Button class="tw-w-full" :size="'lg'" :icon="tabGroup.icon" :label="'Button'" /></div>
-                                    <div><Button class="tw-w-3/4" :size="'lg'" :icon="tabGroup.icon" :variant="'outline'" :label="'Button'" /></div>
-                                    <div><Button class="tw-w-1/3" :size="'lg'" :icon="tabGroup.icon" :variant="'flat'" disabled :label="'Button'" /></div>
-                                    <div><Button class="" :size="'lg'" :icon="tabGroup.icon" :variant="'flat'" :label="'Button'" /></div>
-                                    <div><InputWithIcon ref="inputValue" :size="'lg'" :icon="tabGroup.icon" :placeholder="'Enter value'" autocomplete="off" /></div>
-                                    <div><Button class="" :size="'lg'" :icon="tabGroup.icon" :variant="'flat'" :label="''" /></div>
-                                    <div><Button class="" :size="'lg'" :icon="tabGroup.icon" :label="''" /></div>
                                 </div>
 
-                                <div v-if="true">
-                                    <div><InputWithIcon :size="'xl'" :icon="tabGroup.icon" :placeholder="'Enter value'" autocomplete="off" /></div>
-                                    <div><Button class="tw-w-full" :size="'xl'" :icon="tabGroup.icon" :label="'Button'" /></div>
-                                    <div><Button class="tw-w-3/4" :size="'xl'" :icon="tabGroup.icon" :variant="'outline'" :label="'Button'" /></div>
-                                    <div><Button class="tw-w-1/2" :size="'xl'" :icon="tabGroup.icon" :variant="'flat'" :label="'Button'" /></div>
-                                    <div><Button class="tw-w-1/3" :size="'xl'" :icon="tabGroup.icon" :variant="'flat'" disabled :label="'Button'" /></div>
-                                    <div><InputWithIcon ref="inputValue" :size="'xl'" :icon="tabGroup.icon" :placeholder="'Enter value'" autocomplete="off" /></div>
-                                    <div><Button class="" :size="'xl'" :icon="tabGroup.icon" :variant="'flat'" :label="''" /></div>
-                                    <div><Button class="" :size="'xl'" :icon="tabGroup.icon" :label="''" /></div>
+                                <div v-if="true" class="tw-relative">
+                                    <div v-if="true" class="tw-absolute tw-w-[0.2px] tw-top-0 tw-bottom-0 tw-bg-slate-400 tw-z-50 tw-ml-[0.95rem]"></div>
+                                    <div v-if="true" class="tw-absolute tw-w-[0.2px] tw-top-0 tw-bottom-0 tw-bg-slate-400 tw-z-50 tw-ml-[2.72rem]"></div>
+
+                                    <div class="tw-space-y-1">
+                                        <!-- Input -->
+                                        <Input :glint="true" :placeholder="'Enter value'" :size="'xl'" type="text" autocomplete="off" />
+
+                                        <!-- Input with icon -->
+                                        <InputWithIcon
+                                            :glint="true"
+                                            :size="'xl'"
+                                            :icon="tabGroup.icon"
+                                            :placeholder="'Enter value'"
+                                            autocomplete="off" />
+
+                                        <!-- Button with icon, label -->
+                                        <Button :glint="true" class="tw-w-full" :size="'xl'" :icon="tabGroup.icon" :variant="'default'" :label="'Button'" />
+                                        <Button :glint="true" class="tw-w-3/4"  :size="'xl'" :icon="tabGroup.icon" :variant="'flat'" :label="'Button'" />
+                                        <Button :glint="true" class="tw-w-1/2"  :size="'xl'" :icon="tabGroup.icon" :variant="'outline'" :label="'Button'" />
+
+                                        <!-- Button with icon, no label -->
+                                        <Button :glint="true" class="tw-w-full" :size="'xl'" :icon="tabGroup.icon" :variant="'default'" :label="''" />
+                                        <Button :glint="true" class="tw-w-3/4"  :size="'xl'" :icon="tabGroup.icon" :variant="'flat'" :label="''" />
+                                        <Button :glint="true" class="tw-w-1/2"  :size="'xl'" :icon="tabGroup.icon" :variant="'outline'" :label="''" />
+
+                                        <!-- Button with icon, no label, minimum width -->
+                                        <div class="tw-w-min"><Button :glint="true" :size="'xl'" :icon="tabGroup.icon" :variant="'default'" :label="''" /></div>
+                                        <div class="tw-w-min"><Button :glint="true" :size="'xl'" :icon="tabGroup.icon" :variant="'outline'" :label="''" /></div>
+                                        <div class="tw-w-min"><Button :glint="true" :size="'xl'" :icon="tabGroup.icon" :variant="'flat'" :label="''" /></div>
+                                    </div>
                                 </div>
 
-                                <div v-if="true">
-                                    <div><InputWithIcon :size="'2xl'" :icon="tabGroup.icon" :placeholder="'Enter value'" autocomplete="off" /></div>
-                                    <div><Button class="tw-w-full" :size="'2xl'" :icon="tabGroup.icon" :label="'Button'" /></div>
-                                    <div><Button class="tw-w-3/4" :size="'2xl'" :icon="tabGroup.icon" :variant="'outline'" :label="'Button'" /></div>
-                                    <div><Button class="tw-w-1/2" :size="'2xl'" :icon="tabGroup.icon" :variant="'flat'" :label="'Button'" /></div>
-                                    <div><Button class="tw-w-1/3" :size="'2xl'" :icon="tabGroup.icon" :variant="'flat'" disabled :label="'Button'" /></div>
-                                    <div><InputWithIcon ref="inputValue" :size="'2xl'" :icon="tabGroup.icon" :placeholder="'Enter value'" autocomplete="off" /></div>
-                                    <div><Button class="" :size="'2xl'" :icon="tabGroup.icon" :variant="'flat'" :label="''" /></div>
-                                    <div><Button class="" :size="'2xl'" :icon="tabGroup.icon" :label="''" /></div>
+                                <div v-if="true" class="tw-relative">
+                                    <div v-if="true" class="tw-absolute tw-w-[0.2px] tw-top-0 tw-bottom-0 tw-bg-slate-400 tw-z-50 tw-ml-[1.3rem]"></div>
+                                    <div v-if="true" class="tw-absolute tw-w-[0.2px] tw-top-0 tw-bottom-0 tw-bg-slate-400 tw-z-50 tw-ml-[3.7rem]"></div>
+
+                                    <div class="tw-space-y-1">
+                                        <!-- Input -->
+                                        <Input :glint="true" :placeholder="'Enter value'" :size="'2xl'" type="text" autocomplete="off" />
+
+                                        <!-- Input with icon -->
+                                        <InputWithIcon
+                                            :glint="true"
+                                            :size="'2xl'"
+                                            :icon="tabGroup.icon"
+                                            :placeholder="'Enter value'"
+                                            autocomplete="off" />
+
+                                        <!-- Button with icon, label -->
+                                        <Button :glint="true" class="tw-w-full" :size="'2xl'" :icon="tabGroup.icon" :variant="'default'" :label="'Button'" />
+                                        <Button :glint="true" class="tw-w-3/4"  :size="'2xl'" :icon="tabGroup.icon" :variant="'flat'" :label="'Button'" />
+                                        <Button :glint="true" class="tw-w-1/2"  :size="'2xl'" :icon="tabGroup.icon" :variant="'outline'" :label="'Button'" />
+
+                                        <!-- Button with icon, no label -->
+                                        <Button :glint="true" class="tw-w-full" :size="'2xl'" :icon="tabGroup.icon" :variant="'default'" :label="''" />
+                                        <Button :glint="true" class="tw-w-3/4"  :size="'2xl'" :icon="tabGroup.icon" :variant="'flat'" :label="''" />
+                                        <Button :glint="true" class="tw-w-1/2"  :size="'2xl'" :icon="tabGroup.icon" :variant="'outline'" :label="''" />
+
+                                        <!-- Button with icon, no label, minimum width -->
+                                        <div class="tw-w-min"><Button :glint="true" :size="'2xl'" :icon="tabGroup.icon" :variant="'default'" :label="''" /></div>
+                                        <div class="tw-w-min"><Button :glint="true" :size="'2xl'" :icon="tabGroup.icon" :variant="'outline'" :label="''" /></div>
+                                        <div class="tw-w-min"><Button :glint="true" :size="'2xl'" :icon="tabGroup.icon" :variant="'flat'" :label="''" /></div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -844,7 +971,7 @@
                     </div>
 
                     <!-- Default Button -->
-                    <div v-if="true" class="tw-grid tw-gap-2 tw-grid-cols-3 sm:tw-grid-cols-4 lg:tw-grid-cols-6 xl:tw-grid-cols-12 2xl:tw-grid-cols-12">
+                    <div v-if="false" class="tw-grid tw-gap-2 tw-grid-cols-3 sm:tw-grid-cols-4 lg:tw-grid-cols-6 xl:tw-grid-cols-12 2xl:tw-grid-cols-12">
                         <div class="tw-flex tw-items-start tw-justify-start tw-block neutral-border">
                             <Button :size="'2xs'" :icon="'ic:sharp-send-to-mobile'" :label="'XXS Button'"></Button>
                         </div>
@@ -869,7 +996,7 @@
                     </div>
 
                     <!-- Outline Button -->
-                    <div v-if="true" class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-9">
+                    <div v-if="false" class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-9">
                         <div class="tw-flex tw-items-start tw-justify-start tw-block neutral-border">
                             <Button :variant="'outline'" :size="'2xs'" :icon="'ic:sharp-dashboard'" :label="'XXS Button'"></Button>
                         </div>
@@ -894,7 +1021,7 @@
                     </div>
 
                     <!-- Flat Button -->
-                    <div v-if="true" class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-9">
+                    <div v-if="false" class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-9">
                         <div class="tw-flex tw-items-start tw-justify-start tw-block neutral-border">
                             <Button :variant="'flat'" :size="'2xs'" :icon="'ic:sharp-dashboard'" :label="'XXS Button'"></Button>
                         </div>
@@ -919,7 +1046,7 @@
                     </div>
 
                     <!-- Hero Plate -->
-                    <div v-if="true" class=" tw-p-2 neutral-border">
+                    <div v-if="false" class=" tw-p-2 neutral-border">
                         <InputLabel class="tw-mb-2" :size="'md'" value="Hero Plate" />
                         <div class="tw-gap-2 tw-flex tw-items-start tw-justify-start tw-flex-wrap">
                             <div >
@@ -1158,7 +1285,7 @@
                     </div>
 
                     <!-- Typography -->
-                    <div v-if="true" class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-8">
+                    <div v-if="false" class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-8">
                         <div class="tw-block neutral-border tw-col-span-2">
                             <p class="tw-text-sm tw-leading-4">0123456789 (){}[] +-*/= .,;:!? #&$%@|^#[ |||> |= ~@/\\/* Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
                         </div>
@@ -1240,7 +1367,7 @@ const {
 } = storeToRefs($themeStore);
 
 let tabGroup = reactive({
-    'icon' : 'ic:sharp-qr-code',
+    'icon' : 'ic:sharp-check-box-outline-blank',
     'size' : 'md'
 });
 
