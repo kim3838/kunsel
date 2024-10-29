@@ -4,7 +4,7 @@
         class="primary-navigation-parent tw-z-40 tw-fixed tw-flex tw-justify-center">
         <div class="tw-max-w-screen-2xl tw-w-full tw-flex tw-justify-start lg:tw-justify-around tw-h-10 lg:tw-h-14">
             <div class="tw--my-px tw-flex tw-items-center">
-                <div class="tw-w-max tw-block tw-h-full tw-w-full tw-flex tw-items-center">
+                <div class="tw-w-max tw-h-full tw-flex tw-items-center">
                     <GlobalFoundries :dark="navigationMode === 'clear'" />
                 </div>
                 <NavDrop
