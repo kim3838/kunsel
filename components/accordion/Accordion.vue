@@ -51,8 +51,6 @@
     </div>
 </template>
 <script setup>
-import {computed} from "vue";
-
 const props = defineProps({
     size: {
         default: 'md'

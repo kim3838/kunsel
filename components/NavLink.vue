@@ -9,8 +9,6 @@
 </template>
 
 <script setup>
-import {computed} from "vue";
-
 const {
     navigationMode,
 } = useLayout();

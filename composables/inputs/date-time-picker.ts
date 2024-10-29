@@ -1,5 +1,3 @@
-import {nextTick, onMounted, onUnmounted} from 'vue';
-
 export function dateTimePicker(options: any[] = []) {
     const {$moment} = useNuxtApp();
 

@@ -33,7 +33,6 @@
 </template>
 <script setup>
 import {storeToRefs} from 'pinia';
-import {computed} from "vue";
 const {$themeStore} = useNuxtApp();
 
 const {

@@ -50,8 +50,6 @@
     </div>
 </template>
 <script setup>
-import {computed, ref, watch} from "vue";
-
 const navDrop = ref(null);
 
 const {

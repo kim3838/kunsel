@@ -5,7 +5,6 @@
 </template>
 
 <script setup lang="ts">
-import {computed, ref} from 'vue';
 const {$ordinal} = useNuxtApp();
 
 const props = defineProps({

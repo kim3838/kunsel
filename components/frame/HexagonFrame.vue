@@ -21,7 +21,6 @@
 
 <script setup>
 import {storeToRefs} from 'pinia';
-import {ref, reactive, computed} from "vue";
 const {$themeStore} = useNuxtApp();
 
 const {

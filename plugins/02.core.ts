@@ -1,5 +1,3 @@
-import {defineNuxtPlugin, useNuxtApp} from "#app";
-import {watch} from 'vue';
 import {storeToRefs} from 'pinia';
 
 export default defineNuxtPlugin(nuxtApp => {

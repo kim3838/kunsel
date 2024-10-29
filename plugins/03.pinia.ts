@@ -1,5 +1,3 @@
-import {defineNuxtPlugin} from "#app";
-
 //Inject pinia stores into nuxt instance
 //Allowing usage outside of Vue components
 export default defineNuxtPlugin(nuxtApp => {
