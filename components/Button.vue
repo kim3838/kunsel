@@ -38,7 +38,8 @@
 <script setup>
 import {storeToRefs} from 'pinia';
 const {$themeStore} = useNuxtApp();
-
+const button = ref(null);
+const {focused: buttonFocused} = useFocus(button);
 const {
     hexAlpha,
     primary: primaryColor,
@@ -120,6 +121,8 @@ const props = defineProps({
         default: 'start',
     },
 });
+
+const emit = defineEmits(['focusStateChanged']);
 
 const heightClass = computed(() => {
     return {
@@ -230,6 +233,10 @@ const contentSyle = computed(() => {
 
 const activeBorderComputed = computed(() => {
     return props.activeBorder ? props.activeBorder : liningColor.value;
+});
+
+watch(buttonFocused, (focused) => {
+    emit('focusStateChanged', focused);
 });
 
 </script>
