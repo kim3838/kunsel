@@ -31,6 +31,7 @@
                             autocomplete="off"
                             ref="selectionSearch"
                             :placeholder="searchable ? 'Search...' : selectionSummary"
+                            :override="{spacing: 'tw-pl-[0.3rem] tw-p-0'}"
                             @keydown="keyHandler"
                             @focusStateChanged="searchInputFocusStateChangedHandler"
                             v-model="props.payload.fetch.filters.search.keyword"
