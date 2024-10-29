@@ -218,7 +218,7 @@ const selectSize = computed(() => {
 <style lang="scss" scoped>
 
 #table-division{
-    overflow-x: auto;
+    overflow-y: hidden;
 }
 
 $tableBorder: v-bind(liningColor);
