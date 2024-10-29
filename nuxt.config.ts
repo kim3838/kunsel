@@ -101,8 +101,8 @@ export default defineNuxtConfig({
         '@nuxtjs/tailwindcss',
         '@vueuse/nuxt',
         '@pinia/nuxt',
+        '@nuxt/icon',
         'nuxt-lodash',
-        'nuxt-icon',
         'vue3-carousel-nuxt'
     ],
 
