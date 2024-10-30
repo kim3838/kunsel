@@ -1,7 +1,7 @@
 <template>
     <div>
         <DefaultWrapper>
-            <div class="tw-mx-auto tw-font-paragraph tw-max-w-screen-2xl">
+            <div class="tw-mx-auto tw-max-w-screen-2xl">
                 <div class="tw-mx-auto tw-flex tw-flex-col tw-justify-center tw-w-fit">
                     <AccentFrame class="tw-my-4 tw-max-w-screen-sm">
                         <template #content>

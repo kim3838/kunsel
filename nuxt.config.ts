@@ -42,7 +42,7 @@ export default defineNuxtConfig({
                 class: ''
             },
             "bodyAttrs": {
-                class: 'tw-font-paragraph'
+                class: 'tw-font-standard'
             }
         },
         layoutTransition: false,

@@ -32,7 +32,7 @@ module.exports = {
                 data: [
                     'Sofia Sans Semi Condensed'
                 ],
-                paragraph: [
+                standard: [
                     'Roboto',
                     'Hedvig Letters Sans',
                     'Source Sans Pro',
