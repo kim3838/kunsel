@@ -18,9 +18,8 @@ module.exports = {
         extend: {
             fontFamily : {
                 sans : [
-                    'IBM Plex Sans Condensed',//Headers
-                    'Spline Sans',
                     'Google Sans Text',
+                    'Spline Sans',
                     'Barlow Semi Condensed',
                     'Roboto Condensed',
                     'Inter',
@@ -31,6 +30,9 @@ module.exports = {
                 ],
                 data: [
                     'Sofia Sans Semi Condensed'
+                ],
+                header: [
+                    'IBM Plex Sans Condensed',//Headers
                 ],
                 standard: [
                     'Roboto',
