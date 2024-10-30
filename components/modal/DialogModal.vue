@@ -6,7 +6,7 @@
         @close="close"
     >
         <div class="tw-p-3 modal-body">
-            <div class="tw-text-lg tw-font-semibold">
+            <div class="tw-text-xl tw-font-medium tw-font-header">
                 <slot name="title" />
             </div>
 

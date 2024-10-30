@@ -3,58 +3,62 @@
         <DefaultWrapper>
             <div class="tw-mx-auto tw-max-w-screen-2xl">
                 <div class="tw-mx-auto tw-flex tw-flex-col tw-justify-center tw-w-fit">
-                    <AccentFrame class="tw-my-4 tw-max-w-screen-sm">
-                        <template #content>
-                            <div class="tw-relative">
-                                <p class="tw-font-medium tw-text-lg">Profile Information</p>
-                                <div class="tw-mt-4 tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2">
-                                    <div>
-                                        <InputLabel :size="'sm'" value="Username" />
-                                        <InputWithIcon class="tw-w-full" :icon="'ic:sharp-person-pin'" v-model="userName" readonly />
-                                    </div>
-                                    <div>
-                                        <InputLabel :size="'sm'" value="Email" />
-                                        <InputWithIcon class="tw-w-full" :icon="'ic:round-mail-outline'" v-model="userEmail" readonly />
-                                    </div>
-                                    <div>
-                                        <InputWithIcon
-                                            class="tw-w-full"
-                                            :icon="user?.email_verified_at ? 'ic:sharp-verified-user' : 'mdi:security-close'"
-                                            :placeholder="user?.email_verified_at ? 'Email Verified' : 'Email Not Verified'"
-                                            readonly />
-                                    </div>
+
+                    <div class="tw-max-w-screen-sm tw-mt-4 tw-font-header">
+                        <p class="tw-font-medium tw-text-xl">Account Settings</p>
+                    </div>
+
+                    <div class="tw-my-4 tw-max-w-screen-sm tw-p-[1.5rem] neutral-border">
+                        <div class="tw-relative">
+                            <p class="tw-font-medium tw-text-lg tw-font-header">Profile Information</p>
+                            <div class="tw-mt-4 tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2">
+                                <div>
+                                    <InputLabel :size="'md'" value="Username" />
+                                    <InputWithIcon :size="'md'" class="tw-w-full" :icon="'ic:sharp-person-pin'" v-model="userName" readonly />
+                                </div>
+                                <div>
+                                    <InputLabel :size="'md'" value="Email" />
+                                    <InputWithIcon :size="'md'" class="tw-w-full" :icon="'ic:round-mail-outline'" v-model="userEmail" readonly />
+                                </div>
+                                <div>
+                                    <InputWithIcon
+                                        :size="'md'"
+                                        class="tw-w-full"
+                                        :icon="user?.email_verified_at ? 'ic:sharp-verified-user' : 'mdi:security-close'"
+                                        :placeholder="user?.email_verified_at ? 'Email Verified' : 'Email Not Verified'"
+                                        readonly />
                                 </div>
                             </div>
-                        </template>
-                    </AccentFrame>
+                        </div>
+                    </div>
 
                     <form @submit.prevent="executeUpdatePassword" class="tw-max-w-screen-sm tw-p-[1.5rem] neutral-border">
-                        <p class="tw-font-medium tw-text-lg">Update Password</p>
-                        <p class="tw-text-base">Ensure your account is using a long, random password to stay secure.</p>
+                        <p class="tw-font-medium tw-text-lg tw-font-header">Update Password</p>
+                        <p class="tw-mt-4 tw-text-base">Ensure your account is using a long, random password to stay secure.</p>
 
                         <div class="tw-mt-4 tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2">
                             <div class="tw-col-span-1 sm:tw-col-span-2">
-                                <InputLabel :size="'sm'" value="Current Password" />
-                                <InputWithIcon class="tw-w-full" :disabled="updatePasswordPending" :icon="'mdi:key-chain'" :type="'password'" placeholder="Enter current password" v-model="updatePassword.currentPassword" required />
+                                <InputLabel :size="'md'" value="Current Password" />
+                                <InputWithIcon :size="'md'" class="tw-w-full" :disabled="updatePasswordPending" :icon="'mdi:key-chain'" :type="'password'" placeholder="Enter current password" v-model="updatePassword.currentPassword" required />
                             </div>
                             <div>
-                                <InputLabel :size="'sm'" value="New Password" />
-                                <InputWithIcon class="tw-w-full" :disabled="updatePasswordPending" :icon="'ph:password-fill'" :type="'password'" placeholder="Enter new password" v-model="updatePassword.newPassword" required />
+                                <InputLabel :size="'md'" value="New Password" />
+                                <InputWithIcon :size="'md'" class="tw-w-full" :disabled="updatePasswordPending" :icon="'ph:password-fill'" :type="'password'" placeholder="Enter new password" v-model="updatePassword.newPassword" required />
                             </div>
                             <div>
-                                <InputLabel :size="'sm'" value="Confirm New Password" />
-                                <InputWithIcon class="tw-w-full" :disabled="updatePasswordPending" :icon="'ph:password-fill'" :type="'password'" placeholder="Re-enter new password" v-model="updatePassword.confirmNewPassword" required />
+                                <InputLabel :size="'md'" value="Confirm New Password" />
+                                <InputWithIcon :size="'md'" class="tw-w-full" :disabled="updatePasswordPending" :icon="'ph:password-fill'" :type="'password'" placeholder="Re-enter new password" v-model="updatePassword.confirmNewPassword" required />
                             </div>
                             <div></div>
                             <div>
-                                <Button :disabled="updatePasswordPending" :label="'Update Password'" />
+                                <Button class="tw-w-min" :disabled="updatePasswordPending" :label="'Update Password'" />
                             </div>
                         </div>
                     </form>
 
                     <form @submit.prevent="executeLogoutOtherDevice" class="tw-max-w-screen-sm tw-mt-4 tw-p-[1.5rem] neutral-border">
-                        <p class="tw-font-medium tw-text-lg">Browser Sessions</p>
-                        <p class="tw-text-base">Manage and log out your active sessions on other browsers and devices. </p>
+                        <p class="tw-font-medium tw-text-lg tw-font-header">Browser Sessions</p>
+                        <p class="tw-mt-4 tw-text-base">Manage and log out your active sessions on other browsers and devices. </p>
 
                         <div v-if="!pendingBrowserSessions && browserSessions.length > 0" class="tw-mt-5 tw-space-y-6">
                             <div v-for="(session, i) in browserSessions" :key="i" class="tw-flex tw-items-center">
@@ -89,18 +93,18 @@
                                 <InputWithIcon :disabled="logoutOtherDevicePending" :icon="'mdi:key-chain'" :type="'password'" placeholder="Enter password" v-model="confirmPassword" required />
                             </div>
                             <div>
-                                <Button :disabled="logoutOtherDevicePending" :label="'Log Out Other Devices'" />
+                                <Button class="tw-w-min" :disabled="logoutOtherDevicePending" :label="'Log Out Other Devices'" />
                             </div>
                         </div>
                     </form>
 
                     <div class="tw-max-w-screen-sm tw-mt-4 tw-p-[1.5rem] neutral-border">
-                        <p class="tw-font-medium tw-text-lg">Two Factor Authentication</p>
-                        <p class="tw-text-base">Add additional security to your account using two factor authentication.</p>
+                        <p class="tw-font-medium tw-text-lg tw-font-header">Two Factor Authentication</p>
+                        <p class="tw-mt-4 tw-text-base">Add additional security to your account using two factor authentication.</p>
 
                         <div class="tw-mt-4 tw-pt-4">
-                            <p v-if="twoFactorEnabled && twoFactorConfirmed" class="tw-font-medium tw-text-lg">You have enabled two factor authentication.</p>
-                            <p v-else-if="twoFactorEnabled && !twoFactorConfirmed" class="tw-font-medium tw-text-lg">Finish enabling two factor authentication.</p>
+                            <p v-if="twoFactorEnabled && twoFactorConfirmed" class="tw-font-medium tw-text-lg tw-font-header">You have enabled two factor authentication.</p>
+                            <p v-else-if="twoFactorEnabled && !twoFactorConfirmed" class="tw-font-medium tw-text-lg tw-font-header">Finish enabling two factor authentication.</p>
                             <p v-else class="tw-font-medium tw-text-lg">You have not enabled two factor authentication. </p>
 
                             <p class="tw-text-base">When two factor authentication is enabled, you will be prompted for a secure, random token during authentication. You may retrieve this token from <b>your phone's Google Authenticator application</b>.</p>
@@ -133,7 +137,7 @@
                                             <InputWithIcon :disabled="confirmTwoFactorPending || disableTwoFactorPending" @keyup.enter="executeConfirmTwoFactor" :icon="'mdi:key-chain'" placeholder="Confirmation Code" v-model="twoFactorConfirmationCode" />
                                         </div>
                                         <div>
-                                            <Button @click="executeConfirmTwoFactor" type="button" :disabled="confirmTwoFactorPending || disableTwoFactorPending" :label="'Confirm'" />
+                                            <Button class="tw-w-min" @click="executeConfirmTwoFactor" type="button" :disabled="confirmTwoFactorPending || disableTwoFactorPending" :label="'Confirm'" />
                                         </div>
                                     </div>
                                 </div>
@@ -163,18 +167,18 @@
                         <div class="tw-mt-4 tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2">
                             <div v-if="twoFactorEnabled && twoFactorConfirmed">
                                 <ConfirmsPassword v-if="!recoveryCodes.length" @confirmed="executeTwoFactorRecoveryCodes">
-                                    <Button :variant="'flat'" @click="" type="button" :disabled="pendingTwoFactorRecoveryCodes" :label="'Show Recovery Codes'" />
+                                    <Button class="tw-w-min" :variant="'flat'" @click="" type="button" :disabled="pendingTwoFactorRecoveryCodes" :label="'Show Recovery Codes'" />
                                 </ConfirmsPassword>
                             </div>
                             <div v-if="twoFactorEnabled && twoFactorConfirmed"></div>
                             <div>
                                 <ConfirmsPassword v-if="twoFactorEnabled" @confirmed="executeDisableTwoFactor">
-                                    <Button :variant="'flat'" type="button" :disabled="confirmTwoFactorPending || disableTwoFactorPending" :label="'Disable 2 Factor Authentication'" />
+                                    <Button class="tw-w-min" :variant="'flat'" type="button" :disabled="confirmTwoFactorPending || disableTwoFactorPending" :label="'Disable 2 Factor Authentication'" />
                                 </ConfirmsPassword>
                             </div>
                             <div>
                                 <ConfirmsPassword v-if="!twoFactorEnabled" @confirmed="executeEnableTwoFactor">
-                                    <Button type="button" :disabled="enableTwoFactorPending" :label="'Enable 2 Factor Authentication'" />
+                                    <Button class="tw-w-min" type="button" :disabled="enableTwoFactorPending" :label="'Enable 2 Factor Authentication'" />
                                 </ConfirmsPassword>
                             </div>
                         </div>
