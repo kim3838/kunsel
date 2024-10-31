@@ -8,7 +8,7 @@
                         <p class="tw-font-medium tw-text-xl">Account Settings</p>
                     </div>
 
-                    <div class="tw-my-4 tw-max-w-screen-sm tw-p-[1.5rem] neutral-border">
+                    <div class="tw-my-4 tw-max-w-screen-sm tw-p-[1.5rem] neutral-border tint-background">
                         <div class="tw-relative">
                             <p class="tw-font-medium tw-text-lg tw-font-header">Profile Information</p>
                             <div class="tw-mt-4 tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2">
@@ -32,7 +32,7 @@
                         </div>
                     </div>
 
-                    <form @submit.prevent="executeUpdatePassword" class="tw-max-w-screen-sm tw-p-[1.5rem] neutral-border">
+                    <form @submit.prevent="executeUpdatePassword" class="tw-max-w-screen-sm tw-p-[1.5rem] neutral-border tint-background">
                         <p class="tw-font-medium tw-text-lg tw-font-header">Update Password</p>
                         <p class="tw-mt-4 tw-text-base">Ensure your account is using a long, random password to stay secure.</p>
 
@@ -56,7 +56,7 @@
                         </div>
                     </form>
 
-                    <form @submit.prevent="executeLogoutOtherDevice" class="tw-max-w-screen-sm tw-mt-4 tw-p-[1.5rem] neutral-border">
+                    <form @submit.prevent="executeLogoutOtherDevice" class="tw-max-w-screen-sm tw-mt-4 tw-p-[1.5rem] neutral-border tint-background">
                         <p class="tw-font-medium tw-text-lg tw-font-header">Browser Sessions</p>
                         <p class="tw-mt-4 tw-text-base">Manage and log out your active sessions on other browsers and devices. </p>
 
@@ -98,7 +98,7 @@
                         </div>
                     </form>
 
-                    <div class="tw-max-w-screen-sm tw-mt-4 tw-p-[1.5rem] neutral-border">
+                    <div class="tw-max-w-screen-sm tw-mt-4 tw-p-[1.5rem] neutral-border tint-background">
                         <p class="tw-font-medium tw-text-lg tw-font-header">Two Factor Authentication</p>
                         <p class="tw-mt-4 tw-text-base">Add additional security to your account using two factor authentication.</p>
 
