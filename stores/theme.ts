@@ -17,7 +17,7 @@ export const useThemeStore = defineStore('theme', {
         palletes: {
             light: {
                 'type': 'light',
-                'primary': '#323232',
+                'primary': '#202020',
                 'secondary': '#787878',
                 'accent': '#c9c9c9',
 
@@ -30,7 +30,7 @@ export const useThemeStore = defineStore('theme', {
                 'body': '#ffffff',
                 'shade': '#f5f5f5',
 
-                'text': '#5a5a5a',
+                'text': '#545451',
                 'text-invert': '#e0e8de',
                 'text-secondary': '#b4b4b4',
             },
@@ -41,7 +41,7 @@ export const useThemeStore = defineStore('theme', {
                 'accent': '#707070',
 
                 'lining': '#e5e5e5',
-                'thread': '#464646',
+                'thread': '#898989',
 
                 'neutral': '#656565',
 
