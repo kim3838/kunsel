@@ -22,8 +22,8 @@
                     </div>
                 </div>
 
-                <div :class="[active ? 'tw-block' : 'tw-hidden']" class="tw-w-full tw-h-full tw-relative tw-overflow-hidden tw-items-center">
-                    <div v-if="searchable" :class="[inputHolderClass]" class="tw-pl-1 tw-absolute tw-left-0 tw-h-full tw-flex tw-items-center">
+                <div :class="[active ? 'tw-block' : 'tw-hidden']" class="tw-w-full tw-h-full tw-relative tw-overflow-hidden">
+                    <div v-if="searchable" :class="[inputHolderClass]" class="tw-absolute tw-left-0 tw-h-full tw-flex tw-items-center">
                         <Input
                             v-if="active"
                             :tabindex="tabindexInput"
