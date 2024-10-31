@@ -991,7 +991,7 @@
                             <Button @click="$themeStore.setTheme('blue')" :size="'lg'" :icon="'mdi:palette-swatch-variant'" :label="'Blue Theme'"></Button>
                         </div>
                         <div class="tw-col-span-3 tw-flex tw-items-start tw-justify-start tw-block tw-w-full neutral-border">
-                            <Button :size="'xl'" :icon="'eos-icons:atom-electron'" :label="'XL Authenticate'"></Button>
+                            <Button @click="$themeStore.setTheme('tulip')" :size="'xl'" :icon="'eos-icons:atom-electron'" :label="'Tulip Theme'"></Button>
                         </div>
                     </div>
 
