@@ -3,7 +3,7 @@
         <DefaultWrapper>
             <div class="tw-mx-auto tw-max-w-screen-2xl tw-flex tw-justify-center">
                 <div class="tw-w-full">
-                    <form @submit.prevent="paginate(1, true)" class="tw-space-y-0.5 tw-my-4 tw-p-[1.5rem] neutral-border">
+                    <form @submit.prevent="paginate(1, true)" class="tw-space-y-2 tw-my-4 tw-p-[1.5rem] neutral-border">
                         <div class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-8">
                             <div class="tw-block">
                                 <InputLabel :size="'sm'" value="Search"/>
