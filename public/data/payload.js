@@ -903,40 +903,58 @@ export default {
         {
             'id': 'feature_1',
             'type': 'full',
+            'proximity': '33%',
             'title': 'Top Seller',
-            'media': {
-                'type': 'image',
-                'source': '/images/carousel/719ed6d6-421b-4b73-8cfe-82fb718c37ce.webp'
-            }
+            'bg': 'red',
+            // 'media': {
+            //     'type': 'image',
+            //     'source': '/images/carousel/719ed6d6-421b-4b73-8cfe-82fb718c37ce.webp'
+            // }
         },
         {
             'id': 'feature_2',
             'type': 'full',
             'title': 'Featured',
-            'media': {
-                'type': 'video',
-                'source': '/videos/weathering_with_you.mp4',
-                'source_type': 'video/mp4'
-            }
+            'bg': 'blue',
+            // 'media': {
+            //     'type': 'video',
+            //     'source': '/videos/weathering_with_you.mp4',
+            //     'source_type': 'video/mp4'
+            // }
         },
         {
             'id': 'feature_3',
-            'type': 'full',
+            'type': 'row',
+            'proximity': '50%',
             'title': 'Trending',
-            'media': {
-                'type': 'image',
-                'source': '/images/carousel/719ed6d6-421b-4b73-8cfe-82fb718c37ce.webp'
-            }
+            'bg': 'green',
+            // 'media': {
+            //     'type': 'image',
+            //     'source': '/images/carousel/719ed6d6-421b-4b73-8cfe-82fb718c37ce.webp'
+            // }
         },
         {
             'id': 'feature_4',
-            'type': 'full',
+            'type': 'row',
+            'proximity': '50%',
             'title': 'Battle Pass',
-            'media': {
-                'type': 'video',
-                'source': '/videos/your_name_4.mp4',
-                'source_type': 'video/mp4'
-            }
-        }
+            'bg': 'yellow',
+            // 'media': {
+            //     'type': 'video',
+            //     'source': '/videos/your_name_4.mp4',
+            //     'source_type': 'video/mp4'
+            // }
+        },
+        {
+            'id': 'feature_5',
+            'type': 'row',
+            'proximity': '40%',
+            'title': 'New Arrival',
+            'bg': 'orange',
+            // 'media': {
+            //     'type': 'image',
+            //     'source': '/images/carousel/719ed6d6-421b-4b73-8cfe-82fb718c37ce.webp'
+            // }
+        },
     ]
 };

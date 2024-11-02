@@ -13,15 +13,16 @@
                 <!-- Add icon before section titles to overlap vertical rule -->
                 <div class="tw-absolute vertical-nav-rule tw-w-[1px] tw-top-0 tw-right-0 tw-bottom-0 tw-left-[50px]"></div>
 
-                <div v-if="false"  class="tw-absolute">
+                <div v-if="false"  class="tw-absolute tw-text-xs tw-font-mono">
                     {{"INDEX: " + index}}<br>
+                    <pre>{{featured[index]}}</pre><br>
                     {{"PREVIOUS: " + sectionNavigation.previous.label}}<br>
                     {{"CURRENT: " + sectionNavigation.current.label}}<br>
                     {{"NEXT: " + sectionNavigation.next.label}}
                 </div>
 
-                <div class="tw-absolute tw-space-y-1 tw-top-0 tw-right-0 tw-bottom-0 tw-left-[56px] allocate-navigation">
-                    <div class="tw-relative tw-w-full tw-h-full">
+                <div class="tw-absolute tw-top-0 tw-right-0 tw-bottom-0 tw-left-[56px] allocate-navigation">
+                    <div class="tw-relative tw-w-full tw-h-full thread-border">
                         <div
                             v-if="false"
                             :style="sectionNavigation.previous.style"
@@ -44,10 +45,14 @@
                             v-if="true"
                             v-for="(featuredSection, index) in featured"
                             :id="`featured-${index}`"
-                            style="text-shadow: 1px 1px 2px #000000;"
-                            :style="sectionNavigationStyle(index)"
-                            class="tw-absolute tw-font-data tw-px-1 tw-text-lg section-navigation tw-text-slate-300 tw-bg-opacity-25 tw-bg-slate-500">
-                            {{$toRomanNumeral(index) + " " + featuredSection.title}}
+                            :style="sectionStyle(index)"
+                            class="tw-absolute section-navigation">
+                            <div
+                                :id="`featured-${index}-header`"
+                                class="tw-font-data tw-text-lg tw-text-white tw-bg-opacity-25 tw-bg-slate-500"
+                                style="text-shadow: 1px 1px 2px #000000;">
+                                {{featuredSection.title}}
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -55,7 +60,7 @@
 
             <!-- Section Background -->
             <section v-for="(section, index) in featured">
-                <div class="tw-relative tw-w-full tw-h-screen tw-flex tw-justify-center tw-items-center tw-overflow-hidden">
+                <div v-if="section?.media && section?.type == 'full'" class="tw-relative tw-w-full tw-h-screen tw-flex tw-justify-center tw-items-center tw-overflow-hidden">
                     <div v-if="section.media.type == 'image' && section.media.source" class="tw-w-full tw-h-full tw-absolute spotlight-image" :style="{'background-image': 'url('+section.media.source+')'}"></div>
 
                     <video
@@ -212,87 +217,70 @@ watch(index, function(newIndex){
         sectionNavigation.next_fade.index = null;
     }
 }, { immediate: true });
-const transitionOptions = ref({
-    duration: 700,
-    transition: [0.645, 0.045, 0.355, 1.000],
-});
 
-// const previousFadeTopPosition = ref(0);
-// const previousTopPosition = ref(0);
-// const currentTopPosition = ref(60);
-// const nextTopPosition = ref(90);
-// const nextFadeTopPosition = ref(0);
-//
-// const previousFadeTopPositionTransition = useTransition(previousFadeTopPosition, transitionOptions.value);
-// const previousTopPositionTransition = useTransition(previousTopPosition, transitionOptions.value);
-// const currentTopPositionTransition = useTransition(currentTopPosition, transitionOptions.value);
-// const nextTopPositionTransition = useTransition(nextTopPosition, transitionOptions.value);
-// const nextFadeTopPositionTransition = useTransition(nextFadeTopPosition, transitionOptions.value);
+function sectionStyle(indexParam){
 
-function sectionNavigationStyle(indexParam){
+    let topProximityIndex = (index.value - 1);
+    let middleProximityIndex = (index.value);
+    let bottomProximityIndex = (index.value + 1);
 
-    //Track indexParam if it is close to current index
-    if(
-        (index.value) == indexParam
-        || (index.value - 1) == indexParam
-        || (index.value + 1) == indexParam
-    ){
-        // if(index.value == 0){
-        //     //First
-        //
-        // }else if(index.value == (featured.value.length - 1)){
-        //     //Last
-        //
-        // }else {
-        //
-        // }
+    //Track indexParam if it is within proximity
+    let withinProximity = (middleProximityIndex == indexParam
+        || topProximityIndex == indexParam
+        || bottomProximityIndex == indexParam);
 
-        if((index.value - 1) == indexParam){
-            return {'top': `0%`};
+    //last section span 100% to bottom
+    let bottomTopPosition = index.value == (featured.value.length - 1) ? 100 : 90;
+
+    if(withinProximity){
+        if(topProximityIndex == indexParam){
+            return {
+                'top': `0%`,
+                'left': 0,
+                'right': 0,
+                'background-color' : `transparent`
+            };
         }
 
-        if((index.value) == indexParam){
-            return {'top': `60%`};
+        if(middleProximityIndex == indexParam){
+            let topProximityIndexElementHeight = document.getElementById('featured-'+topProximityIndex+'-header')?.offsetHeight || 0;
+            let middleProximityTopPosition = featured.value[middleProximityIndex]?.proximity || `${topProximityIndexElementHeight}px`
+
+            return {
+                'top': `calc(${middleProximityTopPosition} + 0.2rem)`,
+                //'top': `10%`,
+                'left': 0,
+                'right': 0,
+                'bottom': `${100 - bottomTopPosition}%`,
+                'background-color' : featured.value[middleProximityIndex].bg
+            };
         }
 
-        if((index.value + 1) == indexParam){
-            return {'top': `90%`};
-        }
-
-        // if(indexParam < index.value){
-        //
-        // }
-        //
-        // if(indexParam > index.value){
-        //
-        // }
-
-
-    } else {
-        if(indexParam < index.value){
-
-            let elementHeight = document.getElementById('featured-'+indexParam)?.offsetHeight || 0;
-            // previousFadeTopPosition.value = 0;
-            // return {'top': `calc(${previousFadeTopPosition.value}% - ${topAllocation.value} - ${elementHeight}px)`};
-            return {'top': `calc(0% - ${topAllocation.value} - ${elementHeight}px)`};
-        }
-
-        if(indexParam > index.value){
-            //nextFadeTopPosition.value = 100;
-            //return {'top': `${nextFadeTopPosition.value}%`};
-
-            return {'top': `100%`};
+        if(bottomProximityIndex == indexParam){
+            return {
+                'top': `${bottomTopPosition}%`,
+                'left': 0,
+                'right': 0,
+                'bottom': 0,
+                'background-color' : featured.value[bottomProximityIndex].bg
+            };
         }
     }
 
-    //return {'top': `${index.value}%`};
+    //Hide element if it's out of proximity
+    if(!withinProximity){
 
-    //Hidden from top
-    //let elementHeight = document.getElementById('featured-'+indexParam)?.offsetHeight || 0;
-    //return {'top': `calc(0% - ${topAllocation.value} - ${elementHeight}px)`};
+        //Hidden from top
+        if(indexParam < index.value){
+            let elementHeight = document.getElementById('featured-'+indexParam)?.offsetHeight || 0;
+            return {'top': `calc(0% - ${topAllocation.value} - ${elementHeight}px)`};
+        }
 
-    //Hidden from bottom
-    //return {'top': `100%`};
+        //Hidden from bottom
+        if(indexParam > index.value){
+            return {'top': `100%`};
+        }
+    }
 }
 
 const scrolling = ref(false);
@@ -410,8 +398,8 @@ section {
     background: linear-gradient(
         to bottom,
         transparent 0%,
-        #9d9d9d 10%,
-        #9d9d9d 90%,
+        rgba(192, 192, 192, 0.5) 10%,
+        rgba(192, 192, 192, 0.5) 90%,
         transparent 100%
     );
 }
