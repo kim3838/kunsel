@@ -903,7 +903,7 @@ export default {
         {
             'id': 'feature_1',
             'type': 'full',
-            'proximity': '33%',
+            'proximity': '30',
             'title': 'Top Seller',
             'bg': 'red',
             // 'media': {
@@ -925,7 +925,7 @@ export default {
         {
             'id': 'feature_3',
             'type': 'row',
-            'proximity': '50%',
+            'proximity': '50',
             'title': 'Trending',
             'bg': 'green',
             // 'media': {
@@ -936,7 +936,7 @@ export default {
         {
             'id': 'feature_4',
             'type': 'row',
-            'proximity': '50%',
+            'proximity': '50',
             'title': 'Battle Pass',
             'bg': 'yellow',
             // 'media': {
@@ -948,9 +948,31 @@ export default {
         {
             'id': 'feature_5',
             'type': 'row',
-            'proximity': '40%',
+            'proximity': '50',
             'title': 'New Arrival',
             'bg': 'orange',
+            // 'media': {
+            //     'type': 'image',
+            //     'source': '/images/carousel/719ed6d6-421b-4b73-8cfe-82fb718c37ce.webp'
+            // }
+        },
+        {
+            'id': 'feature_6',
+            'type': 'row',
+            'proximity': '50',
+            'title': 'For You',
+            'bg': 'indigo',
+            // 'media': {
+            //     'type': 'image',
+            //     'source': '/images/carousel/719ed6d6-421b-4b73-8cfe-82fb718c37ce.webp'
+            // }
+        },
+        {
+            'id': 'feature_7',
+            'type': 'row',
+            'proximity': '50',
+            'title': 'Limited Offer',
+            'bg': 'azure',
             // 'media': {
             //     'type': 'image',
             //     'source': '/images/carousel/719ed6d6-421b-4b73-8cfe-82fb718c37ce.webp'

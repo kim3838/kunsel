@@ -49,9 +49,15 @@
                             class="tw-absolute section-navigation">
                             <div
                                 :id="`featured-${index}-header`"
-                                class="tw-font-data tw-text-lg tw-text-white tw-bg-opacity-25 tw-bg-slate-500"
-                                style="text-shadow: 1px 1px 2px #000000;">
-                                {{featuredSection.title}}
+                                class="tw-pb-1">
+                                <div
+                                    class="tw-font-data tw-w-min tw-pr-1 tw-text-nowrap tw-text-lg tw-text-white tw-rounded-sm tw-bg-opacity-25 tw-bg-slate-500"
+                                    style="text-shadow: 1px 1px 2px #000000;">
+                                    {{featuredSection.title}}
+                                </div>
+                            </div>
+                            <div>
+
                             </div>
                         </div>
                     </div>
@@ -60,7 +66,7 @@
 
             <!-- Section Background -->
             <section v-for="(section, index) in featured">
-                <div v-if="section?.media && section?.type == 'full'" class="tw-relative tw-w-full tw-h-screen tw-flex tw-justify-center tw-items-center tw-overflow-hidden">
+                <div v-if="section?.media" class="tw-relative tw-w-full tw-h-screen tw-flex tw-justify-center tw-items-center tw-overflow-hidden">
                     <div v-if="section.media.type == 'image' && section.media.source" class="tw-w-full tw-h-full tw-absolute spotlight-image" :style="{'background-image': 'url('+section.media.source+')'}"></div>
 
                     <video
@@ -230,39 +236,54 @@ function sectionStyle(indexParam){
         || bottomProximityIndex == indexParam);
 
     //last section span 100% to bottom
-    let bottomTopPosition = index.value == (featured.value.length - 1) ? 100 : 90;
+    let bottomProximityTopPosition = index.value == (featured.value.length - 1) ? 100 : 90;
+
+    let topProximityIndexElementHeight = document.getElementById('featured-' + topProximityIndex + '-header')?.offsetHeight || 0;
+    let middleProximity = (featured.value[middleProximityIndex]?.proximity) ? featured.value[middleProximityIndex].proximity : 0 ;
+    let middleProximityTopPosition = (middleProximity)
+        ? `${middleProximity}%`
+        : `${topProximityIndexElementHeight}px`;
 
     if(withinProximity){
         if(topProximityIndex == indexParam){
+            let topProximityBackground = featured.value[topProximityIndex].type == 'row'
+                ? featured.value[topProximityIndex].bg
+                : `transparent`;
+
+            let topProximityTopPosition = featured.value[topProximityIndex].type == 'row'
+                ? `${100 - middleProximity}%`
+                : `calc(100% - ${topAllocation.value})`;
+
             return {
                 'top': `0%`,
                 'left': 0,
                 'right': 0,
-                'background-color' : `transparent`
+                 'bottom': topProximityTopPosition,
+                'background-color' : topProximityBackground
             };
         }
 
         if(middleProximityIndex == indexParam){
-            let topProximityIndexElementHeight = document.getElementById('featured-'+topProximityIndex+'-header')?.offsetHeight || 0;
-            let middleProximityTopPosition = featured.value[middleProximityIndex]?.proximity || `${topProximityIndexElementHeight}px`
+            let middleProximityBackground = featured.value[middleProximityIndex].bg;
 
             return {
-                'top': `calc(${middleProximityTopPosition} + 0.2rem)`,
-                //'top': `10%`,
+                'top': `${middleProximityTopPosition}`,
                 'left': 0,
                 'right': 0,
-                'bottom': `${100 - bottomTopPosition}%`,
-                'background-color' : featured.value[middleProximityIndex].bg
+                'bottom': `${100 - bottomProximityTopPosition}%`,
+                'background-color' : middleProximityBackground
             };
         }
 
         if(bottomProximityIndex == indexParam){
+            let bottomProximityBackground = featured.value[bottomProximityIndex].bg;
+
             return {
-                'top': `${bottomTopPosition}%`,
+                'top': `${bottomProximityTopPosition}%`,
                 'left': 0,
                 'right': 0,
                 'bottom': 0,
-                'background-color' : featured.value[bottomProximityIndex].bg
+                'background-color' : bottomProximityBackground
             };
         }
     }
