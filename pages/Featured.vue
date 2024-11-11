@@ -8,41 +8,20 @@
         <!-- Main Content -->
         <main class="tw-relative">
 
-            <!-- Section Breadcrumbs -->
+            <!-- Section Navigation -->
             <div class="tw-fixed tw-z-10 tw-top-0 tw-right-0 tw-bottom-0 tw-left-0 tw-h-screen">
                 <!-- Add icon before section titles to overlap vertical rule -->
-                <div class="tw-absolute vertical-nav-rule tw-w-[1px] tw-top-0 tw-right-0 tw-bottom-0 tw-left-[50px]"></div>
+                <div class="tw-absolute vertical-nav-rule tw-w-[1px] tw-top-0 tw-right-0 tw-bottom-0 tw-left-[14px]"></div>
 
+                <!-- Debug -->
                 <div v-if="false"  class="tw-absolute tw-text-xs tw-font-mono">
                     {{"INDEX: " + index}}<br>
-                    <pre>{{featured[index]}}</pre><br>
-                    {{"PREVIOUS: " + sectionNavigation.previous.label}}<br>
-                    {{"CURRENT: " + sectionNavigation.current.label}}<br>
-                    {{"NEXT: " + sectionNavigation.next.label}}
+                    <pre>{{featured[index]}}</pre>
                 </div>
 
-                <div class="tw-absolute tw-top-0 tw-right-0 tw-bottom-0 tw-left-[56px] allocate-navigation">
-                    <div class="tw-relative tw-w-full tw-h-full thread-border">
+                <div class="tw-absolute tw-top-0 tw-right-0 tw-bottom-0 tw-left-[20px] allocate-navigation">
+                    <div class="tw-relative tw-w-full tw-h-full">
                         <div
-                            v-if="false"
-                            :style="sectionNavigation.previous.style"
-                            class="tw-absolute tw-text-lg thread-border">
-                            Previous
-                        </div>
-                        <div
-                            v-if="false"
-                            :style="sectionNavigation.current.style"
-                            class="tw-absolute tw-text-lg thread-border">
-                            Current
-                        </div>
-                        <div
-                            v-if="false"
-                            class="tw-absolute tw-text-lg thread-border">
-                            Next
-                        </div>
-
-                        <div
-                            v-if="true"
                             v-for="(featuredSection, index) in featured"
                             :id="`featured-${index}`"
                             :style="sectionStyle(index)"
@@ -55,9 +34,79 @@
                                     style="text-shadow: 1px 1px 2px #000000;">
                                     {{featuredSection.title}}
                                 </div>
-                            </div>
-                            <div>
+                                <div
+                                    v-if="false"
+                                    :id="`featured-${index}-content`"
+                                    :style="contentStyle(index)"
+                                    class="tw-absolute section-navigation">
+                                    <div class="tw-w-full tw-h-[230px] tw-flex tw-flex-nowrap tw-gap-2 neutral-border tw-overflow-y-hidden">
+                                        <div class="tw-w-[460px] tw-h-full tw-flex-none" v-for="item in leftToRightItems">
+                                            <HexagonFrame
+                                                :frame-border="item.frameBorder"
+                                                :content-border="item.contentBorder"
+                                                :direction="'ltr'"
+                                                :head-percentage="50"
+                                                :top-right="45"
+                                                :bottom-left="55"
+                                                :header-fade="true"
+                                                :header-fade-color="'rgba(25,25,25,0.1)'">
+                                                <template #header>
+                                                    <div class="tw-h-full tw-w-[50%]">
+                                                        <div
+                                                            class="tw-h-full tw-w-full tw-bg-cover tw-bg-center tw-bg-no-repeat"
+                                                            :style="{'background':'url('+item.image.path+')'}"
+                                                        />
+                                                    </div>
+                                                    <div class="tw-h-full tw-w-[50%]">
+                                                        <div
+                                                            class="tw-h-full tw-w-full tw-bg-cover tw-bg-center tw-bg-no-repeat tw-opacity-10"
+                                                            :style="{'background':'url('+item.image.path+')'}"
+                                                        />
+                                                    </div>
+                                                </template>
+                                                <template v-slot:body="{frameBorderColor, contentBorderColor}">
+                                                    <div class="tw-h-full tw-w-[50%] tw-p-4 tw-overflow-hidden tw-relative tw-flex tw-flex-col tw-text[#5A5A5A]">
 
+                                                        <div class="tw-overflow-auto tw-space-y-0.5">
+                                                            <div class="tw-font-semibold tw-h-max tw-flex-none">
+                                                                <UnorderedList
+                                                                    class="tw-cursor-pointer hover:tw-underline"
+                                                                    :size="'md'"
+                                                                    :icon="item.listIcon"
+                                                                    :label="item.title"/>
+                                                            </div>
+
+                                                            <div style="height: 1px;width: 100%;background: linear-gradient(to right, transparent 0%, #e3e3e3 30%, #e3e3e3 70%, transparent 100%);"></div>
+
+                                                            <div v-if="item?.bullets?.value?.length" class="tw-flex tw-flex-row tw-flex-nowrap">
+                                                                <div class="tw-w-full" :style="{'columns': (item.bullets.column ? item.bullets.column : 1)}">
+                                                                    <UnorderedList
+                                                                        v-for="bullet in item.bullets.value"
+                                                                        :size="'sm'"
+                                                                        :icon="'eos-icons:commit'"
+                                                                        :label="bullet"/>
+                                                                </div>
+                                                            </div>
+
+                                                            <div
+                                                                v-if="item.description"
+                                                                v-html="item.description"
+                                                                class="tw-text-base tw-leading-5 tw-line-clamp-3"
+                                                                :style="{'font-family': 'Source Sans Pro'}"
+                                                            ></div>
+
+                                                            <UnorderedList
+                                                                class="tw-cursor-pointer hover:tw-underline"
+                                                                :font-family="'Source Sans Pro'"
+                                                                :size="'sm'"
+                                                                :label="'Read more'"/>
+                                                        </div>
+                                                    </div>
+                                                </template>
+                                            </HexagonFrame>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -84,6 +133,19 @@
                     </div>
                 </div>
             </section>
+
+            <!-- Section Content -->
+            <div class="tw-fixed tw-z-20 tw-top-0 tw-right-0 tw-bottom-0 tw-left-[20px] allocate-navigation">
+                <div class="tw-relative tw-w-full tw-h-full">
+                    <div
+                        v-for="(featuredContent, index) in featured"
+                        :id="`featured-${index}-content`"
+                        :style="contentStyle(index)"
+                        class="tw-absolute section-content">
+                        <pre>{{featuredContent}}</pre>
+                    </div>
+                </div>
+            </div>
         </main>
         <!-- DateTime Picker -->
         <div id="datetimepicker-slot" class="tw-font-data"></div>
@@ -97,6 +159,7 @@ import {storeToRefs} from 'pinia';
 import {useTransition} from '@vueuse/core';
 import dataPayload from '@/public/data/payload.js';
 import {forEach} from "lodash-es";
+import {validate} from "@babel/types";
 useLayout().setNavigationMode('clear', 'index.vue');
 const {$themeStore, $toRomanNumeral} = useNuxtApp();
 const clientReadyState = useClientReadyState();
@@ -105,6 +168,8 @@ const {
 } = storeToRefs($themeStore);
 const topAllocation = ref('0px');
 const featured = ref(dataPayload['featured']);
+const leftToRightItems = ref(dataPayload['leftToRightItems']);
+const carouselTrendingItems = ref(dataPayload['carousel']['trendingItems']);
 const featuredVideos = useTemplateRef('featuredVideos');
 //Boot full page scroll on navigate
 if(clientReadyState.value){
@@ -112,7 +177,7 @@ if(clientReadyState.value){
         await nextTick(() => {
             bootPageScroll();
             //console.log({'onMounted feature_2': feature_2.value});
-            autoPlayVideoSpotlights(featuredVideos);
+            //autoPlayVideoSpotlights(featuredVideos);
         });
     })
 }
@@ -123,14 +188,14 @@ watch(clientReadyState, async (clientReady) => {
         await nextTick(() => {
             bootPageScroll();
             //console.log({'clientReady feature_2': feature_2.value});
-            autoPlayVideoSpotlights(featuredVideos);
+            //autoPlayVideoSpotlights(featuredVideos);
         });
     }
 });
 
 function autoPlayVideoSpotlights(videoSpotlights){
 
-    videoSpotlights.value.forEach(video => {
+    videoSpotlights.value?.forEach(video => {
 
         console.log({'featuredVideo': video});
 
@@ -162,95 +227,41 @@ function autoPlayVideoSpotlights(videoSpotlights){
 }
 
 const index = ref(0);
+const scrolledUp = ref(false);
 const sections = ref([]);
-const sectionNavigation = reactive({
-    previous_fade: {
-        index: null,
-        label: ''
-    }, previous: {
-        index: null,
-        label: '',
-        style: {'top': '0%'}
-    }, current: {
-        index: null,
-        label: '',
-        style: {'top': '60%'}
-    }, next: {
-        index: null,
-        label: '',
-        style: {'top': '90%'}
-    }, next_fade: {
-        index: null,
-        label: ''
-    }
-});
-watch(index, function(newIndex){
 
-    if(newIndex == 0){
-        //First
-        sectionNavigation.previous_fade.label = null;
-        sectionNavigation.previous_fade.index = null;
-        sectionNavigation.previous.label = null;
-        sectionNavigation.previous.index = null;
-        sectionNavigation.current.label = featured.value[newIndex]?.title;
-        sectionNavigation.current.index = newIndex;
-        sectionNavigation.next.label = featured.value[newIndex + 1]?.title;
-        sectionNavigation.next.index = newIndex;
-        sectionNavigation.next_fade.label = null;
-        sectionNavigation.next_fade.index = null;
-    }else if(newIndex == (featured.value.length - 1)){
-        //Last
-        sectionNavigation.previous_fade.label = null;
-        sectionNavigation.previous_fade.index = null;
-        sectionNavigation.previous.label = featured.value[newIndex - 1]?.title;
-        sectionNavigation.previous.index = newIndex;
-        sectionNavigation.current.label = featured.value[newIndex]?.title;
-        sectionNavigation.current.index = newIndex;
-        sectionNavigation.next.label = null;
-        sectionNavigation.next.index = null;
-        sectionNavigation.next_fade.label = null;
-        sectionNavigation.next_fade.index = null;
-    }else {
-        sectionNavigation.previous_fade.label = null;
-        sectionNavigation.previous_fade.index = null;
-        sectionNavigation.previous.label = featured.value[newIndex - 1]?.title;
-        sectionNavigation.previous.index = newIndex;
-        sectionNavigation.current.label = featured.value[newIndex]?.title;
-        sectionNavigation.current.index = newIndex;
-        sectionNavigation.next.label = featured.value[newIndex + 1]?.title;
-        sectionNavigation.next.index = newIndex;
-        sectionNavigation.next_fade.label = null;
-        sectionNavigation.next_fade.index = null;
-    }
+watch(index, function(newIndex, oldIndex){
+    scrolledUp.value = newIndex < oldIndex;
 }, { immediate: true });
+
+const topProximityIndex = computed(() => index.value - 1);
+const middleProximityIndex = computed(() => index.value);
+const bottomProximityIndex = computed(() => index.value + 1);
+//last section span 100% to bottom
+const bottomProximityTopPosition = computed(() => index.value == (featured.value.length - 1) ? 100 : 90);
+
+const withinProximity = (index) => {
+    return (middleProximityIndex.value == index
+        || topProximityIndex.value == index
+        || bottomProximityIndex.value == index);
+}
 
 function sectionStyle(indexParam){
 
-    let topProximityIndex = (index.value - 1);
-    let middleProximityIndex = (index.value);
-    let bottomProximityIndex = (index.value + 1);
+    let sectionHeaderHeight = document.getElementById('featured-'+indexParam)?.offsetHeight || 0;
 
-    //Track indexParam if it is within proximity
-    let withinProximity = (middleProximityIndex == indexParam
-        || topProximityIndex == indexParam
-        || bottomProximityIndex == indexParam);
+    let topProximityHeaderElementHeight = document.getElementById('featured-' + topProximityIndex.value + '-header')?.offsetHeight || 0;
 
-    //last section span 100% to bottom
-    let bottomProximityTopPosition = index.value == (featured.value.length - 1) ? 100 : 90;
-
-    let topProximityIndexElementHeight = document.getElementById('featured-' + topProximityIndex + '-header')?.offsetHeight || 0;
-    let middleProximity = (featured.value[middleProximityIndex]?.proximity) ? featured.value[middleProximityIndex].proximity : 0 ;
+    let middleProximity = (featured.value[middleProximityIndex.value]?.proximity) ? featured.value[middleProximityIndex.value].proximity : 0 ;
     let middleProximityTopPosition = (middleProximity)
         ? `${middleProximity}%`
-        : `${topProximityIndexElementHeight}px`;
+        : `${topProximityHeaderElementHeight}px`;
 
-    if(withinProximity){
-        if(topProximityIndex == indexParam){
-            let topProximityBackground = featured.value[topProximityIndex].type == 'row'
-                ? featured.value[topProximityIndex].bg
-                : `transparent`;
+    if(withinProximity(indexParam)){
+        if(topProximityIndex.value == indexParam){
+            let topProximityBackground = featured.value[topProximityIndex.value].bg;
 
-            let topProximityTopPosition = featured.value[topProximityIndex].type == 'row'
+            let topProximityTopPosition = featured.value[topProximityIndex.value].type == 'row'
                 ? `${100 - middleProximity}%`
                 : `calc(100% - ${topAllocation.value})`;
 
@@ -259,47 +270,150 @@ function sectionStyle(indexParam){
                 'left': 0,
                 'right': 0,
                  'bottom': topProximityTopPosition,
-                'background-color' : topProximityBackground
+                // 'background-color' : topProximityBackground
             };
         }
 
-        if(middleProximityIndex == indexParam){
-            let middleProximityBackground = featured.value[middleProximityIndex].bg;
+        if(middleProximityIndex.value == indexParam){
+            let middleProximityBackground = featured.value[middleProximityIndex.value].bg;
 
             return {
                 'top': `${middleProximityTopPosition}`,
                 'left': 0,
                 'right': 0,
-                'bottom': `${100 - bottomProximityTopPosition}%`,
-                'background-color' : middleProximityBackground
+                'bottom': `${100 - bottomProximityTopPosition.value}%`,
+                // 'background-color' : middleProximityBackground
             };
         }
 
-        if(bottomProximityIndex == indexParam){
-            let bottomProximityBackground = featured.value[bottomProximityIndex].bg;
+        if(bottomProximityIndex.value == indexParam){
+            let bottomProximityBackground = featured.value[bottomProximityIndex.value].bg;
 
             return {
-                'top': `${bottomProximityTopPosition}%`,
+                'top': `${bottomProximityTopPosition.value}%`,
                 'left': 0,
                 'right': 0,
                 'bottom': 0,
-                'background-color' : bottomProximityBackground
+                // 'background-color' : bottomProximityBackground
             };
         }
     }
 
     //Hide element if it's out of proximity
-    if(!withinProximity){
-
+    if(!withinProximity(indexParam)){
         //Hidden from top
         if(indexParam < index.value){
-            let elementHeight = document.getElementById('featured-'+indexParam)?.offsetHeight || 0;
-            return {'top': `calc(0% - ${topAllocation.value} - ${elementHeight}px)`};
+            return {
+                'top': `calc(0% - ${topAllocation.value} - ${sectionHeaderHeight}px)`,
+                'left': 0,
+                'right': 0,
+            };
         }
 
         //Hidden from bottom
         if(indexParam > index.value){
-            return {'top': `100%`};
+            return {
+                'top': `100%`,
+                'left': 0,
+                'right': 0,
+            };
+        }
+    }
+}
+
+function contentStyle(indexParam){
+
+    let topProximityHeaderElementHeight = document.getElementById('featured-' + topProximityIndex.value + '-header')?.offsetHeight || 0;
+    let middleProximityHeaderElementHeight = document.getElementById('featured-' + middleProximityIndex.value + '-header')?.offsetHeight || 0;
+    let bottomProximityHeaderElementHeight = document.getElementById('featured-' + bottomProximityIndex.value + '-header')?.offsetHeight || 0;
+
+    let middleProximity = (featured.value[middleProximityIndex.value]?.proximity) ? featured.value[middleProximityIndex.value].proximity : 0 ;
+    let middleProximityTopPosition = (middleProximity)
+        ? `${middleProximity}%`
+        : `${topProximityHeaderElementHeight}px`;
+
+    if(withinProximity(indexParam)){
+        if(topProximityIndex.value == indexParam){
+
+            let topProximityIsTypeRow = featured.value[topProximityIndex.value].type == 'row';
+
+            let topProximityBackground = featured.value[topProximityIndex.value].bg;
+
+            let topProximityTopPosition = featured.value[topProximityIndex.value].type == 'row'
+                ? `${100 - middleProximity}%`
+                : `calc(100% - ${topAllocation.value})`;
+
+            if(topProximityIsTypeRow){
+                return {
+                    'top': `0%`,
+                    'left': 0,
+                    'right': 0,
+                    'bottom': topProximityTopPosition,
+                    'padding-top': `${topProximityHeaderElementHeight}px`,
+                    // 'background-color': topProximityBackground
+                };
+            }
+
+            if(!topProximityIsTypeRow){
+
+                return {
+                    'top': `-100%`,
+                    'left': 0,
+                    'right': 0,
+                    'bottom': `calc(100% + ${topAllocation.value})`,
+                    'padding-top': `${topProximityHeaderElementHeight}px`,
+                    // 'background-color': topProximityBackground
+                };
+            }
+        }
+
+        if(middleProximityIndex.value == indexParam){
+            let middleProximityBackground = featured.value[middleProximityIndex.value].bg;
+
+            return {
+                'top': `${middleProximityTopPosition}`,
+                'left': 0,
+                'right': 0,
+                'bottom': `${100 - bottomProximityTopPosition.value}%`,
+                'padding-top': `${middleProximityHeaderElementHeight}px`,
+                // 'background-color': middleProximityBackground
+            };
+        }
+
+        if(bottomProximityIndex.value == indexParam){
+            let bottomProximityBackground = featured.value[bottomProximityIndex.value].bg;
+
+            return {
+                'top': `${bottomProximityTopPosition.value}%`,
+                'left': 0,
+                'right': 0,
+                'bottom': 0,
+                'padding-top': `${bottomProximityHeaderElementHeight}px`,
+                // 'background-color': bottomProximityBackground
+            };
+
+        }
+    }
+
+    //Hide content if it's out of proximity
+    if(!withinProximity(indexParam)){
+        //Hidden from top
+        if(indexParam < index.value){
+            return {
+                'top': `-100%`,
+                'left': 0,
+                'right': 0,
+                'bottom': `calc(100% + ${topAllocation.value})`
+            };
+        }
+
+        //Hidden from bottom
+        if(indexParam > index.value){
+            return {
+                'top': `100%`,
+                'left': 0,
+                'right': 0,
+            };
         }
     }
 }
@@ -429,6 +543,9 @@ section {
 }
 
 .section-navigation {
+    transition: top v-bind(scrollSpeedMs) cubic-bezier(0.645, 0.045, 0.355, 1);
+}
+.section-content {
     transition: top v-bind(scrollSpeedMs) cubic-bezier(0.645, 0.045, 0.355, 1);
 }
 </style>

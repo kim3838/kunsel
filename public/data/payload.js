@@ -904,79 +904,80 @@ export default {
             'id': 'feature_1',
             'type': 'full',
             'proximity': '30',
-            'title': 'Top Seller',
+            'title': 'FULL 1',
             'bg': 'red',
-            // 'media': {
-            //     'type': 'image',
-            //     'source': '/images/carousel/719ed6d6-421b-4b73-8cfe-82fb718c37ce.webp'
-            // }
+            'media': {
+                'type': 'image',
+                'source': '/images/carousel/60a0ac44-4533-421b-aa6c-cfba7036fb97.webp'
+            }
         },
         {
             'id': 'feature_2',
             'type': 'full',
-            'title': 'Featured',
+            'proximity': '30',
+            'title': 'FULL 2',
             'bg': 'blue',
-            // 'media': {
-            //     'type': 'video',
-            //     'source': '/videos/weathering_with_you.mp4',
-            //     'source_type': 'video/mp4'
-            // }
+            'media': {
+                'type': 'video',
+                'source': '/videos/weathering_with_you.mp4',
+                'source_type': 'video/mp4'
+            }
         },
         {
             'id': 'feature_3',
-            'type': 'row',
-            'proximity': '50',
-            'title': 'Trending',
-            'bg': 'green',
-            // 'media': {
-            //     'type': 'image',
-            //     'source': '/images/carousel/719ed6d6-421b-4b73-8cfe-82fb718c37ce.webp'
-            // }
+            'type': 'full',
+            // 'proximity': '60',
+            'title': 'FULL 3',
+            'bg': 'lightgreen',
+            'media': {
+                'type': 'image',
+                'source': '/images/carousel/f415740d-5951-4b5d-af98-1404e9c65df5.jpg'
+            }
         },
         {
             'id': 'feature_4',
             'type': 'row',
             'proximity': '50',
-            'title': 'Battle Pass',
+            'title': 'ROW 1',
             'bg': 'yellow',
-            // 'media': {
-            //     'type': 'video',
-            //     'source': '/videos/your_name_4.mp4',
-            //     'source_type': 'video/mp4'
-            // }
+            'media': {
+                'type': 'video',
+                'source': '/videos/your_name_4.mp4',
+                'source_type': 'video/mp4'
+            }
         },
         {
             'id': 'feature_5',
             'type': 'row',
             'proximity': '50',
-            'title': 'New Arrival',
+            'title': 'ROW 2',
             'bg': 'orange',
-            // 'media': {
-            //     'type': 'image',
-            //     'source': '/images/carousel/719ed6d6-421b-4b73-8cfe-82fb718c37ce.webp'
-            // }
+            'media': {
+                'type': 'image',
+                'source': '/images/carousel/719ed6d6-421b-4b73-8cfe-82fb718c37ce.webp'
+            }
         },
         {
             'id': 'feature_6',
             'type': 'row',
             'proximity': '50',
-            'title': 'For You',
+            'title': 'ROW 3',
             'bg': 'indigo',
-            // 'media': {
-            //     'type': 'image',
-            //     'source': '/images/carousel/719ed6d6-421b-4b73-8cfe-82fb718c37ce.webp'
-            // }
+            'media': {
+                'type': 'image',
+                'source': '/images/carousel/c12d1eba-e8c2-4827-a0d2-5298c4b0f421.webp'
+            }
         },
         {
             'id': 'feature_7',
             'type': 'row',
             'proximity': '50',
-            'title': 'Limited Offer',
+            'title': 'ROW 4',
             'bg': 'azure',
-            // 'media': {
-            //     'type': 'image',
-            //     'source': '/images/carousel/719ed6d6-421b-4b73-8cfe-82fb718c37ce.webp'
-            // }
+            'media': {
+                'type': 'image',
+                'source': '/images/carousel/d519b14b-0289-43af-ae15-9d7446d4f914.webp'
+            }
         },
     ]
 };
