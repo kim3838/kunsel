@@ -403,7 +403,8 @@ function contentStyle(indexParam){
                 'top': `-100%`,
                 'left': 0,
                 'right': 0,
-                'bottom': `calc(100% + ${topAllocation.value})`
+                'bottom': `calc(100% + ${topAllocation.value})`,
+                'padding-top': `${topProximityHeaderElementHeight}px`,
             };
         }
 
@@ -413,6 +414,7 @@ function contentStyle(indexParam){
                 'top': `100%`,
                 'left': 0,
                 'right': 0,
+                'padding-top': `${bottomProximityHeaderElementHeight}px`,
             };
         }
     }
