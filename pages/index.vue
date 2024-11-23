@@ -1,522 +1,230 @@
 <template>
-    <div>
-        <SnapLandingWrapper>
-            <!-- Spotlight: Video -->
-            <div v-if="false" class="tw-snap-start tw-snap-always tw-relative tw-w-full tw-h-screen">
-                <video :ref="'spotlightVideo_1'" preload="none" muted loop class="tw-absolute tw-z-30 tw-border-0 tw-object-cover tw-w-full tw-h-full">
-                    <source :src="'videos/your_name_4.mp4'" type="video/mp4">
-                </video>
+    <div
+        v-if="clientReadyState"
+        ref="layoutScroll"
+        class="tw-h-screen tw-max-h-screen tw-overflow-y-hidden tw-overflow-x-hidden">
+        <!-- Primary Navigation Menu -->
+        <LandingNavigation v-model:navigation-height-in-pixels="topAllocation"/>
+        <!-- Main Content -->
+        <main class="tw-relative">
 
-                <div class="navigation-height tw-w-full tw-relative"></div>
-                <div v-if="true" class="tw-absolute tw-w-full tw-h-full spotlight-content-height tw-z-30 tw-flex tw-justify-center">
-                    <div class="tw-pb-10 tw-max-w-screen-2xl tw-w-full tw-flex tw-flex-col-reverse">
-                        <article class="tw-w-full tw-h-max">
-                            <CarouselModuleCarousel
-                                dir="rtl"
-                                v-model="spotlight_1_index"
-                                v-bind="carouselSettings"
-                                :breakpoints="carouselBreakpoints"
-                                class="tw-w-full lg:tw-w-full">
-                                <CarouselModuleSlide class="tw-w-[270px] tw-transition-all tw-duration-700 tw-opacity-70 hover:tw-opacity-100" v-for="spotLightItem in spotlight_1" :key="spotLightItem">
-                                    <div class="tw-w-full tw-h-[350px] tw-mx-2">
-                                        <HexagonFrame
-                                            :frame-border="'#dedede'"
-                                            :content-border="'#b7b7b7'"
-                                            :direction="'ttb'"
-                                            :head-percentage="70"
-                                            :top-right="45"
-                                            :bottom-left="45"
-                                            :header-fade="true"
-                                            :header-fade-color="'rgba(5,5,5,0.1)'">
-                                            <template #header>
-                                                <div class="tw-h-[70%] tw-w-full tw-p-[6px] tw-box-border">
-                                                    <div
-                                                        class="tw-h-full tw-w-full tw-bg-cover tw-bg-center tw-bg-no-repeat"
-                                                        :style="{'background':'url('+spotLightItem.image+')'}"
-                                                    />
-                                                </div>
-                                                <div class="tw-h-[30%] tw-w-full tw-box-border">
-                                                    <div
-                                                        class="tw-h-full tw-w-full tw-bg-cover tw-bg-center tw-bg-no-repeat tw-grayscale tw-opacity-20"
-                                                        :style="{'background':'url('+spotLightItem.image+')'}"
-                                                    />
-                                                </div>
-                                            </template>
-                                            <template #body>
-                                                <div class="tw-h-[30%] tw-w-full tw-pt-2 tw-pl-8 tw-overflow-hidden tw-flex tw-flex-col">
+            <!-- Section Navigation -->
+            <div class="tw-fixed tw-z-10 tw-top-0 tw-right-0 tw-bottom-0 tw-left-0 tw-h-screen">
+                <!-- Add icon before section titles to overlap vertical rule -->
+                <div class="tw-absolute vertical-nav-rule tw-w-[1px] tw-top-0 tw-right-0 tw-bottom-0 tw-left-[14px]"></div>
 
-                                                    <div class="tw-overflow-auto tw-space-y-2">
+                <!-- Debug -->
+                <div v-if="true" class="tw-absolute tw-text-white tw-text-xs tw-font-mono">
+                    {{`SCREEN DIMENSION: ${screenWidth} x ${screenHeight}`}}
+                </div>
+                <div v-if="false" class="tw-absolute tw-text-xs tw-font-mono">
+                    {{"INDEX: " + index}}<br>
+                    <pre>{{featured[index]}}</pre>
+                </div>
 
-                                                        <div class="tw-font-semibold tw-h-max tw-flex-none" style="text-align: left;">
-                                                            <div class="tw-text-lg tw-font-semibold" v-text="spotLightItem.subTitle"></div>
-
-                                                            <NuxtLink
-                                                                v-if="spotLightItem.link"
-                                                                :to="spotLightItem.link">
-                                                                <UnorderedList
-                                                                    class="tw-cursor-pointer hover:tw-underline"
-                                                                    :size="'md'"
-                                                                    :label="'Read more'"/>
-                                                            </NuxtLink>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </template>
-                                        </HexagonFrame>
-                                    </div>
-                                </CarouselModuleSlide>
-                                <template #addons>
-                                    <CarouselModuleNavigation />
-                                </template>
-                            </CarouselModuleCarousel>
-                        </article>
-                        <div class="tw-p-4 tw-space-x-2 tw-text-right">
-                            <Button :variant="'outline'" :size="'xl'" :label="'GET BUNDLE'" />
-                        </div>
-                        <div class="tw-px-4 tw-text-right">
-                            <div class="tw-flex tw-justify-end">
-                                <HeroPlate :size="'lg'" :bookmark="'NEW ARRIVAL'" :theme="'gold'" :label="'COLORFIRE Meow Series'"/>
-                            </div>
-
-                            <div class="tw-text-xl" :style="{'direction': 'rtl', 'color': '#ffffff', 'text-shadow': '1px 1px 2px #000000'}">
-                                <UnorderedList
-                                    class="tw-space-x-2"
-                                    :size="'lg'"
-                                    :icon="'bi:gpu-card'"
-                                    :label="'COLORFIRE GeForce RTX 4060 MEOW-ORG 8GB-V'"/>
-                                <UnorderedList
-                                    class="tw-space-x-2"
-                                    :size="'lg'"
-                                    :icon="'bi:motherboard'"
-                                    :label="'COLORFIRE B760M-MEOW WIFI D5 ORANGE'"/>
-                                <UnorderedList
-                                    class="tw-space-x-2"
-                                    :size="'lg'"
-                                    :icon="'lucide:pc-case'"
-                                    :label="'Segotep Memphis-S Meow PC Case (M-ATX / ITX supported)'"/>
-                                <div class="tw-font-mono tw-font-semibold tw-text-4xl">₱28,500.00</div>
+                <div class="tw-absolute tw-top-0 tw-right-0 tw-bottom-0 tw-left-[20px] allocate-navigation">
+                    <div class="tw-relative tw-w-full tw-h-full">
+                        <div
+                            v-for="(featuredSection, index) in featured"
+                            :id="`featured-${index}`"
+                            :style="sectionStyle(index)"
+                            class="tw-absolute section-navigation">
+                            <div
+                                :id="`featured-${index}-header`"
+                                class="tw-pb-1">
+                                <div
+                                    class="tw-font-data tw-w-min tw-pr-1 tw-text-nowrap tw-text-lg tw-text-white tw-rounded-sm tw-bg-opacity-25 tw-bg-slate-500"
+                                    style="text-shadow: 1px 1px 2px #000000;">
+                                    {{featuredSection.title}}
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Spotlight: Image -->
-            <div v-if="true" class="tw-snap-start tw-snap-always tw-relative tw-w-full tw-h-screen">
-                <div class="tw-w-full tw-h-full tw-absolute tw-z-30 spotlight-image" :style="{'background-image': `url(/images/carousel/c12d1eba-e8c2-4827-a0d2-5298c4b0f421.webp)`}"></div>
+            <!-- Section Background -->
+            <section v-for="(section, index) in featured" :style="{'background': section.background}">
+                <div v-if="section?.media" class="tw-relative tw-w-full tw-h-screen tw-flex tw-justify-center tw-items-center tw-overflow-hidden">
+                    <div v-if="section.media.type == 'image' && section.media.source" class="tw-w-full tw-h-full tw-absolute background-image" :style="{'background-image': 'url('+section.media.source+')'}"></div>
 
-                <div class="navigation-height tw-w-full tw-relative"></div>
-                <div v-if="false" class="tw-absolute tw-w-full tw-h-full spotlight-content-height tw-z-30 tw-flex tw-justify-center">
-                    <div class="tw-pb-10 tw-max-w-screen-2xl tw-w-full tw-flex tw-flex-col-reverse">
+                    <video
+                        v-if="section.media.type == 'video' && section.media.source"
+                        class="tw-absolute tw-border-0 tw-object-cover tw-w-full tw-h-full"
+                        preload="none"
+                        ref="featuredVideos"
+                        muted
+                        loop>
+                        <source :src="section.media.source" :type="section.media.source_type">
+                    </video>
 
-                        <article class="tw-w-full tw-h-max">
-                            <CarouselModuleCarousel
-                                dir="rtl"
-                                v-model="spotlight_1_index"
-                                v-bind="carouselSettings"
-                                :breakpoints="carouselBreakpoints"
-                                class="tw-w-full lg:tw-w-full">
-                                <CarouselModuleSlide class="tw-w-[270px]" v-for="spotLightItem in spotlight_1" :key="spotLightItem">
-                                    <div class="tw-w-full tw-h-[350px] tw-mx-2">
-                                        <HexagonFrame
-                                            :frame-border="'#dedede'"
-                                            :content-border="'#b7b7b7'"
-                                            :direction="'ttb'"
-                                            :head-percentage="70"
-                                            :top-right="45"
-                                            :bottom-left="45"
-                                            :header-fade="true"
-                                            :header-fade-color="'rgba(5,5,5,0.1)'">
-                                            <template #header>
-                                                <div class="tw-h-[70%] tw-w-full tw-p-[6px] tw-box-border">
-                                                    <div
-                                                        class="tw-h-full tw-w-full tw-bg-cover tw-bg-center tw-bg-no-repeat"
-                                                        :style="{'background':'url('+spotLightItem.image+')'}"
-                                                    />
+                    <div v-if="false" class="tw-z-40 thread-border tw-bg-white tw-font-mono tw-px-1.5">
+                        {{layoutScrollY}}&nbsp;:&nbsp;{{index}}
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section Content -->
+            <div class="tw-fixed tw-z-20 tw-top-0 tw-right-0 tw-bottom-0 tw-left-[20px] allocate-navigation">
+                <div class="tw-relative tw-w-full tw-h-full">
+                    <div
+                        v-for="(featuredContent, index) in featured"
+                        :id="`featured-${index}-content`"
+                        :style="contentStyle(index)"
+                        class="tw-absolute section-content">
+
+                        <div class="tw-w-full tw-flex tw-flex-nowrap tw-gap-2 tw-overflow-y-hidden"><!-- tw-bg-gray-600 tw-bg-opacity-50 -->
+                            <div
+                                v-if="false"
+                                class="tw-flex-none background-image"
+                                :style="[featuredElementStyle(featuredContent, 'dimension'),{'background-image': 'url(/images/hero/prestige-13-ai-kv-bg.jpg'}]">
+                            </div>
+                            <div
+                                :style="[featuredElementStyle(featuredContent, 'dimension')]"
+                                class="tw-flex-none"
+                                v-for="child in featuredContent.children" :key="child">
+                                <Glint :orientation="child.glint_orientation" :enable="child.glint" :color="child.glint_color">
+                                    <HexagonFrame
+                                        :frame-border="child.frame_border"
+                                        :opaque="child.content_opaque"
+                                        :content-background="child.content_background"
+                                        :direction="child.content_direction"
+                                        :theme="featuredContent.theme"
+                                        :head-percentage="child.head_percentage"
+                                        :top-right="child.top_right_corner"
+                                        :bottom-left="child.bottom_left_corner"
+                                        :header-fade="child.header_fade"
+                                        :header-fade-color="child.header_fade_color">
+                                        <template #header>
+                                            <div :class="[featuredElementClass(featuredContent, child, 'header_class')]" class="tw-box-border">
+                                                <div
+                                                    class="tw-h-full tw-w-full tw-bg-cover tw-bg-center tw-bg-no-repeat"
+                                                    :style="{'background':'url('+child.image+')'}"
+                                                />
+                                            </div>
+                                            <div :class="[featuredElementClass(featuredContent, child, 'body_class')]" class="tw-box-border">
+                                                <div
+                                                    class="tw-h-full tw-w-full tw-bg-cover tw-bg-center tw-bg-no-repeat tw-grayscale tw-opacity-20"
+                                                    :style="{'background':'url('+child.image+')'}"
+                                                />
+                                            </div>
+                                        </template>
+                                        <template v-slot:body="{frameBorderColor}">
+                                            <div :class="[featuredElementClass(featuredContent, child, 'body_class')]" class="tw-p-2 tw-overflow-hidden tw-flex tw-flex-col">
+                                                <div v-if="child.content_direction == `ttb`" class="tw-overflow-auto tw-space-y-4">
+                                                    <div :class="[featuredElementClass(featuredContent, child, 'title')]" class="tw-line-clamp-2" v-text="child.title"></div>
+                                                    <NuxtLink
+                                                        v-if="child.link"
+                                                        :to="child.link">
+                                                        <UnorderedList
+                                                            class="tw-cursor-pointer hover:tw-underline"
+                                                            :size="'sm'"
+                                                            :label="'Read more'"/>
+                                                    </NuxtLink>
                                                 </div>
-                                                <div class="tw-h-[30%] tw-w-full tw-box-border">
-                                                    <div
-                                                        class="tw-h-full tw-w-full tw-bg-cover tw-bg-center tw-bg-no-repeat tw-grayscale tw-opacity-20"
-                                                        :style="{'background':'url('+spotLightItem.image+')'}"
-                                                    />
-                                                </div>
-                                            </template>
-                                            <template #body>
-                                                <div class="tw-h-[30%] tw-w-full tw-pt-2 tw-pl-8 tw-overflow-hidden tw-flex tw-flex-col">
 
-                                                    <div class="tw-overflow-auto tw-space-y-2">
+                                                <div v-else-if="child.content_direction == `ltr`" class="tw-overflow-auto tw-space-y-0.5">
+                                                    <div class="tw-font-data tw-font-semibold tw-h-max tw-flex-none">
+                                                        <UnorderedList
+                                                            class="tw-cursor-pointer hover:tw-underline"
+                                                            :size="'md'"
+                                                            :icon="child.title_icon"
+                                                            :label="child.title"/>
+                                                    </div>
 
-                                                        <div class="tw-font-semibold tw-h-max tw-flex-none" style="text-align: left;">
-                                                            <div class="tw-text-lg tw-font-semibold" v-text="spotLightItem.subTitle"></div>
+                                                    <div style="height: 1px;width: 100%;background: linear-gradient(to right, transparent 0%, #e3e3e3 30%, #e3e3e3 70%, transparent 100%);"></div>
 
-                                                            <NuxtLink
-                                                                v-if="spotLightItem.link"
-                                                                :to="spotLightItem.link">
-                                                                <UnorderedList
-                                                                    class="tw-cursor-pointer hover:tw-underline"
-                                                                    :size="'md'"
-                                                                    :label="'Read more'"/>
-                                                            </NuxtLink>
+                                                    <div v-if="child?.bullets?.value?.length" class="tw-flex tw-flex-row tw-flex-nowrap">
+                                                        <div class="tw-w-full" :style="{'columns': (child.bullets.column ? child.bullets.column : 1)}">
+                                                            <UnorderedList
+                                                                v-for="bullet in child.bullets.value"
+                                                                :size="'sm'"
+                                                                :icon="'eos-icons:commit'"
+                                                                :label="bullet"/>
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </template>
-                                        </HexagonFrame>
-                                    </div>
-                                </CarouselModuleSlide>
-                                <template #addons>
-                                    <CarouselModuleNavigation />
-                                </template>
-                            </CarouselModuleCarousel>
-                        </article>
-                        <div class="tw-p-4 tw-space-x-2 tw-text-right">
-                            <Button :variant="'outline'" :size="'xl'" :label="'GET BUNDLE'" />
-                        </div>
-                        <div class="tw-px-4 tw-text-right">
-                            <div class="tw-flex tw-justify-end tw-font-[Barlow_Semi_Condensed]">
-                                <HeroPlate :size="'lg'" :bookmark="'NEW ARRIVAL'" :theme="'tulip'" :label="'COLORFIRE Meow Series'"/>
-                            </div>
-
-                            <div class="tw-text-xl" :style="{'direction': 'rtl', 'color': '#ffffff', 'text-shadow': '1px 1px 2px #000000'}">
-                                <UnorderedList
-                                    class="tw-space-x-2"
-                                    :size="'lg'"
-                                    :icon="'bi:gpu-card'"
-                                    :label="'COLORFIRE GeForce RTX 4060 MEOW-ORG 8GB-V'"/>
-                                <UnorderedList
-                                    class="tw-space-x-2"
-                                    :size="'lg'"
-                                    :icon="'bi:motherboard'"
-                                    :label="'COLORFIRE B760M-MEOW WIFI D5 ORANGE'"/>
-                                <UnorderedList
-                                    class="tw-space-x-2"
-                                    :size="'lg'"
-                                    :icon="'lucide:pc-case'"
-                                    :label="'Segotep Memphis-S Meow PC Case (M-ATX / ITX supported)'"/>
-
-                                <div class="tw-font-mono tw-font-semibold tw-text-4xl">₱28,500.00</div>
+                                            </div>
+                                        </template>
+                                    </HexagonFrame>
+                                </Glint>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-
-            <!-- Spotlight: Image -->
-            <div v-if="true" class="tw-snap-start tw-snap-always tw-relative tw-w-full tw-h-screen">
-                <div class="tw-w-full tw-h-full tw-absolute tw-z-30 spotlight-image" :style="{'background-image': `url(/images/carousel/d519b14b-0289-43af-ae15-9d7446d4f914.webp)`}"></div>
-            </div>
-
-            <div v-if="true">
-                <div class="navigation-height tw-w-full tw-snap-start tw-snap-always"></div>
-                <div class="tw-pl-2 tw-mx-auto tw-max-w-screen-2xl tw-flex tw-flex-col">
-                    <article class="tw-mt-4 tw-relative">
-                        <CarouselModuleCarousel
-                            v-model="carouselFeaturedItem"
-                            v-bind="carouselSettings"
-                            :breakpoints="carouselBreakpoints"
-                            :mouse-drag="true"
-                            class="tw-w-full lg:tw-w-full">
-                            <CarouselModuleSlide class="tw-w-[170px]">
-
-                                <HexagonFrame :top-right="45" :bottom-left="45">
-                                    <template #body>
-                                        <div class="tw-h-full tw-flex tw-items-center tw-text-center tw-font-['Google_Sans_Text'] tw-text-xl tw-font-semibold tw-px-8">
-                                            Featured Products
-                                        </div>
-                                    </template>
-                                </HexagonFrame>
-                            </CarouselModuleSlide>
-                            <CarouselModuleSlide class="tw-w-[270px]" v-for="featuredItem in carouselFeaturedItems" :key="featuredItem">
-                                <div class="tw-w-full tw-h-[350px] tw-mx-2">
-                                    <HexagonFrame
-                                        :frame-border="'#dedede'"
-                                        :content-border="'#b7b7b7'"
-                                        :direction="'ttb'"
-                                        :head-percentage="70"
-                                        :top-right="45"
-                                        :bottom-left="45"
-                                        :header-fade="true"
-                                        :header-fade-color="'rgba(5,5,5,0.1)'">
-                                        <template #header>
-                                            <div class="tw-h-[70%] tw-w-full tw-p-[6px] tw-box-border">
-                                                <div
-                                                    class="tw-h-full tw-w-full tw-bg-cover tw-bg-center tw-bg-no-repeat"
-                                                    :style="{'background':'url('+featuredItem.image+')'}"
-                                                />
-                                            </div>
-                                            <div class="tw-h-[30%] tw-w-full tw-box-border">
-                                                <div
-                                                    class="tw-h-full tw-w-full tw-bg-cover tw-bg-center tw-bg-no-repeat tw-grayscale tw-opacity-20"
-                                                    :style="{'background':'url('+featuredItem.image+')'}"
-                                                />
-                                            </div>
-                                        </template>
-                                        <template #body>
-                                            <div class="tw-h-[30%] tw-w-full tw-pt-2 tw-pl-8 tw-overflow-hidden tw-flex tw-flex-col">
-
-                                                <div class="tw-overflow-auto tw-space-y-2">
-
-                                                    <div class="tw-font-semibold tw-h-max tw-flex-none" style="text-align: left;">
-                                                        <div class="tw-text-lg tw-font-semibold" v-text="featuredItem.subTitle"></div>
-
-                                                        <NuxtLink
-                                                            v-if="featuredItem.link"
-                                                            :to="featuredItem.link">
-                                                            <UnorderedList
-                                                                class="tw-cursor-pointer hover:tw-underline"
-                                                                :size="'md'"
-                                                                :label="'Read more'"/>
-                                                        </NuxtLink>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </template>
-                                    </HexagonFrame>
-                                </div>
-                            </CarouselModuleSlide>
-                            <template #addons>
-                                <CarouselModuleNavigation />
-                            </template>
-                        </CarouselModuleCarousel>
-                    </article>
-                </div>
-            </div>
-
-            <div v-if="true">
-                <div class="navigation-height tw-w-full tw-snap-start tw-snap-always"></div>
-                <div class="tw-pl-2 tw-mx-auto tw-max-w-screen-2xl tw-flex tw-flex-col">
-                    <article class="tw-mt-4 tw-relative">
-                        <CarouselModuleCarousel
-                            v-model="carouselTrendingItem"
-                            v-bind="carouselSettings"
-                            :breakpoints="carouselBreakpoints"
-                            :mouse-drag="true"
-                            class="tw-w-full lg:tw-w-full">
-                            <CarouselModuleSlide class="tw-w-[170px]">
-
-                                <HexagonFrame :top-right="45" :bottom-left="45">
-                                    <template #body>
-                                        <div class="tw-h-full tw-flex tw-items-center tw-text-center tw-font-['Google_Sans_Text'] tw-text-xl tw-font-semibold tw-px-8">
-                                            Trending
-                                        </div>
-                                    </template>
-                                </HexagonFrame>
-                            </CarouselModuleSlide>
-                            <CarouselModuleSlide class="tw-w-[270px]" v-for="featuredItem in carouselTrendingItems" :key="featuredItem">
-                                <div class="tw-w-full tw-h-[350px] tw-mx-2">
-                                    <HexagonFrame
-                                        :frame-border="'#dedede'"
-                                        :content-border="'#b7b7b7'"
-                                        :direction="'ttb'"
-                                        :head-percentage="70"
-                                        :top-right="45"
-                                        :bottom-left="45"
-                                        :header-fade="true"
-                                        :header-fade-color="'rgba(5,5,5,0.1)'">
-                                        <template #header>
-                                            <div class="tw-h-[70%] tw-w-full tw-p-[6px] tw-box-border">
-                                                <div
-                                                    class="tw-h-full tw-w-full tw-bg-cover tw-bg-center tw-bg-no-repeat"
-                                                    :style="{'background':'url('+featuredItem.image+')'}"
-                                                />
-                                            </div>
-                                            <div class="tw-h-[30%] tw-w-full tw-box-border">
-                                                <div
-                                                    class="tw-h-full tw-w-full tw-bg-cover tw-bg-center tw-bg-no-repeat tw-grayscale tw-opacity-20"
-                                                    :style="{'background':'url('+featuredItem.image+')'}"
-                                                />
-                                            </div>
-                                        </template>
-                                        <template #body>
-                                            <div class="tw-h-[30%] tw-w-full tw-pt-2 tw-pl-8 tw-overflow-hidden tw-flex tw-flex-col">
-
-                                                <div class="tw-overflow-auto tw-space-y-2">
-
-                                                    <div class="tw-font-semibold tw-h-max tw-flex-none" style="text-align: left;">
-                                                        <div class="tw-text-lg tw-font-semibold" v-text="featuredItem.subTitle"></div>
-
-                                                        <NuxtLink
-                                                            v-if="featuredItem.link"
-                                                            :to="featuredItem.link">
-                                                            <UnorderedList
-                                                                class="tw-cursor-pointer hover:tw-underline"
-                                                                :size="'md'"
-                                                                :label="'Read more'"/>
-                                                        </NuxtLink>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </template>
-                                    </HexagonFrame>
-                                </div>
-                            </CarouselModuleSlide>
-                            <template #addons>
-                                <CarouselModuleNavigation />
-                            </template>
-                        </CarouselModuleCarousel>
-                    </article>
-                </div>
-            </div>
-
-            <div v-if="true">
-                <div class="navigation-height tw-w-full tw-snap-start tw-snap-always"></div>
-                <div class="tw-pl-2 tw-mx-auto tw-max-w-screen-2xl tw-flex tw-flex-col">
-                    <article class="tw-mt-4 w-relative">
-                        <CarouselModuleCarousel
-                            v-model="carouselNewArrival"
-                            v-bind="carouselSettings"
-                            :breakpoints="carouselBreakpoints"
-                            class="tw-w-full lg:tw-w-full">
-                            <CarouselModuleSlide class="tw-w-[170px]">
-                                <HexagonFrame :top-right="75" :bottom-left="75">
-                                    <template #body>
-                                        <div class="tw-h-full tw-flex tw-items-center tw-text-center tw-font-['Google_Sans_Text'] tw-text-xl tw-font-semibold tw-px-8">
-                                            New Arrivals
-                                        </div>
-                                    </template>
-                                </HexagonFrame>
-                            </CarouselModuleSlide>
-
-                            <CarouselModuleSlide v-for="newArrival in carouselNewArrivals" :key="newArrival">
-                                <div class="tw-mx-2 tw-w-[440px] tw-h-[500px]">
-                                    <InformationCard
-                                        :image="newArrival.image"
-                                        :title="newArrival.title"
-                                        :sub-title="newArrival.subTitle"
-                                    />
-                                </div>
-
-                            </CarouselModuleSlide>
-                            <CarouselModuleSlide :class="[`tw-w-[340px]`]">
-                            </CarouselModuleSlide>
-
-                            <template #addons>
-                                <CarouselModuleNavigation />
-                            </template>
-                        </CarouselModuleCarousel>
-                    </article>
-                </div>
-            </div>
-
-            <div v-if="false">
-                <div id="latest-news" class="navigation-height tw-w-full tw-snap-start tw-snap-always"></div>
-                <div class="tw-pl-2 tw-mx-auto tw-max-w-screen-2xl tw-flex tw-flex-col">
-                    <ClientOnly>
-                        <article class="tw-mt-4">
-                            <div v-if="screenWidth < screens['md']" class="tw-text-center tw-text-3xl tw-font-bold tw-font-['Google_Sans_Text']">Latest News</div>
-                            <div :class="[screenWidth >= screens['md'] ? 'tw-flex-nowrap tw-snap-x tw-snap-mandatory tw-overflow-x-scroll' : 'tw-flex-col']" class="tw-relative tw-flex tw-items-center tw-space-x-2 lg:tw-space-x-8 tw-w-full ">
-
-                                <div v-if="screenWidth >= screens['md']" class="tw-snap-center tw-snap-always tw-inline-block tw-h-[375px] tw-w-[170px] tw-flex-none tw-flex tw-justify-center">
-                                    <div class="tw-w-[170px] tw-h-[247px]">
-                                        <HexagonFrame  :top-right="75" :bottom-left="75">
-                                            <template #body>
-                                                <div class="tw-w-full tw-h-full tw-font-['Google_Sans_Text'] tw-text-xl tw-font-semibold tw-flex tw-justify-center tw-items-center">
-                                                    Latest News
-                                                </div>
-                                            </template>
-                                        </HexagonFrame>
-                                    </div>
-                                </div>
-
-                                <div v-for="blog in news" :class="screenWidth >= screens['md'] ? 'tw-snap-center tw-snap-always tw-inline-block sm:tw-w-1/2 lg:tw-w-1/3 xl:tw-w-1/4 tw-flex-none tw-flex tw-justify-center' : ''" class="tw-cursor-pointer">
-                                    <div v-if="screenWidth < screens['md']" class="tw-mb-4 navigation-height tw-w-full tw-snap-start tw-snap-always"></div>
-                                    <div class="tw-w-[370px] tint-background thread-border">
-                                        <img :src="blog.image.path" class="tw-h-[247px] tw-w-full">
-                                        <div class="tw-px-2 tw-pt-2 tw-text-xl tw-h-[3.5rem] tw-line-clamp-2 tw-font-bold tw-tracking-normal tw-leading-tight hover:tw-underline">{{blog.title}}</div>
-                                        <div class="tw-px-2 tw-pt-4 tw-text-base tw-h-[4rem] tw-line-clamp-2">{{blog.subTitle}}</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </article>
-                    </ClientOnly>
-                </div>
-            </div>
-
-            <div v-if="false">
-                <div id="faq" class="navigation-height tw-w-full tw-snap-start tw-snap-always"></div>
-                <div class="tw-px-2 tw-mx-auto tw-max-w-screen-2xl tw-flex tw-flex-col" >
-                    <article class="tw-mt-4 tw-w-full tw-px-4 tw-flex tw-flex-wrap lg:tw-flex-nowrap tw-justify-center">
-                        <div class="tw-text-center lg:tw-text-start lg:tw-w-1/4 tw-font-['Google_Sans_Text']">
-                            <div class="tw-text-3xl tw-font-bold">Frequently Answered Questions</div>
-                            <div class="tw-text-xl tw-font-semibold">Have a question? Check out our frequently asked questions to find your answer.</div>
-                            <div class="tw-h-60 tw-w-full tw-bg-contain tw-bg-center lg:tw-bg-left tw-bg-no-repeat" :style="{'background-image': 'url(/deco/undraw/undraw_my_answer_re_k4dv.svg)'}"></div>
-                        </div>
-                        <Accordion
-                            v-model:payload="faqs"
-                            :title-icon="false"
-                            :multi-line-title="true"
-                            :active-border-color="'transparent'"
-                            :center-content="faqCenterContent"
-                            :size="'lg'"
-                            single-expand
-                            class="tw-mt-4 lg:tw-w-1/2 lg:tw-mt-0 tw-space-y-4"/>
-                    </article>
-                </div>
-            </div>
-        </SnapLandingWrapper>
+        </main>
+        <!-- DateTime Picker -->
+        <div id="datetimepicker-slot" class="tw-font-data"></div>
+        <!-- Action Modal -->
+        <PromptModal />
     </div>
 </template>
 
 <script setup lang="ts">
+import {storeToRefs} from 'pinia';
+import {useTransition} from '@vueuse/core';
 import dataPayload from '@/public/data/payload.js';
 useLayout().setNavigationMode('clear', 'index.vue');
+const {$themeStore, $toRomanNumeral} = useNuxtApp();
+const {screenHeightBreakpoint, height: screenHeight, width: screenWidth} = useScreen();
 const clientReadyState = useClientReadyState();
 
-import {storeToRefs} from "pinia";
-const {$themeStore} = useNuxtApp();
-const {screens, width: screenWidth, } = useScreen();
 const {
-    hexAlpha,
-    lining: liningColor,
+    thread: threadColor
 } = storeToRefs($themeStore);
+const topAllocation = ref('0px');
+const featured = ref(dataPayload['featured']);
+const leftToRightItems = ref(dataPayload['leftToRightItems']);
+const carouselTrendingItems = ref(dataPayload['carousel']['trendingItems']);
+const featuredVideos = useTemplateRef('featuredVideos');
+//Boot full page scroll on navigate
+if(clientReadyState.value){
+    onMounted(async () => {
+        await nextTick(() => {
+            bootPageScroll();
+            //console.log({'onMounted feature_2': feature_2.value});
+            autoPlayVideoSpotlights(featuredVideos);
+        });
+    })
+}
 
-const spotlightVideo_1 = ref<HTMLElement | null>(null);
-
-onMounted(async () => {
-    await nextTick(() => {
-        if(clientReadyState.value){
-            console.log({'onMounted spotlightVideo_1': spotlightVideo_1.value});
-            reIndexSpotlightCarousel();
-            autoPlayVideoSpotlights();
-        }
-    });
-});
-
+//Boot full page scroll on page load
 watch(clientReadyState, async (clientReady) => {
-    console.log({'index.vue Watch clientReadyState':clientReady});
     if(clientReady){
         await nextTick(() => {
-            reIndexSpotlightCarousel();
-            autoPlayVideoSpotlights();
+            bootPageScroll();
+            //console.log({'clientReady feature_2': feature_2.value});
+            autoPlayVideoSpotlights(featuredVideos);
         });
     }
-})
-
-const spotlight_1_index = ref(0);
-watch(screenWidth, value => {
-    reIndexSpotlightCarousel();
 });
-function autoPlayVideoSpotlights(){
-    [spotlightVideo_1].forEach(video => {
-        if(video.value != null){
-            let playPromise = video.value.play();
+
+function autoPlayVideoSpotlights(videoSpotlights){
+
+    videoSpotlights.value?.forEach(video => {
+
+        console.log({'featuredVideo': video});
+
+        if(video){
+            let playPromise = video.play();
 
             if(playPromise != undefined){
                 playPromise.then(()=>{
                     let observer = new IntersectionObserver(
                         (entries) => {
                             entries.forEach((entry) => {
-                                if (entry.intersectionRatio !== 1 && !video.value.paused) {
-                                    video.value.pause();
-                                } else if (video.value.paused) {
-                                    video.value.play();
+                                if (entry.intersectionRatio !== 1 && !video.paused) {
+                                    video.pause();
+                                } else if (video.paused) {
+                                    video.play();
                                 }
                             });
                         },
                         {threshold: 1}
                     );
 
-                    observer.observe(video.value);
+                    observer.observe(video);
                 }).catch((error: any) => {
 
                 });
@@ -524,72 +232,383 @@ function autoPlayVideoSpotlights(){
         }
     })
 }
-function reIndexSpotlightCarousel(){
-    if (screenWidth.value >= screens['2xl']) {//>=1536
-        spotlight_1_index.value = 0;
-    } else if (screenWidth.value >= screens['xl'] && screenWidth.value < screens['2xl']) {//>=1280 < 1536
-        spotlight_1_index.value = 0;
-    } else if (screenWidth.value >= screens['lg'] && screenWidth.value < screens['xl']) {//>=1024 < 1280
-        spotlight_1_index.value = 0.5;
-    } else if (screenWidth.value >= screens['md'] && screenWidth.value < screens['lg']) {//>=768 < 1024
-        spotlight_1_index.value = 1.5;
-    } else if (screenWidth.value >= screens['sm'] && screenWidth.value < screens['md']) {//>=640 < 768
-        spotlight_1_index.value = 2;
-    } else if (screenWidth.value < screens['sm']) {//<640
-        spotlight_1_index.value = 2;
+
+const index = ref(0);
+const featuredElementDimension = ref('lg');
+const sections = ref([]);
+
+watch(index, function(newIndex, oldIndex){}, { immediate: true });
+
+const topProximityIndex = computed(() => index.value - 1);
+const middleProximityIndex = computed(() => index.value);
+const bottomProximityIndex = computed(() => index.value + 1);
+//last section span 100% to bottom
+const bottomProximityTopPosition = computed(() => index.value == (featured.value.length - 1) ? 100 : 93);
+
+const withinProximity = (index) => {
+    return (middleProximityIndex.value == index
+        || topProximityIndex.value == index
+        || bottomProximityIndex.value == index);
+}
+
+function sectionStyle(indexParam){
+
+    let sectionHeaderHeight = document.getElementById('featured-'+indexParam)?.offsetHeight || 0;
+
+    let topProximityHeaderElementHeight = document.getElementById('featured-' + topProximityIndex.value + '-header')?.offsetHeight || 0;
+
+    let middleProximity = (featured.value[middleProximityIndex.value]?.proximity) ? featured.value[middleProximityIndex.value].proximity : 0 ;
+    let middleProximityTopPosition = (middleProximity)
+        ? `${middleProximity}%`
+        : `${topProximityHeaderElementHeight}px`;
+
+    if(withinProximity(indexParam)){
+        if(topProximityIndex.value == indexParam){
+            let topProximityBackground = featured.value[topProximityIndex.value].bg;
+
+            let topProximityTopPosition = featured.value[topProximityIndex.value].type == 'row'
+                ? `${100 - middleProximity}%`
+                : `calc(100% - ${topAllocation.value})`;
+
+            return {
+                'top': `0%`,
+                'left': 0,
+                'right': 0,
+                'bottom': topProximityTopPosition,
+                'display': `auto`,
+                'flex-direction': 'auto',
+                // 'background-color' : topProximityBackground
+            };
+        }
+
+        if(middleProximityIndex.value == indexParam){
+            let middleProximityBackground = featured.value[middleProximityIndex.value].bg;
+
+            return {
+                'top': `${middleProximityTopPosition}`,
+                'left': 0,
+                'right': 0,
+                'bottom': `${100 - bottomProximityTopPosition.value}%`,
+                // 'background-color' : middleProximityBackground
+            };
+        }
+
+        if(bottomProximityIndex.value == indexParam){
+            let bottomProximityBackground = featured.value[bottomProximityIndex.value].bg;
+
+            return {
+                'top': `${bottomProximityTopPosition.value}%`,
+                'left': 0,
+                'right': 0,
+                'bottom': 0,
+                // 'background-color' : bottomProximityBackground
+            };
+        }
     }
-};
 
-const carouselSettings = ref({
-    itemsToShow: 2,
-    snapAlign: 'start',
-});
-const carouselBreakpoints = ref({
-    [screens['sm']]: {
-        itemsToShow: 2,
-        snapAlign: 'start',
-    },
+    //Hide element if it's out of proximity
+    if(!withinProximity(indexParam)){
+        //Hidden from top
+        if(indexParam < index.value){
+            return {
+                'top': `calc(0% - ${topAllocation.value} - ${sectionHeaderHeight}px)`,
+                'left': 0,
+                'right': 0,
+            };
+        }
 
-    [screens['md']]: {
-        itemsToShow: 2.5,
-        snapAlign: 'start',
-    },
+        //Hidden from bottom
+        if(indexParam > index.value){
+            return {
+                'top': `100%`,
+                'left': 0,
+                'right': 0,
+            };
+        }
+    }
+}
 
-    [screens['lg']]: {
-        itemsToShow: 4.5,
-        snapAlign: 'start',
-    },
-});
+function contentStyle(indexParam){
 
-const carouselFeaturedItem = ref(0);
-const carouselNewArrival = ref(0);
-const carouselTrendingItem = ref(0);
+    let topProximityHeaderElementHeight = document.getElementById('featured-' + topProximityIndex.value + '-header')?.offsetHeight || 0;
+    let middleProximityHeaderElementHeight = document.getElementById('featured-' + middleProximityIndex.value + '-header')?.offsetHeight || 0;
+    let bottomProximityHeaderElementHeight = document.getElementById('featured-' + bottomProximityIndex.value + '-header')?.offsetHeight || 0;
 
-const carouselNewArrivals = ref(dataPayload['carousel']['newArrivals']);
-const carouselFeaturedItems = ref(dataPayload['carousel']['featuredItems']);
-const carouselTrendingItems = ref(dataPayload['carousel']['trendingItems']);
+    let middleProximity = (featured.value[middleProximityIndex.value]?.proximity) ? featured.value[middleProximityIndex.value].proximity : 0 ;
+    let middleProximityTopPosition = (middleProximity)
+        ? `${middleProximity}%`
+        : `${topProximityHeaderElementHeight}px`;
 
-const news = ref([]);
-const faqs = ref({
-    recentActive: 0,
-    options: []
-});
-const faqCenterContent = computed(() => {
-    return screenWidth.value < screens['lg'];
-})
+    if(withinProximity(indexParam)){
+        if(topProximityIndex.value == indexParam){
+
+            let topProximityIsTypeRow = featured.value[topProximityIndex.value].type == 'row';
+
+            let topProximityBackground = featured.value[topProximityIndex.value].bg;
+
+            let topProximityTopPosition = featured.value[topProximityIndex.value].type == 'row'
+                ? `${100 - middleProximity}%`
+                : `calc(100% - ${topAllocation.value})`;
+
+            if(topProximityIsTypeRow){
+                return {
+                    'top': `0%`,
+                    'left': 0,
+                    'right': 0,
+                    'bottom': topProximityTopPosition,
+                    'padding-top': `${topProximityHeaderElementHeight}px`,
+                    // 'background-color': topProximityBackground,
+                };
+            }
+
+            if(!topProximityIsTypeRow){
+
+                return {
+                    'top': `-100%`,
+                    'left': 0,
+                    'right': 0,
+                    'bottom': `calc(100% + ${topAllocation.value})`,
+                    'padding-top': `${topProximityHeaderElementHeight}px`,
+                    // 'background-color': topProximityBackground,
+                };
+            }
+        }
+
+        if(middleProximityIndex.value == indexParam){
+            let middleProximityBackground = featured.value[middleProximityIndex.value].bg;
+
+            return {
+                'top': `${middleProximityTopPosition}`,
+                'left': 0,
+                'right': 0,
+                'bottom': `${100 - bottomProximityTopPosition.value}%`,
+                'padding-top': `${middleProximityHeaderElementHeight}px`,
+                // 'background-color': middleProximityBackground,
+            };
+        }
+
+        if(bottomProximityIndex.value == indexParam){
+            let bottomProximityBackground = featured.value[bottomProximityIndex.value].bg;
+            let bottomContentOpacity = featured.value[middleProximityIndex.value].theme == featured.value[bottomProximityIndex.value].theme ? '1' : '0';
+
+            return {
+                'top': `${bottomProximityTopPosition.value}%`,
+                'left': 0,
+                'right': 0,
+                'bottom': `auto`,
+                'padding-top': `${bottomProximityHeaderElementHeight}px`,
+                // 'background-color': bottomProximityBackground,
+                'opacity': bottomContentOpacity
+            };
+
+        }
+    }
+
+    //Hide content if it's out of proximity
+    if(!withinProximity(indexParam)){
+        //Hidden from top
+        if(indexParam < index.value){
+            return {
+                'top': `-100%`,
+                'left': 0,
+                'right': 0,
+                'bottom': `calc(100% + ${topAllocation.value})`,
+                'padding-top': `${topProximityHeaderElementHeight}px`,
+            };
+        }
+
+        //Hidden from bottom
+        if(indexParam > index.value){
+            return {
+                'top': `100%`,
+                'left': 0,
+                'right': 0,
+                'padding-top': `${bottomProximityHeaderElementHeight}px`,
+            };
+        }
+    }
+}
+
+watch(screenHeight, value => {
+
+    let size = 'md'
+
+    if (value >= screenHeightBreakpoint['lg']) {
+        size = 'xl';
+    } else if (value >= screenHeightBreakpoint['md'] && value < screenHeightBreakpoint['lg']) {
+        size = 'lg';
+    } else if (value >= screenHeightBreakpoint['sm'] && value < screenHeightBreakpoint['md']) {
+        size = 'md';
+    } else if (value < screenHeightBreakpoint['sm']) {
+        size = 'sm';
+    }
+
+    featuredElementDimension.value = size;
+
+}, { immediate: true });
+
+function featuredElementStyle(featured, property){
+
+    let width = featured.dimension[featuredElementDimension.value][0];
+    let height = featured.dimension[featuredElementDimension.value][1];
+
+    return {
+        'dimension': {
+            'width': width,
+            'height': height,
+        }
+    }[property];
+}
+
+function featuredElementClass(featured, child, property){
+
+    let titleClass =  ['xl','lg'].indexOf(featuredElementDimension.value) >= 0
+        ? 'tw-text-lg tw-font-medium tw-font-header'
+        : 'tw-text-sm tw-font-normal tw-font-sans';
+
+    let headerClass = child.content_direction == 'ttb'
+        ? `tw-w-full tw-h-[${child.head_percentage}%] tw-p-[${child.header_padding}]`
+        : `tw-w-[${child.head_percentage}%] tw-h-full`;
+
+    let bodyClass = child.content_direction == 'ttb'
+        ? `tw-w-full tw-h-[${child.body_percentage}%]`
+        : `tw-w-[${child.body_percentage}%] tw-h-full`;
+
+    return {
+        'header_class': headerClass,
+        'body_class' : bodyClass,
+        'title': titleClass
+    }[property];
+}
+
+const scrolling = ref(false);
+const proximityThreshold = ref(0);
+const scrollSpeed = ref(200);
+const scrollSpeedMs = computed(()=>`${scrollSpeed.value}ms`);
+const layoutScroll = ref<HTMLElement | null>(null)
+const { y: layoutScrollY } = useScroll(layoutScroll)
+function bootPageScroll(){
+    sections.value = document.querySelectorAll('section');
+    proximityThreshold.value = layoutScroll.value.offsetHeight / 2;
+
+    layoutScroll.value.removeEventListener('wheel', handleMouseWheel, { passive: false });
+    layoutScroll.value.addEventListener('wheel', handleMouseWheel, { passive: false });
+}
+
+function handleMouseWheel(event){
+    if(!isDesktop() || scrolling.value){
+        return false;
+    }
+
+    scrolling.value = true;
+    event.preventDefault();
+    // Normalize wheel delta
+    const delta = Math.max(-1, Math.min(1, event.deltaY));
+    console.log({'handleMouseWheel delta': delta});
+
+    if(delta > 0 && index.value < (sections.value.length - 1)){
+        index.value += 1;
+    }
+
+    if(delta < 0 && index.value > 0){
+        index.value -= 1;
+    }
+
+    console.log({'index': index.value});
+
+    let sectionAttr = [];
+
+    for (const section of sections.value) {
+        sectionAttr.push({
+            clientHeight: section.clientHeight,
+            clientTop: section.clientTop,
+            offsetHeight: section.offsetHeight,
+            offsetTop: section.offsetTop,
+        });
+    }
+    //console.log({'handleMouseWheel sections': sectionAttr});
+
+    // Calculate scroll amount
+    //const scrollAmount = layoutScrollY.value + layoutScroll.value.offsetHeight * delta;
+    const scrollAmount = sections.value[index.value].offsetTop;
+
+    // Scroll to the calculated amount with easing
+    console.log({'scrollTo': scrollAmount});
+    smoothScroll(scrollAmount, scrollSpeed.value, easeInOutCubic, true);
+
+    //scrolling.value = false;
+}
+
+function easeInOutCubic(t, b, c, d) {
+    if ((t /= d / 2) < 1) return c / 2 * t * t * t + b;
+    return c / 2 * ((t -= 2) * t * t + 2) + b;
+}
+
+function snapToSection() {
+    for (const section of sections.value) {
+        const sectionTop = section.offsetTop;
+        const distance = Math.abs(layoutScrollY.value - sectionTop);
+
+        if (distance < proximityThreshold.value) {
+            smoothScroll(sectionTop, scrollSpeed.value * 0.25, easeInOutCubic);
+            scrolling.value = false;
+            break;
+        }
+    }
+}
+
+function smoothScroll(target, duration, easingFunction, snap = false) {
+    const start = layoutScrollY.value;
+    const startTime = 'now' in window.performance ? performance.now() : new Date().getTime();
+
+    function scroll(timestamp) {
+        const currentTime = 'now' in window.performance ? performance.now() : new Date().getTime();
+        const timeElapsed = currentTime - startTime;
+        const scrollAmount = easingFunction(timeElapsed, start, target - start, duration);
+
+        layoutScrollY.value = scrollAmount;
+
+        if (timeElapsed < duration) {
+            requestAnimationFrame(scroll);
+        } else {
+            if(snap){
+                snapToSection();
+            } else {
+                scrolling.value = false;
+            }
+        }
+    }
+
+    requestAnimationFrame(scroll);
+}
 </script>
-<style scoped lang="scss">
-.figure img{
-    object-fit: cover;
+<style scoped>
+section {
+    height: 100vh;
 }
-.spotlight-image{
+
+.background-image{
     background-position: center center;
     background-size: cover;
     background-repeat: no-repeat;
 }
-.carousel-image{
-    background-position: center center;
-    background-size: cover;
-    background-repeat: no-repeat;
+.vertical-nav-rule{
+    background: linear-gradient(
+        to bottom,
+        transparent 0%,
+        rgba(192, 192, 192, 0.5) 10%,
+        rgba(192, 192, 192, 0.5) 90%,
+        transparent 100%
+    );
+}
+.allocate-navigation {
+    padding-top: v-bind(topAllocation);
+}
+
+.section-navigation {
+    transition: all v-bind(scrollSpeedMs) cubic-bezier(0.645, 0.045, 0.355, 1);
+}
+.section-content {
+    transition: all v-bind(scrollSpeedMs) cubic-bezier(0.645, 0.045, 0.355, 1);
 }
 </style>
