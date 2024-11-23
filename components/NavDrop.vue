@@ -2,9 +2,9 @@
     <div
         ref="navDrop"
         tabindex="0"
-        :style="{'text-shadow': navigationTextShadow}"
+        :style="{'text-shadow': navigationTextShadow, 'font-family': fontFamily}"
         :class="[classes]"
-        class="tw-font-data nav-drop tw-px-2 tw-py-1 tw-cursor-pointer focus:tw-outline-none focus:tw-ring-transparent focus:tw-ring-1">
+        class="nav-drop tw-px-2 tw-py-1 tw-cursor-pointer focus:tw-outline-none focus:tw-ring-transparent focus:tw-ring-1">
         <span :class="[headerFontClass]">{{title}}</span>
         <ClientOnly><Icon :name="navDropIcon"/></ClientOnly>
         <div
@@ -89,7 +89,11 @@ const props = defineProps({
     parent: {
         type: Boolean,
         default: true
-    }
+    },
+    fontFamily: {
+        type: String,
+        default: 'inherit'
+    },
 })
 
 const activeComputed = ref(false);

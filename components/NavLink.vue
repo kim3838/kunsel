@@ -1,8 +1,8 @@
 <template>
     <NuxtLink
         :to="to"
-        :style="{'text-shadow': navigationTextShadow}"
-        class="tw-font-data tw-box-border tw-inline-flex tw-items-center tw-px-2 focus:tw-outline-none focus:tw-ring-transparent focus:tw-ring-1"
+        :style="{'text-shadow': navigationTextShadow, 'font-family': fontFamily}"
+        class="tw-box-border tw-inline-flex tw-items-center tw-px-2 focus:tw-outline-none focus:tw-ring-transparent focus:tw-ring-1"
         :class="[classes, headerFontClass, 'nav-link']">
         <slot></slot>
     </NuxtLink>
@@ -32,6 +32,10 @@ const props = defineProps({
     },
     size: {
         default: 'md'
+    },
+    fontFamily: {
+        type: String,
+        default: 'inherit'
     },
 });
 
