@@ -1,16 +1,12 @@
 import {storeToRefs} from "pinia";
 
 export const useLayout = () => {
-    const routeTo = useRouteTo();
     const {isAuthenticated, logout} = useAuth();
-    const {screens, width: screenWidth, height: screenHeight } = useScreen();
+    const {screenWidthBreakpoint, width: screenWidth, height: screenHeight } = useScreen();
     const $themeStore = useThemeStore();
     const {body: bodyColor} = storeToRefs($themeStore);
     const navigationMode = useState('navigation-mode', () => 'clear');
 
-    const enableScrollSnap = computed(() => {
-        return ['index'].includes(routeTo.value.name);
-    });
     const navigationAccountLinks = computed(() => {
         let links: object[] = [];
 
@@ -95,15 +91,9 @@ export const useLayout = () => {
         links = links.concat([
             {
                 type: 'link',
-                title: 'Home',
+                title: 'Featured',
                 to: '/',
                 route: 'index'
-            },
-            {
-                type: 'link',
-                title: 'Featured',
-                to: '/featured',
-                route: 'featured'
             },
             {
                 type: 'link',
@@ -198,17 +188,17 @@ export const useLayout = () => {
     const navigationHeaderSize = computed(() => {
         let size = 'lg'
 
-        if (screenWidth.value >= screens['2xl']) {//3xl
+        if (screenWidth.value >= screenWidthBreakpoint['2xl']) {//3xl
             size = 'md';
-        } else if (screenWidth.value >= screens['xl'] && screenWidth.value < screens['2xl']) {//2xl
+        } else if (screenWidth.value >= screenWidthBreakpoint['xl'] && screenWidth.value < screenWidthBreakpoint['2xl']) {//2xl
             size = 'md';
-        } else if (screenWidth.value >= screens['lg'] && screenWidth.value < screens['xl']) {//xl
+        } else if (screenWidth.value >= screenWidthBreakpoint['lg'] && screenWidth.value < screenWidthBreakpoint['xl']) {//xl
             size = 'md';
-        } else if (screenWidth.value >= screens['md'] && screenWidth.value < screens['lg']) {//lg
+        } else if (screenWidth.value >= screenWidthBreakpoint['md'] && screenWidth.value < screenWidthBreakpoint['lg']) {//lg
             size = 'sm';
-        } else if (screenWidth.value >= screens['sm'] && screenWidth.value < screens['md']) {//md
+        } else if (screenWidth.value >= screenWidthBreakpoint['sm'] && screenWidth.value < screenWidthBreakpoint['md']) {//md
             size = 'sm';
-        } else if (screenWidth.value < screens['sm']) {//sm
+        } else if (screenWidth.value < screenWidthBreakpoint['sm']) {//sm
             size = 'sm';
         }
 
@@ -217,7 +207,7 @@ export const useLayout = () => {
     const rightNavigationDropAlign = computed(()=>{
         let dropAlign = 'right';
 
-        if (screenWidth.value >= screens['lg']) {
+        if (screenWidth.value >= screenWidthBreakpoint['lg']) {
             dropAlign = 'right';
         } else {
             dropAlign = 'left';
@@ -238,7 +228,6 @@ export const useLayout = () => {
     }
 
     return {
-        enableScrollSnap,
         navigationLinks,
         navigationAccountLinks,
         navigationMode,
