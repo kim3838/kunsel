@@ -1,5 +1,5 @@
 <template>
-    <footer :class="[enableScrollSnap ? 'tw-snap-start tw-snap-always' : '']">
+    <footer>
         <div class="tw-mx-auto tw-max-w-screen-xl tw-px-4 tw-pb-6 tw-pt-16 sm:tw-px-6 lg:tw-px-8">
             <div class="tw-grid tw-grid-cols-1 lg:tw-grid-cols-4">
                 <div>
@@ -160,10 +160,6 @@ const {
     accent: accentColor,
     thread: threadColor
 } = storeToRefs($themeStore);
-
-const {
-    enableScrollSnap
-} = useLayout();
 </script>
 
 <style scoped>
