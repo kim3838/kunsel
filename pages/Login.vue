@@ -77,7 +77,6 @@ useLayout().setNavigationMode('solid', 'Login.vue');
 const clientReadyState = useClientReadyState();
 const {$coreStore} = useNuxtApp();
 const {isAuthenticated, login, authPending} = useAuth();
-const {screens, width: screenWidth, } = useScreen();
 
 let identifierInput = ref(null);
 
@@ -105,7 +104,7 @@ watch(clientReadyState, async (clientReady) => {
 });
 
 const identifier = ref("kim.123");
-const password = ref("password");
+const password = ref("Operationcal1277&&5");
 const remember = ref(false);
 
 function handleLogin(){
