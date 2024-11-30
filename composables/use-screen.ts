@@ -1,5 +1,5 @@
 export const useScreen = () => {
-    const screens = {
+    const screenWidthBreakpoint = {
         'sm': 640,
         'md': 768,
         'lg': 1024,
@@ -7,10 +7,17 @@ export const useScreen = () => {
         '2xl': 1536
     };
 
+    const screenHeightBreakpoint = {
+        'sm': 680,
+        'md': 780,
+        'lg': 940
+    };
+
     const { width, height } = useWindowSize()
 
     return {
-        screens,
+        screenWidthBreakpoint,
+        screenHeightBreakpoint,
         width,
         height
     }
