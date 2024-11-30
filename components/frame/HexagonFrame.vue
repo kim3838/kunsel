@@ -1,18 +1,17 @@
 <template>
     <div class="tw-relative tw-w-full tw-h-full">
         <div class="clip"></div>
-        <div class="clip-frame tw-z-30">
+        <div :style="clipFrameStyle" class="clip-frame tw-z-30">
             <div class="clip-body tw-flex body-direction">
                 <slot
                     name="body"
                     :slot="{
-                    frameBorderColor: frameBorderColor,
-                    contentBorderColor: contentBorderColor
+                    frameBorderColor: frameBorderColor
                 }"
                 ></slot>
             </div>
         </div>
-        <div class="clip-inner tint-background tw-z-20 tw-flex" :class="[direction === 'ltr' ? 'tw-flex-row' : 'tw-flex-col']">
+        <div class="clip-inner tw-z-20 tw-flex" :class="[direction === 'ltr' ? 'tw-flex-row' : 'tw-flex-col', opaque ? 'base-background' : '']">
             <div :style="fadeTransition"></div>
             <slot name="header"></slot>
         </div>
@@ -29,16 +28,34 @@ const {
     thread: threadColor,
     lining: liningColor,
     tint: tintColor,
+    text: textColor,
+    textInvert: textInvertColor,
 } = storeToRefs($themeStore);
 
 const props = defineProps({
-    frameBorder: {
+    theme: {
+        type: String,
+        default: 'light'
+    },
+    frameBorderGradientEnable: {
+        type: Boolean,
+        default: false
+    },
+    frameBorderPrimaryColor: {
         type: String,
         default: ''
     },
-    contentBorder: {
+    frameBorderSecondaryColor: {
         type: String,
         default: ''
+    },
+    frameBorderWidth: {
+        type: String,
+        default: '1px'
+    },
+    contentBackground: {
+        type: String,
+        default: `transparent`
     },
     topRight: {
         type: Number,
@@ -56,6 +73,10 @@ const props = defineProps({
         type: String,
         default: 'ltr'
     },
+    opaque: {
+        type: Boolean,
+        default: true
+    },
     headerFade: {
         type: Boolean,
         default: true
@@ -70,11 +91,32 @@ const tintColor50 = computed(() => {
     return tintColor.value + hexAlpha.value['50'];
 });
 const frameBorderColor = computed(() => {
-    return props.frameBorder ? props.frameBorder : threadColor.value;
+
+    if(props.frameBorderGradientEnable){
+        return 'transparent';
+    }
+
+    return props.frameBorderPrimaryColor ? props.frameBorderPrimaryColor : threadColor.value;
 });
-const contentBorderColor = computed(() => {
-    return props.contentBorder ? props.contentBorder : liningColor.value;
+const clipFrameStyle = computed(() => {
+
+    let frameBorderPrimaryColor = props.frameBorderPrimaryColor ? props.frameBorderPrimaryColor : threadColor.value;
+
+    if(!props.frameBorderGradientEnable){
+        return {
+            'border': `${props.frameBorderWidth} solid ${frameBorderPrimaryColor}`,
+        }
+    }
+
+    let frameBorderSecondaryColor = props.frameBorderSecondaryColor ? props.frameBorderSecondaryColor : frameBorderPrimaryColor;
+
+    return {
+        'border': `${props.frameBorderWidth} solid`,
+        'border-image-source': `linear-gradient(45deg, ${frameBorderPrimaryColor} 20%, ${frameBorderSecondaryColor}, transparent 70%, ${frameBorderSecondaryColor}, ${frameBorderPrimaryColor} 100%)`,
+        'border-image-slice': '1'
+    };
 });
+
 const topRightAllocationInPixels = computed(() => {
     return (props.topRight + 'px');
 });
@@ -87,6 +129,12 @@ const bodyFlexDirection = computed(() => {
         'ttb': 'column-reverse',
     }[props.direction];
 });
+const textColorComputed = computed(() => {
+    return {
+        'light': textColor.value,
+        'dark': textInvertColor.value,
+    }[props.theme];
+});
 
 const fadeTransition = computed(() => {
 
@@ -94,7 +142,7 @@ const fadeTransition = computed(() => {
         return {};
     }
 
-    var headerFadeColor = props.headerFadeColor ? props.headerFadeColor: tintColor50.value;
+    let headerFadeColor = props.headerFadeColor ? props.headerFadeColor: tintColor50.value;
 
     return {
         display: (props.headPercentage > 0 ? 'block' : 'none'),
@@ -107,11 +155,6 @@ const fadeTransition = computed(() => {
 </script>
 
 <style scoped lang="scss">
-@keyframes animate-border {
-    0%{background-position: 0% 0%;}
-    50%{background-position: 600% 0%;}
-    100%{background-position: 0% 0%;}
-}
 .body-direction{
     flex-direction: v-bind(bodyFlexDirection) !important;
 }
@@ -126,27 +169,18 @@ const fadeTransition = computed(() => {
         0 calc(100% - v-bind(bottomLeftAllocationInPixels)),
         0 0
     );
-    background-size: 150% 100%;
-    background-position: 0% 0;
-    background-repeat: repeat;
-    background-image: linear-gradient(
-        112deg,
-        v-bind(contentBorderColor) 40%,
-        transparent 50%,
-        transparent 55%,
-        v-bind(contentBorderColor) 65%);
-    -webkit-animation: animate-border 15s infinite ease;
-    -moz-animation: animate-border 15s infinite ease;
-    animation: animate-border 15s infinite ease;
+}
+.base-background{
+    background: v-bind(contentBackground);
 }
 .clip-frame{
-    border:1px solid v-bind(frameBorderColor);
     position: absolute;
     content: "";
     top: 7px;
     left: 7px;
     right: 7px;
     bottom: 7px;
+
 }
 .clip-inner{
     clip-path: polygon(
@@ -177,5 +211,6 @@ const fadeTransition = computed(() => {
     left: 0;
     right: 0;
     bottom: 0;
+    color: v-bind(textColorComputed);
 }
 </style>
