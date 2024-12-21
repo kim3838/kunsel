@@ -1,7 +1,14 @@
 <template>
     <div>
         <LandingWrapper>
-            <div class="tw-mx-auto tw-p-4 thread-border">
+            <div class="tw-mx-auto tw-p-4 tw-space-y-2">
+
+                <a class="link" href="">
+                    <span>
+                        Shop Now
+                    </span>
+                </a>
+
                 <div v-if="false" class="tw-flex tw-mb-4">
                     <SampleEmitter
                         v-model:[dynamicFoo].capitalizeEveryWord ="fooComputed"
@@ -52,246 +59,90 @@
                     </Glint>
                 </a>
 
-                <div v-if="false" class="tw-w-[170px] tw-h-[230px] tw-mb-4 tw-mx-auto">
-                    <HexagonFrame>
-                        <template #body>
-                            <div class="tw-relative tw-h-full tw-flex tw-items-center tw-px-4 tw-text-center tw-text-xl tw-font-semibold">
-                                Hexagon Frame Without Corner
-                            </div>
-                        </template>
-                    </HexagonFrame>
-                </div>
-
-                <div v-if="false" class="tw-grid tw-gap-4 tw-grid-cols-1 lg:tw-grid-cols-3 xl:tw-grid-cols-4">
-                    <div
-                        v-for="item in leftToRightItems"
-                        class="tw-h-[230px]">
-                        <HexagonFrame
-                            :frame-border="item.frameBorder"
-                            :content-border="item.contentBorder"
-                            :direction="'ltr'"
-                            :head-percentage="50"
-                            :top-right="45"
-                            :bottom-left="55"
-                            :header-fade="true"
-                            :header-fade-color="'rgba(25,25,25,0.1)'">
-                            <template #header>
-                                <div class="tw-h-full tw-w-[50%]">
-                                    <div
-                                        class="tw-h-full tw-w-full tw-bg-cover tw-bg-center tw-bg-no-repeat"
-                                        :style="{'background':'url('+item.image.path+')'}"
-                                    />
-                                </div>
-                                <div class="tw-h-full tw-w-[50%]">
-                                    <div
-                                        class="tw-h-full tw-w-full tw-bg-cover tw-bg-center tw-bg-no-repeat tw-opacity-10"
-                                        :style="{'background':'url('+item.image.path+')'}"
-                                    />
-                                </div>
-                            </template>
-                            <template v-slot:body="{frameBorderColor, contentBorderColor}">
-                                <div class="tw-h-full tw-w-[50%] tw-p-4 tw-overflow-hidden tw-relative tw-flex tw-flex-col tw-text[#5A5A5A]">
-
-                                    <div class="tw-overflow-auto tw-space-y-0.5">
-                                        <div class="tw-font-semibold tw-h-max tw-flex-none">
-                                            <UnorderedList
-                                                class="tw-cursor-pointer hover:tw-underline"
-                                                :size="'md'"
-                                                :icon="item.listIcon"
-                                                :label="item.title"/>
-                                        </div>
-
-                                        <div style="height: 1px;width: 100%;background: linear-gradient(to right, transparent 0%, #e3e3e3 30%, #e3e3e3 70%, transparent 100%);"></div>
-
-                                        <div v-if="item?.bullets?.value?.length" class="tw-flex tw-flex-row tw-flex-nowrap">
-                                            <div class="tw-w-full" :style="{'columns': (item.bullets.column ? item.bullets.column : 1)}">
-                                                <UnorderedList
-                                                    v-for="bullet in item.bullets.value"
-                                                    :size="'sm'"
-                                                    :icon="'eos-icons:commit'"
-                                                    :label="bullet"/>
-                                            </div>
-                                        </div>
-
+                <div v-if="false"  class="tw-bg-cover tw-bg-no-repeat tw-bg-center tw-p-4 tw-bg-slate-800" :style="{'background-image': 'url(/images/cod-bg-hero.png'}">
+                    <div class="tw-w-[330px] tw-h-[420px] tw-mx-auto">
+                        <Glint :orientation="`portrait`" :color="`#a98313`">
+                            <HexagonFrame
+                                :frame-border-primary-color="'#524007'"
+                                :content-background="`#1b1b1b`"
+                                :direction="'ttb'"
+                                :theme="'dark'"
+                                :head-percentage="70"
+                                :top-right="45"
+                                :bottom-left="45"
+                                :opaque="true"
+                                :header-fade="true"
+                                :header-fade-color="'rgba(5,5,5,0.5)'">
+                                <template #header>
+                                    <div class="tw-h-[70%] tw-w-full tw-p-[20px] tw-box-border">
                                         <div
-                                            v-if="item.description"
-                                            v-html="item.description"
-                                            class="tw-text-base tw-leading-5 tw-line-clamp-3"
-                                            :style="{'font-family': 'Source Sans Pro'}"
-                                        ></div>
-
-                                        <UnorderedList
-                                            class="tw-cursor-pointer hover:tw-underline"
-                                            :font-family="'Source Sans Pro'"
-                                            :size="'sm'"
-                                            :label="'Read more'"/>
+                                            class="tw-h-full tw-w-full tw-bg-cover tw-bg-center tw-bg-no-repeat"
+                                            :style="{'background':'url('+carouselTrendingItems[0].image+')'}"
+                                        />
                                     </div>
-                                </div>
-                            </template>
-                        </HexagonFrame>
-                    </div>
-                </div>
-
-                <div v-if="false" class="tw-w-[270px] tw-h-[350px] tw-mx-auto">
-                    <Glint>
-                        <HexagonFrame
-                            :frame-border="'#dedede'"
-                            :content-border="'#b7b7b7'"
-                            :direction="'ttb'"
-                            :head-percentage="70"
-                            :top-right="45"
-                            :bottom-left="45"
-                            :header-fade="true"
-                            :header-fade-color="'rgba(5,5,5,0.1)'">
-                            <template #header>
-                                <div class="tw-h-[70%] tw-w-full tw-p-[6px] tw-box-border">
-                                    <div
-                                        class="tw-h-full tw-w-full tw-bg-cover tw-bg-center tw-bg-no-repeat"
-                                        :style="{'background':'url('+carouselTrendingItems[0].image+')'}"
-                                    />
-                                </div>
-                                <div class="tw-h-[30%] tw-w-full tw-box-border">
-                                    <div
-                                        class="tw-h-full tw-w-full tw-bg-cover tw-bg-center tw-bg-no-repeat tw-grayscale tw-opacity-20"
-                                        :style="{'background':'url('+carouselTrendingItems[0].image+')'}"
-                                    />
-                                </div>
-                            </template>
-                            <template v-slot:body="{frameBorderColor, contentBorderColor}">
-                                <div class="tw-h-[30%] tw-w-full tw-pt-2 tw-pl-4 tw-overflow-hidden tw-flex tw-flex-col">
-
-                                    <div class="tw-overflow-auto tw-space-y-2">
-
-                                        <div class="tw-font-semibold tw-h-max tw-flex-none" style="text-align: left;">
-                                            <div class="tw-text-lg tw-font-semibold tw-font-data" v-text="carouselTrendingItems[0].subTitle"></div>
-
+                                    <div class="tw-h-[30%] tw-w-full tw-box-border">
+                                        <div
+                                            class="tw-h-full tw-w-full tw-bg-cover tw-bg-center tw-bg-no-repeat tw-grayscale tw-opacity-20"
+                                            :style="{'background':'url('+carouselTrendingItems[0].image+')'}"
+                                        />
+                                    </div>
+                                </template>
+                                <template v-slot:body="{frameBorderColor}">
+                                    <div class="tw-h-[30%] tw-w-full tw-p-2 tw-overflow-hidden tw-flex tw-flex-col">
+                                        <div class="tw-overflow-auto tw-space-y-4">
+                                            <div class="tw-text-lg tw-font-medium tw-font-header" v-text="carouselTrendingItems[0].subTitle"></div>
                                             <NuxtLink
                                                 v-if="carouselTrendingItems[0].link"
                                                 :to="carouselTrendingItems[0].link">
                                                 <UnorderedList
-                                                    class="tw-cursor-pointer hover:tw-underline tw-font-data"
-                                                    :size="'md'"
+                                                    class="tw-cursor-pointer hover:tw-underline"
+                                                    :size="'sm'"
                                                     :label="'Read more'"/>
                                             </NuxtLink>
                                         </div>
                                     </div>
-                                </div>
-                            </template>
-                        </HexagonFrame>
-                    </Glint>
-                </div>
-
-                <div v-if="false">
-                    <div class="navigation-height tw-w-full tw-snap-start tw-snap-always"></div>
-                    <div class="tw-pl-2 tw-mx-auto tw-max-w-screen-2xl tw-flex tw-flex-col">
-                        <article class="tw-mt-4 tw-relative">
-                            <CarouselModuleCarousel
-                                v-model="carouselTrendingItem"
-                                v-bind="carouselSettings"
-                                :breakpoints="carouselBreakpoints"
-                                :mouse-drag="true"
-                                class="tw-w-full lg:tw-w-full">
-                                <CarouselModuleSlide class="tw-w-[170px]">
-
-                                    <HexagonFrame :top-right="45" :bottom-left="45">
-                                        <template #body>
-                                            <div class="tw-h-full tw-flex tw-items-center tw-text-center tw-font-['Google_Sans_Text'] tw-text-xl tw-font-semibold tw-px-8">
-                                                Trending
-                                            </div>
-                                        </template>
-                                    </HexagonFrame>
-                                </CarouselModuleSlide>
-                                <CarouselModuleSlide class="tw-w-[270px]" v-for="featuredItem in carouselTrendingItems" :key="featuredItem">
-                                    <div class="tw-w-full tw-h-[350px] tw-mx-2">
-                                        <HexagonFrame
-                                            :frame-border="'#dedede'"
-                                            :content-border="'#b7b7b7'"
-                                            :direction="'ttb'"
-                                            :head-percentage="70"
-                                            :top-right="45"
-                                            :bottom-left="45"
-                                            :header-fade="true"
-                                            :header-fade-color="'rgba(5,5,5,0.1)'">
-                                            <template #header>
-                                                <div class="tw-h-[70%] tw-w-full tw-p-[6px] tw-box-border">
-                                                    <div
-                                                        class="tw-h-full tw-w-full tw-bg-cover tw-bg-center tw-bg-no-repeat"
-                                                        :style="{'background':'url('+featuredItem.image+')'}"
-                                                    />
-                                                </div>
-                                                <div class="tw-h-[30%] tw-w-full tw-box-border">
-                                                    <div
-                                                        class="tw-h-full tw-w-full tw-bg-cover tw-bg-center tw-bg-no-repeat tw-grayscale tw-opacity-20"
-                                                        :style="{'background':'url('+featuredItem.image+')'}"
-                                                    />
-                                                </div>
-                                            </template>
-                                            <template #body>
-                                                <div class="tw-h-[30%] tw-w-full tw-pt-2 tw-pl-8 tw-overflow-hidden tw-flex tw-flex-col">
-
-                                                    <div class="tw-overflow-auto tw-space-y-2">
-
-                                                        <div class="tw-font-semibold tw-h-max tw-flex-none" style="text-align: left;">
-                                                            <div class="tw-text-lg tw-font-semibold" v-text="featuredItem.subTitle"></div>
-
-                                                            <NuxtLink
-                                                                v-if="featuredItem.link"
-                                                                :to="featuredItem.link">
-                                                                <UnorderedList
-                                                                    class="tw-cursor-pointer hover:tw-underline"
-                                                                    :size="'md'"
-                                                                    :label="'Read more'"/>
-                                                            </NuxtLink>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </template>
-                                        </HexagonFrame>
-                                    </div>
-                                </CarouselModuleSlide>
-                                <template #addons>
-                                    <CarouselModuleNavigation />
                                 </template>
-                            </CarouselModuleCarousel>
-                        </article>
+                            </HexagonFrame>
+                        </Glint>
                     </div>
                 </div>
 
-                <div v-if="false" class="tw-mt-6 tw-mx-auto tw-w-11/12">
-                    <div class="tw-grid tw-gap-[1rem] tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-3 xl:tw-grid-cols-4">
-                        <div
-                            v-for="item in topToBottomItems" class="tw-h-[430px]">
+                <div v-if="true" class="tw-bg-cover tw-bg-no-repeat tw-bg-center tw-p-4" :style="{'background-image': 'url(/images/carousel/f415740d-5951-4b5d-af98-1404e9c65df5.jpg'}">
+                    <div class="tw-w-full tw-h-[230px] tw-flex tw-flex-nowrap tw-gap-2 tw-overflow-y-hidden">
+                        <div class="tw-w-[460px] tw-h-full tw-flex-none" v-for="item in leftToRightItems">
                             <HexagonFrame
-                                :frame-border="item.frameBorder"
-                                :content-border="item.contentBorder"
-                                :direction="'ttb'"
+                                :frame-border-gradient-enable="true"
+                                :frame-border-primary-color="item.frameBorder"
+                                :content-background="`#ffffff`"
+                                :direction="'ltr'"
+                                :theme="'light'"
                                 :head-percentage="50"
-                                :top-right="50"
-                                :bottom-left="50"
+                                :top-right="45"
+                                :bottom-left="45"
+                                :opaque="true"
                                 :header-fade="false">
                                 <template #header>
-                                    <div class="tw-h-[50%] tw-w-full">
+                                    <div class="tw-h-full tw-w-[50%]">
                                         <div
                                             class="tw-h-full tw-w-full tw-bg-cover tw-bg-center tw-bg-no-repeat"
                                             :style="{'background':'url('+item.image.path+')'}"
                                         />
                                     </div>
-                                    <div class="tw-h-[50%] tw-w-full tw-bg-black">
+                                    <div class="tw-h-full tw-w-[50%]">
                                         <div
-                                            class="tw-h-full tw-w-full tw-bg-cover tw-bg-center tw-bg-no-repeat tw-opacity-90 tw-blur-2xl"
+                                            class="tw-h-full tw-w-full tw-bg-cover tw-bg-center tw-bg-no-repeat tw-opacity-10"
                                             :style="{'background':'url('+item.image.path+')'}"
                                         />
                                     </div>
                                 </template>
-                                <template #body>
-                                    <div class="tw-h-[50%] tw-w-full tw-p-4 tw-overflow-hidden tw-relative tw-flex tw-flex-col tw-text-[#e3e3e3]">
+                                <template v-slot:body="{frameBorderColor}">
+                                    <div class="tw-h-full tw-w-[50%] tw-p-4 tw-overflow-hidden tw-relative tw-flex tw-flex-col tw-text[#5A5A5A]">
 
-                                        <div class="tw-overflow-auto tw-space-y-2">
-
-                                            <div class="tw-font-semibold tw-h-max tw-flex-none">
+                                        <div class="tw-overflow-auto tw-space-y-0.5">
+                                            <div class="tw-font-data tw-font-semibold tw-h-max tw-flex-none">
                                                 <UnorderedList
                                                     class="tw-cursor-pointer hover:tw-underline"
-                                                    :size="'lg'"
+                                                    :size="'md'"
                                                     :icon="item.listIcon"
                                                     :label="item.title"/>
                                             </div>
@@ -312,11 +163,138 @@
                                                 v-if="item.description"
                                                 v-html="item.description"
                                                 class="tw-text-base tw-leading-5 tw-line-clamp-3"
+                                                :style="{'font-family': 'Source Sans Pro'}"
                                             ></div>
 
                                             <UnorderedList
                                                 class="tw-cursor-pointer hover:tw-underline"
                                                 :font-family="'Source Sans Pro'"
+                                                :size="'sm'"
+                                                :label="'Read more'"/>
+                                        </div>
+                                    </div>
+                                </template>
+                            </HexagonFrame>
+                        </div>
+                    </div>
+                </div>
+
+                <div v-if="false"  class="tw-bg-cover tw-bg-no-repeat tw-bg-center tw-p-4 tw-bg-slate-400" :style="{'background-image': 'url(/images/deco/ripple_texture.png'}">
+                    <div class="tw-w-full tw-h-[350px] tw-flex tw-flex-nowrap tw-gap-2 tw-overflow-y-hidden">
+                        <div class="tw-w-[250px] tw-h-full tw-flex-none" v-for="featuredItem in carouselTrendingItems" :key="featuredItem">
+                            <HexagonFrame
+                                :frame-border-gradient-enable="true"
+                                :frame-border-primary-color="'#d3dae7'"
+                                :content-background="`#ffffff`"
+                                :direction="'ttb'"
+                                :theme="'light'"
+                                :head-percentage="70"
+                                :top-right="45"
+                                :bottom-left="45"
+                                :opaque="true"
+                                :header-fade="true"
+                                :header-fade-color="'rgba(5,5,5,0.1)'">
+                                <template #header>
+                                    <div class="tw-h-[70%] tw-w-full tw-p-[6px] tw-box-border">
+                                        <div
+                                            class="tw-h-full tw-w-full tw-bg-cover tw-bg-center tw-bg-no-repeat"
+                                            :style="{'background':'url('+featuredItem.image+')'}"
+                                        />
+                                    </div>
+                                    <div class="tw-h-[30%] tw-w-full tw-box-border">
+                                        <div
+                                            class="tw-h-full tw-w-full tw-bg-cover tw-bg-center tw-bg-no-repeat tw-grayscale tw-opacity-20"
+                                            :style="{'background':'url('+featuredItem.image+')'}"
+                                        />
+                                    </div>
+                                </template>
+                                <template #body>
+                                    <div class="tw-h-[30%] tw-w-full tw-p-2 tw-overflow-hidden tw-flex tw-flex-col">
+
+                                        <div class="tw-overflow-auto tw-space-y-2">
+
+                                            <div class="tw-font-semibold tw-h-max tw-flex-none" style="text-align: left;">
+                                                <div class="tw-text-lg tw-font-medium tw-font-header" v-text="featuredItem.subTitle"></div>
+
+                                                <NuxtLink
+                                                    v-if="featuredItem.link"
+                                                    :to="featuredItem.link">
+                                                    <UnorderedList
+                                                        class="tw-cursor-pointer hover:tw-underline tw-font-data"
+                                                        :size="'md'"
+                                                        :label="'Read more'"/>
+                                                </NuxtLink>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </template>
+                            </HexagonFrame>
+                        </div>
+                    </div>
+                </div>
+
+                <div v-if="true" class="tw-mt-6 tw-mx-auto">
+                    <div class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-3 xl:tw-grid-cols-4">
+                        <div
+                            v-for="item in topToBottomItems" class="tw-h-[520px]">
+                            <HexagonFrame
+                                :frame-border-gradient-enable="true"
+                                :frame-border-primary-color="item.frameBorderPrimary"
+                                :frame-border-secondary-color="item.frameBorderSecondary"
+                                :frame-border-width="`2px`"
+                                :theme="item.theme"
+                                :direction="'ttb'"
+                                :head-percentage="70"
+                                :top-right="65"
+                                :bottom-left="50"
+                                :header-fade="false">
+                                <template #header>
+                                    <div class="tw-h-[60%] tw-w-full">
+                                        <div
+                                            class="tw-h-full tw-w-full tw-bg-cover tw-bg-center tw-bg-no-repeat"
+                                            :style="{'background':'url('+item.image.path+')'}"
+                                        />
+                                    </div>
+                                    <div class="tw-h-[40%] tw-w-full tw-bg-black">
+                                        <div
+                                            class="tw-h-full tw-w-full tw-bg-cover tw-bg-center tw-bg-no-repeat tw-opacity-90 tw-blur-2xl"
+                                            :style="{'background':'url('+item.image.path+')'}"
+                                        />
+                                    </div>
+                                </template>
+                                <template #body>
+                                    <div style="text-shadow: rgb(0, 0, 0) 1px 1px 2px;" class="tw-h-[40%] tw-w-full tw-p-4 tw-overflow-hidden tw-relative tw-flex tw-flex-col">
+
+                                        <div class="tw-overflow-auto tw-space-y-2 tw-font-standard">
+
+                                            <div class="tw-h-max tw-flex-none">
+                                                <UnorderedList
+                                                    class="tw-font-medium tw-font-header tw-cursor-pointer hover:tw-underline"
+                                                    :size="'lg'"
+                                                    :icon="item.listIcon"
+                                                    :label="item.title"/>
+                                            </div>
+
+                                            <div style="height: 1px;width: 100%;background: linear-gradient(to right, transparent 0%, #e3e3e3 30%, #e3e3e3 70%, transparent 100%);"></div>
+
+                                            <div v-if="item?.bullets?.value?.length" class="tw-flex tw-flex-row tw-flex-nowrap">
+                                                <div class="tw-w-full" :style="{'columns': (item.bullets.column ? item.bullets.column : 1)}">
+                                                    <UnorderedList
+                                                        v-for="bullet in item.bullets.value"
+                                                        :size="'sm'"
+                                                        :icon="'eos-icons:commit'"
+                                                        :label="bullet"/>
+                                                </div>
+                                            </div>
+
+                                            <div
+                                                v-if="item.description"
+                                                v-html="item.description"
+                                                class="tw-text-sm tw-leading-5 tw-line-clamp-4"
+                                            ></div>
+
+                                            <UnorderedList
+                                                class="tw-cursor-pointer hover:tw-underline"
                                                 :size="'sm'"
                                                 :label="'Read more'"/>
                                         </div>
@@ -349,18 +327,95 @@
 
                 <br>
 
-                <div v-if="true" class="tw-space-x-2 tw-flex tw-gap-2">
-                    <Glint :orientation="'landscape'" class="tw-max-w-min">
-                        <Button :label="'Show from Top'" @click="topPosition = 50"></Button>
-                    </Glint>
-                    <Glint :orientation="'landscape'" class="tw-max-w-min">
-                        <Button :label="'Hide to Top'" @click="topPosition = 0"></Button>
-                    </Glint>
+                <div v-if="false" class="tw-space-x-2 tw-mb-2 tw-gap-2">
+                    <div class="tw-inline-block">
+                        <Button class="" :justify-content="'start'" :label="'Toggle Icon Grid'" :focus-ring="true" :variant="'outline'" :size="'md'" :glint="true" @click="tabGroup.show_icon_grid = !tabGroup.show_icon_grid"></Button>
+                    </div>
+
+                    <div class="tw-inline-block">
+                        <Button class="" :justify-content="'center'" :label="'Show from Top'" :variant="'flat'" :size="'md'" :glint="true" @click="topPosition = 50"></Button>
+                    </div>
+
+                    <div class="tw-inline-block">
+                        <Button class="" :justify-content="'end'" :label="'Hide to Top'" :focus-ring="true" :size="'md'"  :glint="true" @click="topPosition = 0"></Button>
+                    </div>
                 </div>
 
+                <div v-if="false" class="tw-grid tw-gap-2 tw-grid-cols-3">
+                    <div></div>
+                    <div class="tw-space-y-1 tw-relative tw-border">
+                        <div v-if="tabGroup.show_icon_grid" class="tw-absolute tw-w-[0.2px] tw-top-0 tw-bottom-0 tw-bg-slate-400 tw-z-50" :class="[tabGroupIconGrid.left]"></div>
+                        <div v-if="tabGroup.show_icon_grid" class="tw-absolute tw-w-[0.2px] tw-top-[-0.25rem] tw-bottom-0 tw-bg-slate-400 tw-z-50" :class="[tabGroupIconGrid.right]"></div>
+
+                        <!-- Selects -->
+                        <MultiSelect :glint="true" always-active :selection-float="false" :drop-shadow="false" :selection-max-viewable-line="5" :size="tabGroup.size" :options="category" :icon="tabGroup.icon"/>
+                        <SingleSelect :glint="true" drop-shadow :selection-max-viewable-line="4" :always-active="false" :size="tabGroup.size" :icon="tabGroup.icon" :options="plan"/>
+                        <MultiSelectPaginated
+                            :drop-shadow="true"
+                            :selection-max-content="true"
+                            :selected-max-viewable-line="6"
+                            :selection-max-viewable-line="10"
+                            :searchable="true"
+                            :glint="true"
+                            :selection-float="true"
+                            :always-active="false"
+                            :label="'Select Prototypes'"
+                            :size="tabGroup.size"
+                            :payload="multiSelectPrototypePayload"
+                            :icon="tabGroup.icon"/>
+                        <SingleSelectPaginated
+                            :value-persist="true"
+                            :drop-shadow="true"
+                            :selection-max-content="false"
+                            :selection-max-viewable-line="10"
+                            :searchable="true"
+                            :glint="true"
+                            :selection-float="true"
+                            :always-active="false"
+                            :label="'Select Prototype'"
+                            :size="tabGroup.size"
+                            :payload="singleSelectPrototypePayload"
+                            :icon="tabGroup.icon"/>
+
+                        <!-- Input -->
+                        <Input :glint="tabGroup.glint" :placeholder="'Enter value'" :size="tabGroup.size" type="text" autocomplete="off" />
+
+                        <!-- Input with icon -->
+                        <InputWithIcon
+                            :glint="tabGroup.glint"
+                            ref="inputValue"
+                            :size="tabGroup.size"
+                            :icon="tabGroup.icon"
+                            :placeholder="'Enter value'"
+                            autocomplete="off" />
+                        <InputWithIcon
+                            :glint="tabGroup.glint"
+                            :icon="tabGroup.icon"
+                            :size="tabGroup.size"
+                            autocomplete="off"
+                            readonly
+                            :disabled="false" />
+
+                        <!-- Button with icon, label -->
+                        <Button :glint="true" class="tw-w-full" :size="tabGroup.size" :icon="tabGroup.icon" :variant="'default'" :label="'Button'" />
+                        <Button :glint="true" class="tw-w-3/4"  :size="tabGroup.size" :icon="tabGroup.icon" :variant="'flat'" :label="'Button'" />
+                        <Button :glint="true" class="tw-w-1/2"  :size="tabGroup.size" :icon="tabGroup.icon" :variant="'outline'" :label="'Button'" />
+
+                        <!-- Button with icon, no label -->
+                        <Button :glint="true" class="tw-w-full" :size="tabGroup.size" :icon="tabGroup.icon" :variant="'default'" :label="''" />
+                        <Button :glint="true" class="tw-w-3/4"  :size="tabGroup.size" :icon="tabGroup.icon" :variant="'flat'" :label="''" />
+                        <Button :glint="true" class="tw-w-1/2"  :size="tabGroup.size" :icon="tabGroup.icon" :variant="'outline'" :label="''" />
+
+                        <!-- Button with icon, no label, minimum width -->
+                        <div class="tw-w-min"><Button :glint="true" :size="tabGroup.size" :icon="tabGroup.icon" :variant="'default'" :label="''" /></div>
+                        <div class="tw-w-min"><Button :glint="true" :size="tabGroup.size" :icon="tabGroup.icon" :variant="'outline'" :label="''" /></div>
+                        <div class="tw-w-min"><Button :glint="true" :size="tabGroup.size" :icon="tabGroup.icon" :variant="'flat'" :label="''" /></div>
+                    </div>
+                    <div></div>
+                </div>
 
                 <!-- Static Single, MultiSelect and DateTime, Date, and Month Picker -->
-                <div v-if="true" class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-3 xl:tw-grid-cols-6 2xl:tw-grid-cols-6">
+                <div v-if="false" class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-3 xl:tw-grid-cols-6 2xl:tw-grid-cols-6">
                     <div class="tw-block neutral-border">
                         <InputLabel :size="'lg'" value="Static Multi Select" />
                         <MultiSelect :glint="true" drop-shadow :selection-max-viewable-line="5" :size="'lg'" :options="category" :icon="'ic:sharp-qr-code'"/>
@@ -398,6 +453,7 @@
                         <InputWithIcon
                             @focusStateChanged="handleFocusStateChanged"
                             :placeholder="'Enter value'"
+                            ref="searchInputWithIcon"
                             :icon="'ion:ios-circle-outline'"
                             :size="'lg'"
                             :type="'text'"
@@ -409,6 +465,7 @@
                         <Input
                             @focusStateChanged="handleFocusStateChanged"
                             :placeholder="'Enter value'"
+                            ref="searchInput"
                             :size="'lg'"
                             type="text"
                             autocomplete="off"
@@ -417,7 +474,7 @@
                 </div>
 
                 <!-- Paginated Single and MultiSelect -->
-                <div v-if="true" class="tw-mt-6 tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-3 xl:tw-grid-cols-4 2xl:tw-grid-cols-5">
+                <div v-if="false" class="tw-mt-6 tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-3 xl:tw-grid-cols-4 2xl:tw-grid-cols-5">
                     <div class="tw-block neutral-border">
                         <InputLabel :size="'lg'" value="Paginated Multi Select" />
 
@@ -453,7 +510,6 @@
                             :icon="'emojione-monotone:japanese-no-vacancy-button'"/>
                     </div>
                 </div>
-
             </div>
         </LandingWrapper>
     </div>
@@ -461,9 +517,9 @@
 
 <script setup lang="ts">
 import dataPayload from '@/public/data/payload.js';
-definePageMeta({middleware: 'guest'});
+// definePageMeta({middleware: 'guest'});
 useLayout().setNavigationMode('solid', 'Lab.vue');
-const {screens, width: screenWidth, } = useScreen();
+const {screenWidthBreakpoint, width: screenWidth, } = useScreen();
 const {$formStore} = useNuxtApp();
 const topPosition = ref(0);
 const clientReadyState = useClientReadyState();
@@ -509,17 +565,17 @@ const carouselSettings = ref({
     snapAlign: 'start',
 });
 const carouselBreakpoints = ref({
-    [screens['sm']]: {
+    [screenWidthBreakpoint['sm']]: {
         itemsToShow: 2,
         snapAlign: 'start',
     },
 
-    [screens['md']]: {
+    [screenWidthBreakpoint['md']]: {
         itemsToShow: 2.5,
         snapAlign: 'start',
     },
 
-    [screens['lg']]: {
+    [screenWidthBreakpoint['lg']]: {
         itemsToShow: 4.5,
         snapAlign: 'start',
     },
@@ -535,6 +591,27 @@ let plan = reactive(dataPayload['prototype']['plan']);
 function handleFocusStateChanged(event){
     console.log({"handleFocusStateChanged": event})
 }
+
+let searchInput = ref(null);
+let searchInputWithIcon = ref(null);
+
+let tabGroup = reactive({
+    'icon' : 'ic:sharp-check-box-outline-blank',
+    'size' : 'lg',
+    'show_icon_grid': false,
+    'glint': false,
+});
+const tabGroupIconGrid = computed(() => {
+    return {
+        '2xs': {'left': 'tw-ml-[0.35rem]', 'right' : 'tw-ml-[1.1rem]'},
+        'xs': {'left': 'tw-ml-[0.40rem]', 'right' : 'tw-ml-[1.35rem]'},
+        'sm': {'left': 'tw-ml-[0.65rem]', 'right' : 'tw-ml-[1.6rem]'},
+        'md': {'left': 'tw-ml-[0.65rem]', 'right' : 'tw-ml-[1.6rem]'},
+        'lg': {'left': 'tw-ml-[0.95rem]', 'right' : 'tw-ml-[2.59rem]'},
+        'xl': {'left': 'tw-ml-[0.95rem]', 'right' : 'tw-ml-[2.72rem]'},
+        '2xl': {'left': 'tw-ml-[1.3rem]', 'right' : 'tw-ml-[3.7rem]'},
+    }[tabGroup.size];
+});
 
 const {render} = dateTimePicker();
 
@@ -579,6 +656,7 @@ let dateTimePickers = ref([
 onMounted(async () => {
     await nextTick(() => {
         render(dateTimePickers.value);
+        //searchInputWithIcon.value?.$refs.input.focus();
     });
 });
 
@@ -587,6 +665,7 @@ watch(clientReadyState, async (clientReady) => {
     if(clientReady){
         await nextTick(() => {
             render(dateTimePickers.value);
+            //searchInputWithIcon?.value.$refs.input.focus();
         });
     }
 })
