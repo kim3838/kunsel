@@ -6,7 +6,7 @@
         :class="[classes]"
         class="nav-drop tw-px-2 tw-py-1 tw-cursor-pointer focus:tw-outline-none focus:tw-ring-transparent focus:tw-ring-1">
         <span :class="[headerFontClass]">{{title}}</span>
-        <ClientOnly><Icon :name="navDropIcon"/></ClientOnly>
+        <Icon :name="navDropIcon"/>
         <div
             v-if="activeComputed"
             :style="navDropOptionsStyleComputed"
@@ -18,14 +18,14 @@
                     :to="dropOption.to"
                     class="tw-px-2 tw-py-1 tw-w-full tw-inline-flex tw-items-center"
                     :class="[childNonDropFontClass]">
-                    <ClientOnly><Icon v-if="dropOption.icon" :name="dropOption.icon" class="tw-mr-1" /></ClientOnly><span>{{dropOption.title}}</span>
+                    <Icon v-if="dropOption.icon" :name="dropOption.icon" class="tw-mr-1" /><span>{{dropOption.title}}</span>
                 </NuxtLink>
 
                 <a v-if="dropOption.type == 'anchor-link'" :href="dropOption.to">
                     <NuxtLink
                         class="tw-px-2 tw-py-1 tw-w-full tw-inline-flex tw-items-center"
                         :class="[childNonDropFontClass]">
-                        <ClientOnly><Icon v-if="dropOption.icon" :name="dropOption.icon" class="tw-mr-1" /></ClientOnly><span>{{dropOption.title}}</span>
+                        <Icon v-if="dropOption.icon" :name="dropOption.icon" class="tw-mr-1" /><span>{{dropOption.title}}</span>
                     </NuxtLink>
                 </a>
 
@@ -33,7 +33,7 @@
                      @click="typeof dropOption.callback == 'function' ? dropOption.callback() : false;"
                      class="tw-px-2 tw-py-1 tw-w-full tw-inline-flex tw-items-center"
                     :class="[childNonDropFontClass]">
-                    <ClientOnly><Icon v-if="dropOption.icon" :name="dropOption.icon" class="tw-mr-1" /></ClientOnly><span>{{dropOption.title}}</span>
+                    <Icon v-if="dropOption.icon" :name="dropOption.icon" class="tw-mr-1" /><span>{{dropOption.title}}</span>
                 </div>
 
                 <NavDrop

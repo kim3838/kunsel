@@ -2,7 +2,7 @@
     <div class="tw-relative tw-overflow-hidden tw-flex tw-items-start tw-justify-start">
         <div class="tw-absolute tw-h-full tw-w-full tw-pointer-events-none"></div>
         <div :style="{'height': iconSlotHeight}" class=" tw-box-border tw-flex tw-items-center">
-            <ClientOnly><Icon :name="icon" :class="[heightClass]"/></ClientOnly>
+            <Icon :name="icon" :class="[heightClass]"/>
         </div>
         <div :class="[fontClass]" :style="{'font-family': fontFamily}" class="tw-ml-1 tw-whitespace-pre-line">{{label}}<slot></slot></div>
     </div>
