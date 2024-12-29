@@ -5,9 +5,7 @@
             <div class="clip-body tw-flex body-direction">
                 <slot
                     name="body"
-                    :slot="{
-                    frameBorderColor: frameBorderColor
-                }"
+                    :frameBorderColor="frameBorderColor"
                 ></slot>
             </div>
         </div>
