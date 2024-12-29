@@ -7,22 +7,23 @@
         <LandingNavigation v-model:navigation-height-in-pixels="topAllocation"/>
         <!-- Main Content -->
         <main class="tw-relative">
+            <!-- Debug -->
+            <div v-if="true" class="tw-fixed tw-z-50 tw-text-xs tw-font-mono">
+                {{`SCREEN DIMENSION: ${screenWidth} x ${screenHeight}`}}
+            </div>
 
             <!-- Section Navigation -->
             <div class="tw-fixed tw-z-10 tw-top-0 tw-right-0 tw-bottom-0 tw-left-0 tw-h-screen">
-                <!-- Add icon before section titles to overlap vertical rule -->
-                <div class="tw-absolute vertical-nav-rule tw-w-[1px] tw-top-0 tw-right-0 tw-bottom-0 tw-left-[14px]"></div>
+                <!-- Todo: Add icon before section titles to overlap vertical rule -->
+                <div class="tw-absolute vertical-nav-rule tw-w-[1px] tw-top-0 tw-right-0 tw-bottom-0 tw-left-[50px]"></div>
 
-                <!-- Debug -->
-                <div v-if="true" class="tw-absolute tw-text-white tw-text-xs tw-font-mono">
-                    {{`SCREEN DIMENSION: ${screenWidth} x ${screenHeight}`}}
-                </div>
                 <div v-if="false" class="tw-absolute tw-text-xs tw-font-mono">
                     {{"INDEX: " + index}}<br>
                     <pre>{{featured[index]}}</pre>
                 </div>
 
-                <div class="tw-absolute tw-top-0 tw-right-0 tw-bottom-0 tw-left-[20px] allocate-navigation">
+                <!-- Todo: Set ref value for global featured left spacing -->
+                <div class="tw-absolute tw-top-0 tw-right-0 tw-bottom-0 tw-left-[56px] allocate-navigation">
                     <div class="tw-relative tw-w-full tw-h-full">
                         <div
                             v-for="(featuredSection, index) in featured"
@@ -33,9 +34,13 @@
                                 :id="`featured-${index}-header`"
                                 class="tw-pb-1">
                                 <div
-                                    class="tw-font-data tw-w-min tw-pr-1 tw-text-nowrap tw-text-lg tw-text-white tw-rounded-sm tw-bg-opacity-25 tw-bg-slate-500"
+                                    class="tw-font-sans tw-w-min tw-px-1 tw-text-nowrap tw-text-white tw-rounded-sm tw-bg-opacity-25 tw-bg-slate-500 tw-backdrop-blur-sm"
                                     style="text-shadow: 1px 1px 2px #000000;">
-                                    {{featuredSection.title}}
+                                    <div class="tw-w-max">
+                                        <UnorderedList
+                                            :icon="sectionNavigationIcon(index)"
+                                            :label="featuredSection?.title"/>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -44,12 +49,13 @@
             </div>
 
             <!-- Section Background -->
-            <section v-for="(section, index) in featured" :style="{'background': section.background}">
-                <div v-if="section?.media" class="tw-relative tw-w-full tw-h-screen tw-flex tw-justify-center tw-items-center tw-overflow-hidden">
-                    <div v-if="section.media.type == 'image' && section.media.source" class="tw-w-full tw-h-full tw-absolute background-image" :style="{'background-image': 'url('+section.media.source+')'}"></div>
+            <section v-for="(section, index) in featured" :style="{'background': section?.background}">
+                <div v-if="section?.media" class="tw-relative tw-w-full tw-h-screen tw-flex tw-justify-center tw-items-start tw-overflow-hidden">
+                    <div v-if="section?.layer?.type == 'image' && section?.layer?.source" class="tw-w-full tw-h-full tw-absolute background-image" :style="{'background-image': 'url('+section.layer.source+')'}"></div>
+                    <div v-if="section?.media?.type == 'image' && section?.media?.source" class="tw-w-full tw-h-full tw-absolute background-image" :style="{'background-image': 'url('+section.media.source+')'}"></div>
 
                     <video
-                        v-if="section.media.type == 'video' && section.media.source"
+                        v-if="section?.media?.type == 'video' && section?.media?.source"
                         class="tw-absolute tw-border-0 tw-object-cover tw-w-full tw-h-full"
                         preload="none"
                         ref="featuredVideos"
@@ -65,90 +71,114 @@
             </section>
 
             <!-- Section Content -->
-            <div class="tw-fixed tw-z-20 tw-top-0 tw-right-0 tw-bottom-0 tw-left-[20px] allocate-navigation">
+            <div class="tw-fixed tw-z-20 tw-top-0 tw-right-0 tw-bottom-0 tw-left-[56px] allocate-navigation">
                 <div class="tw-relative tw-w-full tw-h-full">
+                    <div
+                        v-if="false"
+                        style="top: 0; left: 0; right: 0; bottom: calc(100% - 40%);"
+                        class="tw-absolute section-content tw-bg-slate-500 tw-bg-opacity-50">
+                    </div>
+                    <div
+                        v-if="true"
+                        v-for="(featuredContent, index) in featured"
+                        :id="`featured-${index}-content-overview`"
+                        :style="baseContentOverviewStyle(index)"
+                        class="tw-absolute section-content"><!-- tw-bg-slate-500 tw-bg-opacity-50 tw-text-white -->
+                        <div :style="contentOverviewStyle(index)" class="neutral-border tw-overflow-hidden tw-text-sm">
+                            {{featuredContent.title}}
+                        </div>
+                    </div>
                     <div
                         v-for="(featuredContent, index) in featured"
                         :id="`featured-${index}-content`"
                         :style="contentStyle(index)"
                         class="tw-absolute section-content">
 
-                        <div class="tw-w-full tw-flex tw-flex-nowrap tw-gap-2 tw-overflow-y-hidden"><!-- tw-bg-gray-600 tw-bg-opacity-50 -->
-                            <div
-                                v-if="false"
-                                class="tw-flex-none background-image"
-                                :style="[featuredElementStyle(featuredContent, 'dimension'),{'background-image': 'url(/images/hero/prestige-13-ai-kv-bg.jpg'}]">
-                            </div>
-                            <div
-                                :style="[featuredElementStyle(featuredContent, 'dimension')]"
-                                class="tw-flex-none"
-                                v-for="child in featuredContent.children" :key="child">
-                                <Glint :orientation="child.glint_orientation" :enable="child.glint" :color="child.glint_color">
-                                    <HexagonFrame
-                                        :frame-border="child.frame_border"
-                                        :opaque="child.content_opaque"
-                                        :content-background="child.content_background"
-                                        :direction="child.content_direction"
-                                        :theme="featuredContent.theme"
-                                        :head-percentage="child.head_percentage"
-                                        :top-right="child.top_right_corner"
-                                        :bottom-left="child.bottom_left_corner"
-                                        :header-fade="child.header_fade"
-                                        :header-fade-color="child.header_fade_color">
-                                        <template #header>
-                                            <div :class="[featuredElementClass(featuredContent, child, 'header_class')]" class="tw-box-border">
-                                                <div
-                                                    class="tw-h-full tw-w-full tw-bg-cover tw-bg-center tw-bg-no-repeat"
-                                                    :style="{'background':'url('+child.image+')'}"
-                                                />
-                                            </div>
-                                            <div :class="[featuredElementClass(featuredContent, child, 'body_class')]" class="tw-box-border">
-                                                <div
-                                                    class="tw-h-full tw-w-full tw-bg-cover tw-bg-center tw-bg-no-repeat tw-grayscale tw-opacity-20"
-                                                    :style="{'background':'url('+child.image+')'}"
-                                                />
-                                            </div>
-                                        </template>
-                                        <template v-slot:body="{frameBorderColor}">
-                                            <div :class="[featuredElementClass(featuredContent, child, 'body_class')]" class="tw-p-2 tw-overflow-hidden tw-flex tw-flex-col">
-                                                <div v-if="child.content_direction == `ttb`" class="tw-overflow-auto tw-space-y-4">
-                                                    <div :class="[featuredElementClass(featuredContent, child, 'title')]" class="tw-line-clamp-2" v-text="child.title"></div>
-                                                    <NuxtLink
-                                                        v-if="child.link"
-                                                        :to="child.link">
-                                                        <UnorderedList
-                                                            class="tw-cursor-pointer hover:tw-underline"
-                                                            :size="'sm'"
-                                                            :label="'Read more'"/>
-                                                    </NuxtLink>
+                        <div class="tw-relative tw-left-[-56px] tw-w-screen">
+                            <Carousel :inner-id="`carousel-inner-${featuredContent.id}`" :x-padding="'56px'" :gap="'0.5rem'" :items="featuredContent.children"><!-- tw-bg-gray-600 tw-bg-opacity-50 -->
+                                <template v-slot:items="{slot}">
+                                    <div
+                                        class="tw-flex-none tw-cursor-pointer tw-relative"
+                                        v-for="child in slot.items" :key="child"
+                                        :style="[featuredElementStyle(featuredContent, child, 'card_dimension')]">
+                                        <HexagonFrame
+                                            :frame-border-gradient-enable="true"
+                                            :frame-border-primary-color="child.frame_border"
+                                            :opaque="child.content_opaque"
+                                            :content-background="child.content_background"
+                                            :direction="child.content_direction"
+                                            :theme="featuredContent.theme"
+                                            :head-percentage="child.head_percentage"
+                                            :top-right="child.top_right_corner"
+                                            :bottom-left="child.bottom_left_corner"
+                                            :header-fade="child.header_fade"
+                                            :header-fade-color="child.header_fade_color">
+                                            <template #header>
+                                                <div class="tw-bg-cover tw-bg-center tw-bg-no-repeat tw-box-border" :style="[featuredElementStyle(featuredContent, child, 'header_style')]">
+                                                    <div
+                                                        class="tw-h-full tw-w-full tw-bg-cover tw-bg-center tw-bg-no-repeat"
+                                                        :style="{'background': child?.image ? 'url('+child?.image+')' : 'none'}"/>
                                                 </div>
+                                                <div class="tw-box-border" :style="[featuredElementStyle(featuredContent, child, 'body_style')]">
+                                                    <div
+                                                        class="tw-h-full tw-w-full tw-bg-cover tw-bg-center tw-bg-no-repeat tw-grayscale"
+                                                        :style="{'background': child?.body_background ? 'url('+child?.body_background+')' : 'none', 'opacity': child?.body_background_opacity ? child.body_background_opacity : 0.2}"/>
+                                                </div>
+                                            </template>
+                                            <template v-slot:body="{frameBorderColor}">
+                                                <div style="text-shadow: none;" :style="[featuredElementStyle(featuredContent, child, 'body_style')]" class="tw-p-2 tw-overflow-hidden tw-flex tw-flex-col">
+                                                    <div v-if="child.content_direction == `ttb`" class="tw-overflow-auto tw-space-y-0.5">
+                                                        <div :class="[featuredElementClass(featuredContent, child, 'title')]" class="tw-line-clamp-2" v-text="child.title"></div>
 
-                                                <div v-else-if="child.content_direction == `ltr`" class="tw-overflow-auto tw-space-y-0.5">
-                                                    <div class="tw-font-data tw-font-semibold tw-h-max tw-flex-none">
-                                                        <UnorderedList
-                                                            class="tw-cursor-pointer hover:tw-underline"
-                                                            :size="'md'"
-                                                            :icon="child.title_icon"
-                                                            :label="child.title"/>
+                                                        <div style="height: 1px;width: 100%;background: linear-gradient(to right, transparent 0%, #e3e3e3 30%, #e3e3e3 70%, transparent 100%);"></div>
+
+                                                        <div v-if="child?.add_ons?.value?.length" class="tw-flex tw-flex-row tw-flex-wrap tw-gap-1">
+                                                            <img :style="{'height': child.add_ons.height}" v-for="add_on in child.add_ons.value" :src="add_on.image" :alt="add_on.alt"/>
+                                                        </div>
+
                                                     </div>
 
-                                                    <div style="height: 1px;width: 100%;background: linear-gradient(to right, transparent 0%, #e3e3e3 30%, #e3e3e3 70%, transparent 100%);"></div>
-
-                                                    <div v-if="child?.bullets?.value?.length" class="tw-flex tw-flex-row tw-flex-nowrap">
-                                                        <div class="tw-w-full" :style="{'columns': (child.bullets.column ? child.bullets.column : 1)}">
+                                                    <div v-else-if="child.content_direction == `ltr`" class="tw-overflow-auto tw-space-y-1">
+                                                        <div class="tw-font-sans tw-font-semibold tw-h-max tw-flex-none">
                                                             <UnorderedList
-                                                                v-for="bullet in child.bullets.value"
-                                                                :size="'sm'"
-                                                                :icon="'eos-icons:commit'"
-                                                                :label="bullet"/>
+                                                                class="tw-cursor-pointer hover:tw-underline"
+                                                                :size="child?.title_size"
+                                                                :icon="child?.title_icon"
+                                                                :label="child?.title"/>
+                                                        </div>
+
+                                                        <div style="height: 1px;width: 100%;background: linear-gradient(to right, transparent 0%, #e3e3e3 30%, #e3e3e3 70%, transparent 100%);"></div>
+
+                                                        <div v-if="child?.add_ons?.value?.length" :class="[child?.title_size === 'lg' ? 'tw-ml-6' : 'tw-ml-4']" class="tw-flex tw-flex-row tw-flex-wrap tw-gap-1">
+                                                            <img :style="{'height': child.add_ons.height}" v-for="add_on in child.add_ons.value" :src="add_on.image" :alt="add_on.alt"/>
+                                                        </div>
+
+                                                        <div v-if="child?.bullets?.value?.length" class="tw-flex tw-flex-row tw-flex-nowrap">
+                                                            <div class="tw-w-full" :style="{'columns': (child.bullets.column ? child.bullets.column : 1)}">
+                                                                <UnorderedList
+                                                                    v-for="bullet in child?.bullets?.value"
+                                                                    :size="child?.description_size"
+                                                                    :icon="'eos-icons:commit'"
+                                                                    :label="bullet"/>
+                                                            </div>
+                                                        </div>
+
+                                                        <div v-if="child?.sub_bullets?.value?.length" class="tw-flex tw-flex-row tw-flex-nowrap tw-pt-2">
+                                                            <div class="tw-w-full tw-italic" :style="{'columns': (child.sub_bullets.column ? child.sub_bullets.column : 1)}">
+                                                                <UnorderedList
+                                                                    v-for="bullet in child?.sub_bullets?.value"
+                                                                    :size="'sm'"
+                                                                    :icon="'stash:asterisk-solid'"
+                                                                    :label="bullet"/>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                        </template>
-                                    </HexagonFrame>
-                                </Glint>
-                            </div>
+                                            </template>
+                                        </HexagonFrame>
+                                    </div>
+                                </template>
+                            </Carousel>
                         </div>
                     </div>
                 </div>
@@ -163,7 +193,6 @@
 
 <script setup lang="ts">
 import {storeToRefs} from 'pinia';
-import {useTransition} from '@vueuse/core';
 import dataPayload from '@/public/data/payload.js';
 useLayout().setNavigationMode('clear', 'index.vue');
 const {$themeStore, $toRomanNumeral} = useNuxtApp();
@@ -289,7 +318,7 @@ function sectionStyle(indexParam){
                 'left': 0,
                 'right': 0,
                 'bottom': `${100 - bottomProximityTopPosition.value}%`,
-                // 'background-color' : middleProximityBackground
+                //'background-color' : middleProximityBackground
             };
         }
 
@@ -325,6 +354,70 @@ function sectionStyle(indexParam){
                 'right': 0,
             };
         }
+    }
+}
+
+function baseContentOverviewStyle(indexParam) {
+
+    let middleProximityHeaderElementHeight = document.getElementById('featured-' + middleProximityIndex.value + '-header')?.offsetHeight || 0;
+    let middleProximity = (featured.value[middleProximityIndex.value]?.proximity) ? featured.value[middleProximityIndex.value].proximity : 0 ;
+
+    if(middleProximityIndex.value == indexParam){
+        return {
+            'top': 0,
+            'left': 0,
+            'right': 0,
+            'bottom': `calc(100% - ${middleProximity}%)`,
+            'padding-top': `${middleProximityHeaderElementHeight}px`,
+        };
+    } else {
+        //Hidden from top
+        if(indexParam < index.value){
+            return {
+                'top': `-100%`,
+                'left': 0,
+                'right': 0,
+                'bottom': `calc(100% + ${topAllocation.value})`
+            };
+        }
+
+        //Hidden from bottom
+        if(indexParam > index.value){
+            return {
+                'top': `100%`,
+                'left': 0,
+                'right': 0
+            };
+        }
+    }
+}
+
+function contentOverviewStyle(indexParam){
+
+    let overviewEnabled = featured.value[indexParam].overview_enabled;
+
+    let overviewEnabledAndHasProximity = overviewEnabled && featured.value[indexParam].proximity;
+
+    let height = featured.value[indexParam].overview_height[featuredElementDimension.value];
+
+    return {
+        'display': overviewEnabledAndHasProximity ? 'block' : 'none',
+        'height': overviewEnabledAndHasProximity ? height : '0px'
+    }
+}
+
+function sectionNavigationIcon(indexParam){
+    if(topProximityIndex.value == indexParam){
+        return 'ic:baseline-arrow-upward';
+    }
+
+    if(middleProximityIndex.value == indexParam){
+        return 'ic:baseline-arrow-forward';
+    }
+
+    if(bottomProximityIndex.value == indexParam){
+        return 'ic:baseline-arrow-downward';
+
     }
 }
 
@@ -369,7 +462,7 @@ function contentStyle(indexParam){
                     'right': 0,
                     'bottom': `calc(100% + ${topAllocation.value})`,
                     'padding-top': `${topProximityHeaderElementHeight}px`,
-                    // 'background-color': topProximityBackground,
+                    //'background-color': topProximityBackground,
                 };
             }
         }
@@ -383,7 +476,7 @@ function contentStyle(indexParam){
                 'right': 0,
                 'bottom': `${100 - bottomProximityTopPosition.value}%`,
                 'padding-top': `${middleProximityHeaderElementHeight}px`,
-                // 'background-color': middleProximityBackground,
+                //'background-color': middleProximityBackground,
             };
         }
 
@@ -397,8 +490,8 @@ function contentStyle(indexParam){
                 'right': 0,
                 'bottom': `auto`,
                 'padding-top': `${bottomProximityHeaderElementHeight}px`,
-                // 'background-color': bottomProximityBackground,
-                'opacity': bottomContentOpacity
+                'opacity': bottomContentOpacity,
+                //'background-color': bottomProximityBackground,
             };
 
         }
@@ -447,15 +540,43 @@ watch(screenHeight, value => {
 
 }, { immediate: true });
 
-function featuredElementStyle(featured, property){
+function featuredElementStyle(featured, child, property){
 
-    let width = featured.dimension[featuredElementDimension.value][0];
-    let height = featured.dimension[featuredElementDimension.value][1];
+    let dimension = child.dimension ? child.dimension : featured.dimension;
+
+    let card_dimension_width = dimension[featuredElementDimension.value][0];
+    let card_dimension_min_width = dimension.minimum[0];
+    let card_dimension_max_width = dimension.maximum[0];
+    let card_dimension_height = dimension[featuredElementDimension.value][1];
+    let card_dimension_min_height = dimension.minimum[1];
+    let card_dimension_max_height = dimension.maximum[1];
+
+    let card_header_width = child.content_direction == 'ttb' ? '100%' : `${child.head_percentage}%`;
+    let card_header_height = child.content_direction == 'ttb' ? `${child.head_percentage}%` : '100%';
+    let card_header_background = child?.header_background ? `url(${child.header_background})` : 'none';
+
+    let card_body_width = child.content_direction == 'ttb' ? '100%' : `${child.body_percentage}%`;
+    let card_body_height = child.content_direction == 'ttb' ? `${child.body_percentage}%` : '100%';
 
     return {
-        'dimension': {
-            'width': width,
-            'height': height,
+        'card_dimension': {
+            'width': card_dimension_width,
+            'min-width': card_dimension_min_width,
+            'max-width': card_dimension_max_width,
+            'height': card_dimension_height,
+            'min-height': card_dimension_min_height,
+            'max-height': card_dimension_max_height,
+        },
+        'header_style': {
+            'width': card_header_width,
+            'height': card_header_height,
+            'padding': child.header_padding,
+            'background-image': card_header_background
+        },
+        'body_style': {
+            'width': card_body_width,
+            'height': card_body_height,
+            'text-shadow': featured.theme == 'light' ? 'none' : 'rgb(0, 0, 0) 1px 1px 2px'
         }
     }[property];
 }
@@ -466,24 +587,14 @@ function featuredElementClass(featured, child, property){
         ? 'tw-text-lg tw-font-medium tw-font-header'
         : 'tw-text-sm tw-font-normal tw-font-sans';
 
-    let headerClass = child.content_direction == 'ttb'
-        ? `tw-w-full tw-h-[${child.head_percentage}%] tw-p-[${child.header_padding}]`
-        : `tw-w-[${child.head_percentage}%] tw-h-full`;
-
-    let bodyClass = child.content_direction == 'ttb'
-        ? `tw-w-full tw-h-[${child.body_percentage}%]`
-        : `tw-w-[${child.body_percentage}%] tw-h-full`;
-
     return {
-        'header_class': headerClass,
-        'body_class' : bodyClass,
         'title': titleClass
     }[property];
 }
 
 const scrolling = ref(false);
 const proximityThreshold = ref(0);
-const scrollSpeed = ref(200);
+const scrollSpeed = ref(300);
 const scrollSpeedMs = computed(()=>`${scrollSpeed.value}ms`);
 const layoutScroll = ref<HTMLElement | null>(null)
 const { y: layoutScrollY } = useScroll(layoutScroll)
