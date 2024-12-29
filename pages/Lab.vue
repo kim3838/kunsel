@@ -7,7 +7,13 @@
                     {{`SCREEN DIMENSION: ${screenWidth} x ${screenHeight}`}}
                 </div>
 
-                <div class="tw-absolute tw-left-[56px] tw-w-screen">
+                <a v-if="true" class="link" href="">
+                    <span>
+                        Shop Now
+                    </span>
+                </a>
+
+                <div v-if="false" class="tw-absolute tw-left-[56px] tw-w-screen">
                     <div class="tw-relative tw-w-full tw-h-full">
 
                         <div class="tw-relative tw-left-[-56px] tw-w-screen neutral-border ">
@@ -36,12 +42,6 @@
                         </div>
                     </div>
                 </div>
-
-                <a v-if="false" class="link" href="">
-                    <span>
-                        Shop Now
-                    </span>
-                </a>
 
                 <StarRating v-if="false" :rating="1.5" />
 
@@ -712,5 +712,28 @@ watch(clientReadyState, async (clientReady) => {
 .section-navigation {
     transition-timing-function: cubic-bezier(0.645, 0.045, 0.355, 1);
     transition: top 200ms;
+}
+
+.link{
+    display: block;
+    width: 200px;
+    padding: 12px 30px;
+    text-decoration: none;
+    border: 2px solid;
+    border-image-slice: 1;
+    border-image-source: linear-gradient(45deg, #7d7d7f 20%, #fefdfd, #3d3d3e 70%, #fefdfd, #7d7d7f 100%);
+    transition: all 1s cubic-bezier(0.645, 0.045, 0.355, 1);
+    -webkit-transition: all 1s cubic-bezier(0.645, 0.045, 0.355, 1);
+}
+
+.link span{
+    font-weight: 600;
+    text-transform: uppercase;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
 }
 </style>
