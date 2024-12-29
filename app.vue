@@ -2,12 +2,12 @@
     <!-- Nuxt Wrapper -->
     <div ref="nuxtWrapper" class="nuxt-page tw-relative">
         <AppRenderingLoading/>
-        <div class="tw-absolute tw-inset-x-0 tw--z-10 tw-overflow-hidden tw--top-40 sm:tw--top-80 tw-blur-3xl" aria-hidden="true">
+        <div v-if="false" class="tw-absolute tw-inset-x-0 tw--z-10 tw-overflow-hidden tw--top-40 sm:tw--top-80 tw-blur-3xl" aria-hidden="true">
             <div class="top-fragment tw-relative tw-w-[36.125rem] sm:tw-w-[72.1875rem] tw-left-[calc(50%-11rem)] sm:tw-left-[calc(50%-30rem)] tw-aspect-[1155/678] tw--translate-x-1/2 tw-rotate-[30deg] tw-opacity-30"></div>
         </div>
         <NuxtLoadingIndicator />
         <NuxtPage/>
-        <div class="tw-absolute tw-inset-x-0 tw--z-10 tw-overflow-hidden tw-top-[calc(20%)] sm:tw-top-[calc(0%)] tw-blur-3xl" aria-hidden="true">
+        <div v-if="false" class="tw-absolute tw-inset-x-0 tw--z-10 tw-overflow-hidden tw-top-[calc(20%)] sm:tw-top-[calc(0%)] tw-blur-3xl" aria-hidden="true">
             <div class="bottom-fragment tw-relative tw-w-[36.125rem] sm:tw-w-[72.1875rem] tw-left-[calc(50%+3rem)] sm:tw-left-[calc(50%+36rem)] tw-aspect-[1155/678]  tw--translate-x-1/2  tw-opacity-30"></div>
         </div>
     </div>
