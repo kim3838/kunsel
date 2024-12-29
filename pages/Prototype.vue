@@ -1,12 +1,12 @@
 <template>
     <div>
-        <LandingWrapper>
+        <DefaultWrapper>
             <div class="tw-mx-auto tw-pt-4 tw-max-w-screen-2xl">
                 <div>Tailwind Url: <a class="tw-text-sky-600" href="_tailwind" target="_blank">{{('http://localhost:3000' + '/_tailwind/')}}</a></div>
 
                 <div class="tw-space-y-2">
                     <!-- Static Single, MultiSelect and DateTime, Date, and Month Picker -->
-                    <div v-if="false" class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-8">
+                    <div v-if="true" class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-8">
                         <div class="tw-block neutral-border">
                             <InputLabel :size="'sm'" value="Static Multi Select" />
                             <MultiSelect drop-shadow :selection-max-viewable-line="5" :size="'md'" :options="category" :icon="'ic:sharp-qr-code'"/>
@@ -75,7 +75,7 @@
                     </div>
 
                     <!-- Paginated Single and MultiSelect -->
-                    <div v-if="false" class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-8">
+                    <div v-if="true" class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-8">
                         <div class="tw-block neutral-border">
                             <InputLabel :size="'sm'" value="Paginated Multi Select" />
                             <MultiSelectPaginated
@@ -386,7 +386,7 @@
                     </div>
 
                     <!-- Tab Indexed Group -->
-                    <div v-if="true">
+                    <div v-if="false">
                         <div class="tw-block tw-p-2 neutral-border">
                             <InputLabel class="tw-mb-2" :size="'md'" value="Tab Group" />
                             <div class="tw-grid tw-gap-1 tw-grid-cols-1 sm:tw-grid-cols-2 md:tw-grid-cols-3 lg:tw-grid-cols-5">
@@ -960,7 +960,7 @@
                     </div>
 
                     <!-- Button and Input Horizontal Alignment -->
-                    <div v-if="true">
+                    <div v-if="false">
                         <div class="tw-my-4 tw-flex tw-justify-center tw-space-x-1.5">
                             <Button :size="tabGroup.size" :icon="tabGroup.icon" :label="'Default'" />
                             <Button :size="tabGroup.size" :icon="tabGroup.icon" :variant="'outline'" :label="'Outline'" />
@@ -971,7 +971,7 @@
                     </div>
 
                     <!-- Default Button -->
-                    <div v-if="false" class="tw-grid tw-gap-2 tw-grid-cols-3 sm:tw-grid-cols-4 lg:tw-grid-cols-6 xl:tw-grid-cols-12 2xl:tw-grid-cols-12">
+                    <div v-if="true" class="tw-grid tw-gap-2 tw-grid-cols-3 sm:tw-grid-cols-4 lg:tw-grid-cols-6 xl:tw-grid-cols-12 2xl:tw-grid-cols-12">
                         <div class="tw-flex tw-items-start tw-justify-start tw-block neutral-border">
                             <Button :size="'2xs'" :icon="'ic:sharp-send-to-mobile'" :label="'XXS Button'"></Button>
                         </div>
@@ -996,7 +996,7 @@
                     </div>
 
                     <!-- Outline Button -->
-                    <div v-if="false" class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-9">
+                    <div v-if="true" class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-9">
                         <div class="tw-flex tw-items-start tw-justify-start tw-block neutral-border">
                             <Button :variant="'outline'" :size="'2xs'" :icon="'ic:sharp-dashboard'" :label="'XXS Button'"></Button>
                         </div>
@@ -1348,7 +1348,7 @@
                     </div>
                 </div>
             </div>
-        </LandingWrapper>
+        </DefaultWrapper>
     </div>
 </template>
 
