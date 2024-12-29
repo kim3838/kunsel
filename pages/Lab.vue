@@ -1,13 +1,49 @@
 <template>
     <div>
         <LandingWrapper>
-            <div class="tw-mx-auto tw-p-4 tw-space-y-2">
+            <div class="tw-mx-auto tw-space-y-2">
 
-                <a class="link" href="">
+                <div class="tw-text-xs tw-font-mono">
+                    {{`SCREEN DIMENSION: ${screenWidth} x ${screenHeight}`}}
+                </div>
+
+                <div class="tw-absolute tw-left-[56px] tw-w-screen">
+                    <div class="tw-relative tw-w-full tw-h-full">
+
+                        <div class="tw-relative tw-left-[-56px] tw-w-screen neutral-border ">
+                            Carousel
+                            <Carousel :inner-id="'unique-id-001'" :x-padding="'56px'" :gap="'0.5rem'" :items="[
+                                { id: 1, name: 'Product 1', width: '550px', height:'200px', image: '/images/product/02/h732.png' },
+                                { id: 2, name: 'Product 2', width: '550px', height:'200px', image: '/images/product/04/h732.png' },
+                                { id: 3, name: 'Product 3', width: 'calc(33.3% - 0.5rem)', height:'200px', image: '/images/product/03/h732.png' },
+                                { id: 4, name: 'Product 4', width: '200px', height:'200px', image: '/images/product/08/h732.png' },
+                                ]">
+                                <template v-slot:items="{slot}">
+                                    <div
+                                        v-for="(item, index) in slot.items"
+                                        :key="index"
+                                        class="tw-flex-none neutral-border"
+                                        :style="{width: item.width}"
+                                    >
+                                        <div>
+                                            <img style="width: 100%; height: 150px; object-fit: cover;" :src="item.image" :alt="item.name" />
+                                            <h3>{{ item.name }}</h3>
+                                        </div>
+                                    </div>
+                                </template>
+
+                            </Carousel>
+                        </div>
+                    </div>
+                </div>
+
+                <a v-if="false" class="link" href="">
                     <span>
                         Shop Now
                     </span>
                 </a>
+
+                <StarRating v-if="false" :rating="1.5" />
 
                 <div v-if="false" class="tw-flex tw-mb-4">
                     <SampleEmitter
@@ -107,7 +143,7 @@
                     </div>
                 </div>
 
-                <div v-if="true" class="tw-bg-cover tw-bg-no-repeat tw-bg-center tw-p-4" :style="{'background-image': 'url(/images/carousel/f415740d-5951-4b5d-af98-1404e9c65df5.jpg'}">
+                <div v-if="false" class="tw-bg-cover tw-bg-no-repeat tw-bg-center tw-p-4" :style="{'background-image': 'url(/images/carousel/f415740d-5951-4b5d-af98-1404e9c65df5.jpg'}">
                     <div class="tw-w-full tw-h-[230px] tw-flex tw-flex-nowrap tw-gap-2 tw-overflow-y-hidden">
                         <div class="tw-w-[460px] tw-h-full tw-flex-none" v-for="item in leftToRightItems">
                             <HexagonFrame
@@ -233,7 +269,7 @@
                     </div>
                 </div>
 
-                <div v-if="true" class="tw-mt-6 tw-mx-auto">
+                <div v-if="false" class="tw-mt-6 tw-mx-auto">
                     <div class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-3 xl:tw-grid-cols-4">
                         <div
                             v-for="item in topToBottomItems" class="tw-h-[520px]">
@@ -519,7 +555,7 @@
 import dataPayload from '@/public/data/payload.js';
 // definePageMeta({middleware: 'guest'});
 useLayout().setNavigationMode('solid', 'Lab.vue');
-const {screenWidthBreakpoint, width: screenWidth, } = useScreen();
+const {screenWidthBreakpoint, width: screenWidth, height: screenHeight} = useScreen();
 const {$formStore} = useNuxtApp();
 const topPosition = ref(0);
 const clientReadyState = useClientReadyState();
@@ -587,6 +623,7 @@ let multiSelectPrototypePayload = reactive(dataPayload['prototype']['multiSelect
 let singleSelectPrototypePayload = reactive(dataPayload['prototype']['singleSelectPrototypePayload']);
 let category = reactive(dataPayload['prototype']['category']);
 let plan = reactive(dataPayload['prototype']['plan']);
+const featured = ref(dataPayload['featured'])[2];
 
 function handleFocusStateChanged(event){
     console.log({"handleFocusStateChanged": event})
