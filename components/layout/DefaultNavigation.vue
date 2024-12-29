@@ -1,18 +1,49 @@
 <template>
     <nav
         ref="navigation"
-        class="primary-navigation-parent tw-z-40 tw-fixed tw-flex tw-justify-center">
-        <div class="tw-max-w-screen-2xl tw-w-full tw-flex tw-justify-start lg:tw-justify-around tw-h-10">
-            <div class="tw--my-px tw-flex tw-items-center">
+        class="primary-navigation-parent tw-z-40 tw-fixed">
+        <div class="tw-w-full tw-font-sans tw-flex tw-justify-center">
+            <div class="tw-max-w-screen-2xl tw-w-full tw-font-sans tw-flex tw-justify-end">
+                <NavLink
+                    class="tw-h-full"
+                    :size="`xs`">
+                    News
+                </NavLink>
+                <NavLink
+                    class="tw-h-full"
+                    :size="`xs`">
+                    FAQ
+                </NavLink>
+                <NavLink
+                    class="tw-h-full"
+                    :size="`xs`">
+                    Support
+                </NavLink>
                 <NavDrop
-                    class="xl:tw-hidden tw-h-full"
-                    :size="navigationHeaderSize"
-                    :title="'Menu'"
-                    :drop-options="navigationLinks" />
+                    v-if="true"
+                    :size="`xs`"
+                    :title="'Language'"
+                    :drop-options="[
+                        {
+                            type: 'action',
+                            title: 'en',
+                            callback: () => {},
+                        },
+                    ]" />
             </div>
-            <div class="tw-flex">
-                <!-- Navigation Links -->
-                <div class="tw--my-px tw-hidden xl:tw-flex">
+        </div>
+        <div class="tw-w-full tw-font-data tw-flex tw-justify-center neutral-border-top">
+            <div class="tw-max-w-screen-2xl tw-w-full tw-flex tw-justify-start lg:tw-justify-around tw-h-10">
+                <div class="tw--my-px tw-flex tw-items-center">
+                    <NavDrop
+                        class="xl:tw-hidden tw-h-full"
+                        :size="navigationHeaderSize"
+                        :title="'Menu'"
+                        :drop-options="navigationLinks" />
+                </div>
+                <div class="tw-flex">
+                    <!-- Navigation Links -->
+                    <div class="tw--my-px tw-hidden xl:tw-flex">
                         <span class="tw-flex tw-items-center"  v-for="navigation in navigationLinks" :key="navigation.title">
                             <NavLink
                                 class="tw-h-full"
@@ -42,18 +73,19 @@
                                 :drop-options="navigation.options"
                             />
                         </span>
+                    </div>
                 </div>
-            </div>
-            <div class="tw--my-px tw-flex tw-items-center">
-                <component
-                    :is="navDrop"
-                    class="tw-h-full"
-                    v-if="isAuthenticated"
-                    :size="navigationHeaderSize"
-                    :drop-align="rightNavigationDropAlign"
-                    :title="user?.name"
-                    :drop-options="navigationAccountLinks"
-                />
+                <div class="tw--my-px tw-flex tw-items-center">
+                    <component
+                        :is="navDrop"
+                        class="tw-h-full"
+                        v-if="isAuthenticated"
+                        :size="navigationHeaderSize"
+                        :drop-align="rightNavigationDropAlign"
+                        :title="user?.name"
+                        :drop-options="navigationAccountLinks"
+                    />
+                </div>
             </div>
         </div>
     </nav>
