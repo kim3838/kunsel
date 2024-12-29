@@ -2,7 +2,7 @@ import {defineStore} from 'pinia'
 
 export const useThemeStore = defineStore('theme', {
     state: () => ({
-        appTheme: 'blue',
+        appTheme: 'light',
         hexAlpha: {
             '10': '19',
             '20': '33',
