@@ -437,7 +437,7 @@ function contentStyle(indexParam){
 
             let topProximityIsTypeRow = featured.value[topProximityIndex.value].type == 'row';
 
-            let topProximityBackground = featured.value[topProximityIndex.value].bg;
+            let topProximityBackground = featured.value[topProximityIndex.value].debug.bg;
 
             let topProximityTopPosition = featured.value[topProximityIndex.value].type == 'row'
                 ? `${100 - middleProximity}%`
@@ -468,7 +468,7 @@ function contentStyle(indexParam){
         }
 
         if(middleProximityIndex.value == indexParam){
-            let middleProximityBackground = featured.value[middleProximityIndex.value].bg;
+            let middleProximityBackground = featured.value[middleProximityIndex.value].debug.bg;
 
             return {
                 'top': `${middleProximityTopPosition}`,
@@ -481,7 +481,7 @@ function contentStyle(indexParam){
         }
 
         if(bottomProximityIndex.value == indexParam){
-            let bottomProximityBackground = featured.value[bottomProximityIndex.value].bg;
+            let bottomProximityBackground = featured.value[bottomProximityIndex.value].debug.bg;
             let bottomContentOpacity = featured.value[middleProximityIndex.value].theme == featured.value[bottomProximityIndex.value].theme ? '1' : '0';
 
             return {
