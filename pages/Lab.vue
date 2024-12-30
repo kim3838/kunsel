@@ -17,8 +17,8 @@
                     <div class="tw-relative tw-w-full tw-h-full">
 
                         <div class="tw-relative tw-left-[-56px] tw-w-screen neutral-border ">
-                            Carousel
-                            <Carousel :inner-id="'unique-id-001'" :x-padding="'56px'" :gap="'0.5rem'" :items="[
+                            FeaturedCarouselRow
+                            <FeaturedCarouselRow :inner-id="'unique-id-001'" :x-padding="'56px'" :gap="'0.5rem'" :items="[
                                 { id: 1, name: 'Product 1', width: '550px', height:'200px', image: '/images/product/02/h732.png' },
                                 { id: 2, name: 'Product 2', width: '550px', height:'200px', image: '/images/product/04/h732.png' },
                                 { id: 3, name: 'Product 3', width: 'calc(33.3% - 0.5rem)', height:'200px', image: '/images/product/03/h732.png' },
@@ -38,7 +38,7 @@
                                     </div>
                                 </template>
 
-                            </Carousel>
+                            </FeaturedCarouselRow>
                         </div>
                     </div>
                 </div>
