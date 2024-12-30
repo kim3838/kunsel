@@ -12,7 +12,7 @@
                 {{`SCREEN DIMENSION: ${screenWidth} x ${screenHeight}`}}
             </div>
 
-            <!-- Section Navigation -->
+            <!-- Section Fragments -->
             <div class="tw-fixed tw-z-10 tw-top-0 tw-right-0 tw-bottom-0 tw-left-0 tw-h-screen">
                 <!-- Todo: Add icon before section titles to overlap vertical rule -->
                 <div class="tw-absolute vertical-nav-rule tw-w-[1px] tw-top-0 tw-right-0 tw-bottom-0 tw-left-[50px]"></div>
@@ -22,28 +22,9 @@
                     <pre>{{featured[index]}}</pre>
                 </div>
 
-                <!-- Todo: Set ref value for global featured left spacing -->
-                <div class="tw-absolute tw-top-0 tw-right-0 tw-bottom-0 tw-left-[56px] allocate-navigation">
+                <div v-if="false" class="tw-absolute tw-top-0 tw-right-0 tw-bottom-0 tw-left-[56px] allocate-navigation">
                     <div class="tw-relative tw-w-full tw-h-full">
-                        <div
-                            v-for="(featuredSection, index) in featured"
-                            :id="`featured-${index}`"
-                            :style="sectionStyle(index)"
-                            class="tw-absolute section-navigation">
-                            <div
-                                :id="`featured-${index}-header`"
-                                class="tw-pb-1">
-                                <div
-                                    class="tw-font-data tw-w-min tw-px-1 tw-text-nowrap tw-text-white tw-rounded-sm tw-bg-opacity-25 tw-bg-slate-500 tw-backdrop-blur-sm"
-                                    style="text-shadow: 1px 1px 2px #000000;">
-                                    <div class="tw-w-max">
-                                        <UnorderedList
-                                            :icon="sectionNavigationIcon(index)"
-                                            :label="featuredSection?.title"/>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+
                     </div>
                 </div>
             </div>
@@ -71,8 +52,28 @@
             </section>
 
             <!-- Section Content -->
+            <!-- Todo: Set ref value for global featured left spacing -->
             <div class="tw-fixed tw-z-20 tw-top-0 tw-right-0 tw-bottom-0 tw-left-[56px] allocate-navigation">
                 <div class="tw-relative tw-w-full tw-h-full">
+                    <div
+                        v-for="(featuredSection, index) in featured"
+                        :id="`featured-${index}`"
+                        :style="sectionStyle(index)"
+                        class="tw-absolute section-navigation">
+                        <div
+                            :id="`featured-${index}-header`"
+                            class="tw-pb-1">
+                            <div
+                                class="tw-font-data tw-w-min tw-px-1 tw-text-nowrap tw-cursor-pointer tw-text-white tw-rounded-sm tw-bg-opacity-25 tw-bg-slate-500 tw-backdrop-blur-sm"
+                                style="text-shadow: 1px 1px 2px #000000;">
+                                <div class="tw-w-max">
+                                    <UnorderedList
+                                        :icon="sectionNavigationIcon(index)"
+                                        :label="featuredSection?.title"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <div
                         v-if="false"
                         style="top: 0; left: 0; right: 0; bottom: calc(100% - 40%);"
@@ -368,7 +369,7 @@ function baseContentOverviewStyle(indexParam) {
             'left': 0,
             'right': 0,
             'bottom': `calc(100% - ${middleProximity}%)`,
-            'padding-top': `${middleProximityHeaderElementHeight}px`,
+            'margin-top': `${middleProximityHeaderElementHeight}px`,
         };
     } else {
         //Hidden from top
@@ -449,8 +450,8 @@ function contentStyle(indexParam){
                     'left': 0,
                     'right': 0,
                     'bottom': topProximityTopPosition,
-                    'padding-top': `${topProximityHeaderElementHeight}px`,
-                    // 'background-color': topProximityBackground,
+                    'margin-top': `${topProximityHeaderElementHeight}px`,
+                    //'background-color': topProximityBackground,
                 };
             }
 
@@ -461,7 +462,7 @@ function contentStyle(indexParam){
                     'left': 0,
                     'right': 0,
                     'bottom': `calc(100% + ${topAllocation.value})`,
-                    'padding-top': `${topProximityHeaderElementHeight}px`,
+                    'margin-top': `${topProximityHeaderElementHeight}px`,
                     //'background-color': topProximityBackground,
                 };
             }
@@ -475,7 +476,7 @@ function contentStyle(indexParam){
                 'left': 0,
                 'right': 0,
                 'bottom': `${100 - bottomProximityTopPosition.value}%`,
-                'padding-top': `${middleProximityHeaderElementHeight}px`,
+                'margin-top': `${middleProximityHeaderElementHeight}px`,
                 //'background-color': middleProximityBackground,
             };
         }
@@ -489,7 +490,7 @@ function contentStyle(indexParam){
                 'left': 0,
                 'right': 0,
                 'bottom': `auto`,
-                'padding-top': `${bottomProximityHeaderElementHeight}px`,
+                'margin-top': `${bottomProximityHeaderElementHeight}px`,
                 'opacity': bottomContentOpacity,
                 //'background-color': bottomProximityBackground,
             };
@@ -506,7 +507,7 @@ function contentStyle(indexParam){
                 'left': 0,
                 'right': 0,
                 'bottom': `calc(100% + ${topAllocation.value})`,
-                'padding-top': `${topProximityHeaderElementHeight}px`,
+                'margin-top': `${topProximityHeaderElementHeight}px`,
             };
         }
 
@@ -516,7 +517,7 @@ function contentStyle(indexParam){
                 'top': `100%`,
                 'left': 0,
                 'right': 0,
-                'padding-top': `${bottomProximityHeaderElementHeight}px`,
+                'margin-top': `${bottomProximityHeaderElementHeight}px`,
             };
         }
     }
