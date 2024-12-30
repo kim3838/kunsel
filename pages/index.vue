@@ -34,7 +34,7 @@
                                 :id="`featured-${index}-header`"
                                 class="tw-pb-1">
                                 <div
-                                    class="tw-font-sans tw-w-min tw-px-1 tw-text-nowrap tw-text-white tw-rounded-sm tw-bg-opacity-25 tw-bg-slate-500 tw-backdrop-blur-sm"
+                                    class="tw-font-data tw-w-min tw-px-1 tw-text-nowrap tw-text-white tw-rounded-sm tw-bg-opacity-25 tw-bg-slate-500 tw-backdrop-blur-sm"
                                     style="text-shadow: 1px 1px 2px #000000;">
                                     <div class="tw-w-max">
                                         <UnorderedList
