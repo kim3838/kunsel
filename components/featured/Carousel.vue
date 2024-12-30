@@ -9,12 +9,12 @@
 
         <span
             v-if="showNavigation"
-            class="nav-button prev tw-flex tw-h-14 tw-w-7 tw-items-center tw-justify-center tw-bg-opacity-25 tw-bg-slate-500 tw-backdrop-blur-sm"
+            class="nav-button prev tw-flex tw-h-14 tw-w-7 tw-items-center tw-justify-center tw-backdrop-blur-sm"
             @click="prevSlide"
         ><Icon :name="'ic:sharp-arrow-back-ios'" class="tw-w-8 tw-h-8"></Icon></span>
         <span
             v-if="showNavigation"
-            class="nav-button next tw-flex tw-h-14 tw-w-7 tw-items-center tw-justify-center tw-bg-opacity-25 tw-bg-slate-500 tw-backdrop-blur-sm"
+            class="nav-button next tw-flex tw-h-14 tw-w-7 tw-items-center tw-justify-center tw-backdrop-blur-sm"
             @click="nextSlide"
         ><Icon :name="'ic:sharp-arrow-forward-ios'" class="tw-w-8 tw-h-8"></Icon></span>
 
@@ -43,6 +43,19 @@ const props = defineProps({
     gap: {
         type: String,
         default: '0.5rem',
+    },
+    scrollSpeed: {
+        type: String,
+        default: '200ms',
+    },
+    buttonProperties: {
+        type: Object,
+        default: function(){
+            return {
+                'color': 'white',
+                'background': 'rgba(200,200,200,0.25)'
+            };
+        }
     },
 });
 
@@ -93,25 +106,23 @@ watch(currentIndex, (newVal, oldVal) => {
 
         innerCarouselStyle.transform = `translateX(0)`;
     }
-
-
-
 })
 </script>
 
 <style scoped>
 .carousel-inner {
-    transition: transform 200ms ease-in-out;
+    transition: transform v-bind(scrollSpeed) ease-in-out;
     padding-left: v-bind(xPadding);
     padding-right: v-bind(xPadding);
     gap: v-bind(gap);
 }
 
 .nav-button {
+    background-color: v-bind(buttonProperties.background);
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    color: white;
+    color: v-bind(buttonProperties.color);
     cursor: pointer;
     z-index: 30;
 }

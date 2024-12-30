@@ -95,7 +95,7 @@
                         class="tw-absolute section-content">
 
                         <div class="tw-relative tw-left-[-56px] tw-w-screen">
-                            <Carousel :inner-id="`carousel-inner-${featuredContent.id}`" :x-padding="'56px'" :gap="'0.5rem'" :items="featuredContent.children"><!-- tw-bg-gray-600 tw-bg-opacity-50 -->
+                            <Carousel :inner-id="`featured-${index}-carousel-inner`" :x-padding="'56px'" :gap="'0.5rem'" :scroll-speed="scrollSpeedMs" :items="featuredContent.children"><!-- tw-bg-gray-600 tw-bg-opacity-50 -->
                                 <template v-slot:items="{slot}">
                                     <div
                                         class="tw-flex-none tw-cursor-pointer tw-relative"
