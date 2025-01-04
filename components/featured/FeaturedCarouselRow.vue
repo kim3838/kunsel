@@ -53,7 +53,8 @@ const props = defineProps({
         default: function(){
             return {
                 'color': 'white',
-                'background': 'rgba(200,200,200,0.25)'
+                'background': 'rgba(200,200,200,0.25)',
+                'hover_background': 'rgba(200,200,200,0.5)',
             };
         }
     },
@@ -125,6 +126,11 @@ watch(currentIndex, (newVal, oldVal) => {
     color: v-bind(buttonProperties.color);
     cursor: pointer;
     z-index: 30;
+}
+
+.nav-button:hover{
+    border:1px solid v-bind(buttonProperties.background);
+    background-color: v-bind(buttonProperties.hover_background);
 }
 
 .nav-button.prev {
