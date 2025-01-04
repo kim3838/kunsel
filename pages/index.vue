@@ -21,12 +21,6 @@
                     {{"INDEX: " + index}}<br>
                     <pre>{{featured[index]}}</pre>
                 </div>
-
-                <div v-if="false" class="tw-absolute tw-top-0 tw-right-0 tw-bottom-0 tw-left-[56px] allocate-navigation">
-                    <div class="tw-relative tw-w-full tw-h-full">
-
-                    </div>
-                </div>
             </div>
 
             <!-- Section Background -->
@@ -52,14 +46,13 @@
             </section>
 
             <!-- Section Content -->
-            <!-- Todo: Set ref value for global featured left spacing -->
-            <div class="tw-fixed tw-z-20 tw-top-0 tw-right-0 tw-bottom-0 tw-left-[56px] allocate-navigation">
+            <div class="tw-fixed tw-z-20 tw-top-0 tw-right-0 tw-bottom-0 section-content-container allocate-navigation">
                 <div class="tw-relative tw-w-full tw-h-full">
                     <div
                         v-for="(featuredSection, index) in featured"
                         :id="`featured-${index}`"
                         :style="sectionStyle(index)"
-                        class="tw-absolute section-navigation">
+                        class="tw-absolute all-transition">
                         <div
                             :id="`featured-${index}-header`"
                             class="tw-pb-1">
@@ -75,16 +68,11 @@
                         </div>
                     </div>
                     <div
-                        v-if="false"
-                        style="top: 0; left: 0; right: 0; bottom: calc(100% - 40%);"
-                        class="tw-absolute section-content tw-bg-slate-500 tw-bg-opacity-50">
-                    </div>
-                    <div
                         v-if="true"
                         v-for="(featuredContent, index) in featured"
                         :id="`featured-${index}-content-overview`"
                         :style="baseContentOverviewStyle(index)"
-                        class="tw-absolute section-content"><!-- tw-bg-slate-500 tw-bg-opacity-50 tw-text-white -->
+                        class="tw-absolute all-transition"><!-- tw-bg-slate-500 tw-bg-opacity-50 tw-text-white -->
                         <div :style="contentOverviewStyle(index)" class="neutral-border tw-overflow-hidden tw-text-sm">
                             {{featuredContent.title}}
                         </div>
@@ -93,10 +81,15 @@
                         v-for="(featuredContent, index) in featured"
                         :id="`featured-${index}-content`"
                         :style="contentStyle(index)"
-                        class="tw-absolute section-content">
+                        class="tw-absolute all-transition">
 
-                        <div class="tw-relative tw-left-[-56px] tw-w-screen">
-                            <FeaturedCarouselRow :inner-id="`featured-${index}-carousel-inner`" :x-padding="'56px'" :gap="'0.5rem'" :scroll-speed="scrollSpeedMs" :items="featuredContent.children"><!-- tw-bg-gray-600 tw-bg-opacity-50 -->
+                        <div class="tw-relative compensate-left-padding tw-w-screen">
+                            <FeaturedCarouselRow
+                                :inner-id="`featured-${index}-carousel-inner`"
+                                :x-padding="paddingInPixels"
+                                :gap="'0.5rem'"
+                                :scroll-speed="scrollSpeedMs"
+                                :items="featuredContent.children"><!-- tw-bg-gray-600 tw-bg-opacity-50 -->
                                 <template v-slot:items="{slot}">
                                     <div
                                         class="tw-flex-none tw-cursor-pointer tw-relative"
@@ -203,11 +196,24 @@ const clientReadyState = useClientReadyState();
 const {
     thread: threadColor
 } = storeToRefs($themeStore);
+
 const topAllocation = ref('0px');
 const featured = ref(dataPayload['featured']);
-const leftToRightItems = ref(dataPayload['leftToRightItems']);
-const carouselTrendingItems = ref(dataPayload['carousel']['trendingItems']);
 const featuredVideos = useTemplateRef('featuredVideos');
+const index = ref(0);
+const featuredElementDimension = ref('lg');
+const sections = ref([]);
+const padding = ref(56);
+const paddingInPixels = computed(()=>`${padding.value}px`);
+const compensatePaddingInPixels = computed(()=>`-${padding.value}px`);
+
+const scrolling = ref(false);
+const proximityThreshold = ref(0);
+const scrollSpeed = ref(300);
+const scrollSpeedMs = computed(()=>`${scrollSpeed.value}ms`);
+const layoutScroll = ref<HTMLElement | null>(null)
+const { y: layoutScrollY } = useScroll(layoutScroll)
+
 //Boot full page scroll on navigate
 if(clientReadyState.value){
     onMounted(async () => {
@@ -262,12 +268,6 @@ function autoPlayVideoSpotlights(videoSpotlights){
         }
     })
 }
-
-const index = ref(0);
-const featuredElementDimension = ref('lg');
-const sections = ref([]);
-
-watch(index, function(newIndex, oldIndex){}, { immediate: true });
 
 const topProximityIndex = computed(() => index.value - 1);
 const middleProximityIndex = computed(() => index.value);
@@ -593,12 +593,6 @@ function featuredElementClass(featured, child, property){
     }[property];
 }
 
-const scrolling = ref(false);
-const proximityThreshold = ref(0);
-const scrollSpeed = ref(300);
-const scrollSpeedMs = computed(()=>`${scrollSpeed.value}ms`);
-const layoutScroll = ref<HTMLElement | null>(null)
-const { y: layoutScrollY } = useScroll(layoutScroll)
 function bootPageScroll(){
     sections.value = document.querySelectorAll('section');
     proximityThreshold.value = layoutScroll.value.offsetHeight / 2;
@@ -704,6 +698,7 @@ section {
     background-size: cover;
     background-repeat: no-repeat;
 }
+
 .vertical-nav-rule{
     background: linear-gradient(
         to bottom,
@@ -713,14 +708,20 @@ section {
         transparent 100%
     );
 }
+
 .allocate-navigation {
     padding-top: v-bind(topAllocation);
 }
 
-.section-navigation {
+.all-transition {
     transition: all v-bind(scrollSpeedMs) cubic-bezier(0.645, 0.045, 0.355, 1);
 }
-.section-content {
-    transition: all v-bind(scrollSpeedMs) cubic-bezier(0.645, 0.045, 0.355, 1);
+
+.section-content-container{
+    left: v-bind(paddingInPixels)
+}
+
+.compensate-left-padding {
+    left: v-bind(compensatePaddingInPixels)
 }
 </style>
