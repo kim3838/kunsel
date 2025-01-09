@@ -9,7 +9,7 @@
         <main class="tw-relative">
             <!-- Debug -->
             <div v-if="true" class="tw-fixed tw-z-50 tw-text-xs tw-font-mono">
-                {{`SCREEN DIMENSION: ${screenWidth} x ${screenHeight}`}}
+                {{`SCREENDIMENSION: ${screenWidth} x ${screenHeight}`}}
             </div>
 
             <!-- Section Fragments -->
@@ -19,12 +19,12 @@
 
                 <div v-if="false" class="tw-absolute tw-text-xs tw-font-mono">
                     {{"INDEX: " + index}}<br>
-                    <pre>{{featured[index]}}</pre>
+                    <pre>{{features[index]}}</pre>
                 </div>
             </div>
 
             <!-- Section Background -->
-            <section v-for="(section, index) in featured" :style="{'background': section?.background}">
+            <section v-for="(section, index) in features" :style="{'background': section?.background}">
                 <div v-if="section?.media" class="tw-relative tw-w-full tw-h-screen tw-flex tw-justify-center tw-items-start tw-overflow-hidden">
                     <div v-if="section?.layer?.type == 'image' && section?.layer?.source" class="tw-w-full tw-h-full tw-absolute background-image" :style="{'background-image': 'url('+section.layer.source+')'}"></div>
                     <div v-if="section?.media?.type == 'image' && section?.media?.source" class="tw-w-full tw-h-full tw-absolute background-image" :style="{'background-image': 'url('+section.media.source+')'}"></div>
@@ -48,11 +48,13 @@
             <!-- Section Content -->
             <div class="tw-fixed tw-z-20 tw-top-0 tw-right-0 tw-bottom-0 section-content-container allocate-navigation">
                 <div class="tw-relative tw-w-full tw-h-full">
+
+                    <!-- Header -->
                     <div
-                        v-for="(featuredSection, index) in featured"
+                        v-for="(featured, index) in features"
                         :id="`featured-${index}`"
                         :style="sectionStyle(index)"
-                        class="tw-absolute all-transition">
+                        class="tw-absolute tw-z-30 all-transition">
                         <div
                             :id="`featured-${index}-header`"
                             class="tw-pb-1">
@@ -62,26 +64,32 @@
                                 <div class="tw-w-max">
                                     <UnorderedList
                                         :icon="sectionNavigationIcon(index)"
-                                        :label="featuredSection?.title"/>
+                                        :label="featured?.title"/>
                                 </div>
                             </div>
                         </div>
                     </div>
+
+                    <!-- Banner -->
                     <div
                         v-if="true"
-                        v-for="(featuredContent, index) in featured"
-                        :id="`featured-${index}-content-overview`"
-                        :style="baseContentOverviewStyle(index)"
-                        class="tw-absolute all-transition"><!-- tw-bg-slate-500 tw-bg-opacity-50 tw-text-white -->
-                        <div :style="contentOverviewStyle(index)" class="neutral-border tw-overflow-hidden tw-text-sm">
-                            {{featuredContent.title}}
+                        v-for="(featured, index) in features"
+                        :id="`featured-${index}-content-banner`"
+                        :style="baseContentBannerStyle(featured, index)"
+                        class="tw-absolute tw-z-20 all-transition"><!-- tw-bg-slate-500 tw-bg-opacity-50 tw-text-white -->
+                        <div class="tw-w-full tw-h-full tw-pb-1">
+                            <div class="" :style="contentBannerStyle(featured, index)">
+                                <div v-if="true" class="tw-w-full tw-h-full tw-bg-cover tw-bg-center tw-bg-no-repeat tw-transition-none" :style="{'background': 'url(/images/spotlight/pmhutf1jqm3c15zb-0_0_desktop_0_1X.webp)'}"></div>
+                            </div>
                         </div>
                     </div>
+
+                    <!-- Carousel Content -->
                     <div
-                        v-for="(featuredContent, index) in featured"
+                        v-for="(featured, index) in features"
                         :id="`featured-${index}-content`"
                         :style="contentStyle(index)"
-                        class="tw-absolute all-transition">
+                        class="tw-absolute tw-z-30 all-transition">
 
                         <div class="tw-relative compensate-left-padding tw-w-screen">
                             <FeaturedCarouselRow
@@ -89,40 +97,40 @@
                                 :x-padding="paddingInPixels"
                                 :gap="'0.5rem'"
                                 :scroll-speed="scrollSpeedMs"
-                                :items="featuredContent.children"><!-- tw-bg-gray-600 tw-bg-opacity-50 -->
+                                :items="featured.children"><!-- tw-bg-gray-600 tw-bg-opacity-50 -->
                                 <template v-slot:items="{slot}">
                                     <div
                                         class="tw-flex-none tw-cursor-pointer tw-relative"
                                         v-for="child in slot.items" :key="child"
-                                        :style="[featuredElementStyle(featuredContent, child, 'card_dimension')]">
+                                        :style="[featuredElementStyle(featured, child, 'card_dimension')]">
                                         <HexagonFrame
                                             :frame-border-gradient-enable="true"
                                             :frame-border-primary-color="child.frame_border"
                                             :opaque="child.content_opaque"
                                             :content-background="child.content_background"
                                             :direction="child.content_direction"
-                                            :theme="featuredContent.theme"
+                                            :theme="featured.theme"
                                             :head-percentage="child.head_percentage"
                                             :top-right="child.top_right_corner"
                                             :bottom-left="child.bottom_left_corner"
                                             :header-fade="child.header_fade"
                                             :header-fade-color="child.header_fade_color">
                                             <template #header>
-                                                <div class="tw-bg-cover tw-bg-center tw-bg-no-repeat tw-box-border" :style="[featuredElementStyle(featuredContent, child, 'header_style')]">
+                                                <div class="tw-bg-cover tw-bg-center tw-bg-no-repeat tw-box-border" :style="[featuredElementStyle(featured, child, 'header_style')]">
                                                     <div
                                                         class="tw-h-full tw-w-full tw-bg-cover tw-bg-center tw-bg-no-repeat"
                                                         :style="{'background': child?.image ? 'url('+child?.image+')' : 'none'}"/>
                                                 </div>
-                                                <div class="tw-box-border" :style="[featuredElementStyle(featuredContent, child, 'body_style')]">
+                                                <div class="tw-box-border" :style="[featuredElementStyle(featured, child, 'body_style')]">
                                                     <div
                                                         class="tw-h-full tw-w-full tw-bg-cover tw-bg-center tw-bg-no-repeat tw-grayscale"
                                                         :style="{'background': child?.body_background ? 'url('+child?.body_background+')' : 'none', 'opacity': child?.body_background_opacity ? child.body_background_opacity : 0.2}"/>
                                                 </div>
                                             </template>
                                             <template v-slot:body="{frameBorderColor}">
-                                                <div style="text-shadow: none;" :style="[featuredElementStyle(featuredContent, child, 'body_style')]" class="tw-p-2 tw-overflow-hidden tw-flex tw-flex-col">
+                                                <div style="text-shadow: none;" :style="[featuredElementStyle(featured, child, 'body_style')]" class="tw-p-2 tw-overflow-hidden tw-flex tw-flex-col">
                                                     <div v-if="child.content_direction == `ttb`" class="tw-overflow-auto tw-space-y-0.5">
-                                                        <div :class="[featuredElementClass(featuredContent, child, 'title')]" class="tw-line-clamp-2" v-text="child.title"></div>
+                                                        <div :class="[featuredElementClass(featured, child, 'title')]" class="tw-line-clamp-2" v-text="child.title"></div>
 
                                                         <div style="height: 1px;width: 100%;background: linear-gradient(to right, transparent 0%, #e3e3e3 30%, #e3e3e3 70%, transparent 100%);"></div>
 
@@ -198,7 +206,7 @@ const {
 } = storeToRefs($themeStore);
 
 const topAllocation = ref('0px');
-const featured = ref(dataPayload['featured']);
+const features = ref(dataPayload['featured']);
 const featuredVideos = useTemplateRef('featuredVideos');
 const index = ref(0);
 const featuredElementDimension = ref('lg');
@@ -273,12 +281,12 @@ const topProximityIndex = computed(() => index.value - 1);
 const middleProximityIndex = computed(() => index.value);
 const bottomProximityIndex = computed(() => index.value + 1);
 //last section span 100% to bottom
-const bottomProximityTopPosition = computed(() => index.value == (featured.value.length - 1) ? 100 : 93);
+const bottomProximityTopPosition = computed(() => index.value == (features.value.length - 1) ? 100 : 93);
 
-const withinProximity = (index) => {
-    return (middleProximityIndex.value == index
-        || topProximityIndex.value == index
-        || bottomProximityIndex.value == index);
+const withinProximity = (indexParam) => {
+    return (middleProximityIndex.value == indexParam
+        || topProximityIndex.value == indexParam
+        || bottomProximityIndex.value == indexParam);
 }
 
 function sectionStyle(indexParam){
@@ -287,16 +295,16 @@ function sectionStyle(indexParam){
 
     let topProximityHeaderElementHeight = document.getElementById('featured-' + topProximityIndex.value + '-header')?.offsetHeight || 0;
 
-    let middleProximity = (featured.value[middleProximityIndex.value]?.proximity) ? featured.value[middleProximityIndex.value].proximity : 0 ;
+    let middleProximity = (features.value[middleProximityIndex.value]?.proximity) ? features.value[middleProximityIndex.value].proximity : 0 ;
     let middleProximityTopPosition = (middleProximity)
         ? `${middleProximity}%`
         : `${topProximityHeaderElementHeight}px`;
 
     if(withinProximity(indexParam)){
         if(topProximityIndex.value == indexParam){
-            let topProximityBackground = featured.value[topProximityIndex.value].bg;
+            let topProximityBackground = features.value[topProximityIndex.value].bg;
 
-            let topProximityTopPosition = featured.value[topProximityIndex.value].type == 'row'
+            let topProximityTopPosition = features.value[topProximityIndex.value].type == 'row'
                 ? `${100 - middleProximity}%`
                 : `calc(100% - ${topAllocation.value})`;
 
@@ -312,7 +320,7 @@ function sectionStyle(indexParam){
         }
 
         if(middleProximityIndex.value == indexParam){
-            let middleProximityBackground = featured.value[middleProximityIndex.value].bg;
+            let middleProximityBackground = features.value[middleProximityIndex.value].bg;
 
             return {
                 'top': `${middleProximityTopPosition}`,
@@ -324,7 +332,7 @@ function sectionStyle(indexParam){
         }
 
         if(bottomProximityIndex.value == indexParam){
-            let bottomProximityBackground = featured.value[bottomProximityIndex.value].bg;
+            let bottomProximityBackground = features.value[bottomProximityIndex.value].bg;
 
             return {
                 'top': `${bottomProximityTopPosition.value}%`,
@@ -358,10 +366,10 @@ function sectionStyle(indexParam){
     }
 }
 
-function baseContentOverviewStyle(indexParam) {
+function baseContentBannerStyle(featured, indexParam) {
 
     let middleProximityHeaderElementHeight = document.getElementById('featured-' + middleProximityIndex.value + '-header')?.offsetHeight || 0;
-    let middleProximity = (featured.value[middleProximityIndex.value]?.proximity) ? featured.value[middleProximityIndex.value].proximity : 0 ;
+    let middleProximity = (features.value[middleProximityIndex.value]?.proximity) ? features.value[middleProximityIndex.value].proximity : 0 ;
 
     if(middleProximityIndex.value == indexParam){
         return {
@@ -372,10 +380,15 @@ function baseContentOverviewStyle(indexParam) {
             'margin-top': `${middleProximityHeaderElementHeight}px`,
         };
     } else {
+        let minHeight = featured.banner_min_height;
+        let hiddenOffsetHeight = document.getElementById(`featured-${indexParam}-content-banner`)?.offsetHeight || 0;
+
+        hiddenOffsetHeight = hiddenOffsetHeight < minHeight ? minHeight : hiddenOffsetHeight;
+
         //Hidden from top
         if(indexParam < index.value){
             return {
-                'top': `-100%`,
+                'top': `calc(-${hiddenOffsetHeight}px - 56px)`,
                 'left': 0,
                 'right': 0,
                 'bottom': `calc(100% + ${topAllocation.value})`
@@ -387,23 +400,27 @@ function baseContentOverviewStyle(indexParam) {
             return {
                 'top': `100%`,
                 'left': 0,
-                'right': 0
+                'right': 0,
+                'bottom': `calc(-${hiddenOffsetHeight}px - 0.25rem)`,
             };
         }
     }
 }
 
-function contentOverviewStyle(indexParam){
+function contentBannerStyle(featured, indexParam){
 
-    let overviewEnabled = featured.value[indexParam].overview_enabled;
+    let bannerEnabled = featured.banner_enabled;
 
-    let overviewEnabledAndHasProximity = overviewEnabled && featured.value[indexParam].proximity;
+    let bannerEnabledAndHasProximity = bannerEnabled && featured.proximity;
 
-    let height = featured.value[indexParam].overview_height[featuredElementDimension.value];
+    let minHeight = featured.banner_min_height;
+
+    let height = '100%';
 
     return {
-        'display': overviewEnabledAndHasProximity ? 'block' : 'none',
-        'height': overviewEnabledAndHasProximity ? height : '0px'
+        'display': bannerEnabledAndHasProximity ? 'block' : 'none',
+        'height': bannerEnabledAndHasProximity ? height : '0px',
+        'min-height': bannerEnabledAndHasProximity ? `${minHeight}px` : '0px',
     }
 }
 
@@ -428,7 +445,7 @@ function contentStyle(indexParam){
     let middleProximityHeaderElementHeight = document.getElementById('featured-' + middleProximityIndex.value + '-header')?.offsetHeight || 0;
     let bottomProximityHeaderElementHeight = document.getElementById('featured-' + bottomProximityIndex.value + '-header')?.offsetHeight || 0;
 
-    let middleProximity = (featured.value[middleProximityIndex.value]?.proximity) ? featured.value[middleProximityIndex.value].proximity : 0 ;
+    let middleProximity = (features.value[middleProximityIndex.value]?.proximity) ? features.value[middleProximityIndex.value].proximity : 0 ;
     let middleProximityTopPosition = (middleProximity)
         ? `${middleProximity}%`
         : `${topProximityHeaderElementHeight}px`;
@@ -436,11 +453,11 @@ function contentStyle(indexParam){
     if(withinProximity(indexParam)){
         if(topProximityIndex.value == indexParam){
 
-            let topProximityIsTypeRow = featured.value[topProximityIndex.value].type == 'row';
+            let topProximityIsTypeRow = features.value[topProximityIndex.value].type == 'row';
 
-            let topProximityBackground = featured.value[topProximityIndex.value].debug.bg;
+            let topProximityBackground = features.value[topProximityIndex.value].debug.bg;
 
-            let topProximityTopPosition = featured.value[topProximityIndex.value].type == 'row'
+            let topProximityTopPosition = features.value[topProximityIndex.value].type == 'row'
                 ? `${100 - middleProximity}%`
                 : `calc(100% - ${topAllocation.value})`;
 
@@ -469,7 +486,7 @@ function contentStyle(indexParam){
         }
 
         if(middleProximityIndex.value == indexParam){
-            let middleProximityBackground = featured.value[middleProximityIndex.value].debug.bg;
+            let middleProximityBackground = features.value[middleProximityIndex.value].debug.bg;
 
             return {
                 'top': `${middleProximityTopPosition}`,
@@ -482,8 +499,8 @@ function contentStyle(indexParam){
         }
 
         if(bottomProximityIndex.value == indexParam){
-            let bottomProximityBackground = featured.value[bottomProximityIndex.value].debug.bg;
-            let bottomContentOpacity = featured.value[middleProximityIndex.value].theme == featured.value[bottomProximityIndex.value].theme ? '1' : '0';
+            let bottomProximityBackground = features.value[bottomProximityIndex.value].debug.bg;
+            let bottomContentOpacity = features.value[middleProximityIndex.value].theme == features.value[bottomProximityIndex.value].theme ? '1' : '0';
 
             return {
                 'top': `${bottomProximityTopPosition.value}%`,
@@ -543,14 +560,14 @@ watch(screenHeight, value => {
 
 function featuredElementStyle(featured, child, property){
 
-    let dimension = child.dimension ? child.dimension : featured.dimension;
+    let card_dimension = child.card_dimension ? child.card_dimension : featured.card_dimension;
 
-    let card_dimension_width = dimension[featuredElementDimension.value][0];
-    let card_dimension_min_width = dimension.minimum[0];
-    let card_dimension_max_width = dimension.maximum[0];
-    let card_dimension_height = dimension[featuredElementDimension.value][1];
-    let card_dimension_min_height = dimension.minimum[1];
-    let card_dimension_max_height = dimension.maximum[1];
+    let card_dimension_width = card_dimension[featuredElementDimension.value][0];
+    let card_dimension_min_width = card_dimension.minimum[0];
+    let card_dimension_max_width = card_dimension.maximum[0];
+    let card_dimension_height = card_dimension[featuredElementDimension.value][1];
+    let card_dimension_min_height = card_dimension.minimum[1];
+    let card_dimension_max_height = card_dimension.maximum[1];
 
     let card_header_width = child.content_direction == 'ttb' ? '100%' : `${child.head_percentage}%`;
     let card_header_height = child.content_direction == 'ttb' ? `${child.head_percentage}%` : '100%';
