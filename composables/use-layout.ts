@@ -221,7 +221,6 @@ export const useLayout = () => {
     }
     function setNavigationMode(mode: any, callie = ''){
         if(mode != navigationMode.value){
-            console.log({[(callie ? (callie + ' ') : '') + 'setNavigationMode']: mode});
             
             navigationMode.value = mode;
         }
