@@ -103,8 +103,7 @@ export default defineNuxtConfig({
         '@vueuse/nuxt',
         '@pinia/nuxt',
         '@nuxt/icon',
-        'nuxt-lodash',
-        'vue3-carousel-nuxt'
+        'nuxt-lodash'
     ],
 
     carousel: {
