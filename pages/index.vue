@@ -77,9 +77,9 @@
                         :id="`featured-${index}-content-banner`"
                         :style="baseContentBannerStyle(featured, index)"
                         class="tw-absolute tw-z-20 all-transition"><!-- tw-bg-slate-500 tw-bg-opacity-50 tw-text-white -->
-                        <div class="tw-w-full tw-h-full tw-pb-1">
-                            <div class="" :style="contentBannerStyle(featured, index)">
-                                <div v-if="true" class="tw-w-full tw-h-full tw-bg-cover tw-bg-center tw-bg-no-repeat tw-transition-none" :style="{'background': 'url(/images/spotlight/pmhutf1jqm3c15zb-0_0_desktop_0_1X.webp)'}"></div>
+                        <div class="tw-w-full tw-h-full tw-pb-1"  :style="{'padding-right': paddingInPixels}">
+                            <div :style="contentBannerStyle(featured, index)">
+                                <div v-if="featured?.banner?.type == 'image' && featured?.banner?.source" class="tw-w-full tw-h-full background-image" :style="{'background-image': 'url('+featured.banner.source+')'}"></div>
                             </div>
                         </div>
                     </div>
@@ -380,7 +380,7 @@ function baseContentBannerStyle(featured, indexParam) {
             'margin-top': `${middleProximityHeaderElementHeight}px`,
         };
     } else {
-        let minHeight = featured.banner_min_height;
+        let minHeight = featured.banner.min_height;
         let hiddenOffsetHeight = document.getElementById(`featured-${indexParam}-content-banner`)?.offsetHeight || 0;
 
         hiddenOffsetHeight = hiddenOffsetHeight < minHeight ? minHeight : hiddenOffsetHeight;
@@ -409,11 +409,11 @@ function baseContentBannerStyle(featured, indexParam) {
 
 function contentBannerStyle(featured, indexParam){
 
-    let bannerEnabled = featured.banner_enabled;
+    let bannerEnabled = featured.banner.enabled;
 
     let bannerEnabledAndHasProximity = bannerEnabled && featured.proximity;
 
-    let minHeight = featured.banner_min_height;
+    let minHeight = featured.banner.min_height;
 
     let height = '100%';
 
