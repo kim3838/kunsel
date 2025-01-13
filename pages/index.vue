@@ -388,7 +388,7 @@ function baseContentBannerStyle(featured, indexParam) {
         //Hidden from top
         if(indexParam < index.value){
             return {
-                'top': `calc(-${hiddenOffsetHeight}px - 56px)`,
+                'top': `calc(-${hiddenOffsetHeight}px - ${topAllocation.value})`,
                 'left': 0,
                 'right': 0,
                 'bottom': `calc(100% + ${topAllocation.value})`
