@@ -79,7 +79,11 @@
                         class="tw-absolute tw-z-20 all-transition"><!-- tw-bg-slate-500 tw-bg-opacity-50 tw-text-white -->
                         <div class="tw-w-full tw-h-full tw-pb-1"  :style="{'padding-right': paddingInPixels}">
                             <div :style="contentBannerStyle(featured, index)">
-                                <div v-if="featured?.banner?.type == 'image' && featured?.banner?.source" class="tw-w-full tw-h-full background-image" :style="{'background-image': 'url('+featured.banner.source+')'}"></div>
+                                <div
+                                    v-if="featured?.banner?.type == 'image'"
+                                    class="tw-w-full tw-h-full background-image"
+                                    :style="bannerImageSourceSet(featured?.banner?.source_set)">
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -198,7 +202,7 @@ import {storeToRefs} from 'pinia';
 import dataPayload from '@/public/data/payload.js';
 useLayout().setNavigationMode('clear', 'index.vue');
 const {$themeStore, $toRomanNumeral} = useNuxtApp();
-const {screenHeightBreakpoint, height: screenHeight, width: screenWidth} = useScreen();
+const {screenHeightBreakpoint, screenWidthBreakpoint, height: screenHeight, width: screenWidth} = useScreen();
 const clientReadyState = useClientReadyState();
 
 const {
@@ -210,6 +214,7 @@ const features = ref(dataPayload['featured']);
 const featuredVideos = useTemplateRef('featuredVideos');
 const index = ref(0);
 const featuredElementDimension = ref('lg');
+const bannerSourceSet = ref('desktop');
 const sections = ref([]);
 const padding = ref(56);
 const paddingInPixels = computed(()=>`${padding.value}px`);
@@ -424,6 +429,17 @@ function contentBannerStyle(featured, indexParam){
     }
 }
 
+function bannerImageSourceSet(sourceSet) {
+
+    let source = Boolean(sourceSet) ? sourceSet[bannerSourceSet.value] : null;
+
+    source = Boolean(source) ? `url(${source})` : 'none';
+
+    return {
+        'background-image': source
+    };
+}
+
 function sectionNavigationIcon(indexParam){
     if(topProximityIndex.value == indexParam){
         return 'ic:baseline-arrow-upward';
@@ -555,6 +571,24 @@ watch(screenHeight, value => {
     }
 
     featuredElementDimension.value = size;
+
+}, { immediate: true });
+
+watch(screenWidth, value => {
+
+    let sourceSet = 'desktop'
+
+    if (value >= screenWidthBreakpoint['xl']) {
+        sourceSet = 'desktop';
+    } else if (value >= screenWidthBreakpoint['lg'] && value < screenWidthBreakpoint['xl']) {
+        sourceSet = 'desktop';
+    } else if (value >= screenWidthBreakpoint['md'] && value < screenWidthBreakpoint['lg']) {
+        sourceSet = 'tablet';
+    } else if (value < screenWidthBreakpoint['md']) {
+        sourceSet = 'mobile';
+    }
+
+    bannerSourceSet.value = sourceSet;
 
 }, { immediate: true });
 
