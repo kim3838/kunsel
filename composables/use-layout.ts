@@ -5,7 +5,7 @@ export const useLayout = () => {
     const {screenWidthBreakpoint, width: screenWidth, height: screenHeight } = useScreen();
     const $themeStore = useThemeStore();
     const {body: bodyColor} = storeToRefs($themeStore);
-    const navigationMode = useState('navigation-mode', () => 'clear');
+    const navigationMode = useState('navigation-mode', () => 'clear-none-background');
 
     const navigationAccountLinks = computed(() => {
         let links: object[] = [];
@@ -170,7 +170,10 @@ export const useLayout = () => {
 
     const navigationHeight = ref(0);
     const navigationBackground = computed(()=>{
-        if(navigationMode.value == 'clear'){
+        if(
+            navigationMode.value == 'clear-none-background'
+            || navigationMode.value == 'clear-with-background'
+        ){
             return 'transparent';
         }
 
@@ -186,20 +189,20 @@ export const useLayout = () => {
         return 'calc(100vh - '+(navigationHeight.value + 'px')+')';
     });
     const navigationHeaderSize = computed(() => {
-        let size = 'lg'
+        let size = 'xs'
 
         if (screenWidth.value >= screenWidthBreakpoint['2xl']) {//3xl
-            size = 'md';
+            size = 'xs';
         } else if (screenWidth.value >= screenWidthBreakpoint['xl'] && screenWidth.value < screenWidthBreakpoint['2xl']) {//2xl
-            size = 'md';
+            size = 'xs';
         } else if (screenWidth.value >= screenWidthBreakpoint['lg'] && screenWidth.value < screenWidthBreakpoint['xl']) {//xl
-            size = 'md';
+            size = 'xs';
         } else if (screenWidth.value >= screenWidthBreakpoint['md'] && screenWidth.value < screenWidthBreakpoint['lg']) {//lg
-            size = 'sm';
+            size = 'xs';
         } else if (screenWidth.value >= screenWidthBreakpoint['sm'] && screenWidth.value < screenWidthBreakpoint['md']) {//md
-            size = 'sm';
+            size = 'xs';
         } else if (screenWidth.value < screenWidthBreakpoint['sm']) {//sm
-            size = 'sm';
+            size = 'xs';
         }
 
         return size;

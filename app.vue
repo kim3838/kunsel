@@ -55,21 +55,25 @@ const {
 } = useLayout();
 
 const navigationLinkColor = computed(()=>{
-    if(navigationMode.value == 'clear'){
+    if(navigationMode.value == 'clear-with-background'){
         return '#ffffff';
     }
 
     return 'auto';
 });
 const navDropOptionsParentBackgroundColor = computed(()=>{
-    if(navigationMode.value == 'clear'){
+    if(
+        navigationMode.value == 'clear-with-background'
+    ){
         return accentColor20.value;
     }
 
     return tintColor.value;
 });
 const navDropOptionsParentBorderColor = computed(()=>{
-    if(navigationMode.value == 'clear'){
+    if(
+        navigationMode.value == 'clear-with-background'
+    ){
         return accentColor20.value;
     }
 
@@ -163,8 +167,6 @@ const navDropOptionsParentBorderColor = computed(()=>{
 
 .nav-drop-active{
     background-color: v-bind(accentColor20);
-    /*border: 1px solid v-bind(neutralColor);*/
-    /*border-bottom-width: 0px;*/
 }
 
 .nav-drop{

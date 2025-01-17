@@ -32,7 +32,7 @@
                     ]" />
             </div>
         </div>
-        <div class="tw-w-full tw-font-data tw-flex tw-justify-center neutral-border-top">
+        <div class="tw-w-full tw-font-sans tw-flex tw-justify-center neutral-border-top">
             <div class="tw-max-w-screen-2xl tw-w-full tw-flex tw-justify-start lg:tw-justify-around tw-h-10">
                 <div class="tw--my-px tw-flex tw-items-center">
                     <NavDrop
@@ -141,7 +141,7 @@ watch(screenWidth, value => {
 });
 
 const navigationHeaderSize = computed(() => {
-    return 'sm';
+    return 'xs';
 });
 </script>
 

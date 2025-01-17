@@ -200,7 +200,7 @@
 <script setup lang="ts">
 import {storeToRefs} from 'pinia';
 import dataPayload from '@/public/data/payload.js';
-useLayout().setNavigationMode('clear', 'index.vue');
+useLayout().setNavigationMode('clear-none-background', 'index.vue');
 const {$themeStore, $toRomanNumeral} = useNuxtApp();
 const {screenHeightBreakpoint, screenWidthBreakpoint, height: screenHeight, width: screenWidth} = useScreen();
 const clientReadyState = useClientReadyState();
@@ -555,6 +555,19 @@ function contentStyle(indexParam){
         }
     }
 }
+
+watch(index, newIndex => {
+
+    let currentFeaturedHasBackground = Boolean(features.value[newIndex]?.media?.source);
+
+    if(currentFeaturedHasBackground){
+        useLayout().setNavigationMode('clear-with-background', 'index.vue');
+    } else {
+        useLayout().setNavigationMode('clear-none-background', 'index.vue');
+    }
+
+
+}, { immediate: true });
 
 watch(screenHeight, value => {
 

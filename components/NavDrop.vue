@@ -57,7 +57,7 @@ const {
 } = useLayout();
 
 const navigationTextShadow = computed(()=>{
-    if(navigationMode.value == 'clear'){
+    if(navigationMode.value == 'clear-with-background'){
         return '1px 1px 2px #000000';
     }
 
