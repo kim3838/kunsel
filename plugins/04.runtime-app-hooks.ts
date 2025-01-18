@@ -12,7 +12,7 @@ export default defineNuxtPlugin((nuxtApp) => {
     //Called when initial vueApp instance is created.
     nuxtApp.hook('app:created', () => {
         //console.log('RUNTIME APP HOOK: vueApp instance is created');
-        useClientReadyState().value = false;
+        //useClientReadyState().value = false;
     });
 
     //Called when Vue app is initialized and mounted in browser.
