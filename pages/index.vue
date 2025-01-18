@@ -76,8 +76,8 @@
                         v-for="(featured, index) in features"
                         :id="`featured-${index}-content-banner`"
                         :style="baseContentBannerStyle(featured, index)"
-                        class="tw-absolute tw-z-20 all-transition"><!-- tw-bg-slate-500 tw-bg-opacity-50 tw-text-white -->
-                        <div class="tw-w-full tw-h-full tw-pb-1"  :style="{'padding-right': paddingInPixels}">
+                        class="tw-absolute tw-z-20 all-transition">
+                        <div class="tw-w-full tw-h-full tw-pb-1">
                             <div :style="contentBannerStyle(featured, index)">
                                 <div
                                     v-if="featured?.banner?.type == 'image'"
@@ -232,7 +232,6 @@ if(clientReadyState.value){
     onMounted(async () => {
         await nextTick(() => {
             bootPageScroll();
-            //console.log({'onMounted feature_2': feature_2.value});
             autoPlayVideoSpotlights(featuredVideos);
         });
     })
@@ -243,7 +242,6 @@ watch(clientReadyState, async (clientReady) => {
     if(clientReady){
         await nextTick(() => {
             bootPageScroll();
-            //console.log({'clientReady feature_2': feature_2.value});
             autoPlayVideoSpotlights(featuredVideos);
         });
     }
@@ -252,8 +250,6 @@ watch(clientReadyState, async (clientReady) => {
 function autoPlayVideoSpotlights(videoSpotlights){
 
     videoSpotlights.value?.forEach(video => {
-
-        console.log({'featuredVideo': video});
 
         if(video){
             let playPromise = video.play();
