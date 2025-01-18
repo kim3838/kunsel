@@ -120,12 +120,12 @@
                                             :header-fade="child.header_fade"
                                             :header-fade-color="child.header_fade_color">
                                             <template #header>
-                                                <div class="tw-bg-cover tw-bg-center tw-bg-no-repeat tw-box-border" :style="[featuredElementStyle(featured, child, 'header_style')]">
+                                                <div :style="[featuredElementStyle(featured, child, 'header_style')]" class="tw-bg-cover tw-bg-center tw-bg-no-repeat tw-box-border">
                                                     <div
                                                         class="tw-h-full tw-w-full tw-bg-cover tw-bg-center tw-bg-no-repeat"
                                                         :style="{'background': child?.image ? 'url('+child?.image+')' : 'none'}"/>
                                                 </div>
-                                                <div class="tw-box-border" :style="[featuredElementStyle(featured, child, 'body_style')]">
+                                                <div :style="[featuredElementStyle(featured, child, 'body_style')]" class="tw-box-border">
                                                     <div
                                                         class="tw-h-full tw-w-full tw-bg-cover tw-bg-center tw-bg-no-repeat tw-grayscale"
                                                         :style="{'background': child?.body_background ? 'url('+child?.body_background+')' : 'none', 'opacity': child?.body_background_opacity ? child.body_background_opacity : 0.2}"/>
@@ -379,7 +379,7 @@ function baseContentBannerStyle(featured, indexParam) {
     if(middleProximityIndex.value == indexParam){
         return {
             'top': 0,
-            'left': 0,
+            'left': `${compensatePaddingInPixels.value}`,
             'right': 0,
             'bottom': `calc(100% - ${middleProximity}%)`,
             'margin-top': `${middleProximityHeaderElementHeight}px`,
@@ -394,7 +394,7 @@ function baseContentBannerStyle(featured, indexParam) {
         if(indexParam < index.value){
             return {
                 'top': `calc(-${hiddenOffsetHeight}px - ${topAllocation.value})`,
-                'left': 0,
+                'left': `${compensatePaddingInPixels.value}`,
                 'right': 0,
                 'bottom': `calc(100% + ${topAllocation.value})`
             };
@@ -404,7 +404,7 @@ function baseContentBannerStyle(featured, indexParam) {
         if(indexParam > index.value){
             return {
                 'top': `100%`,
-                'left': 0,
+                'left': `${compensatePaddingInPixels.value}`,
                 'right': 0,
                 'bottom': `calc(-${hiddenOffsetHeight}px - 0.25rem)`,
             };
@@ -418,14 +418,11 @@ function contentBannerStyle(featured, indexParam){
 
     let bannerEnabledAndHasProximity = bannerEnabled && featured.proximity;
 
-    let minHeight = featured.banner.min_height;
-
     let height = '100%';
 
     return {
         'display': bannerEnabledAndHasProximity ? 'block' : 'none',
         'height': bannerEnabledAndHasProximity ? height : '0px',
-        'min-height': bannerEnabledAndHasProximity ? `${minHeight}px` : '0px',
     }
 }
 
@@ -616,12 +613,15 @@ function featuredElementStyle(featured, child, property){
     let card_dimension_min_height = card_dimension.minimum[1];
     let card_dimension_max_height = card_dimension.maximum[1];
 
-    let card_header_width = child.content_direction == 'ttb' ? '100%' : `${child.head_percentage}%`;
-    let card_header_height = child.content_direction == 'ttb' ? `${child.head_percentage}%` : '100%';
+    let head_percentage = child.head_percentage[featuredElementDimension.value];
+    let body_percentage = child.body_percentage[featuredElementDimension.value];
+
+    let card_header_width = child.content_direction == 'ttb' ? '100%' : `${head_percentage}%`;
+    let card_header_height = child.content_direction == 'ttb' ? `${head_percentage}%` : '100%';
     let card_header_background = child?.header_background ? `url(${child.header_background})` : 'none';
 
-    let card_body_width = child.content_direction == 'ttb' ? '100%' : `${child.body_percentage}%`;
-    let card_body_height = child.content_direction == 'ttb' ? `${child.body_percentage}%` : '100%';
+    let card_body_width = child.content_direction == 'ttb' ? '100%' : `${body_percentage}%`;
+    let card_body_height = child.content_direction == 'ttb' ? `${body_percentage}%` : '100%';
 
     return {
         'card_dimension': {
