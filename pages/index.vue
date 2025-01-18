@@ -501,7 +501,7 @@ function contentStyle(indexParam){
                 'top': `${middleProximityTopPosition}`,
                 'left': 0,
                 'right': 0,
-                'bottom': `${100 - bottomProximityTopPosition.value}%`,
+                'bottom': `calc(${100 - bottomProximityTopPosition.value}% + 0.25rem)`,
                 'margin-top': `${middleProximityHeaderElementHeight}px`,
                 //'background-color': middleProximityBackground,
             };
