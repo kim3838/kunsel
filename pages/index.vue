@@ -564,16 +564,20 @@ watch(index, newIndex => {
 
 watch(screenHeight, value => {
 
-    let size = 'md'
+    let size = 'lg'
 
-    if (value >= screenHeightBreakpoint['lg']) {
+    if (value >= screenHeightBreakpoint['xl']) {
         size = 'xl';
-    } else if (value >= screenHeightBreakpoint['md'] && value < screenHeightBreakpoint['lg']) {
+    } else if (value > screenHeightBreakpoint['lg'] && value <= screenHeightBreakpoint['xl']) {
         size = 'lg';
-    } else if (value >= screenHeightBreakpoint['sm'] && value < screenHeightBreakpoint['md']) {
+    } else if (value > screenHeightBreakpoint['md'] && value <= screenHeightBreakpoint['lg']) {
+        size = 'lg';
+    } else if (value > screenHeightBreakpoint['sm'] && value <= screenHeightBreakpoint['md']) {
         size = 'md';
-    } else if (value < screenHeightBreakpoint['sm']) {
+    } else if (value > screenHeightBreakpoint['xs'] && value <= screenHeightBreakpoint['sm']) {
         size = 'sm';
+    } else if(value <= screenHeightBreakpoint['xs']){
+        size = 'xs';
     }
 
     featuredElementDimension.value = size;

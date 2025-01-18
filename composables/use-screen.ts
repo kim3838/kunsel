@@ -8,9 +8,11 @@ export const useScreen = () => {
     };
 
     const screenHeightBreakpoint = {
-        'sm': 680,
+        'xs': 560,
+        'sm': 620,
         'md': 780,
-        'lg': 940
+        'lg': 940,
+        'xl': 1100,
     };
 
     const { width, height } = useWindowSize()
