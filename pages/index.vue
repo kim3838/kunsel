@@ -114,7 +114,7 @@
                                             :content-background="child.content_background"
                                             :direction="child.content_direction"
                                             :theme="featured.theme"
-                                            :head-percentage="child.head_percentage"
+                                            :head-percentage="featuredElementStyle(featured, child, 'head_percentage')"
                                             :top-right="child.top_right_corner"
                                             :bottom-left="child.bottom_left_corner"
                                             :header-fade="child.header_fade"
@@ -646,6 +646,7 @@ function featuredElementStyle(featured, child, property){
             'min-height': card_dimension_min_height,
             'max-height': card_dimension_max_height,
         },
+        'head_percentage': head_percentage,
         'header_style': {
             'width': card_header_width,
             'height': card_header_height,
