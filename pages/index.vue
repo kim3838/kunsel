@@ -380,13 +380,15 @@ function baseContentBannerStyle(featured, indexParam) {
     let middleProximityHeaderElementHeight = document.getElementById('featured-' + middleProximityIndex.value + '-header')?.offsetHeight || 0;
     let middleProximity = (features.value[middleProximityIndex.value]?.proximity) ? features.value[middleProximityIndex.value].proximity : 0 ;
 
+    let middleProximityMargintop = indexParam > 0 ? middleProximityHeaderElementHeight : 0;
+
     if(middleProximityIndex.value == indexParam){
         return {
             'top': 0,
             'left': `${compensatePaddingInPixels.value}`,
             'right': 0,
             'bottom': `calc(100% - ${middleProximity}%)`,
-            'margin-top': `${middleProximityHeaderElementHeight}px`,
+            'margin-top': `${middleProximityMargintop}px`,
         };
     } else {
         let minHeight = featured.banner.min_height;
