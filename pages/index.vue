@@ -145,7 +145,7 @@
                                                     </div>
 
                                                     <div v-else-if="child.content_direction == `ltr`" class="tw-overflow-auto tw-space-y-1">
-                                                        <div class="tw-font-sans tw-font-semibold tw-h-max tw-flex-none">
+                                                        <div class="tw-font-stiff tw-h-max tw-flex-none">
                                                             <UnorderedList
                                                                 class="tw-cursor-pointer hover:tw-underline"
                                                                 :size="child?.title_size"
@@ -664,8 +664,8 @@ function featuredElementStyle(featured, child, property){
 function featuredElementClass(featured, child, property){
 
     let titleClass =  ['xl','lg'].indexOf(featuredElementDimension.value) >= 0
-        ? 'tw-text-lg tw-font-medium tw-font-header'
-        : 'tw-text-sm tw-font-normal tw-font-sans';
+        ? 'tw-text-lg tw-font-medium tw-font-stiff'
+        : 'tw-text-sm tw-font-normal tw-font-stiff';
 
     return {
         'title': titleClass
