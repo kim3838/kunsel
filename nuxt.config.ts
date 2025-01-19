@@ -23,13 +23,20 @@ export default defineNuxtConfig({
                 {rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=Protest+Revolution&display=swap" rel="stylesheet'},
                 {rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=Hedvig+Letters+Sans&display=swap" rel="stylesheet'},
                 //Serif
-                {rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=Gupter:wght@400;500;700&family=Kotta+One&display=swap'},
                 {rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&display=swap'},
                 {rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=Oranienbaum&display=swap'},
                 {rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=Almendra:ital,wght@0,400;0,700;1,400;1,700&display=swap'},
                 //Monospace
                 {rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap'},
-                {rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=Spline+Sans+Mono:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap'}
+                {rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=Spline+Sans+Mono:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap'},
+                //Stiff
+                {rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=Iceberg&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap'},
+                {rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=Bruno+Ace+SC&display=swap'},
+                //Techno
+                {rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=Oxanium:wght@200..800&display=swap'},
+                //Appearance
+                {rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=Merienda:wght@300..900&display=swap'},
+
             ],
             "style": [],
             "script": [

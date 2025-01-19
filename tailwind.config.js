@@ -28,6 +28,18 @@ module.exports = {
                     'Protest Revolution',
                     'sans-serif'
                 ],
+                appearance:[
+                    'Merienda'
+                ],
+                techno:[
+                    'Oxanium'
+                ],
+                stiff:[
+                    'Iceberg',
+                ],
+                'stiff-wide':[
+                    'Bruno Ace SC',
+                ],
                 data: [
                     'Sofia Sans Semi Condensed'
                 ],
@@ -43,9 +55,6 @@ module.exports = {
                     'Oranienbaum',
                     'Instrument Serif',
                     'Almendra',
-                    'Prociono',
-                    'Gupter',
-                    'Kotta One',
                     'serif'
                 ],
                 mono : [
