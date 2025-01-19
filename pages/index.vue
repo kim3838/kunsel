@@ -15,7 +15,7 @@
             <!-- Section Fragments -->
             <div class="tw-fixed tw-z-10 tw-top-0 tw-right-0 tw-bottom-0 tw-left-0 tw-h-screen">
                 <!-- Todo: Add icon before section titles to overlap vertical rule -->
-                <div class="tw-absolute vertical-nav-rule tw-w-[1px] tw-top-0 tw-right-0 tw-bottom-0 tw-left-[50px]"></div>
+                <div class="tw-absolute vertical-nav-rule"></div>
 
                 <div v-if="false" class="tw-absolute tw-text-xs tw-font-mono">
                     {{"INDEX: " + index}}<br>
@@ -219,6 +219,8 @@ const sections = ref([]);
 const padding = ref(56);
 const paddingInPixels = computed(()=>`${padding.value}px`);
 const compensatePaddingInPixels = computed(()=>`-${padding.value}px`);
+const marginRuleLeftSpace = computed(()=>padding.value - 6);
+const marginRuleLeftSpaceInPixels = computed(()=>`${marginRuleLeftSpace.value}px`);
 
 const scrolling = ref(false);
 const proximityThreshold = ref(0);
@@ -770,6 +772,8 @@ section {
 }
 
 .vertical-nav-rule{
+    width: 1px;
+    inset: 0 0 0 v-bind(marginRuleLeftSpaceInPixels);
     background: linear-gradient(
         to bottom,
         transparent 0%,
