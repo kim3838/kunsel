@@ -566,17 +566,17 @@ watch(screenHeight, value => {
 
     let size = 'lg'
 
-    if (value >= screenHeightBreakpoint['xl']) {
+    if (value > screenHeightBreakpoint['xl']) {
         size = 'xl';
-    } else if (value > screenHeightBreakpoint['lg'] && value <= screenHeightBreakpoint['xl']) {
+    } else if (value >= screenHeightBreakpoint['lg'] && value < screenHeightBreakpoint['xl']) {
         size = 'lg';
-    } else if (value > screenHeightBreakpoint['md'] && value <= screenHeightBreakpoint['lg']) {
+    } else if (value >= screenHeightBreakpoint['md'] && value < screenHeightBreakpoint['lg']) {
         size = 'lg';
-    } else if (value > screenHeightBreakpoint['sm'] && value <= screenHeightBreakpoint['md']) {
+    } else if (value >= screenHeightBreakpoint['sm'] && value < screenHeightBreakpoint['md']) {
         size = 'md';
-    } else if (value > screenHeightBreakpoint['xs'] && value <= screenHeightBreakpoint['sm']) {
+    } else if (value >= screenHeightBreakpoint['xs'] && value < screenHeightBreakpoint['sm']) {
         size = 'sm';
-    } else if(value <= screenHeightBreakpoint['xs']){
+    } else if(value < screenHeightBreakpoint['xs']){
         size = 'xs';
     }
 
@@ -586,19 +586,25 @@ watch(screenHeight, value => {
 
 watch(screenWidth, value => {
 
-    let sourceSet = 'desktop'
+    let sourceSet = 'desktop';
+    let paddingTemp = 56;
 
-    if (value >= screenWidthBreakpoint['xl']) {
+    if (value > screenWidthBreakpoint['xl']) {
         sourceSet = 'desktop';
+        paddingTemp = 66;
     } else if (value >= screenWidthBreakpoint['lg'] && value < screenWidthBreakpoint['xl']) {
         sourceSet = 'desktop';
+        paddingTemp = 56;
     } else if (value >= screenWidthBreakpoint['md'] && value < screenWidthBreakpoint['lg']) {
         sourceSet = 'tablet';
+        paddingTemp = 46;
     } else if (value < screenWidthBreakpoint['md']) {
         sourceSet = 'mobile';
+        paddingTemp = 46;
     }
 
     bannerSourceSet.value = sourceSet;
+    padding.value = paddingTemp;
 
 }, { immediate: true });
 
