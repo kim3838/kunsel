@@ -6,7 +6,7 @@
 
                 <div class="tw-space-y-2">
                     <!-- Static Single, MultiSelect and DateTime, Date, and Month Picker -->
-                    <div v-if="true" class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-8">
+                    <div v-if="false" class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-8">
                         <div class="tw-block neutral-border">
                             <InputLabel :size="'sm'" value="Static Multi Select" />
                             <MultiSelect drop-shadow :selection-max-viewable-line="5" :size="'md'" :options="category" :icon="'ic:sharp-qr-code'"/>
@@ -75,7 +75,7 @@
                     </div>
 
                     <!-- Paginated Single and MultiSelect -->
-                    <div v-if="true" class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-8">
+                    <div v-if="false" class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-8">
                         <div class="tw-block neutral-border">
                             <InputLabel :size="'sm'" value="Paginated Multi Select" />
                             <MultiSelectPaginated
@@ -199,7 +199,7 @@
                     </div>
 
                     <!-- Datatables -->
-                    <div v-if="true" class="tw-grid tw-gap-2 sm:tw-grid-cols-1 md:tw-grid-cols-2 lg:tw-grid-cols-4">
+                    <div v-if="false" class="tw-grid tw-gap-2 sm:tw-grid-cols-1 md:tw-grid-cols-2 lg:tw-grid-cols-4">
                         <div class="tw-block tw-col-span-1 sm:tw-col-span-3 md:tw-col-span-2 lg:tw-col-span-2 tw-p-2 neutral-border">
                             <InputLabel class="tw-mb-2" :size="'md'" value="MD Datatable" />
                             <DataTable
@@ -379,7 +379,7 @@
                                 <div class="neutral-border tw-p-1">
                                     <pre>USEFETCH LAZY FETCH PENDING: {{useFetchPending}}</pre>
                                     <pre>USEFETCH LAZY FETCH DATA: {{!useFetchPending ? useFetchData : null}}</pre>
-                                    <Button class="tw-w-min" @click="useFetchPost" :label="'useFetch Post'" />
+                                    <Button class="tw-w-min" @click="useFetchGet" :label="'useFetch Get'" />
                                 </div>
                             </div>
                         </div>
@@ -971,7 +971,7 @@
                     </div>
 
                     <!-- Default Button -->
-                    <div v-if="true" class="tw-grid tw-gap-2 tw-grid-cols-3 sm:tw-grid-cols-4 lg:tw-grid-cols-6 xl:tw-grid-cols-12 2xl:tw-grid-cols-12">
+                    <div v-if="false" class="tw-grid tw-gap-2 tw-grid-cols-3 sm:tw-grid-cols-4 lg:tw-grid-cols-6 xl:tw-grid-cols-12 2xl:tw-grid-cols-12">
                         <div class="tw-flex tw-items-start tw-justify-start tw-block neutral-border">
                             <Button :size="'2xs'" :icon="'ic:sharp-send-to-mobile'" :label="'XXS Button'"></Button>
                         </div>
@@ -996,7 +996,7 @@
                     </div>
 
                     <!-- Outline Button -->
-                    <div v-if="true" class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-9">
+                    <div v-if="false" class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-9">
                         <div class="tw-flex tw-items-start tw-justify-start tw-block neutral-border">
                             <Button :variant="'outline'" :size="'2xs'" :icon="'ic:sharp-dashboard'" :label="'XXS Button'"></Button>
                         </div>
@@ -1451,10 +1451,10 @@ async function oFetchNoPromptPost(){
 const useFetchData = ref('');
 const {
     pending: useFetchPending,
-    execute: useFetchPost,
-} = await laraUseFetch("/api/test-post", {
+    execute: useFetchGet,
+} = await laraUseFetch("/api/user", {
     lazy: false,
-    method: 'POST',
+    method: 'GET',
 }, {
     onRequest: async () => {
         console.log("CALLBACK ON REQUEST");
