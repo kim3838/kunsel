@@ -2,14 +2,14 @@
     <nav
         ref="landingNavigation"
         class="primary-navigation-parent tw-z-40 tw-fixed">
-        <div class="tw-w-full tw-font-sans tw-flex tw-justify-center">
-            <div class="tw-max-w-screen-2xl tw-w-full tw-flex tw-justify-start lg:tw-justify-around tw-h-10 lg:tw-h-10">
+        <div class="tw-w-full tw-font-stiff tw-flex tw-justify-center">
+            <div class="tw-max-w-screen-2xl tw-w-full tw-flex tw-justify-start lg:tw-justify-around tw-h-10 lg:tw-h-16">
                 <div class="tw--my-px tw-flex tw-items-center">
                     <div class="tw-w-max tw-h-full tw-flex tw-items-center">
                         <GlobalFoundries :dark="navigationMode === 'clear-with-background'" />
                     </div>
                     <NavDrop
-                        class="xl:tw-hidden tw-h-full"
+                        class="lg:tw-hidden tw-h-full"
                         :size="navigationHeaderSize"
                         :title="'Menu'"
                         :drop-options="navigationLinks" />
@@ -17,7 +17,7 @@
 
                 <div class="tw-flex">
                     <!-- Navigation Links -->
-                    <div class="tw--my-px tw-hidden xl:tw-flex">
+                    <div class="tw--my-px tw-hidden lg:tw-flex">
                     <span class="tw-flex tw-items-center"  v-for="navigation in navigationLinks" :key="navigation.title">
                         <NavLink
                             class="tw-h-full"
@@ -86,12 +86,9 @@ const {
     rightNavigationDropAlign
 } = useLayout();
 
-
 onMounted(async () => {
-    //console.log({'Navigation.vue': 'Mounted'});
     await nextTick(() => {
         let navigationHeight = landingNavigation.value?.offsetHeight;
-        //console.log({'Await NextTick LandingNavigation.vue navigationHeight':navigationHeight});
         if(landingNavigation.value !== null &&  navigationHeight !== undefined){
             setNavigationHeight(navigationHeight);
             navigationHeightInPixelsModel.value = navigationHeightInPixels.value;
@@ -100,11 +97,9 @@ onMounted(async () => {
 });
 
 watch(clientReadyState, async (clientReady) => {
-    //console.log({'Navigation.vue Watch clientReadyState':clientReady});
     if(clientReady){
         await nextTick(() => {
             let navigationHeight = landingNavigation.value?.offsetHeight;
-            //console.log({'Await NextTick LandingNavigation.vue navigationHeight':navigationHeight});
             if(landingNavigation.value !== null &&  navigationHeight !== undefined){
                 setNavigationHeight(navigationHeight);
                 navigationHeightInPixelsModel.value = navigationHeightInPixels.value;
@@ -115,6 +110,7 @@ watch(clientReadyState, async (clientReady) => {
 
 watch(screenWidth, value => {
     setNavigationHeight(landingNavigation.value.offsetHeight);
+    navigationHeightInPixelsModel.value = navigationHeightInPixels.value;
 });
 </script>
 
