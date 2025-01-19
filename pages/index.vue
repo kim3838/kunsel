@@ -59,7 +59,7 @@
                             :id="`featured-${index}-header`"
                             class="tw-pb-1">
                             <div
-                                class="tw-font-data tw-w-min tw-px-1 tw-text-nowrap tw-cursor-pointer tw-text-white tw-rounded-sm tw-bg-opacity-25 tw-bg-slate-500 tw-backdrop-blur-sm"
+                                class="tw-font-stiff-wide section-header tw-w-min tw-px-1 tw-text-nowrap tw-cursor-pointer tw-text-white tw-rounded-sm tw-backdrop-blur-sm"
                                 style="text-shadow: 1px 1px 2px #000000;">
                                 <div class="tw-w-max">
                                     <UnorderedList
@@ -206,8 +206,14 @@ const {screenHeightBreakpoint, screenWidthBreakpoint, height: screenHeight, widt
 const clientReadyState = useClientReadyState();
 
 const {
-    thread: threadColor
+    hexAlpha,
+    thread: threadColor,
+    accent: accentColor,
 } = storeToRefs($themeStore);
+
+const accentColor20 = computed(() => {
+    return accentColor.value + hexAlpha.value['20'];
+});
 
 const topAllocation = ref('0px');
 const features = ref(dataPayload['featured']);
@@ -793,6 +799,10 @@ section {
 
 .section-content-container{
     left: v-bind(paddingInPixels)
+}
+
+.section-header{
+    background-color: v-bind(accentColor20);
 }
 
 .compensate-left-padding {
