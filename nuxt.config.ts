@@ -128,6 +128,11 @@ export default defineNuxtConfig({
                 },
             },
         },
+        server: {
+            allowedHosts: [
+                '.server.local'
+            ]
+        }
     },
 
     tailwindcss: {
