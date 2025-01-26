@@ -197,6 +197,9 @@ useLayout().setNavigationMode('solid', 'Profile.vue');
 await laraUseFetch("/api/hit", {lazy: false});
 
 const {$promptStore} = useNuxtApp();
+const runtimeConfig = useRuntimeConfig();
+
+const presetPassword = process.env.NODE_ENV === 'development' ? runtimeConfig.public.devUserPassword : '';
 
 const user = userState();
 const userName = computed(() => _get(user.value, 'name', null));
@@ -216,9 +219,9 @@ if(twoFactorEnabled.value && !twoFactorConfirmed.value){
 }
 
 let updatePassword = reactive({
-    currentPassword: 'password',
-    newPassword: 'password',
-    confirmNewPassword: 'password',
+    currentPassword: presetPassword,
+    newPassword: presetPassword,
+    confirmNewPassword: presetPassword,
 });
 
 let updatePasswordDataComputed = computed(() => {
@@ -261,7 +264,7 @@ const executeUpdatePassword = async () => {
     });
 }
 
-const confirmPassword = ref('password');
+const confirmPassword = ref(presetPassword);
 const logoutOtherDevicePending = ref(false);
 const executeLogoutOtherDevice = async () => {
     logoutOtherDevicePending.value = true;
