@@ -192,6 +192,10 @@
 <script setup lang="ts">
 definePageMeta({middleware: 'auth'});
 useLayout().setNavigationMode('solid', 'Profile.vue');
+
+//Hit server with ssr
+await laraUseFetch("/api/hit", {lazy: false});
+
 const {$promptStore} = useNuxtApp();
 
 const user = userState();
