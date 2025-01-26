@@ -282,8 +282,23 @@ const executeLogoutOtherDevice = async () => {
                 title: 'Logout other device',
                 message: _get(response, '_data.message', ''),
                 action: {
-                    callback: () => {
+                    callback: async () => {
                         confirmPassword.value = '';
+                        pendingBrowserSessions.value = true;
+
+                        await laraFetch("/api/sessions", {
+                            method: 'GET',
+                        }, {
+                            onRequestError: () => {
+                                pendingBrowserSessions.value = false;
+                            },
+                            onResponse: () => {
+                                pendingBrowserSessions.value = false;
+                            },
+                            onSuccessResponse: (request, response, options) => {
+                                browserSessions.value = _get(response, "_data.values", []);
+                            }
+                        });
                     },
                     label: 'Close'
                 }
