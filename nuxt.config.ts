@@ -130,7 +130,8 @@ export default defineNuxtConfig({
         },
         server: {
             allowedHosts: [
-                '.server.local'
+                '.server.local',
+                'client.server.local',
             ]
         }
     },
