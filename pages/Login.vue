@@ -76,8 +76,10 @@ definePageMeta({middleware: 'guest'});
 useLayout().setNavigationMode('solid', 'Login.vue');
 const clientReadyState = useClientReadyState();
 const {$coreStore} = useNuxtApp();
+const runtimeConfig = useRuntimeConfig();
 const {isAuthenticated, login, authPending} = useAuth();
-
+const presetUsername = process.env.NODE_ENV === 'development' ? runtimeConfig.public.devUsername : '';
+const presetPassword = process.env.NODE_ENV === 'development' ? runtimeConfig.public.devUserPassword : '';
 let identifierInput = ref(null);
 
 //On navigate, focus on identifier input
@@ -103,8 +105,8 @@ watch(clientReadyState, async (clientReady) => {
     }
 });
 
-const identifier = ref("kim.123");
-const password = ref("Operationcal1277&&5");
+const identifier = ref(presetUsername);
+const password = ref(presetPassword);
 const remember = ref(false);
 
 function handleLogin(){
