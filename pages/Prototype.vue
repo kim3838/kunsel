@@ -6,28 +6,29 @@
 
                 <div class="tw-space-y-2">
                     <!-- Static Single, MultiSelect and DateTime, Date, and Month Picker -->
-                    <div v-if="false" class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-8">
+                    <div v-if="true" class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-8">
                         <div class="tw-block neutral-border">
                             <InputLabel :size="'sm'" value="Static Multi Select" />
-                            <MultiSelect drop-shadow :selection-max-viewable-line="5" :size="'md'" :options="category" :icon="'ic:sharp-qr-code'"/>
+                            <MultiSelect glint drop-shadow :selection-max-viewable-line="5" :size="'md'" :options="category" :icon="'ic:sharp-qr-code'"/>
                         </div>
                         <div class="tw-block neutral-border">
                             <InputLabel :size="'sm'" value="Non Searchable Multi Select" />
-                            <MultiSelect drop-shadow :selection-max-viewable-line="5" :searchable="false" :size="'md'" :options="category" :icon="'eos-icons:installing'"/>
+                            <MultiSelect glint drop-shadow :selection-max-viewable-line="5" :searchable="false" :size="'md'" :options="category" :icon="'eos-icons:installing'"/>
                         </div>
                         <div class="tw-block neutral-border">
                             <InputLabel :size="'sm'" value="Static Single Select" />
-                            <SingleSelect drop-shadow :selection-max-viewable-line="4" :always-active="false" :size="'md'" :icon="'emojione-monotone:japanese-no-vacancy-button'" :options="plan"/>
+                            <SingleSelect glint drop-shadow :selection-max-viewable-line="4" :always-active="false" :size="'md'" :icon="'emojione-monotone:japanese-no-vacancy-button'" :options="plan"/>
                         </div>
 
                         <div class="tw-block neutral-border">
                             <InputLabel :size="'sm'" value="Non Searchable Single Select" />
-                            <SingleSelect drop-shadow :selection-max-viewable-line="4" :searchable="false" :size="'md'" :icon="'emojione-monotone:japanese-vacancy-button'" :options="plan"/>
+                            <SingleSelect glint drop-shadow :selection-max-viewable-line="4" :searchable="false" :size="'md'" :icon="'emojione-monotone:japanese-vacancy-button'" :options="plan"/>
                         </div>
 
                         <div class="tw-block neutral-border">
                             <InputLabel :size="'sm'" value="Single Select Persist Value" />
                             <SingleSelect
+                                glint
                                 drop-shadow
                                 :selection-max-viewable-line="3"
                                 :size="'md'"
@@ -41,6 +42,7 @@
                         <div class="tw-block neutral-border">
                             <InputLabel :size="'sm'" for="date" value="Date" />
                             <InputWithIcon
+                                glint
                                 :icon="'simple-icons:googlecalendar'"
                                 :size="'md'"
                                 :id="'date'"
@@ -52,6 +54,7 @@
                         <div class="tw-block neutral-border">
                             <InputLabel :size="'sm'" for="datetime" value="DateTime" />
                             <InputWithIcon
+                                glint
                                 :icon="'simple-icons:googlecalendar'"
                                 :size="'md'"
                                 :id="'datetime'"
@@ -64,6 +67,7 @@
                         <div class="tw-block neutral-border">
                             <InputLabel :size="'sm'" for="month" value="Month" />
                             <InputWithIcon
+                                glint
                                 :icon="'simple-icons:protoncalendar'"
                                 :size="'md'"
                                 :id="'month'"
@@ -75,10 +79,11 @@
                     </div>
 
                     <!-- Paginated Single and MultiSelect -->
-                    <div v-if="false" class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-8">
+                    <div v-if="true" class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-8">
                         <div class="tw-block neutral-border">
                             <InputLabel :size="'sm'" value="Paginated Multi Select" />
                             <MultiSelectPaginated
+                                glint
                                 :drop-shadow="true"
                                 :selection-max-content="true"
                                 :selected-max-viewable-line="6"
@@ -94,6 +99,7 @@
                         <div class="tw-block neutral-border">
                             <InputLabel :size="'sm'" value="Paginated Single Select" />
                             <SingleSelectPaginated
+                                glint
                                 :value-persist="true"
                                 :drop-shadow="true"
                                 :selection-max-content="false"
@@ -109,9 +115,10 @@
                     </div>
 
                     <!-- Static Single and MultiSelect with more Custom Configurations -->
-                    <div v-if="false" class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-8">
-                        <div class="tw-flex tw-block">
+                    <div v-if="true" class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-8">
+                        <div>
                             <MultiSelect
+                                glint
                                 :selection-max-content="false"
                                 :selection-max-viewable-line="6"
                                 :selection-float="false"
@@ -124,8 +131,9 @@
                                 :options="category"
                                 :icon="'ic:sharp-display-settings'"/>
                         </div>
-                        <div class="tw-flex tw-block">
+                        <div>
                             <MultiSelect
+                                glint
                                 :selection-max-content="false"
                                 :selection-max-viewable-line="3"
                                 :selection-float="false"
@@ -138,8 +146,9 @@
                                 :options="category"
                                 :icon="'ic:sharp-display-settings'"/>
                         </div>
-                        <div class="tw-flex tw-block">
+                        <div>
                             <MultiSelect
+                                glint
                                 :selection-max-content="false"
                                 :selection-max-viewable-line="3"
                                 :selection-float="false"
@@ -152,8 +161,9 @@
                                 :options="category"
                                 :icon="'ic:sharp-display-settings'"/>
                         </div>
-                        <div class="tw-flex tw-block">
+                        <div>
                             <SingleSelect
+                                glint
                                 :selection-max-content="false"
                                 :selection-max-viewable-line="5"
                                 :selection-float="false"
@@ -166,8 +176,9 @@
                                 :label="'Select Plan'"
                                 :options="plan"/>
                         </div>
-                        <div class="tw-flex tw-block">
+                        <div>
                             <SingleSelect
+                                glint
                                 :size="'lg'"
                                 :selection-max-content="false"
                                 :selection-max-viewable-line="5"
@@ -181,8 +192,9 @@
                                 :label="'Select Plan'"
                                 :options="plan"/>
                         </div>
-                        <div class="tw-flex tw-block">
+                        <div>
                             <SingleSelect
+                                glint
                                 :size="'lg'"
                                 :selection-max-content="false"
                                 :selection-max-viewable-line="3"
@@ -199,7 +211,7 @@
                     </div>
 
                     <!-- Datatables -->
-                    <div v-if="false" class="tw-grid tw-gap-2 sm:tw-grid-cols-1 md:tw-grid-cols-2 lg:tw-grid-cols-4">
+                    <div v-if="true" class="tw-grid tw-gap-2 sm:tw-grid-cols-1 md:tw-grid-cols-2 lg:tw-grid-cols-4">
                         <div class="tw-block tw-col-span-1 sm:tw-col-span-3 md:tw-col-span-2 lg:tw-col-span-2 tw-p-2 neutral-border">
                             <InputLabel class="tw-mb-2" :size="'md'" value="MD Datatable" />
                             <DataTable
@@ -386,7 +398,7 @@
                     </div>
 
                     <!-- Tab Indexed Group -->
-                    <div v-if="false">
+                    <div v-if="true">
                         <div class="tw-block tw-p-2 neutral-border">
                             <InputLabel class="tw-mb-2" :size="'md'" value="Tab Group" />
                             <div class="tw-grid tw-gap-1 tw-grid-cols-1 sm:tw-grid-cols-2 md:tw-grid-cols-3 lg:tw-grid-cols-5">
@@ -469,7 +481,7 @@
                     </div>
 
                     <!-- Button and Input Grid Spacing Alignments -->
-                    <div v-if="false">
+                    <div v-if="true">
                         <div class="tw-block tw-p-2 neutral-border">
                             <InputLabel class="tw-mb-2" :size="'md'" value="Spacing Alignment Grid" />
                             <div class="tw-grid tw-gap-1 tw-grid-cols-7">
@@ -960,7 +972,7 @@
                     </div>
 
                     <!-- Button and Input Horizontal Alignment -->
-                    <div v-if="false">
+                    <div v-if="true">
                         <div class="tw-my-4 tw-flex tw-justify-center tw-space-x-1.5">
                             <Button :size="tabGroup.size" :icon="tabGroup.icon" :label="'Default'" />
                             <Button :size="tabGroup.size" :icon="tabGroup.icon" :variant="'outline'" :label="'Outline'" />
@@ -971,7 +983,7 @@
                     </div>
 
                     <!-- Default Button -->
-                    <div v-if="false" class="tw-grid tw-gap-2 tw-grid-cols-3 sm:tw-grid-cols-4 lg:tw-grid-cols-6 xl:tw-grid-cols-12 2xl:tw-grid-cols-12">
+                    <div v-if="true" class="tw-grid tw-gap-2 tw-grid-cols-3 sm:tw-grid-cols-4 lg:tw-grid-cols-6 xl:tw-grid-cols-12 2xl:tw-grid-cols-12">
                         <div class="tw-flex tw-items-start tw-justify-start tw-block neutral-border">
                             <Button :size="'2xs'" :icon="'ic:sharp-send-to-mobile'" :label="'XXS Button'"></Button>
                         </div>
@@ -996,7 +1008,7 @@
                     </div>
 
                     <!-- Outline Button -->
-                    <div v-if="false" class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-9">
+                    <div v-if="true" class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-9">
                         <div class="tw-flex tw-items-start tw-justify-start tw-block neutral-border">
                             <Button :variant="'outline'" :size="'2xs'" :icon="'ic:sharp-dashboard'" :label="'XXS Button'"></Button>
                         </div>
@@ -1021,7 +1033,7 @@
                     </div>
 
                     <!-- Flat Button -->
-                    <div v-if="false" class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-9">
+                    <div v-if="true" class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-9">
                         <div class="tw-flex tw-items-start tw-justify-start tw-block neutral-border">
                             <Button :variant="'flat'" :size="'2xs'" :icon="'ic:sharp-dashboard'" :label="'XXS Button'"></Button>
                         </div>
@@ -1128,7 +1140,7 @@
                     </div>
 
                     <!-- Checkbox -->
-                    <div v-if="false" class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-8">
+                    <div v-if="true" class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-8">
                         <div class="neutral-border">
                             <label>
                                 <Checkbox v-model="remember1" :label="' '" :size="'md'" name="remember" />
@@ -1152,7 +1164,7 @@
                     </div>
 
                     <!-- Checkbox Group -->
-                    <div v-if="false" class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-8">
+                    <div v-if="true" class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-8">
                         <div class="neutral-border">
                         </div>
                         <div class="neutral-border">
@@ -1173,7 +1185,7 @@
                     </div>
 
                     <!-- Radio Group -->
-                    <div v-if="false" class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-8">
+                    <div v-if="true" class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-8">
                         <div class="tw-flex tw-items-start tw-justify-start tw-block neutral-border">
                             <div>
                                 <InputLabel :size="'md'" value="SM : Gender Group" />
@@ -1221,7 +1233,7 @@
                     </div>
 
                     <!-- Default Input -->
-                    <div v-if="false" class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-8">
+                    <div v-if="true" class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-8">
                         <div class="tw-block neutral-border">
                             <InputLabel :size="'2xs'" for="form_input_1" value="XXS Label" />
                             <Input :size="'2xs'" placeholder="Enter username" id="form_input_1" type="text" autocomplete="off" />
@@ -1253,7 +1265,7 @@
                     </div>
 
                     <!-- Input with Icon -->
-                    <div v-if="false" class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-8">
+                    <div v-if="true" class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-8">
                         <div class="tw-block neutral-border">
                             <InputLabel :size="'2xs'" for="form_input_1" value="XXS Label" />
                             <InputWithIcon :size="'2xs'" :icon="'ic:sharp-qr-code'" placeholder="Enter username" id="form_input_1" autocomplete="off" />
@@ -1285,7 +1297,7 @@
                     </div>
 
                     <!-- Typography -->
-                    <div v-if="false" class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-8">
+                    <div v-if="true" class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-8">
                         <div class="tw-block neutral-border tw-col-span-2">
                             <p class="tw-text-sm tw-leading-4">0123456789 (){}[] +-*/= .,;:!? #&$%@|^#[ |||> |= ~@/\\/* Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
                         </div>
@@ -1301,7 +1313,7 @@
                     </div>
 
                     <!-- Font Weights -->
-                    <div v-if="false" class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-8">
+                    <div v-if="true" class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-8">
                         <div class="tw-block neutral-border tw-col-span-2">
                             <p class="tw-text-sm tw-font-thin tw-leading-4">Thin: 0123456789 (){}[] +-*/= .,;:!? #&$%@|^#[ |||> |= ~@/\\/* Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
                             <br><p class="tw-text-sm tw-font-extralight tw-leading-4">Extra Light: 0123456789 (){}[] +-*/= .,;:!? #&$%@|^#[ |||> |= ~@/\\/* Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
