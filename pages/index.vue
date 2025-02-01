@@ -95,7 +95,11 @@
                         :style="contentStyle(index)"
                         class="tw-absolute tw-z-30 all-transition">
 
-                        <div class="tw-relative compensate-left-padding tw-w-screen">
+                        <div v-if="featured.type === 'template'" class="tw-h-full tw-pb-1" :style="{'padding-right': paddingInPixels}">
+                            <component :is="resolvedFeaturedSpotlight"/>
+                        </div>
+
+                        <div v-else class="tw-relative compensate-left-padding tw-w-screen">
                             <FeaturedCarouselRow
                                 :inner-id="`featured-${index}-carousel-inner`"
                                 :x-padding="paddingInPixels"
@@ -204,6 +208,8 @@ useLayout().setNavigationMode('clear-none-background', 'index.vue');
 const {$themeStore, $toRomanNumeral} = useNuxtApp();
 const {screenHeightBreakpoint, screenWidthBreakpoint, height: screenHeight, width: screenWidth} = useScreen();
 const clientReadyState = useClientReadyState();
+
+const resolvedFeaturedSpotlight = resolveComponent('FeaturedSpotlight');
 
 const {
     hexAlpha,
