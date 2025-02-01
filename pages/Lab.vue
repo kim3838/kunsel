@@ -3,9 +3,11 @@
         <LandingWrapper>
             <div class="tw-mx-auto tw-space-y-2">
 
-                <div class="tw-text-xs tw-font-mono">
-                    {{`SCREEN DIMENSION: ${screenWidth} x ${screenHeight}`}}
-                </div>
+                <ClientOnly>
+                    <div class="tw-text-xs tw-font-mono">
+                        {{`SCREEN DIMENSION: ${screenWidth} x ${screenHeight}`}}
+                    </div>
+                </ClientOnly>
 
                 <a v-if="true" class="link" href="">
                     <span>
