@@ -1,5 +1,7 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 
+import tailwindcss from "@tailwindcss/vite";
+
 // @ts-ignore
 export default defineNuxtConfig({
     app: {
@@ -74,6 +76,7 @@ export default defineNuxtConfig({
 
     css: [
         '@/assets/css/main.css',
+        '@/assets/css/tailwind.css',
         '@/assets/css/fonts.css',
         '@/assets/css/datetimepicker.css'
     ],
@@ -102,7 +105,6 @@ export default defineNuxtConfig({
     },
 
     modules: [
-        '@nuxtjs/tailwindcss',
         '@vueuse/nuxt',
         '@pinia/nuxt',
         '@nuxt/icon',
@@ -113,13 +115,6 @@ export default defineNuxtConfig({
         prefix: 'CarouselModule'
     },
 
-    postcss: {
-        plugins: {
-            tailwindcss: {},
-            autoprefixer: {},
-        },
-    },
-
     vite: {
         css: {
             preprocessorOptions: {
@@ -128,17 +123,15 @@ export default defineNuxtConfig({
                 },
             },
         },
+        plugins: [
+            tailwindcss(),
+        ],
         server: {
             allowedHosts: [
                 '.server.local',
                 'client.server.local',
             ]
         }
-    },
-
-    tailwindcss: {
-        cssPath: ['@/assets/css/tailwind.css', {injectPosition: "first"}],
-        viewer: true
     },
 
     runtimeConfig: {

@@ -1,3 +1,5 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+
+@import "tailwindcss";
+@import "tailwindcss" important;
+@import "tailwindcss" prefix(tw);
+@config "../../tailwind.config.js";
