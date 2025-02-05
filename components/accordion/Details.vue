@@ -3,16 +3,16 @@
         <div
             @click="activeComputed = !activeComputed"
             :class="[heightClass, singleExpand && activeComputed ? 'active-border-title' : '']"
-            class="text-type-title-content-alignment tw-px-2 tw-cursor-pointer tw-flex tw-items-center">
-            <div class="tw-text-base" :class="[multiLineTitle ? '' : 'tw-truncate']">
+            class="text-type-title-content-alignment px-2 cursor-pointer flex items-center">
+            <div class="text-base" :class="[multiLineTitle ? '' : 'truncate']">
                 <slot name="title"></slot>
             </div>
-            <Icon v-if="titleIcon" class="tw-flex-none tw-h-5 tw-w-5" :name="'ic:baseline-arrow-drop-down'"></Icon>
+            <Icon v-if="titleIcon" class="flex-none h-5 w-5" :name="'ic:baseline-arrow-drop-down'"></Icon>
         </div>
         <div
             v-show="activeComputed"
             :class="[singleExpand && activeComputed ? 'active-border-body' : '']"
-            class="tw-px-2 tw-text-base">
+            class="px-2 text-base">
             <slot name="body"></slot>
         </div>
     </div>
@@ -65,8 +65,8 @@ const activeBorderColorComputed = computed(() => {
 
 const heightClass = computed(() => {
     return {
-        'md': props.multiLineTitle ? '' : 'tw-h-8',
-        'lg': props.multiLineTitle ? '' : 'tw-h-11'
+        'md': props.multiLineTitle ? '' : 'h-8',
+        'lg': props.multiLineTitle ? '' : 'h-11'
     }[props.size]
 });
 

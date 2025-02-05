@@ -1,124 +1,124 @@
 <template>
     <footer>
-        <div class="tw-mx-auto tw-max-w-screen-xl tw-px-4 tw-pb-6 tw-pt-16 sm:tw-px-6 lg:tw-px-8">
-            <div class="tw-grid tw-grid-cols-1 lg:tw-grid-cols-4">
+        <div class="mx-auto max-w-screen-xl px-4 pb-6 pt-16 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-4">
                 <div>
-                    <div class="tw-flex tw-justify-center lg:tw-justify-start">
-                        <GlobalFoundries class="lg:tw-w-max"/>
+                    <div class="flex justify-center lg:justify-start">
+                        <GlobalFoundries class="lg:w-max"/>
                     </div>
 
-                    <p v-if="false" class="tw-mt-5 tw-text-center tw-leading-relaxed sm:tw-max-w-md sm:tw-text-left">
+                    <p v-if="false" class="mt-5 text-center leading-relaxed sm:max-w-md sm:text-left">
                         Lorem ipsum dolor, sit amet consectetur adipisicing elit. Incidunt
                         consequuntur amet culpa cum itaque neque.
                     </p>
 
-                    <ul v-if="false" class="tw-mt-2 tw-flex tw-justify-center tw-gap-6 sm:tw-justify-start md:gap-8">
+                    <ul v-if="false" class="mt-2 flex justify-center gap-6 sm:justify-start md:gap-8">
                         <li>
                             <a href="/" rel="noreferrer" target="_blank">
-                                <ClientOnly><Icon class="tw-h-5 tw-w-5" name="mdi:facebook"></Icon></ClientOnly>
+                                <ClientOnly><Icon class="h-5 w-5" name="mdi:facebook"></Icon></ClientOnly>
                             </a>
                         </li>
                         <li>
                             <a href="/" rel="noreferrer" target="_blank">
-                                <ClientOnly><Icon class="tw-h-5 tw-w-5" name="mdi:instagram"></Icon></ClientOnly>
+                                <ClientOnly><Icon class="h-5 w-5" name="mdi:instagram"></Icon></ClientOnly>
                             </a>
                         </li>
                         <li>
                             <a href="/" rel="noreferrer" target="_blank">
-                                <ClientOnly><Icon class="tw-h-5 tw-w-5" name="mdi:youtube"></Icon></ClientOnly>
+                                <ClientOnly><Icon class="h-5 w-5" name="mdi:youtube"></Icon></ClientOnly>
                             </a>
                         </li>
                     </ul>
                 </div>
 
-                <div class="tw-grid tw-grid-cols-1 tw-gap-2 tw-mt-8 lg:tw-mt-0 sm:tw-grid-cols-2 md:tw-grid-cols-5 lg:tw-col-span-3">
-                    <div class="tw-text-center sm:tw-text-left lg:tw-pl-28 md:tw-col-span-2">
-                        <p class="tw-font-medium">Contact Us</p>
+                <div class="grid grid-cols-1 gap-2 mt-8 lg:mt-0 sm:grid-cols-2 md:grid-cols-5 lg:col-span-3">
+                    <div class="text-center sm:text-left lg:pl-28 md:col-span-2">
+                        <p class="font-medium">Contact Us</p>
 
-                        <div class="tw-mt-2 tw-space-y-2">
+                        <div class="mt-2 space-y-2">
                             <UnorderedList
-                                class="tw-flex sm:tw-justify-start tw-justify-center"
+                                class="flex sm:justify-start justify-center"
                                 :size="'sm'"
                                 :icon="'ic:round-mail-outline'"
                                 :label="'info@globalfoundries.com'"/>
 
                             <UnorderedList
-                                class="tw-flex sm:tw-justify-start tw-justify-center"
+                                class="flex sm:justify-start justify-center"
                                 :size="'sm'"
                                 :icon="'ic:sharp-phone'"
                                 :label="'+63 99-1999-1991'"/>
 
                             <UnorderedList
-                                class="tw-flex sm:tw-justify-start tw-justify-center"
+                                class="flex sm:justify-start justify-center"
                                 :size="'sm'"
                                 :icon="'ic:sharp-location-on'"
                                 :label="'Quezon City, Metro Manila, Philippines'"/>
                         </div>
                     </div>
 
-                    <div class="tw-text-center tw-mt-12 sm:tw-text-left sm:tw-mt-0">
-                        <p class="tw-font-medium">Our Services</p>
+                    <div class="text-center mt-12 sm:text-left sm:mt-0">
+                        <p class="font-medium">Our Services</p>
 
-                        <div class="tw-mt-2 tw-space-y-2">
+                        <div class="mt-2 space-y-2">
 
                             <UnorderedList
-                                class="tw-flex sm:tw-justify-start tw-justify-center"
+                                class="flex sm:justify-start justify-center"
                                 :size="'sm'"
                                 :label="'Custom Web Services'"/>
                             <UnorderedList
-                                class="tw-flex sm:tw-justify-start tw-justify-center"
+                                class="flex sm:justify-start justify-center"
                                 :size="'sm'"
                                 :label="'Product Landing Page'"/>
                         </div>
                     </div>
 
-                    <div class="tw-text-center tw-mt-12 sm:tw-text-left md:tw-mt-0">
-                        <p class="tw-font-medium">Helpful Links</p>
+                    <div class="text-center mt-12 sm:text-left md:mt-0">
+                        <p class="font-medium">Helpful Links</p>
 
-                        <div class="tw-mt-2 tw-space-y-2">
+                        <div class="mt-2 space-y-2">
 
                             <UnorderedList
-                                class="tw-flex sm:tw-justify-start tw-justify-center"
+                                class="flex sm:justify-start justify-center"
                                 :size="'sm'"
                                 :icon="'ri:info-i'"
                                 :label="'FAQs'"/>
                             <UnorderedList
-                                class="tw-flex sm:tw-justify-start tw-justify-center tw-overflow-visible"
+                                class="flex sm:justify-start justify-center overflow-visible"
                                 :icon="'ri:info-i'"
                                 :size="'sm'">
-                                <div class="tw-flex">
-                                    <a class="tw-inline-block hover:tw-underline" href="/">
-                                        <span class="tw-transition group-hover:tw-text-gray-700/75">
+                                <div class="flex">
+                                    <a class="inline-block hover:underline" href="/">
+                                        <span class="transition group-hover:text-gray-700/75">
                                         Support
                                         </span>
                                     </a>
 
-                                    <span class="tw-ml-1 tw-relative tw-flex tw-h-2 tw-w-2">
-                                        <span class="tw-absolute tw-inline-flex tw-h-full tw-w-full tw-animate-ping tw-rounded-full ping-highlight tw-opacity-75"></span>
-                                        <span class="tw-relative tw-inline-flex tw-h-2 tw-w-2 tw-rounded-full ping"></span>
+                                    <span class="ml-1 relative flex h-2 w-2">
+                                        <span class="absolute inline-flex h-full w-full animate-ping rounded-full ping-highlight opacity-75"></span>
+                                        <span class="relative inline-flex h-2 w-2 rounded-full ping"></span>
                                     </span>
                                 </div>
                             </UnorderedList>
                         </div>
                     </div>
 
-                    <div class="tw-text-center tw-mt-12 sm:tw-text-left md:tw-mt-0">
-                        <p class="tw-font-medium">About Us</p>
+                    <div class="text-center mt-12 sm:text-left md:mt-0">
+                        <p class="font-medium">About Us</p>
 
-                        <div class="tw-mt-2 tw-space-y-2 tw-text-sm">
+                        <div class="mt-2 space-y-2 text-sm">
 
                             <UnorderedList
-                                class="tw-flex sm:tw-justify-start tw-justify-center"
+                                class="flex sm:justify-start justify-center"
                                 :size="'sm'"
                                 :icon="'ri:info-i'"
                                 :label="'News'"/>
                             <UnorderedList
-                                class="tw-flex sm:tw-justify-start tw-justify-center"
+                                class="flex sm:justify-start justify-center"
                                 :size="'sm'"
                                 :icon="'ri:info-i'"
                                 :label="'History'"/>
                             <UnorderedList
-                                class="tw-flex sm:tw-justify-start tw-justify-center"
+                                class="flex sm:justify-start justify-center"
                                 :size="'sm'"
                                 :icon="'ri:info-i'"
                                 :label="'Leadership'"/>
@@ -127,22 +127,22 @@
                 </div>
             </div>
 
-            <div class="footer-rule tw-mt-2"></div>
+            <div class="footer-rule mt-2"></div>
 
-            <div class="tw-pt-2 tw-mt-2">
-                <div class="tw-text-center sm:tw-flex sm:tw-justify-between sm:tw-text-left">
-                    <p class="tw-text-sm">
+            <div class="pt-2 mt-2">
+                <div class="text-center sm:flex sm:justify-between sm:text-left">
+                    <p class="text-sm">
 
-                        <a class="tw-inline-block hover:tw-underline" href="/">
+                        <a class="inline-block hover:underline" href="/">
                             Terms & Conditions
                         </a>
                         <span>&nbsp;.&nbsp;</span>
-                        <a class="tw-inline-block hover:tw-underline" href="/">
+                        <a class="inline-block hover:underline" href="/">
                             Privacy Policy
                         </a>
                     </p>
-                    <p class="tw-mt-4 tw-text-sm tw-flex tw-items-center tw-justify-center sm:tw-justify-start sm:tw-order-first sm:tw-mt-0">
-                        Copyright © GLOBAL FOUNDRIES inc.&nbsp;<span class="tw-block sm:tw-inline">All Rights Reserved.</span>
+                    <p class="mt-4 text-sm flex items-center justify-center sm:justify-start sm:order-first sm:mt-0">
+                        Copyright © GLOBAL FOUNDRIES inc.&nbsp;<span class="block sm:inline">All Rights Reserved.</span>
                     </p>
                 </div>
             </div>

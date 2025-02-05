@@ -1,5 +1,5 @@
 <template>
-    <div class="tw-relative tw-h-full tw-w-full">
+    <div class="relative h-full w-full">
         <slot name="header"></slot>
 
         <div class="frame-outer">

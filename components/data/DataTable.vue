@@ -1,6 +1,6 @@
 <template>
     <div id="table-division" ref="dataTableScroll">
-        <table class="tw-border-collapse tw-font-data">
+        <table class="border-collapse font-data">
             <thead>
                 <tr>
                     <td v-if="selection" style="padding:3px 0.5rem;">
@@ -31,6 +31,7 @@
                     </td>
                     <td
                         v-for="(header, index) in headers" :key="row.id"
+                        class="whitespace-pre"
                         :class="[bodyFontClass, cellAlignClass(header?.alignData)]">
                         <slot
                             :name="`cell.${header.value}`"
@@ -38,12 +39,12 @@
                             :slot="{buttonSize: buttonSize, inputSize: inputSize, datepickerFontSize: datepickerFontSize, selectSize: selectSize}"
                             :cell="row"
                             :index="index">
-                            <div class="tw-p-[3px]">{{row[header.value]}}</div>
+                            <div class="p-[3px]">{{row[header.value]}}</div>
                         </slot>
                     </td>
                 </tr>
                 <tr v-if="!rows.length">
-                    <td colspan="100%" class="tw-text-center tw-font-semibold" :class="[bodyFontClass]">
+                    <td colspan="100%" class="text-center font-semibold" :class="[bodyFontClass]">
                         {{noDataLabel}}
                     </td>
                 </tr>
@@ -101,10 +102,10 @@ const emit = defineEmits(["update:modelValue"]);
 
 function cellAlignClass(align = null){
     return {
-        [null]: 'tw-text-left',
-        'left': 'tw-text-left',
-        'center': 'tw-text-center',
-        'right': 'tw-text-right',
+        [null]: 'text-left',
+        'left': 'text-left',
+        'center': 'text-center',
+        'right': 'text-right',
     }[align];
 }
 
@@ -151,19 +152,19 @@ const currentRowIds = computed(() => {
 
 const headerFontClass = computed(() => {
     return {
-        'sm': 'tw-font-semibold tw-text-sm',
-        'md': 'tw-font-semibold tw-text-base',
-        'lg': 'tw-font-semibold tw-text-base',
-        'xl': 'tw-font-semibold tw-text-base',
+        'sm': 'font-semibold text-sm',
+        'md': 'font-semibold text-base',
+        'lg': 'font-semibold text-base',
+        'xl': 'font-semibold text-base',
     }[props.size];
 });
 
 const bodyFontClass = computed(() => {
     return {
-        'sm': 'tw-text-xs',
-        'md': 'tw-text-sm',
-        'lg': 'tw-text-base',
-        'xl': 'tw-text-lg',
+        'sm': 'text-xs',
+        'md': 'text-sm',
+        'lg': 'text-base',
+        'xl': 'text-lg',
     }[props.size];
 });
 
@@ -196,10 +197,10 @@ const inputSize = computed(() => {
 
 const datepickerFontSize = computed(() => {
     return {
-        'sm': 'tw-text-xs',
-        'md': 'tw-text-sm',
-        'lg': 'tw-text-sm',
-        'xl': 'tw-text-lg',
+        'sm': 'text-xs',
+        'md': 'text-sm',
+        'lg': 'text-sm',
+        'xl': 'text-lg',
     }[props.size]
 });
 

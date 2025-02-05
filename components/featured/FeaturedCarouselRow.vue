@@ -1,22 +1,22 @@
 <template>
-    <div class="tw-relative tw-w-full">
+    <div class="relative w-full">
         <div
             :id="innerId"
-            class="carousel-inner tw-flex tw-flex-nowrap"
+            class="carousel-inner flex flex-nowrap"
             :style="innerCarouselStyle">
             <slot name="items" :slot="{items: items}"></slot>
         </div>
 
         <span
             v-if="showNavigation"
-            class="nav-button prev tw-flex tw-h-14 tw-w-7 tw-items-center tw-justify-center tw-backdrop-blur-sm"
+            class="nav-button prev flex h-14 w-7 items-center justify-center backdrop-blur-sm"
             @click="prevSlide"
-        ><Icon :name="'ic:sharp-arrow-back-ios'" class="tw-w-8 tw-h-8"></Icon></span>
+        ><Icon :name="'ic:sharp-arrow-back-ios'" class="w-8 h-8"></Icon></span>
         <span
             v-if="showNavigation"
-            class="nav-button next tw-flex tw-h-14 tw-w-7 tw-items-center tw-justify-center tw-backdrop-blur-sm"
+            class="nav-button next flex h-14 w-7 items-center justify-center backdrop-blur-sm"
             @click="nextSlide"
-        ><Icon :name="'ic:sharp-arrow-forward-ios'" class="tw-w-8 tw-h-8"></Icon></span>
+        ><Icon :name="'ic:sharp-arrow-forward-ios'" class="w-8 h-8"></Icon></span>
 
     </div>
 </template>

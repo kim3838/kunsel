@@ -4,25 +4,25 @@
         :max-width="maxWidth"
         :closeable="closeable"
         @close="close">
-        <div class="tw-p-3 modal-body">
-            <div class="sm:tw-flex sm:tw-items-start">
-                <div class="tw-mx-auto tw-flex-shrink-0 tw-flex tw-items-center tw-justify-center tw-h-12 tw-w-12 sm:tw-mx-0 sm:tw-h-10 sm:tw-w-10">
+        <div class="p-3 modal-body">
+            <div class="sm:flex sm:items-start">
+                <div class="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 sm:mx-0 sm:h-10 sm:w-10">
                     <slot name="icon"></slot>
                 </div>
 
-                <div class="tw-mt-3 tw-text-center sm:tw-mt-0 sm:tw-ml-2 sm:tw-text-left">
-                    <h3 class="tw-text-xl tw-font-medium tw-font-header">
+                <div class="mt-3 text-center sm:mt-0 sm:ml-2 sm:text-left">
+                    <h3 class="text-xl font-medium font-header">
                         <slot name="title"></slot>
                     </h3>
 
-                    <div class="tw-mt-1 tw-text-base">
+                    <div class="mt-1 text-base">
                         <slot name="content"></slot>
                     </div>
                 </div>
             </div>
         </div>
 
-        <div class="tw-px-3 tw-py-2.5">
+        <div class="px-3 py-2.5">
             <slot name="footer">
             </slot>
         </div>

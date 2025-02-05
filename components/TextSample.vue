@@ -1,37 +1,37 @@
 <template>
     <div>
 
-        <div class="tw-font-sans tw-text-xl tw-text-gray-500">
+        <div class="font-sans text-xl text-gray-500">
             <span v-text="sansParagraph"></span>
         </div>
-        <div class="tw-font-serif tw-text-xl tw-text-gray-500">
+        <div class="font-serif text-xl text-gray-500">
             <span v-text="serifParagraph"></span>
         </div>
-        <div class="tw-font-mono tw-text-xl tw-text-gray-500">
+        <div class="font-mono text-xl text-gray-500">
             <span v-text="monoParagraph"></span>
         </div>
 
-        <div class="tw-w-full tw-bg-gradient-to-r tw-from-transparent tw-via-gray-300 tw-from-transparent tw-my-1"
+        <div class="w-full bg-gradient-to-r from-transparent via-gray-300 from-transparent my-1"
              style="height: 2px;"></div>
 
-        <div class="tw-font-sans tw-text-base tw-text-gray-500">
+        <div class="font-sans text-base text-gray-500">
             <span v-text="sansParagraph"></span>
         </div>
-        <div class="tw-font-serif tw-text-base tw-text-gray-500">
+        <div class="font-serif text-base text-gray-500">
             <span v-text="serifParagraph"></span>
         </div>
-        <div class="tw-font-mono tw-text-base tw-text-gray-500">
+        <div class="font-mono text-base text-gray-500">
             <span v-text="monoParagraph"></span>
         </div>
 
-        <div class="tw-w-full tw-bg-gradient-to-r tw-from-transparent tw-via-gray-300 tw-from-transparent tw-my-1"
+        <div class="w-full bg-gradient-to-r from-transparent via-gray-300 from-transparent my-1"
              style="height: 2px;"></div>
 
-        <div class="tw-text-sm tw-text-gray-500" style="font-family: 'Gupter', 'sans-serif';">
+        <div class="text-sm text-gray-500" style="font-family: 'Gupter', 'sans-serif';">
             <span v-text="serifParagraph"></span>
         </div>
 
-        <div class="tw-text-sm tw-text-gray-500" style="font-family: 'Kotta One', 'serif';">
+        <div class="text-sm text-gray-500" style="font-family: 'Kotta One', 'serif';">
             <span v-text="serifParagraph"></span>
         </div>
     </div>

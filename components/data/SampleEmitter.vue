@@ -1,5 +1,5 @@
 <template>
-    <div class="tw-flex">
+    <div class="flex">
         <InputWithIcon
             :icon="'twemoji:calendar'"
             v-model="fooModel"

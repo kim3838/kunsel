@@ -1,14 +1,14 @@
 <template>
     <!-- Nuxt Wrapper -->
-    <div ref="nuxtWrapper" class="nuxt-page tw-relative">
+    <div ref="nuxtWrapper" class="nuxt-page relative">
         <AppRenderingLoading/>
-        <div v-if="false" class="tw-absolute tw-inset-x-0 tw--z-10 tw-overflow-hidden tw--top-40 sm:tw--top-80 tw-blur-3xl" aria-hidden="true">
-            <div class="top-fragment tw-relative tw-w-[36.125rem] sm:tw-w-[72.1875rem] tw-left-[calc(50%-11rem)] sm:tw-left-[calc(50%-30rem)] tw-aspect-[1155/678] tw--translate-x-1/2 tw-rotate-[30deg] tw-opacity-30"></div>
+        <div v-if="false" class="absolute inset-x-0 -z-10 overflow-hidden -top-40 sm:-top-80 blur-3xl" aria-hidden="true">
+            <div class="top-fragment relative w-[36.125rem] sm:w-[72.1875rem] left-[calc(50%-11rem)] sm:left-[calc(50%-30rem)] aspect-[1155/678] -translate-x-1/2 rotate-[30deg] opacity-30"></div>
         </div>
         <NuxtLoadingIndicator />
         <NuxtPage/>
-        <div v-if="false" class="tw-absolute tw-inset-x-0 tw--z-10 tw-overflow-hidden tw-top-[calc(20%)] sm:tw-top-[calc(0%)] tw-blur-3xl" aria-hidden="true">
-            <div class="bottom-fragment tw-relative tw-w-[36.125rem] sm:tw-w-[72.1875rem] tw-left-[calc(50%+3rem)] sm:tw-left-[calc(50%+36rem)] tw-aspect-[1155/678]  tw--translate-x-1/2  tw-opacity-30"></div>
+        <div v-if="false" class="absolute inset-x-0 -z-10 overflow-hidden top-[calc(20%)] sm:top-[calc(0%)] blur-3xl" aria-hidden="true">
+            <div class="bottom-fragment relative w-[36.125rem] sm:w-[72.1875rem] left-[calc(50%+3rem)] sm:left-[calc(50%+36rem)] aspect-[1155/678]  -translate-x-1/2  opacity-30"></div>
         </div>
     </div>
 </template>

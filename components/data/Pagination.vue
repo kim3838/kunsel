@@ -1,5 +1,5 @@
 <template>
-    <span class="tw-space-x-0.5 tw-flex tw-w-max">
+    <span class="space-x-0.5 flex w-max">
         <Button
             type="button"
             :disabled="pagination.current_page === 1 || pending || pagination.total === 0"

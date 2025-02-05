@@ -1,5 +1,5 @@
 <template>
-    <div class="card tw-h-full tw-cursor-pointer">
+    <div class="card h-full cursor-pointer">
         <NuxtLink
             :to="link">
             <VCutFrame
@@ -13,10 +13,10 @@
 
                 <template #body>
                     <div class="card-content" :style="{'font-family': fontFamily}">
-                        <div class="card-title tw-text-xl tw-font-bold tw-tracking-normal tw-leading-tight">
+                        <div class="card-title text-xl font-bold tracking-normal leading-tight">
                             {{title}}
                         </div>
-                        <div class="card-sub-title tw-text-lg tw-line-clamp-3 tw-leading-5">
+                        <div class="card-sub-title text-lg line-clamp-3 leading-5">
                             {{subTitle}}
                         </div>
                     </div>

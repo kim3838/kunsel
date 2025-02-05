@@ -3,27 +3,27 @@
         ref="selectParent"
         :tabindex="tabindexComputed"
         :style="{width: width}"
-        class="tw-font-data focus:tw-outline-none">
+        class="font-data focus:outline-none">
         <Glint :enable="glint" :orientation="'landscape'" :color="activeBorderComputed">
             <div
                 ref="selectHeader"
                 :style="{'border-radius': '2px'}"
-                class="tw-w-full tw-flex tw-justify-start background"
+                class="w-full flex justify-start background"
                 :class="[heightClass, borderClass]">
-                <div :class="[iconHolderClass]" class="tw-flex-none tw-flex tw-justify-end tw-items-center">
+                <div :class="[iconHolderClass]" class="flex-none flex justify-end items-center">
                     <ClientOnly><Icon :class="[iconClass]" :name="pending ? 'eos-icons:loading' : icon"/></ClientOnly>
                 </div>
-                <div v-if="!active" class="tw-w-full tw-relative tw-cursor-pointer">
-                    <div :class="[selectionClass]" class="tw-absolute tw-truncate tw-flex tw-items-center">
+                <div v-if="!active" class="w-full relative cursor-pointer">
+                    <div :class="[selectionClass]" class="absolute truncate flex items-center">
                         {{selectionSummary}}
                     </div>
-                    <div :class="[dropDownIconHolderClass]" class="tw-absolute tw-right-0 tw-top-0 tw-flex tw-justify-center tw-items-center">
+                    <div :class="[dropDownIconHolderClass]" class="absolute right-0 top-0 flex justify-center items-center">
                         <ClientOnly><Icon :class="[dropDownIconClass]" name="ic:baseline-arrow-drop-down" /></ClientOnly>
                     </div>
                 </div>
 
-                <div :class="[active ? 'tw-block' : 'tw-hidden']" class="tw-w-full tw-h-full tw-relative tw-overflow-hidden">
-                    <div v-if="searchable" :class="[inputHolderClass]" class="tw-absolute tw-left-0 tw-h-full tw-flex tw-items-center">
+                <div :class="[active ? 'block' : 'hidden']" class="w-full h-full relative overflow-hidden">
+                    <div v-if="searchable" :class="[inputHolderClass]" class="absolute left-0 h-full flex items-center">
                         <Input
                             v-if="active"
                             :tabindex="tabindexInput"
@@ -31,7 +31,7 @@
                             autocomplete="off"
                             ref="selectionSearch"
                             :placeholder="searchable ? 'Search...' : selectionSummary"
-                            :override="{spacing: 'tw-pl-[0.3rem] tw-p-0'}"
+                            :override="{spacing: 'pl-[0.3rem] p-0'}"
                             @keydown="keyHandler"
                             @focusStateChanged="searchInputFocusStateChangedHandler"
                             v-model="props.payload.fetch.filters.search.keyword"
@@ -41,18 +41,18 @@
                             :focusRing="false"
                             :disabled="false" />
                     </div>
-                    <div v-else :class="[selectionClass]" class="tw-absolute tw-truncate tw-flex tw-items-center">
+                    <div v-else :class="[selectionClass]" class="absolute truncate flex items-center">
                         {{selectionSummary}}
                     </div>
                     <div
                         :class="[dropDownIconHolderClass]"
-                        class="tw-absolute tw-right-0 tw-top-0 tw-flex tw-justify-center tw-items-center">
+                        class="absolute right-0 top-0 flex justify-center items-center">
                         <ClientOnly>
                             <Icon
                                 v-if="searchable"
                                 @click="clearSearch"
                                 :class="[dropDownIconClass]"
-                                class="tw-cursor-pointer"
+                                class="cursor-pointer"
                                 :name="pending ? 'eos-icons:loading' : 'ic:baseline-clear'" />
                         </ClientOnly>
                     </div>
@@ -64,29 +64,29 @@
             v-show="active"
             :style="[selectionOffsetComputed, selectionWidthComputed, {'border-radius': '2px'}]"
             ref="selectionOrigin"
-            class="tw-z-40 tw-mt-[7px] background"
-            :class="[dropShadow ? 'tw-drop-shadow-2xl' : '', selectionFloat ? 'tw-absolute' : 'tw-relative', borderClass]">
-            <div class="tw-absolute tw-border-solid options-arrow-lining-color" :style="[optionsArrowSlotClass]"></div>
-            <div class="tw-absolute tw-border-solid options-arrow-color" :style="[optionsArrowClass]"></div>
-            <div class="tw-px-2 tw-pt-2 tw-text-left" :class="[optionsFontClass]">
+            class="z-40 mt-[7px] background"
+            :class="[dropShadow ? 'drop-shadow-2xl' : '', selectionFloat ? 'absolute' : 'relative', borderClass]">
+            <div class="absolute border-solid options-arrow-lining-color" :style="[optionsArrowSlotClass]"></div>
+            <div class="absolute border-solid options-arrow-color" :style="[optionsArrowClass]"></div>
+            <div class="px-2 pt-2 text-left" :class="[optionsFontClass]">
                 {{selectionHeaderSummary}}
             </div>
-            <div tabindex="0" ref="selectionScroll" :style="{'max-height': selectionMaxHeight}" class="tw-overflow-auto">
+            <div tabindex="0" ref="selectionScroll" :style="{'max-height': selectionMaxHeight}" class="overflow-auto">
                 <UnorderedList
                     v-for="item in selection" :key="item.value"
-                    class="tw-px-2 options-class tw-cursor-pointer"
+                    class="px-2 options-class cursor-pointer"
                     @click="valuePersist && isItemSelected(item) ? false :selectItem(item)"
                     :icon="isItemSelected(item) ? 'ic:sharp-radio-button-checked' : 'ic:sharp-radio-button-unchecked'"
                     :size="selectionItemSize"
                     :label="item.text"/>
                 <div v-show="showSelectionEndResult">
                     <UnorderedList
-                        class="tw-px-2"
+                        class="px-2"
                         :icon="selectionEndResult.icon"
                         :size="selectionItemSize"
                         :label="selectionEndResult.label"/>
                 </div>
-                <div v-if="selectionMaxViewableLine == selection.length && !showSelectionEndResult" class="tw-h-8 tw-w-full tw-bg-transparent"></div>
+                <div v-if="selectionMaxViewableLine == selection.length && !showSelectionEndResult" class="h-8 w-full bg-transparent"></div>
             </div>
         </div>
     </div>
@@ -226,11 +226,11 @@ const activeBorderComputed = computed(() => {
 
 const heightClass = computed(() => {
     return {
-        '2xs': 'tw-h-5',
-        'xs': 'tw-h-6',
-        'sm': 'tw-h-7',
-        'md': 'tw-h-8',
-        'lg': 'tw-h-11'
+        '2xs': 'h-5',
+        'xs': 'h-6',
+        'sm': 'h-7',
+        'md': 'h-8',
+        'lg': 'h-11'
     }[props.size];
 });
 
@@ -250,41 +250,41 @@ const selectionItemSize = computed(() => {
 
 const iconHolderClass = computed(() => {
     return {
-        '2xs': 'tw-w-[1.2rem]',
-        'xs': 'tw-w-[1.45rem]',
-        'sm': 'tw-w-[1.7rem]',
-        'md': 'tw-w-[1.7rem]',
-        'lg': 'tw-w-[2.75rem]'
+        '2xs': 'w-[1.2rem]',
+        'xs': 'w-[1.45rem]',
+        'sm': 'w-[1.7rem]',
+        'md': 'w-[1.7rem]',
+        'lg': 'w-[2.75rem]'
     }[props.size];
 });
 
 const iconClass = computed(() => {
     return {
-        '2xs': 'tw-h-4 tw-w-4',
-        'xs': 'tw-h-5 tw-w-5',
-        'sm': 'tw-h-5 tw-w-5',
-        'md': 'tw-h-5 tw-w-5',
-        'lg': 'tw-h-8 tw-w-8'
+        '2xs': 'h-4 w-4',
+        'xs': 'h-5 w-5',
+        'sm': 'h-5 w-5',
+        'md': 'h-5 w-5',
+        'lg': 'h-8 w-8'
     }[props.size];
 });
 
 const dropDownIconHolderClass = computed(() => {
     return {
-        '2xs': 'tw-w-5 tw-h-5',
-        'xs': 'tw-w-6 tw-h-6',
-        'sm': 'tw-w-7 tw-h-7',
-        'md': 'tw-w-8 tw-h-8',
-        'lg': 'tw-w-11 tw-h-11'
+        '2xs': 'w-5 h-5',
+        'xs': 'w-6 h-6',
+        'sm': 'w-7 h-7',
+        'md': 'w-8 h-8',
+        'lg': 'w-11 h-11'
     }[props.size];
 });
 
 const dropDownIconClass = computed(() => {
     return {
-        '2xs': 'tw-h-4 tw-w-4',
-        'xs': 'tw-h-5 tw-w-5',
-        'sm': 'tw-h-5 tw-w-5',
-        'md': 'tw-h-5 tw-w-5',
-        'lg': 'tw-h-6 tw-w-6'
+        '2xs': 'h-4 w-4',
+        'xs': 'h-5 w-5',
+        'sm': 'h-5 w-5',
+        'md': 'h-5 w-5',
+        'lg': 'h-6 w-6'
     }[props.size];
 });
 
@@ -302,31 +302,31 @@ const selectionMaxHeight = computed(() => {
 
 const selectionClass = computed(() => {
     return {
-        '2xs': 'tw-text-xs tw-h-5 tw-leading-[0.875rem] tw-left-[0.2rem] tw-right-[1.45rem]',
-        'xs': 'tw-text-xs tw-h-6 tw-leading-[0.875rem] tw-left-[0.2rem] tw-right-[1.7rem]',
-        'sm': 'tw-text-sm tw-h-7 tw-leading-[0.875rem] tw-left-[0.2rem] tw-right-[1.85rem]',
-        'md': 'tw-text-sm tw-h-8 tw-leading-[0.875rem] tw-left-[0.2rem] tw-right-[2.2rem]',
-        'lg': 'tw-text-lg tw-h-11 tw-leading-[0.875rem] tw-left-[0.2rem] tw-right-[2.95rem]',
+        '2xs': 'text-xs h-5 leading-[0.875rem] left-[0.2rem] right-[1.45rem]',
+        'xs': 'text-xs h-6 leading-[0.875rem] left-[0.2rem] right-[1.7rem]',
+        'sm': 'text-sm h-7 leading-[0.875rem] left-[0.2rem] right-[1.85rem]',
+        'md': 'text-sm h-8 leading-[0.875rem] left-[0.2rem] right-[2.2rem]',
+        'lg': 'text-lg h-11 leading-[0.875rem] left-[0.2rem] right-[2.95rem]',
     }[props.size];
 });
 
 const optionsFontClass = computed(() => {
     return {
-        '2xs': 'tw-text-base',
-        'xs': 'tw-text-base',
-        'sm': 'tw-text-base',
-        'md': 'tw-text-base',
-        'lg': 'tw-text-lg'
+        '2xs': 'text-base',
+        'xs': 'text-base',
+        'sm': 'text-base',
+        'md': 'text-base',
+        'lg': 'text-lg'
     }[props.size];
 });
 
 const inputHolderClass = computed(() => {
     return {
-        '2xs': 'tw-right-5',
-        'xs': 'tw-right-6',
-        'sm': 'tw-right-7',
-        'md': 'tw-right-8',
-        'lg': 'tw-right-11',
+        '2xs': 'right-5',
+        'xs': 'right-6',
+        'sm': 'right-7',
+        'md': 'right-8',
+        'lg': 'right-11',
     }[props.size];
 });
 

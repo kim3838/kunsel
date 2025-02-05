@@ -26,7 +26,7 @@
             </div>
         </div>
 
-        <div class="tw-relative">
+        <div class="relative">
             <slot name="content"></slot>
         </div>
     </div>

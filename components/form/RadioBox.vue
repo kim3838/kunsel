@@ -1,14 +1,14 @@
 <template>
-    <label :for="labelId" class="tw-font-data ">
-        <div class="tw-flex tw-items-start tw-justify-start">
+    <label :for="labelId" class="font-data ">
+        <div class="flex items-start justify-start">
             <ClientOnly>
-                <div :style="{'height': radioBoxSlotHeight}" class="tw-flex tw-items-center">
+                <div :style="{'height': radioBoxSlotHeight}" class="flex items-center">
                     <Icon v-if="selected == value" :class="[radioSize, 'radio']" name="ic:sharp-radio-button-checked"></Icon>
                     <Icon v-else :class="[radioSize]" class='radio' name="ic:sharp-radio-button-unchecked"></Icon>
                 </div>
             </ClientOnly>
 
-            <div v-if="label?.trim()" :class="[fontClass]" class="tw-ml-1 tw-whitespace-pre-line">{{label}}</div>
+            <div v-if="label?.trim()" :class="[fontClass]" class="ml-1 whitespace-pre-line">{{label}}</div>
             <input
                 type="radio"
                 :value="value"
@@ -72,17 +72,17 @@ const radioBoxSlotHeight = computed(()=>{
 
 const radioSize = computed(() => {
     return {
-        'sm': 'tw-h-3.5 tw-w-3.5',
-        'md': 'tw-h-5 tw-w-5',
-        'lg': 'tw-h-6 tw-w-6',
+        'sm': 'h-3.5 w-3.5',
+        'md': 'h-5 w-5',
+        'lg': 'h-6 w-6',
     }[props.size]
 });
 
 const fontClass = computed(() => {
     return {
-        'sm': 'tw-text-sm',
-        'md': 'tw-text-base',
-        'lg': 'tw-text-lg'
+        'sm': 'text-sm',
+        'md': 'text-base',
+        'lg': 'text-lg'
     }[props.size]
 });
 

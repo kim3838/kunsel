@@ -1,6 +1,6 @@
 <template>
-    <label :class="[fontClass]" class="tw-font-data tw-flex tw-align-start">
-        <span class="tw-line-clamp-1" v-if="value">{{ value }}</span>
+    <label :class="[fontClass]" class="font-data flex align-start">
+        <span class="line-clamp-1" v-if="value">{{ value }}</span>
         <span v-else><slot></slot></span>
     </label>
 </template>
@@ -20,12 +20,12 @@
         computed: {
             fontClass(){
                 return {
-                    '2xs': 'tw-text-xs tw-font-medium tw-leading-3',
-                    'xs': 'tw-text-xs tw-font-medium tw-leading-3',
-                    'sm': 'tw-text-sm tw-font-medium tw-leading-4',
-                    'md': 'tw-text-base tw-font-medium tw-leading-5',
-                    'lg': 'tw-text-lg tw-font-medium tw-leading-5',
-                    'xl': 'tw-text-xl tw-font-semibold tw-leading-5',
+                    '2xs': 'text-xs font-medium leading-3',
+                    'xs': 'text-xs font-medium leading-3',
+                    'sm': 'text-sm font-medium leading-4',
+                    'md': 'text-base font-medium leading-5',
+                    'lg': 'text-lg font-medium leading-5',
+                    'xl': 'text-xl font-semibold leading-5',
                 }[this.size]
             },
         }

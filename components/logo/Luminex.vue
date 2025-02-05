@@ -1,5 +1,5 @@
 <template>
-    <div class="tw-w-full tw-h-full">
+    <div class="w-full h-full">
         <svg xmlns="http://www.w3.org/2000/svg" height="100%" width="100%" :fill="'#636580'" version="1.1" id="Layer_1" viewBox="-25.014 -17.448475 216.788 104.69085">
             <path id="path803" d="M.44 15.8068h6.07v21.83h10.72v5.11H.44z" class="cls-1"/>
             <path id="path805"

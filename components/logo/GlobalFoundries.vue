@@ -1,5 +1,5 @@
 <template>
-    <div class="tw-w-full tw-h-full">
+    <div class="w-full h-full">
         <svg xmlns="http://www.w3.org/2000/svg" height="100%" width="100%" viewBox="60 -17.81255 513.5466 106.8753">
             <g clip-path="url(#b)" transform="matrix(1.25 0 0 -1.25 -75.8055 162)">
                 <path

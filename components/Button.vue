@@ -1,5 +1,5 @@
 <template>
-    <div class="tw-relative tw-box-border">
+    <div class="relative box-border">
         <Glint :height-style="glintHeightStyle" :enable="glint" :orientation="'landscape'" :color="activeBorderComputed">
             <button
                 ref="button"
@@ -11,23 +11,24 @@
                     colorClass]"
                 :type="type"
                 class="
-                    tw-w-full
-                    tw-font-medium
-                    tw-tracking-wide
-                    tw-box-border
-                    disabled:tw-cursor-not-allowed
-                    tw-relative">
+                    w-full
+                    font-medium
+                    tracking-wide
+                    box-border
+                    cursor-pointer
+                    disabled:cursor-not-allowed
+                    relative">
                 <slot :fontClass="fontClass">
-                    <div class="tw-w-full tw-h-full tw-flex" :style="[contentSyle]">
+                    <div class="w-full h-full flex" :style="[contentSyle]">
                         <div
                             :style="{'filter': variant === 'default' ? 'drop-shadow(rgba(0, 0, 0, 0.3) 0px 1px 1px)' : 'none'}"
                             v-if="icon?.trim()"
-                            :class="[iconHolderClass, iconSpacingClass, label?.trim() ? 'tw-justify-end' : 'tw-justify-center']"
-                            class="tw-flex-none tw-flex tw-items-center tw-z-10">
+                            :class="[iconHolderClass, iconSpacingClass, label?.trim() ? 'justify-end' : 'justify-center']"
+                            class="flex-none flex items-center z-10">
                             <Icon v-if="icon?.trim()" :class="[iconClass]" :name="icon"></Icon>
                         </div>
 
-                        <div v-if="label?.trim()" :class="['tw-flex tw-items-center tw-truncate tw-z-10', fontClass, labelSpacingClass]">{{label}}</div>
+                        <div v-if="label?.trim()" :class="['flex items-center truncate z-10', fontClass, labelSpacingClass]">{{label}}</div>
                     </div>
                 </slot>
             </button>
@@ -126,13 +127,13 @@ const emit = defineEmits(['focusStateChanged']);
 
 const heightClass = computed(() => {
     return {
-        '2xs': 'tw-h-5',
-        'xs': 'tw-h-6',
-        'sm': 'tw-h-7',
-        'md': 'tw-h-8',
-        'lg': 'tw-h-11',
-        'xl': 'tw-h-14',
-        '2xl' : 'tw-h-16',
+        '2xs': 'h-5',
+        'xs': 'h-6',
+        'sm': 'h-7',
+        'md': 'h-8',
+        'lg': 'h-11',
+        'xl': 'h-14',
+        '2xl' : 'h-16',
     }[props.size]
 });
 
@@ -151,61 +152,61 @@ const glintHeightStyle = computed(() => {
 
 const labelSpacingClass = computed(() => {
     return {
-        '2xs': props.icon?.trim() ? 'tw-pl-[0.2rem] tw-pr-[0.5rem]' : 'tw-px-[0.3rem]',
-        'xs': props.icon?.trim() ? 'tw-pl-[0.2rem] tw-pr-[0.5rem]' : 'tw-px-[0.3rem]',
-        'sm': props.icon?.trim() ? 'tw-pl-[0.2rem] tw-pr-[0.5rem]' : 'tw-px-[0.6rem]',
-        'md': props.icon?.trim() ? 'tw-pl-[0.2rem] tw-pr-[0.5rem]' : 'tw-px-[0.6rem]',
-        'lg': props.icon?.trim() ? 'tw-pl-1 tw-pr-[0.5rem]' : 'tw-px-[0.85rem]',
-        'xl': props.icon?.trim() ? 'tw-pl-1 tw-pr-[0.5rem]' : 'tw-px-[0.85rem]',
-        '2xl': props.icon?.trim() ? 'tw-pl-1 tw-pr-[0.5rem]' : 'tw-px-[1.25rem]'
+        '2xs': props.icon?.trim() ? 'pl-[0.2rem] pr-[0.5rem]' : 'px-[0.3rem]',
+        'xs': props.icon?.trim() ? 'pl-[0.2rem] pr-[0.5rem]' : 'px-[0.3rem]',
+        'sm': props.icon?.trim() ? 'pl-[0.2rem] pr-[0.5rem]' : 'px-[0.6rem]',
+        'md': props.icon?.trim() ? 'pl-[0.2rem] pr-[0.5rem]' : 'px-[0.6rem]',
+        'lg': props.icon?.trim() ? 'pl-1 pr-[0.5rem]' : 'px-[0.85rem]',
+        'xl': props.icon?.trim() ? 'pl-1 pr-[0.5rem]' : 'px-[0.85rem]',
+        '2xl': props.icon?.trim() ? 'pl-1 pr-[0.5rem]' : 'px-[1.25rem]'
     }[props.size]
 });
 
 const iconSpacingClass = computed(() => {
     return {
-        '2xs': props.label?.trim() ? '' : 'tw-pl-[0.15rem] tw-mr-[0.1rem]',
-        'xs': props.label?.trim() ? '' : 'tw-pl-[0.15rem] tw-mr-[0.2rem]',
-        'sm': props.label?.trim() ? '' : (props.variant == 'default' ? 'tw-pl-[0.5rem] tw-mr-[0.4rem]' : 'tw-pl-[0.45rem] tw-mr-[0.45rem]'),
-        'md': props.label?.trim() ? '' : (props.variant == 'default' ? 'tw-pl-[0.45rem] tw-mr-[0.4rem]' : 'tw-pl-[0.45rem] tw-mr-[0.4rem]'),
-        'lg': props.label?.trim() ? '' : (props.variant == 'default' ? 'tw-pl-[0.7rem] tw-mr-[0.65rem]' : 'tw-pl-[0.7rem] tw-mr-[0.7rem]'),
-        'xl': props.label?.trim() ? '' : (props.variant == 'default' ? 'tw-pl-[0.65rem] tw-mr-[0.6rem]' : 'tw-pl-[0.65rem] tw-mr-[0.65rem]'),
-        '2xl': props.label?.trim() ? '' : (props.variant == 'default' ? 'tw-pl-[1rem] tw-mr-[0.85rem]' : 'tw-pl-[1rem] tw-mr-[0.9rem]')
+        '2xs': props.label?.trim() ? '' : 'pl-[0.15rem] mr-[0.1rem]',
+        'xs': props.label?.trim() ? '' : 'pl-[0.15rem] mr-[0.2rem]',
+        'sm': props.label?.trim() ? '' : (props.variant == 'default' ? 'pl-[0.5rem] mr-[0.4rem]' : 'pl-[0.45rem] mr-[0.45rem]'),
+        'md': props.label?.trim() ? '' : (props.variant == 'default' ? 'pl-[0.45rem] mr-[0.4rem]' : 'pl-[0.45rem] mr-[0.4rem]'),
+        'lg': props.label?.trim() ? '' : (props.variant == 'default' ? 'pl-[0.7rem] mr-[0.65rem]' : 'pl-[0.7rem] mr-[0.7rem]'),
+        'xl': props.label?.trim() ? '' : (props.variant == 'default' ? 'pl-[0.65rem] mr-[0.6rem]' : 'pl-[0.65rem] mr-[0.65rem]'),
+        '2xl': props.label?.trim() ? '' : (props.variant == 'default' ? 'pl-[1rem] mr-[0.85rem]' : 'pl-[1rem] mr-[0.9rem]')
     }[props.size]
 });
 
 const iconHolderClass = computed(() => {
     return {
-        '2xs': props.variant == 'default' ? 'tw-w-[1.2rem]': 'tw-w-[1.2rem]',
-        'xs': props.variant == 'default' ? 'tw-w-[1.45rem]': 'tw-w-[1.45rem]',
-        'sm': props.variant == 'default' ? 'tw-w-[1.7rem]': 'tw-w-[1.7rem]',
-        'md': props.variant == 'default' ? 'tw-w-[1.7rem]': 'tw-w-[1.7rem]',
-        'lg': props.variant == 'default' ? 'tw-w-[2.75rem]' : 'tw-w-[2.75rem]',
-        'xl': props.variant == 'default' ? 'tw-w-[2.95rem]' : 'tw-w-[2.95rem]',
-        '2xl': props.variant == 'default' ? 'tw-w-[3.95rem]' : 'tw-w-[3.95rem]',
+        '2xs': props.variant == 'default' ? 'w-[1.2rem]': 'w-[1.2rem]',
+        'xs': props.variant == 'default' ? 'w-[1.45rem]': 'w-[1.45rem]',
+        'sm': props.variant == 'default' ? 'w-[1.7rem]': 'w-[1.7rem]',
+        'md': props.variant == 'default' ? 'w-[1.7rem]': 'w-[1.7rem]',
+        'lg': props.variant == 'default' ? 'w-[2.75rem]' : 'w-[2.75rem]',
+        'xl': props.variant == 'default' ? 'w-[2.95rem]' : 'w-[2.95rem]',
+        '2xl': props.variant == 'default' ? 'w-[3.95rem]' : 'w-[3.95rem]',
     }[props.size];
 });
 
 const iconClass = computed(() => {
     return {
-        '2xs': 'tw-h-4 tw-w-4',
-        'xs': 'tw-h-5 tw-w-5',
-        'sm': 'tw-h-5 tw-w-5',
-        'md': 'tw-h-5 tw-w-5',
-        'lg': 'tw-h-8 tw-w-8',
-        'xl': 'tw-h-9 tw-w-9',
-        '2xl': 'tw-h-12 tw-w-12',
+        '2xs': 'h-4 w-4',
+        'xs': 'h-5 w-5',
+        'sm': 'h-5 w-5',
+        'md': 'h-5 w-5',
+        'lg': 'h-8 w-8',
+        'xl': 'h-9 w-9',
+        '2xl': 'h-12 w-12',
     }[props.size]
 });
 
 const fontClass = computed(() => {
     return {
-        '2xs': "tw-font-['Barlow_Semi_Condensed'] tw-text-xs tw-font-medium",
-        'xs': "tw-font-['Barlow_Semi_Condensed'] tw-text-sm tw-font-medium",
-        'sm': "tw-font-['Barlow_Semi_Condensed'] tw-text-base tw-font-medium",
-        'md': "tw-font-['Barlow_Semi_Condensed'] tw-text-base tw-font-medium",
-        'lg': "tw-font-['Barlow'] tw-text-2xl tw-font-semibold",
-        'xl': "tw-font-['Barlow'] tw-text-3xl tw-font-semibold",
-        '2xl': "tw-font-['Barlow'] tw-text-4xl tw-font-semibold",
+        '2xs': "font-['Barlow_Semi_Condensed'] text-xs font-medium",
+        'xs': "font-['Barlow_Semi_Condensed'] text-sm font-medium",
+        'sm': "font-['Barlow_Semi_Condensed'] text-base font-medium",
+        'md': "font-['Barlow_Semi_Condensed'] text-base font-medium",
+        'lg': "font-['Barlow'] text-2xl font-semibold",
+        'xl': "font-['Barlow'] text-3xl font-semibold",
+        '2xl': "font-['Barlow'] text-4xl font-semibold",
     }[props.size]
 });
 
@@ -330,7 +331,7 @@ watch(buttonFocused, (focused) => {
     right:0;
     background: linear-gradient(to right, v-bind(primaryColor80) 20%, v-bind(primaryColor) 50%, v-bind(primaryColor90) 100%);
     opacity: 0;
-    transition: all 400ms cubic-bezier(0.645, 0.045, 0.355, 1);
+    transition: all 100ms cubic-bezier(0.645, 0.045, 0.355, 1);
 }
 .outlined::after{
     content: '';
@@ -342,7 +343,7 @@ watch(buttonFocused, (focused) => {
     background-image: url('/images/deco/ripple_texture.png'), linear-gradient(to right, transparent, v-bind(primaryColor));
     background-size: cover;
     opacity: 0;
-    transition: all 400ms cubic-bezier(0.645, 0.045, 0.355, 1);
+    transition: all 100ms cubic-bezier(0.645, 0.045, 0.355, 1);
 }
 .outlined:hover::before{
     opacity: 1;

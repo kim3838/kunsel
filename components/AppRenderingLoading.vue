@@ -1,7 +1,7 @@
 <template>
     <transition name="fade">
-        <div v-show="!clientReadyState" class="tw-bg-white tw-fixed tw-inset-0 tw-overflow-y-auto tw-px-0 tw-z-50">
-            <div class="tw-h-full tw-flex tw-items-center tw-justify-center">
+        <div v-show="!clientReadyState" class="bg-white fixed inset-0 overflow-y-auto px-0 z-50">
+            <div class="h-full flex items-center justify-center">
                 <UnorderedList :size="'lg'" :icon="'eos-icons:loading'">Please wait...</UnorderedList>
             </div>
         </div>

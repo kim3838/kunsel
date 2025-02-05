@@ -1,26 +1,26 @@
 <template>
     <nav
         ref="landingNavigation"
-        class="primary-navigation-parent tw-z-40 tw-fixed">
-        <div class="tw-w-full tw-font-stiff tw-flex tw-justify-center">
-            <div class="tw-max-w-screen-2xl tw-w-full tw-flex tw-justify-start lg:tw-justify-around tw-h-10 lg:tw-h-16">
-                <div class="tw--my-px tw-flex tw-items-center">
-                    <div class="tw-w-max tw-h-full tw-flex tw-items-center">
+        class="primary-navigation-parent z-40 fixed">
+        <div class="w-full font-stiff flex justify-center">
+            <div class="max-w-screen-2xl w-full flex justify-start lg:justify-around h-10 lg:h-16">
+                <div class="-my-px flex items-center">
+                    <div class="w-max h-full flex items-center">
                         <GlobalFoundries :dark="navigationMode === 'clear-with-background'" />
                     </div>
                     <NavDrop
-                        class="lg:tw-hidden tw-h-full"
+                        class="lg:hidden h-full"
                         :size="navigationHeaderSize"
                         :title="'Menu'"
                         :drop-options="navigationLinks" />
                 </div>
 
-                <div class="tw-flex">
+                <div class="flex">
                     <!-- Navigation Links -->
-                    <div class="tw--my-px tw-hidden lg:tw-flex">
-                    <span class="tw-flex tw-items-center"  v-for="navigation in navigationLinks" :key="navigation.title">
+                    <div class="-my-px hidden lg:flex">
+                    <span class="flex items-center"  v-for="navigation in navigationLinks" :key="navigation.title">
                         <NavLink
-                            class="tw-h-full"
+                            class="h-full"
                             v-if="navigation.type == 'link'"
                             :size="navigationHeaderSize"
                             :to="navigation.to"
@@ -29,18 +29,18 @@
                         </NavLink>
 
                         <a
-                            class="tw-h-full"
+                            class="h-full"
                             v-if="navigation.type == 'anchor-link'"
                             :href="navigation.to">
                             <NavLink
-                                class="tw-h-full"
+                                class="h-full"
                                 :size="navigationHeaderSize">
                                 {{navigation.title}}
                             </NavLink>
                         </a>
 
                         <NavDrop
-                            class="tw-h-full"
+                            class="h-full"
                             v-if="navigation.type === 'drop'"
                             :size="navigationHeaderSize"
                             :title="navigation.title"
@@ -49,10 +49,10 @@
                     </span>
                     </div>
                 </div>
-                <div class="tw--my-px tw-flex tw-items-center">
+                <div class="-my-px flex items-center">
                     <component
                         :is="navDrop"
-                        class="tw-h-full"
+                        class="h-full"
                         v-if="isAuthenticated"
                         :size="navigationHeaderSize"
                         :drop-align="rightNavigationDropAlign"

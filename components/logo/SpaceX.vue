@@ -1,5 +1,5 @@
 <template>
-    <div class="tw-w-full tw-h-full">
+    <div class="w-full h-full">
         <svg xmlns="http://www.w3.org/2000/svg" height="100%" width="100%" :fill="dark? '#fff' : '#1f1f1f'"
              viewBox="-59.625 -12.15 516.75 72.9">
             <path

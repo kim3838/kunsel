@@ -1,24 +1,24 @@
 <template>
     <div>
         <DefaultWrapper>
-            <div class="tw-mx-auto tw-px-4 tw-max-w-screen-2xl tw-flex tw-justify-center">
-                <AccentFrame class="tw-my-4">
+            <div class="mx-auto px-4 max-w-screen-2xl flex justify-center">
+                <AccentFrame class="my-4">
                     <template #content>
-                        <div class="tw-relative tw-py-4">
-                            <form @submit.prevent="execute" class="tw-w-80">
-                                <div class="tw-text-lg tw-font-medium tw-mb-4">
+                        <div class="relative py-4">
+                            <form @submit.prevent="execute" class="w-80">
+                                <div class="text-lg font-medium mb-4">
                                     Verify your email.
                                 </div>
 
-                                <p class="tw-text-base">
+                                <p class="text-base">
                                     Please click the verification button sent to your email address.
                                 </p>
-                                <p class="tw-text-sm tw-mt-4">
+                                <p class="text-sm mt-4">
                                     Use the button below to resend the verification.
                                     Dont forget to check your email spam category.
                                 </p>
 
-                                <div class="tw-flex tw-mt-4 tw-items-center tw-justify-end">
+                                <div class="flex mt-4 items-center justify-end">
                                     <Button
                                         :disabled="pending"
                                         :size="'md'"

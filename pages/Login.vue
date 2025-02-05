@@ -1,40 +1,40 @@
 <template>
     <div>
         <LandingWrapper>
-            <div class="tw-mx-auto tw-pt-4 tw-max-w-screen-2xl">
-                <div class="tw-flex tw-justify-center">
-                    <AccentFrame class="tw-my-4">
+            <div class="mx-auto pt-4 max-w-screen-2xl">
+                <div class="flex justify-center">
+                    <AccentFrame class="my-4">
                         <template #content>
-                            <div class="tw-relative tw-py-4">
-                                <label class="tw-text-lg tw-font-medium">Password Login</label>
-                                <form @submit.prevent="handleLogin" class="tw-mt-4 tw-w-80">
-                                    <div class="tw-block">
+                            <div class="relative py-4">
+                                <label class="text-lg font-medium">Password Login</label>
+                                <form @submit.prevent="handleLogin" class="mt-4 w-80">
+                                    <div class="block">
                                         <InputLabel :size="'md'" for="identifier" value="Username or Email" />
                                         <Input
                                             :disabled="authPending"
                                             :size="'lg'"
                                             id="identifier"
-                                            class="tw-w-full"
+                                            class="w-full"
                                             ref="identifierInput"
                                             v-model="identifier"
                                             autocomplete="off" />
                                     </div>
 
-                                    <div class="tw-block tw-mt-4">
+                                    <div class="block mt-4">
                                         <InputLabel :size="'md'" for="password" value="Password" />
                                         <Input
                                             :disabled="authPending"
                                             :size="'lg'"
                                             id="password"
                                             :type="'password'"
-                                            class="tw-w-full tw-tracking-widest"
+                                            class="w-full tracking-widest"
                                             v-model="password"
                                             required
                                             autocomplete="current-password" />
                                     </div>
 
-                                    <div class="tw-block tw-mt-4">
-                                        <label class="tw-flex tw-items-center">
+                                    <div class="block mt-4">
+                                        <label class="flex items-center">
                                             <Checkbox
                                                 :disabled="authPending"
                                                 name="remember"
@@ -44,15 +44,15 @@
                                         </label>
                                     </div>
 
-                                    <div v-if="$coreStore.service.error.payload && !useNuxtApp().$coreStore.service.error.prompt" class="tw-block tw-text-sm tw-text-red-500">
+                                    <div v-if="$coreStore.service.error.payload && !useNuxtApp().$coreStore.service.error.prompt" class="block text-sm text-red-500">
                                         <span>{{ $coreStore.service.error.payload.message }}</span>
                                     </div>
 
-                                    <div v-if="!isAuthenticated" class="tw-flex tw-mt-4 tw-items-center tw-justify-between">
-                                        <div class="tw-block tw-text-sm tw-self-end">
-                                            <NuxtLink class="hover:tw-underline" :to="'forgot-password'">Forgot password.</NuxtLink>
+                                    <div v-if="!isAuthenticated" class="flex mt-4 items-center justify-between">
+                                        <div class="block text-sm self-end">
+                                            <NuxtLink class="hover:underline" :to="'forgot-password'">Forgot password.</NuxtLink>
                                         </div>
-                                        <div class="tw-flex-grow-[0.5]">
+                                        <div class="flex-grow-[0.5]">
                                             <Button
                                                 :justify-content="'center'"
                                                 :disabled="authPending"
@@ -120,6 +120,6 @@ function handleLogin(){
 
 <style scoped>
 .container {
-    @apply tw-flex tw-justify-center tw-items-center tw-text-center tw-mx-auto;
+    @apply flex justify-center items-center text-center mx-auto;
 }
 </style>

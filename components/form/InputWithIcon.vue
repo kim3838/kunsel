@@ -1,11 +1,11 @@
 <template>
-    <div class="tw-font-data tw-relative tw-box-border" :class="[heightClass]">
+    <div class="font-data relative box-border" :class="[heightClass]">
         <Glint :height-style="glintHeightStyle" :enable="glint" :orientation="'landscape'" :color="activeBorderComputed">
-            <div v-if="icon?.trim()" class="tw-absolute tw-w-full tw-h-full tw-z-20 tw-flex tw-pointer-events-none">
-                <div :class="[iconHolderClass]" class="tw-flex-none tw-h-full tw-flex tw-justify-end tw-items-center">
+            <div v-if="icon?.trim()" class="absolute w-full h-full z-20 flex pointer-events-none">
+                <div :class="[iconHolderClass]" class="flex-none h-full flex justify-end items-center">
                     <Icon :class="[iconClass]" :name="icon" />
                 </div>
-                <div class="tw-w-full tw-relative"></div>
+                <div class="w-full relative"></div>
             </div>
             <input
                 :id="id"
@@ -15,13 +15,12 @@
                     fontClass,
                     spacingClass,
                     backgroundClass,
-                    'focus:tw-ring-transparent focus:tw-ring',
                     focusRing ? 'focus-ring' : '',
                     withBorder ? 'bordered' : 'borderless',
-                    rounded ? 'tw-rounded-sm': ''
+                    rounded ? 'rounded-[2px]': ''
                 ]"
                 :style="{'top': absoluteTopAllocation}"
-                class="tw-relative tw-w-full tw-h-full tw-z-10 tw-form-input tw-box-border"
+                class="relative w-full h-full z-10 box-border outline-none"
                 :value="modelValue"
                 :placeholder="placeholder"
                 :type="type"
@@ -127,25 +126,25 @@ const emit = defineEmits(['update:modelValue', 'focusStateChanged']);
 
 const iconHolderClass = computed(() => {
     return {
-        '2xs': 'tw-w-5',
-        'xs': 'tw-w-[1.5rem]',
-        'sm': 'tw-w-[1.77rem]',
-        'md': 'tw-w-[1.75rem]',
-        'lg': 'tw-w-[2.8rem]',
-        'xl': 'tw-w-[3rem]',
-        '2xl': 'tw-w-[4rem]',
+        '2xs': 'w-5',
+        'xs': 'w-[1.5rem]',
+        'sm': 'w-[1.77rem]',
+        'md': 'w-[1.75rem]',
+        'lg': 'w-[2.8rem]',
+        'xl': 'w-[3rem]',
+        '2xl': 'w-[4rem]',
     }[props.size];
 });
 
 const iconClass = computed(() => {
     return {
-        '2xs': 'tw-h-4 tw-w-4',
-        'xs': 'tw-h-5 tw-w-5',
-        'sm': 'tw-h-5 tw-w-5',
-        'md': 'tw-h-5 tw-w-5',
-        'lg': 'tw-h-8 tw-w-8',
-        'xl': 'tw-h-9 tw-w-9',
-        '2xl': 'tw-h-12 tw-w-12',
+        '2xs': 'h-4 w-4',
+        'xs': 'h-5 w-5',
+        'sm': 'h-5 w-5',
+        'md': 'h-5 w-5',
+        'lg': 'h-8 w-8',
+        'xl': 'h-9 w-9',
+        '2xl': 'h-12 w-12',
     }[props.size]
 });
 
@@ -168,26 +167,26 @@ const spacingClass = computed(() => {
     }
 
     return {
-        '2xs': props.icon?.trim() ? 'tw-pl-[1.4rem] tw-p-0' : '',
-        'xs': props.icon?.trim() ? 'tw-pl-[1.65rem] tw-p-0' : '',
-        'sm': props.icon?.trim() ? 'tw-pl-[1.875rem] tw-p-0' : '',
-        'md': props.icon?.trim() ? 'tw-pl-[1.875rem] tw-p-0' : '',
-        'lg': props.icon?.trim() ? 'tw-pl-[3rem] tw-p-0' : '',
-        'xl': props.icon?.trim() ? 'tw-pl-[3.2rem] tw-p-0' : '',
-        '2xl': props.icon?.trim() ? 'tw-pl-[4.3rem] tw-p-0' : ''
+        '2xs': props.icon?.trim() ? 'pl-[1.4rem] p-0' : '',
+        'xs': props.icon?.trim() ? 'pl-[1.65rem] p-0' : '',
+        'sm': props.icon?.trim() ? 'pl-[1.875rem] p-0' : '',
+        'md': props.icon?.trim() ? 'pl-[1.875rem] p-0' : '',
+        'lg': props.icon?.trim() ? 'pl-[3rem] p-0' : '',
+        'xl': props.icon?.trim() ? 'pl-[3.2rem] p-0' : '',
+        '2xl': props.icon?.trim() ? 'pl-[4.3rem] p-0' : ''
     }[props.size]
 });
 
 const heightClass = computed(() => {
     return {
-        '2xs': 'tw-h-5',
-        'xs': 'tw-h-6',
-        'sm': 'tw-h-7',
-        'md': 'tw-h-8',
-        'lg': 'tw-h-11',
-        'xl': 'tw-h-14',
-        '2xl' : 'tw-h-16',
-        '3xl' : 'tw-h-20',
+        '2xs': 'h-5',
+        'xs': 'h-6',
+        'sm': 'h-7',
+        'md': 'h-8',
+        'lg': 'h-11',
+        'xl': 'h-14',
+        '2xl' : 'h-16',
+        '3xl' : 'h-20',
     }[props.size]
 });
 
@@ -211,14 +210,14 @@ const fontClass = computed(() => {
     }
 
     return {
-        '2xs': 'tw-text-xs',
-        'xs': 'tw-text-xs',
-        'sm': 'tw-text-sm',
-        'md': 'tw-text-sm',
-        'lg': 'tw-text-lg',
-        'xl': 'tw-text-2xl tw-font-semibold',
-        '2xl': 'tw-text-4xl tw-font-semibold',
-        '3xl': 'tw-text-5xl tw-font-bold',
+        '2xs': 'text-xs',
+        'xs': 'text-xs',
+        'sm': 'text-sm',
+        'md': 'text-sm',
+        'lg': 'text-lg',
+        'xl': 'text-2xl font-semibold',
+        '2xl': 'text-4xl font-semibold',
+        '3xl': 'text-5xl font-bold',
     }[props.size];
 });
 

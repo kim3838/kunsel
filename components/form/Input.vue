@@ -1,5 +1,5 @@
 <template>
-    <div class="tw-font-data tw-relative tw-box-border" :class="[heightClass]">
+    <div class="font-data relative box-border" :class="[heightClass]">
         <Glint :height-style="glintHeightStyle" :enable="glint" :orientation="'landscape'" :color="activeBorderComputed">
             <input
                 :tabindex="tabindex"
@@ -8,13 +8,12 @@
                     fontClass,
                     spacingClass,
                     backgroundClass,
-                    'focus:tw-ring-transparent focus:tw-ring',
                     focusRing ? 'focus-ring' : '',
                     withBorder ? 'bordered' : 'borderless',
-                    rounded ? 'tw-rounded-sm': ''
+                    rounded ? 'rounded-[2px]': ''
                 ]"
                 :style="{'top': absoluteTopAllocation}"
-                class="tw-relative tw-form-input tw-h-full tw-w-full tw-box-border"
+                class="relative h-full w-full box-border outline-none"
                 :value="modelValue"
                 :placeholder="placeholder"
                 :type="type"
@@ -112,14 +111,14 @@ const emit = defineEmits(['update:modelValue', 'focusStateChanged']);
 
 const heightClass = computed(() => {
     return {
-        '2xs': 'tw-h-5',
-        'xs': 'tw-h-6',
-        'sm': 'tw-h-7',
-        'md': 'tw-h-8',
-        'lg': 'tw-h-11',
-        'xl': 'tw-h-14',
-        '2xl' : 'tw-h-16',
-        '3xl' : 'tw-h-20',
+        '2xs': 'h-5',
+        'xs': 'h-6',
+        'sm': 'h-7',
+        'md': 'h-8',
+        'lg': 'h-11',
+        'xl': 'h-14',
+        '2xl' : 'h-16',
+        '3xl' : 'h-20',
     }[props.size]
 });
 
@@ -142,13 +141,13 @@ const spacingClass = computed(() => {
     }
 
     return {
-        '2xs': 'tw-pl-[0.3rem] tw-p-0',
-        'xs': 'tw-pl-[0.3rem] tw-p-0',
-        'sm': 'tw-pl-[0.65rem] tw-p-0',
-        'md': 'tw-pl-[0.65rem] tw-p-0',
-        'lg': 'tw-pl-[0.95rem] tw-p-0',
-        'xl': 'tw-pl-[1rem] tw-p-0',
-        '2xl': 'tw-pl-[1.25rem] tw-p-0'
+        '2xs': 'pl-[0.3rem] p-0',
+        'xs': 'pl-[0.3rem] p-0',
+        'sm': 'pl-[0.65rem] p-0',
+        'md': 'pl-[0.65rem] p-0',
+        'lg': 'pl-[0.95rem] p-0',
+        'xl': 'pl-[1rem] p-0',
+        '2xl': 'pl-[1.25rem] p-0'
     }[props.size]
 });
 
@@ -172,14 +171,14 @@ const fontClass = computed(() => {
     }
 
     return {
-        '2xs': 'tw-text-xs',
-        'xs': 'tw-text-xs',
-        'sm': 'tw-text-sm',
-        'md': 'tw-text-sm',
-        'lg': 'tw-text-lg',
-        'xl': 'tw-text-2xl tw-font-semibold',
-        '2xl': 'tw-text-3xl tw-font-bold',
-        '3xl': 'tw-text-5xl tw-font-bold',
+        '2xs': 'text-xs',
+        'xs': 'text-xs',
+        'sm': 'text-sm',
+        'md': 'text-sm',
+        'lg': 'text-lg',
+        'xl': 'text-2xl font-semibold',
+        '2xl': 'text-3xl font-bold',
+        '3xl': 'text-5xl font-bold',
     }[props.size];
 });
 

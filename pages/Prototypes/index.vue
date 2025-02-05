@@ -1,44 +1,44 @@
 <template>
     <div>
         <DefaultWrapper>
-            <div class="tw-mx-auto tw-max-w-screen-2xl tw-flex tw-justify-center">
-                <div class="tw-w-full">
-                    <form @submit.prevent="paginate(1, true)" class="tw-space-y-2 tw-my-4 tw-p-[1.5rem] neutral-border">
-                        <div class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-8">
-                            <div class="tw-block">
+            <div class="mx-auto max-w-screen-2xl flex justify-center">
+                <div class="w-full">
+                    <form @submit.prevent="paginate(1, true)" class="space-y-2 my-4 p-[1.5rem] neutral-border">
+                        <div class="grid gap-2 grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-8">
+                            <div class="block">
                                 <InputLabel :size="'sm'" value="Search"/>
-                                <Input :size="'md'" ref="searchInput" v-model="filters.search.keyword" class="tw-w-full" placeholder="Search something" type="text" autocomplete="off"/>
+                                <Input :size="'md'" ref="searchInput" v-model="filters.search.keyword" class="w-full" placeholder="Search something" type="text" autocomplete="off"/>
                             </div>
-                            <div class="tw-block">
-                                <InputLabel :size="'sm'" value="_" class="tw-text-transparent"/>
+                            <div class="block">
+                                <InputLabel :size="'sm'" value="_" class="text-transparent"/>
                                 <Button type="button" :variant="'flat'" @click="filters.search.keyword += '.';" :size="'md'" :icon="'ic:sharp-join-left'" :label="'Concat &quot;.&quot;'"></Button>
                             </div>
                         </div>
 
-                        <div class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-8">
-                            <div class="tw-block">
+                        <div class="grid gap-2 grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-8">
+                            <div class="block">
                                 <InputLabel :size="'sm'" value="Code"/>
-                                <Input :size="'md'" readonly v-model="filters.code" class="tw-w-full" placeholder="Search something" type="text" autocomplete="off"/>
+                                <Input :size="'md'" readonly v-model="filters.code" class="w-full" placeholder="Search something" type="text" autocomplete="off"/>
                             </div>
-                            <div class="tw-block">
-                                <InputLabel :size="'sm'" value="_" class="tw-text-transparent"/>
+                            <div class="block">
+                                <InputLabel :size="'sm'" value="_" class="text-transparent"/>
                                 <Button type="button" :variant="'flat'" @click="filters.code += '.';" :size="'md'" :icon="'ic:sharp-join-left'" :label="'Concat &quot;.&quot;'"></Button>
                             </div>
                         </div>
 
-                        <div class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-8">
-                            <div class="tw-bloc">
+                        <div class="grid gap-2 grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-8">
+                            <div class="bloc">
                                 <InputLabel :size="'sm'" value="Date Added: From"/>
-                                <InputWithIcon :icon="'ion:calendar-number-sharp'" :id="'datetimefrom'" readonly v-model="filters.datetimeFrom" :size="'md'" class="tw-w-full" />
+                                <InputWithIcon :icon="'ion:calendar-number-sharp'" :id="'datetimefrom'" readonly v-model="filters.datetimeFrom" :size="'md'" class="w-full" />
                             </div>
-                            <div class="tw-block">
+                            <div class="block">
                                 <InputLabel :size="'sm'" value="Date Added: To"/>
-                                <InputWithIcon :icon="'ion:calendar-number-sharp'" :id="'datetimeto'" readonly v-model="filters.datetimeTo" :size="'md'" class="tw-w-full" />
+                                <InputWithIcon :icon="'ion:calendar-number-sharp'" :id="'datetimeto'" readonly v-model="filters.datetimeTo" :size="'md'" class="w-full" />
                             </div>
                         </div>
 
-                        <div class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-8">
-                            <Button class="tw-w-min" ref="submitButton" type="submit" :disabled="pending" :size="'md'" :icon="pending ? 'eos-icons:loading' : 'mdi:data'" :label="pending ? 'Loading' : 'Process'"></Button>
+                        <div class="grid gap-2 grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-8">
+                            <Button class="w-min" ref="submitButton" type="submit" :disabled="pending" :size="'md'" :icon="pending ? 'eos-icons:loading' : 'mdi:data'" :label="pending ? 'Loading' : 'Process'"></Button>
                         </div>
                     </form>
 
@@ -56,7 +56,7 @@
                                     v-model="pageComputed"
                                 />
                                 <DataTable
-                                    class="tw-mt-0.5"
+                                    class="mt-0.5"
                                     :headers="prototypeHeaders"
                                     :size="'xl'"
                                     :rows="prototypes.data"
@@ -72,10 +72,10 @@
                                             :override="{font_size: slot.datepickerFontSize}"
                                             in-cell
                                             :size="slot.inputSize"
-                                            class="tw-w-full" />
+                                            class="w-full" />
                                     </template>
                                     <template v-slot:cell.actions="{cell, slot, scrollReference}">
-                                        <div class="tw-h-full tw-space-x-0.5 tw-w-full tw-flex tw-items-center">
+                                        <div class="h-full space-x-0.5 w-full flex items-center">
                                             <Button type="button" :size="slot.buttonSize" :label="'Details'"></Button>
                                             <Button type="button" :size="slot.buttonSize" :label="'Approve'"></Button>
                                             <Button type="button" :size="slot.buttonSize" :label="'Deny'"></Button>

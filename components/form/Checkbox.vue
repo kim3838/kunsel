@@ -1,15 +1,15 @@
 <template>
-    <span class="tw-font-data tw-box-border tw-overflow-hidden tw-flex tw-items-start tw-justify-start tw-cursor-pointer">
-        <div :style="{'height': checkBoxSlotHeight}" class="tw-flex tw-items-center">
+    <span class="font-data box-border overflow-hidden flex items-start justify-start cursor-pointer" :class="[fontClass]">
+        <div :style="{'height': checkBoxSlotHeight}" class="flex items-center">
             <input
                 :disabled="disabled"
                 :tabindex="tabable ? 0 : -1"
                 type="checkbox"
                 v-model="proxyModel"
                 :class="[heightClass, inputClass]"
-                class="tw-form-checkbox checkbox tw-outline-none focus:tw-ring-transparent focus:tw-ring">
+                class="checkbox">
         </div>
-        <div v-if="label?.trim()" :class="[fontClass]" class="tw-ml-1 tw-whitespace-pre-line">{{label}}</div>
+        <div v-if="label?.trim()" class="ml-1 whitespace-pre-line">{{label}}</div>
     </span>
 </template>
 
@@ -72,17 +72,17 @@ const checkBoxSlotHeight = computed(()=>{
 
 const heightClass = computed(() => {
     return {
-        'sm': 'tw-h-3 tw-w-3',
-        'md': 'tw-h-3.5 tw-w-3.5',
-        'lg': 'tw-h-5 tw-w-5',
+        'sm': 'h-3 w-3',
+        'md': 'h-3.5 w-3.5',
+        'lg': 'h-5 w-5',
     }[props.size];
 });
 
 const fontClass = computed(() => {
     return {
-        'sm': 'tw-text-sm',
-        'md': 'tw-text-base',
-        'lg': 'tw-text-lg'
+        'sm': 'text-sm',
+        'md': 'text-base',
+        'lg': 'text-lg'
     }[props.size];
 });
 
@@ -93,21 +93,54 @@ const inputClass = computed(() => {
         'lg': 'checkbox-lg'
     }[props.size];
 });
+
+const checkMarkSize = computed(() => {
+    return {
+        'sm': '0.5rem',
+        'md': '0.7rem',
+        'lg': '1rem'
+    }[props.size];
+});
 </script>
 
 <style scoped>
 .checkbox {
+    appearance: none;
     color: v-bind(checkBoxColor) !important;
     border-color: v-bind(liningColor) !important;
-    outline: transparent none !important;
     box-shadow: none !important;
+    outline: none !important;
+    cursor: pointer;
+    border-radius: 1px;
+    display: inline-block;
+    position: relative;
+    vertical-align: middle;
+}
+
+input[type="checkbox"]:checked {
+    background-color: v-bind(checkBoxColor) !important;
+}
+
+input[type="checkbox"]::before {
+    position: absolute;
+    font-size: v-bind(checkMarkSize) !important;
+    color: white;
+    width: 100%;
+    height: 120%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+input[type="checkbox"]:checked::before {
+    content: "✔";
 }
 
 .checkbox-md{
-    border-width: 1px;
+    border-width: 0.1rem;
 }
 
 .checkbox-lg{
-    border-width: 2px;
+    border-width: 0.1rem;
 }
 </style>

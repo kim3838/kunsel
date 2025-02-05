@@ -2,22 +2,22 @@
     <div
         v-if="clientReadyState"
         ref="layoutScroll"
-        class="tw-h-screen tw-max-h-screen tw-overflow-y-hidden tw-overflow-x-hidden">
+        class="h-screen max-h-screen overflow-y-hidden overflow-x-hidden">
         <!-- Primary Navigation Menu -->
         <LandingNavigation v-model:navigation-height-in-pixels="topAllocation"/>
         <!-- Main Content -->
-        <main class="tw-relative">
+        <main class="relative">
             <!-- Debug -->
-            <div v-if="true" class="tw-fixed tw-z-50 tw-text-xs tw-font-mono">
+            <div v-if="true" class="fixed z-50 text-xs font-mono">
                 {{`SCREENDIMENSION: ${screenWidth} x ${screenHeight}`}}
             </div>
 
             <!-- Section Fragments -->
-            <div class="tw-fixed tw-z-10 tw-top-0 tw-right-0 tw-bottom-0 tw-left-0 tw-h-screen">
+            <div class="fixed z-10 top-0 right-0 bottom-0 left-0 h-screen">
                 <!-- Todo: Add icon before section titles to overlap vertical rule -->
-                <div class="tw-absolute vertical-nav-rule"></div>
+                <div class="absolute vertical-nav-rule"></div>
 
-                <div v-if="false" class="tw-absolute tw-text-xs tw-font-mono">
+                <div v-if="false" class="absolute text-xs font-mono">
                     {{"INDEX: " + index}}<br>
                     <pre>{{features[index]}}</pre>
                 </div>
@@ -25,13 +25,13 @@
 
             <!-- Section Background -->
             <section v-for="(section, index) in features" :style="{'background': section?.background}">
-                <div v-if="section?.media" class="tw-relative tw-w-full tw-h-screen tw-flex tw-justify-center tw-items-start tw-overflow-hidden">
-                    <div v-if="section?.layer?.type == 'image' && section?.layer?.source" class="tw-w-full tw-h-full tw-absolute background-image" :style="{'background-image': 'url('+section.layer.source+')'}"></div>
-                    <div v-if="section?.media?.type == 'image' && section?.media?.source" class="tw-w-full tw-h-full tw-absolute background-image" :style="{'background-image': 'url('+section.media.source+')'}"></div>
+                <div v-if="section?.media" class="relative w-full h-screen flex justify-center items-start overflow-hidden">
+                    <div v-if="section?.layer?.type == 'image' && section?.layer?.source" class="w-full h-full absolute background-image" :style="{'background-image': 'url('+section.layer.source+')'}"></div>
+                    <div v-if="section?.media?.type == 'image' && section?.media?.source" class="w-full h-full absolute background-image" :style="{'background-image': 'url('+section.media.source+')'}"></div>
 
                     <video
                         v-if="section?.media?.type == 'video' && section?.media?.source"
-                        class="tw-absolute tw-border-0 tw-object-cover tw-w-full tw-h-full"
+                        class="absolute border-0 object-cover w-full h-full"
                         preload="none"
                         ref="featuredVideos"
                         muted
@@ -39,29 +39,29 @@
                         <source :src="section.media.source" :type="section.media.source_type">
                     </video>
 
-                    <div v-if="false" class="tw-z-40 thread-border tw-bg-white tw-font-mono tw-px-1.5">
+                    <div v-if="false" class="z-40 thread-border bg-white font-mono px-1.5">
                         {{layoutScrollY}}&nbsp;:&nbsp;{{index}}
                     </div>
                 </div>
             </section>
 
             <!-- Section Content -->
-            <div class="tw-fixed tw-z-20 tw-top-0 tw-right-0 tw-bottom-0 section-content-container allocate-navigation">
-                <div class="tw-relative tw-w-full tw-h-full">
+            <div class="fixed z-20 top-0 right-0 bottom-0 section-content-container allocate-navigation">
+                <div class="relative w-full h-full">
 
                     <!-- Header -->
                     <div
                         v-for="(featured, index) in features"
                         :id="`featured-${index}`"
                         :style="sectionStyle(index)"
-                        class="tw-absolute tw-z-30 all-transition">
+                        class="absolute z-30 all-transition">
                         <div
                             :id="`featured-${index}-header`"
-                            class="tw-pb-1">
+                            class="pb-1">
                             <div
-                                class="tw-font-stiff-wide section-header tw-w-min tw-px-1 tw-text-nowrap tw-cursor-pointer tw-text-white tw-rounded-sm tw-backdrop-blur-sm"
+                                class="font-stiff-wide section-header w-min px-1 text-nowrap cursor-pointer text-white rounded-sm backdrop-blur-sm"
                                 style="text-shadow: 1px 1px 2px #000000;">
-                                <div class="tw-w-max">
+                                <div class="w-max">
                                     <UnorderedList
                                         :icon="sectionNavigationIcon(index)"
                                         :label="featured?.title"/>
@@ -76,12 +76,12 @@
                         v-for="(featured, index) in features"
                         :id="`featured-${index}-content-banner`"
                         :style="baseContentBannerStyle(featured, index)"
-                        class="tw-absolute tw-z-20 all-transition">
-                        <div class="tw-w-full tw-h-full tw-pb-1">
+                        class="absolute z-20 all-transition">
+                        <div class="w-full h-full pb-1">
                             <div :style="contentBannerStyle(featured, index)">
                                 <div
                                     v-if="featured?.banner?.type == 'image'"
-                                    class="tw-w-full tw-h-full background-image"
+                                    class="w-full h-full background-image"
                                     :style="bannerImageSourceSet(featured?.banner?.source_set)">
                                 </div>
                             </div>
@@ -93,22 +93,22 @@
                         v-for="(featured, index) in features"
                         :id="`featured-${index}-content`"
                         :style="contentStyle(index)"
-                        class="tw-absolute tw-z-30 all-transition">
+                        class="absolute z-30 all-transition">
 
-                        <div v-if="featured.type === 'template'" class="tw-h-full tw-pb-1" :style="{'padding-right': paddingInPixels}">
+                        <div v-if="featured.type === 'template'" class="h-full pb-1" :style="{'padding-right': paddingInPixels}">
                             <component :is="resolvedFeaturedSpotlight"/>
                         </div>
 
-                        <div v-else class="tw-relative compensate-left-padding tw-w-screen">
+                        <div v-else class="relative compensate-left-padding w-screen">
                             <FeaturedCarouselRow
                                 :inner-id="`featured-${index}-carousel-inner`"
                                 :x-padding="paddingInPixels"
                                 :gap="'0.5rem'"
                                 :scroll-speed="scrollSpeedMs"
-                                :items="featured.children"><!-- tw-bg-gray-600 tw-bg-opacity-50 -->
+                                :items="featured.children"><!-- bg-gray-600 bg-opacity-50 -->
                                 <template v-slot:items="{slot}">
                                     <div
-                                        class="tw-flex-none tw-cursor-pointer tw-relative"
+                                        class="flex-none cursor-pointer relative"
                                         v-for="child in slot.items" :key="child"
                                         :style="[featuredElementStyle(featured, child, 'card_dimension')]">
                                         <HexagonFrame
@@ -124,34 +124,34 @@
                                             :header-fade="child.header_fade"
                                             :header-fade-color="child.header_fade_color">
                                             <template #header>
-                                                <div :style="[featuredElementStyle(featured, child, 'header_style')]" class="tw-bg-cover tw-bg-center tw-bg-no-repeat tw-box-border">
+                                                <div :style="[featuredElementStyle(featured, child, 'header_style')]" class="bg-cover bg-center bg-no-repeat box-border">
                                                     <div
-                                                        class="tw-h-full tw-w-full tw-bg-cover tw-bg-center tw-bg-no-repeat"
+                                                        class="h-full w-full bg-cover bg-center bg-no-repeat"
                                                         :style="{'background': child?.image ? 'url('+child?.image+')' : 'none'}"/>
                                                 </div>
-                                                <div :style="[featuredElementStyle(featured, child, 'body_style')]" class="tw-box-border">
+                                                <div :style="[featuredElementStyle(featured, child, 'body_style')]" class="box-border">
                                                     <div
-                                                        class="tw-h-full tw-w-full tw-bg-cover tw-bg-center tw-bg-no-repeat tw-grayscale"
+                                                        class="h-full w-full bg-cover bg-center bg-no-repeat grayscale"
                                                         :style="{'background': child?.body_background ? 'url('+child?.body_background+')' : 'none', 'opacity': child?.body_background_opacity ? child.body_background_opacity : 0.2}"/>
                                                 </div>
                                             </template>
                                             <template v-slot:body="{frameBorderColor}">
-                                                <div style="text-shadow: none;" :style="[featuredElementStyle(featured, child, 'body_style')]" class="tw-p-2 tw-overflow-hidden tw-flex tw-flex-col">
-                                                    <div v-if="child.content_direction == `ttb`" class="tw-overflow-auto tw-space-y-0.5">
-                                                        <div :class="[featuredElementClass(featured, child, 'title')]" class="tw-line-clamp-2" v-text="child.title"></div>
+                                                <div style="text-shadow: none;" :style="[featuredElementStyle(featured, child, 'body_style')]" class="p-2 overflow-hidden flex flex-col">
+                                                    <div v-if="child.content_direction == `ttb`" class="overflow-auto space-y-0.5">
+                                                        <div :class="[featuredElementClass(featured, child, 'title')]" class="line-clamp-2" v-text="child.title"></div>
 
                                                         <div style="height: 1px;width: 100%;background: linear-gradient(to right, transparent 0%, #e3e3e3 30%, #e3e3e3 70%, transparent 100%);"></div>
 
-                                                        <div v-if="child?.add_ons?.value?.length" class="tw-flex tw-flex-row tw-flex-wrap tw-gap-1">
+                                                        <div v-if="child?.add_ons?.value?.length" class="flex flex-row flex-wrap gap-1">
                                                             <img :style="{'height': child.add_ons.height}" v-for="add_on in child.add_ons.value" :src="add_on.image" :alt="add_on.alt"/>
                                                         </div>
 
                                                     </div>
 
-                                                    <div v-else-if="child.content_direction == `ltr`" class="tw-overflow-auto tw-space-y-1">
-                                                        <div class="tw-font-stiff tw-h-max tw-flex-none">
+                                                    <div v-else-if="child.content_direction == `ltr`" class="overflow-auto space-y-1">
+                                                        <div class="font-stiff h-max flex-none">
                                                             <UnorderedList
-                                                                class="tw-cursor-pointer hover:tw-underline"
+                                                                class="cursor-pointer hover:underline"
                                                                 :size="child?.title_size"
                                                                 :icon="child?.title_icon"
                                                                 :label="child?.title"/>
@@ -159,12 +159,12 @@
 
                                                         <div style="height: 1px;width: 100%;background: linear-gradient(to right, transparent 0%, #e3e3e3 30%, #e3e3e3 70%, transparent 100%);"></div>
 
-                                                        <div v-if="child?.add_ons?.value?.length" :class="[child?.title_size === 'lg' ? 'tw-ml-6' : 'tw-ml-4']" class="tw-flex tw-flex-row tw-flex-wrap tw-gap-1">
+                                                        <div v-if="child?.add_ons?.value?.length" :class="[child?.title_size === 'lg' ? 'ml-6' : 'ml-4']" class="flex flex-row flex-wrap gap-1">
                                                             <img :style="{'height': child.add_ons.height}" v-for="add_on in child.add_ons.value" :src="add_on.image" :alt="add_on.alt"/>
                                                         </div>
 
-                                                        <div v-if="child?.bullets?.value?.length" class="tw-flex tw-flex-row tw-flex-nowrap">
-                                                            <div class="tw-w-full" :style="{'columns': (child.bullets.column ? child.bullets.column : 1)}">
+                                                        <div v-if="child?.bullets?.value?.length" class="flex flex-row flex-nowrap">
+                                                            <div class="w-full" :style="{'columns': (child.bullets.column ? child.bullets.column : 1)}">
                                                                 <UnorderedList
                                                                     v-for="bullet in child?.bullets?.value"
                                                                     :size="child?.description_size"
@@ -173,8 +173,8 @@
                                                             </div>
                                                         </div>
 
-                                                        <div v-if="child?.sub_bullets?.value?.length" class="tw-flex tw-flex-row tw-flex-nowrap tw-pt-2">
-                                                            <div class="tw-w-full tw-italic" :style="{'columns': (child.sub_bullets.column ? child.sub_bullets.column : 1)}">
+                                                        <div v-if="child?.sub_bullets?.value?.length" class="flex flex-row flex-nowrap pt-2">
+                                                            <div class="w-full italic" :style="{'columns': (child.sub_bullets.column ? child.sub_bullets.column : 1)}">
                                                                 <UnorderedList
                                                                     v-for="bullet in child?.sub_bullets?.value"
                                                                     :size="'sm'"
@@ -195,7 +195,7 @@
             </div>
         </main>
         <!-- DateTime Picker -->
-        <div id="datetimepicker-slot" class="tw-font-data"></div>
+        <div id="datetimepicker-slot" class="font-data"></div>
         <!-- Action Modal -->
         <PromptModal />
     </div>
@@ -672,8 +672,8 @@ function featuredElementStyle(featured, child, property){
 function featuredElementClass(featured, child, property){
 
     let titleClass =  ['xl','lg'].indexOf(featuredElementDimension.value) >= 0
-        ? 'tw-text-lg tw-font-medium tw-font-stiff'
-        : 'tw-text-sm tw-font-normal tw-font-stiff';
+        ? 'text-lg font-medium font-stiff'
+        : 'text-sm font-normal font-stiff';
 
     return {
         'title': titleClass

@@ -1,10 +1,10 @@
 <template>
-    <div class="tw-relative tw-overflow-hidden tw-flex tw-items-start tw-justify-start">
-        <div class="tw-absolute tw-h-full tw-w-full tw-pointer-events-none"></div>
-        <div :style="{'height': iconSlotHeight}" class=" tw-box-border tw-flex tw-items-center">
+    <div class="relative overflow-hidden flex items-start justify-start">
+        <div class="absolute h-full w-full pointer-events-none"></div>
+        <div :style="{'height': iconSlotHeight}" class=" box-border flex items-center">
             <Icon :name="icon" :class="[heightClass]"/>
         </div>
-        <div :class="[fontClass]" :style="{'font-family': fontFamily}" class="tw-ml-1 tw-whitespace-pre-line">{{label}}<slot></slot></div>
+        <div :class="[fontClass]" :style="{'font-family': fontFamily}" class="ml-1 whitespace-pre-line">{{label}}<slot></slot></div>
     </div>
 </template>
 
@@ -49,17 +49,17 @@ const iconSlotHeight = computed(()=>{
 
 const heightClass = computed(() => {
     return {
-        'sm': 'tw-h-3 tw-w-3',
-        'md': 'tw-h-3.5 tw-w-3.5',
-        'lg': 'tw-h-5 tw-w-5',
+        'sm': 'h-3 w-3',
+        'md': 'h-3.5 w-3.5',
+        'lg': 'h-5 w-5',
     }[props.size];
 });
 
 const fontClass = computed(() => {
     return {
-        'sm': 'tw-text-sm',
-        'md': 'tw-text-base',
-        'lg': 'tw-text-lg'
+        'sm': 'text-sm',
+        'md': 'text-base',
+        'lg': 'text-lg'
     }[props.size];
 });
 </script>

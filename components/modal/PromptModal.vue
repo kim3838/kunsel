@@ -8,7 +8,7 @@
             <ClientOnly>
                 <Icon
                     v-if="icon"
-                    class="tw-h-full tw-w-full"
+                    class="h-full w-full"
                     :name="icon">
                 </Icon>
             </ClientOnly>
@@ -34,7 +34,7 @@
         </template>
 
         <template #footer>
-            <div class="tw-flex tw-space-x-2 tw-justify-end">
+            <div class="flex space-x-2 justify-end">
                 <Button :size="'md'" @click.native="$promptStore.promptAction()" :label="action.label"></Button>
             </div>
         </template>

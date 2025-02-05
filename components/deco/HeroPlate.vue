@@ -1,15 +1,15 @@
 <template>
-    <div class="tw-relative tw-w-max">
+    <div class="relative w-max">
 
-        <div v-if="bookmark?.trim()" class="tw-relative tw-z-20 tw-w-full tw-flex tw-justify-end tw-font-data">
-            <div class="bookmark tw-w-max tw-text-sm tw-leading-4">
+        <div v-if="bookmark?.trim()" class="relative z-20 w-full flex justify-end font-data">
+            <div class="bookmark w-max text-sm leading-4">
                 {{bookmark}}
             </div>
         </div>
 
-        <div class="border-fragment tw-relative tw-z-30 tw-w-max">
-            <div class="base-fragment tw-w-max">
-                <div :class="[textClass]" class="tw-px-1.5 tw-py-1 tw-text-transparent tw-bg-clip-text text-fragment">
+        <div class="border-fragment relative z-30 w-max">
+            <div class="base-fragment w-max">
+                <div :class="[textClass]" class="px-1.5 py-1 text-transparent bg-clip-text text-fragment">
                     {{label}}
                 </div>
             </div>
@@ -43,9 +43,9 @@ const props = defineProps({
 
 const textClass = computed(()=>{
     return {
-        'sm': 'tw-text-xl tw-font-bold',
-        'md': 'tw-text-2xl tw-font-bold',
-        'lg': 'tw-text-3xl tw-font-bold',
+        'sm': 'text-xl font-bold',
+        'md': 'text-2xl font-bold',
+        'lg': 'text-3xl font-bold',
     }[props.size];
 })
 

@@ -1,11 +1,11 @@
 <template>
-    <div v-show="show" class="tw-fixed tw-inset-0 tw-overflow-y-auto tw-px-0 tw-z-50">
-        <div v-show="show" class="tw-fixed tw-inset-0" @click="close">
-            <div class="tw-absolute tw-inset-0 modal-layer tw-opacity-75"></div>
+    <div v-show="show" class="fixed inset-0 overflow-y-auto px-0 z-50">
+        <div v-show="show" class="fixed inset-0" @click="close">
+            <div class="absolute inset-0 modal-layer opacity-75"></div>
         </div>
 
-        <div v-show="show" class="tw-h-full tw-flex tw-items-center thread-border">
-            <div  class="modal-body tw-rounded-sm tw-overflow-hidden tw-w-full sm:tw-w-full sm:tw-mx-auto" :class="maxWidthClass">
+        <div v-show="show" class="h-full flex items-center thread-border">
+            <div  class="modal-body rounded-sm overflow-hidden w-full sm:w-full sm:mx-auto" :class="maxWidthClass">
                 <slot></slot>
             </div>
         </div>
@@ -63,11 +63,11 @@ export default {
     computed: {
         maxWidthClass() {
             return {
-                'sm': 'sm:tw-max-w-sm',
-                'md': 'sm:tw-max-w-md',
-                'lg': 'sm:tw-max-w-lg',
-                'xl': 'sm:tw-max-w-xl',
-                '2xl': 'sm:tw-max-w-2xl',
+                'sm': 'sm:max-w-sm',
+                'md': 'sm:max-w-md',
+                'lg': 'sm:max-w-lg',
+                'xl': 'sm:max-w-xl',
+                '2xl': 'sm:max-w-2xl',
             }[this.maxWidth]
         }
     }

@@ -16,14 +16,14 @@
             <template #content>
                 {{ (confirmingPasswordPending && confirmingPassword ? '' : content) }}
 
-                <div class="tw-mt-4">
+                <div class="mt-4">
                     <Input
                         v-if="!confirmingPasswordPending"
                         ref="passwordInput"
                         :disabled="confirmPasswordPending"
                         v-model="form.password"
                         :type="'password'"
-                        class="tw-block"
+                        class="block"
                         :placeholder="'Password'"
                         @keyup.enter="confirmPassword"
                     />
@@ -31,7 +31,7 @@
             </template>
 
             <template #footer>
-                <div class="tw-flex tw-space-x-2 tw-justify-end">
+                <div class="flex space-x-2 justify-end">
                     <UnorderedList
                         v-if="confirmingPasswordPending && confirmingPassword"
                         :icon="'eos-icons:loading'"

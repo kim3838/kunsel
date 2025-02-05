@@ -1,7 +1,7 @@
 <template>
-    <div class="tw-font-data ">
+    <div class="font-data ">
         <RadioBox
-            class="tw-flex tw-items-center"
+            class="flex items-center"
             v-for="selection in selections"
             v-model="computedSelected"
             :selected="computedSelected"

@@ -1,10 +1,10 @@
 <template>
     <div>
         <LandingWrapper>
-            <div class="tw-mx-auto tw-space-y-2">
+            <div class="mx-auto space-y-2">
 
                 <ClientOnly>
-                    <div class="tw-text-xs tw-font-mono">
+                    <div class="text-xs font-mono">
                         {{`SCREEN DIMENSION: ${screenWidth} x ${screenHeight}`}}
                     </div>
                 </ClientOnly>
@@ -15,10 +15,10 @@
                     </span>
                 </a>
 
-                <div v-if="false" class="tw-absolute tw-left-[56px] tw-w-screen">
-                    <div class="tw-relative tw-w-full tw-h-full">
+                <div v-if="false" class="absolute left-[56px] w-screen">
+                    <div class="relative w-full h-full">
 
-                        <div class="tw-relative tw-left-[-56px] tw-w-screen neutral-border ">
+                        <div class="relative left-[-56px] w-screen neutral-border ">
                             FeaturedCarouselRow
                             <FeaturedCarouselRow :inner-id="'unique-id-001'" :x-padding="'56px'" :gap="'0.5rem'" :items="[
                                 { id: 1, name: 'Product 1', width: '550px', height:'200px', image: '/images/product/02/h732.png' },
@@ -30,7 +30,7 @@
                                     <div
                                         v-for="(item, index) in slot.items"
                                         :key="index"
-                                        class="tw-flex-none neutral-border"
+                                        class="flex-none neutral-border"
                                         :style="{width: item.width}"
                                     >
                                         <div>
@@ -47,15 +47,15 @@
 
                 <StarRating v-if="false" :rating="1.5" />
 
-                <div v-if="false" class="tw-flex tw-mb-4">
+                <div v-if="false" class="flex mb-4">
                     <SampleEmitter
                         v-model:[dynamicFoo].capitalizeEveryWord ="fooComputed"
                         v-model:[dynamicBarCaller].capitalize="barComputed"
-                        class="tw-w-[250px]"
+                        class="w-[250px]"
                     />
                 </div>
 
-                <div v-if="false" class="tw-mb-4 tw-relative tw-w-[370px] tw-h-[530px] tw-mx-auto">
+                <div v-if="false" class="mb-4 relative w-[370px] h-[530px] mx-auto">
                     <Glint>
                         <InformationCard
                             :image="'/images/spotlight/1697501586302.jpg'"
@@ -71,7 +71,7 @@
 
                 <a
                     v-if="false"
-                    class="hub-card tw-mt-40 tw-mx-auto thread-border"
+                    class="hub-card mt-40 mx-auto thread-border"
                     href="https://www.callofduty.com/blackcell"
                     style="width: 200px; height: 400px; background-color: #ececec;">
                     <span class="glint"></span>
@@ -82,7 +82,7 @@
 
                 <a
                     v-if="false"
-                    class="tw-relative tw-block tw-mt-2 tw-mx-auto thread-border"
+                    class="relative block mt-2 mx-auto thread-border"
                     style="width: 400px; height: 200px; border-radius: 2px; background-color: #ececec;">
                     <Glint :orientation="'landscape'">
                         Hello
@@ -90,15 +90,15 @@
                 </a>
                 <a
                     v-if="false"
-                    class="tw-relative tw-block tw-mt-2 tw-mx-auto thread-border"
+                    class="relative block mt-2 mx-auto thread-border"
                     style="width: 200px; height: 400px; border-radius: 2px; background-color: #ececec;">
                     <Glint :orientation="'portrait'">
                         Hello
                     </Glint>
                 </a>
 
-                <div v-if="false"  class="tw-bg-cover tw-bg-no-repeat tw-bg-center tw-p-4 tw-bg-slate-800" :style="{'background-image': 'url(/images/cod-bg-hero.png'}">
-                    <div class="tw-w-[330px] tw-h-[420px] tw-mx-auto">
+                <div v-if="false"  class="bg-cover bg-no-repeat bg-center p-4 bg-slate-800" :style="{'background-image': 'url(/images/cod-bg-hero.png'}">
+                    <div class="w-[330px] h-[420px] mx-auto">
                         <Glint :orientation="`portrait`" :color="`#a98313`">
                             <HexagonFrame
                                 :frame-border-primary-color="'#524007'"
@@ -112,28 +112,28 @@
                                 :header-fade="true"
                                 :header-fade-color="'rgba(5,5,5,0.5)'">
                                 <template #header>
-                                    <div class="tw-h-[70%] tw-w-full tw-p-[20px] tw-box-border">
+                                    <div class="h-[70%] w-full p-[20px] box-border">
                                         <div
-                                            class="tw-h-full tw-w-full tw-bg-cover tw-bg-center tw-bg-no-repeat"
+                                            class="h-full w-full bg-cover bg-center bg-no-repeat"
                                             :style="{'background':'url('+carouselTrendingItems[0].image+')'}"
                                         />
                                     </div>
-                                    <div class="tw-h-[30%] tw-w-full tw-box-border">
+                                    <div class="h-[30%] w-full box-border">
                                         <div
-                                            class="tw-h-full tw-w-full tw-bg-cover tw-bg-center tw-bg-no-repeat tw-grayscale tw-opacity-20"
+                                            class="h-full w-full bg-cover bg-center bg-no-repeat grayscale opacity-20"
                                             :style="{'background':'url('+carouselTrendingItems[0].image+')'}"
                                         />
                                     </div>
                                 </template>
                                 <template v-slot:body="{frameBorderColor}">
-                                    <div class="tw-h-[30%] tw-w-full tw-p-2 tw-overflow-hidden tw-flex tw-flex-col">
-                                        <div class="tw-overflow-auto tw-space-y-4">
-                                            <div class="tw-text-lg tw-font-medium tw-font-header" v-text="carouselTrendingItems[0].subTitle"></div>
+                                    <div class="h-[30%] w-full p-2 overflow-hidden flex flex-col">
+                                        <div class="overflow-auto space-y-4">
+                                            <div class="text-lg font-medium font-header" v-text="carouselTrendingItems[0].subTitle"></div>
                                             <NuxtLink
                                                 v-if="carouselTrendingItems[0].link"
                                                 :to="carouselTrendingItems[0].link">
                                                 <UnorderedList
-                                                    class="tw-cursor-pointer hover:tw-underline"
+                                                    class="cursor-pointer hover:underline"
                                                     :size="'sm'"
                                                     :label="'Read more'"/>
                                             </NuxtLink>
@@ -145,9 +145,9 @@
                     </div>
                 </div>
 
-                <div v-if="false" class="tw-bg-cover tw-bg-no-repeat tw-bg-center tw-p-4" :style="{'background-image': 'url(/images/carousel/f415740d-5951-4b5d-af98-1404e9c65df5.jpg'}">
-                    <div class="tw-w-full tw-h-[230px] tw-flex tw-flex-nowrap tw-gap-2 tw-overflow-y-hidden">
-                        <div class="tw-w-[460px] tw-h-full tw-flex-none" v-for="item in leftToRightItems">
+                <div v-if="false" class="bg-cover bg-no-repeat bg-center p-4" :style="{'background-image': 'url(/images/carousel/f415740d-5951-4b5d-af98-1404e9c65df5.jpg'}">
+                    <div class="w-full h-[230px] flex flex-nowrap gap-2 overflow-y-hidden">
+                        <div class="w-[460px] h-full flex-none" v-for="item in leftToRightItems">
                             <HexagonFrame
                                 :frame-border-gradient-enable="true"
                                 :frame-border-primary-color="item.frameBorder"
@@ -160,26 +160,26 @@
                                 :opaque="true"
                                 :header-fade="false">
                                 <template #header>
-                                    <div class="tw-h-full tw-w-[50%]">
+                                    <div class="h-full w-[50%]">
                                         <div
-                                            class="tw-h-full tw-w-full tw-bg-cover tw-bg-center tw-bg-no-repeat"
+                                            class="h-full w-full bg-cover bg-center bg-no-repeat"
                                             :style="{'background':'url('+item.image.path+')'}"
                                         />
                                     </div>
-                                    <div class="tw-h-full tw-w-[50%]">
+                                    <div class="h-full w-[50%]">
                                         <div
-                                            class="tw-h-full tw-w-full tw-bg-cover tw-bg-center tw-bg-no-repeat tw-opacity-10"
+                                            class="h-full w-full bg-cover bg-center bg-no-repeat opacity-10"
                                             :style="{'background':'url('+item.image.path+')'}"
                                         />
                                     </div>
                                 </template>
                                 <template v-slot:body="{frameBorderColor}">
-                                    <div class="tw-h-full tw-w-[50%] tw-p-4 tw-overflow-hidden tw-relative tw-flex tw-flex-col tw-text[#5A5A5A]">
+                                    <div class="h-full w-[50%] p-4 overflow-hidden relative flex flex-col text[#5A5A5A]">
 
-                                        <div class="tw-overflow-auto tw-space-y-0.5">
-                                            <div class="tw-font-data tw-font-semibold tw-h-max tw-flex-none">
+                                        <div class="overflow-auto space-y-0.5">
+                                            <div class="font-data font-semibold h-max flex-none">
                                                 <UnorderedList
-                                                    class="tw-cursor-pointer hover:tw-underline"
+                                                    class="cursor-pointer hover:underline"
                                                     :size="'md'"
                                                     :icon="item.listIcon"
                                                     :label="item.title"/>
@@ -187,8 +187,8 @@
 
                                             <div style="height: 1px;width: 100%;background: linear-gradient(to right, transparent 0%, #e3e3e3 30%, #e3e3e3 70%, transparent 100%);"></div>
 
-                                            <div v-if="item?.bullets?.value?.length" class="tw-flex tw-flex-row tw-flex-nowrap">
-                                                <div class="tw-w-full" :style="{'columns': (item.bullets.column ? item.bullets.column : 1)}">
+                                            <div v-if="item?.bullets?.value?.length" class="flex flex-row flex-nowrap">
+                                                <div class="w-full" :style="{'columns': (item.bullets.column ? item.bullets.column : 1)}">
                                                     <UnorderedList
                                                         v-for="bullet in item.bullets.value"
                                                         :size="'sm'"
@@ -200,12 +200,12 @@
                                             <div
                                                 v-if="item.description"
                                                 v-html="item.description"
-                                                class="tw-text-base tw-leading-5 tw-line-clamp-3"
+                                                class="text-base leading-5 line-clamp-3"
                                                 :style="{'font-family': 'Source Sans Pro'}"
                                             ></div>
 
                                             <UnorderedList
-                                                class="tw-cursor-pointer hover:tw-underline"
+                                                class="cursor-pointer hover:underline"
                                                 :font-family="'Source Sans Pro'"
                                                 :size="'sm'"
                                                 :label="'Read more'"/>
@@ -217,9 +217,9 @@
                     </div>
                 </div>
 
-                <div v-if="false"  class="tw-bg-cover tw-bg-no-repeat tw-bg-center tw-p-4 tw-bg-slate-400" :style="{'background-image': 'url(/images/deco/ripple_texture.png'}">
-                    <div class="tw-w-full tw-h-[350px] tw-flex tw-flex-nowrap tw-gap-2 tw-overflow-y-hidden">
-                        <div class="tw-w-[250px] tw-h-full tw-flex-none" v-for="featuredItem in carouselTrendingItems" :key="featuredItem">
+                <div v-if="false"  class="bg-cover bg-no-repeat bg-center p-4 bg-slate-400" :style="{'background-image': 'url(/images/deco/ripple_texture.png'}">
+                    <div class="w-full h-[350px] flex flex-nowrap gap-2 overflow-y-hidden">
+                        <div class="w-[250px] h-full flex-none" v-for="featuredItem in carouselTrendingItems" :key="featuredItem">
                             <HexagonFrame
                                 :frame-border-gradient-enable="true"
                                 :frame-border-primary-color="'#d3dae7'"
@@ -233,32 +233,32 @@
                                 :header-fade="true"
                                 :header-fade-color="'rgba(5,5,5,0.1)'">
                                 <template #header>
-                                    <div class="tw-h-[70%] tw-w-full tw-p-[6px] tw-box-border">
+                                    <div class="h-[70%] w-full p-[6px] box-border">
                                         <div
-                                            class="tw-h-full tw-w-full tw-bg-cover tw-bg-center tw-bg-no-repeat"
+                                            class="h-full w-full bg-cover bg-center bg-no-repeat"
                                             :style="{'background':'url('+featuredItem.image+')'}"
                                         />
                                     </div>
-                                    <div class="tw-h-[30%] tw-w-full tw-box-border">
+                                    <div class="h-[30%] w-full box-border">
                                         <div
-                                            class="tw-h-full tw-w-full tw-bg-cover tw-bg-center tw-bg-no-repeat tw-grayscale tw-opacity-20"
+                                            class="h-full w-full bg-cover bg-center bg-no-repeat grayscale opacity-20"
                                             :style="{'background':'url('+featuredItem.image+')'}"
                                         />
                                     </div>
                                 </template>
                                 <template #body>
-                                    <div class="tw-h-[30%] tw-w-full tw-p-2 tw-overflow-hidden tw-flex tw-flex-col">
+                                    <div class="h-[30%] w-full p-2 overflow-hidden flex flex-col">
 
-                                        <div class="tw-overflow-auto tw-space-y-2">
+                                        <div class="overflow-auto space-y-2">
 
-                                            <div class="tw-font-semibold tw-h-max tw-flex-none" style="text-align: left;">
-                                                <div class="tw-text-lg tw-font-medium tw-font-header" v-text="featuredItem.subTitle"></div>
+                                            <div class="font-semibold h-max flex-none" style="text-align: left;">
+                                                <div class="text-lg font-medium font-header" v-text="featuredItem.subTitle"></div>
 
                                                 <NuxtLink
                                                     v-if="featuredItem.link"
                                                     :to="featuredItem.link">
                                                     <UnorderedList
-                                                        class="tw-cursor-pointer hover:tw-underline tw-font-data"
+                                                        class="cursor-pointer hover:underline font-data"
                                                         :size="'md'"
                                                         :label="'Read more'"/>
                                                 </NuxtLink>
@@ -271,10 +271,10 @@
                     </div>
                 </div>
 
-                <div v-if="false" class="tw-mt-6 tw-mx-auto">
-                    <div class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-3 xl:tw-grid-cols-4">
+                <div v-if="false" class="mt-6 mx-auto">
+                    <div class="grid gap-2 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
                         <div
-                            v-for="item in topToBottomItems" class="tw-h-[520px]">
+                            v-for="item in topToBottomItems" class="h-[520px]">
                             <HexagonFrame
                                 :frame-border-gradient-enable="true"
                                 :frame-border-primary-color="item.frameBorderPrimary"
@@ -287,27 +287,27 @@
                                 :bottom-left="50"
                                 :header-fade="false">
                                 <template #header>
-                                    <div class="tw-h-[60%] tw-w-full">
+                                    <div class="h-[60%] w-full">
                                         <div
-                                            class="tw-h-full tw-w-full tw-bg-cover tw-bg-center tw-bg-no-repeat"
+                                            class="h-full w-full bg-cover bg-center bg-no-repeat"
                                             :style="{'background':'url('+item.image.path+')'}"
                                         />
                                     </div>
-                                    <div class="tw-h-[40%] tw-w-full tw-bg-black">
+                                    <div class="h-[40%] w-full bg-black">
                                         <div
-                                            class="tw-h-full tw-w-full tw-bg-cover tw-bg-center tw-bg-no-repeat tw-opacity-90 tw-blur-2xl"
+                                            class="h-full w-full bg-cover bg-center bg-no-repeat opacity-90 blur-2xl"
                                             :style="{'background':'url('+item.image.path+')'}"
                                         />
                                     </div>
                                 </template>
                                 <template #body>
-                                    <div style="text-shadow: rgb(0, 0, 0) 1px 1px 2px;" class="tw-h-[40%] tw-w-full tw-p-4 tw-overflow-hidden tw-relative tw-flex tw-flex-col">
+                                    <div style="text-shadow: rgb(0, 0, 0) 1px 1px 2px;" class="h-[40%] w-full p-4 overflow-hidden relative flex flex-col">
 
-                                        <div class="tw-overflow-auto tw-space-y-2 tw-font-standard">
+                                        <div class="overflow-auto space-y-2 font-standard">
 
-                                            <div class="tw-h-max tw-flex-none">
+                                            <div class="h-max flex-none">
                                                 <UnorderedList
-                                                    class="tw-font-medium tw-font-header tw-cursor-pointer hover:tw-underline"
+                                                    class="font-medium font-header cursor-pointer hover:underline"
                                                     :size="'lg'"
                                                     :icon="item.listIcon"
                                                     :label="item.title"/>
@@ -315,8 +315,8 @@
 
                                             <div style="height: 1px;width: 100%;background: linear-gradient(to right, transparent 0%, #e3e3e3 30%, #e3e3e3 70%, transparent 100%);"></div>
 
-                                            <div v-if="item?.bullets?.value?.length" class="tw-flex tw-flex-row tw-flex-nowrap">
-                                                <div class="tw-w-full" :style="{'columns': (item.bullets.column ? item.bullets.column : 1)}">
+                                            <div v-if="item?.bullets?.value?.length" class="flex flex-row flex-nowrap">
+                                                <div class="w-full" :style="{'columns': (item.bullets.column ? item.bullets.column : 1)}">
                                                     <UnorderedList
                                                         v-for="bullet in item.bullets.value"
                                                         :size="'sm'"
@@ -328,11 +328,11 @@
                                             <div
                                                 v-if="item.description"
                                                 v-html="item.description"
-                                                class="tw-text-sm tw-leading-5 tw-line-clamp-4"
+                                                class="text-sm leading-5 line-clamp-4"
                                             ></div>
 
                                             <UnorderedList
-                                                class="tw-cursor-pointer hover:tw-underline"
+                                                class="cursor-pointer hover:underline"
                                                 :size="'sm'"
                                                 :label="'Read more'"/>
                                         </div>
@@ -343,47 +343,47 @@
                     </div>
                 </div>
 
-                <div v-if="false" class="tw-ml-20 tw-rounded-md hover:tw-cursor-pointer tw-w-[244px] tw-h-[48px]"
+                <div v-if="false" class="ml-20 rounded-md hover:cursor-pointer w-[244px] h-[48px]"
                      style="background: linear-gradient(to right, rgb(156, 112, 164), rgb(40, 39, 82));position: relative;">
                     <div style="width: 100%;height: 100%;position: absolute;background-size: cover;opacity: 0.2;background-image: url('/images/deco/ripple_texture.png');"></div>
-                    <div class="tw-flex tw-gap-2 tw-items-center tw-rounded-md" style="text-shadow: rgba(0, 0, 0, 0.5) 0px 2px 8px;">
+                    <div class="flex gap-2 items-center rounded-md" style="text-shadow: rgba(0, 0, 0, 0.5) 0px 2px 8px;">
                         <div
-                            class="tw-flex tw-w-[48px] tw-h-[48px] tw-items-center tw-justify-center tw-rounded-l-md"
+                            class="flex w-[48px] h-[48px] items-center justify-center rounded-l-md"
                             style="background: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.1));">
                             <img
                                 src="https://dota2protracker.com/static/facet_icons/mana.png"
-                                class="tw-w-6 tw-h-6"
+                                class="w-6 h-6"
                                 style="filter: drop-shadow(rgba(0, 0, 0, 0.3) 0px 3px 2px);">
                         </div>
-                        <div class="tw-flex tw-pr-2 tw-font-medium tw-justify-center tw-text-xl tw-text-white tw-uppercase tw-whitespace-nowrap">
+                        <div class="flex pr-2 font-medium justify-center text-xl text-white uppercase whitespace-nowrap">
                             Satyr Convert
                         </div>
                     </div>
                 </div>
 
-                <span :style="boxStyle" ref="animateMe" class="section-navigation thread-border tw-absolute">ANIMATE</span>
+                <span :style="boxStyle" ref="animateMe" class="section-navigation thread-border absolute">ANIMATE</span>
 
                 <br>
 
-                <div v-if="false" class="tw-space-x-2 tw-mb-2 tw-gap-2">
-                    <div class="tw-inline-block">
-                        <Button class="" :justify-content="'start'" :label="'Toggle Icon Grid'" :focus-ring="true" :variant="'outline'" :size="'md'" :glint="true" @click="tabGroup.show_icon_grid = !tabGroup.show_icon_grid"></Button>
+                <div v-if="false" class="space-x-2 mb-2 gap-2">
+                    <div class="inline-block">
+                        <Button class="" :justify-content="'start'" :label="'Toggle Icon Grid'" :variant="'outline'" :size="'md'" :glint="true" @click="tabGroup.show_icon_grid = !tabGroup.show_icon_grid"></Button>
                     </div>
 
-                    <div class="tw-inline-block">
-                        <Button class="" :justify-content="'center'" :label="'Show from Top'" :variant="'flat'" :size="'md'" :glint="true" @click="topPosition = 50"></Button>
+                    <div class="inline-block">
+                        <Button class="" :justify-content="'center'" :active-border="'red'" :label="'Show from Top'" :variant="'flat'" :size="'md'" :glint="true" @click="topPosition = 50"></Button>
                     </div>
 
-                    <div class="tw-inline-block">
-                        <Button class="" :justify-content="'end'" :label="'Hide to Top'" :focus-ring="true" :size="'md'"  :glint="true" @click="topPosition = 0"></Button>
+                    <div class="inline-block">
+                        <Button class="" :justify-content="'end'" :label="'Hide to Top'" :size="'md'" :glint="true" @click="topPosition = 0"></Button>
                     </div>
                 </div>
 
-                <div v-if="false" class="tw-grid tw-gap-2 tw-grid-cols-3">
+                <div v-if="false" class="grid gap-2 grid-cols-3">
                     <div></div>
-                    <div class="tw-space-y-1 tw-relative tw-border">
-                        <div v-if="tabGroup.show_icon_grid" class="tw-absolute tw-w-[0.2px] tw-top-0 tw-bottom-0 tw-bg-slate-400 tw-z-50" :class="[tabGroupIconGrid.left]"></div>
-                        <div v-if="tabGroup.show_icon_grid" class="tw-absolute tw-w-[0.2px] tw-top-[-0.25rem] tw-bottom-0 tw-bg-slate-400 tw-z-50" :class="[tabGroupIconGrid.right]"></div>
+                    <div class="space-y-1 relative border">
+                        <div v-if="tabGroup.show_icon_grid" class="absolute w-[0.2px] top-0 bottom-0 bg-slate-400 z-50" :class="[tabGroupIconGrid.left]"></div>
+                        <div v-if="tabGroup.show_icon_grid" class="absolute w-[0.2px] top-[-0.25rem] bottom-0 bg-slate-400 z-50" :class="[tabGroupIconGrid.right]"></div>
 
                         <!-- Selects -->
                         <MultiSelect :glint="true" always-active :selection-float="false" :drop-shadow="false" :selection-max-viewable-line="5" :size="tabGroup.size" :options="category" :icon="tabGroup.icon"/>
@@ -435,34 +435,34 @@
                             :disabled="false" />
 
                         <!-- Button with icon, label -->
-                        <Button :glint="true" class="tw-w-full" :size="tabGroup.size" :icon="tabGroup.icon" :variant="'default'" :label="'Button'" />
-                        <Button :glint="true" class="tw-w-3/4"  :size="tabGroup.size" :icon="tabGroup.icon" :variant="'flat'" :label="'Button'" />
-                        <Button :glint="true" class="tw-w-1/2"  :size="tabGroup.size" :icon="tabGroup.icon" :variant="'outline'" :label="'Button'" />
+                        <Button :glint="true" class="w-full" :size="tabGroup.size" :icon="tabGroup.icon" :variant="'default'" :label="'Button'" />
+                        <Button :glint="true" class="w-3/4"  :size="tabGroup.size" :icon="tabGroup.icon" :variant="'flat'" :label="'Button'" />
+                        <Button :glint="true" class="w-1/2"  :size="tabGroup.size" :icon="tabGroup.icon" :variant="'outline'" :label="'Button'" />
 
                         <!-- Button with icon, no label -->
-                        <Button :glint="true" class="tw-w-full" :size="tabGroup.size" :icon="tabGroup.icon" :variant="'default'" :label="''" />
-                        <Button :glint="true" class="tw-w-3/4"  :size="tabGroup.size" :icon="tabGroup.icon" :variant="'flat'" :label="''" />
-                        <Button :glint="true" class="tw-w-1/2"  :size="tabGroup.size" :icon="tabGroup.icon" :variant="'outline'" :label="''" />
+                        <Button :glint="true" class="w-full" :size="tabGroup.size" :icon="tabGroup.icon" :variant="'default'" :label="''" />
+                        <Button :glint="true" class="w-3/4"  :size="tabGroup.size" :icon="tabGroup.icon" :variant="'flat'" :label="''" />
+                        <Button :glint="true" class="w-1/2"  :size="tabGroup.size" :icon="tabGroup.icon" :variant="'outline'" :label="''" />
 
                         <!-- Button with icon, no label, minimum width -->
-                        <div class="tw-w-min"><Button :glint="true" :size="tabGroup.size" :icon="tabGroup.icon" :variant="'default'" :label="''" /></div>
-                        <div class="tw-w-min"><Button :glint="true" :size="tabGroup.size" :icon="tabGroup.icon" :variant="'outline'" :label="''" /></div>
-                        <div class="tw-w-min"><Button :glint="true" :size="tabGroup.size" :icon="tabGroup.icon" :variant="'flat'" :label="''" /></div>
+                        <div class="w-min"><Button :glint="true" :size="tabGroup.size" :icon="tabGroup.icon" :variant="'default'" :label="''" /></div>
+                        <div class="w-min"><Button :glint="true" :size="tabGroup.size" :icon="tabGroup.icon" :variant="'outline'" :label="''" /></div>
+                        <div class="w-min"><Button :glint="true" :size="tabGroup.size" :icon="tabGroup.icon" :variant="'flat'" :label="''" /></div>
                     </div>
                     <div></div>
                 </div>
 
                 <!-- Static Single, MultiSelect and DateTime, Date, and Month Picker -->
-                <div v-if="false" class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-3 xl:tw-grid-cols-6 2xl:tw-grid-cols-6">
-                    <div class="tw-block neutral-border">
+                <div v-if="false" class="grid gap-2 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 2xl:grid-cols-6">
+                    <div class="block neutral-border">
                         <InputLabel :size="'lg'" value="Static Multi Select" />
                         <MultiSelect :glint="true" drop-shadow :selection-max-viewable-line="5" :size="'lg'" :options="category" :icon="'ic:sharp-qr-code'"/>
                     </div>
-                    <div class="tw-block neutral-border">
+                    <div class="block neutral-border">
                         <InputLabel :size="'lg'" value="Static Single Select" />
                         <SingleSelect :glint="true" drop-shadow :selection-max-viewable-line="4" :always-active="false" :size="'lg'" :icon="'emojione-monotone:japanese-no-vacancy-button'" :options="plan"/>
                     </div>
-                    <div class="tw-block neutral-border">
+                    <div class="block neutral-border">
                         <InputLabel :size="'lg'" for="date" value="Date" />
                         <InputWithIcon
                             :icon="'simple-icons:googlecalendar'"
@@ -474,7 +474,7 @@
                             :disabled="false"
                             :glint="true" />
                     </div>
-                    <div class="tw-block neutral-border">
+                    <div class="block neutral-border">
                         <InputLabel :size="'lg'" for="datetime" value="DateTime" />
                         <InputWithIcon
                             :icon="'simple-icons:googlecalendar'"
@@ -486,7 +486,7 @@
                             :disabled="false"
                             :glint="true" />
                     </div>
-                    <div class="tw-block neutral-border">
+                    <div class="block neutral-border">
                         <InputLabel :size="'lg'" value="Number" />
                         <InputWithIcon
                             @focusStateChanged="handleFocusStateChanged"
@@ -498,7 +498,7 @@
                             :disabled="false"
                             :glint="true" />
                     </div>
-                    <div class="tw-block neutral-border">
+                    <div class="block neutral-border">
                         <InputLabel :size="'lg'" value="Input" />
                         <Input
                             @focusStateChanged="handleFocusStateChanged"
@@ -512,8 +512,8 @@
                 </div>
 
                 <!-- Paginated Single and MultiSelect -->
-                <div v-if="false" class="tw-mt-6 tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-3 xl:tw-grid-cols-4 2xl:tw-grid-cols-5">
-                    <div class="tw-block neutral-border">
+                <div v-if="false" class="mt-6 grid gap-2 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
+                    <div class="block neutral-border">
                         <InputLabel :size="'lg'" value="Paginated Multi Select" />
 
                         <MultiSelectPaginated
@@ -531,7 +531,7 @@
                             :icon="'ic:sharp-qr-code'"/>
 
                     </div>
-                    <div class="tw-block neutral-border">
+                    <div class="block neutral-border">
                         <InputLabel :size="'lg'" value="Paginated Single Select" />
                         <SingleSelectPaginated
                             :value-persist="true"
@@ -557,7 +557,7 @@
 import dataPayload from '@/public/data/payload.js';
 // definePageMeta({middleware: 'guest'});
 useLayout().setNavigationMode('solid', 'Lab.vue');
-const {screenWidthBreakpoint, width: screenWidth, height: screenHeight} = useScreen();
+// const {screenWidthBreakpoint, width: screenWidth, height: screenHeight} = useScreen();
 const {$formStore} = useNuxtApp();
 const topPosition = ref(0);
 const clientReadyState = useClientReadyState();
@@ -642,13 +642,13 @@ let tabGroup = reactive({
 });
 const tabGroupIconGrid = computed(() => {
     return {
-        '2xs': {'left': 'tw-ml-[0.35rem]', 'right' : 'tw-ml-[1.1rem]'},
-        'xs': {'left': 'tw-ml-[0.40rem]', 'right' : 'tw-ml-[1.35rem]'},
-        'sm': {'left': 'tw-ml-[0.65rem]', 'right' : 'tw-ml-[1.6rem]'},
-        'md': {'left': 'tw-ml-[0.65rem]', 'right' : 'tw-ml-[1.6rem]'},
-        'lg': {'left': 'tw-ml-[0.95rem]', 'right' : 'tw-ml-[2.59rem]'},
-        'xl': {'left': 'tw-ml-[0.95rem]', 'right' : 'tw-ml-[2.72rem]'},
-        '2xl': {'left': 'tw-ml-[1.3rem]', 'right' : 'tw-ml-[3.7rem]'},
+        '2xs': {'left': 'ml-[0.35rem]', 'right' : 'ml-[1.1rem]'},
+        'xs': {'left': 'ml-[0.40rem]', 'right' : 'ml-[1.35rem]'},
+        'sm': {'left': 'ml-[0.65rem]', 'right' : 'ml-[1.6rem]'},
+        'md': {'left': 'ml-[0.65rem]', 'right' : 'ml-[1.6rem]'},
+        'lg': {'left': 'ml-[0.95rem]', 'right' : 'ml-[2.59rem]'},
+        'xl': {'left': 'ml-[0.95rem]', 'right' : 'ml-[2.72rem]'},
+        '2xl': {'left': 'ml-[1.3rem]', 'right' : 'ml-[3.7rem]'},
     }[tabGroup.size];
 });
 

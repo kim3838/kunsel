@@ -1,16 +1,16 @@
 <template>
     <div>
         <DefaultWrapper>
-            <div class="tw-mx-auto tw-pt-4 tw-max-w-screen-2xl tw-font-header tw-text-lg tw-font-semibold">
+            <div class="mx-auto pt-4 max-w-screen-2xl font-header text-lg font-semibold border">
                 Example page
             </div>
-            <div class="tw-mt-4 tw-space-y-2 tw-text-sm tw-font-mono">
+            <div class="mt-4 space-y-2 text-sm font-mono">
                 <pre>OFETCH PENDING: {{ofetchPending}}</pre>
-                <pre class="tw-bg-opacity-50 tw-bg-slate-200">OFETCH RESPONSE: <span v-text="ofetchData" /></pre>
-                <pre class="tw-bg-opacity-50 tw-bg-slate-200">OFETCH RESPONSE: <span v-html="ofetchData" /></pre>
-                <Input :size="'lg'" class="tw-font-mono" v-model="singleLineStringValue" type="text" autocomplete="off"/>
-                <TextArea :cols="80" :size="'lg'" class="tw-font-mono" v-model="multiLineStringValue"/>
-                <Button class="tw-inline-block" @click="oFetchGet" :label="'OFetch Get'" />
+                <pre class="bg-opacity-50 bg-slate-200">OFETCH RESPONSE: <span v-text="ofetchData" /></pre>
+                <pre class="bg-opacity-50 bg-slate-200">OFETCH RESPONSE: <span v-html="ofetchData" /></pre>
+                <Input :size="'lg'" class="font-mono" v-model="singleLineStringValue" type="text" autocomplete="off"/>
+                <TextArea :cols="80" :size="'lg'" class="font-mono" v-model="multiLineStringValue"/>
+                <Button class="inline-block" @click="oFetchGet" :label="'OFetch Get'" />
             </div>
         </DefaultWrapper>
     </div>
@@ -32,7 +32,7 @@ async function oFetchGet(){
     await laraFetch("/api/hit", {
         method: 'GET',
         params: {
-            'singleLineStringValue': singleLineStringValue.value
+            'multiLineStringValue': multiLineStringValue.value
         }
     }, {
         onRequest: () => {

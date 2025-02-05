@@ -1,31 +1,31 @@
 <template>
     <div>
         <DefaultWrapper>
-            <div class="tw-mx-auto tw-pt-4 tw-max-w-screen-2xl">
-                <div>Tailwind Url: <a class="tw-text-sky-600" href="_tailwind" target="_blank">{{('http://localhost:3000' + '/_tailwind/')}}</a></div>
+            <div class="mx-auto pt-4 max-w-screen-2xl">
+                <div>Tailwind Url: <a class="text-sky-600" href="_tailwind" target="_blank">{{('http://localhost:3000' + '/_tailwind/')}}</a></div>
 
-                <div class="tw-space-y-2">
+                <div class="space-y-2">
                     <!-- Static Single, MultiSelect and DateTime, Date, and Month Picker -->
-                    <div v-if="true" class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-8">
-                        <div class="tw-block neutral-border">
+                    <div v-if="true" class="grid gap-2 grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-8">
+                        <div class="block neutral-border">
                             <InputLabel :size="'sm'" value="Static Multi Select" />
                             <MultiSelect glint drop-shadow :selection-max-viewable-line="5" :size="'md'" :options="category" :icon="'ic:sharp-qr-code'"/>
                         </div>
-                        <div class="tw-block neutral-border">
+                        <div class="block neutral-border">
                             <InputLabel :size="'sm'" value="Non Searchable Multi Select" />
                             <MultiSelect glint drop-shadow :selection-max-viewable-line="5" :searchable="false" :size="'md'" :options="category" :icon="'eos-icons:installing'"/>
                         </div>
-                        <div class="tw-block neutral-border">
+                        <div class="block neutral-border">
                             <InputLabel :size="'sm'" value="Static Single Select" />
                             <SingleSelect glint drop-shadow :selection-max-viewable-line="4" :always-active="false" :size="'md'" :icon="'emojione-monotone:japanese-no-vacancy-button'" :options="plan"/>
                         </div>
 
-                        <div class="tw-block neutral-border">
+                        <div class="block neutral-border">
                             <InputLabel :size="'sm'" value="Non Searchable Single Select" />
                             <SingleSelect glint drop-shadow :selection-max-viewable-line="4" :searchable="false" :size="'md'" :icon="'emojione-monotone:japanese-vacancy-button'" :options="plan"/>
                         </div>
 
-                        <div class="tw-block neutral-border">
+                        <div class="block neutral-border">
                             <InputLabel :size="'sm'" value="Single Select Persist Value" />
                             <SingleSelect
                                 glint
@@ -39,7 +39,7 @@
                                 :options="bookingType"/>
                         </div>
 
-                        <div class="tw-block neutral-border">
+                        <div class="block neutral-border">
                             <InputLabel :size="'sm'" for="date" value="Date" />
                             <InputWithIcon
                                 glint
@@ -51,7 +51,7 @@
                                 readonly
                                 :disabled="false" />
                         </div>
-                        <div class="tw-block neutral-border">
+                        <div class="block neutral-border">
                             <InputLabel :size="'sm'" for="datetime" value="DateTime" />
                             <InputWithIcon
                                 glint
@@ -64,7 +64,7 @@
                                 :disabled="false" />
                         </div>
 
-                        <div class="tw-block neutral-border">
+                        <div class="block neutral-border">
                             <InputLabel :size="'sm'" for="month" value="Month" />
                             <InputWithIcon
                                 glint
@@ -79,8 +79,8 @@
                     </div>
 
                     <!-- Paginated Single and MultiSelect -->
-                    <div v-if="true" class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-8">
-                        <div class="tw-block neutral-border">
+                    <div v-if="true" class="grid gap-2 grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-8">
+                        <div class="block neutral-border">
                             <InputLabel :size="'sm'" value="Paginated Multi Select" />
                             <MultiSelectPaginated
                                 glint
@@ -96,7 +96,7 @@
                                 :payload="multiSelectPrototypePayload"
                                 :icon="'ic:sharp-qr-code'"/>
                         </div>
-                        <div class="tw-block neutral-border">
+                        <div class="block neutral-border">
                             <InputLabel :size="'sm'" value="Paginated Single Select" />
                             <SingleSelectPaginated
                                 glint
@@ -115,7 +115,7 @@
                     </div>
 
                     <!-- Static Single and MultiSelect with more Custom Configurations -->
-                    <div v-if="true" class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-8">
+                    <div v-if="false" class="grid gap-2 grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-8">
                         <div>
                             <MultiSelect
                                 glint
@@ -211,9 +211,9 @@
                     </div>
 
                     <!-- Datatables -->
-                    <div v-if="true" class="tw-grid tw-gap-2 sm:tw-grid-cols-1 md:tw-grid-cols-2 lg:tw-grid-cols-4">
-                        <div class="tw-block tw-col-span-1 sm:tw-col-span-3 md:tw-col-span-2 lg:tw-col-span-2 tw-p-2 neutral-border">
-                            <InputLabel class="tw-mb-2" :size="'md'" value="MD Datatable" />
+                    <div v-if="true" class="grid gap-2 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4">
+                        <div class="block col-span-1 sm:col-span-3 md:col-span-2 lg:col-span-2 p-2 neutral-border">
+                            <InputLabel class="mb-2" :size="'md'" value="MD Datatable" />
                             <DataTable
                                 :headers="dataTable1Headers"
                                 :size="'md'"
@@ -221,8 +221,8 @@
                                 v-model="dataTable1Selected"
                                 selection>
                                 <template v-slot:cell.name="{cell, index, slot}">
-                                    <div class="tw-h-full tw-w-full tw-flex tw-items-center">
-                                        <Button class="tw-w-full" :variant="'outline'" :icon="'ic:sharp-check-box-outline-blank'" :size="slot.buttonSize" :label="`[${index}] ${cell.name}`"></Button>
+                                    <div class="h-full w-full flex items-center">
+                                        <Button class="w-full" :variant="'outline'" :icon="'ic:sharp-check-box-outline-blank'" :size="slot.buttonSize" :label="`[${index}] ${cell.name}`"></Button>
                                     </div>
                                 </template>
                                 <template v-slot:cell.category="{cell, slot, scrollReference}">
@@ -245,8 +245,8 @@
                                 </template>
                             </DataTable>
                         </div>
-                        <div class="tw-block tw-col-span-1 sm:tw-col-span-3 md:tw-col-span-2 lg:tw-col-span-2 tw-p-2 neutral-border">
-                            <InputLabel class="tw-mb-2" :size="'md'" value="LG Datatable with Selection" />
+                        <div class="block col-span-1 sm:col-span-3 md:col-span-2 lg:col-span-2 p-2 neutral-border">
+                            <InputLabel class="mb-2" :size="'md'" value="LG Datatable with Selection" />
                             <DataTable
                                 :headers="dataTable2Headers"
                                 :size="'lg'"
@@ -254,8 +254,8 @@
                                 v-model="dataTable2Selected"
                                 selection>
                                 <template v-slot:cell.name="{cell, index, slot}">
-                                    <div class="tw-h-full tw-w-full tw-flex tw-items-center">
-                                        <Button class="tw-w-full" :variant="'default'" :icon="'ic:sharp-check-box-outline-blank'" :size="slot.buttonSize" :label="`${cell.name}`"></Button>
+                                    <div class="h-full w-full flex items-center">
+                                        <Button class="w-full" :variant="'default'" :icon="'ic:sharp-check-box-outline-blank'" :size="slot.buttonSize" :label="`${cell.name}`"></Button>
                                     </div>
                                 </template>
                                 <template v-slot:cell.code="{index, cell, slot}">
@@ -272,8 +272,8 @@
                                 </template>
                             </DataTable>
                         </div>
-                        <div class="tw-block md:tw-col-span-2 lg:tw-col-span-4 tw-p-2 neutral-border">
-                            <InputLabel class="tw-mb-2" :size="'md'" value="XL Datatable with Selection and Form Foundations" />
+                        <div class="block md:col-span-2 lg:col-span-4 p-2 neutral-border">
+                            <InputLabel class="mb-2" :size="'md'" value="XL Datatable with Selection and Form Foundations" />
                             <DataTable
                                 :headers="dataTable3Headers"
                                 :size="'xl'"
@@ -281,7 +281,7 @@
                                 v-model="dataTable3Selected"
                                 selection>
                                 <template v-slot:cell.tools="{cell, slot, scrollReference}">
-                                    <div class="tw-h-full tw-space-x-0.5 tw-w-full tw-flex tw-items-center">
+                                    <div class="h-full space-x-0.5 w-full flex items-center">
                                         <Button :size="slot.buttonSize" :icon="'ic:sharp-check-box-outline-blank'" :label="'Slot I'"></Button>
                                         <Button :variant="'flat'" :size="slot.buttonSize" :icon="'ic:sharp-check-box-outline-blank'" :label="'Slot II'"></Button>
                                         <Button :variant="'flat'" :size="slot.buttonSize" :icon="'ic:sharp-check-box-outline-blank'" :label="'Slot III'"></Button>
@@ -290,15 +290,15 @@
                                     </div>
                                 </template>
                                 <template v-slot:cell.input="{cell, index, slot}">
-                                    <Input :size="slot.inputSize" class="tw-w-full" placeholder="Enter Amount" type="text" autocomplete="off" />
+                                    <Input :size="slot.inputSize" class="w-full" placeholder="Enter Amount" type="text" autocomplete="off" />
                                 </template>
                                 <template v-slot:cell.name="{cell, index, slot}">
-                                    <div class="tw-h-full tw-w-full tw-flex tw-items-center">
-                                        <Button class="tw-w-full" :variant="'flat'" :icon="'ic:sharp-check-box-outline-blank'" :size="slot.buttonSize" :label="`${cell.name}`"></Button>
+                                    <div class="h-full w-full flex items-center">
+                                        <Button class="w-full" :variant="'flat'" :icon="'ic:sharp-check-box-outline-blank'" :size="slot.buttonSize" :label="`${cell.name}`"></Button>
                                     </div>
                                 </template>
                                 <template v-slot:cell.code="{cell, index, slot}">
-                                    <Input :size="slot.inputSize" class="tw-w-full" v-model="cell.code" type="text" autocomplete="off" />
+                                    <Input :size="slot.inputSize" class="w-full" v-model="cell.code" type="text" autocomplete="off" />
                                 </template>
                                 <template v-slot:cell.single_paginated="{cell, slot, scrollReference}">
                                     <SingleSelectPaginated
@@ -375,23 +375,23 @@
 
                     <!-- Lara Fetch Group -->
                     <div v-if="true">
-                        <div class="tw-block tw-p-2 neutral-border">
-                            <InputLabel class="tw-mb-2" :size="'md'" value="Lara Fetch Group" />
-                            <div class="tw-grid tw-gap-1 tw-grid-cols-1 sm:tw-grid-cols-2 md:tw-grid-cols-2 lg:tw-grid-cols-3">
-                                <div class="neutral-border tw-p-1">
+                        <div class="block p-2 neutral-border">
+                            <InputLabel class="mb-2" :size="'md'" value="Lara Fetch Group" />
+                            <div class="grid gap-1 grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3">
+                                <div class="neutral-border p-1">
                                     <pre>OFETCH PENDING: {{ofetchPending}}</pre>
                                     <pre>OFETCH DATA: {{ofetchData}}</pre>
-                                    <Button class="tw-inline-block" @click="oFetchPost" :label="'OFetch Post'" />
+                                    <Button class="inline-block" @click="oFetchPost" :label="'OFetch Post'" />
                                 </div>
-                                <div class="neutral-border tw-p-1">
+                                <div class="neutral-border p-1">
                                     <pre>OFETCH NO ERROR PROMPT PENDING: {{ofetchNoPromptPending}}</pre>
                                     <pre>OFETCH NO ERROR PROMPT DATA: {{ofetchNoPromptData}}</pre>
-                                    <Button class="tw-inline-block" @click="oFetchNoPromptPost" :label="'OFetch NO PROMPT Post'" />
+                                    <Button class="inline-block" @click="oFetchNoPromptPost" :label="'OFetch NO PROMPT Post'" />
                                 </div>
-                                <div class="neutral-border tw-p-1">
+                                <div class="neutral-border p-1">
                                     <pre>USEFETCH LAZY FETCH PENDING: {{useFetchPending}}</pre>
                                     <pre>USEFETCH LAZY FETCH DATA: {{!useFetchPending ? useFetchData : null}}</pre>
-                                    <Button class="tw-w-min" @click="useFetchGet" :label="'useFetch Get'" />
+                                    <Button class="w-min" @click="useFetchGet" :label="'useFetch Get'" />
                                 </div>
                             </div>
                         </div>
@@ -399,9 +399,9 @@
 
                     <!-- Tab Indexed Group -->
                     <div v-if="true">
-                        <div class="tw-block tw-p-2 neutral-border">
-                            <InputLabel class="tw-mb-2" :size="'md'" value="Tab Group" />
-                            <div class="tw-grid tw-gap-1 tw-grid-cols-1 sm:tw-grid-cols-2 md:tw-grid-cols-3 lg:tw-grid-cols-5">
+                        <div class="block p-2 neutral-border">
+                            <InputLabel class="mb-2" :size="'md'" value="Tab Group" />
+                            <div class="grid gap-1 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5">
                                 <div>
                                     <Input :tabindex="1" :size="tabGroup.size" :placeholder="'Enter value'" type="text" autocomplete="off" />
                                 </div>
@@ -481,15 +481,15 @@
                     </div>
 
                     <!-- Button and Input Grid Spacing Alignments -->
-                    <div v-if="true">
-                        <div class="tw-block tw-p-2 neutral-border">
-                            <InputLabel class="tw-mb-2" :size="'md'" value="Spacing Alignment Grid" />
-                            <div class="tw-grid tw-gap-1 tw-grid-cols-7">
-                                <div v-if="true" class="tw-relative">
-                                    <div v-if="true" class="tw-absolute tw-w-[0.2px] tw-top-0 tw-bottom-0 tw-bg-slate-400 tw-z-50 tw-ml-[0.35rem]"></div>
-                                    <div v-if="true" class="tw-absolute tw-w-[0.2px] tw-top-0 tw-bottom-0 tw-bg-slate-400 tw-z-50 tw-ml-[1.1rem]"></div>
+                    <div v-if="false">
+                        <div class="block p-2 neutral-border">
+                            <InputLabel class="mb-2" :size="'md'" value="Spacing Alignment Grid" />
+                            <div class="grid gap-1 grid-cols-7">
+                                <div v-if="true" class="relative">
+                                    <div v-if="true" class="absolute w-[0.2px] top-0 bottom-0 bg-slate-400 z-50 ml-[0.35rem]"></div>
+                                    <div v-if="true" class="absolute w-[0.2px] top-0 bottom-0 bg-slate-400 z-50 ml-[1.1rem]"></div>
 
-                                    <div class="tw-space-y-1">
+                                    <div class="space-y-1">
                                         <MultiSelectPaginated
                                             :glint="true"
                                             :drop-shadow="true"
@@ -552,27 +552,27 @@
                                             autocomplete="off" />
 
                                         <!-- Button with icon, label -->
-                                        <Button :glint="true" class="tw-w-full" :size="'2xs'" :icon="tabGroup.icon" :variant="'default'" :label="'Button'" />
-                                        <Button :glint="true" class="tw-w-3/4"  :size="'2xs'" :icon="tabGroup.icon" :variant="'flat'" :label="'Button'" />
-                                        <Button :glint="true" class="tw-w-1/2"  :size="'2xs'" :icon="tabGroup.icon" :variant="'outline'" :label="'Button'" />
+                                        <Button :glint="true" class="w-full" :size="'2xs'" :icon="tabGroup.icon" :variant="'default'" :label="'Button'" />
+                                        <Button :glint="true" class="w-3/4"  :size="'2xs'" :icon="tabGroup.icon" :variant="'flat'" :label="'Button'" />
+                                        <Button :glint="true" class="w-1/2"  :size="'2xs'" :icon="tabGroup.icon" :variant="'outline'" :label="'Button'" />
 
                                         <!-- Button with icon, no label -->
-                                        <Button :glint="true" class="tw-w-full" :size="'2xs'" :icon="tabGroup.icon" :variant="'default'" :label="''" />
-                                        <Button :glint="true" class="tw-w-3/4"  :size="'2xs'" :icon="tabGroup.icon" :variant="'flat'" :label="''" />
-                                        <Button :glint="true" class="tw-w-1/2"  :size="'2xs'" :icon="tabGroup.icon" :variant="'outline'" :label="''" />
+                                        <Button :glint="true" class="w-full" :size="'2xs'" :icon="tabGroup.icon" :variant="'default'" :label="''" />
+                                        <Button :glint="true" class="w-3/4"  :size="'2xs'" :icon="tabGroup.icon" :variant="'flat'" :label="''" />
+                                        <Button :glint="true" class="w-1/2"  :size="'2xs'" :icon="tabGroup.icon" :variant="'outline'" :label="''" />
 
                                         <!-- Button with icon, no label, minimum width -->
-                                        <div class="tw-w-min"><Button :glint="true" :size="'2xs'" :icon="tabGroup.icon" :variant="'default'" :label="''" /></div>
-                                        <div class="tw-w-min"><Button :glint="true" :size="'2xs'" :icon="tabGroup.icon" :variant="'outline'" :label="''" /></div>
-                                        <div class="tw-w-min"><Button :glint="true" :size="'2xs'" :icon="tabGroup.icon" :variant="'flat'" :label="''" /></div>
+                                        <div class="w-min"><Button :glint="true" :size="'2xs'" :icon="tabGroup.icon" :variant="'default'" :label="''" /></div>
+                                        <div class="w-min"><Button :glint="true" :size="'2xs'" :icon="tabGroup.icon" :variant="'outline'" :label="''" /></div>
+                                        <div class="w-min"><Button :glint="true" :size="'2xs'" :icon="tabGroup.icon" :variant="'flat'" :label="''" /></div>
                                     </div>
                                 </div>
 
-                                <div v-if="true" class="tw-relative">
-                                    <div v-if="true" class="tw-absolute tw-w-[0.2px] tw-top-0 tw-bottom-0 tw-bg-slate-400 tw-z-50 tw-ml-[0.40rem]"></div>
-                                    <div v-if="true" class="tw-absolute tw-w-[0.2px] tw-top-0 tw-bottom-0 tw-bg-slate-400 tw-z-50 tw-ml-[1.35rem]"></div>
+                                <div v-if="true" class="relative">
+                                    <div v-if="true" class="absolute w-[0.2px] top-0 bottom-0 bg-slate-400 z-50 ml-[0.40rem]"></div>
+                                    <div v-if="true" class="absolute w-[0.2px] top-0 bottom-0 bg-slate-400 z-50 ml-[1.35rem]"></div>
 
-                                    <div class="tw-space-y-1">
+                                    <div class="space-y-1">
                                         <MultiSelectPaginated
                                             :glint="true"
                                             :drop-shadow="true"
@@ -635,27 +635,27 @@
                                             autocomplete="off" />
 
                                         <!-- Button with icon, label -->
-                                        <Button :glint="true" class="tw-w-full" :size="'xs'" :icon="tabGroup.icon" :variant="'default'" :label="'Button'" />
-                                        <Button :glint="true" class="tw-w-3/4"  :size="'xs'" :icon="tabGroup.icon" :variant="'flat'" :label="'Button'" />
-                                        <Button :glint="true" class="tw-w-1/2"  :size="'xs'" :icon="tabGroup.icon" :variant="'outline'" :label="'Button'" />
+                                        <Button :glint="true" class="w-full" :size="'xs'" :icon="tabGroup.icon" :variant="'default'" :label="'Button'" />
+                                        <Button :glint="true" class="w-3/4"  :size="'xs'" :icon="tabGroup.icon" :variant="'flat'" :label="'Button'" />
+                                        <Button :glint="true" class="w-1/2"  :size="'xs'" :icon="tabGroup.icon" :variant="'outline'" :label="'Button'" />
 
                                         <!-- Button with icon, no label -->
-                                        <Button :glint="true" class="tw-w-full" :size="'xs'" :icon="tabGroup.icon" :variant="'default'" :label="''" />
-                                        <Button :glint="true" class="tw-w-3/4"  :size="'xs'" :icon="tabGroup.icon" :variant="'flat'" :label="''" />
-                                        <Button :glint="true" class="tw-w-1/2"  :size="'xs'" :icon="tabGroup.icon" :variant="'outline'" :label="''" />
+                                        <Button :glint="true" class="w-full" :size="'xs'" :icon="tabGroup.icon" :variant="'default'" :label="''" />
+                                        <Button :glint="true" class="w-3/4"  :size="'xs'" :icon="tabGroup.icon" :variant="'flat'" :label="''" />
+                                        <Button :glint="true" class="w-1/2"  :size="'xs'" :icon="tabGroup.icon" :variant="'outline'" :label="''" />
 
                                         <!-- Button with icon, no label, minimum width -->
-                                        <div class="tw-w-min"><Button :glint="true" :size="'xs'" :icon="tabGroup.icon" :variant="'default'" :label="''" /></div>
-                                        <div class="tw-w-min"><Button :glint="true" :size="'xs'" :icon="tabGroup.icon" :variant="'outline'" :label="''" /></div>
-                                        <div class="tw-w-min"><Button :glint="true" :size="'xs'" :icon="tabGroup.icon" :variant="'flat'" :label="''" /></div>
+                                        <div class="w-min"><Button :glint="true" :size="'xs'" :icon="tabGroup.icon" :variant="'default'" :label="''" /></div>
+                                        <div class="w-min"><Button :glint="true" :size="'xs'" :icon="tabGroup.icon" :variant="'outline'" :label="''" /></div>
+                                        <div class="w-min"><Button :glint="true" :size="'xs'" :icon="tabGroup.icon" :variant="'flat'" :label="''" /></div>
                                     </div>
                                 </div>
 
-                                <div v-if="true" class="tw-relative">
-                                    <div v-if="true" class="tw-absolute tw-w-[0.2px] tw-top-0 tw-bottom-0 tw-bg-slate-400 tw-z-50 tw-ml-[0.65rem]"></div>
-                                    <div v-if="true" class="tw-absolute tw-w-[0.2px] tw-top-0 tw-bottom-0 tw-bg-slate-400 tw-z-50 tw-ml-[1.6rem]"></div>
+                                <div v-if="true" class="relative">
+                                    <div v-if="true" class="absolute w-[0.2px] top-0 bottom-0 bg-slate-400 z-50 ml-[0.65rem]"></div>
+                                    <div v-if="true" class="absolute w-[0.2px] top-0 bottom-0 bg-slate-400 z-50 ml-[1.6rem]"></div>
 
-                                    <div class="tw-space-y-1">
+                                    <div class="space-y-1">
                                         <MultiSelectPaginated
                                             :glint="true"
                                             :drop-shadow="true"
@@ -719,27 +719,27 @@
                                             autocomplete="off" />
 
                                         <!-- Button with icon, label -->
-                                        <Button :glint="true" class="tw-w-full" :size="'sm'" :icon="tabGroup.icon" :variant="'default'" :label="'Button'" />
-                                        <Button :glint="true" class="tw-w-3/4"  :size="'sm'" :icon="tabGroup.icon" :variant="'flat'" :label="'Button'" />
-                                        <Button :glint="true" class="tw-w-1/2"  :size="'sm'" :icon="tabGroup.icon" :variant="'outline'" :label="'Button'" />
+                                        <Button :glint="true" class="w-full" :size="'sm'" :icon="tabGroup.icon" :variant="'default'" :label="'Button'" />
+                                        <Button :glint="true" class="w-3/4"  :size="'sm'" :icon="tabGroup.icon" :variant="'flat'" :label="'Button'" />
+                                        <Button :glint="true" class="w-1/2"  :size="'sm'" :icon="tabGroup.icon" :variant="'outline'" :label="'Button'" />
 
                                         <!-- Button with icon, no label -->
-                                        <Button :glint="true" class="tw-w-full" :size="'sm'" :icon="tabGroup.icon" :variant="'default'" :label="''" />
-                                        <Button :glint="true" class="tw-w-3/4"  :size="'sm'" :icon="tabGroup.icon" :variant="'flat'" :label="''" />
-                                        <Button :glint="true" class="tw-w-1/2"  :size="'sm'" :icon="tabGroup.icon" :variant="'outline'" :label="''" />
+                                        <Button :glint="true" class="w-full" :size="'sm'" :icon="tabGroup.icon" :variant="'default'" :label="''" />
+                                        <Button :glint="true" class="w-3/4"  :size="'sm'" :icon="tabGroup.icon" :variant="'flat'" :label="''" />
+                                        <Button :glint="true" class="w-1/2"  :size="'sm'" :icon="tabGroup.icon" :variant="'outline'" :label="''" />
 
                                         <!-- Button with icon, no label, minimum width -->
-                                        <div class="tw-w-min"><Button :glint="true" :size="'sm'" :icon="tabGroup.icon" :variant="'default'" :label="''" /></div>
-                                        <div class="tw-w-min"><Button :glint="true" :size="'sm'" :icon="tabGroup.icon" :variant="'outline'" :label="''" /></div>
-                                        <div class="tw-w-min"><Button :glint="true" :size="'sm'" :icon="tabGroup.icon" :variant="'flat'" :label="''" /></div>
+                                        <div class="w-min"><Button :glint="true" :size="'sm'" :icon="tabGroup.icon" :variant="'default'" :label="''" /></div>
+                                        <div class="w-min"><Button :glint="true" :size="'sm'" :icon="tabGroup.icon" :variant="'outline'" :label="''" /></div>
+                                        <div class="w-min"><Button :glint="true" :size="'sm'" :icon="tabGroup.icon" :variant="'flat'" :label="''" /></div>
                                     </div>
                                 </div>
 
-                                <div v-if="true" class="tw-relative">
-                                    <div v-if="true" class="tw-absolute tw-w-[0.2px] tw-top-0 tw-bottom-0 tw-bg-slate-400 tw-z-50 tw-ml-[0.65rem]"></div>
-                                    <div v-if="true" class="tw-absolute tw-w-[0.2px] tw-top-0 tw-bottom-0 tw-bg-slate-400 tw-z-50 tw-ml-[1.6rem]"></div>
+                                <div v-if="true" class="relative">
+                                    <div v-if="true" class="absolute w-[0.2px] top-0 bottom-0 bg-slate-400 z-50 ml-[0.65rem]"></div>
+                                    <div v-if="true" class="absolute w-[0.2px] top-0 bottom-0 bg-slate-400 z-50 ml-[1.6rem]"></div>
 
-                                    <div class="tw-space-y-1">
+                                    <div class="space-y-1">
                                         <!-- Selects -->
                                         <MultiSelectPaginated
                                             :glint="true"
@@ -803,27 +803,27 @@
                                             autocomplete="off" />
 
                                         <!-- Button with icon, label -->
-                                        <Button :glint="true" class="tw-w-full" :size="'md'" :icon="tabGroup.icon" :variant="'default'" :label="'Button'" />
-                                        <Button :glint="true" class="tw-w-3/4"  :size="'md'" :icon="tabGroup.icon" :variant="'flat'" :label="'Button'" />
-                                        <Button :glint="true" class="tw-w-1/2"  :size="'md'" :icon="tabGroup.icon" :variant="'outline'" :label="'Button'" />
+                                        <Button :glint="true" class="w-full" :size="'md'" :icon="tabGroup.icon" :variant="'default'" :label="'Button'" />
+                                        <Button :glint="true" class="w-3/4"  :size="'md'" :icon="tabGroup.icon" :variant="'flat'" :label="'Button'" />
+                                        <Button :glint="true" class="w-1/2"  :size="'md'" :icon="tabGroup.icon" :variant="'outline'" :label="'Button'" />
 
                                         <!-- Button with icon, no label -->
-                                        <Button :glint="true" class="tw-w-full" :size="'md'" :icon="tabGroup.icon" :variant="'default'" :label="''" />
-                                        <Button :glint="true" class="tw-w-3/4"  :size="'md'" :icon="tabGroup.icon" :variant="'flat'" :label="''" />
-                                        <Button :glint="true" class="tw-w-1/2"  :size="'md'" :icon="tabGroup.icon" :variant="'outline'" :label="''" />
+                                        <Button :glint="true" class="w-full" :size="'md'" :icon="tabGroup.icon" :variant="'default'" :label="''" />
+                                        <Button :glint="true" class="w-3/4"  :size="'md'" :icon="tabGroup.icon" :variant="'flat'" :label="''" />
+                                        <Button :glint="true" class="w-1/2"  :size="'md'" :icon="tabGroup.icon" :variant="'outline'" :label="''" />
 
                                         <!-- Button with icon, no label, minimum width -->
-                                        <div class="tw-w-min"><Button :glint="true" :size="'md'" :icon="tabGroup.icon" :variant="'default'" :label="''" /></div>
-                                        <div class="tw-w-min"><Button :glint="true" :size="'md'" :icon="tabGroup.icon" :variant="'outline'" :label="''" /></div>
-                                        <div class="tw-w-min"><Button :glint="true" :size="'md'" :icon="tabGroup.icon" :variant="'flat'" :label="''" /></div>
+                                        <div class="w-min"><Button :glint="true" :size="'md'" :icon="tabGroup.icon" :variant="'default'" :label="''" /></div>
+                                        <div class="w-min"><Button :glint="true" :size="'md'" :icon="tabGroup.icon" :variant="'outline'" :label="''" /></div>
+                                        <div class="w-min"><Button :glint="true" :size="'md'" :icon="tabGroup.icon" :variant="'flat'" :label="''" /></div>
                                     </div>
                                 </div>
 
-                                <div v-if="true" class="tw-relative">
-                                    <div v-if="true" class="tw-absolute tw-w-[0.2px] tw-top-0 tw-bottom-0 tw-bg-slate-400 tw-z-50 tw-ml-[0.95rem]"></div>
-                                    <div v-if="true" class="tw-absolute tw-w-[0.2px] tw-top-0 tw-bottom-0 tw-bg-slate-400 tw-z-50 tw-ml-[2.59rem]"></div>
+                                <div v-if="true" class="relative">
+                                    <div v-if="true" class="absolute w-[0.2px] top-0 bottom-0 bg-slate-400 z-50 ml-[0.95rem]"></div>
+                                    <div v-if="true" class="absolute w-[0.2px] top-0 bottom-0 bg-slate-400 z-50 ml-[2.59rem]"></div>
 
-                                    <div class="tw-space-y-1">
+                                    <div class="space-y-1">
                                         <MultiSelectPaginated
                                             :glint="true"
                                             :drop-shadow="true"
@@ -886,27 +886,27 @@
                                             autocomplete="off" />
 
                                         <!-- Button with icon, label -->
-                                        <Button :glint="true" class="tw-w-full" :size="'lg'" :icon="tabGroup.icon" :variant="'default'" :label="'Button'" />
-                                        <Button :glint="true" class="tw-w-3/4"  :size="'lg'" :icon="tabGroup.icon" :variant="'flat'" :label="'Button'" />
-                                        <Button :glint="true" class="tw-w-1/2"  :size="'lg'" :icon="tabGroup.icon" :variant="'outline'" :label="'Button'" />
+                                        <Button :glint="true" class="w-full" :size="'lg'" :icon="tabGroup.icon" :variant="'default'" :label="'Button'" />
+                                        <Button :glint="true" class="w-3/4"  :size="'lg'" :icon="tabGroup.icon" :variant="'flat'" :label="'Button'" />
+                                        <Button :glint="true" class="w-1/2"  :size="'lg'" :icon="tabGroup.icon" :variant="'outline'" :label="'Button'" />
 
                                         <!-- Button with icon, no label -->
-                                        <Button :glint="true" class="tw-w-full" :size="'lg'" :icon="tabGroup.icon" :variant="'default'" :label="''" />
-                                        <Button :glint="true" class="tw-w-3/4"  :size="'lg'" :icon="tabGroup.icon" :variant="'flat'" :label="''" />
-                                        <Button :glint="true" class="tw-w-1/2"  :size="'lg'" :icon="tabGroup.icon" :variant="'outline'" :label="''" />
+                                        <Button :glint="true" class="w-full" :size="'lg'" :icon="tabGroup.icon" :variant="'default'" :label="''" />
+                                        <Button :glint="true" class="w-3/4"  :size="'lg'" :icon="tabGroup.icon" :variant="'flat'" :label="''" />
+                                        <Button :glint="true" class="w-1/2"  :size="'lg'" :icon="tabGroup.icon" :variant="'outline'" :label="''" />
 
                                         <!-- Button with icon, no label, minimum width -->
-                                        <div class="tw-w-min"><Button :glint="true" :size="'lg'" :icon="tabGroup.icon" :variant="'default'" :label="''" /></div>
-                                        <div class="tw-w-min"><Button :glint="true" :size="'lg'" :icon="tabGroup.icon" :variant="'outline'" :label="''" /></div>
-                                        <div class="tw-w-min"><Button :glint="true" :size="'lg'" :icon="tabGroup.icon" :variant="'flat'" :label="''" /></div>
+                                        <div class="w-min"><Button :glint="true" :size="'lg'" :icon="tabGroup.icon" :variant="'default'" :label="''" /></div>
+                                        <div class="w-min"><Button :glint="true" :size="'lg'" :icon="tabGroup.icon" :variant="'outline'" :label="''" /></div>
+                                        <div class="w-min"><Button :glint="true" :size="'lg'" :icon="tabGroup.icon" :variant="'flat'" :label="''" /></div>
                                     </div>
                                 </div>
 
-                                <div v-if="true" class="tw-relative">
-                                    <div v-if="true" class="tw-absolute tw-w-[0.2px] tw-top-0 tw-bottom-0 tw-bg-slate-400 tw-z-50 tw-ml-[0.95rem]"></div>
-                                    <div v-if="true" class="tw-absolute tw-w-[0.2px] tw-top-0 tw-bottom-0 tw-bg-slate-400 tw-z-50 tw-ml-[2.72rem]"></div>
+                                <div v-if="true" class="relative">
+                                    <div v-if="true" class="absolute w-[0.2px] top-0 bottom-0 bg-slate-400 z-50 ml-[0.95rem]"></div>
+                                    <div v-if="true" class="absolute w-[0.2px] top-0 bottom-0 bg-slate-400 z-50 ml-[2.72rem]"></div>
 
-                                    <div class="tw-space-y-1">
+                                    <div class="space-y-1">
                                         <!-- Input -->
                                         <Input :glint="true" :placeholder="'Enter value'" :size="'xl'" type="text" autocomplete="off" />
 
@@ -919,27 +919,27 @@
                                             autocomplete="off" />
 
                                         <!-- Button with icon, label -->
-                                        <Button :glint="true" class="tw-w-full" :size="'xl'" :icon="tabGroup.icon" :variant="'default'" :label="'Button'" />
-                                        <Button :glint="true" class="tw-w-3/4"  :size="'xl'" :icon="tabGroup.icon" :variant="'flat'" :label="'Button'" />
-                                        <Button :glint="true" class="tw-w-1/2"  :size="'xl'" :icon="tabGroup.icon" :variant="'outline'" :label="'Button'" />
+                                        <Button :glint="true" class="w-full" :size="'xl'" :icon="tabGroup.icon" :variant="'default'" :label="'Button'" />
+                                        <Button :glint="true" class="w-3/4"  :size="'xl'" :icon="tabGroup.icon" :variant="'flat'" :label="'Button'" />
+                                        <Button :glint="true" class="w-1/2"  :size="'xl'" :icon="tabGroup.icon" :variant="'outline'" :label="'Button'" />
 
                                         <!-- Button with icon, no label -->
-                                        <Button :glint="true" class="tw-w-full" :size="'xl'" :icon="tabGroup.icon" :variant="'default'" :label="''" />
-                                        <Button :glint="true" class="tw-w-3/4"  :size="'xl'" :icon="tabGroup.icon" :variant="'flat'" :label="''" />
-                                        <Button :glint="true" class="tw-w-1/2"  :size="'xl'" :icon="tabGroup.icon" :variant="'outline'" :label="''" />
+                                        <Button :glint="true" class="w-full" :size="'xl'" :icon="tabGroup.icon" :variant="'default'" :label="''" />
+                                        <Button :glint="true" class="w-3/4"  :size="'xl'" :icon="tabGroup.icon" :variant="'flat'" :label="''" />
+                                        <Button :glint="true" class="w-1/2"  :size="'xl'" :icon="tabGroup.icon" :variant="'outline'" :label="''" />
 
                                         <!-- Button with icon, no label, minimum width -->
-                                        <div class="tw-w-min"><Button :glint="true" :size="'xl'" :icon="tabGroup.icon" :variant="'default'" :label="''" /></div>
-                                        <div class="tw-w-min"><Button :glint="true" :size="'xl'" :icon="tabGroup.icon" :variant="'outline'" :label="''" /></div>
-                                        <div class="tw-w-min"><Button :glint="true" :size="'xl'" :icon="tabGroup.icon" :variant="'flat'" :label="''" /></div>
+                                        <div class="w-min"><Button :glint="true" :size="'xl'" :icon="tabGroup.icon" :variant="'default'" :label="''" /></div>
+                                        <div class="w-min"><Button :glint="true" :size="'xl'" :icon="tabGroup.icon" :variant="'outline'" :label="''" /></div>
+                                        <div class="w-min"><Button :glint="true" :size="'xl'" :icon="tabGroup.icon" :variant="'flat'" :label="''" /></div>
                                     </div>
                                 </div>
 
-                                <div v-if="true" class="tw-relative">
-                                    <div v-if="true" class="tw-absolute tw-w-[0.2px] tw-top-0 tw-bottom-0 tw-bg-slate-400 tw-z-50 tw-ml-[1.3rem]"></div>
-                                    <div v-if="true" class="tw-absolute tw-w-[0.2px] tw-top-0 tw-bottom-0 tw-bg-slate-400 tw-z-50 tw-ml-[3.7rem]"></div>
+                                <div v-if="true" class="relative">
+                                    <div v-if="true" class="absolute w-[0.2px] top-0 bottom-0 bg-slate-400 z-50 ml-[1.3rem]"></div>
+                                    <div v-if="true" class="absolute w-[0.2px] top-0 bottom-0 bg-slate-400 z-50 ml-[3.7rem]"></div>
 
-                                    <div class="tw-space-y-1">
+                                    <div class="space-y-1">
                                         <!-- Input -->
                                         <Input :glint="true" :placeholder="'Enter value'" :size="'2xl'" type="text" autocomplete="off" />
 
@@ -952,19 +952,19 @@
                                             autocomplete="off" />
 
                                         <!-- Button with icon, label -->
-                                        <Button :glint="true" class="tw-w-full" :size="'2xl'" :icon="tabGroup.icon" :variant="'default'" :label="'Button'" />
-                                        <Button :glint="true" class="tw-w-3/4"  :size="'2xl'" :icon="tabGroup.icon" :variant="'flat'" :label="'Button'" />
-                                        <Button :glint="true" class="tw-w-1/2"  :size="'2xl'" :icon="tabGroup.icon" :variant="'outline'" :label="'Button'" />
+                                        <Button :glint="true" class="w-full" :size="'2xl'" :icon="tabGroup.icon" :variant="'default'" :label="'Button'" />
+                                        <Button :glint="true" class="w-3/4"  :size="'2xl'" :icon="tabGroup.icon" :variant="'flat'" :label="'Button'" />
+                                        <Button :glint="true" class="w-1/2"  :size="'2xl'" :icon="tabGroup.icon" :variant="'outline'" :label="'Button'" />
 
                                         <!-- Button with icon, no label -->
-                                        <Button :glint="true" class="tw-w-full" :size="'2xl'" :icon="tabGroup.icon" :variant="'default'" :label="''" />
-                                        <Button :glint="true" class="tw-w-3/4"  :size="'2xl'" :icon="tabGroup.icon" :variant="'flat'" :label="''" />
-                                        <Button :glint="true" class="tw-w-1/2"  :size="'2xl'" :icon="tabGroup.icon" :variant="'outline'" :label="''" />
+                                        <Button :glint="true" class="w-full" :size="'2xl'" :icon="tabGroup.icon" :variant="'default'" :label="''" />
+                                        <Button :glint="true" class="w-3/4"  :size="'2xl'" :icon="tabGroup.icon" :variant="'flat'" :label="''" />
+                                        <Button :glint="true" class="w-1/2"  :size="'2xl'" :icon="tabGroup.icon" :variant="'outline'" :label="''" />
 
                                         <!-- Button with icon, no label, minimum width -->
-                                        <div class="tw-w-min"><Button :glint="true" :size="'2xl'" :icon="tabGroup.icon" :variant="'default'" :label="''" /></div>
-                                        <div class="tw-w-min"><Button :glint="true" :size="'2xl'" :icon="tabGroup.icon" :variant="'outline'" :label="''" /></div>
-                                        <div class="tw-w-min"><Button :glint="true" :size="'2xl'" :icon="tabGroup.icon" :variant="'flat'" :label="''" /></div>
+                                        <div class="w-min"><Button :glint="true" :size="'2xl'" :icon="tabGroup.icon" :variant="'default'" :label="''" /></div>
+                                        <div class="w-min"><Button :glint="true" :size="'2xl'" :icon="tabGroup.icon" :variant="'outline'" :label="''" /></div>
+                                        <div class="w-min"><Button :glint="true" :size="'2xl'" :icon="tabGroup.icon" :variant="'flat'" :label="''" /></div>
                                     </div>
                                 </div>
                             </div>
@@ -973,7 +973,7 @@
 
                     <!-- Button and Input Horizontal Alignment -->
                     <div v-if="true">
-                        <div class="tw-my-4 tw-flex tw-justify-center tw-space-x-1.5">
+                        <div class="my-4 flex justify-center space-x-1.5">
                             <Button :size="tabGroup.size" :icon="tabGroup.icon" :label="'Default'" />
                             <Button :size="tabGroup.size" :icon="tabGroup.icon" :variant="'outline'" :label="'Outline'" />
                             <Button :size="tabGroup.size" :icon="tabGroup.icon" :variant="'flat'" :label="'Flat'" />
@@ -983,84 +983,84 @@
                     </div>
 
                     <!-- Default Button -->
-                    <div v-if="true" class="tw-grid tw-gap-2 tw-grid-cols-3 sm:tw-grid-cols-4 lg:tw-grid-cols-6 xl:tw-grid-cols-12 2xl:tw-grid-cols-12">
-                        <div class="tw-flex tw-items-start tw-justify-start tw-block neutral-border">
+                    <div v-if="true" class="grid gap-2 grid-cols-3 sm:grid-cols-4 lg:grid-cols-6 xl:grid-cols-12 2xl:grid-cols-12">
+                        <div class="flex items-start justify-start block neutral-border">
                             <Button :size="'2xs'" :icon="'ic:sharp-send-to-mobile'" :label="'XXS Button'"></Button>
                         </div>
-                        <div class="tw-flex tw-items-start tw-justify-start tw-block neutral-border">
+                        <div class="flex items-start justify-start block neutral-border">
                             <Button :size="'xs'" :icon="'ic:sharp-send-to-mobile'" :label="'XS Button'"></Button>
                         </div>
-                        <div class="tw-col-span-2 tw-flex tw-items-start tw-justify-start tw-block neutral-border">
+                        <div class="col-span-2 flex items-start justify-start block neutral-border">
                             <Button :size="'sm'" :icon="'ic:sharp-send-to-mobile'" @click="showPrompt" :label="'SM Show Prompt'"></Button>
                         </div>
-                        <div class="tw-col-span-2 tw-flex tw-items-start tw-justify-start tw-block neutral-border">
+                        <div class="col-span-2 flex items-start justify-start block neutral-border">
                             <Button :size="'md'" :icon="'ic:sharp-send-to-mobile'" @click="showServiceError" :label="'MD Show Service Error'"></Button>
                         </div>
-                        <div class="tw-flex tw-items-start tw-justify-start tw-block neutral-border">
+                        <div class="flex items-start justify-start block neutral-border">
                             <Button :disabled="true" :icon="'eos-icons:compass'" :label="'Disabled'"></Button>
                         </div>
-                        <div class="tw-col-span-2 tw-flex tw-items-start tw-justify-start tw-block tw-w-full neutral-border">
+                        <div class="col-span-2 flex items-start justify-start block w-full neutral-border">
                             <Button @click="$themeStore.setTheme('blue')" :size="'lg'" :icon="'mdi:palette-swatch-variant'" :label="'Blue Theme'"></Button>
                         </div>
-                        <div class="tw-col-span-3 tw-flex tw-items-start tw-justify-start tw-block tw-w-full neutral-border">
+                        <div class="col-span-3 flex items-start justify-start block w-full neutral-border">
                             <Button @click="$themeStore.setTheme('tulip')" :size="'xl'" :icon="'eos-icons:atom-electron'" :label="'Tulip Theme'"></Button>
                         </div>
                     </div>
 
                     <!-- Outline Button -->
-                    <div v-if="true" class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-9">
-                        <div class="tw-flex tw-items-start tw-justify-start tw-block neutral-border">
+                    <div v-if="true" class="grid gap-2 grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-9">
+                        <div class="flex items-start justify-start block neutral-border">
                             <Button :variant="'outline'" :size="'2xs'" :icon="'ic:sharp-dashboard'" :label="'XXS Button'"></Button>
                         </div>
-                        <div class="tw-flex tw-items-start tw-justify-start tw-block neutral-border">
+                        <div class="flex items-start justify-start block neutral-border">
                             <Button :variant="'outline'" :size="'xs'" :icon="'ic:sharp-dashboard'" :label="'XS Button'"></Button>
                         </div>
-                        <div class="tw-flex tw-items-start tw-justify-start tw-block neutral-border">
+                        <div class="flex items-start justify-start block neutral-border">
                             <Button :variant="'outline'" :size="'sm'" :icon="'ic:sharp-dashboard'" :label="'SM Authenticate'"></Button>
                         </div>
-                        <div class="tw-flex tw-items-start tw-justify-start tw-block neutral-border">
+                        <div class="flex items-start justify-start block neutral-border">
                             <Button :variant="'outline'" :size="'md'" :icon="'ic:sharp-dashboard'" :label="'MD Authenticate'"></Button>
                         </div>
-                        <div class="tw-flex tw-items-start tw-justify-start tw-block neutral-border">
+                        <div class="flex items-start justify-start block neutral-border">
                             <Button :variant="'outline'" :icon="'eos-icons:compass'" :disabled="true" :label="'Disabled'"></Button>
                         </div>
-                        <div class="tw-col-span-2 tw-flex tw-items-start tw-justify-start tw-block tw-w-full neutral-border">
+                        <div class="col-span-2 flex items-start justify-start block w-full neutral-border">
                             <Button @click="$themeStore.setTheme('light')" :variant="'outline'" :size="'lg'" :icon="'mdi:palette-swatch-variant'" :label="'Light Theme'"></Button>
                         </div>
-                        <div class="tw-col-span-2 tw-flex tw-items-start tw-justify-start tw-block tw-w-full">
+                        <div class="col-span-2 flex items-start justify-start block w-full">
                             <Button @click="$themeStore.setTheme('dark')" :variant="'outline'" :size="'xl'" :icon="'eos-icons:atom-electron'" :label="'Dark Theme'"></Button>
                         </div>
                     </div>
 
                     <!-- Flat Button -->
-                    <div v-if="true" class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-9">
-                        <div class="tw-flex tw-items-start tw-justify-start tw-block neutral-border">
+                    <div v-if="true" class="grid gap-2 grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-9">
+                        <div class="flex items-start justify-start block neutral-border">
                             <Button :variant="'flat'" :size="'2xs'" :icon="'ic:sharp-dashboard'" :label="'XXS Button'"></Button>
                         </div>
-                        <div class="tw-flex tw-items-start tw-justify-start tw-block neutral-border">
+                        <div class="flex items-start justify-start block neutral-border">
                             <Button :variant="'flat'" :size="'xs'" :icon="'ic:sharp-dashboard'" :label="'XS Button'"></Button>
                         </div>
-                        <div class="tw-flex tw-items-start tw-justify-start tw-block neutral-border">
+                        <div class="flex items-start justify-start block neutral-border">
                             <Button :variant="'flat'" :size="'sm'" :icon="'ic:sharp-dashboard'" :label="'SM Authenticate'"></Button>
                         </div>
-                        <div class="tw-flex tw-items-start tw-justify-start tw-block neutral-border">
+                        <div class="flex items-start justify-start block neutral-border">
                             <Button :variant="'flat'" :flat-border-color="threadColor.value" :size="'md'" :icon="'ic:sharp-dashboard'" :label="'MD Authenticate'"></Button>
                         </div>
-                        <div class="tw-flex tw-items-start tw-justify-start tw-block neutral-border">
+                        <div class="flex items-start justify-start block neutral-border">
                             <Button :variant="'flat'" :flat-border-color="liningColor.value" :icon="'eos-icons:compass'" :label="'Disabled'"></Button>
                         </div>
-                        <div class="tw-col-span-2 tw-flex tw-items-start tw-justify-start tw-block tw-w-full neutral-border">
+                        <div class="col-span-2 flex items-start justify-start block w-full neutral-border">
                             <Button @click="$themeStore.setTheme('emerald')" :variant="'flat'" :size="'lg'" :icon="'mdi:palette-swatch-variant'" :disabled="true" :label="'Emerald Theme'"></Button>
                         </div>
-                        <div class="tw-col-span-2 tw-flex tw-items-start tw-justify-start tw-block tw-w-full neutral-border">
+                        <div class="col-span-2 flex items-start justify-start block w-full neutral-border">
                             <Button :variant="'flat'" :size="'xl'" :icon="'eos-icons:atom-electron'" :label="'XL Authenticate'"></Button>
                         </div>
                     </div>
 
                     <!-- Hero Plate -->
-                    <div v-if="false" class=" tw-p-2 neutral-border">
-                        <InputLabel class="tw-mb-2" :size="'md'" value="Hero Plate" />
-                        <div class="tw-gap-2 tw-flex tw-items-start tw-justify-start tw-flex-wrap">
+                    <div v-if="true" class=" p-2 neutral-border">
+                        <InputLabel class="mb-2" :size="'md'" value="Hero Plate" />
+                        <div class="gap-2 flex items-start justify-start flex-wrap">
                             <div >
                                 <div>
                                     <HeroPlate :size="'sm'" :bookmark="'FOR YOU'" :label="'B760M-MEOW'"/>
@@ -1124,23 +1124,23 @@
                     </div>
 
                     <!-- Accordion -->
-                    <div v-if="false" class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-1 lg:tw-grid-cols-3 xl:tw-grid-cols-3 2xl:tw-grid-cols-3">
+                    <div v-if="true" class="grid gap-2 grid-cols-1 sm:grid-cols-1 lg:grid-cols-3 xl:grid-cols-3 2xl:grid-cols-3">
                         <div>
                             <InputLabel :size="'md'" value="MD : Accordion Single Expand" />
                             <Accordion :size="'md'" :single-expand="true" v-model:payload="accordionSingleExpand" />
                         </div>
                         <div>
                             <InputLabel :size="'md'" value="MD : Accordion Multi Expand" />
-                            <Accordion :size="'md'" class="tw-space-y-4" v-model:payload="accordionMultiExpand" />
+                            <Accordion :size="'md'" class="space-y-4" v-model:payload="accordionMultiExpand" />
                         </div>
                         <div>
                             <InputLabel :size="'md'" value="LG : Accordion Multi Expand" />
-                            <Accordion :size="'lg'" class="tw-space-y-4" v-model:payload="accordionMultiExpand" />
+                            <Accordion :size="'lg'" class="space-y-4" v-model:payload="accordionMultiExpand" />
                         </div>
                     </div>
 
                     <!-- Checkbox -->
-                    <div v-if="true" class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-8">
+                    <div v-if="true" class="grid gap-2 grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-8">
                         <div class="neutral-border">
                             <label>
                                 <Checkbox v-model="remember1" :label="' '" :size="'md'" name="remember" />
@@ -1164,7 +1164,7 @@
                     </div>
 
                     <!-- Checkbox Group -->
-                    <div v-if="true" class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-8">
+                    <div v-if="true" class="grid gap-2 grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-8">
                         <div class="neutral-border">
                         </div>
                         <div class="neutral-border">
@@ -1185,8 +1185,8 @@
                     </div>
 
                     <!-- Radio Group -->
-                    <div v-if="true" class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-8">
-                        <div class="tw-flex tw-items-start tw-justify-start tw-block neutral-border">
+                    <div v-if="true" class="grid gap-2 grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-8">
+                        <div class="flex items-start justify-start block neutral-border">
                             <div>
                                 <InputLabel :size="'md'" value="SM : Gender Group" />
                                 <RadioGroup
@@ -1197,7 +1197,7 @@
                                 <div>Selected Option: {{ genderGroup.selected }}</div>
                             </div>
                         </div>
-                        <div class="tw-flex tw-items-start tw-justify-start tw-block neutral-border">
+                        <div class="flex items-start justify-start block neutral-border">
                             <div>
                                 <InputLabel :size="'md'" value="SM : Status Group" />
                                 <RadioGroup
@@ -1208,7 +1208,7 @@
                                 <div>Selected Option: {{ statusGroup.selected }}</div>
                             </div>
                         </div>
-                        <div class="tw-flex tw-items-start tw-justify-start tw-block neutral-border">
+                        <div class="flex items-start justify-start block neutral-border">
                             <div>
                                 <InputLabel :size="'md'" value="MD : Transaction Group" />
                                 <RadioGroup
@@ -1219,7 +1219,7 @@
                                 <div>Selected Option: {{ transactionGroup.selected }}</div>
                             </div>
                         </div>
-                        <div class="tw-flex tw-items-start tw-justify-start tw-block neutral-border">
+                        <div class="flex items-start justify-start block neutral-border">
                             <div>
                                 <InputLabel :size="'md'" value="LG : Category Group" />
                                 <RadioGroup
@@ -1233,129 +1233,129 @@
                     </div>
 
                     <!-- Default Input -->
-                    <div v-if="true" class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-8">
-                        <div class="tw-block neutral-border">
+                    <div v-if="true" class="grid gap-2 grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-8">
+                        <div class="block neutral-border">
                             <InputLabel :size="'2xs'" for="form_input_1" value="XXS Label" />
                             <Input :size="'2xs'" placeholder="Enter username" id="form_input_1" type="text" autocomplete="off" />
                         </div>
-                        <div class="tw-block neutral-border">
+                        <div class="block neutral-border">
                             <InputLabel :size="'xs'" for="form_input_2" value="XS Label" />
                             <Input :size="'xs'" placeholder="Enter username" id="form_input_2" type="text" autocomplete="off" />
                         </div>
-                        <div class="tw-block neutral-border">
+                        <div class="block neutral-border">
                             <InputLabel :size="'sm'" for="form_input_3" value="SM Label" />
                             <Input :size="'sm'" placeholder="Enter username" id="form_input_3" type="text" autocomplete="off" />
                         </div>
-                        <div class="tw-block neutral-border">
+                        <div class="block neutral-border">
                             <InputLabel :size="'md'" for="form_input_4" value="MD Label" />
                             <Input :size="'md'" placeholder="Enter username" id="form_input_4" type="text" autocomplete="off" />
                         </div>
-                        <div class="tw-block neutral-border">
+                        <div class="block neutral-border">
                             <InputLabel :size="'md'" for="form_input_5" value="MD Label" />
                             <Input :size="'md'" disabled placeholder="Disabled" id="form_input_4" type="text" autocomplete="off" />
                         </div>
-                        <div class="tw-block neutral-border">
+                        <div class="block neutral-border">
                             <InputLabel :size="'lg'" for="form_input_6" value="LG Label" />
                             <Input :size="'lg'" placeholder="Enter username" id="form_input_5" type="text" autocomplete="off" />
                         </div>
-                        <div class="tw-col-span-2 tw-block neutral-border">
+                        <div class="col-span-2 block neutral-border">
                             <InputLabel :size="'xl'" for="form_input_7" value="XL Label" />
                             <Input :size="'xl'" placeholder="Enter username" id="form_input_6" type="text" autocomplete="off" />
                         </div>
                     </div>
 
                     <!-- Input with Icon -->
-                    <div v-if="true" class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-8">
-                        <div class="tw-block neutral-border">
+                    <div v-if="true" class="grid gap-2 grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-8">
+                        <div class="block neutral-border">
                             <InputLabel :size="'2xs'" for="form_input_1" value="XXS Label" />
                             <InputWithIcon :size="'2xs'" :icon="'ic:sharp-qr-code'" placeholder="Enter username" id="form_input_1" autocomplete="off" />
                         </div>
-                        <div class="tw-block neutral-border">
+                        <div class="block neutral-border">
                             <InputLabel :size="'xs'" for="form_input_2" value="XS Label" />
                             <InputWithIcon :size="'xs'" :icon="'ic:sharp-qr-code'" placeholder="Enter username" id="form_input_2" autocomplete="off" />
                         </div>
-                        <div class="tw-block neutral-border">
+                        <div class="block neutral-border">
                             <InputLabel :size="'sm'" for="form_input_3" value="SM Label" />
                             <InputWithIcon :size="'sm'" :icon="'ic:sharp-qr-code'" placeholder="Enter username" id="form_input_3" autocomplete="off" />
                         </div>
-                        <div class="tw-block neutral-border">
+                        <div class="block neutral-border">
                             <InputLabel :size="'md'" for="form_input_4" value="MD Label" />
                             <InputWithIcon :size="'md'" :icon="'ic:sharp-qr-code'" placeholder="Enter username" id="form_input_4" autocomplete="off" />
                         </div>
-                        <div class="tw-block neutral-border">
+                        <div class="block neutral-border">
                             <InputLabel :size="'md'" for="form_input_5" value="MD Label" />
                             <InputWithIcon :size="'md'" :icon="'ic:sharp-qr-code'" disabled placeholder="Disabled" id="form_input_4" autocomplete="off" />
                         </div>
-                        <div class="tw-block neutral-border">
+                        <div class="block neutral-border">
                             <InputLabel :size="'lg'" for="form_input_6" value="LG Label" />
                             <InputWithIcon :size="'lg'" :icon="'ic:sharp-qr-code'" placeholder="Enter username" id="form_input_5" autocomplete="off" />
                         </div>
-                        <div class="tw-col-span-2 tw-block neutral-border">
+                        <div class="col-span-2 block neutral-border">
                             <InputLabel :size="'xl'" for="form_input_7" value="XL Label" />
                             <InputWithIcon :size="'xl'" :icon="'ic:sharp-qr-code'" placeholder="Enter username" id="form_input_6" autocomplete="off" />
                         </div>
                     </div>
 
                     <!-- Typography -->
-                    <div v-if="true" class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-8">
-                        <div class="tw-block neutral-border tw-col-span-2">
-                            <p class="tw-text-sm tw-leading-4">0123456789 (){}[] +-*/= .,;:!? #&$%@|^#[ |||> |= ~@/\\/* Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
+                    <div v-if="true" class="grid gap-2 grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-8">
+                        <div class="block neutral-border col-span-2">
+                            <p class="text-sm leading-4">0123456789 (){}[] +-*/= .,;:!? #&$%@|^#[ |||> |= ~@/\\/* Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
                         </div>
-                        <div class="tw-block neutral-border tw-col-span-2">
-                            <p class="tw-text-base tw-leading-4">0123456789 (){}[] +-*/= .,;:!? #&$%@|^#[ |||> |= ~@/\\/* Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
+                        <div class="block neutral-border col-span-2">
+                            <p class="text-base leading-4">0123456789 (){}[] +-*/= .,;:!? #&$%@|^#[ |||> |= ~@/\\/* Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
                         </div>
-                        <div class="tw-block neutral-border tw-col-span-2">
-                            <p class="tw-text-lg tw-leading-5">0123456789 (){}[] +-*/= .,;:!? #&$%@|^#[ |||> |= ~@/\\/* Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
+                        <div class="block neutral-border col-span-2">
+                            <p class="text-lg leading-5">0123456789 (){}[] +-*/= .,;:!? #&$%@|^#[ |||> |= ~@/\\/* Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
                         </div>
-                        <div class="tw-block neutral-border tw-col-span-2">
-                            <p class="tw-text-xl tw-leading-6">0123456789 (){}[] +-*/= .,;:!? #&$%@|^#[ |||> |= ~@/\\/* Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
+                        <div class="block neutral-border col-span-2">
+                            <p class="text-xl leading-6">0123456789 (){}[] +-*/= .,;:!? #&$%@|^#[ |||> |= ~@/\\/* Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
                         </div>
                     </div>
 
                     <!-- Font Weights -->
-                    <div v-if="true" class="tw-grid tw-gap-2 tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-5 xl:tw-grid-cols-6 2xl:tw-grid-cols-8">
-                        <div class="tw-block neutral-border tw-col-span-2">
-                            <p class="tw-text-sm tw-font-thin tw-leading-4">Thin: 0123456789 (){}[] +-*/= .,;:!? #&$%@|^#[ |||> |= ~@/\\/* Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
-                            <br><p class="tw-text-sm tw-font-extralight tw-leading-4">Extra Light: 0123456789 (){}[] +-*/= .,;:!? #&$%@|^#[ |||> |= ~@/\\/* Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
-                            <br><p class="tw-text-sm tw-font-light tw-leading-4">Light: 0123456789 (){}[] +-*/= .,;:!? #&$%@|^#[ |||> |= ~@/\\/* Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
-                            <br><p class="tw-text-sm tw-font-normal tw-leading-4">Normal: 0123456789 (){}[] +-*/= .,;:!? #&$%@|^#[ |||> |= ~@/\\/* Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
-                            <br><p class="tw-text-sm tw-font-medium tw-leading-4">Medium: 0123456789 (){}[] +-*/= .,;:!? #&$%@|^#[ |||> |= ~@/\\/* Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
-                            <br><p class="tw-text-sm tw-font-semibold tw-leading-4">Semibold: 0123456789 (){}[] +-*/= .,;:!? #&$%@|^#[ |||> |= ~@/\\/* Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
-                            <br><p class="tw-text-sm tw-font-bold tw-leading-4">Bold: 0123456789 (){}[] +-*/= .,;:!? #&$%@|^#[ |||> |= ~@/\\/* Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
-                            <br><p class="tw-text-sm tw-font-extrabold tw-leading-4">Extra Bold: 0123456789 (){}[] +-*/= .,;:!? #&$%@|^#[ |||> |= ~@/\\/* Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
-                            <br><p class="tw-text-sm tw-font-black tw-leading-4">Black: 0123456789 (){}[] +-*/= .,;:!? #&$%@|^#[ |||> |= ~@/\\/* Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
+                    <div v-if="true" class="grid gap-2 grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-8">
+                        <div class="block neutral-border col-span-2">
+                            <p class="text-sm font-thin leading-4">Thin: 0123456789 (){}[] +-*/= .,;:!? #&$%@|^#[ |||> |= ~@/\\/* Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
+                            <br><p class="text-sm font-extralight leading-4">Extra Light: 0123456789 (){}[] +-*/= .,;:!? #&$%@|^#[ |||> |= ~@/\\/* Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
+                            <br><p class="text-sm font-light leading-4">Light: 0123456789 (){}[] +-*/= .,;:!? #&$%@|^#[ |||> |= ~@/\\/* Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
+                            <br><p class="text-sm font-normal leading-4">Normal: 0123456789 (){}[] +-*/= .,;:!? #&$%@|^#[ |||> |= ~@/\\/* Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
+                            <br><p class="text-sm font-medium leading-4">Medium: 0123456789 (){}[] +-*/= .,;:!? #&$%@|^#[ |||> |= ~@/\\/* Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
+                            <br><p class="text-sm font-semibold leading-4">Semibold: 0123456789 (){}[] +-*/= .,;:!? #&$%@|^#[ |||> |= ~@/\\/* Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
+                            <br><p class="text-sm font-bold leading-4">Bold: 0123456789 (){}[] +-*/= .,;:!? #&$%@|^#[ |||> |= ~@/\\/* Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
+                            <br><p class="text-sm font-extrabold leading-4">Extra Bold: 0123456789 (){}[] +-*/= .,;:!? #&$%@|^#[ |||> |= ~@/\\/* Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
+                            <br><p class="text-sm font-black leading-4">Black: 0123456789 (){}[] +-*/= .,;:!? #&$%@|^#[ |||> |= ~@/\\/* Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
                         </div>
-                        <div class="tw-block neutral-border tw-col-span-2">
-                            <p class="tw-text-base tw-font-thin tw-leading-4">Thin: 0123456789 (){}[] +-*/= .,;:!? #&$%@|^#[ |||> |= ~@/\\/* Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
-                            <br><p class="tw-text-base tw-font-extralight tw-leading-4">Extra Light: 0123456789 (){}[] +-*/= .,;:!? #&$%@|^#[ |||> |= ~@/\\/* Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
-                            <br><p class="tw-text-base tw-font-light tw-leading-4">Light: 0123456789 (){}[] +-*/= .,;:!? #&$%@|^#[ |||> |= ~@/\\/* Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
-                            <br><p class="tw-text-base tw-font-normal tw-leading-4">Normal: 0123456789 (){}[] +-*/= .,;:!? #&$%@|^#[ |||> |= ~@/\\/* Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
-                            <br><p class="tw-text-base tw-font-medium tw-leading-4">Medium: 0123456789 (){}[] +-*/= .,;:!? #&$%@|^#[ |||> |= ~@/\\/* Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
-                            <br><p class="tw-text-base tw-font-semibold tw-leading-4">Semibold: 0123456789 (){}[] +-*/= .,;:!? #&$%@|^#[ |||> |= ~@/\\/* Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
-                            <br><p class="tw-text-base tw-font-bold tw-leading-4">Bold: 0123456789 (){}[] +-*/= .,;:!? #&$%@|^#[ |||> |= ~@/\\/* Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
-                            <br><p class="tw-text-base tw-font-extrabold tw-leading-4">Extra Bold: 0123456789 (){}[] +-*/= .,;:!? #&$%@|^#[ |||> |= ~@/\\/* Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
-                            <br><p class="tw-text-base tw-font-black tw-leading-4">Black: 0123456789 (){}[] +-*/= .,;:!? #&$%@|^#[ |||> |= ~@/\\/* Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
+                        <div class="block neutral-border col-span-2">
+                            <p class="text-base font-thin leading-4">Thin: 0123456789 (){}[] +-*/= .,;:!? #&$%@|^#[ |||> |= ~@/\\/* Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
+                            <br><p class="text-base font-extralight leading-4">Extra Light: 0123456789 (){}[] +-*/= .,;:!? #&$%@|^#[ |||> |= ~@/\\/* Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
+                            <br><p class="text-base font-light leading-4">Light: 0123456789 (){}[] +-*/= .,;:!? #&$%@|^#[ |||> |= ~@/\\/* Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
+                            <br><p class="text-base font-normal leading-4">Normal: 0123456789 (){}[] +-*/= .,;:!? #&$%@|^#[ |||> |= ~@/\\/* Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
+                            <br><p class="text-base font-medium leading-4">Medium: 0123456789 (){}[] +-*/= .,;:!? #&$%@|^#[ |||> |= ~@/\\/* Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
+                            <br><p class="text-base font-semibold leading-4">Semibold: 0123456789 (){}[] +-*/= .,;:!? #&$%@|^#[ |||> |= ~@/\\/* Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
+                            <br><p class="text-base font-bold leading-4">Bold: 0123456789 (){}[] +-*/= .,;:!? #&$%@|^#[ |||> |= ~@/\\/* Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
+                            <br><p class="text-base font-extrabold leading-4">Extra Bold: 0123456789 (){}[] +-*/= .,;:!? #&$%@|^#[ |||> |= ~@/\\/* Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
+                            <br><p class="text-base font-black leading-4">Black: 0123456789 (){}[] +-*/= .,;:!? #&$%@|^#[ |||> |= ~@/\\/* Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
                         </div>
-                        <div class="tw-block neutral-border tw-col-span-2">
-                            <p class="tw-text-lg tw-font-thin tw-leading-5">Thin: 0123456789 (){}[] +-*/= .,;:!? #&$%@|^#[ |||> |= ~@/\\/* Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
-                            <br><p class="tw-text-lg tw-font-extralight tw-leading-5">Extra Light: 0123456789 (){}[] +-*/= .,;:!? #&$%@|^#[ |||> |= ~@/\\/* Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
-                            <br><p class="tw-text-lg tw-font-light tw-leading-5">Light: 0123456789 (){}[] +-*/= .,;:!? #&$%@|^#[ |||> |= ~@/\\/* Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
-                            <br><p class="tw-text-lg tw-font-normal tw-leading-5">Normal: 0123456789 (){}[] +-*/= .,;:!? #&$%@|^#[ |||> |= ~@/\\/* Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
-                            <br><p class="tw-text-lg tw-font-medium tw-leading-5">Medium: 0123456789 (){}[] +-*/= .,;:!? #&$%@|^#[ |||> |= ~@/\\/* Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
-                            <br><p class="tw-text-lg tw-font-semibold tw-leading-5">Semibold: 0123456789 (){}[] +-*/= .,;:!? #&$%@|^#[ |||> |= ~@/\\/* Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
-                            <br><p class="tw-text-lg tw-font-bold tw-leading-5">Bold: 0123456789 (){}[] +-*/= .,;:!? #&$%@|^#[ |||> |= ~@/\\/* Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
-                            <br><p class="tw-text-lg tw-font-extrabold tw-leading-5">Extra Bold: 0123456789 (){}[] +-*/= .,;:!? #&$%@|^#[ |||> |= ~@/\\/* Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
-                            <br><p class="tw-text-lg tw-font-black tw-leading-5">Black: 0123456789 (){}[] +-*/= .,;:!? #&$%@|^#[ |||> |= ~@/\\/* Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
+                        <div class="block neutral-border col-span-2">
+                            <p class="text-lg font-thin leading-5">Thin: 0123456789 (){}[] +-*/= .,;:!? #&$%@|^#[ |||> |= ~@/\\/* Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
+                            <br><p class="text-lg font-extralight leading-5">Extra Light: 0123456789 (){}[] +-*/= .,;:!? #&$%@|^#[ |||> |= ~@/\\/* Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
+                            <br><p class="text-lg font-light leading-5">Light: 0123456789 (){}[] +-*/= .,;:!? #&$%@|^#[ |||> |= ~@/\\/* Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
+                            <br><p class="text-lg font-normal leading-5">Normal: 0123456789 (){}[] +-*/= .,;:!? #&$%@|^#[ |||> |= ~@/\\/* Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
+                            <br><p class="text-lg font-medium leading-5">Medium: 0123456789 (){}[] +-*/= .,;:!? #&$%@|^#[ |||> |= ~@/\\/* Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
+                            <br><p class="text-lg font-semibold leading-5">Semibold: 0123456789 (){}[] +-*/= .,;:!? #&$%@|^#[ |||> |= ~@/\\/* Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
+                            <br><p class="text-lg font-bold leading-5">Bold: 0123456789 (){}[] +-*/= .,;:!? #&$%@|^#[ |||> |= ~@/\\/* Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
+                            <br><p class="text-lg font-extrabold leading-5">Extra Bold: 0123456789 (){}[] +-*/= .,;:!? #&$%@|^#[ |||> |= ~@/\\/* Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
+                            <br><p class="text-lg font-black leading-5">Black: 0123456789 (){}[] +-*/= .,;:!? #&$%@|^#[ |||> |= ~@/\\/* Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
                         </div>
-                        <div class="tw-block neutral-border tw-col-span-2">
-                            <p class="tw-text-xl tw-font-extralight tw-leading-6">Thin: 0123456789 (){}[] +-*/= .,;:!? #&$%@|^#[ |||> |= ~@/\\/* Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
-                            <br><p class="tw-text-xl tw-font-light tw-leading-6">Extra Light: 0123456789 (){}[] +-*/= .,;:!? #&$%@|^#[ |||> |= ~@/\\/* Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
-                            <br><p class="tw-text-xl tw-font-normal tw-leading-6">Normal: 0123456789 (){}[] +-*/= .,;:!? #&$%@|^#[ |||> |= ~@/\\/* Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
-                            <br><p class="tw-text-xl tw-font-medium tw-leading-6">Medium: 0123456789 (){}[] +-*/= .,;:!? #&$%@|^#[ |||> |= ~@/\\/* Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
-                            <br><p class="tw-text-xl tw-font-semibold tw-leading-6">Semibold: 0123456789 (){}[] +-*/= .,;:!? #&$%@|^#[ |||> |= ~@/\\/* Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
-                            <br><p class="tw-text-xl tw-font-bold tw-leading-6">Bold: 0123456789 (){}[] +-*/= .,;:!? #&$%@|^#[ |||> |= ~@/\\/* Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
-                            <br><p class="tw-text-xl tw-font-extrabold tw-leading-6">Extra Bold: 0123456789 (){}[] +-*/= .,;:!? #&$%@|^#[ |||> |= ~@/\\/* Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
-                            <br><p class="tw-text-xl tw-font-black tw-leading-6">Black: 0123456789 (){}[] +-*/= .,;:!? #&$%@|^#[ |||> |= ~@/\\/* Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
+                        <div class="block neutral-border col-span-2">
+                            <p class="text-xl font-extralight leading-6">Thin: 0123456789 (){}[] +-*/= .,;:!? #&$%@|^#[ |||> |= ~@/\\/* Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
+                            <br><p class="text-xl font-light leading-6">Extra Light: 0123456789 (){}[] +-*/= .,;:!? #&$%@|^#[ |||> |= ~@/\\/* Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
+                            <br><p class="text-xl font-normal leading-6">Normal: 0123456789 (){}[] +-*/= .,;:!? #&$%@|^#[ |||> |= ~@/\\/* Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
+                            <br><p class="text-xl font-medium leading-6">Medium: 0123456789 (){}[] +-*/= .,;:!? #&$%@|^#[ |||> |= ~@/\\/* Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
+                            <br><p class="text-xl font-semibold leading-6">Semibold: 0123456789 (){}[] +-*/= .,;:!? #&$%@|^#[ |||> |= ~@/\\/* Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
+                            <br><p class="text-xl font-bold leading-6">Bold: 0123456789 (){}[] +-*/= .,;:!? #&$%@|^#[ |||> |= ~@/\\/* Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
+                            <br><p class="text-xl font-extrabold leading-6">Extra Bold: 0123456789 (){}[] +-*/= .,;:!? #&$%@|^#[ |||> |= ~@/\\/* Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
+                            <br><p class="text-xl font-black leading-6">Black: 0123456789 (){}[] +-*/= .,;:!? #&$%@|^#[ |||> |= ~@/\\/* Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
                         </div>
                     </div>
                 </div>

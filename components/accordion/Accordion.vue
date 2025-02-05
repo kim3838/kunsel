@@ -28,7 +28,7 @@
                 <div
                     v-else-if="detail.body.type === 'checkbox'"
                     class="non-text-type-content-alignment"
-                    :class="['tw-flex', nonTextTypeContentAlignment]">
+                    :class="['flex', nonTextTypeContentAlignment]">
                     <div>
                         <label v-for="detailsCheckbox in detail.body.value" :key="detailsCheckbox">
                             <Checkbox v-model="detailsCheckbox.value" :label="detailsCheckbox.text" :size="checkBoxSize" />
@@ -38,7 +38,7 @@
                 <div
                     v-else-if="detail.body.type === 'radio'"
                     class="non-text-type-content-alignment"
-                    :class="['tw-flex', nonTextTypeContentAlignment]">
+                    :class="['flex', nonTextTypeContentAlignment]">
                     <div>
                         <RadioGroup
                             :selections="detail.body.value.selection"
@@ -85,15 +85,15 @@ const props = defineProps({
 
 const titleFontClass = computed(() => {
     return {
-        'md': 'tw-text-lg',
-        'lg': 'tw-text-xl tw-font-semibold',
+        'md': 'text-lg',
+        'lg': 'text-xl font-semibold',
     }[props.size];
 });
 
 const bodyFontClass = computed(() => {
     return {
-        'md': 'tw-text-base',
-        'lg': 'tw-text-lg',
+        'md': 'text-base',
+        'lg': 'text-lg',
     }[props.size];
 });
 

@@ -1,15 +1,15 @@
 <template>
-    <div class="tw-relative tw-w-full tw-h-full">
+    <div class="relative w-full h-full">
         <div class="clip"></div>
-        <div :style="clipFrameStyle" class="clip-frame tw-z-30">
-            <div class="clip-body tw-flex body-direction">
+        <div :style="clipFrameStyle" class="clip-frame z-30">
+            <div class="clip-body flex body-direction">
                 <slot
                     name="body"
                     :frameBorderColor="frameBorderColor"
                 ></slot>
             </div>
         </div>
-        <div class="clip-inner tw-z-20 tw-flex" :class="[direction === 'ltr' ? 'tw-flex-row' : 'tw-flex-col', opaque ? 'base-background' : '']">
+        <div class="clip-inner z-20 flex" :class="[direction === 'ltr' ? 'flex-row' : 'flex-col', opaque ? 'base-background' : '']">
             <div :style="fadeTransition"></div>
             <slot name="header"></slot>
         </div>

@@ -2,7 +2,7 @@
     <div
         v-if="clientReadyState"
         id="layoutScroll"
-        class="tw-relative tw-scroll-smooth tw-h-screen tw-max-h-screen tw-overflow-auto tw-snap-none">
+        class="relative scroll-smooth h-screen max-h-screen overflow-auto snap-none">
         <!-- Primary Navigation Menu -->
         <LandingNavigation v-model:navigation-height-in-pixels="topAllocation" />
         <!-- Main Content -->
@@ -10,7 +10,7 @@
             <slot></slot>
         </main>
         <!-- DateTime Picker -->
-        <div id="datetimepicker-slot" class="tw-font-data"></div>
+        <div id="datetimepicker-slot" class="font-data"></div>
         <!-- Action Modal -->
         <PromptModal />
         <!-- Footer -->

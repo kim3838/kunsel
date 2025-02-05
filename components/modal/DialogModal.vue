@@ -5,17 +5,17 @@
         :closeable="closeable"
         @close="close"
     >
-        <div class="tw-p-3 modal-body">
-            <div class="tw-text-xl tw-font-medium tw-font-header">
+        <div class="p-3 modal-body">
+            <div class="text-xl font-medium font-header">
                 <slot name="title" />
             </div>
 
-            <div class="tw-mt-1 tw-text-base">
+            <div class="mt-1 text-base">
                 <slot name="content" />
             </div>
         </div>
 
-        <div class="tw-px-3 tw-py-2.5">
+        <div class="px-3 py-2.5">
             <slot name="footer" />
         </div>
     </Modal>
