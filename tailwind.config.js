@@ -61,9 +61,6 @@ module.exports = {
                     'monospace'
                 ],
             },
-            spacing: {
-                'sidebar': '250px',
-            },
         },
     },
 
