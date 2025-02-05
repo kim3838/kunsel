@@ -1,41 +1,45 @@
 <template>
-    <div class="tw-mx-auto tw-max-w-screen-2xl">
-        <div class="tw-my-4">
-            <div class="tw-w-max">
+    <div class="nuxt-error-page mx-auto max-w-screen-2xl">
+        <div class="p-4">
+            <div class="my-4 text-xl font-header font-medium">
                 <div v-if="error.statusCode === 404">Page not found</div>
-                <div v-else>An error occurred</div>
-                <NuxtLink class="tw-text-sm" to="/">
-                    <Button :variant="'flat'" :label="'Back to Home page'"/>
-                </NuxtLink>
+                <div v-else >Something went wrong...</div>
+            </div>
+            <div class="my-4">
+                <p>{{ error.url }}</p>
+                <p>{{ errorDisplay }}</p>
+            </div>
+            <div class="text-sm inline-block" >
+                <Button @click="handleError" glint :label="'Clear Error & back to Home page'"/>
             </div>
         </div>
-        <div class="tw-my-4">
-            <pre class="tw-w-full">{{ error }}</pre>
-        </div>
+        <!-- Footer -->
+        <LandingFooter/>
     </div>
 </template>
 
-<script>
-export default {
-    props: ['error'],
-    layout: 'blank' // you can set a custom layout for the error page
-}
+<script setup lang="ts">
+import {storeToRefs} from 'pinia';
+import type { NuxtError } from '#app'
+
+const {$themeStore} = useNuxtApp();
+const {
+    text: textColor,
+} = storeToRefs($themeStore);
+
+const props = defineProps({
+    error: Object as () => NuxtError
+})
+
+const errorDisplay = computed(()=>{
+    return `Error ${props.error.statusCode}: ${props.error.statusMessage || props.error.message}`;
+})
+
+const handleError = () => clearError({ redirect: '/' })
 </script>
 
 <style>
-html {
-    font-size: 16px;
-    word-spacing: 1px;
-    -ms-text-size-adjust: 100%;
-    -webkit-text-size-adjust: 100%;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-}
-
-*,
-*::before,
-*::after {
-    box-sizing: border-box;
-    margin: 0;
+.nuxt-error-page{
+    color: v-bind(textColor);
 }
 </style>
