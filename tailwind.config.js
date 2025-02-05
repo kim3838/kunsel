@@ -1,17 +1,5 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-    // content: [
-    //     "./components/**/*.{js,vue,ts}",
-    //     "./layouts/**/*.vue",
-    //     "./pages/**/*.vue",
-    //     "./app.vue",
-    //     "./error.vue",
-    // ],
-
-    // darkMode: 'class',
-
-    // important: true,
-
     theme: {
         extend: {
             fontFamily : {
@@ -22,15 +10,14 @@ module.exports = {
                     'Roboto Condensed',
                     'Inter',
                     'Inclusive Sans',
-                    //Design
-                    'Protest Revolution',
-                    'sans-serif'
+                    'sans-serif',
                 ],
                 appearance:[
-                    'Merienda'
+                    'Merienda',
+                    'Protest Revolution',
                 ],
                 techno:[
-                    'Oxanium'
+                    'Oxanium',
                 ],
                 stiff:[
                     'Iceberg',
@@ -39,10 +26,10 @@ module.exports = {
                     'Bruno Ace SC',
                 ],
                 data: [
-                    'Sofia Sans Semi Condensed'
+                    'Sofia Sans Semi Condensed',
                 ],
                 header: [
-                    'IBM Plex Sans Condensed',//Headers
+                    'IBM Plex Sans Condensed',
                 ],
                 standard: [
                     'Roboto',
@@ -53,12 +40,12 @@ module.exports = {
                     'Oranienbaum',
                     'Instrument Serif',
                     'Almendra',
-                    'serif'
+                    'serif',
                 ],
                 mono : [
                     'Spline Sans Mono',
                     'Roboto Mono',
-                    'monospace'
+                    'monospace',
                 ],
             },
         },
