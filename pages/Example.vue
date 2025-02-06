@@ -1,16 +1,17 @@
 <template>
     <div>
         <DefaultWrapper>
-            <div class="mx-auto pt-4 max-w-screen-2xl font-header text-lg font-semibold border">
-                Example page
-            </div>
-            <div class="mt-4 space-y-2 text-sm font-mono">
-                <pre>OFETCH PENDING: {{ofetchPending}}</pre>
-                <pre class="bg-opacity-50 bg-slate-200">OFETCH RESPONSE: <span v-text="ofetchData" /></pre>
-                <pre class="bg-opacity-50 bg-slate-200">OFETCH RESPONSE: <span v-html="ofetchData" /></pre>
-                <Input :size="'lg'" class="font-mono" v-model="singleLineStringValue" type="text" autocomplete="off"/>
-                <TextArea :cols="80" :size="'lg'" class="font-mono" v-model="multiLineStringValue"/>
-                <Button class="inline-block" @click="oFetchGet" :label="'OFetch Get'" />
+            <div class="mx-auto pt-4 max-w-screen-2xl ">
+                <div class="font-header text-lg font-semibold">Example page</div>
+
+                <div class="mt-4 space-y-2 text-sm font-mono">
+                    <pre>OFETCH PENDING: {{ofetchPending}}</pre>
+                    <pre class="bg-opacity-50 bg-slate-200">OFETCH RESPONSE: <span v-text="ofetchData" /></pre>
+                    <pre class="bg-opacity-50 bg-slate-200">OFETCH RESPONSE: <span v-html="ofetchData" /></pre>
+                    <Input :size="'lg'" class="font-stiff" v-model="singleLineStringValue" type="text" autocomplete="off"/>
+                    <TextArea :cols="140" :size="'lg'" class="font-stiff" v-model="multiLineStringValue"/>
+                    <Button class="inline-block" @click="oFetchGet" :label="'OFetch Get'" />
+                </div>
             </div>
         </DefaultWrapper>
     </div>
