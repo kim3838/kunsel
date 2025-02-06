@@ -557,7 +557,7 @@
 import dataPayload from '@/public/data/payload.js';
 // definePageMeta({middleware: 'guest'});
 useLayout().setNavigationMode('solid', 'Lab.vue');
-// const {screenWidthBreakpoint, width: screenWidth, height: screenHeight} = useScreen();
+const {screenWidthBreakpoint, width: screenWidth, height: screenHeight} = useScreen();
 const {$formStore} = useNuxtApp();
 const topPosition = ref(0);
 const clientReadyState = useClientReadyState();
