@@ -111,10 +111,6 @@ export default defineNuxtConfig({
         'nuxt-lodash'
     ],
 
-    carousel: {
-        prefix: 'CarouselModule'
-    },
-
     vite: {
         css: {
             preprocessorOptions: {
