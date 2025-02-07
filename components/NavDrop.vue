@@ -156,8 +156,18 @@ const navDropOptionsStyleComputed = computed(() => {
 
 const { focused: navigationFocused } = useFocus(navDrop);
 
-onClickOutside(navDrop, (event) => {
-    activeComputed.value = false;
+const handleClickOutside = (event) => {
+    if (navDrop.value && !navDrop.value.contains(event.target)) {
+        activeComputed.value = false;
+    }
+};
+
+onMounted(() => {
+    document.addEventListener('mousedown', handleClickOutside);
+});
+
+onUnmounted(() => {
+    document.removeEventListener('mousedown', handleClickOutside);
 });
 
 watch(navigationFocused, value => {
