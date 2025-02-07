@@ -50,23 +50,18 @@
     </div>
 </template>
 <script setup>
-const navDrop = ref(null);
+import {storeToRefs} from 'pinia';
 
+const {$themeStore} = useNuxtApp();
 const {
     navigationMode,
 } = useLayout();
-
-const navigationTextShadow = computed(()=>{
-    if(navigationMode.value == 'clear-with-background'){
-        return '1px 1px 2px #000000';
-    }
-
-    return 'none';
-});
-
-const navDropIcon = computed(()=>{
-   return props.parent ? 'ic:baseline-arrow-drop-down' : 'ic:baseline-arrow-right';
-});
+const {
+    hexAlpha,
+    accent: accentColor,
+    neutral: neutralColor,
+    tint: tintColor
+} = storeToRefs($themeStore);
 
 const props = defineProps({
     dropOptions: {
@@ -94,7 +89,49 @@ const props = defineProps({
         type: String,
         default: 'inherit'
     },
-})
+});
+
+const navDrop = ref(null);
+
+const navigationTextShadow = computed(()=>{
+    if(navigationMode.value == 'clear-with-background'){
+        return '1px 1px 2px #000000';
+    }
+
+    return 'none';
+});
+
+const navDropIcon = computed(()=>{
+   return props.parent ? 'ic:baseline-arrow-drop-down' : 'ic:baseline-arrow-right';
+});
+const accentColor20 = computed(() => {
+    return accentColor.value + hexAlpha.value['20'];
+});
+const navigationLinkColor = computed(()=>{
+    if(navigationMode.value == 'clear-with-background'){
+        return '#ffffff';
+    }
+
+    return 'auto';
+});
+const navDropOptionsParentBackgroundColor = computed(()=>{
+    if(
+        navigationMode.value == 'clear-with-background'
+    ){
+        return accentColor20.value;
+    }
+
+    return tintColor.value;
+});
+const navDropOptionsParentBorderColor = computed(()=>{
+    if(
+        navigationMode.value == 'clear-with-background'
+    ){
+        return accentColor20.value;
+    }
+
+    return neutralColor.value;
+});
 
 const activeComputed = ref(false);
 const navDropOptionsStyleComputed = computed(() => {
@@ -161,5 +198,33 @@ const childDropSize = computed(() => {
 });
 </script>
 <style scoped>
+.nav-drop-active{
+    background-color: v-bind(accentColor20);
+}
 
+.nav-drop{
+    color: v-bind(navigationLinkColor);
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+}
+.nav-drop:hover{
+    background-color: v-bind(accentColor20);
+}
+
+.nav-drop-options-parent{
+    position: absolute;
+    border: 1px solid v-bind(navDropOptionsParentBorderColor);
+    min-width: calc(100% + 0px);
+    width: max-content;
+    background-color: v-bind(navDropOptionsParentBackgroundColor);
+}
+
+.nav-drop-link{
+    color: v-bind(navigationLinkColor);
+}
+
+.nav-drop-link:hover{
+    background-color: v-bind(accentColor20);
+}
 </style>

@@ -43,42 +43,6 @@ const liningColor10 = computed(() => {
 const liningColor70 = computed(() => {
     return liningColor.value + hexAlpha.value['70'];
 });
-const primaryColor50 = computed(() => {
-    return primaryColor.value + hexAlpha.value['50'];
-});
-const accentColor20 = computed(() => {
-    return accentColor.value + hexAlpha.value['20'];
-});
-
-const {
-    navigationMode,
-} = useLayout();
-
-const navigationLinkColor = computed(()=>{
-    if(navigationMode.value == 'clear-with-background'){
-        return '#ffffff';
-    }
-
-    return 'auto';
-});
-const navDropOptionsParentBackgroundColor = computed(()=>{
-    if(
-        navigationMode.value == 'clear-with-background'
-    ){
-        return accentColor20.value;
-    }
-
-    return tintColor.value;
-});
-const navDropOptionsParentBorderColor = computed(()=>{
-    if(
-        navigationMode.value == 'clear-with-background'
-    ){
-        return accentColor20.value;
-    }
-
-    return neutralColor.value;
-});
 
 //const nuxtWrapper = ref(null);
 //const {x: nuxtWrapperXScroll,y: nuxtWrapperYScroll,arrivedState: nuxtWrapperArrivedState } = useScroll(nuxtWrapper)
@@ -138,61 +102,6 @@ const navDropOptionsParentBorderColor = computed(()=>{
 
 .scaffold{
     border: 1px solid v-bind(liningColor);
-}
-
-.nav-active{
-    border-style: solid;
-    border-top-color: transparent;
-    border-left-color: transparent;
-    border-right-color: transparent;
-    border-top-width: 1px;
-    border-left-width: 1px;
-    border-right-width: 1px;
-    border-bottom-width: 2px;
-    border-bottom-color: v-bind(primaryColor50);
-    background-color: v-bind(accentColor20);
-}
-
-.nav-link{
-    color: v-bind(navigationLinkColor);
-}
-
-.nav-link:focus{
-    border: 1px solid v-bind(neutralColor);
-}
-
-.nav-link:hover{
-    background-color: v-bind(accentColor20);
-}
-
-.nav-drop-active{
-    background-color: v-bind(accentColor20);
-}
-
-.nav-drop{
-    color: v-bind(navigationLinkColor);
-    position: relative;
-    display: inline-flex;
-    align-items: center;
-}
-.nav-drop:hover{
-    background-color: v-bind(accentColor20);
-}
-
-.nav-drop-options-parent{
-    position: absolute;
-    border: 1px solid v-bind(navDropOptionsParentBorderColor);
-    min-width: calc(100% + 0px);
-    width: max-content;
-    background-color: v-bind(navDropOptionsParentBackgroundColor);
-}
-
-.nav-drop-link{
-    color: v-bind(navigationLinkColor);
-}
-
-.nav-drop-link:hover{
-    background-color: v-bind(accentColor20);
 }
 
 .top-fragment{
