@@ -13,6 +13,7 @@ export const useThemeStore = defineStore('theme', {
             '70': 'B2',
             '80': 'CC',
             '90': 'E5',
+            '100': 'FF',
         },
         palletes: {
             light: {
@@ -26,11 +27,11 @@ export const useThemeStore = defineStore('theme', {
 
                 'neutral': '#e5e5e5',
 
-                'tint': '#ffffff',
+                'tint': '#fdfdfd',
                 'body': '#ffffff',
                 'shade': '#f5f5f5',
 
-                'text': '#545451',
+                'text': '#464646',
                 'text-invert': '#e0e8de',
                 'text-secondary': '#b4b4b4',
             },
@@ -64,7 +65,7 @@ export const useThemeStore = defineStore('theme', {
 
                 'neutral': '#e5e5e5',
 
-                'tint': '#ffffff',
+                'tint': '#fdfdfd',
                 'body': '#ffffff',
                 'shade': '#f5f5f5',
 
