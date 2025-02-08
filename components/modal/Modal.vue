@@ -82,7 +82,7 @@ export default {
     background-color: v-bind(bodyColor);
     border: 1px solid v-bind(threadColor);
     filter:
-        drop-shadow(v-bind(threadColor) 0px 0px 100px)
-        drop-shadow(v-bind(threadColor) 0px 0px 50px);
+        drop-shadow(v-bind(threadColor) 0px 0px 0px)
+        drop-shadow(v-bind(threadColor) 0px 0px 7px);
 }
 </style>
