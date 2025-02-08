@@ -22,12 +22,13 @@ const {
     type: themeType,
     primary: primaryColor,
     lining: liningColor,
+    text: textColor,
     textInvert: textInvertColor,
 } = storeToRefs($themeStore);
 
 const checkBoxColor = computed(() => {
     return themeType.value == 'light'
-        ? (primaryColor.value + hexAlpha.value['70'])
+        ? (textColor.value)
         : (textInvertColor.value);
 });
 
