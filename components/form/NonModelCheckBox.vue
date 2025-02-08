@@ -9,7 +9,8 @@
                 :data-theme="themeType"
                 :checked="proxyChecked"
                 :class="[heightClass, inputClass]"
-                class="checkbox">
+                class="checkbox"
+                ref="input">
         </div>
         <div v-if="label?.trim()" :class="[fontClass]" class="ml-1 whitespace-pre-line">{{label}}</div>
     </span>
@@ -18,7 +19,8 @@
 <script setup>
 import {storeToRefs} from 'pinia';
 const {$themeStore} = useNuxtApp();
-
+const input = ref(null);
+const {focused: inputFocused} = useFocus(input);
 const {
     hexAlpha,
     type: themeType,
@@ -63,6 +65,8 @@ const props = defineProps({
         default: true,
     }
 });
+
+const emit = defineEmits(['focusStateChanged']);
 
 const proxyChecked = computed(() => {
 
@@ -111,6 +115,10 @@ const checkMarkSize = computed(() => {
         'md': '1rem',
         'lg': '1.5rem'
     }[props.size];
+});
+
+watch(inputFocused, (focused) => {
+    emit('focusStateChanged', focused);
 });
 </script>
 

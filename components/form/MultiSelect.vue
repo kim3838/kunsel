@@ -23,7 +23,7 @@
                 </div>
 
                 <div :class="[active ? 'block pl-2' : 'hidden']" class="flex items-center">
-                    <NonModelCheckBox :tabable="false" :size="checkBoxSize" :checked="selectedAllCurrentSelection()" @click="toggleSelection" />
+                    <NonModelCheckBox @focusStateChanged="selectionToggleFocusStateChangedHandler" :tabable="false" :size="checkBoxSize" :checked="selectedAllCurrentSelection()" @click="toggleSelection" />
                 </div>
                 <div :class="[active ? 'block' : 'hidden']" class="w-full h-full relative overflow-hidden items-center">
                     <div v-if="searchable" :class="[inputHolderClass]" class="absolute left-0 h-full flex items-center">
@@ -85,6 +85,7 @@
                     :checked="isItemSelected(item)"
                     :label="item.text"
                     :tabable="false"
+                    @focusStateChanged="selectionToggleFocusStateChangedHandler"
                     @click="selectItem(item)"
                 />
             </div>
@@ -387,6 +388,8 @@ function keepFocusAlive(){
     nextTick(() => {
         if(props.searchable){
             selectionSearch.value.$refs.input.focus();
+        } else {
+            selectParentFocused.value = true;
         }
 
         clearTimeout(keepFocusCallback.value);
@@ -515,6 +518,14 @@ watch(selectionScrollFocused, (focused) => {
         loseFocus();
     }
 });
+
+function selectionToggleFocusStateChangedHandler(focused: boolean) {
+    if (focused) {
+        keepFocusAlive();
+    } else {
+        loseFocus();
+    }
+}
 
 function searchInputFocusStateChangedHandler(focused: boolean) {
     if (focused) {
