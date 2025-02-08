@@ -80,7 +80,6 @@ const {
     navigationHeaderSize,
     navigationHeightInPixels,
     navigationMode,
-    topAllocationInPixels,
     setNavigationHeight,
     rightNavigationDropAlign
 } = useLayout();

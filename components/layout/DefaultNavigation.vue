@@ -104,7 +104,6 @@ const {
     navigationAccountLinks,
     navigationBackground,
     navigationHeightInPixels,
-    topAllocationInPixels,
     setNavigationHeight,
     rightNavigationDropAlign
 } = useLayout();

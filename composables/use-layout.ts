@@ -182,9 +182,6 @@ export const useLayout = () => {
     const navigationHeightInPixels = computed(() => {
         return (navigationHeight.value + 'px');
     });
-    const topAllocationInPixels = computed(()=>{
-        return (navigationHeight.value + 'px');
-    });
     const navigationHeaderSize = computed(() => {
         let size = 'md'
 
@@ -234,7 +231,6 @@ export const useLayout = () => {
         navigationBackground,
         navigationHeaderSize,
         navigationHeightInPixels,
-        topAllocationInPixels,
         setNavigationHeight,
         setNavigationMode,
         rightNavigationDropAlign
