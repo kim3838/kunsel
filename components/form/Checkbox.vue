@@ -97,9 +97,9 @@ const inputClass = computed(() => {
 
 const checkMarkSize = computed(() => {
     return {
-        'sm': '0.5rem',
-        'md': '0.7rem',
-        'lg': '1rem'
+        'sm': '0.8rem',
+        'md': '1rem',
+        'lg': '1.5rem'
     }[props.size];
 });
 </script>
@@ -137,7 +137,6 @@ input[data-theme="light"][type="checkbox"]:checked::after {
 
 input[type="checkbox"]::before {
     position: absolute;
-    font-size: v-bind(checkMarkSize) !important;
     color: white;
     width: 100%;
     height: 120%;
@@ -147,7 +146,10 @@ input[type="checkbox"]::before {
 }
 
 input[type="checkbox"]:checked::before {
-    content: "✔";
+    content: "🗸";
+    font-family: 'Roboto', sans-serif !important;
+    font-size: v-bind(checkMarkSize) !important;
+    font-weight: 600 !important;
 }
 
 .checkbox-md{
