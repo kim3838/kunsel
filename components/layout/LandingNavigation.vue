@@ -81,7 +81,6 @@ const {
     navigationHeightInPixels,
     navigationMode,
     topAllocationInPixels,
-    spotlightContentHeight,
     setNavigationHeight,
     rightNavigationDropAlign
 } = useLayout();

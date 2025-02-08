@@ -185,9 +185,6 @@ export const useLayout = () => {
     const topAllocationInPixels = computed(()=>{
         return (navigationHeight.value + 'px');
     });
-    const spotlightContentHeight = computed(() => {
-        return 'calc(100vh - '+(navigationHeight.value + 'px')+')';
-    });
     const navigationHeaderSize = computed(() => {
         let size = 'md'
 
@@ -238,7 +235,6 @@ export const useLayout = () => {
         navigationHeaderSize,
         navigationHeightInPixels,
         topAllocationInPixels,
-        spotlightContentHeight,
         setNavigationHeight,
         setNavigationMode,
         rightNavigationDropAlign
