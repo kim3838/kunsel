@@ -6,6 +6,7 @@
                 :disabled="disabled"
                 :tabindex="tabable ? 0 : -1"
                 type="checkbox"
+                :data-theme="themeType"
                 :checked="proxyChecked"
                 :class="[heightClass, inputClass]"
                 class="checkbox">
@@ -23,13 +24,12 @@ const {
     type: themeType,
     primary: primaryColor,
     lining: liningColor,
-    text: textColor,
     textInvert: textInvertColor,
 } = storeToRefs($themeStore);
 
 const checkBoxColor = computed(() => {
     return themeType.value == 'light'
-        ? (textColor.value)
+        ? (primaryColor.value + hexAlpha.value['100'])
         : (textInvertColor.value);
 });
 
@@ -130,6 +130,19 @@ const checkMarkSize = computed(() => {
 
 input[type="checkbox"]:checked {
     background-color: v-bind(checkBoxColor) !important;
+    overflow: hidden;
+}
+
+input[data-theme="light"][type="checkbox"]:checked::after {
+    content: '';
+    position: absolute;
+    left:-50%;
+    height: 100%;
+    width: 150%;
+    background-image: url('/images/deco/ripple_texture.png');
+    background-size: cover;
+    opacity: 0.8;
+    background-repeat: no-repeat;
 }
 
 input[type="checkbox"]::before {

@@ -1,12 +1,10 @@
 <template>
     <label :for="labelId" class="font-data ">
         <div class="flex items-start justify-start">
-            <ClientOnly>
-                <div :style="{'height': radioBoxSlotHeight}" class="flex items-center">
-                    <Icon v-if="selected == value" :class="[radioSize, 'radio']" name="ic:sharp-radio-button-checked"></Icon>
-                    <Icon v-else :class="[radioSize]" class='radio' name="ic:sharp-radio-button-unchecked"></Icon>
-                </div>
-            </ClientOnly>
+            <div :style="{'height': radioBoxSlotHeight}" class="flex items-center">
+                <Icon v-if="selected == value" :data-theme="themeType" class="radio" :class="[radioSize]" name="ic:sharp-radio-button-checked"></Icon>
+                <Icon v-else :class="[radioSize]" :data-theme="themeType" class='radio' name="ic:sharp-radio-button-unchecked"></Icon>
+            </div>
 
             <div v-if="label?.trim()" :class="[fontClass]" class="ml-1 whitespace-pre-line">{{label}}</div>
             <input
@@ -26,12 +24,15 @@ const {$themeStore} = useNuxtApp();
 
 const {
     hexAlpha,
+    type: themeType,
     primary: primaryColor,
     text: textColor,
 } = storeToRefs($themeStore);
 
-const primaryColor70 = computed(() => {
-    return primaryColor.value + hexAlpha.value['70'];
+const radioBoxColor = computed(() => {
+    return themeType.value == 'light'
+        ? (primaryColor.value + hexAlpha.value['100'])
+        : (textColor.value);
 });
 
 const props = defineProps({
@@ -97,6 +98,20 @@ input[type="radio"] {
 }
 
 .radio{
-    color: v-bind(textColor) !important;
+    color: v-bind(radioBoxColor) !important;
+    position: relative;
+    overflow: hidden;
+}
+
+.radio[data-theme="light"]::after {
+    content: '';
+    position: absolute;
+    left: -107%;
+    height: 100%;
+    width: 240%;
+    background-image: url('/images/deco/ripple_texture.png');
+    background-size: cover;
+    opacity: 0.9;
+    background-repeat: no-repeat;
 }
 </style>
