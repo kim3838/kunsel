@@ -287,8 +287,8 @@ watch(buttonFocused, (focused) => {
 .default-background::after{
     content: '';
     position: absolute;
-    top:0;
-    bottom: 0;
+    top: -25%;
+    bottom: -25%;
     left:0;
     right:0;
     width: 140%;
