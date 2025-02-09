@@ -146,9 +146,27 @@ const liningColor70 = computed(() => {
 .daterangepicker td.active,
 .daterangepicker td.active:hover,
 .daterangepicker td:not(.active):hover {
-    background-color: v-bind(textColor);
+    background-color: v-bind(primaryColor);
     border-color: transparent;
     color: v-bind(textInvertColor);
+    position: relative;
+    overflow: hidden;
+    font-size: 1.5rem;
+}
+
+.daterangepicker td.active:before,
+.daterangepicker td.active:hover:before,
+.daterangepicker td:not(.active):hover:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: -65%;
+    right: 0;
+    width: 165%;
+    background-image: url('/images/deco/ripple_texture.png');
+    background-size: cover;
+    opacity: 0.6;
 }
 
 .daterangepicker th.available:hover {
@@ -164,8 +182,17 @@ const liningColor70 = computed(() => {
     border-bottom: 6px solid v-bind(tintColor);
 }
 
+.daterangepicker .calendar-table .next, .daterangepicker .calendar-table .prev{
+    position: relative;
+    font-size: 0.6rem !important;
+}
+
+.daterangepicker .calendar-table .next:hover, .daterangepicker .calendar-table .prev:hover{
+    background: v-bind(accentColor) !important;
+}
+
 .daterangepicker .calendar-table .next span, .daterangepicker .calendar-table .prev span {
-    border: solid v-bind(accentColor);
+    border: solid v-bind(textColor);
     border-width: 0 2px 2px 0;
 }
 
@@ -176,5 +203,40 @@ const liningColor70 = computed(() => {
 .daterangepicker select.hourselect, .daterangepicker select.minuteselect, .daterangepicker select.secondselect, .daterangepicker select.ampmselect {
     border: 1px solid v-bind(liningColor);
     background-color: v-bind(tintColor);
+}
+
+.daterangepicker .calendar-table th{
+    font-family: 'Barlow Semi Condensed', sans-serif;
+}
+
+.daterangepicker .drp-buttons .btn {
+    margin-left: 8px;
+    font-size: 1rem;
+    font-weight: 500;
+    font-family: 'Barlow Semi Condensed', sans-serif;
+    padding-left: 0.6rem;
+    padding-right: 0.6rem;
+    letter-spacing: 0.025rem;
+    height: calc(0.25rem * 7);
+    border-radius: 2px;
+    cursor: pointer;
+    position: relative;
+    color: v-bind(textInvertColor) !important;
+    text-shadow: rgba(0, 0, 0, 0.5) 0 1px 2px;
+    background: v-bind(primaryColor);
+    overflow: hidden;
+}
+
+.daterangepicker .drp-buttons .btn:before {
+    content: '';
+    position: absolute;
+    top: -25%;
+    bottom: -25%;
+    left: -100%;
+    right: 0;
+    width: 200%;
+    background-image: url('/images/deco/ripple_texture.png');
+    background-size: cover;
+    opacity: 0.4;
 }
 </style>
