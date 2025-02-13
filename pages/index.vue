@@ -9,7 +9,7 @@
         <main class="relative">
             <!-- Debug -->
             <div v-if="true" class="fixed z-50 text-xs font-mono">
-                {{`SCREENDIMENSION: ${screenWidth} x ${screenHeight}`}}
+                {{`screen: ${screenWidth} x ${screenHeight}, y-axis: ${layoutScrollY}`}}
             </div>
 
             <!-- Section Fragments -->
