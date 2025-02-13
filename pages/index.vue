@@ -235,7 +235,9 @@ const proximityThreshold = ref(0);
 const scrollSpeed = ref(400);
 const scrollSpeedMs = computed(()=>`${scrollSpeed.value}ms`);
 const layoutScroll = ref<HTMLElement | null>(null)
-const { y: layoutScrollY } = useScroll(layoutScroll)
+const { y: layoutScrollY} = useScroll(layoutScroll);
+const layoutScrollTemplateReference = useTemplateRef('layoutScroll');
+const { direction:layoutScrollSwipeDirection} = useSwipe(layoutScrollTemplateReference);
 
 //Boot full page scroll on navigate
 if(clientReadyState.value){
@@ -685,6 +687,25 @@ function bootPageScrollOnMouseWheel(){
         layoutScroll.value.addEventListener('wheel', handleMouseWheel, { passive: false });
     }
 }
+
+watch(layoutScrollSwipeDirection, (value) => {
+
+    if(scrolling.value){
+        return false;
+    }
+
+    if(value == 'up' && index.value < (sections.value.length - 1)){
+        index.value += 1;
+        scrolling.value = true;
+        attemptScroll();
+    }
+
+    if(value == 'down' && index.value > 0){
+        index.value -= 1;
+        scrolling.value = true;
+        attemptScroll();
+    }
+});
 
 function handleMouseWheel(event){
 
