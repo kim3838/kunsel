@@ -685,47 +685,33 @@ function bootPageScroll(){
 }
 
 function handleMouseWheel(event){
-    if(!isDesktop() || scrolling.value){
+
+    if(scrolling.value){
         return false;
     }
 
-    scrolling.value = true;
     event.preventDefault();
-    // Normalize wheel delta
+
     const delta = Math.max(-1, Math.min(1, event.deltaY));
-    console.log({'handleMouseWheel delta': delta});
 
     if(delta > 0 && index.value < (sections.value.length - 1)){
         index.value += 1;
+        scrolling.value = true;
+        attemptScroll();
     }
 
     if(delta < 0 && index.value > 0){
         index.value -= 1;
+        scrolling.value = true;
+        attemptScroll();
     }
+}
 
-    console.log({'index': index.value});
+function attemptScroll(){
 
-    let sectionAttr = [];
-
-    for (const section of sections.value) {
-        sectionAttr.push({
-            clientHeight: section.clientHeight,
-            clientTop: section.clientTop,
-            offsetHeight: section.offsetHeight,
-            offsetTop: section.offsetTop,
-        });
-    }
-    //console.log({'handleMouseWheel sections': sectionAttr});
-
-    // Calculate scroll amount
-    //const scrollAmount = layoutScrollY.value + layoutScroll.value.offsetHeight * delta;
     const scrollAmount = sections.value[index.value].offsetTop;
 
-    // Scroll to the calculated amount with easing
-    console.log({'scrollTo': scrollAmount});
     smoothScroll(scrollAmount, scrollSpeed.value, easeInOutCubic, true);
-
-    //scrolling.value = false;
 }
 
 function easeInOutCubic(t, b, c, d) {
