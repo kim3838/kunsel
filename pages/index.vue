@@ -38,10 +38,6 @@
                         loop>
                         <source :src="section.media.source" :type="section.media.source_type">
                     </video>
-
-                    <div v-if="false" class="z-40 thread-border bg-white font-mono px-1.5">
-                        {{layoutScrollY}}&nbsp;:&nbsp;{{index}}
-                    </div>
                 </div>
             </section>
 
