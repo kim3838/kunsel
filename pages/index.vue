@@ -232,7 +232,7 @@ const marginRuleLeftSpaceInPixels = computed(()=>`${marginRuleLeftSpace.value}px
 
 const scrolling = ref(false);
 const proximityThreshold = ref(0);
-const scrollSpeed = ref(300);
+const scrollSpeed = ref(400);
 const scrollSpeedMs = computed(()=>`${scrollSpeed.value}ms`);
 const layoutScroll = ref<HTMLElement | null>(null)
 const { y: layoutScrollY } = useScroll(layoutScroll)
