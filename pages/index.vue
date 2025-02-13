@@ -241,7 +241,7 @@ const { y: layoutScrollY } = useScroll(layoutScroll)
 if(clientReadyState.value){
     onMounted(async () => {
         await nextTick(() => {
-            bootPageScroll();
+            bootPageScrollOnMouseWheel();
             autoPlayVideoSpotlights(featuredVideos);
         });
     })
@@ -251,7 +251,7 @@ if(clientReadyState.value){
 watch(clientReadyState, async (clientReady) => {
     if(clientReady){
         await nextTick(() => {
-            bootPageScroll();
+            bootPageScrollOnMouseWheel();
             autoPlayVideoSpotlights(featuredVideos);
         });
     }
@@ -676,12 +676,14 @@ function featuredElementClass(featured, child, property){
     }[property];
 }
 
-function bootPageScroll(){
+function bootPageScrollOnMouseWheel(){
     sections.value = document.querySelectorAll('section');
     proximityThreshold.value = layoutScroll.value.offsetHeight / 2;
 
-    layoutScroll.value.removeEventListener('wheel', handleMouseWheel, { passive: false });
-    layoutScroll.value.addEventListener('wheel', handleMouseWheel, { passive: false });
+    if(isDesktop()){
+        layoutScroll.value.removeEventListener('wheel', handleMouseWheel, { passive: false });
+        layoutScroll.value.addEventListener('wheel', handleMouseWheel, { passive: false });
+    }
 }
 
 function handleMouseWheel(event){
