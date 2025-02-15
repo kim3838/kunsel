@@ -16,11 +16,6 @@
             <div class="fixed z-10 top-0 right-0 bottom-0 left-0 h-screen">
                 <!-- Todo: Add icon before section titles to overlap vertical rule -->
                 <div class="absolute vertical-nav-rule"></div>
-
-                <div v-if="false" class="absolute text-xs font-mono">
-                    {{"INDEX: " + index}}<br>
-                    <pre>{{features[index]}}</pre>
-                </div>
             </div>
 
             <!-- Section Background -->
