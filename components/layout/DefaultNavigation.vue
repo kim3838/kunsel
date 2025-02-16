@@ -3,7 +3,7 @@
         ref="navigation"
         class="primary-navigation-parent z-40 fixed">
         <div class="w-full font-sans flex justify-center">
-            <div class="max-w-screen-2xl w-full font-sans flex justify-end">
+            <div class="max-w-screen-2xl w-full flex justify-end">
                 <NavLink
                     class="h-full"
                     :size="`xs`">
@@ -32,7 +32,7 @@
                     ]" />
             </div>
         </div>
-        <div class="w-full font-sans flex justify-center neutral-border-top">
+        <div class="w-full font-data flex justify-center neutral-border-top">
             <div class="max-w-screen-2xl w-full flex justify-start lg:justify-around h-10">
                 <div class="-my-px flex items-center">
                     <NavDrop
