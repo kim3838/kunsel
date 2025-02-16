@@ -88,10 +88,6 @@ const liningColor70 = computed(() => {
     border: 1px solid v-bind(neutralColor);
 }
 
-.neutral-border-top{
-    border-top: 1px solid v-bind(neutralColor);
-}
-
 .lining-border{
     border: 1px solid v-bind(liningColor);
 }

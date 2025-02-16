@@ -95,6 +95,7 @@
 </template>
 
 <script setup lang="ts">
+import {storeToRefs} from 'pinia';
 const clientReadyState = useClientReadyState();
 const {$isRouteActive} = useNuxtApp();
 const {isAuthenticated, user} = useAuth();
@@ -110,6 +111,12 @@ const {
     setNavigationHeight,
     rightNavigationDropAlign
 } = useLayout();
+
+const {$themeStore} = useNuxtApp();
+
+const {
+    neutral: neutralColor,
+} = storeToRefs($themeStore);
 
 onMounted(async () => {
     //console.log({'DefaultNavigation.vue': 'Mounted'});
@@ -152,5 +159,9 @@ const navigationHeaderSize = computed(() => {
     left: 0;
     right: 5px;
     z-index: 30;
+}
+
+.neutral-border-top{
+    border-top: 1px solid v-bind(neutralColor);
 }
 </style>
