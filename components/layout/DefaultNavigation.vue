@@ -139,7 +139,7 @@ watch(screenWidth, value => {
 });
 
 const navigationHeaderSize = computed(() => {
-    return 'xs';
+    return 'sm';
 });
 </script>
 
