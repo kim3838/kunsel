@@ -15,12 +15,13 @@ export const useLayout = () => {
                 {
                     type: 'link',
                     title: 'Account Settings',
-                    icon: 'eos-icons:rotating-gear',
+                    icon: 'ic:baseline-arrow-right',
                     to: '/profile',
                 },
                 {
                     type: 'action',
                     title: 'Logout',
+                    icon: 'ic:baseline-arrow-right',
                     callback: () => {
                         logout();
                     },
@@ -76,13 +77,6 @@ export const useLayout = () => {
             });
         }
 
-        links.push({
-            type: 'link',
-            title: 'Shop',
-            icon: 'ic:sharp-shop',
-            to: '',
-        });
-
         return links;
     });
     const navigationLinks = computed(()=>{
@@ -122,7 +116,6 @@ export const useLayout = () => {
             {
                 type: 'drop',
                 title: 'About',
-                icon: 'ic:baseline-arrow-right',
                 options: [
                     {
                         type: 'anchor-link',
@@ -135,7 +128,6 @@ export const useLayout = () => {
             {
                 type: 'drop',
                 title: 'Help',
-                icon: 'ic:baseline-arrow-right',
                 options: [
                     {
                         type: 'anchor-link',
@@ -186,11 +178,11 @@ export const useLayout = () => {
         let size = 'md'
 
         if (screenWidth.value >= screenWidthBreakpoint['2xl']) {//3xl
-            size = 'lg';
+            size = 'md';
         } else if (screenWidth.value >= screenWidthBreakpoint['xl'] && screenWidth.value < screenWidthBreakpoint['2xl']) {//2xl
-            size = 'lg';
+            size = 'md';
         } else if (screenWidth.value >= screenWidthBreakpoint['lg'] && screenWidth.value < screenWidthBreakpoint['xl']) {//xl
-            size = 'lg';
+            size = 'md';
         } else if (screenWidth.value >= screenWidthBreakpoint['md'] && screenWidth.value < screenWidthBreakpoint['lg']) {//lg
             size = 'md';
         } else if (screenWidth.value >= screenWidthBreakpoint['sm'] && screenWidth.value < screenWidthBreakpoint['md']) {//md
