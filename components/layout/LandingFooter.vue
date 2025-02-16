@@ -1,6 +1,6 @@
 <template>
     <footer>
-        <div class="mx-auto max-w-screen-xl px-4 pb-6 pt-16 sm:px-6 lg:px-8">
+        <div class="font-data mx-auto max-w-screen-xl px-4 pb-6 pt-16 sm:px-6 lg:px-8">
             <div class="grid grid-cols-1 lg:grid-cols-4">
                 <div>
                     <div class="flex justify-center lg:justify-start">
@@ -33,7 +33,7 @@
 
                 <div class="grid grid-cols-1 gap-2 mt-8 lg:mt-0 sm:grid-cols-2 md:grid-cols-5 lg:col-span-3">
                     <div class="text-center sm:text-left lg:pl-28 md:col-span-2">
-                        <p class="font-medium">Contact Us</p>
+                        <p :class="headerClass">Contact Us</p>
 
                         <div class="mt-2 space-y-2">
                             <UnorderedList
@@ -57,7 +57,7 @@
                     </div>
 
                     <div class="text-center mt-12 sm:text-left sm:mt-0">
-                        <p class="font-medium">Our Services</p>
+                        <p :class="headerClass">Our Services</p>
 
                         <div class="mt-2 space-y-2">
 
@@ -73,7 +73,7 @@
                     </div>
 
                     <div class="text-center mt-12 sm:text-left md:mt-0">
-                        <p class="font-medium">Helpful Links</p>
+                        <p :class="headerClass">Helpful Links</p>
 
                         <div class="mt-2 space-y-2">
 
@@ -103,7 +103,7 @@
                     </div>
 
                     <div class="text-center mt-12 sm:text-left md:mt-0">
-                        <p class="font-medium">About Us</p>
+                        <p :class="headerClass">About Us</p>
 
                         <div class="mt-2 space-y-2 text-sm">
 
@@ -153,13 +153,15 @@
 <script setup lang="ts">
 import {storeToRefs} from "pinia";
 
-const {$themeStore, $isRouteActive} = useNuxtApp();
+const {$themeStore} = useNuxtApp();
 
 const {
     primary: primaryColor,
     accent: accentColor,
-    thread: threadColor
+    neutral: neutralColor
 } = storeToRefs($themeStore);
+
+const headerClass = ref('font-stiff');
 </script>
 
 <style scoped>
@@ -177,9 +179,8 @@ const {
     background: linear-gradient(
         to right,
         transparent 0%,
-        v-bind(threadColor) 10%,
-        transparent 50%,
-        v-bind(threadColor) 90%,
+        v-bind(neutralColor) 10%,
+        v-bind(neutralColor) 90%,
         transparent 100%
     );
 }
