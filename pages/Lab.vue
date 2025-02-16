@@ -15,38 +15,6 @@
                     </span>
                 </a>
 
-                <div v-if="false" class="absolute left-[56px] w-screen">
-                    <div class="relative w-full h-full">
-
-                        <div class="relative left-[-56px] w-screen neutral-border ">
-                            FeaturedCarouselRow
-                            <FeaturedCarouselRow :inner-id="'unique-id-001'" :x-padding="'56px'" :gap="'0.5rem'" :items="[
-                                { id: 1, name: 'Product 1', width: '550px', height:'200px', image: '/images/product/02/h732.png' },
-                                { id: 2, name: 'Product 2', width: '550px', height:'200px', image: '/images/product/04/h732.png' },
-                                { id: 3, name: 'Product 3', width: 'calc(33.3% - 0.5rem)', height:'200px', image: '/images/product/03/h732.png' },
-                                { id: 4, name: 'Product 4', width: '200px', height:'200px', image: '/images/product/08/h732.png' },
-                                ]">
-                                <template v-slot:items="{slot}">
-                                    <div
-                                        v-for="(item, index) in slot.items"
-                                        :key="index"
-                                        class="flex-none neutral-border"
-                                        :style="{width: item.width}"
-                                    >
-                                        <div>
-                                            <img style="width: 100%; height: 150px; object-fit: cover;" :src="item.image" :alt="item.name" />
-                                            <h3>{{ item.name }}</h3>
-                                        </div>
-                                    </div>
-                                </template>
-
-                            </FeaturedCarouselRow>
-                        </div>
-                    </div>
-                </div>
-
-                <StarRating v-if="false" :rating="1.5" />
-
                 <div v-if="false" class="flex mb-4">
                     <SampleEmitter
                         v-model:[dynamicFoo].capitalizeEveryWord ="fooComputed"
