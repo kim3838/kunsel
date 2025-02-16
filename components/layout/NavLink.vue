@@ -74,8 +74,8 @@ const headerFontClass = computed(() => {
     return {
         'xs': 'text-sm font-normal',
         'sm': 'text-base font-normal',
-        'md': 'text-lg font-normal',
-        'lg': 'text-xl font-normal',
+        'md': 'text-lg font-medium',
+        'lg': 'text-xl font-medium',
     }[props.size]
 });
 </script>
