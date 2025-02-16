@@ -5,6 +5,7 @@
         :style="{'text-shadow': navigationTextShadow, 'font-family': fontFamily}"
         :class="[classes]"
         class="nav-drop px-2 py-1 cursor-pointer focus:outline-none focus:ring-transparent focus:ring-1">
+        <Icon v-if="icon" :name="icon" class="mr-1" />
         <span :class="[headerFontClass]">{{title}}</span>
         <Icon :name="navDropIcon"/>
         <div
@@ -43,6 +44,7 @@
                     :size="childDropSize"
                     :drop-justify="'right'"
                     :title="dropOption.title"
+                    :icon="dropOption.icon"
                     :drop-options="dropOption.options"
                 />
             </div>
@@ -71,6 +73,10 @@ const props = defineProps({
     title: {
         type: String,
         default: ''
+    },
+    icon: {
+        type: String,
+        default: null,
     },
     size: {
         default: 'md'

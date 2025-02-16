@@ -4,7 +4,7 @@
         :style="{'text-shadow': navigationTextShadow, 'font-family': fontFamily}"
         class="box-border inline-flex items-center px-2 focus:outline-none focus:ring-transparent focus:ring-1"
         :class="[classes, headerFontClass, 'nav-link']">
-        <slot></slot>
+        <Icon v-if="icon" :name="icon" class="mr-1" /><slot></slot>
     </NuxtLink>
 </template>
 
@@ -25,6 +25,10 @@ const {
 
 const props = defineProps({
     to: {
+        type: String,
+        default: null,
+    },
+    icon: {
         type: String,
         default: null,
     },

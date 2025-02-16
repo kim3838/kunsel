@@ -24,6 +24,7 @@
                             v-if="navigation.type == 'link'"
                             :size="navigationHeaderSize"
                             :to="navigation.to"
+                            :icon="navigation.icon"
                             :active="$isRouteActive(navigation.route)">
                             {{navigation.title}}
                         </NavLink>
@@ -34,6 +35,7 @@
                             :href="navigation.to">
                             <NavLink
                                 class="h-full"
+                                :icon="navigation.icon"
                                 :size="navigationHeaderSize">
                                 {{navigation.title}}
                             </NavLink>
@@ -44,6 +46,7 @@
                             v-if="navigation.type === 'drop'"
                             :size="navigationHeaderSize"
                             :title="navigation.title"
+                            :icon="navigation.icon"
                             :drop-options="navigation.options"
                         />
                     </span>
