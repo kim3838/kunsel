@@ -17,8 +17,7 @@ export default {
                 ]
             },
             "link": "/prototype",
-            "frameBorder": "#dedede",
-            "contentBorder": "#b7b7b7"
+            "frameBorder": "#e3b98f"
         },
         {
             "image":{
@@ -37,31 +36,96 @@ export default {
                 ]
             },
             "link": "/prototype",
-            "frameBorder": "#dedede",
-            "contentBorder": "#b7b7b7"
+            "frameBorder": "#e3b98f"
         },
         {
             "image":{
-                "path": "/images/product/d942910a-ffe9-461c-8847-a6fdb4ab480c.webp"
+                "path": "/images/product/fc44dd4e-40ed-49df-bd9e-bc210dfbaf7c.webp"
             },
             "listIcon": "bi:gpu-card",
-            "title": "COLORFIRE GeForce RTX 4070 SUPER MEOW-ORG 12GB-V",
+            "title": "COLORFIRE GeForce RTX 4060 MEOW-ORG 8GB-V",
             "description": "",
             "bullets": {
                 "value": [
                     "COLORFIRE Series",
-                    "Efficient and durable heat dissipation.",
-                    "With triple fans to enhance air pressure and air input, supporting auto-stop technology.",
-                    "Adjustable lighting effects via iGame Center."
+                    'Efficient and durable heat dissipation.',
+                    'Adjustable lighting effects via iGame Center.'
                 ]
             },
             "link": "/prototype",
-            "frameBorder": "#dedede",
-            "contentBorder": "#b7b7b7"
+            "frameBorder": "#e3b98f"
         }
     ],
     'topToBottomItems': [
         {
+            'theme': 'dark',
+            'image':{
+                'path': '/images/spotlight/1697501586302.jpg'
+            },
+            'listIcon': 'octicon:circuit-board',
+            'title': 'New Z790 motherboards from ROG pave the way for 14th Gen Intel Core CPUs',
+            'link': '/prototype',
+            'description': 'WiFi 7 support, more fast storage, front-panel device charging, intelligent controls — our latest Z790 motherboards have it all.',
+            'frameBorder': '#a8dadc',
+            'contentBorder': '#4b6e7a'
+        },
+        {
+            'theme': 'dark',
+            'image':{
+                'path': '/images/spotlight/w636.jpg'
+            },
+            'listIcon': 'octicon:circuit-board',
+            'title': 'ASUS B550 Series- Rise Above the Battlefield',
+            'link': '/prototype',
+            'description': 'ASUS B550 Series packs all the essentials for the latest AMD processors. WiFi 6 and 2.5 Gb Ethernet provide ample bandwidth for online gaming, while AI Noise-Canceling Mic software ensures you’re clearly heard in-game. And system set up is a breeze with the intuitive BIOS Flashback™.',
+            'frameBorderPrimary': '#dea87e',
+            'frameBorderSecondary': 'rgba(180,139,88,0.64)'
+        },
+        {
+            'theme': 'dark',
+            'image':{
+                'path': '/images/spotlight/w637.jpg'
+            },
+            'listIcon': 'octicon:circuit-board',
+            'title': 'ASUS Z490 Series- AI Motherboards',
+            'link': '/prototype',
+            'description': 'ASUS Z490 motherboards feature intelligent overclocking, revolutionary cooling, a robust power solution, optimized memory and next-gen connectivity to unleash the power of the latest 10th Gen Intel® Core™ processors.',
+            'frameBorderPrimary': '#a8dadc',
+            'frameBorderSecondary': '#4b6e7a'
+        },
+        {
+            'theme': 'dark',
+            'image':{
+                'path': '/images/spotlight/1692323352671.webp'
+            },
+            'listIcon': 'octicon:circuit-board',
+            'title': 'Race after your dreams with the power of the ROG Strix SCAR 16 and SCAR 18',
+            'link': '/prototype',
+            'description': 'Discover the amazing true story of a gamer turned pro racer in the new movie Gran Turismo.',
+            'frameBorderPrimary': '#908686',
+            'frameBorderSecondary': '#7b6969'
+        },
+        {
+            'theme': 'dark',
+            'image':{
+                'path': '/images/spotlight/c869bdd2-4aa7-408d-b2af-75681836aa9a.webp'
+            },
+            'listIcon': 'octicon:circuit-board',
+            'title': 'COLORFUL Launches EVOL P15 Gaming Laptop',
+            'link': '/prototype',
+            'description': null,
+            'bullets': {
+                'column': 2,
+                'value': [
+                    'Retro-Futuristic Design',
+                    'Deep Chiller System',
+                ]
+            },
+            'frameBorderPrimary': '#a8dadc',
+            'frameBorderSecondary': '#4b6e7a'
+        },
+        {
+            'theme': 'dark',
             'image':{
                 'path': '/images/spotlight/5037c274-2024-46d3-8f04-e70ccea4ec8f.webp'
             },
@@ -78,50 +142,11 @@ export default {
                     'COLORFUL GeForce RTX 4070 NB EX'
                 ]
             },
-            'frameBorder': '#C2446F',
-            'contentBorder': '#922042'
+            'frameBorderPrimary': '#9b888c',
+            'frameBorderSecondary': '#C2446F'
         },
         {
-            'image':{
-                'path': '/images/spotlight/w636.jpg'
-            },
-            'listIcon': 'octicon:circuit-board',
-            'title': 'ASUS B550 Series- Rise Above the Battlefield',
-            'link': '/prototype',
-            'description': 'ASUS B550 Series packs all the essentials for the latest AMD processors. WiFi 6 and 2.5 Gb Ethernet provide ample bandwidth for online gaming, while AI Noise-Canceling Mic software ensures you’re clearly heard in-game. And system set up is a breeze with the intuitive BIOS Flashback™.',
-            'frameBorder': '#f9dbbd',
-            'contentBorder': '#f4a261'
-        },
-        {
-            'image':{
-                'path': '/images/spotlight/w637.jpg'
-            },
-            'listIcon': 'octicon:circuit-board',
-            'title': 'ASUS Z490 Series- AI Motherboards',
-            'link': '/prototype',
-            'description': 'ASUS Z490 motherboards feature intelligent overclocking, revolutionary cooling, a robust power solution, optimized memory and next-gen connectivity to unleash the power of the latest 10th Gen Intel® Core™ processors.',
-            'frameBorder': '#a8dadc',
-            'contentBorder': '#4b6e7a'
-        },
-        {
-            'image':{
-                'path': '/images/spotlight/c869bdd2-4aa7-408d-b2af-75681836aa9a.webp'
-            },
-            'listIcon': 'octicon:circuit-board',
-            'title': 'COLORFUL Launches EVOL P15 Gaming Laptop',
-            'link': '/prototype',
-            'description': null,
-            'bullets': {
-                'column': 2,
-                'value': [
-                    'Retro-Futuristic Design',
-                    'Deep Chiller System',
-                ]
-            },
-            'frameBorder': '#a8dadc',
-            'contentBorder': '#4b6e7a'
-        },
-        {
+            'theme': 'dark',
             'image':{
                 'path': '/images/spotlight/CODM-S4-FOOLS-GOLD-009.jpg'
             },
@@ -129,21 +154,11 @@ export default {
             'title': 'FOOL\'S GOLD',
             'link': '/prototype',
             'description': 'Season 4 — Fool’s Gold launches on Call of Duty: Mobile on April 17 at 5 PM PT.',
-            'frameBorder': '#3b6b2a',
-            'contentBorder': '#3b6b2a'
+            'frameBorderPrimary': '#3b6b2a',
+            'frameBorderSecondary': '#284d1c'
         },
         {
-            'image':{
-                'path': '/images/spotlight/1697501586302.jpg'
-            },
-            'listIcon': 'octicon:circuit-board',
-            'title': 'New Z790 motherboards from ROG pave the way for 14th Gen Intel Core CPUs',
-            'link': '/prototype',
-            'description': 'WiFi 7 support, more fast storage, front-panel device charging, intelligent controls — our latest Z790 motherboards have it all.',
-            'frameBorder': '#a8dadc',
-            'contentBorder': '#4b6e7a'
-        },
-        {
+            'theme': 'dark',
             'image':{
                 'path': '/images/spotlight/w638.jpg'
             },
@@ -151,19 +166,8 @@ export default {
             'title': 'ROG Gaming Audio',
             'link': '/prototype',
             'description': 'Utilizing advanced trace layout techniques to mitigate noise, and featuring carefully selected components and a host of software options that enhance the gaming experience, ROG Gaming Audio pushes onboard audio to the very limits.',
-            'frameBorder': '#696969',
-            'contentBorder': '#457b9d'
-        },
-        {
-            'image':{
-                'path': '/images/spotlight/1692323352671.webp'
-            },
-            'listIcon': 'octicon:circuit-board',
-            'title': 'Race after your dreams with the power of the ROG Strix SCAR 16 and SCAR 18',
-            'link': '/prototype',
-            'description': 'Discover the amazing true story of a gamer turned pro racer in the new movie Gran Turismo.',
-            'frameBorder': '#f9dbbd',
-            'contentBorder': '#f4a261'
+            'frameBorderPrimary': '#908686',
+            'frameBorderSecondary': '#7b6969'
         },
     ],
     'prototype': {
@@ -794,6 +798,12 @@ export default {
         ],
         'trendingItems': [
             {
+                'image': '/images/product/50c51e5f-6507-4319-8f95-967d60f0bb3f_transparent.webp',
+                'title': 'Graphics card',
+                'subTitle': 'iGame GeForce RTX 4080 SUPER Black Myth Wukong Edition OC 16GB-V',
+                'link': '/prototype'
+            },
+            {
                 'image': '/images/product/c7dfc1f1-102a-4ea9-84f6-f87dda2094b8.webp',
                 'title': 'Motherboard',
                 'subTitle': 'CVN Z790D5 GAMING PRO WIFI V20',
@@ -900,84 +910,1026 @@ export default {
         },
     ],
     'featured': [
+        // {
+        //     'id': 'feature_1',
+        //     'type': 'full',
+        //     'theme': 'dark',
+        //     'proximity': '40',
+        //     'title': 'Spotlight',
+        //     'debug': {
+        //         'bg': 'rgba(255,0,0,0.2)',
+        //     },
+        //     'background': '#ffffff',
+        //     'layer': {
+        //         'type': 'image',
+        //         'source': ''
+        //     },
+        //     'media': {
+        //         'type': 'image',
+        //         //'source': '/images/product/05/kv-bg.webp'
+        //     },
+        //     'overview_enabled': false,
+        //     'overview_height': {
+        //         'sm': '200px',
+        //         'md': '200px',
+        //         'lg': '200px',
+        //         'xl': '200px'
+        //     },
+        //     'overview_min_height': 200,
+        //     'card_dimension': {
+        //         'sm': ['calc(50% - 0.5rem)', '240px'],
+        //         'md': ['calc(50% - 0.5rem)', '300px'],
+        //         'lg': ['calc(50% - 0.5rem)', '320px'],
+        //         'xl': ['calc(50% - 0.5rem)', '400px'],
+        //         'minimum': ['840px', '240px'],
+        //     },
+        //     'children': [
+        //         {
+        //             'card_dimension': {
+        //                 'sm': ['calc(35% - 0.5rem)', '240px'],
+        //                 'md': ['calc(35% - 0.5rem)', '300px'],
+        //                 'lg': ['calc(35% - 0.5rem)', '320px'],
+        //                 'xl': ['calc(35% - 0.5rem)', '400px'],
+        //                 'minimum': ['611px', '240px'],
+        //                 'maximum': ['784px', '400px'],
+        //             },
+        //             'image': '/images/product/05-01/redeem-pd.webp',
+        //             'link': '/',
+        //             'glint': true,
+        //             'glint_color': '#787772',
+        //             'glint_orientation': 'landscape',
+        //             'frame_border': '#18436a',
+        //             'content_opaque': true,
+        //             'content_background': '#2b2b2b',
+        //             'content_direction': 'ltr',
+        //             'head_percentage': 100,
+        //             'body_percentage': 0,
+        //             'top_right_corner': 45,
+        //             'bottom_left_corner': 45,
+        //             'header_fade': false,
+        //             'header_padding': `20px`,
+        //             'header_fade_color': 'rgba(5,5,5,0.1)',
+        //             'header_background': '/images/product/05-01/redeem-bg.webp',
+        //             'add_ons': {
+        //                 'height': '30px',
+        //                 'value': []
+        //             },
+        //             'bullets': {
+        //                 'value': [
+        //                     "Purchase the MSI S.T.A.L.K.E.R. 2 co-branded graphics card and receive access to the full S.T.A.L.K.E.R. 2: Heart of Chornobyl Deluxe version gaming experience! Follow the redemption guidelines to claim your game and dive into the immersive world of S.T.A.L.K.E.R. 2.",
+        //                 ]
+        //             },
+        //         },
+        //         {
+        //             'card_dimension': {
+        //                 'sm': ['calc(50% - 0.5rem)', '240px'],
+        //                 'md': ['calc(50% - 0.5rem)', '300px'],
+        //                 'lg': ['calc(50% - 0.5rem)', '320px'],
+        //                 'xl': ['calc(50% - 0.5rem)', '400px'],
+        //                 'minimum': ['840px', '240px'],
+        //                 'maximum': ['1124px', '400px'],
+        //             },
+        //             'image': '/images/product/05/1024.png',
+        //             'title': 'GeForce RTX™ 4070 Ti SUPER 16G GAMING SLIM STALKER 2 EDITION',
+        //             'title_icon': 'bi:gpu-card',
+        //             'title_size': 'lg',
+        //             'description_size': 'md',
+        //             'link': '/',
+        //             'glint': true,
+        //             'glint_color': '#787772',
+        //             'glint_orientation': 'landscape',
+        //             'frame_border': '#adadad',
+        //             'content_opaque': true,
+        //             'content_background': '#2b2b2b',
+        //             'content_direction': 'ltr',
+        //             'head_percentage': 50,
+        //             'body_percentage': 50,
+        //             'top_right_corner': 45,
+        //             'bottom_left_corner': 45,
+        //             'header_fade': false,
+        //             'header_padding': `20px`,
+        //             'header_fade_color': 'rgba(5,5,5,0.1)',
+        //             'header_background': '/images/deco/msi-cloud.jpg',
+        //             'body_background': '/images/product/05/kv-bg.webp',
+        //             'add_ons': {
+        //                 'height': '30px',
+        //                 'value': [
+        //                     {
+        //                         'image': '/images/product/01/add-ons-001.png',
+        //                         'alt': '3 months free adobe cloud'
+        //                     },
+        //                     {
+        //                         'image': '/images/product/01/add-ons-002.png',
+        //                         'alt': 'Windows 11 ready'
+        //                     }
+        //                 ]
+        //             },
+        //             'bullets': {
+        //                 'value': [
+        //                     "Purchase the MSI S.T.A.L.K.E.R. 2 co-branded graphics card and receive access to the full S.T.A.L.K.E.R. 2: Heart of Chornobyl Deluxe version gaming experience! Follow the redemption guidelines to claim your game and dive into the immersive world of S.T.A.L.K.E.R. 2.",
+        //                 ]
+        //             },
+        //             'sub_bullets': {
+        //                 'value': [
+        //                     "The redeemed game will be provided as a digital code",
+        //                     "Please note that the redemption process is subject to specified terms, and official game activation will depend on the publisher's release schedule."
+        //                 ]
+        //             }
+        //         },
+        //     ]
+        // },
+
         {
             'id': 'feature_1',
-            'type': 'full',
-            'proximity': '30',
-            'title': 'FULL 1',
-            'bg': 'red',
+            'type': 'template',
+            'theme': 'light',
+            'proximity': null,
+            'title': 'Featured',
+            'debug': {
+                'bg': 'rgba(206,206,206,0.2)',
+            },
+            'background': '#ffffff',
+            'banner':{
+                'enabled': false,
+                'min_height': 0
+            },
             'media': {
                 'type': 'image',
-                'source': '/images/carousel/60a0ac44-4533-421b-aa6c-cfba7036fb97.webp'
-            }
+                'source': null
+            },
+            'children': []
         },
+
         {
             'id': 'feature_2',
             'type': 'full',
-            'proximity': '30',
-            'title': 'FULL 2',
-            'bg': 'blue',
+            'theme': 'light',
+            'proximity': 50,
+            'title': 'GEFORCE RTX 50 SERIES',
+            'debug': {
+                'bg': 'rgba(93,111,146,0.5)',
+            },
+            'background': '#ffffff',
+            'banner':{
+                'enabled':false,
+                'min_height':0,
+                'type': 'image',
+                'source_set': {
+                    // 'mobile' : '/images/spotlight/bjvxa65ixepu6gbr-0_0_desktop_0_1X.webp',
+                    // 'tablet' : '/images/spotlight/bjvxa65ixepu6gbr-0_0_desktop_0_1X.webp',
+                    // 'desktop' : '/images/spotlight/bjvxa65ixepu6gbr-0_0_desktop_0_1X.webp',
+                    'mobile' : '/images/spotlight/p5oieiwbjl30hu2n-0_0_mobile_0_1X.webp',
+                    'tablet' : '/images/spotlight/p5oieiwbjl30hu2n-0_0_tablet_0_1X.webp',
+                    'desktop' : '/images/spotlight/pjipbdai5xukdvng-0_0_desktop_0_1X.webp',
+                }
+            },
+            'card_dimension': {
+                'xs': ['calc(33.3% - 0.5rem)', '150px'],
+                'sm': ['calc(33.3% - 0.5rem)', '190px'],
+                'md': ['calc(33.3% - 0.5rem)', '220px'],
+                'lg': ['calc(33.3% - 0.5rem)', '280px'],
+                'xl': ['calc(33.3% - 0.5rem)', '420px'],
+                'minimum': ['600px', '150px'],
+                'maximum': ['680px', '420px'],
+            },
             'media': {
-                'type': 'video',
-                'source': '/videos/weathering_with_you.mp4',
-                'source_type': 'video/mp4'
-            }
+                'type': 'image',
+                //'source': '/images/deco/14669594_5514924.jpg'
+                // 'type': 'video',
+                // 'source': '/videos/weathering_with_you.mp4',
+            },
+            'children': [
+                {
+                    'image': '/images/product/10/h732.png',
+                    'title': 'ROG Astral GeForce RTX™ 5090 32GB GDDR7',
+                    'title_icon': 'bi:gpu-card',
+                    'title_size': 'lg',
+                    'description_size': 'sm',
+                    'link': '/',
+                    'glint': true,
+                    'glint_color': '#787772',
+                    'glint_orientation': 'landscape',
+                    'frame_border': '#e8b156',//#92a7c0
+                    'content_opaque': true,
+                    'content_background': '#ffffff',
+                    'content_direction': 'ltr',
+                    'head_percentage': {
+                        'xs': 30,
+                        'sm': 35,
+                        'md': 40,
+                        'lg': 50,
+                        'xl': 60,
+                    },
+                    'body_percentage': {
+                        'xs': 70,
+                        'sm': 65,
+                        'md': 60,
+                        'lg': 50,
+                        'xl': 40,
+                    },
+                    'top_right_corner': 25,
+                    'bottom_left_corner': 45,
+                    'header_fade': true,
+                    'header_padding': `0px`,
+                    'header_fade_color': 'rgba(145,155,141,0.1)',
+                    'header_background': '',
+                    //'body_background': '/images/deco/ROG-Prism_Wallpaper_FHD.jpg',
+                    'body_background_opacity': 0.1,
+                    'add_ons': {
+                        'height': '30px',
+                        'value': [
+                            {
+                                'image': '/images/product/10/add-ons-001.png',
+                                'alt': '1 month free adobe cloud'
+                            },
+                            {
+                                'image': '/images/product/10/add-ons-002.png',
+                                'alt': 'Windows 11 ready'
+                            },
+                        ]
+                    },
+                    'bullets': {
+                        'value': [
+                            "ROG Astral GeForce RTX™ 5090 32GB GDDR7 - the first ROG quad-fan graphics card delivering unprecedented airflow and air pressure for optimal cooling performance",
+                        ]
+                    }
+                },
+                {
+                    'image': '/images/product/11/h732.png',
+                    'title': 'ROG Astral GeForce RTX™ 5080 16GB GDDR7',
+                    'title_icon': 'bi:gpu-card',
+                    'title_size': 'lg',
+                    'description_size': 'sm',
+                    'link': '/',
+                    'glint': true,
+                    'glint_color': '#787772',
+                    'glint_orientation': 'landscape',
+                    'frame_border': '#e8b156',//#92a7c0
+                    'content_opaque': true,
+                    'content_background': '#ffffff',
+                    'content_direction': 'ltr',
+                    'head_percentage': {
+                        'xs': 30,
+                        'sm': 35,
+                        'md': 40,
+                        'lg': 50,
+                        'xl': 60,
+                    },
+                    'body_percentage': {
+                        'xs': 70,
+                        'sm': 65,
+                        'md': 60,
+                        'lg': 50,
+                        'xl': 40,
+                    },
+                    'top_right_corner': 25,
+                    'bottom_left_corner': 45,
+                    'header_fade': true,
+                    'header_padding': `0px`,
+                    'header_fade_color': 'rgba(145,155,141,0.1)',
+                    'header_background': '',
+                    //'body_background': '/images/deco/ROG-Prism_Wallpaper_FHD.jpg',
+                    'body_background_opacity': 0.1,
+                    'add_ons': {
+                        'height': '30px',
+                        'value': [
+                            {
+                                'image': '/images/product/11/add-ons-001.png',
+                                'alt': '1 month free adobe cloud'
+                            },
+                            {
+                                'image': '/images/product/11/add-ons-002.png',
+                                'alt': 'Windows 11 ready'
+                            },
+                        ]
+                    },
+                    'bullets': {
+                        'value': [
+                            "ROG Astral GeForce RTX™ 5080 16GB GDDR7 - the first ROG quad-fan graphics card delivering unprecedented airflow and air pressure for optimal cooling performance",
+                        ]
+                    }
+                },
+
+            ]
         },
         {
             'id': 'feature_3',
             'type': 'full',
-            // 'proximity': '60',
-            'title': 'FULL 3',
-            'bg': 'lightgreen',
+            'theme': 'light',
+            'proximity': 50,
+            'title': 'ROG Strix GeForce RTX™',
+            'debug': {
+                'bg': 'rgba(220,220,107,0.2)',
+            },
+            'background': '#ffffff',
+            'banner':{
+                'enabled':false,
+                'min_height':420,
+                'type': 'image',
+                'source_set': {
+                    'mobile' : '/images/deco/ROG-Prism_Wallpaper_FHD.jpg',
+                    'tablet' : '/images/deco/ROG-Prism_Wallpaper_FHD.jpg',
+                    'desktop' : '/images/deco/ROG-Prism_Wallpaper_FHD.jpg',
+                }
+            },
+            'card_dimension': {
+                'xs': ['calc(33.3% - 0.5rem)', '150px'],
+                'sm': ['calc(33.3% - 0.5rem)', '190px'],
+                'md': ['calc(33.3% - 0.5rem)', '220px'],
+                'lg': ['calc(33.3% - 0.5rem)', '280px'],
+                'xl': ['calc(33.3% - 0.5rem)', '420px'],
+                'minimum': ['600px', '150px'],
+                'maximum': ['680px', '420px'],
+            },
+            'layer': {
+                'type': 'image',
+            },
             'media': {
                 'type': 'image',
-                'source': '/images/carousel/f415740d-5951-4b5d-af98-1404e9c65df5.jpg'
-            }
+                //'source': '/images/deco/14669594_5514924.jpg'
+            },
+            'children': [
+                {
+                    'image': '/images/product/09/h732.png',
+                    'title': 'ROG Strix GeForce RTX™ 5070 Ti 16GB GDDR7',
+                    'title_icon': 'bi:gpu-card',
+                    'title_size': 'md',
+                    'description_size': 'sm',
+                    'link': '/',
+                    'glint': true,
+                    'glint_color': '#787772',
+                    'glint_orientation': 'landscape',
+                    'frame_border': 'silver',
+                    'content_opaque': true,
+                    'content_background': '#ffffff',
+                    'content_direction': 'ltr',
+                    'head_percentage': {
+                        'xs': 50,
+                        'sm': 55,
+                        'md': 60,
+                        'lg': 60,
+                        'xl': 70,
+                    },
+                    'body_percentage': {
+                        'xs': 50,
+                        'sm': 45,
+                        'md': 40,
+                        'lg': 40,
+                        'xl': 30,
+                    },
+                    'top_right_corner': 25,
+                    'bottom_left_corner': 45,
+                    'header_fade': true,
+                    'header_padding': `0px`,
+                    'header_fade_color': 'rgba(145,155,141,0.1)',
+                    'header_background': '',
+                    //'body_background': '/images/deco/bg-kv.png',
+                    'body_background_opacity': 0.1,
+                    'add_ons': {
+                        'height': '30px',
+                        'value': [
+                            {
+                                'image': '/images/product/09/add-ons-001.png',
+                                'alt': '1 month free adobe cloud'
+                            },
+                            {
+                                'image': '/images/product/09/add-ons-002.png',
+                                'alt': 'Windows 11 ready'
+                            },
+                        ]
+                    },
+                    'bullets': {
+                        'value': [
+                            "The ROG Strix GeForce RTX™ 5070 Ti 16GB GDDR7 with advanced cooling system provides you premium power delivery.",
+                        ]
+                    }
+                },
+                {
+                    'image': '/images/product/02/h732.png',
+                    'title': 'ROG Strix GeForce RTX™ 4090 24GB GDDR6X OC EVA-02 Edition',
+                    'title_icon': 'bi:gpu-card',
+                    'title_size': 'md',
+                    'description_size': 'sm',
+                    'link': '/',
+                    'glint': true,
+                    'glint_color': '#787772',
+                    'glint_orientation': 'landscape',
+                    'frame_border': 'silver',
+                    'content_opaque': true,
+                    'content_background': '#ffffff',
+                    'content_direction': 'ltr',
+                    'head_percentage': {
+                        'xs': 30,
+                        'sm': 35,
+                        'md': 40,
+                        'lg': 50,
+                        'xl': 60,
+                    },
+                    'body_percentage': {
+                        'xs': 70,
+                        'sm': 65,
+                        'md': 60,
+                        'lg': 50,
+                        'xl': 40,
+                    },
+                    'top_right_corner': 25,
+                    'bottom_left_corner': 45,
+                    'header_fade': true,
+                    'header_padding': `0px`,
+                    'header_fade_color': 'rgba(145,155,141,0.1)',
+                    'header_background': '',
+                    //'body_background': '/images/deco/bg-kv.png',
+                    'body_background_opacity': 0.1,
+                    'add_ons': {
+                        'height': '30px',
+                        'value': [
+                            {
+                                'image': '/images/product/04/add-ons-001.png',
+                                'alt': '1 month free adobe cloud'
+                            },
+                        ]
+                    },
+                    'bullets': {
+                        'value': [
+                            "ROG Strix GeForce RTX™ 4090 24GB GDDR6X OC EVA-02 Edition with DLSS 3 and chart-topping thermal performance.",
+                            "4-Year Premium Warranty",
+                        ]
+                    }
+                },
+                {
+                    'image': '/images/product/04/h732.png',
+                    'title': 'ROG Strix GeForce RTX™ 4080 16GB GDDR6X White OC Edition',
+                    'title_icon': 'bi:gpu-card',
+                    'title_size': 'md',
+                    'description_size': 'sm',
+                    'link': '/',
+                    'glint': true,
+                    'glint_color': '#787772',
+                    'glint_orientation': 'landscape',
+                    'frame_border': 'silver',
+                    'content_opaque': true,
+                    'content_background': '#ffffff',
+                    'content_direction': 'ltr',
+                    'head_percentage': {
+                        'xs': 30,
+                        'sm': 35,
+                        'md': 40,
+                        'lg': 50,
+                        'xl': 60,
+                    },
+                    'body_percentage': {
+                        'xs': 70,
+                        'sm': 65,
+                        'md': 60,
+                        'lg': 50,
+                        'xl': 40,
+                    },
+                    'top_right_corner': 25,
+                    'bottom_left_corner': 45,
+                    'header_fade': true,
+                    'header_padding': `0px`,
+                    'header_fade_color': 'rgba(145,155,141,0.1)',
+                    'header_background': '',
+                    //'body_background': '/images/deco/bg-kv.png',
+                    'body_background_opacity': 0.1,
+                    'add_ons': {
+                        'height': '30px',
+                        'value': [
+                            {
+                                'image': '/images/product/04/add-ons-001.png',
+                                'alt': '1 month free adobe cloud'
+                            },
+                        ]
+                    },
+                    'bullets': {
+                        'value': [
+                            "ROG Strix GeForce RTX™ 4080 16GB GDDR6X White OC Edition with DLSS 3 and chart-topping thermal performance.",
+                            "4-Year Premium Warranty",
+                        ]
+                    }
+                },
+                {
+                    'image': '/images/product/03/h732.png',
+                    'title': 'ROG Strix GeForce RTX™ 3080 OC Edition 12GB',
+                    'title_icon': 'bi:gpu-card',
+                    'title_size': 'md',
+                    'description_size': 'sm',
+                    'link': '/',
+                    'glint': true,
+                    'glint_color': '#787772',
+                    'glint_orientation': 'landscape',
+                    'frame_border': 'silver',
+                    'content_opaque': true,
+                    'content_background': '#ffffff',
+                    'content_direction': 'ltr',
+                    'head_percentage': {
+                        'xs': 30,
+                        'sm': 35,
+                        'md': 40,
+                        'lg': 50,
+                        'xl': 60,
+                    },
+                    'body_percentage': {
+                        'xs': 70,
+                        'sm': 65,
+                        'md': 60,
+                        'lg': 50,
+                        'xl': 40,
+                    },
+                    'top_right_corner': 25,
+                    'bottom_left_corner': 45,
+                    'header_fade': true,
+                    'header_padding': `0px`,
+                    'header_fade_color': 'rgba(145,155,141,0.1)',
+                    'header_background': '',
+                    //'body_background': '/images/deco/bg-kv.png',
+                    'body_background_opacity': 0.1,
+                    'bullets': {
+                        'value': [
+                            "ROG Strix GeForce RTX™ 3080 OC Edition 12GB GDDR6X with LHR offers a buffed-up design that delivers chart-topping thermal performance."
+                        ]
+                    }
+                },
+                {
+                    'image': '/images/product/08/h732.png',
+                    'title': 'ROG-STRIX-GeForce-RTX-3080-GUNDAM-EDITION',
+                    'title_icon': 'bi:gpu-card',
+                    'title_size': 'md',
+                    'description_size': 'sm',
+                    'link': '/',
+                    'glint': true,
+                    'glint_color': '#787772',
+                    'glint_orientation': 'landscape',
+                    'frame_border': 'silver',
+                    'content_opaque': true,
+                    'content_background': '#ffffff',
+                    'content_direction': 'ltr',
+                    'head_percentage': {
+                        'xs': 30,
+                        'sm': 35,
+                        'md': 40,
+                        'lg': 50,
+                        'xl': 60,
+                    },
+                    'body_percentage': {
+                        'xs': 70,
+                        'sm': 65,
+                        'md': 60,
+                        'lg': 50,
+                        'xl': 40,
+                    },
+                    'top_right_corner': 25,
+                    'bottom_left_corner': 45,
+                    'header_fade': true,
+                    'header_padding': `0px`,
+                    'header_fade_color': 'rgba(145,155,141,0.1)',
+                    'header_background': '',
+                    'body_background': '/images/deco/bg-kv.png',
+                    'body_background_opacity': 0.1,
+                    'add_ons': {
+                        'height': '30px',
+                        'value': [
+                            {
+                                'image': '/images/product/08/add-ons-001.png',
+                                'alt': '1 month free adobe cloud'
+                            },
+                            {
+                                'image': '/images/product/08/add-ons-002.png',
+                                'alt': 'Windows 11 ready'
+                            },
+                        ]
+                    },
+                    'bullets': {
+                        'value': [
+                            "ROG Strix GeForce RTX™ 3080 GUNDAM EDITION with design influence from the premier GUNDAM mech and chart-topping gaming performance.",
+                            "OC Edition: Boost Clock 1935 MHz (OC Mode)/ 1905 MHz (Gaming Mode)"
+                        ]
+                    }
+                },
+            ]
         },
         {
             'id': 'feature_4',
-            'type': 'row',
-            'proximity': '50',
-            'title': 'ROW 1',
-            'bg': 'yellow',
-            'media': {
-                'type': 'video',
-                'source': '/videos/your_name_4.mp4',
-                'source_type': 'video/mp4'
-            }
-        },
-        {
-            'id': 'feature_5',
-            'type': 'row',
-            'proximity': '50',
-            'title': 'ROW 2',
-            'bg': 'orange',
-            'media': {
+            'type': 'full',
+            'theme': 'light',
+            'proximity': 50,
+            'title': 'ProArt Series',
+            'debug': {
+                'bg': 'rgba(150,198,139,0.2)',
+            },
+            'background': '#ffffff',
+            'banner':{
+                'enabled':true,
+                'min_height':420,
                 'type': 'image',
-                'source': '/images/carousel/719ed6d6-421b-4b73-8cfe-82fb718c37ce.webp'
-            }
-        },
-        {
-            'id': 'feature_6',
-            'type': 'row',
-            'proximity': '50',
-            'title': 'ROW 3',
-            'bg': 'indigo',
-            'media': {
+                'source_set': {
+                    'mobile' : '/images/spotlight/pro-art-4080.png',
+                    'tablet' : '/images/spotlight/pro-art-4080.png',
+                    'desktop' : '/images/spotlight/pro-art-4080.png',
+                }
+            },
+            'card_dimension': {
+                'xs': ['calc(33.3% - 0.5rem)', '150px'],
+                'sm': ['calc(33.3% - 0.5rem)', '190px'],
+                'md': ['calc(33.3% - 0.5rem)', '220px'],
+                'lg': ['calc(33.3% - 0.5rem)', '280px'],
+                'xl': ['calc(33.3% - 0.5rem)', '420px'],
+                'minimum': ['600px', '150px'],
+                'maximum': ['680px', '420px'],
+            },
+            'layer': {
                 'type': 'image',
-                'source': '/images/carousel/c12d1eba-e8c2-4827-a0d2-5298c4b0f421.webp'
-            }
-        },
-        {
-            'id': 'feature_7',
-            'type': 'row',
-            'proximity': '50',
-            'title': 'ROW 4',
-            'bg': 'azure',
+            },
             'media': {
+                //'type': 'video',
+                //'source': '/videos/7020083_Gold_Molecular_3840x2160.mp4',
+                //'source_type': 'video/mp4',
                 'type': 'image',
-                'source': '/images/carousel/d519b14b-0289-43af-ae15-9d7446d4f914.webp'
-            }
+                //'source': '/images/deco/14669594_5514924.jpg'
+            },
+            'children': [
+                {
+                    'image': '/images/product/07/fwebp.webp',
+                    'title': 'ProArt GeForce RTX™ 4080 SUPER 16GB GDDR6X OC Edition',
+                    'title_icon': 'bi:gpu-card',
+                    'title_size': 'md',
+                    'description_size': 'sm',
+                    'link': '/',
+                    'glint': true,
+                    'glint_color': '#787772',
+                    'glint_orientation': 'landscape',
+                    'frame_border': '#cbcbcb',
+                    'content_opaque': true,
+                    'content_background': '#ffffff',
+                    'content_direction': 'ltr',
+                    'head_percentage': {
+                        'xs': 30,
+                        'sm': 35,
+                        'md': 40,
+                        'lg': 50,
+                        'xl': 60,
+                    },
+                    'body_percentage': {
+                        'xs': 70,
+                        'sm': 65,
+                        'md': 60,
+                        'lg': 50,
+                        'xl': 40,
+                    },
+                    'top_right_corner': 25,
+                    'bottom_left_corner': 45,
+                    'header_fade': true,
+                    'header_padding': `10px`,
+                    'header_fade_color': 'rgba(145,155,141,0.1)',
+                    'header_background': null,
+                    'body_background': null,
+                    'add_ons': {
+                        'height': '30px',
+                        'value': [
+                            {
+                                'image': '/images/product/07/add-ons-001.png',
+                                'alt': '3 months free adobe cloud'
+                            },
+                            {
+                                'image': '/images/product/07/add-ons-002.png',
+                                'alt': '1 month free adobe cloud'
+                            },
+                            {
+                                'image': '/images/product/07/add-ons-003.png',
+                                'alt': 'Windows 11 ready'
+                            }
+                        ]
+                    },
+                    'bullets': {
+                        'value': [
+                            "AI Performance: 855 AI TOPS",
+                            "SFF-Ready Enthusiast GeForce Card for small-form-factor builds",
+                        ]
+                    },
+                },
+                {
+                    'image': '/images/product/06/fwebp.webp',
+                    'title': 'ProArt GeForce RTX™ 4070 Ti SUPER 16GB GDDR6X OC Edition',
+                    'title_icon': 'bi:gpu-card',
+                    'title_size': 'md',
+                    'description_size': 'sm',
+                    'link': '/',
+                    'glint': true,
+                    'glint_color': '#787772',
+                    'glint_orientation': 'landscape',
+                    'frame_border': '#cbcbcb',
+                    'content_opaque': true,
+                    'content_background': '#ffffff',
+                    'content_direction': 'ltr',
+                    'head_percentage': {
+                        'xs': 30,
+                        'sm': 35,
+                        'md': 40,
+                        'lg': 50,
+                        'xl': 60,
+                    },
+                    'body_percentage': {
+                        'xs': 70,
+                        'sm': 65,
+                        'md': 60,
+                        'lg': 50,
+                        'xl': 40,
+                    },
+                    'top_right_corner': 25,
+                    'bottom_left_corner': 45,
+                    'header_fade': true,
+                    'header_padding': `10px`,
+                    'header_fade_color': 'rgba(145,155,141,0.1)',
+                    'header_background': null,
+                    'body_background': null,
+                    'add_ons': {
+                        'height': '30px',
+                        'value': [
+                            {
+                                'image': '/images/product/06/add-ons-001.png',
+                                'alt': '3 months free adobe cloud'
+                            },
+                            {
+                                'image': '/images/product/06/add-ons-002.png',
+                                'alt': '1 month free adobe cloud'
+                            },
+                            {
+                                'image': '/images/product/06/add-ons-003.png',
+                                'alt': 'Windows 11 ready'
+                            }
+                        ]
+                    },
+                    'bullets': {
+                        'value': [
+                            "OC mode: 2670 MHz (OC mode)/ 2640 MHz (Default mode)",
+                            "SFF-Ready Enthusiast GeForce Card for small-form-factor builds",
+                        ]
+                    },
+                },
+                {
+                    'image': '/images/product/01/fwebp.webp',
+                    'title': 'ProArt GeForce RTX™ 4070 SUPER 12GB GDDR6X OC Edition',
+                    'title_icon': 'bi:gpu-card',
+                    'title_size': 'md',
+                    'description_size': 'sm',
+                    'link': '/',
+                    'glint': true,
+                    'glint_color': '#787772',
+                    'glint_orientation': 'landscape',
+                    'frame_border': '#cbcbcb',
+                    'content_opaque': true,
+                    'content_background': '#ffffff',
+                    'content_direction': 'ltr',
+                    'head_percentage': {
+                        'xs': 30,
+                        'sm': 35,
+                        'md': 40,
+                        'lg': 50,
+                        'xl': 60,
+                    },
+                    'body_percentage': {
+                        'xs': 70,
+                        'sm': 65,
+                        'md': 60,
+                        'lg': 50,
+                        'xl': 40,
+                    },
+                    'top_right_corner': 25,
+                    'bottom_left_corner': 45,
+                    'header_fade': true,
+                    'header_padding': `10px`,
+                    'header_fade_color': 'rgba(145,155,141,0.1)',
+                    'header_background': null,
+                    'body_background': null,
+                    'add_ons': {
+                        'height': '30px',
+                        'value': [
+                            {
+                                'image': '/images/product/01/add-ons-001.png',
+                                'alt': '3 months free adobe cloud'
+                            },
+                            {
+                                'image': '/images/product/01/add-ons-002.png',
+                                'alt': 'Windows 11 ready'
+                            }
+                        ]
+                    },
+                    'bullets': {
+                        'value': [
+                            "NVIDIA Studio: RTX and AI-accelerated creator apps, exclusive AI software, and Studio Drivers for unmatched creativity and performance",
+                            "SFF-Ready Enthusiast GeForce Card for small-form-factor builds",
+                        ]
+                    },
+                },
+            ]
         },
+        // {
+        //     'id': 'feature_5',
+        //     'type': 'full',
+        //     'theme': 'light',
+        //     'proximity': 63,
+        //     'title': 'MEOW SET',
+        //     'debug': {
+        //         'bg': 'rgba(158,107,81,0.5)',
+        //     },
+        //     'background': '#ffffff',
+        //     'banner':{
+        //         'enabled':false,
+        //         'min_height':380,
+        //         'type': 'image',
+        //         'source': null
+        //     },
+        //     'card_dimension': {
+        //         'xs': ['calc(25% - 0.5rem)', '90px'],
+        //         'sm': ['calc(25% - 0.5rem)', '130px'],
+        //         'md': ['calc(25% - 0.5rem)', '180px'],
+        //         'lg': ['calc(25% - 0.5rem)', '230px'],
+        //         'xl': ['calc(25% - 0.5rem)', '280px'],
+        //         'minimum': ['400px', '90px'],
+        //         'maximum': ['453px', '280px'],
+        //     },
+        //     'media': {
+        //         'type': 'image',
+        //         'source': '/images/carousel/f415740d-5951-4b5d-af98-1404e9c65df5-1920-min-90.webp'
+        //     },
+        //     'children': [
+        //         {
+        //             'image': '/images/product/202306201506003693.webp',
+        //             'title': 'Segotep Memphis-S Meow PC Case',
+        //             'title_icon': 'octicon:circuit-board',
+        //             'title_size': 'md',
+        //             'description_size': 'sm',
+        //             'link': '/',
+        //             'glint': true,
+        //             'glint_color': '#a97147',
+        //             'glint_orientation': 'landscape',
+        //             'frame_border': '#e3b98f',
+        //             'content_opaque': true,
+        //             'content_background': '#ffffff',
+        //             'content_direction': 'ltr',
+        //             'head_percentage': {
+        //                 'xs': 30,
+        //                 'sm': 35,
+        //                 'md': 40,
+        //                 'lg': 50,
+        //                 'xl': 60,
+        //             },
+        //             'body_percentage': {
+        //                 'xs': 70,
+        //                 'sm': 65,
+        //                 'md': 60,
+        //                 'lg': 50,
+        //                 'xl': 40,
+        //             },
+        //             'top_right_corner': 25,
+        //             'bottom_left_corner': 45,
+        //             'header_fade': false,
+        //             'header_padding': `0px`,
+        //             'header_fade_color': 'rgba(5,5,5,0.1)',
+        //             'header_background': null,
+        //             //'body_background': '/images/deco/kv_layout.jpg',
+        //             'body_background_opacity': 0.1,
+        //             'bullets': {
+        //                 'value': [
+        //                     "M-ATX / ITX supported",
+        //                     "Up to three 2.5\" SSDs and one 3.5\" HDD",
+        //                     "Up to 240mm rad. of AIO coolers Supports up to 170mm tall CPU coolers"
+        //                 ]
+        //             },
+        //         },
+        //         {
+        //             'image': '/images/product/c76383ac-e6c0-4725-bec0-b171449c5960.webp',
+        //             'title': 'COLORFIRE B760M-MEOW WIFI D5 ORANGE',
+        //             'title_icon': 'octicon:circuit-board',
+        //             'title_size': 'md',
+        //             'description_size': 'sm',
+        //             'link': '/',
+        //             'glint': true,
+        //             'glint_color': '#a97147',
+        //             'glint_orientation': 'landscape',
+        //             'frame_border': '#e3b98f',
+        //             'content_opaque': true,
+        //             'content_background': '#ffffff',
+        //             'content_direction': 'ltr',
+        //             'head_percentage': {
+        //                 'xs': 30,
+        //                 'sm': 35,
+        //                 'md': 40,
+        //                 'lg': 50,
+        //                 'xl': 60,
+        //             },
+        //             'body_percentage': {
+        //                 'xs': 70,
+        //                 'sm': 65,
+        //                 'md': 60,
+        //                 'lg': 50,
+        //                 'xl': 40,
+        //             },
+        //             'top_right_corner': 25,
+        //             'bottom_left_corner': 45,
+        //             'header_fade': false,
+        //             'header_padding': `0px`,
+        //             'header_fade_color': 'rgba(5,5,5,0.1)',
+        //             'header_background': null,
+        //             //'body_background': '/images/deco/kv_layout.jpg',
+        //             'body_background_opacity': 0.1,
+        //             'bullets': {
+        //                 'value': [
+        //                     "Support the 14th/13th and 12th gen. Intel adapting to the LGA 1700",
+        //                     "Support dual channel DDR5-7200 (OC) MHz memory",
+        //                     "Provide 3 PCIe 4.0 x4 M.2 SSD slots",
+        //                     //"One USB 3.2 Gen 2 Type-C and two USB 3.2 Gen 1 Type-A high-speed rear interfaces"
+        //                 ]
+        //             },
+        //         },
+        //         {
+        //             'image': '/images/product/fc44dd4e-40ed-49df-bd9e-bc210dfbaf7c.webp',
+        //             'title': 'COLORFIRE GeForce RTX 4060 MEOW-ORG 8GB-V',
+        //             'title_icon': 'bi:gpu-card',
+        //             'title_size': 'md',
+        //             'description_size': 'sm',
+        //             'link': '/',
+        //             'glint': true,
+        //             'glint_color': '#a97147',
+        //             'glint_orientation': 'landscape',
+        //             'frame_border': '#e3b98f',
+        //             'content_opaque': true,
+        //             'content_background': '#ffffff',
+        //             'content_direction': 'ltr',
+        //             'head_percentage': {
+        //                 'xs': 30,
+        //                 'sm': 35,
+        //                 'md': 40,
+        //                 'lg': 50,
+        //                 'xl': 60,
+        //             },
+        //             'body_percentage': {
+        //                 'xs': 70,
+        //                 'sm': 65,
+        //                 'md': 60,
+        //                 'lg': 50,
+        //                 'xl': 40,
+        //             },
+        //             'top_right_corner': 25,
+        //             'bottom_left_corner': 45,
+        //             'header_fade': false,
+        //             'header_padding': `5px`,
+        //             'header_fade_color': 'rgba(5,5,5,0.1)',
+        //             //'body_background': '/images/deco/kv_layout.jpg',
+        //             'body_background_opacity': 0.1,
+        //             'bullets': {
+        //                 'value': [
+        //                     "Efficient and durable heat dissipation.",
+        //                     "Adjustable lighting effects via iGame Center."
+        //                 ]
+        //             },
+        //         },
+        //     ]
+        // },
+        
+        // {
+        //     'id': 'feature_4',
+        //     'type': 'row',
+        //     'proximity': '50',
+        //     'title': 'ROW 1',
+        //     'bg': 'yellow',
+        //     'media': {
+        //         'type': 'image',
+        //         'source': '/images/cod-bg-hero.png'
+        //     }
+        // },
+        // {
+        //     'id': 'feature_5',
+        //     'type': 'row',
+        //     'proximity': '50',
+        //     'title': 'ROW 2',
+        //     'bg': 'orange',
+        //     'media': {
+        //         'type': 'image',
+        //         'source': '/images/cod-bg-hero.png'
+        //     }
+        // },
+        // {
+        //     'id': 'feature_6',
+        //     'type': 'row',
+        //     'proximity': '50',
+        //     'title': 'ROW 3',
+        //     'bg': 'indigo',
+        //     'media': {
+        //         'type': 'image',
+        //         'source': '/images/cod-bg-hero.png'
+        //     }
+        // },
+        // {
+        //     'id': 'feature_7',
+        //     'type': 'row',
+        //     'proximity': '50',
+        //     'title': 'ROW 4',
+        //     'bg': 'azure',
+        //     'media': {
+        //         'type': 'image',
+        //         'source': '/images/cod-bg-hero.png'
+        //     }
+        // },
     ]
 };
