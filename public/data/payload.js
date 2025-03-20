@@ -268,7 +268,7 @@ export default {
                     }
                 }
             },
-            selected: [1, 2]
+            selected: [1,2]
         },
         'singleSelectPrototype': {
             search: '',
