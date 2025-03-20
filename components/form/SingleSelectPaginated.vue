@@ -388,7 +388,7 @@ const selectionSummary = computed(() => {
         return 'Loading...';
     }
 
-    if(props.payload.selected == null){
+    if(props.payload.selected == null || _isEmpty(selected.value)){
         return "None Selected";
     } else {
         return selected.value.text;
@@ -631,7 +631,7 @@ const selectedExecute = async () => {
         onSuccessResponse: (request, response, options) => {
             let data = _get(response, '_data.values.selection.data', {});
 
-            selected.value = Array.isArray(data) ? data[0] : {};
+            selected.value = _isEmpty(data[0]) ? {} : data[0];
         }
     });
 }

@@ -451,12 +451,16 @@ const selectionSummary = computed(() => {
         return 'Loading...';
     }
 
-    if(props.payload.selected.length === 0){
-        return "None Selected";
-    } else if(props.payload.selected.length < 5) {
-        return selected.value.map(item => item.text).join(", ");
-    } else if(props.payload.selected.length > 4) {
-        return `${props.payload.selected.length} Selected`;
+    const filteredSelected = selected.value
+        .filter(item => item.text)
+        .map(item => item.text);
+
+    if (filteredSelected.length === 0){
+        return "None selected";
+    } else if (filteredSelected.length < 5){
+        return filteredSelected.join(', ');
+    } else {
+        return `${filteredSelected.length} Selected`;
     }
 });
 
