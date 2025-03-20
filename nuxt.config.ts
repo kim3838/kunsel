@@ -51,7 +51,7 @@ export default defineNuxtConfig({
                 class: ''
             },
             "bodyAttrs": {
-                class: 'tw-font-standard'
+                class: 'font-standard'
             }
         },
         layoutTransition: false,
