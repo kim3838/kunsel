@@ -31,7 +31,7 @@ export const useLayout = () => {
                     title: 'CSR Post',
                     icon: 'material-symbols:request-quote-sharp',
                     callback: async () => {
-                        await laraFetch("/api/test-post", {
+                        await laraFetch("/api/utility/post", {
                             method: 'POST',
                         }, {
                             onResponse: (request, response, options) => {
