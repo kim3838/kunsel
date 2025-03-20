@@ -30,7 +30,7 @@ async function oFetchGet(){
     ofetchData.value = '';
     ofetchPending.value = true;
 
-    await laraFetch("/api/hit", {
+    await laraFetch("/api/utility/debug", {
         method: 'GET',
         params: {
             'multiLineStringValue': multiLineStringValue.value
