@@ -268,7 +268,7 @@ export default {
                     }
                 }
             },
-            selected: [400, 476]
+            selected: [1, 2]
         },
         'singleSelectPrototype': {
             search: '',
@@ -298,7 +298,7 @@ export default {
                     }
                 }
             },
-            selected: 400,
+            selected: 1,
         },
         'categorySelection': [
             {text : 'Charms', value: true},
