@@ -26,6 +26,9 @@ export const useLayout = () => {
                         logout();
                     },
                 },
+            ]);
+
+            let debugRequests = [
                 {
                     type: 'action',
                     title: 'CSR Post',
@@ -68,7 +71,7 @@ export const useLayout = () => {
                         });
                     },
                 },
-            ]);
+            ];
         } else {
             links.unshift({
                 type: 'link',
@@ -85,33 +88,9 @@ export const useLayout = () => {
         links = links.concat([
             {
                 type: 'link',
-                title: 'Featured',
+                title: 'Dashboard',
                 to: '/',
                 route: 'index'
-            },
-            {
-                type: 'link',
-                title: 'Lab',
-                to: '/lab',
-                route: 'lab'
-            },
-            {
-                type: 'link',
-                title: 'Prototype',
-                to: '/prototype',
-                route: 'prototype'
-            },
-            {
-                type: 'link',
-                title: 'Example',
-                to: '/example',
-                route: 'example'
-            },
-            {
-                type: 'link',
-                title: 'Prototypes',
-                to: '/prototypes',
-                route: 'prototypes'
             },
             {
                 type: 'drop',
@@ -139,12 +118,7 @@ export const useLayout = () => {
                         type: 'link',
                         title: 'Support',
                         icon: 'ic:baseline-arrow-right',
-                    },
-                    {
-                        type: 'link',
-                        title: 'Live Chat',
-                        icon: 'ic:baseline-arrow-right',
-                    },
+                    }
                 ]
             }
         ]);
