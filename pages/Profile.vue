@@ -105,9 +105,9 @@
                         <div class="mt-4 pt-4">
                             <p v-if="twoFactorEnabled && twoFactorConfirmed" class="font-medium text-lg font-header">You have enabled two factor authentication.</p>
                             <p v-else-if="twoFactorEnabled && !twoFactorConfirmed" class="font-medium text-lg font-header">Finish enabling two factor authentication.</p>
-                            <p v-else class="font-medium text-lg">You have not enabled two factor authentication. </p>
+                            <p v-else class="font-medium text-lg font-header">You have not enabled two factor authentication. </p>
 
-                            <p class="text-base">When two factor authentication is enabled, you will be prompted for a secure, random token during authentication. You may retrieve this token from <b>your phone's Google Authenticator application</b>.</p>
+                            <p class="mt-4 text-base">When two factor authentication is enabled, you will be prompted for a secure, random token during authentication. You may retrieve this token from <b>your phone's Google Authenticator application</b>.</p>
 
                             <div v-if="twoFactorEnabled">
                                 <p v-if="twoFactorConfirming" class="mt-4 text-sm">
