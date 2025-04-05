@@ -4,12 +4,14 @@
             <div class="mx-auto space-y-2">
 
                 <ClientOnly>
-                    <div class="text-xs font-mono">
+                    <div class="text-xs font-mono flex justify-center">
                         {{`SCREEN DIMENSION: ${screenWidth} x ${screenHeight}`}}
                     </div>
                 </ClientOnly>
 
-                <HeroLink :label="'Shop now'"></HeroLink>
+                <div class="flex justify-center">
+                    <HeroLink><span class="font-appearance">Shop now</span></HeroLink>
+                </div>
 
                 <div v-if="false" class="flex mb-4">
                     <SampleEmitter

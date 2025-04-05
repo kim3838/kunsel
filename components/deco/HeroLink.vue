@@ -1,24 +1,18 @@
 <template>
     <a class="link" href="">
         <span>
-            {{label}}
+            <slot></slot>
         </span>
     </a>
 </template>
 
 <script setup lang="ts">
-const props = defineProps({
-    label: {
-        type: String,
-        default: null,
-    },
-});
+
 </script>
 
 <style scoped>
 .link{
     display: block;
-    width: 200px;
     padding: 12px 30px;
     text-decoration: none;
     border: 2px solid;
