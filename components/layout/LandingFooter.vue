@@ -1,35 +1,8 @@
 <template>
     <footer>
-        <div class="font-data mx-auto max-w-screen-xl px-4 pb-6 pt-16 sm:px-6 lg:px-8">
+        <div class="mx-auto max-w-screen-2xl px-4 pb-6 pt-16 sm:px-6 lg:px-8">
             <div class="grid grid-cols-1 lg:grid-cols-4">
-                <div>
-                    <div class="flex justify-center lg:justify-start">
-                        <GlobalFoundries class="lg:w-max"/>
-                    </div>
-
-                    <p v-if="false" class="mt-5 text-center leading-relaxed sm:max-w-md sm:text-left">
-                        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Incidunt
-                        consequuntur amet culpa cum itaque neque.
-                    </p>
-
-                    <ul v-if="false" class="mt-2 flex justify-center gap-6 sm:justify-start md:gap-8">
-                        <li>
-                            <a href="/" rel="noreferrer" target="_blank">
-                                <ClientOnly><Icon class="h-5 w-5" name="mdi:facebook"></Icon></ClientOnly>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="/" rel="noreferrer" target="_blank">
-                                <ClientOnly><Icon class="h-5 w-5" name="mdi:instagram"></Icon></ClientOnly>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="/" rel="noreferrer" target="_blank">
-                                <ClientOnly><Icon class="h-5 w-5" name="mdi:youtube"></Icon></ClientOnly>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
+                <div></div>
 
                 <div class="grid grid-cols-1 gap-2 mt-8 lg:mt-0 sm:grid-cols-2 md:grid-cols-5 lg:col-span-3">
                     <div class="text-center sm:text-left lg:pl-28 md:col-span-2">
@@ -161,7 +134,7 @@ const {
     neutral: neutralColor
 } = storeToRefs($themeStore);
 
-const headerClass = ref('font-stiff');
+const headerClass = ref('font-appearance text-lg');
 </script>
 
 <style scoped>

@@ -2,7 +2,7 @@
     <nav
         ref="landingNavigation"
         class="primary-navigation-parent z-40 fixed">
-        <div class="w-full font-stiff flex justify-center">
+        <div class="w-full font-appearance flex justify-center">
             <div class="max-w-screen-2xl w-full flex justify-start lg:justify-around h-10 lg:h-16">
                 <div class="-my-px flex items-center">
                     <div class="w-max h-full flex items-center">
