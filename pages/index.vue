@@ -2,7 +2,11 @@
     <div>
         <LandingWrapper>
             <div class="mx-auto pt-4 max-w-screen-2xl">
-                Dashboard
+
+                <div class="my-20 flex justify-center">
+                    <HeroLink><span class="font-appearance">Dashboard coming soon...</span></HeroLink>
+                </div>
+
             </div>
         </LandingWrapper>
     </div>
