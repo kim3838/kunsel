@@ -1420,7 +1420,7 @@ async function oFetchPost(){
     ofetchData.value = '';
     ofetchPending.value = true;
 
-    await laraFetch("/api/test-post", {
+    await laraFetch("/api/utility/post", {
         method: 'POST',
     }, {
         onRequest: () => {
@@ -1447,7 +1447,7 @@ async function oFetchNoPromptPost(){
     ofetchNoPromptData.value = '';
     ofetchNoPromptPending.value = true;
 
-    await laraFetch("/api/test-post", {
+    await laraFetch("/api/utility/post", {
         method: 'POST',
     }, {
         onRequestError: () => {
