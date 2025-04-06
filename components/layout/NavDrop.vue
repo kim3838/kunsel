@@ -11,7 +11,7 @@
         <div
             v-if="activeComputed"
             :style="navDropOptionsStyleComputed"
-            :class="['nav-drop-options-parent', parent ? 'drop-shadow-lg' : 'drop-shadow-none']">
+            :class="['nav-drop-options-parent', parent ? 'drop-shadow-sm' : 'drop-shadow-none']">
             <div v-for="dropOption in dropOptions" :key="dropOption.title" :style="{'text-shadow': navigationTextShadow}" class="nav-drop-link cursor-pointer">
 
                 <NuxtLink
