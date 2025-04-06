@@ -123,14 +123,6 @@ export const useLayout = () => {
             }
         ]);
 
-        if(!isAuthenticated.value){
-            links = links.concat([{
-                type: 'drop',
-                title: 'Account',
-                options: navigationAccountLinks.value
-            },]);
-        }
-
         return links;
     })
 

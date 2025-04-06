@@ -62,6 +62,13 @@
                         :title="user?.name"
                         :drop-options="navigationAccountLinks"
                     />
+                    <NavDrop
+                        v-else
+                        class="h-full"
+                        :size="navigationHeaderSize"
+                        :title="'Account'"
+                        :drop-options="navigationAccountLinks"
+                    />
                 </div>
             </div>
         </div>
