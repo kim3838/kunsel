@@ -13,6 +13,7 @@
 </template>
 
 <script setup lang="ts">
+definePageMeta({middleware: 'auth'});
 useLayout().setNavigationMode('solid');
 </script>
 
