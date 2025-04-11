@@ -22,6 +22,16 @@ export const useAuth = () => {
     const isAuthenticated = computed(() => !!user.value);
     const authPending = ref(false);
 
+    const ssrFetchUser = async () => {
+        const {baseURL} = useRuntimeConfig().public;
+        const {data: userData} = await useFetch(baseURL + "/api/user", {
+            credentials: 'include',
+            headers: laraHeaders()
+        });
+
+        user.value = _get(userData.value, 'values', undefined);
+    }
+
     const fetchUser = async() => {
         await laraFetch("/api/user", {
             method: 'GET',
@@ -141,6 +151,7 @@ export const useAuth = () => {
         user,
         isAuthenticated,
         fetchUser,
+        ssrFetchUser,
         login,
         twoFactorLogin,
         authPending,
