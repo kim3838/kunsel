@@ -95,7 +95,7 @@ if(clientReadyState.value){
 
 //On page load, focus on identifier input
 watch(clientReadyState, async (clientReady) => {
-    console.log({'Login.vue Watch clientReadyState':clientReady});
+
     if(clientReady){
         await nextTick(() => {
             if(identifierInput.value){
