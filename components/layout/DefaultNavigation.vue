@@ -33,7 +33,7 @@
             </div>
         </div>
         <div class="w-full font-data flex justify-center neutral-border-top">
-            <div class="max-w-screen-2xl w-full flex justify-start lg:justify-around h-10">
+            <div class="max-w-screen-2xl w-full flex justify-start lg:justify-around h-8">
                 <div class="flex items-center">
                     <NavDrop
                         class="xl:hidden  h-full"
@@ -79,6 +79,19 @@
                     </div>
                 </div>
                 <div class="flex items-center">
+                    <SingleSelect
+                        v-if="isAuthenticated"
+                        drop-shadow
+                        :searchable="false"
+                        :always-active="false"
+                        value-persist
+                        disable-header-border
+                        navigation-mode
+                        :size="'md'"
+                        :label="'Select Associated Company'"
+                        :options="$authStore.associatedCompanies.singleSelectPayload"
+                        @valueChange = "updateStoredAssociatedCompany"
+                    />
                     <component
                         :is="navDrop"
                         class="h-full"
@@ -103,6 +116,8 @@
 
 <script setup lang="ts">
 import {storeToRefs} from 'pinia';
+
+const {updateStoredAssociatedCompany} = useAssociation();
 const clientReadyState = useClientReadyState();
 const {$isRouteActive} = useNuxtApp();
 const {isAuthenticated, user} = useAuth();
