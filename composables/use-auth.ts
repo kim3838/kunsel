@@ -22,6 +22,7 @@ export const useAuth = () => {
     const user = userState();
     const isAuthenticated = computed(() => !!user.value);
     const authPending = ref(false);
+    const {fetchAssociatedCompanies, storeAssociatedCompanies} = useAssociation();
 
     const ssrFetchUser = async () => {
         await laraSsrUseFetch("/api/user", {
@@ -80,6 +81,8 @@ export const useAuth = () => {
                     });
                 } else {
                     await fetchUser();
+                    await fetchAssociatedCompanies();
+                    await storeAssociatedCompanies();
                     await navigateTo({
                         path: '/',
                         replace: true
