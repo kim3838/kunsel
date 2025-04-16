@@ -1,6 +1,7 @@
 
 export const laraInterceptor = () => {
-    const {$coreStore, $promptStore} = useNuxtApp();
+    const coreStore = useCoreStore();
+    const promptStore = usePromptStore();
     const user = userState();
 
     async function onRequest(callbacks, promptErrorResponse = false, interceptorParameters = {}){
@@ -9,7 +10,7 @@ export const laraInterceptor = () => {
             await callbacks.onRequest();
         }
 
-        $coreStore.resetServiceError();
+        coreStore.resetServiceError();
     }
 
     async function onRequestError(callbacks, promptErrorResponse = false, interceptorParameters = {}){
@@ -22,7 +23,7 @@ export const laraInterceptor = () => {
             );
         }
 
-        $coreStore.setServiceError({
+        coreStore.setServiceError({
             prompt: promptErrorResponse,
             icon: 'ic:sharp-error-outline',
             title: 'Request failed',
@@ -56,7 +57,7 @@ export const laraInterceptor = () => {
             switch(responseCode.toString()) {
                 case '401':
                     if(user.value){
-                        $promptStore.setPrompt({
+                        promptStore.setPrompt({
                             icon: 'mdi:connection',
                             title: _get(response, '_data.message', ''),
                             message: 'Session have been ended, login again to restore session.',
@@ -69,7 +70,7 @@ export const laraInterceptor = () => {
                             }
                         });
                     } else {
-                        $coreStore.setServiceError({
+                        coreStore.setServiceError({
                             prompt: promptErrorResponse,
                             icon: 'ic:sharp-error-outline',
                             title: 'Request failed',
@@ -79,7 +80,7 @@ export const laraInterceptor = () => {
                     break;
                 case '406':
 
-                    $coreStore.setServiceError({
+                    coreStore.setServiceError({
                         prompt: promptErrorResponse,
                         icon: 'ic:sharp-error-outline',
                         title: 'Request failed',
@@ -93,7 +94,7 @@ export const laraInterceptor = () => {
 
                     break;
                 default:
-                    $coreStore.setServiceError({
+                    coreStore.setServiceError({
                         prompt: promptErrorResponse,
                         icon: 'ic:sharp-error-outline',
                         title: 'Request failed',
@@ -103,7 +104,7 @@ export const laraInterceptor = () => {
         }
 
         if(responseCode >= 500 && responseCode < 600){
-            $coreStore.setServiceError({
+            coreStore.setServiceError({
                 prompt: promptErrorResponse,
                 icon: 'ic:sharp-error-outline',
                 title: 'Something Went Wrong',
