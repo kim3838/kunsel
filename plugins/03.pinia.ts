@@ -10,6 +10,7 @@ export default defineNuxtPlugin(nuxtApp => {
             promptStore: usePromptStore($pinia),
             formStore: useFormStore($pinia),
             themeStore: useThemeStore($pinia),
+            authStore: useAuthStore($pinia),
         }
     }
 })
