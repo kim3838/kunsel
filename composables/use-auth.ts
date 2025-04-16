@@ -3,6 +3,7 @@ export type User = {
     name: string | null,
     email: string | null,
     email_verified_at: string | null,
+    type: number | null,
     two_factor_enabled: boolean | null,
     two_factor_confirmed: boolean | null,
 };
@@ -37,14 +38,7 @@ export const useAuth = () => {
             method: 'GET',
         }, {
             onSuccessResponse: async (request, response, options) => {
-                user.value = {
-                    id: _get(response, '_data.values.id', null),
-                    name: _get(response, '_data.values.name', null),
-                    email: _get(response, '_data.values.email', null),
-                    email_verified_at: _get(response, '_data.values.email_verified_at', null),
-                    two_factor_enabled: _get(response, '_data.values.two_factor_enabled', null),
-                    two_factor_confirmed: _get(response, '_data.values.two_factor_confirmed', null),
-                };
+                user.value = _get(response._data, 'values', undefined);
             }
         }, false);
     }
