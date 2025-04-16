@@ -1,7 +1,7 @@
 import {storeToRefs} from "pinia";
 
 export const useLayout = () => {
-    const {isAuthenticated, logout} = useAuth();
+    const {isAuthenticated, destroyAuthentication} = useAuth();
     const {screenWidthBreakpoint, width: screenWidth, height: screenHeight } = useScreen();
     const $themeStore = useThemeStore();
     const {body: bodyColor} = storeToRefs($themeStore);
@@ -23,7 +23,7 @@ export const useLayout = () => {
                     title: 'Logout',
                     icon: 'ic:baseline-arrow-right',
                     callback: () => {
-                        logout();
+                        destroyAuthentication();
                     },
                 },
             ]);

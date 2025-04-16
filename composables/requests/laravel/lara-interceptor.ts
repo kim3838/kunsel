@@ -63,7 +63,7 @@ export const laraInterceptor = () => {
                             message: 'Session have been ended, login again to restore session.',
                             action: {
                                 callback: () => {
-                                    user.value = undefined;
+                                    useAuth().destroyAuthentication();
                                     navigateTo("/login", {replace: true});
                                 },
                                 label: 'Okay'

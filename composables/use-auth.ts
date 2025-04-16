@@ -128,7 +128,7 @@ export const useAuth = () => {
         });
     }
 
-    async function logout() {
+    async function destroyAuthentication() {
         if (!isAuthenticated.value) return;
 
         const {$coreStore} = useNuxtApp();
@@ -138,10 +138,15 @@ export const useAuth = () => {
             method: 'POST'
         },{
             onSuccessResponse: (request, response, options) => {
-                user.value = undefined;
+                logout();
                 navigateTo("/login", {replace: true});
             }
         });
+    }
+
+    async function logout(){
+        useAuthStore().resetAssociatedCompanies()
+        user.value = undefined;
     }
 
     return {
@@ -152,6 +157,7 @@ export const useAuth = () => {
         login,
         twoFactorLogin,
         authPending,
+        destroyAuthentication,
         logout
     };
 }
