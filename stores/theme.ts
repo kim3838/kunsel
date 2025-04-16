@@ -1,118 +1,120 @@
 import {defineStore} from 'pinia'
 
 export const useThemeStore = defineStore('theme', {
-    state: () => ({
-        appTheme: 'light',
-        hexAlpha: {
-            '10': '19',
-            '20': '33',
-            '30': '4C',
-            '40': '66',
-            '50': '7F',
-            '60': '99',
-            '70': 'B2',
-            '80': 'CC',
-            '90': 'E5',
-            '100': 'FF',
-        },
-        palletes: {
-            light: {
-                'type': 'light',
-                'primary': '#202020',
-                'secondary': '#787878',
-                'accent': '#c9c9c9',
-
-                'lining': '#b4b4b4',
-                'thread': '#c7c7c7',
-
-                'neutral': '#e5e5e5',
-
-                'tint': '#fdfdfd',
-                'body': '#ffffff',
-                'shade': '#f5f5f5',
-
-                'text': '#464646',
-                'text-invert': '#e0e8de',
-                'text-secondary': '#b4b4b4',
+    state: () => {
+        return {
+            appTheme: 'light',
+            hexAlpha: {
+                '10': '19',
+                '20': '33',
+                '30': '4C',
+                '40': '66',
+                '50': '7F',
+                '60': '99',
+                '70': 'B2',
+                '80': 'CC',
+                '90': 'E5',
+                '100': 'FF',
             },
-            dark: {
-                'type': 'dark',
-                'primary': '#e5e5e5',
-                'secondary': '#464646',
-                'accent': '#707070',
+            palletes: {
+                light: {
+                    'type': 'light',
+                    'primary': '#202020',
+                    'secondary': '#787878',
+                    'accent': '#c9c9c9',
 
-                'lining': '#e5e5e5',
-                'thread': '#898989',
+                    'lining': '#b4b4b4',
+                    'thread': '#c7c7c7',
 
-                'neutral': '#656565',
+                    'neutral': '#e5e5e5',
 
-                'tint': '#4f4f4f',
-                'body': '#323232',
-                'shade': '#414141',
+                    'tint': '#fdfdfd',
+                    'body': '#ffffff',
+                    'shade': '#f5f5f5',
 
-                'text': '#e3e3e3',
-                'text-invert': '#464646',
-                'text-secondary': '#7a7a7a',
-            },
-            blue: {
-                'type': 'light',
-                'primary': '#132e60',
-                'secondary': '#263b62',
-                'accent': '#dae3f0',
+                    'text': '#464646',
+                    'text-invert': '#e0e8de',
+                    'text-secondary': '#b4b4b4',
+                },
+                dark: {
+                    'type': 'dark',
+                    'primary': '#e5e5e5',
+                    'secondary': '#464646',
+                    'accent': '#707070',
 
-                'lining': '#90a5cc',
-                'thread': '#c6c9cc',
+                    'lining': '#e5e5e5',
+                    'thread': '#898989',
 
-                'neutral': '#e5e5e5',
+                    'neutral': '#656565',
 
-                'tint': '#fdfdfd',
-                'body': '#ffffff',
-                'shade': '#f5f5f5',
+                    'tint': '#4f4f4f',
+                    'body': '#323232',
+                    'shade': '#414141',
 
-                'text': '#545c72',
-                'text-invert': '#dbe8ee',
-                'text-secondary': '#99aed0',
-            },
-            tulip: {
-                'type': 'light',
-                'primary': '#D45E5E',
-                'secondary': '#D45E5E',
-                'accent': '#f4978e',
+                    'text': '#e3e3e3',
+                    'text-invert': '#464646',
+                    'text-secondary': '#7a7a7a',
+                },
+                blue: {
+                    'type': 'light',
+                    'primary': '#132e60',
+                    'secondary': '#263b62',
+                    'accent': '#dae3f0',
 
-                'lining': '#F08080',
-                'thread': '#F8AD9D',
+                    'lining': '#90a5cc',
+                    'thread': '#c6c9cc',
 
-                'neutral': '#fff8e0',
+                    'neutral': '#e5e5e5',
 
-                'tint': '#ffead7',
-                'body': '#ffeee0',
-                'shade': '#ffdab9',
+                    'tint': '#fdfdfd',
+                    'body': '#ffffff',
+                    'shade': '#f5f5f5',
 
-                'text': '#502e2e',
-                'text-invert': '#ffffff',
-                'text-secondary': '#ab7676',
-            },
-            emerald: {
-                'type': 'dark',
-                'primary': '#d2f5c6',
-                'secondary': '#ffffff',
-                'accent': '#79AC78',
+                    'text': '#545c72',
+                    'text-invert': '#dbe8ee',
+                    'text-secondary': '#99aed0',
+                },
+                tulip: {
+                    'type': 'light',
+                    'primary': '#D45E5E',
+                    'secondary': '#D45E5E',
+                    'accent': '#f4978e',
 
-                'lining': '#d2f5c6',
-                'thread': '#678369',
+                    'lining': '#F08080',
+                    'thread': '#F8AD9D',
 
-                'neutral': '#4d7779',
+                    'neutral': '#fff8e0',
 
-                'tint': '#027177',
-                'body': '#016A70',
-                'shade': '#016A70',
+                    'tint': '#ffead7',
+                    'body': '#ffeee0',
+                    'shade': '#ffdab9',
 
-                'text': '#D0E7D2',
-                'text-invert': '#016A70',
-                'text-secondary': '#678369',
+                    'text': '#502e2e',
+                    'text-invert': '#ffffff',
+                    'text-secondary': '#ab7676',
+                },
+                emerald: {
+                    'type': 'dark',
+                    'primary': '#d2f5c6',
+                    'secondary': '#ffffff',
+                    'accent': '#79AC78',
+
+                    'lining': '#d2f5c6',
+                    'thread': '#678369',
+
+                    'neutral': '#4d7779',
+
+                    'tint': '#027177',
+                    'body': '#016A70',
+                    'shade': '#016A70',
+
+                    'text': '#D0E7D2',
+                    'text-invert': '#016A70',
+                    'text-secondary': '#678369',
+                }
             }
         }
-    }),
+    },
 
     getters: {
         getTheme() {
