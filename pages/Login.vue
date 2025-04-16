@@ -44,7 +44,7 @@
                                         </label>
                                     </div>
 
-                                    <div v-if="$coreStore.service.error.payload && !useNuxtApp().$coreStore.service.error.prompt" class="block text-sm text-red-500">
+                                    <div v-if="$coreStore.service.error.payload && !$coreStore.service.error.prompt" class="block text-sm text-red-500">
                                         <span>{{ $coreStore.service.error.payload.message }}</span>
                                     </div>
 
