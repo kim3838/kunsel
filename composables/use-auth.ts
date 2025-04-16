@@ -23,13 +23,13 @@ export const useAuth = () => {
     const authPending = ref(false);
 
     const ssrFetchUser = async () => {
-        const {baseURL} = useRuntimeConfig().public;
-        const {data: userData} = await useFetch(baseURL + "/api/user", {
-            credentials: 'include',
-            headers: laraHeaders()
+        await laraSsrUseFetch("/api/user", {
+            method: 'GET',
+        }, {
+            onSuccessResponse: async (request, response, options) => {
+                user.value = _get(response._data, 'values', undefined);
+            }
         });
-
-        user.value = _get(userData.value, 'values', undefined);
     }
 
     const fetchUser = async() => {
