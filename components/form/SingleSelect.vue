@@ -67,7 +67,7 @@
             :style="[selectionOffsetComputed, selectionWidthComputed, {'border-radius': '2px'}]"
             ref="selectionOrigin"
             class="z-40 mt-[7px] background"
-            :class="[dropShadow ? 'drop-shadow-2xl' : '', selectionFloat ? 'absolute' : 'relative', borderClass]">
+            :class="[dropShadow ? 'drop-shadow-sm' : '', selectionFloat ? 'absolute' : 'relative', borderClass]">
             <div class="absolute border-solid options-arrow-lining-color" :style="[optionsArrowSlotClass]"></div>
             <div class="absolute border-solid options-arrow-color" :style="[optionsArrowClass]"></div>
             <div class="px-2 pt-2 text-left" :class="[optionsFontClass]">
