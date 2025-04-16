@@ -4,7 +4,7 @@
         tabindex="0"
         :style="{'text-shadow': navigationTextShadow, 'font-family': fontFamily}"
         :class="[classes]"
-        class="nav-drop px-2 py-1 cursor-pointer focus:outline-none focus:ring-transparent focus:ring-1">
+        class="nav-drop h-full px-2 py-1 cursor-pointer focus:outline-none focus:ring-transparent focus:ring-1">
         <Icon v-if="icon" :name="icon" class="mr-1" />
         <span :class="[headerFontClass]">{{title}}</span>
         <Icon :name="navDropIcon"/>
@@ -61,6 +61,7 @@ const {
 const {
     hexAlpha,
     accent: accentColor,
+    lining: liningColor,
     neutral: neutralColor,
     tint: tintColor
 } = storeToRefs($themeStore);
@@ -136,7 +137,7 @@ const navDropOptionsParentBorderColor = computed(()=>{
         return accentColor20.value;
     }
 
-    return neutralColor.value;
+    return liningColor.value;
 });
 
 const activeComputed = ref(false);
