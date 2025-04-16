@@ -50,23 +50,4 @@ export default defineNuxtPlugin(nuxtApp => {
     nuxtApp.provide('isRouteActive', function (routeSlug: string) {
         return [route.path, _toLower(route.name)].indexOf(_toLower(routeSlug)) >= 0;
     });
-
-    /*
-    * App Hooks (runtime)
-    * https://nuxt.com/docs/api/advanced/hooks#app-hooks-runtime
-    */
-    nuxtApp.hook('app:beforeMount', () => {
-        const {$themeStore} = useNuxtApp();
-
-        const {
-            appTheme,
-            body: bodyColor,
-        } = storeToRefs($themeStore);
-
-        document.body.style.backgroundColor = bodyColor.value;
-
-        watch(appTheme, (newTheme) => {
-            document.body.style.backgroundColor = bodyColor.value;
-        });
-    });
 });

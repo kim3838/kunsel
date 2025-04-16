@@ -15,14 +15,21 @@ export default defineNuxtPlugin((nuxtApp) => {
         //useClientReadyState().value = false;
     });
 
+    //Called when SSR rendering is done.
+    nuxtApp.hook('app:rendered', async() => {
+        await useAppBootstrap().ssrBoot();
+        //console.log('RUNTIME APP HOOK: SSR rendering is done');
+    });
+
+    //Called before mounting the app, called only on client side.
+    nuxtApp.hook('app:beforeMount', async() => {
+        await useAppBootstrap().boot();
+        //console.log('RUNTIME APP HOOK: vueApp before mounting in browser');
+    });
+
     //Called when Vue app is initialized and mounted in browser.
     nuxtApp.hook('app:mounted', () => {
         //console.log('RUNTIME APP HOOK: vueApp mounted in browser');
-    });
-
-    //Called when SSR rendering is done.
-    nuxtApp.hook('app:rendered', () => {
-        //console.log('RUNTIME APP HOOK: SSR rendering is done');
     });
 
     //Called on Suspense pending event.
@@ -30,14 +37,14 @@ export default defineNuxtPlugin((nuxtApp) => {
         //console.log('PAGE NAVIGATE: Suspense pending event');
     });
 
-    //Called on Suspense resolved event.
-    nuxtApp.hook('page:finish', () => {
-        //console.log('PAGE NAVIGATE: Suspense resolved event');
-    });
-
     //Called after page:finish
     nuxtApp.hook('page:loading:end', () => {
         //console.log('PAGE NAVIGATE: page:finish');
+    });
+
+    //Called on Suspense resolved event.
+    nuxtApp.hook('page:finish', () => {
+        //console.log('PAGE NAVIGATE: Suspense resolved event');
     });
 })
 
