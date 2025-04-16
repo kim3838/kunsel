@@ -8,12 +8,12 @@
             <div
                 ref="selectHeader"
                 :style="{'border-radius': '2px'}"
-                class="w-full flex justify-start background"
-                :class="[heightClass, borderClass]">
-                <div :class="[iconHolderClass]" class="flex-none flex justify-end items-center">
+                class="w-full flex justify-start"
+                :class="[heightClass, headerBorderClass, spacingClass, navigationMode ? 'navigation-mode' : '']">
+                <div v-if="icon" :class="[iconHolderClass]" class="flex-none flex justify-end items-center">
                     <ClientOnly><Icon :class="[iconClass]" :name="icon"/></ClientOnly>
                 </div>
-                <div v-if="!active" class="w-full relative cursor-pointer">
+                <div v-if="!active && !navigationMode" class="w-full relative cursor-pointer">
                     <div :class="[selectionClass]" class="absolute truncate flex items-center">
                         {{selectionSummary}}
                     </div>
@@ -21,8 +21,12 @@
                         <ClientOnly><Icon :class="[dropDownIconClass]" name="ic:baseline-arrow-drop-down" /></ClientOnly>
                     </div>
                 </div>
+                <div v-if="!active && navigationMode" class="h-full inline-flex items-center cursor-pointer">
+                    {{selectionSummary}}
+                    <Icon :class="[dropDownIconClass]" name="ic:baseline-arrow-drop-down" />
+                </div>
 
-                <div :class="[active ? 'block' : 'hidden']" class="w-full h-full relative overflow-hidden">
+                <div v-if="!navigationMode" :class="[active ? 'block' : 'hidden']" class="w-full h-full relative overflow-hidden">
                     <div v-if="searchable" :class="[inputHolderClass]" class="absolute left-0 h-full flex items-center">
                         <Input
                             v-if="active"
@@ -45,6 +49,45 @@
                     </div>
                     <div v-else :class="[selectionClass]" class="absolute truncate flex items-center">
                         {{selectionSummary}}
+                    </div>
+                    <div
+                        :class="[dropDownIconHolderClass]"
+                        class="absolute right-0 top-0 flex justify-center items-center">
+                        <ClientOnly>
+                            <Icon
+                                v-if="searchable"
+                                @click="clearSearch"
+                                :class="[dropDownIconClass]"
+                                class="cursor-pointer"
+                                name="ic:baseline-clear" />
+                        </ClientOnly>
+                    </div>
+                </div>
+
+                <div v-if="navigationMode" :class="[active ? 'block' : 'hidden']" class="h-full relative overflow-hidden">
+                    <div v-if="searchable" :class="[inputHolderClass]" class="left-0 h-full flex items-center">
+                        <Input
+                            v-if="active"
+                            :tabindex="tabindexInput"
+                            :readonly="!searchable"
+                            autocomplete="off"
+                            class=""
+                            ref="selectionSearch"
+                            :placeholder="searchable ? 'Search...' : selectionSummary"
+                            :override="{spacing: 'pl-[0.3rem] p-0'}"
+                            @keydown="keyHandler"
+                            @focusStateChanged="searchInputFocusStateChangedHandler"
+                            v-on:input="searchSelection"
+                            v-model="props.options.search"
+                            :size="inputSize"
+                            :withBorder="false"
+                            :rounded="false"
+                            :focusRing="false"
+                            :disabled="false" />
+                    </div>
+                    <div v-else :class="[selectionClass]" class="truncate h-full inline-flex items-center">
+                        {{selectionSummary}}
+                        <Icon :class="[dropDownIconClass]" name="ic:baseline-arrow-drop-down" />
                     </div>
                     <div
                         :class="[dropDownIconHolderClass]"
@@ -92,12 +135,18 @@ import {storeToRefs} from 'pinia';
 const {$themeStore} = useNuxtApp();
 
 const {
+    hexAlpha,
+    accent: accentColor,
     lining: liningColor,
     thread: threadColor,
     neutral: neutralColor,
     tint: tintColor,
     text: textColor,
 } = storeToRefs($themeStore);
+
+const accentColor20 = computed(() => {
+    return accentColor.value + hexAlpha.value['20'];
+});
 
 const props = defineProps({
     options: {
@@ -122,6 +171,10 @@ const props = defineProps({
         type: Boolean,
         default: false
     },
+    navigationMode: {
+        type: Boolean,
+        default: false
+    },
     valuePersist: {
         type: Boolean,
         default: false
@@ -137,6 +190,10 @@ const props = defineProps({
     activeBorder: {
         type: String,
         default: ''
+    },
+    disableHeaderBorder: {
+        type: Boolean,
+        default: false
     },
     selectionMaxContent: {
         type: Boolean,
@@ -160,7 +217,7 @@ const props = defineProps({
     },
     icon: {
         type: String,
-        default: 'ion:md-options'
+        default: null
     },
     label: {
         type: String,
@@ -216,6 +273,18 @@ const heightClass = computed(() => {
 
 const borderClass = computed(() => {
     return (active.value ? 'active-border' : 'idle-border');
+});
+
+const headerBorderClass = computed(() => {
+    if(props.disableHeaderBorder){
+        return;
+    }
+
+    return (active.value ? 'active-border' : 'idle-border');
+});
+
+const spacingClass = computed(() => {
+    return (props.icon ? '' : 'pl-2');
 });
 
 const selectionItemSize = computed(() => {
@@ -499,8 +568,18 @@ onMounted(async () => {
     await nextTick();
     selectionWidth.value = selectHeader.value.offsetWidth;
 });
+
+const emit = defineEmits(["valueChange"]);
+
+watch(() => props.options.selected, newValue => {
+    emit('valueChange', newValue);
+})
 </script>
 <style scoped>
+.navigation-mode:hover{
+    background-color: v-bind(accentColor20);
+}
+
 .background {
     background-color: v-bind(tintColor);
 }
