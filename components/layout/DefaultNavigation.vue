@@ -34,7 +34,7 @@
         </div>
         <div class="w-full font-data flex justify-center neutral-border-top">
             <div class="max-w-screen-2xl w-full flex justify-start lg:justify-around h-10">
-                <div class="-my-px flex items-center">
+                <div class="flex items-center">
                     <NavDrop
                         class="xl:hidden  h-full"
                         :size="navigationHeaderSize"
@@ -78,7 +78,7 @@
                         </span>
                     </div>
                 </div>
-                <div class="-my-px flex items-center">
+                <div class="flex items-center">
                     <component
                         :is="navDrop"
                         class="h-full"

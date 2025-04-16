@@ -4,7 +4,7 @@
         class="primary-navigation-parent z-40 fixed">
         <div class="w-full font-appearance flex justify-center">
             <div class="max-w-screen-2xl w-full flex justify-start lg:justify-around h-10 lg:h-16">
-                <div class="-my-px flex items-center">
+                <div class="flex items-center">
                     <div class="w-max h-full flex items-center">
                         <GlobalFoundries :dark="navigationMode === 'clear-with-background'" />
                     </div>
@@ -52,7 +52,7 @@
                     </span>
                     </div>
                 </div>
-                <div class="-my-px flex items-center">
+                <div class="flex items-center">
                     <component
                         :is="navDrop"
                         class="h-full"
