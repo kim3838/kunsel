@@ -33,7 +33,7 @@
             </div>
         </div>
         <div class="w-full font-data flex justify-center neutral-border-top">
-            <div class="max-w-screen-2xl w-full flex justify-start lg:justify-around h-8">
+            <div class="max-w-screen-2xl w-full flex justify-start lg:justify-around" :class="mainNavigationHeightClass">
                 <div class="flex items-center">
                     <NavDrop
                         class="xl:hidden  h-full"
@@ -87,9 +87,10 @@
                         value-persist
                         disable-header-border
                         navigation-mode
-                        :size="'md'"
+                        :size="navigationHeaderSize"
                         :label="'Select Associated Company'"
                         :options="$authStore.associatedCompanies.singleSelectPayload"
+                        :drop-align="rightNavigationDropAlign"
                         @valueChange = "updateStoredAssociatedCompany"
                     />
                     <component
@@ -172,6 +173,17 @@ watch(screenWidth, value => {
 
 const navigationHeaderSize = computed(() => {
     return 'sm';
+});
+
+//Reference same height as SingleSelect
+const mainNavigationHeightClass = computed(() => {
+    return {
+        '2xs': 'h-5',
+        'xs': 'h-6',
+        'sm': 'h-7',
+        'md': 'h-8',
+        'lg': 'h-11'
+    }[navigationHeaderSize.value];
 });
 </script>
 
