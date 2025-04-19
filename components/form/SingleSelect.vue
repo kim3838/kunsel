@@ -3,13 +3,14 @@
         ref="selectParent"
         :tabindex="tabindexComputed"
         :style="{width: width}"
-        class="font-data focus:outline-none">
+        class="font-data focus:outline-none"
+        :class="[navigationMode ? 'relative' : '']">
         <Glint :enable="glint" :orientation="'landscape'" :color="activeBorderComputed">
             <div
                 ref="selectHeader"
                 :style="{'border-radius': '2px'}"
                 class="w-full flex justify-start"
-                :class="[heightClass, headerBorderClass, spacingClass, navigationMode ? 'navigation-mode' : '']">
+                :class="[heightClass, headerBorderClass, navigationMode ? 'navigation-mode' : defaultModeSpacingClass]">
                 <div v-if="icon" :class="[iconHolderClass]" class="flex-none flex justify-end items-center">
                     <ClientOnly><Icon :class="[iconClass]" :name="icon"/></ClientOnly>
                 </div>
@@ -21,8 +22,10 @@
                         <ClientOnly><Icon :class="[dropDownIconClass]" name="ic:baseline-arrow-drop-down" /></ClientOnly>
                     </div>
                 </div>
-                <div v-if="!active && navigationMode" class="h-full inline-flex items-center cursor-pointer">
-                    {{selectionSummary}}
+                <div v-if="!active && navigationMode" class="h-full inline-flex items-center cursor-pointer" :class="[navigationModeSpacingClass]">
+                    <div :class="[selectionClass]" class="truncate h-full inline-flex items-center">
+                        {{selectionSummary}}
+                    </div>
                     <Icon :class="[dropDownIconClass]" name="ic:baseline-arrow-drop-down" />
                 </div>
 
@@ -64,7 +67,7 @@
                     </div>
                 </div>
 
-                <div v-if="navigationMode" :class="[active ? 'block' : 'hidden']" class="h-full relative overflow-hidden">
+                <div v-if="navigationMode" :class="[active ? 'block' : 'hidden', navigationModeSpacingClass]" class="h-full relative overflow-hidden">
                     <div v-if="searchable" :class="[inputHolderClass]" class="left-0 h-full flex items-center">
                         <Input
                             v-if="active"
@@ -226,6 +229,9 @@ const props = defineProps({
     size: {
         default: 'md'
     },
+    dropAlign: {
+        default: 'left'
+    },
 });
 
 let active = ref(!!props.alwaysActive);
@@ -241,7 +247,7 @@ let selectionSearch = ref(null);
 let selectionScroll = ref<HTMLElement | null>(null);
 let selectHeader = ref(null);
 let selectionOrigin = ref(null);
-let selectionWidth = ref(null);
+let selectionHeaderWidth = ref(null);
 let selectionOffset = reactive({
     origin: null,
     left: 0
@@ -283,7 +289,11 @@ const headerBorderClass = computed(() => {
     return (active.value ? 'active-border' : 'idle-border');
 });
 
-const spacingClass = computed(() => {
+const defaultModeSpacingClass = computed(() => {
+    return (props.icon ? '' : 'pl-2');
+});
+
+const navigationModeSpacingClass = computed(() => {
     return (props.icon ? '' : 'pl-2');
 });
 
@@ -291,7 +301,7 @@ const selectionItemSize = computed(() => {
     return {
         '2xs': 'sm',
         'xs': 'sm',
-        'sm': 'sm',
+        'sm': 'md',
         'md': 'md',
         'lg': 'lg'
     }[props.size];
@@ -350,13 +360,24 @@ const selectionMaxHeight = computed(() => {
 });
 
 const selectionClass = computed(() => {
-    return {
-        '2xs': 'text-xs h-5 leading-[0.875rem] left-[0.2rem] right-[1.45rem]',
-        'xs': 'text-xs h-6 leading-[0.875rem] left-[0.2rem] right-[1.7rem]',
-        'sm': 'text-sm h-7 leading-[0.875rem] left-[0.2rem] right-[1.85rem]',
-        'md': 'text-base h-8 leading-[0.875rem] left-[0.2rem] right-[2.2rem]',
-        'lg': 'text-lg h-11 leading-[0.875rem] left-[0.2rem] right-[2.95rem]',
-    }[props.size];
+
+    if(props.navigationMode){
+        return {
+            '2xs': 'text-xs h-5 leading-[0.875rem] left-[0.2rem] right-[1.45rem]',
+            'xs': 'text-sm h-6 leading-[0.875rem] left-[0.2rem] right-[1.7rem]',
+            'sm': 'text-base h-7 leading-[0.875rem] left-[0.2rem] right-[1.85rem]',
+            'md': 'text-lg h-8 leading-[0.875rem] left-[0.2rem] right-[2.2rem]',
+            'lg': 'text-xl h-11 leading-[0.875rem] left-[0.2rem] right-[2.95rem]',
+        }[props.size];
+    } else {
+        return {
+            '2xs': 'text-xs h-5 leading-[0.875rem] left-[0.2rem] right-[1.45rem]',
+            'xs': 'text-xs h-6 leading-[0.875rem] left-[0.2rem] right-[1.7rem]',
+            'sm': 'text-sm h-7 leading-[0.875rem] left-[0.2rem] right-[1.85rem]',
+            'md': 'text-base h-8 leading-[0.875rem] left-[0.2rem] right-[2.2rem]',
+            'lg': 'text-lg h-11 leading-[0.875rem] left-[0.2rem] right-[2.95rem]',
+        }[props.size];
+    }
 });
 
 const optionsFontClass = computed(() => {
@@ -390,11 +411,23 @@ const inputSize = computed(() => {
 });
 
 const optionsArrowSlotClass = computed(() => {
-    return {'left':'9px', 'top': '-7px', 'border-right': '7px solid transparent', 'border-left': '7px solid transparent', 'border-bottom': '7px'};
+    return {
+        [props.dropAlign]:'9px',
+        'top': '-7px',
+        'border-right': '7px solid transparent',
+        'border-left': '7px solid transparent',
+        'border-bottom': '7px'
+    };
 });
 
 const optionsArrowClass = computed(() => {
-    return {'left':'10px', 'top': '-6px', 'border-right': '6px solid transparent', 'border-left': '6px solid transparent', 'border-bottom': '6px'};
+    return {
+        [props.dropAlign]:'10px',
+        'top': '-6px',
+        'border-right': '6px solid transparent',
+        'border-left': '6px solid transparent',
+        'border-bottom': '6px'
+    }
 });
 
 const selectionHeaderSummary = computed(()=>{
@@ -413,11 +446,21 @@ const selectionSummary = computed(() => {
 
 const selectionOffsetComputed = computed(()=>{
     let offsetStyles = {};
+    let selectionRightAlign = props.dropAlign == 'right';
 
     if (selectionOffset.origin === null || !props.inHorizontalScrollable){
 
+        if(selectionRightAlign){
+            offsetStyles = {
+                ...offsetStyles,
+                'left': selectionOffset.left
+            };
+        }
     } else {
-        offsetStyles['left'] = `${selectionOffset.left}px`
+        offsetStyles = {
+            ...offsetStyles,
+            'left': selectionOffset.left
+        };
     }
 
     return offsetStyles;
@@ -426,14 +469,14 @@ const selectionOffsetComputed = computed(()=>{
 const selectionWidthComputed = computed(()=>{
     let widthStyles = {};
 
-    if(selectionWidth.value === null || props.selectionMaxContent){
+    if(selectionHeaderWidth.value === null || props.selectionMaxContent){
         widthStyles['width'] = 'max-content';
 
-        if(selectionWidth.value != null){
-            widthStyles['min-width'] = `${selectionWidth.value}px`;
+        if(selectionHeaderWidth.value != null){
+            widthStyles['min-width'] = `${selectionHeaderWidth.value}px`;
         }
     } else {
-        widthStyles['width'] = `${selectionWidth.value}px`;
+        widthStyles['width'] = `${selectionHeaderWidth.value}px`;
     }
 
     return widthStyles;
@@ -546,7 +589,7 @@ function handleBackTab() {
 
 watch(active, async (newValue) => {
     await nextTick();
-    selectionWidth.value = selectHeader.value.offsetWidth;
+    selectionHeaderWidth.value = selectHeader.value.offsetWidth;
 
     if(props.inHorizontalScrollable){
         if(selectionOffset.origin === null){
@@ -557,16 +600,28 @@ watch(active, async (newValue) => {
             let originOffsetLeft = selectionOffset.origin;
             let parentScrollLeft = props.scrollReference.scrollLeft;
             let offsetLeft = originOffsetLeft - parentScrollLeft;
-            selectionOffset.left = offsetLeft < 0 ? 0 : offsetLeft;
+            selectionOffset.left = `${offsetLeft < 0 ? 0 : offsetLeft}px`;
         } else {
-            selectionOffset.left = selectionOffset.origin;
+            selectionOffset.left = `${selectionOffset.origin}px`;
         }
+    } else {
+
+        if(props.dropAlign == 'right' && selectionOrigin.value){
+            selectionOffset.left = `calc(-${selectionOrigin.value.offsetWidth}px + 100%)`;
+        }
+
     }
 });
 
 onMounted(async () => {
     await nextTick();
-    selectionWidth.value = selectHeader.value.offsetWidth;
+    selectionHeaderWidth.value = selectHeader.value.offsetWidth;
+
+    if(props.alwaysActive){
+        if(props.dropAlign == 'right' && selectionOrigin.value){
+            selectionOffset.left = `calc(-${selectionOrigin.value.offsetWidth}px + 100%)`;
+        }
+    }
 });
 
 const emit = defineEmits(["valueChange"]);
