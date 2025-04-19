@@ -7,46 +7,50 @@
         class="nav-drop h-full px-2 py-1 cursor-pointer focus:outline-none focus:ring-transparent focus:ring-1">
         <Icon v-if="icon" :name="icon" class="mr-1" />
         <span :class="[headerFontClass]">{{title}}</span>
-        <Icon :name="navDropIcon"/>
+        <Icon :class="[dropDownIconClass]" :name="navDropIcon"/>
         <div
             v-if="activeComputed"
             :style="navDropOptionsStyleComputed"
-            :class="['nav-drop-options-parent', parent ? 'drop-shadow-sm' : 'drop-shadow-none']">
-            <div v-for="dropOption in dropOptions" :key="dropOption.title" :style="{'text-shadow': navigationTextShadow}" class="nav-drop-link cursor-pointer">
+            :class="['nav-drop-options-parent', parent ? 'drop-shadow-sm mt-[7px]' : 'drop-shadow-none']">
+            <div class="relative">
+                <div v-if="parent" class="absolute border-solid options-arrow-lining-color" :style="[optionsArrowSlotClass]"></div>
+                <div v-if="parent" class="absolute border-solid options-arrow-color" :style="[optionsArrowClass]"></div>
+                <div v-for="dropOption in dropOptions" :key="dropOption.title" :style="{'text-shadow': navigationTextShadow}" class="nav-drop-link cursor-pointer">
 
-                <NuxtLink
-                    v-if="dropOption.type === 'link'"
-                    :to="dropOption.to"
-                    class="px-2 py-1 w-full inline-flex items-center"
-                    :class="[childNonDropFontClass]">
-                    <Icon v-if="dropOption.icon" :name="dropOption.icon" class="mr-1" /><span>{{dropOption.title}}</span>
-                </NuxtLink>
-
-                <a v-if="dropOption.type == 'anchor-link'" :href="dropOption.to">
                     <NuxtLink
+                        v-if="dropOption.type === 'link'"
+                        :to="dropOption.to"
                         class="px-2 py-1 w-full inline-flex items-center"
                         :class="[childNonDropFontClass]">
-                        <Icon v-if="dropOption.icon" :name="dropOption.icon" class="mr-1" /><span>{{dropOption.title}}</span>
+                        <Icon v-if="dropOption.icon" :class="[dropDownIconClass]" :name="dropOption.icon" class="mr-1" /><span>{{dropOption.title}}</span>
                     </NuxtLink>
-                </a>
 
-                <div v-if="dropOption.type === 'action'"
-                     @click="typeof dropOption.callback == 'function' ? dropOption.callback() : false;"
-                     class="px-2 py-1 w-full inline-flex items-center"
-                    :class="[childNonDropFontClass]">
-                    <Icon v-if="dropOption.icon" :name="dropOption.icon" class="mr-1" /><span>{{dropOption.title}}</span>
+                    <a v-if="dropOption.type == 'anchor-link'" :href="dropOption.to">
+                        <NuxtLink
+                            class="px-2 py-1 w-full inline-flex items-center"
+                            :class="[childNonDropFontClass]">
+                            <Icon v-if="dropOption.icon" :class="[dropDownIconClass]" :name="dropOption.icon" class="mr-1" /><span>{{dropOption.title}}</span>
+                        </NuxtLink>
+                    </a>
+
+                    <div v-if="dropOption.type === 'action'"
+                         @click="typeof dropOption.callback == 'function' ? dropOption.callback() : false;"
+                         class="px-2 py-1 w-full inline-flex items-center"
+                         :class="[childNonDropFontClass]">
+                        <Icon v-if="dropOption.icon" :name="dropOption.icon" :class="[dropDownIconClass]" class="mr-1" /><span>{{dropOption.title}}</span>
+                    </div>
+
+                    <NavDrop
+                        class="w-full"
+                        v-if="dropOption.type === 'drop'"
+                        :parent="false"
+                        :size="childDropSize"
+                        :drop-justify="'right'"
+                        :title="dropOption.title"
+                        :icon="dropOption.icon"
+                        :drop-options="dropOption.options"
+                    />
                 </div>
-
-                <NavDrop
-                    class="w-full"
-                    v-if="dropOption.type === 'drop'"
-                    :parent="false"
-                    :size="childDropSize"
-                    :drop-justify="'right'"
-                    :title="dropOption.title"
-                    :icon="dropOption.icon"
-                    :drop-options="dropOption.options"
-                />
             </div>
         </div>
     </div>
@@ -213,6 +217,35 @@ const childDropSize = computed(() => {
         'lg': 'lg',
     }[props.size]
 });
+const optionsArrowSlotClass = computed(() => {
+    return {
+        [props.dropAlign]:'9px',
+        'top': '-7px',
+        'border-right': '7px solid transparent',
+        'border-left': '7px solid transparent',
+        'border-bottom': '7px'
+    };
+});
+
+const optionsArrowClass = computed(() => {
+    return {
+        [props.dropAlign]:'10px',
+        'top': '-6px',
+        'border-right': '6px solid transparent',
+        'border-left': '6px solid transparent',
+        'border-bottom': '6px'
+    }
+});
+
+const dropDownIconClass = computed(() => {
+    return {
+        '2xs': 'h-4 w-4',
+        'xs': 'h-5 w-5',
+        'sm': 'h-5 w-5',
+        'md': 'h-5 w-5',
+        'lg': 'h-6 w-6'
+    }[props.size];
+});
 </script>
 <style scoped>
 .nav-drop-active{
@@ -243,5 +276,12 @@ const childDropSize = computed(() => {
 
 .nav-drop-link:hover{
     background-color: v-bind(accentColor20);
+}
+.options-arrow-lining-color{
+    border-bottom-color: v-bind(navDropOptionsParentBorderColor) !important;
+}
+
+.options-arrow-color {
+    border-bottom-color: v-bind(tintColor) !important;
 }
 </style>
