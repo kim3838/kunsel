@@ -1,9 +1,9 @@
 <template>
     <div>
         <DefaultWrapper>
-            <div class="mx-auto max-w-screen-2xl flex justify-center">
-                <div class="w-full">
-                    <form @submit.prevent="paginate(1, true)" class="space-y-2 my-4 p-[1.5rem] neutral-border">
+            <div class="mx-auto max-w-screen-2xl">
+                <div>
+                    <form @submit.prevent="paginate(1, true)" class="space-y-2 my-4 p-[20px] neutral-border">
                         <div class="grid gap-2 grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-8">
                             <div class="block">
                                 <InputLabel :size="'sm'" value="Search"/>
