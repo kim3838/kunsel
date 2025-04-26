@@ -33,7 +33,7 @@
             </div>
         </div>
         <div class="w-full flex justify-center neutral-border-top" :class="mainNavigationFontClass">
-            <div class="max-w-screen-2xl w-full flex justify-start lg:justify-around" :class="mainNavigationHeightClass">
+            <div class="max-w-screen-2xl w-full flex justify-start px-[20px] lg:px-0 lg:justify-around" :class="mainNavigationHeightClass">
                 <div class="flex items-center">
                     <NavDrop
                         class="xl:hidden  h-full"
