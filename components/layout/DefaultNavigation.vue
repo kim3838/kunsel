@@ -2,7 +2,7 @@
     <nav
         ref="navigation"
         class="primary-navigation-parent z-40 fixed">
-        <div class="w-full font-sans flex justify-center">
+        <div class="w-full flex justify-center"  :class="mainNavigationFontClass">
             <div class="max-w-screen-2xl w-full flex justify-end">
                 <NavLink
                     class="h-full"
@@ -32,7 +32,7 @@
                     ]" />
             </div>
         </div>
-        <div class="w-full font-data flex justify-center neutral-border-top">
+        <div class="w-full flex justify-center neutral-border-top" :class="mainNavigationFontClass">
             <div class="max-w-screen-2xl w-full flex justify-start lg:justify-around" :class="mainNavigationHeightClass">
                 <div class="flex items-center">
                     <NavDrop
@@ -43,7 +43,7 @@
                 </div>
                 <div class="flex">
                     <!-- Navigation Links -->
-                    <div class="-my-px hidden xl:flex">
+                    <div class="hidden xl:flex">
                         <span class="flex items-center"  v-for="navigation in navigationLinks" :key="navigation.title">
                             <NavLink
                                 class="h-full"
@@ -91,6 +91,7 @@
                         :label="'Select Associated Company'"
                         :options="$authStore.associatedCompanies.singleSelectPayload"
                         :drop-align="rightNavigationDropAlign"
+                        :override="associatedCompaniesSelectOverrides"
                         @valueChange = "updateStoredAssociatedCompany"
                     />
                     <component
@@ -175,7 +176,6 @@ const navigationHeaderSize = computed(() => {
     return 'sm';
 });
 
-//Reference same height as SingleSelect
 const mainNavigationHeightClass = computed(() => {
     return {
         '2xs': 'h-5',
@@ -183,8 +183,20 @@ const mainNavigationHeightClass = computed(() => {
         'sm': 'h-7',
         'md': 'h-8',
         'lg': 'h-11'
-    }[navigationHeaderSize.value];
+    }['lg'];
 });
+
+const mainNavigationFontClass = computed(() => {
+    return 'font-business';
+});
+
+const associatedCompaniesSelectOverrides = computed(() => {
+    return {
+        'height': mainNavigationHeightClass.value,
+        'font_family': mainNavigationFontClass.value
+    };
+})
+
 </script>
 
 <style scoped>
