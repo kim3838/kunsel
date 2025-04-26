@@ -3,8 +3,8 @@
         ref="selectParent"
         :tabindex="tabindexComputed"
         :style="{width: width}"
-        class="font-data focus:outline-none"
-        :class="[navigationMode ? 'relative' : '']">
+        class="focus:outline-none"
+        :class="[navigationMode ? 'relative' : '', baseFontFamilyClass]">
         <Glint :enable="glint" :orientation="'landscape'" :color="activeBorderComputed">
             <div
                 ref="selectHeader"
@@ -232,6 +232,12 @@ const props = defineProps({
     dropAlign: {
         default: 'left'
     },
+    override: {
+        type: Object,
+        default: function () {
+            return {}
+        }
+    },
 });
 
 let active = ref(!!props.alwaysActive);
@@ -268,6 +274,11 @@ const activeBorderComputed = computed(() => {
 });
 
 const heightClass = computed(() => {
+
+    if(props.override.height){
+        return props.override.height;
+    }
+
     return {
         '2xs': 'h-5',
         'xs': 'h-6',
@@ -275,6 +286,15 @@ const heightClass = computed(() => {
         'md': 'h-8',
         'lg': 'h-11'
     }[props.size];
+});
+
+const baseFontFamilyClass = computed(() => {
+
+    if(props.override.font_family){
+        return props.override.font_family;
+    }
+
+    return 'font-data';
 });
 
 const borderClass = computed(() => {
