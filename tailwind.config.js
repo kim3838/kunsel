@@ -16,6 +16,9 @@ module.exports = {
                     'Merienda',
                     'Protest Revolution',
                 ],
+                business: [
+                    'Roboto Flex',
+                ],
                 techno:[
                     'Oxanium',
                 ],
@@ -37,6 +40,7 @@ module.exports = {
                     'Source Sans Pro',
                 ],
                 serif : [
+                    'Playfair Display',
                     'Oranienbaum',
                     'Instrument Serif',
                     'Almendra',
