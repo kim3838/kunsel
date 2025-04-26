@@ -17,7 +17,7 @@
 
                 <div class="flex">
                     <!-- Navigation Links -->
-                    <div class="-my-px hidden lg:flex">
+                    <div class="hidden lg:flex">
                     <span class="flex items-center"  v-for="navigation in navigationLinks" :key="navigation.title">
                         <NavLink
                             class="h-full"
