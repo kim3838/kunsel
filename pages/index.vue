@@ -4,7 +4,7 @@
             <div class="mx-auto pt-4 max-w-screen-2xl">
 
                 <div class="my-20 flex justify-center">
-                    <HeroLink><span class="font-appearance">Dashboard coming soon...</span></HeroLink>
+                    <HeroLink><span class="font-business">Dashboard coming soon...</span></HeroLink>
                 </div>
 
             </div>

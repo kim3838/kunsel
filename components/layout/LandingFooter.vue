@@ -132,7 +132,7 @@ const {
     neutral: neutralColor
 } = storeToRefs($themeStore);
 
-const headerClass = ref('font-appearance text-lg');
+const headerClass = ref('font-business text-lg');
 </script>
 
 <style scoped>
