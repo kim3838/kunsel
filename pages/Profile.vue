@@ -2,13 +2,13 @@
     <div>
         <DefaultWrapper>
             <div class="mx-auto max-w-screen-2xl">
-                <div class="mx-auto flex flex-col justify-center w-fit">
+                <div class="max-w-screen-sm mx-auto flex flex-col justify-center space-y-4 my-4 p-[20px] neutral-border">
 
-                    <div class="max-w-screen-sm mt-4 font-header">
+                    <div class="font-header">
                         <p class="font-medium text-xl">Account Settings</p>
                     </div>
 
-                    <div class="my-4 max-w-screen-sm p-[1.5rem] neutral-border tint-background">
+                    <div class="p-4 neutral-border tint-background">
                         <div class="relative">
                             <p class="font-medium text-lg font-header">Profile Information</p>
                             <div class="mt-4 grid gap-2 grid-cols-1 sm:grid-cols-2">
@@ -32,7 +32,7 @@
                         </div>
                     </div>
 
-                    <form @submit.prevent="executeUpdatePassword" class="max-w-screen-sm p-[1.5rem] neutral-border tint-background">
+                    <form @submit.prevent="executeUpdatePassword" class="p-4 neutral-border tint-background">
                         <p class="font-medium text-lg font-header">Update Password</p>
                         <p class="mt-4 text-base">Ensure your account is using a long, random password to stay secure.</p>
 
@@ -56,7 +56,7 @@
                         </div>
                     </form>
 
-                    <form @submit.prevent="executeLogoutOtherDevice" class="max-w-screen-sm mt-4 p-[1.5rem] neutral-border tint-background">
+                    <form @submit.prevent="executeLogoutOtherDevice" class="p-4 neutral-border tint-background">
                         <p class="font-medium text-lg font-header">Browser Sessions</p>
                         <p class="mt-4 text-base">Manage and log out your active sessions on other browsers and devices. </p>
 
@@ -98,7 +98,7 @@
                         </div>
                     </form>
 
-                    <div class="max-w-screen-sm mt-4 p-[1.5rem] neutral-border tint-background">
+                    <div class="p-4 neutral-border tint-background">
                         <p class="font-medium text-lg font-header">Two Factor Authentication</p>
                         <p class="mt-4 text-base">Add additional security to your account using two factor authentication.</p>
 
