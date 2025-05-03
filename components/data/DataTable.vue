@@ -6,6 +6,7 @@
                     <td v-if="selection" style="padding:3px 0.5rem;">
                         <NonModelCheckBox :size="checkBoxSize" :checked="checkedAllCurrentSelection()" @click="toggleCheck()" />
                     </td>
+                    <td v-if="manualSortable"></td>
                     <td
                         v-for="header in headers"
                         :key="header.value"
@@ -19,7 +20,7 @@
                     </td>
                 </tr>
             </thead>
-            <tbody>
+            <tbody ref="tableBody">
                 <!-- Table cell height: sm = 25px, md = 29px, lg = 33px, xl = 37px -->
                 <tr v-for="row in rows" :key="row.id">
                     <td v-if="selection" style="padding:0 0.5rem;">
@@ -28,6 +29,11 @@
                             :value="row.id"
                             :selected="props.modelValue"
                             @click="checkRow(row)"/>
+                    </td>
+                    <td v-if="manualSortable" :class="[bodyFontClass]">
+                        <div class="flex px-[3px]" >
+                            <Icon class="handleOrder cursor-grab active:cursor-grabbing" name="carbon:caret-sort"></Icon>
+                        </div>
                     </td>
                     <td
                         v-for="(header, index) in headers" :key="row.id"
@@ -54,11 +60,14 @@
 </template>
 
 <script setup lang="ts">
+import {useSortable} from '@vueuse/integrations/useSortable';
+import {moveArrayElement} from '@vueuse/integrations/useSortable'
 import {storeToRefs} from 'pinia';
 const {$themeStore} = useNuxtApp();
 
 const {
     hexAlpha,
+    neutral: neutralColor,
     lining: liningColor,
     thread: threadColor,
     shade: shadeColor
@@ -93,12 +102,33 @@ const props = defineProps({
     noDataLabel: {
         type: String,
         default: 'No Record',
+    },
+    manualSortable: {
+        type: Boolean,
+        default: false,
     }
 });
 
 let dataTableScroll = ref(null);
 
-const emit = defineEmits(["update:modelValue"]);
+const emit = defineEmits(["update:modelValue", "manualSorted"]);
+
+const tableBody = useTemplateRef('tableBody');
+const {option} = useSortable(tableBody, props.rows, {
+    handle: '.handleOrder',
+    animation: 200,
+    disabled: !props.manualSortable,
+    ghostClass: 'sortable-ghost',
+    chosenClass: 'sortable-chosen',
+    dragClass: 'sortable-drag',
+    onUpdate: (draggedElement) => {
+        moveArrayElement(props.rows, draggedElement.oldIndex, draggedElement.newIndex, draggedElement);
+
+        nextTick(() => {
+            emit('manualSorted', draggedElement.oldIndex, draggedElement.newIndex, draggedElement)
+        })
+    }
+})
 
 function cellAlignClass(align = null){
     return {
@@ -252,5 +282,10 @@ tbody tr td:last-child{
 
 tbody tr:nth-of-type(2n+1){
     background-color: v-bind(shadeColor);
+}
+
+.sortable-ghost {
+    color: transparent !important;
+    background-color: v-bind(neutralColor) !important;
 }
 </style>

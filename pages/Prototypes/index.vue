@@ -62,6 +62,8 @@
                                     :rows="prototypes.data"
                                     :no-data-label="pending ? 'Loading' : 'No Prototype Found'"
                                     v-model="selectedPrototypes"
+                                    manual-sortable
+                                    @manualSorted="manualSorted"
                                     selection>
                                     <template v-slot:cell.datetime_added="{cell, slot}">
                                         <InputWithIcon
@@ -266,6 +268,10 @@ function renderDateTimePickers(){
     let dateTimePickers = filtersDateTimePickers.value.concat(dataDateTimePickers);
 
     render(dateTimePickers);
+}
+
+function manualSorted(oldIndex, newIndex, row){
+    renderDateTimePickers();
 }
 
 //Render date time pickers on navigate
