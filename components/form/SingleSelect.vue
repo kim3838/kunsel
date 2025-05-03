@@ -253,6 +253,7 @@ let selectionSearch = ref(null);
 let selectionScroll = ref<HTMLElement | null>(null);
 let selectHeader = ref(null);
 let selectionOrigin = ref(null);
+const selectionOriginRef = useTemplateRef('selectionOrigin');
 let selectionHeaderWidth = ref(null);
 let selectionOffset = reactive({
     origin: null,
@@ -638,8 +639,8 @@ onMounted(async () => {
     selectionHeaderWidth.value = selectHeader.value.offsetWidth;
 
     if(props.alwaysActive){
-        if(props.dropAlign == 'right' && selectionOrigin.value){
-            selectionOffset.left = `calc(-${selectionOrigin.value.offsetWidth}px + 100%)`;
+        if(props.dropAlign == 'right'){
+            selectionOffset.left = `calc(-${selectionOriginRef.value.offsetWidth}px + 100%)`;
         }
     }
 });
