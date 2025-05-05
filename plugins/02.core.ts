@@ -51,7 +51,7 @@ export default defineNuxtPlugin(nuxtApp => {
         return [route.path, _toLower(route.name)].indexOf(_toLower(routeSlug)) >= 0;
     });
 
-    nuxtApp.provide('orderSequenceable', function (data: Sequenceable) {
+    nuxtApp.provide('orderSequenceable', function (data: Sequenceable[]) {
 
         let order = 0;
 
