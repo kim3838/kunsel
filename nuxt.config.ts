@@ -94,7 +94,8 @@ export default defineNuxtConfig({
         {path: '@/components/frame'},
         {path: '@/components/list'},
         {path: '@/components/layout'},
-        {path: '@/components/card'}
+        {path: '@/components/card'},
+        {path: '@/components/settings', pathPrefix: false},
     ],
 
     lodash: {
