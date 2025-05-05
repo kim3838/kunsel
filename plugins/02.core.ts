@@ -1,4 +1,3 @@
-import {storeToRefs} from 'pinia';
 
 export default defineNuxtPlugin(nuxtApp => {
     const route = useRoute();
