@@ -1,3 +1,4 @@
+import type {Sequenceable} from "@/composables/settings/payroll/use-payroll-settings-company-compensation";
 
 export default defineNuxtPlugin(nuxtApp => {
     const route = useRoute();
@@ -49,4 +50,11 @@ export default defineNuxtPlugin(nuxtApp => {
     nuxtApp.provide('isRouteActive', function (routeSlug: string) {
         return [route.path, _toLower(route.name)].indexOf(_toLower(routeSlug)) >= 0;
     });
+
+    nuxtApp.provide('orderSequenceable', function (data: Sequenceable) {
+
+        let order = 0;
+
+        data.forEach((sequenceable: Sequenceable) => {sequenceable.order = ++order;});
+    })
 });
