@@ -2,7 +2,7 @@
     <nav
         ref="navigation"
         class="primary-navigation-parent z-40 fixed">
-        <div class="w-full flex justify-center"  :class="mainNavigationFontClass">
+        <div class="relative z-[42] w-full flex justify-center"  :class="mainNavigationFontClass">
             <div class="max-w-screen-2xl w-full flex justify-end">
                 <NavLink
                     class="h-full"
@@ -32,7 +32,7 @@
                     ]" />
             </div>
         </div>
-        <div class="w-full flex justify-center neutral-border-top" :class="mainNavigationFontClass">
+        <div class="relative z-[41] w-full flex justify-center neutral-border-top" :class="mainNavigationFontClass">
             <div class="max-w-screen-2xl w-full flex justify-start px-[20px] lg:px-0 lg:justify-around" :class="mainNavigationHeightClass">
                 <div class="flex items-center">
                     <NavDrop
