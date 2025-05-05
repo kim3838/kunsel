@@ -8,15 +8,16 @@ export default defineNuxtPlugin(nuxtApp => {
         console.log({[`${useNuxtApp().$moment().format('YYYY-MM-DD H:m:s')} DEBUG: ${key}`]: payload})
     });
 
-    nuxtApp.provide('ordinal', function (number) {
+    nuxtApp.provide('ordinal', function (number: number | string) {
         let s = ["th", "st", "nd", "rd"];
+        // @ts-ignore
         let v = number % 100;
         return number + (s[(v - 20) % 10] || s[v] || s[0]);
     });
 
-    nuxtApp.provide('toRomanNumeral', function (num) {
+    nuxtApp.provide('toRomanNumeral', function (number: number) {
 
-        if(num == 0){
+        if(number == 0){
             return 'i';
         }
 
@@ -39,15 +40,16 @@ export default defineNuxtPlugin(nuxtApp => {
         let result = "";
         for (let i = 0; i < romanNumerals.length; i++) {
             const { value, symbol } = romanNumerals[i];
-            while (num >= value) {
+            while (number >= value) {
                 result += symbol;
-                num -= value;
+                number -= value;
             }
         }
         return result;
     });
 
     nuxtApp.provide('isRouteActive', function (routeSlug: string) {
+        // @ts-ignore
         return [route.path, _toLower(route.name)].indexOf(_toLower(routeSlug)) >= 0;
     });
 
