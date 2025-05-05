@@ -275,7 +275,7 @@ export default {
                 {text : 'Custom Corporate', value: 3},
                 {text : 'Evaluator', value: 4},
             ],
-            selected: null
+            selected: '3'
         },
         'categoryGroup': {
             selection: [
