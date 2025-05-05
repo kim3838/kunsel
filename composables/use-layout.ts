@@ -92,6 +92,29 @@ export const useLayout = () => {
                 to: '/',
                 route: 'index'
             },
+            ...[
+                {
+                    type: 'link',
+                    title: 'Prototype',
+                    to: '/prototype',
+                    route: 'prototype'
+                },
+                {
+                    type: 'link',
+                    title: 'Prototypes',
+                    to: '/prototypes',
+                    route: 'prototypes'
+                },
+            ],
+            ...(
+                isAuthenticated.value
+                    ? [{
+                        type: 'link',
+                        title: 'Settings',
+                        to: '/settings',
+                        route: 'settings'
+                    }] : []
+            ),
             {
                 type: 'drop',
                 title: 'About',
