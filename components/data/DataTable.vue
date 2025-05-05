@@ -6,7 +6,11 @@
                     <td v-if="selection" style="padding:3px 0.5rem;">
                         <NonModelCheckBox :size="checkBoxSize" :checked="checkedAllCurrentSelection()" @click="toggleCheck()" />
                     </td>
-                    <td v-if="manualSortable"></td>
+                    <td v-if="manualSortable" :class="[headerFontClass]">
+                        <div class="flex px-[3px]" >
+                            <Icon name="mi:sort"></Icon>
+                        </div>
+                    </td>
                     <td
                         v-for="header in headers"
                         :key="header.value"
@@ -42,7 +46,7 @@
                         <slot
                             :name="`cell.${header.value}`"
                             :scrollReference="dataTableScroll"
-                            :slot="{buttonSize: buttonSize, inputSize: inputSize, datepickerFontSize: datepickerFontSize, selectSize: selectSize}"
+                            :slot="{buttonSize: buttonSize, inputSize: inputSize, datepickerFontSize: datepickerFontSize, selectSize: selectSize, checkBoxSize: checkBoxSize}"
                             :cell="row"
                             :index="index">
                             <div class="p-[3px]">{{row[header.value]}}</div>
