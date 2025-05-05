@@ -1,4 +1,63 @@
 export default {
+    'companyCompensations':[
+        {
+            'id': 1001,
+            'order': 1,
+            'name': 'Salary',
+            'type': {
+                'label': 'Salary',
+                'value': 'SALARY',
+            },
+            'assignable': true,
+            'formula': 'Standard-Salary',
+            'start_date': null,
+            'end_date': null
+        },{
+            'id': 1002,
+            'order': 2,
+            'name': 'Meal allowance',
+            'type': {
+                'label': 'Regular Allowance',
+                'value': 'REGULAR_ALLOWANCE',
+            },
+            'assignable': true,
+            'formula': 'Standard-Meal',
+            'start_date': null,
+            'end_date': null
+        },{
+            'id': 1003,
+            'order': 3,
+            'name': 'Overtime',
+            'type': {
+                'label': 'Overtime',
+                'value': 'OVERTIME',
+            },
+            'assignable': false,
+            'formula': 'Standard-Overtime',
+            'start_date': null,
+            'end_date': null
+        },{
+            'id': 1004,
+            'order': 4,
+            'name': '13th month',
+            'type': {
+                'label': 'Benefit',
+                'value': 'BENEFIT',
+            },
+            'assignable': false,
+            'formula': 'Standard-13thMonth',
+            'start_date': 'Nov 02 of last year',
+            'end_date': 'Nov 01 of current year'
+        },
+    ],
+    'formulas': {
+        'companyCompensations:': [
+            'Standard-Salary',
+            'Standard-Overtime',
+            'Standard-Meal',
+            'Standard-13thMonth',
+        ]
+    },
     'leftToRightItems': [
         {
             "image":{
