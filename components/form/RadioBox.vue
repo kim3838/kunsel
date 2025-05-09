@@ -65,9 +65,9 @@ const isChecked = computed(() => {
 
 const radioBoxSlotHeight = computed(()=>{
     return {
-        'sm': '20px',
-        'md': '24px',
-        'lg': '28px',
+        'sm': '18px',
+        'md': '20px',
+        'lg': '26px',
     }[props.size];
 });
 
