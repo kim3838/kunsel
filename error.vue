@@ -2,11 +2,11 @@
     <div class="nuxt-error-page mx-auto max-w-screen-2xl">
         <div class="p-4">
             <div class="my-4 text-xl font-header font-medium">
-                <div v-if="error.statusCode === 404">Page not found</div>
+                <div v-if="props.error?.statusCode === 404">Page not found</div>
                 <div v-else >Something went wrong...</div>
             </div>
             <div class="my-4">
-                <p>{{ error.url }}</p>
+                <p>{{ errorUrl }}</p>
                 <p>{{ errorDisplay }}</p>
             </div>
             <div class="text-sm inline-block" >
@@ -31,8 +31,12 @@ const props = defineProps({
     error: Object as () => NuxtError
 })
 
+const errorUrl = computed(()=>{
+    return (props.error as NuxtError & { url?: string })?.url;
+})
+
 const errorDisplay = computed(()=>{
-    return `Error ${props.error.statusCode}: ${props.error.statusMessage || props.error.message}`;
+    return `Error ${props.error?.statusCode}: ${props.error?.statusMessage || props.error?.message}`;
 })
 
 const handleError = () => clearError({ redirect: '/' })

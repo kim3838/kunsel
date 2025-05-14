@@ -12,7 +12,7 @@
                 :value="value"
                 :checked="isChecked"
                 :id="labelId"
-                @change="$emit('update:modelValue', $event.target.value)"
+                @change="$emit('update:modelValue', ($event.target as HTMLInputElement).value)"
                 name="radio-input"/>
         </div>
     </label>

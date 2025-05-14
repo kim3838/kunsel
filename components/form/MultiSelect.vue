@@ -95,6 +95,13 @@
 
 <script setup lang="ts">
 import {storeToRefs} from 'pinia';
+import type {
+    SelectValueInterface,
+    SelectDataType,
+    SelectSelectedT,
+    SelectionOffsetT,
+    SelectSearchPoolT
+} from "@/public/js/types/form";
 const {$themeStore} = useNuxtApp();
 
 const {
@@ -156,7 +163,7 @@ const props = defineProps({
         default: true
     },
     scrollReference: {
-        type: Object,
+        type: Object as PropType<HTMLElement | null>,
         default: null
     },
     icon: {
@@ -179,14 +186,14 @@ let tabindexInput = computed(() => {
     return tabindexComputed.value + 1;
 });
 let keepFocus = ref(false);
-let keepFocusCallback = ref(1);
+let keepFocusCallback = ref<ReturnType<typeof setTimeout> | number>(1);
 let selectParent = ref(null);
 let selectionSearch = ref(null);
 let selectionScroll = ref<HTMLElement | null>(null);
-let selectHeader = ref(null);
-let selectionOrigin = ref(null);
-let selectionWidth = ref(null);
-let selectionOffset = reactive({
+let selectHeader = ref<HTMLElement | null>(null);
+let selectionOrigin = ref<HTMLElement | null>(null);
+let selectionHeaderWidth = ref<number | null>(null);
+let selectionOffset = reactive<SelectionOffsetT>({
     origin: null,
     left: 0
 });
@@ -194,8 +201,8 @@ let selectionOffset = reactive({
 const { focused: selectParentFocused } = useFocus(selectParent);
 const { focused: selectionScrollFocused } = useFocus(selectionScroll);
 
-let searchPool = ref([]);
-searchPool.value = props.options.data.map(item => item.value);
+let searchPool = ref<SelectSearchPoolT>([]);
+searchPool.value = props.options.data.map((item: SelectDataType) => item.value);
 
 const idleBorderComputed = computed(() => {
     return props.idleBorder ? props.idleBorder : threadColor.value;
@@ -337,9 +344,9 @@ const selectionSummary = computed(() => {
     if(props.options.selected.length === 0){
         return "None Selected";
     } else if(props.options.selected.length < 5) {
-        return props.options.data.filter((item) => {
+        return props.options.data.filter((item: SelectDataType) => {
             return props.options.selected.indexOf(item.value) >= 0;
-        }).map(item => item.text).join(", ");
+        }).map((item: SelectDataType) => item.text).join(", ");
     } else if(props.options.selected.length > 4) {
         let summary = '';
 
@@ -354,7 +361,7 @@ const selectionSummary = computed(() => {
 });
 
 const selectionOffsetComputed = computed(()=>{
-    let offsetStyles = {};
+    let offsetStyles: { left?: string, right?: string } = {};
 
     if (selectionOffset.origin === null || !props.inHorizontalScrollable){
 
@@ -366,16 +373,16 @@ const selectionOffsetComputed = computed(()=>{
 });
 
 const selectionWidthComputed = computed(()=>{
-    let widthStyles = {};
+    let widthStyles: { width?: string, "min-width"?: string } = {};
 
-    if(selectionWidth.value === null || props.selectionMaxContent){
+    if(selectionHeaderWidth.value === null || props.selectionMaxContent){
         widthStyles['width'] = 'max-content';
 
-        if(selectionWidth.value != null){
-            widthStyles['min-width'] = `${selectionWidth.value}px`;
+        if(selectionHeaderWidth.value != null){
+            widthStyles['min-width'] = `${selectionHeaderWidth.value}px`;
         }
     } else {
-        widthStyles['width'] = `${selectionWidth.value}px`;
+        widthStyles['width'] = `${selectionHeaderWidth.value}px`;
     }
 
     return widthStyles;
@@ -386,8 +393,9 @@ function keepFocusAlive(){
         active.value = true;
     }
     nextTick(() => {
-        if(props.searchable){
-            selectionSearch.value.$refs.input.focus();
+        if(props.searchable && selectionSearch.value){
+            //@ts-ignore
+            selectionSearch.value?.$refs.input.focus();
         } else {
             selectParentFocused.value = true;
         }
@@ -413,16 +421,16 @@ function loseFocus(chain: Boolean = false){
 function toggleSelection(){
     if (props.options.search.trim()){
         if (selectedAllCurrentSelection()){
-            props.options.selected = props.options.selected.filter(value => {
+            props.options.selected = props.options.selected.filter((value: SelectSelectedT) => {
                 return !isItemInSearchPool({value: value});
             });
         } else {
-            let selectedNotInSearch = props.options.selected.filter(value => {
+            let selectedNotInSearch = props.options.selected.filter((value: SelectSelectedT) => {
                 return !isItemInSearchPool({value: value});
             });
-            let selectionInSearch = props.options.selection.filter(data => {
+            let selectionInSearch = props.options.selection.filter((data: SelectDataType) => {
                 return data.text.toLowerCase().indexOf(props.options.search.trim().toLowerCase()) > -1
-            }).map(item => item.value);
+            }).map((item: SelectDataType) => item.value);
 
             props.options.selected = _uniq(selectedNotInSearch.concat(selectionInSearch));
         }
@@ -430,18 +438,18 @@ function toggleSelection(){
         if (selectedAllCurrentSelection()){
             props.options.selected = [];
         } else {
-            props.options.selected = props.options.selection.map(item => item.value);
+            props.options.selected = props.options.selection.map((item: SelectDataType) => item.value);
         }
     }
 }
 
 function selectedAllCurrentSelection(): boolean {
     if (props.options.search.trim()){
-        let selected = props.options.selected.filter(value => {
+        let selected = props.options.selected.filter((value: SelectSelectedT) => {
             return isItemInSearchPool({value: value});
         });
 
-        let selection = props.options.selection.filter(data => {
+        let selection = props.options.selection.filter((data: SelectDataType) => {
             return data.text.toLowerCase().indexOf(props.options.search.trim().toLowerCase()) > -1
         });
 
@@ -453,7 +461,7 @@ function selectedAllCurrentSelection(): boolean {
 
 function selectedSomeCurrentSelection(): boolean {
     if (props.options.search.trim()){
-        let selected = props.options.selected.filter(value => {
+        let selected = props.options.selected.filter((value: SelectSelectedT) => {
             return isItemInSearchPool({value: value});
         });
 
@@ -469,7 +477,7 @@ function headerIcon(): string{
     return 'ic:sharp-check-box-outline-blank';
 }
 
-function selectItem(item: any): void{
+function selectItem(item: SelectValueInterface): void{
     if(isItemSelected(item)){
         _remove(props.options.selected, (value) => value == item.value);
     } else {
@@ -477,27 +485,27 @@ function selectItem(item: any): void{
     }
 }
 
-function isItemSelected(item): boolean{
+function isItemSelected(item: SelectValueInterface): boolean{
     return props.options.selected.indexOf(item.value) >= 0;
 }
 
-function isItemInSearchPool(item): boolean{
+function isItemInSearchPool(item: SelectValueInterface): boolean{
     return searchPool.value.indexOf(item.value) >= 0;
 }
 
 function searchSelection(){
     if (!props.options.search.trim()){
-        searchPool.value = props.options.data.map(item => item.value);
+        searchPool.value = props.options.data.map((item: SelectDataType) => item.value);
     } else {
-        searchPool.value = props.options.data.filter(data => {
+        searchPool.value = props.options.data.filter((data: SelectDataType) => {
             return data.text.toLowerCase().indexOf(props.options.search.toLowerCase()) > -1
-        }).map(item => item.value);
+        }).map((item: SelectDataType) => item.value);
     }
 }
 
 function clearSearch(){
     props.options.search = "";
-    searchPool.value = props.options.data.map(item => item.value);
+    searchPool.value = props.options.data.map((item: SelectDataType) => item.value);
 }
 
 watch(selectParentFocused, (focused) => {
@@ -535,7 +543,7 @@ function searchInputFocusStateChangedHandler(focused: boolean) {
     }
 }
 
-function keyHandler(event) {
+function keyHandler(event: KeyboardEvent) {
     let key = event.which;
 
     if (event.shiftKey && event.keyCode === 9){
@@ -555,27 +563,27 @@ function handleBackTab() {
 
 watch(active, async (newValue) => {
     await nextTick();
-    selectionWidth.value = selectHeader.value.offsetWidth;
+    selectionHeaderWidth.value = selectHeader.value ? selectHeader.value.offsetWidth: null;
 
     if(props.inHorizontalScrollable){
         if(selectionOffset.origin === null){
-            selectionOffset.origin = selectionOrigin.value.offsetLeft;
+            selectionOffset.origin = selectionOrigin.value ? selectionOrigin.value.offsetLeft: null;
         }
 
         if(newValue){
             let originOffsetLeft = selectionOffset.origin;
-            let parentScrollLeft = props.scrollReference.scrollLeft;
-            let offsetLeft = originOffsetLeft - parentScrollLeft;
+            let parentScrollLeft = props.scrollReference?.scrollLeft ?? 0;
+            let offsetLeft = (originOffsetLeft ?? 0) - parentScrollLeft;
             selectionOffset.left = offsetLeft < 0 ? 0 : offsetLeft;
         } else {
-            selectionOffset.left = selectionOffset.origin;
+            selectionOffset.left = selectionOffset.origin ?? 0;
         }
     }
 });
 
 onMounted(async () => {
     await nextTick();
-    selectionWidth.value = selectHeader.value.offsetWidth;
+    selectionHeaderWidth.value = selectHeader.value ? selectHeader.value.offsetWidth: null;
 });
 </script>
 <style scoped>

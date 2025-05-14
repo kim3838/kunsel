@@ -1,23 +1,28 @@
+
 import {defineStore} from 'pinia'
+import type {PromptT} from "@/public/js/common/type";
 
 export const usePromptStore = defineStore('prompt', () => {
 
-    const show = ref(false);
-    const icon = ref(null);
-    const title = ref(null);
-    const message = ref(null);
-    const messageList = ref([]);
-    const action = ref({
+    const show = ref<boolean>(false);
+    const icon = ref<string | null>(null);
+    const title = ref<string | null>(null);
+    const message = ref<string | null>(null);
+    const messageList = ref<string[]>([]);
+    const action = ref(<{
+        callback: (() => void) | null;
+        label: string;
+    }>{
         callback: null,
         label: 'Click'
     });
 
-    function setPrompt(promptPayload){
+    function setPrompt(promptPayload: PromptT){
         show.value = true;
         icon.value = promptPayload.icon;
         title.value = promptPayload.title;
         message.value = promptPayload.message;
-        messageList.value = _get(promptPayload, 'messageList', []);
+        messageList.value = _get(promptPayload, 'messageList', []) ?? [];
         action.value = {
             callback: promptPayload.action.callback,
             label: promptPayload.action.label

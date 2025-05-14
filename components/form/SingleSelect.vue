@@ -135,6 +135,12 @@
 
 <script setup lang="ts">
 import {storeToRefs} from 'pinia';
+import type {
+    SelectValueInterface,
+    SelectDataType,
+    SingleSelectSelectionOffsetT,
+    SelectSearchPoolT,
+} from "@/public/js/types/form";
 const {$themeStore} = useNuxtApp();
 
 const {
@@ -147,8 +153,8 @@ const {
     text: textColor,
 } = storeToRefs($themeStore);
 
-const accentColor20 = computed(() => {
-    return accentColor.value + hexAlpha.value['20'];
+const accentColor40 = computed(() => {
+    return accentColor.value + hexAlpha.value['40'];
 });
 
 const props = defineProps({
@@ -159,7 +165,7 @@ const props = defineProps({
                 search: '',
                 data: [],
                 selection: [],
-                selected: []
+                selected: null
             }
         }
     },
@@ -215,7 +221,7 @@ const props = defineProps({
         default: true
     },
     scrollReference: {
-        type: Object,
+        type: Object as PropType<HTMLElement | null>,
         default: null
     },
     icon: {
@@ -247,24 +253,24 @@ let tabindexInput = computed(() => {
     return tabindexComputed.value + 1;
 });
 let keepFocus = ref(false);
-let keepFocusCallback = ref(1);
+let keepFocusCallback = ref<ReturnType<typeof setTimeout> | number>(1);
 let selectParent = ref(null);
 let selectionSearch = ref(null);
 let selectionScroll = ref<HTMLElement | null>(null);
-let selectHeader = ref(null);
-let selectionOrigin = ref(null);
+let selectHeader = ref<HTMLElement | null>(null);
+let selectionOrigin = ref<HTMLElement | null>(null);
 const selectionOriginRef = useTemplateRef('selectionOrigin');
-let selectionHeaderWidth = ref(null);
-let selectionOffset = reactive({
+let selectionHeaderWidth = ref<number | null>(null);
+let selectionOffset = reactive<SingleSelectSelectionOffsetT>({
     origin: null,
-    left: 0
+    left: '0'
 });
 
 const { focused: selectParentFocused } = useFocus(selectParent);
 const { focused: selectionScrollFocused } = useFocus(selectionScroll);
 
-let searchPool = ref([]);
-searchPool.value = props.options.data.map(item => item.value);
+let searchPool = ref<SelectSearchPoolT>([]);
+searchPool.value = props.options.data.map((item: SelectDataType) => item.value);
 
 const idleBorderComputed = computed(() => {
     return props.idleBorder ? props.idleBorder : threadColor.value;
@@ -459,14 +465,14 @@ const selectionSummary = computed(() => {
     if(props.options.selected == null){
         return "None Selected";
     } else {
-        return props.options.data.filter((item) => {
+        return props.options.data.filter((item: SelectDataType) => {
             return item.value == props.options.selected;
         })[0].text;
     }
 });
 
 const selectionOffsetComputed = computed(()=>{
-    let offsetStyles = {};
+    let offsetStyles: { left?: string, right?: string } = {};
     let selectionRightAlign = props.dropAlign == 'right';
 
     if (selectionOffset.origin === null || !props.inHorizontalScrollable){
@@ -488,7 +494,7 @@ const selectionOffsetComputed = computed(()=>{
 });
 
 const selectionWidthComputed = computed(()=>{
-    let widthStyles = {};
+    let widthStyles: { width?: string, "min-width"?: string } = {};
 
     if(selectionHeaderWidth.value === null || props.selectionMaxContent){
         widthStyles['width'] = 'max-content';
@@ -508,7 +514,8 @@ function keepFocusAlive(){
         active.value = true;
     }
     nextTick(() => {
-        if(props.searchable){
+        if(props.searchable && selectionSearch.value){
+            //@ts-ignore
             selectionSearch.value.$refs.input.focus();
         }
 
@@ -530,7 +537,7 @@ function loseFocus(chain: Boolean = false){
     }, 10);
 }
 
-function selectItem(item: any): void{
+function selectItem(item: SelectValueInterface): void{
     if(isItemSelected(item)){
         props.options.selected = null;
     } else {
@@ -540,27 +547,27 @@ function selectItem(item: any): void{
     loseFocus();
 }
 
-function isItemSelected(item): boolean{
+function isItemSelected(item: SelectValueInterface): boolean{
     return props.options.selected == item.value;
 }
 
-function isItemInSearchPool(item): boolean{
+function isItemInSearchPool(item: SelectValueInterface): boolean{
     return searchPool.value.indexOf(item.value) >= 0;
 }
 
 function searchSelection(){
     if (!props.options.search.trim()){
-        searchPool.value = props.options.data.map(item => item.value);
+        searchPool.value = props.options.data.map((item: SelectDataType) => item.value);
     } else {
-        searchPool.value = props.options.data.filter(data => {
+        searchPool.value = props.options.data.filter((data: SelectDataType) => {
             return data.text.toLowerCase().indexOf(props.options.search.toLowerCase()) > -1
-        }).map(item => item.value);
+        }).map((item: SelectDataType) => item.value);
     }
 }
 
 function clearSearch(){
     props.options.search = "";
-    searchPool.value = props.options.data.map(item => item.value);
+    searchPool.value = props.options.data.map((item: SelectDataType) => item.value);
 }
 
 watch(selectParentFocused, (focused) => {
@@ -590,7 +597,7 @@ function searchInputFocusStateChangedHandler(focused: boolean) {
     }
 }
 
-function keyHandler(event) {
+function keyHandler(event: KeyboardEvent) {
     let key = event.which;
 
     if (event.shiftKey && event.keyCode === 9){
@@ -610,17 +617,17 @@ function handleBackTab() {
 
 watch(active, async (newValue) => {
     await nextTick();
-    selectionHeaderWidth.value = selectHeader.value.offsetWidth;
+    selectionHeaderWidth.value = selectHeader.value ? selectHeader.value.offsetWidth: null;
 
     if(props.inHorizontalScrollable){
         if(selectionOffset.origin === null){
-            selectionOffset.origin = selectionOrigin.value.offsetLeft;
+            selectionOffset.origin = selectionOrigin.value ? selectionOrigin.value.offsetLeft: null;
         }
 
         if(newValue){
             let originOffsetLeft = selectionOffset.origin;
-            let parentScrollLeft = props.scrollReference.scrollLeft;
-            let offsetLeft = originOffsetLeft - parentScrollLeft;
+            let parentScrollLeft = props.scrollReference?.scrollLeft ?? 0;
+            let offsetLeft = (originOffsetLeft ?? 0) - parentScrollLeft;
             selectionOffset.left = `${offsetLeft < 0 ? 0 : offsetLeft}px`;
         } else {
             selectionOffset.left = `${selectionOffset.origin}px`;
@@ -636,10 +643,10 @@ watch(active, async (newValue) => {
 
 onMounted(async () => {
     await nextTick();
-    selectionHeaderWidth.value = selectHeader.value.offsetWidth;
+    selectionHeaderWidth.value = selectHeader.value ? selectHeader.value.offsetWidth: null;
 
     if(props.alwaysActive){
-        if(props.dropAlign == 'right'){
+        if(props.dropAlign == 'right' && selectionOriginRef.value){
             selectionOffset.left = `calc(-${selectionOriginRef.value.offsetWidth}px + 100%)`;
         }
     }
@@ -653,7 +660,7 @@ watch(() => props.options.selected, newValue => {
 </script>
 <style scoped>
 .navigation-mode:hover{
-    background-color: v-bind(accentColor20);
+    background-color: v-bind(accentColor40);
 }
 
 .background {

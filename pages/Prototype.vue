@@ -79,7 +79,7 @@
                     </div>
 
                     <!-- Paginated Single and MultiSelect -->
-                    <div v-if="false" class="grid gap-2 grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-8">
+                    <div v-if="true" class="grid gap-2 grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-8">
                         <div class="block neutral-border">
                             <InputLabel :size="'sm'" value="Paginated Multi Select" />
                             <MultiSelectPaginated
@@ -1033,7 +1033,7 @@
                     </div>
 
                     <!-- Flat Button -->
-                    <div v-if="false" class="grid gap-2 grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-9">
+                    <div v-if="true" class="grid gap-2 grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-9">
                         <div class="flex items-start justify-start block neutral-border">
                             <Button :variant="'flat'" :size="'2xs'" :icon="'ic:sharp-dashboard'" :label="'XXS Button'"></Button>
                         </div>
@@ -1044,10 +1044,10 @@
                             <Button :variant="'flat'" :size="'sm'" :icon="'ic:sharp-dashboard'" :label="'SM Authenticate'"></Button>
                         </div>
                         <div class="flex items-start justify-start block neutral-border">
-                            <Button :variant="'flat'" :flat-border-color="threadColor.value" :size="'md'" :icon="'ic:sharp-dashboard'" :label="'MD Authenticate'"></Button>
+                            <Button :variant="'flat'" :flat-border-color="threadColor" :size="'md'" :icon="'ic:sharp-dashboard'" :label="'MD Authenticate'"></Button>
                         </div>
                         <div class="flex items-start justify-start block neutral-border">
-                            <Button :variant="'flat'" :flat-border-color="liningColor.value" :icon="'eos-icons:compass'" :label="'Disabled'"></Button>
+                            <Button :variant="'flat'" :flat-border-color="liningColor" :icon="'eos-icons:compass'" :label="'Disabled'"></Button>
                         </div>
                         <div class="col-span-2 flex items-start justify-start block w-full neutral-border">
                             <Button @click="$themeStore.setTheme('emerald')" :variant="'flat'" :size="'lg'" :icon="'mdi:palette-swatch-variant'" :disabled="true" :label="'Emerald Theme'"></Button>
@@ -1168,24 +1168,24 @@
                         <div class="neutral-border">
                         </div>
                         <div class="neutral-border">
-                            <label v-for="category in categorySelection" :key="category">
+                            <label v-for="category in categorySelection" :key="category.text">
                                 <Checkbox v-model="category.value" :label="category.text" :size="'sm'" />
                             </label>
                         </div>
                         <div class="neutral-border">
-                            <label v-for="category in categorySelection" :key="category">
+                            <label v-for="category in categorySelection" :key="category.text">
                                 <Checkbox v-model="category.value" :label="category.text" :size="'md'" />
                             </label>
                         </div>
                         <div class="neutral-border">
-                            <label v-for="category in categorySelection" :key="category">
+                            <label v-for="category in categorySelection" :key="category.text">
                                 <Checkbox v-model="category.value" :label="category.text" :size="'lg'" />
                             </label>
                         </div>
                     </div>
 
                     <!-- Radio Group -->
-                    <div v-if="false" class="grid gap-2 grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-8">
+                    <div v-if="true" class="grid gap-2 grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-8">
                         <div class="flex items-start justify-start block neutral-border">
                             <div>
                                 <InputLabel :size="'md'" value="SM : Gender Group" />
@@ -1366,11 +1366,16 @@
 
 <script setup lang="ts">
 import dataPayload from '@/public/data/payload.js';
+import type {
+    DateTimePickerOptionsT,
+    DateTimePickerPayloadT
+} from "@/public/js/datetimepicker/type";
 definePageMeta({middleware: 'auth'});
 useLayout().setNavigationMode('solid', 'Prototype.vue');
 
 const clientReadyState = useClientReadyState();
 import {storeToRefs} from 'pinia';
+import type {TableHeaderT} from "public/js/types/data";
 const {$themeStore, $formStore} = useNuxtApp();
 const {
     thread: threadColor,
@@ -1430,15 +1435,15 @@ async function oFetchPost(){
             console.log("CALLBACK ON REQUEST ERROR");
             ofetchPending.value = false;
         },
-        onResponse: (request, response, options) => {
+        onResponse: (request, options, response) => {
             console.log("CALLBACK ON RESPONSE");
             ofetchPending.value = false;
-            ofetchData.value = response._data;
+            ofetchData.value = _get(response, '_data', '') as string;
         },
-        onSuccessResponse: (request, response, options) => {
+        onSuccessResponse: (request, options, response) => {
             console.log("CALLBACK ON SUCCESS RESPONSE");
         },
-        onNotAcceptableResponse: (request, response, options) => {
+        onNotAcceptableResponse: (request, options, response) => {
             console.log("CALLBACK ON NOT ACCEPTABLE RESPONSE");
         }
     });
@@ -1453,9 +1458,9 @@ async function oFetchNoPromptPost(){
         onRequestError: () => {
             ofetchNoPromptPending.value = false;
         },
-        onResponse: (request, response, options) => {
+        onResponse: (request, options, response) => {
             ofetchNoPromptPending.value = false;
-            ofetchNoPromptData.value = response._data;
+            ofetchNoPromptData.value = _get(response, '_data', '') as string;
         }
     }, false);
 }
@@ -1474,16 +1479,16 @@ const {
     onRequestError: async () => {
         console.log("CALLBACK ON REQUEST ERROR");
     },
-    onResponse: async (request, response, options) => {
+    onResponse: async (request, options, response) => {
         console.log("CALLBACK ON RESPONSE");
     },
-    onSuccessResponse: async (request, response, options) => {
+    onSuccessResponse: async (request, options, response) => {
         console.log("CALLBACK ON SUCCESS RESPONSE");
-        useFetchData.value = _get(response, "_data", '');
+        useFetchData.value = _get(response, '_data', '') as string;
     },
-    onNotAcceptableResponse: async (request, response, options) => {
+    onNotAcceptableResponse: async (request, options, response) => {
         console.log("CALLBACK ON NOT ACCEPTABLE RESPONSE");
-        useFetchData.value = _get(response, "_data", '');
+        useFetchData.value = _get(response, '_data', '') as string;
     }
 }, true);
 
@@ -1508,15 +1513,15 @@ let singleSelectPrototype = reactive(dataPayload['prototype']['singleSelectProto
 let singleSelectPrototypePayload = reactive(dataPayload['prototype']['singleSelectPrototypePayload']);
 
 let dataTable1Selected = ref(dataPayload['prototype']['dataTables']['1']['selected']);
-let dataTable1Headers = reactive(dataPayload['prototype']['dataTables']['1']['headers']);
+let dataTable1Headers = reactive<TableHeaderT[]>(dataPayload['prototype']['dataTables']['1']['headers'] as TableHeaderT[]);
 let dataTable1Data = ref(dataPayload['prototype']['dataTables']['1']['data']);
 
 let dataTable2Selected = ref(dataPayload['prototype']['dataTables']['2']['selected']);
-let dataTable2Headers = reactive(dataPayload['prototype']['dataTables']['2']['headers']);
+let dataTable2Headers = reactive<TableHeaderT[]>(dataPayload['prototype']['dataTables']['2']['headers'] as TableHeaderT[]);
 let dataTable2Data = ref(dataPayload['prototype']['dataTables']['2']['data']);
 
 let dataTable3Selected = ref(dataPayload['prototype']['dataTables']['3']['selected']);
-let dataTable3Headers = reactive(dataPayload['prototype']['dataTables']['3']['headers']);
+let dataTable3Headers = reactive<TableHeaderT[]>(dataPayload['prototype']['dataTables']['3']['headers'] as TableHeaderT[]);
 let dataTable3Data = ref(dataPayload['prototype']['dataTables']['3']['data']);
 
 //Render datetime picker for dataTable1Data row datetime added
@@ -1524,7 +1529,7 @@ let data_1_DateTimePickers = dataTable1Data.value.map(record => {
     return {
         id: `datetime_added-` + record.id,
         type: 'datetime',
-        selectedCallback: (payload) => {
+        selectedCallback: (payload: DateTimePickerPayloadT) => {
             record.datetime_added = payload.value;
         }
     }
@@ -1534,7 +1539,7 @@ let data_2_DateTimePickers = dataTable2Data.value.map(record => {
     return {
         id: `datetime_added-` + record.id,
         type: 'datetime',
-        selectedCallback: (payload) => {
+        selectedCallback: (payload: DateTimePickerPayloadT) => {
             record.datetime_added = payload.value;
         }
     }
@@ -1544,18 +1549,18 @@ let data_3_DateTimePickers = dataTable3Data.value.map(record => {
     return {
         id: `datetime_added-` + record.id,
         type: 'datetime',
-        selectedCallback: (payload) => {
+        selectedCallback: (payload: DateTimePickerPayloadT) => {
             record.datetime_added = payload.value;
         }
     }
 });
 
 //Render sample datetime pickers
-let dateTimePickers = ref([
+let dateTimePickers = ref<DateTimePickerOptionsT[]>([
     {
         id: 'datetime',
         type: 'datetime',
-        selectedCallback: (payload) => {
+        selectedCallback: (payload: DateTimePickerPayloadT) => {
             formStore.setFormFilterValue({
                 key: 'dateTime',
                 value: payload.value
@@ -1564,7 +1569,7 @@ let dateTimePickers = ref([
     }, {
         id: 'date',
         type: 'date',
-        selectedCallback: (payload) => {
+        selectedCallback: (payload: DateTimePickerPayloadT) => {
             formStore.setFormFilterValue({
                 key: 'date',
                 value: payload.value
@@ -1573,7 +1578,7 @@ let dateTimePickers = ref([
     }, {
         id: 'month',
         type: 'month',
-        selectedCallback: (payload) => {
+        selectedCallback: (payload: DateTimePickerPayloadT) => {
             formStore.setFormFilterValue({
                 key: 'monthValue',
                 value: payload.value

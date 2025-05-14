@@ -94,7 +94,11 @@
 
 <script setup lang="ts">
 import {storeToRefs} from 'pinia';
-const {$coreStore,$themeStore} = useNuxtApp();
+import type {
+    SelectDataType,
+    SingleSelectSelectionOffsetT
+} from "@/public/js/types/form";
+const {$themeStore} = useNuxtApp();
 const clientReadyState = useClientReadyState();
 
 const {
@@ -167,7 +171,7 @@ const props = defineProps({
         default: true
     },
     scrollReference: {
-        type: Object,
+        type: Object as PropType<HTMLElement | null>,
         default: null
     },
     icon: {
@@ -190,9 +194,9 @@ let tabindexInput = computed(() => {
     return tabindexComputed.value + 1;
 });
 let keepFocus = ref(false);
-let keepFocusCallback = ref(1);
-let selection = ref([]);
-let selected = ref({});
+let keepFocusCallback = ref<ReturnType<typeof setTimeout> | number>(1);
+let selection = ref<SelectDataType[]>([]);
+let selected = ref<SelectDataType | null>(null);
 let searchTriggered = ref(false);
 let page = ref(1);
 let perPage = computed(() => {
@@ -205,12 +209,12 @@ let selectionEndResult = reactive({
     'icon': 'eos-icons:loading',
     'label': 'Loading...',
 });
-let selectHeader = ref(null);
-let selectionOrigin = ref(null);
-let selectionWidth = ref(null);
-let selectionOffset = reactive({
+let selectHeader = ref<HTMLElement | null>(null);
+let selectionOrigin = ref<HTMLElement | null>(null);
+let selectionHeaderWidth = ref<number | null>(null);
+let selectionOffset = reactive<SingleSelectSelectionOffsetT>({
     origin: null,
-    left: 0
+    left: '0'
 });
 
 const { focused: selectParentFocused } = useFocus(selectParent);
@@ -349,28 +353,28 @@ const optionsArrowClass = computed(() => {
 });
 
 const selectionOffsetComputed = computed(()=>{
-    let offsetStyles = {};
+    let offsetStyles: { left?: string, right?: string } = {};
 
     if (selectionOffset.origin === null || !props.inHorizontalScrollable){
 
     } else {
-        offsetStyles['left'] = `${selectionOffset.left}px`
+        offsetStyles['left'] = selectionOffset.left
     }
 
     return offsetStyles;
 });
 
 const selectionWidthComputed = computed(()=>{
-    let widthStyles = {};
+    let widthStyles: { width?: string, "min-width"?: string } = {};
 
-    if(selectionWidth.value === null || props.selectionMaxContent){
+    if(selectionHeaderWidth.value === null || props.selectionMaxContent){
         widthStyles['width'] = 'max-content';
 
-        if(selectionWidth.value != null){
-            widthStyles['min-width'] = `${selectionWidth.value}px`;
+        if(selectionHeaderWidth.value != null){
+            widthStyles['min-width'] = `${selectionHeaderWidth.value}px`;
         }
     } else {
-        widthStyles['width'] = `${selectionWidth.value}px`;
+        widthStyles['width'] = `${selectionHeaderWidth.value}px`;
     }
 
     return widthStyles;
@@ -435,7 +439,8 @@ function keepFocusAlive(){
         active.value = true;
     }
     nextTick(() => {
-        if(props.searchable){
+        if(props.searchable && selectionSearch.value){
+            //@ts-ignore
             selectionSearch.value.$refs.input.focus();
         }
 
@@ -457,11 +462,11 @@ function loseFocus(chain: Boolean = false){
     }, 10);
 }
 
-function isItemSelected(item): boolean{
+function isItemSelected(item: SelectDataType): boolean{
     return props.payload.selected == item.value;
 }
 
-function selectItem(item: any): void{
+function selectItem(item: SelectDataType){
     if(isItemSelected(item)){
         props.payload.selected = null;
         selected.value = null;
@@ -489,20 +494,20 @@ watch(active, async (newValue) => {
 
     //If selection is in horizontal scrollable
     //set selection options offset left to align just below its selection header
-    selectionWidth.value = selectHeader.value.offsetWidth;
+    selectionHeaderWidth.value = selectHeader.value ? selectHeader.value.offsetWidth : null;
 
     if(props.inHorizontalScrollable){
         if(selectionOffset.origin === null){
-            selectionOffset.origin = selectionOrigin.value.offsetLeft;
+            selectionOffset.origin = selectionOrigin.value ? selectionOrigin.value.offsetLeft: null;
         }
 
         if(newValue){
             let originOffsetLeft = selectionOffset.origin;
-            let parentScrollLeft = props.scrollReference.scrollLeft;
-            let offsetLeft = originOffsetLeft - parentScrollLeft;
-            selectionOffset.left = offsetLeft < 0 ? 0 : offsetLeft;
+            let parentScrollLeft = props.scrollReference?.scrollLeft ?? 0;
+            let offsetLeft = (originOffsetLeft ?? 0) - parentScrollLeft;
+            selectionOffset.left = `${offsetLeft < 0 ? 0 : offsetLeft}px`;
         } else {
-            selectionOffset.left = selectionOffset.origin;
+            selectionOffset.left = `${selectionOffset.origin ?? 0}px`;
         }
     }
 });
@@ -534,7 +539,7 @@ function searchInputFocusStateChangedHandler(focused: boolean) {
     }
 }
 
-function keyHandler(event) {
+function keyHandler(event: KeyboardEvent) {
     let key = event.which;
 
     if (event.shiftKey && event.keyCode === 9){
@@ -572,7 +577,7 @@ const execute = async () => {
             selectionEndResult.icon = 'eos-icons:loading';
             selectionEndResult.label = 'Please wait...';
         },
-        onSuccessResponse: async (request, response, options) => {
+        onSuccessResponse: async (request, options, response) => {
             if(searchTriggered.value){
                 selection.value = [];
             }
@@ -628,10 +633,12 @@ const selectedExecute = async () => {
         onResponse: () => {
             pending.value = false;
         },
-        onSuccessResponse: (request, response, options) => {
-            let data = _get(response, '_data.values.selection.data', {});
+        onSuccessResponse: (request, options, response) => {
+            let data = _get(response, '_data.values.selection.data', []);
 
-            selected.value = _isEmpty(data[0]) ? {} : data[0];
+            const preSelected = _first(data);
+
+            selected.value = _isEmpty(preSelected) ? null : (preSelected ?? null);
         }
     });
 }
@@ -645,7 +652,7 @@ onMounted(async () => {
         let selectionOffsetWidth = selectHeader.value?.offsetWidth;
 
         if(selectionOffsetWidth !== null &&  selectionOffsetWidth !== undefined){
-            selectionWidth.value = selectionOffsetWidth;
+            selectionHeaderWidth.value = selectionOffsetWidth;
         }
     });
 });
@@ -656,7 +663,7 @@ watch(clientReadyState, async (clientReady) => {
             let selectionOffsetWidth = selectHeader.value?.offsetWidth;
 
             if(selectionOffsetWidth !== null &&  selectionOffsetWidth !== undefined){
-                selectionWidth.value = selectionOffsetWidth;
+                selectionHeaderWidth.value = selectionOffsetWidth;
             }
         });
     }

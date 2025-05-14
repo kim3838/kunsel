@@ -32,7 +32,7 @@
                     ]" />
             </div>
         </div>
-        <div class="relative z-[41] w-full flex justify-center neutral-border-top" :class="mainNavigationFontClass">
+        <div class="relative z-[41] w-full flex justify-center neutral-border-top-bottom" :class="mainNavigationFontClass">
             <div class="max-w-screen-2xl w-full flex justify-start px-[20px] lg:px-0 lg:justify-around" :class="mainNavigationHeightClass">
                 <div class="flex items-center">
                     <NavDrop
@@ -51,7 +51,7 @@
                                 :size="navigationHeaderSize"
                                 :to="navigation.to"
                                 :icon="navigation.icon"
-                                :active="$isRouteActive(navigation.route)">
+                                :active="isRouteActive(navigation.route)">
                                 {{navigation.title}}
                             </NavLink>
 
@@ -121,12 +121,14 @@ import {storeToRefs} from 'pinia';
 
 const {updateStoredAssociatedCompany} = useAssociation();
 const clientReadyState = useClientReadyState();
-const {$isRouteActive} = useNuxtApp();
+const nuxtApp = useNuxtApp();
+const isRouteActive = nuxtApp.$isRouteActive as (routeSlug: string | undefined) => boolean;
+
 const {isAuthenticated, user} = useAuth();
 const {width: screenWidth} = useScreen();
 const navDrop = resolveComponent('navDrop');
 const navigationHeightInPixelsModel = defineModel('navigationHeightInPixels');
-const navigation = ref(null);
+const navigation = ref<HTMLElement | null>(null);
 const {
     navigationLinks,
     navigationAccountLinks,
@@ -169,7 +171,9 @@ watch(clientReadyState, async (clientReady) => {
 })
 
 watch(screenWidth, value => {
-    setNavigationHeight(navigation.value.offsetHeight);
+    if (navigation.value) {
+        setNavigationHeight(navigation.value.offsetHeight);
+    }
 });
 
 const navigationHeaderSize = computed(() => {
@@ -207,7 +211,8 @@ const associatedCompaniesSelectOverrides = computed(() => {
     z-index: 30;
 }
 
-.neutral-border-top{
+.neutral-border-top-bottom{
     border-top: 1px solid v-bind(neutralColor);
+    border-bottom: 1px solid v-bind(neutralColor);
 }
 </style>

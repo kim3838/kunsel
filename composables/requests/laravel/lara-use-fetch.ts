@@ -1,10 +1,11 @@
 
 import type {UseFetchOptions} from "nuxt/app";
+import type {CallbackResponseT} from "@/public/js/types/request";
 
 export function laraUseFetch<T>(
     path: string,
     options: UseFetchOptions<T> = {},
-    callbacks: Object = {},
+    callbacks: CallbackResponseT = {},
     promptErrorResponse = true
 ){
     const {
@@ -18,10 +19,14 @@ export function laraUseFetch<T>(
         credentials: 'include',
         watch: false,
         server: false,
-        async onRequest(){
+        async onRequest({ request, options }){
             console.log({'LARA USEFETCH' : 'START: ' + baseURL + path})
 
-            await laraInterceptorOnRequest(callbacks, promptErrorResponse);
+            await laraInterceptorOnRequest(
+                callbacks,
+                promptErrorResponse,
+                {request: request, options: options}
+            );
         },
         async onRequestError({ request, options, error }) {
             console.log({'LARA USEFETCH ERROR' : error.message});
@@ -32,13 +37,13 @@ export function laraUseFetch<T>(
                 {request: request, options: options, error: error}
             );
         },
-        async onResponse({request, response, options}) {
+        async onResponse({request, options, response}) {
             console.log({'LARA USEFETCH ON-RESPONSE CODE' : response?._data?.code});
 
             await laraInterceptorOnResponse(
                 callbacks,
                 promptErrorResponse,
-                {request: request, response: response, options: options}
+                {request: request, options: options, response: response}
             );
         },
         ...options,

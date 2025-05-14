@@ -62,8 +62,8 @@ const navigationTextShadow = computed(()=>{
 const primaryColor50 = computed(() => {
     return primaryColor.value + hexAlpha.value['50'];
 });
-const accentColor20 = computed(() => {
-    return accentColor.value + hexAlpha.value['20'];
+const accentColor40 = computed(() => {
+    return accentColor.value + hexAlpha.value['40'];
 });
 
 
@@ -98,7 +98,7 @@ const headerFontClass = computed(() => {
     border-right-width: 1px;
     border-bottom-width: 2px;
     border-bottom-color: v-bind(primaryColor50);
-    background-color: v-bind(accentColor20);
+    background-color: v-bind(accentColor40);
 }
 
 .nav-link{
@@ -110,6 +110,6 @@ const headerFontClass = computed(() => {
 }
 
 .nav-link:hover{
-    background-color: v-bind(accentColor20);
+    background-color: v-bind(accentColor40);
 }
 </style>

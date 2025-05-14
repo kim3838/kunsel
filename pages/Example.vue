@@ -18,6 +18,7 @@
 </template>
 
 <script setup lang="ts">
+//@ts-nocheck
 definePageMeta({middleware: 'auth'});
 useLayout().setNavigationMode('solid', 'Example.vue');
 
@@ -43,7 +44,7 @@ async function oFetchGet(){
             console.log("CALLBACK ON REQUEST ERROR");
             ofetchPending.value = false;
         },
-        onResponse: (request, response, options) => {
+        onResponse: (request, options, response) => {
             console.log("CALLBACK ON RESPONSE");
             ofetchPending.value = false;
             ofetchData.value = response._data?.values?.return;

@@ -39,8 +39,12 @@
 
 <script setup lang="ts">
 import dataPayload from '@/public/data/payload.js';
+import type {Sequenceable, TableHeaderT} from "@/public/js/types/data";
+import type {SequenceableCompanyPayrollComponent} from "@/composables/settings/payroll/use-payroll-settings-company-compensation";
+const nuxtApp = useNuxtApp();
+const orderSequenceable = nuxtApp.$orderSequenceable as (data: Sequenceable[]) => void;
 
-const companyCompensationsHeaders = reactive([
+const companyCompensationsHeaders = reactive<TableHeaderT[]>([
     { text: 'Order', value: 'order', alignData: 'center'},
     { text: 'Name', value: 'name'},
     { text: 'Type', value: 'type'},
@@ -52,11 +56,11 @@ const companyCompensationsHeaders = reactive([
     { text: '', alignData: 'left', value: 'actions'},
 ]);
 
-const companyCompensationsData = ref(dataPayload['companyCompensations']);
+const companyCompensationsData = ref<SequenceableCompanyPayrollComponent[]>(dataPayload['companyCompensations']);
 const selectedCompanyCompensations = ref([]);
 
-function manualSorted(oldIndex, newIndex, row){
-    useNuxtApp().$orderSequenceable(companyCompensationsData.value);
+function manualSorted(){
+    orderSequenceable(companyCompensationsData.value);
 }
 </script>
 

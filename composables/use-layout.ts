@@ -1,4 +1,7 @@
 import {storeToRefs} from "pinia";
+import type {
+    NavigationLinkInterface
+} from "@/public/js/types/layout";
 
 export const useLayout = () => {
     const {isAuthenticated, destroyAuthentication} = useAuth();
@@ -7,10 +10,59 @@ export const useLayout = () => {
     const {body: bodyColor} = storeToRefs($themeStore);
     const navigationMode = useState('navigation-mode', () => 'clear-none-background');
 
-    const navigationAccountLinks = computed(() => {
-        let links: object[] = [];
+    const navigationAccountLinks = computed<NavigationLinkInterface[]>(() => {
+        let links: NavigationLinkInterface[] = [];
 
         if(isAuthenticated.value){
+
+            let debugRequests = [
+                {
+                    type: 'action',
+                    title: 'CSR Post',
+                    icon: 'material-symbols:request-quote-sharp',
+                    callback: async () => {
+                        await laraFetch("/api/utility/post", {
+                            method: 'POST',
+                        }, {
+                            onResponse: (request, options, response) => {
+                                //@ts-ignore
+                                console.log({'CSR POST RESPONSE' : response._data.code});
+                            }
+                        });
+                    },
+                },
+                {
+                    type: 'action',
+                    title: 'CSR Get',
+                    icon: 'material-symbols:request-quote-sharp',
+                    callback: async () => {
+                        await laraFetch("/api/user", {
+                            method: 'GET',
+                        }, {
+                            onResponse: (request, options, response) => {
+                                //@ts-ignore
+                                console.log({'CSR GET RESPONSE' : response._data.code});
+                            }
+                        });
+                    },
+                },
+                {
+                    type: 'action',
+                    title: 'CSR Get CSRF',
+                    icon: 'material-symbols:request-quote-sharp',
+                    callback: async () => {
+                        await laraFetch("/sanctum/csrf-cookie", {
+                            method: 'GET',
+                        }, {
+                            onResponse: (request, options, response) => {
+                                //@ts-ignore
+                                console.log({'CSR GET CSRF' : response._data.code});
+                            }
+                        });
+                    },
+                },
+            ];
+
             links = links.concat([
                 {
                     type: 'link',
@@ -26,52 +78,9 @@ export const useLayout = () => {
                         destroyAuthentication();
                     },
                 },
+                ...(debugRequests as NavigationLinkInterface[])
             ]);
 
-            let debugRequests = [
-                {
-                    type: 'action',
-                    title: 'CSR Post',
-                    icon: 'material-symbols:request-quote-sharp',
-                    callback: async () => {
-                        await laraFetch("/api/utility/post", {
-                            method: 'POST',
-                        }, {
-                            onResponse: (request, response, options) => {
-                                console.log({'CSR POST RESPONSE' : response._data.code});
-                            }
-                        });
-                    },
-                },
-                {
-                    type: 'action',
-                    title: 'CSR Get',
-                    icon: 'material-symbols:request-quote-sharp',
-                    callback: async () => {
-                        await laraFetch("/api/user", {
-                            method: 'GET',
-                        }, {
-                            onResponse: (request, response, options) => {
-                                console.log({'CSR GET RESPONSE' : response._data.code});
-                            }
-                        });
-                    },
-                },
-                {
-                    type: 'action',
-                    title: 'CSR Get CSRF',
-                    icon: 'material-symbols:request-quote-sharp',
-                    callback: async () => {
-                        await laraFetch("/sanctum/csrf-cookie", {
-                            method: 'GET',
-                        }, {
-                            onResponse: (request, response, options) => {
-                                console.log({'CSR GET CSRF' : response._data.code});
-                            }
-                        });
-                    },
-                },
-            ];
         } else {
             links.unshift({
                 type: 'link',
@@ -82,8 +91,8 @@ export const useLayout = () => {
 
         return links;
     });
-    const navigationLinks = computed(()=>{
-        let links: object[] = [];
+    const navigationLinks = computed<NavigationLinkInterface[]>(()=>{
+        let links: NavigationLinkInterface[] = [];
 
         links = links.concat([
             {
@@ -92,29 +101,24 @@ export const useLayout = () => {
                 to: '/',
                 route: 'index'
             },
-            ...[
-                {
-                    type: 'link',
-                    title: 'Prototype',
-                    to: '/prototype',
-                    route: 'prototype'
-                },
-                {
-                    type: 'link',
-                    title: 'Prototypes',
-                    to: '/prototypes',
-                    route: 'prototypes'
-                },
-            ],
-            ...(
-                isAuthenticated.value
-                    ? [{
-                        type: 'link',
-                        title: 'Settings',
-                        to: '/settings',
-                        route: 'settings'
-                    }] : []
-            ),
+            {
+                type: 'link',
+                title: 'Prototype',
+                to: '/prototype',
+                route: 'prototype'
+            },
+            {
+                type: 'link',
+                title: 'Prototypes',
+                to: '/prototypes',
+                route: 'prototypes'
+            },
+            ...(isAuthenticated.value ? [{
+                type: 'link',
+                title: 'Settings',
+                to: '/settings',
+                route: 'settings'
+            }] : []) as NavigationLinkInterface[],
             {
                 type: 'drop',
                 title: 'About',
@@ -144,7 +148,7 @@ export const useLayout = () => {
                     }
                 ]
             }
-        ]);
+        ] as NavigationLinkInterface[]);
 
         return links;
     })

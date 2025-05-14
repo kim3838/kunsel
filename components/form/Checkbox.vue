@@ -33,7 +33,7 @@ const checkBoxColor = computed(() => {
 });
 
 const props = defineProps({
-    modelValue: [Number, Boolean, String],
+    modelValue: [null, Number, Boolean, String],
     disabled: {
         type: Boolean,
         default: false

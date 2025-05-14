@@ -1,10 +1,14 @@
+
 import {defineStore} from 'pinia'
+import type {StoreAssociatedCompanyT} from "@/public/js/types/association";
 
 export const useAuthStore = defineStore('auth', () => {
 
     const SELECTED_ASSOCIATED_COMPANY_STORAGE_KEY = 'persist_company';
 
-    const associatedCompanies = ref({
+    const associatedCompanies = ref<{
+        singleSelectPayload: StoreAssociatedCompanyT;
+    }>({
         singleSelectPayload: {
             search: '',
             data: [],

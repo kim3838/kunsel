@@ -1,8 +1,16 @@
-export function dateTimePicker(options: any[] = []) {
+
+import type {
+    DateRangePickerOptions,
+    DateTimePickerOptionsT
+} from "@/public/js/datetimepicker/type";
+
+import moment from "moment";
+
+export function dateTimePicker(options: DateTimePickerOptionsT[] = []) {
     const {$moment} = useNuxtApp();
 
-    onMounted(async () => {
-        scaffold(options);
+    onMounted(async() => {
+        await scaffold(options);
     });
 
     onUnmounted(() => {
@@ -14,17 +22,19 @@ export function dateTimePicker(options: any[] = []) {
         const elements = document.getElementsByClassName("daterangepicker ltr single opensright");
 
         while (elements.length > 0) {
-            // @ts-ignore
-            elements[0].parentNode.removeChild(elements[0]);
+            if (elements[0].parentNode) {
+                elements[0].parentNode.removeChild(elements[0]);
+            }
         }
     }
 
-    async function scaffold(options){
+    async function scaffold(options: DateTimePickerOptionsT[]){
         await nextTick();
 
-        _forEach(options, option => {
+        _forEach(options, (option: DateTimePickerOptionsT) => {
             switch (option.type) {
                 case 'datetime':
+                    //@ts-ignore
                     $(`#${option.id}`).daterangepicker({
                         "singleDatePicker": true,
                         "showDropdowns": true,
@@ -36,14 +46,16 @@ export function dateTimePicker(options: any[] = []) {
                         locale: {
                             format: 'YYYY-MM-DD HH:mm:ss'
                         }
-                        // @ts-ignore
-                    }).on('apply.daterangepicker', function (event, picker) {
+
+                    }).on('apply.daterangepicker', function (event: any, pickerOptions: DateRangePickerOptions) {
+
                         option.selectedCallback({
-                            value: picker.startDate.format('YYYY-MM-DD HH:mm:ss')
+                            value: pickerOptions.startDate.format('YYYY-MM-DD HH:mm:ss')
                         });
                     });
                     break;
                 case 'date':
+                    //@ts-ignore
                     $(`#${option.id}`).daterangepicker({
                         "singleDatePicker": true,
                         "showDropdowns": true,
@@ -51,14 +63,15 @@ export function dateTimePicker(options: any[] = []) {
                         locale: {
                             format: 'YYYY-MM-DD'
                         }
-                        // @ts-ignore
-                    }, function (start, end, label) {
+
+                    }, function (startDate: moment.Moment, endDate: moment.Moment, label: string) {
                         option.selectedCallback({
-                            value: start.format('YYYY-MM-DD')
+                            value: startDate.format('YYYY-MM-DD')
                         });
                     });
                     break;
                 case 'month':
+                    //@ts-ignore
                     $(`#${option.id}`).daterangepicker({
                         "monthPicker": true,
                         "singleDatePicker": true,
@@ -83,16 +96,15 @@ export function dateTimePicker(options: any[] = []) {
                             ],
                             "firstDay": 1
                         }
-                        // @ts-ignore
-                    }).on('apply.daterangepicker', function (event, picker) {
 
-                        let picked = picker.selectedYear === undefined
-                            ? picker.startDate.format('YYYY-MM')
-                            : picker.selectedYear + '-' + (picker.selectedMonth + 1);
+                    }).on('apply.daterangepicker', function (event: any, pickerOptions: DateRangePickerOptions) {
 
-                        // @ts-ignore
+                        let picked = pickerOptions.selectedYear === undefined
+                            ? pickerOptions.startDate.format('YYYY-MM')
+                            : pickerOptions.selectedYear + '-' + (pickerOptions.selectedMonth + 1);
+
                         let value = $moment(picked, 'YYYY-MM-DD').format('YYYY-MM');
-                        // @ts-ignore
+
                         let label = $moment(picked, 'YYYY-MM').format('YYYY MMMM');
 
                         option.selectedCallback({
@@ -105,9 +117,9 @@ export function dateTimePicker(options: any[] = []) {
         })
     }
 
-    async function render(options: any[] = []){
+    async function render(options: DateTimePickerOptionsT[] = []){
         clearScaffold();
-        scaffold(options);
+        await scaffold(options);
     }
 
     return {render};

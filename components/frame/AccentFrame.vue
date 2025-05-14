@@ -43,8 +43,8 @@ const {
     tint: tintColor,
 } = storeToRefs($themeStore);
 
-const threadColor20 = computed(() => {
-    return threadColor.value + hexAlpha.value['20'];
+const accentColor40 = computed(() => {
+    return threadColor.value + hexAlpha.value['40'];
 });
 </script>
 <style scoped>
@@ -75,7 +75,7 @@ const threadColor20 = computed(() => {
     bottom: 1rem;
     left: 0rem;
     background-color: v-bind(tintColor);
-    border: 1px solid v-bind(threadColor20);
+    border: 1px solid v-bind(accentColor40);
 }
 
 .frame-thread-1{

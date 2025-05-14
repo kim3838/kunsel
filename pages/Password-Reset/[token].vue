@@ -78,8 +78,8 @@ if (!route.query.email) {
 let password = ref(null);
 
 const data = reactive({
-    email: route.query.email,
-    token: route.params.token,
+    email: route.query.email as string,
+    token: route.params.token as string,
     password: "password",
     password_confirmation: "password",
 });
@@ -89,6 +89,7 @@ if(clientReadyState.value){
     onMounted(async () => {
         await nextTick(()=>{
             if(password.value){
+                //@ts-ignore
                 password.value.$refs.input.focus();
             }
         });
@@ -100,6 +101,7 @@ watch(clientReadyState, async (clientReady) => {
     if(clientReady){
         await nextTick(() => {
             if(password.value){
+                //@ts-ignore
                 password.value.$refs.input.focus();
             }
         });
@@ -125,7 +127,7 @@ const executeResetPassword = async () => {
         onResponse: () => {
             pending.value = false;
         },
-        onSuccessResponse: (request, response, options) => {
+        onSuccessResponse: (request, options, response) => {
             $promptStore.setPrompt({
                 icon: 'mdi:key-chain',
                 title: 'Password Reset',

@@ -94,12 +94,17 @@
 </template>
 
 <script setup lang="ts">
+import type {DataTableMeta, TableHeaderT, TableRowT} from "@/public/js/types/data";
+
 const {$moment} = useNuxtApp();
 const clientReadyState = useClientReadyState();
 definePageMeta({middleware: ['auth', 'verified']});
 useLayout().setNavigationMode('solid', 'Prototypes/index.vue');
 
-let prototypes = reactive({
+let prototypes = reactive<{
+    data: TableRowT[];
+    meta: DataTableMeta
+}>({
     'data': [],
     'meta': {
         pagination: {
@@ -111,7 +116,7 @@ let prototypes = reactive({
         }
     }
 });
-let prototypeHeaders = reactive([
+let prototypeHeaders = reactive<TableHeaderT[]>([
     { text: '#', value: 'row_number'},
     { text: 'ID', value: 'id'},
     { text: 'NAME', value: 'name'},
@@ -124,7 +129,17 @@ let prototypeHeaders = reactive([
     // { text: 'DATE CREATED', alignData: 'left', value: 'created_at'},
     // { text: 'DATE UPDATED', alignData: 'left', value: 'updated_at'},
 ]);
-let filters = reactive({
+let filters = reactive<{
+    page: number,
+    perPage: number,
+    search: {
+        keyword: string,
+        callback: ReturnType<typeof setTimeout> | number
+    },
+    code: string,
+    datetimeFrom: string,
+    datetimeTo: string,
+}>({
     page: 1,
     perPage: 10,
     search: {
@@ -147,7 +162,7 @@ let pageComputed = computed({
             perPage: filters.perPage,
         }
     },
-    set(payload) {
+    set(payload: { key: 'page' | 'perPage', value: number }) {
         filters[payload.key] = payload.value;
     }
 });
@@ -180,7 +195,7 @@ let execute = async () => {
         onResponse: () => {
             pending.value = false;
         },
-        onSuccessResponse: (request, response, options) => {
+        onSuccessResponse: (request, options, response) => {
             prototypes.data = _get(response, '_data.values.data', []);
             prototypes.meta = _get(response, '_data.values.meta', {
                 pagination: {
@@ -200,8 +215,10 @@ watch(pending, async (newPending, oldPending) => {
     if (!newPending) {
         await nextTick();
         //Focus Submit Button
+        //@ts-ignore
         submitButton.value.$refs.button.focus();
         //Focus Search Input
+        //@ts-ignore
         searchInput.value.$refs.input.focus();
     }
 });
@@ -240,13 +257,13 @@ let filtersDateTimePickers = ref([
     {
         id: 'datetimefrom',
         type: 'datetime',
-        selectedCallback: (payload) => {
+        selectedCallback: (payload: {value: string}) => {
             filters.datetimeFrom = payload.value;
         }
     }, {
         id: 'datetimeto',
         type: 'datetime',
-        selectedCallback: (payload) => {
+        selectedCallback: (payload: {value: string}) => {
             filters.datetimeTo = payload.value;
         }
     }
@@ -259,7 +276,7 @@ function renderDateTimePickers(){
         return {
             id: `datetime_added-` + record.id,
             type: 'datetime',
-            selectedCallback: (payload) => {
+            selectedCallback: (payload: {value: string}) => {
                 record.datetime_added = payload.value;
             }
         }
@@ -270,7 +287,7 @@ function renderDateTimePickers(){
     render(dateTimePickers);
 }
 
-function manualSorted(oldIndex, newIndex, row){
+function manualSorted(){
     renderDateTimePickers();
 }
 

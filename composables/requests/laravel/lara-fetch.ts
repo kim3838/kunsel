@@ -1,10 +1,11 @@
 
 import type {UseFetchOptions} from "nuxt/app";
+import type {CallbackResponseT} from "@/public/js/types/request";
 
-export async function laraFetch<T>(
+export async function laraFetch<DataT, ErrorT>(
     path: string,
-    options: UseFetchOptions<T> = {},
-    callbacks: Object = {},
+    options: UseFetchOptions<DataT> = {},
+    callbacks: CallbackResponseT,
     promptErrorResponse = true
 ){
     const {
@@ -15,9 +16,9 @@ export async function laraFetch<T>(
     const {baseURL} = useRuntimeConfig().public;
 
     //Re-fetch csrf token when performing modifying action
-    if (process.client && ["post", "delete", "put", "patch"].includes(
-        options?.method?.toLowerCase() ?? ""
-    )) {
+    const method = options?.method ? String(options.method).toLowerCase() : "";
+
+    if (process.client && ["post", "delete", "put", "patch"].includes(method)) {
         await $fetch("/sanctum/csrf-cookie", {
             baseURL: baseURL,
             credentials: "include",
@@ -25,15 +26,19 @@ export async function laraFetch<T>(
     }
 
     await $fetch(baseURL + path, {
+        //@ts-ignore
         credentials: 'include',
-        async onRequest(){
+        //@ts-ignore
+        async onRequest({request, options}){
             console.log({'LARA 0FETCH' : 'START: ' + baseURL + path})
 
             await laraInterceptorOnRequest(
                 callbacks,
-                promptErrorResponse
+                promptErrorResponse,
+                {request: request, options: options}
             );
         },
+        //@ts-ignore
         async onRequestError({ request, options, error }) {
             console.log({'LARA 0FETCH ERROR' : error.message})
 
@@ -43,13 +48,14 @@ export async function laraFetch<T>(
                 {request: request, options: options, error: error}
             );
         },
-        async onResponse({request, response, options}) {
+        //@ts-ignore
+        async onResponse({request, options, response}) {
             console.log({'LARA 0FETCH RESPONSE CODE' : response?._data?.code})
 
             await laraInterceptorOnResponse(
                 callbacks,
                 promptErrorResponse,
-                {request: request, response: response, options: options}
+                {request: request, options: options, response: response}
             );
         },
         ...options,

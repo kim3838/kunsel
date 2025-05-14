@@ -1,8 +1,10 @@
+
 import {defineStore} from 'pinia';
 import moment from "moment";
+import type {StoreFormT} from "@/public/js/common/type";
 
 export const useFormStore = defineStore('form', {
-    state: () => {
+    state: (): StoreFormT => {
         return {
             filters: {
                 date: moment().format('YYYY-MM-DD'),
@@ -18,7 +20,7 @@ export const useFormStore = defineStore('form', {
     },
 
     actions: {
-        setFormFilterValue(payload){
+        setFormFilterValue(payload: {key: 'date' | 'dateTime' | 'monthValue' | 'monthLabel', value: any}){
             this.filters[payload.key] = payload.value;
         },
     },

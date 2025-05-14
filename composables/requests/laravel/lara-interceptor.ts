@@ -1,25 +1,30 @@
 
+import type {CallbackResponseT, InterceptorParametersT} from "@/public/js/types/request";
+
 export const laraInterceptor = () => {
     const coreStore = useCoreStore();
     const promptStore = usePromptStore();
     const user = userState();
 
-    async function onRequest(callbacks, promptErrorResponse = false, interceptorParameters = {}){
+    async function onRequest(callbacks: CallbackResponseT, promptErrorResponse = false, interceptorParameters: InterceptorParametersT){
         //Perform on request callback
         if(callbacks.onRequest && typeof callbacks.onRequest == 'function'){
-            await callbacks.onRequest();
+            await callbacks.onRequest(
+                interceptorParameters.request,
+                interceptorParameters.options,
+            );
         }
 
         coreStore.resetServiceError();
     }
 
-    async function onRequestError(callbacks, promptErrorResponse = false, interceptorParameters = {}){
+    async function onRequestError(callbacks: CallbackResponseT, promptErrorResponse = false, interceptorParameters: InterceptorParametersT){
         //Perform on request error callback
         if(callbacks.onRequestError && typeof callbacks.onRequestError == 'function'){
             await callbacks.onRequestError(
-                interceptorParameters?.request ?? null,
-                interceptorParameters?.options ?? null,
-                interceptorParameters?.error ?? null
+                interceptorParameters.request,
+                interceptorParameters.options,
+                interceptorParameters.error
             );
         }
 
@@ -33,22 +38,22 @@ export const laraInterceptor = () => {
         });
     }
 
-    async function onResponse(callbacks, promptErrorResponse = false, interceptorParameters = {}){
-        let request = interceptorParameters?.request ?? null;
-        let response = interceptorParameters?.response ?? null;
-        let options = interceptorParameters?.options ?? null;
-        let responseCode = response._data.code;
+    async function onResponse(callbacks: CallbackResponseT, promptErrorResponse = false, interceptorParameters: InterceptorParametersT){
+        let request = interceptorParameters.request;
+        let options = interceptorParameters.options;
+        let response = interceptorParameters.response;
+        let responseCode: number = _isEmpty(response) ? 0 : response._data.code;
 
         //Perform on response callback
         if(callbacks.onResponse && typeof callbacks.onResponse == 'function'){
-            await callbacks.onResponse(request, response, options);
+            await callbacks.onResponse(request, options, response);
         }
 
         if(responseCode == 200){
 
             //Perform success response callback
             if(callbacks.onSuccessResponse && typeof callbacks.onSuccessResponse == 'function'){
-                await callbacks.onSuccessResponse(request, response, options);
+                await callbacks.onSuccessResponse(request, options, response);
             }
         }
 
@@ -89,7 +94,7 @@ export const laraInterceptor = () => {
 
                     //Perform not acceptable response callback
                     if(callbacks.onNotAcceptableResponse && typeof callbacks.onNotAcceptableResponse == 'function'){
-                        await callbacks.onNotAcceptableResponse(request, response, options);
+                        await callbacks.onNotAcceptableResponse(request, options, response);
                     }
 
                     break;

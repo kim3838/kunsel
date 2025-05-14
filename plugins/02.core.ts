@@ -1,23 +1,23 @@
-import type {Sequenceable} from "@/composables/settings/payroll/use-payroll-settings-company-compensation";
+
+import type {Sequenceable} from "@/public/js/types/data";
 
 export default defineNuxtPlugin(nuxtApp => {
     const route = useRoute();
 
-    nuxtApp.provide('debug', function (key: string, payload: any) {
-        // @ts-ignore
+    nuxtApp.provide('debug', function (key: string, payload: any): void {
         console.log({[`${useNuxtApp().$moment().format('YYYY-MM-DD H:m:s')} DEBUG: ${key}`]: payload})
     });
 
-    nuxtApp.provide('ordinal', function (number: number | string) {
+    nuxtApp.provide('ordinal', function (num: number | string): string {
         let s = ["th", "st", "nd", "rd"];
         // @ts-ignore
-        let v = number % 100;
-        return number + (s[(v - 20) % 10] || s[v] || s[0]);
+        let v = num % 100;
+        return num + (s[(v - 20) % 10] || s[v] || s[0]);
     });
 
-    nuxtApp.provide('toRomanNumeral', function (number: number) {
+    nuxtApp.provide('toRomanNumeral', function (num: number): string {
 
-        if(number == 0){
+        if(num == 0){
             return 'i';
         }
 
@@ -40,20 +40,20 @@ export default defineNuxtPlugin(nuxtApp => {
         let result = "";
         for (let i = 0; i < romanNumerals.length; i++) {
             const { value, symbol } = romanNumerals[i];
-            while (number >= value) {
+            while (num >= value) {
                 result += symbol;
-                number -= value;
+                num -= value;
             }
         }
         return result;
     });
 
-    nuxtApp.provide('isRouteActive', function (routeSlug: string) {
+    nuxtApp.provide('isRouteActive', function (routeSlug: string | undefined): boolean {
         // @ts-ignore
         return [route.path, _toLower(route.name)].indexOf(_toLower(routeSlug)) >= 0;
     });
 
-    nuxtApp.provide('orderSequenceable', function (data: Sequenceable[]) {
+    nuxtApp.provide('orderSequenceable', function (data: Sequenceable[]): void {
 
         let order = 0;
 

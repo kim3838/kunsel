@@ -5,7 +5,8 @@
 </template>
 
 <script setup lang="ts">
-const {$ordinal} = useNuxtApp();
+const nuxtApp = useNuxtApp();
+const $ordinal = nuxtApp.$ordinal as (num: number | string) => string;
 
 const props = defineProps({
     pagination: {

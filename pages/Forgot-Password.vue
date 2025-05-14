@@ -53,6 +53,7 @@ if(clientReadyState.value){
     onMounted(async () => {
         await nextTick(()=>{
             if(emailInput.value){
+                //@ts-ignore
                 emailInput.value.$refs.input.focus();
             }
         });
@@ -64,6 +65,7 @@ watch(clientReadyState, async (clientReady) => {
     if(clientReady){
         await nextTick(() => {
             if(emailInput.value){
+                //@ts-ignore
                 emailInput.value.$refs.input.focus();
             }
         });
@@ -94,7 +96,7 @@ const executeForgotPassword = async () => {
         onResponse: () => {
             pending.value = false;
         },
-        onSuccessResponse: (request, response, options) => {
+        onSuccessResponse: (request, options, response) => {
             $promptStore.setPrompt({
                 icon: 'ic:outline-mark-email-read',
                 title: 'Password Reset',

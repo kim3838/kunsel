@@ -1,9 +1,28 @@
+
 import {defineStore} from 'pinia'
+
+type PaletteNames = 'light' | 'dark' | 'blue' | 'tulip' | 'emerald';
+
+type ThemeT = {
+    type: string;
+    primary: string;
+    secondary: string;
+    accent: string;
+    lining: string;
+    thread: string;
+    neutral: string;
+    tint: string;
+    body: string;
+    shade: string;
+    text: string;
+    'text-invert': string;
+    'text-secondary': string;
+}
 
 export const useThemeStore = defineStore('theme', {
     state: () => {
         return {
-            appTheme: 'light',
+            appTheme: 'light' as PaletteNames,
             hexAlpha: {
                 '10': '19',
                 '20': '33',
@@ -117,55 +136,55 @@ export const useThemeStore = defineStore('theme', {
     },
 
     getters: {
-        getTheme() {
+        getTheme(): string {
             return this.appTheme;
         },
-        palletesComputed() {
+        palletesComputed(): ThemeT{
             return this.palletes[this.appTheme];
         },
-        type() {
+        type(): string {
             return this.palletesComputed['type'];
         },
-        primary() {
+        primary(): string {
             return this.palletesComputed['primary'];
         },
-        secondary() {
+        secondary(): string {
             return this.palletesComputed['secondary'];
         },
-        accent() {
+        accent(): string {
             return this.palletesComputed['accent'];
         },
-        lining() {
+        lining(): string {
             return this.palletesComputed['lining'];
         },
-        thread() {
+        thread(): string {
             return this.palletesComputed['thread'];
         },
-        neutral() {
+        neutral(): string {
             return this.palletesComputed['neutral'];
         },
-        tint() {
+        tint(): string {
             return this.palletesComputed['tint'];
         },
-        body() {
+        body(): string {
             return this.palletesComputed['body'];
         },
-        shade() {
+        shade(): string {
             return this.palletesComputed['shade'];
         },
-        text() {
+        text(): string {
             return this.palletesComputed['text'];
         },
-        textInvert() {
+        textInvert(): string {
             return this.palletesComputed['text-invert'];
         },
-        textSecondary() {
+        textSecondary(): string {
             return this.palletesComputed['text-secondary'];
         },
     },
 
     actions: {
-        setTheme(theme){
+        setTheme(theme: PaletteNames){
             if(theme != this.appTheme){
                 this.appTheme = theme;
             }

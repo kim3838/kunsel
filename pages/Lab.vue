@@ -520,6 +520,7 @@
 </template>
 
 <script setup lang="ts">
+//@ts-nocheck
 import dataPayload from '@/public/data/payload.js';
 // definePageMeta({middleware: 'guest'});
 useLayout().setNavigationMode('solid', 'Lab.vue');

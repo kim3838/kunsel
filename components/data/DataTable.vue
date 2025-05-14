@@ -67,6 +67,7 @@
 import {useSortable} from '@vueuse/integrations/useSortable';
 import {moveArrayElement} from '@vueuse/integrations/useSortable'
 import {storeToRefs} from 'pinia';
+import type {TableHeaderT, TableRowT} from "@/public/js/types/data";
 const {$themeStore} = useNuxtApp();
 
 const {
@@ -87,11 +88,11 @@ const liningColor10 = computed(() => {
 
 const props = defineProps({
     headers: {
-        type: Array,
+        type: Array as PropType<TableHeaderT[]>,
         default: () => [],
     },
     rows: {
-        type: Array,
+        type: Array as PropType<TableRowT[]>,
         default: () => [],
     },
     size: {
@@ -125,22 +126,24 @@ const {option} = useSortable(tableBody, props.rows, {
     ghostClass: 'sortable-ghost',
     chosenClass: 'sortable-chosen',
     dragClass: 'sortable-drag',
-    onUpdate: (draggedElement) => {
-        moveArrayElement(props.rows, draggedElement.oldIndex, draggedElement.newIndex, draggedElement);
+    onUpdate: (event: { oldIndex: number; newIndex: number; [key: string]: any }) => {
+        moveArrayElement(props.rows, event.oldIndex, event.newIndex, event);
 
         nextTick(() => {
-            emit('manualSorted', draggedElement.oldIndex, draggedElement.newIndex, draggedElement)
+            emit('manualSorted', event.oldIndex, event.newIndex, event)
         })
     }
 })
 
-function cellAlignClass(align = null){
-    return {
-        [null]: 'text-left',
-        'left': 'text-left',
-        'center': 'text-center',
-        'right': 'text-right',
-    }[align];
+function cellAlignClass(align: 'left' | 'center' | 'right' | undefined = undefined){
+
+    const alignmentClasses = {
+        left: 'text-left',
+        center: 'text-center',
+        right: 'text-right'
+    };
+
+    return alignmentClasses[align as keyof typeof alignmentClasses] ?? 'text-left';
 }
 
 function checkedAllCurrentSelection(): boolean {
@@ -153,11 +156,11 @@ function checkedAllCurrentSelection(): boolean {
     return result;
 }
 
-function isRowSelected(row): boolean{
+function isRowSelected(row: TableRowT): boolean{
     return props.modelValue.indexOf(row.id) >= 0;
 }
 
-function checkRow(row: any): void{
+function checkRow(row: TableRowT): void{
     if(isRowSelected(row)){
         _remove(props.modelValue, (value) => value == row.id);
     } else {
@@ -168,7 +171,7 @@ function checkRow(row: any): void{
 function toggleCheck(){
     if (checkedAllCurrentSelection()){
         let clearedCurrentRows = _remove(props.modelValue, function(id) {
-            let inCurrentRowIds = currentRowIds.value.indexOf(id) >= 0;
+            let inCurrentRowIds = currentRowIds.value.indexOf(id as string | number) >= 0;
             return !inCurrentRowIds;
         });
 

@@ -13,6 +13,7 @@
 </template>
 
 <script setup lang="ts">
+import type {SelectDataType} from "@/public/js/types/form";
 
 const props = defineProps({
     modelValue: {
@@ -21,10 +22,11 @@ const props = defineProps({
     },
     selections: {
         required: true,
-        type: Array,
+        type: Array as PropType<SelectDataType[]>,
     },
     size: {
-        default: null
+        type: String,
+        default: 'md'
     }
 });
 

@@ -1,9 +1,11 @@
 
+import type {AssociatedCompanyT, SelectedCompanyT} from "@/public/js/types/association";
+
 export const associatedCompanyState = () => {
-    return useState<{}>("associated_company", () => {
+    return useState<AssociatedCompanyT>("associated_company", () => {
         return {
             selection: [],
-            selected: [],
+            selected: null,
         }
     });
 };
@@ -18,10 +20,9 @@ export const useAssociation = () => {
             method: 'GET',
             params: {filters: {user_id: user?.value?.id}}
         }, {
-            onSuccessResponse: async (request, response, options) => {
-                let values = response._data.values;
-                let selection = values.selection;
-                let selected = values.selected;
+            onSuccessResponse: async (request, options, response) => {
+                let selection = _get(response, '_data.values.selection', []);
+                let selected = _get(response, '_data.values.selected', null);
 
                 associatedCompany.value = {
                     ...associatedCompany.value,
@@ -38,10 +39,9 @@ export const useAssociation = () => {
             method: 'GET',
             params: {filters: {user_id: user?.value?.id}}
         }, {
-            onSuccessResponse: async (request, response, options) => {
-                let values = response._data.values;
-                let selection = values.selection;
-                let selected = values.selected;
+            onSuccessResponse: async (request, options, response) => {
+                let selection = _get(response, '_data.values.selection', []);
+                let selected = _get(response, '_data.values.selected', null);
 
                 associatedCompany.value = {
                     ...associatedCompany.value,
@@ -60,10 +60,10 @@ export const useAssociation = () => {
 
             let associatedCompaniesSingleSelectPayload = $authStore.associatedCompanies.singleSelectPayload;
             let storedCompany = localStorage.getItem($authStore.SELECTED_ASSOCIATED_COMPANY_STORAGE_KEY);
-            let selectedCompany = storedCompany ? storedCompany : associatedCompany.value.selected;
+            let selectedCompany: SelectedCompanyT = storedCompany ? storedCompany : associatedCompany.value.selected;
 
             if(_isNull(storedCompany)){
-                localStorage.setItem($authStore.SELECTED_ASSOCIATED_COMPANY_STORAGE_KEY, associatedCompany.value.selected);
+                localStorage.setItem($authStore.SELECTED_ASSOCIATED_COMPANY_STORAGE_KEY, String(associatedCompany.value.selected));
             }
 
             $authStore.associatedCompanies.singleSelectPayload = {
@@ -75,13 +75,13 @@ export const useAssociation = () => {
         }
     }
 
-    const updateStoredAssociatedCompany = (newValue) => {
+    const updateStoredAssociatedCompany = (newValue: SelectedCompanyT) => {
         const {$authStore} = useNuxtApp();
 
         if(_isNull(newValue)){
             localStorage.removeItem($authStore.SELECTED_ASSOCIATED_COMPANY_STORAGE_KEY);
         } else {
-            localStorage.setItem($authStore.SELECTED_ASSOCIATED_COMPANY_STORAGE_KEY, newValue);
+            localStorage.setItem($authStore.SELECTED_ASSOCIATED_COMPANY_STORAGE_KEY, String(newValue));
         }
     }
 

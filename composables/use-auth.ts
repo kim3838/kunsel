@@ -1,3 +1,6 @@
+
+import type {FetchResponse, ResolvedFetchOptions} from "ofetch";
+
 export type User = {
     id: number | null,
     name: string | null,
@@ -28,8 +31,9 @@ export const useAuth = () => {
         await laraSsrUseFetch("/api/user", {
             method: 'GET',
         }, {
-            onSuccessResponse: async (request, response, options) => {
-                user.value = _get(response._data, 'values', undefined);
+            onSuccessResponse: async (request: RequestInfo, options: ResolvedFetchOptions, response: FetchResponse<any> | undefined) => {
+                const userData = _get(response, '_data.values', undefined);
+                user.value = userData as User | undefined;
             }
         });
     }
@@ -38,8 +42,9 @@ export const useAuth = () => {
         await laraFetch("/api/user", {
             method: 'GET',
         }, {
-            onSuccessResponse: async (request, response, options) => {
-                user.value = _get(response._data, 'values', undefined);
+            onSuccessResponse: async (request: RequestInfo, options: ResolvedFetchOptions, response: FetchResponse<any> | undefined) => {
+                const userData = _get(response, '_data.values', undefined);
+                user.value = userData as User | undefined;
             }
         }, false);
     }
@@ -71,7 +76,7 @@ export const useAuth = () => {
             onResponse: () => {
                 authPending.value = false;
             },
-            onSuccessResponse: async (request, response, options) => {
+            onSuccessResponse: async (request, options, response) => {
                 let twoFactorChallenge = _get(response, '_data.values.two_factor_challenge', false);
 
                 if(twoFactorChallenge){
@@ -118,7 +123,7 @@ export const useAuth = () => {
                     statusMessage: "Challenged user not found."
                 });
             },
-            onSuccessResponse: async (request, response, options) => {
+            onSuccessResponse: async (request, options, response) => {
                 await fetchUser();
                 await navigateTo({
                     path: '/',
@@ -137,7 +142,7 @@ export const useAuth = () => {
         await laraFetch("/api/logout", {
             method: 'POST'
         },{
-            onSuccessResponse: (request, response, options) => {
+            onSuccessResponse: (request, options, response) => {
                 logout();
                 navigateTo("/login", {replace: true});
             }

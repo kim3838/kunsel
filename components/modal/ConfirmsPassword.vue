@@ -98,7 +98,7 @@ const startConfirmingPassword = async () => {
         onResponse: () => {
             confirmingPasswordPending.value = false;
         },
-        onSuccessResponse: (request, response, options) => {
+        onSuccessResponse: (request, options, response) => {
             if(_get(response, '_data.values.confirmed', false)){
                 confirmingPassword.value = false;
                 emit('confirmed');
@@ -123,7 +123,7 @@ const confirmPassword = async () => {
         onResponse: () => {
             confirmPasswordPending.value = false;
         },
-        onSuccessResponse: (request, response, options) => {
+        onSuccessResponse: (request, options, response) => {
             closeModal();
             nextTick().then(() => emit('confirmed'));
         }

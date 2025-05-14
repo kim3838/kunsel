@@ -6,7 +6,7 @@ export default {
             'name': 'Salary',
             'type': {
                 'label': 'Salary',
-                'value': 'SALARY',
+                'value': 1,
             },
             'assignable': true,
             'formula': 'Standard-Salary',
@@ -18,7 +18,7 @@ export default {
             'name': 'Meal allowance',
             'type': {
                 'label': 'Regular Allowance',
-                'value': 'REGULAR_ALLOWANCE',
+                'value': 2,
             },
             'assignable': true,
             'formula': 'Standard-Meal',
@@ -30,7 +30,7 @@ export default {
             'name': 'Overtime',
             'type': {
                 'label': 'Overtime',
-                'value': 'OVERTIME',
+                'value': 3,
             },
             'assignable': false,
             'formula': 'Standard-Overtime',
@@ -42,7 +42,7 @@ export default {
             'name': '13th month',
             'type': {
                 'label': 'Benefit',
-                'value': 'BENEFIT',
+                'value': 4,
             },
             'assignable': false,
             'formula': 'Standard-13thMonth',
@@ -357,7 +357,7 @@ export default {
                     }
                 }
             },
-            selected: 1,
+            selected: 513,
         },
         'categorySelection': [
             {text : 'Charms', value: true},

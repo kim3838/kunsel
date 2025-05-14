@@ -15,19 +15,23 @@
                                 <div class="mt-4 grid gap-2 grid-cols-1 sm:grid-cols-2">
                                     <div>
                                         <InputLabel :size="'md'" value="Username" />
-                                        <InputWithIcon :size="'md'" class="w-full" :icon="'ic:sharp-person-pin'" v-model="userName" readonly />
-                                    </div>
-                                    <div>
-                                        <InputLabel :size="'md'" value="Email" />
-                                        <InputWithIcon :size="'md'" class="w-full" :icon="'ic:round-mail-outline'" v-model="userEmail" readonly />
-                                    </div>
-                                    <div>
-                                        <InputWithIcon
+                                        <UnorderedList
+                                            class="w-full font-data"
+                                            :icon="'ic:sharp-person-pin'"
                                             :size="'md'"
-                                            class="w-full"
+                                            :label="userName || undefined"/>
+                                    </div>
+                                    <div>
+                                        <UnorderedList
+                                            class="font-data"
                                             :icon="user?.email_verified_at ? 'ic:sharp-verified-user' : 'mdi:security-close'"
-                                            :placeholder="user?.email_verified_at ? 'Email Verified' : 'Email Not Verified'"
-                                            readonly />
+                                            :size="'md'"
+                                            :label="user?.email_verified_at ? 'Email Verified' : 'Email Not Verified'"/>
+                                        <UnorderedList
+                                            class="w-full font-data"
+                                            :icon="'ic:round-mail-outline'"
+                                            :size="'md'"
+                                            :label="userEmail || undefined"/>
                                     </div>
                                 </div>
                             </div>
@@ -64,7 +68,7 @@
                             <div v-if="!pendingBrowserSessions && browserSessions.length > 0" class="mt-5 space-y-6">
                                 <div v-for="(session, i) in browserSessions" :key="i" class="flex items-center">
                                     <div>
-                                        <ClientOnly><Icon class="h-8 w-8" :name="session.agent.platform ? 'zondicons:computer-desktop' : 'material-symbols:question-mark'"></Icon></ClientOnly>
+                                        <Icon class="h-8 w-8" :name="session.agent.platform ? 'zondicons:computer-desktop' : 'material-symbols:question-mark'"></Icon>
                                     </div>
 
                                     <div class="ms-3">
@@ -192,6 +196,8 @@
 </template>
 
 <script setup lang="ts">
+import type {BrowserSessionT} from "public/js/common/type";
+
 definePageMeta({middleware: 'auth'});
 useLayout().setNavigationMode('solid', 'Profile.vue');
 
@@ -204,13 +210,14 @@ const runtimeConfig = useRuntimeConfig();
 const presetPassword = process.env.NODE_ENV === 'development' ? runtimeConfig.public.devUserPassword : '';
 
 const user = userState();
-const userName = computed(() => _get(user.value, 'name', null));
-const userEmail = computed(() => _get(user.value, 'email', null));
+const userName = computed(() => _get(user.value, 'name', ''));
+const userEmail = computed(() => _get(user.value, 'email', ''));
 const twoFactorEnabled = computed(() => _get(user.value, 'two_factor_enabled', null));
 const twoFactorConfirmed = computed(() => _get(user.value, 'two_factor_confirmed', null));
 const twoFactorConfirming = ref(false);
 const pendingBrowserSessions = ref(false);
-const browserSessions = ref([]);
+const browserSessions = ref<BrowserSessionT[]>([]);
+type ApiResponse = { _data: { values: BrowserSessionT[] } };
 const setupKey = ref(null);
 const qrCode = ref(null);
 const recoveryCodes = ref([]);
@@ -248,7 +255,7 @@ const executeUpdatePassword = async () => {
         onResponse: () => {
             updatePasswordPending.value = false;
         },
-        onSuccessResponse: (request, response, options) => {
+        onSuccessResponse: (request, options, response) => {
             $promptStore.setPrompt({
                 icon: 'mdi:key-chain',
                 title: 'Update Password',
@@ -281,7 +288,7 @@ const executeLogoutOtherDevice = async () => {
         onResponse: () => {
             logoutOtherDevicePending.value = false;
         },
-        onSuccessResponse: (request, response, options) => {
+        onSuccessResponse: (request, options, response) => {
             $promptStore.setPrompt({
                 icon: 'mdi:key-chain',
                 title: 'Logout other device',
@@ -300,8 +307,8 @@ const executeLogoutOtherDevice = async () => {
                             onResponse: () => {
                                 pendingBrowserSessions.value = false;
                             },
-                            onSuccessResponse: (request, response, options) => {
-                                browserSessions.value = _get(response, "_data.values", []);
+                            onSuccessResponse: (request, options, response) => {
+                                browserSessions.value = (_get(response, "_data.values", []) as BrowserSessionT[]);
                             }
                         });
                     },
@@ -325,8 +332,10 @@ const executeEnableTwoFactor = async () => {
         onResponse: () => {
             enableTwoFactorPending.value = false;
         },
-        onSuccessResponse: (request, response, options) => {
-            user.value.two_factor_enabled = true;
+        onSuccessResponse: (request, options, response) => {
+            if (user.value) {
+                user.value.two_factor_enabled = true;
+            }
             twoFactorConfirming.value = true;
             executeTwoFactorSetupKey();
             executeTwoFactorQrCode();
@@ -348,7 +357,7 @@ const executeTwoFactorSetupKey = async () => {
         onResponse: () => {
             pendingTwoFactorSetupKey.value = false;
         },
-        onSuccessResponse: (request, response, options) => {
+        onSuccessResponse: (request, options, response) => {
             setupKey.value = _get(response, '_data.values.secret_key', null);
         }
     });
@@ -367,7 +376,7 @@ const executeTwoFactorQrCode = async () => {
         onResponse: () => {
             pendingTwoFactorQrCode.value = false;
         },
-        onSuccessResponse: (request, response, options) => {
+        onSuccessResponse: (request, options, response) => {
             qrCode.value = _get(response, '_data.values.svg', null);
         }
     });
@@ -385,8 +394,8 @@ onNuxtReady(async () => {
         onResponse: () => {
             pendingBrowserSessions.value = false;
         },
-        onSuccessResponse: (request, response, options) => {
-            browserSessions.value = _get(response, "_data.values", []);
+        onSuccessResponse: (request, options, response) => {
+            browserSessions.value = (_get(response, "_data.values", []) as BrowserSessionT[]);
         }
     });
 
@@ -409,7 +418,7 @@ const executeTwoFactorRecoveryCodes = async () => {
         onResponse: () => {
             pendingTwoFactorRecoveryCodes.value = false;
         },
-        onSuccessResponse: (request, response, options) => {
+        onSuccessResponse: (request, options, response) => {
             recoveryCodes.value = _get(response, '_data.values.recovery_codes', []);
         }
     });
@@ -432,9 +441,11 @@ const executeConfirmTwoFactor = async () => {
         onResponse: () => {
             confirmTwoFactorPending.value = false;
         },
-        onSuccessResponse: (request, response, options) => {
+        onSuccessResponse: (request, options, response) => {
             twoFactorConfirming.value = false;
-            user.value.two_factor_confirmed = true;
+            if (user.value) {
+                user.value.two_factor_confirmed = true;
+            }
             setupKey.value = null;
             qrCode.value = null;
             executeTwoFactorRecoveryCodes();
@@ -443,6 +454,7 @@ const executeConfirmTwoFactor = async () => {
                 title: 'Two-Factor Confirmed',
                 message: _get(response, '_data.message', ''),
                 action: {
+                    callback: null,
                     label: 'Okay'
                 }
             });
@@ -463,9 +475,11 @@ const executeDisableTwoFactor = async () => {
         onResponse: () => {
             disableTwoFactorPending.value = false;
         },
-        onSuccessResponse: (request, response, options) => {
-            user.value.two_factor_enabled = false;
-            user.value.two_factor_confirmed = false;
+        onSuccessResponse: (request, options, response) => {
+            if (user.value) {
+                user.value.two_factor_enabled = false;
+                user.value.two_factor_confirmed = false;
+            }
             twoFactorConfirming.value = false;
         }
     });

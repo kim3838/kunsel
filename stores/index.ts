@@ -1,14 +1,11 @@
-import {defineStore} from 'pinia'
 
-type serviceErrorType = {
-    prompt: boolean,
-    icon: string | null,
-    title: string | null,
-    payload: object | null
-}
+import {defineStore} from 'pinia'
+import type {ServiceErrorT} from "@/public/js/common/type";
 
 export const useCoreStore = defineStore('core', () => {
-    const service = ref({
+    const service = ref<{
+        error: ServiceErrorT;
+    }>({
         error: {
             prompt: false,
             title: null,
@@ -21,24 +18,23 @@ export const useCoreStore = defineStore('core', () => {
         return service.value.error;
     })
 
-    function setServiceError(serviceError: serviceErrorType){
+    function setServiceError(serviceError: ServiceErrorT){
 
         service.value.error = serviceError;
 
-        let that = this;
-        let errors = _flatten(Object.values(_get(serviceError, 'payload.errors', {})));
+        let errors = _flatten(Object.values(_get(serviceError, 'payload.errors', []))) as string[];
         let message = errors.length ? null : _get(serviceError, 'payload.message', null);
 
         if(_get(serviceError, 'prompt', false)){
             useNuxtApp().$promptStore.setPrompt({
-                show: serviceError.prompt,
-                icon: serviceError.icon,
-                title: serviceError.title,
+
+                icon: serviceError.icon ?? null,
+                title: serviceError.title ?? null,
                 message: message,
                 messageList: errors,
                 action: {
                     callback: () => {
-                        that.resetServiceError();
+                        resetServiceError();
                     },
                     label: 'Close'
                 }

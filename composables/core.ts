@@ -4,7 +4,7 @@ export const useClientReadyState = () => {
 };
 
 export const deviceState = () => {
-    const userAgent = navigator.userAgent || navigator.vendor || window.opera;
+    const userAgent = navigator.userAgent || navigator.vendor || (window as any).opera;
 
     // Check for mobile devices
     if (/android/i.test(userAgent)) {

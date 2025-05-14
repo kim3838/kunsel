@@ -53,7 +53,7 @@ const execute = async () => {
         onResponse: () => {
             pending.value = false;
         },
-        onSuccessResponse: (request, response, options) => {
+        onSuccessResponse: (request, options, response) => {
             $promptStore.setPrompt({
                 icon: 'ic:outline-mark-email-read',
                 title: 'Email Verification',

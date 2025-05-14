@@ -87,6 +87,7 @@ if(clientReadyState.value){
     onMounted(async () => {
         await nextTick(()=>{
             if(identifierInput.value){
+                //@ts-ignore
                 identifierInput.value.$refs.input.focus();
             }
         });
@@ -99,6 +100,7 @@ watch(clientReadyState, async (clientReady) => {
     if(clientReady){
         await nextTick(() => {
             if(identifierInput.value){
+                //@ts-ignore
                 identifierInput.value.$refs.input.focus();
             }
         });

@@ -25,7 +25,7 @@
                             :size="navigationHeaderSize"
                             :to="navigation.to"
                             :icon="navigation.icon"
-                            :active="$isRouteActive(navigation.route)">
+                            :active="isRouteActive(navigation.route)">
                             {{navigation.title}}
                         </NavLink>
 
@@ -77,12 +77,13 @@
 
 <script setup lang="ts">
 const clientReadyState = useClientReadyState();
-const {$isRouteActive} = useNuxtApp();
+const nuxtApp = useNuxtApp();
+const isRouteActive = nuxtApp.$isRouteActive as (routeSlug: string | undefined) => boolean;
 const {isAuthenticated, user} = useAuth();
 const {width: screenWidth} = useScreen();
 const navDrop = resolveComponent('navDrop');
 const navigationHeightInPixelsModel = defineModel('navigationHeightInPixels');
-const landingNavigation = ref(null);
+const landingNavigation = ref<HTMLElement | null>(null);
 const {
     navigationLinks,
     navigationAccountLinks,
@@ -117,7 +118,10 @@ watch(clientReadyState, async (clientReady) => {
 })
 
 watch(screenWidth, value => {
-    setNavigationHeight(landingNavigation.value.offsetHeight);
+    if(landingNavigation.value){
+        setNavigationHeight(landingNavigation.value.offsetHeight);
+    }
+
     navigationHeightInPixelsModel.value = navigationHeightInPixels.value;
 });
 </script>
