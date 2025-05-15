@@ -43,6 +43,7 @@ export default {
             default: false
         },
         maxWidth: {
+            type: [String, null],
             default: null
         },
         closeable: {

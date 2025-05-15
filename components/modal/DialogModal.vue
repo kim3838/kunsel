@@ -36,7 +36,7 @@ defineProps({
         default: false,
     },
     maxWidth: {
-        type: String,
+        type: [String, null],
         default: null,
     },
     closeable: {
