@@ -49,7 +49,7 @@ export default {
             default: false
         },
         maxWidth: {
-            default: '2xl'
+            default: null
         },
         closeable: {
             default: true

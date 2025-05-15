@@ -5,7 +5,6 @@
         </span>
 
         <DialogModal
-            :max-width="'lg'"
             :show="confirmingPassword"
             :closeable="false"
             @close="closeModal">

@@ -1,7 +1,6 @@
 <template>
     <ConfirmationModal
         :closeable="false"
-        :max-width="'lg'"
         :show="show"
         @close="$promptStore.promptAction()">
         <template #icon>

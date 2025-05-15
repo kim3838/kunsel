@@ -4,8 +4,8 @@
             <div class="absolute inset-0 modal-layer opacity-75"></div>
         </div>
 
-        <div v-show="show" class="h-full flex items-center thread-border">
-            <div  class="modal-body rounded-sm overflow-hidden w-full sm:w-full sm:mx-auto" :class="maxWidthClass">
+        <div v-show="show" class="h-full flex items-center relative z-[60] w-full px-2">
+            <div class="modal-body rounded-sm overflow-hidden mx-auto w-full" :style="[widthStyle]">
                 <slot></slot>
             </div>
         </div>
@@ -21,6 +21,7 @@ export default {
 
         const {
             primary: primaryColor,
+            secondary: secondaryColor,
             neutral: neutralColor,
             body: bodyColor,
             thread: threadColor,
@@ -28,6 +29,7 @@ export default {
 
         return {
             primaryColor,
+            secondaryColor,
             neutralColor,
             bodyColor,
             threadColor
@@ -41,7 +43,7 @@ export default {
             default: false
         },
         maxWidth: {
-            default: '2xl'
+            default: null
         },
         closeable: {
             default: true
@@ -61,28 +63,20 @@ export default {
     },
 
     computed: {
-        maxWidthClass() {
+        widthStyle() {
             return {
-                'sm': 'sm:max-w-sm',
-                'md': 'sm:max-w-md',
-                'lg': 'sm:max-w-lg',
-                'xl': 'sm:max-w-xl',
-                '2xl': 'sm:max-w-2xl',
-            }[this.maxWidth]
-        }
+                'max-width': this.maxWidth ? this.maxWidth : 'max-content'
+            }
+        },
     }
 }
 </script>
 <style scoped>
 .modal-layer{
-    background-color: transparent;
+    background-color: v-bind(secondaryColor);
 }
 
 .modal-body{
     background-color: v-bind(bodyColor);
-    border: 1px solid v-bind(threadColor);
-    filter:
-        drop-shadow(v-bind(threadColor) 0px 0px 0px)
-        drop-shadow(v-bind(threadColor) 0px 0px 7px);
 }
 </style>
