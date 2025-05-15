@@ -30,22 +30,28 @@
             </template>
 
             <template #footer>
-                <div class="flex space-x-2 justify-end">
-                    <UnorderedList
-                        v-if="confirmingPasswordPending && confirmingPassword"
-                        :icon="'eos-icons:loading'"
-                        :size="'md'"
-                        :label="'Please wait...'"/>
-                    <Button
-                        v-show="!confirmingPasswordPending"
-                        :disabled="confirmPasswordPending"
-                        @click="closeModal" :label="'Cancel'" />
+                <div class="flex space-x-2 justify-between">
+                    <div class="space-x-2 inline-flex">
+                        <div class="space-x-2 inline-flex items-center">
+                            <UnorderedList
+                                v-if="(confirmingPasswordPending && confirmingPassword) || confirmPasswordPending"
+                                :icon="'eos-icons:loading'"
+                                :size="'md'"
+                                :label="'Please wait...'"/>
+                        </div>
+                    </div>
+                    <div class="space-x-2 inline-flex items-center">
+                        <Button
+                            v-show="!confirmingPasswordPending"
+                            :disabled="confirmPasswordPending"
+                            @click="closeModal" :label="'Cancel'" />
 
-                    <Button
-                        v-show="!confirmingPasswordPending"
-                        :disabled="confirmPasswordPending"
-                        @click="confirmPassword"
-                        :label="button"/>
+                        <Button
+                            v-show="!confirmingPasswordPending"
+                            :disabled="confirmPasswordPending"
+                            @click="confirmPassword"
+                            :label="button"/>
+                    </div>
                 </div>
             </template>
         </DialogModal>
