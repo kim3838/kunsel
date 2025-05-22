@@ -17,6 +17,7 @@ module.exports = {
                     'Protest Revolution',
                 ],
                 business: [
+                    'Inclusive Sans',
                     'Roboto Flex',
                 ],
                 techno:[
