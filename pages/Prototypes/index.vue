@@ -77,7 +77,7 @@
                                             class="w-full" />
                                     </template>
                                     <template v-slot:cell.actions="{cell, slot, scrollReference}">
-                                        <div class="h-full space-x-0.5 w-full flex items-center">
+                                        <div class="h-full mx-0.5 space-x-0.5 w-full flex items-center">
                                             <Button type="button" :size="slot.buttonSize" :label="'Details'"></Button>
                                             <Button type="button" :size="slot.buttonSize" :label="'Approve'"></Button>
                                             <Button type="button" :size="slot.buttonSize" :label="'Deny'"></Button>
