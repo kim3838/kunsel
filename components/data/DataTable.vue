@@ -1,10 +1,13 @@
 <template>
     <div id="table-division" ref="dataTableScroll">
-        <table class="border-collapse font-data">
+        <!-- Disabled Layer -->
+        <div v-if="disabled" class="absolute disabled-overlay opacity-25 z-30"></div>
+
+        <table ref="tableReference" class="border-collapse font-data">
             <thead>
                 <tr>
                     <td v-if="selection" style="padding:3px 0.5rem;">
-                        <NonModelCheckBox :size="checkBoxSize" :checked="checkedAllCurrentSelection()" @click="toggleCheck()" />
+                        <NonModelCheckBox :disabled="disabled" :size="checkBoxSize" :checked="checkedAllCurrentSelection()" @click="toggleCheck()" />
                     </td>
                     <td v-if="manualSortable" :class="[headerFontClass]">
                         <div class="flex px-[3px]" >
@@ -72,6 +75,7 @@ const {$themeStore} = useNuxtApp();
 
 const {
     hexAlpha,
+    secondary: secondaryColor,
     neutral: neutralColor,
     lining: liningColor,
     thread: threadColor,
@@ -111,13 +115,33 @@ const props = defineProps({
     manualSortable: {
         type: Boolean,
         default: false,
+    },
+    disabled: {
+        type: Boolean,
+        default: false,
     }
 });
 
-let dataTableScroll = ref(null);
+const dataTableScroll = ref(null);
 
 const emit = defineEmits(["update:modelValue", "manualSorted"]);
 
+const dataTableReference = useTemplateRef('dataTableScroll');
+const tableReference = useTemplateRef('tableReference');
+const { width: dataTableReferenceWidth, height: dataTableReferenceHeight } = useElementSize(dataTableReference)
+const { width: tableReferenceWidth, height: tableReferenceHeight } = useElementSize(tableReference)
+
+const dataTableReferenceWidthComputed = computed(() => {
+    let width = dataTableReferenceWidth.value > tableReferenceWidth.value ? tableReferenceWidth.value : dataTableReferenceWidth.value;
+
+    return width + 'px';
+})
+const dataTableReferenceHeightComputed = computed(() => {
+
+    let height = dataTableReferenceHeight.value > tableReferenceHeight.value ? tableReferenceHeight.value : dataTableReferenceHeight.value;
+
+    return height + 'px';
+});
 const tableBody = useTemplateRef('tableBody');
 const {option} = useSortable(tableBody, props.rows, {
     handle: '.handleOrder',
@@ -294,5 +318,11 @@ tbody tr:nth-of-type(2n+1){
 .sortable-ghost {
     color: transparent !important;
     background-color: v-bind(neutralColor) !important;
+}
+
+.disabled-overlay {
+    background-color: v-bind(secondaryColor) !important;
+    height: v-bind(dataTableReferenceHeightComputed);
+    width: v-bind(dataTableReferenceWidthComputed);
 }
 </style>
