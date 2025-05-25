@@ -4,7 +4,8 @@ import type {
 } from "@/public/js/types/layout";
 
 export const useLayout = () => {
-    const {isAuthenticated, destroyAuthentication} = useAuth();
+    const {isAuthenticated, userIsSuperAdmin, destroyAuthentication} = useAuth();
+    const companyAssignmentTypeIsAdmin = companyAssignmentTypeIsAdminState();
     const {screenWidthBreakpoint, width: screenWidth, height: screenHeight } = useScreen();
     const $themeStore = useThemeStore();
     const {body: bodyColor} = storeToRefs($themeStore);
@@ -113,41 +114,44 @@ export const useLayout = () => {
                 to: '/prototypes',
                 route: 'prototypes'
             },
-            ...(isAuthenticated.value ? [{
+            ...((isAuthenticated.value && (userIsSuperAdmin.value || companyAssignmentTypeIsAdmin.value)) ? [{
                 type: 'link',
                 title: 'Settings',
                 to: '/settings',
                 route: 'settings'
             }] : []) as NavigationLinkInterface[],
-            {
-                type: 'drop',
-                title: 'About',
-                options: [
+            ...(!isAuthenticated.value ? [
                     {
-                        type: 'anchor-link',
-                        title: 'Latest news',
-                        icon: 'ic:baseline-arrow-right',
-                        to: '/#latest-news'
-                    },
-                ]
-            },
-            {
-                type: 'drop',
-                title: 'Help',
-                options: [
-                    {
-                        type: 'anchor-link',
-                        title: 'FAQ',
-                        icon: 'ic:baseline-arrow-right',
-                        to: '/#faq'
+                        type: 'drop',
+                        title: 'About',
+                        options: [
+                            {
+                                type: 'anchor-link',
+                                title: 'Latest news',
+                                icon: 'ic:baseline-arrow-right',
+                                to: '/#latest-news'
+                            },
+                        ]
                     },
                     {
-                        type: 'link',
-                        title: 'Support',
-                        icon: 'ic:baseline-arrow-right',
+                        type: 'drop',
+                        title: 'Help',
+                        options: [
+                            {
+                                type: 'anchor-link',
+                                title: 'FAQ',
+                                icon: 'ic:baseline-arrow-right',
+                                to: '/#faq'
+                            },
+                            {
+                                type: 'link',
+                                title: 'Support',
+                                icon: 'ic:baseline-arrow-right',
+                            }
+                        ]
                     }
-                ]
-            }
+                ] : []
+            ) as NavigationLinkInterface[]
         ] as NavigationLinkInterface[]);
 
         return links;

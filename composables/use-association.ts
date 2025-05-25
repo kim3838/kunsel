@@ -10,27 +10,34 @@ export const associatedCompanyState = () => {
     });
 };
 
+export const companyAssignmentTypeIsAdminState = () => {
+    return useState("company_assignment_type_is_admin", () => false);
+}
+
 export const useAssociation = () => {
     const user = userState();
+    const companyAssignmentTypeIsAdmin = companyAssignmentTypeIsAdminState();
     const associatedCompany = associatedCompanyState();
 
     const ssrFetchAssociatedCompanies = async() => {
 
-        await laraSsrUseFetch("/api/associated-companies", {
-            method: 'GET',
-            params: {filters: {user_id: user?.value?.id}}
-        }, {
-            onSuccessResponse: async (request, options, response) => {
-                let selection = _get(response, '_data.values.selection', []);
-                let selected = _get(response, '_data.values.selected', null);
+        await callOnce(async () => {
+            await laraSsrUseFetch("/api/associated-companies", {
+                method: 'GET',
+                params: {filters: {user_id: user?.value?.id}}
+            }, {
+                onSuccessResponse: async (request, options, response) => {
+                    let selection = _get(response, '_data.values.selection', []);
+                    let selected = _get(response, '_data.values.selected', null);
 
-                associatedCompany.value = {
-                    ...associatedCompany.value,
-                    selection: selection,
-                    selected: selected
+                    associatedCompany.value = {
+                        ...associatedCompany.value,
+                        selection: selection,
+                        selected: selected
+                    }
                 }
-            }
-        });
+            });
+        })
     }
 
     const fetchAssociatedCompanies = async() => {
@@ -59,36 +66,55 @@ export const useAssociation = () => {
             const {$authStore} = useNuxtApp();
 
             let associatedCompaniesSingleSelectPayload = $authStore.associatedCompanies.singleSelectPayload;
-            let storedCompany = localStorage.getItem($authStore.SELECTED_ASSOCIATED_COMPANY_STORAGE_KEY);
-            let selectedCompany: SelectedCompanyT = storedCompany ? storedCompany : associatedCompany.value.selected;
 
-            if(_isNull(storedCompany)){
-                localStorage.setItem($authStore.SELECTED_ASSOCIATED_COMPANY_STORAGE_KEY, String(associatedCompany.value.selected));
+            const storedCompany = useCookie<SelectedCompanyT>($authStore.SELECTED_ASSOCIATED_COMPANY_STORAGE_KEY);
+
+            if(storedCompany.value == undefined){
+                storedCompany.value = associatedCompany.value.selected;
             }
 
             $authStore.associatedCompanies.singleSelectPayload = {
                 ...associatedCompaniesSingleSelectPayload,
                 data: associatedCompany.value.selection,
                 selection: associatedCompany.value.selection,
-                selected: selectedCompany
+                selected: storedCompany.value
             };
+
+            updateCompanyAssignmentType(storedCompany.value);
         }
     }
 
     const updateStoredAssociatedCompany = (newValue: SelectedCompanyT) => {
         const {$authStore} = useNuxtApp();
+        const {userIsSuperAdmin} = useAuth();
+        const route = useRoute()
 
-        if(_isNull(newValue)){
-            localStorage.removeItem($authStore.SELECTED_ASSOCIATED_COMPANY_STORAGE_KEY);
-        } else {
-            localStorage.setItem($authStore.SELECTED_ASSOCIATED_COMPANY_STORAGE_KEY, String(newValue));
+        const storedCompany = useCookie<SelectedCompanyT>($authStore.SELECTED_ASSOCIATED_COMPANY_STORAGE_KEY);
+
+        storedCompany.value = newValue;
+
+        updateCompanyAssignmentType(newValue);
+
+        if(_toLower(String(route.name)) == 'settings' && !(userIsSuperAdmin.value || companyAssignmentTypeIsAdmin.value)){
+            return navigateTo("/", {replace: true});
         }
+    }
+
+    const updateCompanyAssignmentType = (selectedCompanyValue: null | number | string = null) => {
+
+        let selectedCompany = _find(
+            associatedCompany.value.selection,
+            {value: selectedCompanyValue !== null ? (typeof selectedCompanyValue === 'string' ? parseInt(selectedCompanyValue) : selectedCompanyValue) : null}
+        );
+
+        companyAssignmentTypeIsAdmin.value = selectedCompany?.payload?.assignment_type?.value == COMPANY_ASSIGNMENT_TYPE.ADMIN;
     }
 
     return {
         ssrFetchAssociatedCompanies,
         fetchAssociatedCompanies,
         storeAssociatedCompanies,
-        updateStoredAssociatedCompany
+        updateStoredAssociatedCompany,
+        updateCompanyAssignmentType
     };
 }

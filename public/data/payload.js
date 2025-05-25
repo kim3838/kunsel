@@ -1,61 +1,92 @@
 export default {
     'companyCompensations':[
         {
-            'id': 1001,
+            'id': 1,
             'order': 1,
-            'name': 'Salary',
+            'name': 'Basic Salary',
             'type': {
-                'label': 'Salary',
-                'value': 1,
+                'text': 'Salary',
+                'value': 0,
             },
             'assignable': true,
             'formula': 'Standard-Salary',
-            'start_date': null,
-            'end_date': null
+            'settings': null,
         },{
-            'id': 1002,
+            'id': 2,
             'order': 2,
             'name': 'Meal allowance',
             'type': {
-                'label': 'Regular Allowance',
-                'value': 2,
+                'text': 'Regular Allowance',
+                'value': 3,
             },
             'assignable': true,
             'formula': 'Standard-Meal',
-            'start_date': null,
-            'end_date': null
+            'settings': null,
         },{
-            'id': 1003,
+            'id': 3,
             'order': 3,
             'name': 'Overtime',
             'type': {
-                'label': 'Overtime',
-                'value': 3,
+                'text': 'Overtime',
+                'value': 1,
             },
-            'assignable': false,
+            'assignable': true,
             'formula': 'Standard-Overtime',
-            'start_date': null,
-            'end_date': null
+            'settings': null,
         },{
-            'id': 1004,
+            'id': 4,
             'order': 4,
             'name': '13th month',
             'type': {
-                'label': 'Benefit',
-                'value': 4,
+                'text': 'Benefit',
+                'value': 2,
             },
-            'assignable': false,
+            'assignable': true,
             'formula': 'Standard-13thMonth',
-            'start_date': 'Nov 02 of last year',
-            'end_date': 'Nov 01 of current year'
+            'settings': {
+                'start_date': 'Nov 02 of last year',
+                'end_date': 'Nov 01 of current year',
+            },
         },
     ],
+    'enums': {
+        'compensationTypes':[
+            {
+                'text': 'Salary',
+                'value': 1,
+            },
+            {
+                'text': 'Regular Allowance',
+                'value': 2,
+            },
+            {
+                'text': 'Overtime',
+                'value': 3,
+            },
+            {
+                'text': 'Benefit',
+                'value': 4,
+            }
+        ]
+    },
     'formulas': {
-        'companyCompensations:': [
-            'Standard-Salary',
-            'Standard-Overtime',
-            'Standard-Meal',
-            'Standard-13thMonth',
+        'companyCompensations': [
+            {
+                'text': 'Standard-Salary',
+                'value': 1,
+            },
+            {
+                'text': 'Standard-Overtime',
+                'value': 2,
+            },
+            {
+                'text': 'Standard-Meal',
+                'value': 3,
+            },
+            {
+                'text': 'Standard-13thMonth',
+                'value': 4,
+            }
         ]
     },
     'leftToRightItems': [

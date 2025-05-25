@@ -1,6 +1,6 @@
 
 import {defineStore} from 'pinia'
-import type {StoreAssociatedCompanyT} from "@/public/js/types/association";
+import type {SelectedCompanyT, StoreAssociatedCompanyT} from "@/public/js/types/association";
 
 export const useAuthStore = defineStore('auth', () => {
 
@@ -22,6 +22,9 @@ export const useAuthStore = defineStore('auth', () => {
     })
 
     function resetAssociatedCompanies() {
+        const storedCompany = useCookie<SelectedCompanyT>(SELECTED_ASSOCIATED_COMPANY_STORAGE_KEY);
+        storedCompany.value = null;
+
         associatedCompanies.value = {
             singleSelectPayload: {
                 search: '',

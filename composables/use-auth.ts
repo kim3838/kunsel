@@ -24,6 +24,7 @@ export const userState = () => {
 export const useAuth = () => {
     const user = userState();
     const isAuthenticated = computed(() => !!user.value);
+    const userIsSuperAdmin = computed(() => user.value?.type == USER_TYPE.SUPERADMIN);
     const authPending = ref(false);
     const {fetchAssociatedCompanies, storeAssociatedCompanies} = useAssociation();
 
@@ -157,6 +158,7 @@ export const useAuth = () => {
     return {
         user,
         isAuthenticated,
+        userIsSuperAdmin,
         fetchUser,
         ssrFetchUser,
         login,
