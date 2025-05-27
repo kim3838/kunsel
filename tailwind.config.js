@@ -32,6 +32,9 @@ module.exports = {
                 data: [
                     'Sofia Sans Semi Condensed',
                 ],
+                subData:[
+                    'Source Sans Pro'
+                ],
                 header: [
                     'IBM Plex Sans Condensed',
                 ],

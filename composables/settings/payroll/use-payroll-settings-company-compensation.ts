@@ -8,8 +8,6 @@ export type CompanyPayrollComponent = {
     type: Enum,
     assignable: boolean,
     formula: string | null,
-    start_date: string | null,
-    end_date: string | null,
 }
 
 export type SequenceableCompanyPayrollComponent = CompanyPayrollComponent & SequenceableTableRow;
