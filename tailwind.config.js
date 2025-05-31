@@ -17,6 +17,8 @@ module.exports = {
                     'Protest Revolution',
                 ],
                 business: [
+                    'Radio Canada Big',
+                    'Bricolage Grotesque',
                     'Inclusive Sans',
                     'Roboto Flex',
                 ],
@@ -44,6 +46,7 @@ module.exports = {
                     'Source Sans Pro',
                 ],
                 serif : [
+                    'Quintessential',
                     'Playfair Display',
                     'Oranienbaum',
                     'Instrument Serif',
