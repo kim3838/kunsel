@@ -4,8 +4,8 @@
         tabindex="0"
         :style="{'text-shadow': navigationTextShadow, 'font-family': fontFamily}"
         :class="[classes]"
-        class="nav-drop h-full px-2 py-1 cursor-pointer focus:outline-none focus:ring-transparent focus:ring-1">
-        <Icon v-if="icon" :name="icon" class="mr-1" />
+        class="nav-drop relative inline-flex items-center h-full px-2 py-1 cursor-pointer focus:outline-none">
+        <Icon v-if="icon" :class="[iconClass]" :name="icon" class="mr-1" />
         <span :class="[headerFontClass]">{{title}}</span>
         <Icon :class="[dropDownIconClass]" :name="navDropIcon"/>
         <div
@@ -42,7 +42,7 @@
 
                     <NavDrop
                         class="w-full"
-                        v-if="dropOption.type === 'drop'"
+                        v-if="_includes([ 'drop', 'sub-nav'], dropOption.type)"
                         :parent="false"
                         :size="childDropSize"
                         :drop-justify="'right'"
@@ -237,6 +237,16 @@ const optionsArrowClass = computed(() => {
     }
 });
 
+const iconClass = computed(() => {
+    return {
+        '2xs': 'h-4 w-4',
+        'xs': 'h-5 w-5',
+        'sm': 'h-5 w-5',
+        'md': 'h-5 w-5',
+        'lg': 'h-8 w-8'
+    }[props.size];
+});
+
 const dropDownIconClass = computed(() => {
     return {
         '2xs': 'h-4 w-4',
@@ -254,9 +264,6 @@ const dropDownIconClass = computed(() => {
 
 .nav-drop{
     color: v-bind(navigationLinkColor);
-    position: relative;
-    display: inline-flex;
-    align-items: center;
 }
 .nav-drop:hover{
     background-color: v-bind(accentColor40);

@@ -1,7 +1,7 @@
 <template>
     <div>
         <DefaultWrapper>
-            <div class="mx-auto pt-4 max-w-screen-2xl">
+            <div class="mx-auto pt-4 max-w-screen-2xl scaffold-border-left-bottom-right">
                 <div>Tailwind Url: <a class="text-sky-600" href="_tailwind" target="_blank">{{('http://localhost:3000' + '/_tailwind/')}}</a></div>
 
                 <div class="space-y-2">

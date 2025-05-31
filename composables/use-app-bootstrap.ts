@@ -3,7 +3,11 @@ import {storeToRefs} from "pinia";
 export const useAppBootstrap = () => {
 
     const {storeAssociatedCompanies} = useAssociation();
-    const {$themeStore} = useNuxtApp();
+    const {$themeStore, $layoutStore} = useNuxtApp();
+
+    const {
+        activeSubNavigationLink,
+    } = useLayout();
 
     const ssrBoot = async () => {
 
@@ -20,6 +24,8 @@ export const useAppBootstrap = () => {
     const boot = async() => {
 
         await storeAssociatedCompanies();
+
+        $layoutStore.setSubNavigationOptions(_get(activeSubNavigationLink.value, 'options', []));
 
         const {
             appTheme,

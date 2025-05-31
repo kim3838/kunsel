@@ -1,6 +1,6 @@
 <template>
     <footer>
-        <div class="mx-auto max-w-screen-2xl px-4 pb-6 pt-16 sm:px-6 lg:px-8">
+        <div class="mx-auto max-w-screen-2xl px-4 pb-6 pt-16 sm:px-6 lg:px-8 scaffold-border-left-bottom-right">
             <div class="mx-auto max-w-screen-lg grid grid-cols-1 gap-2 mt-8 lg:mt-0 sm:grid-cols-2 md:grid-cols-5 lg:col-span-3">
 
                 <div class="text-center sm:text-left md:col-span-2">

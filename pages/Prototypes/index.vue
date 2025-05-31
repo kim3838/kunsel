@@ -1,10 +1,10 @@
 <template>
     <div>
         <DefaultWrapper>
-            <div class="mx-auto max-w-screen-2xl">
+            <div class="mx-auto max-w-screen-2xl scaffold-border-left-bottom-right">
                 <div>
-                    <form @submit.prevent="paginate(1, true)" class="space-y-2 my-4 p-[20px] neutral-border">
-                        <div class="grid gap-2 grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-8">
+                    <form @submit.prevent="paginate(1, true)" class="space-y-2 p-[20px]">
+                        <div class="grid gap-2 grid-cols-1 sm:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-8">
                             <div class="block">
                                 <InputLabel :size="'sm'" value="Search"/>
                                 <Input :size="'md'" ref="searchInput" v-model="filters.search.keyword" class="w-full" placeholder="Search something" type="text" autocomplete="off"/>
@@ -15,7 +15,7 @@
                             </div>
                         </div>
 
-                        <div class="grid gap-2 grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-8">
+                        <div class="grid gap-2 grid-cols-1 sm:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-8">
                             <div class="block">
                                 <InputLabel :size="'sm'" value="Code"/>
                                 <Input :size="'md'" readonly v-model="filters.code" class="w-full" placeholder="Search something" type="text" autocomplete="off"/>
@@ -26,7 +26,7 @@
                             </div>
                         </div>
 
-                        <div class="grid gap-2 grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-8">
+                        <div class="grid gap-2 grid-cols-1 sm:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-8">
                             <div class="bloc">
                                 <InputLabel :size="'sm'" value="Date Added: From"/>
                                 <InputWithIcon :icon="'ion:calendar-number-sharp'" :id="'datetimefrom'" readonly v-model="filters.datetimeFrom" :size="'md'" class="w-full" />
@@ -37,14 +37,14 @@
                             </div>
                         </div>
 
-                        <div class="grid gap-2 grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-8">
+                        <div class="grid gap-2 grid-cols-1 sm:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-8">
                             <Button class="w-min" ref="submitButton" type="submit" :disabled="pending" :size="'md'" :icon="pending ? 'eos-icons:loading' : 'mdi:data'" :label="pending ? 'Loading' : 'Process'"></Button>
                         </div>
                     </form>
 
                     <AccentFrame>
                         <template #content>
-                            <div>
+                            <div class="pt-5">
                                 <PageInformation
                                     v-if="prototypes.meta.pagination.total > 0"
                                     :pagination="prototypes.meta.pagination"
@@ -95,7 +95,6 @@
 
 <script setup lang="ts">
 import type {DataTableMeta, TableHeaderT, TableRowT} from "@/public/js/types/data";
-
 const {$moment} = useNuxtApp();
 const clientReadyState = useClientReadyState();
 definePageMeta({middleware: ['auth', 'verified']});
