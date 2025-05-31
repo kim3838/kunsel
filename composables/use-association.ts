@@ -18,6 +18,14 @@ export const useAssociation = () => {
     const user = userState();
     const companyAssignmentTypeIsAdmin = companyAssignmentTypeIsAdminState();
     const associatedCompany = associatedCompanyState();
+    const currentRouteNameIsCompanyAdminProtected = computed(() => {
+        const route = useRoute();
+
+        return _includes([
+            'settings-compensations',
+            'settings-deductions',
+        ], _toLower(String(route.name)));
+    });
 
     const ssrFetchAssociatedCompanies = async() => {
 
@@ -95,7 +103,7 @@ export const useAssociation = () => {
 
         updateCompanyAssignmentType(newValue);
 
-        if(_toLower(String(route.name)) == 'settings' && !(userIsSuperAdmin.value || companyAssignmentTypeIsAdmin.value)){
+        if(currentRouteNameIsCompanyAdminProtected.value && !(userIsSuperAdmin.value || companyAssignmentTypeIsAdmin.value)){
             return navigateTo("/", {replace: true});
         }
     }
