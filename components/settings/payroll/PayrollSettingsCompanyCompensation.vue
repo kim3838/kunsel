@@ -104,7 +104,7 @@ const disableDataTable = computed(() => {
 const companyCompensationsExecute = async () => {
     companyCompensationsPending.value = true;
 
-    await laraFetch("/api/company/compensations", {
+    await laraFetch("/api/compensations", {
         method: 'GET',
         params: {
             filters: {
@@ -186,7 +186,7 @@ const deleteSelected = async () => {
     selectedIds.forEach((id) => {
         batchDelete.push(
             new Promise((resolve, reject) => {
-                laraFetch(`/api/company/compensation/${id}`, {
+                laraFetch(`/api/compensation/${id}`, {
                     method: 'DELETE',
                 },{
                     onRequestError: (request, options, error) => {

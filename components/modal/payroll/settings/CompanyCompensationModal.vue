@@ -148,7 +148,7 @@ const compensationFormulaPending = ref(false)
 const compensationFormulaExecute = async () => {
     compensationFormulaPending.value = true;
 
-    await laraFetch("/api/selections/company/formulas", {
+    await laraFetch("/api/company-formula-selections", {
         method: 'GET',
         params: {
             filters: {
@@ -184,7 +184,7 @@ const compensationFormulaSettingsExecute = async (companyFormulaId: null | numbe
     if (_isNull(companyFormulaId)) return;
     compensationFormulaSettingsPending.value = true;
 
-    await laraFetch(`/api/company/formula/${companyFormulaId}`, {
+    await laraFetch(`/api/company-formula/${companyFormulaId}`, {
         method: 'GET',
     }, {
         onRequestError: () => {
@@ -237,7 +237,7 @@ const submitAction = computed(() => {
     return Boolean(props.editPayload.id) ? 'PATCH' : 'POST';
 });
 const submitPath = computed(() => {
-    return Boolean(props.editPayload.id) ? `/api/company/compensation/${props.editPayload.id}` : `/api/company/compensation`;
+    return Boolean(props.editPayload.id) ? `/api/compensation/${props.editPayload.id}` : `/api/compensation`;
 });
 
 const submitPending = ref(false);
