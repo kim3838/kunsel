@@ -1,8 +1,8 @@
 <template>
     <div class="scaffold-border-left-bottom-right">
         <div class="space-x-1 p-[20px]">
-            <Button class="inline-block" :size="'sm'" :label="'Create'" @click="create"/>
-            <Button class="inline-block" :size="'sm'" :label="'Delete selected'"/>
+            <Button class="inline-block" :size="'sm'" :label="'Create'" :disabled="disableActions" @click="create"/>
+            <Button class="inline-block" :size="'sm'" :label="'Delete selected'" :disabled="disableActions" @click="deleteSelected"/>
         </div>
 
         <CompanyCompensationModal
@@ -14,11 +14,16 @@
         <AccentFrame>
             <template #content>
                 <div class="pt-5">
+                    <UnorderedList
+                        v-if="disableActions"
+                        :icon="'eos-icons:loading'"
+                        :size="'md'"
+                        :label="'Please wait...'"/>
                     <DataTable
                         :headers="companyCompensationsHeaders"
                         :size="'lg'"
                         :rows="companyCompensationsData"
-                        :disabled="companyCompensationsPending"
+                        :disabled="disableDataTable"
                         v-model="selectedCompanyCompensations"
                         manual-sortable
                         @manualSorted="manualSorted"
@@ -46,7 +51,7 @@
                             </table>
                         </template>
                         <template v-slot:cell.actions="{cell, slot, scrollReference}">
-                            <Button class="mx-0.5" type="button" :size="slot.buttonSize" :label="'Edit'" @click="edit(cell)"></Button>
+                            <Button class="mx-0.5" type="button" :size="slot.buttonSize" :label="'Edit'" @click="edit(cell)" :disabled="disableActions"></Button>
                         </template>
                     </DataTable>
                 </div>
@@ -88,6 +93,13 @@ watch(selectedAssociatedCompany, (newValue) => {
 const companyCompensationsData = ref<SequenceableCompanyPayrollComponent[]>([]);
 const companyCompensationsPending = ref(false);
 const selectedCompanyCompensations = ref([]);
+
+const disableActions = computed(() => {
+    return companyCompensationsPending.value || creatingOrEditing.value || companyCompensationsReOrderPending.value || deleting.value;
+});
+const disableDataTable = computed(() => {
+    return companyCompensationsPending.value || deleting.value
+})
 
 const companyCompensationsExecute = async () => {
     companyCompensationsPending.value = true;
@@ -140,6 +152,7 @@ const companyCompensationsReOrderExecute = async () => {
 }
 
 const creatingOrEditing = ref(false);
+const deleting = ref(false);
 const editPayload = ref({});
 
 const manualSorted = async () => {
@@ -162,6 +175,38 @@ const create = () => {
 const edit = (cell: SequenceableCompanyPayrollComponent) => {
     creatingOrEditing.value = true;
     editPayload.value = cell;
+}
+
+const deleteSelected = async () => {
+    deleting.value = true;
+
+    const selectedIds = selectedCompanyCompensations.value;
+    let batchDelete: Promise<any>[] = [];
+
+    selectedIds.forEach((id) => {
+        batchDelete.push(
+            new Promise((resolve, reject) => {
+                laraFetch(`/api/company/compensation/${id}`, {
+                    method: 'DELETE',
+                },{
+                    onRequestError: (request, options, error) => {
+                        reject(error);
+                    },
+                    onResponse: (request, options, response) => {
+                        resolve(response);
+                    }
+                })
+            })
+        );
+    });
+
+    await Promise.all(batchDelete);
+    selectedCompanyCompensations.value = [];
+    await companyCompensationsExecute();
+    orderSequenceable(companyCompensationsData.value);
+    await companyCompensationsReOrderExecute();
+
+    deleting.value = false;
 }
 </script>
 

@@ -65,9 +65,20 @@
             </div>
         </template>
         <template #footer>
-            <div class="flex space-x-2 justify-end">
-                <Button :disabled="disableActions" @click="submit" :label="actionLabel" />
-                <Button :disabled="disableActions" @click="closeModal" :label="'Cancel'" />
+            <div class="flex space-x-2 justify-between">
+                <div class="space-x-2 inline-flex">
+                    <div class="space-x-2 inline-flex items-center">
+                        <UnorderedList
+                            v-if="disableActions"
+                            :icon="'eos-icons:loading'"
+                            :size="'md'"
+                            :label="'Please wait...'"/>
+                    </div>
+                </div>
+                <div class="space-x-2 inline-flex items-center">
+                    <Button :disabled="disableActions" @click="submit" :label="actionLabel" />
+                    <Button :disabled="disableActions" @click="closeModal" :label="'Cancel'" />
+                </div>
             </div>
         </template>
     </DialogModal>
