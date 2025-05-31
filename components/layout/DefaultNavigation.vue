@@ -2,8 +2,8 @@
     <nav
         ref="navigation"
         class="primary-navigation-parent z-40 fixed">
-        <div class="relative z-[42] w-full flex justify-center"  :class="mainNavigationFontClass">
-            <div class="max-w-screen-2xl w-full flex justify-end">
+        <div class="relative z-[42] w-full flex justify-center font-[Inclusive_Sans]">
+            <div class="max-w-screen-2xl w-full flex justify-end h-5 scaffold-border-left-right">
                 <NavLink
                     class="h-full"
                     :size="`xs`">
@@ -32,26 +32,27 @@
                     ]" />
             </div>
         </div>
-        <div class="relative z-[41] w-full flex justify-center neutral-border-top-bottom" :class="mainNavigationFontClass">
-            <div class="max-w-screen-2xl w-full flex justify-start px-[20px] lg:px-0 lg:justify-around" :class="mainNavigationHeightClass">
-                <div class="flex items-center">
-                    <NavDrop
-                        class="xl:hidden  h-full"
-                        :size="navigationHeaderSize"
-                        :title="'Menu'"
-                        :drop-options="navigationLinks" />
-                </div>
+        <div class="relative z-[41] w-full flex justify-center" :class="mainNavigationFontClass">
+            <div class="max-w-screen-2xl w-full flex justify-start lg:justify-between scaffold-border" :class="mainNavigationHeightClass">
                 <div class="flex">
                     <!-- Navigation Links -->
-                    <div class="hidden xl:flex">
-                        <span class="flex items-center"  v-for="navigation in navigationLinks" :key="navigation.title">
+                    <div class="flex">
+                        <NavDrop
+                            class="lg:hidden  h-full"
+                            :size="navigationHeaderSize"
+                            :title="'Menu'"
+                            :drop-options="navigationLinks" />
+                    </div>
+                    <div class="hidden lg:flex">
+                        <span class="flex" v-for="navigation in navigationLinks" :key="navigation.key">
                             <NavLink
                                 class="h-full"
                                 v-if="navigation.type == 'link'"
                                 :size="navigationHeaderSize"
                                 :to="navigation.to"
                                 :icon="navigation.icon"
-                                :active="isRouteActive(navigation.route)">
+                                :active-style="`ripple`"
+                                :active="isRouteActive(navigation.route_active)">
                                 {{navigation.title}}
                             </NavLink>
 
@@ -75,10 +76,20 @@
                                 :icon="navigation.icon"
                                 :drop-options="navigation.options"
                             />
+                            <NavSub
+                                class="h-full"
+                                v-if="navigation.type === 'sub-nav'"
+                                :size="navigationHeaderSize"
+                                :title="navigation.title"
+                                :icon="navigation.icon"
+                                :drop-options="navigation.options"
+                                :active="isRoutePathActive(navigation.path_active)"
+                                @update-sub-navigation-options="updateSubNavigationOptions"
+                            />
                         </span>
                     </div>
                 </div>
-                <div class="flex items-center">
+                <div class="flex">
                     <SingleSelect
                         v-if="isAuthenticated"
                         drop-shadow
@@ -113,24 +124,75 @@
                 </div>
             </div>
         </div>
+        <!-- Sub Navigation -->
+        <div v-show="subNavigationOptions.length" class="relative w-full flex justify-center" :class="subNavigationFontClass">
+            <div ref="subNavigationRef" tabindex="0" class="max-w-screen-2xl w-full flex justify-start focus:outline-none" :class="[subNavigationOptions.length ? 'scaffold-border-left-bottom-right' : '']">
+                <span class="flex" :class="subNavigationHeightClass" v-for="navigation in subNavigationOptions" :key="navigation.key">
+                    <NavLink
+                        class="h-full"
+                        v-if="navigation.type == 'link'"
+                        :size="subNavigationHeaderSize"
+                        :to="navigation.to"
+                        :icon="navigation.icon"
+                        :active-style="`ripple`"
+                        :active="isRouteActive(navigation.route_active)">
+                        {{navigation.title}}
+                    </NavLink>
+
+                    <a
+                        class="h-full"
+                        v-if="navigation.type == 'anchor-link'"
+                        :href="navigation.to">
+                        <NavLink
+                            class="h-full"
+                            :icon="navigation.icon"
+                            :size="subNavigationHeaderSize">
+                            {{navigation.title}}
+                        </NavLink>
+                    </a>
+
+                    <NavDrop
+                        class="h-full"
+                        v-if="navigation.type === 'drop'"
+                        :size="subNavigationHeaderSize"
+                        :title="navigation.title"
+                        :icon="navigation.icon"
+                        :drop-options="navigation.options"
+                    />
+                </span>
+            </div>
+        </div>
     </nav>
 </template>
 
 <script setup lang="ts">
 import {storeToRefs} from 'pinia';
+import type {NavigationLinkInterface} from "@/public/js/types/layout";
 
 const {updateStoredAssociatedCompany} = useAssociation();
 const clientReadyState = useClientReadyState();
 const nuxtApp = useNuxtApp();
-const isRouteActive = nuxtApp.$isRouteActive as (routeSlug: string | undefined) => boolean;
+const isRouteActive = nuxtApp.$isRouteActive as (name: string | undefined) => boolean;
+const isRoutePathActive = nuxtApp.$isRoutePathActive as (path: string | undefined) => boolean;
 
 const {isAuthenticated, user} = useAuth();
 const {width: screenWidth} = useScreen();
 const navDrop = resolveComponent('navDrop');
 const navigationHeightInPixelsModel = defineModel('navigationHeightInPixels');
-const navigation = ref<HTMLElement | null>(null);
+const navigation = useTemplateRef('navigation');
+const subNavigationRef = useTemplateRef('subNavigationRef');
+const { focused: subNavigationFocused } = useFocusWithin (subNavigationRef);
+const { height: navigationHeight} = useElementSize(navigation);
+const {$themeStore, $layoutStore} = useNuxtApp();
+const {
+    neutral: neutralColor,
+} = storeToRefs($themeStore);
+const {
+    subNavigationOptions
+} = storeToRefs($layoutStore);
 const {
     navigationLinks,
+    activeSubNavigationLink,
     navigationAccountLinks,
     navigationBackground,
     navigationHeightInPixels,
@@ -138,46 +200,47 @@ const {
     rightNavigationDropAlign
 } = useLayout();
 
-const {$themeStore} = useNuxtApp();
+const updateSubNavigationOptions = (options: NavigationLinkInterface[]) => {
+    $layoutStore.setSubNavigationOptions(options);
 
-const {
-    neutral: neutralColor,
-} = storeToRefs($themeStore);
+    subNavigationRef?.value?.focus();
+}
+
+watch(subNavigationFocused, (focused) => {
+
+    const activeSubNavigationLinkOptions = _get(activeSubNavigationLink.value, 'options', []);
+
+    if(!focused){
+        $layoutStore.setSubNavigationOptions(activeSubNavigationLinkOptions);
+    }
+});
+
+watch(navigationHeight, (newNavigationHeight) => {
+    setNavigationHeight(navigationHeight.value);
+    navigationHeightInPixelsModel.value = navigationHeightInPixels.value;
+});
 
 onMounted(async () => {
-    //console.log({'DefaultNavigation.vue': 'Mounted'});
-    await nextTick(() => {
-        let navigationHeight = navigation.value?.offsetHeight;
-        //console.log({'Await NextTick DefaultNavigation.vue navigationHeight':navigationHeight});
-        if(navigation.value !== null &&  navigationHeight !== undefined){
-            setNavigationHeight(navigationHeight);
-            navigationHeightInPixelsModel.value = navigationHeightInPixels.value;
-        }
-    });
+    setNavigationHeight(navigationHeight.value);
+    navigationHeightInPixelsModel.value = navigationHeightInPixels.value;
 });
 
 watch(clientReadyState, async (clientReady) => {
-    //console.log({'DefaultNavigation.vue Watch clientReadyState':clientReady});
     if(clientReady){
-        await nextTick(() => {
-            let navigationHeight = navigation.value?.offsetHeight;
-            //console.log({'Await NextTick DefaultNavigation.vue navigationHeight':navigationHeight});
-            if(navigation.value !== null &&  navigationHeight !== undefined){
-                setNavigationHeight(navigationHeight);
-                navigationHeightInPixelsModel.value = navigationHeightInPixels.value;
-            }
-        });
+        setNavigationHeight(navigationHeight.value);
+        navigationHeightInPixelsModel.value = navigationHeightInPixels.value;
     }
 })
 
 watch(screenWidth, value => {
-    if (navigation.value) {
-        setNavigationHeight(navigation.value.offsetHeight);
-    }
+    setNavigationHeight(navigationHeight.value);
 });
 
 const navigationHeaderSize = computed(() => {
     return 'sm';
+});
+const subNavigationHeaderSize = computed(() => {
+    return 'xs';
 });
 
 const mainNavigationHeightClass = computed(() => {
@@ -187,10 +250,23 @@ const mainNavigationHeightClass = computed(() => {
         'sm': 'h-7',
         'md': 'h-8',
         'lg': 'h-11'
-    }['lg'];
+    }['md'];
+});
+
+const subNavigationHeightClass = computed(() => {
+    return {
+        '2xs': 'h-5',
+        'xs': 'h-6',
+        'sm': 'h-7',
+        'md': 'h-8',
+        'lg': 'h-11'
+    }['xs'];
 });
 
 const mainNavigationFontClass = computed(() => {
+    return 'font-business';
+});
+const subNavigationFontClass = computed(() => {
     return 'font-business';
 });
 
@@ -200,7 +276,6 @@ const associatedCompaniesSelectOverrides = computed(() => {
         'font_family': mainNavigationFontClass.value
     };
 })
-
 </script>
 
 <style lang="scss" scoped>

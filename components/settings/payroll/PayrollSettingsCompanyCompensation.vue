@@ -1,47 +1,71 @@
 <template>
-    <div>
-        <div class="font-medium text-lg font-header">
-            Employee Compensations
-        </div>
-        <div class="space-x-1">
-            <Button class="inline-block" :size="'sm'" :label="'Create'"/>
+    <div class="scaffold-border-left-bottom-right">
+        <div class="space-x-1 p-[20px]">
+            <Button class="inline-block" :size="'sm'" :label="'Create'" @click="create"/>
             <Button class="inline-block" :size="'sm'" :label="'Delete selected'"/>
         </div>
+
+        <CompanyCompensationModal
+            v-model:creatingOrEditing="creatingOrEditing"
+            v-model:editPayload="editPayload"
+            @resolved="compensationResolved"
+        ></CompanyCompensationModal>
+
+        <AccentFrame>
+            <template #content>
+                <div class="pt-5">
+                    <DataTable
+                        :headers="companyCompensationsHeaders"
+                        :size="'lg'"
+                        :rows="companyCompensationsData"
+                        :disabled="companyCompensationsPending"
+                        v-model="selectedCompanyCompensations"
+                        manual-sortable
+                        @manualSorted="manualSorted"
+                        selection>
+                        <template v-slot:cell.type="{cell,slot}">
+                            <div class="p-[3px]">{{cell.type.text}}</div>
+                        </template>
+                        <template v-slot:cell.assignable="{cell, slot, scrollReference}">
+                            <div class="flex justify-center">
+                                <NonModelCheckBox disabled :size="slot.checkBoxSize" :checked="cell.assignable" ></NonModelCheckBox>
+                            </div>
+                        </template>
+                        <template v-slot:cell.global="{cell, slot, scrollReference}">
+                            <div class="flex justify-center">
+                                <NonModelCheckBox disabled :size="slot.checkBoxSize" :checked="!cell.assignable" ></NonModelCheckBox>
+                            </div>
+                        </template>
+                        <template v-slot:cell.settings="{cell}">
+                            <table class="border-separate text-sm font-sub-data">
+                                <tbody>
+                                <tr v-for="(setting, key) in cell.settings">
+                                    <td>{{ setting.label }}</td><td class="pl-1">{{ setting.value }}</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </template>
+                        <template v-slot:cell.actions="{cell, slot, scrollReference}">
+                            <Button class="mx-0.5" type="button" :size="slot.buttonSize" :label="'Edit'" @click="edit(cell)"></Button>
+                        </template>
+                    </DataTable>
+                </div>
+            </template>
+        </AccentFrame>
         <div>
-            <DataTable
-                :headers="companyCompensationsHeaders"
-                :size="'lg'"
-                :rows="companyCompensationsData"
-                v-model="selectedCompanyCompensations"
-                manual-sortable
-                @manualSorted="manualSorted"
-                selection>
-                <template v-slot:cell.type="{cell,slot}">
-                    <div class="p-[3px]">{{cell.type.label}}</div>
-                </template>
-                <template v-slot:cell.assignable="{cell, slot, scrollReference}">
-                    <div class="flex justify-center">
-                        <NonModelCheckBox disabled :size="slot.checkBoxSize" :checked="cell.assignable" ></NonModelCheckBox>
-                    </div>
-                </template>
-                <template v-slot:cell.global="{cell, slot, scrollReference}">
-                    <div class="flex justify-center">
-                        <NonModelCheckBox disabled :size="slot.checkBoxSize" :checked="!cell.assignable" ></NonModelCheckBox>
-                    </div>
-                </template>
-                <template v-slot:cell.actions="{cell, slot, scrollReference}">
-                    <Button class="mx-0.5" type="button" :size="slot.buttonSize" :label="'Edit'"></Button>
-                </template>
-            </DataTable>
         </div>
     </div>
 </template>
 
 <script setup lang="ts">
-import dataPayload from '@/public/data/payload.js';
 import type {Sequenceable, TableHeaderT} from "@/public/js/types/data";
 import type {SequenceableCompanyPayrollComponent} from "@/composables/settings/payroll/use-payroll-settings-company-compensation";
+import {storeToRefs} from "pinia";
+const {isAuthenticated} = useAuth();
 const nuxtApp = useNuxtApp();
+const {
+    selectedAssociatedCompany
+} = storeToRefs(nuxtApp.$authStore);
 const orderSequenceable = nuxtApp.$orderSequenceable as (data: Sequenceable[]) => void;
 
 const companyCompensationsHeaders = reactive<TableHeaderT[]>([
@@ -51,16 +75,93 @@ const companyCompensationsHeaders = reactive<TableHeaderT[]>([
     { text: 'Assignable', value: 'assignable'},
     { text: 'Global', value: 'global'},
     { text: 'Formula', value: 'formula'},
-    { text: 'Date from', value: 'start_date'},
-    { text: 'Date to', value: 'end_date'},
+    { text: 'Settings', value: 'settings'},
     { text: '', alignData: 'left', value: 'actions'},
 ]);
 
-const companyCompensationsData = ref<SequenceableCompanyPayrollComponent[]>(dataPayload['companyCompensations']);
+watch(selectedAssociatedCompany, (newValue) => {
+    if(isAuthenticated.value){
+        companyCompensationsExecute();
+    }
+})
+
+const companyCompensationsData = ref<SequenceableCompanyPayrollComponent[]>([]);
+const companyCompensationsPending = ref(false);
 const selectedCompanyCompensations = ref([]);
 
-function manualSorted(){
+const companyCompensationsExecute = async () => {
+    companyCompensationsPending.value = true;
+
+    await laraFetch("/api/company/compensations", {
+        method: 'GET',
+        params: {
+            filters: {
+                'company_id': selectedAssociatedCompany.value,
+            }
+        }
+    },{
+        onRequestError: () => {
+            companyCompensationsPending.value = false;
+        },
+        onResponse: () => {
+            companyCompensationsPending.value = false;
+        },
+        onSuccessResponse: async (request, options, response) => {
+            companyCompensationsData.value = _get(response, '_data.values.compensations', []);
+        }
+    });
+}
+await companyCompensationsExecute();
+
+const companyCompensationsReOrderPending = ref(false);
+const companyCompensationsReOrderExecute = async () => {
+    companyCompensationsReOrderPending.value = true;
+
+    const orderables = companyCompensationsData.value.map((item) => {
+        return {id: item.id, order: item.order}
+    });
+
+    await laraFetch("/api/orderable/re-order/compensation", {
+        method: 'POST',
+        params: {
+            orderables: JSON.stringify(orderables),
+        }
+    },{
+        onRequestError: () => {
+            companyCompensationsReOrderPending.value = false;
+        },
+        onResponse: () => {
+            companyCompensationsReOrderPending.value = false;
+        },
+        onSuccessResponse: async (request, options, response) => {
+            await companyCompensationsExecute();
+        }
+    });
+}
+
+const creatingOrEditing = ref(false);
+const editPayload = ref({});
+
+const manualSorted = async () => {
+    companyCompensationsPending.value = true;
     orderSequenceable(companyCompensationsData.value);
+    await companyCompensationsReOrderExecute();
+}
+
+const compensationResolved = async () => {
+    creatingOrEditing.value = false;
+    editPayload.value = {};
+    await companyCompensationsExecute();
+}
+
+const create = () => {
+    creatingOrEditing.value = true;
+    editPayload.value = {};
+};
+
+const edit = (cell: SequenceableCompanyPayrollComponent) => {
+    creatingOrEditing.value = true;
+    editPayload.value = cell;
 }
 </script>
 

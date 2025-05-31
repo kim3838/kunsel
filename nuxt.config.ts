@@ -90,6 +90,7 @@ export default defineNuxtConfig({
         {path: '@/components'},
         {path: '@/components/form'},
         {path: '@/components/modal'},
+        {path: '@/components/modal/payroll/settings'},
         {path: '@/components/data'},
         {path: '@/components/deco'},
         {path: '@/components/accordion'},
@@ -121,6 +122,7 @@ export default defineNuxtConfig({
             preprocessorOptions: {
                 scss: {
                     api: 'modern-compiler', // or "modern", "legacy"
+                    additionalData: `@use "@/assets/scss/variables.scss" as *;`
                 },
             },
         },
