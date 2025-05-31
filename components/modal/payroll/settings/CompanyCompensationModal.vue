@@ -44,6 +44,7 @@
                                 :selection-max-viewable-line="6"
                                 :size="'md'"
                                 :label="'Select Compensation Formula'"
+                                :key="compensationFormulaSingleSelectKey"
                                 :options="compensationFormulaOptions"
                                 @value-change="compensationFormulaSettingsExecute"/>
                         </td>
@@ -136,12 +137,18 @@ const assignable = reactive({
     selected: 1
 });
 
-const compensationFormulas = ref([]);
-
 watch(selectedAssociatedCompany, (newValue) => {
     if(isAuthenticated.value){
         compensationFormulaExecute();
     }
+})
+
+const compensationFormulaSingleSelectKey = ref(0);
+const compensationFormulaOptions = reactive({
+    search: '',
+    data: [],
+    selection: [],
+    selected: null
 })
 
 const compensationFormulaPending = ref(false)
@@ -164,18 +171,14 @@ const compensationFormulaExecute = async () => {
             compensationFormulaPending.value = false;
         },
         onSuccessResponse: async (request, options, response) => {
-            compensationFormulas.value = _get(response, '_data.values.selection', []);
+            const selection = _get(response, '_data.values.selection', []);
+            compensationFormulaOptions.data = selection
+            compensationFormulaOptions.selection = selection;
+            compensationFormulaSingleSelectKey.value++;
         }
     });
 }
 await compensationFormulaExecute();
-
-const compensationFormulaOptions = reactive({
-    search: '',
-    data: compensationFormulas.value,
-    selection: compensationFormulas.value,
-    selected: null
-})
 
 const compensationFormulaSettings = ref<CompanyFormulaT[]>([]);
 const compensationFormulaSettingsPending = ref(false)
