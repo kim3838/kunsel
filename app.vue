@@ -57,10 +57,10 @@ const liningColor70 = computed(() => {
 
 // const mountains = await $fetch('https://api.nuxtjs.dev/mountains').catch((error) => error.data)
 </script>
-<style>
+<style lang="scss">
 ::-webkit-scrollbar {
-    width: 5px;
-    height: 5px;
+    width: $scrollBarWidth;
+    height: $scrollBarHeight;
 }
 
 ::-webkit-scrollbar-track {

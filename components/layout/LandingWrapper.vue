@@ -2,7 +2,7 @@
     <div
         v-if="clientReadyState"
         id="layoutScroll"
-        class="relative scroll-smooth h-screen max-h-screen overflow-auto snap-none">
+        class="relative scroll-smooth h-screen max-h-screen overflow-y-scroll snap-none">
         <!-- Primary Navigation Menu -->
         <LandingNavigation v-model:navigation-height-in-pixels="topAllocation" />
         <!-- Main Content -->

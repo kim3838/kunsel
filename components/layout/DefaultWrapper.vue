@@ -2,11 +2,11 @@
     <div
         v-if="clientReadyState"
         id="layoutScroll"
-        class="relative scroll-smooth h-screen max-h-screen overflow-auto">
+        class="relative scroll-smooth h-screen max-h-screen overflow-y-scroll">
         <!-- Primary Navigation Menu -->
         <DefaultNavigation v-model:navigation-height-in-pixels="topAllocation"/>
         <!-- Main Content -->
-        <main class="allocate-navigation">
+        <main class="allocate-navigation absolute">
             <slot></slot>
         </main>
         <!-- DateTime Picker -->
@@ -20,7 +20,11 @@
 const clientReadyState = useClientReadyState();
 const topAllocation = ref('0px');
 </script>
-<style scoped>
+<style lang="scss" scoped>
+main{
+    left: 0;
+    right: 0;
+}
 .allocate-navigation {
     padding-top: v-bind(topAllocation);
 }

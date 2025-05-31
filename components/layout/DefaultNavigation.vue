@@ -203,16 +203,10 @@ const associatedCompaniesSelectOverrides = computed(() => {
 
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .primary-navigation-parent {
     background-color: v-bind(navigationBackground) !important;
     left: 0;
-    right: 5px;
-    z-index: 30;
-}
-
-.neutral-border-top-bottom{
-    border-top: 1px solid v-bind(neutralColor);
-    border-bottom: 1px solid v-bind(neutralColor);
+    right: $scrollBarWidth;
 }
 </style>
