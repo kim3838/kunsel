@@ -16,9 +16,13 @@
 <script setup lang="ts">
 import {storeToRefs} from 'pinia';
 
-const {$debug, $moment, $themeStore, $coreStore} = useNuxtApp();
+const {$debug, $moment, $themeStore, $coreStore, $layoutStore} = useNuxtApp();
 const runtimeConfig = useRuntimeConfig();
 const appConfig = useAppConfig();
+const route = useRoute();
+const {
+    activeSubNavigationLink,
+} = useLayout();
 
 const {
     hexAlpha,
@@ -42,6 +46,10 @@ const liningColor10 = computed(() => {
 });
 const liningColor70 = computed(() => {
     return liningColor.value + hexAlpha.value['70'];
+});
+
+watch(() => route.name,() => {
+    $layoutStore.setSubNavigationOptions(_get(activeSubNavigationLink.value, 'options', []));
 });
 
 //const nuxtWrapper = ref(null);
@@ -98,6 +106,32 @@ const liningColor70 = computed(() => {
 
 .scaffold{
     border: 1px solid v-bind(liningColor);
+}
+
+.scaffold-border-left-right{
+    border-left: 1px dashed v-bind(threadColor);
+    border-right: 1px dashed v-bind(threadColor);
+}
+.scaffold-border-left-top-right{
+    border-left: 1px dashed v-bind(threadColor);
+    border-top: 1px dashed v-bind(threadColor);
+    border-right: 1px dashed v-bind(threadColor);
+}
+.scaffold-border-left-bottom-right{
+    border-left: 1px dashed v-bind(threadColor);
+    border-bottom: 1px dashed v-bind(threadColor);
+    border-right: 1px dashed v-bind(threadColor);
+}
+.scaffold-border-top-bottom{
+    border-top: 1px dashed v-bind(threadColor);
+    border-bottom: 1px dashed v-bind(threadColor);
+}
+.scaffold-border-bottom{
+    border-bottom: 1px dashed v-bind(threadColor);
+}
+
+.scaffold-border{
+    border: 1px dashed v-bind(threadColor);
 }
 
 .top-fragment{

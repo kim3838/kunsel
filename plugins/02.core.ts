@@ -48,9 +48,14 @@ export default defineNuxtPlugin(nuxtApp => {
         return result;
     });
 
-    nuxtApp.provide('isRouteActive', function (routeSlug: string | undefined): boolean {
+    nuxtApp.provide('isRouteActive', function (name: string | undefined): boolean {
         // @ts-ignore
-        return [route.path, _toLower(route.name)].indexOf(_toLower(routeSlug)) >= 0;
+        return [route.path, _toLower(route.name)].indexOf(_toLower(name)) >= 0;
+    });
+
+    nuxtApp.provide('isRoutePathActive', function (path: string | undefined): boolean {
+        // @ts-ignore
+        return route.path.startsWith(path);
     });
 
     nuxtApp.provide('orderSequenceable', function (data: Sequenceable[]): void {

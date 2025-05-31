@@ -3,7 +3,7 @@
         ref="landingNavigation"
         class="primary-navigation-parent z-40 fixed">
         <div class="w-full font-business flex justify-center">
-            <div class="max-w-screen-2xl w-full flex justify-start lg:justify-around h-10 lg:h-16">
+            <div class="max-w-screen-2xl w-full flex justify-start lg:justify-around h-10 lg:h-16 scaffold-border-left-bottom-right">
                 <div class="flex items-center">
                     <div class="w-max h-full flex items-center">
                         <GlobalFoundries :dark="navigationMode === 'clear-with-background'" />
@@ -18,14 +18,14 @@
                 <div class="flex">
                     <!-- Navigation Links -->
                     <div class="hidden lg:flex">
-                    <span class="flex items-center"  v-for="navigation in navigationLinks" :key="navigation.title">
+                    <span class="flex items-center"  v-for="navigation in navigationLinks" :key="navigation.key">
                         <NavLink
                             class="h-full"
                             v-if="navigation.type == 'link'"
                             :size="navigationHeaderSize"
                             :to="navigation.to"
                             :icon="navigation.icon"
-                            :active="isRouteActive(navigation.route)">
+                            :active="isRouteActive(navigation.route_active)">
                             {{navigation.title}}
                         </NavLink>
 
@@ -78,7 +78,7 @@
 <script setup lang="ts">
 const clientReadyState = useClientReadyState();
 const nuxtApp = useNuxtApp();
-const isRouteActive = nuxtApp.$isRouteActive as (routeSlug: string | undefined) => boolean;
+const isRouteActive = nuxtApp.$isRouteActive as (name: string | undefined) => boolean;
 const {isAuthenticated, user} = useAuth();
 const {width: screenWidth} = useScreen();
 const navDrop = resolveComponent('navDrop');

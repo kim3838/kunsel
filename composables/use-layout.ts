@@ -4,6 +4,8 @@ import type {
 } from "@/public/js/types/layout";
 
 export const useLayout = () => {
+    const nuxtApp = useNuxtApp();
+    const isRoutePathActive = nuxtApp.$isRoutePathActive as (path: string | undefined) => boolean;
     const {isAuthenticated, userIsSuperAdmin, destroyAuthentication} = useAuth();
     const companyAssignmentTypeIsAdmin = companyAssignmentTypeIsAdminState();
     const {screenWidthBreakpoint, width: screenWidth, height: screenHeight } = useScreen();
@@ -18,6 +20,7 @@ export const useLayout = () => {
 
             let debugRequests = [
                 {
+                    key: 'debug-csr-post',
                     type: 'action',
                     title: 'CSR Post',
                     icon: 'material-symbols:request-quote-sharp',
@@ -33,6 +36,7 @@ export const useLayout = () => {
                     },
                 },
                 {
+                    key: 'debug-csr-get',
                     type: 'action',
                     title: 'CSR Get',
                     icon: 'material-symbols:request-quote-sharp',
@@ -48,6 +52,7 @@ export const useLayout = () => {
                     },
                 },
                 {
+                    key: 'debug-csr-csrf',
                     type: 'action',
                     title: 'CSR Get CSRF',
                     icon: 'material-symbols:request-quote-sharp',
@@ -66,15 +71,17 @@ export const useLayout = () => {
 
             links = links.concat([
                 {
+                    key: 'account-settings',
                     type: 'link',
                     title: 'Account Settings',
-                    icon: 'ic:baseline-arrow-right',
+                    icon: 'ic:baseline-miscellaneous-services',
                     to: '/profile',
                 },
                 {
+                    key: 'login',
                     type: 'action',
                     title: 'Logout',
-                    icon: 'ic:baseline-arrow-right',
+                    icon: 'mdi:connection',
                     callback: () => {
                         destroyAuthentication();
                     },
@@ -84,6 +91,7 @@ export const useLayout = () => {
 
         } else {
             links.unshift({
+                key: 'login',
                 type: 'link',
                 title: 'Login',
                 to: '/login',
@@ -97,35 +105,34 @@ export const useLayout = () => {
 
         links = links.concat([
             {
+                key: 'dashboard',
                 type: 'link',
                 title: 'Dashboard',
                 to: '/',
-                route: 'index'
+                route_active: 'index'
             },
             {
+                key: 'prototype',
                 type: 'link',
                 title: 'Prototype',
                 to: '/prototype',
-                route: 'prototype'
+                route_active: 'prototype'
             },
             {
+                key: 'prototypes',
                 type: 'link',
                 title: 'Prototypes',
                 to: '/prototypes',
-                route: 'prototypes'
+                route_active: 'prototypes'
             },
-            ...((isAuthenticated.value && (userIsSuperAdmin.value || companyAssignmentTypeIsAdmin.value)) ? [{
-                type: 'link',
-                title: 'Settings',
-                to: '/settings',
-                route: 'settings'
-            }] : []) as NavigationLinkInterface[],
-            ...(!isAuthenticated.value ? [
+            ...(isAuthenticated.value ? [
                     {
+                        key: 'about',
                         type: 'drop',
                         title: 'About',
                         options: [
                             {
+                                key: 'latest-news',
                                 type: 'anchor-link',
                                 title: 'Latest news',
                                 icon: 'ic:baseline-arrow-right',
@@ -134,16 +141,19 @@ export const useLayout = () => {
                         ]
                     },
                     {
+                        key: 'help',
                         type: 'drop',
                         title: 'Help',
                         options: [
                             {
+                                key: 'faq',
                                 type: 'anchor-link',
                                 title: 'FAQ',
                                 icon: 'ic:baseline-arrow-right',
                                 to: '/#faq'
                             },
                             {
+                                key: 'support',
                                 type: 'link',
                                 title: 'Support',
                                 icon: 'ic:baseline-arrow-right',
@@ -151,10 +161,40 @@ export const useLayout = () => {
                         ]
                     }
                 ] : []
-            ) as NavigationLinkInterface[]
+            ) as NavigationLinkInterface[],
+            ...((isAuthenticated.value && (userIsSuperAdmin.value || companyAssignmentTypeIsAdmin.value)) ? [{
+                key: 'settings',
+                type: 'sub-nav',
+                title: 'Settings',
+                icon: 'ic:baseline-miscellaneous-services',
+                path_active: '/settings',
+                options: [
+                    {
+                        key: 'settings/compensations',
+                        type: 'link',
+                        title: 'Compensations',
+                        icon: 'mdi:cash-plus',
+                        to: '/settings/compensations',
+                        route_active: 'settings-compensations'
+                    },
+                    {
+                        key: 'settings/deductions',
+                        type: 'link',
+                        title: 'Deductions',
+                        icon: 'mdi:cash-minus',
+                        to: '/settings/deductions',
+                        route_active: 'settings-deductions'
+                    },
+                ]
+            }] : []) as NavigationLinkInterface[],
         ] as NavigationLinkInterface[]);
 
         return links;
+    })
+
+    const subNavigationLinks = computed<NavigationLinkInterface[]>(()=> navigationLinks.value.filter(navigationLink => navigationLink.type == 'sub-nav'));
+    const activeSubNavigationLink = computed<NavigationLinkInterface|null>( () => {
+        return subNavigationLinks.value.filter((subNavigationLink: NavigationLinkInterface|null) => isRoutePathActive(subNavigationLink?.path_active)).pop() || null;
     })
 
     const navigationHeight = ref(0);
@@ -193,7 +233,7 @@ export const useLayout = () => {
     const rightNavigationDropAlign = computed(()=>{
         let dropAlign = 'right';
 
-        if (screenWidth.value >= screenWidthBreakpoint['lg']) {
+        if (screenWidth.value >= screenWidthBreakpoint['md']) {
             dropAlign = 'right';
         } else {
             dropAlign = 'left';
@@ -214,6 +254,8 @@ export const useLayout = () => {
 
     return {
         navigationLinks,
+        subNavigationLinks,
+        activeSubNavigationLink,
         navigationAccountLinks,
         navigationMode,
         navigationHeight,
