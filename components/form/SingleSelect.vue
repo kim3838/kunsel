@@ -121,7 +121,7 @@
             </div>
             <div tabindex="0" ref="selectionScroll" :style="{'max-height': selectionMaxHeight}" class="overflow-auto">
                 <UnorderedList
-                    v-for="item in options.selection" :key="item.value"
+                    v-for="item in selectionOptions" :key="`${item.value}-${selectionOptionsKey}`"
                     class="px-2 options-class cursor-pointer"
                     :class="[isItemInSearchPool(item) ? '' : 'hidden', optionsFontClass]"
                     @click="valuePersist && isItemSelected(item) ? false :selectItem(item)"
@@ -266,11 +266,20 @@ let selectionOffset = reactive<SingleSelectSelectionOffsetT>({
     left: '0'
 });
 
+const searchPool = ref<SelectSearchPoolT>(props.options.data.map((item: SelectDataType) => item.value));
+const selectionOptionsKey = ref(0);
+const selectionOptions = ref(props.options.selection);
+
+watch(() => props.options.selection, (newValue)=>{
+    selectionOptions.value = newValue;
+    selectionOptionsKey.value++;
+})
+watch(() => props.options.data, (newValue)=>{
+    searchPool.value = newValue.map((item: SelectDataType) => item.value);
+})
+
 const { focused: selectParentFocused } = useFocus(selectParent);
 const { focused: selectionScrollFocused } = useFocus(selectionScroll);
-
-let searchPool = ref<SelectSearchPoolT>([]);
-searchPool.value = props.options.data.map((item: SelectDataType) => item.value);
 
 const idleBorderComputed = computed(() => {
     return props.idleBorder ? props.idleBorder : threadColor.value;

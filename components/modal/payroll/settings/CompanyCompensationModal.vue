@@ -44,7 +44,6 @@
                                 :selection-max-viewable-line="6"
                                 :size="'md'"
                                 :label="'Select Compensation Formula'"
-                                :key="compensationFormulaSingleSelectKey"
                                 :options="compensationFormulaOptions"
                                 @value-change="compensationFormulaSettingsExecute"/>
                         </td>
@@ -143,7 +142,6 @@ watch(selectedAssociatedCompany, (newValue) => {
     }
 })
 
-const compensationFormulaSingleSelectKey = ref(0);
 const compensationFormulaOptions = reactive({
     search: '',
     data: [],
@@ -174,7 +172,6 @@ const compensationFormulaExecute = async () => {
             const selection = _get(response, '_data.values.selection', []);
             compensationFormulaOptions.data = selection
             compensationFormulaOptions.selection = selection;
-            compensationFormulaSingleSelectKey.value++;
         }
     });
 }
