@@ -213,8 +213,8 @@ const fontClass = computed(() => {
 const colorClass = computed(() => {
     return {
         'default': 'default-background',
-        'outline': props.disabled ? '' : 'outlined',
-        'flat': props.disabled ? '' : 'flat',
+        'outline': 'outlined',
+        'flat': 'flat',
     }[props.variant]
 });
 
