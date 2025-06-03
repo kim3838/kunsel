@@ -11,54 +11,50 @@
             @resolved="compensationResolved"
         ></CompanyCompensationModal>
 
-        <AccentFrame>
-            <template #content>
-                <div class="pt-5">
-                    <UnorderedList
-                        v-if="disableActions"
-                        :icon="'eos-icons:loading'"
-                        :size="'md'"
-                        :label="'Please wait...'"/>
-                    <DataTable
-                        :headers="companyCompensationsHeaders"
-                        :size="'lg'"
-                        :rows="companyCompensationsData"
-                        :disabled="disableDataTable"
-                        v-model="selectedCompanyCompensations"
-                        manual-sortable
-                        @manualSorted="manualSorted"
-                        selection>
-                        <template v-slot:cell.type="{cell,slot}">
-                            <div class="p-[3px]">{{cell.type.text}}</div>
-                        </template>
-                        <template v-slot:cell.assignable="{cell, slot, scrollReference}">
-                            <div class="flex justify-center">
-                                <NonModelCheckBox disabled :size="slot.checkBoxSize" :checked="cell.assignable" ></NonModelCheckBox>
-                            </div>
-                        </template>
-                        <template v-slot:cell.global="{cell, slot, scrollReference}">
-                            <div class="flex justify-center">
-                                <NonModelCheckBox disabled :size="slot.checkBoxSize" :checked="!cell.assignable" ></NonModelCheckBox>
-                            </div>
-                        </template>
-                        <template v-slot:cell.settings="{cell}">
-                            <table class="border-separate text-sm font-sub-data">
-                                <tbody>
-                                <tr v-for="(setting, key) in cell.settings">
-                                    <td>{{ setting.label }}</td><td class="pl-1">{{ setting.value }}</td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </template>
-                        <template v-slot:cell.actions="{cell, slot, scrollReference}">
-                            <Button class="mx-0.5" type="button" :size="slot.buttonSize" :label="'Edit'" @click="edit(cell)" :disabled="disableActions"></Button>
-                        </template>
-                    </DataTable>
-                </div>
+        <FansyFrame>
+            <template v-slot:content>
+                <UnorderedList
+                    v-if="disableActions"
+                    :icon="'eos-icons:loading'"
+                    :size="'md'"
+                    :label="'Please wait...'"/>
+                <DataTable
+                    :headers="companyCompensationsHeaders"
+                    :size="'lg'"
+                    :rows="companyCompensationsData"
+                    :disabled="disableDataTable"
+                    v-model="selectedCompanyCompensations"
+                    manual-sortable
+                    @manualSorted="manualSorted"
+                    selection>
+                    <template v-slot:cell.type="{cell,slot}">
+                        <div class="p-[3px]">{{cell.type.text}}</div>
+                    </template>
+                    <template v-slot:cell.assignable="{cell, slot, scrollReference}">
+                        <div class="flex justify-center">
+                            <NonModelCheckBox disabled :size="slot.checkBoxSize" :checked="cell.assignable" ></NonModelCheckBox>
+                        </div>
+                    </template>
+                    <template v-slot:cell.global="{cell, slot, scrollReference}">
+                        <div class="flex justify-center">
+                            <NonModelCheckBox disabled :size="slot.checkBoxSize" :checked="!cell.assignable" ></NonModelCheckBox>
+                        </div>
+                    </template>
+                    <template v-slot:cell.settings="{cell}">
+                        <table class="border-separate text-sm font-sub-data">
+                            <tbody>
+                            <tr v-for="(setting, key) in cell.settings">
+                                <td>{{ setting.label }}</td><td class="pl-1">{{ setting.value }}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </template>
+                    <template v-slot:cell.actions="{cell, slot, scrollReference}">
+                        <Button class="mx-0.5" type="button" :size="slot.buttonSize" :label="'Edit'" @click="edit(cell)" :disabled="disableActions"></Button>
+                    </template>
+                </DataTable>
             </template>
-        </AccentFrame>
-        <div>
-        </div>
+        </FansyFrame>
     </div>
 </template>
 

@@ -42,51 +42,49 @@
                         </div>
                     </form>
 
-                    <AccentFrame>
-                        <template #content>
-                            <div class="pt-5">
-                                <PageInformation
-                                    v-if="prototypes.meta.pagination.total > 0"
-                                    :pagination="prototypes.meta.pagination"
-                                    :no-record-label="'No Record Found'"/>
-                                <Pagination
-                                    :size="'xl'"
-                                    :pagination="prototypes.meta.pagination"
-                                    :pending="pending"
-                                    v-model="pageComputed"
-                                />
-                                <DataTable
-                                    class="mt-0.5"
-                                    :headers="prototypeHeaders"
-                                    :size="'xl'"
-                                    :rows="prototypes.data"
-                                    :no-data-label="pending ? 'Loading' : 'No Prototype Found'"
-                                    v-model="selectedPrototypes"
-                                    manual-sortable
-                                    @manualSorted="manualSorted"
-                                    selection>
-                                    <template v-slot:cell.datetime_added="{cell, slot}">
-                                        <InputWithIcon
-                                            :icon="'ion:calendar-number-sharp'"
-                                            :id="`datetime_added-` + cell.id"
-                                            v-model="cell.datetime_added"
-                                            readonly
-                                            :override="{font_size: slot.datepickerFontSize}"
-                                            in-cell
-                                            :size="slot.inputSize"
-                                            class="w-full" />
-                                    </template>
-                                    <template v-slot:cell.actions="{cell, slot, scrollReference}">
-                                        <div class="h-full mx-0.5 space-x-0.5 w-full flex items-center">
-                                            <Button type="button" :size="slot.buttonSize" :label="'Details'"></Button>
-                                            <Button type="button" :size="slot.buttonSize" :label="'Approve'"></Button>
-                                            <Button type="button" :size="slot.buttonSize" :label="'Deny'"></Button>
-                                        </div>
-                                    </template>
-                                </DataTable>
-                            </div>
+                    <FansyFrame>
+                        <template v-slot:content>
+                            <PageInformation
+                                v-if="prototypes.meta.pagination.total > 0"
+                                :pagination="prototypes.meta.pagination"
+                                :no-record-label="'No Record Found'"/>
+                            <Pagination
+                                :size="'xl'"
+                                :pagination="prototypes.meta.pagination"
+                                :pending="pending"
+                                v-model="pageComputed"
+                            />
+                            <DataTable
+                                class="mt-0.5"
+                                :headers="prototypeHeaders"
+                                :size="'xl'"
+                                :rows="prototypes.data"
+                                :no-data-label="pending ? 'Loading' : 'No Prototype Found'"
+                                v-model="selectedPrototypes"
+                                manual-sortable
+                                @manualSorted="manualSorted"
+                                selection>
+                                <template v-slot:cell.datetime_added="{cell, slot}">
+                                    <InputWithIcon
+                                        :icon="'ion:calendar-number-sharp'"
+                                        :id="`datetime_added-` + cell.id"
+                                        v-model="cell.datetime_added"
+                                        readonly
+                                        :override="{font_size: slot.datepickerFontSize}"
+                                        in-cell
+                                        :size="slot.inputSize"
+                                        class="w-full" />
+                                </template>
+                                <template v-slot:cell.actions="{cell, slot, scrollReference}">
+                                    <div class="h-full mx-0.5 space-x-0.5 w-full flex items-center">
+                                        <Button type="button" :size="slot.buttonSize" :label="'Details'"></Button>
+                                        <Button type="button" :size="slot.buttonSize" :label="'Approve'"></Button>
+                                        <Button type="button" :size="slot.buttonSize" :label="'Deny'"></Button>
+                                    </div>
+                                </template>
+                            </DataTable>
                         </template>
-                    </AccentFrame>
+                    </FansyFrame>
                 </div>
             </div>
         </DefaultWrapper>
