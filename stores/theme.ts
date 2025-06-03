@@ -104,9 +104,9 @@ export const useThemeStore = defineStore('theme', {
 
                     'neutral': '#fff8e0',
 
-                    'tint': '#ffead7',
-                    'body': '#ffeee0',
-                    'shade': '#ffdab9',
+                    'tint': '#fff8f0',
+                    'body': '#fff8f0',
+                    'shade': '#ffdec1',
 
                     'text': '#502e2e',
                     'text-invert': '#ffffff',
@@ -123,7 +123,7 @@ export const useThemeStore = defineStore('theme', {
 
                     'neutral': '#4d7779',
 
-                    'tint': '#027177',
+                    'tint': '#016A70',
                     'body': '#016A70',
                     'shade': '#016A70',
 
