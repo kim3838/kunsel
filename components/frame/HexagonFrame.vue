@@ -35,6 +35,10 @@ const props = defineProps({
         type: String,
         default: 'light'
     },
+    textInvertByThemeType:{
+        type: Boolean,
+        default: true
+    },
     frameBorderGradientEnable: {
         type: Boolean,
         default: false
@@ -128,6 +132,11 @@ const bodyFlexDirection = computed(() => {
     }[props.direction];
 });
 const textColorComputed = computed(() => {
+
+    if(!props.textInvertByThemeType){
+        return textColor.value;
+    }
+
     return {
         'light': textColor.value,
         'dark': textInvertColor.value,
