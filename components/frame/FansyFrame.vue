@@ -10,7 +10,7 @@
             :text-invert-by-theme-type="false"
             :head-percentage="50"
             :top-right="55"
-            :bottom-left="20"
+            :bottom-left="30"
             :opaque="true"
             :header-fade="false">
             <template #header>
