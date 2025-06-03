@@ -9,7 +9,7 @@
             <div
                 ref="selectHeader"
                 :style="{'border-radius': '2px'}"
-                class="w-full flex justify-start"
+                class="w-full flex justify-start background"
                 :class="[heightClass, headerBorderClass, navigationMode ? 'navigation-mode' : defaultModeSpacingClass]">
                 <div v-if="icon" :class="[iconHolderClass]" class="flex-none flex justify-end items-center">
                     <ClientOnly><Icon :class="[iconClass]" :name="icon"/></ClientOnly>

@@ -79,7 +79,8 @@ const {
     neutral: neutralColor,
     lining: liningColor,
     thread: threadColor,
-    shade: shadeColor
+    shade: shadeColor,
+    tint: tintColor,
 } = storeToRefs($themeStore);
 
 const liningColor70 = computed(() => {
@@ -313,6 +314,11 @@ tbody tr td:last-child{
 
 tbody tr:nth-of-type(2n+1){
     background-color: v-bind(shadeColor);
+}
+
+tbody tr:not(:nth-of-type(2n+1)),
+thead{
+    background-color: v-bind(tintColor);
 }
 
 .sortable-ghost {
