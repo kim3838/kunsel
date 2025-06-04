@@ -66,7 +66,7 @@ export const useThemeStore = defineStore('theme', {
 
                     'neutral': '#656565',
 
-                    'tint': '#4f4f4f',
+                    'tint': '#323232',
                     'body': '#323232',
                     'shade': '#414141',
 
