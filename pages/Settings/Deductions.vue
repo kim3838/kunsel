@@ -2,7 +2,7 @@
     <div>
         <DefaultWrapper>
             <div class="mx-auto max-w-screen-2xl">
-
+                <PayrollSettingsDeduction/>
             </div>
         </DefaultWrapper>
     </div>

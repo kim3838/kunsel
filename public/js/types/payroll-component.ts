@@ -10,4 +10,4 @@ export type CompanyPayrollComponent = {
     formula: string | null,
 }
 
-export type SequenceableCompanyPayrollComponent = CompanyPayrollComponent & SequenceableTableRow;
+export type SequenceablePayrollComponent = CompanyPayrollComponent & SequenceableTableRow;

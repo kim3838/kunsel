@@ -5,11 +5,11 @@
             <Button class="inline-block" :size="'sm'" :label="'Delete selected'" :disabled="disableActions" @click="deleteSelected"/>
         </div>
 
-        <CompanyCompensationModal
+        <CompensationModal
             v-model:creatingOrEditing="creatingOrEditing"
             v-model:editPayload="editPayload"
             @resolved="compensationResolved"
-        ></CompanyCompensationModal>
+        ></CompensationModal>
 
         <FansyFrame>
             <template v-slot:content>
@@ -19,11 +19,11 @@
                     :size="'md'"
                     :label="'Please wait...'"/>
                 <DataTable
-                    :headers="companyCompensationsHeaders"
+                    :headers="compensationsHeaders"
                     :size="'lg'"
-                    :rows="companyCompensationsData"
+                    :rows="compensationsData"
                     :disabled="disableDataTable"
-                    v-model="selectedCompanyCompensations"
+                    v-model="selectedCompensations"
                     manual-sortable
                     @manualSorted="manualSorted"
                     selection>
@@ -60,7 +60,7 @@
 
 <script setup lang="ts">
 import type {Sequenceable, TableHeaderT} from "@/public/js/types/data";
-import type {SequenceableCompanyPayrollComponent} from "@/composables/settings/payroll/use-payroll-settings-company-compensation";
+import type {SequenceablePayrollComponent} from "@/public/js/types/payroll-component";
 import {storeToRefs} from "pinia";
 const {isAuthenticated} = useAuth();
 const nuxtApp = useNuxtApp();
@@ -69,7 +69,7 @@ const {
 } = storeToRefs(nuxtApp.$authStore);
 const orderSequenceable = nuxtApp.$orderSequenceable as (data: Sequenceable[]) => void;
 
-const companyCompensationsHeaders = reactive<TableHeaderT[]>([
+const compensationsHeaders = reactive<TableHeaderT[]>([
     { text: 'Order', value: 'order', alignData: 'center'},
     { text: 'Name', value: 'name'},
     { text: 'Type', value: 'type'},
@@ -82,23 +82,23 @@ const companyCompensationsHeaders = reactive<TableHeaderT[]>([
 
 watch(selectedAssociatedCompany, (newValue) => {
     if(isAuthenticated.value){
-        companyCompensationsExecute();
+        compensationsExecute();
     }
 })
 
-const companyCompensationsData = ref<SequenceableCompanyPayrollComponent[]>([]);
-const companyCompensationsPending = ref(false);
-const selectedCompanyCompensations = ref([]);
+const compensationsData = ref<SequenceablePayrollComponent[]>([]);
+const compensationsPending = ref(false);
+const selectedCompensations = ref([]);
 
 const disableActions = computed(() => {
-    return companyCompensationsPending.value || creatingOrEditing.value || companyCompensationsReOrderPending.value || deleting.value;
+    return compensationsPending.value || creatingOrEditing.value || compensationsReOrderPending.value || deleting.value;
 });
 const disableDataTable = computed(() => {
-    return companyCompensationsPending.value || deleting.value
+    return compensationsPending.value || deleting.value
 })
 
-const companyCompensationsExecute = async () => {
-    companyCompensationsPending.value = true;
+const compensationsExecute = async () => {
+    compensationsPending.value = true;
 
     await laraFetch("/api/compensations", {
         method: 'GET',
@@ -109,23 +109,23 @@ const companyCompensationsExecute = async () => {
         }
     },{
         onRequestError: () => {
-            companyCompensationsPending.value = false;
+            compensationsPending.value = false;
         },
         onResponse: () => {
-            companyCompensationsPending.value = false;
+            compensationsPending.value = false;
         },
         onSuccessResponse: async (request, options, response) => {
-            companyCompensationsData.value = _get(response, '_data.values.compensations', []);
+            compensationsData.value = _get(response, '_data.values.compensations', []);
         }
     });
 }
-await companyCompensationsExecute();
+await compensationsExecute();
 
-const companyCompensationsReOrderPending = ref(false);
-const companyCompensationsReOrderExecute = async () => {
-    companyCompensationsReOrderPending.value = true;
+const compensationsReOrderPending = ref(false);
+const compensationsReOrderExecute = async () => {
+    compensationsReOrderPending.value = true;
 
-    const orderables = companyCompensationsData.value.map((item) => {
+    const orderables = compensationsData.value.map((item) => {
         return {id: item.id, order: item.order}
     });
 
@@ -136,13 +136,13 @@ const companyCompensationsReOrderExecute = async () => {
         }
     },{
         onRequestError: () => {
-            companyCompensationsReOrderPending.value = false;
+            compensationsReOrderPending.value = false;
         },
         onResponse: () => {
-            companyCompensationsReOrderPending.value = false;
+            compensationsReOrderPending.value = false;
         },
         onSuccessResponse: async (request, options, response) => {
-            await companyCompensationsExecute();
+            await compensationsExecute();
         }
     });
 }
@@ -152,15 +152,15 @@ const deleting = ref(false);
 const editPayload = ref({});
 
 const manualSorted = async () => {
-    companyCompensationsPending.value = true;
-    orderSequenceable(companyCompensationsData.value);
-    await companyCompensationsReOrderExecute();
+    compensationsPending.value = true;
+    orderSequenceable(compensationsData.value);
+    await compensationsReOrderExecute();
 }
 
 const compensationResolved = async () => {
     creatingOrEditing.value = false;
     editPayload.value = {};
-    await companyCompensationsExecute();
+    await compensationsExecute();
 }
 
 const create = () => {
@@ -168,7 +168,7 @@ const create = () => {
     editPayload.value = {};
 };
 
-const edit = (cell: SequenceableCompanyPayrollComponent) => {
+const edit = (cell: SequenceablePayrollComponent) => {
     creatingOrEditing.value = true;
     editPayload.value = cell;
 }
@@ -176,7 +176,7 @@ const edit = (cell: SequenceableCompanyPayrollComponent) => {
 const deleteSelected = async () => {
     deleting.value = true;
 
-    const selectedIds = selectedCompanyCompensations.value;
+    const selectedIds = selectedCompensations.value;
     let batchDelete: Promise<any>[] = [];
 
     selectedIds.forEach((id) => {
@@ -197,10 +197,10 @@ const deleteSelected = async () => {
     });
 
     await Promise.all(batchDelete);
-    selectedCompanyCompensations.value = [];
-    await companyCompensationsExecute();
-    orderSequenceable(companyCompensationsData.value);
-    await companyCompensationsReOrderExecute();
+    selectedCompensations.value = [];
+    await compensationsExecute();
+    orderSequenceable(compensationsData.value);
+    await compensationsReOrderExecute();
 
     deleting.value = false;
 }
