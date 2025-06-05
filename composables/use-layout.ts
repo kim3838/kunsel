@@ -185,6 +185,14 @@ export const useLayout = () => {
                         to: '/settings/deductions',
                         route_active: 'settings-deductions'
                     },
+                    {
+                        key: 'settings/income-taxes',
+                        type: 'link',
+                        title: 'Income Tax',
+                        icon: 'mdi:receipt-text-minus-outline',
+                        to: '/settings/incometaxes',
+                        route_active: 'settings-incometaxes'
+                    },
                 ]
             }] : []) as NavigationLinkInterface[],
         ] as NavigationLinkInterface[]);
