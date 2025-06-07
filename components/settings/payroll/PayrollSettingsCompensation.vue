@@ -44,7 +44,7 @@
                         <table class="border-separate text-sm font-sub-data">
                             <tbody>
                             <tr v-for="(setting, key) in cell.settings">
-                                <td>{{ setting.label }}</td><td class="pl-1">{{ setting.value }}</td>
+                                <td>{{ setting.label }}</td><td class="pl-1">{{ setting.readable }}</td>
                             </tr>
                             </tbody>
                         </table>

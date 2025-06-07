@@ -54,7 +54,7 @@
                             <table class="border-separate">
                                 <tbody>
                                 <tr v-for="(setting, key) in deductionFormulaSettings">
-                                    <td>{{ setting.label }}</td><td class="pl-1">{{ setting.value }}</td>
+                                    <td>{{ setting.label }}</td><td class="pl-1">{{ setting.readable }}</td>
                                 </tr>
                                 </tbody>
                             </table>
