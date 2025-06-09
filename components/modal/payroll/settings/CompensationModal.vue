@@ -90,6 +90,9 @@ import type {CompanyFormulaT} from "@/public/js/types/company-component";
 const {isAuthenticated} = useAuth();
 const nuxtApp = useNuxtApp();
 const {
+    updatedAssociatedCompanyFlag
+} = storeToRefs(nuxtApp.$associationStore);
+const {
     selectedAssociatedCompany
 } = storeToRefs(nuxtApp.$authStore);
 
@@ -136,7 +139,7 @@ const assignable = reactive({
     selected: 1
 });
 
-watch(selectedAssociatedCompany, (newValue) => {
+watch(updatedAssociatedCompanyFlag, (newValue) => {
     if(isAuthenticated.value){
         compensationFormulaExecute();
     }

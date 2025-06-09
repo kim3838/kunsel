@@ -15,6 +15,7 @@ export default defineNuxtPlugin(nuxtApp => {
             formStore: useFormStore($pinia),
             themeStore: useThemeStore($pinia),
             authStore: useAuthStore($pinia),
+            associationStore: useAssociationStore($pinia),
         }
     }
 })

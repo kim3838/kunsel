@@ -24,6 +24,8 @@ export const useAssociation = () => {
         return _includes([
             'settings-compensations',
             'settings-deductions',
+            'settings-incometaxes',
+            'settings-payperiodsetting',
         ], _toLower(String(route.name)));
     });
 
@@ -93,7 +95,7 @@ export const useAssociation = () => {
     }
 
     const updateStoredAssociatedCompany = (newValue: SelectedCompanyT) => {
-        const {$authStore} = useNuxtApp();
+        const {$authStore, $associationStore} = useNuxtApp();
         const {userIsSuperAdmin} = useAuth();
         const route = useRoute()
 
@@ -105,6 +107,10 @@ export const useAssociation = () => {
 
         if(currentRouteNameIsCompanyAdminProtected.value && !(userIsSuperAdmin.value || companyAssignmentTypeIsAdmin.value)){
             return navigateTo("/", {replace: true});
+        } else {
+
+            //Increment updatedAssociatedCompanyFlag and use it on a watcher as is the associated company updated
+            $associationStore.updatedAssociatedCompanyFlag++;
         }
     }
 

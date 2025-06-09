@@ -65,6 +65,9 @@ import {storeToRefs} from "pinia";
 const {isAuthenticated} = useAuth();
 const nuxtApp = useNuxtApp();
 const {
+    updatedAssociatedCompanyFlag
+} = storeToRefs(nuxtApp.$associationStore);
+const {
     selectedAssociatedCompany
 } = storeToRefs(nuxtApp.$authStore);
 const orderSequenceable = nuxtApp.$orderSequenceable as (data: Sequenceable[]) => void;
@@ -80,7 +83,7 @@ const deductionsHeaders = reactive<TableHeaderT[]>([
     { text: '', alignData: 'left', value: 'actions'},
 ]);
 
-watch(selectedAssociatedCompany, (newValue) => {
+watch(updatedAssociatedCompanyFlag, (newValue) => {
     if(isAuthenticated.value){
         deductionsExecute();
     }
