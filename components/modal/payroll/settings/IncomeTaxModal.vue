@@ -113,7 +113,7 @@ const emit = defineEmits(['update:creatingOrEditing', 'update:editPayload','reso
 
 const incomeTaxSelection = ref([]);
 
-await laraUseFetch("/api/enum/selections/income_tax", {
+await laraUseFetch("/api/enum-selections/income_tax", {
     lazy: false,
     method: 'GET',
 }, {

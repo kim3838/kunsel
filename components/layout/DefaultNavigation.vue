@@ -126,7 +126,7 @@
         </div>
         <!-- Sub Navigation -->
         <div v-show="subNavigationOptions.length" class="relative w-full flex justify-center" :class="subNavigationFontClass">
-            <div ref="subNavigationRef" tabindex="0" class="max-w-screen-2xl w-full flex justify-start focus:outline-none" :class="[subNavigationOptions.length ? 'scaffold-border-left-bottom-right' : '']">
+            <div ref="subNavigationRef" tabindex="0" class="max-w-screen-2xl w-full flex flex-wrap justify-start focus:outline-none" :class="[subNavigationOptions.length ? 'scaffold-border-left-bottom-right' : '']">
                 <span class="flex" :class="subNavigationHeightClass" v-for="navigation in subNavigationOptions" :key="navigation.key">
                     <NavLink
                         class="h-full"

@@ -113,7 +113,7 @@ const emit = defineEmits(['update:creatingOrEditing', 'update:editPayload','reso
 
 const compensationSelection = ref([]);
 
-await laraUseFetch("/api/enum/selections/compensation", {
+await laraUseFetch("/api/enum-selections/compensation", {
     lazy: false,
     method: 'GET',
 }, {
