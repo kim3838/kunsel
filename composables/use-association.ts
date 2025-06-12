@@ -1,5 +1,5 @@
 
-import type {AssociatedCompanyT, SelectedCompanyT} from "@/public/js/types/association";
+import type {AssignedCompanyT, AssociatedCompanyT, SelectedCompanyT} from "@/public/js/types/association";
 
 export const associatedCompanyState = () => {
     return useState<AssociatedCompanyT>("associated_company", () => {
@@ -102,7 +102,6 @@ export const useAssociation = () => {
         const {sessionDomain} = useRuntimeConfig().public;
         const {$authStore, $associationStore} = useNuxtApp();
         const {userIsSuperAdmin} = useAuth();
-        const route = useRoute()
 
         const storedCompany = useCookie<SelectedCompanyT>($authStore.SELECTED_ASSOCIATED_COMPANY_STORAGE_KEY,{
             domain: sessionDomain,
@@ -122,14 +121,20 @@ export const useAssociation = () => {
         }
     }
 
-    const updateCompanyAssignmentType = (selectedCompanyValue: null | number | string = null) => {
+    const updateCompanyAssignmentType = (selectedCompanyValue: null | number | string = null): void => {
 
-        let selectedCompany = _find(
-            associatedCompany.value.selection,
-            {value: selectedCompanyValue !== null ? (typeof selectedCompanyValue === 'string' ? parseInt(selectedCompanyValue) : selectedCompanyValue) : null}
+        const normalizedSelectedCompanyValue = selectedCompanyValue === null ? null :
+            typeof selectedCompanyValue === 'string' ? Number(selectedCompanyValue) : selectedCompanyValue;
+
+        const selectedCompany: AssignedCompanyT | undefined = associatedCompany.value.selection.find(
+            company => company.value === normalizedSelectedCompanyValue
         );
 
-        companyAssignmentTypeIsAdmin.value = selectedCompany?.payload?.assignment_type?.value == COMPANY_ASSIGNMENT_TYPE.ADMIN;
+        if (!selectedCompany) {
+            return;
+        }
+
+        companyAssignmentTypeIsAdmin.value = selectedCompany.payload.assignment_type.value == COMPANY_ASSIGNMENT_TYPE.ADMIN;
     }
 
     return {
