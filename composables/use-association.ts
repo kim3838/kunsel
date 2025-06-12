@@ -73,11 +73,15 @@ export const useAssociation = () => {
 
         if(useAuth().isAuthenticated.value){
 
+            const {sessionDomain} = useRuntimeConfig().public;
             const {$authStore} = useNuxtApp();
 
             let associatedCompaniesSingleSelectPayload = $authStore.associatedCompanies.singleSelectPayload;
 
-            const storedCompany = useCookie<SelectedCompanyT>($authStore.SELECTED_ASSOCIATED_COMPANY_STORAGE_KEY);
+            const storedCompany = useCookie<SelectedCompanyT>($authStore.SELECTED_ASSOCIATED_COMPANY_STORAGE_KEY,{
+                domain: sessionDomain,
+                sameSite: 'lax',
+            });
 
             if(storedCompany.value == undefined){
                 storedCompany.value = associatedCompany.value.selected;
@@ -95,11 +99,15 @@ export const useAssociation = () => {
     }
 
     const updateStoredAssociatedCompany = (newValue: SelectedCompanyT) => {
+        const {sessionDomain} = useRuntimeConfig().public;
         const {$authStore, $associationStore} = useNuxtApp();
         const {userIsSuperAdmin} = useAuth();
         const route = useRoute()
 
-        const storedCompany = useCookie<SelectedCompanyT>($authStore.SELECTED_ASSOCIATED_COMPANY_STORAGE_KEY);
+        const storedCompany = useCookie<SelectedCompanyT>($authStore.SELECTED_ASSOCIATED_COMPANY_STORAGE_KEY,{
+            domain: sessionDomain,
+            sameSite: 'lax',
+        });
 
         storedCompany.value = newValue;
 

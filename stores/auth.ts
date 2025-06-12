@@ -22,7 +22,11 @@ export const useAuthStore = defineStore('auth', () => {
     })
 
     function resetAssociatedCompanies() {
-        const storedCompany = useCookie<SelectedCompanyT>(SELECTED_ASSOCIATED_COMPANY_STORAGE_KEY);
+        const {sessionDomain} = useRuntimeConfig().public;
+        const storedCompany = useCookie<SelectedCompanyT>(SELECTED_ASSOCIATED_COMPANY_STORAGE_KEY,{
+            domain: sessionDomain,
+            sameSite: 'lax',
+        });
         storedCompany.value = null;
 
         associatedCompanies.value = {
