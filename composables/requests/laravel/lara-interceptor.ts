@@ -30,7 +30,7 @@ export const laraInterceptor = () => {
 
         coreStore.setServiceError({
             prompt: promptErrorResponse,
-            icon: 'ic:sharp-error-outline',
+            icon: 'mdi:information-variant-circle-outline',
             title: 'Request failed',
             payload: {
                 message: interceptorParameters?.error?.message ?? null
@@ -77,7 +77,7 @@ export const laraInterceptor = () => {
                     } else {
                         coreStore.setServiceError({
                             prompt: promptErrorResponse,
-                            icon: 'ic:sharp-error-outline',
+                            icon: 'mdi:information-variant-circle-outline',
                             title: 'Request failed',
                             payload: response?._data
                         });
@@ -87,7 +87,7 @@ export const laraInterceptor = () => {
 
                     coreStore.setServiceError({
                         prompt: promptErrorResponse,
-                        icon: 'ic:sharp-error-outline',
+                        icon: 'mdi:information-variant-circle-outline',
                         title: 'Request failed',
                         payload: response?._data
                     });
@@ -101,7 +101,7 @@ export const laraInterceptor = () => {
                 default:
                     coreStore.setServiceError({
                         prompt: promptErrorResponse,
-                        icon: 'ic:sharp-error-outline',
+                        icon: 'mdi:information-variant-circle-outline',
                         title: 'Request failed',
                         payload: response?._data
                     });
@@ -111,7 +111,7 @@ export const laraInterceptor = () => {
         if(responseCode >= 500 && responseCode < 600){
             coreStore.setServiceError({
                 prompt: promptErrorResponse,
-                icon: 'ic:sharp-error-outline',
+                icon: 'mdi:information-variant-circle-outline',
                 title: 'Something Went Wrong',
                 payload: response?._data
             });

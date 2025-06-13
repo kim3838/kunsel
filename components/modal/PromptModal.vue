@@ -1,18 +1,9 @@
 <template>
     <ConfirmationModal
         :closeable="false"
+        :icon="icon"
         :show="show"
         @close="$promptStore.promptAction()">
-        <template #icon>
-            <ClientOnly>
-                <Icon
-                    v-if="icon"
-                    class="h-full w-full"
-                    :name="icon">
-                </Icon>
-            </ClientOnly>
-        </template>
-
         <template #title>
             <span v-text="title"></span>
         </template>
@@ -21,14 +12,12 @@
             <div v-if="message">
                 <div v-text="message"></div>
             </div>
-            <div v-if="messageList.length">
-                <ul>
-                    <ClientOnly>
-                        <li v-for="messageNode in messageList" :key="messageNode">
-                            <Icon name="radix-icons:dot"></Icon>&nbsp;{{messageNode}}
-                        </li>
-                    </ClientOnly>
-                </ul>
+            <div v-if="messageList.length" class="ml-2">
+                <UnorderedList
+                    v-for="(message, index) in messageList" :key="`${message}-${index}`"
+                    :size="'md'"
+                    :label="message"
+                ></UnorderedList>
             </div>
         </template>
 

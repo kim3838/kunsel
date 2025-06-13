@@ -350,7 +350,7 @@ export default {
         },
         'multiSelectPrototypePayload': {
             fetch: {
-                url: '/model-selections/prototype',
+                url: '/api/model-selections/prototype',
                 filters: {
                     search: {
                         keyword: '',
@@ -380,7 +380,7 @@ export default {
         },
         'singleSelectPrototypePayload': {
             fetch: {
-                url: '/model-selections/prototype',
+                url: '/api/model-selections/prototype',
                 filters: {
                     search: {
                         keyword: '',
@@ -683,7 +683,7 @@ export default {
                         "capacity": 19,
                         "single_select_prototype_payload": {
                             fetch: {
-                                url: '/model-selections/prototype',
+                                url: '/api/model-selections/prototype',
                                 filters: {
                                     search: {
                                         keyword: '',
@@ -695,7 +695,7 @@ export default {
                         },
                         "multi_select_prototype_payload": {
                             fetch: {
-                                url: '/model-selections/prototype',
+                                url: '/api/model-selections/prototype',
                                 filters: {
                                     search: {
                                         keyword: '',
@@ -719,7 +719,7 @@ export default {
                         "capacity": 15,
                         "single_select_prototype_payload": {
                             fetch: {
-                                url: '/model-selections/prototype',
+                                url: '/api/model-selections/prototype',
                                 filters: {
                                     search: {
                                         keyword: '',
@@ -731,7 +731,7 @@ export default {
                         },
                         "multi_select_prototype_payload": {
                             fetch: {
-                                url: '/model-selections/prototype',
+                                url: '/api/model-selections/prototype',
                                 filters: {
                                     search: {
                                         keyword: '',
@@ -755,7 +755,7 @@ export default {
                         "capacity": 15,
                         "single_select_prototype_payload": {
                             fetch: {
-                                url: '/model-selections/prototype',
+                                url: '/api/model-selections/prototype',
                                 filters: {
                                     search: {
                                         keyword: '',
@@ -767,7 +767,7 @@ export default {
                         },
                         "multi_select_prototype_payload": {
                             fetch: {
-                                url: '/model-selections/prototype',
+                                url: '/api/model-selections/prototype',
                                 filters: {
                                     search: {
                                         keyword: '',
@@ -791,7 +791,7 @@ export default {
                         "capacity": 35,
                         "single_select_prototype_payload": {
                             fetch: {
-                                url: '/model-selections/prototype',
+                                url: '/api/model-selections/prototype',
                                 filters: {
                                     search: {
                                         keyword: '',
@@ -803,7 +803,7 @@ export default {
                         },
                         "multi_select_prototype_payload": {
                             fetch: {
-                                url: '/model-selections/prototype',
+                                url: '/api/model-selections/prototype',
                                 filters: {
                                     search: {
                                         keyword: '',
