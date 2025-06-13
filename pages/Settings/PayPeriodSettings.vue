@@ -53,50 +53,56 @@
                     </template>
                 </DialogModal>
 
-                <div v-if="!_isEmpty(payPeriodSetting)" class="p-[20px]">
-                    <div>Days to pay after cut off</div>
-                    <div class="text-sm font-sub-data">{{`${payPeriodSetting.days_to_pay_after_cut_off} days`}}</div>
-                    <br>
-                    <InputLabel :size="'md'" value="Monthly and Semimonthly 2nd half Cut-off Presets" />
-                    <div class="flex">
-                        <SingleSelect
-                            :width="'220px'"
-                            :searchable="false"
-                            drop-shadow
-                            value-persist
-                            :selection-max-viewable-line="6"
-                            :size="'md'"
-                            :label="'Select Cut-off Presets'"
-                            :options="payPeriodPresetOptions"
-                            @value-change="updatePayPeriods"/>
+                <div v-if="!_isEmpty(payPeriodSetting)" class="p-[20px] space-y-4">
+                    <div>
+                        <div>Days to pay after cut off</div>
+                        <div class="text-sm font-sub-data">{{`${payPeriodSetting.days_to_pay_after_cut_off} days`}}</div>
                     </div>
-                    <br>
-                    <div>Monthly Pay Period</div>
-                    <table class="border-separate text-sm font-sub-data">
-                        <tbody>
-                        <tr v-for="(setting, key) in payPeriodSetting.monthly_pay_period">
-                            <td>{{ setting.label }}</td><td class="pl-1">{{ setting.readable }}</td>
-                        </tr>
-                        </tbody>
-                    </table>
-                    <br>
-                    <div>Semimonthly Pay Period</div>
-                    <table class="border-separate text-sm font-sub-data">
-                        <tbody>
-                        <tr v-for="(setting, key) in payPeriodSetting.semimonthly_pay_period">
-                            <td>{{ setting.label }}</td><td class="pl-1">{{ setting.readable }}</td>
-                        </tr>
-                        </tbody>
-                    </table>
-                    <br>
-                    <Button
-                        class="max-w-min"
-                        :disabled="submitPending"
-                        :icon="submitPending ? 'eos-icons:loading' : 'mdi:data'"
-                        @click="submit"
-                        :label="submitPending ? 'Updating...' : 'Update'"></Button>
+
+                    <div>
+                        <InputLabel :size="'md'" value="Monthly and Semimonthly 2nd half Cut-off Presets" />
+                        <div class="flex">
+                            <SingleSelect
+                                :width="'220px'"
+                                :searchable="false"
+                                drop-shadow
+                                value-persist
+                                :selection-max-viewable-line="6"
+                                :size="'md'"
+                                :label="'Select Cut-off Presets'"
+                                :options="payPeriodPresetOptions"
+                                @value-change="updatePayPeriods"/>
+                        </div>
+                    </div>
+
+                    <div>
+                        <div>Monthly Pay Period</div>
+                        <table class="border-separate text-sm font-sub-data">
+                            <tbody>
+                            <tr v-for="(setting, key) in payPeriodSetting.monthly_pay_period">
+                                <td>{{ setting.label }}</td><td class="pl-1">{{ setting.readable }}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div><div>Semimonthly Pay Period</div>
+                        <table class="border-separate text-sm font-sub-data">
+                            <tbody>
+                            <tr v-for="(setting, key) in payPeriodSetting.semimonthly_pay_period">
+                                <td>{{ setting.label }}</td><td class="pl-1">{{ setting.readable }}</td>
+                            </tr>
+                            </tbody>
+                        </table></div>
+                    <div>
+                        <Button
+                            class="max-w-min"
+                            :disabled="submitPending"
+                            :icon="submitPending ? 'eos-icons:loading' : 'mdi:data'"
+                            @click="submit"
+                            :label="submitPending ? 'Updating...' : 'Update'"></Button>
+                    </div>
                 </div>
-                <div v-else>
+                <div v-else class="p-[20px]">
                     Pay period setting not found.
                 </div>
             </div>
