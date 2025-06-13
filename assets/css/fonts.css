@@ -279,20 +279,31 @@
 
 @font-face {
     font-family: "Spline Sans";
-    src: url('/fonts/spline-sans/ttf/SplineSans-Regular.ttf') format('truetype');
+    src: url('/fonts/spline-sans/ttf/SplineSans-SemiBold.ttf') format('truetype');
     font-style: normal;
     font-stretch: normal;
     font-display: swap;
     font-weight: 500;
 }
 
+/**********************************************************************************************************************/
+
 @font-face {
-    font-family: "Spline Sans";
-    src: url('/fonts/spline-sans/ttf/SplineSans-Medium.ttf') format('truetype');
+    font-family: "Aptos Narrow";
+    src: url('/fonts/aptos-narrow/ttf/Aptos-Narrow.ttf') format('truetype');
     font-style: normal;
     font-stretch: normal;
     font-display: swap;
-    font-weight: 600;
+    font-weight: 400;
+}
+
+@font-face {
+    font-family: "Aptos Narrow";
+    src: url('/fonts/aptos-narrow/ttf/Aptos-Narrow-Bold.ttf') format('truetype');
+    font-style: normal;
+    font-stretch: normal;
+    font-display: swap;
+    font-weight: 500;
 }
 
 /**********************************************************************************************************************/

@@ -19,7 +19,7 @@
                     disabled:cursor-not-allowed
                     relative">
                 <slot :fontClass="fontClass">
-                    <div class="w-full h-full flex" :style="[contentSyle]">
+                    <div class="w-full h-full flex" :style="[contentStyle]">
                         <div
                             :style="{'filter': variant === 'default' ? 'drop-shadow(rgba(0, 0, 0, 0.3) 0px 1px 1px)' : 'none'}"
                             v-if="icon?.trim()"
@@ -226,7 +226,7 @@ const borderStyle = computed(() => {
     }[props.variant]
 });
 
-const contentSyle = computed(() => {
+const contentStyle = computed(() => {
     return {
         'justify-content': props.justifyContent
     }

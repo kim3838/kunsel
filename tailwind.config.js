@@ -41,11 +41,13 @@ module.exports = {
                     'IBM Plex Sans Condensed',
                 ],
                 standard: [
+                    'Aptos Narrow',
                     'Roboto',
                     'Hedvig Letters Sans',
                     'Source Sans Pro',
                 ],
                 serif : [
+                    'Prociono',
                     'Quintessential',
                     'Playfair Display',
                     'Oranienbaum',

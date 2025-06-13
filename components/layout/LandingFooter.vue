@@ -9,19 +9,19 @@
                     <div class="mt-2 space-y-2">
                         <UnorderedList
                             class="flex sm:justify-start justify-center"
-                            :size="'sm'"
+                            :size="listSize"
                             :icon="'ic:round-mail-outline'"
                             :label="'info@globalfoundries.com'"/>
 
                         <UnorderedList
                             class="flex sm:justify-start justify-center"
-                            :size="'sm'"
+                            :size="listSize"
                             :icon="'ic:sharp-phone'"
                             :label="'+63 99-1999-1991'"/>
 
                         <UnorderedList
                             class="flex sm:justify-start justify-center"
-                            :size="'sm'"
+                            :size="listSize"
                             :icon="'ic:sharp-location-on'"
                             :label="'Quezon City, Metro Manila, Philippines'"/>
                     </div>
@@ -34,11 +34,11 @@
 
                         <UnorderedList
                             class="flex sm:justify-start justify-center"
-                            :size="'sm'"
+                            :size="listSize"
                             :label="'Custom Web Services'"/>
                         <UnorderedList
                             class="flex sm:justify-start justify-center"
-                            :size="'sm'"
+                            :size="listSize"
                             :label="'Product Landing Page'"/>
                     </div>
                 </div>
@@ -50,24 +50,24 @@
 
                         <UnorderedList
                             class="flex sm:justify-start justify-center"
-                            :size="'sm'"
+                            :size="listSize"
                             :icon="'ri:info-i'"
                             :label="'FAQs'"/>
                         <UnorderedList
                             class="flex sm:justify-start justify-center overflow-visible"
                             :icon="'ri:info-i'"
-                            :size="'sm'">
+                            :size="listSize">
                             <div class="flex">
                                 <a class="inline-block hover:underline" href="/">
-                                        <span class="transition group-hover:text-gray-700/75">
+                                    <span class="transition group-hover:text-gray-700/75">
                                         Support
-                                        </span>
+                                    </span>
                                 </a>
 
                                 <span class="ml-1 relative flex h-2 w-2">
-                                        <span class="absolute inline-flex h-full w-full animate-ping rounded-full ping-highlight opacity-75"></span>
-                                        <span class="relative inline-flex h-2 w-2 rounded-full ping"></span>
-                                    </span>
+                                    <span class="absolute inline-flex h-full w-full animate-ping rounded-full ping-highlight opacity-75"></span>
+                                    <span class="relative inline-flex h-2 w-2 rounded-full ping"></span>
+                                </span>
                             </div>
                         </UnorderedList>
                     </div>
@@ -80,17 +80,17 @@
 
                         <UnorderedList
                             class="flex sm:justify-start justify-center"
-                            :size="'sm'"
+                            :size="listSize"
                             :icon="'ri:info-i'"
                             :label="'News'"/>
                         <UnorderedList
                             class="flex sm:justify-start justify-center"
-                            :size="'sm'"
+                            :size="listSize"
                             :icon="'ri:info-i'"
                             :label="'History'"/>
                         <UnorderedList
                             class="flex sm:justify-start justify-center"
-                            :size="'sm'"
+                            :size="listSize"
                             :icon="'ri:info-i'"
                             :label="'Leadership'"/>
                     </div>
@@ -101,9 +101,8 @@
             <div class="footer-rule mt-2"></div>
 
             <div class="mx-auto max-w-screen-lg pt-2 mt-2">
-                <div class="text-center sm:flex sm:justify-between sm:text-left">
-                    <p class="text-sm">
-
+                <div class="text-base text-center sm:flex sm:justify-between sm:text-left">
+                    <p>
                         <a class="inline-block hover:underline" href="/">
                             Terms & Conditions
                         </a>
@@ -112,7 +111,7 @@
                             Privacy Policy
                         </a>
                     </p>
-                    <p class="mt-4 text-sm flex items-center justify-center sm:justify-start sm:order-first sm:mt-0">
+                    <p class="mt-4 flex items-center justify-center sm:justify-start sm:order-first sm:mt-0">
                         Copyright © GLOBAL FOUNDRIES inc.&nbsp;<span class="block sm:inline">All Rights Reserved.</span>
                     </p>
                 </div>
@@ -133,6 +132,7 @@ const {
 } = storeToRefs($themeStore);
 
 const headerClass = ref('font-business text-lg');
+const listSize = ref('md');
 </script>
 
 <style scoped>
