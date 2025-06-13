@@ -194,12 +194,12 @@ export const useLayout = () => {
                         route_active: 'settings-incometaxes'
                     },
                     {
-                        key: 'settings/pay-period-setting',
+                        key: 'settings/pay-period-settings',
                         type: 'link',
-                        title: 'Pay Period Setting',
+                        title: 'Pay Period Settings',
                         icon: 'ic:baseline-miscellaneous-services',
-                        to: '/settings/payperiodsetting',
-                        route_active: 'settings-payperiodsetting'
+                        to: '/settings/payperiodsettings',
+                        route_active: 'settings-payperiodsettings'
                     },
                 ]
             }] : []) as NavigationLinkInterface[],

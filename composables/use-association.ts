@@ -25,7 +25,7 @@ export const useAssociation = () => {
             'settings-compensations',
             'settings-deductions',
             'settings-incometaxes',
-            'settings-payperiodsetting',
+            'settings-payperiodsettings',
         ], _toLower(String(route.name)));
     });
 
