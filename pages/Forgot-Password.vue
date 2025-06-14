@@ -1,7 +1,7 @@
 <template>
     <div>
         <LandingWrapper>
-            <div class="mx-auto px-4 max-w-screen-2xl flex justify-center">
+            <div class="mx-auto px-4 flex justify-center max-w-screen-2xl scaffold-border-left-bottom-right">
                 <AccentFrame class="my-4">
                     <template #content>
                         <div class="relative py-4">

@@ -1,7 +1,7 @@
 <template>
     <div>
         <LandingWrapper>
-            <div class="mx-auto px-4 max-w-screen-2xl flex justify-center">
+            <div class="mx-auto px-4 flex justify-center max-w-screen-2xl scaffold-border-left-bottom-right">
                 <div class="hidden sm:block px-4 py-8 h-96 w-96">
                     <div class="w-full h-full bg-contain bg-center bg-no-repeat" :style="{'background-image': 'url(/deco/undraw/undraw_two_factor_authentication_namy.svg)'}"></div>
                 </div>
