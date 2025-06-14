@@ -1,5 +1,5 @@
 <template>
-    <label :class="[fontClass]" class="font-data flex align-start">
+    <label :class="[fontClass]" class="flex align-start">
         <span class="line-clamp-1" v-if="value">{{ value }}</span>
         <span v-else><slot></slot></span>
     </label>
@@ -20,12 +20,12 @@
         computed: {
             fontClass(){
                 return {
-                    '2xs': 'text-xs font-medium leading-3',
-                    'xs': 'text-xs font-medium leading-3',
-                    'sm': 'text-sm font-medium leading-4',
-                    'md': 'text-base font-medium leading-5',
-                    'lg': 'text-lg font-medium leading-5',
-                    'xl': 'text-xl font-semibold leading-5',
+                    '2xs': 'text-xs leading-3',
+                    'xs': 'text-xs leading-3',
+                    'sm': 'text-sm leading-4',
+                    'md': 'text-base leading-5',
+                    'lg': 'text-lg leading-5',
+                    'xl': 'text-xl leading-5',
                 }[this.size]
             },
         }
