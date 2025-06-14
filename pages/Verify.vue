@@ -6,7 +6,7 @@
                     <template #content>
                         <div class="relative py-4">
                             <form @submit.prevent="execute" class="w-80">
-                                <div class="text-lg font-medium mb-4">
+                                <div class="text-lg font-medium font-header mb-4">
                                     Verify your email.
                                 </div>
 

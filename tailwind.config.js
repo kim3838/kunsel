@@ -17,6 +17,7 @@ module.exports = {
                     'Protest Revolution',
                 ],
                 business: [
+                    'Prociono',
                     'Radio Canada Big',
                     'Bricolage Grotesque',
                     'Inclusive Sans',
@@ -35,6 +36,7 @@ module.exports = {
                     'Sofia Sans Semi Condensed',
                 ],
                 subData:[
+                    'Aptos Narrow',
                     'Source Sans Pro'
                 ],
                 header: [

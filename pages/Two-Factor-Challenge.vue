@@ -9,7 +9,7 @@
                     <template #content>
                         <div class="relative py-4">
                             <form @submit.prevent="handleLogin" class="w-80">
-                                <div class="block text-lg font-medium mb-4">
+                                <div class="block text-lg font-medium font-header mb-4">
                                     Enter your code
                                 </div>
                                 <template v-if="! recovery">
