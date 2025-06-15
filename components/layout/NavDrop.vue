@@ -153,11 +153,11 @@ const navDropOptionsStyleComputed = computed(() => {
             [props.dropAlign]: 'calc(0px)',
         },
         'right': {
-            top: '-1px',
+            top: '0px',
             left: 'calc(100% + 0px)',
         },
         'left': {
-            top: '-1px',
+            top: '0px',
             right: 'calc(100% + 0px)',
         },
     };
