@@ -197,7 +197,7 @@ export const useLayout = () => {
                         key: 'settings/pay-period-settings',
                         type: 'link',
                         title: 'Pay Period Settings',
-                        icon: 'ic:baseline-miscellaneous-services',
+                        icon: 'mdi:calendar-cursor-outline',
                         to: '/settings/payperiodsettings',
                         route_active: 'settings-payperiodsettings'
                     },
