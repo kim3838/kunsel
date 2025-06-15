@@ -116,6 +116,7 @@ import type {PayPeriodPresetSelectionT, PayPeriodSettingT} from "@/public/js/typ
 
 definePageMeta({middleware: ['auth', 'company-admin']});
 useLayout().setNavigationMode('solid', 'PayPeriodSetting.vue');
+
 const {isAuthenticated} = useAuth();
 const nuxtApp = useNuxtApp();
 const {
