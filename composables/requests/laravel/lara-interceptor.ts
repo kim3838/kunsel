@@ -83,6 +83,19 @@ export const laraInterceptor = () => {
                         });
                     }
                     break;
+                case '403':
+                    coreStore.setServiceError({
+                        prompt: promptErrorResponse,
+                        icon: 'mdi:information-variant-circle-outline',
+                        title: 'Request failed',
+                        payload: response?._data
+                    });
+
+                    //Perform unauthorized response callback
+                    if(callbacks.onUnAuthorizedResponse && typeof callbacks.onUnAuthorizedResponse == 'function'){
+                        await callbacks.onUnAuthorizedResponse(request, options, response);
+                    }
+                    break;
                 case '406':
 
                     coreStore.setServiceError({
