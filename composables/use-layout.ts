@@ -201,6 +201,14 @@ export const useLayout = () => {
                         to: '/settings/payperiodsettings',
                         route_active: 'settings-payperiodsettings'
                     },
+                    {
+                        key: 'settings/salary-statement-modules',
+                        type: 'link',
+                        title: 'Salary Statement Modules',
+                        icon: 'mdi:invoice-text-multiple-outline',
+                        to: '/settings/salarystatementmodules',
+                        route_active: 'settings-salarystatementmodules'
+                    },
                 ]
             }] : []) as NavigationLinkInterface[],
         ] as NavigationLinkInterface[]);

@@ -62,3 +62,9 @@ export type PromptT = {
         label: string;
     };
 };
+
+export type ConditionT = {
+    subject: string,
+    operator: string,
+    value: string | number | null,
+}

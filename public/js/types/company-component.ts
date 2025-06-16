@@ -1,4 +1,6 @@
 
+import type {ConditionT, Enum} from "@/public/js/common/type";
+import type {SequenceableTableRow} from "@/public/js/types/data";
 
 export type CompanyFormulaT = {
     key: string,
@@ -24,4 +26,13 @@ export type PayPeriodPresetSelectionT = {
     text: string | number,
     monthly_period: string,
     semimonthly_period: string,
+}
+
+export type SalaryStatementModuleT = SequenceableTableRow & {
+    id: string | number,
+    company_id: string | number,
+    formulable_type: Enum,
+    name: string,
+    reference: string,
+    conditions: ConditionT[]
 }
