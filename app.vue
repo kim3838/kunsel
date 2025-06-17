@@ -126,6 +126,9 @@ watch(() => route.name,() => {
     border-top: 1px dashed v-bind(threadColor);
     border-bottom: 1px dashed v-bind(threadColor);
 }
+.scaffold-border-top{
+    border-top: 1px dashed v-bind(threadColor);
+}
 .scaffold-border-bottom{
     border-bottom: 1px dashed v-bind(threadColor);
 }

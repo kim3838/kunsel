@@ -1,9 +1,9 @@
 <template>
     <footer>
-        <div class="mx-auto max-w-screen-2xl px-4 pb-6 pt-16 sm:px-6 lg:px-8 scaffold-border-left-bottom-right">
-            <div class="mx-auto max-w-screen-lg grid grid-cols-1 gap-2 mt-8 lg:mt-0 sm:grid-cols-2 md:grid-cols-5 lg:col-span-3">
+        <div class="mx-auto max-w-screen-2xl scaffold-border-left-bottom-right">
+            <div class="mx-auto max-w-screen-lg grid grid-cols-1 gap-2 px-2 py-8 sm:grid-cols-2 md:grid-cols-5 lg:col-span-3">
 
-                <div class="text-center sm:text-left md:col-span-2">
+                <div class="scaffold-border p-2 text-center sm:text-left md:col-span-2">
                     <p :class="headerClass">Contact Us</p>
 
                     <div class="mt-2 space-y-2">
@@ -11,7 +11,7 @@
                             class="flex sm:justify-start justify-center"
                             :size="listSize"
                             :icon="'ic:round-mail-outline'"
-                            :label="'info@globalfoundries.com'"/>
+                            :label="'info@host.com'"/>
 
                         <UnorderedList
                             class="flex sm:justify-start justify-center"
@@ -27,7 +27,7 @@
                     </div>
                 </div>
 
-                <div class="text-center mt-12 sm:text-left sm:mt-0">
+                <div class="scaffold-border p-2 text-center mt-12 sm:text-left sm:mt-0">
                     <p :class="headerClass">Our Services</p>
 
                     <div class="mt-2 space-y-2">
@@ -35,15 +35,15 @@
                         <UnorderedList
                             class="flex sm:justify-start justify-center"
                             :size="listSize"
-                            :label="'Custom Web Services'"/>
+                            :label="'Payroll System'"/>
                         <UnorderedList
                             class="flex sm:justify-start justify-center"
                             :size="listSize"
-                            :label="'Product Landing Page'"/>
+                            :label="'Product/Services Landing Page'"/>
                     </div>
                 </div>
 
-                <div class="text-center mt-12 sm:text-left md:mt-0">
+                <div class="scaffold-border p-2 text-center mt-12 sm:text-left md:mt-0">
                     <p :class="headerClass">Helpful Links</p>
 
                     <div class="mt-2 space-y-2">
@@ -73,7 +73,7 @@
                     </div>
                 </div>
 
-                <div class="text-center mt-12 sm:text-left md:mt-0">
+                <div class="scaffold-border p-2 text-center mt-12 sm:text-left md:mt-0">
                     <p :class="headerClass">About Us</p>
 
                     <div class="mt-2 space-y-2 text-sm">
@@ -98,22 +98,19 @@
 
             </div>
 
-            <div class="footer-rule mt-2"></div>
-
-            <div class="mx-auto max-w-screen-lg pt-2 mt-2">
-                <div class="text-base text-center sm:flex sm:justify-between sm:text-left">
-                    <p>
-                        <a class="inline-block hover:underline" href="/">
-                            Terms & Conditions
-                        </a>
-                        <span>&nbsp;.&nbsp;</span>
-                        <a class="inline-block hover:underline" href="/">
-                            Privacy Policy
-                        </a>
-                    </p>
-                    <p class="mt-4 flex items-center justify-center sm:justify-start sm:order-first sm:mt-0">
-                        Copyright © GLOBAL FOUNDRIES inc.&nbsp;<span class="block sm:inline">All Rights Reserved.</span>
-                    </p>
+            <div class="scaffold-border-top py-8">
+                <div class="mx-auto max-w-screen-lg flex justify-center ">
+                    <div class="text-base ">
+                        <div class="space-x-2">
+                            <a class="inline-block hover:underline" href="/">
+                                Terms & Conditions
+                            </a>
+                            <span>|</span>
+                            <a class="inline-block hover:underline" href="/">
+                                Privacy Policy
+                            </a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
