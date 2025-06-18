@@ -125,6 +125,7 @@ export const useAuth = () => {
                 });
             },
             onSuccessResponse: async (request, options, response) => {
+                useAuthStore().resetAssociatedCompanies();
                 await fetchUser();
                 await navigateTo({
                     path: '/',
