@@ -209,6 +209,14 @@ export const useLayout = () => {
                         to: '/settings/salarystatementmodules',
                         route_active: 'settings-salarystatementmodules'
                     },
+                    {
+                        key: 'settings/formula-settings',
+                        type: 'link',
+                        title: 'Formula Settings',
+                        icon: 'mdi:math-compass',
+                        to: '/settings/formulasettings',
+                        route_active: 'settings-formulasettings'
+                    },
                 ]
             }] : []) as NavigationLinkInterface[],
         ] as NavigationLinkInterface[]);
