@@ -1,5 +1,5 @@
 <template>
-    <span class="space-x-0.5 flex w-max">
+    <div class="space-x-0.5 flex w-max">
         <Button
             type="button"
             :disabled="pagination.current_page === 1 || pending || pagination.total === 0"
@@ -32,16 +32,19 @@
             :size="buttonSize"
             :icon="'ic:sharp-last-page'"
             :label="lastPage.label" />
-        <SingleSelect
-            drop-shadow
-            :size="selectSize"
-            :searchable="false"
-            :value-persist="true"
-            :width="perPageSelectWidth"
-            :icon="'mdi:book-open-page-variant-outline'"
-            :label="'Per Page'"
-            :options="perPage"/>
-    </span>
+        <div>
+            <SingleSelect
+                drop-shadow
+                :selection-float="false"
+                :size="selectSize"
+                :searchable="false"
+                :value-persist="true"
+                :width="perPageSelectWidth"
+                :icon="'mdi:book-open-page-variant-outline'"
+                :label="'Per Page'"
+                :options="perPage"/>
+        </div>
+    </div>
 </template>
 
 <script setup lang="ts">
