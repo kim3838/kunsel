@@ -134,7 +134,6 @@ const compensationName = ref('');
 const assignable = reactive({
     selection: [
         {text : 'Assignable', value: 1},
-        {text : 'Global', value: 0},
     ],
     selected: 1
 });

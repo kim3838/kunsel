@@ -77,7 +77,6 @@ const compensationsHeaders = reactive<TableHeaderT[]>([
     { text: 'Name', value: 'name'},
     { text: 'Type', value: 'type'},
     { text: 'Assignable', value: 'assignable'},
-    { text: 'Global', value: 'global'},
     { text: 'Formula', value: 'formula'},
     { text: 'Settings', value: 'settings'},
     { text: '', alignData: 'left', value: 'actions'},
