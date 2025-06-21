@@ -99,7 +99,7 @@
                         disable-header-border
                         navigation-mode
                         :size="navigationHeaderSize"
-                        :label="'Select Associated Company'"
+                        :label="'Select Association'"
                         :options="$authStore.associatedCompanies.singleSelectPayload"
                         :drop-align="rightNavigationDropAlign"
                         :override="associatedCompaniesSelectOverrides"
