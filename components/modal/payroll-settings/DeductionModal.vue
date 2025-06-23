@@ -5,7 +5,7 @@
         :closeable="false"
     >
         <template #title>
-            Create compensation
+            Create deduction
         </template>
         <template #content>
             <div>
@@ -13,7 +13,7 @@
                     <tbody>
                     <tr>
                         <td><InputLabel :size="'md'" value="Name" /></td>
-                        <td><Input v-model="compensationName" placeholder="Enter compensation name" type="text" /></td>
+                        <td><Input v-model="deductionName" placeholder="Enter deduction name" type="text" /></td>
                     </tr>
                     <tr>
                         <td><InputLabel :size="'md'" value="Type" /></td>
@@ -23,8 +23,8 @@
                                 drop-shadow
                                 :selection-max-viewable-line="4"
                                 :size="'md'"
-                                :label="'Select Compensation Type'"
-                                :options="compensationTypeSingleSelect"/>
+                                :label="'Select Deduction Type'"
+                                :options="deductionTypeOptions"/>
                         </td>
                     </tr>
                     <tr>
@@ -44,16 +44,16 @@
                                 :selection-max-viewable-line="6"
                                 :size="'md'"
                                 :label="'Select Compensation Formula'"
-                                :options="compensationFormulaOptions"
-                                @value-change="compensationFormulaSettingsExecute"/>
+                                :options="deductionFormulaOptions"
+                                @value-change="deductionFormulaSettingsExecute"/>
                         </td>
                     </tr>
-                    <tr v-if="!_isEmpty(compensationFormulaSettings)">
+                    <tr v-if="!_isEmpty(deductionFormulaSettings)">
                         <td><InputLabel :size="'md'" value="Formula settings" /></td>
                         <td class="text-sm font-sub-data">
                             <table class="border-separate">
                                 <tbody>
-                                <tr v-for="(setting, key) in compensationFormulaSettings">
+                                <tr v-for="(setting, key) in deductionFormulaSettings">
                                     <td>{{ setting.label }}</td><td class="pl-1">{{ setting.readable }}</td>
                                 </tr>
                                 </tbody>
@@ -86,7 +86,7 @@
 
 <script setup lang="ts">
 import {storeToRefs} from "pinia";
-import type {CompanyFormulaT} from "@/public/js/types/company-component";
+import type {CompanyFormulaT} from "public/js/types/company-component";
 const {isAuthenticated} = useAuth();
 const nuxtApp = useNuxtApp();
 const {
@@ -113,7 +113,7 @@ const emit = defineEmits(['update:creatingOrEditing', 'update:editPayload','reso
 
 const compensationSelection = ref([]);
 
-await laraUseFetch("/api/enum-selections/compensation", {
+await laraUseFetch("/api/enum-selections/deduction", {
     lazy: false,
     method: 'GET',
 }, {
@@ -122,81 +122,82 @@ await laraUseFetch("/api/enum-selections/compensation", {
     }
 }, true);
 
-const compensationTypeSingleSelect = reactive({
+const deductionTypeOptions = reactive({
     search: '',
     data: compensationSelection.value,
     selection: compensationSelection.value,
     selected: null
 });
 
-const compensationName = ref('');
+const deductionName = ref('');
 
 const assignable = reactive({
     selection: [
         {text : 'Assignable', value: 1},
+        {text : 'Global', value: 0},
     ],
     selected: 1
 });
 
 watch(updatedAssociatedCompanyFlag, (newValue) => {
     if(isAuthenticated.value){
-        compensationFormulaExecute();
+        deductionFormulaExecute();
     }
 })
 
-const compensationFormulaOptions = reactive({
+const deductionFormulaOptions = reactive({
     search: '',
     data: [],
     selection: [],
     selected: null
 })
 
-const compensationFormulaPending = ref(false)
-const compensationFormulaExecute = async () => {
-    compensationFormulaPending.value = true;
+const deductionFormulaPending = ref(false)
+const deductionFormulaExecute = async () => {
+    deductionFormulaPending.value = true;
 
     await laraFetch("/api/company-formula-selections", {
         method: 'GET',
         params: {
             filters: {
                 'company_id': selectedAssociatedCompany.value,
-                'formulable_type': FORMULABLE.EARNINGS
+                'formulable_type': FORMULABLE.DEDUCTIONS
             }
         }
     }, {
         onRequestError: () => {
-            compensationFormulaPending.value = false;
+            deductionFormulaPending.value = false;
         },
         onResponse: () => {
-            compensationFormulaPending.value = false;
+            deductionFormulaPending.value = false;
         },
         onSuccessResponse: async (request, options, response) => {
             const selection = _get(response, '_data.values.selection', []);
-            compensationFormulaOptions.data = selection
-            compensationFormulaOptions.selection = selection;
+            deductionFormulaOptions.data = selection
+            deductionFormulaOptions.selection = selection;
         }
     });
 }
-await compensationFormulaExecute();
+await deductionFormulaExecute();
 
-const compensationFormulaSettings = ref<CompanyFormulaT[]>([]);
-const compensationFormulaSettingsPending = ref(false)
-const compensationFormulaSettingsExecute = async (companyFormulaId: null | number | string = '') => {
+const deductionFormulaSettings = ref<CompanyFormulaT[]>([]);
+const deductionFormulaSettingsPending = ref(false)
+const deductionFormulaSettingsExecute = async (companyFormulaId: null | number | string = '') => {
 
     if (_isNull(companyFormulaId)) return;
-    compensationFormulaSettingsPending.value = true;
+    deductionFormulaSettingsPending.value = true;
 
     await laraFetch(`/api/company-formula/${companyFormulaId}`, {
         method: 'GET',
     }, {
         onRequestError: () => {
-            compensationFormulaSettingsPending.value = false;
+            deductionFormulaSettingsPending.value = false;
         },
         onResponse: () => {
-            compensationFormulaSettingsPending.value = false;
+            deductionFormulaSettingsPending.value = false;
         },
         onSuccessResponse: async (request, options, response) => {
-            compensationFormulaSettings.value = _get(response, '_data.values.company_formula.settings', []);
+            deductionFormulaSettings.value = _get(response, '_data.values.company_formula.settings', []);
         }
     });
 }
@@ -204,10 +205,10 @@ const compensationFormulaSettingsExecute = async (companyFormulaId: null | numbe
 const form = computed(() => {
     return {
         'company_id': selectedAssociatedCompany.value,
-        'name': compensationName.value,
+        'name': deductionName.value,
         'assignable': assignable.selected,
-        'type': compensationTypeSingleSelect.selected,
-        'company_formula_id': compensationFormulaOptions.selected,
+        'type': deductionTypeOptions.selected,
+        'company_formula_id': deductionFormulaOptions.selected,
     }
 });
 
@@ -215,10 +216,10 @@ watch(() => props.editPayload, (editPayload) => {
 
     if(Boolean(props.editPayload.id)){
 
-        compensationName.value = _get(editPayload, 'name', '');
+        deductionName.value = _get(editPayload, 'name', '');
         assignable.selected = Number(_get(editPayload, 'assignable', true));
-        compensationTypeSingleSelect.selected = _get(editPayload, 'type.value', null);
-        compensationFormulaOptions.selected = _get(editPayload, 'company_formula_id', null);
+        deductionTypeOptions.selected = _get(editPayload, 'type.value', null);
+        deductionFormulaOptions.selected = _get(editPayload, 'company_formula_id', null);
     }
 
 })
@@ -230,7 +231,7 @@ const closeModal = () => {
 };
 
 const disableActions = computed(() => {
-    return submitPending.value || compensationFormulaSettingsPending.value || compensationFormulaPending.value;
+    return submitPending.value || deductionFormulaSettingsPending.value || deductionFormulaPending.value;
 });
 const actionLabel = computed(() => {
     return Boolean(props.editPayload.id) ? 'Update' : 'Create';
@@ -239,17 +240,17 @@ const submitAction = computed(() => {
     return Boolean(props.editPayload.id) ? 'PATCH' : 'POST';
 });
 const submitPath = computed(() => {
-    return Boolean(props.editPayload.id) ? `/api/compensation/${props.editPayload.id}` : `/api/compensation`;
+    return Boolean(props.editPayload.id) ? `/api/deduction/${props.editPayload.id}` : `/api/deduction`;
 });
 
 const submitPending = ref(false);
 const reset = () => {
-    compensationName.value = '';
+    deductionName.value = '';
     assignable.selected = 1;
-    compensationTypeSingleSelect.selected = null;
-    compensationFormulaOptions.selected = null;
+    deductionTypeOptions.selected = null;
+    deductionFormulaOptions.selected = null;
 
-    compensationFormulaSettings.value = [];
+    deductionFormulaSettings.value = [];
 }
 const submit = async() => {
     submitPending.value = true;

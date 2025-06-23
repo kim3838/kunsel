@@ -90,7 +90,7 @@ export default defineNuxtConfig({
         {path: '@/components'},
         {path: '@/components/form'},
         {path: '@/components/modal'},
-        {path: '@/components/modal/payroll/settings'},
+        {path: '@/components/modal/payroll-settings'},
         {path: '@/components/data'},
         {path: '@/components/deco'},
         {path: '@/components/accordion'},
