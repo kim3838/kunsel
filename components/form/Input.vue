@@ -17,6 +17,9 @@
                 :value="modelValue"
                 :placeholder="placeholder"
                 :type="type"
+                :min="min"
+                :max="max"
+                @keydown="limitKeys"
                 :readonly="readonly"
                 @input="$emit('update:modelValue', $event.target.value)"
                 ref="input">
@@ -51,6 +54,10 @@ const props = defineProps({
     type: {
         type: String,
         default: 'text'
+    },
+    typeStrict: {
+        type: Boolean,
+        default: false,
     },
     placeholder: {
         type: String,
@@ -105,9 +112,27 @@ const props = defineProps({
         type: Boolean,
         default: false
     },
+    min: {
+        type: Number,
+        default: null
+    },
+    max: {
+        type: Number,
+        default: null
+    },
 });
 
 const emit = defineEmits(['update:modelValue', 'focusStateChanged']);
+
+function limitKeys(event) {
+    if(props.type === 'number' && props.typeStrict){
+        const invalidKeys = ['e', 'E', '+', '-']
+
+        if (invalidKeys.includes(event.key)) {
+            event.preventDefault()
+        }
+    }
+}
 
 const heightClass = computed(() => {
     return {
