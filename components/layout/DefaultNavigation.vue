@@ -103,7 +103,7 @@
                         :options="$authStore.associatedCompanies.singleSelectPayload"
                         :drop-align="rightNavigationDropAlign"
                         :override="associatedCompaniesSelectOverrides"
-                        @valueChange = "updateStoredAssociatedCompany"
+                        @valueChange="updateStoredAssociatedCompany"
                     />
                     <component
                         :is="navDrop"
