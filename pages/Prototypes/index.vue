@@ -40,24 +40,27 @@
                         <div class="grid gap-2 grid-cols-1 sm:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-8">
                             <Button class="w-min" ref="submitButton" type="submit" :disabled="pending" :size="'md'" :icon="pending ? 'eos-icons:loading' : 'mdi:data'" :label="pending ? 'Loading' : 'Process'"></Button>
                         </div>
-                    </form>
 
-                    <FansyFrame>
-                        <template v-slot:content>
+                        <div>
                             <PageInformation
                                 v-if="prototypes.meta.pagination.total > 0"
                                 :pagination="prototypes.meta.pagination"
                                 :no-record-label="'No Record Found'"/>
                             <Pagination
-                                :size="'xl'"
+                                :size="'lg'"
                                 :pagination="prototypes.meta.pagination"
                                 :pending="pending"
                                 v-model="pageComputed"
                             />
+                        </div>
+                    </form>
+
+                    <FansyFrame>
+                        <template v-slot:content>
                             <DataTable
                                 class="mt-0.5"
                                 :headers="prototypeHeaders"
-                                :size="'xl'"
+                                :size="'lg'"
                                 :rows="prototypes.data"
                                 :no-data-label="pending ? 'Loading' : 'No Prototype Found'"
                                 v-model="selectedPrototypes"
