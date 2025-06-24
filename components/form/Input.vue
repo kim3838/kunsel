@@ -20,8 +20,9 @@
                 :min="min"
                 :max="max"
                 @keydown="limitKeys"
-                :readonly="readonly"
+                @focus="focusInput"
                 @input="$emit('update:modelValue', $event.target.value)"
+                :readonly="readonly"
                 ref="input">
         </Glint>
     </div>
@@ -120,6 +121,10 @@ const props = defineProps({
         type: Number,
         default: null
     },
+    highLightAllTextOnFocus: {
+        type: Boolean,
+        default: false
+    }
 });
 
 const emit = defineEmits(['update:modelValue', 'focusStateChanged']);
@@ -132,6 +137,16 @@ function limitKeys(event) {
             event.preventDefault()
         }
     }
+}
+
+function focusInput(event) {
+    if(props.highLightAllTextOnFocus){
+        selectAllText(event);
+    }
+}
+
+function selectAllText(event) {
+    event.target.select();
 }
 
 const heightClass = computed(() => {
