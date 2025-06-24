@@ -3,6 +3,7 @@
         :show="show"
         :max-width="maxWidth"
         :closeable="closeable"
+        :landscape="landscape"
         @close="close"
     >
         <div class="p-3 modal-body">
@@ -42,6 +43,9 @@ defineProps({
     closeable: {
         type: Boolean,
         default: true,
+    },
+    landscape: {
+        default: false
     },
 });
 

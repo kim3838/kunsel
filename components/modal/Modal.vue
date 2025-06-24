@@ -4,8 +4,8 @@
             <div class="absolute inset-0 modal-layer opacity-75"></div>
         </div>
 
-        <div v-show="show" class="h-full flex items-center relative z-[60] w-full px-2">
-            <div class="modal-body rounded-sm overflow-hidden mx-auto w-full" :style="[widthStyle]">
+        <div v-show="show" class="h-full flex items-center relative z-[60] w-full" :class="[modalContainerClass]">
+            <div class="modal-body overflow-hidden mx-auto w-full" :class="[modalBodyClass]" :style="[widthStyle]">
                 <slot></slot>
             </div>
         </div>
@@ -36,7 +36,7 @@ export default {
         };
     },
     props: {
-        loading: {
+        landscape: {
             default: false
         },
         show: {
@@ -65,8 +65,27 @@ export default {
 
     computed: {
         widthStyle() {
+
+            if(this.landscape){
+                return {};
+            }
+
             return {
                 'max-width': this.maxWidth ? this.maxWidth : 'max-content'
+            }
+        },
+        modalBodyClass() {
+            if(this.landscape){
+                return '';
+            } else {
+                return 'rounded-sm';
+            }
+        },
+        modalContainerClass() {
+            if(this.landscape){
+                return '';
+            } else {
+                return 'px-2'
             }
         },
     }
