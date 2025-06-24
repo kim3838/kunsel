@@ -1,8 +1,8 @@
 <template>
     <div class="scaffold-border-left-bottom-right">
-        <div class="space-x-1 p-[20px]">
+        <div class="flex space-x-1 p-[20px]">
             <Button class="inline-block" :size="'sm'" :label="'Create'" :disabled="disableActions" @click="create"/>
-            <Button class="inline-block" :size="'sm'" :label="'Delete selected'" :disabled="disableActions" @click="deleteSelected"/>
+            <Button :variant="'outline'" :icon="'mdi:delete-forever'" class="inline-block" :size="'sm'" :label="'Delete selected'" :disabled="disableActions" @click="deleteSelected"/>
         </div>
 
         <DeductionModal
@@ -177,9 +177,14 @@ const edit = (cell: SequenceablePayrollComponent) => {
 }
 
 const deleteSelected = async () => {
+    const selectedIds = selectedDeductions.value;
+
+    if(_isEmpty(selectedIds)){
+        return;
+    }
+
     deleting.value = true;
 
-    const selectedIds = selectedDeductions.value;
     let batchDelete: Promise<any>[] = [];
 
     selectedIds.forEach((id) => {

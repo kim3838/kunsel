@@ -5,7 +5,7 @@
         :closeable="false"
     >
         <template #title>
-            Create deduction
+            {{title}}
         </template>
         <template #content>
             <div>
@@ -77,7 +77,7 @@
                 </div>
                 <div class="space-x-2 inline-flex items-center">
                     <Button :disabled="disableActions" @click="submit" :label="actionLabel" />
-                    <Button :disabled="disableActions" @click="closeModal" :label="'Cancel'" />
+                    <Button :variant="'outline'" :icon="'mdi:cancel'" :disabled="disableActions" @click="closeModal" :label="'Cancel'" />
                 </div>
             </div>
         </template>
@@ -241,6 +241,9 @@ const submitAction = computed(() => {
 });
 const submitPath = computed(() => {
     return Boolean(props.editPayload.id) ? `/api/deduction/${props.editPayload.id}` : `/api/deduction`;
+});
+const title = computed(() => {
+    return Boolean(props.editPayload.id) ? 'Edit deduction' : 'Create deduction';
 });
 
 const submitPending = ref(false);
