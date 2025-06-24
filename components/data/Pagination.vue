@@ -35,7 +35,6 @@
         <div>
             <SingleSelect
                 drop-shadow
-                :selection-float="false"
                 :size="selectSize"
                 :searchable="false"
                 :value-persist="true"
