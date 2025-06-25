@@ -98,7 +98,19 @@
 import type {DataTableMeta, TableHeaderT, TableRowT} from "@/public/js/types/data";
 const {$moment} = useNuxtApp();
 const clientReadyState = useClientReadyState();
-definePageMeta({middleware: ['auth', 'verified']});
+definePageMeta({
+    middleware: ['auth', 'verified'],
+    validate: async(route) => {
+        const nuxtApp = useNuxtApp()
+        console.log({"Server side rendering": import.meta.server});
+        console.log({"Client side rendering": import.meta.client});
+
+        console.log({"Initial client load": nuxtApp.isHydrating && nuxtApp.payload.serverRendered});
+
+        return true;
+    }
+});
+
 useLayout().setNavigationMode('solid', 'Prototypes/index.vue');
 
 let prototypes = reactive<{
