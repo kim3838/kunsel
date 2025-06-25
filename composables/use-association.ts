@@ -115,7 +115,7 @@ export const useAssociation = () => {
         updateCompanyAssignmentType(newValue);
 
         if(currentRouteNameIsCompanyAdminProtected.value && !(userIsSuperAdmin.value || companyAssignmentTypeIsAdmin.value)){
-            return navigateTo("/", {replace: true});
+            navigateTo("/", {replace: true});
         } else {
 
             //Increment updatedAssociatedCompanyFlag and use it on a watcher as is the associated company updated
