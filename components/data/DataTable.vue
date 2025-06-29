@@ -29,7 +29,7 @@
             </thead>
             <tbody ref="tableBody">
                 <!-- Table cell height: sm = 25px, md = 29px, lg = 33px, xl = 37px -->
-                <tr v-for="row in rows" :key="row.id">
+                <tr v-for="(row, rowIndex) in rows" :key="row.id">
                     <td v-if="selection" style="padding:0 0.5rem;">
                         <NonModelCheckBox
                             :size="checkBoxSize"
@@ -43,7 +43,7 @@
                         </div>
                     </td>
                     <td
-                        v-for="(header, index) in headers" :key="row.id"
+                        v-for="(header, headerIndex) in headers" :key="row.id"
                         class="whitespace-pre"
                         :class="[bodyFontClass, cellAlignClass(header?.alignData)]">
                         <slot
@@ -51,7 +51,8 @@
                             :scrollReference="dataTableScroll"
                             :slot="{buttonSize: buttonSize, inputSize: inputSize, datepickerFontSize: datepickerFontSize, selectSize: selectSize, checkBoxSize: checkBoxSize}"
                             :cell="row"
-                            :index="index">
+                            :headerIndex="headerIndex"
+                            :rowIndex="rowIndex">
                             <div class="p-[3px]">{{row[header.value]}}</div>
                         </slot>
                     </td>
