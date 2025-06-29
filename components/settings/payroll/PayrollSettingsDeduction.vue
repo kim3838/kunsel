@@ -1,8 +1,8 @@
 <template>
     <div class="scaffold-border-left-bottom-right">
         <div class="flex space-x-1 p-[20px]">
-            <Button class="inline-block" :size="'sm'" :label="'Create'" :disabled="disableActions" @click="create"/>
-            <Button :variant="'outline'" :icon="'mdi:delete-forever'" class="inline-block" :size="'sm'" :label="'Delete selected'" :disabled="disableActions" @click="deleteSelected"/>
+            <Button class="inline-block" :icon="'mdi:plus'" :size="'sm'" :label="'Create'" :disabled="disableActions" @click="create"/>
+            <Button :variant="'outline'" :icon="'mdi:delete-outline'" class="inline-block" :size="'sm'" :label="'Delete selected'" :disabled="disableActions" @click="deleteSelected"/>
         </div>
 
         <DeductionModal
@@ -77,7 +77,6 @@ const deductionsHeaders = reactive<TableHeaderT[]>([
     { text: 'Name', value: 'name'},
     { text: 'Type', value: 'type'},
     { text: 'Assignable', value: 'assignable'},
-    { text: 'Global', value: 'global'},
     { text: 'Formula', value: 'formula'},
     { text: 'Settings', value: 'settings'},
     { text: '', alignData: 'left', value: 'actions'},

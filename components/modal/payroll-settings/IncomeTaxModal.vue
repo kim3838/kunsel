@@ -76,8 +76,8 @@
                     </div>
                 </div>
                 <div class="space-x-2 inline-flex items-center">
-                    <Button :disabled="disableActions" @click="submit" :label="actionLabel" />
                     <Button :variant="'outline'" :icon="'mdi:cancel'" :disabled="disableActions" @click="closeModal" :label="'Cancel'" />
+                    <Button :disabled="disableActions" @click="submit" :label="actionLabel" />
                 </div>
             </div>
         </template>
@@ -134,7 +134,6 @@ const incomeTaxName = ref('');
 const assignable = reactive({
     selection: [
         {text : 'Assignable', value: 1},
-        {text : 'Global', value: 0},
     ],
     selected: 1
 });
