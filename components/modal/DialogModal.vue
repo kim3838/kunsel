@@ -4,14 +4,15 @@
         :max-width="maxWidth"
         :closeable="closeable"
         :landscape="landscape"
+        :contentPadding="contentPadding"
         @close="close"
     >
-        <div class="p-3 modal-body">
+        <div :style=[modalBodySpacingStyle] class="modal-body">
             <div class="text-xl font-medium font-header">
                 <slot name="title" />
             </div>
 
-            <div class="mt-1 text-base">
+            <div class="text-base">
                 <slot name="content" />
             </div>
         </div>
@@ -31,7 +32,7 @@ const {
     neutral: neutralColor,
 } = storeToRefs($themeStore);
 
-defineProps({
+const props = defineProps({
     show: {
         type: Boolean,
         default: false,
@@ -47,6 +48,10 @@ defineProps({
     landscape: {
         default: false
     },
+    contentPadding: {
+        type: String,
+        default: 'calc(0.25rem * 3)'
+    },
 });
 
 const emit = defineEmits(['close']);
@@ -54,6 +59,19 @@ const emit = defineEmits(['close']);
 const close = () => {
     emit('close');
 };
+
+const modalBodySpacingStyle = computed(() => {
+    let style = {};
+
+    if(!_isEmpty(props.contentPadding)){
+        style = {
+            ...style,
+            'padding': props.contentPadding
+        }
+    }
+
+    return style;
+})
 </script>
 <style scoped>
 
