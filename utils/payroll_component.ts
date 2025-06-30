@@ -7,6 +7,12 @@ export const  FORMULABLE = {
     NET_INCOME : 5
 }
 
+export const FORMULABLE_MODEL_MAP_KEY = {
+    [FORMULABLE.EARNINGS]: 'compensation',
+    [FORMULABLE.DEDUCTIONS]: 'deduction',
+    [FORMULABLE.INCOME_TAX]: 'income_tax',
+};
+
 export const  COMPENSATIONS = {
     SALARY : 0,
     OVERTIME : 1,
