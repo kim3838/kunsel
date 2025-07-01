@@ -77,7 +77,7 @@
                 </div>
                 <div class="space-x-2 inline-flex items-center">
                     <Button :variant="'outline'" :icon="'mdi:cancel'" :disabled="disableActions" @click="closeModal" :label="'Cancel'" />
-                    <Button :disabled="disableActions" @click="submit" :label="actionLabel" />
+                    <Button :disabled="disableActions" :icon="actionIcon" @click="submit" :label="actionLabel" />
                 </div>
             </div>
         </template>
@@ -231,6 +231,9 @@ const closeModal = () => {
 
 const disableActions = computed(() => {
     return submitPending.value || compensationFormulaSettingsPending.value || compensationFormulaPending.value;
+});
+const actionIcon = computed(() => {
+    return Boolean(props.editPayload.id) ? 'mdi:pen' : 'mdi:plus';
 });
 const actionLabel = computed(() => {
     return Boolean(props.editPayload.id) ? 'Update' : 'Create';
