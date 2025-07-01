@@ -50,7 +50,7 @@
                         </table>
                     </template>
                     <template v-slot:cell.actions="{cell, slot, scrollReference}">
-                        <Button class="mx-0.5" type="button" :size="slot.buttonSize" :label="'Edit'" @click="edit(cell)" :disabled="disableActions"></Button>
+                        <Button class="mx-0.5" type="button" :size="slot.buttonSize" :icon="'mdi:pen'" :label="'Edit'" @click="edit(cell)" :disabled="disableActions"></Button>
                     </template>
                 </DataTable>
             </template>
@@ -74,12 +74,12 @@ const orderSequenceable = nuxtApp.$orderSequenceable as (data: Sequenceable[]) =
 
 const incomeTaxesHeaders = reactive<TableHeaderT[]>([
     { text: 'Order', value: 'order', alignData: 'center'},
+    { text: '', alignData: 'left', value: 'actions'},
     { text: 'Name', value: 'name'},
     { text: 'Type', value: 'type'},
     { text: 'Assignable', value: 'assignable'},
     { text: 'Formula', value: 'formula'},
     { text: 'Settings', value: 'settings'},
-    { text: '', alignData: 'left', value: 'actions'},
 ]);
 
 watch(updatedAssociatedCompanyFlag, (newValue) => {
