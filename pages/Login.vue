@@ -57,7 +57,7 @@
                                                 :justify-content="'center'"
                                                 :disabled="authPending"
                                                 :size="'md'"
-                                                :icon="authPending ? 'eos-icons:installing' : 'mdi:key-chain'"
+                                                :icon="authPending ? 'eos-icons:loading' : 'mdi:key-chain'"
                                                 :label="authPending ? 'Logging in...' : 'Login'"></Button>
                                         </div>
                                     </div>
