@@ -273,7 +273,7 @@ const subNavigationFontClass = computed(() => {
 const associatedCompaniesSelectOverrides = computed(() => {
     return {
         'height': 'h-full',
-        'font_family': mainNavigationFontClass.value
+        'font_family_class': mainNavigationFontClass.value
     };
 })
 </script>

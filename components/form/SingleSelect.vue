@@ -306,8 +306,8 @@ const heightClass = computed(() => {
 
 const baseFontFamilyClass = computed(() => {
 
-    if(props.override.font_family){
-        return props.override.font_family;
+    if(props.override.font_family_class){
+        return props.override.font_family_class;
     }
 
     return 'font-data';
