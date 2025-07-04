@@ -121,6 +121,12 @@ const props = defineProps({
         type: String,
         default: 'start',
     },
+    override: {
+        type: Object,
+        default: function () {
+            return {}
+        }
+    },
 });
 
 const emit = defineEmits(['focusStateChanged']);
@@ -199,14 +205,15 @@ const iconClass = computed(() => {
 });
 
 const fontClass = computed(() => {
+
     return {
-        '2xs': "font-['Barlow_Semi_Condensed'] text-xs font-medium",
-        'xs': "font-['Barlow_Semi_Condensed'] text-sm font-medium",
-        'sm': "font-['Barlow_Semi_Condensed'] text-base font-medium",
-        'md': "font-['Barlow_Semi_Condensed'] text-base font-medium",
-        'lg': "font-['Barlow'] text-2xl font-semibold",
-        'xl': "font-['Barlow'] text-3xl font-semibold",
-        '2xl': "font-['Barlow'] text-4xl font-semibold",
+        '2xs': `text-xs font-medium`,
+        'xs': `text-sm font-medium`,
+        'sm': `text-base font-medium`,
+        'md': `text-base font-medium`,
+        'lg': `text-2xl font-semibold`,
+        'xl': `text-3xl font-semibold`,
+        '2xl': `text-4xl font-semibold`,
     }[props.size]
 });
 
@@ -227,8 +234,22 @@ const borderStyle = computed(() => {
 });
 
 const contentStyle = computed(() => {
+    let condensedFontFamily = props.override.font_family ? props.override.font_family : `Barlow Semi Condensed`;
+    let fontFamily = props.override.font_family ? props.override.font_family : `Barlow`;
+
+    fontFamily = {
+        '2xs': condensedFontFamily,
+        'xs': condensedFontFamily,
+        'sm': condensedFontFamily,
+        'md': condensedFontFamily,
+        'lg': fontFamily,
+        'xl': fontFamily,
+        '2xl': fontFamily,
+    }[props.size];
+
     return {
-        'justify-content': props.justifyContent
+        'justify-content': props.justifyContent,
+        'font-family': fontFamily
     }
 });
 
