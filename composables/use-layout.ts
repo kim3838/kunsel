@@ -125,7 +125,7 @@ export const useLayout = () => {
                 to: '/prototypes',
                 route_active: 'prototypes'
             },
-            ...(isAuthenticated.value ? [
+            ...(!isAuthenticated.value ? [
                     {
                         key: 'about',
                         type: 'drop',
@@ -163,6 +163,36 @@ export const useLayout = () => {
                 ] : []
             ) as NavigationLinkInterface[],
             ...((isAuthenticated.value && (userIsSuperAdmin.value || companyAssignmentTypeIsAdmin.value)) ? [{
+                key: 'workforce',
+                type: 'sub-nav',
+                title: 'Workforce',
+                icon: 'ic:round-diversity-3',
+                path_active: '/workforce',
+                options:[
+                    {
+                        key: 'workforce/employees',
+                        type: 'link',
+                        title: 'Employees',
+                        icon: 'mdi:account-multiple',
+                        to: '/workforce/employees',
+                        route_active: 'workforce-employees'
+                    },
+                    {
+                        key: 'workforce/departments',
+                        type: 'link',
+                        title: 'Departments',
+                        to: '/workforce/departments',
+                        route_active: 'workforce-departments'
+                    },
+                    {
+                        key: 'workforce/designations',
+                        type: 'link',
+                        title: 'Designations',
+                        to: '/workforce/designations',
+                        route_active: 'workforce-designations'
+                    },
+                ]
+            }, {
                 key: 'settings',
                 type: 'sub-nav',
                 title: 'Settings',
