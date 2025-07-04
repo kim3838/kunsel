@@ -51,7 +51,7 @@ export const useThemeStore = defineStore('theme', {
                     'body': '#ffffff',
                     'shade': '#f5f5f5',
 
-                    'text': '#464646',
+                    'text': '#606060',
                     'text-invert': '#e0e8de',
                     'text-secondary': '#b4b4b4',
                 },
@@ -96,7 +96,7 @@ export const useThemeStore = defineStore('theme', {
                 tulip: {
                     'type': 'light',
                     'primary': '#D45E5E',
-                    'secondary': '#D45E5E',
+                    'secondary': '#d78c8c',
                     'accent': '#f4978e',
 
                     'lining': '#F08080',
@@ -104,11 +104,11 @@ export const useThemeStore = defineStore('theme', {
 
                     'neutral': '#fff8e0',
 
-                    'tint': '#fff8f0',
-                    'body': '#fff8f0',
-                    'shade': '#ffdec1',
+                    'tint': '#fdfdfd',
+                    'body': '#ffffff',
+                    'shade': '#ffeddf',
 
-                    'text': '#502e2e',
+                    'text': '#755548',
                     'text-invert': '#ffffff',
                     'text-secondary': '#ab7676',
                 },
