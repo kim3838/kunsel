@@ -28,6 +28,9 @@ export const useAssociation = () => {
             'settings-payperiodsettings',
             'settings-salarystatementmodules',
             'settings-formulasettings',
+            'workforce-employees',
+            'workforce-departments',
+            'workforce-designations',
         ], _toLower(String(route.name)));
     });
 
