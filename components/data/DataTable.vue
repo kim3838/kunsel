@@ -29,34 +29,59 @@
             </thead>
             <tbody ref="tableBody">
                 <!-- Table cell height: sm = 25px, md = 29px, lg = 33px, xl = 37px -->
-                <tr v-for="(row, rowIndex) in rows" :key="row.id">
-                    <td v-if="selection" style="padding:0 0.5rem;">
-                        <NonModelCheckBox
-                            :size="checkBoxSize"
-                            :value="row.id"
-                            :selected="props.modelValue"
-                            @click="checkRow(row)"/>
-                    </td>
-                    <td v-if="manualSortable" :class="[bodyFontClass]">
-                        <div class="flex px-[3px]" >
-                            <Icon class="handleOrder cursor-grab active:cursor-grabbing" name="carbon:caret-sort"></Icon>
-                        </div>
-                    </td>
-                    <td
-                        v-for="(header, headerIndex) in headers" :key="row.id"
-                        class="whitespace-pre"
-                        :class="[bodyFontClass, cellAlignClass(header?.alignData)]">
-                        <slot
-                            :name="`cell.${header.value}`"
-                            :scrollReference="dataTableScroll"
-                            :slot="{buttonSize: buttonSize, inputSize: inputSize, datepickerFontSize: datepickerFontSize, selectSize: selectSize, checkBoxSize: checkBoxSize}"
-                            :cell="row"
-                            :headerIndex="headerIndex"
-                            :rowIndex="rowIndex">
-                            <div class="p-[3px]">{{row[header.value]}}</div>
-                        </slot>
-                    </td>
-                </tr>
+                <template v-for="(row, rowIndex) in rows" :key="row.id">
+                    <tr>
+                        <td v-if="selection" style="padding:0 0.5rem;">
+                            <NonModelCheckBox
+                                :size="checkBoxSize"
+                                :value="row.id"
+                                :selected="props.modelValue"
+                                @click="checkRow(row)"/>
+                        </td>
+                        <td v-if="manualSortable" :class="[bodyFontClass]">
+                            <div class="flex px-[3px]" >
+                                <Icon class="handleOrder cursor-grab active:cursor-grabbing" name="carbon:caret-sort"></Icon>
+                            </div>
+                        </td>
+                        <td
+                            v-for="(header, headerIndex) in headers" :key="row.id"
+                            class="whitespace-pre"
+                            :class="[bodyFontClass, cellAlignClass(header?.alignData)]">
+                            <slot
+                                :name="`cell.${header.value}`"
+                                :scrollReference="dataTableScroll"
+                                :slot="{buttonSize: buttonSize, inputSize: inputSize, datepickerFontSize: datepickerFontSize, selectSize: selectSize, checkBoxSize: checkBoxSize}"
+                                :cell="row"
+                                :headerIndex="headerIndex"
+                                :rowIndex="rowIndex">
+                                <div class="p-[3px]">{{row[header.value]}}</div>
+                            </slot>
+                        </td>
+                    </tr>
+
+                    <DataTableSubRow
+                        v-if="subRowSlug && row[subRowSlug]"
+                        :slug="subRowSlug"
+                        :row-index="rowIndex"
+                        :row="row"
+                        :rows="rows"
+                        :type="subRowSettings.type"
+                        :container-padding-top="subRowSettings.containerPaddingTop"
+                        :container-padding-bottom="subRowSettings.containerPaddingBottom"
+                        :title-size="subRowSettings.titleSize"
+                        :row-vertical-line="subRowSettings.rowVerticalLine"
+                        :vertical-border-type="subRowSettings.verticalBorderType"
+                        :horizontal-border-type="subRowSettings.horizontalBorderType">
+                        <template v-slot="{rowIndex, cell, slot}">
+                            <slot
+                                :name="'sub_row_slot'"
+                                :slot="slot"
+                                :cell="row"
+                                :rowIndex="rowIndex"
+                            ></slot>
+                        </template>
+                    </DataTableSubRow>
+                </template>
                 <tr v-if="!rows.length">
                     <td colspan="100%" class="text-center font-semibold" :class="[bodyFontClass]">
                         {{noDataLabel}}
@@ -121,6 +146,24 @@ const props = defineProps({
     disabled: {
         type: Boolean,
         default: false,
+    },
+    subRowSlug: {
+        type: String,
+        default: null,
+    },
+    subRowSettings: {
+        type: Object,
+        default: () => {
+            return {
+                type: DATATABLE_SUBROW_TYPE.TITLED,
+                containerPaddingTop: 0.25,
+                containerPaddingBottom: 0.75,
+                titleSize: 'md',
+                rowVerticalLine: true,
+                verticalBorderType: 'dashed',
+                horizontalBorderType: 'dashed',
+            }
+        }
     }
 });
 
@@ -287,38 +330,21 @@ const selectSize = computed(() => {
 $tableBorder: v-bind(liningColor);
 $cellBorder: v-bind(liningColor70);
 
-table{
+#table-division table{
     white-space: nowrap;
-    border: 1px solid $tableBorder;
+    border: 0;
 }
 
-thead tr td:not(:last-child){
-    border-bottom: 0;
-    border-left: 0;
-    border-right: 1px solid $cellBorder;
-    border-top: 0;
+#table-division table thead tr td,tbody tr td {
+    border: 1px solid $cellBorder;
 }
 
-tbody tr td:not(:last-child){
-    border-bottom: 0;
-    border-left: 0;
-    border-right: 1px solid $cellBorder;
-    border-top: 1px solid $cellBorder;
-}
-
-tbody tr td:last-child{
-    border-bottom: 0;
-    border-left: 0;
-    border-right: 0;
-    border-top: 1px solid $cellBorder;
-}
-
-tbody tr:nth-of-type(2n+1){
+#table-division table tbody tr:nth-of-type(2n+1){
     background-color: v-bind(shadeColor);
 }
 
-tbody tr:not(:nth-of-type(2n+1)),
-thead{
+#table-division table tbody tr:not(:nth-of-type(2n+1)),
+#table-division table thead{
     background-color: v-bind(tintColor);
 }
 
@@ -327,7 +353,7 @@ thead{
     background-color: v-bind(neutralColor) !important;
 }
 
-.disabled-overlay {
+#table-division .disabled-overlay {
     background-color: v-bind(secondaryColor) !important;
     height: v-bind(dataTableReferenceHeightComputed);
     width: v-bind(dataTableReferenceWidthComputed);
