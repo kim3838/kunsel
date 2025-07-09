@@ -169,7 +169,7 @@ const props = defineProps({
 
 const dataTableScroll = ref(null);
 
-const emit = defineEmits(["update:modelValue", "manualSorted"]);
+const emit = defineEmits(["update:modelValue", "manualSorted", "selectionChanged"]);
 
 const dataTableReference = useTemplateRef('dataTableScroll');
 const tableReference = useTemplateRef('tableReference');
@@ -232,8 +232,12 @@ function isRowSelected(row: TableRowT): boolean{
 function checkRow(row: TableRowT): void{
     if(isRowSelected(row)){
         _remove(props.modelValue, (value) => value == row.id);
+        emit('selectionChanged', {action: SELECTION_ACTION.REMOVE, value: _castArray(row.id)});
     } else {
         props.modelValue.push(row.id);
+        nextTick(()=>{
+            emit('selectionChanged', {action: SELECTION_ACTION.ADD, value: _castArray(props.modelValue)});
+        });
     }
 }
 
@@ -245,10 +249,16 @@ function toggleCheck(){
         });
 
         emit('update:modelValue', clearedCurrentRows);
+        nextTick(()=>{
+            emit('selectionChanged', {action: SELECTION_ACTION.REMOVE, value: _castArray(currentRowIds.value)});
+        });
     } else {
         let merged = _uniq(props.modelValue.concat(currentRowIds.value));
 
         emit('update:modelValue', merged);
+        nextTick(()=>{
+            emit('selectionChanged', {action: SELECTION_ACTION.ADD, value: _castArray(props.modelValue)});
+        });
     }
 }
 
@@ -354,7 +364,7 @@ $cellBorder: v-bind(liningColor70);
 }
 
 #table-division .disabled-overlay {
-    background-color: v-bind(secondaryColor) !important;
+    background-color: transparent !important;
     height: v-bind(dataTableReferenceHeightComputed);
     width: v-bind(dataTableReferenceWidthComputed);
 }
