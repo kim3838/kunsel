@@ -15,7 +15,13 @@
             :header-fade="false">
             <template #header>
                 <div class="h-full w-full">
-                    <div class="h-full w-full bg-cover bg-center bg-no-repeat blur-sm grayscale opacity-50" :style="{'background':'url(/images/deco/fluid-gold-top.jpg)'}"/>
+                    <div class="absolute inset-x-0 -z-10 overflow-hidden -top-40 sm:-top-80 opacity-50 blur-3xl" aria-hidden="true">
+                        <div class="top-fragment relative w-[36.125rem] sm:w-[72.1875rem] left-[calc(50%-11rem)] sm:left-[calc(50%-30rem)] aspect-[1155/678] -translate-x-1/2 rotate-[30deg] opacity-30"></div>
+                    </div>
+
+                    <div class="absolute inset-x-0 -z-10 overflow-hidden top-[calc(20%)] sm:top-[calc(0%)] blur-3xl" aria-hidden="true">
+                        <div class="bottom-fragment relative w-[36.125rem] sm:w-[72.1875rem] left-[calc(50%+3rem)] sm:left-[calc(50%+36rem)] aspect-[1155/678]  -translate-x-1/2  opacity-30"></div>
+                    </div>
                 </div>
             </template>
             <template #body>
@@ -37,6 +43,7 @@ const {
     tint: tintColor,
     lining: liningColor,
     shade: shadeColor,
+    primary: primaryColor,
 } = storeToRefs($themeStore);
 
 const { height: contentHeight } = useElementSize(useTemplateRef('contentContainerRef'));
@@ -62,3 +69,14 @@ const frameContainerStyle = computed(() => {
     }
 });
 </script>
+<style lang="scss">
+.top-fragment{
+    background-image: linear-gradient(to right top, v-bind(shadeColor), v-bind(primaryColor));
+    clip-path: polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%);
+}
+
+.bottom-fragment{
+    background-image: linear-gradient(to right top, v-bind(shadeColor), v-bind(primaryColor));
+    clip-path: polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%);
+}
+</style>
