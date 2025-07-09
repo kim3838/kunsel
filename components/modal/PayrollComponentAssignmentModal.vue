@@ -26,7 +26,7 @@
                         <UnorderedList :size="'lg'" :icon="'eos-icons:loading'">Please wait...</UnorderedList>
                     </div>
                 </div>
-                <div class="p-3 pt-4 pb-40 mx-auto max-w-screen-lg grid gap-2 grid-cols-3 sm:grid-cols-4 md:grid-cols-6">
+                <div class="p-3 pt-4 mx-auto max-w-screen-lg grid gap-2 grid-cols-3 sm:grid-cols-4 md:grid-cols-6">
                     <div class="col-span-2">
                         <InputLabel :size="'md'" value="Select"/>
                         <SingleSelect :searchable="false" drop-shadow value-persist :size="'md'" :options="assignablePayrollComponentOptions" @valueChange="assignablePayrollComponentSelectedChange"/>
@@ -56,7 +56,7 @@
                     <div class="space-x-2 inline-flex">
                         <div class="space-x-2 inline-flex items-center">
                             <UnorderedList
-                                v-if="disableActions"
+                                v-if="submitPending"
                                 :icon="'eos-icons:loading'"
                                 :size="'md'"
                                 :label="'Please wait...'"/>
@@ -67,7 +67,7 @@
                             class="w-min"
                             :variant=" 'outline'"
                             :size="'md'"
-                            :disabled="disableActions || loadingOverlay"
+                            :disabled="disableActions"
                             :icon="'mdi:cancel'"
                             :label="'Cancel'"
                             @click="closeModal"/>
@@ -76,7 +76,7 @@
                             :variant="'default'"
                             :size="'md'"
                             :icon="submitButtonIcon"
-                            :disabled="disableActions || loadingOverlay"
+                            :disabled="disableActions"
                             :label="saveButtonLabel"
                             @click="submit"/>
                     </div>
@@ -284,7 +284,7 @@ const loadingOverlay = computed(()=>{
     return assignablePayrollComponentPending.value;
 });
 const disableActions = computed(()=>{
-    return submitPending.value;
+    return submitPending.value  || loadingOverlay.value;
 });
 const employeeExists = computed(() => {
     return Boolean(props.employeePayload.id);
