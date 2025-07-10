@@ -404,6 +404,7 @@ let paramsComputed = computed(() => {
         page: page.value,
         perPage: perPage.value,
         filters: {
+            ...props.payload.fetch.filters,
             search: props.payload.fetch.filters.search.keyword
         }
     };
