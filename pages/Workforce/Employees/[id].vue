@@ -52,9 +52,15 @@
                                 <InputLabel :size="'sm'" value="Designation"/>
                                 <SingleSelect drop-shadow :size="'md'" :options="designationOptions"/>
                             </div>
-                            <div>
+                            <div class="col-span-2">
                                 <InputLabel :size="'sm'" value="Manager"/>
-                                <SingleSelect drop-shadow :size="'md'" :options="managerOptions"/>
+                                <SingleSelectPaginated
+                                    drop-shadow
+                                    :selection-max-viewable-line="10"
+                                    :label="'Select Manager'"
+                                    :size="'md'"
+                                    :icon="'ic:baseline-supervisor-account'"
+                                    :payload="managerOptions"/>
                             </div>
                         </div>
                     </fieldset>
@@ -80,20 +86,19 @@
 
                         <div class="grid gap-2 grid-cols-1">
                             <fieldset class="neutral-border px-2 pb-2 grid gap-2 grid-cols-1">
-                                <legend class="text-lg font-medium font-header">Compensations</legend>
+                                <legend class="text-sm">Compensations</legend>
                                 <div v-if="false">
                                     <span class="font-semibold">Employee Compensations:</span> {{employeeCompensationData}}<br>
                                     <span class="font-semibold">Employee Compensations[1]:</span> {{employeeCompensationData[1]}}<br>
                                     <span class="font-semibold">Selected Employee Compensations:</span> {{selectedEmployeeCompensation}}<br>
                                 </div>
-                                <div class="space-x-2 inline-flex items-center">
+                                <div class="space-x-1 mt-2 inline-flex items-center">
                                     <Button
                                         class="w-min"
                                         :variant=" 'outline'"
                                         :size="'sm'"
                                         :disabled="disableEmployeeCompensationActions"
                                         :icon="'mdi:plus'"
-                                        :label="'Add Compensation'"
                                         @click="createOrEditPayrollComponent(FORMULABLE.EARNINGS)"/>
                                     <Button
                                         v-if="employeeExists"
@@ -102,8 +107,7 @@
                                         :size="'sm'"
                                         :icon="'mdi:delete-outline'"
                                         :disabled="disableEmployeeCompensationActions"
-                                        @click="deleteSelected(FORMULABLE.EARNINGS)"
-                                        :label="'Delete Selected'" />
+                                        @click="deleteSelected(FORMULABLE.EARNINGS)" />
                                     <Button
                                         v-if="employeeExists"
                                         class="w-min"
@@ -111,8 +115,7 @@
                                         :size="'sm'"
                                         :icon="'mdi:rotate-3d-variant'"
                                         :disabled="disableEmployeeCompensationActions"
-                                        @click="employeeCompensationExecute"
-                                        :label="'Reload'" />
+                                        @click="employeeCompensationExecute" />
                                 </div>
                                 <UnorderedList
                                     v-if="disableEmployeeCompensationActions"
@@ -142,7 +145,6 @@
                                                 :size="slot.buttonSize"
                                                 :disabled="disableEmployeeCompensationActions"
                                                 :icon="'mdi:pen'"
-                                                :label="'Edit'"
                                                 @click="createOrEditPayrollComponent(FORMULABLE.EARNINGS, cell, rowIndex)"/>
                                         </div>
                                     </template>
@@ -165,20 +167,19 @@
                             </fieldset>
 
                             <fieldset class="neutral-border px-2 pb-2 grid gap-2 grid-cols-1">
-                                <legend class="text-lg font-medium font-header">Deductions</legend>
+                                <legend class="text-sm">Deductions</legend>
                                 <div v-if="false">
                                     <span class="font-semibold">Employee Deductions:</span> {{employeeDeductionData}}<br>
                                     <span class="font-semibold">Employee Deductions[1]:</span> {{employeeDeductionData[1]}}<br>
                                     <span class="font-semibold">Selected Employee Deductions:</span> {{selectedEmployeeDeduction}}<br>
                                 </div>
-                                <div class="space-x-2 inline-flex items-center">
+                                <div class="space-x-1 mt-2 inline-flex items-center">
                                     <Button
                                         class="w-min"
                                         :variant=" 'outline'"
                                         :size="'sm'"
                                         :disabled="disableEmployeeDeductionActions"
                                         :icon="'mdi:plus'"
-                                        :label="'Add Deduction'"
                                         @click="createOrEditPayrollComponent(FORMULABLE.DEDUCTIONS)"/>
                                     <Button
                                         v-if="employeeExists"
@@ -187,8 +188,7 @@
                                         :size="'sm'"
                                         :icon="'mdi:delete-outline'"
                                         :disabled="disableEmployeeDeductionActions"
-                                        @click="deleteSelected(FORMULABLE.DEDUCTIONS)"
-                                        :label="'Delete Selected'" />
+                                        @click="deleteSelected(FORMULABLE.DEDUCTIONS)" />
                                     <Button
                                         v-if="employeeExists"
                                         class="w-min"
@@ -196,8 +196,7 @@
                                         :size="'sm'"
                                         :icon="'mdi:rotate-3d-variant'"
                                         :disabled="disableEmployeeDeductionActions"
-                                        @click="employeeDeductionExecute"
-                                        :label="'Reload'" />
+                                        @click="employeeDeductionExecute" />
                                 </div>
                                 <UnorderedList
                                     v-if="disableEmployeeDeductionActions"
@@ -227,7 +226,6 @@
                                                 :size="slot.buttonSize"
                                                 :disabled="disableEmployeeDeductionActions"
                                                 :icon="'mdi:pen'"
-                                                :label="'Edit'"
                                                 @click="createOrEditPayrollComponent(FORMULABLE.DEDUCTIONS, cell, rowIndex)"/>
                                         </div>
                                     </template>
@@ -241,20 +239,19 @@
                             </fieldset>
 
                             <fieldset class="neutral-border px-2 pb-2 grid gap-2 grid-cols-1">
-                                <legend class="text-lg font-medium font-header">Income Tax</legend>
+                                <legend class="text-sm">Income Tax</legend>
                                 <div v-if="false">
                                     <span class="font-semibold">Employee Income Taxes:</span> {{employeeIncomeTaxData}}<br>
                                     <span class="font-semibold">Employee Income Taxes[1]:</span> {{employeeIncomeTaxData[1]}}<br>
                                     <span class="font-semibold">Selected Employee Income Taxes:</span> {{selectedEmployeeIncomeTax}}<br>
                                 </div>
-                                <div class="space-x-2 inline-flex items-center">
+                                <div class="space-x-1 mt-2 inline-flex items-center">
                                     <Button
                                         class="w-min"
                                         :variant=" 'outline'"
                                         :size="'sm'"
                                         :disabled="disableEmployeeIncomeTaxActions"
                                         :icon="'mdi:plus'"
-                                        :label="'Add Tax'"
                                         @click="createOrEditPayrollComponent(FORMULABLE.INCOME_TAX)"/>
                                     <Button
                                         v-if="employeeExists"
@@ -263,8 +260,7 @@
                                         :size="'sm'"
                                         :icon="'mdi:delete-outline'"
                                         :disabled="disableEmployeeIncomeTaxActions"
-                                        @click="deleteSelected(FORMULABLE.INCOME_TAX)"
-                                        :label="'Delete Selected'" />
+                                        @click="deleteSelected(FORMULABLE.INCOME_TAX)" />
                                     <Button
                                         v-if="employeeExists"
                                         class="w-min"
@@ -272,8 +268,7 @@
                                         :size="'sm'"
                                         :icon="'mdi:rotate-3d-variant'"
                                         :disabled="disableEmployeeIncomeTaxActions"
-                                        @click="employeeIncomeTaxExecute"
-                                        :label="'Reload'" />
+                                        @click="employeeIncomeTaxExecute" />
                                 </div>
                                 <UnorderedList
                                     v-if="disableEmployeeIncomeTaxActions"
@@ -303,7 +298,6 @@
                                                 :size="slot.buttonSize"
                                                 :disabled="disableEmployeeIncomeTaxActions"
                                                 :icon="'mdi:pen'"
-                                                :label="'Edit'"
                                                 @click="createOrEditPayrollComponent(FORMULABLE.INCOME_TAX, cell, rowIndex)"/>
                                         </div>
                                     </template>
@@ -390,26 +384,6 @@ const genderOptions = reactive({
     selected: GENDER.NOT_SPECIFIED
 });
 
-const employeeExists = computed(() => {
-    return !_isEmpty(employee.value);
-});
-
-const fetchEmployee = async () => {
-    await laraFetch(`/api/employee/${route.params.id}`, {
-        method: 'GET',
-    }, {
-        onSuccessResponse: async (request, options, response) => {
-            employee.value = _get(response, '_data.values.employee', null);
-            employeeNumber.value = _get(response, '_data.values.employee.number', '');
-            employeeFamilyName.value = _get(response, '_data.values.employee.family_name', '');
-            employeeMiddleName.value = _get(response, '_data.values.employee.middle_name', '');
-            employeeGivenName.value = _get(response, '_data.values.employee.given_name', '');
-            genderOptions.selected = _get(response, '_data.values.employee.gender.value', GENDER.NOT_SPECIFIED);
-        },
-    });
-};
-await fetchEmployee();
-
 //Employee Organization
 const departmentOptions = reactive({
     search: '',
@@ -424,11 +398,95 @@ const designationOptions = reactive({
     selected: null
 });
 const managerOptions = reactive({
-    search: '',
-    data: [],
-    selection: [],
-    selected: null
+    fetch: {
+        url: '/api/employee-selections',
+        filters: {
+            'company_id': selectedAssociatedCompany.value,
+            search: {
+                keyword: '',
+                callback: 1
+            }
+        }
+    },
+    selected: null,
 });
+const designationsPending = ref(false);
+const designationsExecute = async () => {
+    designationsPending.value = true;
+
+    await laraFetch("/api/designation-selections", {
+        method: 'GET',
+        params: {
+            filters: {
+                'company_id': selectedAssociatedCompany.value,
+            }
+        }
+    }, {
+        onRequestError: () => {
+            designationsPending.value = false;
+        },
+        onResponse: () => {
+            designationsPending.value = false;
+        },
+        onSuccessResponse: async (request, options, response) => {
+            const selection = _get(response, '_data.values.selection', []);
+            designationOptions.data = selection
+            designationOptions.selection = selection;
+        }
+    });
+}
+await designationsExecute();
+
+const departmentsPending = ref(false);
+const departmentsExecute = async () => {
+    departmentsPending.value = true;
+
+    await laraFetch("/api/department-selections", {
+        method: 'GET',
+        params: {
+            filters: {
+                'company_id': selectedAssociatedCompany.value,
+            }
+        }
+    }, {
+        onRequestError: () => {
+            departmentsPending.value = false;
+        },
+        onResponse: () => {
+            departmentsPending.value = false;
+        },
+        onSuccessResponse: async (request, options, response) => {
+            const selection = _get(response, '_data.values.selection', []);
+            departmentOptions.data = selection
+            departmentOptions.selection = selection;
+        }
+    });
+}
+await departmentsExecute();
+
+const employeeExists = computed(() => {
+    return !_isEmpty(employee.value);
+});
+
+//Fetch Employee Information
+const fetchEmployee = async () => {
+    await laraFetch(`/api/employee/${route.params.id}`, {
+        method: 'GET',
+    }, {
+        onSuccessResponse: async (request, options, response) => {
+            employee.value = _get(response, '_data.values.employee', null);
+            employeeNumber.value = _get(response, '_data.values.employee.number', '');
+            employeeFamilyName.value = _get(response, '_data.values.employee.family_name', '');
+            employeeMiddleName.value = _get(response, '_data.values.employee.middle_name', '');
+            employeeGivenName.value = _get(response, '_data.values.employee.given_name', '');
+            genderOptions.selected = _get(response, '_data.values.employee.gender.value', GENDER.NOT_SPECIFIED);
+            departmentOptions.selected = _get(response, '_data.values.employee.department_id', null);
+            designationOptions.selected = _get(response, '_data.values.employee.designation_id', null);
+            managerOptions.selected = _get(response, '_data.values.employee.manager_id', null);
+        },
+    });
+};
+await fetchEmployee();
 
 const payPeriodSelection = ref([]);
 const payTypeSelection = ref([]);
@@ -470,7 +528,6 @@ watch(updatedAssociatedCompanyFlag, (newValue) => {
         navigateTo("/workforce/employees", {replace: true});
     }
 });
-
 
 const creatingOrEditingPayrollComponent = ref(false);
 const deletingPayrollComponent = ref(false);
