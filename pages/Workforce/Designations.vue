@@ -46,6 +46,7 @@
                     <div class="space-x-1">
                         <Button class="inline-block" :icon="'mdi:plus'" :size="'sm'" :label="'Create'" :disabled="disableActions"  @click="create"/>
                         <Button :variant="'outline'" :icon="'mdi:delete-outline'" class="inline-block" :size="'sm'" :label="'Delete selected'" :disabled="disableActions" @click="deleteSelected"/>
+                        <Button :variant="'outline'" :icon="'mdi:rotate-3d-variant'" class="inline-block" :size="'sm'" :label="'Reload'" :disabled="disableActions" @click="designationsExecute"/>
                     </div>
                 </div>
 
