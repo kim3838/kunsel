@@ -12,7 +12,6 @@
 
                     <div class="grid gap-2 grid-cols-1 sm:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-8">
                         <Button class="w-min" ref="submitButton" type="submit" :disabled="disableActions" :size="'md'" :icon="disableActions ? 'eos-icons:loading' : 'mdi:data'" :label="disableActions ? 'Loading' : 'Load'"></Button>
-
                     </div>
 
                     <div>
@@ -26,14 +25,9 @@
                         <div class="mb-2">
                             <NuxtLink
                                 :to="`/workforce/employees/create-employee`">
-                                <Button class="w-min" :variant="'outline'" :disabled="disableActions" :size="'sm'" :icon="disableActions ? 'eos-icons:loading' : 'mdi:plus'" :label="'Create Employee'"></Button>
+                                <Button class="w-min" :disabled="disableActions" :size="'sm'" :icon="disableActions ? 'eos-icons:loading' : 'mdi:plus'" :label="disableActions ? 'Please wait' : ''"></Button>
                             </NuxtLink>
                         </div>
-                        <UnorderedList
-                            v-if="disableActions"
-                            :icon="'eos-icons:loading'"
-                            :size="'md'"
-                            :label="'Please wait...'"/>
                         <DataTable
                             :headers="employeesHeaders"
                             :size="'lg'"
@@ -54,6 +48,15 @@
                             </template>
                             <template v-slot:cell.marital_status="{cell,slot}">
                                 <div class="p-[3px]">{{cell.marital_status.text}}</div>
+                            </template>
+                            <template v-slot:cell.department="{cell,slot}">
+                                <div class="p-[3px]">{{cell.department?.name}}</div>
+                            </template>
+                            <template v-slot:cell.designation="{cell,slot}">
+                                <div class="p-[3px]">{{cell.designation?.name}}</div>
+                            </template>
+                            <template v-slot:cell.manager="{cell,slot}">
+                                <div class="p-[3px]">{{cell.manager?.full_name}}</div>
                             </template>
                         </DataTable>
                     </template>
@@ -102,9 +105,12 @@ const employeesHeaders = reactive<TableHeaderT[]>([
     { text: '#', value: 'row_number'},
     { text: '', value: 'action'},
     { text: 'Number', value: 'number', alignData: 'left'},
-    { text: 'Name', value: 'full_name'},
+    { text: 'Full Name (Family, Middle, Given)', value: 'full_name'},
     { text: 'Gender', value: 'gender'},
     { text: 'Marital Status', value: 'marital_status'},
+    { text: 'Department', value: 'department'},
+    { text: 'Designation', value: 'designation'},
+    { text: 'Manager', value: 'manager'},
 ]);
 
 const employees = reactive<{
