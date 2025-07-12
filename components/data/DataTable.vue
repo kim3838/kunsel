@@ -204,6 +204,14 @@ const {option} = useSortable(tableBody, props.rows, {
     }
 })
 
+useMutationObserver(dataTableScroll, () => {
+    const elements = dataTableScroll.value?.querySelectorAll('[draggable="false"]') || [];
+    elements.forEach(el => el.remove())
+}, {
+    childList: true,
+    subtree: true,
+});
+
 function cellAlignClass(align: 'left' | 'center' | 'right' | undefined = undefined){
 
     const alignmentClasses = {
