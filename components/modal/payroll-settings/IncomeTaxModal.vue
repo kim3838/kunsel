@@ -45,19 +45,7 @@
                                 :size="'md'"
                                 :label="'Select Income Tax Formula'"
                                 :options="incomeTaxFormulaOptions"
-                                @value-change="incomeTaxFormulaSettingsExecute"/>
-                        </td>
-                    </tr>
-                    <tr v-if="!_isEmpty(incomeTaxFormulaSettings)">
-                        <td><InputLabel :size="'md'" value="Formula settings" /></td>
-                        <td class="text-sm font-sub-data">
-                            <table class="border-separate">
-                                <tbody>
-                                <tr v-for="(setting, key) in incomeTaxFormulaSettings">
-                                    <td>{{ setting.label }}</td><td class="pl-1">{{ setting.readable }}</td>
-                                </tr>
-                                </tbody>
-                            </table>
+                                @value-change=""/>
                         </td>
                     </tr>
                     </tbody>

@@ -40,15 +40,6 @@
                             <NonModelCheckBox disabled :size="slot.checkBoxSize" :checked="!cell.assignable" ></NonModelCheckBox>
                         </div>
                     </template>
-                    <template v-slot:cell.settings="{cell}">
-                        <table class="border-separate text-sm font-sub-data">
-                            <tbody>
-                            <tr v-for="(setting, key) in cell.settings">
-                                <td>{{ setting.label }}</td><td class="pl-1">{{ setting.readable }}</td>
-                            </tr>
-                            </tbody>
-                        </table>
-                    </template>
                     <template v-slot:cell.actions="{cell, slot, scrollReference}">
                         <Button class="mx-0.5" type="button" :size="slot.buttonSize" :icon="'mdi:pen'" :label="'Edit'" @click="edit(cell)" :disabled="disableActions"></Button>
                     </template>
@@ -79,7 +70,6 @@ const deductionsHeaders = reactive<TableHeaderT[]>([
     { text: 'Type', value: 'type'},
     { text: 'Assignable', value: 'assignable'},
     { text: 'Formula', value: 'formula'},
-    { text: 'Settings', value: 'settings'},
 ]);
 
 watch(updatedAssociatedCompanyFlag, (newValue) => {
