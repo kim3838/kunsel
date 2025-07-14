@@ -3,67 +3,70 @@
         <DefaultWrapper>
             <div class="mx-auto max-w-screen-2xl">
 
-                <div class="p-[20px] space-y-8">
-                    <fieldset class="neutral-border px-2 pb-2 space-y-2">
-                        <legend class="text-lg font-medium font-header">Employee Information</legend>
+                <div class="p-[20px] space-y-2">
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                        <fieldset class="neutral-border px-2 pb-2 space-y-2">
+                            <legend class="text-lg font-medium font-header">Employee Information</legend>
 
-                        <div v-if="false">
-                            <span class="font-semibold">Employee:</span> {{employee}}<br>
-                            <span class="font-semibold">Employee Exists:</span> {{employeeExists}}<br>
-                            <span class="font-semibold">Child Component Employee Payload:</span> {{childComponentEmployeePayload}}<br>
-                        </div>
+                            <div v-if="false">
+                                <span class="font-semibold">Employee:</span> {{employee}}<br>
+                                <span class="font-semibold">Employee Exists:</span> {{employeeExists}}<br>
+                                <span class="font-semibold">Child Component Employee Payload:</span> {{childComponentEmployeePayload}}<br>
+                            </div>
 
-                        <div class="grid gap-2 grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-7 2xl:grid-cols-8">
-                            <div>
-                                <InputLabel :size="'sm'" value="Employee number"/>
-                                <Input :size="'md'" v-model="employeeNumber" type="text"/>
+                            <div class="grid gap-2 grid-cols-2 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-4 xl:grid-cols-5">
+                                <div>
+                                    <InputLabel :size="'sm'" value="Employee number"/>
+                                    <Input :size="'md'" v-model="employeeNumber" type="text"/>
+                                </div>
                             </div>
-                        </div>
 
-                        <div class="grid gap-2 grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-7 2xl:grid-cols-8">
-                            <div>
-                                <InputLabel :size="'sm'" value="Family name"/>
-                                <Input :size="'md'" v-model="employeeFamilyName" type="text"/>
+                            <div class="grid gap-2 grid-cols-2 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-4 xl:grid-cols-5">
+                                <div>
+                                    <InputLabel :size="'sm'" value="Family name"/>
+                                    <Input :size="'md'" v-model="employeeFamilyName" type="text"/>
+                                </div>
+                                <div>
+                                    <InputLabel :size="'sm'" value="Middle name"/>
+                                    <Input :size="'md'" v-model="employeeMiddleName" type="text"/>
+                                </div>
+                                <div>
+                                    <InputLabel :size="'sm'" value="Given name"/>
+                                    <Input :size="'md'" v-model="employeeGivenName" type="text"/>
+                                </div>
+                                <div>
+                                    <InputLabel :size="'sm'" value="Gender"/>
+                                    <SingleSelect drop-shadow value-persist :size="'md'" :options="genderOptions"/>
+                                </div>
                             </div>
-                            <div>
-                                <InputLabel :size="'sm'" value="Middle name"/>
-                                <Input :size="'md'" v-model="employeeMiddleName" type="text"/>
-                            </div>
-                            <div>
-                                <InputLabel :size="'sm'" value="Given name"/>
-                                <Input :size="'md'" v-model="employeeGivenName" type="text"/>
-                            </div>
-                            <div>
-                                <InputLabel :size="'sm'" value="Gender"/>
-                                <SingleSelect drop-shadow value-persist :size="'md'" :options="genderOptions"/>
-                            </div>
-                        </div>
-                    </fieldset>
+                        </fieldset>
 
-                    <fieldset class="neutral-border px-2 pb-2 space-y-2">
-                        <legend class="text-lg font-medium font-header">Organization</legend>
+                        <fieldset class="neutral-border px-2 pb-2 space-y-2">
+                            <legend class="text-lg font-medium font-header">Organization</legend>
 
-                        <div class="grid gap-2 grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-7 2xl:grid-cols-8">
-                            <div>
-                                <InputLabel :size="'sm'" value="Department"/>
-                                <SingleSelect drop-shadow :size="'md'" :options="departmentOptions"/>
+                            <div class="grid gap-2 grid-cols-2 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-5 xl:grid-cols-6">
+                                <div class="lg:col-span-2">
+                                    <InputLabel :size="'sm'" value="Department"/>
+                                    <SingleSelect drop-shadow :size="'md'" :options="departmentOptions"/>
+                                </div>
+                                <div class="lg:col-span-2">
+                                    <InputLabel :size="'sm'" value="Designation"/>
+                                    <SingleSelect drop-shadow :size="'md'" :options="designationOptions"/>
+                                </div>
+                                <div class="hidden lg:block"></div>
+                                <div class="col-span-2">
+                                    <InputLabel :size="'sm'" value="Manager"/>
+                                    <SingleSelectPaginated
+                                        drop-shadow
+                                        :selection-max-viewable-line="10"
+                                        :label="'Select Manager'"
+                                        :size="'md'"
+                                        :icon="'mdi:badge-account-outline'"
+                                        :payload="managerOptions"/>
+                                </div>
                             </div>
-                            <div>
-                                <InputLabel :size="'sm'" value="Designation"/>
-                                <SingleSelect drop-shadow :size="'md'" :options="designationOptions"/>
-                            </div>
-                            <div class="col-span-2">
-                                <InputLabel :size="'sm'" value="Manager"/>
-                                <SingleSelectPaginated
-                                    drop-shadow
-                                    :selection-max-viewable-line="10"
-                                    :label="'Select Manager'"
-                                    :size="'md'"
-                                    :icon="'ic:baseline-supervisor-account'"
-                                    :payload="managerOptions"/>
-                            </div>
-                        </div>
-                    </fieldset>
+                        </fieldset>
+                    </div>
 
                     <PayrollComponentAssignmentModal
                         v-model:creatingOrEditing="creatingOrEditingPayrollComponent"
