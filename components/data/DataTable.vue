@@ -348,21 +348,21 @@ const selectSize = computed(() => {
 $tableBorder: v-bind(liningColor);
 $cellBorder: v-bind(liningColor70);
 
-#table-division table{
+table{
     white-space: nowrap;
     border: 0;
 }
 
-#table-division table thead tr td,tbody tr td {
+table thead tr td,tbody tr td {
     border: 1px solid $cellBorder;
 }
 
-#table-division table tbody tr:nth-of-type(2n+1){
+table tbody tr:nth-of-type(2n+1){
     background-color: v-bind(shadeColor);
 }
 
-#table-division table tbody tr:not(:nth-of-type(2n+1)),
-#table-division table thead{
+table tbody tr:not(:nth-of-type(2n+1)),
+table thead{
     background-color: v-bind(tintColor);
 }
 
@@ -371,7 +371,7 @@ $cellBorder: v-bind(liningColor70);
     background-color: v-bind(neutralColor) !important;
 }
 
-#table-division .disabled-overlay {
+.disabled-overlay {
     background-color: transparent !important;
     height: v-bind(dataTableReferenceHeightComputed);
     width: v-bind(dataTableReferenceWidthComputed);
