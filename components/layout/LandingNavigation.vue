@@ -4,10 +4,7 @@
         class="primary-navigation-parent z-40 fixed">
         <div class="w-full font-business flex justify-center">
             <div class="max-w-screen-2xl w-full flex justify-start lg:justify-around h-10 lg:h-16 scaffold-border-left-bottom-right">
-                <div class="flex items-center">
-                    <div class="w-max h-full flex items-center">
-                        <GlobalFoundries :dark="navigationMode === 'clear-with-background'" />
-                    </div>
+                <div class="flex">
                     <NavDrop
                         class="lg:hidden h-full"
                         :size="navigationHeaderSize"
@@ -18,7 +15,7 @@
                 <div class="flex">
                     <!-- Navigation Links -->
                     <div class="hidden lg:flex">
-                    <span class="flex items-center"  v-for="navigation in navigationLinks" :key="navigation.key">
+                    <span class="flex"  v-for="navigation in navigationLinks" :key="navigation.key">
                         <NavLink
                             class="h-full"
                             v-if="navigation.type == 'link'"
@@ -52,7 +49,7 @@
                     </span>
                     </div>
                 </div>
-                <div class="flex items-center">
+                <div class="flex">
                     <component
                         :is="navDrop"
                         class="h-full"
