@@ -1,6 +1,6 @@
 <template>
     <div>
-        <LandingWrapper>
+        <DefaultWrapper>
             <div class="mx-auto pt-4 max-w-screen-2xl scaffold-border-left-bottom-right">
 
                 <div class="my-20 flex justify-center">
@@ -8,7 +8,7 @@
                 </div>
 
             </div>
-        </LandingWrapper>
+        </DefaultWrapper>
     </div>
 </template>
 
