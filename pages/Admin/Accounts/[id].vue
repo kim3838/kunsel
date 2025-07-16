@@ -1,0 +1,142 @@
+<template>
+    <div>
+        <AdminWrapper>
+            <div class="mx-auto max-w-screen-2xl">
+                <form @submit.prevent="formSubmit" class="p-[20px] space-y-2">
+                    <div class="grid gap-2 grid-cols-4 sm:grid-cols-5 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-8">
+                        <div>
+                            <InputLabel :size="'sm'" value="Account number"/>
+                            <Input :disabled="!creatingAccount" :size="'md'" v-model="accountNumber" type="text"/>
+                        </div>
+                        <div>
+                            <InputLabel :size="'sm'" value="Type"/>
+                            <SingleSelect value-persist drop-shadow :size="'md'" :options="accountTypeOptions"/>
+                        </div>
+                    </div>
+
+                    <div class="grid gap-2 grid-cols-4 sm:grid-cols-5 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-8">
+                        <Button class="w-min" ref="submitButton" type="submit" :disabled="disableActions" :size="'md'" :icon="disableActions ? 'eos-icons:loading' : 'mdi:data'" :label="submitLabel"></Button>
+                    </div>
+                </form>
+            </div>
+        </AdminWrapper>
+    </div>
+</template>
+
+<script setup lang="ts">
+import {storeToRefs} from "pinia";
+import type {TableHeaderT} from "@/public/js/types/data";
+
+useLayout().setNavigationMode('solid', 'Accounts/[id].vue');
+
+const route = useRoute();
+const account = ref(null);
+const creatingAccount = computed(() => {
+    return route.params.id === 'create-account';
+});
+const accountNumber = ref('');
+
+definePageMeta({
+    middleware: ['auth', 'super-admin'],
+    validate: async (route) => {
+
+        if (import.meta.server) return true;
+
+        let create = route.params.id === 'create-account';
+
+        if(create){return true;}
+
+        await laraUseFetch(`/api/account/${route.params.id}`, {
+            lazy: false,
+            method: 'GET'
+        }, {
+            onSuccessResponse: async (request, options, response) => {
+                account.value = _get(response, '_data.values.account', null);
+            }
+        }, false);
+
+        return !_isEmpty(account.value);
+    }
+});
+
+const accountTypeOptions = reactive({
+    search: '',
+    data: [
+        {text : 'Standard', value: ACCOUNT_TYPE.STANDARD},
+        {text : 'Corporate', value: ACCOUNT_TYPE.CORPORATE},
+    ],
+    selection: [
+        {text : 'Standard', value: ACCOUNT_TYPE.STANDARD},
+        {text : 'Corporate', value: ACCOUNT_TYPE.CORPORATE},
+    ],
+    selected: ACCOUNT_TYPE.STANDARD
+});
+
+//Fetch Account Information
+const fetchAccount = async () => {
+    if(route.params.id === 'create-account'){return;}
+
+    await laraFetch(`/api/account/${route.params.id}`, {
+        method: 'GET',
+    }, {
+        onSuccessResponse: async (request, options, response) => {
+            account.value = _get(response, '_data.values.account', null);
+            accountNumber.value = _get(response, '_data.values.account.number', '');
+            accountTypeOptions.selected = _get(response, '_data.values.account.type.value', ACCOUNT_TYPE.STANDARD);
+        },
+    });
+};
+
+await fetchAccount();
+
+const formPending = ref(false);
+const disableActions = computed(() => {
+    return formPending.value
+});
+
+const submitLabel = computed(() => {
+    return formPending.value ? 'Please wait' : (!creatingAccount.value ? 'Save' : 'Submit');
+});
+const submitAction = computed(() => {
+    return !creatingAccount.value ? 'PATCH' : 'POST';
+});
+const submitPath = computed(() => {
+    return !creatingAccount.value ? `/api/account/${account.value.id}` : `/api/account`;
+});
+const formBody = computed(() => {
+    let body = {
+        'type': accountTypeOptions.selected,
+    };
+
+    if(creatingAccount.value){
+        body = {...body, number: accountNumber.value}
+    }
+
+    return body
+});
+
+const formSubmit = async() => {
+    formPending.value = true;
+
+    await laraFetch(submitPath.value, {
+        method: submitAction.value,
+        body: formBody.value,
+    }, {
+        onRequestError: () => {
+            formPending.value = false;
+        },
+        onResponse: () => {
+            formPending.value = false;
+        },
+        onSuccessResponse: async (request, options, response) => {
+            await navigateTo({
+                path: '/admin/accounts',
+            });
+        },
+    });
+}
+</script>
+
+<style scoped>
+
+</style>
