@@ -37,9 +37,14 @@ export const useAssociation = () => {
     const ssrFetchAssociatedCompanies = async() => {
 
         await callOnce(async () => {
-            await laraSsrUseFetch("/api/associated-companies", {
+            await laraSsrUseFetch("/api/associated-company-selections", {
                 method: 'GET',
-                params: {filters: {user_id: user?.value?.id}}
+                params: {
+                    filters: {
+                        user_id: user?.value?.id,
+                        assignment_type: [COMPANY_ASSIGNMENT_TYPE.DEFAULT, COMPANY_ASSIGNMENT_TYPE.ADMIN],
+                    }
+                }
             }, {
                 onSuccessResponse: async (request, options, response) => {
                     let selection = _get(response, '_data.values.selection', []);
@@ -57,9 +62,14 @@ export const useAssociation = () => {
 
     const fetchAssociatedCompanies = async() => {
 
-        await laraFetch("/api/associated-companies", {
+        await laraFetch("/api/associated-company-selections", {
             method: 'GET',
-            params: {filters: {user_id: user?.value?.id}}
+            params: {
+                filters: {
+                    user_id: user?.value?.id,
+                    assignment_type: [COMPANY_ASSIGNMENT_TYPE.DEFAULT, COMPANY_ASSIGNMENT_TYPE.ADMIN],
+                }
+            }
         }, {
             onSuccessResponse: async (request, options, response) => {
                 let selection = _get(response, '_data.values.selection', []);
