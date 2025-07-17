@@ -8,7 +8,7 @@ export interface UserCompanyPivotT {
 export type AssignedCompanyT = {
     text: string;
     value: number;
-    payload: UserCompanyPivotT,
+    payload?: UserCompanyPivotT,
 }
 
 export type SelectedCompanyT = string | number | null;
