@@ -132,8 +132,6 @@ let paramsComputed = computed(() => {
         page: filters.page,
         perPage: filters.perPage,
         filters: {
-            'user_id': user?.value?.id,
-            'assignment_type': COMPANY_ASSIGNMENT_TYPE.ADMIN,
             'account_type': accountTypeOptions.selected
         }
     };
