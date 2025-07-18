@@ -345,7 +345,7 @@ const childComponentEmployeePayload = computed(() => {
 });
 
 definePageMeta({
-    middleware: ['auth', 'company-admin'],
+    middleware: ['auth', 'admin-of-selected-company'],
     validate: async (route) => {
 
         if (import.meta.server) return true;

@@ -8,6 +8,7 @@ export const useLayout = () => {
     const isRoutePathActive = nuxtApp.$isRoutePathActive as (path: string | undefined) => boolean;
     const {isAuthenticated, userIsSuperAdmin, destroyAuthentication} = useAuth();
     const companyAssignmentTypeIsAdmin = companyAssignmentTypeIsAdminState();
+    const adminInAnyCompany = adminInAnyCompanyState();
     const {screenWidthBreakpoint, width: screenWidth, height: screenHeight } = useScreen();
     const $themeStore = useThemeStore();
     const {body: bodyColor} = storeToRefs($themeStore);
@@ -108,24 +109,28 @@ export const useLayout = () => {
                 key: 'dashboard',
                 type: 'link',
                 title: 'Dashboard',
+                icon: 'ic:sharp-double-arrow',
                 to: '/',
                 route_active: 'index'
             },
-            {
-                key: 'prototype',
-                type: 'link',
-                title: 'Prototype',
-                to: '/prototype',
-                route_active: 'prototype'
-            },
-            {
-                key: 'prototypes',
-                type: 'link',
-                title: 'Prototypes',
-                to: '/prototypes',
-                route_active: 'prototypes'
-            },
-            ...(!isAuthenticated.value ? [
+            ...(false ? [
+                    {
+                        key: 'prototype',
+                        type: 'link',
+                        title: 'Prototype',
+                        to: '/prototype',
+                        route_active: 'prototype'
+                    },
+                    {
+                        key: 'prototypes',
+                        type: 'link',
+                        title: 'Prototypes',
+                        to: '/prototypes',
+                        route_active: 'prototypes'
+                    },
+                ]:[]
+            ) as NavigationLinkInterface[],
+            ...(false ? [
                     {
                         key: 'about',
                         type: 'drop',
@@ -247,6 +252,43 @@ export const useLayout = () => {
                         to: '/settings/formulasettings',
                         route_active: 'settings-formulasettings'
                     },
+                ]
+            }] : []) as NavigationLinkInterface[],
+            ...((userIsSuperAdmin.value || adminInAnyCompany.value) ? [{
+                key: 'admin',
+                type: 'sub-nav',
+                title: 'Admin',
+                path_active: '/admin',
+                icon: 'ep:management',
+                options: [
+                    ...(userIsSuperAdmin.value ? [
+                        {
+                            key: 'admin/accounts',
+                            type: 'link',
+                            title: 'Accounts',
+                            icon: 'ic:baseline-all-inbox',
+                            to: '/admin/accounts',
+                            route_active: 'admin-accounts'
+                        }
+                    ]: []),
+                    ...(!userIsSuperAdmin.value ? [
+                        {
+                            key: 'admin/associated-accounts',
+                            type: 'link',
+                            title: 'Account Info',
+                            icon: 'ic:baseline-all-inbox',
+                            to: '/admin/associated-accounts',
+                            route_active: 'admin-associated-accounts'
+                        },
+                        {
+                            key: 'admin/associated-companies',
+                            type: 'link',
+                            title: 'Companies',
+                            icon: 'ic:baseline-all-inbox',
+                            to: '/admin/associated-companies',
+                            route_active: 'admin-associated-companies'
+                        },
+                    ]: []),
                 ]
             }] : []) as NavigationLinkInterface[],
         ] as NavigationLinkInterface[]);

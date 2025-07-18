@@ -134,7 +134,7 @@
 import type {TableHeaderT, TableRowT} from "@/public/js/types/data";
 import {storeToRefs} from "pinia";
 
-definePageMeta({middleware: ['auth', 'company-admin']});
+definePageMeta({middleware: ['auth', 'admin-of-selected-company']});
 useLayout().setNavigationMode('solid', 'Departments.vue');
 
 const {isAuthenticated} = useAuth();

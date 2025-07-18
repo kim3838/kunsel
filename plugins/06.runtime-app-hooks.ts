@@ -17,7 +17,6 @@ export default defineNuxtPlugin((nuxtApp) => {
 
     //Called when SSR rendering is done.
     nuxtApp.hook('app:rendered', async() => {
-        await useAppBootstrap().ssrBoot();
         //console.log('RUNTIME APP HOOK: SSR rendering is done');
     });
 

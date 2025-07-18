@@ -114,7 +114,7 @@
 import {storeToRefs} from "pinia";
 import type {PayPeriodPresetSelectionT, PayPeriodSettingT} from "@/public/js/types/company-component";
 
-definePageMeta({middleware: ['auth', 'company-admin']});
+definePageMeta({middleware: ['auth', 'admin-of-selected-company']});
 useLayout().setNavigationMode('solid', 'PayPeriodSetting.vue');
 
 const {isAuthenticated} = useAuth();

@@ -9,7 +9,7 @@
 </template>
 
 <script setup lang="ts">
-definePageMeta({middleware: ['auth', 'company-admin']});
+definePageMeta({middleware: ['auth', 'admin-of-selected-company']});
 useLayout().setNavigationMode('solid', 'Deductions.vue');
 </script>
 

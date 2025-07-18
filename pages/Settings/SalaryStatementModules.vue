@@ -35,7 +35,7 @@ import type {Sequenceable, TableHeaderT} from "@/public/js/types/data";
 import type {SalaryStatementModuleT} from "@/public/js/types/company-component";
 import {storeToRefs} from "pinia";
 
-definePageMeta({middleware: ['auth', 'company-admin']});
+definePageMeta({middleware: ['auth', 'admin-of-selected-company']});
 useLayout().setNavigationMode('solid', 'SalaryStatementModules.vue');
 const route = useRoute();
 

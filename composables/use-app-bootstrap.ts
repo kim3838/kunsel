@@ -9,18 +9,6 @@ export const useAppBootstrap = () => {
         activeSubNavigationLink,
     } = useLayout();
 
-    const ssrBoot = async () => {
-
-        if(process.client) return;
-
-        const {ssrFetchAssociatedCompanies} = useAssociation();
-        const {isAuthenticated} = useAuth();
-
-        if(isAuthenticated.value){
-            await ssrFetchAssociatedCompanies();
-        }
-    }
-
     const boot = async() => {
 
         await storeAssociatedCompanies();
@@ -40,7 +28,6 @@ export const useAppBootstrap = () => {
     }
 
     return {
-        ssrBoot,
         boot,
     }
 }

@@ -26,7 +26,7 @@ export const useAuth = () => {
     const isAuthenticated = computed(() => !!user.value);
     const userIsSuperAdmin = computed(() => user.value?.type == USER_TYPE.SUPERADMIN);
     const authPending = ref(false);
-    const {fetchAssociatedCompanies, storeAssociatedCompanies} = useAssociation();
+    const {fetchAssociatedCompanies, storeAssociatedCompanies, fetchIsAdminInAnyCompany} = useAssociation();
 
     const ssrFetchUser = async () => {
         await laraSsrUseFetch("/api/user", {
@@ -89,6 +89,7 @@ export const useAuth = () => {
                     await fetchUser();
                     await fetchAssociatedCompanies();
                     await storeAssociatedCompanies();
+                    await fetchIsAdminInAnyCompany();
                     await navigateTo({
                         path: '/',
                         replace: true

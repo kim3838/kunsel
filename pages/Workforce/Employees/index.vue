@@ -35,7 +35,7 @@
                             :disabled="disableDataTable"
                             v-model="selectedEmployees"
                             selection>
-                            <template v-slot:cell.action="{cell,slot}">
+                            <template v-slot:cell.actions="{cell,slot}">
                                 <div class="h-full mx-0.5 space-x-0.5 w-full flex items-center">
                                     <NuxtLink
                                         :to="`/workforce/employees/${cell.ulid}`">
@@ -70,7 +70,7 @@
 import type {DataTableMeta, TableHeaderT, TableRowT} from "@/public/js/types/data";
 import {storeToRefs} from "pinia";
 
-definePageMeta({middleware: ['auth', 'company-admin']});
+definePageMeta({middleware: ['auth', 'admin-of-selected-company']});
 useLayout().setNavigationMode('solid', 'Employees.vue');
 
 const {isAuthenticated} = useAuth();
@@ -103,8 +103,8 @@ const employmentStatusOptions = reactive({
 
 const employeesHeaders = reactive<TableHeaderT[]>([
     { text: '#', value: 'row_number'},
-    { text: '', value: 'action'},
-    { text: 'Number', value: 'number', alignData: 'left'},
+    { text: '', value: 'actions'},
+    { text: 'Employee #', value: 'number', alignData: 'left'},
     { text: 'Full Name (Family, Middle, Given)', value: 'full_name'},
     { text: 'Gender', value: 'gender'},
     { text: 'Marital Status', value: 'marital_status'},

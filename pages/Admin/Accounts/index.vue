@@ -65,13 +65,12 @@ import type {DataTableMeta, TableHeaderT, TableRowT} from "@/public/js/types/dat
 
 definePageMeta({middleware: ['auth', 'super-admin']});
 useLayout().setNavigationMode('solid');
-const user = userState();
 
 const accountsHeaders = reactive<TableHeaderT[]>([
     { text: '', value: 'actions'},
-    { text: 'Account Number', value: 'number', alignData: 'left'},
+    { text: 'Account #', value: 'number', alignData: 'left'},
     { text: 'Type', value: 'type', alignData: 'left'},
-    { text: 'Date', value: 'date_registered', alignData: 'left'},
+    { text: 'Date Registered', value: 'date_registered', alignData: 'left'},
 ]);
 
 const accountTypeOptions = reactive({

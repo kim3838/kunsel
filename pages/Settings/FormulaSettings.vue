@@ -46,7 +46,7 @@
 import {storeToRefs} from "pinia";
 import type {TableHeaderT} from "@/public/js/types/data";
 
-definePageMeta({middleware: ['auth', 'company-admin']});
+definePageMeta({middleware: ['auth', 'admin-of-selected-company']});
 useLayout().setNavigationMode('solid', 'FormulaSettings.vue');
 
 const StandardOvertimeSettings = resolveComponent('StandardOvertimeSettings');
