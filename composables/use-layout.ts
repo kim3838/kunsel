@@ -269,7 +269,14 @@ export const useLayout = () => {
                             icon: 'ic:baseline-all-inbox',
                             to: '/admin/accounts',
                             route_active: 'admin-accounts'
-                        }
+                        },{
+                            key: 'admin/companies',
+                            type: 'link',
+                            title: 'Companies',
+                            icon: 'ic:baseline-business-center',
+                            to: '/admin/companies',
+                            route_active: 'admin-companies'
+                        },
                     ]: []),
                     ...(!userIsSuperAdmin.value ? [
                         {
@@ -284,7 +291,7 @@ export const useLayout = () => {
                             key: 'admin/associated-companies',
                             type: 'link',
                             title: 'Companies',
-                            icon: 'ic:baseline-all-inbox',
+                            icon: 'ic:baseline-business-center',
                             to: '/admin/associated-companies',
                             route_active: 'admin-associated-companies'
                         },

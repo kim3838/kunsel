@@ -22,7 +22,7 @@
 
                 <FansyFrame>
                     <template v-slot:content>
-                        <div class="mb-2">
+                        <div class="mb-2 flex">
                             <NuxtLink
                                 :to="`/workforce/employees/create-employee`">
                                 <Button class="w-min" :disabled="disableActions" :size="'sm'" :icon="disableActions ? 'eos-icons:loading' : 'mdi:plus'" :label="disableActions ? 'Please wait' : ''"></Button>
