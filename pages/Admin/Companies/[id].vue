@@ -1,0 +1,186 @@
+<template>
+    <div>
+        <AdminWrapper>
+            <div class="mx-auto max-w-screen-2xl">
+                <div class="flex px-[20px] pt-[20px] mb-2">
+                    <NuxtLink
+                        :to="`/admin/companies`">
+                        <Button class="w-min" :variant="`outline`" :disabled="disableActions" :size="'sm'" :icon="disableActions ? 'eos-icons:loading' : 'ic:sharp-keyboard-arrow-left'" :label="disableActions ? 'Please wait' : ''"></Button>
+                    </NuxtLink>
+                </div>
+
+                <form @submit.prevent="formSubmit" class="px-[20px] space-y-2">
+                    <div class="grid gap-2 grid-cols-4 sm:grid-cols-5 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-8">
+                        <div>
+                            <InputLabel :size="'sm'" value="Account"/>
+                            <SingleSelect value-persist drop-shadow :size="'md'" :options="accountOptions"/>
+                        </div>
+                        <div>
+                            <InputLabel :size="'sm'" value="Code"/>
+                            <Input :size="'md'" v-model="companyCode" type="text"/>
+                        </div>
+                        <div>
+                            <InputLabel :size="'sm'" value="Name"/>
+                            <Input :size="'md'" v-model="companyName" type="text"/>
+                        </div>
+                        <div>
+                            <InputLabel :size="'sm'" value="Timezone"/>
+                            <SingleSelect value-persist drop-shadow :size="'md'" :options="timezoneOptions"/>
+                        </div>
+                    </div>
+
+                    <div class="grid gap-2 grid-cols-4 sm:grid-cols-5 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-8">
+                        <Button class="w-min" ref="submitButton" type="submit" :disabled="disableActions" :size="'md'" :icon="disableActions ? 'eos-icons:loading' : 'mdi:data'" :label="submitLabel"></Button>
+                    </div>
+                </form>
+            </div>
+        </AdminWrapper>
+    </div>
+</template>
+
+<script setup lang="ts">
+
+const {fetchAssociatedCompanies, storeAssociatedCompanies} = useAssociation();
+useLayout().setNavigationMode('solid', 'Companies/[id].vue');
+
+const route = useRoute();
+const user = userState();
+const company = ref(null);
+const creatingAccount = computed(() => {
+    return route.params.id === 'create-company';
+});
+const companyCode = ref('');
+const companyName = ref('');
+
+definePageMeta({
+    middleware: ['auth', 'super-admin'],
+    validate: async (route) => {
+
+        if (import.meta.server) return true;
+
+        let create = route.params.id === 'create-company';
+
+        if(create){return true;}
+
+        await laraUseFetch(`/api/company/${route.params.id}`, {
+            lazy: false,
+            method: 'GET'
+        }, {
+            onSuccessResponse: async (request, options, response) => {
+                company.value = _get(response, '_data.values.company', null);
+            }
+        }, false);
+
+        return !_isEmpty(company.value);
+    }
+});
+
+const accountOptions = reactive({
+    search: '',
+    data: [],
+    selection: [],
+    selected: null
+});
+const timezoneOptions = reactive({
+    search: '',
+    data: [],
+    selection: [],
+    selected: null
+});
+const fetchAccounts = async() => {
+
+    await laraFetch("/api/account-selections", {
+        method: 'GET',
+    }, {
+        onSuccessResponse: async (request, options, response) => {
+            let selection = _get(response, '_data.values.selection', []);
+            accountOptions.data = selection;
+            accountOptions.selection = selection;
+        }
+    })
+}
+await fetchAccounts();
+const fetchTimezones = async() => {
+
+    await laraFetch("/api/timezone-selections", {
+        method: 'GET',
+    }, {
+        onSuccessResponse: async (request, options, response) => {
+            let selection = _get(response, '_data.values.selection', []);
+            timezoneOptions.data = selection;
+            timezoneOptions.selection = selection;
+        }
+    })
+}
+await fetchTimezones();
+
+//Fetch Company Information
+const fetchCompany = async () => {
+    if(route.params.id === 'create-company'){return;}
+
+    await laraFetch(`/api/company/${route.params.id}`, {
+        method: 'GET',
+    }, {
+        onSuccessResponse: async (request, options, response) => {
+            company.value = _get(response, '_data.values.company', null);
+            accountOptions.selected = _get(response, '_data.values.company.account_id', null);
+            companyCode.value = _get(response, '_data.values.company.code', '');
+            companyName.value = _get(response, '_data.values.company.name', '');
+            timezoneOptions.selected = _get(response, '_data.values.company.timezone', null);
+        },
+    });
+};
+
+await fetchCompany();
+
+const formPending = ref(false);
+const disableActions = computed(() => {
+    return formPending.value
+});
+
+const submitLabel = computed(() => {
+    return formPending.value ? 'Please wait' : (!creatingAccount.value ? 'Save' : 'Submit');
+});
+const submitAction = computed(() => {
+    return !creatingAccount.value ? 'PATCH' : 'POST';
+});
+const submitPath = computed(() => {
+    return !creatingAccount.value ? `/api/company/${company.value.id}` : `/api/company`;
+});
+const formBody = computed(() => {
+
+    return {
+        account_id: accountOptions.selected,
+        code: companyCode.value,
+        name: companyName.value,
+        timezone: timezoneOptions.selected,
+    };
+});
+
+const formSubmit = async() => {
+    formPending.value = true;
+
+    await laraFetch(submitPath.value, {
+        method: submitAction.value,
+        body: formBody.value,
+    }, {
+        onRequestError: () => {
+            formPending.value = false;
+        },
+        onResponse: () => {
+            formPending.value = false;
+        },
+        onSuccessResponse: async (request, options, response) => {
+            await fetchAssociatedCompanies();
+            await storeAssociatedCompanies();
+            await navigateTo({
+                path: '/admin/companies',
+            });
+        },
+    });
+}
+</script>
+
+<style scoped>
+
+</style>

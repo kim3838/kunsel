@@ -2,7 +2,13 @@
     <div>
         <AdminWrapper>
             <div class="mx-auto max-w-screen-2xl">
-                <form @submit.prevent="formSubmit" class="p-[20px] space-y-2">
+                <div class="flex px-[20px] pt-[20px] mb-2">
+                    <NuxtLink
+                        :to="`/admin/accounts`">
+                        <Button class="w-min" :variant="`outline`" :disabled="disableActions" :size="'sm'" :icon="disableActions ? 'eos-icons:loading' : 'ic:sharp-keyboard-arrow-left'" :label="disableActions ? 'Please wait' : ''"></Button>
+                    </NuxtLink>
+                </div>
+                <form @submit.prevent="formSubmit" class="px-[20px] space-y-2">
                     <div class="grid gap-2 grid-cols-4 sm:grid-cols-5 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-8">
                         <div>
                             <InputLabel :size="'sm'" value="Account number"/>
