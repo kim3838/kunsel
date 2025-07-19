@@ -4,6 +4,13 @@
             <div class="mx-auto max-w-screen-2xl">
 
                 <div class="p-[20px] space-y-2">
+                    <div class="flex">
+                        <NuxtLink
+                            :to="`/workforce/employees`">
+                            <Button class="w-min" :variant="`outline`" :disabled="disableActions" :size="'sm'" :icon="disableActions ? 'eos-icons:loading' : 'ic:sharp-keyboard-arrow-left'" :label="disableActions ? 'Please wait' : ''"></Button>
+                        </NuxtLink>
+                    </div>
+
                     <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
                         <fieldset class="neutral-border px-2 pb-2 space-y-2">
                             <legend class="text-lg font-medium font-header">Employee Information</legend>
@@ -116,7 +123,7 @@
                                         class="w-min"
                                         :variant="'outline'"
                                         :size="'sm'"
-                                        :icon="'mdi:rotate-3d-variant'"
+                                        :icon="'ic:sharp-restart-alt'"
                                         :disabled="disableEmployeeCompensationActions"
                                         @click="employeeCompensationExecute" />
                                 </div>
@@ -197,7 +204,7 @@
                                         class="w-min"
                                         :variant="'outline'"
                                         :size="'sm'"
-                                        :icon="'mdi:rotate-3d-variant'"
+                                        :icon="'ic:sharp-restart-alt'"
                                         :disabled="disableEmployeeDeductionActions"
                                         @click="employeeDeductionExecute" />
                                 </div>
@@ -269,7 +276,7 @@
                                         class="w-min"
                                         :variant="'outline'"
                                         :size="'sm'"
-                                        :icon="'mdi:rotate-3d-variant'"
+                                        :icon="'ic:sharp-restart-alt'"
                                         :disabled="disableEmployeeIncomeTaxActions"
                                         @click="employeeIncomeTaxExecute" />
                                 </div>
@@ -791,6 +798,11 @@ const payrollComponentResolved = (component, attributes, rowIndex = -1) => {
 
     }
 };
+
+const formPending = ref(false);
+const disableActions = computed(() => {
+    return formPending.value
+});
 </script>
 
 <style scoped>
