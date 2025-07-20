@@ -14,11 +14,10 @@ export type AssignedCompanyT = {
 export type SelectedCompanyT = string | number | null;
 
 export interface AssociatedCompanyT {
-    selection: AssignedCompanyT[],
+    selection: AssignedCompanyT[];
     selected: SelectedCompanyT,
 }
 
 export interface StoreAssociatedCompanyT extends AssociatedCompanyT {
     search: string;
-    data: AssignedCompanyT[];
 }
