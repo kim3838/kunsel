@@ -112,7 +112,6 @@ await laraUseFetch("/api/enum-selections/compensation", {
 
 const compensationTypeSingleSelect = reactive({
     search: '',
-    data: compensationSelection.value,
     selection: compensationSelection.value,
     selected: null
 });
@@ -134,7 +133,6 @@ watch(updatedAssociatedCompanyFlag, (newValue) => {
 
 const compensationFormulaOptions = reactive({
     search: '',
-    data: [],
     selection: [],
     selected: null
 })
@@ -159,9 +157,7 @@ const compensationFormulaExecute = async () => {
             compensationFormulaPending.value = false;
         },
         onSuccessResponse: async (request, options, response) => {
-            const selection = _get(response, '_data.values.selection', []);
-            compensationFormulaOptions.data = selection
-            compensationFormulaOptions.selection = selection;
+            compensationFormulaOptions.selection = _get(response, '_data.values.selection', []);
         }
     });
 }

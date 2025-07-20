@@ -134,12 +134,10 @@ watch(updatedAssociatedCompanyFlag, (newValue) => {
 
 const payPeriodPresetOptions = reactive<{
     search: string,
-    data: PayPeriodPresetSelectionT[],
     selection: PayPeriodPresetSelectionT[],
     selected: number | string | null
 }>({
     search: '',
-    data: [],
     selection: [],
     selected: null
 });
@@ -165,9 +163,7 @@ const payPeriodPresetExecute = async () => {
             payPeriodPresetPending.value = false;
         },
         onSuccessResponse: async (request, options, response) => {
-            const payPeriodPresetSelection = _get(response, '_data.values.selection', []);
-            payPeriodPresetOptions.data = payPeriodPresetSelection;
-            payPeriodPresetOptions.selection = payPeriodPresetSelection;
+            payPeriodPresetOptions.selection = _get(response, '_data.values.selection', []);
         }
     }, false);
 }

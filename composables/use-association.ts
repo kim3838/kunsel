@@ -142,7 +142,6 @@ export const useAssociation = () => {
 
             $authStore.associatedCompanies.singleSelectPayload = {
                 ...associatedCompaniesSingleSelectPayload,
-                data: associatedCompany.value.selection,
                 selection: associatedCompany.value.selection,
                 selected: storedCompany.value
             };

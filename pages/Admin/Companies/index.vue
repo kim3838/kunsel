@@ -93,7 +93,6 @@ const companies = reactive<{
 });
 const accountOptions = reactive({
     search: '',
-    data: [],
     selection: [],
     selected: []
 });
@@ -171,9 +170,7 @@ const fetchAccounts = async() => {
         method: 'GET',
     }, {
         onSuccessResponse: async (request, options, response) => {
-            let selection = _get(response, '_data.values.selection', []);
-            accountOptions.data = selection;
-            accountOptions.selection = selection;
+            accountOptions.selection = _get(response, '_data.values.selection', []);
         }
     })
 }

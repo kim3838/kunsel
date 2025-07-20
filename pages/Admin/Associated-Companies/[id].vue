@@ -77,13 +77,11 @@ definePageMeta({
 
 const associatedAccountOptions = reactive({
     search: '',
-    data: [],
     selection: [],
     selected: null
 });
 const timezoneOptions = reactive({
     search: '',
-    data: [],
     selection: [],
     selected: null
 });
@@ -99,9 +97,7 @@ const fetchAssociatedAccounts = async() => {
         }
     }, {
         onSuccessResponse: async (request, options, response) => {
-            let selection = _get(response, '_data.values.selection', []);
-            associatedAccountOptions.data = selection;
-            associatedAccountOptions.selection = selection;
+            associatedAccountOptions.selection = _get(response, '_data.values.selection', []);
         }
     })
 }
@@ -112,9 +108,7 @@ const fetchTimezones = async() => {
         method: 'GET',
     }, {
         onSuccessResponse: async (request, options, response) => {
-            let selection = _get(response, '_data.values.selection', []);
-            timezoneOptions.data = selection;
-            timezoneOptions.selection = selection;
+            timezoneOptions.selection = _get(response, '_data.values.selection', []);
         }
     })
 }

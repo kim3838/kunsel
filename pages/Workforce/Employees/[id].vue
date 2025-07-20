@@ -397,13 +397,11 @@ const genderOptions = reactive({
 //Employee Organization
 const departmentOptions = reactive({
     search: '',
-    data: [],
     selection: [],
     selected: null
 });
 const designationOptions = reactive({
     search: '',
-    data: [],
     selection: [],
     selected: null
 });
@@ -439,9 +437,7 @@ const designationsExecute = async () => {
             designationsPending.value = false;
         },
         onSuccessResponse: async (request, options, response) => {
-            const selection = _get(response, '_data.values.selection', []);
-            designationOptions.data = selection
-            designationOptions.selection = selection;
+            designationOptions.selection = _get(response, '_data.values.selection', []);
         }
     });
 }
@@ -466,9 +462,7 @@ const departmentsExecute = async () => {
             departmentsPending.value = false;
         },
         onSuccessResponse: async (request, options, response) => {
-            const selection = _get(response, '_data.values.selection', []);
-            departmentOptions.data = selection
-            departmentOptions.selection = selection;
+            departmentOptions.selection = _get(response, '_data.values.selection', []);
         }
     });
 }

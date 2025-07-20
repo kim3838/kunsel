@@ -208,7 +208,6 @@ const formulableModelMapKey = computed(()=>{
 //Assignable Employee Payroll Component Selections
 const assignablePayrollComponentOptions = reactive({
     search: '',
-    data: [],
     selection: [],
     selected: null
 });
@@ -238,9 +237,7 @@ const assignablePayrollComponentExecute = async () => {
             assignablePayrollComponentPending.value = false;
         },
         onSuccessResponse: async (request, options, response) => {
-            const selection = _get(response, '_data.values.selection', []);
-            assignablePayrollComponentOptions.data = selection
-            assignablePayrollComponentOptions.selection = selection;
+            assignablePayrollComponentOptions.selection = _get(response, '_data.values.selection', []);
 
             loadEditable();
         }

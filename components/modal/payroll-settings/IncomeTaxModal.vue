@@ -134,7 +134,6 @@ watch(updatedAssociatedCompanyFlag, (newValue) => {
 
 const incomeTaxFormulaOptions = reactive({
     search: '',
-    data: [],
     selection: [],
     selected: null
 })
@@ -159,9 +158,7 @@ const incomeTaxFormulaExecute = async () => {
             incomeTaxFormulaPending.value = false;
         },
         onSuccessResponse: async (request, options, response) => {
-            const selection = _get(response, '_data.values.selection', []);
-            incomeTaxFormulaOptions.data = selection
-            incomeTaxFormulaOptions.selection = selection;
+            incomeTaxFormulaOptions.selection = _get(response, '_data.values.selection', []);
         }
     });
 }

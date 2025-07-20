@@ -11,7 +11,6 @@ export const useAuthStore = defineStore('auth', () => {
     }>({
         singleSelectPayload: {
             search: '',
-            data: [],
             selection: [],
             selected: null
         }
@@ -32,7 +31,6 @@ export const useAuthStore = defineStore('auth', () => {
         associatedCompanies.value = {
             singleSelectPayload: {
                 search: '',
-                data: [],
                 selection: [],
                 selected: null
             }

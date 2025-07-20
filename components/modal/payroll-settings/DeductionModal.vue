@@ -134,7 +134,6 @@ watch(updatedAssociatedCompanyFlag, (newValue) => {
 
 const deductionFormulaOptions = reactive({
     search: '',
-    data: [],
     selection: [],
     selected: null
 })
@@ -159,9 +158,7 @@ const deductionFormulaExecute = async () => {
             deductionFormulaPending.value = false;
         },
         onSuccessResponse: async (request, options, response) => {
-            const selection = _get(response, '_data.values.selection', []);
-            deductionFormulaOptions.data = selection
-            deductionFormulaOptions.selection = selection;
+            deductionFormulaOptions.selection = _get(response, '_data.values.selection', []);
         }
     });
 }

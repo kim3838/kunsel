@@ -276,7 +276,6 @@ const departmentOptions = reactive({
 });
 const parentDepartmentSelectionOption = reactive({
     search: '',
-    data: [],
     selection: [],
     selected: null
 });
@@ -306,9 +305,7 @@ const parentDepartmentSelectionExecute = async () => {
             parentDepartmentSelectionPending.value = false;
         },
         onSuccessResponse: async (request, options, response) => {
-            const selection = _get(response, '_data.values.selection', []);
-            parentDepartmentSelectionOption.data = selection
-            parentDepartmentSelectionOption.selection = selection;
+            parentDepartmentSelectionOption.selection = _get(response, '_data.values.selection', []);
         }
     });
 }
