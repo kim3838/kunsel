@@ -265,8 +265,10 @@ let selectionOffset = reactive<SingleSelectSelectionOffsetT>({
     origin: null,
     left: '0'
 });
-
-const searchPool = ref<SelectSearchPoolT>(props.options.data.map((item: SelectDataType) => item.value));
+const optionsDataComputed = computed(() => {
+    return [...props.options.selection];
+});
+const searchPool = ref<SelectSearchPoolT>(optionsDataComputed.value.map((item: SelectDataType) => item.value));
 const selectionOptionsKey = ref(0);
 const selectionOptions = ref(props.options.selection);
 
@@ -274,7 +276,7 @@ watch(() => props.options.selection, (newValue)=>{
     selectionOptions.value = newValue;
     selectionOptionsKey.value++;
 })
-watch(() => props.options.data, (newValue)=>{
+watch(optionsDataComputed, (newValue)=>{
     searchPool.value = newValue.map((item: SelectDataType) => item.value);
 })
 
@@ -474,7 +476,7 @@ const selectionSummary = computed(() => {
     if(props.options.selected == null){
         return "None Selected";
     } else {
-        return props.options.data.filter((item: SelectDataType) => {
+        return optionsDataComputed.value.filter((item: SelectDataType) => {
             return item.value == props.options.selected;
         })[0].text;
     }
@@ -566,9 +568,9 @@ function isItemInSearchPool(item: SelectValueInterface): boolean{
 
 function searchSelection(){
     if (!props.options.search.trim()){
-        searchPool.value = props.options.data.map((item: SelectDataType) => item.value);
+        searchPool.value = optionsDataComputed.value.map((item: SelectDataType) => item.value);
     } else {
-        searchPool.value = props.options.data.filter((data: SelectDataType) => {
+        searchPool.value = optionsDataComputed.value.filter((data: SelectDataType) => {
             return data.text.toLowerCase().indexOf(props.options.search.toLowerCase()) > -1
         }).map((item: SelectDataType) => item.value);
     }
@@ -576,7 +578,7 @@ function searchSelection(){
 
 function clearSearch(){
     props.options.search = "";
-    searchPool.value = props.options.data.map((item: SelectDataType) => item.value);
+    searchPool.value = optionsDataComputed.value.map((item: SelectDataType) => item.value);
 }
 
 watch(selectParentFocused, (focused) => {

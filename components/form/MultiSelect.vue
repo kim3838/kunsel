@@ -201,8 +201,11 @@ let selectionOffset = reactive<SelectionOffsetT>({
 const { focused: selectParentFocused } = useFocus(selectParent);
 const { focused: selectionScrollFocused } = useFocus(selectionScroll);
 
+const optionsDataComputed = computed(() => {
+    return [...props.options.selection];
+});
 let searchPool = ref<SelectSearchPoolT>([]);
-searchPool.value = props.options.data.map((item: SelectDataType) => item.value);
+searchPool.value = optionsDataComputed.value.map((item: SelectDataType) => item.value);
 
 const idleBorderComputed = computed(() => {
     return props.idleBorder ? props.idleBorder : threadColor.value;
@@ -344,15 +347,15 @@ const selectionSummary = computed(() => {
     if(props.options.selected.length === 0){
         return "None Selected";
     } else if(props.options.selected.length < 5) {
-        return props.options.data.filter((item: SelectDataType) => {
+        return optionsDataComputed.value.filter((item: SelectDataType) => {
             return props.options.selected.indexOf(item.value) >= 0;
         }).map((item: SelectDataType) => item.text).join(", ");
     } else if(props.options.selected.length > 4) {
         let summary = '';
 
-        if (props.options.selected.length < props.options.data.length) {
+        if (props.options.selected.length < optionsDataComputed.value.length) {
             summary = `${props.options.selected.length} Selected`;
-        } else if (props.options.selected.length === props.options.data.length){
+        } else if (props.options.selected.length === optionsDataComputed.value.length){
             summary = `All Selected`;
         }
 
@@ -495,9 +498,9 @@ function isItemInSearchPool(item: SelectValueInterface): boolean{
 
 function searchSelection(){
     if (!props.options.search.trim()){
-        searchPool.value = props.options.data.map((item: SelectDataType) => item.value);
+        searchPool.value = optionsDataComputed.value.map((item: SelectDataType) => item.value);
     } else {
-        searchPool.value = props.options.data.filter((data: SelectDataType) => {
+        searchPool.value = optionsDataComputed.value.filter((data: SelectDataType) => {
             return data.text.toLowerCase().indexOf(props.options.search.toLowerCase()) > -1
         }).map((item: SelectDataType) => item.value);
     }
@@ -505,7 +508,7 @@ function searchSelection(){
 
 function clearSearch(){
     props.options.search = "";
-    searchPool.value = props.options.data.map((item: SelectDataType) => item.value);
+    searchPool.value = optionsDataComputed.value.map((item: SelectDataType) => item.value);
 }
 
 watch(selectParentFocused, (focused) => {
