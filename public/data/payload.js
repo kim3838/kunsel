@@ -270,15 +270,6 @@ export default {
         },
         'category': {
             search: '',
-            data: [
-                {text : 'Charms', value: 0},
-                {text : 'Bracelets', value: 1},
-                {text : 'Tab\t\tBrooches\nand\nPins', value: 2},
-                {text : 'Necklaces', value: 3},
-                {text : 'Earrings', value: 4},
-                {text : 'Rings', value: 5},
-                {text : 'Polyester', value: 6},
-            ],
             selection: [
                 {text : 'Charms', value: 0},
                 {text : 'Bracelets', value: 1},
@@ -292,13 +283,6 @@ export default {
         },
         'plan': {
             search: '',
-            data: [
-                {text : 'Free', value: 0},
-                {text : 'Individual', value: 1},
-                {text : 'Standard Corporate', value: 2},
-                {text : 'Custom Corporate', value: 3},
-                {text : 'Evaluator', value: 4},
-            ],
             selection: [
                 {text : 'Free', value: 0},
                 {text : 'Individual', value: 1},
@@ -322,11 +306,6 @@ export default {
         },
         'perPage': {
             search: '',
-            data: [
-                {text : '10 per page', value: 10},
-                {text : '25 per page', value: 25},
-                {text : '100 per page', value: 100},
-            ],
             selection: [
                 {text : '10 per page', value: 10},
                 {text : '25 per page', value: 25},
@@ -336,11 +315,6 @@ export default {
         },
         'bookingType': {
             search: '',
-            data: [
-                {text : 'Individual', value: 1},
-                {text : 'Spouse/Co-Owner', value: 2},
-                {text : 'Corporation/Partnership', value: 3}
-            ],
             selection: [
                 {text : 'Individual', value: 1},
                 {text : 'Spouse/Co-Owner', value: 2},
@@ -362,13 +336,6 @@ export default {
         },
         'singleSelectPrototype': {
             search: '',
-            data: [
-                {text : 'PRT3221289642 005-5RZX3-MPJ-9GRRWA', value: 0},
-                {text : 'PRT3224439642 005-5RZX3-MPJ-9GRRWA', value: 1},
-                {text : 'PRT3222219642 005-5RZX3-MPJ-9GRRWA', value: 2},
-                {text : 'PRT3224324642 005-5RZX3-MPJ-9GRRWA', value: 3},
-                {text : 'PRT3221285552 005-5RZX3-MPJ-9GRRWA', value: 4},
-            ],
             selection: [
                 {text : 'PRT3221289642 005-5RZX3-MPJ-9GRRWA', value: 0},
                 {text : 'PRT3224439642 005-5RZX3-MPJ-9GRRWA', value: 1},
