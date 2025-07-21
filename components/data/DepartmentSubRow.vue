@@ -2,7 +2,6 @@
     <div>
         <DataTable
             v-if="!rowsIsEmpty"
-            class="mt-1"
             :headers="departmentsHeaders"
             v-model="selectedDepartments"
             :disabled="disabled"

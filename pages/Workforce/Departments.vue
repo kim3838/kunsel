@@ -112,7 +112,7 @@
                                 <Button class="mx-0.5" type="button" :size="slot.buttonSize" :icon="'mdi:pen'" :label="'Edit'" @click="edit(cell)"></Button>
                             </template>
                             <template v-slot:sub_row_slot="{rowIndex, cell, slot}">
-                                <div class="flex items-center scaffold-border">
+                                <div class="inline-flex items-center scaffold-border pr-2">
                                     <Icon name="mdi:info-variant" :class="[slot.iconSizeClass]" /><div :class="[slot.titleSizeClass]">Sub-Departments</div>
                                 </div>
                                 <DepartmentSubRow
