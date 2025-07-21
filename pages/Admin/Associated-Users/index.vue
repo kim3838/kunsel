@@ -1,0 +1,283 @@
+<template>
+    <div>
+        <AdminWrapper>
+            <div class="mx-auto max-w-screen-2xl">
+                <form @submit.prevent="paginate(1, true)" class="space-y-2 p-[20px]">
+                    <div class="grid gap-2 grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-8">
+                        <div>
+                            <InputLabel :size="'sm'" value="Company" />
+                            <MultiSelect glint drop-shadow :selection-max-viewable-line="5" :size="'md'" :options="associatedCompanyOptions" :icon="'mdi:checkbook'"/>
+                        </div>
+                        <div>
+                            <InputLabel :size="'sm'" value="User Status" />
+                            <MultiSelect glint drop-shadow :selection-max-viewable-line="5" :size="'md'" :options="userStatusOptions" :icon="'mdi:checkbook'"/>
+                        </div>
+                        <div>
+                            <InputLabel :size="'sm'" value="Search" />
+                            <Input :size="'md'" ref="searchInput" v-model="filters.search.keyword" class="w-full" placeholder="Search" type="text" autocomplete="off"/>
+                        </div>
+                    </div>
+
+                    <div class="grid gap-2 grid-cols-1 sm:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-8">
+                        <Button class="w-min" ref="submitButton" type="submit" :disabled="disableActions" :size="'md'" :icon="disableActions ? 'eos-icons:loading' : 'mdi:data'" :label="disableActions ? 'Loading' : 'Load'"></Button>
+                    </div>
+
+                    <div class="grid gap-2 grid-cols-1 sm:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-8">
+                        <div class="flex items-center col-span-2">
+                            <label>
+                                <Checkbox
+                                    :disabled="disableActions"
+                                    name="remember"
+                                    v-model="showAssociatedCompanies"
+                                    :size="'md'"
+                                    :label="'Show Associated Companies'" />
+                            </label>
+                        </div>
+                    </div>
+
+                    <div>
+                        <PageInformation v-if="users.meta.pagination.total > 0" :pagination="users.meta.pagination" :no-record-label="'No Record Found'"/>
+                        <Pagination :size="'lg'" :pagination="users.meta.pagination" :pending="usersPending" v-model="pageComputed"/>
+                    </div>
+                </form>
+
+                <FansyFrame>
+                    <template v-slot:content>
+                        <div class="mb-2 flex">
+                            <NuxtLink
+                                :to="`/admin/associated-companies/create-company`">
+                                <Button class="w-min" :disabled="disableActions" :size="'sm'" :icon="disableActions ? 'eos-icons:loading' : 'mdi:plus'" :label="disableActions ? 'Please wait' : ''"></Button>
+                            </NuxtLink>
+                        </div>
+                        <UnorderedList
+                            v-if="disableActions"
+                            :icon="'eos-icons:loading'"
+                            :size="'md'"
+                            :label="'Please wait...'"/>
+                        <DataTable
+                            :headers="usersHeaders"
+                            :size="'lg'"
+                            :rows="users.data"
+                            :disabled="disableDataTable"
+                            v-model="selectedUsers"
+                            :sub-row-slug="usersSubRowSlug"
+                            :sub-row-settings="{
+                                type: DATATABLE_SUBROW_TYPE.TITLED,
+                                containerPaddingTop: 0.25,
+                                containerPaddingBottom: 0.75,
+                                titleSize: 'sm',
+                                rowVerticalLine: true,
+                                verticalBorderType: 'dashed',
+                                horizontalBorderType: 'dashed',
+                            }"
+                            selection>
+                            <template v-slot:cell.actions="{cell,slot}">
+                                <div class="h-full mx-0.5 space-x-0.5 w-full flex items-center">
+                                    <NuxtLink
+                                        :to="`/admin/associated-users/${cell.ulid}`">
+                                        <Button type="button" :variant="'outline'" :icon="'material-symbols:lab-profile-sharp'" :size="slot.buttonSize" :label="''"></Button>
+                                    </NuxtLink>
+                                </div>
+                            </template>
+                            <template v-slot:cell.status="{cell,slot}">
+                                <div class="p-[3px]">{{cell.status.text}}</div>
+                            </template>
+                            <template v-slot:cell.email_verified_at="{cell,slot}">
+                                <div class="p-[3px]">{{cell.email_verified_at != null ? `Verified` : `Not verified`}}</div>
+                            </template>
+                            <template v-slot:sub_row_slot="{rowIndex, cell, slot}">
+                                <div class="inline-flex items-center scaffold-border pr-2">
+                                    <Icon name="mdi:info-variant" :class="[slot.iconSizeClass]" /><div :class="[slot.titleSizeClass]">Associations</div>
+                                </div>
+
+                                <AssociatedUserSubRow
+                                    :rows="cell[slot.slug]"
+                                    :disabled="disableDataTable"
+                                ></AssociatedUserSubRow>
+                            </template>
+                        </DataTable>
+                    </template>
+                </FansyFrame>
+            </div>
+        </AdminWrapper>
+    </div>
+</template>
+
+<script setup lang="ts">
+import type {DataTableMeta, TableHeaderT, TableRowT} from "@/public/js/types/data";
+
+definePageMeta({middleware: ['auth', 'admin-in-any-company']});
+useLayout().setNavigationMode('solid');
+const user = userState();
+
+const usersHeaders = reactive<TableHeaderT[]>([
+    { text: '', value: 'actions'},
+    { text: 'Username', value: 'username', alignData: 'left'},
+    { text: 'Status', value: 'status', alignData: 'left'},
+    { text: 'Email', value: 'email', alignData: 'left'},
+    { text: 'Email Verified', value: 'email_verified_at', alignData: 'left'},
+    { text: 'Timezone', value: 'timezone', alignData: 'left'},
+]);
+const usersSubRowSlug = ref('associated_companies');
+const showAssociatedCompanies = ref(true);
+
+watch(() => {return showAssociatedCompanies.value;}, (show) => {
+    if(show){
+        usersSubRowSlug.value = 'associated_companies';
+        paginate(1, true)
+    } else {
+        usersSubRowSlug.value = '';
+        paginate(1, true)
+    }
+})
+
+const users = reactive<{
+    data: TableRowT[];
+    meta: DataTableMeta
+}>({
+    'data': [],
+    'meta': {
+        pagination: {
+            total: 0,
+            count: 0,
+            per_page: 0,
+            current_page: 0,
+            total_pages: 0
+        }
+    }
+});
+
+const associatedCompanyOptions = reactive({
+    search: '',
+    selection: [],
+    selected: []
+});
+const fetchAssociatedCompanies = async() => {
+
+    await laraFetch("/api/associated-company-selections", {
+        method: 'GET',
+        params: {
+            filters: {
+                user_id: user?.value?.id,
+                assignment_type: [COMPANY_ASSIGNMENT_TYPE.ADMIN],
+            }
+        }
+    }, {
+        onSuccessResponse: async (request, options, response) => {
+            associatedCompanyOptions.selection = _get(response, '_data.values.selection', []);
+        }
+    })
+}
+await fetchAssociatedCompanies();
+const userStatusOptions = reactive({
+    search: '',
+    selection: [
+        {text : 'Active', value: USER_STATUS.ACTIVE},
+        {text : 'Inactive', value: USER_STATUS.INACTIVE},
+    ],
+    selected: []
+});
+
+let filters = reactive<{
+    page: number,
+    perPage: number,
+    search: {
+        keyword: string,
+        callback: ReturnType<typeof setTimeout> | number
+    }
+}>({
+    page: 1,
+    perPage: 10,
+    search: {
+        keyword: '',
+        callback: 1
+    }
+});
+let pageComputed = computed({
+    get() {
+        return {
+            page: filters.page,
+            perPage: filters.perPage,
+        }
+    },
+    set(payload: { key: 'page' | 'perPage', value: number }) {
+        filters[payload.key] = payload.value;
+    }
+});
+let paramsComputed = computed(() => {
+
+    let associatedCompanies = _isEmpty(associatedCompanyOptions.selected)
+        ? _map(associatedCompanyOptions.selection, 'value')
+        : associatedCompanyOptions.selected;
+
+    return {
+        page: filters.page,
+        perPage: filters.perPage,
+        filters: {
+            'user_id': user?.value?.id,
+            'search': filters.search.keyword,
+            'associated_companies': associatedCompanies,
+            'status': userStatusOptions.selected
+        }
+    };
+});
+
+const usersPending = ref(false);
+const selectedUsers = ref([]);
+const usersExecute = async () => {
+    usersPending.value = true;
+
+    await laraFetch("/api/associated-users", {
+        method: 'GET',
+        params: paramsComputed.value
+    },{
+        onRequestError: () => {
+            usersPending.value = false;
+        },
+        onResponse: () => {
+            usersPending.value = false;
+        },
+        onSuccessResponse: async (request, options, response) => {
+            users.data = _get(response, '_data.values.data', []);
+            users.meta = _get(response, '_data.values.meta', {
+                pagination: {
+                    total: 0,
+                    count: 0,
+                    per_page: 0,
+                    current_page: 0,
+                    total_pages: 0
+                }
+            });
+        }
+    });
+}
+await usersExecute();
+
+function paginate(page = 1, clearSelection = false){
+    clearTimeout(filters.search.callback);
+
+    if(clearSelection){
+        selectedUsers.value = [];
+    }
+
+    if(filters.page === page){
+        usersExecute();
+    } else {
+        filters.page = page;
+    }
+}
+
+watch(() => {return filters.page;}, () => {paginate(filters.page);});
+watch(() => {return filters.perPage;}, () => {paginate(1);});
+
+const disableActions = computed(() => {
+    return usersPending.value;
+});
+const disableDataTable = computed(() => {
+    return usersPending.value;
+});
+</script>
+
+<style scoped>
+
+</style>

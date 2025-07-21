@@ -295,6 +295,14 @@ export const useLayout = () => {
                             to: '/admin/associated-companies',
                             route_active: 'admin-associated-companies'
                         },
+                        {
+                            key: 'admin/associated-users',
+                            type: 'link',
+                            title: 'Users',
+                            icon: 'ic:baseline-recent-actors',
+                            to: '/admin/associated-users',
+                            route_active: 'admin-associated-users'
+                        },
                     ]: []),
                 ]
             }] : []) as NavigationLinkInterface[],
