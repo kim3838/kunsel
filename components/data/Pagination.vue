@@ -147,12 +147,6 @@ const emit = defineEmits(["update:modelValue"]);
 
 let perPage = reactive({
     search: '',
-    data: [
-        {text : '5 per page', value: 5},
-        {text : '10 per page', value: 10},
-        {text : '25 per page', value: 25},
-        {text : '100 per page', value: 100},
-    ],
     selection: [
         {text : '5 per page', value: 5},
         {text : '10 per page', value: 10},

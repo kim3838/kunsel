@@ -67,10 +67,6 @@ definePageMeta({
 
 const accountTypeOptions = reactive({
     search: '',
-    data: [
-        {text : 'Standard', value: ACCOUNT_TYPE.STANDARD},
-        {text : 'Corporate', value: ACCOUNT_TYPE.CORPORATE},
-    ],
     selection: [
         {text : 'Standard', value: ACCOUNT_TYPE.STANDARD},
         {text : 'Corporate', value: ACCOUNT_TYPE.CORPORATE},

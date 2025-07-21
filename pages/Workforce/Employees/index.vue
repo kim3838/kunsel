@@ -90,13 +90,9 @@ watch(updatedAssociatedCompanyFlag, (newValue) => {
 
 const employmentStatusOptions = reactive({
     search: '',
-    data: [
-        {text : 'Active', value: 0},
-        {text : 'Inactive', value: 1},
-    ],
     selection: [
-        {text : 'Active', value: 0},
-        {text : 'Inactive', value: 1},
+        {text : 'Active', value: USER_STATUS.ACTIVE},
+        {text : 'Inactive', value: USER_STATUS.INACTIVE},
     ],
     selected: []
 });

@@ -381,11 +381,6 @@ const employeeMiddleName = ref('');
 const employeeGivenName = ref('');
 const genderOptions = reactive({
     search: '',
-    data: [
-        {text : 'Not Specified', value: GENDER.NOT_SPECIFIED},
-        {text : 'Male', value: GENDER.MALE},
-        {text : 'Female', value: GENDER.FEMALE},
-    ],
     selection: [
         {text : 'Not Specified', value: GENDER.NOT_SPECIFIED},
         {text : 'Male', value: GENDER.MALE},

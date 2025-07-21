@@ -117,7 +117,6 @@ const props = defineProps({
         default: function () {
             return {
                 search: '',
-                data: [],
                 selection: [],
                 selected: []
             }
