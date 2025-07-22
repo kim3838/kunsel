@@ -361,7 +361,7 @@ definePageMeta({
 
         if(createEmployee){return true;}
 
-        await laraUseFetch(`/api/employee/${route.params.id}`, {
+        await laraUseFetch(`/api/employee-check/${route.params.id}`, {
             lazy: false,
             method: 'GET'
         }, {
