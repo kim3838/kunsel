@@ -6,7 +6,7 @@
                     <div class="grid gap-2 grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-8">
                         <div>
                             <InputLabel :size="'sm'" value="Company" />
-                            <MultiSelect glint drop-shadow :selection-max-viewable-line="5" :size="'md'" :options="associatedCompanyOptions" :icon="'mdi:checkbook'"/>
+                            <MultiSelect glint drop-shadow :max-viewable-summary-count="1" :selection-max-viewable-line="5" :size="'md'" :options="associatedCompanyOptions" :icon="'mdi:checkbook'"/>
                         </div>
                         <div>
                             <InputLabel :size="'sm'" value="User Status" />
@@ -45,7 +45,7 @@
                     <template v-slot:content>
                         <div class="mb-2 flex">
                             <NuxtLink
-                                :to="`/admin/associated-companies/create-company`">
+                                :to="`/admin/associated-users/create-user`">
                                 <Button class="w-min" :disabled="disableActions" :size="'sm'" :icon="disableActions ? 'eos-icons:loading' : 'mdi:plus'" :label="disableActions ? 'Please wait' : ''"></Button>
                             </NuxtLink>
                         </div>
