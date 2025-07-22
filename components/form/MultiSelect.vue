@@ -153,6 +153,10 @@ const props = defineProps({
         type: Number,
         default: 10
     },
+    maxViewableSummaryCount: {
+        type: Number,
+        default: 5
+    },
     selectionFloat: {
         type: Boolean,
         default: true
@@ -345,11 +349,11 @@ const selectionHeaderSummary = computed(()=>{
 const selectionSummary = computed(() => {
     if(props.options.selected.length === 0){
         return "None Selected";
-    } else if(props.options.selected.length < 5) {
+    } else if(props.options.selected.length <= props.maxViewableSummaryCount) {
         return optionsDataComputed.value.filter((item: SelectDataType) => {
             return props.options.selected.indexOf(item.value) >= 0;
         }).map((item: SelectDataType) => item.text).join(", ");
-    } else if(props.options.selected.length > 4) {
+    } else if(props.options.selected.length > props.maxViewableSummaryCount) {
         let summary = '';
 
         if (props.options.selected.length < optionsDataComputed.value.length) {

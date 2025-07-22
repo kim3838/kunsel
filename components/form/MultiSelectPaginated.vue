@@ -188,6 +188,10 @@ const props = defineProps({
         type: Number,
         default: 10
     },
+    maxViewableSummaryCount: {
+        type: Number,
+        default: 5
+    },
     selectionFloat: {
         type: Boolean,
         default: true
@@ -461,7 +465,7 @@ const selectionSummary = computed(() => {
 
     if (filteredSelected.length === 0){
         return "None selected";
-    } else if (filteredSelected.length < 5){
+    } else if (filteredSelected.length <= props.maxViewableSummaryCount){
         return filteredSelected.join(', ');
     } else {
         return `${filteredSelected.length} Selected`;
