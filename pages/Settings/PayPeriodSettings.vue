@@ -53,10 +53,12 @@
                     </template>
                 </DialogModal>
 
-                <div v-if="!_isEmpty(payPeriodSetting)" class="p-[20px] space-y-4">
+                <div class="p-[20px] space-y-4">
                     <div>
                         <div>Days to pay after cut off</div>
-                        <div class="text-sm font-sub-data">{{`${payPeriodSetting.days_to_pay_after_cut_off} days`}}</div>
+                        <div>
+                            <Input class="w-[120px]" type="number" v-model="payPeriodSetting.days_to_pay_after_cut_off" high-light-all-text-on-focus />
+                        </div>
                     </div>
 
                     <div>
@@ -75,7 +77,7 @@
                         </div>
                     </div>
 
-                    <div>
+                    <div v-if="payPeriodSetting.monthly_pay_period">
                         <div>Monthly Pay Period</div>
                         <table class="border-separate text-sm font-sub-data">
                             <tbody>
@@ -85,25 +87,26 @@
                             </tbody>
                         </table>
                     </div>
-                    <div><div>Semimonthly Pay Period</div>
+
+                    <div v-if="payPeriodSetting.semimonthly_pay_period">
+                        <div>Semimonthly Pay Period</div>
                         <table class="border-separate text-sm font-sub-data">
                             <tbody>
                             <tr v-for="(setting, key) in payPeriodSetting.semimonthly_pay_period">
                                 <td>{{ setting.label }}</td><td class="pl-1">{{ setting.readable }}</td>
                             </tr>
                             </tbody>
-                        </table></div>
+                        </table>
+                    </div>
+
                     <div>
                         <Button
                             class="max-w-min"
                             :disabled="submitPending"
                             :icon="submitPending ? 'eos-icons:loading' : 'mdi:data'"
                             @click="submit"
-                            :label="submitPending ? 'Updating...' : 'Update'"></Button>
+                            :label="submitLabel"></Button>
                     </div>
-                </div>
-                <div v-else class="p-[20px]">
-                    Pay period setting not found.
                 </div>
             </div>
         </DefaultWrapper>
@@ -218,16 +221,21 @@ const updatePayPeriods = () => {
 };
 
 const submitPending = ref(false);
+const submitLabel = computed(() => {
+    return payPeriodSetting.value.id ? 'Update' : 'Create';
+});
+const submitAction = computed(() => {
+    return payPeriodSetting.value.id ? 'PATCH' : 'POST';
+});
+const submitPath = computed(() => {
+    return payPeriodSetting.value.id ? `/api/pay-period-setting/${payPeriodSetting.value.id}` : `/api/pay-period-setting`;
+});
 const submit = async() => {
-
-    if(!payPeriodSetting.value.id){
-        return;
-    }
 
     submitPending.value = true;
 
-    await laraFetch(`/api/pay-period-setting/${payPeriodSetting.value.id}`, {
-        method: 'PATCH',
+    await laraFetch(submitPath.value, {
+        method: submitAction.value,
         body: payPeriodSetting.value
     }, {
         onRequestError: () => {
@@ -241,6 +249,7 @@ const submit = async() => {
 
             payPeriodSetting.value = Object.assign(
                 payPeriodSetting.value, {
+                    id: payPeriodSettingResponse.id,
                     days_to_pay_after_cut_off: payPeriodSettingResponse.days_to_pay_after_cut_off,
                     time_period_preset_reference: payPeriodSettingResponse.time_period_preset_reference,
                     monthly_pay_period: payPeriodSettingResponse.monthly_pay_period,
