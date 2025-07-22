@@ -60,7 +60,7 @@
                             :rows="users.data"
                             :disabled="disableDataTable"
                             v-model="selectedUsers"
-                            :sub-row-slug="usersSubRowSlug"
+                            :sub-row-slug="$associationStore.associatedUserSubRowSlug"
                             :sub-row-settings="{
                                 type: DATATABLE_SUBROW_TYPE.TITLED,
                                 containerPaddingTop: 0.25,
@@ -109,7 +109,7 @@ import type {DataTableMeta, TableHeaderT, TableRowT} from "@/public/js/types/dat
 definePageMeta({middleware: ['auth', 'admin-in-any-company']});
 useLayout().setNavigationMode('solid');
 const user = userState();
-
+const {$associationStore} = useNuxtApp();
 const usersHeaders = reactive<TableHeaderT[]>([
     { text: '', value: 'actions'},
     { text: 'Username', value: 'username', alignData: 'left'},
@@ -118,15 +118,16 @@ const usersHeaders = reactive<TableHeaderT[]>([
     { text: 'Email Verified', value: 'email_verified_at', alignData: 'left'},
     { text: 'Timezone', value: 'timezone', alignData: 'left'},
 ]);
-const usersSubRowSlug = ref('associated_companies');
+
 const showAssociatedCompanies = ref(true);
+showAssociatedCompanies.value = $associationStore.associatedUserSubRowSlug === 'associated_companies';
 
 watch(() => {return showAssociatedCompanies.value;}, (show) => {
     if(show){
-        usersSubRowSlug.value = 'associated_companies';
+        $associationStore.associatedUserSubRowSlug = 'associated_companies';
         paginate(1, true)
     } else {
-        usersSubRowSlug.value = '';
+        $associationStore.associatedUserSubRowSlug = '';
         paginate(1, true)
     }
 })
