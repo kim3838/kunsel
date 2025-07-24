@@ -235,6 +235,10 @@ const props = defineProps({
         type: String,
         default: 'Select'
     },
+    noneSelectedLabel: {
+        type: String,
+        default: 'None Selected'
+    },
     size: {
         default: 'md'
     },
@@ -477,7 +481,7 @@ const selectionHeaderSummary = computed(()=>{
 
 const selectionSummary = computed(() => {
     if(props.options.selected == null){
-        return "None Selected";
+        return props.noneSelectedLabel;
     } else {
         return optionsDataComputed.value.filter((item: SelectDataType) => {
             return item.value == props.options.selected;
