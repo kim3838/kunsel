@@ -4,13 +4,34 @@
             <div class="mx-auto space-y-2">
 
                 <ClientOnly>
-                    <div class="text-xs font-mono flex justify-center">
+                    <div v-if="false" class="text-xs font-mono flex justify-center">
                         {{`SCREEN DIMENSION: ${screenWidth} x ${screenHeight}`}}
                     </div>
                 </ClientOnly>
 
-                <div class="flex justify-center">
-                    <HeroLink><span class="font-appearance">Shop now</span></HeroLink>
+                <div class="inline-flex justify-center">
+                    <HeroLink  v-if="false"><span class="font-appearance">Shop now</span></HeroLink>
+                </div>
+
+                <!-- Modeled SingleSelect -->
+                <div>
+                    singleSelectValue: {{singleSelectValue}}<br>
+                    singleSelectOptions: {{singleSelectOptions}}<br>
+                    <SingleSelect
+                        class="w-[240px]"
+                        v-model="singleSelectValue"
+                        :options="singleSelectOptions"
+                    />
+                </div>
+                <!-- Modeled MultiSelect -->
+                <div>
+                    multiSelectValue: {{multiSelectValue}}<br>
+                    multiSelectOptions: {{multiSelectOptions}}<br>
+                    <MultiSelect
+                        class="w-[240px]"
+                        v-model="multiSelectValue"
+                        :options="multiSelectOptions"
+                    />
                 </div>
 
                 <div v-if="false" class="flex mb-4">
@@ -555,6 +576,29 @@ const fooComputed = computed({
         fooProp.value = value;
     }
 })
+
+
+const singleSelectValue = ref(COMPANY_ASSIGNMENT_TYPE.DEFAULT);
+const singleSelectOptions = reactive({
+    search: '',
+    selection: [
+        {text : 'None', value: null},
+        {text : 'Default', value: COMPANY_ASSIGNMENT_TYPE.DEFAULT},
+        {text : 'Admin', value: COMPANY_ASSIGNMENT_TYPE.ADMIN},
+    ]
+});
+
+const multiSelectValue = ref([COMPANY_ASSIGNMENT_TYPE.DEFAULT]);
+const multiSelectOptions = reactive({
+    search: '',
+    selection: [
+        {text : 'None', value: null},
+        {text : 'Default', value: COMPANY_ASSIGNMENT_TYPE.DEFAULT},
+        {text : 'Admin', value: COMPANY_ASSIGNMENT_TYPE.ADMIN},
+    ]
+});
+
+
 watch(fooProp, value => {
     console.log({'FOO UPDATED' : value});
 });
