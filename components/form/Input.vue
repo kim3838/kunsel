@@ -10,7 +10,8 @@
                     backgroundClass,
                     focusRing ? 'focus-ring' : '',
                     withBorder ? 'bordered' : 'borderless',
-                    rounded ? 'rounded-[2px]': ''
+                    rounded ? 'rounded-[2px]': '',
+                    disabled ? 'cursor-not-allowed' : ''
                 ]"
                 :style="{'top': absoluteTopAllocation}"
                 class="relative h-full w-full box-border outline-none"

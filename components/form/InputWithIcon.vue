@@ -17,15 +17,20 @@
                     backgroundClass,
                     focusRing ? 'focus-ring' : '',
                     withBorder ? 'bordered' : 'borderless',
-                    rounded ? 'rounded-[2px]': ''
+                    rounded ? 'rounded-[2px]': '',
+                    disabled ? 'cursor-not-allowed' : ''
                 ]"
                 :style="{'top': absoluteTopAllocation}"
                 class="relative w-full h-full z-10 box-border outline-none"
                 :value="modelValue"
                 :placeholder="placeholder"
                 :type="type"
-                :readonly="readonly"
+                :min="min"
+                :max="max"
+                @keydown="limitKeys"
+                @focus="focusInput"
                 @input="$emit('update:modelValue', $event.target.value)"
+                :readonly="readonly"
                 ref="input">
         </Glint>
     </div>
@@ -74,6 +79,10 @@ const props = defineProps({
         type: String,
         default: 'text',
     },
+    typeStrict: {
+        type: Boolean,
+        default: false,
+    },
     placeholder: {
         type: String,
         default: ''
@@ -120,9 +129,41 @@ const props = defineProps({
         type: Boolean,
         default: false
     },
+    min: {
+        type: Number,
+        default: null
+    },
+    max: {
+        type: Number,
+        default: null
+    },
+    highLightAllTextOnFocus: {
+        type: Boolean,
+        default: false
+    }
 });
 
 const emit = defineEmits(['update:modelValue', 'focusStateChanged']);
+
+function limitKeys(event) {
+    if(props.type === 'number' && props.typeStrict){
+        const invalidKeys = ['e', 'E', '+', '-']
+
+        if (invalidKeys.includes(event.key)) {
+            event.preventDefault()
+        }
+    }
+}
+
+function focusInput(event) {
+    if(props.highLightAllTextOnFocus){
+        selectAllText(event);
+    }
+}
+
+function selectAllText(event) {
+    event.target.select();
+}
 
 const iconHolderClass = computed(() => {
     return {
