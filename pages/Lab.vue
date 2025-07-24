@@ -14,7 +14,7 @@
                 </div>
 
                 <!-- Modeled SingleSelect -->
-                <div>
+                <div v-if="false">
                     singleSelectValue: {{singleSelectValue}}<br>
                     singleSelectOptions: {{singleSelectOptions}}<br>
                     <SingleSelect
@@ -24,7 +24,7 @@
                     />
                 </div>
                 <!-- Modeled MultiSelect -->
-                <div>
+                <div v-if="false">
                     multiSelectValue: {{multiSelectValue}}<br>
                     multiSelectOptions: {{multiSelectOptions}}<br>
                     <MultiSelect
@@ -32,6 +32,34 @@
                         v-model="multiSelectValue"
                         :options="multiSelectOptions"
                     />
+                </div>
+
+                <div v-if="false">
+                    listCompanyAssignments[0]: {{listCompanyAssignments[0]}}<br>
+                    multiSelectOptions: {{multiSelectOptions}}<br>
+                    <MultiSelectWrapper
+                        class="w-[240px]"
+                        v-model="listCompanyAssignments[0].company_assignment_types"
+                        :options="multiSelectOptions"
+                    />
+                </div>
+
+                <div v-if="false" v-for="listCompanyAssignment in listCompanyAssignments">
+                    {{listCompanyAssignment}}
+                    <SingleSelectWrapper
+                        v-if="false"
+                        class="w-[240px]"
+                        :label="'Select Custom Label'"
+                        :size="'md'"
+                        v-model="listCompanyAssignment.company_assignment_type"
+                        :options="singleSelectOptions"
+                    />
+                    <MultiSelectWrapper
+                        v-if="true"
+                        class="w-[240px]"
+                        :size="'md'"
+                        v-model="listCompanyAssignment.company_assignment_types"
+                        :options="multiSelectOptions"/>
                 </div>
 
                 <div v-if="false" class="flex mb-4">
@@ -598,6 +626,11 @@ const multiSelectOptions = reactive({
     ]
 });
 
+const listCompanyAssignments = ref([
+    { company_assignment_type: 0, company_assignment_types: []},
+    { company_assignment_type: 1, company_assignment_types: [1]},
+    { company_assignment_type: 0, company_assignment_types: [0,1]}
+]);
 
 watch(fooProp, value => {
     console.log({'FOO UPDATED' : value});
