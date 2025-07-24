@@ -158,6 +158,10 @@ const accentColor40 = computed(() => {
 });
 
 const props = defineProps({
+    modelValue: {
+        type: [String, Number],
+        default: undefined,
+    },
     options: {
         type: Object,
         default: function () {
@@ -662,9 +666,23 @@ onMounted(async () => {
     }
 });
 
-const emit = defineEmits(["valueChange"]);
+const emit = defineEmits(["valueChange", "update:modelValue"]);
+
+const proxyModel = computed({
+    get() {
+        return props.modelValue;
+    },
+    set(newValue) {
+        emit("update:modelValue", newValue);
+    }
+});
+
+if(proxyModel.value !== undefined){
+    props.options.selected = proxyModel.value;
+}
 
 watch(() => props.options.selected, newValue => {
+    proxyModel.value = newValue;
     emit('valueChange', newValue);
 })
 </script>

@@ -112,6 +112,10 @@ const {
 } = storeToRefs($themeStore);
 
 const props = defineProps({
+    modelValue: {
+        type: Array,
+        default: undefined
+    },
     options: {
         type: Object,
         default: function () {
@@ -590,6 +594,27 @@ watch(active, async (newValue) => {
 onMounted(async () => {
     await nextTick();
     selectionHeaderWidth.value = selectHeader.value ? selectHeader.value.offsetWidth: null;
+});
+
+const emit = defineEmits(["update:modelValue"]);
+
+const proxyModel = computed({
+    get() {
+        return props.modelValue;
+    },
+    set(newValue) {
+        emit("update:modelValue", newValue);
+    }
+});
+
+if(proxyModel.value !== undefined){
+    props.options.selected = proxyModel.value;
+} else {
+    props.options.selected = _get(props, 'options.selected', []);
+}
+
+watch(() => props.options.selected, newValue => {
+    proxyModel.value = newValue;
 });
 </script>
 <style scoped>
