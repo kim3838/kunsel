@@ -183,10 +183,16 @@ export const useAssociation = () => {
         );
 
         if (!selectedCompany) {
+            companyAssignmentTypeIsAdmin.value = false;
             return;
         }
 
         companyAssignmentTypeIsAdmin.value = selectedCompany.payload?.assignment_type.value == COMPANY_ASSIGNMENT_TYPE.ADMIN;
+    }
+
+    const resetUserAssociationStates = async() => {
+        companyAssignmentTypeIsAdmin.value = false;
+        adminInAnyCompany.value = false;
     }
 
     return {
@@ -196,6 +202,7 @@ export const useAssociation = () => {
         fetchIsAdminInAnyCompany,
         storeAssociatedCompanies,
         updateStoredAssociatedCompany,
-        updateCompanyAssignmentType
+        updateCompanyAssignmentType,
+        resetUserAssociationStates
     };
 }
