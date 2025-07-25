@@ -291,7 +291,7 @@ export const useLayout = () => {
                             key: 'admin/associated-companies',
                             type: 'link',
                             title: 'Companies',
-                            icon: 'ic:baseline-business-center',
+                            icon: 'ic:baseline-curtains-closed',
                             to: '/admin/associated-companies',
                             route_active: 'admin-associated-companies'
                         },

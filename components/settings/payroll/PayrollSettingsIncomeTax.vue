@@ -41,7 +41,7 @@
                         </div>
                     </template>
                     <template v-slot:cell.actions="{cell, slot, scrollReference}">
-                        <Button class="mx-0.5" type="button" :size="slot.buttonSize" :icon="'mdi:pen'" :label="'Edit'" @click="edit(cell)" :disabled="disableActions"></Button>
+                        <Button class="mx-0.5" type="button" :size="slot.buttonSize" :icon="'mdi:pen'" @click="edit(cell)" :disabled="disableActions" :label="'Edit'" :override="{font_family: `GG Sans`}"></Button>
                     </template>
                 </DataTable>
             </template>

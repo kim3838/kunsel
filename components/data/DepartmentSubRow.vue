@@ -10,7 +10,7 @@
             selection
             @selectionChanged="selectionChanged">
             <template v-slot:cell.actions="{cell, slot, scrollReference}">
-                <Button class="mx-0.5" :variant="'outline'" type="button" :size="slot.buttonSize" :icon="'mdi:pen'" @click="edit(cell)"></Button>
+                <Button class="mx-0.5" :variant="'outline'" type="button" :size="slot.buttonSize" :icon="'mdi:pen'" @click="edit(cell)" :label="'Edit'" :override="{font_family: `GG Sans`}"></Button>
             </template>
         </DataTable>
     </div>

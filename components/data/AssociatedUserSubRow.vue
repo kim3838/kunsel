@@ -11,6 +11,11 @@
             <template v-slot:cell.assignment="{cell,slot}">
                 <div class="p-[3px]">{{cell.assignment.text}}</div>
             </template>
+            <template v-slot:cell.is_employee="{cell, slot, scrollReference}">
+                <div class="flex justify-center">
+                    <NonModelCheckBox disabled :size="slot.checkBoxSize" :checked="cell.is_employee"></NonModelCheckBox>
+                </div>
+            </template>
         </DataTable>
     </div>
 </template>
@@ -37,7 +42,9 @@ const selectedAssociations = ref([]);
 const associationsHeaders = reactive<TableHeaderT[]>([
     { text: 'Company', value: 'name', alignData: 'left'},
     { text: 'Assignment', value: 'assignment', alignData: 'left'},
-    { text: 'Employed as', value: 'employee', alignData: 'left'},
+    { text: 'Is Employee', value: 'is_employee', alignData: 'left'},
+    { text: '#', value: 'employee_number', alignData: 'left'},
+    { text: 'Name', value: 'employee_full_name', alignData: 'left'},
 ]);
 
 const edit = (cell: TableRowT) => {
