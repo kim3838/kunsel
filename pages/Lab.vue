@@ -14,20 +14,22 @@
                 </div>
 
                 <!-- Modeled SingleSelect -->
-                <div v-if="false">
+                <div v-if="true">
                     singleSelectValue: {{singleSelectValue}}<br>
                     singleSelectOptions: {{singleSelectOptions}}<br>
                     <SingleSelect
+                        :size="'sm'"
                         class="w-[240px]"
                         v-model="singleSelectValue"
                         :options="singleSelectOptions"
                     />
                 </div>
                 <!-- Modeled MultiSelect -->
-                <div v-if="false">
+                <div v-if="true">
                     multiSelectValue: {{multiSelectValue}}<br>
                     multiSelectOptions: {{multiSelectOptions}}<br>
                     <MultiSelect
+                        :size="'sm'"
                         class="w-[240px]"
                         v-model="multiSelectValue"
                         :options="multiSelectOptions"

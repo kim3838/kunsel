@@ -983,7 +983,7 @@
                     </div>
 
                     <!-- Default Button -->
-                    <div v-if="false" class="grid gap-2 grid-cols-3 sm:grid-cols-4 lg:grid-cols-6 xl:grid-cols-12 2xl:grid-cols-12">
+                    <div v-if="true" class="grid gap-2 grid-cols-3 sm:grid-cols-4 lg:grid-cols-6 xl:grid-cols-12 2xl:grid-cols-12">
                         <div class="flex items-start justify-start block neutral-border">
                             <Button :size="'2xs'" :icon="'ic:sharp-send-to-mobile'" :label="'XXS Button'"></Button>
                         </div>
@@ -1008,7 +1008,7 @@
                     </div>
 
                     <!-- Outline Button -->
-                    <div v-if="false" class="grid gap-2 grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-9">
+                    <div v-if="true" class="grid gap-2 grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-9">
                         <div class="flex items-start justify-start block neutral-border">
                             <Button :variant="'outline'" :size="'2xs'" :icon="'ic:sharp-dashboard'" :label="'XXS Button'"></Button>
                         </div>
