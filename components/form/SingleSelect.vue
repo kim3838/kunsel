@@ -359,7 +359,7 @@ const selectionItemSize = computed(() => {
     return {
         '2xs': 'sm',
         'xs': 'sm',
-        'sm': 'md',
+        'sm': props.navigationMode ? 'md' : 'sm',
         'md': 'md',
         'lg': 'lg'
     }[props.size];
@@ -461,8 +461,8 @@ const inputHolderClass = computed(() => {
 const inputSize = computed(() => {
     return {
         '2xs': 'xs',
-        'xs': 'md',
-        'sm': 'md',
+        'xs': props.navigationMode ? 'md' : 'sm',
+        'sm': props.navigationMode ? 'md' : 'sm',
         'md': 'md',
         'lg': 'lg',
     }[props.size];

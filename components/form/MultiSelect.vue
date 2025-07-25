@@ -349,8 +349,8 @@ const inputHolderClass = computed(() => {
 const inputSize = computed(() => {
     return {
         '2xs': 'xs',
-        'xs': 'md',
-        'sm': 'md',
+        'xs': 'sm',
+        'sm': 'sm',
         'md': 'md',
         'lg': 'lg',
     }[props.size];
