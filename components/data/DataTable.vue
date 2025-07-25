@@ -28,7 +28,7 @@
                 </tr>
             </thead>
             <tbody ref="tableBody">
-                <!-- Table cell height: sm = 25px, md = 29px, lg = 33px, xl = 37px -->
+                <!-- Table cell height: sm = 23px, md = 27px, lg = 31px, xl = 35px -->
                 <template v-for="(row, rowIndex) in rows" :key="row.id">
                     <tr>
                         <td v-if="selection" style="padding:0 0.5rem;">
