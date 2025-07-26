@@ -318,11 +318,11 @@ const selectionMaxHeight = computed(() => {
 
 const selectionClass = computed(() => {
     return {
-        '2xs': 'text-xs h-5 leading-[0.875rem] left-[0.2rem] right-[1.45rem]',
-        'xs': 'text-xs h-6 leading-[0.875rem] left-[0.2rem] right-[1.7rem]',
-        'sm': 'text-sm h-7 leading-[0.875rem] left-[0.2rem] right-[1.85rem]',
-        'md': 'text-base h-8 leading-[0.875rem] left-[0.2rem] right-[2.2rem]',
-        'lg': 'text-lg h-11 leading-[0.875rem] left-[0.2rem] right-[2.95rem]',
+        '2xs': 'text-xs h-full leading-[0.875rem] left-[0.2rem] right-[1.45rem]',
+        'xs': 'text-xs h-full leading-[0.875rem] left-[0.2rem] right-[1.7rem]',
+        'sm': 'text-sm h-full leading-[0.875rem] left-[0.2rem] right-[1.85rem]',
+        'md': 'text-base h-full leading-[0.875rem] left-[0.2rem] right-[2.2rem]',
+        'lg': 'text-lg h-full leading-[0.875rem] left-[0.2rem] right-[2.95rem]',
     }[props.size];
 });
 
