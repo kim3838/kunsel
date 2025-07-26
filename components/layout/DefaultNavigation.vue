@@ -100,6 +100,7 @@
                         navigation-mode
                         :size="navigationHeaderSize"
                         :label="'Select Association'"
+                        :none-selected-label="'No Associated Company'"
                         :options="$authStore.associatedCompanies.singleSelectPayload"
                         :drop-align="rightNavigationDropAlign"
                         :override="associatedCompaniesSelectOverrides"
