@@ -211,15 +211,17 @@ let paramsComputed = computed(() => {
         ? _map(associatedCompanyOptions.selection, 'value')
         : associatedCompanyOptions.selected;
 
+    let baseFilters = {
+        ...(_isEmpty(associatedCompanyOptions.selected) ? {'user_id': user?.value?.id} : null),
+        'search': filters.search.keyword,
+        'associated_companies': associatedCompanies,
+        'status': userStatusOptions.selected
+    };
+
     return {
         page: filters.page,
         perPage: filters.perPage,
-        filters: {
-            'user_id': user?.value?.id,
-            'search': filters.search.keyword,
-            'associated_companies': associatedCompanies,
-            'status': userStatusOptions.selected
-        }
+        filters: baseFilters
     };
 });
 
