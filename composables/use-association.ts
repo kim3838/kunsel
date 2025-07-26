@@ -118,7 +118,7 @@ export const useAssociation = () => {
             onSuccessResponse: async (request, options, response) => {
                 adminInAnyCompany.value = _get(response, '_data.values.is_admin_in_any_company', false);
             }
-        });
+        }, false);
     }
 
     const storeAssociatedCompanies = async() => {
