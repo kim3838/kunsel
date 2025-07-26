@@ -4,7 +4,7 @@
         <div v-if="disabled" class="absolute disabled-overlay opacity-25 z-30"></div>
 
         <table ref="tableReference" class="border-collapse font-data">
-            <thead>
+            <thead class="table-header-background">
                 <tr>
                     <td v-if="selection" style="padding:3px 0.5rem;">
                         <NonModelCheckBox :disabled="disabled" :size="checkBoxSize" :checked="checkedAllCurrentSelection()" @click="toggleCheck()" />
@@ -30,7 +30,7 @@
             <tbody ref="tableBody">
                 <!-- Table cell height: sm = 23px, md = 27px, lg = 31px, xl = 35px -->
                 <template v-for="(row, rowIndex) in rows" :key="row.id">
-                    <tr>
+                    <tr :class="[rowBackgroundClass(rowIndex)]" >
                         <td v-if="selection" style="padding:0 0.5rem;">
                             <NonModelCheckBox
                                 :size="checkBoxSize"
@@ -164,7 +164,11 @@ const props = defineProps({
                 horizontalBorderType: 'dashed',
             }
         }
-    }
+    },
+    stripped: {
+        type: Boolean,
+        default: true,
+    },
 });
 
 const dataTableScroll = ref(null);
@@ -337,6 +341,12 @@ const selectSize = computed(() => {
     }[props.size]
 });
 
+const rowBackgroundClass = (rowIndex: number) => {
+
+    if (!props.stripped) return 'table-default-background';
+
+    return rowIndex % 2 === 0 ? 'table-row-odd-background' : 'table-row-even-background'
+};
 </script>
 
 <style lang="scss" scoped>
@@ -357,12 +367,13 @@ table thead tr td,tbody tr td {
     border: 1px solid $cellBorder;
 }
 
-table tbody tr:nth-of-type(2n+1){
+.table-row-odd-background {
     background-color: v-bind(shadeColor);
 }
 
-table tbody tr:not(:nth-of-type(2n+1)),
-table thead{
+.table-default-background,
+.table-row-even-background,
+.table-header-background {
     background-color: v-bind(tintColor);
 }
 
