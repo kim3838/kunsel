@@ -115,7 +115,7 @@ const usersHeaders = reactive<TableHeaderT[]>([
     { text: 'Username', value: 'username', alignData: 'left'},
     { text: 'Status', value: 'status', alignData: 'left'},
     { text: 'Email', value: 'email', alignData: 'left'},
-    { text: 'Email Verified', value: 'email_verified_at', alignData: 'left'},
+    { text: 'Email Verification', value: 'email_verified_at', alignData: 'left'},
     { text: 'Timezone', value: 'timezone', alignData: 'left'},
 ]);
 

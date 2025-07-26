@@ -13,7 +13,7 @@
             </template>
             <template v-slot:cell.is_employee="{cell, slot, scrollReference}">
                 <div class="flex justify-center">
-                    <NonModelCheckBox disabled :size="slot.checkBoxSize" :checked="cell.is_employee"></NonModelCheckBox>
+                    <NonModelCheckBox v-if="cell.is_employee" disabled :size="slot.checkBoxSize" :checked="cell.is_employee"></NonModelCheckBox>
                 </div>
             </template>
         </DataTable>
