@@ -13,7 +13,7 @@
                     <div class="grid gap-2 grid-cols-4 sm:grid-cols-5 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-8">
                         <div>
                             <InputLabel :size="'sm'" value="Account"/>
-                            <SingleSelect value-persist drop-shadow :size="'md'" :options="accountOptions"/>
+                            <SingleSelect :icon="'mdi:checkbook'" value-persist drop-shadow :size="'md'" :options="accountOptions"/>
                         </div>
                         <div>
                             <InputLabel :size="'sm'" value="Code"/>
@@ -25,7 +25,7 @@
                         </div>
                         <div>
                             <InputLabel :size="'sm'" value="Timezone"/>
-                            <SingleSelect value-persist drop-shadow :size="'md'" :options="timezoneOptions"/>
+                            <SingleSelect :icon="'stash:globe-timezone-solid'" value-persist drop-shadow :size="'md'" :options="timezoneOptions"/>
                         </div>
                     </div>
 

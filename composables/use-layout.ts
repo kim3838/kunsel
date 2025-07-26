@@ -186,6 +186,7 @@ export const useLayout = () => {
                         key: 'workforce/departments',
                         type: 'link',
                         title: 'Departments',
+                        icon: 'ic:baseline-lan',
                         to: '/workforce/departments',
                         route_active: 'workforce-departments'
                     },
@@ -193,6 +194,7 @@ export const useLayout = () => {
                         key: 'workforce/designations',
                         type: 'link',
                         title: 'Designations',
+                        icon: 'ic:baseline-schema',
                         to: '/workforce/designations',
                         route_active: 'workforce-designations'
                     },
@@ -208,7 +210,7 @@ export const useLayout = () => {
                         key: 'settings/compensations',
                         type: 'link',
                         title: 'Compensations',
-                        icon: 'mdi:cash-plus',
+                        icon: 'ic:baseline-attach-money',
                         to: '/settings/compensations',
                         route_active: 'settings-compensations'
                     },
@@ -216,7 +218,7 @@ export const useLayout = () => {
                         key: 'settings/deductions',
                         type: 'link',
                         title: 'Deductions',
-                        icon: 'mdi:cash-minus',
+                        icon: 'ic:baseline-money-off',
                         to: '/settings/deductions',
                         route_active: 'settings-deductions'
                     },
@@ -224,7 +226,7 @@ export const useLayout = () => {
                         key: 'settings/income-taxes',
                         type: 'link',
                         title: 'Income Tax',
-                        icon: 'mdi:receipt-text-minus-outline',
+                        icon: 'ic:baseline-account-balance',//'game-icons:pay-money',
                         to: '/settings/incometaxes',
                         route_active: 'settings-incometaxes'
                     },
@@ -232,7 +234,7 @@ export const useLayout = () => {
                         key: 'settings/pay-period-settings',
                         type: 'link',
                         title: 'Pay Period Settings',
-                        icon: 'mdi:calendar-cursor-outline',
+                        icon: 'mdi:calendar-cursor',
                         to: '/settings/payperiodsettings',
                         route_active: 'settings-payperiodsettings'
                     },
@@ -240,7 +242,7 @@ export const useLayout = () => {
                         key: 'settings/salary-statement-modules',
                         type: 'link',
                         title: 'Salary Statement Modules',
-                        icon: 'mdi:invoice-text-multiple-outline',
+                        icon: 'ic:baseline-dynamic-form',
                         to: '/settings/salarystatementmodules',
                         route_active: 'settings-salarystatementmodules'
                     },
@@ -248,7 +250,7 @@ export const useLayout = () => {
                         key: 'settings/formula-settings',
                         type: 'link',
                         title: 'Formula Settings',
-                        icon: 'mdi:math-compass',
+                        icon: 'ic:baseline-architecture',
                         to: '/settings/formulasettings',
                         route_active: 'settings-formulasettings'
                     },
@@ -273,7 +275,7 @@ export const useLayout = () => {
                             key: 'admin/companies',
                             type: 'link',
                             title: 'Companies',
-                            icon: 'ic:baseline-business-center',
+                            icon: 'ic:baseline-curtains-closed',
                             to: '/admin/companies',
                             route_active: 'admin-companies'
                         },
