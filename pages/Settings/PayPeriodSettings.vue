@@ -13,15 +13,15 @@
                         <div class="space-y-2">
                             <div>
                                 <div>Days to pay after cut off</div>
-                                <div class="text-sm font-sub-data">{{`${payPeriodSetting.days_to_pay_after_cut_off} days`}}</div>
+                                <div class="text-sm font-data">{{`${payPeriodSetting.days_to_pay_after_cut_off} days`}}</div>
                             </div>
                             <div>
                                 <div>Pay Period Preset</div>
-                                <div class="text-sm font-sub-data">{{payPeriodSetting.preset_name}}</div>
+                                <div class="text-sm font-data">{{payPeriodSetting.preset_name}}</div>
                             </div>
                             <div>
                                 <div>Monthly Pay Period</div>
-                                <table class="border-separate text-sm font-sub-data">
+                                <table class="border-separate text-sm font-data">
                                     <tbody>
                                     <tr v-for="(setting, key) in payPeriodSetting.monthly_pay_period">
                                         <td>{{ setting.label }}</td><td class="pl-1">{{ setting.readable }}</td>
@@ -31,7 +31,7 @@
                             </div>
                             <div>
                                 <div>Semimonthly Pay Period</div>
-                                <table class="border-separate text-sm font-sub-data">
+                                <table class="border-separate text-sm font-data">
                                     <tbody>
                                     <tr v-for="(setting, key) in payPeriodSetting.semimonthly_pay_period">
                                         <td>{{ setting.label }}</td><td class="pl-1">{{ setting.readable }}</td>
@@ -79,7 +79,7 @@
 
                     <div v-if="payPeriodSetting.monthly_pay_period">
                         <div>Monthly Pay Period</div>
-                        <table class="border-separate text-sm font-sub-data">
+                        <table class="border-separate text-sm font-data">
                             <tbody>
                             <tr v-for="(setting, key) in payPeriodSetting.monthly_pay_period">
                                 <td>{{ setting.label }}</td><td class="pl-1">{{ setting.readable }}</td>
@@ -90,7 +90,7 @@
 
                     <div v-if="payPeriodSetting.semimonthly_pay_period">
                         <div>Semimonthly Pay Period</div>
-                        <table class="border-separate text-sm font-sub-data">
+                        <table class="border-separate text-sm font-data">
                             <tbody>
                             <tr v-for="(setting, key) in payPeriodSetting.semimonthly_pay_period">
                                 <td>{{ setting.label }}</td><td class="pl-1">{{ setting.readable }}</td>
