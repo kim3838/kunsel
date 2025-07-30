@@ -4,6 +4,7 @@ module.exports = {
         extend: {
             fontFamily : {
                 sans : [
+                    'GG Sans',
                     'Google Sans Text',
                     'Spline Sans',
                     'Barlow Semi Condensed',
