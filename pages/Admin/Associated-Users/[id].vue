@@ -304,7 +304,7 @@ const userFormBody = computed(() => {
             name: username.value,
             email: email.value,
             password: password.value,
-            password_confirm: confirmPassword.value,
+            password_confirmation: confirmPassword.value,
         }
     }
 
