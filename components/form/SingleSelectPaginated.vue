@@ -8,12 +8,12 @@
             <div
                 ref="selectHeader"
                 :style="{'border-radius': '2px'}"
-                class="w-full flex justify-start background"
-                :class="[heightClass, borderClass]">
+                class="w-full flex justify-start"
+                :class="[backgroundClass, heightClass, borderClass]">
                 <div :class="[iconHolderClass]" class="flex-none flex justify-end items-center">
                     <ClientOnly><Icon :class="[iconClass]" :name="pending ? 'eos-icons:loading' : icon"/></ClientOnly>
                 </div>
-                <div v-if="!active" class="w-full relative cursor-pointer">
+                <div v-if="!active" class="w-full relative" :class="[disabled ? 'cursor-not-allowed' : 'cursor-pointer']">
                     <div :class="[selectionClass]" class="absolute truncate flex items-center">
                         {{selectionSummary}}
                     </div>
@@ -102,12 +102,22 @@ const {$themeStore} = useNuxtApp();
 const clientReadyState = useClientReadyState();
 
 const {
+    hexAlpha,
+    type: themeType,
+    primary: primaryColor,
     lining: liningColor,
     thread: threadColor,
     neutral: neutralColor,
     tint: tintColor,
     text: textColor,
+    textInvert: textInvertColor,
 } = storeToRefs($themeStore);
+
+const disabledBackgroundColor = computed(() => {
+    return themeType.value == 'light'
+        ? (primaryColor.value + hexAlpha.value['10'])
+        : (textInvertColor.value + hexAlpha.value['40']);
+});
 
 const props = defineProps({
     payload: {
@@ -130,6 +140,10 @@ const props = defineProps({
     tabindex: {
         type: Number,
         default: 0
+    },
+    disabled: {
+        type: Boolean,
+        default: false
     },
     inHorizontalScrollable: Boolean,
     dropShadow: Boolean,
@@ -380,6 +394,10 @@ const selectionWidthComputed = computed(()=>{
     return widthStyles;
 });
 
+const backgroundClass = computed(() => {
+    return props.disabled ? 'disabled-background' : 'background';
+});
+
 const selectionHeaderSummary = computed(()=>{
     return (props.payload.fetch.filters.search.keyword.trim() && selection.value.length == 0)
         ? 'Not Found.'
@@ -514,6 +532,8 @@ watch(active, async (newValue) => {
 });
 
 watch(selectParentFocused, (focused) => {
+    if(props.disabled) return;
+
     if (focused) {
         if(backTabbed.value){
             loseFocus();
@@ -525,6 +545,8 @@ watch(selectParentFocused, (focused) => {
     }
 });
 watch(selectionScrollFocused, (focused) => {
+    if(props.disabled) return;
+
     if (focused) {
         keepFocusAlive();
     } else {
@@ -533,6 +555,8 @@ watch(selectionScrollFocused, (focused) => {
 });
 
 function searchInputFocusStateChangedHandler(focused: boolean) {
+    if(props.disabled) return;
+
     if (focused) {
         keepFocusAlive();
     } else {
@@ -673,6 +697,10 @@ watch(clientReadyState, async (clientReady) => {
 <style scoped>
 .background {
     background-color: v-bind(tintColor);
+}
+
+.disabled-background {
+    background-color: v-bind(disabledBackgroundColor) !important;
 }
 
 .idle-border {
