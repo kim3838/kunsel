@@ -348,21 +348,15 @@ const componentForm = computed(() => {
 
     let selectedPayrollComponentType = _get(selectedPayrollComponent.value, 'type.value');
 
-    let componentFormTemp = {};
+    let componentFormTemp = {
+        formulable_type: props.payrollComponentFormulable
+    };
 
     if(props.payrollComponentFormulable == FORMULABLE.EARNINGS){
 
-        if (selectedPayrollComponentType == COMPENSATIONS.SALARY) {
-            return {
-                ...componentFormTemp,
-                'amount': amount.value,
-                'pay_period': payPeriodOptions.selected,
-                'pay_type': payTypeOptions.selected,
-                'pay_frequency': payFrequencyOptions.selected,
-            };
-        }
+        if (selectedPayrollComponentType == COMPENSATIONS.SALARY ||
+            selectedPayrollComponentType == COMPENSATIONS.REGULAR_ALLOWANCE) {
 
-        if (selectedPayrollComponentType == COMPENSATIONS.REGULAR_ALLOWANCE) {
             return {
                 ...componentFormTemp,
                 'amount': amount.value,
