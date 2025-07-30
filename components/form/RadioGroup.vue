@@ -1,9 +1,10 @@
 <template>
-    <div class="font-data ">
+    <div class="font-data flex" :class="[orientationClass]">
         <RadioBox
             class="flex items-center"
             v-for="selection in selections"
             v-model="computedSelected"
+            :disabled="disabled"
             :selected="computedSelected"
             :key="selection.value"
             :value="selection.value"
@@ -17,7 +18,7 @@ import type {SelectDataType} from "@/public/js/types/form";
 
 const props = defineProps({
     modelValue: {
-        type: [String, Number],
+        type: [String, Number, null],
         default: 0
     },
     selections: {
@@ -27,7 +28,15 @@ const props = defineProps({
     size: {
         type: String,
         default: 'md'
-    }
+    },
+    orientation: {
+        type: String,
+        default: 'vertical'
+    },
+    disabled: {
+        type: Boolean,
+        default: false
+    },
 });
 
 const emit = defineEmits(["update:modelValue"]);
@@ -40,6 +49,13 @@ const computedSelected = computed({
         emit('update:modelValue', selected);
     }
 });
+
+const orientationClass = computed(() => {
+    return {
+        'horizontal': 'flex-row gap-4',
+        'vertical': 'flex-col gap-0',
+    }[props.orientation];
+})
 </script>
 
 <style scoped>
