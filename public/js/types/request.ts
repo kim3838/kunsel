@@ -44,4 +44,9 @@ export type CallbackResponseT = {
         options: ResolvedFetchOptions,
         response?: FetchResponse<T>,
     ) => void;
+    onUnprocessableContentResponse?: <T = any>(
+        request: FetchRequest,
+        options: ResolvedFetchOptions,
+        response?: FetchResponse<T>,
+    ) => void;
 }

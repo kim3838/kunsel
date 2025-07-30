@@ -111,6 +111,21 @@ export const laraInterceptor = () => {
                     }
 
                     break;
+                case '422':
+
+                    coreStore.setServiceError({
+                        prompt: promptErrorResponse,
+                        icon: 'mdi:information-variant-circle-outline',
+                        title: 'Request failed',
+                        payload: response?._data
+                    });
+
+                    //Perform un-processable content response callback
+                    if(callbacks.onUnprocessableContentResponse && typeof callbacks.onUnprocessableContentResponse == 'function'){
+                        await callbacks.onUnprocessableContentResponse(request, options, response);
+                    }
+
+                    break;
                 default:
                     coreStore.setServiceError({
                         prompt: promptErrorResponse,
