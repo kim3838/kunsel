@@ -1,5 +1,5 @@
 <template>
-    <div class="font-data relative box-border" :class="[heightClass]">
+    <div class="relative box-border" :class="[heightClass, baseFontFamilyClass]">
         <Glint :height-style="glintHeightStyle" :enable="glint" :orientation="'landscape'" :color="activeBorderComputed">
             <div v-if="icon?.trim()" class="absolute w-full h-full z-20 flex pointer-events-none">
                 <div :class="[iconHolderClass]" class="flex-none h-full flex justify-end items-center">
@@ -229,6 +229,15 @@ const heightClass = computed(() => {
         '2xl' : 'h-16',
         '3xl' : 'h-20',
     }[props.size]
+});
+
+const baseFontFamilyClass = computed(() => {
+
+    if(props.override.font_family_class){
+        return props.override.font_family_class;
+    }
+
+    return 'font-data';
 });
 
 const glintHeightStyle = computed(() => {

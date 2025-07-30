@@ -1,5 +1,5 @@
 <template>
-    <div class="font-data relative box-border" :class="[heightClass]">
+    <div class="relative box-border" :class="[heightClass, baseFontFamilyClass]">
         <Glint :height-style="glintHeightStyle" :enable="glint" :orientation="'landscape'" :color="activeBorderComputed">
             <input
                 :tabindex="tabindex"
@@ -192,6 +192,15 @@ const spacingClass = computed(() => {
     }[props.size]
 });
 
+const baseFontFamilyClass = computed(() => {
+
+    if(props.override.font_family_class){
+        return props.override.font_family_class;
+    }
+
+    return 'font-data';
+});
+
 const glintHeightStyle = computed(() => {
     return {
         '2xs': '1.25rem',
@@ -218,7 +227,7 @@ const fontClass = computed(() => {
         'md': 'text-base',
         'lg': 'text-lg',
         'xl': 'text-2xl font-semibold',
-        '2xl': 'text-3xl font-bold',
+        '2xl': 'text-4xl font-semibold',
         '3xl': 'text-5xl font-bold',
     }[props.size];
 });
