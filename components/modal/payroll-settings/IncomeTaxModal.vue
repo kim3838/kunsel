@@ -12,10 +12,6 @@
                 <table class="w-full border-separate border-spacing-2">
                     <tbody>
                     <tr>
-                        <td><InputLabel :size="'md'" value="Name" /></td>
-                        <td><Input v-model="incomeTaxName" placeholder="Enter income tax" type="text" /></td>
-                    </tr>
-                    <tr>
                         <td><InputLabel :size="'md'" value="Type" /></td>
                         <td>
                             <SingleSelect
@@ -26,6 +22,10 @@
                                 :label="'Select Income Tax Type'"
                                 :options="incomeTaxTypeSingleSelect"/>
                         </td>
+                    </tr>
+                    <tr>
+                        <td><InputLabel :size="'md'" value="Name" /></td>
+                        <td><Input v-model="incomeTaxName" placeholder="Enter income tax" type="text" /></td>
                     </tr>
                     <tr>
                         <td></td>

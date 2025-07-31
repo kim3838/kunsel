@@ -12,10 +12,6 @@
                 <table class="w-full border-separate border-spacing-2">
                     <tbody>
                     <tr>
-                        <td><InputLabel :size="'md'" value="Name" /></td>
-                        <td><Input v-model="deductionName" placeholder="Enter deduction name" type="text" /></td>
-                    </tr>
-                    <tr>
                         <td><InputLabel :size="'md'" value="Type" /></td>
                         <td>
                             <SingleSelect
@@ -26,6 +22,10 @@
                                 :label="'Select Deduction Type'"
                                 :options="deductionTypeOptions"/>
                         </td>
+                    </tr>
+                    <tr>
+                        <td><InputLabel :size="'md'" value="Name" /></td>
+                        <td><Input v-model="deductionName" placeholder="Enter deduction name" type="text" /></td>
                     </tr>
                     <tr>
                         <td></td>

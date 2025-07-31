@@ -12,10 +12,6 @@
                 <table class="w-full border-separate border-spacing-2">
                     <tbody>
                     <tr>
-                        <td><InputLabel :size="'md'" value="Name" /></td>
-                        <td><Input v-model="compensationName" placeholder="Enter compensation name" type="text" /></td>
-                    </tr>
-                    <tr>
                         <td><InputLabel :size="'md'" value="Type" /></td>
                         <td>
                             <SingleSelect
@@ -26,6 +22,10 @@
                                 :label="'Select Compensation Type'"
                                 :options="compensationTypeSingleSelect"/>
                         </td>
+                    </tr>
+                    <tr>
+                        <td><InputLabel :size="'md'" value="Name" /></td>
+                        <td><Input v-model="compensationName" placeholder="Enter compensation name" type="text" /></td>
                     </tr>
                     <tr>
                         <td></td>
