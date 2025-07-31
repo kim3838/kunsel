@@ -9,8 +9,9 @@
                 <p>{{ errorUrl }}</p>
                 <p>{{ errorDisplay }}</p>
             </div>
-            <div class="text-sm inline-block" >
-                <Button @click="handleError" glint :label="'Clear Error & back to Home page'"/>
+            <div class="text-sm flex flex-row gap-2" >
+                <Button class="max-w-min inline-block" @click="handleError" glint :label="'Clear Error'"/>
+                <Button class="max-w-min inline-block" :icon="'ic:sharp-restart-alt'" @click="reload" glint :label="'Reload'"/>
             </div>
         </div>
         <!-- Footer -->
@@ -39,7 +40,8 @@ const errorDisplay = computed(()=>{
     return `Error ${props.error?.statusCode}: ${props.error?.statusMessage || props.error?.message}`;
 })
 
-const handleError = () => clearError({ redirect: '/' })
+const handleError = () => clearError({ redirect: '/' });
+const reload = () => window.location.reload();
 </script>
 
 <style>
