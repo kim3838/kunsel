@@ -1,14 +1,16 @@
 
 import type {Enum} from "@/public/js/common/type";
 
-export interface UserCompanyPivotT {
-    assignment_type: Enum
+export interface AssignedCompanyPayloadT {
+    assignment_type: Enum,
+    currency: string,
+    timezone: string
 }
 
 export type AssignedCompanyT = {
     text: string;
     value: number;
-    payload?: UserCompanyPivotT,
+    payload: AssignedCompanyPayloadT,
 }
 
 export type SelectedCompanyT = string | number | null;

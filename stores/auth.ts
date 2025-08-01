@@ -1,6 +1,6 @@
 
 import {defineStore} from 'pinia'
-import type {SelectedCompanyT, StoreAssociatedCompanyT} from "@/public/js/types/association";
+import type { SelectedCompanyT, StoreAssociatedCompanyT, AssignedCompanyPayloadT} from "@/public/js/types/association";
 
 export const useAuthStore = defineStore('auth', () => {
 
@@ -18,6 +18,12 @@ export const useAuthStore = defineStore('auth', () => {
 
     const selectedAssociatedCompany = computed(() => {
         return associatedCompanies.value.singleSelectPayload.selected;
+    })
+
+    const selectedAssociatedCompanyPayload = computed<AssignedCompanyPayloadT | undefined>(() => {
+        return associatedCompanies.value.singleSelectPayload.selection.find(
+            company => company.value == selectedAssociatedCompany.value
+        )?.payload;
     })
 
     function resetAssociatedCompanies() {
@@ -41,6 +47,7 @@ export const useAuthStore = defineStore('auth', () => {
         SELECTED_ASSOCIATED_COMPANY_STORAGE_KEY,
         associatedCompanies,
         resetAssociatedCompanies,
-        selectedAssociatedCompany
+        selectedAssociatedCompany,
+        selectedAssociatedCompanyPayload
     }
 })

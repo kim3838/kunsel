@@ -20,3 +20,15 @@ export type SingleSelectSelectionOffsetT = {
     origin: number | null;
     left: string;
 };
+
+export type SelectionArrayT = {
+    text: string;
+    value: string;
+    [key: string]: any;
+};
+
+export type SelectionOptionsT = {
+    search: string;
+    selection: SelectionArrayT[];
+    selected: string | null;
+};
