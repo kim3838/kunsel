@@ -70,6 +70,7 @@
                                 verticalBorderType: 'dashed',
                                 horizontalBorderType: 'dashed',
                             }"
+                            :stripped="false"
                             selection>
                             <template v-slot:cell.actions="{cell,slot}">
                                 <div class="h-full mx-0.5 space-x-0.5 w-full flex items-center">
