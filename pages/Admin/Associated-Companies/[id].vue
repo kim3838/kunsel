@@ -23,9 +23,19 @@
                             <InputLabel :size="'sm'" value="Name"/>
                             <Input :size="'md'" v-model="companyName" type="text"/>
                         </div>
+                    </div>
+                    <div class="grid gap-2 grid-cols-4 sm:grid-cols-5 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-8">
+                        <div>
+                            <InputLabel :size="'sm'" value="Country"/>
+                            <SingleSelect value-persist drop-shadow :size="'md'" :options="countryOptions"/>
+                        </div>
+                        <div>
+                            <InputLabel :size="'sm'" value="Currency"/>
+                            <SingleSelect value-persist drop-shadow :size="'md'" :options="currencyOptions"/>
+                        </div>
                         <div>
                             <InputLabel :size="'sm'" value="Timezone"/>
-                            <SingleSelect value-persist drop-shadow :size="'md'" :options="timezoneOptions"/>
+                            <SingleSelect :icon="'stash:globe-timezone-solid'" value-persist drop-shadow :size="'md'" :options="timezoneOptions"/>
                         </div>
                     </div>
 
@@ -80,6 +90,16 @@ const associatedAccountOptions = reactive({
     selection: [],
     selected: null
 });
+const countryOptions = reactive({
+    search: '',
+    selection: [],
+    selected: null
+});
+const currencyOptions = reactive({
+    search: '',
+    selection: [],
+    selected: null
+});
 const timezoneOptions = reactive({
     search: '',
     selection: [],
@@ -102,6 +122,28 @@ const fetchAssociatedAccounts = async() => {
     })
 }
 await fetchAssociatedAccounts();
+const fetchCountries = async() => {
+
+    await laraFetch("/api/country-selections", {
+        method: 'GET',
+    }, {
+        onSuccessResponse: async (request, options, response) => {
+            countryOptions.selection = _get(response, '_data.values.selection', []);
+        }
+    })
+}
+await fetchCountries();
+const fetchCurrencies = async() => {
+
+    await laraFetch("/api/currency-selections", {
+        method: 'GET',
+    }, {
+        onSuccessResponse: async (request, options, response) => {
+            currencyOptions.selection = _get(response, '_data.values.selection', []);
+        }
+    })
+}
+await fetchCurrencies();
 const fetchTimezones = async() => {
 
     await laraFetch("/api/timezone-selections", {
@@ -126,6 +168,8 @@ const fetchCompany = async () => {
             associatedAccountOptions.selected = _get(response, '_data.values.company.account_id', null);
             companyCode.value = _get(response, '_data.values.company.code', '');
             companyName.value = _get(response, '_data.values.company.name', '');
+            countryOptions.selected = _get(response, '_data.values.company.country_id', null);
+            currencyOptions.selected = _get(response, '_data.values.company.currency', null);
             timezoneOptions.selected = _get(response, '_data.values.company.timezone', null);
         },
     });
@@ -153,6 +197,8 @@ const formBody = computed(() => {
         account_id: associatedAccountOptions.selected,
         code: companyCode.value,
         name: companyName.value,
+        country_id: countryOptions.selected,
+        currency: currencyOptions.selected,
         timezone: timezoneOptions.selected,
     };
 });
