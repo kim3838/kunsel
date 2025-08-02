@@ -24,6 +24,10 @@
                         </td>
                     </tr>
                     <tr>
+                        <td><InputLabel :size="'md'" value="Code" /></td>
+                        <td><Input v-model="incomeTaxCode" type="text" /></td>
+                    </tr>
+                    <tr>
                         <td><InputLabel :size="'md'" value="Name" /></td>
                         <td><Input v-model="incomeTaxName" placeholder="Enter income tax" type="text" /></td>
                     </tr>
@@ -117,6 +121,7 @@ const incomeTaxTypeSingleSelect = reactive({
     selected: null
 });
 
+const incomeTaxCode = ref('');
 const incomeTaxName = ref('');
 
 const assignable = reactive({
@@ -189,6 +194,7 @@ const incomeTaxFormulaSettingsExecute = async (companyFormulaId: null | number |
 const form = computed(() => {
     return {
         'company_id': selectedAssociatedCompany.value,
+        'code': incomeTaxCode.value,
         'name': incomeTaxName.value,
         'assignable': assignable.selected,
         'type': incomeTaxTypeSingleSelect.selected,
@@ -200,6 +206,7 @@ watch(() => props.editPayload, (editPayload) => {
 
     if(Boolean(props.editPayload.id)){
 
+        incomeTaxCode.value = _get(editPayload, 'code', '');
         incomeTaxName.value = _get(editPayload, 'name', '');
         assignable.selected = Number(_get(editPayload, 'assignable', true));
         incomeTaxTypeSingleSelect.selected = _get(editPayload, 'type.value', null);
@@ -235,6 +242,7 @@ const title = computed(() => {
 
 const submitPending = ref(false);
 const reset = () => {
+    incomeTaxCode.value = '';
     incomeTaxName.value = '';
     assignable.selected = 1;
     incomeTaxTypeSingleSelect.selected = null;

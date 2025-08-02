@@ -24,8 +24,12 @@
                         </td>
                     </tr>
                     <tr>
+                        <td><InputLabel :size="'md'" value="Code" /></td>
+                        <td><Input v-model="compensationCode" type="text" /></td>
+                    </tr>
+                    <tr>
                         <td><InputLabel :size="'md'" value="Name" /></td>
-                        <td><Input v-model="compensationName" placeholder="Enter compensation name" type="text" /></td>
+                        <td><Input v-model="compensationName" type="text" /></td>
                     </tr>
                     <tr>
                         <td></td>
@@ -116,6 +120,7 @@ const compensationTypeSingleSelect = reactive({
     selected: null
 });
 
+const compensationCode = ref('');
 const compensationName = ref('');
 
 const assignable = reactive({
@@ -188,6 +193,7 @@ const compensationFormulaSettingsExecute = async (companyFormulaId: null | numbe
 const form = computed(() => {
     return {
         'company_id': selectedAssociatedCompany.value,
+        'code': compensationCode.value,
         'name': compensationName.value,
         'assignable': assignable.selected,
         'type': compensationTypeSingleSelect.selected,
@@ -199,6 +205,7 @@ watch(() => props.editPayload, (editPayload) => {
 
     if(Boolean(props.editPayload.id)){
 
+        compensationCode.value = _get(editPayload, 'code', '');
         compensationName.value = _get(editPayload, 'name', '');
         assignable.selected = Number(_get(editPayload, 'assignable', true));
         compensationTypeSingleSelect.selected = _get(editPayload, 'type.value', null);
@@ -234,6 +241,7 @@ const title = computed(() => {
 
 const submitPending = ref(false);
 const reset = () => {
+    compensationCode.value = '';
     compensationName.value = '';
     assignable.selected = 1;
     compensationTypeSingleSelect.selected = null;

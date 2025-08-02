@@ -66,6 +66,7 @@ const orderSequenceable = nuxtApp.$orderSequenceable as (data: Sequenceable[]) =
 const deductionsHeaders = reactive<TableHeaderT[]>([
     { text: 'Order', value: 'order', alignData: 'center'},
     { text: '', alignData: 'left', value: 'actions'},
+    { text: 'Code', value: 'code'},
     { text: 'Name', value: 'name'},
     { text: 'Type', value: 'type'},
     { text: 'Assignable', value: 'assignable'},

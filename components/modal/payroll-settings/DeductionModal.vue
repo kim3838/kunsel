@@ -24,8 +24,12 @@
                         </td>
                     </tr>
                     <tr>
+                        <td><InputLabel :size="'md'" value="Code" /></td>
+                        <td><Input v-model="deductionCode" type="text" /></td>
+                    </tr>
+                    <tr>
                         <td><InputLabel :size="'md'" value="Name" /></td>
-                        <td><Input v-model="deductionName" placeholder="Enter deduction name" type="text" /></td>
+                        <td><Input v-model="deductionName" type="text" /></td>
                     </tr>
                     <tr>
                         <td></td>
@@ -117,6 +121,7 @@ const deductionTypeOptions = reactive({
     selected: null
 });
 
+const deductionCode = ref('');
 const deductionName = ref('');
 
 const assignable = reactive({
@@ -189,6 +194,7 @@ const deductionFormulaSettingsExecute = async (companyFormulaId: null | number |
 const form = computed(() => {
     return {
         'company_id': selectedAssociatedCompany.value,
+        'code': deductionCode.value,
         'name': deductionName.value,
         'assignable': assignable.selected,
         'type': deductionTypeOptions.selected,
@@ -200,6 +206,7 @@ watch(() => props.editPayload, (editPayload) => {
 
     if(Boolean(props.editPayload.id)){
 
+        deductionCode.value = _get(editPayload, 'code', '');
         deductionName.value = _get(editPayload, 'name', '');
         assignable.selected = Number(_get(editPayload, 'assignable', true));
         deductionTypeOptions.selected = _get(editPayload, 'type.value', null);
@@ -235,6 +242,7 @@ const title = computed(() => {
 
 const submitPending = ref(false);
 const reset = () => {
+    deductionCode.value = '';
     deductionName.value = '';
     assignable.selected = 1;
     deductionTypeOptions.selected = null;
