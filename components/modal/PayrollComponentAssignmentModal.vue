@@ -26,7 +26,7 @@
                         <UnorderedList :size="'lg'" :icon="'eos-icons:loading'">Please wait...</UnorderedList>
                     </div>
                 </div>
-                <div class="p-3 pt-4 mx-auto max-w-screen-lg grid gap-2 grid-cols-3 sm:grid-cols-4 md:grid-cols-6">
+                <div class="p-3 pt-4 mx-auto max-w-screen-lg grid gap-2 grid-cols-3 sm:grid-cols-4 md:grid-cols-5">
                     <div class="col-span-2">
                         <InputLabel :size="'md'" value="Select"/>
                         <SingleSelect :searchable="false" drop-shadow value-persist :size="'md'" :options="assignablePayrollComponentOptions" @valueChange="assignablePayrollComponentSelectedChange"/>
@@ -35,6 +35,11 @@
                         <InputLabel :size="'md'" value="Amount"/>
                         <Input v-model="amount" high-light-all-text-on-focus :size="'md'" :min="0" :type="'number'" type-strict />
                     </div>
+                    <div v-if="selectedPayrollComponentIsAmountable">
+                        <InputLabel :size="'md'" value="Currency"/>
+                        <Input v-model="currency" disabled :size="'md'" />
+                    </div>
+                    <div class="hidden md:block"></div>
                     <div v-if="selectedPayrollComponentIsAmountable">
                         <InputLabel :size="'md'" value="Pay Period"/>
                         <SingleSelect :searchable="false" :selection-max-viewable-line="4" drop-shadow value-persist :size="'md'" :options="payPeriodOptions"/>
@@ -92,7 +97,8 @@ const {isAuthenticated} = useAuth();
 const nuxtApp = useNuxtApp();
 
 const {
-    selectedAssociatedCompany
+    selectedAssociatedCompany,
+    selectedAssociatedCompanyPayload
 } = storeToRefs(nuxtApp.$authStore);
 
 const props = defineProps({
@@ -178,6 +184,7 @@ const assignablePayrollComponentSelectedChange = (value: null | number) => {
 
         if(!selectedPayrollComponentIsAmountable.value){
             amount.value = 0;
+            currency.value = defaultCurrency.value;
             payPeriodOptions.selected = null;
             payTypeOptions.selected = null;
             payFrequencyOptions.selected = null;
@@ -250,15 +257,18 @@ watch(() => props.creatingOrEditing, (creatingOrEditing) => {
     }
 });
 
+const amount = ref(0);
+const currency = ref<String | null>('');
+const defaultCurrency = ref(selectedAssociatedCompanyPayload.value?.currency ?? null);
+
 const loadEditable = () => {
     amount.value = _get(props.editPayload, 'amount', 0);
+    currency.value = _get(props.editPayload, 'currency', defaultCurrency.value);
     payPeriodOptions.selected = _get(props.editPayload, 'pay_period.value', null);
     payTypeOptions.selected = _get(props.editPayload, 'pay_type.value', null);
     payFrequencyOptions.selected = _get(props.editPayload, 'pay_frequency.value', null);
     assignablePayrollComponentOptions.selected = _get(props.editPayload, 'payroll_componentable_id', null);
 };
-
-const amount = ref(0);
 
 const closeModal = () => {
     emit('update:creatingOrEditing', false);
@@ -269,6 +279,7 @@ const closeModal = () => {
 };
 const reset = () => {
     amount.value = 0;
+    currency.value = defaultCurrency.value;
     assignablePayrollComponentOptions.selected = null;
     payPeriodOptions.selected = null;
     payTypeOptions.selected = null;
@@ -360,6 +371,7 @@ const componentForm = computed(() => {
             return {
                 ...componentFormTemp,
                 'amount': amount.value,
+                'currency': currency.value,
                 'pay_period': payPeriodOptions.selected,
                 'pay_type': payTypeOptions.selected,
                 'pay_frequency': payFrequencyOptions.selected,
