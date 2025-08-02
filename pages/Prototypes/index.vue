@@ -304,11 +304,13 @@ function manualSorted(){
 }
 
 //Render date time pickers on navigate
-onMounted(async () => {
-    await nextTick(() => {
-        render(filtersDateTimePickers.value);
+if(clientReadyState.value){
+    onMounted(async () => {
+        await nextTick(() => {
+            render(filtersDateTimePickers.value);
+        });
     });
-});
+}
 
 //Render date time pickers on load
 watch(clientReadyState, async (clientReady) => {
