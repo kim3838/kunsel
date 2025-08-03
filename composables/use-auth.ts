@@ -75,12 +75,13 @@ export const useAuth = () => {
                 authPending.value = false;
             },
             onResponse: () => {
-                authPending.value = false;
+
             },
             onSuccessResponse: async (request, options, response) => {
                 let twoFactorChallenge = _get(response, '_data.values.two_factor_challenge', false);
 
                 if(twoFactorChallenge){
+                    authPending.value = false;
                     await navigateTo({
                         path: '/two-factor-challenge',
                         replace: true
@@ -91,6 +92,7 @@ export const useAuth = () => {
                     await fetchAssociatedCompanies();
                     await storeAssociatedCompanies();
                     await fetchIsAdminInAnyCompany();
+                    authPending.value = false;
                     await navigateTo({
                         path: '/',
                         replace: true

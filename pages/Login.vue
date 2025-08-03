@@ -48,14 +48,14 @@
                                         <span>{{ $coreStore.service.error.payload.message }}</span>
                                     </div>
 
-                                    <div v-if="!isAuthenticated" class="flex mt-4 items-center justify-between">
+                                    <div class="flex mt-4 items-center justify-between">
                                         <div class="block text-sm self-end">
                                             <NuxtLink class="hover:underline" :to="'forgot-password'">Forgot password.</NuxtLink>
                                         </div>
                                         <div class="flex-grow-[0.5]">
                                             <Button
                                                 :justify-content="'center'"
-                                                :disabled="authPending"
+                                                :disabled="authPending || isAuthenticated"
                                                 :size="'md'"
                                                 :icon="authPending ? 'eos-icons:loading' : 'mdi:key-chain'"
                                                 :label="authPending ? 'Logging in...' : 'Login'"></Button>
