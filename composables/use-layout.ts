@@ -257,6 +257,22 @@ export const useLayout = () => {
                 ]
             }] : []) as NavigationLinkInterface[],
             ...((userIsSuperAdmin.value || adminInAnyCompany.value) ? [{
+                key: 'import',
+                type: 'sub-nav',
+                title: 'Import',
+                path_active: '/import',
+                icon: 'ic:baseline-upload-file',
+                options: [
+                    {
+                        key: 'import/employees',
+                        type: 'link',
+                        title: 'Employees',
+                        icon: 'mdi:account-multiple',
+                        to: '/import/employees',
+                        route_active: 'import-employees'
+                    }
+                ],
+            },{
                 key: 'admin',
                 type: 'sub-nav',
                 title: 'Admin',
