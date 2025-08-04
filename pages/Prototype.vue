@@ -240,7 +240,6 @@
                                         :id="`datetime_added-` + cell.id"
                                         v-model="cell.datetime_added"
                                         readonly
-                                        in-cell
                                         :size="slot.inputSize" />
                                 </template>
                             </DataTable>
@@ -267,7 +266,6 @@
                                         :id="`datetime_added-` + cell.id"
                                         v-model="cell.datetime_added"
                                         readonly
-                                        in-cell
                                         :size="slot.inputSize" />
                                 </template>
                             </DataTable>
@@ -366,7 +364,6 @@
                                         :id="`datetime_added-` + cell.id"
                                         v-model="cell.datetime_added"
                                         readonly
-                                        in-cell
                                         :size="slot.inputSize" />
                                 </template>
                             </DataTable>
