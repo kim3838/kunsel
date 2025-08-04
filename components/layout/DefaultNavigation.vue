@@ -238,10 +238,10 @@ watch(screenWidth, value => {
 });
 
 const navigationHeaderSize = computed(() => {
-    return 'sm';
+    return 'md';
 });
 const subNavigationHeaderSize = computed(() => {
-    return 'xs';
+    return 'sm';
 });
 
 const mainNavigationHeightClass = computed(() => {
