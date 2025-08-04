@@ -186,7 +186,7 @@ export const useLayout = () => {
                         key: 'workforce/departments',
                         type: 'link',
                         title: 'Departments',
-                        icon: 'ic:baseline-lan',
+                        icon: 'ic:baseline-all-inbox',
                         to: '/workforce/departments',
                         route_active: 'workforce-departments'
                     },
@@ -194,7 +194,7 @@ export const useLayout = () => {
                         key: 'workforce/designations',
                         type: 'link',
                         title: 'Designations',
-                        icon: 'ic:baseline-schema',
+                        icon: 'ic:baseline-inbox',
                         to: '/workforce/designations',
                         route_active: 'workforce-designations'
                     },

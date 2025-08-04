@@ -233,11 +233,11 @@
                             <div class="grid gap-2 grid-cols-2 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-5 xl:grid-cols-6">
                                 <div class="lg:col-span-2">
                                     <InputLabel :size="'sm'" value="Department"/>
-                                    <SingleSelect :icon="'ic:baseline-lan'" :disabled="disableActions" drop-shadow :size="'md'" :options="departmentOptions"/>
+                                    <SingleSelect :icon="'ic:baseline-all-inbox'" :disabled="disableActions" drop-shadow :size="'md'" :options="departmentOptions"/>
                                 </div>
                                 <div class="lg:col-span-2">
                                     <InputLabel :size="'sm'" value="Designation"/>
-                                    <SingleSelect :icon="'ic:baseline-schema'" :disabled="disableActions" drop-shadow :size="'md'" :options="designationOptions"/>
+                                    <SingleSelect :icon="'ic:baseline-inbox'" :disabled="disableActions" drop-shadow :size="'md'" :options="designationOptions"/>
                                 </div>
                                 <div class="hidden lg:block"></div>
                                 <div class="col-span-2">
