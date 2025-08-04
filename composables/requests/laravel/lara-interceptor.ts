@@ -19,14 +19,6 @@ export const laraInterceptor = () => {
     }
 
     async function onRequestError(callbacks: CallbackResponseT, promptErrorResponse = false, interceptorParameters: InterceptorParametersT){
-        //Perform on request error callback
-        if(callbacks.onRequestError && typeof callbacks.onRequestError == 'function'){
-            await callbacks.onRequestError(
-                interceptorParameters.request,
-                interceptorParameters.options,
-                interceptorParameters.error
-            );
-        }
 
         coreStore.setServiceError({
             prompt: promptErrorResponse,
@@ -36,6 +28,15 @@ export const laraInterceptor = () => {
                 message: interceptorParameters?.error?.message ?? null
             }
         });
+
+        //Perform on request error callback
+        if(callbacks.onRequestError && typeof callbacks.onRequestError == 'function'){
+            await callbacks.onRequestError(
+                interceptorParameters.request,
+                interceptorParameters.options,
+                interceptorParameters.error
+            );
+        }
     }
 
     async function onResponse(callbacks: CallbackResponseT, promptErrorResponse = false, interceptorParameters: InterceptorParametersT){
