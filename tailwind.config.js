@@ -21,7 +21,6 @@ module.exports = {
                     'Prociono',
                     'Radio Canada Big',
                     'Bricolage Grotesque',
-                    'Inclusive Sans',
                     'Roboto Flex',
                 ],
                 techno:[
