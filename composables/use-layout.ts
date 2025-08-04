@@ -261,7 +261,7 @@ export const useLayout = () => {
                 type: 'sub-nav',
                 title: 'Import',
                 path_active: '/import',
-                icon: 'ic:baseline-upload-file',
+                icon: 'mdi:file-upload',
                 options: [
                     {
                         key: 'import/employees',
