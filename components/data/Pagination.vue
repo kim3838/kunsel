@@ -39,7 +39,7 @@
                 :searchable="false"
                 :value-persist="true"
                 :width="perPageSelectWidth"
-                :icon="'mdi:book-open-page-variant-outline'"
+                :icon="'ic:baseline-style'"
                 :label="'Per Page'"
                 :options="perPage"/>
         </div>
