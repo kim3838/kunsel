@@ -230,6 +230,16 @@ const usersPending = ref(false);
 const selectedUsers = ref([]);
 const usersExecute = async () => {
     usersPending.value = true;
+    users.data = [];
+    users.meta = {
+        pagination: {
+            total: 0,
+            count: 0,
+            per_page: 0,
+            current_page: 0,
+            total_pages: 0
+        }
+    };
 
     await laraFetch("/api/associated-users", {
         method: 'GET',
