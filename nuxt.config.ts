@@ -72,6 +72,31 @@ export default defineNuxtConfig({
         dirs: [
             'composables/**',
             'stores'
+        ],
+        presets: [
+            {
+                from: 'lodash',
+                imports: [
+                    { name: 'get', as: '_get'},
+                    { name: 'isEmpty', as: '_isEmpty'},
+                    { name: 'difference', as: '_difference'},
+                    { name: 'uniq', as: '_uniq'},
+                    { name: 'castArray', as: '_castArray'},
+                    { name: 'includes', as: '_includes'},
+                    { name: 'toLower', as: '_toLower'},
+                    { name: 'some', as: '_some'},
+                    { name: 'upperCase', as: '_upperCase'},
+                    { name: 'startCase', as: '_startCase'},
+                    { name: 'map', as: '_map' },
+                    { name: 'flatten', as: '_flatten'},
+                    { name: 'without', as: '_without'},
+                    { name: 'forEach', as: '_forEach'},
+                    { name: 'replace', as: '_replace'},
+                    { name: 'concat', as: '_concat'},
+                    { name: 'remove', as: '_remove'},
+                    { name: 'find', as: '_find'},
+                ]
+            }
         ]
     },
 
@@ -114,7 +139,7 @@ export default defineNuxtConfig({
         '@vueuse/nuxt',
         '@pinia/nuxt',
         '@nuxt/icon',
-        'nuxt-lodash'
+        //'nuxt-lodash'
     ],
 
     vite: {
