@@ -7,31 +7,35 @@
                 </div>
                 <div class="w-full relative"></div>
             </div>
-            <input
-                :id="id"
-                :tabindex="tabindex"
-                :disabled="disabled"
+            <div
+                class="relative w-full h-full z-10 box-border outline-none flex items-center"
                 :class="[
-                    fontClass,
-                    spacingClass,
                     backgroundClass,
                     focusRing ? 'focus-ring' : '',
                     withBorder ? 'bordered' : 'borderless',
                     rounded ? 'rounded-[2px]': '',
                     disabled ? 'cursor-not-allowed' : ''
-                ]"
-                :style="{'top': absoluteTopAllocation}"
-                class="relative w-full h-full z-10 box-border outline-none"
-                :value="modelValue"
-                :placeholder="placeholder"
-                :type="type"
-                :min="min"
-                :max="max"
-                @keydown="limitKeys"
-                @focus="focusInput"
-                @input="$emit('update:modelValue', $event.target.value)"
-                :readonly="readonly"
-                ref="input">
+                ]">
+                <input
+                    :id="id"
+                    :tabindex="tabindex"
+                    :disabled="disabled"
+                    class="relative w-full box-border outline-none"
+                    :class="[
+                        fontClass,
+                        spacingClass
+                    ]"
+                    :value="modelValue"
+                    :placeholder="placeholder"
+                    :type="type"
+                    :min="min"
+                    :max="max"
+                    @keydown="limitKeys"
+                    @focus="focusInput"
+                    @input="$emit('update:modelValue', $event.target.value)"
+                    :readonly="readonly"
+                    ref="input">
+            </div>
         </Glint>
     </div>
 </template>
@@ -86,10 +90,6 @@ const props = defineProps({
     placeholder: {
         type: String,
         default: ''
-    },
-    inCell: {
-        type: Boolean,
-        default: false
     },
     disabled: {
         type: Boolean,
@@ -186,18 +186,6 @@ const iconClass = computed(() => {
         'lg': 'h-8 w-8',
         'xl': 'h-9 w-9',
         '2xl': 'h-12 w-12',
-    }[props.size]
-});
-
-const absoluteTopAllocation = computed(() => {
-    return {
-        '2xs': props.inCell ? '0' : '-3px',
-        'xs': props.inCell ? '0' : '-1px',
-        'sm': '0',
-        'md': '0',
-        'lg': '0',
-        'xl': '0',
-        '2xl': '0',
     }[props.size]
 });
 

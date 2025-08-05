@@ -1,30 +1,34 @@
 <template>
     <div class="relative box-border" :class="[heightClass, baseFontFamilyClass]">
         <Glint :height-style="glintHeightStyle" :enable="glint" :orientation="'landscape'" :color="activeBorderComputed">
-            <input
-                :tabindex="tabindex"
-                :disabled="disabled"
+            <div
+                class="relative w-full h-full box-border outline-none flex items-center"
                 :class="[
-                    fontClass,
-                    spacingClass,
                     backgroundClass,
                     focusRing ? 'focus-ring' : '',
                     withBorder ? 'bordered' : 'borderless',
                     rounded ? 'rounded-[2px]': '',
                     disabled ? 'cursor-not-allowed' : ''
-                ]"
-                :style="{'top': absoluteTopAllocation}"
-                class="relative h-full w-full box-border outline-none"
-                :value="modelValue"
-                :placeholder="placeholder"
-                :type="type"
-                :min="min"
-                :max="max"
-                @keydown="limitKeys"
-                @focus="focusInput"
-                @input="$emit('update:modelValue', $event.target.value)"
-                :readonly="readonly"
-                ref="input">
+                ]">
+                <input
+                    :tabindex="tabindex"
+                    :disabled="disabled"
+                    :class="[
+                        fontClass,
+                        spacingClass
+                    ]"
+                    class="relative w-full box-border outline-none"
+                    :value="modelValue"
+                    :placeholder="placeholder"
+                    :type="type"
+                    :min="min"
+                    :max="max"
+                    @keydown="limitKeys"
+                    @focus="focusInput"
+                    @input="$emit('update:modelValue', $event.target.value)"
+                    :readonly="readonly"
+                    ref="input">
+            </div>
         </Glint>
     </div>
 </template>
@@ -64,10 +68,6 @@ const props = defineProps({
     placeholder: {
         type: String,
         default: ''
-    },
-    inCell: {
-        type: Boolean,
-        default: false
     },
     size: {
         default: 'md'
@@ -160,18 +160,6 @@ const heightClass = computed(() => {
         'xl': 'h-14',
         '2xl' : 'h-16',
         '3xl' : 'h-20',
-    }[props.size]
-});
-
-const absoluteTopAllocation = computed(() => {
-    return {
-        '2xs': props.inCell ? '0' : '-3px',
-        'xs': props.inCell ? '0' : '-1px',
-        'sm': '0',
-        'md': '0',
-        'lg': '0',
-        'xl': '0',
-        '2xl': '0',
     }[props.size]
 });
 
