@@ -93,6 +93,7 @@ useLayout().setNavigationMode('solid', 'Associated-Users/[id].vue');
 
 const route = useRoute();
 const user = userState();
+const {fetchAssociatedCompanies, storeAssociatedCompanies} = useAssociation();
 const associatedUser = ref(null);
 
 definePageMeta({
@@ -362,6 +363,8 @@ const userCompanyAssignmentFormSubmit = async(userId = null) => {
             userCompanyAssignmentFormPending.value = false;
         },
         onSuccessResponse: async (request, options, response) => {
+            await fetchAssociatedCompanies();
+            await storeAssociatedCompanies();
             await navigateTo({
                 path: '/admin/associated-users',
             });

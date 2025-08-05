@@ -136,7 +136,13 @@ export const useAssociation = () => {
             });
 
             if(storedCompany.value == undefined){
-                //Todo: if storedCompany.value is not belong to associated company selections, set selected to associatedCompany.value.selected
+
+                storedCompany.value = associatedCompany.value.selected;
+            }
+
+            const storedCompanyIdExistsOnSelection = _some(associatedCompany.value.selection, company => company.value == storedCompany.value);
+
+            if(!storedCompanyIdExistsOnSelection){
                 storedCompany.value = associatedCompany.value.selected;
             }
 
