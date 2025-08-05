@@ -25,8 +25,8 @@ export interface ErrorPayloadInterface {
 
 export type ServiceErrorT = {
     prompt: boolean,
-    icon: string | null,
-    title: string | null,
+    icon?: string | null,
+    title?: string | null,
     payload: ErrorPayloadInterface | null
 }
 

@@ -42,6 +42,14 @@ export const useCoreStore = defineStore('core', () => {
         }
     }
 
+    const hasNonPromptableServicePayloadMessage = computed(() => {
+        return service.value.error.payload && !service.value.error.prompt
+    });
+
+    const servicePayloadMessage = computed(() => {
+        return service.value.error.payload?.message ?? '';
+    });
+
     function resetServiceError(){
         service.value.error = {
             prompt: false,
@@ -55,6 +63,8 @@ export const useCoreStore = defineStore('core', () => {
         service,
         getServiceError,
         setServiceError,
-        resetServiceError
+        resetServiceError,
+        hasNonPromptableServicePayloadMessage,
+        servicePayloadMessage
     }
 })

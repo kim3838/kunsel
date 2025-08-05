@@ -75,10 +75,12 @@ export const useAuth = () => {
                 authPending.value = false;
             },
             onResponse: () => {
-
+                authPending.value = false;
             },
             onSuccessResponse: async (request, options, response) => {
                 let twoFactorChallenge = _get(response, '_data.values.two_factor_challenge', false);
+
+                authPending.value = true;
 
                 if(twoFactorChallenge){
                     authPending.value = false;

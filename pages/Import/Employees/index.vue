@@ -6,8 +6,12 @@
                     <div class="grid gap-2 grid-cols-3 sm:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-8">
                         <div class="col-span-3">
                             <InputWithIcon ref="fileToImport" :size="'md'" class="mt-2" :icon="'ic:baseline-file-open'" type="file" />
+                            <div v-if="$coreStore.hasNonPromptableServicePayloadMessage" class="block text-red-700">
+                                <span>{{ $coreStore.servicePayloadMessage }}</span>
+                            </div>
                         </div>
                     </div>
+
                     <div class="space-x-1">
                         <NuxtLink :to="`${baseURL}/api/employee-import-template`">
                             <Button class="inline-block" :icon="'ic:baseline-download'" :size="'sm'" :disabled="disableActions" :label="'CSV Template'"/>
@@ -167,44 +171,27 @@ const upload = async () => {
                 pending.value = false;
 
                 coreStore.setServiceError({
-                    prompt: true,
-                    icon: 'mdi:information-variant-circle-outline',
-                    title: 'Request failed',
+                    prompt: false,
                     payload: {
-                        message: 'Re-attach the file if its edited.'
+                        message: 'Something went wrong: Try to re-attach the file if its edited.'
                     }
                 });
-
-                setTimeout(() => {
-
-                }, 10);
             },
             onResponse: () => {
                 pending.value = false;
             },
             onUnprocessableContentResponse: async (request, options, response) => {
                 validationErrorsData.value = _get(response, '_data.errors', []);
-
-                coreStore.setServiceError({
-                    prompt: true,
-                    icon: 'mdi:information-variant-circle-outline',
-                    title: 'Request failed',
-                    payload: {
-                        message: _get(response, '_data.message', 'Validation failed.')
-                    }
-                });
             },
             onSuccessResponse: async (request, options, response) => {
                 importedEmployeesData.value = _get(response, '_data.values.employees', []);
             }
-        }, true);
+        }, false);
 
 
     } else {
         coreStore.setServiceError({
-            prompt: true,
-            icon: 'mdi:information-variant-circle-outline',
-            title: 'Request failed',
+            prompt: false,
             payload: {
                 message: 'File not found.'
             }
