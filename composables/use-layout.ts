@@ -28,6 +28,7 @@ export const useLayout = () => {
                     callback: async () => {
                         await laraFetch("/api/utility/post", {
                             method: 'POST',
+                            params: {key: 'value'},
                         }, {
                             onResponse: (request, options, response) => {
                                 //@ts-ignore
