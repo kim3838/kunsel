@@ -312,7 +312,7 @@ export const useLayout = () => {
                         {
                             key: 'admin/associated-accounts',
                             type: 'link',
-                            title: 'Account Info',
+                            title: 'Subscription',
                             //icon: 'ic:baseline-all-inbox',
                             to: '/admin/associated-accounts',
                             route_active: 'admin-associated-accounts'
