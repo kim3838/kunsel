@@ -6,11 +6,13 @@ export default defineNuxtPlugin({
         if(import.meta.server){
 
             const {ssrFetchAssociatedCompanies, ssrFetchIsAdminInAnyCompany} = useAssociation();
+            const {ssrFetchCommon} = useCommon();
             const {isAuthenticated} = useAuth();
 
             if(isAuthenticated.value){
                 await ssrFetchAssociatedCompanies();
                 await ssrFetchIsAdminInAnyCompany();
+                await ssrFetchCommon();
             }
         }
     },
