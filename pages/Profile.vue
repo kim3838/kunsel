@@ -196,7 +196,7 @@
 </template>
 
 <script setup lang="ts">
-import type {BrowserSessionT} from "public/js/common/type";
+import type {BrowserSessionT} from "@/public/js/common/type";
 
 definePageMeta({middleware: 'auth'});
 useLayout().setNavigationMode('solid', 'Profile.vue');

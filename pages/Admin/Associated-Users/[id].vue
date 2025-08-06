@@ -87,7 +87,7 @@
 
 <script setup lang="ts">
 
-import type {TableHeaderT} from "public/js/types/data";
+import type {TableHeaderT} from "@/public/js/types/data";
 
 useLayout().setNavigationMode('solid', 'Associated-Users/[id].vue');
 

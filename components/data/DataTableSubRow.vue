@@ -18,7 +18,7 @@
 
 <script setup lang="ts">
 import {storeToRefs} from "pinia";
-import type {TableRowT} from "public/js/types/data";
+import type {TableRowT} from "@/public/js/types/data";
 
 const {$themeStore} = useNuxtApp();
 

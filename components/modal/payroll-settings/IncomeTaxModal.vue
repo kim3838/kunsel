@@ -78,7 +78,7 @@
 
 <script setup lang="ts">
 import {storeToRefs} from "pinia";
-import type {CompanyFormulaT} from "public/js/types/company-component";
+import type {CompanyFormulaT} from "@/public/js/types/company-component";
 const {isAuthenticated} = useAuth();
 const nuxtApp = useNuxtApp();
 const {

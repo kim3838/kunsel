@@ -1372,7 +1372,7 @@ useLayout().setNavigationMode('solid', 'Prototype.vue');
 
 const clientReadyState = useClientReadyState();
 import {storeToRefs} from 'pinia';
-import type {TableHeaderT} from "public/js/types/data";
+import type {TableHeaderT} from "@/public/js/types/data";
 const {$themeStore, $formStore} = useNuxtApp();
 const {
     thread: threadColor,

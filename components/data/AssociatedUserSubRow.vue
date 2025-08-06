@@ -22,7 +22,7 @@
 </template>
 
 <script setup lang="ts">
-import type {TableHeaderT, TableRowT} from "public/js/types/data";
+import type {TableHeaderT, TableRowT} from "@/public/js/types/data";
 
 const props = defineProps({
     rows: {
