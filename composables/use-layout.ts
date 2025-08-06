@@ -75,19 +75,19 @@ export const useLayout = () => {
                     key: 'account-settings',
                     type: 'link',
                     title: 'Account Settings',
-                    icon: 'ic:baseline-miscellaneous-services',
+                    //icon: 'ic:baseline-miscellaneous-services',
                     to: '/profile',
                 },
                 {
                     key: 'login',
                     type: 'action',
                     title: 'Logout',
-                    icon: 'mdi:connection',
+                    //icon: 'mdi:connection',
                     callback: () => {
                         destroyAuthentication();
                     },
                 },
-                ...(debugRequests as NavigationLinkInterface[])
+                //...(debugRequests as NavigationLinkInterface[])
             ]);
 
         } else {
@@ -171,14 +171,14 @@ export const useLayout = () => {
                 key: 'workforce',
                 type: 'sub-nav',
                 title: 'Workforce',
-                icon: 'ic:round-diversity-3',
+                //icon: 'ic:round-diversity-3',
                 path_active: '/workforce',
                 options:[
                     {
                         key: 'workforce/employees',
                         type: 'link',
                         title: 'Employees',
-                        icon: 'mdi:account-multiple',
+                        //icon: 'mdi:account-multiple',
                         to: '/workforce/employees',
                         route_active: 'workforce-employees'
                     },
@@ -186,7 +186,7 @@ export const useLayout = () => {
                         key: 'workforce/departments',
                         type: 'link',
                         title: 'Departments',
-                        icon: 'ic:baseline-all-inbox',
+                        //icon: 'ic:baseline-all-inbox',
                         to: '/workforce/departments',
                         route_active: 'workforce-departments'
                     },
@@ -194,7 +194,7 @@ export const useLayout = () => {
                         key: 'workforce/designations',
                         type: 'link',
                         title: 'Designations',
-                        icon: 'ic:baseline-inbox',
+                        //icon: 'ic:baseline-inbox',
                         to: '/workforce/designations',
                         route_active: 'workforce-designations'
                     },
@@ -203,14 +203,14 @@ export const useLayout = () => {
                 key: 'settings',
                 type: 'sub-nav',
                 title: 'Settings',
-                icon: 'ic:baseline-miscellaneous-services',
+                //icon: 'ic:baseline-miscellaneous-services',
                 path_active: '/settings',
                 options: [
                     {
                         key: 'settings/compensations',
                         type: 'link',
                         title: 'Compensations',
-                        icon: 'ic:baseline-attach-money',
+                        //icon: 'ic:baseline-attach-money',
                         to: '/settings/compensations',
                         route_active: 'settings-compensations'
                     },
@@ -218,7 +218,7 @@ export const useLayout = () => {
                         key: 'settings/deductions',
                         type: 'link',
                         title: 'Deductions',
-                        icon: 'ic:baseline-money-off',
+                        //icon: 'ic:baseline-money-off',
                         to: '/settings/deductions',
                         route_active: 'settings-deductions'
                     },
@@ -226,7 +226,7 @@ export const useLayout = () => {
                         key: 'settings/income-taxes',
                         type: 'link',
                         title: 'Income Tax',
-                        icon: 'ic:baseline-account-balance',//'game-icons:pay-money',
+                        //icon: 'ic:baseline-account-balance',//'game-icons:pay-money',
                         to: '/settings/incometaxes',
                         route_active: 'settings-incometaxes'
                     },
@@ -234,7 +234,7 @@ export const useLayout = () => {
                         key: 'settings/pay-period-settings',
                         type: 'link',
                         title: 'Pay Period Settings',
-                        icon: 'mdi:calendar-cursor',
+                        //icon: 'mdi:calendar-cursor',
                         to: '/settings/payperiodsettings',
                         route_active: 'settings-payperiodsettings'
                     },
@@ -242,7 +242,7 @@ export const useLayout = () => {
                         key: 'settings/salary-statement-modules',
                         type: 'link',
                         title: 'Salary Statement Modules',
-                        icon: 'ic:baseline-dynamic-form',
+                        //icon: 'ic:baseline-dynamic-form',
                         to: '/settings/salarystatementmodules',
                         route_active: 'settings-salarystatementmodules'
                     },
@@ -250,7 +250,7 @@ export const useLayout = () => {
                         key: 'settings/formula-settings',
                         type: 'link',
                         title: 'Formula Settings',
-                        icon: 'ic:baseline-architecture',
+                        //icon: 'ic:baseline-architecture',
                         to: '/settings/formulasettings',
                         route_active: 'settings-formulasettings'
                     },
@@ -261,13 +261,13 @@ export const useLayout = () => {
                 type: 'sub-nav',
                 title: 'Import',
                 path_active: '/import',
-                icon: 'mdi:file-upload',
+                //icon: 'mdi:file-upload',
                 options: [
                     {
                         key: 'import/employees',
                         type: 'link',
                         title: 'Employees',
-                        icon: 'mdi:account-multiple',
+                        //icon: 'mdi:account-multiple',
                         to: '/import/employees',
                         route_active: 'import-employees'
                     }
@@ -277,21 +277,21 @@ export const useLayout = () => {
                 type: 'sub-nav',
                 title: 'Admin',
                 path_active: '/admin',
-                icon: 'ep:management',
+                //icon: 'ep:management',
                 options: [
                     ...(userIsSuperAdmin.value ? [
                         {
                             key: 'admin/accounts',
                             type: 'link',
                             title: 'Accounts',
-                            icon: 'ic:baseline-all-inbox',
+                            //icon: 'ic:baseline-all-inbox',
                             to: '/admin/accounts',
                             route_active: 'admin-accounts'
                         },{
                             key: 'admin/companies',
                             type: 'link',
                             title: 'Companies',
-                            icon: 'ic:baseline-curtains-closed',
+                            //icon: 'ic:baseline-curtains-closed',
                             to: '/admin/companies',
                             route_active: 'admin-companies'
                         },
@@ -301,7 +301,7 @@ export const useLayout = () => {
                             key: 'admin/associated-accounts',
                             type: 'link',
                             title: 'Account Info',
-                            icon: 'ic:baseline-all-inbox',
+                            //icon: 'ic:baseline-all-inbox',
                             to: '/admin/associated-accounts',
                             route_active: 'admin-associated-accounts'
                         },
@@ -309,7 +309,7 @@ export const useLayout = () => {
                             key: 'admin/associated-companies',
                             type: 'link',
                             title: 'Companies',
-                            icon: 'ic:baseline-curtains-closed',
+                            //icon: 'ic:baseline-curtains-closed',
                             to: '/admin/associated-companies',
                             route_active: 'admin-associated-companies'
                         },
@@ -317,7 +317,7 @@ export const useLayout = () => {
                             key: 'admin/associated-users',
                             type: 'link',
                             title: 'Users',
-                            icon: 'ic:baseline-recent-actors',
+                            //icon: 'ic:baseline-recent-actors',
                             to: '/admin/associated-users',
                             route_active: 'admin-associated-users'
                         },
