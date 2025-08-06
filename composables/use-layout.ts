@@ -128,6 +128,18 @@ export const useLayout = () => {
                         to: '/prototypes',
                         route_active: 'prototypes'
                     },
+                    {
+                        key: 'lab',
+                        type: 'link',
+                        title: 'Lab',
+                        to: '/lab',
+                    },
+                    {
+                        key: 'example',
+                        type: 'link',
+                        title: 'Example',
+                        to: '/example',
+                    },
                 ]:[]
             ) as NavigationLinkInterface[],
             ...(false ? [
