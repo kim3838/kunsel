@@ -396,7 +396,7 @@
                     </div>
                 </div>
 
-                <div v-if="true" class="grid gap-2 grid-cols-3">
+                <div v-if="false" class="grid gap-2 grid-cols-3">
                     <div></div>
                     <div class="space-y-1 relative border">
                         <div v-if="tabGroup.show_icon_grid" class="absolute w-[0.2px] top-0 bottom-0 bg-slate-400 z-50" :class="[tabGroupIconGrid.left]"></div>
@@ -738,12 +738,14 @@ let dateTimePickers = ref([
 ]);
 
 //Render date time pickers on navigate
-onMounted(async () => {
-    await nextTick(() => {
-        render(dateTimePickers.value);
-        //searchInputWithIcon.value?.$refs.input.focus();
+if(clientReadyState.value){
+    onMounted(async () => {
+        await nextTick(() => {
+            render(dateTimePickers.value);
+            //searchInputWithIcon.value?.$refs.input.focus();
+        });
     });
-});
+}
 
 //Render date time pickers on load
 watch(clientReadyState, async (clientReady) => {
