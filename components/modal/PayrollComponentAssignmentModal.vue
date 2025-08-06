@@ -160,9 +160,9 @@ const payFrequencySelection = toRef(props, 'payFrequencySelection');
 
 const emit = defineEmits(['update:creatingOrEditing', 'update:payrollComponentFormulable', 'update:editPayload', 'update:editPayloadIndex', 'resolved']);
 
-const payPeriodOptions = reactive({search: '', data: payPeriodSelection, selection: payPeriodSelection, selected: null});
-const payTypeOptions = reactive({search: '', data: payTypeSelection, selection: payTypeSelection, selected: null});
-const payFrequencyOptions = reactive({search: '', data: payFrequencySelection, selection: payFrequencySelection, selected: null});
+const payPeriodOptions = reactive({search: '', selection: payPeriodSelection, selected: null});
+const payTypeOptions = reactive({search: '', selection: payTypeSelection, selected: null});
+const payFrequencyOptions = reactive({search: '', selection: payFrequencySelection, selected: null});
 
 const selectedPayrollComponentIsAmountable = ref(false);
 const selectedPayrollComponent = ref({});

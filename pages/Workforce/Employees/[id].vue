@@ -521,6 +521,7 @@ import type {SelectionOptionsT} from "@/public/js/types/form";
 useLayout().setNavigationMode('solid', 'Employees/[id].vue');
 
 const route = useRoute();
+const {payrollComponentPaySelections} = useCommon();
 const {screenWidthBreakpoint, width: screenWidth} = useScreen();
 const {isAuthenticated} = useAuth();
 const {$authStore, $associationStore, $moment} = useNuxtApp();
@@ -834,40 +835,9 @@ const managerOptions = reactive({
     selected: null,
 });
 
-const payPeriodSelection = ref([]);
-const payTypeSelection = ref([]);
-const payFrequencySelection = ref([]);
-const fetchPayPeriodSelection = async () => {
-    await laraFetch(`/api/enum-selections/pay_period`, {
-        method: 'GET',
-    }, {
-        onSuccessResponse: async (request, options, response) => {
-            payPeriodSelection.value = _get(response, '_data.values.data', []);
-        },
-    });
-};
-const fetchPayTypeSelection = async () => {
-    await laraFetch(`/api/enum-selections/pay_type`, {
-        method: 'GET',
-    }, {
-        onSuccessResponse: async (request, options, response) => {
-            payTypeSelection.value = _get(response, '_data.values.data', []);
-        },
-    });
-};
-const fetchPayFrequencySelection = async () => {
-    await laraFetch(`/api/enum-selections/pay_frequency`, {
-        method: 'GET',
-    }, {
-        onSuccessResponse: async (request, options, response) => {
-            payFrequencySelection.value = _get(response, '_data.values.data', []);
-        },
-    });
-};
-
-await fetchPayPeriodSelection();
-await fetchPayTypeSelection();
-await fetchPayFrequencySelection();
+const payPeriodSelection = payrollComponentPaySelections.value.pay_period;
+const payTypeSelection = payrollComponentPaySelections.value.pay_type;
+const payFrequencySelection = payrollComponentPaySelections.value.pay_frequency;
 
 watch(updatedAssociatedCompanyFlag, (newValue) => {
     if(isAuthenticated.value){
