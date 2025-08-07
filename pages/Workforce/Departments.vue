@@ -76,29 +76,28 @@
                 </DialogModal>
 
                 <div class="space-y-2 p-[20px]">
-                    <div class="space-x-1">
+                    <div class="flex flex-row flex-wrap gap-2">
                         <Button class="inline-block" :icon="'mdi:plus'" :size="'sm'" :disabled="disableActions"  @click="create"/>
                         <Button :variant="'outline'" :icon="'mdi:delete-outline'" class="inline-block" :size="'sm'" :disabled="disableActions" @click="deleteSelected"/>
                         <Button :variant="'outline'" :icon="'ic:sharp-restart-alt'" class="inline-block" :size="'sm'" :disabled="disableActions" @click="departmentsExecute"/>
                     </div>
                 </div>
 
-                <FansyFrame>
-                    <template v-slot:content>
-                        <UnorderedList
-                            v-if="disableActions"
-                            :icon="'eos-icons:loading'"
-                            :size="'md'"
-                            :label="'Please wait...'"/>
+                <div class="px-[20px]">
+                    <UnorderedList
+                        v-if="disableActions"
+                        :icon="'eos-icons:loading'"
+                        :size="'md'"
+                        :label="'Please wait...'"/>
 
-                        <DataTable
-                            :headers="departmentsHeaders"
-                            :size="'lg'"
-                            :rows="departmentsData"
-                            :disabled="disableDataTable"
-                            v-model="selectedDepartments"
-                            :sub-row-slug="'details'"
-                            :sub-row-settings="{
+                    <DataTable
+                        :headers="departmentsHeaders"
+                        :size="'lg'"
+                        :rows="departmentsData"
+                        :disabled="disableDataTable"
+                        v-model="selectedDepartments"
+                        :sub-row-slug="'details'"
+                        :sub-row-settings="{
                                 type: DATATABLE_SUBROW_TYPE.TITLED,
                                 containerPaddingTop: 0.25,
                                 containerPaddingBottom: 0.75,
@@ -107,24 +106,23 @@
                                 verticalBorderType: 'dashed',
                                 horizontalBorderType: 'dashed',
                             }"
-                            selection>
-                            <template v-slot:cell.actions="{cell, slot, scrollReference}">
-                                <Button class="mx-0.5" type="button" :size="slot.buttonSize" :icon="'mdi:pen'" @click="edit(cell)" :label="'Edit'" :override="{font_family: `GG Sans`}"></Button>
-                            </template>
-                            <template v-slot:sub_row_slot="{rowIndex, cell, slot}">
-                                <div class="inline-flex items-center scaffold-border pr-2">
-                                    <Icon name="mdi:info-variant" :class="[slot.iconSizeClass]" /><div :class="[slot.titleSizeClass]">Sub-Departments</div>
-                                </div>
-                                <DepartmentSubRow
-                                    :rows="cell[slot.slug].sub_departments"
-                                    @proxy-edit="edit"
-                                    @sync-selected="syncSelectedSubDepartments"
-                                    :disabled="disableDataTable"
-                                ></DepartmentSubRow>
-                            </template>
-                        </DataTable>
-                    </template>
-                </FansyFrame>
+                        selection>
+                        <template v-slot:cell.actions="{cell, slot, scrollReference}">
+                            <Button class="mx-0.5" type="button" :size="slot.buttonSize" :icon="'mdi:pen'" @click="edit(cell)" :label="'Edit'" :override="{font_family: `GG Sans`}"></Button>
+                        </template>
+                        <template v-slot:sub_row_slot="{rowIndex, cell, slot}">
+                            <div class="inline-flex items-center scaffold-border pr-2">
+                                <Icon name="mdi:info-variant" :class="[slot.iconSizeClass]" /><div :class="[slot.titleSizeClass]">Sub-Departments</div>
+                            </div>
+                            <DepartmentSubRow
+                                :rows="cell[slot.slug].sub_departments"
+                                @proxy-edit="edit"
+                                @sync-selected="syncSelectedSubDepartments"
+                                :disabled="disableDataTable"
+                            ></DepartmentSubRow>
+                        </template>
+                    </DataTable>
+                </div>
             </div>
         </DefaultWrapper>
     </div>

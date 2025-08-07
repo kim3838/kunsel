@@ -43,33 +43,31 @@
                 </DialogModal>
 
                 <div class="space-y-2 p-[20px]">
-                    <div class="space-x-1">
+                    <div class="flex flex-row flex-wrap gap-2">
                         <Button class="inline-block" :icon="'mdi:plus'" :size="'sm'" :disabled="disableActions"  @click="create"/>
                         <Button :variant="'outline'" :icon="'mdi:delete-outline'" class="inline-block" :size="'sm'" :disabled="disableActions" @click="deleteSelected"/>
                         <Button :variant="'outline'" :icon="'ic:sharp-restart-alt'" class="inline-block" :size="'sm'" :disabled="disableActions" @click="designationsExecute"/>
                     </div>
                 </div>
 
-                <FansyFrame>
-                    <template v-slot:content>
-                        <UnorderedList
-                            v-if="disableActions"
-                            :icon="'eos-icons:loading'"
-                            :size="'md'"
-                            :label="'Please wait...'"/>
-                        <DataTable
-                            :headers="designationsHeaders"
-                            :size="'lg'"
-                            :rows="designationsData"
-                            :disabled="disableDataTable"
-                            v-model="selectedDesignations"
-                            selection>
-                            <template v-slot:cell.actions="{cell, slot, scrollReference}">
-                                <Button class="mx-0.5" type="button" :size="slot.buttonSize" :icon="'mdi:pen'" :disabled="disableActions" @click="edit(cell)" :label="'Edit'" :override="{font_family: `GG Sans`}"></Button>
-                            </template>
-                        </DataTable>
-                    </template>
-                </FansyFrame>
+                <div class="px-[20px]">
+                    <UnorderedList
+                        v-if="disableActions"
+                        :icon="'eos-icons:loading'"
+                        :size="'md'"
+                        :label="'Please wait...'"/>
+                    <DataTable
+                        :headers="designationsHeaders"
+                        :size="'lg'"
+                        :rows="designationsData"
+                        :disabled="disableDataTable"
+                        v-model="selectedDesignations"
+                        selection>
+                        <template v-slot:cell.actions="{cell, slot, scrollReference}">
+                            <Button class="mx-0.5" type="button" :size="slot.buttonSize" :icon="'mdi:pen'" :disabled="disableActions" @click="edit(cell)" :label="'Edit'" :override="{font_family: `GG Sans`}"></Button>
+                        </template>
+                    </DataTable>
+                </div>
             </div>
         </DefaultWrapper>
     </div>

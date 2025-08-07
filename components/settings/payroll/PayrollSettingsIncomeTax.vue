@@ -1,8 +1,10 @@
 <template>
     <div class="scaffold-border-left-bottom-right">
-        <div class="flex space-x-1 p-[20px]">
-            <Button class="inline-block" :icon="'mdi:plus'" :size="'sm'" :disabled="disableActions" @click="create"/>
-            <Button :variant="'outline'" :icon="'mdi:delete-outline'" class="inline-block" :size="'sm'" :disabled="disableActions" @click="deleteSelected"/>
+        <div class="space-y-2 p-[20px]">
+            <div class="flex flex-row flex-wrap gap-2">
+                <Button class="inline-block" :icon="'mdi:plus'" :size="'sm'" :disabled="disableActions" @click="create"/>
+                <Button :variant="'outline'" :icon="'mdi:delete-outline'" class="inline-block" :size="'sm'" :disabled="disableActions" @click="deleteSelected"/>
+            </div>
         </div>
 
         <IncomeTaxModal
