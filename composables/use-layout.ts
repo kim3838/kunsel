@@ -268,8 +268,7 @@ export const useLayout = () => {
                         route_active: 'settings-formulasettings'
                     },
                 ]
-            }] : []) as NavigationLinkInterface[],
-            ...((userIsSuperAdmin.value || adminInAnyCompany.value) ? [{
+            },{
                 key: 'import',
                 type: 'sub-nav',
                 title: 'Import',
@@ -285,7 +284,8 @@ export const useLayout = () => {
                         route_active: 'import-employees'
                     }
                 ],
-            },{
+            }] : []) as NavigationLinkInterface[],
+            ...((userIsSuperAdmin.value || adminInAnyCompany.value) ? [{
                 key: 'admin',
                 type: 'sub-nav',
                 title: 'Admin',
