@@ -25,37 +25,44 @@
                     </div>
                 </form>
 
-                <FansyFrame>
-                    <template v-slot:content>
-                        <div class="mb-2 flex">
-                            <NuxtLink
-                                :to="`/admin/associated-companies/create-company`">
-                                <Button class="w-min" :disabled="disableActions" :size="'sm'" :icon="disableActions ? 'eos-icons:loading' : 'mdi:plus'" :label="disableActions ? 'Please wait' : ''"></Button>
-                            </NuxtLink>
+                <div class="px-[20px]">
+                    <div class="mb-2 flex">
+                        <NuxtLink
+                            :to="`/admin/associated-companies/create-company`">
+                            <Button class="w-min" :disabled="disableActions" :size="'sm'" :icon="disableActions ? 'eos-icons:loading' : 'mdi:plus'" :label="disableActions ? 'Please wait' : ''"></Button>
+                        </NuxtLink>
+                    </div>
+
+                    <UnorderedList
+                        v-if="disableActions"
+                        :icon="'eos-icons:loading'"
+                        :size="'md'"
+                        :label="'Please wait...'"/>
+
+                    <div class="mx-auto max-w-screen-2xl flex flex-row flex-wrap gap-4">
+
+                        <div v-for="company in companies.data" :key="company.id" class="scaffold-border p-4 space-y-2">
+                            <div>
+                                <div class="text-base">{{company.name}}</div>
+                                <div><span>Account #</span> {{company.account_number}}</div>
+                                <div class="text-sm"><span>Company code: </span>{{company.name}}</div>
+                            </div>
+
+                            <div class="w-full space-x-0.5 flex items-center">
+                                <NuxtLink
+                                    :to="`/admin/associated-companies/${company.ulid}`">
+                                    <Button type="button" :variant="'outline'" :icon="'mdi:information-variant-circle-outline'" :size="'sm'"  :label="'info'" :override="{font_family: `GG Sans`}"></Button>
+                                </NuxtLink>
+                            </div>
+
+                            <div>
+                                <div class="text-sm"><span>Country: </span>{{company.country}}</div>
+                                <div class="text-sm"><span>Currency: </span>{{company.currency}}</div>
+                                <div class="text-sm"><span>Timezone: </span>{{company.timezone}}</div>
+                            </div>
                         </div>
-                        <UnorderedList
-                            v-if="disableActions"
-                            :icon="'eos-icons:loading'"
-                            :size="'md'"
-                            :label="'Please wait...'"/>
-                        <DataTable
-                            :headers="companiesHeaders"
-                            :size="'lg'"
-                            :rows="companies.data"
-                            :disabled="disableDataTable"
-                            v-model="selectedCompanies"
-                            selection>
-                            <template v-slot:cell.actions="{cell,slot}">
-                                <div class="h-full mx-0.5 space-x-0.5 w-full flex items-center">
-                                    <NuxtLink
-                                        :to="`/admin/associated-companies/${cell.ulid}`">
-                                        <Button type="button" :variant="'default'" :icon="'mdi:information-variant-circle-outline'" :size="slot.buttonSize"  :label="'info'" :override="{font_family: `GG Sans`}"></Button>
-                                    </NuxtLink>
-                                </div>
-                            </template>
-                        </DataTable>
-                    </template>
-                </FansyFrame>
+                    </div>
+                </div>
             </div>
         </AdminWrapper>
     </div>
@@ -67,16 +74,6 @@ import type {DataTableMeta, TableHeaderT, TableRowT} from "@/public/js/types/dat
 definePageMeta({middleware: ['auth', 'admin-in-any-company']});
 useLayout().setNavigationMode('solid');
 const user = userState();
-
-const companiesHeaders = reactive<TableHeaderT[]>([
-    { text: '', value: 'actions'},
-    { text: 'Account #', value: 'account_number', alignData: 'left'},
-    { text: 'Name', value: 'name', alignData: 'left'},
-    { text: 'Code', value: 'code', alignData: 'left'},
-    { text: 'Country', value: 'country', alignData: 'left'},
-    { text: 'Currency', value: 'currency', alignData: 'left'},
-    { text: 'Timezone', value: 'timezone', alignData: 'left'},
-]);
 
 const companies = reactive<{
     data: TableRowT[];
@@ -114,6 +111,7 @@ let filters = reactive<{
         callback: 1
     }
 });
+
 let pageComputed = computed({
     get() {
         return {
@@ -125,6 +123,7 @@ let pageComputed = computed({
         filters[payload.key] = payload.value;
     }
 });
+
 let paramsComputed = computed(() => {
     return {
         page: filters.page,
