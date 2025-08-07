@@ -41,27 +41,26 @@
                     </div>
                 </form>
 
-                <FansyFrame>
-                    <template v-slot:content>
-                        <div class="mb-2 flex">
-                            <NuxtLink
-                                :to="`/admin/associated-users/create-user`">
-                                <Button class="w-min" :disabled="disableActions" :size="'sm'" :icon="disableActions ? 'eos-icons:loading' : 'mdi:plus'" :label="disableActions ? 'Please wait' : ''"></Button>
-                            </NuxtLink>
-                        </div>
-                        <UnorderedList
-                            v-if="disableActions"
-                            :icon="'eos-icons:loading'"
-                            :size="'md'"
-                            :label="'Please wait...'"/>
-                        <DataTable
-                            :headers="usersHeaders"
-                            :size="'lg'"
-                            :rows="users.data"
-                            :disabled="disableDataTable"
-                            v-model="selectedUsers"
-                            :sub-row-slug="$associationStore.associatedUserSubRowSlug"
-                            :sub-row-settings="{
+                <div class="px-[20px]">
+                    <div class="mb-2 flex">
+                        <NuxtLink
+                            :to="`/admin/associated-users/create-user`">
+                            <Button class="w-min" :disabled="disableActions" :size="'sm'" :icon="disableActions ? 'eos-icons:loading' : 'mdi:plus'" :label="disableActions ? 'Please wait' : ''"></Button>
+                        </NuxtLink>
+                    </div>
+                    <UnorderedList
+                        v-if="disableActions"
+                        :icon="'eos-icons:loading'"
+                        :size="'md'"
+                        :label="'Please wait...'"/>
+                    <DataTable
+                        :headers="usersHeaders"
+                        :size="'lg'"
+                        :rows="users.data"
+                        :disabled="disableDataTable"
+                        v-model="selectedUsers"
+                        :sub-row-slug="$associationStore.associatedUserSubRowSlug"
+                        :sub-row-settings="{
                                 type: DATATABLE_SUBROW_TYPE.TITLED,
                                 containerPaddingTop: 0.25,
                                 containerPaddingBottom: 0.75,
@@ -70,35 +69,34 @@
                                 verticalBorderType: 'dashed',
                                 horizontalBorderType: 'dashed',
                             }"
-                            :stripped="false"
-                            selection>
-                            <template v-slot:cell.actions="{cell,slot}">
-                                <div class="h-full mx-0.5 space-x-0.5 w-full flex items-center">
-                                    <NuxtLink
-                                        :to="`/admin/associated-users/${cell.ulid}`">
-                                        <Button type="button" :variant="'default'" :icon="'mdi:information-variant-circle-outline'" :size="slot.buttonSize" :label="'info'" :override="{font_family: `GG Sans`}"></Button>
-                                    </NuxtLink>
-                                </div>
-                            </template>
-                            <template v-slot:cell.status="{cell,slot}">
-                                <div class="p-[3px]">{{cell.status.text}}</div>
-                            </template>
-                            <template v-slot:cell.email_verified_at="{cell,slot}">
-                                <div class="p-[3px]">{{cell.email_verified_at != null ? `Verified` : `Not verified`}}</div>
-                            </template>
-                            <template v-slot:sub_row_slot="{rowIndex, cell, slot}">
-                                <div class="inline-flex items-center scaffold-border pr-2">
-                                    <Icon name="mdi:info-variant" :class="[slot.iconSizeClass]" /><div :class="[slot.titleSizeClass]">Associated Companies</div>
-                                </div>
+                        :stripped="false"
+                        selection>
+                        <template v-slot:cell.actions="{cell,slot}">
+                            <div class="h-full mx-0.5 space-x-0.5 w-full flex items-center">
+                                <NuxtLink
+                                    :to="`/admin/associated-users/${cell.ulid}`">
+                                    <Button type="button" :variant="'default'" :icon="'mdi:information-variant-circle-outline'" :size="slot.buttonSize" :label="'info'" :override="{font_family: `GG Sans`}"></Button>
+                                </NuxtLink>
+                            </div>
+                        </template>
+                        <template v-slot:cell.status="{cell,slot}">
+                            <div class="p-[3px]">{{cell.status.text}}</div>
+                        </template>
+                        <template v-slot:cell.email_verified_at="{cell,slot}">
+                            <div class="p-[3px]">{{cell.email_verified_at != null ? `Verified` : `Not verified`}}</div>
+                        </template>
+                        <template v-slot:sub_row_slot="{rowIndex, cell, slot}">
+                            <div class="inline-flex items-center scaffold-border pr-2">
+                                <Icon name="mdi:info-variant" :class="[slot.iconSizeClass]" /><div :class="[slot.titleSizeClass]">Associated Companies</div>
+                            </div>
 
-                                <AssociatedUserSubRow
-                                    :rows="cell[slot.slug]"
-                                    :disabled="disableDataTable"
-                                ></AssociatedUserSubRow>
-                            </template>
-                        </DataTable>
-                    </template>
-                </FansyFrame>
+                            <AssociatedUserSubRow
+                                :rows="cell[slot.slug]"
+                                :disabled="disableDataTable"
+                            ></AssociatedUserSubRow>
+                        </template>
+                    </DataTable>
+                </div>
             </div>
         </AdminWrapper>
     </div>
