@@ -2,7 +2,9 @@
     <div>
         <DefaultWrapper>
             <div class="mx-auto max-w-screen-2xl">
+                <PayrollSettingsCompensation/>
                 <PayrollSettingsDeduction/>
+                <PayrollSettingsIncomeTax/>
             </div>
         </DefaultWrapper>
     </div>
@@ -10,9 +12,9 @@
 
 <script setup lang="ts">
 definePageMeta({middleware: ['auth', 'admin-of-selected-company']});
-useLayout().setNavigationMode('solid', 'Deductions.vue');
+useLayout().setNavigationMode('solid');
 </script>
 
-<style scoped lang="scss">
+<style scoped>
 
 </style>

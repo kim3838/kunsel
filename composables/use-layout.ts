@@ -220,28 +220,12 @@ export const useLayout = () => {
                 path_active: '/settings',
                 options: [
                     {
-                        key: 'settings/compensations',
+                        key: 'settings/payroll-components',
                         type: 'link',
-                        title: 'Compensations',
+                        title: 'Payroll Components',
                         //icon: 'ic:baseline-attach-money',
-                        to: '/settings/compensations',
-                        route_active: 'settings-compensations'
-                    },
-                    {
-                        key: 'settings/deductions',
-                        type: 'link',
-                        title: 'Deductions',
-                        //icon: 'ic:baseline-money-off',
-                        to: '/settings/deductions',
-                        route_active: 'settings-deductions'
-                    },
-                    {
-                        key: 'settings/income-taxes',
-                        type: 'link',
-                        title: 'Income Tax',
-                        //icon: 'ic:baseline-account-balance',//'game-icons:pay-money',
-                        to: '/settings/incometaxes',
-                        route_active: 'settings-incometaxes'
+                        to: '/settings/payrollcomponents',
+                        route_active: 'settings-payrollcomponents'
                     },
                     {
                         key: 'settings/pay-period-settings',
