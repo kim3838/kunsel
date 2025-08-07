@@ -10,8 +10,15 @@
                         </div>
                     </div>
 
-                    <div class="grid gap-2 grid-cols-3 sm:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-8">
+                    <div class="flex flex-row flex-wrap gap-2">
                         <Button class="w-min" ref="submitButton" type="submit" :disabled="disableActions" :size="'md'" :icon="disableActions ? 'eos-icons:loading' : 'mdi:data'" :label="disableActions ? 'Loading' : 'Load'"></Button>
+                        <RadioGroup
+                            class="scaffold-border px-2"
+                            :disabled="disableActions"
+                            :selections="viewMode.selection"
+                            :size="'md'"
+                            :orientation="'horizontal'"
+                            v-model="viewMode.selected" />
                     </div>
 
                     <div>
@@ -20,47 +27,74 @@
                     </div>
                 </form>
 
-                <FansyFrame>
-                    <template v-slot:content>
-                        <div class="mb-2 flex">
-                            <NuxtLink
-                                :to="`/workforce/employees/create-employee`">
-                                <Button class="w-min" :disabled="disableActions" :size="'sm'" :icon="disableActions ? 'eos-icons:loading' : 'mdi:plus'" :label="disableActions ? 'Please wait' : ''"></Button>
-                            </NuxtLink>
+                <div class="px-[20px]">
+                    <div class="mb-2 flex">
+                        <NuxtLink
+                            :to="`/workforce/employees/create-employee`">
+                            <Button class="w-min" :disabled="disableActions" :size="'sm'" :icon="disableActions ? 'eos-icons:loading' : 'mdi:plus'" :label="disableActions ? 'Please wait' : ''"></Button>
+                        </NuxtLink>
+                    </div>
+
+                    <div v-if="viewMode.selected == DATA_VIEW_MODE.FLEX" class="flex flex-row flex-wrap gap-4">
+
+                        <div v-for="employee in employees.data" :key="employee.id" class="flex-grow scaffold-border p-4 space-y-2">
+                            <div>
+                                <div class="text-base"><span class="font-semibold">{{employee.number}}</span>&nbsp;{{employee.full_name}}</div>
+                                <div class="text-sm"><span>Gender: </span>{{employee.gender.text}}</div>
+                                <div class="text-sm"><span>Marital Status: </span>{{employee.marital_status.text}}</div>
+                            </div>
+
+                            <div class="w-full space-x-0.5 flex items-center">
+                                <NuxtLink
+                                    :to="`/workforce/employees/${employee.ulid}`">
+                                    <Button type="button" :variant="'outline'" :icon="'mdi:information-variant-circle-outline'" :size="'sm'"  :label="'info'" :override="{font_family: `GG Sans`}"></Button>
+                                </NuxtLink>
+                            </div>
+
+                            <div>
+                                <div class="text-sm"><span>Department: </span>{{employee.department?.name ?? 'None'}}</div>
+                                <div class="text-sm"><span>Designation: </span>{{employee.designation?.name ?? 'None'}}</div>
+                                <div class="text-sm"><span>Manager: </span>{{employee.manager?.name ?? 'None'}}</div>
+                            </div>
                         </div>
-                        <DataTable
-                            :headers="employeesHeaders"
-                            :size="'lg'"
-                            :rows="employees.data"
-                            :disabled="disableDataTable"
-                            v-model="selectedEmployees"
-                            selection>
-                            <template v-slot:cell.actions="{cell,slot}">
-                                <div class="h-full mx-0.5 space-x-0.5 w-full flex items-center">
-                                    <NuxtLink
-                                        :to="`/workforce/employees/${cell.ulid}`">
-                                        <Button type="button" :variant="'default'" :icon="'mdi:information-variant-circle-outline'" :size="slot.buttonSize" :label="'info'" :override="{font_family: `GG Sans`}"></Button>
-                                    </NuxtLink>
-                                </div>
-                            </template>
-                            <template v-slot:cell.gender="{cell,slot}">
-                                <div class="p-[3px]">{{cell.gender.text}}</div>
-                            </template>
-                            <template v-slot:cell.marital_status="{cell,slot}">
-                                <div class="p-[3px]">{{cell.marital_status.text}}</div>
-                            </template>
-                            <template v-slot:cell.department="{cell,slot}">
-                                <div class="p-[3px]">{{cell.department?.name}}</div>
-                            </template>
-                            <template v-slot:cell.designation="{cell,slot}">
-                                <div class="p-[3px]">{{cell.designation?.name}}</div>
-                            </template>
-                            <template v-slot:cell.manager="{cell,slot}">
-                                <div class="p-[3px]">{{cell.manager?.full_name}}</div>
-                            </template>
-                        </DataTable>
-                    </template>
-                </FansyFrame>
+                        <div v-if="noEmployeeRecords">
+                            No Record Found.
+                        </div>
+                    </div>
+
+                    <DataTable
+                        v-if="viewMode.selected == DATA_VIEW_MODE.LIST"
+                        :headers="employeesHeaders"
+                        :size="'lg'"
+                        :rows="employees.data"
+                        :disabled="disableDataTable"
+                        v-model="selectedEmployees"
+                        selection>
+                        <template v-slot:cell.actions="{cell,slot}">
+                            <div class="h-full mx-0.5 space-x-0.5 w-full flex items-center">
+                                <NuxtLink
+                                    :to="`/workforce/employees/${cell.ulid}`">
+                                    <Button type="button" :variant="'default'" :icon="'mdi:information-variant-circle-outline'" :size="slot.buttonSize" :label="'info'" :override="{font_family: `GG Sans`}"></Button>
+                                </NuxtLink>
+                            </div>
+                        </template>
+                        <template v-slot:cell.gender="{cell,slot}">
+                            <div class="p-[3px]">{{cell.gender.text}}</div>
+                        </template>
+                        <template v-slot:cell.marital_status="{cell,slot}">
+                            <div class="p-[3px]">{{cell.marital_status.text}}</div>
+                        </template>
+                        <template v-slot:cell.department="{cell,slot}">
+                            <div class="p-[3px]">{{cell.department?.name}}</div>
+                        </template>
+                        <template v-slot:cell.designation="{cell,slot}">
+                            <div class="p-[3px]">{{cell.designation?.name}}</div>
+                        </template>
+                        <template v-slot:cell.manager="{cell,slot}">
+                            <div class="p-[3px]">{{cell.manager?.full_name}}</div>
+                        </template>
+                    </DataTable>
+                </div>
             </div>
         </DefaultWrapper>
     </div>
@@ -138,6 +172,23 @@ let filters = reactive<{
         keyword: '',
         callback: 1
     }
+});
+const noEmployeeRecords = computed(() => {
+    return employees.meta.pagination.total === 0;
+})
+const viewMode = reactive<{
+    selection: Array<{text: string, value: number}>;
+    selected: number | null;
+}>({
+    selection: [
+        {text : 'Flex', value: DATA_VIEW_MODE.FLEX},
+        {text : 'List', value: DATA_VIEW_MODE.LIST},
+    ],
+    selected: DATA_VIEW_MODE.FLEX
+});
+watch(() => viewMode.selected,async viewModeType => {
+    await nextTick();
+    paginate(1, true);
 });
 let pageComputed = computed({
     get() {
