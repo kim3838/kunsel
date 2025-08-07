@@ -178,7 +178,7 @@ const assignablePayrollComponentSelectedChange = (value: null | number) => {
     if(props.payrollComponentFormulable == FORMULABLE.EARNINGS){
 
         selectedPayrollComponentIsAmountable.value = _includes([
-            COMPENSATIONS.SALARY,
+            COMPENSATIONS.BASIC_SALARY,
             COMPENSATIONS.REGULAR_ALLOWANCE
         ], selectedPayrollComponentTemp.type.value);
 
@@ -365,7 +365,7 @@ const componentForm = computed(() => {
 
     if(props.payrollComponentFormulable == FORMULABLE.EARNINGS){
 
-        if (selectedPayrollComponentType == COMPENSATIONS.SALARY ||
+        if (selectedPayrollComponentType == COMPENSATIONS.BASIC_SALARY ||
             selectedPayrollComponentType == COMPENSATIONS.REGULAR_ALLOWANCE) {
 
             return {

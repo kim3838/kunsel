@@ -14,7 +14,7 @@ export const FORMULABLE_MODEL_MAP_KEY = {
 };
 
 export const  COMPENSATIONS = {
-    SALARY : 0,
+    BASIC_SALARY : 0,
     OVERTIME : 1,
     BENEFIT : 2,
     REGULAR_ALLOWANCE : 3
