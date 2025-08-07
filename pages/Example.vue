@@ -15,6 +15,10 @@
                     </div>
                 </div>
             </div>
+            <div>
+                timezoneSelectionsState {{timezoneSelections}}<br>
+                common.timezoneSelections {{common.timezoneSelections}}<br>
+            </div>
         </LandingWrapper>
     </div>
 </template>
@@ -28,6 +32,8 @@ const singleLineStringValue = ref('');
 const multiLineStringValue = ref('');
 const ofetchData = ref('');
 const ofetchPending = ref(false);
+const common = useCommon();
+const timezoneSelections = timezoneSelectionsState();
 
 async function oFetchGet(){
     ofetchData.value = '';

@@ -51,6 +51,7 @@
 <script setup lang="ts">
 
 const {fetchAssociatedCompanies, storeAssociatedCompanies} = useAssociation();
+const {timezoneSelections} = useCommon();
 useLayout().setNavigationMode('solid', 'Associated-Companies/[id].vue');
 
 const route = useRoute();
@@ -102,7 +103,7 @@ const currencyOptions = reactive({
 });
 const timezoneOptions = reactive({
     search: '',
-    selection: [],
+    selection: timezoneSelections.value,
     selected: null
 });
 const fetchAssociatedAccounts = async() => {
@@ -144,17 +145,6 @@ const fetchCurrencies = async() => {
     })
 }
 await fetchCurrencies();
-const fetchTimezones = async() => {
-
-    await laraFetch("/api/timezone-selections", {
-        method: 'GET',
-    }, {
-        onSuccessResponse: async (request, options, response) => {
-            timezoneOptions.selection = _get(response, '_data.values.selection', []);
-        }
-    })
-}
-await fetchTimezones();
 
 //Fetch Company Information
 const fetchCompany = async () => {

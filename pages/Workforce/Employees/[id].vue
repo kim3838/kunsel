@@ -521,7 +521,7 @@ import type {SelectionOptionsT} from "@/public/js/types/form";
 useLayout().setNavigationMode('solid', 'Employees/[id].vue');
 
 const route = useRoute();
-const {payrollComponentPaySelections} = useCommon();
+const {payrollComponentPaySelections, timezoneSelections} = useCommon();
 const {screenWidthBreakpoint, width: screenWidth} = useScreen();
 const {isAuthenticated} = useAuth();
 const {$authStore, $associationStore, $moment} = useNuxtApp();
@@ -626,20 +626,9 @@ const employeeUserStatusOptions = reactive({
 });
 const employeeUserTimezoneOptions = reactive<SelectionOptionsT>({
     search: '',
-    selection: [],
+    selection: timezoneSelections.value,
     selected: null
 });
-const fetchTimezones = async() => {
-
-    await laraFetch("/api/timezone-selections", {
-        method: 'GET',
-    }, {
-        onSuccessResponse: async (request, options, response) => {
-            employeeUserTimezoneOptions.selection = _get(response, '_data.values.selection', []);
-        }
-    })
-}
-await fetchTimezones();
 
 const nonEmployeeUsersPending = ref(false);
 const nonEmployeeUserOptions = reactive({

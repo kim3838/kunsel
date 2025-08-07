@@ -10,10 +10,16 @@ export const payrollComponentPaySelectionsState = () => {
     });
 }
 
+export const timezoneSelectionsState = () => {
+    return useState('timezone_selections', () => []);
+}
+
 export const useCommon = () => {
     const payrollComponentPaySelections = payrollComponentPaySelectionsState();
+    const timezoneSelections = timezoneSelectionsState();
 
     const ssrFetchCommon = async () => {
+
         await laraSsrUseFetch('/api/payroll-component-pay-selections', {
             method: 'GET',
         }, {
@@ -22,6 +28,15 @@ export const useCommon = () => {
                 payrollComponentPaySelections.value.pay_period = _get(response, '_data.values.pay_period', []);
                 payrollComponentPaySelections.value.pay_type = _get(response, '_data.values.pay_type', []);
                 payrollComponentPaySelections.value.pay_frequency = _get(response, '_data.values.pay_frequency', []);
+            },
+        });
+
+        await laraSsrUseFetch('/api/timezone-selections', {
+            method: 'GET',
+        }, {
+            onSuccessResponse: async (request, options, response) => {
+
+                timezoneSelections.value = _get(response, '_data.values.selection', []);
             },
         });
     }
@@ -38,6 +53,15 @@ export const useCommon = () => {
                 payrollComponentPaySelections.value.pay_frequency = _get(response, '_data.values.pay_frequency', []);
             },
         });
+
+        await laraFetch('/api/timezone-selections', {
+            method: 'GET',
+        }, {
+            onSuccessResponse: async (request, options, response) => {
+
+                timezoneSelections.value = _get(response, '_data.values.selections', []);
+            },
+        });
     }
 
     const resetCommon = async () => {
@@ -46,12 +70,14 @@ export const useCommon = () => {
             pay_type: [],
             pay_frequency: [],
         };
+        timezoneSelections.value = [];
     }
 
     return {
         ssrFetchCommon,
         fetchCommon,
         payrollComponentPaySelections,
+        timezoneSelections,
         resetCommon
     };
 }
