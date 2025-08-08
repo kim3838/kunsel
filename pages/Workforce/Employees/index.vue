@@ -188,6 +188,7 @@ const viewMode = reactive<{
 });
 watch(() => viewMode.selected,async viewModeType => {
     await nextTick();
+    selectedEmployees.value = [];
     paginate(1, true);
 });
 let pageComputed = computed({
