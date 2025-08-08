@@ -829,7 +829,7 @@ const payTypeSelection = payrollComponentPaySelections.value.pay_type;
 const payFrequencySelection = payrollComponentPaySelections.value.pay_frequency;
 
 watch(updatedAssociatedCompanyFlag, (newValue) => {
-    if(isAuthenticated.value){
+    if(isAuthenticated.value && selectedAssociatedCompany.value){
         navigateTo("/workforce/employees", {replace: true});
     }
 });

@@ -144,7 +144,7 @@ const importedEmployeesCount = computed(() => {
 })
 
 watch(updatedAssociatedCompanyFlag, (newValue) => {
-    if(isAuthenticated.value){
+    if(isAuthenticated.value && selectedAssociatedCompany.value){
         validationErrorsData.value = [];
         importedEmployeesData.value = [];
     }

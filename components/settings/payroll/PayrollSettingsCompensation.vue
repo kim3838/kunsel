@@ -77,7 +77,7 @@ const compensationsHeaders = reactive<TableHeaderT[]>([
 ]);
 
 watch(updatedAssociatedCompanyFlag, (newValue) => {
-    if(isAuthenticated.value){
+    if(isAuthenticated.value && selectedAssociatedCompany.value){
         compensationsExecute();
     }
 })

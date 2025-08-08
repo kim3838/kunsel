@@ -50,7 +50,7 @@ const {
 const orderSequenceable = nuxtApp.$orderSequenceable as (data: Sequenceable[]) => void;
 
 watch(updatedAssociatedCompanyFlag, (newValue) => {
-    if(isAuthenticated.value){
+    if(isAuthenticated.value && selectedAssociatedCompany.value){
         salaryStatementModulesExecute();
     }
 });

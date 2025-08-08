@@ -145,7 +145,7 @@ const {
 } = storeToRefs(nuxtApp.$authStore);
 
 watch(updatedAssociatedCompanyFlag, (newValue) => {
-    if(isAuthenticated.value){
+    if(isAuthenticated.value && selectedAssociatedCompany.value){
         departmentsExecute();
     }
 })

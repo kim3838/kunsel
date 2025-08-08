@@ -131,7 +131,7 @@ const assignable = reactive({
 });
 
 watch(updatedAssociatedCompanyFlag, (newValue) => {
-    if(isAuthenticated.value){
+    if(isAuthenticated.value && selectedAssociatedCompany.value){
         compensationFormulaExecute();
     }
 })
