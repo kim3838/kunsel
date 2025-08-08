@@ -14,7 +14,7 @@
             @click="previousPageHandler()"
             :variant="'flat'"
             :size="buttonSize"
-            :icon="'ic:sharp-keyboard-double-arrow-left'"
+            :icon="'ic:sharp-keyboard-arrow-left'"
             :label="previousPage.label" />
         <Button
             type="button"
@@ -22,7 +22,7 @@
             @click="nextPageHandler()"
             :variant="'flat'"
             :size="buttonSize"
-            :icon="'ic:sharp-keyboard-double-arrow-right'"
+            :icon="'ic:sharp-keyboard-arrow-right'"
             :label="nextPage.label" />
         <Button
             type="button"
