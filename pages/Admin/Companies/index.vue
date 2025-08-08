@@ -20,7 +20,7 @@
                     </div>
 
                     <div>
-                        <PageInformation v-if="companies.meta.pagination.total > 0" :pagination="companies.meta.pagination" :no-record-label="'No Record Found'"/>
+                        <PageInformation :pagination="companies.meta.pagination" :pending="companiesPending"/>
                         <Pagination :size="'lg'" :pagination="companies.meta.pagination" :pending="companiesPending" v-model="pageComputed"/>
                     </div>
                 </form>

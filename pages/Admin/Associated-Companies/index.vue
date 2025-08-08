@@ -20,7 +20,7 @@
                     </div>
 
                     <div>
-                        <PageInformation v-if="companies.meta.pagination.total > 0" :pagination="companies.meta.pagination" :no-record-label="'No Record Found'"/>
+                        <PageInformation :pagination="companies.meta.pagination" :pending="companiesPending"/>
                         <Pagination :size="'lg'" :pagination="companies.meta.pagination" :pending="companiesPending" v-model="pageComputed"/>
                     </div>
                 </form>
@@ -32,12 +32,6 @@
                             <Button class="w-min" :disabled="disableActions" :size="'sm'" :icon="disableActions ? 'eos-icons:loading' : 'mdi:plus'" :label="disableActions ? 'Please wait' : ''"></Button>
                         </NuxtLink>
                     </div>
-
-                    <UnorderedList
-                        v-if="disableActions"
-                        :icon="'eos-icons:loading'"
-                        :size="'md'"
-                        :label="'Please wait...'"/>
 
                     <div class="mx-auto max-w-screen-2xl flex flex-row flex-wrap gap-4">
 

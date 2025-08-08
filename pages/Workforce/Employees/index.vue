@@ -22,7 +22,7 @@
                     </div>
 
                     <div>
-                        <PageInformation v-if="employees.meta.pagination.total > 0" :pagination="employees.meta.pagination" :no-record-label="'No Record Found'"/>
+                        <PageInformation :pagination="employees.meta.pagination" :pending="employeesPending"/>
                         <Pagination :size="'lg'" :pagination="employees.meta.pagination" :pending="employeesPending" v-model="pageComputed"/>
                     </div>
                 </form>

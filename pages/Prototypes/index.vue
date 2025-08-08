@@ -43,9 +43,8 @@
 
                         <div>
                             <PageInformation
-                                v-if="prototypes.meta.pagination.total > 0"
                                 :pagination="prototypes.meta.pagination"
-                                :no-record-label="'No Record Found'"/>
+                                :pending="pending"/>
                             <Pagination
                                 :size="'lg'"
                                 :pagination="prototypes.meta.pagination"
@@ -196,6 +195,16 @@ let pending = ref(false);
 let execute = async () => {
     pending.value = true;
     clearTimeout(filters.search.callback);
+    prototypes.data = [];
+    prototypes.meta = {
+        pagination: {
+            total: 0,
+            count: 0,
+            per_page: 0,
+            current_page: 0,
+            total_pages: 0
+        }
+    };
 
     await laraFetch("/api/v1/prototypes", {
         method: 'GET',
