@@ -18,21 +18,16 @@
                         </div>
                     </div>
 
-                    <div class="grid gap-2 grid-cols-3 sm:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-8">
+                    <div class="flex flex-row flex-wrap gap-2">
                         <Button class="w-min" ref="submitButton" type="submit" :disabled="disableActions" :size="'md'" :icon="disableActions ? 'eos-icons:loading' : 'mdi:data'" :label="disableActions ? 'Loading' : 'Load'"></Button>
-                    </div>
-
-                    <div class="grid gap-2 grid-cols-1 sm:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-8">
-                        <div class="flex items-center col-span-2">
-                            <label>
-                                <Checkbox
-                                    :disabled="disableActions"
-                                    name="remember"
-                                    v-model="showAssociatedCompanies"
-                                    :size="'md'"
-                                    :label="'Show Associated Companies'" />
-                            </label>
-                        </div>
+                        <label class="flex items-center">
+                            <Checkbox
+                                :disabled="disableActions"
+                                name="remember"
+                                v-model="showAssociatedCompanies"
+                                :size="'md'"
+                                :label="'Show Associated Companies'" />
+                        </label>
                     </div>
 
                     <div>
@@ -48,11 +43,6 @@
                             <Button class="w-min" :disabled="disableActions" :size="'sm'" :icon="disableActions ? 'eos-icons:loading' : 'mdi:plus'" :label="disableActions ? 'Please wait' : ''"></Button>
                         </NuxtLink>
                     </div>
-                    <UnorderedList
-                        v-if="disableActions"
-                        :icon="'eos-icons:loading'"
-                        :size="'md'"
-                        :label="'Please wait...'"/>
                     <DataTable
                         :headers="usersHeaders"
                         :size="'lg'"
