@@ -292,6 +292,14 @@ export const useLayout = () => {
                             to: '/admin/companies',
                             route_active: 'admin-companies'
                         },
+                        {
+                            key: 'admin/users',
+                            type: 'link',
+                            title: 'Users',
+                            //icon: 'ic:baseline-recent-actors',
+                            to: '/admin/users',
+                            route_active: 'admin-users'
+                        },
                     ]: []),
                     ...(!userIsSuperAdmin.value ? [
                         {

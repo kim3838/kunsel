@@ -11,8 +11,15 @@
                         </div>
                     </div>
 
-                    <div class="grid gap-2 grid-cols-1 sm:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-8">
+                    <div class="flex flex-row flex-wrap gap-2">
                         <Button class="w-min" ref="submitButton" type="submit" :disabled="disableActions" :size="'md'" :icon="disableActions ? 'eos-icons:loading' : 'mdi:data'" :label="disableActions ? 'Loading' : 'Load'"></Button>
+                        <RadioGroup
+                            class="scaffold-border px-2"
+                            :disabled="disableActions"
+                            :selections="viewMode.selection"
+                            :size="'md'"
+                            :orientation="'horizontal'"
+                            v-model="viewMode.selected" />
                     </div>
 
                     <div>
@@ -21,40 +28,66 @@
                     </div>
                 </form>
 
-                <FansyFrame>
-                    <template v-slot:content>
-                        <div class="mb-2">
-                            <NuxtLink
-                                :to="`/admin/accounts/create-account`">
-                                <Button class="w-min" :disabled="disableActions" :size="'sm'" :icon="disableActions ? 'eos-icons:loading' : 'mdi:plus'" :label="disableActions ? 'Please wait' : ''"></Button>
-                            </NuxtLink>
+                <div class="px-[20px]">
+                    <div class="mb-2 flex">
+                        <NuxtLink
+                            :to="`/admin/accounts/create-account`">
+                            <Button class="w-min" :disabled="disableActions" :size="'sm'" :icon="disableActions ? 'eos-icons:loading' : 'mdi:plus'" :label="disableActions ? 'Please wait' : ''"></Button>
+                        </NuxtLink>
+                    </div>
+
+                    <div v-if="viewMode.selected == DATA_VIEW_MODE.FLEX" class="flex flex-row flex-wrap gap-4">
+
+                        <div v-for="account in accounts.data" :key="account.id" class="scaffold-border p-4 space-y-2">
+                            <div>
+                                <div><span class="font-semibold">Account #</span> {{account.number}}</div>
+                                <div class="text-sm">{{account.type.text}}</div>
+                                <div class="text-sm">Date registered: {{account.date_registered}}</div>
+                            </div>
+
+                            <div class="w-full space-x-0.5 flex items-center">
+                                <NuxtLink
+                                    :to="`/admin/accounts/${account.ulid}`">
+                                    <Button type="button" :variant="'outline'" :icon="'material-symbols:lab-profile-sharp'" :size="'sm'" :label="'info'" :override="{font_family: `GG Sans`}"></Button>
+                                </NuxtLink>
+                            </div>
+
+                            <div>
+                                <div class="mb-2 font-semibold">Subscriptions:</div>
+                                <UnorderedList
+                                    v-for="subscription in account.subscriptions"
+                                    :icon="'ic:sharp-radio-button-checked'"
+                                    :label="subscription.module.text" />
+                            </div>
                         </div>
-                        <UnorderedList
-                            v-if="disableActions"
-                            :icon="'eos-icons:loading'"
-                            :size="'md'"
-                            :label="'Please wait...'"/>
-                        <DataTable
-                            :headers="accountsHeaders"
-                            :size="'lg'"
-                            :rows="accounts.data"
-                            :disabled="disableDataTable"
-                            v-model="selectedAccounts"
-                            selection>
-                            <template v-slot:cell.actions="{cell,slot}">
-                                <div class="h-full mx-0.5 space-x-0.5 w-full flex items-center">
-                                    <NuxtLink
-                                        :to="`/admin/accounts/${cell.ulid}`">
-                                        <Button type="button" :icon="'material-symbols:lab-profile-sharp'" :size="slot.buttonSize" :label="''"></Button>
-                                    </NuxtLink>
-                                </div>
-                            </template>
-                            <template v-slot:cell.type="{cell,slot}">
-                                <div class="p-[3px]">{{cell.type.text}}</div>
-                            </template>
-                        </DataTable>
-                    </template>
-                </FansyFrame>
+
+                        <div v-if="noAccountRecords">
+                            No Record Found.
+                        </div>
+                    </div>
+
+                    <DataTable
+                        v-if="viewMode.selected == DATA_VIEW_MODE.LIST"
+                        :headers="accountsHeaders"
+                        :size="'lg'"
+                        :rows="accounts.data"
+                        :disabled="disableDataTable"
+                        v-model="selectedAccounts"
+                        selection>
+                        <template v-slot:cell.actions="{cell,slot}">
+                            <div class="h-full mx-0.5 space-x-0.5 w-full flex items-center">
+                                <NuxtLink
+                                    :to="`/admin/accounts/${cell.ulid}`">
+                                    <Button type="button" :icon="'material-symbols:lab-profile-sharp'" :size="slot.buttonSize" :label="''"></Button>
+                                </NuxtLink>
+                            </div>
+                        </template>
+                        <template v-slot:cell.type="{cell,slot}">
+                            <div class="p-[3px]">{{cell.type.text}}</div>
+                        </template>
+                    </DataTable>
+                </div>
+
             </div>
         </AdminWrapper>
     </div>
@@ -111,6 +144,19 @@ let filters = reactive<{
         keyword: '',
         callback: 1
     }
+});
+const noAccountRecords = computed(() => {
+    return accounts.meta.pagination.total === 0;
+})
+const viewMode = reactive<{
+    selection: Array<{text: string, value: number}>;
+    selected: number | null;
+}>({
+    selection: [
+        {text : 'Flex', value: DATA_VIEW_MODE.FLEX},
+        {text : 'List', value: DATA_VIEW_MODE.LIST},
+    ],
+    selected: DATA_VIEW_MODE.FLEX
 });
 let pageComputed = computed({
     get() {

@@ -4,7 +4,7 @@
             <div class="mx-auto max-w-screen-2xl">
                 <div class="flex px-[20px] pt-[20px] mb-2">
                     <NuxtLink
-                        :to="`/admin/associated-users`">
+                        :to="`/admin/users`">
                         <Button class="w-min" :variant="`outline`" :disabled="disableActions" :size="'sm'" :icon="disableActions ? 'eos-icons:loading' : 'ic:sharp-keyboard-arrow-left'" :label="disableActions ? 'Please wait' : ''"></Button>
                     </NuxtLink>
                 </div>
@@ -54,7 +54,6 @@
                             <template v-slot:cell.company_assignment_type="{cell, slot, scrollReference}">
                                 <div class="p-[1px]">
                                     <SingleSelectWrapper
-                                        :disabled="!isAdminInCompany(cell.company_id) || disableActions"
                                         in-horizontal-scrollable
                                         drop-shadow
                                         :scroll-reference="scrollReference"
@@ -98,7 +97,7 @@ const {timezoneSelections} = useCommon();
 const associatedUser = ref(null);
 
 definePageMeta({
-    middleware: ['auth', 'admin-in-any-company'],
+    middleware: ['auth', 'super-admin'],
     validate: async (route) => {
 
         if (import.meta.server) return true;
@@ -169,15 +168,6 @@ const authUserAssociatedCompanyOptions = reactive({
 const authUserAssociatedCompanies = computed(() => {
     return _map(authUserAssociatedCompanyOptions.selection, 'value');
 });
-const userAssociatedCompanyOptions = reactive({
-    search: '',
-    selection: [],
-    selected: []
-});
-const userAssociatedCompanies = computed(() => {
-    return _map(userAssociatedCompanyOptions.selection, 'value');
-});
-const isAdminInCompany = (companyId: Number | String) => _some(authUserAssociatedCompanies.value, id => id == companyId);
 
 // Fetch User Information
 const fetchAssociatedUser = async () => {
@@ -201,14 +191,8 @@ await fetchAssociatedUser();
 // Fetch Authenticated User Associated Companies
 const fetchAuthUserAssociatedCompanies = async() => {
 
-    await laraFetch("/api/associated-company-selections", {
+    await laraFetch("/api/company-selections", {
         method: 'GET',
-        params: {
-            filters: {
-                user_id: user?.value?.id,
-                assignment_type: [COMPANY_ASSIGNMENT_TYPE.ADMIN],
-            }
-        }
     }, {
         onSuccessResponse: async (request, options, response) => {
             authUserAssociatedCompanyOptions.selection = _get(response, '_data.values.selection', []);
@@ -216,26 +200,6 @@ const fetchAuthUserAssociatedCompanies = async() => {
     })
 }
 await fetchAuthUserAssociatedCompanies();
-
-// Fetch User Associated Companies
-const fetchUserAssociatedCompanies = async() => {
-    if(route.params.id === 'create-user'){return;}
-
-    await laraFetch("/api/associated-company-selections", {
-        method: 'GET',
-        params: {
-            filters: {
-                user_id: associatedUser.value.id,
-                assignment_type: [COMPANY_ASSIGNMENT_TYPE.DEFAULT, COMPANY_ASSIGNMENT_TYPE.ADMIN],
-            }
-        }
-    }, {
-        onSuccessResponse: async (request, options, response) => {
-            userAssociatedCompanyOptions.selection = _get(response, '_data.values.selection', []);
-        }
-    })
-}
-await fetchUserAssociatedCompanies();
 
 const userCompanyAssignmentHeaders = reactive<TableHeaderT[]>([
     { text: 'Company', value: 'company_name', alignData: 'left'},
@@ -255,7 +219,7 @@ const fetchUserCompanyAssignment = async () => {
         params: {
             filters: {
                 user_id: associatedUser.value.id,
-                associated_companies: _uniq(authUserAssociatedCompanies.value.concat(userAssociatedCompanies.value)),
+                associated_companies: authUserAssociatedCompanies.value,
             }
         }
     }, {
@@ -356,7 +320,7 @@ const userCompanyAssignmentFormSubmit = async(userId = null) => {
             await fetchAssociatedCompanies();
             await storeAssociatedCompanies();
             await navigateTo({
-                path: '/admin/associated-users',
+                path: '/admin/users',
             });
         },
     });
@@ -393,7 +357,7 @@ const createUserFormSubmit = async() => {
         },
         onSuccessResponse: async (request, options, response) => {
             const userUlid = _get(response, '_data.values.user.ulid', null);
-            await navigateTo({path: `/admin/associated-users/${userUlid}`, replace: true});
+            await navigateTo({path: `/admin/users/${userUlid}`, replace: true});
         },
     });
 }
