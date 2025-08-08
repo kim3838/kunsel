@@ -37,17 +37,18 @@
                 </form>
 
                 <div class="px-[20px]">
-                    <div class="mb-2 flex">
+                    <div class="mb-2 flex items-center min-h-8">
+                        <UnorderedList
+                            v-if="disableActions"
+                            :icon="'eos-icons:loading'"
+                            :size="'md'"
+                            :label="'Please wait...'"/>
                         <NuxtLink
-                            ><!-- :to="`/admin/associated-users/create-user`" -->
-                            <Button class="w-min" :disabled="disableActions" :size="'sm'" :icon="disableActions ? 'eos-icons:loading' : 'mdi:plus'" :label="disableActions ? 'Please wait' : ''"></Button>
+                            v-else
+                            :to="`/admin/users/create-user`">
+                            <Button class="w-min" :disabled="disableActions" :size="'sm'" :icon="disableActions ? 'eos-icons:loading' : 'mdi:plus'" :label="''"></Button>
                         </NuxtLink>
                     </div>
-                    <UnorderedList
-                        v-if="disableActions"
-                        :icon="'eos-icons:loading'"
-                        :size="'md'"
-                        :label="'Please wait...'"/>
                     <DataTable
                         :headers="usersHeaders"
                         :size="'lg'"
@@ -56,14 +57,14 @@
                         v-model="selectedUsers"
                         :sub-row-slug="$associationStore.associatedUserSubRowSlug"
                         :sub-row-settings="{
-                                type: DATATABLE_SUBROW_TYPE.TITLED,
-                                containerPaddingTop: 0.25,
-                                containerPaddingBottom: 0.75,
-                                titleSize: 'sm',
-                                rowVerticalLine: true,
-                                verticalBorderType: 'dashed',
-                                horizontalBorderType: 'dashed',
-                            }"
+                            type: DATATABLE_SUBROW_TYPE.TITLED,
+                            containerPaddingTop: 0.25,
+                            containerPaddingBottom: 0.75,
+                            titleSize: 'sm',
+                            rowVerticalLine: true,
+                            verticalBorderType: 'dashed',
+                            horizontalBorderType: 'dashed',
+                        }"
                         :stripped="false"
                         selection>
                         <template v-slot:cell.actions="{cell,slot}">

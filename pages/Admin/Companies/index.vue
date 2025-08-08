@@ -27,8 +27,14 @@
 
                 <FansyFrame>
                     <template v-slot:content>
-                        <div class="mb-2 flex">
+                        <div class="mb-2 flex items-center min-h-8">
+                            <UnorderedList
+                                v-if="disableActions"
+                                :icon="'eos-icons:loading'"
+                                :size="'md'"
+                                :label="'Please wait...'"/>
                             <NuxtLink
+                                v-else
                                 :to="`/admin/companies/create-company`">
                                 <Button class="w-min" :disabled="disableActions" :size="'sm'" :icon="disableActions ? 'eos-icons:loading' : 'mdi:plus'" :label="disableActions ? 'Please wait' : ''"></Button>
                             </NuxtLink>
