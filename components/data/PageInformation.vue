@@ -21,9 +21,9 @@ const props = defineProps({
             }
         }
     },
-    noRecordLabel: {
-        type: String,
-        default: 'No Record Found',
+    pending: {
+        type: Boolean,
+        default: false,
     },
 });
 
@@ -57,8 +57,8 @@ const showing = computed(() => {
 });
 
 const pageInformation = computed(() => {
-    return totalRow.value == 0
-        ? props.noRecordLabel
-        : pageInfo.value + ", Showing " + showing.value + " Result" + (totalRow.value > 1 ? 's' : '');
+    let info = pageInfo.value + ", Showing " + showing.value + " Result" + (totalRow.value > 1 ? 's' : '');
+
+    return props.pending ? '...' : info;
 });
 </script>
