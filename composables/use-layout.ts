@@ -212,6 +212,20 @@ export const useLayout = () => {
                         route_active: 'workforce-designations'
                     },
                 ]
+            },{
+                key: 'policies',
+                type: 'sub-nav',
+                title: 'Policies',
+                path_active: '/policies',
+                options:[
+                    {
+                        key: 'policies/shifts',
+                        type: 'link',
+                        title: 'Shifts',
+                        to: '/policies/shifts',
+                        route_active: 'policies-shifts'
+                    },
+                ]
             }, {
                 key: 'settings',
                 type: 'sub-nav',

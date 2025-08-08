@@ -1,0 +1,334 @@
+<template>
+    <div>
+        <DefaultWrapper>
+            <div class="mx-auto max-w-screen-2xl">
+                <form @submit.prevent="paginate(1, true)" class="space-y-2 p-[20px]">
+                    <div class="grid gap-2 grid-cols-3 sm:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-8">
+                        <div>
+                            <div>
+                                <InputLabel :size="'sm'" value="Search" />
+                                <Input :size="'md'" ref="searchInput" v-model="filters.search.keyword" class="w-full" placeholder="Search" type="text" autocomplete="off"/>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flex flex-row flex-wrap gap-2">
+                        <Button class="w-min" ref="submitButton" type="submit" :disabled="disableActions" :size="'md'" :icon="disableActions ? 'eos-icons:loading' : 'mdi:data'" :label="disableActions ? 'Loading' : 'Load'"></Button>
+                        <RadioGroup
+                            class="scaffold-border px-2"
+                            :disabled="disableActions"
+                            :selections="viewMode.selection"
+                            :size="'md'"
+                            :orientation="'horizontal'"
+                            v-model="viewMode.selected" />
+                        <label class="flex items-center">
+                            <Checkbox
+                                :disabled="disableActions"
+                                name="remember"
+                                v-model="showSchedulesPerShift"
+                                :size="'md'"
+                                :label="'Show Schedules Per Shift'" />
+                        </label>
+                    </div>
+
+                    <div>
+                        <PageInformation :pagination="shifts.meta.pagination" :pending="shiftsPending" />
+                        <Pagination :size="'lg'" :pagination="shifts.meta.pagination" :pending="shiftsPending" v-model="pageComputed"/>
+                    </div>
+                </form>
+
+                <div class="px-[20px]">
+                    <div class="mb-2 flex items-center min-h-8">
+                        <UnorderedList
+                            v-if="disableActions"
+                            :icon="'eos-icons:loading'"
+                            :size="'md'"
+                            :label="'Please wait...'"/>
+                        <NuxtLink
+                            v-else
+                            :to="`#`"><!-- /policies/shift/create-shif -->
+                            <Button class="w-min" :disabled="disableActions" :size="'sm'" :icon="disableActions ? 'eos-icons:loading' : 'mdi:plus'" :label="disableActions ? 'Please wait' : ''"></Button>
+                        </NuxtLink>
+                    </div>
+
+                    <DataTable
+                        v-if="viewMode.selected == DATA_VIEW_MODE.LIST"
+                        :headers="shiftsHeaders"
+                        :size="'lg'"
+                        :rows="shifts.data"
+                        :disabled="disableDataTable"
+                        v-model="selectedShifts"
+                        :sub-row-slug="shiftSubRowSlug"
+                        :sub-row-settings="{
+                            type: DATATABLE_SUBROW_TYPE.TITLED,
+                            containerPaddingTop: 0.25,
+                            containerPaddingBottom: 0.75,
+                            titleSize: 'md',
+                            rowVerticalLine: true,
+                            verticalBorderType: 'dashed',
+                            horizontalBorderType: 'dashed',
+                        }"
+                        :stripped="false"
+                        selection>
+                        <template v-slot:cell.actions="{cell,slot}">
+                            <div class="h-full mx-0.5 space-x-0.5 w-full flex items-center">
+                                <NuxtLink
+                                    ><!-- :to="`/policies/shift/${cell.ulid}`" -->
+                                    <Button type="button" :variant="'default'" :icon="'mdi:pen'" :size="slot.buttonSize" :label="'Edit'" :override="{font_family: `GG Sans`}"></Button>
+                                </NuxtLink>
+                            </div>
+                        </template>
+                        <template v-slot:cell.type="{cell,slot}">
+                            <div class="p-[3px]">{{cell.type.text}}</div>
+                        </template>
+                        <template v-slot:cell.is_default="{cell, slot, scrollReference}">
+                            <div class="flex justify-center">
+                                <NonModelCheckBox disabled :size="slot.checkBoxSize" :checked="cell.is_default" ></NonModelCheckBox>
+                            </div>
+                        </template>
+                        <template v-slot:sub_row_slot="{rowIndex, cell, slot}">
+                            <div class="inline-flex items-center scaffold-border pr-2">
+                                <Icon name="mdi:info-variant" :class="[slot.iconSizeClass]" /><div :class="[slot.titleSizeClass]">Shift Schedules</div>
+                            </div>
+
+                            <ShiftSubRow
+                                :rows="cell[slot.slug]"
+                                :disabled="disableDataTable"
+                            ></ShiftSubRow>
+                        </template>
+                    </DataTable>
+                </div>
+            </div>
+        </DefaultWrapper>
+    </div>
+</template>
+
+<script setup lang="ts">
+import type {DataTableMeta, TableHeaderT, TableRowT} from "@/public/js/types/data";
+
+import {storeToRefs} from "pinia";
+
+definePageMeta({middleware: ['auth', 'admin-of-selected-company']});
+useLayout().setNavigationMode('solid');
+
+const {isAuthenticated} = useAuth();
+const nuxtApp = useNuxtApp();
+const {
+    updatedAssociatedCompanyFlag
+} = storeToRefs(nuxtApp.$associationStore);
+const {
+    selectedAssociatedCompany
+} = storeToRefs(nuxtApp.$authStore);
+
+watch(updatedAssociatedCompanyFlag, (newValue) => {
+    if(isAuthenticated.value && selectedAssociatedCompany.value){
+        paginate();
+    }
+})
+
+const showSchedulesPerShift = ref(false);
+const shiftSubRowSlug = ref('');
+
+watch(() => {return showSchedulesPerShift.value;}, (show) => {
+    if(show){
+        shiftSubRowSlug.value = 'schedules';
+        paginate(1, true)
+    } else {
+        shiftSubRowSlug.value = '';
+        paginate(1, true)
+    }
+})
+
+const shiftsHeaders = reactive<TableHeaderT[]>([
+    { text: '', value: 'actions'},
+    { text: 'Code', value: 'code'},
+    { text: 'Name', value: 'name'},
+    { text: 'Type', value: 'type'},
+    { text: 'Is Default', value: 'is_default'},
+]);
+
+const shifts = reactive<{
+    data: TableRowT[];
+    meta: DataTableMeta
+}>({
+    'data': [],
+    'meta': {
+        pagination: {
+            total: 0,
+            count: 0,
+            per_page: 0,
+            current_page: 0,
+            total_pages: 0
+        }
+    }
+});
+
+let filters = reactive<{
+    page: number,
+    perPage: number,
+    search: {
+        keyword: string,
+        callback: ReturnType<typeof setTimeout> | number
+    }
+}>({
+    page: 1,
+    perPage: 10,
+    search: {
+        keyword: '',
+        callback: 1
+    }
+});
+
+const noShiftRecords = computed(() => {
+    return shifts.meta.pagination.total === 0;
+})
+
+const viewMode = reactive<{
+    selection: Array<{text: string, value: number}>;
+    selected: number | null;
+}>({
+    selection: [
+        {text : 'List', value: DATA_VIEW_MODE.LIST},
+    ],
+    selected: DATA_VIEW_MODE.LIST
+});
+
+watch(() => viewMode.selected,async viewModeType => {
+    await nextTick();
+    selectedShifts.value = [];
+    paginate(1, true);
+});
+
+let pageComputed = computed({
+    get() {
+        return {
+            page: filters.page,
+            perPage: filters.perPage,
+        }
+    },
+    set(payload: { key: 'page' | 'perPage', value: number }) {
+        filters[payload.key] = payload.value;
+    }
+});
+
+let paramsComputed = computed(() => {
+    return {
+        page: filters.page,
+        perPage: filters.perPage,
+        filters: {
+            company_id: selectedAssociatedCompany.value,
+            search: filters.search.keyword,
+        }
+    };
+});
+const shiftsPending = ref(false);
+const selectedShifts = ref([]);
+
+const shiftsExecute = async () => {
+    shiftsPending.value = true;
+    shifts.data = [];
+    shifts.meta = {
+        pagination: {
+            total: 0,
+            count: 0,
+            per_page: 0,
+            current_page: 0,
+            total_pages: 0
+        }
+    };
+
+    await laraFetch("/api/shifts", {
+        method: 'GET',
+        params: paramsComputed.value
+    },{
+        onRequestError: () => {
+            shiftsPending.value = false;
+        },
+        onResponse: () => {
+            shiftsPending.value = false;
+        },
+        onSuccessResponse: async (request, options, response) => {
+            shifts.data = _get(response, '_data.values.data', []);
+            shifts.meta = _get(response, '_data.values.meta', {
+                pagination: {
+                    total: 0,
+                    count: 0,
+                    per_page: 0,
+                    current_page: 0,
+                    total_pages: 0
+                }
+            });
+        }
+    });
+}
+
+await shiftsExecute();
+
+const disableActions = computed(() => {
+    return shiftsPending.value || deleting.value;
+});
+const disableDataTable = computed(() => {
+    return shiftsPending.value || deleting.value;
+});
+
+function paginate(page = 1, clearSelection = false){
+    clearTimeout(filters.search.callback);
+
+    if(clearSelection){
+        selectedShifts.value = [];
+    }
+
+    if(filters.page === page){
+        shiftsExecute();
+    } else {
+        filters.page = page;
+    }
+}
+
+watch(() => {return filters.page;}, () => {paginate(filters.page);});
+watch(() => {return filters.perPage;}, () => {paginate(1);});
+
+const deleting = ref(false);
+const deleteSelected = async () => {
+
+    const selectedIds = selectedShifts.value;
+
+    if(_isEmpty(selectedIds)){
+        return;
+    }
+
+    deleting.value = true;
+
+    let batchDelete: Promise<any>[] = [];
+
+    selectedIds.forEach((id) => {
+        batchDelete.push(
+            new Promise((resolve, reject) => {
+                laraFetch(`/api/shift/${id}`, {
+                    method: 'DELETE',
+                    body: {
+                        'company_id': selectedAssociatedCompany.value,
+                    }
+                },{
+                    onRequestError: (request, options, error) => {
+                        reject(error);
+                    },
+                    onResponse: (request, options, response) => {
+                        resolve(response);
+                    }
+                })
+            })
+        );
+    });
+
+    await Promise.all(batchDelete);
+    selectedShifts.value = [];
+    await shiftsExecute();
+
+    deleting.value = false;
+}
+</script>
+
+<style scoped>
+
+</style>
