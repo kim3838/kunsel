@@ -1,7 +1,7 @@
 <template>
     <div class="space-y-2">
         <div class="space-y-2 px-[20px] py-2">
-            <p class="font-medium text-lg font-header">Deductions</p>
+            <p>Deductions</p>
             <div class="flex flex-row flex-wrap gap-2">
                 <Button class="inline-block" :icon="'mdi:plus'" :size="'sm'" :disabled="disableActions" @click="create"/>
                 <Button :variant="'outline'" :icon="'mdi:delete-outline'" class="inline-block" :size="'sm'" :disabled="disableActions" @click="deleteSelected"/>
