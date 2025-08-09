@@ -1,5 +1,5 @@
 <template>
-    <div class="font-data flex" :class="[orientationClass]">
+    <div class="font-data flex" :class="[orientationClass, heightClass]">
         <RadioBox
             class="flex items-center"
             v-for="selection in selections"
@@ -56,6 +56,18 @@ const orientationClass = computed(() => {
         'vertical': 'flex-col gap-0',
     }[props.orientation];
 })
+
+const heightClass = computed(() => {
+    return {
+        '2xs': 'h-5',
+        'xs': 'h-6',
+        'sm': 'h-7',
+        'md': 'h-8',
+        'lg': 'h-11',
+        'xl': 'h-14',
+        '2xl' : 'h-16',
+    }[props.size]
+});
 </script>
 
 <style scoped>
