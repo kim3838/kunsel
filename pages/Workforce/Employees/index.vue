@@ -60,7 +60,7 @@
                             <div>
                                 <div class="text-sm"><span>Department: </span>{{employee.department?.name ?? 'None'}}</div>
                                 <div class="text-sm"><span>Designation: </span>{{employee.designation?.name ?? 'None'}}</div>
-                                <div class="text-sm"><span>Manager: </span>{{employee.manager?.name ?? 'None'}}</div>
+                                <div class="text-sm"><span>Manager: </span>{{employee.manager?.full_name ?? 'None'}}</div>
                             </div>
                         </div>
                         <div v-if="noEmployeeRecords">
