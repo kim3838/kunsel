@@ -95,6 +95,7 @@ export default defineNuxtConfig({
                     { name: 'concat', as: '_concat'},
                     { name: 'remove', as: '_remove'},
                     { name: 'find', as: '_find'},
+                    { name: 'first', as: '_first'},
                 ]
             }
         ]
