@@ -154,6 +154,8 @@ const selectedPayPeriodPreset = computed(() => {
 const payPeriodPresetPending = ref(false)
 const payPeriodPresetExecute = async () => {
 
+    if(import.meta.server){return;}
+
     payPeriodPresetPending.value = true;
 
     await laraFetch(`/api/pay-period-preset-selections`, {

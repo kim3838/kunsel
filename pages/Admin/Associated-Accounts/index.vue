@@ -41,6 +41,9 @@ let paramsComputed = computed(() => {
 const accountsPending = ref(false);
 
 const accountsExecute = async () => {
+
+    if(import.meta.server){return;}
+
     accountsPending.value = true;
 
     await laraFetch("/api/associated-accounts", {

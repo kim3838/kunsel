@@ -223,6 +223,9 @@ let paramsComputed = computed(() => {
 const usersPending = ref(false);
 const selectedUsers = ref([]);
 const usersExecute = async () => {
+
+    if(import.meta.server){return;}
+
     usersPending.value = true;
     users.data = [];
     users.meta = {

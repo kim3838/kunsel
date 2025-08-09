@@ -94,6 +94,9 @@ const disableDataTable = computed(() => {
 })
 
 const deductionsExecute = async () => {
+
+    if(import.meta.server){return;}
+
     deductionsPending.value = true;
 
     await laraFetch("/api/deductions", {

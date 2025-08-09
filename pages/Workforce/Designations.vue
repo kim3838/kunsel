@@ -105,6 +105,9 @@ const designationsPending = ref(false);
 const selectedDesignations = ref([]);
 
 const designationsExecute = async () => {
+
+    if(import.meta.server){return;}
+
     designationsPending.value = true;
 
     await laraFetch("/api/designations", {

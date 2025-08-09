@@ -144,6 +144,9 @@ const compensationFormulaOptions = reactive({
 
 const compensationFormulaPending = ref(false)
 const compensationFormulaExecute = async () => {
+
+    if(import.meta.server){return;}
+
     compensationFormulaPending.value = true;
 
     await laraFetch("/api/company-formula-selections", {

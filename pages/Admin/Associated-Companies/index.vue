@@ -140,6 +140,9 @@ let paramsComputed = computed(() => {
 const companiesPending = ref(false);
 const selectedCompanies = ref([]);
 const companiesExecute = async () => {
+
+    if(import.meta.server){return;}
+
     companiesPending.value = true;
 
     await laraFetch("/api/associated-companies", {

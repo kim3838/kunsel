@@ -145,6 +145,9 @@ const incomeTaxFormulaOptions = reactive({
 
 const incomeTaxFormulaPending = ref(false)
 const incomeTaxFormulaExecute = async () => {
+
+    if(import.meta.server){return;}
+
     incomeTaxFormulaPending.value = true;
 
     await laraFetch("/api/company-formula-selections", {

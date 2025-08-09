@@ -225,6 +225,9 @@ const shiftsPending = ref(false);
 const selectedShifts = ref([]);
 
 const shiftsExecute = async () => {
+
+    if(import.meta.server){return;}
+
     shiftsPending.value = true;
     shifts.data = [];
     shifts.meta = {

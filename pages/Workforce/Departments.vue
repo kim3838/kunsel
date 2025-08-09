@@ -171,6 +171,9 @@ const syncSelectedSubDepartments = (selectionPayload) => {
 }
 
 const departmentsExecute = async () => {
+
+    if(import.meta.server){return;}
+
     departmentsPending.value = true;
     departmentsData.value = [];
 
@@ -280,6 +283,9 @@ const parentDepartmentSelectionOption = reactive({
 
 const parentDepartmentSelectionPending = ref(false);
 const parentDepartmentSelectionExecute = async () => {
+
+    if(import.meta.server){return;}
+
     parentDepartmentSelectionPending.value = true;
 
     await laraFetch("/api/department-selections", {

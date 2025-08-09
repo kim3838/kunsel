@@ -94,6 +94,9 @@ const disableDataTable = computed(() => {
 })
 
 const compensationsExecute = async () => {
+
+    if(import.meta.server){return;}
+
     compensationsPending.value = true;
 
     await laraFetch("/api/compensations", {

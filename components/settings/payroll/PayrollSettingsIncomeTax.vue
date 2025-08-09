@@ -94,6 +94,9 @@ const disableDataTable = computed(() => {
 })
 
 const incomeTaxesExecute = async () => {
+
+    if(import.meta.server){return;}
+
     incomeTaxesPending.value = true;
 
     await laraFetch("/api/income-taxes", {

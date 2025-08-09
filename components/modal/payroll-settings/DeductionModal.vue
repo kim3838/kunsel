@@ -145,6 +145,9 @@ const deductionFormulaOptions = reactive({
 
 const deductionFormulaPending = ref(false)
 const deductionFormulaExecute = async () => {
+
+    if(import.meta.server){return;}
+
     deductionFormulaPending.value = true;
 
     await laraFetch("/api/company-formula-selections", {

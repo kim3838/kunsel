@@ -644,6 +644,9 @@ watch(() => nonEmployeeUserOptions.selected, newValue => {
     employeeOfficeEmail.value = _get(selectedUser, 'payload.email', '');
 });
 const nonEmployeeUsersExecute = async () => {
+
+    if(import.meta.server){return;}
+
     nonEmployeeUsersPending.value = true;
 
     await laraFetch("/api/non-employee-user-selections", {
@@ -717,6 +720,9 @@ const designationOptions = reactive({
 
 const designationsPending = ref(false);
 const designationsExecute = async () => {
+
+    if(import.meta.server){return;}
+
     designationsPending.value = true;
 
     await laraFetch("/api/designation-selections", {
@@ -742,6 +748,9 @@ await designationsExecute();
 
 const departmentsPending = ref(false);
 const departmentsExecute = async () => {
+
+    if(import.meta.server){return;}
+
     departmentsPending.value = true;
 
     await laraFetch("/api/department-selections", {
@@ -765,8 +774,27 @@ const departmentsExecute = async () => {
 }
 await departmentsExecute();
 
+const managerOptions = reactive({
+    fetch: {
+        url: '/api/employee-selections',
+        filters: {
+            'company_id': selectedAssociatedCompany.value,
+            'except_id': _without([employeeId.value], null),
+            search: {
+                keyword: '',
+                callback: 1
+            }
+        }
+    },
+    selected: null,
+});
+
+
 //Fetch Employee Information
 const fetchEmployee = async () => {
+
+    if(import.meta.server){return;}
+
     await laraFetch(`/api/employee/${route.params.id}`, {
         method: 'GET',
     }, {
@@ -792,6 +820,9 @@ const fetchEmployee = async () => {
 
 //Fetch Employee Contact Information
 const fetchEmployeeContact = async () => {
+
+    if(import.meta.server){return;}
+
     await laraFetch(`/api/employee-contact/${employee?.value?.id}`, {
         method: 'GET',
     }, {
@@ -808,21 +839,6 @@ if(!creatingEmployee.value){
     await fetchEmployee();
     await fetchEmployeeContact();
 }
-
-const managerOptions = reactive({
-    fetch: {
-        url: '/api/employee-selections',
-        filters: {
-            'company_id': selectedAssociatedCompany.value,
-            'except_id': _without([employeeId.value], null),
-            search: {
-                keyword: '',
-                callback: 1
-            }
-        }
-    },
-    selected: null,
-});
 
 const payPeriodSelection = payrollComponentPaySelections.value.pay_period;
 const payTypeSelection = payrollComponentPaySelections.value.pay_type;
@@ -865,9 +881,10 @@ const employeeCompensationData = ref([]);
 const selectedEmployeeCompensation = ref([]);
 const employeeCompensationPending = ref(false);
 const employeeCompensationExecute = async () => {
-    if(creatingEmployee.value){
-        return 0;
-    }
+
+    if(import.meta.server){return;}
+
+    if(creatingEmployee.value){return;}
 
     employeeCompensationPending.value = true;
 
@@ -905,9 +922,10 @@ const employeeDeductionData = ref([]);
 const selectedEmployeeDeduction = ref([]);
 const employeeDeductionPending = ref(false);
 const employeeDeductionExecute = async () => {
-    if(creatingEmployee.value){
-        return 0;
-    }
+
+    if(import.meta.server){return;}
+
+    if(creatingEmployee.value){return;}
 
     employeeDeductionPending.value = true;
 
@@ -944,9 +962,10 @@ const employeeIncomeTaxData = ref([]);
 const selectedEmployeeIncomeTax = ref([]);
 const employeeIncomeTaxPending = ref(false);
 const employeeIncomeTaxExecute = async () => {
-    if(creatingEmployee.value){
-        return 0;
-    }
+
+    if(import.meta.server){return;}
+
+    if(creatingEmployee.value){return;}
 
     employeeIncomeTaxPending.value = true;
 
