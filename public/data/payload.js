@@ -355,7 +355,7 @@ export default {
                     }
                 }
             },
-            selected: 513,
+            selected: 2,
         },
         'categorySelection': [
             {text : 'Charms', value: true},
