@@ -6,6 +6,7 @@ export interface Sequenceable {
 export interface TableHeaderT {
     value: string;
     text: string;
+    minWidth?: string;
     width?: string;
     alignHeader?: 'left' | 'center' | 'right';
     alignData?: 'left' | 'center' | 'right';
