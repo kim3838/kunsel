@@ -17,7 +17,7 @@
                     <td
                         v-for="header in headers"
                         :key="header.value"
-                        :style="{'min-width': header.width}"
+                        :style="{'min-width': header.minWidth, 'width': header.width}"
                         style="padding:0.25rem;"
                         :class="[
                             headerFontClass,
@@ -50,7 +50,7 @@
                             <slot
                                 :name="`cell.${header.value}`"
                                 :scrollReference="dataTableScroll"
-                                :slot="{buttonSize: buttonSize, inputSize: inputSize, datepickerFontSize: datepickerFontSize, selectSize: selectSize, checkBoxSize: checkBoxSize}"
+                                :slot="{buttonSize: buttonSize, inputSize: inputSize, datepickerFontSize: datepickerFontSize, selectSize: selectSize, checkBoxSize: checkBoxSize, radioGroupSize: radioGroupSize}"
                                 :cell="row"
                                 :headerIndex="headerIndex"
                                 :rowIndex="rowIndex">
@@ -311,6 +311,15 @@ const checkBoxSize = computed(() => {
         'md': 'md',
         'lg': 'lg',
         'xl': 'lg',
+    }[props.size]
+});
+
+const radioGroupSize = computed(() => {
+    return {
+        'sm': '2xs',
+        'md': 'xs',
+        'lg': 'sm',
+        'xl': 'md',
     }[props.size]
 });
 
