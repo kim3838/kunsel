@@ -6,7 +6,7 @@
             v-model="computedSelected"
             :disabled="disabled"
             :selected="computedSelected"
-            :key="selection.value"
+            :radioKey="radioKey"
             :value="selection.value"
             :label="selection.text"
             :size="size"/>
@@ -24,6 +24,10 @@ const props = defineProps({
     selections: {
         required: true,
         type: Array as PropType<SelectDataType[]>,
+    },
+    radioKey: {
+        type: [String, Number],
+        default: '1'
     },
     size: {
         type: String,

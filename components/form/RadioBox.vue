@@ -1,5 +1,5 @@
 <template>
-    <label :for="labelId" class="font-data">
+    <label :for="radioId" class="font-data">
         <span class="flex items-start justify-start">
             <span :style="{'height': radioBoxSlotHeight}" class="flex items-center">
                 <Icon v-if="selected == value" :data-theme="themeType" class="radio" :class="[radioSize]" name="ic:sharp-radio-button-checked"></Icon>
@@ -11,10 +11,10 @@
                 type="radio"
                 :value="value"
                 :checked="isChecked"
-                :id="labelId"
+                :id="radioId"
                 :disabled="disabled"
                 @change="$emit('update:modelValue', ($event.target as HTMLInputElement).value)"
-                name="radio-input"/>
+                :name="radioName"/>
         </span>
     </label>
 </template>
@@ -45,6 +45,10 @@ const props = defineProps({
         type: [String, Number],
         default: 0
     },
+    radioKey: {
+        type: [String, Number],
+        default: '1'
+    },
     label: {
         type: String,
         default: ''
@@ -62,7 +66,8 @@ const props = defineProps({
     },
 });
 
-const labelId = computed(() => props.modelValue + '-' +props.label);
+const radioId = computed(() => `radio-${props.radioKey}-${props.value}`);
+const radioName = computed(() => `radio-${props.radioKey}`);
 
 const isChecked = computed(() => {
     return props.selected === props.value;
