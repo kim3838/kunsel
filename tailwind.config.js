@@ -39,6 +39,7 @@ module.exports = {
                     'IBM Plex Sans Condensed',
                 ],
                 standard: [
+                    'National Park',
                     'Aptos Narrow',
                     'Roboto',
                     'Hedvig Letters Sans',
