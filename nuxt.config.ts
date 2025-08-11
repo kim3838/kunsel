@@ -27,6 +27,7 @@ export default defineNuxtConfig({
                 {rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=Inclusive+Sans:ital,wght@0,300..700;1,300..700&display=swap" rel="stylesheet'},
                 {rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&family=Radio+Canada+Big:ital,wght@0,400..700;1,400..700&display=swap" rel="stylesheet'},
                 {rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=National+Park:wght@200..800&display=swap" rel="stylesheet'},
+                {rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=Funnel+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet'},
                 //Serif
                 {rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&display=swap'},
                 {rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=Oranienbaum&display=swap'},
