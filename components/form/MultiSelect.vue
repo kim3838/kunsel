@@ -10,7 +10,7 @@
                 :style="{'border-radius': '2px'}"
                 class="w-full flex justify-start"
                 :class="[backgroundClass, heightClass, borderClass]">
-                <div v-if="!active" :class="[iconHolderClass]" class="flex-none flex justify-end items-center">
+                <div v-if="!active && icon" :class="[iconHolderClass]" class="flex-none flex justify-end items-center">
                     <ClientOnly><Icon :class="[iconClass]" :name="icon"/></ClientOnly>
                 </div>
                 <div v-if="!active" class="w-full relative" :class="[disabled ? 'cursor-not-allowed' : 'cursor-pointer']">
@@ -189,7 +189,7 @@ const props = defineProps({
     },
     icon: {
         type: String,
-        default: 'ic:baseline-keyboard-option-key'
+        default: null
     },
     label: {
         type: String,
@@ -317,12 +317,15 @@ const selectionMaxHeight = computed(() => {
 });
 
 const selectionClass = computed(() => {
+
+    let leftSpacing = props.icon ? 'left-[0.2rem]' : 'left-[0.5rem]';
+
     return {
-        '2xs': 'text-xs h-full leading-[0.875rem] left-[0.2rem] right-[1.45rem]',
-        'xs': 'text-xs h-full leading-[0.875rem] left-[0.2rem] right-[1.7rem]',
-        'sm': 'text-sm h-full leading-[0.875rem] left-[0.2rem] right-[1.85rem]',
-        'md': 'text-base h-full leading-[0.875rem] left-[0.2rem] right-[2.2rem]',
-        'lg': 'text-lg h-full leading-[0.875rem] left-[0.2rem] right-[2.95rem]',
+        '2xs': `text-xs h-full leading-[0.875rem] ${leftSpacing} right-[1.45rem]`,
+        'xs': `text-xs h-full leading-[0.875rem] ${leftSpacing} right-[1.7rem]`,
+        'sm': `text-sm h-full leading-[0.875rem] ${leftSpacing} right-[1.85rem]`,
+        'md': `text-base h-full leading-[0.875rem] ${leftSpacing} right-[2.2rem]`,
+        'lg': `text-lg h-full leading-[0.875rem] ${leftSpacing} right-[2.95rem]`,
     }[props.size];
 });
 
