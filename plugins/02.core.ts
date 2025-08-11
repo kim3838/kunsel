@@ -64,4 +64,31 @@ export default defineNuxtPlugin(nuxtApp => {
 
         data.forEach((sequenceable: Sequenceable) => {sequenceable.order = ++order;});
     })
+
+    nuxtApp.provide('timeDifference', function (start: string | null, end: string | null): string | null {
+
+        if(!start || !end){
+            return null;
+        }
+
+        const moment = useNuxtApp().$moment;
+
+        // Parse times
+        const startMoment = moment(start, "HH:mm");
+        const endMoment = moment(end, "HH:mm");
+
+        // Handle overnight shift
+        if (endMoment.isBefore(startMoment)) {
+            endMoment.add(1, 'day');
+        }
+
+        // Get difference as duration
+        const duration = moment.duration(endMoment.diff(startMoment));
+
+        // Format as HH:MM
+        const hours = String(Math.floor(duration.asHours())).padStart(2, '0');
+        const minutes = String(duration.minutes()).padStart(2, '0');
+
+        return `${hours}:${minutes}`;
+    })
 });
