@@ -59,7 +59,7 @@ export const useCommon = () => {
         }, {
             onSuccessResponse: async (request, options, response) => {
 
-                timezoneSelections.value = _get(response, '_data.values.selections', []);
+                timezoneSelections.value = _get(response, '_data.values.selection', []);
             },
         });
     }
