@@ -62,7 +62,7 @@ const orientationClass = computed(() => {
 })
 
 const heightClass = computed(() => {
-    return {
+    let horizontalHeight = {
         '2xs': 'h-5',
         'xs': 'h-6',
         'sm': 'h-7',
@@ -70,7 +70,12 @@ const heightClass = computed(() => {
         'lg': 'h-11',
         'xl': 'h-14',
         '2xl' : 'h-16',
-    }[props.size]
+    }[props.size];
+
+    return {
+        'horizontal': horizontalHeight,
+        'vertical': 'h-auto',
+    }[props.orientation];
 });
 </script>
 
