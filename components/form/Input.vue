@@ -25,6 +25,7 @@
                     :max="max"
                     @keydown="limitKeys"
                     @focus="focusInput"
+                    @blur="blurInput"
                     @input="$emit('update:modelValue', $event.target.value)"
                     :readonly="readonly"
                     ref="input">
@@ -125,10 +126,51 @@ const props = defineProps({
     highLightAllTextOnFocus: {
         type: Boolean,
         default: false
+    },
+    timeBlur: {
+        type: Boolean,
+        default: false
     }
 });
 
 const emit = defineEmits(['update:modelValue', 'focusStateChanged']);
+
+const formatTime = (value) => {
+    if (!value) return '';
+
+    // Remove invalid chars except digits and colon
+    value = value.replace(/[^\d:]/g, '');
+
+    let hours = 0;
+    let minutes = 0;
+
+    if (value.includes(':')) {
+        const parts = value.split(':');
+        hours = parts[0] ? parseInt(parts[0], 10) : 0;
+        minutes = parts[1] ? parseInt(parts[1], 10) : 0;
+    } else {
+        if (value.length <= 2) {
+            hours = parseInt(value, 10);
+            minutes = 0;
+        } else {
+            hours = parseInt(value.slice(0, value.length - 2), 10);
+            minutes = parseInt(value.slice(-2), 10);
+        }
+    }
+
+    // Clamp values
+    hours = Math.min(Math.max(hours, 0), 23);
+    minutes = Math.min(Math.max(minutes, 0), 59);
+
+    return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
+}
+
+const blurInput = async (event) => {
+    if(props.timeBlur){
+        await nextTick();
+        emit('update:modelValue', formatTime(event.target.value));
+    }
+}
 
 function limitKeys(event) {
     if(props.type === 'number' && props.typeStrict){
