@@ -23,11 +23,12 @@
                                         <tr><td class="font-semibold">Email</td><td class="pl-2">{{ _get(resolvedEmployee, 'user.email', null) }}</td></tr>
                                         </tbody>
                                     </table>
+
+                                    <div v-if="employeeHasNewlyCreatedUser && _get(resolvedEmployee, 'user_id', false)" class="mt-4 text-sm">
+                                        An email will be sent to the employee regarding of his account registration and login credentials.
+                                    </div>
                                 </div>
 
-                                <div class="text-sm">
-                                    An email will be sent to the employee regarding of his account registration and login credentials.
-                                </div>
                             </fieldset>
 
                             <fieldset class="neutral-border px-2 pb-2 space-y-2">
@@ -66,6 +67,8 @@
                         validateForms: {{validateForms}}<br>
                         creatingEmployee: {{creatingEmployee}}<br>
                         employeeHasUser: {{employeeHasUser}}<br>
+                        employeeHasNewlyCreatedUser: {{employeeHasNewlyCreatedUser}}<br>
+                        employeeUserCreationOptionsDisabled: {{employeeUserCreationOptionsDisabled}}<br>
                         employeeHasContact: {{employeeHasContact}}<br>
                         employeeUserCreationOptions.selected: {{employeeUserCreationOptions.selected}}<br>
                         employeeId: {{employeeId}}<br>
@@ -121,7 +124,7 @@
                                 <div v-if="employeeUserCreationOptions.selected == EMPLOYEE_USER_CREATION.EXISTING_USER" class="grid gap-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-2 xl:grid-cols-3">
                                     <div class="sm:col-span-2 lg:col-span-2">
                                         <InputLabel :size="'sm'" value="User"/>
-                                        <SingleSelect :disabled="disableActions" drop-shadow :size="'md'" :options="nonEmployeeUserOptions"/>
+                                        <SingleSelect :disabled="disableActions || employeeUserCreationOptionsDisabled" drop-shadow :size="'md'" :options="nonEmployeeUserOptions"/>
                                     </div>
                                 </div>
 
@@ -537,6 +540,7 @@ const employee = ref(null);
 const employeeHasUser = computed(() => {
     return _get(employee.value, 'user_id', null) !== null;
 });
+const employeeHasNewlyCreatedUser = ref(false);
 const employeeHasContact = ref(false);
 const creatingEmployee = computed(() => {
     return route.params.id === 'create-employee';
@@ -773,22 +777,7 @@ const departmentsExecute = async () => {
     });
 }
 await departmentsExecute();
-
-const managerOptions = reactive({
-    fetch: {
-        url: '/api/employee-selections',
-        filters: {
-            'company_id': selectedAssociatedCompany.value,
-            'except_id': _without([employeeId.value], null),
-            search: {
-                keyword: '',
-                callback: 1
-            }
-        }
-    },
-    selected: null,
-});
-
+const tempSelectedManager = ref(null);
 
 //Fetch Employee Information
 const fetchEmployee = async () => {
@@ -810,7 +799,7 @@ const fetchEmployee = async () => {
             maritalStatusOptions.selected = _get(response, '_data.values.employee.marital_status.value', MARITAL_STATUS.NOT_SPECIFIED);
             departmentOptions.selected = _get(response, '_data.values.employee.department_id', null);
             designationOptions.selected = _get(response, '_data.values.employee.designation_id', null);
-            managerOptions.selected = _get(response, '_data.values.employee.manager_id', null);
+            tempSelectedManager.value = _get(response, '_data.values.employee.manager_id', null);
 
             //Set user profile creation options to null if user_id exists
             employeeUserCreationOptions.selected = _get(response, '_data.values.employee.user_id', false) ? null : EMPLOYEE_USER_CREATION.NONE;
@@ -839,6 +828,21 @@ if(!creatingEmployee.value){
     await fetchEmployee();
     await fetchEmployeeContact();
 }
+
+const managerOptions = reactive({
+    fetch: {
+        url: '/api/employee-selections',
+        filters: {
+            'company_id': selectedAssociatedCompany.value,
+            'except_id': _without([employeeId.value], null),
+            search: {
+                keyword: '',
+                callback: 1
+            }
+        }
+    },
+    selected: tempSelectedManager.value,
+});
 
 const payPeriodSelection = payrollComponentPaySelections.value.pay_period;
 const payTypeSelection = payrollComponentPaySelections.value.pay_type;
@@ -1195,6 +1199,8 @@ const coreFormSubmit = async (employee = null, formPayload = {}) => {
             onSuccessResponse: async (request, options, response) => {
                 let userId = _get(response, '_data.values.user.id', null);
 
+                employeeHasNewlyCreatedUser.value = true;
+
                 if(!creatingEmployee.value || !validateForms.value){
                     await defaultAssignUserCompanyAssignment(userId);
                 }
@@ -1238,6 +1244,8 @@ const coreFormSubmit = async (employee = null, formPayload = {}) => {
             },
             onSuccessResponse: async (request, options, response) => {
                 let userId = _get(response, '_data.values.user.id', null);
+
+                employeeHasNewlyCreatedUser.value = true;
 
                 if(!creatingEmployee.value || !validateForms.value){
                     await defaultAssignUserCompanyAssignment(userId);
@@ -1568,6 +1576,10 @@ const resolveEmployee = (employee) => {
 
 const resetPageToInitialState = async () => {
     validateForms.value = true;
+
+    //Reset flags
+    employeeHasNewlyCreatedUser.value = false;
+    employeeUserCreationOptionsDisabled.value = false;
 
     // Reset User Account options
     employeeUserCreationOptions.selected = EMPLOYEE_USER_CREATION.NONE;
