@@ -138,8 +138,8 @@ const perPageSelectWidth = computed(() => {
     return {
         'sm': '120px',
         'md': '130px',
-        'lg': '140px',
-        'xl': '160px',
+        'lg': '160px',
+        'xl': '180px',
     }[props.size]
 });
 
