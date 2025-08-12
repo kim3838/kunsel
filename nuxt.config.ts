@@ -98,6 +98,7 @@ export default defineNuxtConfig({
                     { name: 'remove', as: '_remove'},
                     { name: 'find', as: '_find'},
                     { name: 'first', as: '_first'},
+                    { name: 'compact', as: '_compact'},
                 ]
             }
         ]

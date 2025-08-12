@@ -45,22 +45,31 @@
 
                         <div v-for="employee in employees.data" :key="employee.id" class="flex-grow scaffold-border p-4 space-y-2">
                             <div>
-                                <div class="text-base"><span class="font-semibold">{{employee.number}}</span>&nbsp;{{employee.full_name}}</div>
-                                <div class="text-sm"><span>Gender: </span>{{employee.gender.text}}</div>
-                                <div class="text-sm"><span>Marital Status: </span>{{employee.marital_status.text}}</div>
-                            </div>
+                                <div class="mb-2 flex justify-between min-h-8">
+                                    <div class="text-base">
+                                        <span class="font-semibold">{{employee.number}}</span>&nbsp;{{employee.full_name}}
+                                    </div>
 
-                            <div class="w-full space-x-0.5 flex items-center">
-                                <NuxtLink
-                                    :to="`/workforce/employees/${employee.ulid}`">
-                                    <Button type="button" :variant="'outline'" :icon="'mdi:information-variant-circle-outline'" :size="'sm'"  :label="'info'" :override="{font_family: `GG Sans`}"></Button>
-                                </NuxtLink>
+                                    <NuxtLink
+                                        :to="`/workforce/employees/${employee.ulid}`">
+                                        <Button type="button" :variant="'outline'" :icon="'mdi:information-variant-circle-outline'" :size="'sm'"  :label="'info'" :override="{font_family: `GG Sans`}"></Button>
+                                    </NuxtLink>
+                                </div>
+
+                                <div class="text-sm"><span class="font-semibold">Gender: </span><span>{{employee.gender.text}}</span></div>
+                                <div class="text-sm"><span class="font-semibold">Marital Status: </span><span>{{employee.marital_status.text}}</span></div>
+
+                                <div class="text-sm">
+                                    <span class="font-semibold">Contact: </span>
+                                    <span v-if="_isEmpty(_compact([employee.contact?.office_email, employee.contact?.personal_email, employee.contact?.office_phone, employee.contact?.personal_phone]))">None</span>
+                                    <div v-else class="font-mono text-xs" :class="index == 0 ? 'inline-block' : 'block'" v-for="(contact, index) in _compact([employee.contact?.office_email, employee.contact?.personal_email, employee.contact?.office_phone, employee.contact?.personal_phone])">{{contact}}</div>
+                                </div>
                             </div>
 
                             <div>
-                                <div class="text-sm"><span>Department: </span>{{employee.department?.name ?? 'None'}}</div>
-                                <div class="text-sm"><span>Designation: </span>{{employee.designation?.name ?? 'None'}}</div>
-                                <div class="text-sm"><span>Manager: </span>{{employee.manager?.full_name ?? 'None'}}</div>
+                                <div class="text-sm"><span class="font-semibold">Department: </span>{{employee.department?.name ?? 'None'}}</div>
+                                <div class="text-sm"><span class="font-semibold">Designation: </span>{{employee.designation?.name ?? 'None'}}</div>
+                                <div class="text-sm"><span class="font-semibold">Manager: </span>{{employee.manager?.full_name ?? 'None'}}</div>
                             </div>
                         </div>
                         <div v-if="noEmployeeRecords">
@@ -98,6 +107,26 @@
                         </template>
                         <template v-slot:cell.manager="{cell,slot}">
                             <div class="p-[3px]">{{cell.manager?.full_name}}</div>
+                        </template>
+                        <template v-slot:cell.office_email="{cell,slot}">
+                            <div class="p-[3px]">
+                                {{cell.contact?.office_email}}
+                            </div>
+                        </template>
+                        <template v-slot:cell.personal_email="{cell,slot}">
+                            <div class="p-[3px]">
+                                {{cell.contact?.personal_email}}
+                            </div>
+                        </template>
+                        <template v-slot:cell.office_phone="{cell,slot}">
+                            <div class="p-[3px]">
+                                {{cell.contact?.office_phone}}
+                            </div>
+                        </template>
+                        <template v-slot:cell.personal_phone="{cell,slot}">
+                            <div class="p-[3px]">
+                                {{cell.contact?.personal_phone}}
+                            </div>
                         </template>
                     </DataTable>
                 </div>
@@ -147,6 +176,10 @@ const employeesHeaders = reactive<TableHeaderT[]>([
     { text: 'Department', value: 'department'},
     { text: 'Designation', value: 'designation'},
     { text: 'Manager', value: 'manager'},
+    { text: 'Email', value: 'office_email'},
+    { text: '', value: 'personal_email'},
+    { text: 'Phone', value: 'office_phone'},
+    { text: '', value: 'personal_phone'},
 ]);
 
 const employees = reactive<{
