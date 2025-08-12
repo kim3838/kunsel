@@ -46,30 +46,30 @@
                         <div v-for="employee in employees.data" :key="employee.id" class="flex-grow scaffold-border p-4 space-y-2">
                             <div>
                                 <div class="mb-2 flex justify-between min-h-8">
-                                    <div class="text-base">
+                                    <div class="text-lg">
                                         <span class="font-semibold">{{employee.number}}</span>&nbsp;{{employee.full_name}}
                                     </div>
 
                                     <NuxtLink
                                         :to="`/workforce/employees/${employee.ulid}`">
-                                        <Button type="button" :variant="'outline'" :icon="'mdi:information-variant-circle-outline'" :size="'sm'"  :label="'info'" :override="{font_family: `GG Sans`}"></Button>
+                                        <Button type="button" :variant="'outline'" :icon="'mdi:checkbook'" :size="'sm'"  :label="'info'" :override="{font_family: `GG Sans`}"></Button>
                                     </NuxtLink>
                                 </div>
 
-                                <div class="text-sm"><span class="font-semibold">Gender: </span><span>{{employee.gender.text}}</span></div>
-                                <div class="text-sm"><span class="font-semibold">Marital Status: </span><span>{{employee.marital_status.text}}</span></div>
+                                <div class="text-base"><span class="font-semibold">Gender: </span><span>{{employee.gender.text}}</span></div>
+                                <div class="text-base"><span class="font-semibold">Marital Status: </span><span>{{employee.marital_status.text}}</span></div>
 
-                                <div class="text-sm">
+                                <div class="text-base">
                                     <span class="font-semibold">Contact: </span>
                                     <span v-if="_isEmpty(_compact([employee.contact?.office_email, employee.contact?.personal_email, employee.contact?.office_phone, employee.contact?.personal_phone]))">None</span>
-                                    <div v-else class="font-mono text-xs" :class="index == 0 ? 'inline-block' : 'block'" v-for="(contact, index) in _compact([employee.contact?.office_email, employee.contact?.personal_email, employee.contact?.office_phone, employee.contact?.personal_phone])">{{contact}}</div>
+                                    <div v-else class="font-mono text-sm" :class="index == 0 ? 'inline-block' : 'block'" v-for="(contact, index) in _compact([employee.contact?.office_email, employee.contact?.personal_email, employee.contact?.office_phone, employee.contact?.personal_phone])">{{contact}}</div>
                                 </div>
                             </div>
 
                             <div>
-                                <div class="text-sm"><span class="font-semibold">Department: </span>{{employee.department?.name ?? 'None'}}</div>
-                                <div class="text-sm"><span class="font-semibold">Designation: </span>{{employee.designation?.name ?? 'None'}}</div>
-                                <div class="text-sm"><span class="font-semibold">Manager: </span>{{employee.manager?.full_name ?? 'None'}}</div>
+                                <div class="text-base"><span class="font-semibold">Department: </span>{{employee.department?.name ?? 'None'}}</div>
+                                <div class="text-base"><span class="font-semibold">Designation: </span>{{employee.designation?.name ?? 'None'}}</div>
+                                <div class="text-base"><span class="font-semibold">Manager: </span>{{employee.manager?.full_name ?? 'None'}}</div>
                             </div>
                         </div>
                         <div v-if="noEmployeeRecords">
@@ -170,9 +170,7 @@ const employeesHeaders = reactive<TableHeaderT[]>([
     { text: '#', value: 'row_number'},
     { text: '', value: 'actions'},
     { text: 'Employee #', value: 'number', alignData: 'left'},
-    { text: 'Full Name (Family, Middle, Given)', value: 'full_name'},
-    { text: 'Gender', value: 'gender'},
-    { text: 'Marital Status', value: 'marital_status'},
+    { text: 'Family name, Middle, Given', value: 'full_name'},
     { text: 'Department', value: 'department'},
     { text: 'Designation', value: 'designation'},
     { text: 'Manager', value: 'manager'},
