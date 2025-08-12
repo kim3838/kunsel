@@ -1,8 +1,8 @@
 <template>
     <div class="space-y-2">
-        <div class="space-y-2 px-[20px] py-2">
-            <p>Deductions</p>
-            <div class="flex flex-row flex-wrap gap-2">
+        <div class="px-[20px] pt-2">
+            <div class="text-lg">Deductions</div>
+            <div class="flex flex-row flex-wrap gap-2 items-center min-h-8">
                 <Button class="inline-block" :icon="'mdi:plus'" :size="'sm'" :disabled="disableActions" @click="create"/>
                 <Button :variant="'outline'" :icon="'mdi:delete-outline'" class="inline-block" :size="'sm'" :disabled="disableActions" @click="deleteSelected"/>
             </div>
@@ -14,41 +14,39 @@
             @resolved="deductionResolved"
         ></DeductionModal>
 
-        <FansyFrame>
-            <template v-slot:content>
-                <UnorderedList
-                    v-if="disableActions"
-                    :icon="'eos-icons:loading'"
-                    :size="'md'"
-                    :label="'Please wait...'"/>
-                <DataTable
-                    :headers="deductionsHeaders"
-                    :size="'lg'"
-                    :rows="deductionsData"
-                    :disabled="disableDataTable"
-                    v-model="selectedDeductions"
-                    manual-sortable
-                    @manualSorted="manualSorted"
-                    selection>
-                    <template v-slot:cell.type="{cell,slot}">
-                        <div class="p-[3px]">{{cell.type.text}}</div>
-                    </template>
-                    <template v-slot:cell.assignable="{cell, slot, scrollReference}">
-                        <div class="flex justify-center">
-                            <NonModelCheckBox disabled :size="slot.checkBoxSize" :checked="cell.assignable" ></NonModelCheckBox>
-                        </div>
-                    </template>
-                    <template v-slot:cell.global="{cell, slot, scrollReference}">
-                        <div class="flex justify-center">
-                            <NonModelCheckBox disabled :size="slot.checkBoxSize" :checked="!cell.assignable" ></NonModelCheckBox>
-                        </div>
-                    </template>
-                    <template v-slot:cell.actions="{cell, slot, scrollReference}">
-                        <Button class="mx-0.5" type="button" :size="slot.buttonSize" :icon="'mdi:pen'" @click="edit(cell)" :disabled="disableActions" :label="'Edit'" :override="{font_family: `GG Sans`}"></Button>
-                    </template>
-                </DataTable>
-            </template>
-        </FansyFrame>
+        <div class="px-[20px]">
+            <UnorderedList
+                v-if="disableActions"
+                :icon="'eos-icons:loading'"
+                :size="'md'"
+                :label="'Please wait...'"/>
+            <DataTable
+                :headers="deductionsHeaders"
+                :size="'lg'"
+                :rows="deductionsData"
+                :disabled="disableDataTable"
+                v-model="selectedDeductions"
+                manual-sortable
+                @manualSorted="manualSorted"
+                selection>
+                <template v-slot:cell.type="{cell,slot}">
+                    <div class="p-[3px]">{{cell.type.text}}</div>
+                </template>
+                <template v-slot:cell.assignable="{cell, slot, scrollReference}">
+                    <div class="flex justify-center">
+                        <NonModelCheckBox disabled :size="slot.checkBoxSize" :checked="cell.assignable" ></NonModelCheckBox>
+                    </div>
+                </template>
+                <template v-slot:cell.global="{cell, slot, scrollReference}">
+                    <div class="flex justify-center">
+                        <NonModelCheckBox disabled :size="slot.checkBoxSize" :checked="!cell.assignable" ></NonModelCheckBox>
+                    </div>
+                </template>
+                <template v-slot:cell.actions="{cell, slot, scrollReference}">
+                    <Button class="mx-0.5" type="button" :size="slot.buttonSize" :icon="'mdi:pen'" @click="edit(cell)" :disabled="disableActions" :label="'Edit'" :override="{font_family: `GG Sans`}"></Button>
+                </template>
+            </DataTable>
+        </div>
     </div>
 </template>
 
