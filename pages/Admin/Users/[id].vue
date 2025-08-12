@@ -10,15 +10,18 @@
                 </div>
 
                 <div class="px-[20px] space-y-2">
-                    <div class="grid gap-2 grid-cols-4 sm:grid-cols-5 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-8">
+                    <div class="grid gap-2 grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 xl:grid-cols-6">
                         <div>
                             <InputLabel :size="'sm'" value="Username"/>
                             <Input :disabled="!creatingAssociatedUser || disableActions" :size="'md'" v-model="username" type="text"/>
                         </div>
-                        <div>
+                        <div class="lg:col-span-3">
                             <InputLabel :size="'sm'" :value="emailLabelComputed.label" :class="emailLabelComputed.class"/>
                             <Input :disabled="!creatingAssociatedUser || disableActions" :size="'md'" v-model="email" type="email"/>
                         </div>
+                    </div>
+
+                    <div class="grid gap-2 grid-cols-2 lg:grid-cols-5 xl:grid-cols-6">
                         <div v-if="creatingAssociatedUser">
                             <InputLabel :size="'sm'" :value="'Password'"/>
                             <Input :disabled="disableActions" :size="'md'" v-model="password" type="password"/>
