@@ -2,14 +2,16 @@
     <div>
         <DataTable
             v-if="!rowsIsEmpty"
-            :headers="associationsHeaders"
-            v-model="selectedAssociations"
+            :headers="headers"
+            v-model="selected"
             :disabled="disabled"
             :size="'md'"
             :rows="rows"
             :stripped="true">
-            <template v-slot:cell.week_day="{cell,slot}">
-                <div class="p-[3px]">{{cell.week_day.text}}</div>
+            <template v-slot:cell.is_rest_day="{cell, slot, scrollReference}">
+                <div class="flex justify-center">
+                    <NonModelCheckBox disabled :size="slot.checkBoxSize" :checked="cell.is_rest_day"></NonModelCheckBox>
+                </div>
             </template>
             <template v-slot:cell.is_day_off="{cell, slot, scrollReference}">
                 <div class="flex justify-center">
@@ -53,17 +55,19 @@ const emit = defineEmits(['proxyEdit', 'syncSelected']);
 
 const rowsIsEmpty = computed(() => props.rows.length === 0);
 
-const selectedAssociations = ref([]);
-const associationsHeaders = reactive<TableHeaderT[]>([
-    { text: 'Weekday', value: 'week_day', alignData: 'left'},
+const selected = ref([]);
+const headers = reactive<TableHeaderT[]>([
+    { text: 'Weekday', value: 'week_day_name', alignData: 'left'},
+    { text: 'Rest Day', value: 'is_rest_day', alignData: 'left'},
     { text: 'Day Off', value: 'is_day_off', alignData: 'left'},
     { text: 'Flexible', value: 'is_flexible', alignData: 'left'},
-    { text: 'Work Start', value: 'work_start', alignData: 'left'},
-    { text: 'Work End', value: 'work_end', alignData: 'left'},
-    { text: 'Total Work Hours w/ Breaks', value: 'total_work_hours_with_breaks', alignData: 'left'},
-    { text: 'Lunch Break Start', value: 'lunch_break_start', alignData: 'left'},
-    { text: 'Lunch Break End', value: 'lunch_break_end', alignData: 'left'},
-    { text: 'Total Lunch Break Hours', value: 'total_lunch_break_hours', alignData: 'left'},
+    { text: 'Timezone', value: 'timezone', alignData: 'left'},
+    { text: 'Work Start', value: 'work_start', alignData: 'right'},
+    { text: 'Work End', value: 'work_end', alignData: 'right'},
+    { text: 'Total Work Hours w/ Breaks', value: 'total_work_hours_with_breaks', alignData: 'right'},
+    { text: 'Lunch Break Start', value: 'lunch_break_start', alignData: 'right'},
+    { text: 'Lunch Break End', value: 'lunch_break_end', alignData: 'right'},
+    { text: 'Total Lunch Break Hours', value: 'total_lunch_break_hours', alignData: 'right'},
 ]);
 
 </script>

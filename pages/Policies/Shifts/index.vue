@@ -5,10 +5,12 @@
                 <form @submit.prevent="paginate(1, true)" class="space-y-2 p-[20px]">
                     <div class="grid gap-2 grid-cols-3 sm:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-8">
                         <div>
-                            <div>
-                                <InputLabel :size="'sm'" value="Search" />
-                                <Input :size="'md'" ref="searchInput" v-model="filters.search.keyword" class="w-full" placeholder="Search" type="text" autocomplete="off"/>
-                            </div>
+                            <InputLabel :size="'sm'" value="Search" />
+                            <Input :size="'md'" ref="searchInput" v-model="filters.search.keyword" class="w-full" placeholder="Search" type="text" autocomplete="off"/>
+                        </div>
+                        <div>
+                            <InputLabel :size="'sm'" value="Type" />
+                            <MultiSelect glint drop-shadow :size="'md'" :options="shiftTypeOptions"/>
                         </div>
                     </div>
 
@@ -38,17 +40,14 @@
                 </form>
 
                 <div class="px-[20px]">
-                    <div class="mb-2 flex items-center min-h-8">
-                        <UnorderedList
-                            v-if="disableActions"
-                            :icon="'eos-icons:loading'"
-                            :size="'md'"
-                            :label="'Please wait...'"/>
+                    <div class="mb-2 flex flex-row flex-wrap gap-2 items-center min-h-8">
+                        <UnorderedList v-if="disableActions" :icon="'eos-icons:loading'" :size="'md'" :label="'Please wait...'"/>
                         <NuxtLink
-                            v-else
-                            :to="`#`"><!-- /policies/shift/create-shif -->
+                            v-if="!disableActions"
+                            :to="`/policies/shifts/create-shift`">
                             <Button class="w-min" :disabled="disableActions" :size="'sm'" :icon="disableActions ? 'eos-icons:loading' : 'mdi:plus'" :label="disableActions ? 'Please wait' : ''"></Button>
                         </NuxtLink>
+                        <Button v-if="!disableActions" :variant="'outline'" :icon="'mdi:delete-outline'" class="inline-block" :size="'sm'" :disabled="disableActions" @click="deleteSelected"/>
                     </div>
 
                     <DataTable
@@ -73,7 +72,7 @@
                         <template v-slot:cell.actions="{cell,slot}">
                             <div class="h-full mx-0.5 space-x-0.5 w-full flex items-center">
                                 <NuxtLink
-                                    ><!-- :to="`/policies/shift/${cell.ulid}`" -->
+                                    :to="`/policies/shifts/${cell.ulid}`">
                                     <Button type="button" :variant="'default'" :icon="'mdi:pen'" :size="slot.buttonSize" :label="'Edit'" :override="{font_family: `GG Sans`}"></Button>
                                 </NuxtLink>
                             </div>
@@ -143,8 +142,7 @@ const shiftsHeaders = reactive<TableHeaderT[]>([
     { text: '', value: 'actions'},
     { text: 'Code', value: 'code'},
     { text: 'Name', value: 'name'},
-    { text: 'Type', value: 'type'},
-    { text: 'Is Default', value: 'is_default'},
+    { text: 'Type', value: 'type'}
 ]);
 
 const shifts = reactive<{
@@ -199,6 +197,15 @@ watch(() => viewMode.selected,async viewModeType => {
     paginate(1, true);
 });
 
+const shiftTypeOptions = reactive({
+    search: '',
+    selection: [
+        {text : 'Regular', value: SHIFT_TYPE.REGULAR},
+        {text : 'Graveyard', value: SHIFT_TYPE.GRAVEYARD},
+    ],
+    selected: []
+});
+
 let pageComputed = computed({
     get() {
         return {
@@ -218,6 +225,7 @@ let paramsComputed = computed(() => {
         filters: {
             company_id: selectedAssociatedCompany.value,
             search: filters.search.keyword,
+            type: shiftTypeOptions.selected,
         }
     };
 });
