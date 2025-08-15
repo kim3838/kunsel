@@ -6,7 +6,7 @@
 
                 <div class="space-y-2">
                     <!-- Static Single, MultiSelect and DateTime, Date, and Month Picker -->
-                    <div v-if="true" class="grid gap-2 grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-8">
+                    <div v-if="false" class="grid gap-2 grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-8">
                         <div class="block neutral-border">
                             <InputLabel :size="'sm'" value="Static Multi Select" />
                             <MultiSelect glint drop-shadow :selection-max-viewable-line="5" :size="'md'" :options="category" :icon="'ic:sharp-qr-code'"/>
@@ -79,7 +79,7 @@
                     </div>
 
                     <!-- Paginated Single and MultiSelect -->
-                    <div v-if="true" class="grid gap-2 grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-8">
+                    <div v-if="false" class="grid gap-2 grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-8">
                         <div class="block neutral-border">
                             <InputLabel :size="'sm'" value="Paginated Multi Select" />
                             <MultiSelectPaginated
@@ -213,7 +213,7 @@
                     </div>
 
                     <!-- Datatables -->
-                    <div v-if="false" class="grid gap-2 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4">
+                    <div v-if="true" class="grid gap-2 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4">
                         <div class="block col-span-1 sm:col-span-3 md:col-span-2 lg:col-span-2 p-2 neutral-border">
                             <InputLabel class="mb-2" :size="'md'" value="MD Datatable" />
                             <DataTable
@@ -235,6 +235,11 @@
                                         :size="slot.selectSize"
                                         :options="category"
                                         :icon="'ic:sharp-check-box-outline-blank'"/>
+                                </template>
+                                <template v-slot:cell.label="{cell, slot, scrollReference}">
+                                    <div class="flex px-[0.3rem] items-center">
+                                        <Label :type="cell.label_type" :size="slot.labelSize" :label="cell.name" />
+                                    </div>
                                 </template>
                                 <template v-slot:cell.datetime_added="{cell, slot, scrollReference}">
                                     <InputWithIcon
@@ -1056,6 +1061,42 @@
                         </div>
                     </div>
 
+                    <!-- Labels -->
+                    <div v-if="false" class="block p-2 neutral-border space-y-4">
+                        <div>
+                            <span class="space-x-1">
+                                <Label :size="'sm'" :type="'default'" :label="'No Daily Totals'" />
+                                <Label :size="'sm'" :type="'success'" :label="'Tallied'" />
+                                <Label :size="'sm'" :type="'danger'" :label="'Not Tallied'" />
+                                <Label :size="'sm'" :type="'caution'" :label="'Caution'" />
+                                <Label :size="'sm'" :type="'warning'" :label="'Warning'" />
+                                <Label :size="'sm'" :type="'info'" :label="'Information'" />
+                            </span>
+                        </div>
+
+                        <div>
+                            <span class="space-x-1">
+                                <Label :size="'md'" :type="'default'" :label="'No Daily Totals'" />
+                                <Label :size="'md'" :type="'success'" :label="'Tallied'" />
+                                <Label :size="'md'" :type="'danger'" :label="'Not Tallied'" />
+                                <Label :size="'md'" :type="'caution'" :label="'Caution'" />
+                                <Label :size="'md'" :type="'warning'" :label="'Warning'" />
+                                <Label :size="'md'" :type="'info'" :label="'Information'" />
+                            </span>
+                        </div>
+
+                        <div>
+                            <span class="space-x-1">
+                                <Label :size="'lg'" :type="'default'" :label="'No Daily Totals'" />
+                                <Label :size="'lg'" :type="'success'" :label="'Tallied'" />
+                                <Label :size="'lg'" :type="'danger'" :label="'Not Tallied'" />
+                                <Label :size="'lg'" :type="'caution'" :label="'Caution'" />
+                                <Label :size="'lg'" :type="'warning'" :label="'Warning'" />
+                                <Label :size="'lg'" :type="'info'" :label="'Information'" />
+                            </span>
+                        </div>
+                    </div>
+
                     <!-- Hero Plate -->
                     <div v-if="false" class=" p-2 neutral-border">
                         <InputLabel class="mb-2" :size="'md'" value="Hero Plate" />
@@ -1184,7 +1225,7 @@
                     </div>
 
                     <!-- Radio Group -->
-                    <div v-if="true" class="grid gap-2 grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-8">
+                    <div v-if="false" class="grid gap-2 grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-8">
                         <div class="flex items-start justify-start block neutral-border">
                             <div>
                                 <InputLabel :size="'md'" value="SM : Gender Group" />
@@ -1300,7 +1341,7 @@
                     </div>
 
                     <!-- Typography -->
-                    <div v-if="true" class="grid gap-2 grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-8">
+                    <div v-if="false" class="grid gap-2 grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-8">
                         <div class="block neutral-border col-span-2">
                             <p class="text-sm leading-4">0123456789 (){}[] +-*/= .,;:!? #&$%@|^#[ |||> |= ~@/\\/* Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
                         </div>
@@ -1316,7 +1357,7 @@
                     </div>
 
                     <!-- Font Weights -->
-                    <div v-if="true" class="grid gap-2 grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-8">
+                    <div v-if="false" class="grid gap-2 grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-8">
                         <div class="block neutral-border col-span-2">
                             <p class="text-sm font-thin leading-4">Thin: 0123456789 (){}[] +-*/= .,;:!? #&$%@|^#[ |||> |= ~@/\\/* Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
                             <br><p class="text-sm font-extralight leading-4">Extra Light: 0123456789 (){}[] +-*/= .,;:!? #&$%@|^#[ |||> |= ~@/\\/* Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
