@@ -28,28 +28,28 @@
                 </div>
                 <div class="p-3 pt-4 mx-auto max-w-screen-lg grid gap-2 grid-cols-3 sm:grid-cols-4 md:grid-cols-5">
                     <div class="col-span-2">
-                        <InputLabel :size="'md'" value="Select"/>
+                        <InputLabel :size="'sm'" value="Select"/>
                         <SingleSelect :searchable="false" drop-shadow value-persist :size="'md'" :options="assignablePayrollComponentOptions" @valueChange="assignablePayrollComponentSelectedChange"/>
                     </div>
                     <div v-if="selectedPayrollComponentIsAmountable">
-                        <InputLabel :size="'md'" value="Amount"/>
+                        <InputLabel :size="'sm'" value="Amount"/>
                         <Input v-model="amount" high-light-all-text-on-focus :size="'md'" :min="0" :type="'number'" type-strict />
                     </div>
                     <div v-if="selectedPayrollComponentIsAmountable">
-                        <InputLabel :size="'md'" value="Currency"/>
+                        <InputLabel :size="'sm'" value="Currency"/>
                         <Input v-model="currency" disabled :size="'md'" />
                     </div>
                     <div class="hidden md:block"></div>
                     <div v-if="selectedPayrollComponentIsAmountable">
-                        <InputLabel :size="'md'" value="Pay Period"/>
+                        <InputLabel :size="'sm'" value="Pay Period"/>
                         <SingleSelect :searchable="false" :selection-max-viewable-line="4" drop-shadow value-persist :size="'md'" :options="payPeriodOptions"/>
                     </div>
                     <div v-if="selectedPayrollComponentIsAmountable">
-                        <InputLabel :size="'md'" value="Pay Type"/>
+                        <InputLabel :size="'sm'" value="Pay Type"/>
                         <SingleSelect :searchable="false" :selection-max-viewable-line="4" drop-shadow value-persist :size="'md'" :options="payTypeOptions"/>
                     </div>
                     <div v-if="selectedPayrollComponentIsAmountable">
-                        <InputLabel :size="'md'" value="Pay Frequency"/>
+                        <InputLabel :size="'sm'" value="Pay Frequency"/>
                         <SingleSelect :searchable="false" :selection-max-viewable-line="4" drop-shadow value-persist :size="'md'" :options="payFrequencyOptions"/>
                     </div>
                 </div>
