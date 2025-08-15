@@ -18,8 +18,10 @@ module.exports = {
                     'Protest Revolution',
                 ],
                 business: [
-                    'Prociono',
+                    'GG Sans',
+                    'Inclusive Sans',
                     'Radio Canada Big',
+                    'Prociono',
                     'Bricolage Grotesque',
                     'Roboto Flex',
                 ],
@@ -33,6 +35,9 @@ module.exports = {
                     'Bruno Ace SC',
                 ],
                 data: [
+                    'Aptos Narrow',
+                    'Funnel Sans',
+                    'National Park',
                     'Sofia Sans Semi Condensed',
                 ],
                 header: [
@@ -41,16 +46,19 @@ module.exports = {
                     'IBM Plex Sans Condensed',
                 ],
                 standard: [
+                    'Aptos Narrow',
                     'Funnel Sans',
                     'National Park',
-                    'Aptos Narrow',
                     'Roboto',
                     'Hedvig Letters Sans',
                     'Source Sans Pro',
                 ],
+                label: [
+                    'Aptos Narrow',
+                ],
                 serif : [
-                    'Prociono',
                     'Quintessential',
+                    'Prociono',
                     'Playfair Display',
                     'Oranienbaum',
                     'Instrument Serif',
@@ -58,8 +66,8 @@ module.exports = {
                     'serif',
                 ],
                 mono : [
-                    'Spline Sans Mono',
                     'Roboto Mono',
+                    'Spline Sans Mono',
                     'monospace',
                 ],
             },
