@@ -19,10 +19,32 @@ type ThemeT = {
     'text-secondary': string;
 }
 
+export type ColorsT = {
+    primary: string;
+    secondary: string;
+}
+
+export type CommonColorsT = {
+    default: ColorsT;
+    success: ColorsT;
+    danger: ColorsT;
+    caution: ColorsT;
+    warning: ColorsT;
+    info: ColorsT;
+}
+
 export const useThemeStore = defineStore('theme', {
     state: () => {
         return {
-            appTheme: 'light' as PaletteNames,
+            appTheme: 'blue' as PaletteNames,
+            common: {
+                'default': {primary: '#777', secondary: '#e5e5e5'},
+                'success': {primary: '#4cb74c', secondary: '#ccffcc'},
+                'danger': {primary: '#d9534f', secondary: '#ffd1d2'},
+                'caution': {primary: '#d28b29', secondary: '#ffe1cd'},
+                'warning': {primary: '#c4bf08', secondary: '#eceaca'},
+                'info': {primary: '#35a4c5', secondary: '#e1eef1'},
+            } as CommonColorsT,
             hexAlpha: {
                 '10': '19',
                 '20': '33',
@@ -76,7 +98,7 @@ export const useThemeStore = defineStore('theme', {
                 },
                 blue: {
                     'type': 'light',
-                    'primary': '#132e60',
+                    'primary': '#18418c',
                     'secondary': '#263b62',
                     'accent': '#dae3f0',
 
@@ -106,7 +128,7 @@ export const useThemeStore = defineStore('theme', {
 
                     'tint': '#fdfdfd',
                     'body': '#ffffff',
-                    'shade': '#ffeddf',
+                    'shade': '#fff6ee',
 
                     'text': '#755548',
                     'text-invert': '#ffffff',

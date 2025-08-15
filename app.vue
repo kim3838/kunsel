@@ -15,6 +15,7 @@
 
 <script setup lang="ts">
 import {storeToRefs} from 'pinia';
+import type {CommonColorsT} from "@/stores/theme";
 
 const {$debug, $moment, $themeStore, $coreStore, $layoutStore} = useNuxtApp();
 const runtimeConfig = useRuntimeConfig();
@@ -26,6 +27,7 @@ const {
 
 const {
     hexAlpha,
+    common: commonColor,
     primary: primaryColor,
     shade: shadeColor,
     accent: accentColor,
@@ -38,6 +40,12 @@ const {
     textSecondary: textSecondaryColor,
 } = storeToRefs($themeStore);
 
+const typedCommonColor = commonColor as Ref<CommonColorsT>;
+const defaultPrimaryColor = computed(() => {return typedCommonColor.value.default.primary;});
+const successPrimaryColor = computed(() => {return typedCommonColor.value.success.primary;});
+const dangerPrimaryColor = computed(() => {return typedCommonColor.value.danger.primary;});
+const warningPrimaryColor = computed(() => {return typedCommonColor.value.warning.primary;});
+const infoPrimaryColor = computed(() => {return typedCommonColor.value.info.primary;});
 const threadColor10 = computed(() => {
     return threadColor.value + hexAlpha.value['10'];
 });
@@ -90,6 +98,26 @@ watch(() => route.name,() => {
 
 .tint-background {
     background-color: v-bind(tintColor);
+}
+
+.label-default {
+    color: v-bind(defaultPrimaryColor);
+}
+
+.label-success {
+    color: v-bind(successPrimaryColor);
+}
+
+.label-danger {
+    color: v-bind(dangerPrimaryColor);
+}
+
+.label-warning {
+    color: v-bind(warningPrimaryColor);
+}
+
+.label-info {
+    color: v-bind(infoPrimaryColor);
 }
 
 .neutral-border{
