@@ -10,6 +10,9 @@
                 </div>
 
                 <div class="px-[20px] space-y-2">
+
+                    <div class="text-lg font-header">User</div>
+
                     <div class="grid gap-2 grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 xl:grid-cols-6">
                         <div>
                             <InputLabel :size="'sm'" value="Username"/>
@@ -44,9 +47,9 @@
                         <Button class="w-min" :disabled="disableActions" @click="createUserFormSubmit" :size="'md'" :icon="disableActions ? 'eos-icons:loading' : 'mdi:data'" :label="createUserFormSubmitLabel"></Button>
                     </div>
 
-                    <div class="pt-4 space-y-2">
-                        <div v-if="!creatingAssociatedUser" class="font-header">
-                            <p class="font-medium text-lg">Company Assignment</p>
+                    <div class="mt-4 space-y-2">
+                        <div v-if="!creatingAssociatedUser" class="text-lg font-header">
+                            Company Assignment
                         </div>
 
                         <DataTable

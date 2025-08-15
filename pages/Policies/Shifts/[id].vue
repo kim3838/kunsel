@@ -44,9 +44,7 @@
 
                 <div class="px-[20px] space-y-2">
 
-                    <div>
-                        <p class="font-medium text-lg">Shift information</p>
-                    </div>
+                    <div class="text-lg font-header">Shift information</div>
 
                     <div class="grid gap-2 grid-cols-3 sm:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
                         <div>
@@ -68,7 +66,7 @@
                     </div>
 
                     <div class="mt-8">
-                        <p class="font-medium text-lg">Schedules</p>
+                        <p class="text-lg font-header">Schedules</p>
                     </div>
 
                     <DataTable

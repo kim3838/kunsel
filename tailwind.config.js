@@ -41,8 +41,9 @@ module.exports = {
                     'Sofia Sans Semi Condensed',
                 ],
                 header: [
-                    'Funnel Sans',
+                    'GG Sans',
                     'National Park',
+                    'Funnel Sans',
                     'IBM Plex Sans Condensed',
                 ],
                 standard: [
