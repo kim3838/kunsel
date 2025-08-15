@@ -12,6 +12,10 @@ export interface TableHeaderT {
     alignData?: 'left' | 'center' | 'right';
 }
 
+export type TableCellStyleT = {
+    'background-color'?: string
+}
+
 export interface TableRowPayloadShadeT {
     cell: string | string[],
     value: string

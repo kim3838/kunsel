@@ -46,11 +46,21 @@
                         <td
                             v-for="(header, headerIndex) in headers" :key="row.id"
                             class="whitespace-pre"
+                            :style="cellStyle(row, header)"
                             :class="[bodyFontClass, cellAlignClass(header?.alignData)]">
                             <slot
                                 :name="`cell.${header.value}`"
                                 :scrollReference="dataTableScroll"
-                                :slot="{buttonSize: buttonSize, inputSize: inputSize, datepickerFontSize: datepickerFontSize, selectSize: selectSize, checkBoxSize: checkBoxSize, radioGroupSize: radioGroupSize}"
+                                :slot="{
+                                    buttonSize: buttonSize,
+                                    inputSize: inputSize,
+                                    unorderedListSize: unorderedListSize,
+                                    labelSize: labelSize,
+                                    datepickerFontSize: datepickerFontSize,
+                                    selectSize: selectSize,
+                                    checkBoxSize: checkBoxSize,
+                                    radioGroupSize: radioGroupSize
+                                }"
                                 :cell="row"
                                 :headerIndex="headerIndex"
                                 :rowIndex="rowIndex">
@@ -96,11 +106,14 @@
 import {useSortable} from '@vueuse/integrations/useSortable';
 import {moveArrayElement} from '@vueuse/integrations/useSortable'
 import {storeToRefs} from 'pinia';
-import type {TableHeaderT, TableRowT} from "@/public/js/types/data";
+import type {TableCellStyleT, TableHeaderT, TableRowPayloadShadeT, TableRowT} from "@/public/js/types/data";
+import type {CommonColorsT} from "@/stores/theme";
+import type {LabelTypesT} from "@/public/js/types/theme";
 const {$themeStore} = useNuxtApp();
 
 const {
     hexAlpha,
+    common: commonColor,
     secondary: secondaryColor,
     neutral: neutralColor,
     lining: liningColor,
@@ -108,6 +121,8 @@ const {
     shade: shadeColor,
     tint: tintColor,
 } = storeToRefs($themeStore);
+
+const typedCommonColor = commonColor as Ref<CommonColorsT>;
 
 const liningColor70 = computed(() => {
     return liningColor.value + hexAlpha.value['70'];
@@ -323,12 +338,30 @@ const radioGroupSize = computed(() => {
     }[props.size]
 });
 
+const labelSize = computed(() => {
+    return {
+        'sm': 'sm',
+        'md': 'sm',
+        'lg': 'md',
+        'xl': 'lg',
+    }[props.size]
+});
+
 const inputSize = computed(() => {
     return {
         'sm': '2xs',
         'md': 'xs',
         'lg': 'sm',
         'xl': 'md',
+    }[props.size]
+});
+
+const unorderedListSize = computed(() => {
+    return {
+        'sm': 'md',
+        'md': 'md',
+        'lg': 'lg',
+        'xl': 'lg',
     }[props.size]
 });
 
@@ -355,6 +388,32 @@ const rowBackgroundClass = (rowIndex: number) => {
     if (!props.stripped) return 'table-default-background';
 
     return rowIndex % 2 === 0 ? 'table-row-odd-background' : 'table-row-even-background'
+};
+
+const cellStyle = (row, header) => {
+
+    let rowPayload = row?._payload;
+
+    let style: TableCellStyleT = {};
+
+    if(rowPayload){
+
+        let labelShade: (TableRowPayloadShadeT | boolean) = _get(rowPayload, 'label_shade', false);
+        let shadeCell: (string | string[]) = _get(labelShade, 'cell', []);
+        let shadeValue: (string | boolean) = _get(labelShade, 'value', false);
+        const validShadeValue = (shadeValue as LabelTypesT) in typedCommonColor.value;
+
+        if(validShadeValue && shadeCell == '*'){
+
+            style['background-color'] = typedCommonColor.value[shadeValue as keyof CommonColorsT].secondary;
+
+        } else if (validShadeValue && _includes(shadeCell, header.value)) {
+
+            style['background-color'] = typedCommonColor.value[shadeValue as keyof CommonColorsT].secondary;
+        }
+    }
+
+    return style;
 };
 </script>
 
