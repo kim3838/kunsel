@@ -225,6 +225,14 @@ export const useLayout = () => {
                         to: '/policies/shifts',
                         route_active: 'policies-shifts'
                     },
+                    {
+                        key: 'policies/payroll-components',
+                        type: 'link',
+                        title: 'Payroll Components',
+                        //icon: 'ic:baseline-attach-money',
+                        to: '/policies/payrollcomponents',
+                        route_active: 'policies-payrollcomponents'
+                    },
                 ]
             }, {
                 key: 'settings',
@@ -233,14 +241,6 @@ export const useLayout = () => {
                 //icon: 'ic:baseline-miscellaneous-services',
                 path_active: '/settings',
                 options: [
-                    {
-                        key: 'settings/payroll-components',
-                        type: 'link',
-                        title: 'Payroll Components',
-                        //icon: 'ic:baseline-attach-money',
-                        to: '/settings/payrollcomponents',
-                        route_active: 'settings-payrollcomponents'
-                    },
                     {
                         key: 'settings/pay-period-settings',
                         type: 'link',
