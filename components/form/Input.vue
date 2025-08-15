@@ -5,6 +5,7 @@
                 class="relative w-full h-full box-border outline-none flex items-center"
                 :class="[
                     backgroundClass,
+                    cursorClass,
                     focusRing ? 'focus-ring' : '',
                     withBorder ? 'bordered' : 'borderless',
                     rounded ? 'rounded-[2px]': '',
@@ -15,7 +16,8 @@
                     :disabled="disabled"
                     :class="[
                         fontClass,
-                        spacingClass
+                        spacingClass,
+                        cursorClass,
                     ]"
                     class="relative w-full box-border outline-none"
                     :value="modelValue"
@@ -203,6 +205,13 @@ const heightClass = computed(() => {
         '2xl' : 'h-16',
         '3xl' : 'h-20',
     }[props.size]
+});
+
+
+const cursorClass = computed(() => {
+    return {
+        'file': 'cursor-pointer'
+    }[props.type]
 });
 
 const spacingClass = computed(() => {

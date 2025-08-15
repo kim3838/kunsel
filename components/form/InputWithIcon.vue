@@ -11,10 +11,11 @@
                 class="relative w-full h-full z-10 box-border outline-none flex items-center"
                 :class="[
                     backgroundClass,
+                    cursorClass,
                     focusRing ? 'focus-ring' : '',
                     withBorder ? 'bordered' : 'borderless',
                     rounded ? 'rounded-[2px]': '',
-                    disabled ? 'cursor-not-allowed' : ''
+                    disabled ? 'cursor-not-allowed' : '',
                 ]">
                 <input
                     :id="id"
@@ -23,7 +24,8 @@
                     class="relative w-full box-border outline-none"
                     :class="[
                         fontClass,
-                        spacingClass
+                        spacingClass,
+                        cursorClass,
                     ]"
                     :value="modelValue"
                     :placeholder="placeholder"
@@ -187,6 +189,12 @@ const iconClass = computed(() => {
         'xl': 'h-9 w-9',
         '2xl': 'h-12 w-12',
     }[props.size]
+});
+
+const cursorClass = computed(() => {
+    return {
+        'file': 'cursor-pointer'
+    }[props.type]
 });
 
 const spacingClass = computed(() => {
