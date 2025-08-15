@@ -47,7 +47,10 @@
                             <div>
                                 <div class="mb-2 flex justify-between min-h-8">
                                     <div class="text-lg">
-                                        <span class="font-semibold">{{employee.number}}</span>&nbsp;{{employee.full_name}}
+                                        <NuxtLink
+                                            :to="`/workforce/employees/${employee.ulid}`">
+                                            <span class="cursor-pointer hover:underline"><span class="font-semibold">{{employee.number}}</span>&nbsp;{{employee.full_name}}</span>
+                                        </NuxtLink>
                                     </div>
 
                                     <NuxtLink
