@@ -12,9 +12,19 @@ export interface TableHeaderT {
     alignData?: 'left' | 'center' | 'right';
 }
 
+export interface TableRowPayloadShadeT {
+    cell: string | string[],
+    value: string
+}
+
+export interface TableRowPayloadT {
+    label_shade?: TableRowPayloadShadeT
+}
+
 export interface TableRowT {
     id: string | number;
     [key: string]: any;
+    _payload?: TableRowPayloadT;
 }
 
 export type MetaPaginationT = {

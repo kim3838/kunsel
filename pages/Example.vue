@@ -55,6 +55,7 @@
                             :headers="dataTable1Headers"
                             :size="'lg'"
                             :rows="dataTable1Data"
+                            :stripped="false"
                             selection>
                             <template v-slot:cell.category="{cell, slot, scrollReference}">
                                 <MultiSelect

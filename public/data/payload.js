@@ -533,11 +533,31 @@ export default {
                 'headers': [
                     { text: 'ID', value: 'id'},
                     { text: 'NAME', value: 'name'},
-                    { text: 'CATEGORY', alignData: 'right', value: 'category', width: '140px'},
-                    { text: 'DATE ADDED', alignData: 'right', value: 'datetime_added', width: '145px'},
-                    { text: 'DATE CREATED', alignData: 'right', value: 'created_at'},
-                    { text: 'DATE UPDATED', alignData: 'right', value: 'updated_at'},],
+                    { text: 'CATEGORY', alignData: 'left', value: 'category', width: '140px'},
+                    { text: 'LABEL', alignData: 'left', value: 'label', width: '160px'},
+                    { text: 'DATE ADDED', alignData: 'left', value: 'datetime_added', width: '145px'},
+                    { text: 'DATE CREATED', alignData: 'left', value: 'created_at'},
+                    { text: 'DATE UPDATED', alignData: 'left', value: 'updated_at'},],
                 'data': [
+                    {
+                        "id": 633,
+                        "name": "Brown Fernandez",
+                        "code": "PRT0451155563",
+                        "type": 1,
+                        "category": null,
+                        "capacity": 33,
+                        "datetime_added": "2023-08-22 17:44:03",
+                        "created_at": "2023-08-22 17:44:03",
+                        "updated_at": "2023-08-22 17:44:03",
+                        "label": '',
+                        "label_type": 'default',
+                        "_payload": {
+                            'label_shade': {
+                                'cell': ['label', 'datetime_added'],
+                                'value': 'default'
+                            }
+                        },
+                    },
                     {
                         "id": 45,
                         "name": "Jamaal Hodkiewicz",
@@ -547,7 +567,15 @@ export default {
                         "capacity": 33,
                         "datetime_added": "2023-08-22 17:44:03",
                         "created_at": "2023-08-22 17:44:03",
-                        "updated_at": "2023-08-22 17:44:03"
+                        "updated_at": "2023-08-22 17:44:03",
+                        "label": '',
+                        "label_type": 'success',
+                        "_payload": {
+                            'label_shade': {
+                                'cell': '*',
+                                'value': 'success'
+                            }
+                        },
                     },
                     {
                         "id": 67,
@@ -558,7 +586,15 @@ export default {
                         "capacity": 23,
                         "datetime_added": "2023-08-22 17:44:03",
                         "created_at": "2023-08-22 17:44:03",
-                        "updated_at": "2023-08-22 17:44:03"
+                        "updated_at": "2023-08-22 17:44:03",
+                        "label": '',
+                        "label_type": 'danger',
+                        "_payload": {
+                            'label_shade': {
+                                'cell': '*',
+                                'value': 'danger'
+                            }
+                        },
                     },
                     {
                         "id": 88,
@@ -569,7 +605,53 @@ export default {
                         "capacity": 22,
                         "datetime_added": "2023-08-22 17:44:03",
                         "created_at": "2023-08-22 17:44:03",
-                        "updated_at": "2023-08-22 17:44:03"
+                        "updated_at": "2023-08-22 17:44:03",
+                        "label": '',
+                        "label_type": 'caution',
+                        "_payload": {
+                            'label_shade': {
+                                'cell': '*',
+                                'value': 'caution'
+                            }
+                        },
+                    },
+                    {
+                        "id": 188,
+                        "name": "Angel Anne Doe",
+                        "code": "PRT9249091497",
+                        "type": 5,
+                        "category": null,
+                        "capacity": 22,
+                        "datetime_added": "2023-08-22 17:44:03",
+                        "created_at": "2023-08-22 17:44:03",
+                        "updated_at": "2023-08-22 17:44:03",
+                        "label": '',
+                        "label_type": 'warning',
+                        "_payload": {
+                            'label_shade': {
+                                'cell': '*',
+                                'value': 'warning'
+                            }
+                        },
+                    },
+                    {
+                        "id": 883,
+                        "name": "Genesis Hewley",
+                        "code": "PRT9249091497",
+                        "type": 5,
+                        "category": null,
+                        "capacity": 22,
+                        "datetime_added": "2023-08-22 17:44:03",
+                        "created_at": "2023-08-22 17:44:03",
+                        "updated_at": "2023-08-22 17:44:03",
+                        "label": '',
+                        "label_type": 'info',
+                        "_payload": {
+                            'label_shade': {
+                                'cell': '*',
+                                'value': 'info'
+                            }
+                        },
                     },
                 ]
             },
