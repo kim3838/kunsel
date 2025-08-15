@@ -44,8 +44,8 @@
                                         </label>
                                     </div>
 
-                                    <div v-if="$coreStore.hasNonPromptableServicePayloadMessage" class="block text-red-700">
-                                        <span>{{ $coreStore.servicePayloadMessage }}</span>
+                                    <div v-if="$coreStore.hasNonPromptableServicePayloadMessage" class="block">
+                                        <Label invert :size="'sm'" :type="'danger'" :label="$coreStore.servicePayloadMessage" />
                                     </div>
 
                                     <div class="flex mt-4 items-center justify-between">
