@@ -208,8 +208,7 @@ definePageMeta({
 
         if(create){return true;}
 
-        await laraUseFetch(`/api/shift-check/${route.params.id}`, {
-            lazy: false,
+        await laraFetch(`/api/shift-check/${route.params.id}`, {
             method: 'GET'
         }, {
             onSuccessResponse: async (request, options, response) => {

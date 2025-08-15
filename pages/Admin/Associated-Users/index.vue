@@ -57,14 +57,14 @@
                         v-model="selectedUsers"
                         :sub-row-slug="$associationStore.associatedUserSubRowSlug"
                         :sub-row-settings="{
-                                type: DATATABLE_SUBROW_TYPE.TITLED,
-                                containerPaddingTop: 0.25,
-                                containerPaddingBottom: 0.75,
-                                titleSize: 'sm',
-                                rowVerticalLine: true,
-                                verticalBorderType: 'dashed',
-                                horizontalBorderType: 'dashed',
-                            }"
+                            type: DATATABLE_SUBROW_TYPE.TITLED,
+                            containerPaddingTop: 0.25,
+                            containerPaddingBottom: 0.75,
+                            titleSize: 'sm',
+                            rowVerticalLine: true,
+                            verticalBorderType: 'dashed',
+                            horizontalBorderType: 'dashed',
+                        }"
                         :stripped="false"
                         selection>
                         <template v-slot:cell.actions="{cell,slot}">

@@ -72,8 +72,7 @@ definePageMeta({
 
         if(create){return true;}
 
-        await laraUseFetch(`/api/company-check/${route.params.id}`, {
-            lazy: false,
+        await laraFetch(`/api/company-check/${route.params.id}`, {
             method: 'GET'
         }, {
             onSuccessResponse: async (request, options, response) => {
