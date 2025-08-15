@@ -71,8 +71,8 @@ const primaryColor90 = computed(() => {
 const primaryColor80 = computed(() => {
     return primaryColor.value + hexAlpha.value['80'];
 });
-const accentColor40 = computed(() => {
-    return accentColor.value + hexAlpha.value['40'];
+const accentColor70 = computed(() => {
+    return accentColor.value + hexAlpha.value['70'];
 });
 
 const classes = computed(() => {
@@ -107,7 +107,7 @@ const iconClass = computed(() => {
 
 .nav-active-bg{
     border: 1px solid transparent;
-    background-color: v-bind(accentColor40);
+    background-color: v-bind(accentColor70);
 }
 
 .nav-active-ripple{
@@ -136,6 +136,6 @@ const iconClass = computed(() => {
 }
 
 .nav-link:hover{
-    background-color: v-bind(accentColor40);
+    background-color: v-bind(accentColor70);
 }
 </style>

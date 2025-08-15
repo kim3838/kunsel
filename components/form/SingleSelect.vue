@@ -162,8 +162,8 @@ const disabledBackgroundColor = computed(() => {
         : (textInvertColor.value + hexAlpha.value['40']);
 });
 
-const accentColor40 = computed(() => {
-    return accentColor.value + hexAlpha.value['40'];
+const accentColor70 = computed(() => {
+    return accentColor.value + hexAlpha.value['70'];
 });
 
 const props = defineProps({
@@ -715,7 +715,7 @@ watch(() => props.options.selected, newValue => {
 </script>
 <style scoped>
 .navigation-mode:hover{
-    background-color: v-bind(accentColor40);
+    background-color: v-bind(accentColor70);
 }
 
 .background {

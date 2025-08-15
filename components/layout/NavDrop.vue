@@ -115,8 +115,8 @@ const navigationTextShadow = computed(()=>{
 const navDropIcon = computed(()=>{
    return props.parent ? 'ic:baseline-arrow-drop-down' : 'ic:baseline-arrow-right';
 });
-const accentColor40 = computed(() => {
-    return accentColor.value + hexAlpha.value['40'];
+const accentColor70 = computed(() => {
+    return accentColor.value + hexAlpha.value['70'];
 });
 const navigationLinkColor = computed(()=>{
     if(navigationMode.value == 'clear-with-background'){
@@ -129,7 +129,7 @@ const navDropOptionsParentBackgroundColor = computed(()=>{
     if(
         navigationMode.value == 'clear-with-background'
     ){
-        return accentColor40.value;
+        return accentColor70.value;
     }
 
     return tintColor.value;
@@ -138,7 +138,7 @@ const navDropOptionsParentBorderColor = computed(()=>{
     if(
         navigationMode.value == 'clear-with-background'
     ){
-        return accentColor40.value;
+        return accentColor70.value;
     }
 
     return liningColor.value;
@@ -259,14 +259,14 @@ const dropDownIconClass = computed(() => {
 </script>
 <style scoped>
 .nav-drop-active{
-    background-color: v-bind(accentColor40);
+    background-color: v-bind(accentColor70);
 }
 
 .nav-drop{
     color: v-bind(navigationLinkColor);
 }
 .nav-drop:hover{
-    background-color: v-bind(accentColor40);
+    background-color: v-bind(accentColor70);
 }
 
 .nav-drop-options-parent{
@@ -282,7 +282,7 @@ const dropDownIconClass = computed(() => {
 }
 
 .nav-drop-link:hover{
-    background-color: v-bind(accentColor40);
+    background-color: v-bind(accentColor70);
 }
 .options-arrow-lining-color{
     border-bottom-color: v-bind(navDropOptionsParentBorderColor) !important;

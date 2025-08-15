@@ -64,8 +64,8 @@ const navigationTextShadow = computed(()=>{
 const navHeaderIcon = computed(()=>{
     return 'ic:baseline-arrow-drop-down';
 });
-const accentColor40 = computed(() => {
-    return accentColor.value + hexAlpha.value['40'];
+const accentColor70 = computed(() => {
+    return accentColor.value + hexAlpha.value['70'];
 });
 const navigationLinkColor = computed(()=>{
     if(navigationMode.value == 'clear-with-background'){
@@ -118,13 +118,13 @@ const dropDownIconClass = computed(() => {
 </script>
 <style scoped>
 .nav-active{
-    background-color: v-bind(accentColor40);
+    background-color: v-bind(accentColor70);
 }
 
 .nav{
     color: v-bind(navigationLinkColor);
 }
 .nav:hover{
-    background-color: v-bind(accentColor40);
+    background-color: v-bind(accentColor70);
 }
 </style>
