@@ -8,3 +8,13 @@ export const  WEEK_DAY = {
     FRIDAY: 5,
     SATURDAY: 6,
 }
+
+export const WEEK_DAY_NAMES = {
+    [WEEK_DAY.SUNDAY]: 'Sunday',
+    [WEEK_DAY.MONDAY]: 'Monday',
+    [WEEK_DAY.TUESDAY]: 'Tuesday',
+    [WEEK_DAY.WEDNESDAY]: 'Wednesday',
+    [WEEK_DAY.THURSDAY]: 'Thursday',
+    [WEEK_DAY.FRIDAY]: 'Friday',
+    [WEEK_DAY.SATURDAY]: 'Saturday',
+}

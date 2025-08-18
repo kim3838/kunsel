@@ -353,8 +353,11 @@
                                     <template v-slot:cell.pay_type="{cell, slot, scrollReference}">
                                         <div class="p-[3px]">{{cell.pay_type?.text}}</div>
                                     </template>
+                                    <template v-slot:cell.pay_frequency_code="{cell, slot, scrollReference}">
+                                        <div class="p-[3px]">{{cell.pay_frequency?.code}}</div>
+                                    </template>
                                     <template v-slot:cell.pay_frequency="{cell, slot, scrollReference}">
-                                        <div class="p-[3px]">{{cell.pay_frequency?.text}}</div>
+                                        <div class="p-[3px]">{{cell.pay_frequency?.type?.text}}</div>
                                     </template>
                                 </DataTable>
                             </fieldset>
@@ -845,7 +848,25 @@ const managerOptions = reactive({
 
 const payPeriodSelection = payrollComponentPaySelections.value.pay_period;
 const payTypeSelection = payrollComponentPaySelections.value.pay_type;
-const payFrequencySelection = payrollComponentPaySelections.value.pay_frequency;
+const payFrequencySelection = ref([]);
+const fetchPayFrequencySelection = async () => {
+
+    if(import.meta.server){return;}
+
+    await laraFetch("/api/pay-frequency-selections", {
+        method: 'GET',
+        params: {
+            filters: {
+                'company_id': selectedAssociatedCompany.value,
+            }
+        }
+    },{
+        onSuccessResponse: async (request, options, response) => {
+            payFrequencySelection.value = _get(response, '_data.values.selection', []);
+        }
+    });
+}
+await fetchPayFrequencySelection();
 
 watch(updatedAssociatedCompanyFlag, (newValue) => {
     if(isAuthenticated.value && selectedAssociatedCompany.value){
@@ -877,6 +898,7 @@ const employeeCompensationHeaders = reactive<TableHeaderT[]>([
     { text: 'Currency', value: 'currency'},
     { text: 'Pay Period', value: 'pay_period'},
     { text: 'Pay Type', value: 'pay_type'},
+    { text: 'Pay Frequency Code', value: 'pay_frequency_code'},
     { text: 'Pay Frequency', value: 'pay_frequency'},
 ]);
 
@@ -1531,7 +1553,7 @@ const employeePayrollComponentFormSubmit = async(employee = null) => {
                         'currency': _get(payrollComponent, 'currency', null),
                         'pay_period': _get(payrollComponent, 'pay_period.value', null),
                         'pay_type': _get(payrollComponent, 'pay_type.value', null),
-                        'pay_frequency': _get(payrollComponent, 'pay_frequency.value', null),
+                        'pay_frequency_id': _get(payrollComponent, 'pay_frequency_id', null),
                     }
                 }
             }

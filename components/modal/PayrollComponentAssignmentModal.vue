@@ -17,6 +17,9 @@
                 <span class="font-semibold">Existing Employee & Existing Payroll Component:</span> {{employeeExistAndPayrollComponentExist}}<br>
                 <span class="font-semibold">Edit mode :</span> {{editPayloadIndex >= 0 || employeePayrollComponentExists}}<br>
                 <span class="font-semibold">Selected Payroll Component :</span> {{selectedPayrollComponent}}<br>
+                <span class="font-semibold">Selected Pay Period :</span> {{selectedPayPeriod}}<br>
+                <span class="font-semibold">Selected Pay Frequency :</span> {{selectedPayFrequency}}<br>
+                <span class="font-semibold">Pay Frequency Type :</span> {{payFrequencyType}}<br>
                 <span class="font-semibold">Component Formulable :</span> {{payrollComponentFormulable}}<br>
                 <span class="font-semibold">Component Form :</span> {{componentForm}}<br>
             </div>
@@ -42,15 +45,15 @@
                     <div class="hidden md:block"></div>
                     <div v-if="selectedPayrollComponentIsAmountable">
                         <InputLabel :size="'sm'" value="Pay Period"/>
-                        <SingleSelect :searchable="false" :selection-max-viewable-line="4" drop-shadow value-persist :size="'md'" :options="payPeriodOptions"/>
+                        <SingleSelect :searchable="false" :selection-max-viewable-line="10" drop-shadow value-persist :size="'md'" :options="payPeriodOptions" @valueChange="payPeriodSelectedChange"/>
                     </div>
                     <div v-if="selectedPayrollComponentIsAmountable">
                         <InputLabel :size="'sm'" value="Pay Type"/>
-                        <SingleSelect :searchable="false" :selection-max-viewable-line="4" drop-shadow value-persist :size="'md'" :options="payTypeOptions"/>
+                        <SingleSelect :searchable="false" :selection-max-viewable-line="10" drop-shadow value-persist :size="'md'" :options="payTypeOptions"/>
                     </div>
                     <div v-if="selectedPayrollComponentIsAmountable">
                         <InputLabel :size="'sm'" value="Pay Frequency"/>
-                        <SingleSelect :searchable="false" :selection-max-viewable-line="4" drop-shadow value-persist :size="'md'" :options="payFrequencyOptions"/>
+                        <SingleSelect :searchable="false" :selection-max-viewable-line="10" drop-shadow value-persist :size="'md'" :options="payFrequencyOptions" @valueChange="payFrequencySelectedChange"/>
                     </div>
                 </div>
             </div>
@@ -93,6 +96,8 @@
 
 <script setup lang="ts">
 import {storeToRefs} from "pinia";
+
+const coreStore = useCoreStore();
 const {isAuthenticated} = useAuth();
 const nuxtApp = useNuxtApp();
 
@@ -165,7 +170,10 @@ const payTypeOptions = reactive({search: '', selection: payTypeSelection, select
 const payFrequencyOptions = reactive({search: '', selection: payFrequencySelection, selected: null});
 
 const selectedPayrollComponentIsAmountable = ref(false);
-const selectedPayrollComponent = ref({});
+const selectedPayrollComponent = ref<{} | null>({});
+const selectedPayPeriod = ref<{} | null>({});
+const selectedPayFrequency = ref<{} | null>({});
+
 const assignablePayrollComponentSelectedChange = (value: null | number) => {
     const selectedPayrollComponentTemp = assignablePayrollComponentOptions.selection.find(item => item.value === value);
 
@@ -188,9 +196,106 @@ const assignablePayrollComponentSelectedChange = (value: null | number) => {
             payPeriodOptions.selected = null;
             payTypeOptions.selected = null;
             payFrequencyOptions.selected = null;
+            payFrequencyType.value = null;
         }
     }
 }
+
+const PAY_PERIOD_VALID_FREQUENCIES = {
+    [PAY_PERIOD.HOURLY]: [PAY_FREQUENCY_TYPE.DAILY, PAY_FREQUENCY_TYPE.WEEKLY, PAY_FREQUENCY_TYPE.SEMI_MONTHLY, PAY_FREQUENCY_TYPE.MONTHLY],
+    [PAY_PERIOD.DAILY]: [PAY_FREQUENCY_TYPE.DAILY, PAY_FREQUENCY_TYPE.WEEKLY, PAY_FREQUENCY_TYPE.SEMI_MONTHLY, PAY_FREQUENCY_TYPE.MONTHLY],
+    [PAY_PERIOD.SEMI_MONTHLY]: [PAY_FREQUENCY_TYPE.SEMI_MONTHLY, PAY_FREQUENCY_TYPE.MONTHLY],
+    [PAY_PERIOD.MONTHLY]: [PAY_FREQUENCY_TYPE.SEMI_MONTHLY, PAY_FREQUENCY_TYPE.MONTHLY]
+};
+
+const PAY_FREQUENCY_VALID_PERIODS = {
+    [PAY_FREQUENCY_TYPE.DAILY]: [PAY_PERIOD.HOURLY, PAY_PERIOD.DAILY],
+    [PAY_FREQUENCY_TYPE.WEEKLY]: [PAY_PERIOD.HOURLY, PAY_PERIOD.DAILY],
+    [PAY_FREQUENCY_TYPE.SEMI_MONTHLY]: [PAY_PERIOD.HOURLY, PAY_PERIOD.DAILY, PAY_PERIOD.SEMI_MONTHLY, PAY_PERIOD.MONTHLY],
+    [PAY_FREQUENCY_TYPE.MONTHLY]: [PAY_PERIOD.HOURLY, PAY_PERIOD.DAILY, PAY_PERIOD.SEMI_MONTHLY, PAY_PERIOD.MONTHLY]
+};
+
+const validatePayPeriodFrequencyCombination = (payPeriodValue: number, frequencyType: number): boolean => {
+    const validFrequencies = PAY_PERIOD_VALID_FREQUENCIES[payPeriodValue];
+    return validFrequencies ? validFrequencies.includes(frequencyType) : false;
+};
+
+const validatePayFrequencyPeriodCombination = (frequencyType: number, payPeriodValue: number): boolean => {
+    const validPeriods = PAY_FREQUENCY_VALID_PERIODS[frequencyType];
+    return validPeriods ? validPeriods.includes(payPeriodValue) : false;
+};
+
+const resetPayPeriodSelection = () => {
+    payPeriodOptions.selected = null;
+    selectedPayPeriod.value = null;
+};
+
+const resetPayFrequencySelection = () => {
+    payFrequencyOptions.selected = null;
+    selectedPayFrequency.value = null;
+    payFrequencyType.value = null;
+};
+
+const showValidationError = (message: string) => {
+    coreStore.setServiceError({
+        prompt: true,
+        payload: { message }
+    });
+};
+
+const payPeriodSelectedChange = (value: null | number) => {
+    const selectedPayPeriodItem = payPeriodOptions.selection.find(item => item.value == value);
+    if (!selectedPayPeriodItem) {
+        return;
+    }
+
+    const selectedPayFrequencyItem = payFrequencyOptions.selection.find(item => item.value == payFrequencyOptions.selected);
+    let selectedFrequencyType = null;
+
+    if(selectedPayFrequencyItem){
+        selectedFrequencyType = selectedPayFrequencyItem?.type_value;
+    }
+
+    selectedPayPeriod.value = selectedPayPeriodItem;
+
+    if (payPeriodOptions.selected !== null && selectedFrequencyType !== null) {
+        const isValidCombination = validatePayPeriodFrequencyCombination(selectedPayPeriodItem.value, selectedFrequencyType);
+
+        if (!isValidCombination) {
+            const periodName = PAY_PERIOD_NAMES[selectedPayPeriodItem.value];
+            const validFrequencyNames = PAY_PERIOD_VALID_FREQUENCIES[selectedPayPeriodItem.value]
+                .map(freq => PAY_FREQUENCY_NAMES[freq].toLowerCase())
+                .join(', ');
+
+            showValidationError(`${periodName} pay period only allow (${validFrequencyNames}) pay frequencies.`);
+            resetPayPeriodSelection();
+        }
+    }
+};
+
+const payFrequencySelectedChange = (value: null | number) => {
+    const selectedPayFrequencyItem = payFrequencyOptions.selection.find(item => item.value == value);
+    if (!selectedPayFrequencyItem) {
+        return;
+    }
+
+    selectedPayFrequency.value = selectedPayFrequencyItem;
+    payFrequencyType.value = selectedPayFrequencyItem.type_value;
+
+    if (payFrequencyOptions.selected !== null && payPeriodOptions.selected !== null) {
+        const isValidCombination = validatePayFrequencyPeriodCombination(selectedPayFrequencyItem.type_value, payPeriodOptions.selected);
+
+        if (!isValidCombination) {
+            const frequencyName = PAY_FREQUENCY_NAMES[selectedPayFrequencyItem.type_value];
+            const validPeriodNames = PAY_FREQUENCY_VALID_PERIODS[selectedPayFrequencyItem.type_value]
+                .map(period => PAY_PERIOD_NAMES[period].toLowerCase())
+                .join(', ');
+
+            showValidationError(`${frequencyName} pay frequency only allow (${validPeriodNames}) pay periods.`);
+            resetPayFrequencySelection();
+        }
+    }
+};
 
 //Payroll Component Label
 const payrollComponentSubject = computed(()=>{
@@ -258,15 +363,17 @@ watch(() => props.creatingOrEditing, (creatingOrEditing) => {
 });
 
 const amount = ref(0);
-const currency = ref<String | null>('');
+const currency = ref<string | null>('');
 const defaultCurrency = ref(selectedAssociatedCompanyPayload.value?.currency ?? null);
+const payFrequencyType = ref<number | null>(null);
 
 const loadEditable = () => {
     amount.value = _get(props.editPayload, 'amount', 0);
     currency.value = _get(props.editPayload, 'currency', defaultCurrency.value);
     payPeriodOptions.selected = _get(props.editPayload, 'pay_period.value', null);
     payTypeOptions.selected = _get(props.editPayload, 'pay_type.value', null);
-    payFrequencyOptions.selected = _get(props.editPayload, 'pay_frequency.value', null);
+    payFrequencyOptions.selected = _get(props.editPayload, 'pay_frequency_id', null);
+    payFrequencyType.value = _get(props.editPayload, 'pay_frequency.type.value', null);
     assignablePayrollComponentOptions.selected = _get(props.editPayload, 'payroll_componentable_id', null);
 };
 
@@ -284,8 +391,11 @@ const reset = () => {
     payPeriodOptions.selected = null;
     payTypeOptions.selected = null;
     payFrequencyOptions.selected = null;
+    payFrequencyType.value = null;
     selectedPayrollComponentIsAmountable.value = false;
-    selectedPayrollComponent.value = false;
+    selectedPayrollComponent.value = null;
+    selectedPayPeriod.value = null;
+    selectedPayFrequency.value = null;
 }
 
 const loadingOverlay = computed(()=>{
@@ -374,7 +484,8 @@ const componentForm = computed(() => {
                 'currency': currency.value,
                 'pay_period': payPeriodOptions.selected,
                 'pay_type': payTypeOptions.selected,
-                'pay_frequency': payFrequencyOptions.selected,
+                'pay_frequency_id': payFrequencyOptions.selected,
+                'pay_frequency_type': payFrequencyType.value,
             };
         }
     }

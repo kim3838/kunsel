@@ -219,19 +219,25 @@ export const useLayout = () => {
                 path_active: '/policies',
                 options:[
                     {
-                        key: 'policies/shifts',
+                        key: 'policies/pay-frequencies',
                         type: 'link',
-                        title: 'Shifts',
-                        to: '/policies/shifts',
-                        route_active: 'policies-shifts'
+                        title: 'Pay Frequency',
+                        to: '/policies/payfrequencies',
+                        route_active: 'policies-payfrequencies'
                     },
                     {
                         key: 'policies/payroll-components',
                         type: 'link',
                         title: 'Payroll Components',
-                        //icon: 'ic:baseline-attach-money',
                         to: '/policies/payrollcomponents',
                         route_active: 'policies-payrollcomponents'
+                    },
+                    {
+                        key: 'policies/shifts',
+                        type: 'link',
+                        title: 'Shifts',
+                        to: '/policies/shifts',
+                        route_active: 'policies-shifts'
                     },
                 ]
             }, {
@@ -241,14 +247,6 @@ export const useLayout = () => {
                 //icon: 'ic:baseline-miscellaneous-services',
                 path_active: '/settings',
                 options: [
-                    {
-                        key: 'settings/pay-period-settings',
-                        type: 'link',
-                        title: 'Pay Period Settings',
-                        //icon: 'mdi:calendar-cursor',
-                        to: '/settings/payperiodsettings',
-                        route_active: 'settings-payperiodsettings'
-                    },
                     {
                         key: 'settings/salary-statement-modules',
                         type: 'link',
