@@ -1528,6 +1528,7 @@ const employeePayrollComponentFormSubmit = async(employee = null) => {
                     employeePayrollComponentFormBody = {
                         ...employeePayrollComponentFormBody,
                         'amount': _get(payrollComponent, 'amount', 0),
+                        'currency': _get(payrollComponent, 'currency', null),
                         'pay_period': _get(payrollComponent, 'pay_period.value', null),
                         'pay_type': _get(payrollComponent, 'pay_type.value', null),
                         'pay_frequency': _get(payrollComponent, 'pay_frequency.value', null),
