@@ -18,7 +18,7 @@
                             <InputLabel :size="'sm'" value="Username"/>
                             <Input :disabled="!creatingAssociatedUser || disableActions" :size="'md'" v-model="username" type="text"/>
                         </div>
-                        <div class="lg:col-span-3">
+                        <div class="lg:col-span-2">
                             <InputLabel :size="'sm'" :value="emailLabelComputed.label" :class="emailLabelComputed.class"/>
                             <Input :disabled="!creatingAssociatedUser || disableActions" :size="'md'" v-model="email" type="email"/>
                         </div>
