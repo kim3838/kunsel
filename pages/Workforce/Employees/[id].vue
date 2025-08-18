@@ -675,17 +675,17 @@ const nonEmployeeUsersExecute = async () => {
 await nonEmployeeUsersExecute();
 
 //Employee Contact
-const employeeOfficeEmail = ref('kimdeguzman20@yahoo.com');
+const employeeOfficeEmail = ref('');
 const employeePersonalEmail = ref('');
 const employeeOfficePhone = ref('');
 const employeePersonalPhone = ref('');
 
 //Employee Information
 const employeeId = ref(null);
-const employeeNumber = ref('C25001');
-const employeeFamilyName = ref('Dela Cruz');
-const employeeMiddleName = ref('Garcia');
-const employeeGivenName = ref('John');
+const employeeNumber = ref('');
+const employeeFamilyName = ref('');
+const employeeMiddleName = ref('');
+const employeeGivenName = ref('');
 const genderOptions = reactive({
     search: '',
     selection: [
