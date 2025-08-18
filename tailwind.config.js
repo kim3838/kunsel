@@ -4,6 +4,7 @@ module.exports = {
         extend: {
             fontFamily : {
                 sans : [
+                    'Funnel Sans',
                     'GG Sans',
                     'Google Sans Text',
                     'Spline Sans',
