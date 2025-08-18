@@ -21,13 +21,6 @@ export type PayPeriodSettingT = {
     semimonthly_pay_period: string,
 }
 
-export type PayPeriodPresetSelectionT = {
-    value: string,
-    text: string | number,
-    monthly_period: string,
-    semimonthly_period: string,
-}
-
 export type SalaryStatementModuleT = SequenceableTableRow & {
     id: string | number,
     company_id: string | number,

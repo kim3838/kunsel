@@ -5,7 +5,6 @@ export const payrollComponentPaySelectionsState = () => {
         return {
             pay_period: [],
             pay_type: [],
-            pay_frequency: [],
         }
     });
 }
@@ -27,7 +26,6 @@ export const useCommon = () => {
 
                 payrollComponentPaySelections.value.pay_period = _get(response, '_data.values.pay_period', []);
                 payrollComponentPaySelections.value.pay_type = _get(response, '_data.values.pay_type', []);
-                payrollComponentPaySelections.value.pay_frequency = _get(response, '_data.values.pay_frequency', []);
             },
         });
 
@@ -50,7 +48,6 @@ export const useCommon = () => {
 
                 payrollComponentPaySelections.value.pay_period = _get(response, '_data.values.pay_period', []);
                 payrollComponentPaySelections.value.pay_type = _get(response, '_data.values.pay_type', []);
-                payrollComponentPaySelections.value.pay_frequency = _get(response, '_data.values.pay_frequency', []);
             },
         });
 
