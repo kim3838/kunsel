@@ -46,33 +46,46 @@
                         <div v-for="employee in employees.data" :key="employee.id" class="flex-grow scaffold-border p-4 space-y-2">
                             <div>
                                 <div class="mb-2 flex justify-between min-h-8">
-                                    <div class="text-lg">
+                                    <div>
+                                        <div class="text-xs">Family name,(Middle), Given</div>
                                         <NuxtLink
                                             :to="`/workforce/employees/${employee.ulid}`">
-                                            <span class="cursor-pointer hover:underline"><span class="font-semibold">{{employee.number}}</span>&nbsp;{{employee.full_name}}</span>
+                                            <span class="text-lg font-header cursor-pointer hover:underline">{{employee.full_name}}</span>
                                         </NuxtLink>
                                     </div>
 
                                     <NuxtLink
+                                        v-if="false"
                                         :to="`/workforce/employees/${employee.ulid}`">
                                         <Button type="button" :variant="'outline'" :icon="'mdi:checkbook'" :size="'sm'"  :label="'info'" :override="{font_family: `GG Sans`}"></Button>
                                     </NuxtLink>
                                 </div>
 
-                                <div class="text-base"><span class="font-semibold">Gender: </span><span>{{employee.gender.text}}</span></div>
-                                <div class="text-base"><span class="font-semibold">Marital Status: </span><span>{{employee.marital_status.text}}</span></div>
-
-                                <div class="text-base">
-                                    <span class="font-semibold">Contact: </span>
-                                    <span v-if="_isEmpty(_compact([employee.contact?.office_email, employee.contact?.personal_email, employee.contact?.office_phone, employee.contact?.personal_phone]))">None</span>
-                                    <div v-else class="font-mono text-sm" :class="index == 0 ? 'inline-block' : 'block'" v-for="(contact, index) in _compact([employee.contact?.office_email, employee.contact?.personal_email, employee.contact?.office_phone, employee.contact?.personal_phone])">{{contact}}</div>
-                                </div>
-                            </div>
-
-                            <div>
-                                <div class="text-base"><span class="font-semibold">Department: </span>{{employee.department?.name ?? 'None'}}</div>
-                                <div class="text-base"><span class="font-semibold">Designation: </span>{{employee.designation?.name ?? 'None'}}</div>
-                                <div class="text-base"><span class="font-semibold">Manager: </span>{{employee.manager?.full_name ?? 'None'}}</div>
+                                <table class="border-separate font-sans">
+                                    <tbody>
+                                        <tr><td class="">Number:</td><td class="pl-2 font-semibold">{{ _get(employee, 'number', null) }}</td></tr>
+                                        <tr>
+                                            <td class="flex justify-start">Contact:</td>
+                                            <td class="pl-2">
+                                                <span v-if="_isEmpty(_compact([employee.contact?.office_email, employee.contact?.personal_email, employee.contact?.office_phone, employee.contact?.personal_phone]))">None</span>
+                                                <div v-else class="text-sm" :class="index == 0 ? 'inline-block' : 'block'" v-for="(contact, index) in _compact([employee.contact?.office_email, employee.contact?.personal_email, employee.contact?.office_phone, employee.contact?.personal_phone])">{{contact}}</div>
+                                            </td>
+                                        </tr>
+                                        <tr><td class="">Department:</td><td class="pl-2">{{ _get(employee, 'department.name', null) }}</td></tr>
+                                        <tr><td class="">Designation:</td><td class="pl-2">{{ _get(employee, 'designation.name', null) }}</td></tr>
+                                        <tr>
+                                            <td class="">Manager:</td>
+                                            <td class="pl-2">
+                                                <NuxtLink
+                                                    :to="`/workforce/employees/${_get(employee, 'manager.ulid', null)}`">
+                                                    <span class="cursor-pointer hover:underline">{{ _get(employee, 'manager.full_name', null) }}</span>
+                                                </NuxtLink>
+                                            </td>
+                                        </tr>
+                                        <tr><td class="">Gender:</td><td class="pl-2">{{ _get(employee, 'gender.text', null) }}</td></tr>
+                                        <tr><td class="">Marital Status:</td><td class="pl-2">{{ _get(employee, 'marital_status.text', null) }}</td></tr>
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                         <div v-if="noEmployeeRecords">

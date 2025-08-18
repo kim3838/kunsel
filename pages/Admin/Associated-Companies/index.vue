@@ -41,25 +41,23 @@
 
                     <div class="mx-auto max-w-screen-2xl flex flex-row flex-wrap gap-4">
 
-                        <div v-for="company in companies.data" :key="company.id" class="scaffold-border p-4 space-y-2">
+                        <div v-for="company in companies.data" :key="company.id" class="scaffold-border p-4 space-y-4">
                             <div>
-                                <div class="text-base">{{company.name}}</div>
-                                <div><span>Account #</span> {{company.account_number}}</div>
-                                <div class="text-sm"><span>Company code: </span>{{company.name}}</div>
-                            </div>
-
-                            <div class="w-full space-x-0.5 flex items-center">
                                 <NuxtLink
                                     :to="`/admin/associated-companies/${company.ulid}`">
-                                    <Button type="button" :variant="'outline'" :icon="'mdi:information-variant-circle-outline'" :size="'sm'"  :label="'info'" :override="{font_family: `GG Sans`}"></Button>
+                                    <div class="text-lg font-medium font-header cursor-pointer hover:underline">{{company.name}}</div>
                                 </NuxtLink>
                             </div>
 
-                            <div>
-                                <div class="text-sm"><span>Country: </span>{{company.country}}</div>
-                                <div class="text-sm"><span>Currency: </span>{{company.currency}}</div>
-                                <div class="text-sm"><span>Timezone: </span>{{company.timezone}}</div>
-                            </div>
+                            <table class="border-separate font-sans">
+                                <tbody>
+                                    <tr><td class="">Account #:</td><td class="pl-2 font-semibold">{{ _get(company, 'account_number', null) }}</td></tr>
+                                    <tr><td class="">Code:</td><td class="pl-2 font-semibold">{{ _get(company, 'code', null) }}</td></tr>
+                                    <tr><td class="">Country:</td><td class="pl-2">{{ _get(company, 'country', null) }}</td></tr>
+                                    <tr><td class="">Currency:</td><td class="pl-2">{{ _get(company, 'currency', null) }}</td></tr>
+                                    <tr><td class="">Timezone:</td><td class="pl-2">{{ _get(company, 'timezone', null) }}</td></tr>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>

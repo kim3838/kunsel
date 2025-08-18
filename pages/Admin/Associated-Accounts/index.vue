@@ -4,17 +4,23 @@
             <div class="mx-auto max-w-screen-2xl p-[20px] flex flex-row flex-wrap gap-4">
 
                 <div v-for="account in accountsData" :key="account.id" class="scaffold-border p-4 space-y-2">
-                    <div>
-                        <div><span class="font-semibold">Account #</span> {{account.number}}</div>
-                        <div class="text-sm">{{account.type.text}}</div>
+                    <div class="font-sans">
+                        Account ID: <span>{{account.number}}</span>
                     </div>
 
-                    <div>
-                        <div class="mb-2 font-semibold">Subscriptions:</div>
-                        <UnorderedList
-                            v-for="subscription in account.subscriptions"
-                            :icon="'ic:sharp-radio-button-checked'"
-                            :label="subscription.module.text" />
+                    <div class="space-y-2 font-sans">
+
+                        <div>
+                            <span>Plan: </span><span>{{account.type.text}}</span>
+                        </div>
+
+                        <div>
+                            <div class="mb-2">Subscriptions:</div>
+                            <UnorderedList
+                                v-for="subscription in account.subscriptions"
+                                :icon="'ic:sharp-radio-button-checked'"
+                                :label="subscription.module.text" />
+                        </div>
                     </div>
                 </div>
             </div>
