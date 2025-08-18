@@ -189,7 +189,6 @@
 <script setup lang="ts">
 import {storeToRefs} from "pinia";
 import type {TimePeriodPresetSelectionT} from "@/public/js/types/time";
-import {PAY_FREQUENCY_TYPE} from "~/utils/payroll_component";
 
 definePageMeta({middleware: ['auth', 'admin-of-selected-company']});
 useLayout().setNavigationMode('solid');
