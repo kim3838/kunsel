@@ -17,7 +17,7 @@ export const useCommon = () => {
     const payrollComponentPaySelections = payrollComponentPaySelectionsState();
     const timezoneSelections = timezoneSelectionsState();
 
-    const ssrFetchCommon = async () => {
+    const ssrFetchPayrollComponentPaySelections = async () => {
 
         await laraSsrUseFetch('/api/payroll-component-pay-selections', {
             method: 'GET',
@@ -28,6 +28,9 @@ export const useCommon = () => {
                 payrollComponentPaySelections.value.pay_type = _get(response, '_data.values.pay_type', []);
             },
         });
+    }
+
+    const ssrFetchTimezoneSelections = async () => {
 
         await laraSsrUseFetch('/api/timezone-selections', {
             method: 'GET',
@@ -71,7 +74,8 @@ export const useCommon = () => {
     }
 
     return {
-        ssrFetchCommon,
+        ssrFetchPayrollComponentPaySelections,
+        ssrFetchTimezoneSelections,
         fetchCommon,
         payrollComponentPaySelections,
         timezoneSelections,
