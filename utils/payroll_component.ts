@@ -7,6 +7,15 @@ export const  FORMULABLE = {
     NET_INCOME : 5
 }
 
+export const  FORMULABLE_NAMES = {
+    [FORMULABLE.EARNINGS] : 'Earnings',
+    [FORMULABLE.DEDUCTIONS] : 'Deductions',
+    [FORMULABLE.TAXABLE_INCOME] : 'Taxable Income',
+    [FORMULABLE.NON_TAXABLE_INCOME] : 'Non-Taxable Income',
+    [FORMULABLE.INCOME_TAX] : 'Income Tax',
+    [FORMULABLE.NET_INCOME] : 'Net Income'
+}
+
 export const FORMULABLE_MODEL_MAP_KEY = {
     [FORMULABLE.EARNINGS]: 'compensation',
     [FORMULABLE.DEDUCTIONS]: 'deduction',

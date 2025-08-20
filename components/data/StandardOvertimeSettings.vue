@@ -1,23 +1,25 @@
 <template>
-    <div>
+    <div class="space-y-4">
+        <FormulaSettingsSubrow :settings="descriptions"/>
         <table>
             <thead>
             <tr>
                 <td class="p-[3px] font-semibold">Overtime Rates</td>
-                <td class="p-[3px]" v-for="(rateSetting) in settings[0].value">
+                <td class="p-[3px]" v-for="(rateSetting) in rateSettings[0].value">
                     {{ rateSetting.label }}
                 </td>
             </tr>
             </thead>
             <tbody>
-            <tr v-for="(rateSetting) in settings">
+            <tr v-for="(rateSetting) in rateSettings">
                 <td class="p-[3px]">{{ rateSetting.label }}</td>
-                <td class="p-[3px] text-sm" v-for="(rate) in rateSetting.value">
+                <td class="p-[3px]" v-for="(rate) in rateSetting.value">
                     {{ rate.readable }}
                 </td>
             </tr>
             </tbody>
         </table>
+        <FormulaSettingsSubrow :settings="nonRateSettings"/>
     </div>
 </template>
 
@@ -44,6 +46,21 @@ const props = defineProps({
         type: Boolean,
         default: false,
     },
+});
+const isDescription = (setting) => {
+    return ['description'].includes(setting.key);
+};
+const isRateSetting = (setting) => {
+    return ['regular_rates', 'night_differential_rates'].includes(setting.key);
+};
+const descriptions = computed(() => {
+    return props.settings.filter(setting => isDescription(setting));
+});
+const rateSettings = computed(() => {
+    return props.settings.filter(setting => isRateSetting(setting) && !isDescription(setting));
+});
+const nonRateSettings = computed(() => {
+    return props.settings.filter(setting => !isRateSetting(setting) && !isDescription(setting));
 });
 </script>
 

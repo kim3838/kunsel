@@ -1,5 +1,6 @@
 <template>
-    <div class="space-y-1">
+    <div class="space-y-4">
+        <FormulaSettingsSubrow :settings="descriptions"/>
         <table>
             <thead>
             <tr>
@@ -12,8 +13,8 @@
             <tbody>
             <tr v-for="(rateSetting) in rateSettings">
                 <td class="p-[3px]">{{ rateSetting.label }}</td>
-                <td class="p-[3px] text-sm" v-for="(rate) in rateSetting.value">
-                    {{rate.readable}}
+                <td class="p-[3px]" v-for="(rate) in rateSetting.value">
+                    {{ rate.readable }}
                 </td>
             </tr>
             </tbody>
@@ -46,14 +47,20 @@ const props = defineProps({
         default: false,
     },
 });
+const isDescription = (setting) => {
+    return ['description'].includes(setting.key);
+};
 const isRateSetting = (setting) => {
     return ['regular_rates', 'night_differential_rates'].includes(setting.key);
 };
+const descriptions = computed(() => {
+    return props.settings.filter(setting => isDescription(setting));
+});
 const rateSettings = computed(() => {
-    return props.settings.filter(setting => isRateSetting(setting));
+    return props.settings.filter(setting => isRateSetting(setting) && !isDescription(setting));
 });
 const nonRateSettings = computed(() => {
-    return props.settings.filter(setting => !isRateSetting(setting));
+    return props.settings.filter(setting => !isRateSetting(setting) && !isDescription(setting));
 });
 </script>
 

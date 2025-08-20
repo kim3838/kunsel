@@ -1,42 +1,140 @@
 <template>
     <div>
         <DefaultWrapper>
-            <div class="mx-auto max-w-screen-2xl p-[20px]">
-                <DataTable
-                    :headers="formulaSettingsHeaders"
-                    :size="'lg'"
-                    :rows="formulaSettingsData"
-                    selection
-                    :sub-row-slug="'settings'"
-                    :sub-row-settings="{
-                        type: DATATABLE_SUBROW_TYPE.TITLED,
-                        containerPaddingTop: 0.25,
-                        containerPaddingBottom: 0.75,
-                        titleSize: 'md',
-                        rowVerticalLine: true,
-                        verticalBorderType: 'dashed',
-                        horizontalBorderType: 'dashed',
-                    }">
-                    <template v-slot:cell.formulable_type="{cell,slot}">
-                        <div class="p-[3px]">{{cell.formulable_type.text}}</div>
-                    </template>
-                    <template v-slot:cell.formulable_component_type="{cell,slot}">
-                        <div class="p-[3px]">{{_get(cell, 'formulable_component_type.text', null)}}</div>
-                    </template>
-                    <template v-slot:cell.formula_is_interpolation="{cell, slot, scrollReference}">
-                        <div class="flex justify-center">
-                            <NonModelCheckBox disabled :size="slot.checkBoxSize" :checked="cell.formula_is_interpolation" ></NonModelCheckBox>
-                        </div>
-                    </template>
-                    <template v-slot:sub_row_slot="{rowIndex, cell, slot}">
-                        <div class="inline-flex items-center scaffold-border pr-2">
-                            <Icon name="mdi:info-variant" :class="[slot.iconSizeClass]" /><div :class="[slot.titleSizeClass]">Settings</div>
-                        </div>
-                        <component v-if="cell.formula_name == 'Standard-Overtime'" :is="StandardOvertimeSettings" :settings="cell.settings" />
-                        <component v-else-if="cell.formula_name == 'Standard-Salary'" :is="StandardSalarySettings" :settings="cell.settings" />
-                        <component v-else :is="FormulaSettingsSubrow" :settings="cell.settings" />
-                    </template>
-                </DataTable>
+            <div class="mx-auto max-w-screen-2xl p-[20px] space-y-4">
+
+                <RadioGroup
+                    :selections="formulableSelection"
+                    :size="'md'"
+                    :orientation="'horizontal'"
+                    :radio-key="`formulable_type`"
+                    v-model="formulableSelected" />
+
+                <fieldset v-if="formulableSelected == FORMULABLE.EARNINGS" class="neutral-border px-2 pb-2 space-y-4">
+                    <legend class="text-lg font-medium font-header">Earnings</legend>
+
+                    <DataTable
+                        :headers="formulaSettingsHeaders"
+                        :size="'lg'"
+                        :rows="earningsFormulaSettings"
+                        selection
+                        :stripped="false"
+                        :sub-row-slug="'sub_row'"
+                        :sub-row-settings="{
+                            type: DATATABLE_SUBROW_TYPE.TITLED,
+                            containerPaddingTop: 1.00,
+                            containerPaddingBottom: 2.75,
+                            titleSize: 'md',
+                            rowVerticalLine: true,
+                            verticalBorderType: 'dashed',
+                            horizontalBorderType: 'dashed',
+                        }">
+                        <template v-slot:cell.formulable_type="{cell,slot}">
+                            <div class="p-[3px]">{{cell.formulable_type.text}}</div>
+                        </template>
+                        <template v-slot:cell.formulable_component_type="{cell,slot}">
+                            <div class="flex space-x-1 px-[0.3rem] items-center">
+                                <Label :size="slot.labelSize" :type="cell._payload.label_shade.value" shade :label="_get(cell, 'formulable_component_type.text', null)" />
+                            </div>
+                        </template>
+                        <template v-slot:cell.formula_is_interpolation="{cell, slot, scrollReference}">
+                            <div class="flex justify-center">
+                                <NonModelCheckBox disabled :size="slot.checkBoxSize" :checked="cell.formula_is_interpolation" ></NonModelCheckBox>
+                            </div>
+                        </template>
+                        <template v-slot:sub_row_slot="{rowIndex, cell, slot}">
+                            <div class="inline-flex items-center scaffold-border pr-2">
+                                <Icon name="mdi:info-variant" :class="[slot.iconSizeClass]" /><div :class="[slot.titleSizeClass]">Settings Information</div>
+                            </div>
+                            <component v-if="cell.formula_name == 'Standard-Overtime'" :is="StandardOvertimeSettings" :settings="cell.sub_row.settings" />
+                            <component v-else-if="cell.formula_name == 'Standard-Salary'" :is="StandardSalarySettings" :settings="cell.sub_row.settings" />
+                            <component v-else :is="FormulaSettingsSubrow" :settings="cell.sub_row.settings" />
+                        </template>
+                    </DataTable>
+                </fieldset>
+
+                <fieldset v-if="formulableSelected == FORMULABLE.DEDUCTIONS" class="neutral-border px-2 pb-2 space-y-4">
+                    <legend class="text-lg font-medium font-header">Deductions</legend>
+
+                    <DataTable
+                        :headers="formulaSettingsHeaders"
+                        :size="'lg'"
+                        :rows="deductionsFormulaSettings"
+                        selection
+                        :stripped="false"
+                        :sub-row-slug="'sub_row'"
+                        :sub-row-settings="{
+                            type: DATATABLE_SUBROW_TYPE.TITLED,
+                            containerPaddingTop: 1.00,
+                            containerPaddingBottom: 2.75,
+                            titleSize: 'md',
+                            rowVerticalLine: true,
+                            verticalBorderType: 'dashed',
+                            horizontalBorderType: 'dashed',
+                        }">
+                        <template v-slot:cell.formulable_type="{cell,slot}">
+                            <div class="p-[3px]">{{cell.formulable_type.text}}</div>
+                        </template>
+                        <template v-slot:cell.formulable_component_type="{cell,slot}">
+                            <div class="flex space-x-1 px-[0.3rem] items-center">
+                                <Label :size="slot.labelSize" :type="cell._payload.label_shade.value" shade :label="_get(cell, 'formulable_component_type.text', null)" />
+                            </div>
+                        </template>
+                        <template v-slot:cell.formula_is_interpolation="{cell, slot, scrollReference}">
+                            <div class="flex justify-center">
+                                <NonModelCheckBox disabled :size="slot.checkBoxSize" :checked="cell.formula_is_interpolation" ></NonModelCheckBox>
+                            </div>
+                        </template>
+                        <template v-slot:sub_row_slot="{rowIndex, cell, slot}">
+                            <div class="inline-flex items-center scaffold-border pr-2">
+                                <Icon name="mdi:info-variant" :class="[slot.iconSizeClass]" /><div :class="[slot.titleSizeClass]">Settings Information</div>
+                            </div>
+                            <component :is="FormulaSettingsSubrow" :settings="cell.sub_row.settings" />
+                        </template>
+                    </DataTable>
+                </fieldset>
+
+                <fieldset v-if="formulableSelected == FORMULABLE.INCOME_TAX" class="neutral-border px-2 pb-2 space-y-4">
+                    <legend class="text-lg font-medium font-header">Income Tax</legend>
+
+                    <DataTable
+                        v-for="taxFormulaSetting in taxFormulaSettings"
+                        :headers="formulaSettingsHeaders"
+                        :size="'lg'"
+                        :rows="[taxFormulaSetting]"
+                        selection
+                        :stripped="false"
+                        :sub-row-slug="'sub_row'"
+                        :sub-row-settings="{
+                            type: DATATABLE_SUBROW_TYPE.TITLED,
+                            containerPaddingTop: 1.00,
+                            containerPaddingBottom: 2.75,
+                            titleSize: 'md',
+                            rowVerticalLine: true,
+                            verticalBorderType: 'dashed',
+                            horizontalBorderType: 'dashed',
+                        }">
+                        <template v-slot:cell.formulable_type="{cell,slot}">
+                            <div class="p-[3px]">{{cell.formulable_type.text}}</div>
+                        </template>
+                        <template v-slot:cell.formulable_component_type="{cell,slot}">
+                            <div class="flex space-x-1 px-[0.3rem] items-center">
+                                <Label :size="slot.labelSize" :type="cell._payload.label_shade.value" shade :label="_get(cell, 'formulable_component_type.text', null)" />
+                            </div>
+                        </template>
+                        <template v-slot:cell.formula_is_interpolation="{cell, slot, scrollReference}">
+                            <div class="flex justify-center">
+                                <NonModelCheckBox disabled :size="slot.checkBoxSize" :checked="cell.formula_is_interpolation" ></NonModelCheckBox>
+                            </div>
+                        </template>
+                        <template v-slot:sub_row_slot="{rowIndex, cell, slot}">
+                            <div class="inline-flex items-center scaffold-border pr-2">
+                                <Icon name="mdi:info-variant" :class="[slot.iconSizeClass]" /><div :class="[slot.titleSizeClass]">Settings Information</div>
+                            </div>
+                            <component :is="FormulaSettingsSubrow" :settings="cell.sub_row.settings" />
+                        </template>
+                    </DataTable>
+                </fieldset>
             </div>
         </DefaultWrapper>
     </div>
@@ -45,6 +143,7 @@
 <script setup lang="ts">
 import {storeToRefs} from "pinia";
 import type {TableHeaderT} from "@/public/js/types/data";
+import type {CompanyFormulaSetting} from "@/public/js/types/formula";
 
 definePageMeta({middleware: ['auth', 'admin-of-selected-company']});
 useLayout().setNavigationMode('solid', 'FormulaSettings.vue');
@@ -74,7 +173,17 @@ const formulaSettingsHeaders = reactive<TableHeaderT[]>([
     { text: 'Formula', value: 'formula_name'},
 ]);
 
-const formulaSettingsData = ref([]);
+const formulableSelected = ref(FORMULABLE.EARNINGS);
+const formulableSelection = reactive([
+    {text : FORMULABLE_NAMES[FORMULABLE.EARNINGS], value: FORMULABLE.EARNINGS},
+    {text : FORMULABLE_NAMES[FORMULABLE.DEDUCTIONS], value: FORMULABLE.DEDUCTIONS},
+    {text : FORMULABLE_NAMES[FORMULABLE.INCOME_TAX], value: FORMULABLE.INCOME_TAX},
+]);
+
+const formulaSettingsData = ref<CompanyFormulaSetting[]>([]);
+const earningsFormulaSettings = ref<CompanyFormulaSetting[]>([]);
+const deductionsFormulaSettings = ref<CompanyFormulaSetting[]>([]);
+const taxFormulaSettings = ref<CompanyFormulaSetting[]>([]);
 const formulaSettingsPending = ref(false)
 
 const formulaSettingsExecute = async() =>{
@@ -89,7 +198,8 @@ const formulaSettingsExecute = async() =>{
         method: 'GET',
         params: {
             filters: {
-                'company_id': selectedAssociatedCompany.value
+                'company_id': selectedAssociatedCompany.value,
+                'formula_interpolation': false
             }
         }
     }, {
@@ -101,8 +211,69 @@ const formulaSettingsExecute = async() =>{
         },
         onSuccessResponse: async (request, options, response) => {
             formulaSettingsData.value = _get(response, '_data.values.formula_settings', []);
+
+            earningsFormulaSettings.value = _filter(formulaSettingsData.value, (item: CompanyFormulaSetting) => {
+                return _includes([FORMULABLE.EARNINGS], item.formulable_type.value);
+            }).map((item: CompanyFormulaSetting) => {
+
+                let shadeValue = _some([
+                    COMPENSATIONS.BASIC_SALARY,
+                    COMPENSATIONS.OVERTIME,
+                    COMPENSATIONS.BENEFIT,
+                    COMPENSATIONS.REGULAR_ALLOWANCE,
+                ],value => value == item.formulable_component_type.value) ? 'success' : 'default'
+
+                return {
+                    ...item,
+                    _payload: {
+                        'label_shade': {
+                            'cell': ['formulable_type', 'formulable_component_type'],
+                            'value': shadeValue
+                        }
+                    }
+                };
+            });
+
+            deductionsFormulaSettings.value = _filter(formulaSettingsData.value, (item: CompanyFormulaSetting) => {
+                return _includes([FORMULABLE.DEDUCTIONS], item.formulable_type.value);
+            }).map((item: CompanyFormulaSetting) => {
+
+                let shadeValue = {
+                    [DEDUCTIONS.DEDUCTION]: 'danger',
+                    [DEDUCTIONS.CONTRIBUTION]: 'warning',
+                }[item.formulable_component_type.value] || 'default';
+
+                return {
+                    ...item,
+                    _payload: {
+                        'label_shade': {
+                            'cell': ['formulable_type', 'formulable_component_type'],
+                            'value': shadeValue
+                        }
+                    }
+                };
+            });
+
+            taxFormulaSettings.value = _filter(formulaSettingsData.value, (item: CompanyFormulaSetting) => {
+                return _includes([FORMULABLE.INCOME_TAX], item.formulable_type.value);
+            }).map((item: CompanyFormulaSetting) => {
+
+                let shadeValue = {
+                    [INCOME_TAX.WITHHOLDING_TAX]: 'caution',
+                }[item.formulable_component_type.value] || 'default';
+
+                return {
+                    ...item,
+                    _payload: {
+                        'label_shade': {
+                            'cell': ['formulable_type', 'formulable_component_type'],
+                            'value': shadeValue
+                        }
+                    }
+                };
+            });
         }
-    }, false);
+    });
 }
 await formulaSettingsExecute();
 </script>
