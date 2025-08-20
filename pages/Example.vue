@@ -3,7 +3,7 @@
         <LandingWrapper>
             <div>
                 <div class="mx-auto pt-4 max-w-screen-2xl ">
-                    <div  v-if="false" class="mt-4 space-y-2 text-sm font-mono">
+                    <div v-if="false" class="mt-4 space-y-2 text-sm font-mono">
                         <pre>OFETCH PENDING: {{ofetchPending}}</pre>
                         <pre class="bg-opacity-50 bg-slate-200">OFETCH RESPONSE: <span v-text="ofetchData" /></pre>
                         <pre class="bg-opacity-50 bg-slate-200">OFETCH RESPONSE: <span v-html="ofetchData" /></pre>
@@ -16,7 +16,8 @@
                         timezoneSelectionsState {{timezoneSelections}}<br>
                         common.timezoneSelections {{common.timezoneSelections}}<br>
                     </div>
-                    <div class="p-4 space-y-4">
+
+                    <div v-if="false" class="p-4 space-y-4">
                         <div>
                             <span class="space-x-1">
                                 <Label :size="'sm'" :type="'default'" :label="'No Daily Totals'" />
