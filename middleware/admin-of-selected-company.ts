@@ -13,10 +13,10 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
             await fetchAssociatedCompanies();
             await storeAssociatedCompanies();
         }
-    }
 
-    const storedCompany = useCookie<SelectedCompanyT>($authStore.SELECTED_ASSOCIATED_COMPANY_STORAGE_KEY);
-    updateCompanyAssignmentType(storedCompany.value);
+        const storedCompany = useCookie<SelectedCompanyT>($authStore.SELECTED_ASSOCIATED_COMPANY_STORAGE_KEY);
+        updateCompanyAssignmentType(storedCompany.value);
+    }
 
     if(!(userIsSuperAdmin.value || companyAssignmentTypeIsAdmin.value)){
         return navigateTo("/", {replace: true});

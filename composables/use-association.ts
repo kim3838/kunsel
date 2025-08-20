@@ -122,6 +122,7 @@ export const useAssociation = () => {
     }
 
     const storeAssociatedCompanies = async() => {
+        const {userIsSuperAdmin} = useAuth();
 
         if(useAuth().isAuthenticated.value){
 
@@ -152,7 +153,9 @@ export const useAssociation = () => {
                 selected: storedCompany.value
             };
 
-            updateCompanyAssignmentType(storedCompany.value);
+            if(!userIsSuperAdmin.value){
+                updateCompanyAssignmentType(storedCompany.value);
+            }
         }
     }
 
@@ -168,7 +171,9 @@ export const useAssociation = () => {
 
         storedCompany.value = newValue;
 
-        updateCompanyAssignmentType(newValue);
+        if(!userIsSuperAdmin.value){
+            updateCompanyAssignmentType(newValue);
+        }
 
         if(currentRouteNameIsCompanyAdminProtected.value && !(userIsSuperAdmin.value || companyAssignmentTypeIsAdmin.value)){
             navigateTo("/", {replace: true});
