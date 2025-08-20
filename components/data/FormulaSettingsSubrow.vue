@@ -1,18 +1,21 @@
 <template>
-    <div>
+    <div class="space-y-4">
         <div v-for="setting in settings" :key="setting.id" class="flex">
+
             <div v-if="setting.type == 'array'">
-                <div v-if="true" class="font-semibold">{{setting.label}}</div>
+
+                <div class="font-semibold">{{setting.label}}</div>
+
                 <div>
                     <table>
-                        <thead class="font-normal">
+                        <thead>
                             <tr>
                                 <td class="p-[3px]" v-for="(setting, index) in setting.value" :key="setting.label">
                                     {{ setting.label }}
                                 </td>
                             </tr>
                         </thead>
-                        <tbody class="text-sm">
+                        <tbody>
                             <tr>
                                 <td class="p-[3px]" v-for="(setting, index) in setting.value" :key="setting.readable">
                                     {{ setting.readable }}
@@ -22,9 +25,15 @@
                     </table>
                 </div>
             </div>
+
+            <div v-else-if="setting.key == 'description' && setting.type == 'text'">
+                <div class="font-semibold">{{setting.label}}</div>
+                <p class="text-base whitespace-pre">{{setting.readable}}</p>
+            </div>
+
             <div v-else>
                 <div class="font-semibold">{{setting.label}}</div>
-                <div class="text-sm">{{setting.readable}}</div>
+                <div class="text-base">{{setting.readable}}</div>
             </div>
         </div>
     </div>
