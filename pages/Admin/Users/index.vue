@@ -58,9 +58,9 @@
                         :sub-row-slug="$associationStore.associatedUserSubRowSlug"
                         :sub-row-settings="{
                             type: DATATABLE_SUBROW_TYPE.TITLED,
-                            containerPaddingTop: 0.25,
-                            containerPaddingBottom: 0.75,
-                            titleSize: 'sm',
+                            containerPaddingTop: 0.75,
+                            containerPaddingBottom: 1.75,
+                            titleSize: 'md',
                             rowVerticalLine: true,
                             verticalBorderType: 'dashed',
                             horizontalBorderType: 'dashed',
