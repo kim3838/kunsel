@@ -10,7 +10,10 @@
                 </div>
 
                 <form @submit.prevent="formSubmit" class="px-[20px] space-y-2">
-                    <div class="grid gap-2 grid-cols-4 sm:grid-cols-5 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-8">
+
+                    <div class="text-lg font-header">Company</div>
+
+                    <div class="grid gap-2 grid-cols-1 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
                         <div>
                             <InputLabel :size="'sm'" value="Account"/>
                             <SingleSelect :icon="'mdi:checkbook'" value-persist drop-shadow :size="'md'" :options="accountOptions"/>
@@ -24,7 +27,7 @@
                             <Input :size="'md'" v-model="companyName" type="text"/>
                         </div>
                     </div>
-                    <div class="grid gap-2 grid-cols-4 sm:grid-cols-5 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-8">
+                    <div class="grid gap-2 grid-cols-1 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
                         <div>
                             <InputLabel :size="'sm'" value="Country"/>
                             <SingleSelect value-persist drop-shadow :size="'md'" :options="countryOptions"/>
@@ -39,9 +42,7 @@
                         </div>
                     </div>
 
-                    <div class="grid gap-2 grid-cols-4 sm:grid-cols-5 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-8">
-                        <Button class="w-min" ref="submitButton" type="submit" :disabled="disableActions" :size="'md'" :icon="disableActions ? 'eos-icons:loading' : 'mdi:data'" :label="submitLabel"></Button>
-                    </div>
+                    <Button class="w-min" ref="submitButton" type="submit" :disabled="disableActions" :size="'md'" :icon="disableActions ? 'eos-icons:loading' : 'mdi:data'" :label="submitLabel"></Button>
                 </form>
             </div>
         </AdminWrapper>
