@@ -1,5 +1,5 @@
 
-export const  ACCOUNT_TYPE = {
+export const  ACCOUNT_PLAN = {
     STANDARD : 0,
-    CORPORATE : 1,
+    BUSINESS : 1,
 }

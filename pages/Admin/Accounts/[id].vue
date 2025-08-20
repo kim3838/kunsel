@@ -16,7 +16,7 @@
                         </div>
                         <div>
                             <InputLabel :size="'sm'" value="Type"/>
-                            <SingleSelect value-persist drop-shadow :size="'md'" :options="accountTypeOptions"/>
+                            <SingleSelect value-persist drop-shadow :size="'md'" :options="accountPlanOptions"/>
                         </div>
                     </div>
 
@@ -30,9 +30,6 @@
 </template>
 
 <script setup lang="ts">
-import {storeToRefs} from "pinia";
-import type {TableHeaderT} from "@/public/js/types/data";
-
 useLayout().setNavigationMode('solid', 'Accounts/[id].vue');
 
 const route = useRoute();
@@ -64,13 +61,13 @@ definePageMeta({
     }
 });
 
-const accountTypeOptions = reactive({
+const accountPlanOptions = reactive({
     search: '',
     selection: [
-        {text : 'Standard', value: ACCOUNT_TYPE.STANDARD},
-        {text : 'Corporate', value: ACCOUNT_TYPE.CORPORATE},
+        {text : 'Standard', value: ACCOUNT_PLAN.STANDARD},
+        {text : 'Business', value: ACCOUNT_PLAN.BUSINESS},
     ],
-    selected: ACCOUNT_TYPE.STANDARD
+    selected: ACCOUNT_PLAN.STANDARD
 });
 
 //Fetch Account Information
@@ -83,7 +80,7 @@ const fetchAccount = async () => {
         onSuccessResponse: async (request, options, response) => {
             account.value = _get(response, '_data.values.account', null);
             accountNumber.value = _get(response, '_data.values.account.number', '');
-            accountTypeOptions.selected = _get(response, '_data.values.account.type.value', ACCOUNT_TYPE.STANDARD);
+            accountPlanOptions.selected = _get(response, '_data.values.account.plan.value', ACCOUNT_PLAN.STANDARD);
         },
     });
 };
@@ -106,7 +103,7 @@ const submitPath = computed(() => {
 });
 const formBody = computed(() => {
     let body = {
-        'type': accountTypeOptions.selected,
+        'type': accountPlanOptions.selected,
     };
 
     if(creatingAccount.value){

@@ -7,7 +7,7 @@
                     <div class="grid gap-2 grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-8">
                         <div>
                             <InputLabel :size="'sm'" value="Account Type" />
-                            <MultiSelect glint drop-shadow :selection-max-viewable-line="5" :size="'md'" :options="accountTypeOptions" :icon="'mdi:checkbook'"/>
+                            <MultiSelect glint drop-shadow :selection-max-viewable-line="5" :size="'md'" :options="accountPlanOptions" :icon="'mdi:checkbook'"/>
                         </div>
                     </div>
 
@@ -45,25 +45,34 @@
                     <div v-if="viewMode.selected == DATA_VIEW_MODE.FLEX" class="flex flex-row flex-wrap gap-4">
 
                         <div v-for="account in accounts.data" :key="account.id" class="scaffold-border p-4 space-y-2">
-                            <div>
-                                <div><span class="font-semibold">Account #</span> {{account.number}}</div>
-                                <div class="text-sm">{{account.type.text}}</div>
-                                <div class="text-sm">Date registered: {{account.date_registered}}</div>
+
+                            <div class="font-sans">
+                                <div>
+                                    Account ID:
+                                </div>
+                                <div class="text-lg font-header cursor-pointer hover:underline">
+                                    <NuxtLink :to="`/admin/accounts/${account.ulid}`">
+                                        <span>{{account.number}}</span>
+                                    </NuxtLink>
+                                </div>
                             </div>
 
-                            <div class="w-full space-x-0.5 flex items-center">
-                                <NuxtLink
-                                    :to="`/admin/accounts/${account.ulid}`">
-                                    <Button type="button" :variant="'outline'" :icon="'material-symbols:lab-profile-sharp'" :size="'sm'" :label="'info'" :override="{font_family: `GG Sans`}"></Button>
-                                </NuxtLink>
-                            </div>
+                            <div class="space-y-2 font-sans">
 
-                            <div>
-                                <div class="mb-2 font-semibold">Subscriptions:</div>
-                                <UnorderedList
-                                    v-for="subscription in account.subscriptions"
-                                    :icon="'ic:sharp-radio-button-checked'"
-                                    :label="subscription.module.text" />
+                                <table class="border-separate font-sans">
+                                    <tbody>
+                                        <tr><td>Plan:</td><td class="pl-2">{{account.plan.text}}</td></tr>
+                                        <tr><td>Date registered:</td><td class="pl-2">{{account.date_registered}}</td></tr>
+                                    </tbody>
+                                </table>
+
+                                <div>
+                                    <div class="mb-2">Subscriptions:</div>
+                                    <UnorderedList
+                                        v-for="subscription in account.subscriptions"
+                                        :icon="'ic:sharp-radio-button-checked'"
+                                        :label="subscription.module.text" />
+                                </div>
                             </div>
                         </div>
 
@@ -88,8 +97,8 @@
                                 </NuxtLink>
                             </div>
                         </template>
-                        <template v-slot:cell.type="{cell,slot}">
-                            <div class="p-[3px]">{{cell.type.text}}</div>
+                        <template v-slot:cell.plan="{cell,slot}">
+                            <div class="p-[3px]">{{cell.plan.text}}</div>
                         </template>
                     </DataTable>
                 </div>
@@ -108,15 +117,15 @@ useLayout().setNavigationMode('solid');
 const accountsHeaders = reactive<TableHeaderT[]>([
     { text: '', value: 'actions'},
     { text: 'Account #', value: 'number', alignData: 'left'},
-    { text: 'Type', value: 'type', alignData: 'left'},
+    { text: 'Plan', value: 'plan', alignData: 'left'},
     { text: 'Date Registered', value: 'date_registered', alignData: 'left'},
 ]);
 
-const accountTypeOptions = reactive({
+const accountPlanOptions = reactive({
     search: '',
     selection: [
-        {text : 'Standard', value: ACCOUNT_TYPE.STANDARD},
-        {text : 'Corporate', value: ACCOUNT_TYPE.CORPORATE},
+        {text : 'Standard', value: ACCOUNT_PLAN.STANDARD},
+        {text : 'Business', value: ACCOUNT_PLAN.BUSINESS},
     ],
     selected: []
 });
@@ -180,7 +189,7 @@ let paramsComputed = computed(() => {
         page: filters.page,
         perPage: filters.perPage,
         filters: {
-            'account_type': accountTypeOptions.selected
+            'account_plan': accountPlanOptions.selected
         }
     };
 });

@@ -25,43 +25,37 @@
                     </div>
                 </form>
 
-                <FansyFrame>
-                    <template v-slot:content>
-                        <div class="mb-2 flex items-center min-h-8">
-                            <UnorderedList
-                                v-if="disableActions"
-                                :icon="'eos-icons:loading'"
-                                :size="'md'"
-                                :label="'Please wait...'"/>
-                            <NuxtLink
-                                v-else
-                                :to="`/admin/companies/create-company`">
-                                <Button class="w-min" :disabled="disableActions" :size="'sm'" :icon="disableActions ? 'eos-icons:loading' : 'mdi:plus'" :label="disableActions ? 'Please wait' : ''"></Button>
-                            </NuxtLink>
-                        </div>
+                <div class="px-[20px]">
+                    <div class="mb-2 flex items-center min-h-8">
                         <UnorderedList
                             v-if="disableActions"
                             :icon="'eos-icons:loading'"
                             :size="'md'"
                             :label="'Please wait...'"/>
-                        <DataTable
-                            :headers="companiesHeaders"
-                            :size="'lg'"
-                            :rows="companies.data"
-                            :disabled="disableDataTable"
-                            v-model="selectedCompanies"
-                            selection>
-                            <template v-slot:cell.actions="{cell,slot}">
-                                <div class="h-full mx-0.5 space-x-0.5 w-full flex items-center">
-                                    <NuxtLink
-                                        :to="`/admin/companies/${cell.ulid}`">
-                                        <Button type="button" :icon="'mdi:pen'" :size="slot.buttonSize" :label="''"></Button>
-                                    </NuxtLink>
-                                </div>
-                            </template>
-                        </DataTable>
-                    </template>
-                </FansyFrame>
+                        <NuxtLink
+                            v-else
+                            :to="`/admin/companies/create-company`">
+                            <Button class="w-min" :disabled="disableActions" :size="'sm'" :icon="disableActions ? 'eos-icons:loading' : 'mdi:plus'" :label="disableActions ? 'Please wait' : ''"></Button>
+                        </NuxtLink>
+                    </div>
+
+                    <DataTable
+                        :headers="companiesHeaders"
+                        :size="'lg'"
+                        :rows="companies.data"
+                        :disabled="disableDataTable"
+                        v-model="selectedCompanies"
+                        selection>
+                        <template v-slot:cell.actions="{cell,slot}">
+                            <div class="h-full mx-0.5 space-x-0.5 w-full flex items-center">
+                                <NuxtLink
+                                    :to="`/admin/companies/${cell.ulid}`">
+                                    <Button type="button" :icon="'mdi:pen'" :size="slot.buttonSize" :label="''"></Button>
+                                </NuxtLink>
+                            </div>
+                        </template>
+                    </DataTable>
+                </div>
             </div>
         </AdminWrapper>
     </div>

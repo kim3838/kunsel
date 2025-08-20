@@ -5,14 +5,22 @@
 
                 <div v-for="account in accountsData" :key="account.id" class="scaffold-border p-4 space-y-2">
                     <div class="font-sans">
-                        Account ID: <span>{{account.number}}</span>
+                        <div>
+                            Account ID:
+                        </div>
+
+                        <div class="text-lg font-header">
+                            <span>{{account.number}}</span>
+                        </div>
                     </div>
 
                     <div class="space-y-2 font-sans">
 
-                        <div>
-                            <span>Plan: </span><span>{{account.type.text}}</span>
-                        </div>
+                        <table class="border-separate font-sans">
+                            <tbody>
+                                <tr><td>Plan:</td><td class="pl-2">{{account.plan.text}}</td></tr>
+                            </tbody>
+                        </table>
 
                         <div>
                             <div class="mb-2">Subscriptions:</div>
