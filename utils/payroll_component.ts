@@ -29,7 +29,14 @@ export const  COMPENSATION = {
     REGULAR_ALLOWANCE : 3
 }
 
-export const  DEDUCTIONS = {
+export const  COMPENSATION_NAMES = {
+    [COMPENSATION.BASIC_SALARY] : 'Basic Salary',
+    [COMPENSATION.OVERTIME] : 'Overtime',
+    [COMPENSATION.BENEFIT] : 'Benefit',
+    [COMPENSATION.REGULAR_ALLOWANCE] : 'Regular Allowance',
+}
+
+export const  DEDUCTION = {
     DEDUCTION : 0,
     CONTRIBUTION : 1
 }
