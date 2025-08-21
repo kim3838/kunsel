@@ -98,10 +98,9 @@
                     <legend class="text-lg font-medium font-header">Income Tax</legend>
 
                     <DataTable
-                        v-for="taxFormulaSetting in taxFormulaSettings"
                         :headers="formulaSettingsHeaders"
                         :size="'lg'"
-                        :rows="[taxFormulaSetting]"
+                        :rows="taxFormulaSettings"
                         selection
                         :stripped="false"
                         :sub-row-slug="'sub_row'"
