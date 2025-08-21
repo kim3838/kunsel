@@ -1,6 +1,6 @@
 <template>
     <div class="space-y-4">
-        <div v-for="setting in settings" :key="setting.id" class="flex">
+        <div v-for="setting in settings" :key="setting.id">
 
             <div v-if="setting.type == 'array'">
 
