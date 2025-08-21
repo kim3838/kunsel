@@ -79,7 +79,7 @@
                     </div>
 
                     <!-- Paginated Single and MultiSelect -->
-                    <div v-if="false" class="grid gap-2 grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-8">
+                    <div v-if="true" class="grid gap-2 grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-8">
                         <div class="block neutral-border">
                             <InputLabel :size="'sm'" value="Paginated Multi Select" />
                             <MultiSelectPaginated
@@ -213,7 +213,7 @@
                     </div>
 
                     <!-- Datatables -->
-                    <div v-if="true" class="grid gap-2 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4">
+                    <div v-if="false" class="grid gap-2 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4">
                         <div class="block col-span-1 sm:col-span-3 md:col-span-2 lg:col-span-2 p-2 neutral-border">
                             <InputLabel class="mb-2" :size="'md'" value="MD Datatable" />
                             <DataTable
@@ -378,7 +378,7 @@
                     </div>
 
                     <!-- Lara Fetch Group -->
-                    <div v-if="true">
+                    <div v-if="false">
                         <div class="block p-2 neutral-border">
                             <InputLabel class="mb-2" :size="'md'" value="Lara Fetch Group" />
                             <div class="grid gap-1 grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3">
