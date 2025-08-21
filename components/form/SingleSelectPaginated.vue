@@ -693,6 +693,12 @@ onMounted(async () => {
     });
 });
 
+const emit = defineEmits(["valueChange"]);
+
+watch(selected, newValue => {
+    emit('valueChange', newValue);
+});
+
 watch(clientReadyState, async (clientReady) => {
     if(clientReady){
         await nextTick(() => {
