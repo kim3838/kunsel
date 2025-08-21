@@ -48,7 +48,7 @@
                             </div>
                             <component v-if="cell.formula_name == 'Standard-Overtime'" :is="StandardOvertimeSettings" :settings="cell.sub_row.settings" />
                             <component v-else-if="cell.formula_name == 'Standard-Salary'" :is="StandardSalarySettings" :settings="cell.sub_row.settings" />
-                            <component v-else :is="FormulaSettingsSubrow" :settings="cell.sub_row.settings" />
+                            <component v-else :is="FormulaSettingsCaster" :settings="cell.sub_row.settings" />
                         </template>
                     </DataTable>
                 </fieldset>
@@ -89,7 +89,7 @@
                             <div class="inline-flex items-center scaffold-border pr-2">
                                 <Icon name="mdi:info-variant" :class="[slot.iconSizeClass]" /><div :class="[slot.titleSizeClass]">Settings Information</div>
                             </div>
-                            <component :is="FormulaSettingsSubrow" :settings="cell.sub_row.settings" />
+                            <component :is="FormulaSettingsCaster" :settings="cell.sub_row.settings" />
                         </template>
                     </DataTable>
                 </fieldset>
@@ -130,7 +130,7 @@
                             <div class="inline-flex items-center scaffold-border pr-2">
                                 <Icon name="mdi:info-variant" :class="[slot.iconSizeClass]" /><div :class="[slot.titleSizeClass]">Settings Information</div>
                             </div>
-                            <component :is="FormulaSettingsSubrow" :settings="cell.sub_row.settings" />
+                            <component :is="FormulaSettingsCaster" :settings="cell.sub_row.settings" />
                         </template>
                     </DataTable>
                 </fieldset>
@@ -149,7 +149,7 @@ useLayout().setNavigationMode('solid', 'FormulaSettings.vue');
 
 const StandardOvertimeSettings = resolveComponent('StandardOvertimeSettings');
 const StandardSalarySettings = resolveComponent('StandardSalarySettings');
-const FormulaSettingsSubrow = resolveComponent('FormulaSettingsSubrow');
+const FormulaSettingsCaster = resolveComponent('FormulaSettingsCaster');
 
 const {isAuthenticated} = useAuth();
 const nuxtApp = useNuxtApp();

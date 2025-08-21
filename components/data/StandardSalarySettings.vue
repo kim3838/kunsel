@@ -1,6 +1,6 @@
 <template>
     <div class="space-y-4">
-        <FormulaSettingsSubrow :settings="descriptions"/>
+        <FormulaSettingsCaster :settings="descriptions"/>
         <table>
             <thead>
             <tr>
@@ -19,7 +19,7 @@
             </tr>
             </tbody>
         </table>
-        <FormulaSettingsSubrow :settings="nonRateSettings"/>
+        <FormulaSettingsCaster :settings="nonRateSettings"/>
     </div>
 </template>
 
