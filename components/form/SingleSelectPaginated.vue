@@ -210,6 +210,11 @@ let tabindexInput = computed(() => {
 let keepFocus = ref(false);
 let keepFocusCallback = ref<ReturnType<typeof setTimeout> | number>(1);
 let selection = ref<SelectDataType[]>([]);
+let meta = reactive({
+    pagination: {
+        total: 0
+    }
+});
 let selected = ref<SelectDataType | null>(null);
 let searchTriggered = ref(false);
 let page = ref(1);
@@ -452,6 +457,9 @@ const showSelectionEndResult = computed(() => {
 
     return selectionIsGreaterThanViewableMaxLine || pending.value;
 });
+const selectionReachedPaginationTotal = computed(() => {
+    return selection.value.length >= meta.pagination.total;
+});
 
 function keepFocusAlive(){
     if(!active.value){
@@ -607,6 +615,9 @@ const execute = async () => {
                 selection.value = [];
             }
 
+            let responseMeta = _get(response, '_data.values.selection.meta', {});
+            meta.pagination.total = _get(responseMeta, 'pagination.total', 0);
+
             let data = _get(response, '_data.values.selection.data', []);
             selection.value = selection.value.concat(data);
 
@@ -618,7 +629,7 @@ const execute = async () => {
                 });
             }
 
-            if(selection.value.length && data.length == 0){
+            if(selectionReachedPaginationTotal.value || (selection.value.length && data.length == 0)){
                 selectionEndResult.icon = 'radix-icons:dot';
                 selectionEndResult.label = 'End of result.';
             }
@@ -627,7 +638,7 @@ const execute = async () => {
 }
 
 watch(selectionScrollBottomReached, (bottomReached) => {
-    if(bottomReached && active.value){
+    if(!selectionReachedPaginationTotal.value && bottomReached && active.value){
         page.value += 1;
         execute();
     }
