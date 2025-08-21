@@ -278,14 +278,14 @@
                         </div>
 
                         <div class="grid gap-2 grid-cols-1">
-                            <fieldset class="neutral-border px-2 pb-2 grid gap-2 grid-cols-1">
+                            <fieldset class="neutral-border px-2 pb-2 space-y-2">
                                 <legend class="text-sm">Compensations</legend>
                                 <div v-if="false">
                                     <span class="font-semibold">Employee Compensations:</span> {{employeeCompensationData}}<br>
                                     <span class="font-semibold">Employee Compensations[1]:</span> {{employeeCompensationData[1]}}<br>
                                     <span class="font-semibold">Selected Employee Compensations:</span> {{selectedEmployeeCompensation}}<br>
                                 </div>
-                                <div class="space-x-1 mt-2 inline-flex items-center">
+                                <div class="inline-flex gap-2 items-center">
                                     <Button
                                         class="w-min"
                                         :variant=" 'outline'"
@@ -364,14 +364,14 @@
                         </div>
 
                         <div class="grid grid-cols-1 md:gap-2 grid-cols-1 lg:grid-cols-3">
-                            <fieldset class="neutral-border px-2 pb-2 grid gap-2 grid-cols-1">
+                            <fieldset class="neutral-border px-2 pb-2 space-y-2">
                                 <legend class="text-sm">Deductions</legend>
                                 <div v-if="false">
                                     <span class="font-semibold">Employee Deductions:</span> {{employeeDeductionData}}<br>
                                     <span class="font-semibold">Employee Deductions[1]:</span> {{employeeDeductionData[1]}}<br>
                                     <span class="font-semibold">Selected Employee Deductions:</span> {{selectedEmployeeDeduction}}<br>
                                 </div>
-                                <div class="space-x-1 mt-2 inline-flex items-center">
+                                <div class="inline-flex gap-2 items-center">
                                     <Button
                                         class="w-min"
                                         :variant=" 'outline'"
@@ -436,14 +436,14 @@
                                 </DataTable>
                             </fieldset>
 
-                            <fieldset class="lg:col-span-2 neutral-border px-2 pb-2 grid gap-2 grid-cols-1">
+                            <fieldset class="lg:col-span-2 neutral-border px-2 pb-2 space-y-2">
                                 <legend class="text-sm">Income Tax</legend>
                                 <div v-if="false">
                                     <span class="font-semibold">Employee Income Taxes:</span> {{employeeIncomeTaxData}}<br>
                                     <span class="font-semibold">Employee Income Taxes[1]:</span> {{employeeIncomeTaxData[1]}}<br>
                                     <span class="font-semibold">Selected Employee Income Taxes:</span> {{selectedEmployeeIncomeTax}}<br>
                                 </div>
-                                <div class="space-x-1 mt-2 inline-flex items-center">
+                                <div class="inline-flex gap-2 items-center">
                                     <Button
                                         class="w-min"
                                         :variant=" 'outline'"
