@@ -28,7 +28,7 @@
 
             <div v-else-if="setting.key == 'description' && setting.type == 'text'">
                 <div class="font-semibold">{{setting.label}}</div>
-                <p class="text-base whitespace-pre">{{setting.readable}}</p>
+                <p class="text-base" :class="'whitespace-' + descriptionWhitespace">{{setting.readable}}</p>
             </div>
 
             <div v-else>
@@ -61,6 +61,10 @@ const props = defineProps({
     disabled: {
         type: Boolean,
         default: false,
+    },
+    descriptionWhitespace: {
+        type: String,
+        default: 'pre',
     },
 });
 
