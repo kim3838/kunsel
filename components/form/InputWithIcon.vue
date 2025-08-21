@@ -65,7 +65,7 @@ const disabledBackgroundColor = computed(() => {
 });
 
 const props = defineProps({
-    modelValue: [String, Number],
+    modelValue: [String, Number, null],
     size: {
         default: 'md'
     },
