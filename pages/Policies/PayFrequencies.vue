@@ -57,7 +57,7 @@
                 <div class="space-y-2 p-[20px] flex flex-col gap-4">
 
                     <fieldset class="neutral-border px-2 pb-2 space-y-2">
-                        <legend class="text-lg font-medium font-header">{{PAY_FREQUENCY_NAMES[dailyPayFrequenciesData.type]}}</legend>
+                        <legend class="text-lg font-medium font-header">{{PAY_FREQUENCY_NAME[dailyPayFrequenciesData.type]}}</legend>
 
                         <div>
                             <div class="text-base"><span class="font-semibold">Code: </span><span>{{dailyPayFrequenciesData?.code}}</span></div>
@@ -67,7 +67,7 @@
 
                     <form @submit.prevent="weeklyPayFrequencyFormSubmit">
                         <fieldset class="neutral-border px-2 pb-2 grid grid-cols-2 md:grid-cols-4 gap-4">
-                            <legend class="text-lg font-medium font-header">{{PAY_FREQUENCY_NAMES[weeklyPayFrequenciesData.type]}}</legend>
+                            <legend class="text-lg font-medium font-header">{{PAY_FREQUENCY_NAME[weeklyPayFrequenciesData.type]}}</legend>
 
                             <div>
                                 <div class="text-base"><span class="font-semibold">Code: </span><span>{{weeklyPayFrequenciesData?.code}}</span></div>

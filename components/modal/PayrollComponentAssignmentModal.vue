@@ -186,8 +186,8 @@ const assignablePayrollComponentSelectedChange = (value: null | number) => {
     if(props.payrollComponentFormulable == FORMULABLE.EARNINGS){
 
         selectedPayrollComponentIsAmountable.value = _includes([
-            COMPENSATIONS.BASIC_SALARY,
-            COMPENSATIONS.REGULAR_ALLOWANCE
+            COMPENSATION.BASIC_SALARY,
+            COMPENSATION.REGULAR_ALLOWANCE
         ], selectedPayrollComponentTemp.type.value);
 
         if(!selectedPayrollComponentIsAmountable.value){
@@ -262,9 +262,9 @@ const payPeriodSelectedChange = (value: null | number) => {
         const isValidCombination = validatePayPeriodFrequencyCombination(selectedPayPeriodItem.value, selectedFrequencyType);
 
         if (!isValidCombination) {
-            const periodName = PAY_PERIOD_NAMES[selectedPayPeriodItem.value];
+            const periodName = PAY_PERIOD_NAME[selectedPayPeriodItem.value];
             const validFrequencyNames = PAY_PERIOD_VALID_FREQUENCIES[selectedPayPeriodItem.value]
-                .map(freq => PAY_FREQUENCY_NAMES[freq].toLowerCase())
+                .map(freq => PAY_FREQUENCY_NAME[freq].toLowerCase())
                 .join(', ');
 
             showValidationError(`${periodName} pay period only allow (${validFrequencyNames}) pay frequencies.`);
@@ -286,9 +286,9 @@ const payFrequencySelectedChange = (value: null | number) => {
         const isValidCombination = validatePayFrequencyPeriodCombination(selectedPayFrequencyItem.type_value, payPeriodOptions.selected);
 
         if (!isValidCombination) {
-            const frequencyName = PAY_FREQUENCY_NAMES[selectedPayFrequencyItem.type_value];
+            const frequencyName = PAY_FREQUENCY_NAME[selectedPayFrequencyItem.type_value];
             const validPeriodNames = PAY_FREQUENCY_VALID_PERIODS[selectedPayFrequencyItem.type_value]
-                .map(period => PAY_PERIOD_NAMES[period].toLowerCase())
+                .map(period => PAY_PERIOD_NAME[period].toLowerCase())
                 .join(', ');
 
             showValidationError(`${frequencyName} pay frequency only allow (${validPeriodNames}) pay periods.`);
@@ -475,8 +475,8 @@ const componentForm = computed(() => {
 
     if(props.payrollComponentFormulable == FORMULABLE.EARNINGS){
 
-        if (selectedPayrollComponentType == COMPENSATIONS.BASIC_SALARY ||
-            selectedPayrollComponentType == COMPENSATIONS.REGULAR_ALLOWANCE) {
+        if (selectedPayrollComponentType == COMPENSATION.BASIC_SALARY ||
+            selectedPayrollComponentType == COMPENSATION.REGULAR_ALLOWANCE) {
 
             return {
                 ...componentFormTemp,

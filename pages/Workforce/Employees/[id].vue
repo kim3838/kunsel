@@ -1545,8 +1545,8 @@ const employeePayrollComponentFormSubmit = async(employee = null) => {
 
             if(payrollFormulableType == FORMULABLE.EARNINGS){
 
-                if (payrollComponentType == COMPENSATIONS.BASIC_SALARY ||
-                    payrollComponentType == COMPENSATIONS.REGULAR_ALLOWANCE) {
+                if (payrollComponentType == COMPENSATION.BASIC_SALARY ||
+                    payrollComponentType == COMPENSATION.REGULAR_ALLOWANCE) {
                     employeePayrollComponentFormBody = {
                         ...employeePayrollComponentFormBody,
                         'amount': _get(payrollComponent, 'amount', 0),

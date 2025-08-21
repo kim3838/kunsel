@@ -175,9 +175,9 @@ const formulaSettingsHeaders = reactive<TableHeaderT[]>([
 
 const formulableSelected = ref(FORMULABLE.EARNINGS);
 const formulableSelection = reactive([
-    {text : FORMULABLE_NAMES[FORMULABLE.EARNINGS], value: FORMULABLE.EARNINGS},
-    {text : FORMULABLE_NAMES[FORMULABLE.DEDUCTIONS], value: FORMULABLE.DEDUCTIONS},
-    {text : FORMULABLE_NAMES[FORMULABLE.INCOME_TAX], value: FORMULABLE.INCOME_TAX},
+    {text : FORMULABLE_NAME[FORMULABLE.EARNINGS], value: FORMULABLE.EARNINGS},
+    {text : FORMULABLE_NAME[FORMULABLE.DEDUCTIONS], value: FORMULABLE.DEDUCTIONS},
+    {text : FORMULABLE_NAME[FORMULABLE.INCOME_TAX], value: FORMULABLE.INCOME_TAX},
 ]);
 
 const formulaSettingsData = ref<CompanyFormulaSetting[]>([]);
@@ -217,10 +217,10 @@ const formulaSettingsExecute = async() =>{
             }).map((item: CompanyFormulaSetting) => {
 
                 let shadeValue = _some([
-                    COMPENSATIONS.BASIC_SALARY,
-                    COMPENSATIONS.OVERTIME,
-                    COMPENSATIONS.BENEFIT,
-                    COMPENSATIONS.REGULAR_ALLOWANCE,
+                    COMPENSATION.BASIC_SALARY,
+                    COMPENSATION.OVERTIME,
+                    COMPENSATION.BENEFIT,
+                    COMPENSATION.REGULAR_ALLOWANCE,
                 ],value => value == item.formulable_component_type.value) ? 'success' : 'default'
 
                 return {
@@ -239,8 +239,8 @@ const formulaSettingsExecute = async() =>{
             }).map((item: CompanyFormulaSetting) => {
 
                 let shadeValue = {
-                    [DEDUCTIONS.DEDUCTION]: 'danger',
-                    [DEDUCTIONS.CONTRIBUTION]: 'warning',
+                    [DEDUCTION.DEDUCTION]: 'danger',
+                    [DEDUCTION.CONTRIBUTION]: 'warning',
                 }[item.formulable_component_type.value] || 'default';
 
                 return {
@@ -259,7 +259,7 @@ const formulaSettingsExecute = async() =>{
             }).map((item: CompanyFormulaSetting) => {
 
                 let shadeValue = {
-                    [INCOME_TAX.WITHHOLDING_TAX]: 'caution',
+                    [INCOME_TAX.COMPENSATION_TAX]: 'caution',
                 }[item.formulable_component_type.value] || 'default';
 
                 return {

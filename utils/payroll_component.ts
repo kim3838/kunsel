@@ -7,7 +7,7 @@ export const  FORMULABLE = {
     NET_INCOME : 5
 }
 
-export const  FORMULABLE_NAMES = {
+export const  FORMULABLE_NAME = {
     [FORMULABLE.EARNINGS] : 'Earnings',
     [FORMULABLE.DEDUCTIONS] : 'Deductions',
     [FORMULABLE.TAXABLE_INCOME] : 'Taxable Income',
@@ -22,7 +22,7 @@ export const FORMULABLE_MODEL_MAP_KEY = {
     [FORMULABLE.INCOME_TAX]: 'income_tax',
 };
 
-export const  COMPENSATIONS = {
+export const  COMPENSATION = {
     BASIC_SALARY : 0,
     OVERTIME : 1,
     BENEFIT : 2,
@@ -34,10 +34,18 @@ export const  DEDUCTIONS = {
     CONTRIBUTION : 1
 }
 
-export const  INCOME_TAX = {
-    WITHHOLDING_TAX : 0
+export const  DEDUCTION_NAME = {
+    [DEDUCTION.DEDUCTION] : 'Deduction',
+    [DEDUCTION.CONTRIBUTION] : 'Contribution',
 }
 
+export const  INCOME_TAX = {
+    COMPENSATION_TAX : 0
+}
+
+export const  INCOME_TAX_NAME = {
+    [INCOME_TAX.COMPENSATION_TAX] : 'Compensation Tax',
+}
 export const PAY_PERIOD ={
     HOURLY : 0,
     DAILY : 1,
@@ -45,7 +53,7 @@ export const PAY_PERIOD ={
     MONTHLY : 3
 }
 
-export const PAY_PERIOD_NAMES = {
+export const PAY_PERIOD_NAME = {
     [PAY_PERIOD.HOURLY]: 'Hourly',
     [PAY_PERIOD.DAILY]: 'Daily',
     [PAY_PERIOD.SEMI_MONTHLY]: 'Semimonthly',
@@ -59,7 +67,7 @@ export const PAY_FREQUENCY_TYPE ={
     MONTHLY : 3
 }
 
-export const PAY_FREQUENCY_NAMES = {
+export const PAY_FREQUENCY_NAME = {
     [PAY_FREQUENCY_TYPE.DAILY]: 'Daily',
     [PAY_FREQUENCY_TYPE.WEEKLY]: 'Weekly',
     [PAY_FREQUENCY_TYPE.SEMI_MONTHLY]: 'Semimonthly',
