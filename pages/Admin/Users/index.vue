@@ -6,11 +6,11 @@
                     <div class="grid gap-2 grid-cols-3 sm:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-8">
                         <div>
                             <InputLabel :size="'sm'" value="Company" />
-                            <MultiSelect glint drop-shadow :max-viewable-summary-count="1" :selection-max-viewable-line="5" :size="'md'" :options="companyOptions" :icon="'ic:baseline-curtains-closed'"/>
+                            <MultiSelect glint drop-shadow :max-viewable-summary-count="1" :selection-max-viewable-line="5" :size="'md'" :options="companyOptions" :icon="'tdesign:component-checkbox'"/>
                         </div>
                         <div>
                             <InputLabel :size="'sm'" value="User Status" />
-                            <MultiSelect glint drop-shadow :selection-max-viewable-line="5" :size="'md'" :options="userStatusOptions" :icon="'mdi:checkbook'"/>
+                            <MultiSelect glint drop-shadow :selection-max-viewable-line="5" :size="'md'" :options="userStatusOptions" :icon="'tdesign:component-checkbox'"/>
                         </div>
                         <div>
                             <InputLabel :size="'sm'" value="Search" />

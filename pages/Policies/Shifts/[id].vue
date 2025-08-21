@@ -150,7 +150,7 @@
                         </template>
                         <template v-slot:cell.actions="{cell,slot}">
                             <div class="flex justify-center mx-[1px]">
-                                <Button v-if="!cell.is_day_off" @click="copyToAll(cell)" type="button" :variant="'default'" :icon="'ic:baseline-copy-all'" :size="slot.buttonSize" :label="'Copy to all'"></Button>
+                                <Button v-if="!cell.is_day_off" @click="copyToAll(cell)" type="button" :variant="'default'" :icon="'tdesign:copy'" :size="slot.buttonSize" :label="'Copy to all'"></Button>
                             </div>
                         </template>
                     </DataTable>

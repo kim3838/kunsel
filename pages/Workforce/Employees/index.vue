@@ -6,7 +6,7 @@
                     <div class="grid gap-2 grid-cols-3 sm:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-8">
                         <div>
                             <InputLabel :size="'sm'" value="Employee Status" />
-                            <MultiSelect glint drop-shadow :selection-max-viewable-line="5" :size="'md'" :options="employmentStatusOptions" :icon="'mdi:checkbook'"/>
+                            <MultiSelect glint drop-shadow :selection-max-viewable-line="5" :size="'md'" :options="employmentStatusOptions" :icon="'tdesign:component-checkbox'"/>
                         </div>
                     </div>
 

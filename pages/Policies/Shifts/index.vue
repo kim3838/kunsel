@@ -10,7 +10,7 @@
                         </div>
                         <div>
                             <InputLabel :size="'sm'" value="Type" />
-                            <MultiSelect glint drop-shadow :size="'md'" :options="shiftTypeOptions"/>
+                            <MultiSelect glint drop-shadow :size="'md'" :options="shiftTypeOptions" :icon="'tdesign:component-checkbox'"/>
                         </div>
                     </div>
 
