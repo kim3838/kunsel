@@ -3,6 +3,7 @@ import type {Enum} from "@/public/js/common/type";
 import type {TableRowPayloadT} from "@/public/js/types/data";
 
 export type CompanyFormulaSetting = {
+    id: string | number;
     company_formula_id : number,
     company_id : number,
     formula_id : number,
