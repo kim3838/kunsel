@@ -303,6 +303,12 @@ export const useLayout = () => {
                             //icon: 'ic:baseline-curtains-closed',
                             to: '/admin/companies',
                             route_active: 'admin-companies'
+                        },{
+                            key: 'admin/formulas',
+                            type: 'link',
+                            title: 'Formulas',
+                            to: '/admin/formulas',
+                            route_active: 'admin-formulas'
                         },
                         {
                             key: 'admin/users',
