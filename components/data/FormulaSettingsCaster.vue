@@ -55,8 +55,10 @@ const liningColor70 = computed(() => {
 
 const props = defineProps({
     settings: {
-        type: Array,
-        default: () => [],
+        type: [Array, null],
+        default: () => {
+            return null
+        },
     },
     disabled: {
         type: Boolean,
