@@ -34,7 +34,7 @@
                         </template>
                         <template v-slot:cell.formulable_component_type="{cell,slot}">
                             <div class="flex space-x-1 px-[0.3rem] items-center">
-                                <Label :size="slot.labelSize" :type="cell._payload.label_shade.value" shade :label="_get(cell, 'formulable_component_type.text', null)" />
+                                <Label :size="slot.labelSize" :type="cell._payload.label_shade.value" shade :label="_get(cell, 'formulable_component_type.text', 'Not Specified')" />
                             </div>
                         </template>
                         <template v-slot:cell.formula_is_interpolation="{cell, slot, scrollReference}">
@@ -77,7 +77,7 @@
                         </template>
                         <template v-slot:cell.formulable_component_type="{cell,slot}">
                             <div class="flex space-x-1 px-[0.3rem] items-center">
-                                <Label :size="slot.labelSize" :type="cell._payload.label_shade.value" shade :label="_get(cell, 'formulable_component_type.text', null)" />
+                                <Label :size="slot.labelSize" :type="cell._payload.label_shade.value" shade :label="_get(cell, 'formulable_component_type.text', 'Not Specified')" />
                             </div>
                         </template>
                         <template v-slot:cell.formula_is_interpolation="{cell, slot, scrollReference}">
@@ -118,7 +118,7 @@
                         </template>
                         <template v-slot:cell.formulable_component_type="{cell,slot}">
                             <div class="flex space-x-1 px-[0.3rem] items-center">
-                                <Label :size="slot.labelSize" :type="cell._payload.label_shade.value" shade :label="_get(cell, 'formulable_component_type.text', null)" />
+                                <Label :size="slot.labelSize" :type="cell._payload.label_shade.value" shade :label="_get(cell, 'formulable_component_type.text', 'Not Specified')" />
                             </div>
                         </template>
                         <template v-slot:cell.formula_is_interpolation="{cell, slot, scrollReference}">
@@ -219,8 +219,8 @@ const formulaSettingsExecute = async() =>{
                     COMPENSATION.BASIC_SALARY,
                     COMPENSATION.OVERTIME,
                     COMPENSATION.BENEFIT,
-                    COMPENSATION.REGULAR_ALLOWANCE,
-                ],value => value == item.formulable_component_type.value) ? 'success' : 'default'
+                    COMPENSATION.REGULAR_ALLOWANCE
+                ],value => value == item.formulable_component_type?.value) ? 'success' : 'default'
 
                 return {
                     ...item,
@@ -240,7 +240,7 @@ const formulaSettingsExecute = async() =>{
                 let shadeValue = {
                     [DEDUCTION.DEDUCTION]: 'danger',
                     [DEDUCTION.CONTRIBUTION]: 'warning',
-                }[item.formulable_component_type.value] || 'default';
+                }[item.formulable_component_type?.value] || 'default';
 
                 return {
                     ...item,
@@ -259,7 +259,7 @@ const formulaSettingsExecute = async() =>{
 
                 let shadeValue = {
                     [INCOME_TAX.COMPENSATION_TAX]: 'caution',
-                }[item.formulable_component_type.value] || 'default';
+                }[item.formulable_component_type?.value] || 'default';
 
                 return {
                     ...item,
