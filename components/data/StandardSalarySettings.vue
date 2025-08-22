@@ -1,7 +1,7 @@
 <template>
     <div class="space-y-4">
         <FormulaSettingsCaster :settings="descriptions"/>
-        <table>
+        <table v-if="rateSettings.length > 0">
             <thead>
             <tr>
                 <td class="p-[3px] font-semibold">Salary Rates</td>
@@ -54,12 +54,24 @@ const isRateSetting = (setting) => {
     return ['regular_rates', 'night_differential_rates'].includes(setting.key);
 };
 const descriptions = computed(() => {
+    if(!props.settings){
+        return [];
+    }
+
     return props.settings.filter(setting => isDescription(setting));
 });
 const rateSettings = computed(() => {
+    if(!props.settings){
+        return [];
+    }
+
     return props.settings.filter(setting => isRateSetting(setting) && !isDescription(setting));
 });
 const nonRateSettings = computed(() => {
+    if(!props.settings){
+        return [];
+    }
+
     return props.settings.filter(setting => !isRateSetting(setting) && !isDescription(setting));
 });
 </script>
