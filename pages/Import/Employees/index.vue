@@ -188,21 +188,6 @@ const disableActions = computed(() => {
     return pending.value;
 });
 
-const downloadTemplate = async () => {
-
-    await laraBlobFetch(
-        '/api/employee-import-template',
-        'employee-import-template',
-        'text/csv;charset=utf-8;',
-        {
-            onRequest: () => {},
-            onResponse: () => {},
-            onRequestError: () => {},
-            onSuccessResponse: () => {},
-        }
-    );
-}
-
 const preImportHeaders = reactive<TableHeaderT[]>([
     { text: 'Row #', value: 'row', alignData: 'center'},
     { text: '', value: 'validation_summary', alignData: 'center', width: '2rem', minWidth: '2rem'},
