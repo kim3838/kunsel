@@ -14,12 +14,12 @@
 
                     <div class="space-x-1">
                         <NuxtLink :to="`${baseURL}/api/employee-import-template`">
-                            <Button class="inline-block" :icon="'ic:baseline-download'" :variant="'outline'" :size="'sm'" :disabled="disableActions" :label="'CSV Template'"/>
+                            <Button class="inline-block" :icon="'tdesign:download'" :variant="'outline'" :size="'sm'" :disabled="disableActions" :label="'CSV Template'"/>
                         </NuxtLink>
-                        <Button class="inline-block" :icon="'ic:sharp-read-more'" :size="'sm'" :disabled="disableActions" v-if="showRead" :label="readLabel"  @click="read"/>
-                        <Button class="inline-block" :icon="'ic:sharp-read-more'" :size="'sm'" :variant="'outline'" :disabled="disableActions" v-if="showUploadNewFile" :label="uploadNewFileLabel"  @click="reset"/>
-                        <Button class="inline-block" :icon="'ic:sharp-read-more'" :size="'sm'" :disabled="disableActions" v-if="showReValidate" :label="reValidateLabel"  @click="reValidate"/>
-                        <Button class="inline-block" :icon="'ic:baseline-save'" :size="'sm'" :disabled="disableActions"  v-if="showSave" :label="saveLabel"  @click="save"/>
+                        <Button class="inline-block" :icon="'tdesign:scan'" :size="'sm'" :disabled="disableActions" v-if="showRead" :label="readLabel"  @click="read"/>
+                        <Button class="inline-block" :icon="'tdesign:upload'" :size="'sm'" :variant="'outline'" :disabled="disableActions" v-if="showUploadNewFile" :label="uploadNewFileLabel"  @click="reset"/>
+                        <Button class="inline-block" :icon="'tdesign:scan'" :size="'sm'" :disabled="disableActions" v-if="showReValidate" :label="reValidateLabel"  @click="reValidate"/>
+                        <Button class="inline-block" :icon="'tdesign:save-filled'" :size="'sm'" :disabled="disableActions"  v-if="showSave" :label="saveLabel"  @click="save"/>
                     </div>
 
                     <div class="flex items-center min-h-8">
