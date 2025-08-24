@@ -750,7 +750,7 @@ const execute = async () => {
             }
 
             if(selectionReachedPaginationTotal.value || (selection.value.length && data.length == 0)){
-                selectionEndResult.icon = 'radix-icons:dot';
+                selectionEndResult.icon = 'ic:baseline-clear';
                 selectionEndResult.label = 'End of result.';
             }
         }
