@@ -1,6 +1,6 @@
 <template>
     <div class="space-y-4">
-        <div v-for="setting in settings" :key="setting.id">
+        <div v-for="setting in settings" :key="setting.key">
 
             <div v-if="setting.type == 'array'">
 
@@ -10,14 +10,14 @@
                     <table>
                         <thead>
                             <tr>
-                                <td class="p-[3px]" v-for="(setting, index) in setting.value" :key="setting.label">
+                                <td class="p-[3px]" v-for="(setting, index) in setting.value" :key="setting.key">
                                     {{ setting.label }}
                                 </td>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
-                                <td class="p-[3px]" v-for="(setting, index) in setting.value" :key="setting.readable">
+                                <td class="p-[3px]" v-for="(setting, index) in setting.value" :key="setting.value">
                                     {{ setting.readable }}
                                 </td>
                             </tr>
