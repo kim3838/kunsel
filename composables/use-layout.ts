@@ -309,6 +309,12 @@ export const useLayout = () => {
                             title: 'Formulas',
                             to: '/admin/formulas',
                             route_active: 'admin-formulas'
+                        },{
+                            key: 'admin/jsonpresets',
+                            type: 'link',
+                            title: 'Json Presets',
+                            to: '/admin/jsonpresets',
+                            route_active: 'admin-jsonpresets'
                         },
                         {
                             key: 'admin/users',
