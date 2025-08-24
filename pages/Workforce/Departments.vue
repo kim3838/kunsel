@@ -108,7 +108,7 @@
                             }"
                         selection>
                         <template v-slot:cell.actions="{cell, slot, scrollReference}">
-                            <Button class="mx-0.5" type="button" :size="slot.buttonSize" :icon="'mdi:pen'" @click="edit(cell)" :label="'Edit'" :override="{font_family: `GG Sans`}"></Button>
+                            <Button class="mx-0.5" type="button" :size="slot.buttonSize" :icon="'mdi:pen'" @click="edit(cell)" :label="'Edit'"></Button>
                         </template>
                         <template v-slot:sub_row_slot="{rowIndex, cell, slot}">
                             <div class="inline-flex items-center scaffold-border pr-2">

@@ -64,7 +64,7 @@
                         v-model="selectedDesignations"
                         selection>
                         <template v-slot:cell.actions="{cell, slot, scrollReference}">
-                            <Button class="mx-0.5" type="button" :size="slot.buttonSize" :icon="'mdi:pen'" :disabled="disableActions" @click="edit(cell)" :label="'Edit'" :override="{font_family: `GG Sans`}"></Button>
+                            <Button class="mx-0.5" type="button" :size="slot.buttonSize" :icon="'mdi:pen'" :disabled="disableActions" @click="edit(cell)" :label="'Edit'"></Button>
                         </template>
                     </DataTable>
                 </div>

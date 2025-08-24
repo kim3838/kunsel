@@ -67,7 +67,7 @@
                             <div class="h-full mx-0.5 space-x-0.5 w-full flex items-center">
                                 <NuxtLink
                                     :to="`/admin/formulas/${cell.ulid}`">
-                                    <Button type="button" :variant="'default'" :icon="'mdi:information-variant-circle-outline'" :size="slot.buttonSize" :label="'info'" :override="{font_family: `GG Sans`}"></Button>
+                                    <Button type="button" :variant="'default'" :icon="'mdi:information-variant-circle-outline'" :size="slot.buttonSize" :label="'info'"></Button>
                                 </NuxtLink>
                             </div>
                         </template>

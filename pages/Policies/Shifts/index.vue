@@ -73,7 +73,7 @@
                             <div class="h-full mx-0.5 space-x-0.5 w-full flex items-center">
                                 <NuxtLink
                                     :to="`/policies/shifts/${cell.ulid}`">
-                                    <Button type="button" :variant="'default'" :icon="'mdi:pen'" :size="slot.buttonSize" :label="'Edit'" :override="{font_family: `GG Sans`}"></Button>
+                                    <Button type="button" :variant="'default'" :icon="'mdi:pen'" :size="slot.buttonSize" :label="'Edit'"></Button>
                                 </NuxtLink>
                             </div>
                         </template>
