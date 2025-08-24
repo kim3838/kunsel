@@ -9,7 +9,7 @@ export const laraInterceptor = () => {
     async function onRequest(callbacks: CallbackResponseT, promptErrorResponse = false, interceptorParameters: InterceptorParametersT){
         //Perform on request callback
         if(callbacks.onRequest && typeof callbacks.onRequest == 'function'){
-            await callbacks.onRequest(
+            callbacks.onRequest(
                 interceptorParameters.request,
                 interceptorParameters.options,
             );
@@ -31,7 +31,7 @@ export const laraInterceptor = () => {
 
         //Perform on request error callback
         if(callbacks.onRequestError && typeof callbacks.onRequestError == 'function'){
-            await callbacks.onRequestError(
+            callbacks.onRequestError(
                 interceptorParameters.request,
                 interceptorParameters.options,
                 interceptorParameters.error
@@ -47,14 +47,14 @@ export const laraInterceptor = () => {
 
         //Perform on response callback
         if(callbacks.onResponse && typeof callbacks.onResponse == 'function'){
-            await callbacks.onResponse(request, options, response);
+            callbacks.onResponse(request, options, response);
         }
 
         if(responseCode == 200){
 
             //Perform success response callback
             if(callbacks.onSuccessResponse && typeof callbacks.onSuccessResponse == 'function'){
-                await callbacks.onSuccessResponse(request, options, response);
+                callbacks.onSuccessResponse(request, options, response);
             }
         }
 
@@ -94,7 +94,7 @@ export const laraInterceptor = () => {
 
                     //Perform unauthorized response callback
                     if(callbacks.onUnAuthorizedResponse && typeof callbacks.onUnAuthorizedResponse == 'function'){
-                        await callbacks.onUnAuthorizedResponse(request, options, response);
+                        callbacks.onUnAuthorizedResponse(request, options, response);
                     }
                     break;
                 case '406':
@@ -108,7 +108,7 @@ export const laraInterceptor = () => {
 
                     //Perform not acceptable response callback
                     if(callbacks.onNotAcceptableResponse && typeof callbacks.onNotAcceptableResponse == 'function'){
-                        await callbacks.onNotAcceptableResponse(request, options, response);
+                        callbacks.onNotAcceptableResponse(request, options, response);
                     }
 
                     break;
@@ -123,7 +123,7 @@ export const laraInterceptor = () => {
 
                     //Perform un-processable content response callback
                     if(callbacks.onUnprocessableContentResponse && typeof callbacks.onUnprocessableContentResponse == 'function'){
-                        await callbacks.onUnprocessableContentResponse(request, options, response);
+                        callbacks.onUnprocessableContentResponse(request, options, response);
                     }
 
                     break;
