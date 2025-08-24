@@ -207,13 +207,13 @@ const iconClass = computed(() => {
 const fontClass = computed(() => {
 
     return {
-        '2xs': `text-xs font-medium`,
-        'xs': `text-sm font-medium`,
-        'sm': `text-base font-medium`,
-        'md': `text-base font-medium`,
-        'lg': `text-2xl font-semibold`,
-        'xl': `text-3xl font-semibold`,
-        '2xl': `text-4xl font-semibold`,
+        '2xs': `text-xs font-normal`,
+        'xs': `text-sm font-normal`,
+        'sm': `text-base font-normal`,
+        'md': `text-base font-normal`,
+        'lg': `text-2xl font-medium`,
+        'xl': `text-3xl font-medium`,
+        '2xl': `text-4xl font-medium`,
     }[props.size]
 });
 
@@ -234,8 +234,8 @@ const borderStyle = computed(() => {
 });
 
 const contentStyle = computed(() => {
-    let condensedFontFamily = props.override.font_family ? props.override.font_family : `Barlow Semi Condensed`;
-    let fontFamily = props.override.font_family ? props.override.font_family : `Barlow`;
+    let condensedFontFamily = props.override.font_family ? props.override.font_family : `Bricolage Grotesque`;
+    let fontFamily = props.override.font_family ? props.override.font_family : `Bricolage Grotesque`;
 
     fontFamily = {
         '2xs': condensedFontFamily,
