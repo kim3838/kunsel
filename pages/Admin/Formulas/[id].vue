@@ -99,7 +99,7 @@
                     <fieldset class="neutral-border px-2 pb-2 space-y-2">
                         <legend class="text-lg font-header">Formula Settings</legend>
 
-                        <Button :type="'button'" class="w-min" :disabled="disableActions" :size="'md'" :icon="'mdi:delete-outline'" :label="'Clear settings'" @click="formulaSettings = null"></Button>
+                        <Button :type="'button'" class="w-min" :disabled="disableActions" :size="'sm'" :icon="'mdi:delete-outline'" :label="'Clear settings'" @click="formulaSettings = null"></Button>
 
                         <FormulaSettingsCaster :description-whitespace="'pre-line'" :settings="formulaSettings" />
                     </fieldset>
@@ -119,14 +119,13 @@
                                     @valueChange="selectedJsonPresetChanged"
                                 />
                             </div>
-                        </div>
-
-                        <div class="flex items-center min-h-8">
-                            <UnorderedList
-                                v-if="jsonPresetPending"
-                                :icon="'eos-icons:loading'"
-                                :size="'md'"
-                                :label="'Please wait...'"/>
+                            <div class="flex items-center min-h-8">
+                                <UnorderedList
+                                    v-if="jsonPresetPending"
+                                    :icon="'eos-icons:loading'"
+                                    :size="'md'"
+                                    :label="'Please wait...'"/>
+                            </div>
                         </div>
 
                         <FormulaSettingsCaster :description-whitespace="'pre-line'" :settings="jsonPresetData" />
@@ -145,7 +144,6 @@ import type {SelectDataType} from "@/public/js/types/form";
 useLayout().setNavigationMode('solid');
 
 const route = useRoute();
-
 const formula = ref(null);
 const creatingFormula = computed(() => {
     return route.params.id === 'create-formula';
@@ -169,7 +167,7 @@ definePageMeta({
         }, {
             onSuccessResponse: async (request, options, response) => {
                 formula.value = _get(response, '_data.values.formula', null);
-            }
+            },
         }, false);
 
         return !_isEmpty(formula.value);
