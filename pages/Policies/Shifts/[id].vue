@@ -178,7 +178,6 @@ const {timezoneSelections} = useCommon();
 const {isAuthenticated} = useAuth();
 const {$authStore, $associationStore, $moment} = useNuxtApp();
 const timeDifference = useNuxtApp().$timeDifference as (start: string | null, end: string | null) => string | null;
-const clientReadyState = useClientReadyState();
 const {
     updatedAssociatedCompanyFlag
 } = storeToRefs($associationStore);
