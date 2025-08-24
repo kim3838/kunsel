@@ -197,25 +197,20 @@ const creatingShift = computed(() => {
 });
 
 definePageMeta({
-    middleware: ['auth', 'admin-of-selected-company'],
-    validate: async (route) => {
+    middleware: ['auth', 'admin-of-selected-company',
+        async (to) => {
 
-        if (import.meta.server) return true;
+            if(import.meta.server || to.params.id === 'create-shift'){return true;}
 
-        let create = route.params.id === 'create-shift';
+            const {data, error} = await laraUseFetch(`/api/shift-check/${to.params.id}`, {method: 'GET',}, {}, false);
 
-        if(create){return true;}
+            if(_isEmpty(data.value) && !_isEmpty(error.value)){
+                let responseCode = _get(error.value, 'data.code', null);
 
-        await laraFetch(`/api/shift-check/${route.params.id}`, {
-            method: 'GET'
-        }, {
-            onSuccessResponse: async (request, options, response) => {
-                shift.value = _get(response, '_data.values.shift', null);
+                throw createError({ statusCode: responseCode, statusMessage: useCoreStore().servicePayloadMessage, fatal: true});
             }
-        });
-
-        return !_isEmpty(shift.value);
-    }
+        }
+    ]
 });
 
 const shiftCode = ref('');

@@ -121,25 +121,20 @@ const jsonContent = ref<any[] | null>([]);
 const jsonFile = ref<HTMLInputElement | null>(null);
 
 definePageMeta({
-    middleware: ['auth', 'super-admin'],
-    validate: async (route) => {
+    middleware: ['auth', 'super-admin',
+        async (to) => {
 
-        if (import.meta.server) return true;
+            if(import.meta.server || to.params.id === 'create-jsonpreset'){return true;}
 
-        let create = route.params.id === 'create-jsonpreset';
+            const {data, error} = await laraUseFetch(`/api/json-preset-check/${to.params.id}`, {method: 'GET',}, {}, false);
 
-        if(create){return true;}
+            if(_isEmpty(data.value) && !_isEmpty(error.value)){
+                let responseCode = _get(error.value, 'data.code', null);
 
-        await laraFetch(`/api/json-preset-check/${route.params.id}`, {
-            method: 'GET'
-        }, {
-            onSuccessResponse: async (request, options, response) => {
-                jsonPreset.value = _get(response, '_data.values.json_preset', null);
+                throw createError({ statusCode: responseCode, statusMessage: useCoreStore().servicePayloadMessage, fatal: true});
             }
-        }, false);
-
-        return !_isEmpty(jsonPreset.value);
-    }
+        }
+    ]
 });
 
 const jsonPresetPending = ref(false);

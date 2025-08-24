@@ -64,25 +64,20 @@ const companyCode = ref('');
 const companyName = ref('');
 
 definePageMeta({
-    middleware: ['auth', 'super-admin'],
-    validate: async (route) => {
+    middleware: ['auth', 'super-admin',
+        async (to) => {
 
-        if (import.meta.server) return true;
+            if(import.meta.server || to.params.id === 'create-company'){return true;}
 
-        let create = route.params.id === 'create-company';
+            const {data, error} = await laraUseFetch(`/api/company-check/${to.params.id}`, {method: 'GET',}, {}, false);
 
-        if(create){return true;}
+            if(_isEmpty(data.value) && !_isEmpty(error.value)){
+                let responseCode = _get(error.value, 'data.code', null);
 
-        await laraFetch(`/api/company-check/${route.params.id}`, {
-            method: 'GET'
-        }, {
-            onSuccessResponse: async (request, options, response) => {
-                company.value = _get(response, '_data.values.company', null);
+                throw createError({ statusCode: responseCode, statusMessage: useCoreStore().servicePayloadMessage, fatal: true});
             }
-        }, false);
-
-        return !_isEmpty(company.value);
-    }
+        }
+    ]
 });
 
 const accountOptions = reactive({

@@ -40,25 +40,20 @@ const creatingAccount = computed(() => {
 const accountNumber = ref('');
 
 definePageMeta({
-    middleware: ['auth', 'super-admin'],
-    validate: async (route) => {
+    middleware: ['auth', 'super-admin',
+        async (to) => {
 
-        if (import.meta.server) return true;
+            if(import.meta.server || to.params.id === 'create-account'){return true;}
 
-        let create = route.params.id === 'create-account';
+            const {data, error} = await laraUseFetch(`/api/account-check/${to.params.id}`, {method: 'GET',}, {}, false);
 
-        if(create){return true;}
+            if(_isEmpty(data.value) && !_isEmpty(error.value)){
+                let responseCode = _get(error.value, 'data.code', null);
 
-        await laraFetch(`/api/account-check/${route.params.id}`, {
-            method: 'GET'
-        }, {
-            onSuccessResponse: async (request, options, response) => {
-                account.value = _get(response, '_data.values.account', null);
+                throw createError({ statusCode: responseCode, statusMessage: useCoreStore().servicePayloadMessage, fatal: true});
             }
-        }, false);
-
-        return !_isEmpty(account.value);
-    }
+        }
+    ]
 });
 
 const accountPlanOptions = reactive({

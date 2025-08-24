@@ -104,25 +104,20 @@ const {timezoneSelections} = useCommon();
 const associatedUser = ref(null);
 
 definePageMeta({
-    middleware: ['auth', 'admin-in-any-company'],
-    validate: async (route) => {
+    middleware: ['auth', 'admin-in-any-company',
+        async (to) => {
 
-        if (import.meta.server) return true;
+            if(import.meta.server || to.params.id === 'create-user'){return true;}
 
-        let create = route.params.id === 'create-user';
+            const {data, error} = await laraUseFetch(`/api/user-check/${to.params.id}`, {method: 'GET',}, {}, false);
 
-        if(create){return true;}
+            if(_isEmpty(data.value) && !_isEmpty(error.value)){
+                let responseCode = _get(error.value, 'data.code', null);
 
-        await laraFetch(`/api/user-check/${route.params.id}`, {
-            method: 'GET'
-        }, {
-            onSuccessResponse: async (request, options, response) => {
-                associatedUser.value = _get(response, '_data.values.user', null);
+                throw createError({ statusCode: responseCode, statusMessage: useCoreStore().servicePayloadMessage, fatal: true});
             }
-        }, false);
-
-        return !_isEmpty(associatedUser.value);
-    }
+        }
+    ]
 });
 
 const creatingAssociatedUser = computed(() => {

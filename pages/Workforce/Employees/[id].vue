@@ -557,25 +557,20 @@ const childComponentEmployeePayload = computed(() => {
 });
 
 definePageMeta({
-    middleware: ['auth', 'admin-of-selected-company'],
-    validate: async (route) => {
+    middleware: ['auth', 'admin-of-selected-company',
+        async (to) => {
 
-        if (import.meta.server) return true;
+            if(import.meta.server || to.params.id === 'create-employee'){return true;}
 
-        let createEmployee = route.params.id === 'create-employee';
+            const {data, error} = await laraUseFetch(`/api/employee-check/${to.params.id}`, {method: 'GET',}, {}, false);
 
-        if(createEmployee){return true;}
+            if(_isEmpty(data.value) && !_isEmpty(error.value)){
+                let responseCode = _get(error.value, 'data.code', null);
 
-        await laraFetch(`/api/employee-check/${route.params.id}`, {
-            method: 'GET'
-        }, {
-            onSuccessResponse: async (request, options, response) => {
-                employee.value = _get(response, '_data.values.employee', null);
+                throw createError({ statusCode: responseCode, statusMessage: useCoreStore().servicePayloadMessage, fatal: true});
             }
-        }, false);
-
-        return !_isEmpty(employee.value);
-    }
+        }
+    ]
 });
 
 const employeeUserCreationOptionsDisabled = ref(false);

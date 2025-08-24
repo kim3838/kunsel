@@ -153,25 +153,20 @@ const interpolation = ref<boolean | null>(false);
 const formulaSettings = ref<any[] | null>([]);
 
 definePageMeta({
-    middleware: ['auth', 'super-admin'],
-    validate: async (route) => {
+    middleware: ['auth', 'super-admin',
+        async (to) => {
 
-        if (import.meta.server) return true;
+            if(import.meta.server || to.params.id === 'create-formula'){return true;}
 
-        let create = route.params.id === 'create-formula';
+            const {data, error} = await laraUseFetch(`/api/formula-check/${to.params.id}`, {method: 'GET',}, {}, false);
 
-        if(create){return true;}
+            if(_isEmpty(data.value) && !_isEmpty(error.value)){
+                let responseCode = _get(error.value, 'data.code', null);
 
-        await laraFetch(`/api/formula-check/${route.params.id}`, {
-            method: 'GET'
-        }, {
-            onSuccessResponse: async (request, options, response) => {
-                formula.value = _get(response, '_data.values.formula', null);
-            },
-        }, false);
-
-        return !_isEmpty(formula.value);
-    }
+                throw createError({ statusCode: responseCode, statusMessage: useCoreStore().servicePayloadMessage, fatal: true});
+            }
+        }
+    ]
 });
 
 const formulableOptions = reactive({
