@@ -174,7 +174,6 @@ import {storeToRefs} from "pinia";
 
 useLayout().setNavigationMode('solid');
 const route = useRoute();
-const {timezoneSelections} = useCommon();
 const {isAuthenticated} = useAuth();
 const {$authStore, $associationStore, $moment} = useNuxtApp();
 const timeDifference = useNuxtApp().$timeDifference as (start: string | null, end: string | null) => string | null;
@@ -252,10 +251,6 @@ const lunchSelection = reactive([
     {text : 'Yes', value: 1},
     {text : 'No', value: 0},
 ]);
-const timezoneSelectionOptions = reactive({
-    search: '',
-    selection: timezoneSelections.value,
-});
 
 const shiftScheduleHeaders = reactive<TableHeaderT[]>([
     { text: 'Weekday', value: 'week_day_name', alignData: 'left'},
