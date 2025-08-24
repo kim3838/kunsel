@@ -1,14 +1,25 @@
 
+export type laraBlobFetchT = {
+    path: string;
+    filename?: string | null;
+    action?: 'download' | 'view';
+};
+
 export async function laraBlobFetch(
-    path: string,
-    filename = 'download',
-    mimeType = 'application/octet-stream',
+    {
+        path,
+        filename = 'download',
+        action = 'download'
+    }: laraBlobFetchT,
     callbacks: any = {},
-    promptErrorResponse = true
+    promptErrorResponse = true,
 ){
 
     const {baseURL} = useRuntimeConfig().public;
     const coreStore = useCoreStore();
+    filename = _isEmpty(filename)|| filename === null
+        ? 'download'
+        : filename;
 
     const response = await $fetch.raw(baseURL + path, {
         credentials: 'include',
@@ -37,14 +48,40 @@ export async function laraBlobFetch(
                     await callbacks.onSuccessResponse(response);
                 }
 
-                const blob = new Blob([response._data], { type: mimeType })
-                const link = document.createElement('a')
-                link.href = URL.createObjectURL(blob)
-                link.download = filename
-                link.click()
+                const disposition = response.headers.get('content-disposition');
 
-                // Clean up memory
-                URL.revokeObjectURL(link.href)
+                let responseFilename = null;
+
+                if (disposition && disposition.includes('filename=')) {
+
+                    const parts = disposition.split('filename=');
+
+                    if (parts.length > 1) {
+                        responseFilename = disposition.split('filename=')[1]?.replace(/"/g, '') ?? null;
+                    }
+                }
+
+                const blob = response._data; // Response _data is already a blob if responseType: 'blob'
+                const url = URL.createObjectURL(blob);
+
+                if (action === 'view') {
+                    // Display in new tab
+                    window.open(url, '_blank');
+                    setTimeout(() => URL.revokeObjectURL(url), 1000);
+                } else {
+                    // Download file
+                    const link = document.createElement('a');
+                    link.href = url;
+                    link.download = _isEmpty(responseFilename) || responseFilename === null
+                        ? filename
+                        : responseFilename;
+
+                    link.addEventListener('click', () => {
+                        setTimeout(() => URL.revokeObjectURL(link.href), 100);
+                    }, { once: true });
+
+                    link.click();
+                }
             }
         }
     }).catch(async (error) => {
