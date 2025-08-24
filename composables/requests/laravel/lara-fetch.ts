@@ -8,6 +8,8 @@ export async function laraFetch<DataT, ErrorT>(
     callbacks: CallbackResponseT,
     promptErrorResponse = true
 ){
+    if(import.meta.server)return;
+
     const {
         onRequest: laraInterceptorOnRequest,
         onRequestError: laraInterceptorOnRequestError,

@@ -193,6 +193,9 @@ let paramsComputed = computed(() => {
 
 let pending = ref(false);
 let execute = async () => {
+
+    if(import.meta.server){return;}
+
     pending.value = true;
     clearTimeout(filters.search.callback);
     prototypes.data = [];

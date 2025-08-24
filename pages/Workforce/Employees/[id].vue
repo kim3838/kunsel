@@ -907,9 +907,7 @@ const selectedEmployeeCompensation = ref([]);
 const employeeCompensationPending = ref(false);
 const employeeCompensationExecute = async () => {
 
-    if(import.meta.server){return;}
-
-    if(creatingEmployee.value){return;}
+    if(import.meta.server || creatingEmployee.value){return;}
 
     employeeCompensationPending.value = true;
 
@@ -948,9 +946,7 @@ const selectedEmployeeDeduction = ref([]);
 const employeeDeductionPending = ref(false);
 const employeeDeductionExecute = async () => {
 
-    if(import.meta.server){return;}
-
-    if(creatingEmployee.value){return;}
+    if(import.meta.server || creatingEmployee.value){return;}
 
     employeeDeductionPending.value = true;
 
@@ -988,9 +984,7 @@ const selectedEmployeeIncomeTax = ref([]);
 const employeeIncomeTaxPending = ref(false);
 const employeeIncomeTaxExecute = async () => {
 
-    if(import.meta.server){return;}
-
-    if(creatingEmployee.value){return;}
+    if(import.meta.server || creatingEmployee.value){return;}
 
     employeeIncomeTaxPending.value = true;
 

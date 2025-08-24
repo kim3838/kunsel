@@ -146,7 +146,7 @@ const jsonPresetPending = ref(false);
 
 //Fetch Json Preset Information
 const fetchJsonPreset = async () => {
-    if(route.params.id === 'create-jsonpreset'){return;}
+    if(import.meta.server || route.params.id === 'create-jsonpreset'){return;}
 
     await laraFetch(`/api/json-preset/${route.params.id}`, {
         method: 'GET',

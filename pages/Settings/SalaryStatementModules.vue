@@ -73,7 +73,7 @@ const disableDataTable = computed(() => {
 })
 const salaryStatementModulesExecute = async() =>{
 
-    if(!selectedAssociatedCompany.value){
+    if(import.meta.server || !selectedAssociatedCompany.value){
         return;
     }
 

@@ -187,7 +187,7 @@ const formulaSettingsPending = ref(false)
 
 const formulaSettingsExecute = async() =>{
 
-    if(!selectedAssociatedCompany.value){
+    if(import.meta.server || !selectedAssociatedCompany.value){
         return;
     }
 

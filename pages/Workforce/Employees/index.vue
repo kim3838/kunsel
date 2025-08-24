@@ -276,7 +276,7 @@ const disableDataTable = computed(() => {
 });
 const employeesExecute = async() =>{
 
-    if(!selectedAssociatedCompany.value){
+    if(import.meta.server || !selectedAssociatedCompany.value){
         return;
     }
 
