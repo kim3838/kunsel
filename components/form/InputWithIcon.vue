@@ -256,9 +256,9 @@ const fontClass = computed(() => {
     }
 
     return {
-        '2xs': 'text-xs',
-        'xs': 'text-xs',
-        'sm': 'text-sm',
+        '2xs': 'text-sm',
+        'xs': 'text-sm',
+        'sm': 'text-base',
         'md': 'text-base',
         'lg': 'text-lg',
         'xl': 'text-2xl font-semibold',

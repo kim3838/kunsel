@@ -265,7 +265,7 @@ const selectionItemSize = computed(() => {
     return {
         '2xs': 'sm',
         'xs': 'sm',
-        'sm': 'sm',
+        'sm': 'md',
         'md': 'md',
         'lg': 'lg'
     }[props.size];
@@ -325,9 +325,9 @@ const selectionMaxHeight = computed(() => {
 
 const selectionClass = computed(() => {
     return {
-        '2xs': 'text-xs h-full leading-[0.875rem] left-[0.2rem] right-[1.45rem]',
-        'xs': 'text-xs h-full leading-[0.875rem] left-[0.2rem] right-[1.7rem]',
-        'sm': 'text-sm h-full leading-[0.875rem] left-[0.2rem] right-[1.85rem]',
+        '2xs': 'text-sm h-full leading-[0.875rem] left-[0.2rem] right-[1.45rem]',
+        'xs': 'text-sm h-full leading-[0.875rem] left-[0.2rem] right-[1.7rem]',
+        'sm': 'text-base h-full leading-[0.875rem] left-[0.2rem] right-[1.85rem]',
         'md': 'text-base h-full leading-[0.875rem] left-[0.2rem] right-[2.2rem]',
         'lg': 'text-lg h-full leading-[0.875rem] left-[0.2rem] right-[2.95rem]',
     }[props.size];
@@ -355,8 +355,8 @@ const inputHolderClass = computed(() => {
 
 const inputSize = computed(() => {
     return {
-        '2xs': 'xs',
-        'xs': 'md',
+        '2xs': 'sm',
+        'xs': 'sm',
         'sm': 'md',
         'md': 'md',
         'lg': 'lg',
