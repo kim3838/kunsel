@@ -41,9 +41,9 @@ const props = defineProps({
 
 const iconSlotHeight = computed(()=>{
     return {
-        'sm': '18px',
-        'md': '22px',
-        'lg': '26px',
+        'sm': '20px',
+        'md': '24px',
+        'lg': '28px',
     }[props.size];
 })
 

@@ -79,9 +79,9 @@ const proxyChecked = computed(() => {
 
 const checkBoxSlotHeight = computed(()=>{
     return {
-        'sm': '17.5px',
-        'md': '21px',
-        'lg': '24.5px',
+        'sm': '20px',
+        'md': '24px',
+        'lg': '28px',
     }[props.size];
 })
 
