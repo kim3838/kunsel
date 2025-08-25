@@ -182,7 +182,7 @@ const {
 } = storeToRefs($associationStore);
 const {
     selectedAssociatedCompanyId,
-    selectedAssociatedCompanyPayload
+    selectedAssociatedCompany
 } = storeToRefs($authStore);
 
 watch(updatedAssociatedCompanyFlag, (newValue) => {
@@ -315,7 +315,7 @@ const isDayOffChanged = (cell: ShiftScheduleT) => {
         cell.total_lunch_break_hours = null;
     } else {
         cell.is_flexible = false;
-        cell.timezone = selectedAssociatedCompanyPayload.value?.timezone ?? null;
+        cell.timezone = selectedAssociatedCompany.value?.payload.timezone ?? null;
         cell.work_start = shiftTypeIsRegular.value ? '09:00' : '22:00';
         cell.work_end = shiftTypeIsRegular.value ? '17:00' : '06:00';
         cell.total_work_hours_with_breaks = timeDifference(cell.work_start, cell.work_end);
@@ -393,7 +393,7 @@ const shiftTypeChanged = (value: number) => {
         shiftSchedules.value.forEach((shiftSchedule) => {
             if (!shiftSchedule.is_day_off) {
                 shiftSchedule.is_flexible = false;
-                shiftSchedule.timezone = selectedAssociatedCompanyPayload.value?.timezone ?? null;
+                shiftSchedule.timezone = selectedAssociatedCompany.value?.payload.timezone ?? null;
                 shiftSchedule.work_start = '09:00';
                 shiftSchedule.work_end = '17:00';
                 shiftSchedule.total_work_hours_with_breaks = timeDifference(shiftSchedule.work_start, shiftSchedule.work_end);
@@ -409,7 +409,7 @@ const shiftTypeChanged = (value: number) => {
         shiftSchedules.value.forEach((shiftSchedule) => {
             if (!shiftSchedule.is_day_off) {
                 shiftSchedule.is_flexible = false;
-                shiftSchedule.timezone = selectedAssociatedCompanyPayload.value?.timezone ?? null;
+                shiftSchedule.timezone = selectedAssociatedCompany.value?.payload.timezone ?? null;
                 shiftSchedule.work_start = '22:00';
                 shiftSchedule.work_end = '06:00';
                 shiftSchedule.total_work_hours_with_breaks = timeDifference(shiftSchedule.work_start, shiftSchedule.work_end);

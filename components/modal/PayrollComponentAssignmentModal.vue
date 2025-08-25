@@ -103,7 +103,7 @@ const nuxtApp = useNuxtApp();
 
 const {
     selectedAssociatedCompanyId,
-    selectedAssociatedCompanyPayload
+    selectedAssociatedCompany
 } = storeToRefs(nuxtApp.$authStore);
 
 const props = defineProps({
@@ -364,7 +364,7 @@ watch(() => props.creatingOrEditing, (creatingOrEditing) => {
 
 const amount = ref(0);
 const currency = ref<string | null>('');
-const defaultCurrency = ref(selectedAssociatedCompanyPayload.value?.currency ?? null);
+const defaultCurrency = ref(selectedAssociatedCompany.value?.payload.currency ?? null);
 const payFrequencyType = ref<number | null>(null);
 
 const loadEditable = () => {

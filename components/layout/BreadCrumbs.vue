@@ -30,7 +30,7 @@ const router = useRouter();
 const nuxtApp = useNuxtApp();
 
 const {
-    selectedAssociatedCompanyName
+    selectedAssociatedCompany
 } = storeToRefs(nuxtApp.$authStore);
 
 const props = defineProps({
@@ -48,8 +48,8 @@ const breadcrumbs = computed((): Breadcrumb[] => {
     const pathSegments = route.path.split('/').filter(segment => segment !== '');
     const breadcrumbs: Breadcrumb[] = [];
 
-    if(props.prefixCompany && selectedAssociatedCompanyName?.value){
-        breadcrumbs.push({name: selectedAssociatedCompanyName.value});
+    if(props.prefixCompany && selectedAssociatedCompany?.value){
+        breadcrumbs.push({name: selectedAssociatedCompany.value.text});
     }
 
     // Add home breadcrumb breadcrumbs.push({name: 'Home', to: '/'});

@@ -537,7 +537,7 @@ const {
 } = storeToRefs($associationStore);
 const {
     selectedAssociatedCompanyId,
-    selectedAssociatedCompanyPayload
+    selectedAssociatedCompany
 } = storeToRefs($authStore);
 const employee = ref(null);
 const employeeHasUser = computed(() => {
@@ -600,7 +600,7 @@ watch(() => employeeUserCreationOptions.selected, employeeUserCreationType => {
         employeeUserEmail.value = '';
         employeeUserPassword.value = '';
         employeeUserPasswordConfirmation.value = '';
-        employeeUserTimezoneOptions.selected = selectedAssociatedCompanyPayload.value?.timezone ?? null;
+        employeeUserTimezoneOptions.selected = selectedAssociatedCompany?.value?.payload.timezone ?? null;
         employeeUserStatusOptions.selected = USER_STATUS.ACTIVE;
     } else {
         employeeUsername.value = '';
