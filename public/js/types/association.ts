@@ -2,7 +2,7 @@
 import type {Enum} from "@/public/js/common/type";
 
 export interface AssignedCompanyPayloadT {
-    assignment_type: Enum,
+    assignment_type?: Enum,
     currency: string,
     timezone: string
 }

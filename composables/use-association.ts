@@ -198,7 +198,7 @@ export const useAssociation = () => {
             return;
         }
 
-        companyAssignmentTypeIsAdmin.value = selectedCompany.payload?.assignment_type.value == COMPANY_ASSIGNMENT_TYPE.ADMIN;
+        companyAssignmentTypeIsAdmin.value = selectedCompany.payload?.assignment_type?.value == COMPANY_ASSIGNMENT_TYPE.ADMIN;
     }
 
     const resetUserAssociationStates = async() => {
