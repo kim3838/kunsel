@@ -106,14 +106,14 @@ export const useLayout = () => {
         let links: NavigationLinkInterface[] = [];
 
         links = links.concat([
-            {
+            ...((isAuthenticated.value) ? [{
                 key: 'dashboard',
                 type: 'link',
                 title: 'Dashboard',
                 icon: 'ic:sharp-double-arrow',
                 to: '/',
                 route_active: 'index'
-            },
+            }] : []) as NavigationLinkInterface[],
             ...(false ? [
                     {
                         key: 'prototype',

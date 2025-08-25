@@ -4,21 +4,34 @@
         id="layoutScroll"
         class="relative scroll-smooth h-screen max-h-screen overflow-y-scroll">
         <!-- Primary Navigation Menu -->
-        <AdminNavigation v-model:navigation-height-in-pixels="topAllocation"/>
+        <AdminNavigation v-model:navigation-height="topAllocation"/>
         <!-- Main Content -->
-        <main class="allocate-navigation absolute">
+        <main ref="mainContent" class="allocate-navigation absolute">
             <slot></slot>
         </main>
         <!-- DateTime Picker -->
         <div id="datetimepicker-slot" class="font-data"></div>
         <!-- Action Modal -->
         <PromptModal />
+        <!-- Footer -->
+        <DefaultFooter class="w-full allocate-navigation-and-content absolute" />
     </div>
 </template>
 
 <script setup lang="ts">
 const clientReadyState = useClientReadyState();
-const topAllocation = ref('0px');
+const topAllocation = ref(0);
+const topAllocationComputed = computed(() => {
+    return (topAllocation.value + 'px');
+});
+
+const mainContentReference = useTemplateRef('mainContent');
+
+const { height: mainContentReferenceHeight } = useElementSize(mainContentReference);
+
+const footerTopAllocationComputed = computed(() => {
+    return ((topAllocation.value + mainContentReferenceHeight.value) + 'px');
+});
 </script>
 <style lang="scss" scoped>
 main{
@@ -26,6 +39,9 @@ main{
     right: 0;
 }
 .allocate-navigation {
-    padding-top: v-bind(topAllocation);
+    padding-top: v-bind(topAllocationComputed);
+}
+.allocate-navigation-and-content {
+    margin-top: v-bind(footerTopAllocationComputed);
 }
 </style>

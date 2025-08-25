@@ -1,60 +1,61 @@
 <template>
     <footer>
-        <div class="mx-auto max-w-screen-2xl scaffold-border-left-bottom-right">
-            <div class="mx-auto max-w-screen-lg grid grid-cols-1 gap-2 px-2 py-8 sm:grid-cols-2 md:grid-cols-5 lg:col-span-3">
+        <div class="mt-24 footer-rule"></div>
+        <div class="mx-auto max-w-screen-lg">
 
-                <div class="scaffold-border p-2 text-center sm:text-left md:col-span-2">
+            <div class="flex flex-wrap gap-2">
+                <div class="flex-grow p-6">
                     <p :class="headerClass">Contact Us</p>
 
                     <div class="mt-2 space-y-2">
                         <UnorderedList
-                            class="flex sm:justify-start justify-center"
+                            class="flex"
                             :size="listSize"
                             :icon="'ic:round-mail-outline'"
                             :label="'info@host.com'"/>
 
                         <UnorderedList
-                            class="flex sm:justify-start justify-center"
+                            class="flex"
                             :size="listSize"
                             :icon="'ic:sharp-phone'"
                             :label="'+63 99-1999-1991'"/>
 
                         <UnorderedList
-                            class="flex sm:justify-start justify-center"
+                            class="flex"
                             :size="listSize"
                             :icon="'ic:sharp-location-on'"
                             :label="'Quezon City, Metro Manila, Philippines'"/>
                     </div>
                 </div>
 
-                <div class="scaffold-border p-2 text-center mt-12 sm:text-left sm:mt-0">
+                <div class="flex-grow p-6">
                     <p :class="headerClass">Our Services</p>
 
                     <div class="mt-2 space-y-2">
 
                         <UnorderedList
-                            class="flex sm:justify-start justify-center"
+                            class="flex"
                             :size="listSize"
                             :label="'Payroll System'"/>
                         <UnorderedList
-                            class="flex sm:justify-start justify-center"
+                            class="flex"
                             :size="listSize"
                             :label="'Product/Services Landing Page'"/>
                     </div>
                 </div>
 
-                <div class="scaffold-border p-2 text-center mt-12 sm:text-left md:mt-0">
+                <div class="flex-grow p-6">
                     <p :class="headerClass">Helpful Links</p>
 
                     <div class="mt-2 space-y-2">
 
                         <UnorderedList
-                            class="flex sm:justify-start justify-center"
+                            class="flex"
                             :size="listSize"
                             :icon="'ri:info-i'"
                             :label="'FAQs'"/>
                         <UnorderedList
-                            class="flex sm:justify-start justify-center overflow-visible"
+                            class="flex overflow-visible"
                             :icon="'ri:info-i'"
                             :size="listSize">
                             <div class="flex">
@@ -73,46 +74,79 @@
                     </div>
                 </div>
 
-                <div class="scaffold-border p-2 text-center mt-12 sm:text-left md:mt-0">
+                <div class="flex-grow p-6">
                     <p :class="headerClass">About Us</p>
 
                     <div class="mt-2 space-y-2 text-sm">
 
                         <UnorderedList
-                            class="flex sm:justify-start justify-center"
+                            class="flex"
                             :size="listSize"
                             :icon="'ri:info-i'"
                             :label="'News'"/>
                         <UnorderedList
-                            class="flex sm:justify-start justify-center"
+                            class="flex"
                             :size="listSize"
                             :icon="'ri:info-i'"
                             :label="'History'"/>
                         <UnorderedList
-                            class="flex sm:justify-start justify-center"
+                            class="flex"
                             :size="listSize"
                             :icon="'ri:info-i'"
                             :label="'Leadership'"/>
                     </div>
                 </div>
 
+                <div class="p-6">
+                    <div class="flex justify-start">
+                        <p class="font-business text-2xl font-medium">
+                            Kunsel
+                        </p>
+                    </div>
+
+                    <p class="mt-6 max-w-md text-sm leading-relaxed sm:max-w-xs sm:text-left">
+                        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Incidunt
+                        consequuntur amet culpa cum itaque neque.
+                    </p>
+
+                    <ul class="mt-2 flex justify-start gap-2 sm:justify-start md:gap-4">
+                        <li>
+                            <a href="/" rel="noreferrer" target="_blank">
+                                <Icon class="h-5 w-5" name="famicons:logo-facebook"></Icon>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/" rel="noreferrer" target="_blank">
+                                <Icon class="h-5 w-5" name="famicons:logo-youtube"></Icon>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/" rel="noreferrer" target="_blank">
+                                <Icon class="h-5 w-5" name="famicons:logo-tiktok"></Icon>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
             </div>
 
-            <div class="scaffold-border-top py-8">
-                <div class="mx-auto max-w-screen-lg flex justify-center ">
-                    <div class="text-base ">
-                        <div class="space-x-2">
-                            <a class="inline-block hover:underline" href="/">
-                                Terms & Conditions
-                            </a>
-                            <span>|</span>
-                            <a class="inline-block hover:underline" href="/">
-                                Privacy Policy
-                            </a>
-                        </div>
+            <div class="mx-auto max-w-screen-lg flex justify-start ">
+                <div class="p-6 text-sm">
+                    <div class="space-x-2">
+                        <a class="inline-block hover:underline" href="/">
+                            &#169;Kunsel 2021. All rights reserved.
+                        </a>
+                        <span>|</span>
+                        <a class="inline-block hover:underline" href="/">
+                            Terms & Conditions
+                        </a>
+                        <span>|</span>
+                        <a class="inline-block hover:underline" href="/">
+                            Privacy Policy
+                        </a>
                     </div>
                 </div>
             </div>
+
         </div>
     </footer>
 </template>
@@ -128,8 +162,8 @@ const {
     neutral: neutralColor
 } = storeToRefs($themeStore);
 
-const headerClass = ref('font-business text-lg');
-const listSize = ref('md');
+const headerClass = ref('font-business text-lg font-medium"');
+const listSize = ref('sm');
 </script>
 
 <style scoped>

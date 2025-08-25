@@ -179,11 +179,11 @@ const isRoutePathActive = nuxtApp.$isRoutePathActive as (path: string | undefine
 const {isAuthenticated, user} = useAuth();
 const {width: screenWidth} = useScreen();
 const navDrop = resolveComponent('navDrop');
-const navigationHeightInPixelsModel = defineModel('navigationHeightInPixels');
+const navigationHeightModel = defineModel('navigationHeight');
 const navigation = useTemplateRef('navigation');
 const subNavigationRef = useTemplateRef('subNavigationRef');
 const { focused: subNavigationFocused } = useFocusWithin (subNavigationRef);
-const { height: navigationHeight} = useElementSize(navigation);
+const { height: navigationReferenceHeight} = useElementSize(navigation);
 const {$themeStore, $layoutStore} = useNuxtApp();
 const {
     neutral: neutralColor,
@@ -196,7 +196,7 @@ const {
     activeSubNavigationLink,
     navigationAccountLinks,
     navigationBackground,
-    navigationHeightInPixels,
+    navigationHeight,
     setNavigationHeight,
     rightNavigationDropAlign
 } = useLayout();
@@ -216,25 +216,25 @@ watch(subNavigationFocused, (focused) => {
     }
 });
 
-watch(navigationHeight, (newNavigationHeight) => {
-    setNavigationHeight(navigationHeight.value);
-    navigationHeightInPixelsModel.value = navigationHeightInPixels.value;
+watch(navigationReferenceHeight, (newNavigationHeight) => {
+    setNavigationHeight(navigationReferenceHeight.value);
+    navigationHeightModel.value = navigationHeight.value;
 });
 
 onMounted(async () => {
-    setNavigationHeight(navigationHeight.value);
-    navigationHeightInPixelsModel.value = navigationHeightInPixels.value;
+    setNavigationHeight(navigationReferenceHeight.value);
+    navigationHeightModel.value = navigationHeight.value;
 });
 
 watch(clientReadyState, async (clientReady) => {
     if(clientReady){
-        setNavigationHeight(navigationHeight.value);
-        navigationHeightInPixelsModel.value = navigationHeightInPixels.value;
+        setNavigationHeight(navigationReferenceHeight.value);
+        navigationHeightModel.value = navigationHeight.value;
     }
 })
 
 watch(screenWidth, value => {
-    setNavigationHeight(navigationHeight.value);
+    setNavigationHeight(navigationReferenceHeight.value);
 });
 
 const navigationHeaderSize = computed(() => {
