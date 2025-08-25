@@ -93,21 +93,30 @@
                             </template>
                             <template v-slot:cell.validation_summary="{cell, slot, scrollReference}">
                                 <div class="flex items-center justify-center">
-                                    <Icon v-if="cell.validation_errors.length > 0" class="text-[#d9534f] w-6 h-6" name="ic:baseline-warning"/>
+                                    <Icon v-if="cell.validation_errors.length > 0" class="label-danger w-6 h-6" name="ic:baseline-warning"/>
                                 </div>
                             </template>
                             <template v-slot:cell.number="{cell, slot, scrollReference}">
-                                <div class="mx-[1px]">
+                                <div v-if="!cell.isEditing" class="p-[3px] cursor-pointer" @click="editRow(cell)">
+                                    {{cell.number}}
+                                </div>
+                                <div v-else class="mx-[1px]" @click="">
                                     <Input v-model="cell.number" :size="slot.inputSize" />
                                 </div>
                             </template>
                             <template v-slot:cell.family_name="{cell, slot, scrollReference}">
-                                <div class="mx-[1px]">
+                                <div v-if="!cell.isEditing" class="p-[3px] cursor-pointer" @click="editRow(cell)">
+                                    {{cell.family_name}}
+                                </div>
+                                <div v-else class="mx-[1px]" @click="">
                                     <Input v-model="cell.family_name" :size="slot.inputSize" />
                                 </div>
                             </template>
                             <template v-slot:cell.given_name="{cell, slot, scrollReference}">
-                                <div class="mx-[1px]">
+                                <div v-if="!cell.isEditing" class="p-[3px] cursor-pointer" @click="editRow(cell)">
+                                    {{cell.given_name}}
+                                </div>
+                                <div v-else class="mx-[1px]" @click="">
                                     <Input v-model="cell.given_name" :size="slot.inputSize" />
                                 </div>
                             </template>
@@ -351,6 +360,10 @@ const resetResolvedModal = () => {
     resolvedModal.value = false;
     resolvedModalMessage.value = '';
 }
+
+const editRow = (cell: TableRowT) => {
+    cell.isEditing = true;
+};
 const save = async () => {
 
     if(selectedPreImportDataId.value.length == 0){
