@@ -396,15 +396,15 @@
                     </div>
                 </div>
 
-                <div v-if="false" class="grid gap-2 grid-cols-3">
+                <div v-if="true" class="grid gap-2 grid-cols-3">
                     <div></div>
                     <div class="space-y-1 relative border">
                         <div v-if="tabGroup.show_icon_grid" class="absolute w-[0.2px] top-0 bottom-0 bg-slate-400 z-50" :class="[tabGroupIconGrid.left]"></div>
                         <div v-if="tabGroup.show_icon_grid" class="absolute w-[0.2px] top-[-0.25rem] bottom-0 bg-slate-400 z-50" :class="[tabGroupIconGrid.right]"></div>
 
                         <!-- Selects -->
-                        <MultiSelect :glint="true" always-active :selection-float="false" :drop-shadow="false" :selection-max-viewable-line="5" :size="tabGroup.size" :options="category" :icon="tabGroup.icon"/>
-                        <SingleSelect :glint="true" drop-shadow :selection-max-viewable-line="4" :always-active="false" :size="tabGroup.size" :icon="tabGroup.icon" :options="plan"/>
+                        <MultiSelect :glint="true" :always-active="true" :selection-float="false" :drop-shadow="false" :selection-max-viewable-line="5" :size="tabGroup.size" :options="category" :icon="tabGroup.icon"/>
+                        <SingleSelect :glint="true" :always-active="true" :selection-float="false" drop-shadow :selection-max-viewable-line="4"  :size="tabGroup.size" :icon="tabGroup.icon" :options="plan"/>
                         <MultiSelectPaginated
                             :drop-shadow="true"
                             :selection-max-content="true"
@@ -682,7 +682,7 @@ let searchInputWithIcon = ref(null);
 
 let tabGroup = reactive({
     'icon' : 'ic:sharp-check-box-outline-blank',
-    'size' : 'lg',
+    'size' : 'sm',
     'show_icon_grid': false,
     'glint': false,
 });
