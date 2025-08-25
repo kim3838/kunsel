@@ -1,11 +1,15 @@
 <template>
     <footer>
-        <div class="mt-24 footer-rule"></div>
+        <div v-if="topRuleDivider" class="mt-24 footer-rule"></div>
+
+        <LandingLinks v-if="landingLinks" />
+
         <div class="mx-auto max-w-screen-lg">
+
             <div class="flex flex-wrap gap-2">
 
                 <div v-for="navigationLink in navigationLinks" :key="navigationLink.key" class="flex-grow p-6 text-center sm:text-left">
-                    <p class="font-business text-lg font-medium">
+                    <p class="font-business text-lg">
                         <NuxtLink
                             v-if="navigationLink.type == 'link'"
                             :to="navigationLink.to"
@@ -15,7 +19,7 @@
                         <span v-else>{{navigationLink.title}}</span>
                     </p>
 
-                    <div v-if="navigationLink?.options && navigationLink.options.length > 0" class="mt-2 space-y-2 text-sm">
+                    <div v-if="navigationLink?.options && navigationLink.options.length > 0" class="mt-2 space-y-2 text-base">
                         <div v-for="subLink in navigationLink.options" :key="subLink.key">
                             <NuxtLink
                                 v-if="subLink.type == 'link'"
@@ -29,15 +33,15 @@
                 </div>
 
                 <div class="p-6">
-                    <div class="flex justify-start">
-                        <p class="font-business text-2xl font-medium">
+                    <div class="flex justify-start items-center">
+                        <div class="font-business text-2xl font-medium">
                             Kunsel
-                        </p>
+                        </div>
+                        <BreadCrumbs prefix-arrow :prefix-company="breadcrumbsPrefixCompany" />
                     </div>
 
-                    <p class="mt-6 max-w-md text-sm leading-relaxed sm:max-w-xs sm:text-left">
-                        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Incidunt
-                        consequuntur amet culpa cum itaque neque.
+                    <p class="mt-2 max-w-md text-base leading-relaxed sm:max-w-xs sm:text-left">
+                        Flexible ERP designed for modern, cloud-powered businesses.
                     </p>
 
                     <ul class="mt-2 flex justify-start gap-2 sm:justify-start md:gap-4">
@@ -94,6 +98,21 @@ const {
 const {
     navigationLinks,
 } = useLayout();
+
+defineProps({
+    topRuleDivider: {
+        type: Boolean,
+        default: false,
+    },
+    landingLinks: {
+        type: Boolean,
+        default: false,
+    },
+    breadcrumbsPrefixCompany: {
+        type: Boolean,
+        default: false,
+    },
+});
 </script>
 
 <style scoped>

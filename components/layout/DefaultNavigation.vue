@@ -3,7 +3,7 @@
         ref="navigation"
         class="primary-navigation-parent z-40 fixed">
         <div class="relative z-[42] w-full flex justify-center font-[Inclusive_Sans]">
-            <div class="max-w-screen-2xl w-full flex justify-end h-5 scaffold-border-left-right">
+            <div class="max-w-screen-2xl w-full flex justify-end h-5">
                 <NavLink
                     class="h-full"
                     :size="`xs`">
@@ -33,7 +33,7 @@
             </div>
         </div>
         <div class="relative z-[41] w-full flex justify-center" :class="mainNavigationFontClass">
-            <div class="max-w-screen-2xl w-full flex justify-start lg:justify-between scaffold-border" :class="mainNavigationHeightClass">
+            <div class="max-w-screen-2xl w-full flex justify-start lg:justify-between" :class="mainNavigationHeightClass">
                 <div class="flex">
                     <!-- Navigation Links -->
                     <div class="flex">
@@ -126,8 +126,8 @@
             </div>
         </div>
         <!-- Sub Navigation -->
-        <div v-show="subNavigationOptions.length" class="relative w-full flex justify-center" :class="subNavigationFontClass">
-            <div ref="subNavigationRef" tabindex="0" class="max-w-screen-2xl w-full flex flex-wrap justify-start focus:outline-none" :class="[subNavigationOptions.length ? 'scaffold-border-left-bottom-right' : '']">
+        <div v-show="subNavigationOptions.length" class="mt-2 relative w-full flex justify-center" :class="subNavigationFontClass">
+            <div ref="subNavigationRef" tabindex="0" class="max-w-screen-2xl w-full flex flex-wrap justify-start focus:outline-none" :class="[subNavigationOptions.length ? '' : '']">
                 <span class="flex" :class="subNavigationHeightClass" v-for="navigation in subNavigationOptions" :key="navigation.key">
                     <NavLink
                         class="h-full"

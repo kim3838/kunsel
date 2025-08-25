@@ -1,0 +1,85 @@
+<template>
+    <ol class="h-8 flex items-center space-x-1">
+
+        <li v-if="prefixArrow && breadcrumbs.length > 0" class="flex items-center">
+            <Icon class="h-5 w-5" name="ic:sharp-keyboard-arrow-right"/>
+        </li>
+
+        <li v-for="(breadcrumb, index) in breadcrumbs" :key="index" class="flex items-center">
+            <span>
+                {{ breadcrumb.name }}
+            </span>
+            <span v-if="index < breadcrumbs.length - 1" class="flex items-center">
+                <Icon class="h-5 w-5" name="ic:sharp-keyboard-arrow-right"/>
+            </span>
+        </li>
+    </ol>
+</template>
+
+<script setup lang="ts">
+import {storeToRefs} from "pinia";
+
+interface Breadcrumb {
+    name: string;
+    to?: string;
+}
+
+const route = useRoute();
+const router = useRouter();
+
+const nuxtApp = useNuxtApp();
+
+const {
+    selectedAssociatedCompanyName
+} = storeToRefs(nuxtApp.$authStore);
+
+const props = defineProps({
+    prefixArrow: {
+        type: Boolean,
+        default: false,
+    },
+    prefixCompany: {
+        type: Boolean,
+        default: false,
+    },
+});
+
+const breadcrumbs = computed((): Breadcrumb[] => {
+    const pathSegments = route.path.split('/').filter(segment => segment !== '');
+    const breadcrumbs: Breadcrumb[] = [];
+
+    if(props.prefixCompany && selectedAssociatedCompanyName?.value){
+        breadcrumbs.push({name: selectedAssociatedCompanyName.value});
+    }
+
+    // Add home breadcrumb breadcrumbs.push({name: 'Home', to: '/'});
+
+    pathSegments.forEach((segment, index) => {
+
+        // Skip if this segment looks like a parameter (you can customize this logic)
+        // In your case, the ID "01K3DDQ4SJ382NZ12C4AHQSVTK" should be skipped
+        const isParameter = /^[A-Z0-9]{26}$/.test(segment) || // ULID pattern
+            /^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/.test(segment) || // UUID pattern
+            /^\d+$/.test(segment); // Numeric ID
+
+        if (!isParameter) {
+            // Capitalize and format the segment name
+            const name = segment
+                .split('-')
+                .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+                .join(' ');
+
+            breadcrumbs.push({
+                name
+            });
+        }
+    });
+
+    return breadcrumbs;
+});
+</script>
+
+
+<style scoped>
+
+</style>

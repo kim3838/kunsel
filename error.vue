@@ -15,7 +15,7 @@
             </div>
         </div>
         <!-- Footer -->
-        <LandingFooter/>
+        <Footer top-rule-divider landing-links />
     </div>
 </template>
 

@@ -20,6 +20,12 @@ export const useAuthStore = defineStore('auth', () => {
         return associatedCompanies.value.singleSelectPayload.selected;
     })
 
+    const selectedAssociatedCompanyName = computed<AssignedCompanyPayloadT | undefined>(() => {
+        return associatedCompanies.value.singleSelectPayload.selection.find(
+            company => company.value == selectedAssociatedCompany.value
+        )?.text;
+    })
+
     const selectedAssociatedCompanyPayload = computed<AssignedCompanyPayloadT | undefined>(() => {
         return associatedCompanies.value.singleSelectPayload.selection.find(
             company => company.value == selectedAssociatedCompany.value
@@ -48,6 +54,7 @@ export const useAuthStore = defineStore('auth', () => {
         associatedCompanies,
         resetAssociatedCompanies,
         selectedAssociatedCompany,
+        selectedAssociatedCompanyName,
         selectedAssociatedCompanyPayload
     }
 })

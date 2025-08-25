@@ -14,7 +14,7 @@
         <!-- Action Modal -->
         <PromptModal />
         <!-- Footer -->
-        <DefaultFooter class="w-full allocate-navigation-and-content absolute" />
+        <Footer top-rule-divider breadcrumbs-prefix-company class="w-full allocate-body absolute" />
     </div>
 </template>
 
@@ -41,7 +41,7 @@ main{
 .allocate-navigation {
     padding-top: v-bind(topAllocationComputed);
 }
-.allocate-navigation-and-content {
+.allocate-body {
     margin-top: v-bind(footerTopAllocationComputed);
 }
 </style>

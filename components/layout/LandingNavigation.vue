@@ -3,7 +3,7 @@
         ref="landingNavigation"
         class="primary-navigation-parent z-40 fixed">
         <div class="w-full font-business flex justify-center">
-            <div class="max-w-screen-2xl w-full flex justify-start lg:justify-around h-10 lg:h-16 scaffold-border-left-bottom-right">
+            <div class="max-w-screen-2xl w-full flex justify-start lg:justify-around h-10 lg:h-16">
                 <div class="flex">
                     <NavDrop
                         class="lg:hidden h-full"
