@@ -98,14 +98,14 @@
                         v-model="selectedDepartments"
                         :sub-row-slug="'details'"
                         :sub-row-settings="{
-                                type: DATATABLE_SUBROW_TYPE.TITLED,
-                                containerPaddingTop: 0.25,
-                                containerPaddingBottom: 0.75,
-                                titleSize: 'sm',
-                                rowVerticalLine: true,
-                                verticalBorderType: 'dashed',
-                                horizontalBorderType: 'dashed',
-                            }"
+                            type: DATATABLE_SUBROW_TYPE.TITLED,
+                            containerPaddingTop: 0.25,
+                            containerPaddingBottom: 0.75,
+                            titleSize: 'sm',
+                            rowVerticalLine: true,
+                            verticalBorderType: 'dashed',
+                            horizontalBorderType: 'dashed',
+                        }"
                         selection>
                         <template v-slot:cell.actions="{cell, slot, scrollReference}">
                             <Button class="mx-0.5" type="button" :size="slot.buttonSize" :icon="'mdi:pen'" @click="edit(cell)" :label="'Edit'"></Button>
