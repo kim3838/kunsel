@@ -1,7 +1,7 @@
 <template>
     <div>
         <LandingWrapper>
-            <div class="mx-auto pt-4 max-w-screen-2xl scaffold-border-left-bottom-right">
+            <div class="mx-auto pt-4 max-w-screen-2xl">
                 <div class="flex justify-center">
                     <AccentFrame class="my-4">
                         <template #content>
@@ -73,7 +73,7 @@
 
 <script setup lang="ts">
 definePageMeta({middleware: 'guest'});
-useLayout().setNavigationMode('solid', 'Login.vue');
+useLayout().setNavigationMode('solid');
 const clientReadyState = useClientReadyState();
 const {$coreStore} = useNuxtApp();
 const runtimeConfig = useRuntimeConfig();

@@ -1,38 +1,40 @@
 <template>
     <div>
         <LandingWrapper>
-            <div class="mx-auto px-4 flex justify-center max-w-screen-2xl scaffold-border-left-bottom-right">
-                <AccentFrame class="my-4">
-                    <template #content>
-                        <div class="relative py-4">
-                            <form @submit.prevent="handleForgotPassword" class="w-80">
-                                <div class="block mt-4">
-                                    <InputLabel :size="'md'" for="identifier" value="Enter account email" />
-                                    <InputWithIcon
-                                        :icon="'ic:round-mail-outline'"
-                                        :disabled="pending"
-                                        :size="'lg'"
-                                        id="email"
-                                        :type="'email'"
-                                        class="w-full"
-                                        ref="emailInput"
-                                        v-model="email"
-                                        autofocus
-                                        autocomplete="off" />
-                                </div>
+            <div class="mx-auto pt-4 max-w-screen-2xl">
+                <div class="flex justify-center">
+                    <AccentFrame class="my-4">
+                        <template #content>
+                            <div class="relative py-4">
+                                <form @submit.prevent="handleForgotPassword" class="w-80">
+                                    <div class="block mt-4">
+                                        <InputLabel :size="'md'" for="identifier" value="Enter account email" />
+                                        <InputWithIcon
+                                            :icon="'ic:round-mail-outline'"
+                                            :disabled="pending"
+                                            :size="'lg'"
+                                            id="email"
+                                            :type="'email'"
+                                            class="w-full"
+                                            ref="emailInput"
+                                            v-model="email"
+                                            autofocus
+                                            autocomplete="off" />
+                                    </div>
 
-                                <div class="flex mt-4 items-center justify-end">
-                                    <Button
-                                        :disabled="pending"
-                                        :size="'md'"
-                                        :variant="'default'"
-                                        :icon="pending ? 'eos-icons:installing' : 'ic:round-mail-outline'"
-                                        :label="pending ? 'Requesting...' : 'Email Password Reset Link'"></Button>
-                                </div>
-                            </form>
-                        </div>
-                    </template>
-                </AccentFrame>
+                                    <div class="flex mt-4 items-center justify-end">
+                                        <Button
+                                            :disabled="pending"
+                                            :size="'md'"
+                                            :variant="'default'"
+                                            :icon="pending ? 'eos-icons:installing' : 'ic:round-mail-outline'"
+                                            :label="pending ? 'Requesting...' : 'Email Password Reset Link'"></Button>
+                                    </div>
+                                </form>
+                            </div>
+                        </template>
+                    </AccentFrame>
+                </div>
             </div>
         </LandingWrapper>
     </div>
@@ -40,7 +42,7 @@
 
 <script setup lang="ts">
 definePageMeta({middleware: 'guest'});
-useLayout().setNavigationMode('solid', 'Forgot-Password.vue');
+useLayout().setNavigationMode('solid');
 const clientReadyState = useClientReadyState();
 const {$promptStore} = useNuxtApp();
 
