@@ -164,11 +164,11 @@ const {
     updatedAssociatedCompanyFlag
 } = storeToRefs(nuxtApp.$associationStore);
 const {
-    selectedAssociatedCompany
+    selectedAssociatedCompanyId
 } = storeToRefs(nuxtApp.$authStore);
 
 watch(updatedAssociatedCompanyFlag, (newValue) => {
-    if(isAuthenticated.value && selectedAssociatedCompany.value){
+    if(isAuthenticated.value && selectedAssociatedCompanyId.value){
         paginate();
     }
 });
@@ -260,7 +260,7 @@ let paramsComputed = computed(() => {
         page: filters.page,
         perPage: filters.perPage,
         filters: {
-            company_id: selectedAssociatedCompany.value,
+            company_id: selectedAssociatedCompanyId.value,
             search: filters.search.keyword,
         }
     };
@@ -276,7 +276,7 @@ const disableDataTable = computed(() => {
 });
 const employeesExecute = async() =>{
 
-    if(import.meta.server || !selectedAssociatedCompany.value){
+    if(import.meta.server || !selectedAssociatedCompanyId.value){
         return;
     }
 

@@ -141,7 +141,7 @@ const {
     updatedAssociatedCompanyFlag
 } = storeToRefs(nuxtApp.$associationStore);
 const {
-    selectedAssociatedCompany
+    selectedAssociatedCompanyId
 } = storeToRefs(nuxtApp.$authStore);
 
 const pending = ref(false);
@@ -216,7 +216,7 @@ const selectedPreImportDataThatHasValidationError = computed(() => {
 })
 
 watch(updatedAssociatedCompanyFlag, (newValue) => {
-    if(isAuthenticated.value && selectedAssociatedCompany.value){
+    if(isAuthenticated.value && selectedAssociatedCompanyId.value){
         reset();
     }
 })
@@ -263,7 +263,7 @@ const read = async () => {
 
         const formData = new FormData();
         formData.append('file', file);
-        formData.append('company_id', selectedAssociatedCompany.value);
+        formData.append('company_id', selectedAssociatedCompanyId.value);
 
         await laraFetch("/api/employee-import-validate", {
             method: 'POST',
@@ -317,7 +317,7 @@ const reValidate = async () => {
     await laraFetch("/api/employee-import-re-validate", {
         method: 'POST',
         body: {
-            company_id: selectedAssociatedCompany.value,
+            company_id: selectedAssociatedCompanyId.value,
             re_validate: selectedPreImportData.value,
         },
     },{
@@ -378,7 +378,7 @@ const save = async () => {
     await laraFetch("/api/employee-import-save", {
         method: 'POST',
         body: {
-            company_id: selectedAssociatedCompany.value,
+            company_id: selectedAssociatedCompanyId.value,
             save: selectedPreImportData.value,
         },
     },{

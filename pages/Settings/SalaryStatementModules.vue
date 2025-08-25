@@ -45,12 +45,12 @@ const {
     updatedAssociatedCompanyFlag
 } = storeToRefs(nuxtApp.$associationStore);
 const {
-    selectedAssociatedCompany
+    selectedAssociatedCompanyId
 } = storeToRefs(nuxtApp.$authStore);
 const orderSequenceable = nuxtApp.$orderSequenceable as (data: Sequenceable[]) => void;
 
 watch(updatedAssociatedCompanyFlag, (newValue) => {
-    if(isAuthenticated.value && selectedAssociatedCompany.value){
+    if(isAuthenticated.value && selectedAssociatedCompanyId.value){
         salaryStatementModulesExecute();
     }
 });
@@ -73,7 +73,7 @@ const disableDataTable = computed(() => {
 })
 const salaryStatementModulesExecute = async() =>{
 
-    if(import.meta.server || !selectedAssociatedCompany.value){
+    if(import.meta.server || !selectedAssociatedCompanyId.value){
         return;
     }
 
@@ -83,7 +83,7 @@ const salaryStatementModulesExecute = async() =>{
         method: 'GET',
         params: {
             filters: {
-                'company_id': selectedAssociatedCompany.value,
+                'company_id': selectedAssociatedCompanyId.value,
             }
         }
     }, {

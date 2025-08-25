@@ -536,7 +536,7 @@ const {
     updatedAssociatedCompanyFlag
 } = storeToRefs($associationStore);
 const {
-    selectedAssociatedCompany,
+    selectedAssociatedCompanyId,
     selectedAssociatedCompanyPayload
 } = storeToRefs($authStore);
 const employee = ref(null);
@@ -654,7 +654,7 @@ const nonEmployeeUsersExecute = async () => {
         method: 'GET',
         params: {
             filters: {
-                'companies': [selectedAssociatedCompany.value],
+                'companies': [selectedAssociatedCompanyId.value],
                 'status': [USER_STATUS.ACTIVE]
             }
         }
@@ -730,7 +730,7 @@ const designationsExecute = async () => {
         method: 'GET',
         params: {
             filters: {
-                'company_id': selectedAssociatedCompany.value,
+                'company_id': selectedAssociatedCompanyId.value,
             }
         }
     }, {
@@ -758,7 +758,7 @@ const departmentsExecute = async () => {
         method: 'GET',
         params: {
             filters: {
-                'company_id': selectedAssociatedCompany.value,
+                'company_id': selectedAssociatedCompanyId.value,
             }
         }
     }, {
@@ -830,7 +830,7 @@ const managerOptions = reactive({
     fetch: {
         url: '/api/employee-selections',
         filters: {
-            'company_id': selectedAssociatedCompany.value,
+            'company_id': selectedAssociatedCompanyId.value,
             'except_id': _without([employeeId.value], null),
             search: {
                 keyword: '',
@@ -852,7 +852,7 @@ const fetchPayFrequencySelection = async () => {
         method: 'GET',
         params: {
             filters: {
-                'company_id': selectedAssociatedCompany.value,
+                'company_id': selectedAssociatedCompanyId.value,
             }
         }
     },{
@@ -864,7 +864,7 @@ const fetchPayFrequencySelection = async () => {
 await fetchPayFrequencySelection();
 
 watch(updatedAssociatedCompanyFlag, (newValue) => {
-    if(isAuthenticated.value && selectedAssociatedCompany.value){
+    if(isAuthenticated.value && selectedAssociatedCompanyId.value){
         navigateTo("/workforce/employees", {replace: true});
     }
 });
@@ -1033,7 +1033,7 @@ const deleteSelectedPayrollComponent = async (component) => {
                 laraFetch(`/api/employee-payroll-component/${id}`, {
                     method: 'DELETE',
                     body: {
-                        'company_id': selectedAssociatedCompany.value
+                        'company_id': selectedAssociatedCompanyId.value
                     }
                 },{
                     onRequestError: (request, options, error) => {
@@ -1168,7 +1168,7 @@ const autogenerateUserFormSubmitPath = computed(() => {
 const autogenerateUserFormBody = computed(() => {
 
     return {
-        company_id: selectedAssociatedCompany.value,
+        company_id: selectedAssociatedCompanyId.value,
         family_name: employeeFamilyName.value,
         given_name: employeeGivenName.value,
         office_email: employeeOfficeEmail.value,
@@ -1283,7 +1283,7 @@ const defaultAssignUserCompanyAssignment = async(userId = null) => {
 
     let formBody = {};
 
-    formBody[selectedAssociatedCompany.value] = {
+    formBody[selectedAssociatedCompanyId.value] = {
         'assignment_type': COMPANY_ASSIGNMENT_TYPE.DEFAULT
     };
 
@@ -1329,7 +1329,7 @@ const employeeFormAction = computed(() => {
 const employeeFormBody = computed(() => {
 
     return {
-        company_id: selectedAssociatedCompany.value,
+        company_id: selectedAssociatedCompanyId.value,
         department_id: departmentOptions.selected,
         designation_id: designationOptions.selected,
         manager_id: managerOptions.selected,
@@ -1526,7 +1526,7 @@ const employeePayrollComponentFormSubmit = async(employee = null) => {
 
             let employeePayrollComponentFormBody = {
                 employee_id: employeeId,
-                company_id: selectedAssociatedCompany.value,
+                company_id: selectedAssociatedCompanyId.value,
                 formulable_type: payrollFormulableType,
                 payroll_componentable_type: payrollComponent.payroll_componentable_type,
                 payroll_componentable_id: payrollComponent.payroll_componentable_id,

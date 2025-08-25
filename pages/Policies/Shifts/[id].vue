@@ -181,12 +181,12 @@ const {
     updatedAssociatedCompanyFlag
 } = storeToRefs($associationStore);
 const {
-    selectedAssociatedCompany,
+    selectedAssociatedCompanyId,
     selectedAssociatedCompanyPayload
 } = storeToRefs($authStore);
 
 watch(updatedAssociatedCompanyFlag, (newValue) => {
-    if(isAuthenticated.value && selectedAssociatedCompany.value){
+    if(isAuthenticated.value && selectedAssociatedCompanyId.value){
         navigateTo("/policies/shifts", {replace: true});
     }
 });
@@ -273,7 +273,7 @@ const fetchShift = async () => {
         await laraFetch(`/api/shift-schedules-preset`, {
             method: 'GET',
             params: {
-                'company_id': selectedAssociatedCompany.value,
+                'company_id': selectedAssociatedCompanyId.value,
             }
         }, {
             onSuccessResponse: async (request, options, response) => {
@@ -439,7 +439,7 @@ const submitPath = computed(() => {
 const formBody = computed(() => {
 
     return{
-        'company_id': selectedAssociatedCompany.value,
+        'company_id': selectedAssociatedCompanyId.value,
         'code': shiftCode.value,
         'name': shiftName.value,
         'type': shiftTypeOptions.selected,

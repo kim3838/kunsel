@@ -16,19 +16,13 @@ export const useAuthStore = defineStore('auth', () => {
         }
     });
 
-    const selectedAssociatedCompany = computed(() => {
+    const selectedAssociatedCompanyId = computed(() => {
         return associatedCompanies.value.singleSelectPayload.selected;
-    })
-
-    const selectedAssociatedCompanyName = computed<AssignedCompanyPayloadT | undefined>(() => {
-        return associatedCompanies.value.singleSelectPayload.selection.find(
-            company => company.value == selectedAssociatedCompany.value
-        )?.text;
     })
 
     const selectedAssociatedCompanyPayload = computed<AssignedCompanyPayloadT | undefined>(() => {
         return associatedCompanies.value.singleSelectPayload.selection.find(
-            company => company.value == selectedAssociatedCompany.value
+            company => company.value == selectedAssociatedCompanyId.value
         )?.payload;
     })
 
@@ -53,8 +47,7 @@ export const useAuthStore = defineStore('auth', () => {
         SELECTED_ASSOCIATED_COMPANY_STORAGE_KEY,
         associatedCompanies,
         resetAssociatedCompanies,
-        selectedAssociatedCompany,
-        selectedAssociatedCompanyName,
+        selectedAssociatedCompanyId,
         selectedAssociatedCompanyPayload
     }
 })

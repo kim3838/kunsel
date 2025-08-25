@@ -60,7 +60,7 @@ const {
     updatedAssociatedCompanyFlag
 } = storeToRefs(nuxtApp.$associationStore);
 const {
-    selectedAssociatedCompany
+    selectedAssociatedCompanyId
 } = storeToRefs(nuxtApp.$authStore);
 const orderSequenceable = nuxtApp.$orderSequenceable as (data: Sequenceable[]) => void;
 
@@ -75,7 +75,7 @@ const compensationsHeaders = reactive<TableHeaderT[]>([
 ]);
 
 watch(updatedAssociatedCompanyFlag, (newValue) => {
-    if(isAuthenticated.value && selectedAssociatedCompany.value){
+    if(isAuthenticated.value && selectedAssociatedCompanyId.value){
         compensationsExecute();
     }
 })
@@ -101,7 +101,7 @@ const compensationsExecute = async () => {
         method: 'GET',
         params: {
             filters: {
-                'company_id': selectedAssociatedCompany.value,
+                'company_id': selectedAssociatedCompanyId.value,
             }
         }
     },{

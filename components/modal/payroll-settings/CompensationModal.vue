@@ -85,7 +85,7 @@ const {
     updatedAssociatedCompanyFlag
 } = storeToRefs(nuxtApp.$associationStore);
 const {
-    selectedAssociatedCompany
+    selectedAssociatedCompanyId
 } = storeToRefs(nuxtApp.$authStore);
 
 const props = defineProps({
@@ -131,7 +131,7 @@ const assignable = reactive({
 });
 
 watch(updatedAssociatedCompanyFlag, (newValue) => {
-    if(isAuthenticated.value && selectedAssociatedCompany.value){
+    if(isAuthenticated.value && selectedAssociatedCompanyId.value){
         compensationFormulaExecute();
     }
 })
@@ -153,7 +153,7 @@ const compensationFormulaExecute = async () => {
         method: 'GET',
         params: {
             filters: {
-                'company_id': selectedAssociatedCompany.value,
+                'company_id': selectedAssociatedCompanyId.value,
                 'formulable_type': FORMULABLE.EARNINGS
             }
         }
@@ -195,7 +195,7 @@ const compensationFormulaSettingsExecute = async (companyFormulaId: null | numbe
 
 const form = computed(() => {
     return {
-        'company_id': selectedAssociatedCompany.value,
+        'company_id': selectedAssociatedCompanyId.value,
         'code': compensationCode.value,
         'name': compensationName.value,
         'assignable': assignable.selected,

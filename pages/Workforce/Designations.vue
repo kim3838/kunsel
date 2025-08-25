@@ -86,11 +86,11 @@ const {
     updatedAssociatedCompanyFlag
 } = storeToRefs(nuxtApp.$associationStore);
 const {
-    selectedAssociatedCompany
+    selectedAssociatedCompanyId
 } = storeToRefs(nuxtApp.$authStore);
 
 watch(updatedAssociatedCompanyFlag, (newValue) => {
-    if(isAuthenticated.value && selectedAssociatedCompany.value){
+    if(isAuthenticated.value && selectedAssociatedCompanyId.value){
         designationsExecute();
     }
 })
@@ -114,7 +114,7 @@ const designationsExecute = async () => {
         method: 'GET',
         params: {
             filters: {
-                'company_id': selectedAssociatedCompany.value,
+                'company_id': selectedAssociatedCompanyId.value,
             }
         }
     },{
@@ -176,7 +176,7 @@ const deleteSelected = async () => {
                 laraFetch(`/api/designation/${id}`, {
                     method: 'DELETE',
                     body: {
-                        'company_id': selectedAssociatedCompany.value,
+                        'company_id': selectedAssociatedCompanyId.value,
                     }
                 },{
                     onRequestError: (request, options, error) => {
@@ -202,7 +202,7 @@ const designationName = ref('');
 
 const createEditModalForm = computed(() => {
     return {
-        'company_id': selectedAssociatedCompany.value,
+        'company_id': selectedAssociatedCompanyId.value,
         'name': designationName.value,
     }
 });

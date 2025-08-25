@@ -102,7 +102,7 @@ const {isAuthenticated} = useAuth();
 const nuxtApp = useNuxtApp();
 
 const {
-    selectedAssociatedCompany,
+    selectedAssociatedCompanyId,
     selectedAssociatedCompanyPayload
 } = storeToRefs(nuxtApp.$authStore);
 
@@ -337,7 +337,7 @@ const assignablePayrollComponentExecute = async () => {
         method: 'GET',
         params: {
             filters: {
-                'company_id': selectedAssociatedCompany.value,
+                'company_id': selectedAssociatedCompanyId.value,
                 'assignable': true
             }
         }
@@ -494,7 +494,7 @@ const componentForm = computed(() => {
 });
 const form = computed(() => {
     let formTemp = {
-        'company_id': selectedAssociatedCompany.value,
+        'company_id': selectedAssociatedCompanyId.value,
         'payroll_componentable_id' : assignablePayrollComponentOptions.selected,
         'payroll_componentable_type' : formulableModelMapKey.value,
     };

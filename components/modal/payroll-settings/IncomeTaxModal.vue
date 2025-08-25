@@ -85,7 +85,7 @@ const {
     updatedAssociatedCompanyFlag
 } = storeToRefs(nuxtApp.$associationStore);
 const {
-    selectedAssociatedCompany
+    selectedAssociatedCompanyId
 } = storeToRefs(nuxtApp.$authStore);
 
 const props = defineProps({
@@ -132,7 +132,7 @@ const assignable = reactive({
 });
 
 watch(updatedAssociatedCompanyFlag, (newValue) => {
-    if(isAuthenticated.value && selectedAssociatedCompany.value){
+    if(isAuthenticated.value && selectedAssociatedCompanyId.value){
         incomeTaxFormulaExecute();
     }
 })
@@ -154,7 +154,7 @@ const incomeTaxFormulaExecute = async () => {
         method: 'GET',
         params: {
             filters: {
-                'company_id': selectedAssociatedCompany.value,
+                'company_id': selectedAssociatedCompanyId.value,
                 'formulable_type': FORMULABLE.INCOME_TAX
             }
         }
@@ -196,7 +196,7 @@ const incomeTaxFormulaSettingsExecute = async (companyFormulaId: null | number |
 
 const form = computed(() => {
     return {
-        'company_id': selectedAssociatedCompany.value,
+        'company_id': selectedAssociatedCompanyId.value,
         'code': incomeTaxCode.value,
         'name': incomeTaxName.value,
         'assignable': assignable.selected,

@@ -157,11 +157,11 @@ const {
     updatedAssociatedCompanyFlag
 } = storeToRefs(nuxtApp.$associationStore);
 const {
-    selectedAssociatedCompany
+    selectedAssociatedCompanyId
 } = storeToRefs(nuxtApp.$authStore);
 
 watch(updatedAssociatedCompanyFlag, (newValue) => {
-    if(isAuthenticated.value && selectedAssociatedCompany.value){
+    if(isAuthenticated.value && selectedAssociatedCompanyId.value){
         formulaSettingsExecute();
     }
 });
@@ -187,7 +187,7 @@ const formulaSettingsPending = ref(false)
 
 const formulaSettingsExecute = async() =>{
 
-    if(import.meta.server || !selectedAssociatedCompany.value){
+    if(import.meta.server || !selectedAssociatedCompanyId.value){
         return;
     }
 
@@ -197,7 +197,7 @@ const formulaSettingsExecute = async() =>{
         method: 'GET',
         params: {
             filters: {
-                'company_id': selectedAssociatedCompany.value,
+                'company_id': selectedAssociatedCompanyId.value,
                 'formula_interpolation': false
             }
         }
