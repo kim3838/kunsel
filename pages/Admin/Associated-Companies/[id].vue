@@ -145,7 +145,7 @@ await fetchCurrencies();
 const fetchCompany = async () => {
     if(route.params.id === 'create-company'){return;}
 
-    await laraFetch(`/api/company/${route.params.id}`, {
+    await laraFetch(`/api/associated-company/${route.params.id}`, {
         method: 'GET',
     }, {
         onSuccessResponse: async (request, options, response) => {
@@ -174,7 +174,7 @@ const submitAction = computed(() => {
     return !creatingAccount.value ? 'PATCH' : 'POST';
 });
 const submitPath = computed(() => {
-    return !creatingAccount.value ? `/api/company/${company.value.id}` : `/api/company`;
+    return !creatingAccount.value ? `/api/associated-company/${company.value.id}` : `/api/company`;
 });
 const formBody = computed(() => {
 
