@@ -15,7 +15,7 @@
                         <div class="mt-4 space-y-2">
 
                             <fieldset class="neutral-border px-2 pb-2 space-y-2">
-                                <legend class="font-semibold">Formula</legend>
+                                <legend class="font-header">Formula</legend>
 
                                 <table class="border-separate font-data">
                                     <tbody>
@@ -28,7 +28,7 @@
                             </fieldset>
 
                             <fieldset class="neutral-border px-2 pb-2 space-y-2">
-                                <legend class="font-semibold">Default Settings</legend>
+                                <legend class="font-header">Default Settings</legend>
 
                                 <FormulaSettingsCaster :description-whitespace="'pre-line'" :settings="_get(resolvedFormula, 'default_settings', null)" />
                             </fieldset>

@@ -15,7 +15,7 @@
                         <div class="mt-4 space-y-2">
 
                             <fieldset class="neutral-border px-2 pb-2 space-y-2">
-                                <legend class="font-semibold">Shift</legend>
+                                <legend class="font-header">Shift</legend>
                                 <table class="border-separate font-data">
                                     <tbody>
                                         <tr><td class="font-semibold">Code</td><td class="pl-2">{{ _get(resolvedShift, 'code', null) }}</td></tr>

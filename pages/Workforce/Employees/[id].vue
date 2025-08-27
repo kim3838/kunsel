@@ -14,7 +14,7 @@
 
                         <div class="mt-4 space-y-2">
                             <fieldset class="neutral-border px-2 pb-2 space-y-2">
-                                <legend class="font-semibold">{{_get(resolvedEmployee, 'user_id', false) ? 'User account details' : 'No user account'}}</legend>
+                                <legend class="font-header">{{_get(resolvedEmployee, 'user_id', false) ? 'User account details' : 'No user account'}}</legend>
 
                                 <div v-if="_get(resolvedEmployee, 'user_id', false)">
                                     <table class="border-separate font-data">
@@ -32,7 +32,7 @@
                             </fieldset>
 
                             <fieldset class="neutral-border px-2 pb-2 space-y-2">
-                                <legend class="font-semibold">Employee details</legend>
+                                <legend class="font-header">Employee details</legend>
                                 <table class="border-separate font-data">
                                     <tbody>
                                     <tr><td class="font-semibold">Number</td><td class="pl-2">{{ _get(resolvedEmployee, 'number', null) }}</td></tr>

@@ -42,7 +42,7 @@
                             <div class="mt-4 space-y-2">
 
                                 <fieldset class="neutral-border px-2 pb-2 space-y-2">
-                                    <legend class="font-semibold">Result</legend>
+                                    <legend class="font-header">Result</legend>
 
                                     <p>{{resolvedModalMessage}}</p>
                                 </fieldset>
@@ -354,7 +354,7 @@ const reValidate = async () => {
 }
 
 const resolvedModal = ref(false);
-const resolvedModalTitle = ref('Request Finished');
+const resolvedModalTitle = ref('Save successful');
 const resolvedModalMessage = ref('');
 const resetResolvedModal = () => {
     resolvedModal.value = false;

@@ -15,7 +15,7 @@
                         <div class="mt-4 space-y-2">
 
                             <fieldset class="neutral-border px-2 pb-2 space-y-2">
-                                <legend class="font-semibold">Json Preset</legend>
+                                <legend class="font-header">Json Preset</legend>
 
                                 <table class="border-separate font-data">
                                     <tbody>
@@ -26,7 +26,7 @@
                             </fieldset>
 
                             <fieldset class="neutral-border px-2 pb-2 space-y-2">
-                                <legend class="font-semibold">Json</legend>
+                                <legend class="font-header">Json</legend>
 
                                 <FormulaSettingsCaster :description-whitespace="'pre-line'" :settings="_get(resolvedJsonPreset, 'json_value', null)" />
                             </fieldset>
