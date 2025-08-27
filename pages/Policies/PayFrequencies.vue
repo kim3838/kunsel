@@ -391,7 +391,6 @@ const monthlySemimonthlyPayFrequencyFormSubmit = async () => {
 };
 
 const resolvedModal = ref(false);
-const resolvedModalTitle = ref('Request Finished');
 const resolvedFrequencies = ref([]);
 const resetResolvedModal = () => {
     resolvedModal.value = false;

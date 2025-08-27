@@ -1,10 +1,10 @@
 <template>
-    <div v-show="show" class="fixed inset-0 overflow-y-auto px-0 z-50">
+    <div v-show="show" :class="[show ? 'flex' : '']" class="fixed inset-0 overflow-y-auto px-0 z-50">
         <div v-show="show" class="fixed inset-0" @click="close">
             <div class="absolute inset-0 modal-layer opacity-75"></div>
         </div>
 
-        <div v-show="show" class="h-full flex items-center relative z-[60] w-full" :class="[modalContainerClass]">
+        <div v-show="show" class="h-min self-center flex items-center relative z-[60] w-full" :class="[modalContainerClass]">
             <div class="modal-body overflow-hidden mx-auto w-full" :class="[modalBodyClass]" :style="[widthStyle]">
                 <slot></slot>
             </div>
