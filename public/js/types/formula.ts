@@ -13,6 +13,7 @@ export type CompanyFormulaSetting = {
     formula_is_interpolation : boolean,
     formulable_type : Enum,
     formulable_component_type : Enum,
+    default_settings : unknown[],
     formula_settings : unknown[],
     _payload?: TableRowPayloadT;
 }

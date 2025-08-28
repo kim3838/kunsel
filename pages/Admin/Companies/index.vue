@@ -50,7 +50,11 @@
                             <div class="h-full mx-0.5 space-x-0.5 w-full flex items-center">
                                 <NuxtLink
                                     :to="`/admin/companies/${cell.ulid}`">
-                                    <Button type="button" :icon="'mdi:pen'" :size="slot.buttonSize" :label="''"></Button>
+                                    <Button type="button" :variant="'default'" :icon="'mdi:information-variant-circle-outline'" :size="slot.buttonSize" :label="'info'"></Button>
+                                </NuxtLink>
+                                <NuxtLink
+                                    :to="`/admin/company-formulas/${cell.ulid}`">
+                                    <Button type="button" :variant="'outline'" :icon="'ri:formula'" :size="slot.buttonSize"></Button>
                                 </NuxtLink>
                             </div>
                         </template>
