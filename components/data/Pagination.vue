@@ -39,7 +39,7 @@
                 :searchable="false"
                 :value-persist="true"
                 :width="perPageSelectWidth"
-                :icon="'ic:baseline-style'"
+                :icon="'gis:layer'"
                 :label="'Per Page'"
                 :options="perPage"/>
         </div>
