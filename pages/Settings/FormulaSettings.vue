@@ -198,7 +198,7 @@ const formulaSettingsExecute = async() =>{
         params: {
             filters: {
                 'company_id': selectedAssociatedCompanyId.value,
-                'formula_interpolation': false
+                'formula_interpolation': [0]
             }
         }
     }, {

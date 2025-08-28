@@ -237,7 +237,7 @@ const viewMode = reactive<{
         {text : 'Flex', value: DATA_VIEW_MODE.FLEX},
         {text : 'List', value: DATA_VIEW_MODE.LIST},
     ],
-    selected: DATA_VIEW_MODE.FLEX
+    selected: DATA_VIEW_MODE.LIST
 });
 watch(() => viewMode.selected,async viewModeType => {
     await nextTick();

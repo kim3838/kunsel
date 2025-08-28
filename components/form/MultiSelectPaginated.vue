@@ -821,6 +821,9 @@ watch(clientReadyState, async (clientReady) => {
     }
 })
 
+defineExpose({
+    clearSelected
+});
 </script>
 <style scoped>
 .background {
