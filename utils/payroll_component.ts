@@ -29,7 +29,7 @@ export const  COMPENSATION = {
     BENEFIT : 3,
 }
 
-export const  COMPENSATION_NAMES = {
+export const  COMPENSATION_NAME = {
     [COMPENSATION.BASIC_SALARY] : 'Basic Salary',
     [COMPENSATION.OVERTIME] : 'Overtime',
     [COMPENSATION.BENEFIT] : 'Benefit',
