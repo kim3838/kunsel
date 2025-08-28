@@ -2,8 +2,7 @@
     <ConfirmationModal
         :closeable="false"
         :icon="icon"
-        :show="show"
-        @close="$promptStore.promptAction()">
+        :show="show">
         <template #title>
             <span v-text="title"></span>
         </template>
@@ -23,6 +22,7 @@
 
         <template #footer>
             <div class="flex space-x-2 justify-end">
+                <Button v-if="resetable" :size="'md'" @click.native="$promptStore.$reset()" :label="resetLabel"></Button>
                 <Button :size="'md'" @click.native="$promptStore.promptAction()" :label="action.label"></Button>
             </div>
         </template>
@@ -36,6 +36,8 @@ const {
     show,
     icon,
     title,
+    resetable,
+    resetLabel,
     message,
     messageList,
     action

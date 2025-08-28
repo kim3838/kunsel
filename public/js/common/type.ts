@@ -55,6 +55,8 @@ export type StoreFormT = {
 export type PromptT = {
     icon: string | null;
     title: string | null;
+    resetable?: boolean;
+    resetLabel?: string;
     message: string | null;
     messageList?: string[];
     action: {
