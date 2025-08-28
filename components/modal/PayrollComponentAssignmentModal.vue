@@ -100,6 +100,7 @@ import {storeToRefs} from "pinia";
 const coreStore = useCoreStore();
 const {isAuthenticated} = useAuth();
 const nuxtApp = useNuxtApp();
+const {payrollComponentPaySelections} = useCommon();
 
 const {
     selectedAssociatedCompanyId,
@@ -159,8 +160,8 @@ const loadingOverlayDimensionStyle = computed(() => {
     };
 });
 
-const payPeriodSelection = toRef(props, 'payPeriodSelection');
-const payTypeSelection = toRef(props, 'payTypeSelection');
+const payPeriodSelection = payrollComponentPaySelections.value.pay_period;
+const payTypeSelection = payrollComponentPaySelections.value.pay_type;
 const payFrequencySelection = toRef(props, 'payFrequencySelection');
 
 const emit = defineEmits(['update:creatingOrEditing', 'update:payrollComponentFormulable', 'update:editPayload', 'update:editPayloadIndex', 'resolved']);

@@ -264,8 +264,6 @@
                         v-model:editPayloadIndex="editPayrollComponentPayloadIndex"
                         v-model:editPayload="payrollComponentEditPayload"
                         v-model:payrollComponentFormulable="creatingOrEditingPayrollComponentFormulable"
-                        :pay-period-selection="payPeriodSelection"
-                        :pay-type-selection="payTypeSelection"
                         :pay-frequency-selection="payFrequencySelection"
                         @resolved="payrollComponentResolved"
                     ></PayrollComponentAssignmentModal>
@@ -527,7 +525,7 @@ import type {SelectionOptionsT} from "@/public/js/types/form";
 useLayout().setNavigationMode('solid', 'Employees/[id].vue');
 
 const route = useRoute();
-const {payrollComponentPaySelections, timezoneSelections} = useCommon();
+const {timezoneSelections} = useCommon();
 const {screenWidthBreakpoint, width: screenWidth} = useScreen();
 const {isAuthenticated} = useAuth();
 const {$authStore, $associationStore, $moment} = useNuxtApp();
@@ -841,8 +839,6 @@ const managerOptions = reactive({
     selected: tempSelectedManager.value,
 });
 
-const payPeriodSelection = payrollComponentPaySelections.value.pay_period;
-const payTypeSelection = payrollComponentPaySelections.value.pay_type;
 const payFrequencySelection = ref([]);
 const fetchPayFrequencySelection = async () => {
 
