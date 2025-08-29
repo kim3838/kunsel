@@ -114,7 +114,7 @@ export const useLayout = () => {
                 to: '/',
                 route_active: 'index'
             }] : []) as NavigationLinkInterface[],
-            ...(false ? [
+            ...(true ? [
                     {
                         key: 'prototype',
                         type: 'link',
@@ -143,7 +143,7 @@ export const useLayout = () => {
                     },
                 ]:[]
             ) as NavigationLinkInterface[],
-            ...(false ? [
+            ...(true ? [
                     {
                         key: 'about',
                         type: 'drop',
@@ -154,7 +154,6 @@ export const useLayout = () => {
                                 type: 'anchor-link',
                                 title: 'Latest news',
                                 icon: 'ic:baseline-arrow-right',
-                                to: '/#latest-news'
                             },
                         ]
                     },
@@ -167,14 +166,55 @@ export const useLayout = () => {
                                 key: 'faq',
                                 type: 'anchor-link',
                                 title: 'FAQ',
-                                icon: 'ic:baseline-arrow-right',
-                                to: '/#faq'
                             },
                             {
                                 key: 'support',
                                 type: 'link',
                                 title: 'Support',
-                                icon: 'ic:baseline-arrow-right',
+                            },
+                            {
+                                key: 'help',
+                                type: 'drop',
+                                title: 'Helpful Links',
+                                options: [
+                                    {
+                                        key: 'ease-of-access',
+                                        type: 'anchor-link',
+                                        title: 'Ease of access',
+                                    },
+                                    {
+                                        key: 'rma',
+                                        type: 'drop',
+                                        title: 'RMA',
+                                        options: [
+                                            {
+                                                key: 'refund',
+                                                type: 'anchor-link',
+                                                title: 'Refund',
+                                            },
+                                            {
+                                                key: 'return-exchange',
+                                                type: 'link',
+                                                title: 'Return Exchange',
+                                            },
+                                            {
+                                                key: 'warranty',
+                                                type: 'link',
+                                                title: 'Warranty',
+                                            },
+                                            {
+                                                key: 'wrong-delivery',
+                                                type: 'link',
+                                                title: 'Wrong delivery',
+                                            },
+                                            {
+                                                key: 'disfunctional',
+                                                type: 'link',
+                                                title: 'Disfunctional',
+                                            },
+                                        ]
+                                    }
+                                ]
                             }
                         ]
                     }
