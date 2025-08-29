@@ -1,7 +1,68 @@
 <template>
     <div>
         <LandingWrapper>
-            <div class="mx-auto space-y-2">
+            <div class="mx-auto space-y-2 py-24">
+
+                <!-- Navdrop Justify Horizontally with Origin Arrow -->
+                <div v-if="false" class="relative w-full flex justify-center font-[Inclusive_Sans]">
+                    <div class="max-w-screen-2xl w-full flex justify-start px-20 h-8 scaffold-border" style="overflow-y:hidden;">
+                        <NavDrop
+                            in-horizontal-scrollable
+                            :always-active="true"
+                            :parent-icon="'material-symbols:language-chinese-array'"
+                            :size="`sm`"
+                            :title="'Language'"
+                            :drop-align="'top'"
+                            :drop-justify="'left'"
+                            :drop-options="[
+                                {
+                                    type: 'action',
+                                    title: 'Action',
+                                    callback: () => {
+                                        console.log('action')
+                                    },
+                                },
+                                {
+                                    type: 'action',
+                                    title: 'Another Action',
+                                    callback: () => {
+                                        console.log('another action')
+                                    },
+                                },
+                                {
+                                    type: 'action',
+                                    title: 'Another Action',
+                                    callback: () => {
+                                        console.log('another action')
+                                    },
+                                },
+                            ]">
+                            <!--<template v-slot="{slot}">
+                                <div v-if="false"  class="pointer-events-none">
+                                    <Button :size="'sm'" :variant="'outline'" :label="'Language'" :icon="'material-symbols:language-chinese-array'" />
+                                </div>
+
+                                <div v-if="true" class="inline-flex items-center h-full px-2 py-1 cursor-pointer focus:outline-none">
+                                    <span :class="[slot.headerFontClass]">Language</span>
+                                    <Icon :class="[slot.dropDownIconClass]" :name="'material-symbols:language-chinese-array'"/>
+                                </div>
+                            </template>-->
+                        </NavDrop>
+
+
+                    </div>
+                </div>
+
+                <!--<EmployeePayrollComponent
+                    v-model:child-component-employee-payload="payrollComponentEmployeePayload"
+                />-->
+
+                <div v-if="false">
+                    <Example
+                        v-model:sample-object="sampleObject"
+                        v-model:sample-boolean="sampleBoolean"
+                    />
+                </div>
 
                 <ClientOnly>
                     <div v-if="false" class="text-xs font-mono flex justify-center">
@@ -378,7 +439,7 @@
                     </div>
                 </div>
 
-                <span :style="boxStyle" ref="animateMe" class="section-navigation thread-border absolute">ANIMATE</span>
+                <span v-if="false" :style="boxStyle" ref="animateMe" class="section-navigation thread-border absolute">ANIMATE</span>
 
                 <br>
 
@@ -396,7 +457,7 @@
                     </div>
                 </div>
 
-                <div v-if="true" class="grid gap-2 grid-cols-3">
+                <div v-if="false" class="grid gap-2 grid-cols-3">
                     <div></div>
                     <div class="space-y-1 relative border">
                         <div v-if="tabGroup.show_icon_grid" class="absolute w-[0.2px] top-0 bottom-0 bg-slate-400 z-50" :class="[tabGroupIconGrid.left]"></div>
@@ -579,6 +640,13 @@ const {screenWidthBreakpoint, width: screenWidth, height: screenHeight} = useScr
 const {$formStore} = useNuxtApp();
 const topPosition = ref(0);
 const clientReadyState = useClientReadyState();
+
+const sampleObject = ref({
+    id: '3',
+    ulid: '01K3QRNEKPETKD5CNDAC7XR24S'
+});
+const sampleBoolean = ref(true);
+
 const boxStyle = computed(() => ({
     position: 'relative',
     top: `${topPosition.value}%`,
