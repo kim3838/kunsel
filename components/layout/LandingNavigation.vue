@@ -6,7 +6,7 @@
             <div class="max-w-screen-2xl w-full flex justify-start lg:justify-around h-10 lg:h-16">
                 <div class="flex">
                     <NavDrop
-                        class="lg:hidden h-full"
+                        class="lg:hidden"
                         :size="navigationHeaderSize"
                         :title="'Menu'"
                         :drop-options="navigationLinks" />
@@ -15,44 +15,39 @@
                 <div class="flex">
                     <!-- Navigation Links -->
                     <div class="hidden lg:flex">
-                    <span class="flex"  v-for="navigation in navigationLinks" :key="navigation.key">
-                        <NavLink
-                            class="h-full"
-                            v-if="navigation.type == 'link'"
-                            :size="navigationHeaderSize"
-                            :to="navigation.to"
-                            :icon="navigation.icon"
-                            :active="isRouteActive(navigation.route_active)">
-                            {{navigation.title}}
-                        </NavLink>
-
-                        <a
-                            class="h-full"
-                            v-if="navigation.type == 'anchor-link'"
-                            :href="navigation.to">
+                        <span class="flex"  v-for="navigation in navigationLinks" :key="navigation.key">
                             <NavLink
-                                class="h-full"
+                                v-if="navigation.type == 'link'"
+                                :size="navigationHeaderSize"
+                                :to="navigation.to"
                                 :icon="navigation.icon"
-                                :size="navigationHeaderSize">
+                                :active="isRouteActive(navigation.route_active)">
                                 {{navigation.title}}
                             </NavLink>
-                        </a>
 
-                        <NavDrop
-                            class="h-full"
-                            v-if="navigation.type === 'drop'"
-                            :size="navigationHeaderSize"
-                            :title="navigation.title"
-                            :icon="navigation.icon"
-                            :drop-options="navigation.options"
-                        />
-                    </span>
+                            <a
+                                v-if="navigation.type == 'anchor-link'"
+                                :href="navigation.to">
+                                <NavLink
+                                    :icon="navigation.icon"
+                                    :size="navigationHeaderSize">
+                                    {{navigation.title}}
+                                </NavLink>
+                            </a>
+
+                            <NavDrop
+                                v-if="navigation.type === 'drop'"
+                                :size="navigationHeaderSize"
+                                :title="navigation.title"
+                                :icon="navigation.icon"
+                                :drop-options="navigation.options"
+                            />
+                        </span>
                     </div>
                 </div>
                 <div class="flex">
                     <component
                         :is="navDrop"
-                        class="h-full"
                         v-if="isAuthenticated"
                         :size="navigationHeaderSize"
                         :drop-align="rightNavigationDropAlign"
@@ -61,7 +56,6 @@
                     />
                     <NavDrop
                         v-else
-                        class="h-full"
                         :size="navigationHeaderSize"
                         :title="'Account'"
                         :drop-options="navigationAccountLinks"

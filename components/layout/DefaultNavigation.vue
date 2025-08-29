@@ -23,6 +23,7 @@
                     v-if="true"
                     :size="`xs`"
                     :title="'Language'"
+                    :icon="'material-symbols:language-chinese-array'"
                     :drop-options="[
                         {
                             type: 'action',
@@ -38,7 +39,7 @@
                     <!-- Navigation Links -->
                     <div class="flex">
                         <NavDrop
-                            class="lg:hidden  h-full"
+                            class="lg:hidden"
                             :size="navigationHeaderSize"
                             :title="'Menu'"
                             :drop-options="navigationLinks" />
@@ -46,7 +47,6 @@
                     <div class="hidden lg:flex">
                         <span class="flex" v-for="navigation in navigationLinks" :key="navigation.key">
                             <NavLink
-                                class="h-full"
                                 v-if="navigation.type == 'link'"
                                 :size="navigationHeaderSize"
                                 :to="navigation.to"
@@ -57,11 +57,9 @@
                             </NavLink>
 
                             <a
-                                class="h-full"
                                 v-if="navigation.type == 'anchor-link'"
                                 :href="navigation.to">
                                 <NavLink
-                                    class="h-full"
                                     :icon="navigation.icon"
                                     :size="navigationHeaderSize">
                                     {{navigation.title}}
@@ -69,7 +67,6 @@
                             </a>
 
                             <NavDrop
-                                class="h-full"
                                 v-if="navigation.type === 'drop'"
                                 :size="navigationHeaderSize"
                                 :title="navigation.title"
@@ -77,7 +74,6 @@
                                 :drop-options="navigation.options"
                             />
                             <NavSub
-                                class="h-full"
                                 v-if="navigation.type === 'sub-nav'"
                                 :size="navigationHeaderSize"
                                 :title="navigation.title"
@@ -108,7 +104,6 @@
                     />
                     <component
                         :is="navDrop"
-                        class="h-full"
                         v-if="isAuthenticated"
                         :size="navigationHeaderSize"
                         :drop-align="rightNavigationDropAlign"
@@ -117,7 +112,6 @@
                     />
                     <NavDrop
                         v-else
-                        class="h-full"
                         :size="navigationHeaderSize"
                         :title="'Account'"
                         :drop-options="navigationAccountLinks"
