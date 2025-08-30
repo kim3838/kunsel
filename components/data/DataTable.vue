@@ -6,7 +6,7 @@
         <table ref="tableReference" class="border-collapse font-data">
             <thead class="table-header-background">
                 <tr>
-                    <td v-if="selection" style="padding:3px 0.5rem;">
+                    <td v-if="selection" style="padding:3px 0.5rem;" ref="checkboxCell">
                         <NonModelCheckBox :disabled="disabled" :size="checkBoxSize" :checked="checkedAllCurrentSelection()" @click="toggleCheck()" />
                     </td>
                     <td v-if="manualSortable" :class="[headerFontClass]">
@@ -51,6 +51,7 @@
                             <slot
                                 :name="`cell.${header.value}`"
                                 :scrollReference="dataTableScroll"
+                                :checkboxCellReference="checkboxCellReference"
                                 :slot="{
                                     buttonSize: buttonSize,
                                     inputSize: inputSize,
@@ -187,7 +188,7 @@ const props = defineProps({
 });
 
 const dataTableScroll = ref(null);
-
+const checkboxCellReference = useTemplateRef('checkboxCell');
 const emit = defineEmits(["update:modelValue", "manualSorted", "selectionChanged"]);
 
 const dataTableReference = useTemplateRef('dataTableScroll');
