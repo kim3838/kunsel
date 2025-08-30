@@ -258,8 +258,16 @@
                         </fieldset>
                     </div>
 
+                    <div v-if="employeePayrollComponentsPending" class="flex items-center min-h-8"  >
+                        <UnorderedList
+                            :icon="'eos-icons:loading'"
+                            :size="'md'"
+                            :label="'Loading Payroll Components...'"/>
+                    </div>
+
                     <EmployeePayrollComponent
                         ref="employeePayrollComponent"
+                        v-model:payroll-components-pending="employeePayrollComponentsPending"
                         v-model:child-component-employee-payload="childComponentEmployeePayload"
                         v-model:employee-compensation-data="employeeCompensationData"
                         v-model:employee-deduction-data="employeeDeductionData"
@@ -625,6 +633,7 @@ watch(updatedAssociatedCompanyFlag, (newValue) => {
 });
 
 //Employee Payroll Components
+const employeePayrollComponentsPending = ref(true);
 const employeeCompensationData = ref([]);
 const employeeDeductionData = ref([]);
 const employeeIncomeTaxData = ref([]);

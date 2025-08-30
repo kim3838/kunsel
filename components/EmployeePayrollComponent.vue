@@ -292,12 +292,17 @@ const props = defineProps({
         type: Boolean,
         default: false,
     },
+    payrollComponentsPending: {
+        type: Boolean,
+        default: false,
+    },
 });
 
 const employeePayload = toRef(props, 'childComponentEmployeePayload');
 
 const emit = defineEmits([
     'update:creatingOrEditingPayrollComponent',
+    'update:payrollComponentsPending',
     'update:employeeCompensationData',
     'update:employeeDeductionData',
     'update:employeeIncomeTaxData',
@@ -386,7 +391,6 @@ const employeeCompensationExecute = async () => {
         }
     });
 }
-await employeeCompensationExecute();
 
 const disableEmployeeCompensationActions = computed(() => {
     return anyOfThePayrollComponentPending.value || creatingOrEditingPayrollComponent.value || deletingPayrollComponent.value || props.disableActions;
@@ -426,7 +430,7 @@ const employeeDeductionExecute = async () => {
         }
     });
 }
-await employeeDeductionExecute();
+
 const disableEmployeeDeductionActions = computed(() => {
     return anyOfThePayrollComponentPending.value || creatingOrEditingPayrollComponent.value || deletingPayrollComponent.value || props.disableActions;
 });
@@ -465,13 +469,41 @@ const employeeIncomeTaxExecute = async () => {
         }
     });
 }
-await employeeIncomeTaxExecute();
+
 const disableEmployeeIncomeTaxActions = computed(() => {
     return anyOfThePayrollComponentPending.value || creatingOrEditingPayrollComponent.value || deletingPayrollComponent.value || props.disableActions;
 });
 const disableEmployeeIncomeTaxDataTable = computed(() => {
     return anyOfThePayrollComponentPending.value || creatingOrEditingPayrollComponent.value || deletingPayrollComponent.value || props.disableActions;
 });
+
+//Fetch all employee payroll components
+
+const employeePayrollComponentsExecute = async () => {
+
+    if(import.meta.server || creatingEmployee.value){return;}
+
+    await laraFetch(`/api/employee-payroll-components/${employeeUlid.value}`, {
+        method: 'GET',
+    },{
+        onRequestError: () => {
+            emit('update:payrollComponentsPending', false);
+        },
+        onResponse: () => {
+            emit('update:payrollComponentsPending', false);
+        },
+        onSuccessResponse: async (request, options, response) => {
+            employeeCompensationData.value = _get(response, '_data.values.compensations.data', []);
+            employeeDeductionData.value = _get(response, '_data.values.deductions.data', []);
+            employeeIncomeTaxData.value = _get(response, '_data.values.income_taxes.data', []);
+
+            emit('update:employeeCompensationData', employeeCompensationData.value);
+            emit('update:employeeDeductionData', employeeDeductionData.value);
+            emit('update:employeeIncomeTaxData', employeeIncomeTaxData.value);
+        }
+    });
+}
+await employeePayrollComponentsExecute();
 
 const deleteSelectedPayrollComponent = async (component) => {
 
