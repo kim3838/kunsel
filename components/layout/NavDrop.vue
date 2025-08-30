@@ -2,6 +2,7 @@
     <div
         ref="navDrop"
         tabindex="0"
+        :class="[disabled ? 'pointer-events-none' : '']"
         class="cursor-pointer">
         <slot :slot="{headerFontClass: headerFontClass, dropDownIconClass: dropDownIconClass, title: title, parentIcon: parentIcon}">
             <div
@@ -22,7 +23,11 @@
             <div class="relative w-max">
                 <div v-if="true" class="absolute border-solid" :style="[optionsArrowSlotStyle]"></div>
                 <div v-if="true" class="absolute border-solid" :style="[optionsArrowStyle]"></div>
-                <div v-for="dropOption in dropOptions" :key="dropOption.title" :style="{'text-shadow': navigationTextShadow}" class="nav-drop-link cursor-pointer">
+                <div
+                    v-for="(dropOption, dropOptionIndex) in dropOptions" :key="dropOption.title"
+                    :style="{'text-shadow': navigationTextShadow,}"
+                    :class="[dropOptionIndex == (dropOptions.length - 1) ? 'no-border-bottom' : 'transparent-border-bottom']"
+                    class="nav-drop-link cursor-pointer flex items-center">
 
                     <NuxtLink
                         v-if="dropOption.type === 'link'"
@@ -116,12 +121,24 @@ const props = defineProps({
         type: Boolean,
         default: false
     },
+    disabled: {
+        type: Boolean,
+        default: false
+    },
+    inSubRow: {
+        type: Boolean,
+        default: false
+    },
     fontFamily: {
         type: String,
         default: 'inherit'
     },
     inHorizontalScrollable: Boolean,
     scrollReference: {
+        type: Object as PropType<HTMLElement | null>,
+        default: null
+    },
+    checkboxCellReference: {
         type: Object as PropType<HTMLElement | null>,
         default: null
     },
@@ -135,11 +152,9 @@ const navHeaderOffsetWidth = ref<number | null>(null);
 const navHeaderOffsetHeight = ref<number | null>(null);
 const navHeaderOffsetLeft = ref<number | null>(null);
 
-const navDropOptionsOffsetWidth = ref<number | null>(null);
+const offsetLeft = ref<number | null>(null);
 
-const offsetLeftAndWidth = computed(() => {
-    return (navHeaderOffsetWidth.value ?? 0) + (navHeaderOffsetLeft.value ?? 0);
-});
+const navDropOptionsOffsetWidth = ref<number | null>(null);
 
 onMounted(async () => {
     await nextTick();
@@ -151,8 +166,15 @@ onMounted(async () => {
         navDropOptionsOffsetWidth.value = navDropOptionsReference.value ? navDropOptionsReference.value.offsetWidth : null;
     }
 
-    if(props.inHorizontalScrollable){
+    if(props.inHorizontalScrollable && !props.inSubRow){
         navHeaderOffsetLeft.value = navDropReference.value ? navDropReference.value.getBoundingClientRect().left : null;
+    }
+
+    offsetLeft.value = (navHeaderOffsetWidth.value ?? 0) + (navHeaderOffsetLeft.value ?? 0);
+
+    if(props.inSubRow && props.checkboxCellReference){
+
+        offsetLeft.value += props.checkboxCellReference.offsetWidth;
     }
 });
 const navigationTextShadow = computed(()=>{
@@ -211,8 +233,15 @@ watch(activeComputed, async (newValue) => {
 
         navDropOptionsOffsetWidth.value = navDropOptionsReference.value ? navDropOptionsReference.value.offsetWidth : null;
 
-        if(props.inHorizontalScrollable){
+        if(props.inHorizontalScrollable && !props.inSubRow){
             navHeaderOffsetLeft.value = navDropReference.value ? navDropReference.value.getBoundingClientRect().left : null;
+        }
+
+        offsetLeft.value = (navHeaderOffsetWidth.value ?? 0) + (navHeaderOffsetLeft.value ?? 0);
+
+        if(props.inSubRow && props.checkboxCellReference){
+
+            offsetLeft.value += props.checkboxCellReference.offsetWidth;
         }
     }
 });
@@ -237,7 +266,7 @@ const navDropOptionsStyleComputed = computed(() => {
             styleTemp = {
                 ...styleTemp,
                 [`margin-${originMargin}`]: '7px',
-                left: `${offsetLeftAndWidth.value}px`
+                left: `${offsetLeft.value}px`
             };
         } else if(props.dropJustify == 'left'){
             styleTemp = {
@@ -260,7 +289,7 @@ const navDropOptionsStyleComputed = computed(() => {
         } else if (props.dropAlign == 'right'){
             styleTemp = {
                 ...styleTemp,
-                left: `${offsetLeftAndWidth.value - navDropOptionsOffsetWidth.value}px`
+                left: `${offsetLeft.value - navDropOptionsOffsetWidth.value}px`
             }
         }
     }
@@ -289,6 +318,11 @@ onUnmounted(() => {
 });
 
 watch(navigationFocused, value => {
+
+    if(props.disabled){
+        return;
+    }
+
     if(value && props.dropOptions.length){
         activeComputed.value = true;
     }
@@ -453,5 +487,12 @@ const dropDownIconClass = computed(() => {
 
 .nav-drop-link:hover{
     background-color: v-bind(accentColor70);
+}
+
+.transparent-border-bottom{
+    border-bottom: 1px solid transparent;
+}
+.no-border-bottom{
+    border-bottom: none;
 }
 </style>
