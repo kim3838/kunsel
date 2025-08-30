@@ -18,7 +18,7 @@
             v-if="activeComputed"
             :style="[navDropOptionsStyleComputed]"
             class="box-border"
-            :class="['nav-drop-options-parent', optionsParentClass]">
+            :class="['nav-drop-options-parent', navDropOptionsClass]">
             <div class="relative w-max">
                 <div v-if="true" class="absolute border-solid" :style="[optionsArrowSlotStyle]"></div>
                 <div v-if="true" class="absolute border-solid" :style="[optionsArrowStyle]"></div>
@@ -52,6 +52,7 @@
                         v-if="_includes([ 'drop', 'sub-nav'], dropOption.type)"
                         :parent="false"
                         :size="childDropSize"
+                        :drop-shadow-size="dropShadowSize"
                         :drop-align="'top'"
                         :drop-justify="'right'"
                         :title="dropOption.title"
@@ -98,6 +99,9 @@ const props = defineProps({
     size: {
         default: 'md'
     },
+    dropShadowSize: {
+        default: 'none'
+    },
     dropJustify: {
         default: 'bottom'
     },
@@ -134,7 +138,7 @@ const navHeaderOffsetLeft = ref<number | null>(null);
 const navDropOptionsOffsetWidth = ref<number | null>(null);
 
 const offsetLeftAndWidth = computed(() => {
-    return navHeaderOffsetWidth.value + navHeaderOffsetLeft.value;
+    return (navHeaderOffsetWidth.value ?? 0) + (navHeaderOffsetLeft.value ?? 0);
 });
 
 onMounted(async () => {
@@ -194,7 +198,6 @@ const navDropOptionsParentBorderColor = computed(()=>{
 
     return liningColor.value;
 });
-
 
 const activeComputed = ref(props.alwaysActive);
 
@@ -321,18 +324,42 @@ const childDropSize = computed(() => {
         'lg': 'lg',
     }[props.size]
 });
-const optionsParentClass = computed(() => {
-    return props.parent ? 'drop-shadow-sm' : 'drop-shadow-none'
+
+const navDropOptionsClass = computed(() => {
+    return {
+        'none': 'shadow-none',
+        'xs': 'shadow-lg',
+        'sm': 'shadow-lg',
+        'md': 'shadow-lg',
+        'lg': 'shadow-lg',
+    }[props.dropShadowSize]
 });
+
+const verticalAlignedArrowSpacingComputed = computed(() => {
+    let spacing = 0;
+
+    if(_includes(['left', 'right'], props.dropJustify)){
+
+        spacing = {
+            'xs': 7,
+            'sm': 9,
+            'md': 11,
+            'lg': 11,
+        }[props.size] ?? 7;
+    }
+
+    return spacing;
+})
 const optionsArrowSlotStyle = computed(() => {
     let styleTemp = {};
 
     if(_includes(['left', 'right'], props.dropJustify)){
         let originMargin = props.dropJustify === 'left' ? 'right' : 'left';
+        let originSpacing = verticalAlignedArrowSpacingComputed.value;
 
         styleTemp = {
-            [props.dropAlign]:'7px',
-            [originMargin]: '-7px',
+            [props.dropAlign]: `${originSpacing}px`,
+            [originMargin]: `-7px`,
             'border-top': '7px solid transparent',
             'border-bottom': '7px solid transparent',
             [`border-${props.dropJustify}`]: '7px',
@@ -358,10 +385,11 @@ const optionsArrowStyle = computed(() => {
 
     if(_includes(['left', 'right'], props.dropJustify)){
         let originMargin = props.dropJustify === 'left' ? 'right' : 'left';
+        let originSpacing = verticalAlignedArrowSpacingComputed.value;
 
         styleTemp = {
-            [props.dropAlign]:'8px',
-            [originMargin]: '-6px',
+            [props.dropAlign]: `${originSpacing + 1}px`,
+            [originMargin]: `-6px`,
             'border-top': '6px solid transparent',
             'border-bottom': '6px solid transparent',
             [`border-${props.dropJustify}`]: '7px',
@@ -383,7 +411,6 @@ const optionsArrowStyle = computed(() => {
 
 const iconClass = computed(() => {
     return {
-        '2xs': 'h-4 w-4',
         'xs': 'h-5 w-5',
         'sm': 'h-5 w-5',
         'md': 'h-5 w-5',
@@ -393,7 +420,6 @@ const iconClass = computed(() => {
 
 const dropDownIconClass = computed(() => {
     return {
-        '2xs': 'h-4 w-4',
         'xs': 'h-5 w-5',
         'sm': 'h-5 w-5',
         'md': 'h-5 w-5',

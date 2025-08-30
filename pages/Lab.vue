@@ -4,36 +4,37 @@
             <div class="mx-auto space-y-2 py-24">
 
                 <!-- Navdrop Justify Horizontally with Origin Arrow -->
-                <div v-if="false" class="relative w-full flex justify-center font-[Inclusive_Sans]">
-                    <div class="max-w-screen-2xl w-full flex justify-start px-20 h-8 scaffold-border" style="overflow-y:hidden;">
+                <div v-if="true" class="relative w-full flex justify-center font-[Inclusive_Sans]">
+                    <div class="max-w-screen-2xl w-full flex justify-start px-20  h-8 scaffold-border" style="overflow-y:hidden;">
                         <NavDrop
                             in-horizontal-scrollable
-                            :always-active="true"
+                            :always-active="false"
                             :parent-icon="'material-symbols:language-chinese-array'"
                             :size="`sm`"
+                            :drop-shadow-size="`lg`"
                             :title="'Language'"
                             :drop-align="'top'"
-                            :drop-justify="'left'"
+                            :drop-justify="'right'"
                             :drop-options="[
                                 {
                                     type: 'action',
-                                    title: 'Action',
+                                    title: 'English',
                                     callback: () => {
-                                        console.log('action')
+                                        console.log('english')
                                     },
                                 },
                                 {
                                     type: 'action',
-                                    title: 'Another Action',
+                                    title: 'Japanese',
                                     callback: () => {
-                                        console.log('another action')
+                                        console.log('japanese')
                                     },
                                 },
                                 {
                                     type: 'action',
-                                    title: 'Another Action',
+                                    title: 'Chinese',
                                     callback: () => {
-                                        console.log('another action')
+                                        console.log('chinese')
                                     },
                                 },
                             ]">
