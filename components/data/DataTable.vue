@@ -28,7 +28,7 @@
                 </tr>
             </thead>
             <tbody ref="tableBody">
-                <!-- Table cell height: sm = 23px, md = 27px, lg = 31px, xl = 35px -->
+                <!-- Table cell height: sm = 23px, md = 27px(29px w/ xs menu), lg = 31px(33px w/ sm menu), xl = 35px(37px w/ md menu) -->
                 <template v-for="(row, rowIndex) in rows" :key="row.id">
                     <tr :class="[rowBackgroundClass(rowIndex)]" >
                         <td v-if="selection" style="padding:0 0.5rem;">
