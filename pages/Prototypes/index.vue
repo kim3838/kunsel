@@ -1,7 +1,7 @@
 <template>
     <div>
         <DefaultWrapper>
-            <div class="mx-auto max-w-screen-2xl scaffold-border-left-bottom-right">
+            <div class="mx-auto max-w-screen-2xl">
                 <div>
                     <form @submit.prevent="paginate(1, true)" class="space-y-2 p-[20px]">
                         <div class="grid gap-2 grid-cols-1 sm:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-8">
@@ -54,39 +54,73 @@
                         </div>
                     </form>
 
-                    <FansyFrame>
-                        <template v-slot:content>
-                            <DataTable
-                                class="mt-0.5"
-                                :headers="prototypeHeaders"
-                                :size="'lg'"
-                                :rows="prototypes.data"
-                                :no-data-label="pending ? 'Loading' : 'No Prototype Found'"
-                                v-model="selectedPrototypes"
-                                manual-sortable
-                                @manualSorted="manualSorted"
-                                selection>
-                                <template v-slot:cell.datetime_added="{cell, slot}">
-                                    <InputWithIcon
-                                        :icon="'ion:calendar-number-sharp'"
-                                        :id="`datetime_added-` + cell.id"
-                                        v-model="cell.datetime_added"
-                                        readonly
-                                        :override="{font_size: slot.datepickerFontSize}"
-                                        in-cell
-                                        :size="slot.inputSize"
-                                        class="w-full" />
-                                </template>
-                                <template v-slot:cell.actions="{cell, slot, scrollReference}">
-                                    <div class="h-full mx-0.5 space-x-0.5 w-full flex items-center">
-                                        <Button type="button" :size="slot.buttonSize" :label="'Details'"></Button>
-                                        <Button type="button" :size="slot.buttonSize" :label="'Approve'"></Button>
-                                        <Button type="button" :size="slot.buttonSize" :label="'Deny'"></Button>
-                                    </div>
-                                </template>
-                            </DataTable>
-                        </template>
-                    </FansyFrame>
+                    <div class="px-[20px]">
+                        <DataTable
+                            class="mt-0.5"
+                            :headers="prototypeHeaders"
+                            :size="'xl'"
+                            :rows="prototypes.data"
+                            :no-data-label="pending ? 'Loading' : 'No Prototype Found'"
+                            v-model="selectedPrototypes"
+                            manual-sortable
+                            @manualSorted="manualSorted"
+                            selection>
+                            <template v-slot:cell.menu="{cell, slot, scrollReference}">
+                                <div class="space-x-0.5 w-full flex items-center">
+                                    <NavDrop
+                                        class="z-10"
+                                        :parent-icon="'ic:baseline-arrow-right'"
+                                        in-horizontal-scrollable
+                                        :size="`sm`"
+                                        :drop-shadow-size="`lg`"
+                                        :title="'Menu'"
+                                        :drop-align="'top'"
+                                        :drop-justify="'right'"
+                                        :always-active="false"
+                                        :drop-options="[
+                                            {type: 'link',title: 'Details',},
+                                            {type: 'action',title: 'Basic Info',},
+                                            {type: 'action',title: 'Contact Info',},
+                                            {type: 'action',title: 'Employment Status',},
+                                            {type: 'action',title: 'Payroll Components',},
+                                        ]">
+                                    </NavDrop>
+                                </div>
+                            </template>
+                            <template v-slot:cell.single_select="{cell, slot, scrollReference}">
+                                <div class="h-full mx-0.5 space-x-0.5 w-full flex items-center">
+                                    <SingleSelect
+                                        :width="'180px'"
+                                        in-horizontal-scrollable
+                                        drop-shadow
+                                        :scroll-reference="scrollReference"
+                                        :size="slot.selectSize"
+                                        :icon="'tdesign:component-checkbox'"
+                                        :label="'Plan'"
+                                        :options="plan" />
+                                </div>
+                            </template>
+                            <template v-slot:cell.datetime_added="{cell, slot}">
+                                <InputWithIcon
+                                    :with-border="false"
+                                    :icon="'ion:calendar-number-sharp'"
+                                    :id="`datetime_added-` + cell.id"
+                                    v-model="cell.datetime_added"
+                                    readonly
+                                    :override="{font_size: slot.datepickerFontSize}"
+                                    in-cell
+                                    :size="slot.inputSize"
+                                    class="w-full" />
+                            </template>
+                            <template v-slot:cell.actions="{cell, slot, scrollReference}">
+                                <div class="h-full mx-0.5 space-x-0.5 w-full flex items-center">
+                                    <Button type="button" :size="slot.buttonSize" :label="'Details'"></Button>
+                                    <Button type="button" :size="slot.buttonSize" :label="'Approve'"></Button>
+                                    <Button type="button" :size="slot.buttonSize" :label="'Deny'"></Button>
+                                </div>
+                            </template>
+                        </DataTable>
+                    </div>
                 </div>
             </div>
         </DefaultWrapper>
@@ -95,6 +129,8 @@
 
 <script setup lang="ts">
 import type {DataTableMeta, TableHeaderT, TableRowT} from "@/public/js/types/data";
+import dataPayload from "@/public/data/payload";
+
 const {$moment} = useNuxtApp();
 const clientReadyState = useClientReadyState();
 definePageMeta({
@@ -111,6 +147,8 @@ definePageMeta({
 });
 
 useLayout().setNavigationMode('solid', 'Prototypes/index.vue');
+
+let plan = reactive(dataPayload['prototype']['plan']);
 
 let prototypes = reactive<{
     data: TableRowT[];
@@ -129,6 +167,8 @@ let prototypes = reactive<{
 });
 let prototypeHeaders = reactive<TableHeaderT[]>([
     { text: '#', value: 'row_number'},
+    { text: '', value: 'menu'},
+    { text: '', value: 'single_select'},
     { text: 'ID', value: 'id'},
     { text: 'NAME', value: 'name'},
     { text: 'CODE', alignHeader: 'center', value: 'code'},
