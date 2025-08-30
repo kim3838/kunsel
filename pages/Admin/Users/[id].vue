@@ -58,14 +58,14 @@
                             :size="'lg'"
                             :rows="userCompanyAssignmentData">
                             <template v-slot:cell.company_assignment_type="{cell, slot, scrollReference}">
-                                <div class="p-[1px]">
+                                <div class="mx-[1px] flex items-center">
                                     <SingleSelectWrapper
                                         in-horizontal-scrollable
                                         drop-shadow
                                         :scroll-reference="scrollReference"
                                         :none-selected-label="'Not Assigned'"
                                         :label="'Select Company Assignment'"
-                                        :icon="cell.company_assignment_type == null ? 'ic:baseline-assignment-late' : 'ic:baseline-assignment-ind'"
+                                        :icon="companyAssignmentIcon(cell.company_assignment_type)"
                                         value-persist
                                         :size="slot.selectSize"
                                         v-model="cell.company_assignment_type"
@@ -169,9 +169,21 @@ const authUserAssociatedCompanies = computed(() => {
     return _map(authUserAssociatedCompanyOptions.selection, 'value');
 });
 
+const companyAssignmentIcon = (companyAssignmentType: number | null = null) => {
+    if(companyAssignmentType == null){
+        return 'tdesign:close-rectangle';
+    }
+
+    return {
+        [COMPANY_ASSIGNMENT_TYPE.DEFAULT]: 'tdesign:user-checked',
+        [COMPANY_ASSIGNMENT_TYPE.ADMIN]: 'tdesign:secured'
+    }[companyAssignmentType];
+}
+
 // Fetch User Information
 const fetchAssociatedUser = async () => {
-    if(route.params.id === 'create-user'){return;}
+
+    if(import.meta.server || route.params.id === 'create-user'){return;}
 
     await laraFetch(`/api/user/${route.params.id}`, {
         method: 'GET',
@@ -190,6 +202,8 @@ await fetchAssociatedUser();
 
 // Fetch Authenticated User Associated Companies
 const fetchAuthUserAssociatedCompanies = async() => {
+
+    if(import.meta.server){return;}
 
     await laraFetch("/api/company-selections", {
         method: 'GET',
@@ -212,7 +226,8 @@ const userCompanyAssignmentHeaders = reactive<TableHeaderT[]>([
 const userCompanyAssignmentData  = ref([]);
 // Fetch User Company Assignment
 const fetchUserCompanyAssignment = async () => {
-    if(route.params.id === 'create-user'){return;}
+
+    if(import.meta.server || route.params.id === 'create-user'){return;}
 
     await laraFetch(`/api/user-company-assignment/${route.params.id}`, {
         method: 'GET',

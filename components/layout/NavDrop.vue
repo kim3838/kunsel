@@ -366,6 +366,7 @@ const navDropOptionsClass = computed(() => {
         'sm': 'shadow-lg',
         'md': 'shadow-lg',
         'lg': 'shadow-lg',
+        'xl': 'shadow-xl',
     }[props.dropShadowSize]
 });
 

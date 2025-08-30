@@ -66,7 +66,7 @@
                                         :scroll-reference="scrollReference"
                                         :none-selected-label="'Not Assigned'"
                                         :label="'Select Company Assignment'"
-                                        :icon="cell.company_assignment_type == null ? 'ic:baseline-assignment-late' : 'ic:baseline-assignment-ind'"
+                                        :icon="companyAssignmentIcon(cell.company_assignment_type)"
                                         value-persist
                                         :size="slot.selectSize"
                                         v-model="cell.company_assignment_type"
@@ -179,9 +179,21 @@ const userAssociatedCompanies = computed(() => {
 });
 const isAdminInCompany = (companyId: Number | String) => _some(authUserAssociatedCompanies.value, id => id == companyId);
 
+const companyAssignmentIcon = (companyAssignmentType: number | null = null) => {
+    if(companyAssignmentType == null){
+        return 'tdesign:close-rectangle';
+    }
+
+    return {
+        [COMPANY_ASSIGNMENT_TYPE.DEFAULT]: 'tdesign:user-checked',
+        [COMPANY_ASSIGNMENT_TYPE.ADMIN]: 'tdesign:secured'
+    }[companyAssignmentType];
+}
+
 // Fetch User Information
 const fetchAssociatedUser = async () => {
-    if(route.params.id === 'create-user'){return;}
+
+    if(import.meta.server || route.params.id === 'create-user'){return;}
 
     await laraFetch(`/api/user/${route.params.id}`, {
         method: 'GET',
@@ -201,6 +213,8 @@ await fetchAssociatedUser();
 // Fetch Authenticated User Associated Companies
 const fetchAuthUserAssociatedCompanies = async() => {
 
+    if(import.meta.server){return;}
+
     await laraFetch("/api/associated-company-selections", {
         method: 'GET',
         params: {
@@ -219,7 +233,8 @@ await fetchAuthUserAssociatedCompanies();
 
 // Fetch User Associated Companies
 const fetchUserAssociatedCompanies = async() => {
-    if(route.params.id === 'create-user'){return;}
+
+    if(import.meta.server || route.params.id === 'create-user'){return;}
 
     await laraFetch("/api/associated-company-selections", {
         method: 'GET',
@@ -248,7 +263,8 @@ const userCompanyAssignmentHeaders = reactive<TableHeaderT[]>([
 const userCompanyAssignmentData  = ref([]);
 // Fetch User Company Assignment
 const fetchUserCompanyAssignment = async () => {
-    if(route.params.id === 'create-user'){return;}
+
+    if(import.meta.server || route.params.id === 'create-user'){return;}
 
     await laraFetch(`/api/user-company-assignment/${route.params.id}`, {
         method: 'GET',

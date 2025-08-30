@@ -108,7 +108,22 @@
                         }"
                         selection>
                         <template v-slot:cell.actions="{cell, slot, scrollReference}">
-                            <Button class="mx-0.5" type="button" :size="slot.buttonSize" :icon="'mdi:pen'" @click="edit(cell)" :label="'Edit'"></Button>
+                            <div class="flex items-center">
+                                <NavDrop
+                                    class="z-10"
+                                    :disabled="disableActions"
+                                    :parent-icon="'ic:baseline-arrow-right'"
+                                    in-horizontal-scrollable
+                                    :size="`sm`"
+                                    :drop-shadow-size="`lg`"
+                                    :title="'Menu'"
+                                    :drop-align="'top'"
+                                    :drop-justify="'right'"
+                                    :drop-options="[
+                                        {type: 'action',icon: 'mdi:pen',title: 'Edit',callback: () => edit(cell),},
+                                    ]">
+                                </NavDrop>
+                            </div>
                         </template>
                         <template v-slot:sub_row_slot="{rowIndex, cell, slot}">
                             <div class="inline-flex items-center scaffold-border pr-2">

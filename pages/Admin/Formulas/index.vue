@@ -64,11 +64,21 @@
                         v-model="selectedFormulas"
                         selection>
                         <template v-slot:cell.actions="{cell,slot}">
-                            <div class="h-full mx-0.5 space-x-0.5 w-full flex items-center">
-                                <NuxtLink
-                                    :to="`/admin/formulas/${cell.ulid}`">
-                                    <Button type="button" :variant="'default'" :icon="'mdi:information-variant-circle-outline'" :size="slot.buttonSize" :label="'info'"></Button>
-                                </NuxtLink>
+                            <div class="flex items-center">
+                                <NavDrop
+                                    class="z-10"
+                                    :disabled="disableActions"
+                                    :parent-icon="'ic:baseline-arrow-right'"
+                                    in-horizontal-scrollable
+                                    :size="`sm`"
+                                    :drop-shadow-size="`lg`"
+                                    :title="'Menu'"
+                                    :drop-align="'top'"
+                                    :drop-justify="'right'"
+                                    :drop-options="[
+                                        {type: 'link',icon: 'mdi:pen',title: 'Edit',to: `/admin/formulas/${cell.ulid}`},
+                                    ]">
+                                </NavDrop>
                             </div>
                         </template>
                         <template v-slot:cell.formulable_type="{cell,slot}">

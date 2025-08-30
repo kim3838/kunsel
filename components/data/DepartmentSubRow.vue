@@ -9,8 +9,24 @@
             :rows="rows"
             selection
             @selectionChanged="selectionChanged">
-            <template v-slot:cell.actions="{cell, slot, scrollReference}">
-                <Button class="mx-0.5" :variant="'outline'" type="button" :size="slot.buttonSize" :icon="'mdi:pen'" @click="edit(cell)" :label="'Edit'"></Button>
+            <template v-slot:cell.actions="{cell, slot, scrollReference, checkboxCellReference}">
+                <div class="flex items-center">
+                    <NavDrop
+                        class="z-10"
+                        :disabled="disabled"
+                        :parent-icon="'ic:baseline-arrow-right'"
+                        in-sub-row
+                        :checkbox-cell-reference="checkboxCellReference"
+                        :size="`xs`"
+                        :drop-shadow-size="`lg`"
+                        :title="'Menu'"
+                        :drop-align="'top'"
+                        :drop-justify="'right'"
+                        :drop-options="[
+                            {type: 'action',icon: 'mdi:pen',title: 'Edit',callback: () => edit(cell),},
+                        ]">
+                    </NavDrop>
+                </div>
             </template>
         </DataTable>
     </div>

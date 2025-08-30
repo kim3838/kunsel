@@ -102,58 +102,24 @@
                         v-model="selectedEmployees"
                         selection>
                         <template v-slot:cell.actions="{cell,slot: cellSlot}">
-                            <div class="h-full space-x-0.5 w-full flex items-center">
+                            <div class="flex items-center">
                                 <NavDrop
                                     class="z-10"
+                                    :disabled="disableActions"
                                     :parent-icon="'ic:baseline-arrow-right'"
                                     in-horizontal-scrollable
                                     :size="`sm`"
+                                    :drop-shadow-size="`lg`"
                                     :title="'Menu'"
                                     :drop-align="'top'"
                                     :drop-justify="'right'"
-                                    :always-active="false"
                                     :drop-options="[
-                                        {
-                                            type: 'link',
-                                            title: 'Details',
-                                            icon: 'ic:baseline-arrow-right',
-                                            to: `/workforce/employees/${cell.ulid}`
-                                        },
-                                        {
-                                            type: 'action',
-                                            icon: 'ic:baseline-arrow-right',
-                                            title: 'Basic Info',
-                                            callback: () => {},
-                                        },
-                                        {
-                                            type: 'action',
-                                            icon: 'ic:baseline-arrow-right',
-                                            title: 'Contact Info',
-                                            callback: () => {},
-                                        },
-                                        {
-                                            type: 'action',
-                                            icon: 'ic:baseline-arrow-right',
-                                            title: 'Employment Status',
-                                            callback: () => {},
-                                        },
-                                        {
-                                            type: 'action',
-                                            icon: 'ic:baseline-arrow-right',
-                                            title: 'Payroll Components',
-                                            callback: () => {},
-                                        },
+                                        {type: 'link',title: 'Details',to: `/workforce/employees/${cell.ulid}`},
+                                        {type: 'action',title: 'Basic Info',callback: () => {},},
+                                        {type: 'action',title: 'Contact Info',callback: () => {},},
+                                        {type: 'action',title: 'Employment Status',callback: () => {},},
+                                        {type: 'action',title: 'Payroll Components',callback: () => {},},
                                     ]">
-                                    <!--<template v-slot="{slot: navSlot}">
-                                        <div v-if="false"  class="pointer-events-none">
-                                            <Button :size="cellSlot.buttonSize" :variant="'outline'" :label="navSlot.title" :icon="navSlot.parentIcon" />
-                                        </div>
-
-                                        <div v-if="true" class="inline-flex items-center h-full px-2 py-1 cursor-pointer focus:outline-none">
-                                            <span :class="[navSlot.headerFontClass]">{{navSlot.title}}</span>
-                                            <Icon :class="[navSlot.dropDownIconClass]" :name="navSlot.parentIcon"/>
-                                        </div>
-                                    </template>-->
                                 </NavDrop>
                             </div>
                         </template>

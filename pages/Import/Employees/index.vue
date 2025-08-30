@@ -91,6 +91,24 @@
                                     {{cell.row}}
                                 </div>
                             </template>
+                            <template v-slot:cell.actions="{cell, slot, scrollReference}">
+                                <div class="flex items-center">
+                                    <NavDrop
+                                        class="z-10"
+                                        :disabled="disableActions"
+                                        :parent-icon="'ic:baseline-arrow-left'"
+                                        in-horizontal-scrollable
+                                        :size="`sm`"
+                                        :drop-shadow-size="`lg`"
+                                        :title="'Menu'"
+                                        :drop-align="'top'"
+                                        :drop-justify="'left'"
+                                        :drop-options="[
+                                            {type: 'action',icon: 'mdi:pen',title: 'Edit',callback: () => editRow(cell),},
+                                        ]">
+                                    </NavDrop>
+                                </div>
+                            </template>
                             <template v-slot:cell.validation_summary="{cell, slot, scrollReference}">
                                 <div class="flex items-center justify-center">
                                     <Icon v-if="cell.validation_errors.length > 0" class="label-danger w-6 h-6" name="ic:baseline-warning"/>
@@ -100,7 +118,7 @@
                                 <div v-if="!cell.isEditing" class="p-[3px] cursor-pointer" @click="editRow(cell)">
                                     {{cell.number}}
                                 </div>
-                                <div v-else class="mx-[1px]" @click="">
+                                <div v-else class="mx-0.5 flex items-center">
                                     <Input v-model="cell.number" :size="slot.inputSize" />
                                 </div>
                             </template>
@@ -108,7 +126,7 @@
                                 <div v-if="!cell.isEditing" class="p-[3px] cursor-pointer" @click="editRow(cell)">
                                     {{cell.family_name}}
                                 </div>
-                                <div v-else class="mx-[1px]" @click="">
+                                <div v-else class="mx-0.5 flex items-center">
                                     <Input v-model="cell.family_name" :size="slot.inputSize" />
                                 </div>
                             </template>
@@ -116,7 +134,7 @@
                                 <div v-if="!cell.isEditing" class="p-[3px] cursor-pointer" @click="editRow(cell)">
                                     {{cell.given_name}}
                                 </div>
-                                <div v-else class="mx-[1px]" @click="">
+                                <div v-else class="mx-0.5 flex items-center">
                                     <Input v-model="cell.given_name" :size="slot.inputSize" />
                                 </div>
                             </template>
@@ -199,6 +217,7 @@ const disableActions = computed(() => {
 
 const preImportHeaders = reactive<TableHeaderT[]>([
     { text: 'Row #', value: 'row', alignData: 'center'},
+    { text: '', value: 'actions'},
     { text: '', value: 'validation_summary', alignData: 'center', width: '2rem', minWidth: '2rem'},
     { text: 'Number', value: 'number', alignData: 'left'},
     { text: 'Family name', value: 'family_name', alignData: 'left'},
@@ -244,12 +263,12 @@ const transformValidated = (validated: EmployeePreImportT[]) => {
 
         if(item.validation_errors.length > 0){
             payload['label_shade'] = {
-                'cell': ['row', 'validation_summary', 'validation'],
+                'cell': ['row', 'actions', 'validation_summary', 'validation'],
                 'value': 'danger'
             }
         } else {
             payload['label_shade'] = {
-                'cell': ['row', 'validation_summary', 'validation'],
+                'cell': ['row', 'actions', 'validation_summary', 'validation'],
                 'value': 'success'
             }
         }

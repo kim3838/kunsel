@@ -77,7 +77,7 @@
                         :rows="shiftSchedules">
                         <template v-slot:cell.week_day_name="{cell, slot, scrollReference}">
                             <div class="text-base h-[34px]">
-                                <div class="h-full flex items-center p-[3px]">
+                                <div class="h-full flex items-center px-2">
                                     {{cell.week_day_name}}
                                 </div>
                             </div>
@@ -99,7 +99,7 @@
                         </template>
                         <template v-slot:cell.timezone="{cell, slot, scrollReference}">
                             <div class="text-base h-[34px]">
-                                <div class="h-full flex items-center p-[3px]">
+                                <div class="h-full flex items-center px-2">
                                     {{cell.timezone}}
                                 </div>
                             </div>
@@ -149,8 +149,11 @@
                             </div>
                         </template>
                         <template v-slot:cell.actions="{cell,slot}">
-                            <div class="flex justify-center mx-[1px]">
-                                <Button v-if="!cell.is_day_off" @click="copyToAll(cell)" type="button" :variant="'default'" :icon="'tdesign:copy'" :size="slot.buttonSize" :label="'Copy to all'"></Button>
+                            <div v-if="!cell.is_day_off" class="text-base h-[34px]">
+                                <div class="h-full flex items-center px-2 cursor-pointer accent-hover" @click="copyToAll(cell)">
+                                    <Icon size="1.5rem" :name="'ph:copy-light'"/>
+                                    <span class="text-base">Copy to all</span>
+                                </div>
                             </div>
                         </template>
                     </DataTable>

@@ -58,7 +58,7 @@
                         <DataTable
                             class="mt-0.5"
                             :headers="prototypeHeaders"
-                            :size="'xl'"
+                            :size="'lg'"
                             :rows="prototypes.data"
                             :no-data-label="pending ? 'Loading' : 'No Prototype Found'"
                             v-model="selectedPrototypes"
@@ -88,7 +88,7 @@
                                 </div>
                             </template>
                             <template v-slot:cell.single_select="{cell, slot, scrollReference}">
-                                <div class="h-full mx-0.5 space-x-0.5 w-full flex items-center">
+                                <div class="mx-0.5 flex items-center">
                                     <SingleSelect
                                         :width="'180px'"
                                         in-horizontal-scrollable
