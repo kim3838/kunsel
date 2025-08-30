@@ -4,7 +4,7 @@
             <div class="mx-auto space-y-2 py-24">
 
                 <!-- Navdrop Justify Horizontally with Origin Arrow -->
-                <div v-if="true" class="relative w-full flex justify-center font-[Inclusive_Sans]">
+                <div v-if="false" class="relative w-full flex justify-center font-[Inclusive_Sans]">
                     <div class="max-w-screen-2xl w-full flex justify-start px-20  h-8 scaffold-border" style="overflow-y:hidden;">
                         <NavDrop
                             in-horizontal-scrollable
