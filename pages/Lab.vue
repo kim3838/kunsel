@@ -4,39 +4,21 @@
             <div class="mx-auto space-y-2 py-24">
 
                 <!-- Navdrop Justify Horizontally with Origin Arrow -->
-                <div v-if="false" class="relative w-full flex justify-center font-[Inclusive_Sans]">
+                <div v-if="true" class="relative w-full flex justify-center font-[Inclusive_Sans]">
                     <div class="max-w-screen-2xl w-full flex justify-start px-20  h-8 scaffold-border" style="overflow-y:hidden;">
                         <NavDrop
-                            in-horizontal-scrollable
-                            :always-active="false"
+                            :in-horizontal-scrollable="navDropInHorizontalScrollable"
+                            :always-active="navDropAlwaysActive"
                             :parent-icon="'material-symbols:language-chinese-array'"
                             :size="`sm`"
                             :drop-shadow-size="`lg`"
-                            :title="'Language'"
+                            :title="'Right Top'"
                             :drop-align="'top'"
                             :drop-justify="'right'"
                             :drop-options="[
-                                {
-                                    type: 'action',
-                                    title: 'English',
-                                    callback: () => {
-                                        console.log('english')
-                                    },
-                                },
-                                {
-                                    type: 'action',
-                                    title: 'Japanese',
-                                    callback: () => {
-                                        console.log('japanese')
-                                    },
-                                },
-                                {
-                                    type: 'action',
-                                    title: 'Chinese',
-                                    callback: () => {
-                                        console.log('chinese')
-                                    },
-                                },
+                                {type: 'action',title: 'English',callback: () => {console.log('english')},},
+                                {type: 'action',title: 'Japanese',callback: () => {console.log('japanese')},},
+                                {type: 'action',title: 'Chinese',callback: () => {console.log('chinese')},},
                             ]">
                             <!--<template v-slot="{slot}">
                                 <div v-if="false"  class="pointer-events-none">
@@ -49,8 +31,91 @@
                                 </div>
                             </template>-->
                         </NavDrop>
-
-
+                    </div>
+                    <div class="max-w-screen-2xl w-full flex justify-start px-20  h-8 scaffold-border" style="overflow-y:hidden;">
+                        <NavDrop
+                            :in-horizontal-scrollable="navDropInHorizontalScrollable"
+                            :always-active="navDropAlwaysActive"
+                            :parent-icon="'material-symbols:language-chinese-array'"
+                            :size="`sm`"
+                            :drop-shadow-size="`lg`"
+                            :title="'Right Bottom'"
+                            :drop-align="'bottom'"
+                            :drop-justify="'right'"
+                            :drop-options="[
+                                {type: 'action',title: 'English',callback: () => {console.log('english')},},
+                                {type: 'action',title: 'Japanese',callback: () => {console.log('japanese')},},
+                                {type: 'action',title: 'Chinese',callback: () => {console.log('chinese')},},
+                            ]">
+                        </NavDrop>
+                    </div>
+                    <div class="max-w-screen-2xl w-full flex justify-start px-20  h-8 scaffold-border" style="overflow-y:hidden;">
+                        <NavDrop
+                            :in-horizontal-scrollable="navDropInHorizontalScrollable"
+                            :always-active="navDropAlwaysActive"
+                            :parent-icon="'material-symbols:language-chinese-array'"
+                            :size="`sm`"
+                            :drop-shadow-size="`lg`"
+                            :title="'Left Top'"
+                            :drop-align="'top'"
+                            :drop-justify="'left'"
+                            :drop-options="[
+                                {type: 'action',title: 'English',callback: () => {console.log('english')},},
+                                {type: 'action',title: 'Japanese',callback: () => {console.log('japanese')},},
+                                {type: 'action',title: 'Chinese',callback: () => {console.log('chinese')},},
+                            ]">
+                        </NavDrop>
+                    </div>
+                    <div class="max-w-screen-2xl w-full flex justify-start px-20  h-8 scaffold-border" style="overflow-y:hidden;">
+                        <NavDrop
+                            :in-horizontal-scrollable="navDropInHorizontalScrollable"
+                            :always-active="navDropAlwaysActive"
+                            :parent-icon="'material-symbols:language-chinese-array'"
+                            :size="`sm`"
+                            :drop-shadow-size="`lg`"
+                            :title="'Left Bottom'"
+                            :drop-align="'bottom'"
+                            :drop-justify="'left'"
+                            :drop-options="[
+                                {type: 'action',title: 'English',callback: () => {console.log('english')},},
+                                {type: 'action',title: 'Japanese',callback: () => {console.log('japanese')},},
+                                {type: 'action',title: 'Chinese',callback: () => {console.log('chinese')},},
+                            ]">
+                        </NavDrop>
+                    </div>
+                    <div class="max-w-screen-2xl w-full flex justify-start px-20  h-8 scaffold-border" style="overflow-y:hidden;">
+                        <NavDrop
+                            :in-horizontal-scrollable="navDropInHorizontalScrollable"
+                            :always-active="navDropAlwaysActive"
+                            :parent-icon="'material-symbols:language-chinese-array'"
+                            :size="`sm`"
+                            :drop-shadow-size="`lg`"
+                            :title="'Bottom Left'"
+                            :drop-align="'left'"
+                            :drop-justify="'bottom'"
+                            :drop-options="[
+                                {type: 'action',title: 'English',callback: () => {console.log('english')},},
+                                {type: 'action',title: 'Japanese',callback: () => {console.log('japanese')},},
+                                {type: 'action',title: 'Chinese',callback: () => {console.log('chinese')},},
+                            ]">
+                        </NavDrop>
+                    </div>
+                    <div class="max-w-screen-2xl w-full flex justify-start px-20  h-8 scaffold-border" style="overflow-y:hidden;">
+                        <NavDrop
+                            :in-horizontal-scrollable="navDropInHorizontalScrollable"
+                            :always-active="navDropAlwaysActive"
+                            :parent-icon="'material-symbols:language-chinese-array'"
+                            :size="`sm`"
+                            :drop-shadow-size="`lg`"
+                            :title="'Bottom Right'"
+                            :drop-align="'right'"
+                            :drop-justify="'bottom'"
+                            :drop-options="[
+                                {type: 'action',title: 'English',callback: () => {console.log('english')},},
+                                {type: 'action',title: 'Japanese',callback: () => {console.log('japanese')},},
+                                {type: 'action',title: 'Chinese',callback: () => {console.log('chinese')},},
+                            ]">
+                        </NavDrop>
                     </div>
                 </div>
 
@@ -825,6 +890,9 @@ watch(clientReadyState, async (clientReady) => {
         });
     }
 })
+
+const navDropAlwaysActive = ref(true);
+const navDropInHorizontalScrollable = ref(false);
 </script>
 
 <style scoped lang="scss">
