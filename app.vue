@@ -55,6 +55,9 @@ const liningColor10 = computed(() => {
 const liningColor70 = computed(() => {
     return liningColor.value + hexAlpha.value['70'];
 });
+const accentColor70 = computed(() => {
+    return accentColor.value + hexAlpha.value['70'];
+});
 
 watch(() => route.name,() => {
     $layoutStore.setSubNavigationOptions(_get(activeSubNavigationLink.value, 'options', []));
@@ -118,6 +121,10 @@ watch(() => route.name,() => {
 
 .label-info {
     color: v-bind(infoPrimaryColor);
+}
+
+.accent-hover:hover {
+    background-color: v-bind(accentColor70);
 }
 
 .neutral-border{
