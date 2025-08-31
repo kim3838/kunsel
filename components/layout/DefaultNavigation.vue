@@ -100,7 +100,7 @@
                         :options="$authStore.associatedCompanies.singleSelectPayload"
                         :drop-align="rightNavigationDropAlign"
                         :override="associatedCompaniesSelectOverrides"
-                        @valueChange="updateStoredAssociatedCompany"
+                        @valueChange="selectedAssociatedCompanyChanged"
                     />
                     <component
                         :is="navDrop"
@@ -164,7 +164,7 @@
 import {storeToRefs} from 'pinia';
 import type {NavigationLinkInterface} from "@/public/js/types/layout";
 
-const {updateStoredAssociatedCompany} = useAssociation();
+const {selectedAssociatedCompanyChanged} = useAssociation();
 const clientReadyState = useClientReadyState();
 const nuxtApp = useNuxtApp();
 const isRouteActive = nuxtApp.$isRouteActive as (name: string | undefined) => boolean;

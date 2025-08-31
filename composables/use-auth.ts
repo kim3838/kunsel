@@ -27,7 +27,7 @@ export const useAuth = () => {
     const userIsSuperAdmin = computed(() => user.value?.type == USER_TYPE.SUPERADMIN);
     const authPending = ref(false);
     const {fetchAssociatedCompanies, storeAssociatedCompanies, fetchIsAdminInAnyCompany, resetUserAssociationStates} = useAssociation();
-    const {fetchCommon, resetCommon} = useCommon();
+    const {fetchCommon, fetchOrganizationSelections, resetCommon} = useCommon();
 
     const ssrFetchUser = async () => {
         await laraSsrUseFetch("/api/user", {
@@ -153,6 +153,7 @@ export const useAuth = () => {
         await storeAssociatedCompanies();
         await fetchIsAdminInAnyCompany();
         await fetchCommon();
+        await fetchOrganizationSelections();
     }
 
     async function destroyAuthentication() {
@@ -172,10 +173,10 @@ export const useAuth = () => {
     }
 
     async function logout(){
-        useAuthStore().resetAssociatedCompanies();
         await resetUserAssociationStates();
         await resetCommon();
         user.value = undefined;
+        useAuthStore().resetAssociatedCompanies();
     }
 
     return {

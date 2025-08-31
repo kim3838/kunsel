@@ -9,6 +9,15 @@ export const payrollComponentPaySelectionsState = () => {
     });
 }
 
+export const companyOrganizationSelectionsState = () => {
+    return useState('organization', () => {
+        return {
+            departments: [],
+            designations: [],
+        }
+    });
+}
+
 export const timezoneSelectionsState = () => {
     return useState('timezone_selections', () => []);
 }
@@ -16,6 +25,7 @@ export const timezoneSelectionsState = () => {
 export const useCommon = () => {
     const payrollComponentPaySelections = payrollComponentPaySelectionsState();
     const timezoneSelections = timezoneSelectionsState();
+    const companyOrganizationSelections = companyOrganizationSelectionsState();
 
     const ssrFetchPayrollComponentPaySelections = async () => {
 
@@ -64,6 +74,45 @@ export const useCommon = () => {
         });
     }
 
+    const fetchDepartmentSelections = async () => {
+        const {$authStore} = useNuxtApp();
+
+        await laraFetch("/api/department-selections", {
+            method: 'GET',
+            params: {
+                filters: {
+                    'company_id': $authStore.selectedAssociatedCompanyId,
+                }
+            }
+        }, {
+            onSuccessResponse: async (request, options, response) => {
+                companyOrganizationSelections.value.departments = _get(response, '_data.values.selection', []);
+            }
+        });
+    };
+
+    const fetchDesignationSelections = async () => {
+        const {$authStore} = useNuxtApp();
+
+        await laraFetch("/api/designation-selections", {
+            method: 'GET',
+            params: {
+                filters: {
+                    'company_id': $authStore.selectedAssociatedCompanyId,
+                }
+            }
+        }, {
+            onSuccessResponse: async (request, options, response) => {
+                companyOrganizationSelections.value.designations = _get(response, '_data.values.selection', []);
+            }
+        });
+    }
+
+    const fetchOrganizationSelections = async () => {
+        await fetchDepartmentSelections();
+        await fetchDesignationSelections();
+    }
+
     const resetCommon = async () => {
         payrollComponentPaySelections.value = {
             pay_period: [],
@@ -71,14 +120,22 @@ export const useCommon = () => {
             pay_frequency: [],
         };
         timezoneSelections.value = [];
+        companyOrganizationSelections.value = {
+            departments: [],
+            designations: [],
+        };
     }
 
     return {
         ssrFetchPayrollComponentPaySelections,
         ssrFetchTimezoneSelections,
         fetchCommon,
+        fetchDepartmentSelections,
+        fetchDesignationSelections,
+        fetchOrganizationSelections,
         payrollComponentPaySelections,
         timezoneSelections,
+        companyOrganizationSelections,
         resetCommon
     };
 }

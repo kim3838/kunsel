@@ -479,72 +479,19 @@ const maritalStatusOptions = reactive({
 const employeeBirthdate = ref('1990-01-01');
 
 //Employee Organization
+const companyOrganizationSelections = companyOrganizationSelectionsState();
+
 const departmentOptions = reactive({
     search: '',
-    selection: [],
+    selection: companyOrganizationSelections.value.departments,
     selected: null
 });
 const designationOptions = reactive({
     search: '',
-    selection: [],
+    selection: companyOrganizationSelections.value.designations,
     selected: null
 });
 
-const designationsPending = ref(false);
-const designationsExecute = async () => {
-
-    if(import.meta.server){return;}
-
-    designationsPending.value = true;
-
-    await laraFetch("/api/designation-selections", {
-        method: 'GET',
-        params: {
-            filters: {
-                'company_id': selectedAssociatedCompanyId.value,
-            }
-        }
-    }, {
-        onRequestError: () => {
-            designationsPending.value = false;
-        },
-        onResponse: () => {
-            designationsPending.value = false;
-        },
-        onSuccessResponse: async (request, options, response) => {
-            designationOptions.selection = _get(response, '_data.values.selection', []);
-        }
-    });
-}
-await designationsExecute();
-
-const departmentsPending = ref(false);
-const departmentsExecute = async () => {
-
-    if(import.meta.server){return;}
-
-    departmentsPending.value = true;
-
-    await laraFetch("/api/department-selections", {
-        method: 'GET',
-        params: {
-            filters: {
-                'company_id': selectedAssociatedCompanyId.value,
-            }
-        }
-    }, {
-        onRequestError: () => {
-            departmentsPending.value = false;
-        },
-        onResponse: () => {
-            departmentsPending.value = false;
-        },
-        onSuccessResponse: async (request, options, response) => {
-            departmentOptions.selection = _get(response, '_data.values.selection', []);
-        }
-    });
-}
-await departmentsExecute();
 const tempSelectedManager = ref(null);
 
 //Fetch Employee Information

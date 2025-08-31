@@ -26,15 +26,15 @@ export const useAssociation = () => {
         const route = useRoute();
 
         return _includes([
-            'settings-compensations',
-            'settings-deductions',
-            'settings-incometaxes',
-            'settings-payperiodsettings',
-            'settings-salarystatementmodules',
-            'settings-formulasettings',
             'workforce-employees',
             'workforce-departments',
             'workforce-designations',
+            'policies-payfrequencies',
+            'policies-payrollcomponents',
+            'policies-shifts',
+            'settings-salarystatementmodules',
+            'settings-formulasettings',
+            'import-employees',
         ], _toLower(String(route.name)));
     });
 
@@ -159,6 +159,16 @@ export const useAssociation = () => {
         }
     }
 
+    const selectedAssociatedCompanyChanged = async (newValue: SelectedCompanyT) => {
+
+        updateStoredAssociatedCompany(newValue);
+
+        if(useAuth().isAuthenticated.value){
+
+            await useCommon().fetchOrganizationSelections();
+        }
+    };
+
     const updateStoredAssociatedCompany = (newValue: SelectedCompanyT) => {
         const {sessionDomain} = useRuntimeConfig().public;
         const {$authStore, $associationStore} = useNuxtApp();
@@ -213,6 +223,7 @@ export const useAssociation = () => {
         fetchIsAdminInAnyCompany,
         storeAssociatedCompanies,
         updateStoredAssociatedCompany,
+        selectedAssociatedCompanyChanged,
         updateCompanyAssignmentType,
         resetUserAssociationStates
     };

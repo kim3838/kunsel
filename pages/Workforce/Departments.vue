@@ -151,6 +151,7 @@ definePageMeta({middleware: ['auth', 'admin-of-selected-company']});
 useLayout().setNavigationMode('solid', 'Departments.vue');
 
 const {isAuthenticated} = useAuth();
+const {fetchDepartmentSelections} = useCommon();
 const nuxtApp = useNuxtApp();
 const {
     updatedAssociatedCompanyFlag
@@ -356,7 +357,7 @@ const createEditModalForm = computed(() => {
 });
 
 watch(editPayload, async (editPayload) => {
-    console.log({'WATCH editPayload': editPayload});
+
     if(Boolean(editPayload.id)){
         departmentName.value = _get(editPayload, 'name', '');
         let parent_id = _get(editPayload, 'parent_id', null);
@@ -415,6 +416,7 @@ const createEditModalSubmit = async() => {
         onSuccessResponse: async (request, options, response) => {
             createEditModalReset();
             await createEditModalResolved();
+            await fetchDepartmentSelections();
         },
     });
 }

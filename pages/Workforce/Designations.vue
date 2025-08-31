@@ -96,6 +96,7 @@ definePageMeta({middleware: ['auth', 'admin-of-selected-company']});
 useLayout().setNavigationMode('solid', 'designations.vue');
 
 const {isAuthenticated} = useAuth();
+const {fetchDesignationSelections} = useCommon();
 const nuxtApp = useNuxtApp();
 const {
     updatedAssociatedCompanyFlag
@@ -274,6 +275,7 @@ const createEditModalSubmit = async() => {
         onSuccessResponse: async (request, options, response) => {
             createEditModalReset();
             await createEditModalResolved();
+            await fetchDesignationSelections();
         },
     });
 }
