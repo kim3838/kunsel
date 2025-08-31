@@ -109,8 +109,11 @@ export const useCommon = () => {
     }
 
     const fetchOrganizationSelections = async () => {
-        await fetchDepartmentSelections();
-        await fetchDesignationSelections();
+
+        if(useAuth().isAuthenticated.value){
+            await fetchDepartmentSelections();
+            await fetchDesignationSelections();
+        }
     }
 
     const resetCommon = async () => {

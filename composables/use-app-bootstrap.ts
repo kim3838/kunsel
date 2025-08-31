@@ -5,7 +5,6 @@ export const useAppBootstrap = () => {
     const {storeAssociatedCompanies} = useAssociation();
     const {fetchOrganizationSelections} = useCommon();
     const {$themeStore, $layoutStore} = useNuxtApp();
-    const {isAuthenticated} = useAuth();
 
     const {
         activeSubNavigationLink,
@@ -14,10 +13,7 @@ export const useAppBootstrap = () => {
     const boot = async() => {
 
         await storeAssociatedCompanies();
-
-        if(isAuthenticated.value){
-            await fetchOrganizationSelections();
-        }
+        await fetchOrganizationSelections();
 
         $layoutStore.setSubNavigationOptions(_get(activeSubNavigationLink.value, 'options', []));
 
