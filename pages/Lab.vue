@@ -272,7 +272,7 @@
                                 <template v-slot:body="{frameBorderColor}">
                                     <div class="h-[30%] w-full p-2 overflow-hidden flex flex-col">
                                         <div class="overflow-auto space-y-4">
-                                            <div class="text-lg font-medium font-header" v-text="carouselTrendingItems[0].subTitle"></div>
+                                            <div class="text-lg font-header" v-text="carouselTrendingItems[0].subTitle"></div>
                                             <NuxtLink
                                                 v-if="carouselTrendingItems[0].link"
                                                 :to="carouselTrendingItems[0].link">
@@ -396,7 +396,7 @@
                                         <div class="overflow-auto space-y-2">
 
                                             <div class="font-semibold h-max flex-none" style="text-align: left;">
-                                                <div class="text-lg font-medium font-header" v-text="featuredItem.subTitle"></div>
+                                                <div class="text-lg font-header" v-text="featuredItem.subTitle"></div>
 
                                                 <NuxtLink
                                                     v-if="featuredItem.link"

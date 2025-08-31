@@ -76,7 +76,7 @@
 
                     <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
                         <fieldset class="neutral-border px-2 pb-2 space-y-2">
-                            <legend class="text-lg font-medium font-header">User Account</legend>
+                            <legend class="text-lg font-header">User Account</legend>
                             <div v-if="employeeHasUser">
                                 <div class="flex gap-3">
                                     <div>
@@ -158,7 +158,7 @@
                         </fieldset>
 
                         <fieldset class="neutral-border px-2 pb-2 space-y-2">
-                            <legend class="text-lg font-medium font-header">Contact</legend>
+                            <legend class="text-lg font-header">Contact</legend>
 
                             <div class="grid gap-2 grid-cols-2 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-5 xl:grid-cols-6">
                                 <div class="lg:col-span-2">
@@ -184,7 +184,7 @@
 
                     <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
                         <fieldset class="neutral-border px-2 pb-2 space-y-2">
-                            <legend class="text-lg font-medium font-header">Employee Information</legend>
+                            <legend class="text-lg font-header">Employee Information</legend>
 
                             <div v-if="false">
                                 <span class="font-semibold">Employee:</span> {{employee}}<br>
@@ -231,7 +231,7 @@
                         </fieldset>
 
                         <fieldset class="neutral-border px-2 pb-2 space-y-2">
-                            <legend class="text-lg font-medium font-header">Organization</legend>
+                            <legend class="text-lg font-header">Organization</legend>
 
                             <div class="grid gap-2 grid-cols-2 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-5 xl:grid-cols-6">
                                 <div class="lg:col-span-2">

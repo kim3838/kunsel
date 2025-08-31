@@ -11,7 +11,7 @@
                     v-model="formulableSelected" />
 
                 <fieldset v-if="formulableSelected == FORMULABLE.EARNINGS" class="neutral-border px-2 pb-2 space-y-4">
-                    <legend class="text-lg font-medium font-header">Earnings</legend>
+                    <legend class="text-lg font-header">Earnings</legend>
 
                     <DataTable
                         :headers="formulaSettingsHeaders"
@@ -54,7 +54,7 @@
                 </fieldset>
 
                 <fieldset v-if="formulableSelected == FORMULABLE.DEDUCTIONS" class="neutral-border px-2 pb-2 space-y-4">
-                    <legend class="text-lg font-medium font-header">Deductions</legend>
+                    <legend class="text-lg font-header">Deductions</legend>
 
                     <DataTable
                         :headers="formulaSettingsHeaders"
@@ -95,7 +95,7 @@
                 </fieldset>
 
                 <fieldset v-if="formulableSelected == FORMULABLE.INCOME_TAX" class="neutral-border px-2 pb-2 space-y-4">
-                    <legend class="text-lg font-medium font-header">Income Tax</legend>
+                    <legend class="text-lg font-header">Income Tax</legend>
 
                     <DataTable
                         :headers="formulaSettingsHeaders"

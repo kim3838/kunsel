@@ -11,7 +11,7 @@
         ></PayrollComponentAssignmentModal>
 
         <fieldset class="neutral-border px-2 pb-2 space-y-2">
-            <legend class="text-lg font-medium font-header">Payroll Information</legend>
+            <legend class="text-lg font-header">Payroll Information</legend>
 
             <div v-if="false">
                 <span class="font-semibold">Employee Payload:</span> {{childComponentEmployeePayload}}<br>

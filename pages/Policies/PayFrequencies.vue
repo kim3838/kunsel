@@ -56,7 +56,7 @@
                 <div class="space-y-2 p-[20px] flex flex-col gap-4">
 
                     <fieldset class="neutral-border px-2 pb-2 space-y-2">
-                        <legend class="text-lg font-medium font-header">{{PAY_FREQUENCY_NAME[dailyPayFrequenciesData.type]}}</legend>
+                        <legend class="text-lg font-header">{{PAY_FREQUENCY_NAME[dailyPayFrequenciesData.type]}}</legend>
 
                         <div>
                             <div class="text-base"><span class="font-semibold">Code: </span><span>{{dailyPayFrequenciesData?.code}}</span></div>
@@ -66,7 +66,7 @@
 
                     <form @submit.prevent="weeklyPayFrequencyFormSubmit">
                         <fieldset class="neutral-border px-2 pb-2 grid grid-cols-2 md:grid-cols-4 gap-4">
-                            <legend class="text-lg font-medium font-header">{{PAY_FREQUENCY_NAME[weeklyPayFrequenciesData.type]}}</legend>
+                            <legend class="text-lg font-header">{{PAY_FREQUENCY_NAME[weeklyPayFrequenciesData.type]}}</legend>
 
                             <div>
                                 <div class="text-base"><span class="font-semibold">Code: </span><span>{{weeklyPayFrequenciesData?.code}}</span></div>
@@ -118,7 +118,7 @@
 
                     <form @submit.prevent="monthlySemimonthlyPayFrequencyFormSubmit">
                         <fieldset class="neutral-border px-2 pb-2 grid grid-cols-2 md:grid-cols-4 gap-4">
-                            <legend class="text-lg font-medium font-header">Monthly / Semimonthly</legend>
+                            <legend class="text-lg font-header">Monthly / Semimonthly</legend>
                             <div></div>
                             <div class="md:col-span-3">
                                 <div class="text-base"><span>Cut-off: </span></div>
