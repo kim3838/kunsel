@@ -124,7 +124,7 @@
                                 <div v-if="employeeUserCreationOptions.selected == EMPLOYEE_USER_CREATION.EXISTING_USER" class="grid gap-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-2 xl:grid-cols-3">
                                     <div class="sm:col-span-2 lg:col-span-2">
                                         <InputLabel :size="'sm'" value="User"/>
-                                        <SingleSelect :disabled="disableActions || employeeUserCreationOptionsDisabled" drop-shadow :size="'md'" :options="nonEmployeeUserOptions"/>
+                                        <SingleSelect :disabled="disableActions || employeeUserCreationOptionsDisabled || nonEmployeeUsersPending" drop-shadow :size="'md'" :options="nonEmployeeUserOptions"/>
                                     </div>
                                 </div>
 
@@ -357,7 +357,7 @@ if(creatingEmployee.value){
 const employeeUserCreationOrientation = computed(() => {
     return screenWidth.value >= screenWidthBreakpoint['md'] ? 'horizontal' : 'vertical';
 })
-watch(() => employeeUserCreationOptions.selected, employeeUserCreationType => {
+watch(() => employeeUserCreationOptions.selected, async(employeeUserCreationType) => {
     nonEmployeeUserOptions.selected = null;
 
     if(employeeUserCreationType == EMPLOYEE_USER_CREATION.MANUAL){
@@ -374,6 +374,13 @@ watch(() => employeeUserCreationOptions.selected, employeeUserCreationType => {
         employeeUserPasswordConfirmation.value = '';
         employeeUserTimezoneOptions.selected = null;
         employeeUserStatusOptions.selected = USER_STATUS.ACTIVE;
+    }
+
+    if(employeeUserCreationType == EMPLOYEE_USER_CREATION.EXISTING_USER
+        && nonEmployeeUserOptions.selection.length == 0
+        && !employeeUserCreationOptionsDisabled.value
+    ){
+        await nonEmployeeUsersExecute();
     }
 });
 
@@ -435,7 +442,6 @@ const nonEmployeeUsersExecute = async () => {
         }
     });
 }
-await nonEmployeeUsersExecute();
 
 //Employee Contact
 const employeeOfficeEmail = ref('');
@@ -605,26 +611,6 @@ const managerOptions = reactive({
     },
     selected: tempSelectedManager.value,
 });
-
-const payFrequencySelection = ref([]);
-const fetchPayFrequencySelection = async () => {
-
-    if(import.meta.server){return;}
-
-    await laraFetch("/api/pay-frequency-selections", {
-        method: 'GET',
-        params: {
-            filters: {
-                'company_id': selectedAssociatedCompanyId.value,
-            }
-        }
-    },{
-        onSuccessResponse: async (request, options, response) => {
-            payFrequencySelection.value = _get(response, '_data.values.selection', []);
-        }
-    });
-}
-await fetchPayFrequencySelection();
 
 watch(updatedAssociatedCompanyFlag, (newValue) => {
     if(isAuthenticated.value && selectedAssociatedCompanyId.value){
@@ -992,7 +978,13 @@ const autoSelectCreatedUser = async (userId = null) => {
 
     employeeUserCreationOptionsDisabled.value = true;
     employeeUserCreationOptions.selected = EMPLOYEE_USER_CREATION.EXISTING_USER;
-    await nonEmployeeUsersExecute();
+
+    let userExistsOnSelection = _find(nonEmployeeUserOptions.selection, {value: userId});
+
+    if(!Boolean(userExistsOnSelection)){
+        await nonEmployeeUsersExecute();
+    }
+
     nonEmployeeUserOptions.selected = userId;
 }
 

@@ -481,7 +481,10 @@ const disableEmployeeIncomeTaxDataTable = computed(() => {
 
 const employeePayrollComponentsExecute = async () => {
 
-    if(import.meta.server || creatingEmployee.value){return;}
+    if(import.meta.server || creatingEmployee.value){
+        emit('update:payrollComponentsPending', false);
+        return;
+    }
 
     await laraFetch(`/api/employee-payroll-components/${employeeUlid.value}`, {
         method: 'GET',
