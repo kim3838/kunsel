@@ -27,7 +27,49 @@
                     </div>
                 </form>
 
+                <!-- Payroll Components -->
+                <DialogModal
+                    :max-width="'1024px'"
+                    :show="payrollComponentsModal"
+                    :closeable="false">
+                    <template #title>
+                        {{payrollComponentsModalTitle}}
+                    </template>
+                    <template #content>
+                        <div ref='payrollComponentsContentContainer' class="overflow-auto max-h-[768px] pt-4 space-y-4">
+                            <div v-if="payrollComponentsLoadingOverlay" :style="payrollComponentsLoadingOverlayDimensionStyle" class="absolute tint-background  z-50">
+                                <div class="h-full flex items-center justify-center">
+                                    <UnorderedList :size="'lg'" :icon="'eos-icons:loading'">Loading Payroll Components...</UnorderedList>
+                                </div>
+                            </div>
+                            <div v-else>
+                                Changes are autosaved.
+                            </div>
+
+                            <EmployeePayrollComponent
+                                isolated
+                                ref="employeePayrollComponent"
+                                v-model:payroll-components-pending="employeePayrollComponentsPending"
+                                v-model:child-component-employee-payload="stagedEmployee"
+                                v-model:employee-compensation-data="employeeCompensationData"
+                                v-model:employee-deduction-data="employeeDeductionData"
+                                v-model:employee-income-tax-data="employeeIncomeTaxData"
+                                v-model:disable-actions="disableActions"
+                            />
+                        </div>
+                    </template>
+                    <template #footer>
+                        <div class="flex space-x-2 justify-between">
+                            <div></div>
+                            <div class="space-x-2 inline-flex items-center">
+                                <Button :variant="'outline'" @click="closePayrollComponentsModal" :label="'Close'" />
+                            </div>
+                        </div>
+                    </template>
+                </DialogModal>
+
                 <div class="px-[20px]">
+
                     <div class="mb-2 flex items-center min-h-8">
                         <UnorderedList
                             v-if="disableActions"
@@ -115,10 +157,7 @@
                                     :drop-justify="'right'"
                                     :drop-options="[
                                         {type: 'link',title: 'Details',to: `/workforce/employees/${cell.ulid}`},
-                                        {type: 'action',title: 'Basic Info',callback: () => {},},
-                                        {type: 'action',title: 'Contact Info',callback: () => {},},
-                                        {type: 'action',title: 'Employment Status',callback: () => {},},
-                                        {type: 'action',title: 'Payroll Components',callback: () => {},},
+                                        {type: 'action',title: 'Payroll Components',callback: () => {showPayrollComponentsModal(cell);},},
                                     ]">
                                 </NavDrop>
                             </div>
@@ -338,6 +377,57 @@ function paginate(page = 1, clearSelection = false){
 
 watch(() => {return filters.page;}, () => {paginate(filters.page);});
 watch(() => {return filters.perPage;}, () => {paginate(1);});
+
+//Employee Payroll Components
+const stagedEmployee = ref<{
+    'id': sring | number | null,
+    'ulid': string | null,
+}>({
+    'id': null,
+    'ulid': null,
+});
+const payrollComponentsLoadingOverlay = computed(()=>{
+    return employeePayrollComponentsPending.value;
+});
+const {
+    width: payrollComponentsContentContainerWidth,
+    height: payrollComponentsContentContainerHeight
+} = useElementSize(useTemplateRef('payrollComponentsContentContainer'));
+const payrollComponentsLoadingOverlayDimensionStyle = computed(() => {
+    return {
+        width: `${payrollComponentsContentContainerWidth.value}px`,
+        height: `${payrollComponentsContentContainerHeight.value}px`
+    };
+});
+const employeePayrollComponentsPending = ref(false);
+const employeeCompensationData = ref([]);
+const employeeDeductionData = ref([]);
+const employeeIncomeTaxData = ref([]);
+
+const payrollComponentsModal = ref(false);
+const payrollComponentsModalTitle = ref('');
+const closePayrollComponentsModal = () => {
+    payrollComponentsModal.value = false;
+    payrollComponentsModalTitle.value = '';
+
+    stagedEmployee.value = {
+        'id': null,
+        'ulid': null,
+    };
+    employeePayrollComponentsPending.value = false;
+};
+const showPayrollComponentsModal = (cell: TableRowT)=> {
+
+    employeePayrollComponentsPending.value = true;
+
+    stagedEmployee.value = {
+        'id': _get(cell, 'id', null),
+        'ulid': _get(cell, 'ulid', null),
+    };
+
+    payrollComponentsModalTitle.value = `${cell.number} ${cell.full_name}`;
+    payrollComponentsModal.value = true;
+};
 </script>
 
 

@@ -259,10 +259,21 @@
 import {storeToRefs} from "pinia";
 import type {TableHeaderT} from "@/public/js/types/data";
 
-const {$authStore} = useNuxtApp();
+const {isAuthenticated} = useAuth();
+const nuxtApp = useNuxtApp();
+const {
+    updatedAssociatedCompanyFlag
+} = storeToRefs(nuxtApp.$associationStore);
 const {
     selectedAssociatedCompanyId,
-} = storeToRefs($authStore);
+} = storeToRefs(nuxtApp.$authStore);
+
+watch(updatedAssociatedCompanyFlag, async (newValue) => {
+    if(isAuthenticated.value && selectedAssociatedCompanyId.value){
+        await fetchPayFrequencySelection();
+    }
+});
+
 const props = defineProps({
     childComponentEmployeePayload: {
         type: Object,
@@ -293,6 +304,10 @@ const props = defineProps({
         default: false,
     },
     payrollComponentsPending: {
+        type: Boolean,
+        default: false,
+    },
+    isolated: {
         type: Boolean,
         default: false,
     },
@@ -327,6 +342,17 @@ const fetchPayFrequencySelection = async () => {
     });
 }
 await fetchPayFrequencySelection();
+
+watch(() => props.childComponentEmployeePayload, async (employeePayload) => {
+
+    if(props.isolated && Boolean(employeePayload.id)){
+
+        await employeeCompensationExecute();
+        await employeeDeductionExecute();
+        await employeeIncomeTaxExecute();
+        emit('update:payrollComponentsPending', false);
+    }
+});
 
 const creatingEmployee = computed(() => {
     return !Boolean(props.childComponentEmployeePayload.id);
