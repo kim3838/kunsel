@@ -114,7 +114,7 @@ export const useLayout = () => {
                 to: '/',
                 route_active: 'index'
             }] : []) as NavigationLinkInterface[],
-            ...(true ? [
+            ...(false ? [
                     {
                         key: 'prototype',
                         type: 'link',
@@ -143,7 +143,7 @@ export const useLayout = () => {
                     },
                 ]:[]
             ) as NavigationLinkInterface[],
-            ...(true ? [
+            ...(false ? [
                     {
                         key: 'about',
                         type: 'drop',
