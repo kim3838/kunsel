@@ -34,7 +34,7 @@
                     :max="max"
                     @keydown="limitKeys"
                     @focus="focusInput"
-                    @input="$emit('update:modelValue', $event.target.value)"
+                    @input="inputInput"
                     :readonly="readonly"
                     ref="input">
             </div>
@@ -145,7 +145,7 @@ const props = defineProps({
     }
 });
 
-const emit = defineEmits(['update:modelValue', 'focusStateChanged']);
+const emit = defineEmits(['update:modelValue', 'focusStateChanged', 'valueChanged']);
 
 function limitKeys(event) {
     if(props.type === 'number' && props.typeStrict){
@@ -156,6 +156,11 @@ function limitKeys(event) {
         }
     }
 }
+
+const inputInput = (event) => {
+    emit('update:modelValue', event.target.value)
+    emit('valueChanged', event.target.value)
+};
 
 function focusInput(event) {
     if(props.highLightAllTextOnFocus){
