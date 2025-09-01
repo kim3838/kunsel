@@ -494,7 +494,7 @@ const designationOptions = reactive({
 
 const tempSelectedManager = ref(null);
 
-//Fetch Employee Information
+//Fetch Employee Information, Contact Information
 const fetchEmployee = async () => {
 
     if(import.meta.server){return;}
@@ -516,32 +516,20 @@ const fetchEmployee = async () => {
             designationOptions.selected = _get(response, '_data.values.employee.designation_id', null);
             tempSelectedManager.value = _get(response, '_data.values.employee.manager_id', null);
 
+            employeeHasContact.value = Boolean(_get(response, '_data.values.employee.contact.id', null));
+            employeeOfficeEmail.value = _get(response, '_data.values.employee.contact.office_email', '');
+            employeePersonalEmail.value = _get(response, '_data.values.employee.contact.personal_email', '');
+            employeeOfficePhone.value = _get(response, '_data.values.employee.contact.office_phone', '');
+            employeePersonalPhone.value = _get(response, '_data.values.employee.contact.personal_phone','');
+
             //Set user profile creation options to null if user_id exists
             employeeUserCreationOptions.selected = _get(response, '_data.values.employee.user_id', false) ? null : EMPLOYEE_USER_CREATION.NONE;
         },
     });
 };
 
-//Fetch Employee Contact Information
-const fetchEmployeeContact = async () => {
-
-    if(import.meta.server){return;}
-
-    await laraFetch(`/api/employee-contact/${employee?.value?.id}`, {
-        method: 'GET',
-    }, {
-        onSuccessResponse: async (request, options, response) => {
-            employeeHasContact.value = Boolean(_get(response, '_data.values.employee_contact.id', null));
-            employeeOfficeEmail.value = _get(response, '_data.values.employee_contact.office_email', '');
-            employeePersonalEmail.value = _get(response, '_data.values.employee_contact.personal_email', '');
-            employeeOfficePhone.value = _get(response, '_data.values.employee_contact.office_phone', '');
-            employeePersonalPhone.value = _get(response, '_data.values.employee_contact.personal_phone','');
-        },
-    });
-};
 if(!creatingEmployee.value){
     await fetchEmployee();
-    await fetchEmployeeContact();
 }
 
 const managerOptions = reactive({
