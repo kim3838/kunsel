@@ -47,15 +47,15 @@
                         <Button class="inline-block" :icon="'mdi:plus'" :size="'sm'" :disabled="disableActions"  @click="create"/>
                         <Button :variant="'outline'" :icon="'mdi:delete-outline'" class="inline-block" :size="'sm'" :disabled="disableActions" @click="deleteSelected"/>
                         <Button :variant="'outline'" :icon="'ic:sharp-restart-alt'" class="inline-block" :size="'sm'" :disabled="disableActions" @click="designationsExecute"/>
+                        <UnorderedList
+                            v-if="disableActions"
+                            :icon="'eos-icons:loading'"
+                            :size="'md'"
+                            :label="'Please wait...'"/>
                     </div>
                 </div>
 
                 <div class="px-[20px]">
-                    <UnorderedList
-                        v-if="disableActions"
-                        :icon="'eos-icons:loading'"
-                        :size="'md'"
-                        :label="'Please wait...'"/>
                     <DataTable
                         :headers="designationsHeaders"
                         :size="'lg'"

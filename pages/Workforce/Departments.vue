@@ -80,17 +80,17 @@
                         <Button class="inline-block" :icon="'mdi:plus'" :size="'sm'" :disabled="disableActions"  @click="create"/>
                         <Button :variant="'outline'" :icon="'mdi:delete-outline'" class="inline-block" :size="'sm'" :disabled="disableActions" @click="deleteSelected"/>
                         <Button :variant="'outline'" :icon="'ic:sharp-restart-alt'" class="inline-block" :size="'sm'" :disabled="disableActions" @click="departmentsExecute"/>
+                        <UnorderedList
+                            v-if="disableActions"
+                            :icon="'eos-icons:loading'"
+                            :size="'md'"
+                            :label="'Please wait...'"/>
                     </div>
                 </div>
 
                 <div class="px-[20px]">
-                    <UnorderedList
-                        v-if="disableActions"
-                        :icon="'eos-icons:loading'"
-                        :size="'md'"
-                        :label="'Please wait...'"/>
-
                     <DataTable
+                        :key="departmentsKey"
                         :headers="departmentsHeaders"
                         :size="'lg'"
                         :rows="departmentsData"
@@ -172,6 +172,7 @@ const departmentsHeaders = reactive<TableHeaderT[]>([
     { text: 'Name', value: 'name', alignData: 'left'},
 ]);
 
+const departmentsKey = ref(0);
 const departmentsData = ref([]);
 const departmentsPending = ref(false);
 const selectedDepartments = ref([]);
@@ -192,7 +193,6 @@ const departmentsExecute = async () => {
     if(import.meta.server){return;}
 
     departmentsPending.value = true;
-    departmentsData.value = [];
 
     await laraFetch("/api/departments", {
         method: 'GET',
@@ -211,6 +211,7 @@ const departmentsExecute = async () => {
         },
         onSuccessResponse: async (request, options, response) => {
             departmentsData.value = _get(response, '_data.values.departments', []);
+            departmentsKey.value += 1;
         }
     });
 }
