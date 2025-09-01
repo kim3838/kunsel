@@ -5,91 +5,69 @@
         </div>
 
         <div v-show="show" class="h-min self-center flex items-center relative z-[60] w-full" :class="[modalContainerClass]">
-            <div class="modal-body overflow-hidden mx-auto w-full" :class="[modalBodyClass]" :style="[widthStyle]">
+            <div class="modal-body overflow-auto mx-auto my-2 w-full" :class="[modalBodyClass]" :style="[widthStyle]" style="max-height: calc(100vh - 1rem);">
                 <slot></slot>
             </div>
         </div>
     </div>
 </template>
 
-<script>
-import {storeToRefs} from 'pinia';
+<script setup>
+import {storeToRefs} from 'pinia'
 
-export default {
-    setup(){
-        const {$themeStore} = useNuxtApp();
+const {$themeStore} = useNuxtApp()
 
-        const {
-            primary: primaryColor,
-            secondary: secondaryColor,
-            neutral: neutralColor,
-            body: bodyColor,
-            thread: threadColor,
-        } = storeToRefs($themeStore);
+const {
+    primary: primaryColor,
+    secondary: secondaryColor,
+    neutral: neutralColor,
+    body: bodyColor,
+    thread: threadColor,
+} = storeToRefs($themeStore)
 
-        return {
-            primaryColor,
-            secondaryColor,
-            neutralColor,
-            bodyColor,
-            threadColor
-        };
+const props = defineProps({
+    landscape: {
+        type: Boolean,
+        default: false,
     },
-    props: {
-        landscape: {
-            default: false
-        },
-        show: {
-            default: false
-        },
-        maxWidth: {
-            type: [String, null],
-            default: null
-        },
-        closeable: {
-            default: true
-        },
+    show: {
+        type: Boolean,
+        default: false,
     },
-
-    methods: {
-        close() {
-            if (this.closeable) {
-                this.$emit('close')
-            }
-        }
+    maxWidth: {
+        type: [String, null],
+        default: null,
     },
-
-    created() {
-
+    closeable: {
+        type: Boolean,
+        default: true,
     },
+})
 
-    computed: {
-        widthStyle() {
+const emit = defineEmits(['close'])
 
-            if(this.landscape){
-                return {};
-            }
-
-            return {
-                'max-width': this.maxWidth ? this.maxWidth : 'max-content'
-            }
-        },
-        modalBodyClass() {
-            if(this.landscape){
-                return '';
-            } else {
-                return 'rounded-sm';
-            }
-        },
-        modalContainerClass() {
-            if(this.landscape){
-                return '';
-            } else {
-                return 'px-2'
-            }
-        },
+const close = () => {
+    if (props.closeable) {
+        emit('close')
     }
 }
+
+const widthStyle = computed(() => {
+    if (props.landscape) {
+        return {}
+    }
+    return {
+        'max-width': props.maxWidth ? props.maxWidth : 'max-content',
+    }
+})
+
+const modalBodyClass = computed(() => {
+    return props.landscape ? '' : 'rounded-sm'
+})
+
+const modalContainerClass = computed(() => {
+    return props.landscape ? '' : 'px-2'
+})
 </script>
 <style scoped>
 .modal-layer{
