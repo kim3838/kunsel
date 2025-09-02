@@ -5,20 +5,24 @@
         <div class="relative z-[42] w-full flex justify-center font-[Inclusive_Sans]">
             <div class="max-w-screen-2xl w-full flex justify-end h-5">
                 <NavLink
-                    class="h-full"
+                    class="h-full cursor-pointer hover:underline"
                     :size="`xs`">
                     News
                 </NavLink>
                 <NavLink
-                    class="h-full"
+                    class="h-full cursor-pointer hover:underline"
                     :size="`xs`">
                     FAQ
                 </NavLink>
                 <NavLink
-                    class="h-full"
+                    class="h-full cursor-pointer hover:underline"
                     :size="`xs`">
                     Support
                 </NavLink>
+                <div v-if="user?.timezone" class=" text-sm h-full flex items-center gap-1 cursor-pointer accent-hover">
+                    <Icon size="0.75rem" :name="'file-icons:moment-timezone'"/>
+                    <div>{{user?.timezone}}</div>
+                </div>
                 <NavDrop
                     v-if="true"
                     :size="`xs`"
