@@ -29,11 +29,11 @@
                         <div class="grid gap-2 grid-cols-1 sm:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-8">
                             <div class="bloc">
                                 <InputLabel :size="'sm'" value="Date Added: From"/>
-                                <InputWithIcon :icon="'ion:calendar-number-sharp'" :id="'datetimefrom'" readonly v-model="filters.datetimeFrom" :size="'md'" class="w-full" />
+                                <InputWithIcon :icon="'ion:calendar-number-sharp'" :id="'datetimefrom'" readonly v-model="filters.datetimeFrom" :size="'md'" class="w-full" :override="{font_family_class: 'font-sans'}" />
                             </div>
                             <div class="block">
                                 <InputLabel :size="'sm'" value="Date Added: To"/>
-                                <InputWithIcon :icon="'ion:calendar-number-sharp'" :id="'datetimeto'" readonly v-model="filters.datetimeTo" :size="'md'" class="w-full" />
+                                <InputWithIcon :icon="'ion:calendar-number-sharp'" :id="'datetimeto'" readonly v-model="filters.datetimeTo" :size="'md'" class="w-full" :override="{font_family_class: 'font-sans'}" />
                             </div>
                         </div>
 
@@ -66,7 +66,7 @@
                             @manualSorted="manualSorted"
                             selection>
                             <template v-slot:cell.menu="{cell, slot, scrollReference}">
-                                <div class="space-x-0.5 w-full flex items-center">
+                                <div class="flex items-center">
                                     <NavDrop
                                         class="z-10"
                                         :parent-icon="'ic:baseline-arrow-right'"
@@ -101,19 +101,21 @@
                                 </div>
                             </template>
                             <template v-slot:cell.datetime_added="{cell, slot}">
-                                <InputWithIcon
-                                    :with-border="false"
-                                    :icon="'ion:calendar-number-sharp'"
-                                    :id="`datetime_added-` + cell.id"
-                                    v-model="cell.datetime_added"
-                                    readonly
-                                    :override="{font_size: slot.datepickerFontSize}"
-                                    in-cell
-                                    :size="slot.inputSize"
-                                    class="w-full" />
+                                <div class="mx-0.5 flex items-center">
+                                    <InputWithIcon
+                                        :with-border="true"
+                                        :icon="'ion:calendar-number-sharp'"
+                                        :id="`datetime_added-` + cell.id"
+                                        v-model="cell.datetime_added"
+                                        readonly
+                                        :override="{font_family_class: 'font-sans'}"
+                                        in-cell
+                                        :size="slot.inputSize"
+                                        class="w-full" />
+                                </div>
                             </template>
                             <template v-slot:cell.actions="{cell, slot, scrollReference}">
-                                <div class="h-full mx-0.5 space-x-0.5 w-full flex items-center">
+                                <div class="mx-0.5 space-x-0.5 flex items-center">
                                     <Button type="button" :size="slot.buttonSize" :label="'Details'"></Button>
                                     <Button type="button" :size="slot.buttonSize" :label="'Approve'"></Button>
                                     <Button type="button" :size="slot.buttonSize" :label="'Deny'"></Button>

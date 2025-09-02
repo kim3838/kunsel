@@ -98,7 +98,7 @@ const submitPath = computed(() => {
 });
 const formBody = computed(() => {
     let body = {
-        'type': accountPlanOptions.selected,
+        'plan': accountPlanOptions.selected,
     };
 
     if(creatingAccount.value){
