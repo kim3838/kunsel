@@ -29,14 +29,14 @@
 
                 <!-- Payroll Components -->
                 <DialogModal
-                    :max-width="'1024px'"
+                    :max-width="'1280px'"
                     :show="payrollComponentsModal"
                     :closeable="false">
                     <template #title>
                         {{payrollComponentsModalTitle}}
                     </template>
                     <template #content>
-                        <div ref='payrollComponentsContentContainer' class="overflow-auto max-h-[768px] pt-4 space-y-4">
+                        <div ref='payrollComponentsContentContainer' :class="[payrollComponentsLoadingOverlay ? '' : 'pt-4 space-y-4 ']" class="min-h-[100px]">
                             <div v-if="payrollComponentsLoadingOverlay" :style="payrollComponentsLoadingOverlayDimensionStyle" class="absolute tint-background  z-50">
                                 <div class="h-full flex items-center justify-center">
                                     <UnorderedList :size="'lg'" :icon="'eos-icons:loading'">Loading Payroll Components...</UnorderedList>
@@ -47,6 +47,7 @@
                             </div>
 
                             <EmployeePayrollComponent
+                                v-show="!(payrollComponentsLoadingOverlay)"
                                 isolated
                                 ref="employeePayrollComponent"
                                 v-model:payroll-components-pending="employeePayrollComponentsPending"

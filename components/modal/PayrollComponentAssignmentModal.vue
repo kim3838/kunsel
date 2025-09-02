@@ -20,8 +20,15 @@
                 <span class="font-semibold">Selected Pay Period :</span> {{selectedPayPeriod}}<br>
                 <span class="font-semibold">Selected Pay Frequency :</span> {{selectedPayFrequency}}<br>
                 <span class="font-semibold">Pay Frequency Type :</span> {{payFrequencyType}}<br>
+                <span class="font-semibold">Amountable Start Selection :</span> {{amountableStartSelection}}<br>
+                <span class="font-semibold">Amountable End Selection :</span> {{amountableEndSelection}}<br>
+                <span class="font-semibold">Amountable Start Model :</span> {{amountableStart}}<br>
+                <span class="font-semibold">Amountable End Model :</span> {{amountableEnd}}<br>
+                <span class="font-semibold">Start Date :</span> {{startDate}}<br>
+                <span class="font-semibold">End Date :</span> {{endDate}}<br>
                 <span class="font-semibold">Component Formulable :</span> {{payrollComponentFormulable}}<br>
                 <span class="font-semibold">Component Form :</span> {{componentForm}}<br>
+                <span class="font-semibold">Form :</span> {{form}}<br>
             </div>
             <div ref='contentContainer'>
                 <div v-if="loadingOverlay" :style="loadingOverlayDimensionStyle" class="absolute tint-background  z-50">
@@ -54,6 +61,48 @@
                     <div v-if="selectedPayrollComponentIsAmountable">
                         <InputLabel :size="'sm'" value="Pay Frequency"/>
                         <SingleSelect :searchable="false" :selection-max-viewable-line="10" drop-shadow value-persist :size="'md'" :options="payFrequencyOptions" @valueChange="payFrequencySelectedChange"/>
+                    </div>
+                    <div v-if="selectedPayrollComponentIsAmountable" class="col-span-full flex flex-wrap gap-2">
+                        <div>
+                            <InputLabel :size="'sm'" value="Date start"/>
+                            <RadioGroup
+                                :selections="amountableStartSelection"
+                                :size="'md'"
+                                :orientation="'horizontal'"
+                                :radio-key="'amountable-start'"
+                                @change="amountableStartSelectedChanged"
+                                v-model="amountableStart" />
+                        </div>
+                        <div v-if="amountableStart == AMOUNTABLE_PAYROLL_COMPONENT_START.CUSTOM_DATE">
+                            <InputLabel :size="'sm'" value="Start date"/>
+                            <InputWithIcon
+                                high-light-all-text-on-focus
+                                @valueChanged="startDateChanged"
+                                :override="{font_family_class: 'font-sans'}"
+                                :icon="'mdi:calendar-cursor-outline'"
+                                :id="`amountable-start-date`" v-model="startDate" :size="'md'" />
+                        </div>
+                    </div>
+                    <div v-if="selectedPayrollComponentIsAmountable" class="col-span-full flex flex-wrap gap-2">
+                        <div>
+                            <InputLabel :size="'sm'" value="Date end"/>
+                            <RadioGroup
+                                :selections="amountableEndSelection"
+                                :size="'md'"
+                                :orientation="'horizontal'"
+                                :radio-key="'amountable-end'"
+                                @change="amountableEndSelectedChanged"
+                                v-model="amountableEnd" />
+                        </div>
+                        <div v-if="amountableEnd == AMOUNTABLE_PAYROLL_COMPONENT_END.CUSTOM_DATE">
+                            <InputLabel :size="'sm'" value="End Date"/>
+                            <InputWithIcon
+                                high-light-all-text-on-focus
+                                @valueChanged="endDateChanged"
+                                :override="{font_family_class: 'font-sans'}"
+                                :icon="'mdi:calendar-cursor-outline'"
+                                :id="`amountable-end-date`" v-model="endDate" :size="'md'" />
+                        </div>
                     </div>
                 </div>
             </div>
@@ -98,9 +147,10 @@
 import {storeToRefs} from "pinia";
 
 const coreStore = useCoreStore();
-const {isAuthenticated} = useAuth();
 const nuxtApp = useNuxtApp();
+const moment = useNuxtApp().$moment;
 const {payrollComponentPaySelections} = useCommon();
+const {render} = dateTimePicker();
 
 const {
     selectedAssociatedCompanyId,
@@ -152,6 +202,17 @@ const props = defineProps({
     },
 });
 
+const amountableStartSelection = reactive([
+    {text : AMOUNTABLE_PAYROLL_COMPONENT_START_NAME[AMOUNTABLE_PAYROLL_COMPONENT_START.NOT_SPECIFIED], value: AMOUNTABLE_PAYROLL_COMPONENT_START.NOT_SPECIFIED},
+    {text : AMOUNTABLE_PAYROLL_COMPONENT_START_NAME[AMOUNTABLE_PAYROLL_COMPONENT_START.EMPLOYMENT_START_DATE], value: AMOUNTABLE_PAYROLL_COMPONENT_START.EMPLOYMENT_START_DATE},
+    {text : AMOUNTABLE_PAYROLL_COMPONENT_START_NAME[AMOUNTABLE_PAYROLL_COMPONENT_START.CUSTOM_DATE], value: AMOUNTABLE_PAYROLL_COMPONENT_START.CUSTOM_DATE},
+]);
+
+const amountableEndSelection = reactive([
+    {text : AMOUNTABLE_PAYROLL_COMPONENT_END_NAME[AMOUNTABLE_PAYROLL_COMPONENT_END.NOT_SPECIFIED], value: AMOUNTABLE_PAYROLL_COMPONENT_END.NOT_SPECIFIED},
+    {text : AMOUNTABLE_PAYROLL_COMPONENT_END_NAME[AMOUNTABLE_PAYROLL_COMPONENT_END.CUSTOM_DATE], value: AMOUNTABLE_PAYROLL_COMPONENT_END.CUSTOM_DATE},
+]);
+
 const {width: contentContainerWidth, height: contentContainerHeight} = useElementSize(useTemplateRef('contentContainer'));
 const loadingOverlayDimensionStyle = computed(() => {
     return {
@@ -175,6 +236,14 @@ const selectedPayrollComponent = ref<{} | null>({});
 const selectedPayPeriod = ref<{} | null>({});
 const selectedPayFrequency = ref<{} | null>({});
 
+watch(selectedPayrollComponentIsAmountable, (selectedPayrollComponentIsAmountable) => {
+    if(selectedPayrollComponentIsAmountable && amountableStart.value == AMOUNTABLE_PAYROLL_COMPONENT_START.CUSTOM_DATE){
+        render(dateStartAndEndDatePickers.value);
+    }
+    if(selectedPayrollComponentIsAmountable && amountableEnd.value == AMOUNTABLE_PAYROLL_COMPONENT_END.CUSTOM_DATE){
+        render(dateStartAndEndDatePickers.value);
+    }
+});
 const assignablePayrollComponentSelectedChange = (value: null | number) => {
     const selectedPayrollComponentTemp = assignablePayrollComponentOptions.selection.find(item => item.value === value);
 
@@ -198,7 +267,27 @@ const assignablePayrollComponentSelectedChange = (value: null | number) => {
             payTypeOptions.selected = null;
             payFrequencyOptions.selected = null;
             payFrequencyType.value = null;
+            amountableStart.value = null;
+            startDate.value = null;
+            amountableEnd.value = null;
+            endDate.value = null;
+        } else {
+
+            if(amountableStart.value == null){
+                amountableStart.value = AMOUNTABLE_PAYROLL_COMPONENT_START.NOT_SPECIFIED;
+            }
+
+            if(amountableEnd.value == null){
+                amountableEnd.value = AMOUNTABLE_PAYROLL_COMPONENT_END.NOT_SPECIFIED;
+            }
         }
+
+    } else {
+
+        amountableStart.value = null;
+        startDate.value = null;
+        amountableEnd.value = null;
+        endDate.value = null;
     }
 }
 
@@ -363,10 +452,59 @@ watch(() => props.creatingOrEditing, (creatingOrEditing) => {
     }
 });
 
+const amountableStartSelectedChanged = () => {
+
+    if(selectedPayrollComponentIsAmountable && amountableStart.value == AMOUNTABLE_PAYROLL_COMPONENT_START.CUSTOM_DATE){
+
+        if(startDate.value == null){
+            startDate.value = moment().format("YYYY-MM-DD");
+        }
+
+        render(dateStartAndEndDatePickers.value);
+    } else {
+
+        startDate.value = null
+    }
+};
+
+const amountableEndSelectedChanged = () => {
+
+    if(selectedPayrollComponentIsAmountable && amountableEnd.value == AMOUNTABLE_PAYROLL_COMPONENT_END.CUSTOM_DATE){
+
+        if(endDate.value == null){
+            endDate.value = moment().format("YYYY-MM-DD");
+        }
+
+        render(dateStartAndEndDatePickers.value);
+    } else {
+
+        endDate.value = null
+    }
+};
+
+const startDateChanged = (value) => {
+    let dateValid = moment(value.trim(), "YYYY-MM-DD", true).isValid();
+
+    if(!dateValid){
+        startDate.value = moment().format("YYYY-MM-DD")
+    }
+}
+const endDateChanged = (value) => {
+    let dateValid = moment(value.trim(), "YYYY-MM-DD", true).isValid();
+
+    if(!dateValid){
+        endDate.value = moment().format("YYYY-MM-DD")
+    }
+}
+
 const amount = ref(0);
 const currency = ref<string | null>('');
 const defaultCurrency = ref(selectedAssociatedCompany.value?.payload.currency ?? null);
 const payFrequencyType = ref<number | null>(null);
+const amountableStart = ref<number | null>(null);
+const startDate = ref<string | null>(moment().format("YYYY-MM-DD"));
+const amountableEnd = ref<number | null>(null);
+const endDate = ref<string | null>(moment().format("YYYY-MM-DD"));
 
 const loadEditable = () => {
     amount.value = _get(props.editPayload, 'amount', 0);
@@ -376,6 +514,16 @@ const loadEditable = () => {
     payFrequencyOptions.selected = _get(props.editPayload, 'pay_frequency_id', null);
     payFrequencyType.value = _get(props.editPayload, 'pay_frequency.type.value', null);
     assignablePayrollComponentOptions.selected = _get(props.editPayload, 'payroll_componentable_id', null);
+
+    amountableStart.value = _get(props.editPayload, 'amountable_start.value', AMOUNTABLE_PAYROLL_COMPONENT_START.NOT_SPECIFIED);
+
+    let startDateTemp = _get(props.editPayload, 'start_date', null);
+    startDate.value = startDateTemp ? moment(startDateTemp).format("YYYY-MM-DD") : null;
+
+    amountableEnd.value = _get(props.editPayload, 'amountable_end.value', AMOUNTABLE_PAYROLL_COMPONENT_END.NOT_SPECIFIED);
+
+    let endDateTemp = _get(props.editPayload, 'end_date', null);
+    endDate.value = endDateTemp ? moment(endDateTemp).format("YYYY-MM-DD") : null;
 };
 
 const closeModal = () => {
@@ -397,6 +545,10 @@ const reset = () => {
     selectedPayrollComponent.value = null;
     selectedPayPeriod.value = null;
     selectedPayFrequency.value = null;
+    amountableStart.value = null;
+    amountableEnd.value = null;
+    startDate.value = null;
+    endDate.value = null;
 }
 
 const loadingOverlay = computed(()=>{
@@ -470,7 +622,19 @@ const componentForm = computed(() => {
 
     let selectedPayrollComponentType = _get(selectedPayrollComponent.value, 'type.value');
 
-    let componentFormTemp = {
+    let componentFormTemp = <{
+        formulable_type: number,
+        amount: number,
+        currency: string | null,
+        pay_period: number | null,
+        pay_type: number | null,
+        pay_frequency_id: number | null,
+        pay_frequency_type: number | null,
+        amountable_start: number | null,
+        amountable_end: number | null,
+        start_date?: string | null,
+        end_date?: string | null,
+    }>{
         formulable_type: props.payrollComponentFormulable
     };
 
@@ -479,7 +643,7 @@ const componentForm = computed(() => {
         if (selectedPayrollComponentType == COMPENSATION.BASIC_SALARY ||
             selectedPayrollComponentType == COMPENSATION.REGULAR_ALLOWANCE) {
 
-            return {
+            componentFormTemp = {
                 ...componentFormTemp,
                 'amount': amount.value,
                 'currency': currency.value,
@@ -487,20 +651,44 @@ const componentForm = computed(() => {
                 'pay_type': payTypeOptions.selected,
                 'pay_frequency_id': payFrequencyOptions.selected,
                 'pay_frequency_type': payFrequencyType.value,
+                'amountable_start': amountableStart.value,
+                'amountable_end': amountableEnd.value,
             };
+
+            if(amountableStart.value == AMOUNTABLE_PAYROLL_COMPONENT_START.CUSTOM_DATE){
+                componentFormTemp = {
+                    ...componentFormTemp,
+                    'start_date': startDate.value
+                };
+            }
+
+            if(amountableEnd.value == AMOUNTABLE_PAYROLL_COMPONENT_END.CUSTOM_DATE){
+                componentFormTemp = {
+                    ...componentFormTemp,
+                    'end_date': endDate.value
+                };
+            }
+
+            return componentFormTemp;
         }
     }
 
     return componentFormTemp;
 });
 const form = computed(() => {
-    let formTemp = {
+    let formTemp = <{
+        company_id: number,
+        payroll_componentable_id: number | null,
+        payroll_componentable_type: string,
+        employee_id?: number | null,
+    }>{
         'company_id': selectedAssociatedCompanyId.value,
         'payroll_componentable_id' : assignablePayrollComponentOptions.selected,
         'payroll_componentable_type' : formulableModelMapKey.value,
     };
 
     if(employeeExists.value){formTemp = {...formTemp, employee_id: props.employeePayload.id}}
+
     formTemp = {...formTemp, ...componentForm.value}
 
     return formTemp;
@@ -530,6 +718,22 @@ const submit = async() => {
     });
 }
 
+const dateStartAndEndDatePickers = ref([
+    {
+        id: `amountable-start-date`,
+        type: 'date',
+        selectedCallback: (payload: {value: string}) => {
+            startDate.value = payload.value;
+        }
+    },
+    {
+        id: `amountable-end-date`,
+        type: 'date',
+        selectedCallback: (payload: {value: string}) => {
+            endDate.value = payload.value;
+        }
+    },
+]);
 </script>
 
 <style scoped>

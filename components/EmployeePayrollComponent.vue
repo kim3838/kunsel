@@ -96,17 +96,26 @@
                         <template v-slot:cell.pay_type="{cell, slot, scrollReference}">
                             <div class="p-[3px]">{{cell.pay_type?.text}}</div>
                         </template>
-                        <template v-slot:cell.pay_frequency_code="{cell, slot, scrollReference}">
-                            <div class="p-[3px]">{{cell.pay_frequency?.code}}</div>
-                        </template>
                         <template v-slot:cell.pay_frequency="{cell, slot, scrollReference}">
                             <div class="p-[3px]">{{cell.pay_frequency?.type?.text}}</div>
+                        </template>
+                        <template v-slot:cell.amountable_start="{cell, slot, scrollReference}">
+                            <div class="p-[3px]">
+                                <span v-if="cell.amountable_start?.value == AMOUNTABLE_PAYROLL_COMPONENT_START.CUSTOM_DATE">{{cell.start_date}}</span>
+                                <span v-else>{{cell.amountable_start?.text}}</span>
+                            </div>
+                        </template>
+                        <template v-slot:cell.amountable_end="{cell, slot, scrollReference}">
+                            <div class="p-[3px]">
+                                <span v-if="cell.amountable_end?.value == AMOUNTABLE_PAYROLL_COMPONENT_END.CUSTOM_DATE">{{cell.end_date}}</span>
+                                <span v-else>{{cell.amountable_end?.text}}</span>
+                            </div>
                         </template>
                     </DataTable>
                 </fieldset>
             </div>
 
-            <div class="grid grid-cols-1 md:gap-2 lg:grid-cols-3">
+            <div class="grid grid-cols-1 md:gap-2 lg:grid-cols-2">
                 <fieldset class="neutral-border px-2 pb-2 space-y-2">
                     <legend class="text-sm">Deductions</legend>
                     <div v-if="false">
@@ -179,7 +188,7 @@
                     </DataTable>
                 </fieldset>
 
-                <fieldset class="lg:col-span-2 neutral-border px-2 pb-2 space-y-2">
+                <fieldset class="lg:col-span-1 neutral-border px-2 pb-2 space-y-2">
                     <legend class="text-sm">Income Tax</legend>
                     <div v-if="false">
                         <span class="font-semibold">Employee Income Taxes:</span> {{employeeIncomeTaxData}}<br>
@@ -389,8 +398,9 @@ const employeeCompensationHeaders = reactive<TableHeaderT[]>([
     { text: 'Currency', value: 'currency'},
     { text: 'Pay Period', value: 'pay_period'},
     { text: 'Pay Type', value: 'pay_type'},
-    { text: 'Pay Frequency Code', value: 'pay_frequency_code'},
     { text: 'Pay Frequency', value: 'pay_frequency'},
+    { text: 'From', value: 'amountable_start'},
+    { text: 'To', value: 'amountable_end'},
 ]);
 
 const employeeCompensationData = ref([]);
