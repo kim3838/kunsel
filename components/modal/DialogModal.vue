@@ -2,6 +2,7 @@
     <Modal
         :show="show"
         :max-width="maxWidth"
+        :max-height="maxHeight"
         :closeable="closeable"
         :landscape="landscape"
         :contentPadding="contentPadding"
@@ -40,6 +41,10 @@ const props = defineProps({
     maxWidth: {
         type: [String, null],
         default: null,
+    },
+    maxHeight: {
+        type: [String, null],
+        default: `100vh`,
     },
     closeable: {
         type: Boolean,

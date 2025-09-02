@@ -5,7 +5,7 @@
         </div>
 
         <div v-show="show" class="h-min self-center flex items-center relative z-[60] w-full" :class="[modalContainerClass]">
-            <div class="modal-body overflow-auto mx-auto my-2 w-full" :class="[modalBodyClass]" :style="[widthStyle]" style="max-height: calc(100vh - 1rem);">
+            <div class="modal-body overflow-auto mx-auto my-2 w-full" :class="[modalBodyClass]" :style="[widthStyle, heightStyle]">
                 <slot></slot>
             </div>
         </div>
@@ -38,6 +38,10 @@ const props = defineProps({
         type: [String, null],
         default: null,
     },
+    maxHeight: {
+        type: [String, null],
+        default: `100vh`,
+    },
     closeable: {
         type: Boolean,
         default: true,
@@ -58,6 +62,15 @@ const widthStyle = computed(() => {
     }
     return {
         'max-width': props.maxWidth ? props.maxWidth : 'max-content',
+    }
+})
+
+const heightStyle = computed(() => {
+
+    let maxHeight = props.maxHeight ? props.maxHeight : `100vh`;
+
+    return {
+        'max-height': `calc(${maxHeight} - 1rem)`
     }
 })
 
