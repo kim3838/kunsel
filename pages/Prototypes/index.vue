@@ -7,7 +7,7 @@
                         <div class="grid gap-2 grid-cols-1 sm:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-8">
                             <div class="block">
                                 <InputLabel :size="'sm'" value="Search"/>
-                                <Input :size="'md'" ref="searchInput" v-model="filters.search.keyword" class="w-full" placeholder="Search something" type="text" autocomplete="off"/>
+                                <Input :size="'md'" ref="searchInput" v-model="filters.search.keyword" class="w-full" placeholder="Search something" type="text"/>
                             </div>
                             <div class="block">
                                 <InputLabel :size="'sm'" value="_" class="text-transparent"/>
@@ -18,7 +18,7 @@
                         <div class="grid gap-2 grid-cols-1 sm:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-8">
                             <div class="block">
                                 <InputLabel :size="'sm'" value="Code"/>
-                                <Input :size="'md'" readonly v-model="filters.code" class="w-full" placeholder="Search something" type="text" autocomplete="off"/>
+                                <Input :size="'md'" readonly v-model="filters.code" class="w-full" placeholder="Search something" type="text"/>
                             </div>
                             <div class="block">
                                 <InputLabel :size="'sm'" value="_" class="text-transparent"/>

@@ -31,7 +31,6 @@
                             v-if="active"
                             :tabindex="tabindexInput"
                             :readonly="!searchable"
-                            autocomplete="off"
                             class="w-full"
                             ref="selectionSearch"
                             :placeholder="searchable ? 'Search...' : selectionSummary"

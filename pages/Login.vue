@@ -16,8 +16,7 @@
                                             id="identifier"
                                             class="w-full"
                                             ref="identifierInput"
-                                            v-model="identifier"
-                                            autocomplete="off" />
+                                            v-model="identifier" />
                                     </div>
 
                                     <div class="block mt-4">
@@ -29,8 +28,7 @@
                                             :type="'password'"
                                             class="w-full tracking-widest"
                                             v-model="password"
-                                            required
-                                            autocomplete="current-password" />
+                                            required />
                                     </div>
 
                                     <div class="block mt-4">

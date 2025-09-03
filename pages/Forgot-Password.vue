@@ -18,8 +18,7 @@
                                             class="w-full"
                                             ref="emailInput"
                                             v-model="email"
-                                            autofocus
-                                            autocomplete="off" />
+                                            autofocus />
                                     </div>
 
                                     <div class="flex mt-4 items-center justify-end">

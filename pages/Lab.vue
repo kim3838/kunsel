@@ -562,7 +562,7 @@
                             :icon="tabGroup.icon"/>
 
                         <!-- Input -->
-                        <Input :glint="tabGroup.glint" :placeholder="'Enter value'" :size="tabGroup.size" type="text" autocomplete="off" />
+                        <Input :glint="tabGroup.glint" :placeholder="'Enter value'" :size="tabGroup.size" type="text"/>
 
                         <!-- Input with icon -->
                         <InputWithIcon
@@ -570,13 +570,11 @@
                             ref="inputValue"
                             :size="tabGroup.size"
                             :icon="tabGroup.icon"
-                            :placeholder="'Enter value'"
-                            autocomplete="off" />
+                            :placeholder="'Enter value'" />
                         <InputWithIcon
                             :glint="tabGroup.glint"
                             :icon="tabGroup.icon"
                             :size="tabGroup.size"
-                            autocomplete="off"
                             readonly
                             :disabled="false" />
 
@@ -615,7 +613,6 @@
                             :size="'lg'"
                             :id="'date'"
                             v-model="formStore.filters.date"
-                            autocomplete="off"
                             readonly
                             :disabled="false"
                             :glint="true" />
@@ -627,7 +624,6 @@
                             :size="'lg'"
                             :id="'datetime'"
                             v-model="formStore.filters.dateTime"
-                            autocomplete="off"
                             readonly
                             :disabled="false"
                             :glint="true" />
@@ -652,7 +648,6 @@
                             ref="searchInput"
                             :size="'lg'"
                             type="text"
-                            autocomplete="off"
                             :glint="true" />
                     </div>
                 </div>

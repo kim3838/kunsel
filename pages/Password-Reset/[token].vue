@@ -15,8 +15,7 @@
                                         :type="'email'"
                                         class="w-full"
                                         v-model="data.email"
-                                        autofocus
-                                        autocomplete="off" />
+                                        autofocus />
                                 </div>
 
                                 <div class="block mt-4">

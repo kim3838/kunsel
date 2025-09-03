@@ -18,6 +18,7 @@
                     disabled ? 'cursor-not-allowed' : '',
                 ]">
                 <input
+                    autocomplete="off"
                     :id="id"
                     :tabindex="tabindex"
                     :disabled="disabled"

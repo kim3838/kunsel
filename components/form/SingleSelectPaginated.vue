@@ -28,7 +28,6 @@
                             v-if="active"
                             :tabindex="tabindexInput"
                             :readonly="!searchable"
-                            autocomplete="off"
                             ref="selectionSearch"
                             :placeholder="searchable ? 'Search...' : selectionSummary"
                             :override="{spacing: 'pl-[0.3rem] p-0'}"

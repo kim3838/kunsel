@@ -29,8 +29,7 @@
                                             class="w-full"
                                             ref="codeInput"
                                             inputmode="numeric"
-                                            :placeholder="recovery ? 'Recovery code' : 'Authentication code'"
-                                            autocomplete="off" />
+                                            :placeholder="recovery ? 'Recovery code' : 'Authentication code'" />
                                     </div>
 
                                     <div v-if="$coreStore.service.error.payload && !useNuxtApp().$coreStore.service.error.prompt" class="block text-sm text-red-400">

@@ -7,7 +7,7 @@
                         <pre>OFETCH PENDING: {{ofetchPending}}</pre>
                         <pre class="bg-opacity-50 bg-slate-200">OFETCH RESPONSE: <span v-text="ofetchData" /></pre>
                         <pre class="bg-opacity-50 bg-slate-200">OFETCH RESPONSE: <span v-html="ofetchData" /></pre>
-                        <Input :size="'lg'" class="font-stiff" v-model="singleLineStringValue" type="text" autocomplete="off"/>
+                        <Input :size="'lg'" class="font-stiff" v-model="singleLineStringValue" type="text"/>
                         <TextArea :cols="140" :size="'lg'" class="font-stiff" v-model="multiLineStringValue"/>
                         <Button class="inline-block" @click="oFetchGet" :label="'OFetch Get'" />
                     </div>

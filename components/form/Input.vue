@@ -12,6 +12,7 @@
                     disabled ? 'cursor-not-allowed' : ''
                 ]">
                 <input
+                    autocomplete="off"
                     :tabindex="tabindex"
                     :disabled="disabled"
                     :class="[
