@@ -291,6 +291,7 @@ import type {SelectionOptionsT} from "@/public/js/types/form";
 
 useLayout().setNavigationMode('solid', 'Employees/[id].vue');
 
+const {render} = dateTimePicker();
 const route = useRoute();
 const {timezoneSelections} = useCommon();
 const {screenWidthBreakpoint, width: screenWidth} = useScreen();
@@ -555,6 +556,9 @@ watch(updatedAssociatedCompanyFlag, (newValue) => {
 
 //Employee Payroll Components
 const employeePayrollComponentsPending = ref(true);
+if(creatingEmployee){
+    employeePayrollComponentsPending.value = false;
+}
 const employeeCompensationData = ref([]);
 const employeeDeductionData = ref([]);
 const employeeIncomeTaxData = ref([]);
@@ -974,6 +978,12 @@ const employeePayrollComponentFormSubmit = async(employee = null) => {
 
                 if (payrollComponentType == COMPENSATION.BASIC_SALARY ||
                     payrollComponentType == COMPENSATION.REGULAR_ALLOWANCE) {
+
+                    let amountableStart = _get(payrollComponent, 'amountable_start.value', null);
+                    let amountableEnd = _get(payrollComponent, 'amountable_end.value', null);
+                    let startDate = _get(payrollComponent, 'start_date', null);
+                    let endDate = _get(payrollComponent, 'end_date', null);
+
                     employeePayrollComponentFormBody = {
                         ...employeePayrollComponentFormBody,
                         'amount': _get(payrollComponent, 'amount', 0),
@@ -981,6 +991,22 @@ const employeePayrollComponentFormSubmit = async(employee = null) => {
                         'pay_period': _get(payrollComponent, 'pay_period.value', null),
                         'pay_type': _get(payrollComponent, 'pay_type.value', null),
                         'pay_frequency_id': _get(payrollComponent, 'pay_frequency_id', null),
+                        'amountable_start': amountableStart,
+                        'amountable_end': amountableEnd,
+                    }
+
+                    if(amountableStart == AMOUNTABLE_PAYROLL_COMPONENT_START.CUSTOM_DATE){
+                        employeePayrollComponentFormBody = {
+                            ...employeePayrollComponentFormBody,
+                            'start_date': startDate
+                        };
+                    }
+
+                    if(amountableEnd == AMOUNTABLE_PAYROLL_COMPONENT_END.CUSTOM_DATE){
+                        employeePayrollComponentFormBody = {
+                            ...employeePayrollComponentFormBody,
+                            'end_date': endDate
+                        };
                     }
                 }
             }
@@ -1086,7 +1112,6 @@ const datePickers = ref([
         }
     }
 ]);
-const {render} = dateTimePicker();
 
 if(clientReadyState.value){
     onMounted(async () => {

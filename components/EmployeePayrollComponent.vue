@@ -52,12 +52,12 @@
                             :icon="'ic:sharp-restart-alt'"
                             :disabled="disableEmployeeCompensationActions"
                             @click="employeeCompensationExecute" />
+                        <UnorderedList
+                            v-if="disableEmployeeCompensationActions"
+                            :icon="'eos-icons:loading'"
+                            :size="'md'"
+                            :label="'Please wait...'"/>
                     </div>
-                    <UnorderedList
-                        v-if="disableEmployeeCompensationActions"
-                        :icon="'eos-icons:loading'"
-                        :size="'md'"
-                        :label="'Please wait...'"/>
                     <DataTable
                         :headers="employeeCompensationHeaders"
                         :size="'lg'"
@@ -147,12 +147,12 @@
                             :icon="'ic:sharp-restart-alt'"
                             :disabled="disableEmployeeDeductionActions"
                             @click="employeeDeductionExecute" />
+                        <UnorderedList
+                            v-if="disableEmployeeDeductionActions"
+                            :icon="'eos-icons:loading'"
+                            :size="'md'"
+                            :label="'Please wait...'"/>
                     </div>
-                    <UnorderedList
-                        v-if="disableEmployeeDeductionActions"
-                        :icon="'eos-icons:loading'"
-                        :size="'md'"
-                        :label="'Please wait...'"/>
                     <DataTable
                         :headers="employeeDeductionHeaders"
                         :size="'lg'"
@@ -219,12 +219,12 @@
                             :icon="'ic:sharp-restart-alt'"
                             :disabled="disableEmployeeIncomeTaxActions"
                             @click="employeeIncomeTaxExecute" />
+                        <UnorderedList
+                            v-if="disableEmployeeIncomeTaxActions"
+                            :icon="'eos-icons:loading'"
+                            :size="'md'"
+                            :label="'Please wait...'"/>
                     </div>
-                    <UnorderedList
-                        v-if="disableEmployeeIncomeTaxActions"
-                        :icon="'eos-icons:loading'"
-                        :size="'md'"
-                        :label="'Please wait...'"/>
                     <DataTable
                         :headers="employeeIncomeTaxHeaders"
                         :size="'lg'"
@@ -542,7 +542,11 @@ const employeePayrollComponentsExecute = async () => {
         }
     });
 }
-await employeePayrollComponentsExecute();
+
+if(!props.isolated && !creatingEmployee.value){
+    await employeePayrollComponentsExecute();
+}
+
 
 const deleteSelectedPayrollComponent = async (component) => {
 
