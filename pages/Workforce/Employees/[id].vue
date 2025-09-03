@@ -592,7 +592,7 @@ const disableActions = computed(() => {
     return coreFormPending.value
         || employeeFormPending.value
         || employeeContactFormPending.value
-        || employeePayrollComponentFormPending.value
+        || employeeAdditionalFormPending.value
 });
 const validateForms = ref(true);
 const coreFormPending = ref(false);
@@ -963,7 +963,7 @@ const reSubmitCoreForm = async(employee = null, formPayload = {}) => {
     } else {
 
         if(creatingEmployee.value){
-            await employeePayrollComponentFormSubmit(employee);
+            await employeeAdditionalFormSubmit(employee);
         } else {
             coreFormPending.value = true;
             resolveEmployee(employee);
@@ -971,90 +971,153 @@ const reSubmitCoreForm = async(employee = null, formPayload = {}) => {
     }
 }
 
-//Save employee payroll component
-const employeePayrollComponentFormPending = ref(false);
-const employeePayrollComponentFormSubmit = async(employee = null) => {
+/**
+ * Additional forms
+ *
+ * Payroll components
+ * Employment profiles
+ **/
+const employeeAdditionalForms = (employee = null) => {
+    const employeeId = _get(employee, 'id', null);
+    let formsTemp = [];
+
+    let payrollComponents = _concat(employeeCompensationData.value, employeeDeductionData.value, employeeIncomeTaxData.value);
+    let payrollComponentFormPayload: {
+        api: string;
+        forms: EmployeePayrollComponentT[];
+    } = {
+        api: '/api/employee-payroll-component',
+        forms: []
+    };
+
+    payrollComponents.forEach((payrollComponent) => {
+        let payrollFormulableType = _get(payrollComponent, 'formulable_type.value');
+        let payrollComponentType = _get(payrollComponent, 'payroll_componentable.type.value');
+
+        let employeePayrollComponentFormBody: EmployeePayrollComponentT = {
+            employee_id: employeeId,
+            company_id: selectedAssociatedCompanyId.value,
+            formulable_type: payrollFormulableType,
+            payroll_componentable_type: payrollComponent.payroll_componentable_type,
+            payroll_componentable_id: payrollComponent.payroll_componentable_id,
+        };
+
+        if(payrollFormulableType == FORMULABLE.EARNINGS){
+
+            if (payrollComponentType == COMPENSATION.BASIC_SALARY ||
+                payrollComponentType == COMPENSATION.REGULAR_ALLOWANCE) {
+
+                let amountableStart = _get(payrollComponent, 'amountable_start.value', null);
+                let amountableEnd = _get(payrollComponent, 'amountable_end.value', null);
+                let startDate = _get(payrollComponent, 'start_date', null);
+                let endDate = _get(payrollComponent, 'end_date', null);
+
+                employeePayrollComponentFormBody = {
+                    ...employeePayrollComponentFormBody,
+                    'amount': _get(payrollComponent, 'amount', 0),
+                    'currency': _get(payrollComponent, 'currency', null),
+                    'pay_period': _get(payrollComponent, 'pay_period.value', null),
+                    'pay_type': _get(payrollComponent, 'pay_type.value', null),
+                    'pay_frequency_id': _get(payrollComponent, 'pay_frequency_id', null),
+                    'amountable_start': amountableStart,
+                    'amountable_end': amountableEnd,
+                }
+
+                if(amountableStart == AMOUNTABLE_PAYROLL_COMPONENT_START.CUSTOM_DATE){
+                    employeePayrollComponentFormBody = {
+                        ...employeePayrollComponentFormBody,
+                        'start_date': startDate
+                    };
+                }
+
+                if(amountableEnd == AMOUNTABLE_PAYROLL_COMPONENT_END.CUSTOM_DATE){
+                    employeePayrollComponentFormBody = {
+                        ...employeePayrollComponentFormBody,
+                        'end_date': endDate
+                    };
+                }
+            }
+        }
+
+        payrollComponentFormPayload.forms.push(employeePayrollComponentFormBody);
+    });
+
+    formsTemp.push(payrollComponentFormPayload);
+
+    let employmentProfileFormPayload: {
+        api: string;
+        forms: EmploymentProfileT[];
+    } = {
+        api: '/api/employment-profile',
+        forms: []
+    };
+
+    employmentProfiles.value.forEach((employmentProfile) => {
+        let endOfServiceType = _get(employmentProfile, 'end_of_service_type.value', null);
+
+        let employeeEmploymentProfileFormBody: EmploymentProfileT = {
+            employee_id: employeeId,
+            status: _get(employmentProfile, 'status.value', null),
+            employment_type: _get(employmentProfile, 'employment_type.value', null),
+            start_date: _get(employmentProfile, 'start_date', null),
+        }
+
+        if(endOfServiceType !== null){
+            employeeEmploymentProfileFormBody = {
+                ...employeeEmploymentProfileFormBody,
+                end_of_service_type: endOfServiceType,
+                end_date: _get(employmentProfile, 'end_date', null),
+            }
+        }
+
+        employmentProfileFormPayload.forms.push(employeeEmploymentProfileFormBody);
+    });
+
+    formsTemp.push(employmentProfileFormPayload);
+
+    return formsTemp;
+}
+
+/**
+ * Save additional forms
+ *
+ * Payroll components
+ * Employment profiles
+ **/
+const employeeAdditionalFormPending = ref(false);
+const employeeAdditionalFormSubmit = async(employee = null) => {
 
     const employeeId = _get(employee, 'id', null);
 
     if(Boolean(employeeId)){
-        employeePayrollComponentFormPending.value = true;
+        employeeAdditionalFormPending.value = true;
 
-        //@ts-ignore
-        let payrollComponents = _concat(employeeCompensationData.value, employeeDeductionData.value, employeeIncomeTaxData.value);
+        let additionalFormPromises: Promise<any>[] = [];
 
-        let payrollComponentPromises: Promise<any>[] = [];
+        employeeAdditionalForms(employee).forEach((formPayload) => {
 
-        //@ts-ignore
-        payrollComponents.forEach((payrollComponent) => {
+            formPayload.forms.forEach((formBody) => {
 
-            let payrollFormulableType = _get(payrollComponent, 'formulable_type.value');
-            let payrollComponentType = _get(payrollComponent, 'payroll_componentable.type.value');
-
-            let employeePayrollComponentFormBody = {
-                employee_id: employeeId,
-                company_id: selectedAssociatedCompanyId.value,
-                formulable_type: payrollFormulableType,
-                payroll_componentable_type: payrollComponent.payroll_componentable_type,
-                payroll_componentable_id: payrollComponent.payroll_componentable_id,
-            };
-
-            if(payrollFormulableType == FORMULABLE.EARNINGS){
-
-                if (payrollComponentType == COMPENSATION.BASIC_SALARY ||
-                    payrollComponentType == COMPENSATION.REGULAR_ALLOWANCE) {
-
-                    let amountableStart = _get(payrollComponent, 'amountable_start.value', null);
-                    let amountableEnd = _get(payrollComponent, 'amountable_end.value', null);
-                    let startDate = _get(payrollComponent, 'start_date', null);
-                    let endDate = _get(payrollComponent, 'end_date', null);
-
-                    employeePayrollComponentFormBody = {
-                        ...employeePayrollComponentFormBody,
-                        'amount': _get(payrollComponent, 'amount', 0),
-                        'currency': _get(payrollComponent, 'currency', null),
-                        'pay_period': _get(payrollComponent, 'pay_period.value', null),
-                        'pay_type': _get(payrollComponent, 'pay_type.value', null),
-                        'pay_frequency_id': _get(payrollComponent, 'pay_frequency_id', null),
-                        'amountable_start': amountableStart,
-                        'amountable_end': amountableEnd,
-                    }
-
-                    if(amountableStart == AMOUNTABLE_PAYROLL_COMPONENT_START.CUSTOM_DATE){
-                        employeePayrollComponentFormBody = {
-                            ...employeePayrollComponentFormBody,
-                            'start_date': startDate
-                        };
-                    }
-
-                    if(amountableEnd == AMOUNTABLE_PAYROLL_COMPONENT_END.CUSTOM_DATE){
-                        employeePayrollComponentFormBody = {
-                            ...employeePayrollComponentFormBody,
-                            'end_date': endDate
-                        };
-                    }
-                }
-            }
-
-            payrollComponentPromises.push(
-                new Promise((resolve, reject) => {
-                    laraFetch(`/api/employee-payroll-component`, {
-                        method: 'POST',
-                        body: employeePayrollComponentFormBody,
-                    }, {
-                        onRequestError: (request, options, error) => {
-                            reject(error);
-                        },
-                        onResponse: (request, options, response) => {
-                            resolve(response);
-                        }
+                additionalFormPromises.push(
+                    new Promise((resolve, reject) => {
+                        laraFetch(formPayload.api, {
+                            method: 'POST',
+                            body: formBody,
+                        }, {
+                            onRequestError: (request, options, error) => {
+                                reject(error);
+                            },
+                            onResponse: (request, options, response) => {
+                                resolve(response);
+                            }
+                        })
                     })
-                })
-            );
-        })
+                );
+            });
+        });
 
-        await Promise.all(payrollComponentPromises);
-        employeePayrollComponentFormPending.value = false;
+        await Promise.all(additionalFormPromises);
+        employeeAdditionalFormPending.value = false;
     }
 
     resolveEmployee(employee);
@@ -1074,7 +1137,8 @@ const resolveEmployee = (employee) => {
     resolvedEmployeeModal.value = true;
 }
 
-const employeePayrollComponentReference = useTemplateRef('employeePayrollComponent')
+const employeePayrollComponentReference = useTemplateRef('employeePayrollComponent');
+const employeeEmploymentProfileReference = useTemplateRef('employeeEmploymentProfile');
 const resetPageToInitialState = async () => {
     validateForms.value = true;
 
@@ -1120,6 +1184,10 @@ const resetPageToInitialState = async () => {
     employeeDeductionData.value = [];
     employeeIncomeTaxData.value = [];
     employeePayrollComponentReference.value?.resetPayrollComponents();
+
+    // Reset Employment Profiles
+    employmentProfiles.value = [];
+    employeeEmploymentProfileReference.value?.reset();
 
     await nonEmployeeUsersExecute();
     resolvedEmployeeModal.value = false;
