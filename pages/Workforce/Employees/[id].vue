@@ -258,6 +258,21 @@
                         </fieldset>
                     </div>
 
+                    <div v-if="employmentProfilesPending" class="flex items-center min-h-8"  >
+                        <UnorderedList
+                            :icon="'eos-icons:loading'"
+                            :size="'md'"
+                            :label="'Loading Employment Profiles...'"/>
+                    </div>
+
+                    <EmploymentProfiles
+                        ref="employeeEmploymentProfile"
+                        v-model:employment-profiles-pending="employmentProfilesPending"
+                        v-model:employment-profiles-data="employmentProfiles"
+                        v-model:child-component-employee-payload="childComponentEmployeePayload"
+                        v-model:disable-actions="disableActions"
+                    />
+
                     <div v-if="employeePayrollComponentsPending" class="flex items-center min-h-8"  >
                         <UnorderedList
                             :icon="'eos-icons:loading'"
@@ -288,6 +303,7 @@
 import {storeToRefs} from "pinia";
 import type {TableHeaderT} from "@/public/js/types/data";
 import type {SelectionOptionsT} from "@/public/js/types/form";
+import type {EmployeePayrollComponentT, EmploymentProfileT} from "@/public/js/types/employee";
 
 useLayout().setNavigationMode('solid', 'Employees/[id].vue');
 
@@ -479,6 +495,13 @@ const maritalStatusOptions = reactive({
 });
 const employeeBirthdate = ref('1990-01-01');
 
+//Employment Profiles
+const employmentProfilesPending = ref(true);
+if(creatingEmployee){
+    employmentProfilesPending.value = false;
+}
+const employmentProfiles = ref([]);
+
 //Employee Organization
 const companyOrganizationSelections = companyOrganizationSelectionsState();
 
@@ -525,6 +548,8 @@ const fetchEmployee = async () => {
 
             //Set user profile creation options to null if user_id exists
             employeeUserCreationOptions.selected = _get(response, '_data.values.employee.user_id', false) ? null : EMPLOYEE_USER_CREATION.NONE;
+
+            employmentProfiles.value = _get(response, '_data.values.employee.employment_profiles', []);
         },
     });
 };

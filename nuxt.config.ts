@@ -100,6 +100,8 @@ export default defineNuxtConfig({
                     { name: 'filter', as: '_filter'},
                     { name: 'first', as: '_first'},
                     { name: 'compact', as: '_compact'},
+                    { name: 'isNil', as: '_isNil'},
+                    { name: 'negate', as: '_negate'},
                 ]
             }
         ]

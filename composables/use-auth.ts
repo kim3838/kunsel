@@ -7,6 +7,7 @@ export type User = {
     email: string | null,
     email_verified_at: string | null,
     type: number | null,
+    timezone: string,
     two_factor_enabled: boolean | null,
     two_factor_confirmed: boolean | null,
 };

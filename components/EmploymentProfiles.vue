@@ -1,0 +1,313 @@
+<template>
+    <div>
+        <EmploymentProfileModal
+            v-model:creatingOrEditing="creatingOrEditing"
+            v-model:employeePayload="employeePayload"
+            v-model:editPayloadIndex="editIndex"
+            v-model:editPayload="editPayload"
+            @resolved="employmentProfileModalResolved"
+        ></EmploymentProfileModal>
+
+        <fieldset class="neutral-border px-2 pb-2 space-y-2">
+            <legend class="text-lg font-header">Employment Profile</legend>
+
+            <div v-if="false">
+                <span class="font-semibold">Employee Payload:</span> {{childComponentEmployeePayload}}<br>
+                <span class="font-semibold">Employee Ulid:</span> {{employeeUlid}}<br>
+                <span class="font-semibold">Edit Payload Index:</span> {{editIndex}}<br>
+                <span class="font-semibold">Props Disable Actions:</span> {{props.disableActions}}<br>
+                <span class="font-semibold">Employment Profiles:</span> {{employmentProfilesData}}<br>
+                <span class="font-semibold">Employment Profiles[1]:</span> {{employmentProfilesData[1]}}<br>
+                <span class="font-semibold">Selected Employment Profiles:</span> {{selectedEmploymentProfiles}}<br>
+            </div>
+
+            <div class="grid grid-cols-1 md:gap-2 lg:grid-cols-1">
+                <div class="space-y-2">
+                    <div class="inline-flex gap-2 items-center">
+                        <Button
+                            class="w-min"
+                            :variant=" 'outline'"
+                            :size="'sm'"
+                            :disabled="disableActions"
+                            :icon="'mdi:plus'"
+                            @click="createOrEdit()"/>
+                        <Button
+                            v-if="!creatingEmployee"
+                            class="w-min"
+                            :variant="'outline'"
+                            :size="'sm'"
+                            :icon="'mdi:delete-outline'"
+                            :disabled="disableActions"
+                            @click="deleteSelected()" />
+                        <Button
+                            v-if="!creatingEmployee"
+                            class="w-min"
+                            :variant="'outline'"
+                            :size="'sm'"
+                            :icon="'ic:sharp-restart-alt'"
+                            :disabled="disableActions"
+                            @click="employmentProfileExecute" />
+                        <UnorderedList
+                            v-if="disableActions"
+                            :icon="'eos-icons:loading'"
+                            :size="'md'"
+                            :label="'Please wait...'"/>
+                    </div>
+
+                    <DataTable
+                        :headers="employmentProfileHeaders"
+                        :size="'lg'"
+                        :rows="employmentProfilesData"
+                        :disabled="disableDataTable"
+                        v-model="selectedEmploymentProfiles"
+                        selection>
+                        <template v-slot:cell.action="{cell,slot, headerIndex, rowIndex}">
+                            <div class="h-full mx-0.5 space-x-0.5 w-full flex items-center">
+                                <Button
+                                    v-if="creatingEmployee"
+                                    class="w-min"
+                                    :variant="'outline'"
+                                    :size="slot.buttonSize"
+                                    :disabled="disableActions"
+                                    :icon="'mdi:delete-forever'"
+                                    @click="deleteRow(rowIndex)"/>
+                                <Button
+                                    class="w-min"
+                                    :variant="'outline'"
+                                    :size="slot.buttonSize"
+                                    :disabled="disableActions"
+                                    :icon="'mdi:pen'"
+                                    @click="createOrEdit(cell, rowIndex)"/>
+                            </div>
+                        </template>
+                        <template v-slot:cell.status="{cell, slot, scrollReference}">
+                            <div class="p-[3px]">{{cell.status.text}}</div>
+                        </template>
+                        <template v-slot:cell.employment_type="{cell, slot, scrollReference}">
+                            <div class="p-[3px]">{{cell.employment_type.text}}</div>
+                        </template>
+                        <template v-slot:cell.end_of_service_type="{cell, slot, scrollReference}">
+                            <div class="p-[3px]">{{cell.end_of_service_type?.text}}</div>
+                        </template>
+                    </DataTable>
+                </div>
+
+                <div class="lg:col-span-1 px-2 pb-2 space-y-2">
+
+                </div>
+            </div>
+        </fieldset>
+    </div>
+</template>
+
+<script setup lang="ts">
+import {storeToRefs} from "pinia";
+import type {TableHeaderT} from "@/public/js/types/data";
+
+const props = defineProps({
+    childComponentEmployeePayload: {
+        type: Object,
+        default: () => {
+            return {};
+        }
+    },
+    employmentProfilesPending: {
+        type: Boolean,
+        default: false,
+    },
+    employmentProfilesData: {
+        type: Array,
+        default: () => {
+            return [];
+        }
+    },
+    disableActions: {
+        type: Boolean,
+        default: false,
+    },
+
+    isolated: {
+        type: Boolean,
+        default: false,
+    },
+});
+
+const employeePayload = toRef(props, 'childComponentEmployeePayload');
+
+const emit = defineEmits([
+    'update:creatingOrEditing',
+    'update:employmentProfilesPending',
+    'update:employmentProfilesData',
+]);
+
+watch(() => props.childComponentEmployeePayload, async (employeePayload) => {
+
+    if(props.isolated && Boolean(employeePayload.id)){
+
+        await employmentProfileExecute();
+        emit('update:employmentProfilesPending', false);
+    }
+});
+
+const creatingEmployee = computed(() => {
+    return !Boolean(props.childComponentEmployeePayload.id);
+});
+const employeeId = computed(() => {
+    return props.childComponentEmployeePayload.id;
+});
+const employeeUlid = computed(() => {
+    return props.childComponentEmployeePayload.ulid;
+});
+
+const creatingOrEditing = ref(false);
+const deleting = ref(false);
+const editIndex = ref(-1);
+const editPayload = ref({});
+
+const createOrEdit = (attributes = {}, rowIndex = -1) => {
+    creatingOrEditing.value = true;
+    if(creatingEmployee.value){
+        editIndex.value = rowIndex;
+    }
+
+    editPayload.value = attributes;
+};
+
+//DataTable
+const employmentProfileHeaders = reactive<TableHeaderT[]>([
+    { text: '', value: 'action'},
+    { text: 'Status', value: 'status'},
+    { text: 'Employment Type', value: 'employment_type'},
+    { text: 'Start Date', value: 'start_date'},
+    { text: 'End Of Service Type', value: 'end_of_service_type'},
+    { text: 'End Date', value: 'end_date'},
+]);
+
+const employmentProfilesData = ref([]);
+const selectedEmploymentProfiles = ref([]);
+const employmentProfilesPending = ref(false);
+const employmentProfileExecute = async () => {
+
+    if(import.meta.server || creatingEmployee.value){
+        emit('update:employmentProfilesPending', false);
+        return;
+    }
+
+    employmentProfilesPending.value = true;
+
+    await laraFetch(`/api/employment-profiles`, {
+        method: 'GET',
+        params: {
+            filters: {
+                //Employee ids,filter out null and undefined
+                employee_id: _filter([employeeId.value], _negate(_isNil)),
+            }
+        }
+    },{
+        onRequestError: () => {
+            employmentProfilesPending.value = false;
+            emit('update:employmentProfilesPending', false);
+        },
+        onResponse: () => {
+            employmentProfilesPending.value = false;
+            emit('update:employmentProfilesPending', false);
+        },
+        onSuccessResponse: async (request, options, response) => {
+            employmentProfilesData.value = _get(response, '_data.values.employment_profiles', []);
+            emit('update:employmentProfilesData', employmentProfilesData.value);
+        }
+    });
+}
+
+if(!props.isolated && !creatingEmployee.value){
+    await employmentProfileExecute();
+}
+
+const disableActions = computed(() => {
+    return employmentProfilesPending.value || creatingOrEditing.value || deleting.value || props.disableActions;
+});
+const disableDataTable = computed(() => {
+    return employmentProfilesPending.value || creatingOrEditing.value || deleting.value || props.disableActions;
+});
+
+const deleteSelected = async () => {
+
+    let selectedIds: number[] = [];
+
+    selectedIds = selectedEmploymentProfiles.value;
+
+    if(_isEmpty(selectedIds)){
+        return;
+    }
+
+    deleting.value = true;
+
+    let batchDelete: Promise<any>[] = [];
+
+    selectedIds.forEach((id) => {
+        batchDelete.push(
+            new Promise((resolve, reject) => {
+                laraFetch(`/api/employment-profile/${id}`, {
+                    method: 'DELETE',
+                },{
+                    onRequestError: (request, options, error) => {
+                        reject(error);
+                    },
+                    onResponse: (request, options, response) => {
+                        resolve(response);
+                    }
+                })
+            })
+        );
+    });
+
+    await Promise.all(batchDelete);
+    selectedEmploymentProfiles.value = [];
+    await employmentProfileExecute();
+
+    deleting.value = false;
+}
+
+const deleteRow = async (rowIndex: number) => {
+    employmentProfilesData.value.splice(rowIndex, 1);
+    emit('update:employmentProfilesData', employmentProfilesData.value);
+}
+
+const employmentProfileModalResolved = (attributes, rowIndex = -1) => {
+
+    if(!creatingEmployee.value){
+
+        employmentProfileExecute();
+
+    } else {
+
+        if(_isEmpty(attributes)){
+            return 0;
+        }
+
+        if(rowIndex >= 0){
+            employmentProfilesData.value.splice(rowIndex, 1, attributes);
+            emit('update:employmentProfilesData', employmentProfilesData.value);
+        } else {
+            employmentProfilesData.value.push(attributes);
+            emit('update:employmentProfilesData', employmentProfilesData.value);
+        }
+    }
+};
+
+const reset = () => {
+    creatingOrEditing.value = false;
+    employmentProfilesData.value = [];
+    selectedEmploymentProfiles.value = [];
+    editIndex.value = -1;
+    editPayload.value = {};
+};
+
+defineExpose({
+    reset
+});
+</script>
+
+<style scoped>
+
+</style>
