@@ -704,6 +704,10 @@ const proxyModel = computed({
     }
 });
 
+watch(() => props.modelValue, newValue => {
+    props.options.selected = newValue;
+})
+
 if(proxyModel.value !== undefined){
     props.options.selected = proxyModel.value;
 }
