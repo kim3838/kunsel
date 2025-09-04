@@ -27,7 +27,8 @@
 
                             <a
                                 v-if="navigation.type == 'anchor-link'"
-                                :href="navigation.to">
+                                :href="navigation.to"
+                                class="w-full h-full flex">
                                 <NavLink
                                     :icon="navigation.icon"
                                     :size="navigationHeaderSize">

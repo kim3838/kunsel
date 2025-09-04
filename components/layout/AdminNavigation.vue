@@ -43,7 +43,7 @@
                     <!-- Navigation Links -->
                     <div class="flex">
                         <NavDrop
-                            class="lg:hidden  h-full"
+                            class="lg:hidden"
                             :size="navigationHeaderSize"
                             :title="'Menu'"
                             :drop-options="navigationLinks" />
@@ -51,7 +51,6 @@
                     <div class="hidden lg:flex">
                         <span class="flex" v-for="navigation in navigationLinks" :key="navigation.key">
                             <NavLink
-                                class="h-full"
                                 v-if="navigation.type == 'link'"
                                 :size="navigationHeaderSize"
                                 :to="navigation.to"
@@ -62,11 +61,10 @@
                             </NavLink>
 
                             <a
-                                class="h-full"
                                 v-if="navigation.type == 'anchor-link'"
-                                :href="navigation.to">
+                                :href="navigation.to"
+                                class="w-full h-full flex">
                                 <NavLink
-                                    class="h-full"
                                     :icon="navigation.icon"
                                     :size="navigationHeaderSize">
                                     {{navigation.title}}
@@ -74,7 +72,6 @@
                             </a>
 
                             <NavDrop
-                                class="h-full"
                                 v-if="navigation.type === 'drop'"
                                 :size="navigationHeaderSize"
                                 :title="navigation.title"
@@ -82,7 +79,6 @@
                                 :drop-options="navigation.options"
                             />
                             <NavSub
-                                class="h-full"
                                 v-if="navigation.type === 'sub-nav'"
                                 :size="navigationHeaderSize"
                                 :title="navigation.title"
@@ -97,7 +93,6 @@
                 <div class="flex">
                     <component
                         :is="navDrop"
-                        class="h-full"
                         v-if="isAuthenticated"
                         :size="navigationHeaderSize"
                         :drop-align="rightNavigationDropAlign"
@@ -106,7 +101,6 @@
                     />
                     <NavDrop
                         v-else
-                        class="h-full"
                         :size="navigationHeaderSize"
                         :title="'Account'"
                         :drop-options="navigationAccountLinks"
@@ -116,7 +110,7 @@
         </div>
         <!-- Sub Navigation -->
         <div v-show="subNavigationOptions.length" class="mt-2 relative w-full flex justify-center" :class="subNavigationFontClass">
-            <div ref="subNavigationRef" tabindex="0" class="max-w-screen-2xl w-full flex flex-wrap justify-start focus:outline-none" :class="[subNavigationOptions.length ? '' : '']">
+            <div ref="subNavigationRef" tabindex="0" class="max-w-screen-2xl w-full flex flex-wrap gap-y-2 justify-start focus:outline-none" :class="[subNavigationOptions.length ? '' : '']">
                 <span class="flex" :class="subNavigationHeightClass" v-for="navigation in subNavigationOptions" :key="navigation.key">
                     <NavLink
                         class="h-full"
@@ -130,11 +124,10 @@
                     </NavLink>
 
                     <a
-                        class="h-full"
                         v-if="navigation.type == 'anchor-link'"
-                        :href="navigation.to">
+                        :href="navigation.to"
+                        class="w-full h-full flex">
                         <NavLink
-                            class="h-full"
                             :icon="navigation.icon"
                             :size="subNavigationHeaderSize">
                             {{navigation.title}}
@@ -148,6 +141,7 @@
                         :title="navigation.title"
                         :icon="navigation.icon"
                         :drop-options="navigation.options"
+                        :drop-active-style="`ripple`"
                     />
                 </span>
             </div>

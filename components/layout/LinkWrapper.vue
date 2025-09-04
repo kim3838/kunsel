@@ -1,39 +1,36 @@
 <template>
     <NuxtLink
-        :to="to"
         :style="{'text-shadow': navigationTextShadow, 'font-family': fontFamily}"
-        class="relative box-border inline-flex items-center px-2 focus:outline-none"
-        :class="[classes, headerFontClass, 'nav-link']">
-        <Icon class="flex-none mr-1" :class="[iconClass]" v-if="icon" :name="icon" />
+        class="relative" :class="[classes, 'nav-link']">
         <slot></slot>
     </NuxtLink>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import {storeToRefs} from 'pinia';
 
 const {$themeStore} = useNuxtApp();
 const {
     navigationMode,
 } = useLayout();
-
 const {
     hexAlpha,
     primary: primaryColor,
     accent: accentColor,
-    neutral: neutralColor,
     textInvert: textInvertColor
 } = storeToRefs($themeStore);
 
+const primaryColor90 = computed(() => {
+    return primaryColor.value + hexAlpha.value['90'];
+});
+const primaryColor80 = computed(() => {
+    return primaryColor.value + hexAlpha.value['80'];
+});
+const accentColor70 = computed(() => {
+    return accentColor.value + hexAlpha.value['70'];
+});
+
 const props = defineProps({
-    to: {
-        type: String,
-        default: null,
-    },
-    icon: {
-        type: String,
-        default: null,
-    },
     active: {
         type: Boolean,
         default: false,
@@ -42,13 +39,10 @@ const props = defineProps({
         type: String,
         default: 'bg',
     },
-    size: {
-        default: 'md'
-    },
     fontFamily: {
         type: String,
         default: 'inherit'
-    }
+    },
 });
 
 const navigationLinkColor = computed(()=>{
@@ -65,46 +59,18 @@ const navigationTextShadow = computed(()=>{
 
     return 'none';
 });
-const primaryColor90 = computed(() => {
-    return primaryColor.value + hexAlpha.value['90'];
-});
-const primaryColor80 = computed(() => {
-    return primaryColor.value + hexAlpha.value['80'];
-});
-const accentColor70 = computed(() => {
-    return accentColor.value + hexAlpha.value['70'];
-});
-
 const classes = computed(() => {
     return props.active
         ? `nav-active-${props.activeStyle}`
         : ''
 });
 
-const headerFontClass = computed(() => {
-    return {
-        'xs': 'text-sm',
-        'sm': 'text-base',
-        'md': 'text-lg',
-        'lg': 'text-xl',
-    }[props.size]
-});
-
-const iconClass = computed(() => {
-    return {
-        '2xs': 'h-4 w-4',
-        'xs': 'h-5 w-5',
-        'sm': 'h-5 w-5',
-        'md': 'h-5 w-5',
-        'lg': 'h-8 w-8'
-    }[props.size];
-});
 </script>
+
 <style scoped>
 .nav-active-bg{
     background-color: v-bind(accentColor70);
 }
-
 .nav-active-ripple{
     color: v-bind(textInvertColor) !important;
     text-shadow: rgba(0, 0, 0, 0.5) 0 1px 2px;

@@ -17,59 +17,70 @@ export const useLayout = () => {
     const navigationAccountLinks = computed<NavigationLinkInterface[]>(() => {
         let links: NavigationLinkInterface[] = [];
 
-        if(isAuthenticated.value){
+        let debugRequests = [
+            {
+                key: 'debug-csr-post',
+                type: 'action',
+                title: 'DEBUG',
+                icon: 'material-symbols:request-quote-sharp',
+                callback: async () => {
+                    await laraFetch("/api/utility/debug", {
+                        method: 'POST',
+                    }, {});
+                },
+            },
+            {
+                key: 'debug-csr-post',
+                type: 'action',
+                title: 'CSR Post',
+                icon: 'material-symbols:request-quote-sharp',
+                callback: async () => {
+                    await laraFetch("/api/utility/post", {
+                        method: 'POST',
+                        params: {key: 'value'},
+                    }, {
+                        onResponse: (request, options, response) => {
+                            //@ts-ignore
+                            console.log({'CSR POST RESPONSE' : response._data.code});
+                        }
+                    });
+                },
+            },
+            {
+                key: 'debug-csr-get',
+                type: 'action',
+                title: 'CSR Get',
+                icon: 'material-symbols:request-quote-sharp',
+                callback: async () => {
+                    await laraFetch("/api/user", {
+                        method: 'GET',
+                    }, {
+                        onResponse: (request, options, response) => {
+                            //@ts-ignore
+                            console.log({'CSR GET RESPONSE' : response._data.code});
+                        }
+                    });
+                },
+            },
+            {
+                key: 'debug-csr-csrf',
+                type: 'action',
+                title: 'CSR Get CSRF',
+                icon: 'material-symbols:request-quote-sharp',
+                callback: async () => {
+                    await laraFetch("/sanctum/csrf-cookie", {
+                        method: 'GET',
+                    }, {
+                        onResponse: (request, options, response) => {
+                            //@ts-ignore
+                            console.log({'CSR GET CSRF' : response._data.code});
+                        }
+                    });
+                },
+            },
+        ];
 
-            let debugRequests = [
-                {
-                    key: 'debug-csr-post',
-                    type: 'action',
-                    title: 'CSR Post',
-                    icon: 'material-symbols:request-quote-sharp',
-                    callback: async () => {
-                        await laraFetch("/api/utility/post", {
-                            method: 'POST',
-                            params: {key: 'value'},
-                        }, {
-                            onResponse: (request, options, response) => {
-                                //@ts-ignore
-                                console.log({'CSR POST RESPONSE' : response._data.code});
-                            }
-                        });
-                    },
-                },
-                {
-                    key: 'debug-csr-get',
-                    type: 'action',
-                    title: 'CSR Get',
-                    icon: 'material-symbols:request-quote-sharp',
-                    callback: async () => {
-                        await laraFetch("/api/user", {
-                            method: 'GET',
-                        }, {
-                            onResponse: (request, options, response) => {
-                                //@ts-ignore
-                                console.log({'CSR GET RESPONSE' : response._data.code});
-                            }
-                        });
-                    },
-                },
-                {
-                    key: 'debug-csr-csrf',
-                    type: 'action',
-                    title: 'CSR Get CSRF',
-                    icon: 'material-symbols:request-quote-sharp',
-                    callback: async () => {
-                        await laraFetch("/sanctum/csrf-cookie", {
-                            method: 'GET',
-                        }, {
-                            onResponse: (request, options, response) => {
-                                //@ts-ignore
-                                console.log({'CSR GET CSRF' : response._data.code});
-                            }
-                        });
-                    },
-                },
-            ];
+        if(isAuthenticated.value){
 
             links = links.concat([
                 {
@@ -99,6 +110,10 @@ export const useLayout = () => {
                 to: '/login',
             });
         }
+
+        links = links.concat([
+            ...(debugRequests as NavigationLinkInterface[])
+        ]);
 
         return links;
     });
@@ -318,7 +333,7 @@ export const useLayout = () => {
                         //icon: 'mdi:account-multiple',
                         to: '/import/employees',
                         route_active: 'import-employees'
-                    }
+                    },
                 ],
             }] : []) as NavigationLinkInterface[],
             ...((userIsSuperAdmin.value || adminInAnyCompany.value) ? [{

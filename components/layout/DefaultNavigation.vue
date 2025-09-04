@@ -62,7 +62,8 @@
 
                             <a
                                 v-if="navigation.type == 'anchor-link'"
-                                :href="navigation.to">
+                                :href="navigation.to"
+                                class="w-full h-full flex">
                                 <NavLink
                                     :icon="navigation.icon"
                                     :size="navigationHeaderSize">
@@ -125,7 +126,7 @@
         </div>
         <!-- Sub Navigation -->
         <div v-show="subNavigationOptions.length" class="mt-2 relative w-full flex justify-center" :class="subNavigationFontClass">
-            <div ref="subNavigationRef" tabindex="0" class="max-w-screen-2xl w-full flex flex-wrap justify-start focus:outline-none" :class="[subNavigationOptions.length ? '' : '']">
+            <div ref="subNavigationRef" tabindex="0" class="max-w-screen-2xl w-full flex flex-wrap gap-y-2 justify-start focus:outline-none" :class="[subNavigationOptions.length ? '' : '']">
                 <span class="flex" :class="subNavigationHeightClass" v-for="navigation in subNavigationOptions" :key="navigation.key">
                     <NavLink
                         class="h-full"
@@ -139,11 +140,10 @@
                     </NavLink>
 
                     <a
-                        class="h-full"
                         v-if="navigation.type == 'anchor-link'"
-                        :href="navigation.to">
+                        :href="navigation.to"
+                        class="w-full h-full flex">
                         <NavLink
-                            class="h-full"
                             :icon="navigation.icon"
                             :size="subNavigationHeaderSize">
                             {{navigation.title}}
@@ -157,6 +157,7 @@
                         :title="navigation.title"
                         :icon="navigation.icon"
                         :drop-options="navigation.options"
+                        :drop-active-style="`ripple`"
                     />
                 </span>
             </div>

@@ -3,7 +3,7 @@
         ref="navDrop"
         tabindex="0"
         :class="[disabled ? 'pointer-events-none' : '']"
-        class="cursor-pointer">
+        class="cursor-pointer focus:outline-none">
         <slot :slot="{headerFontClass: headerFontClass, dropDownIconClass: dropDownIconClass, title: title, parentIcon: parentIcon}">
             <div
                 :style="{'text-shadow': navigationTextShadow, 'font-family': fontFamily}"
@@ -26,20 +26,28 @@
                 <div
                     v-for="(dropOption, dropOptionIndex) in dropOptions" :key="dropOption.title"
                     :style="{'text-shadow': navigationTextShadow,}"
-                    :class="[dropOptionIndex == (dropOptions.length - 1) ? 'no-border-bottom' : 'transparent-border-bottom']"
-                    class="nav-drop-link cursor-pointer flex items-center">
+                    :class="[
+                        dropOptionIndex == (dropOptions.length - 1) ? 'no-border-bottom' : 'transparent-border-bottom',
+                        _includes(['anchor-link', 'action'], dropOption.type) ? 'nav-drop-link' : ''
+                    ]"
+                    class="cursor-pointer flex items-center">
 
-                    <NuxtLink
+                    <LinkWrapper
                         v-if="dropOption.type === 'link'"
                         :to="dropOption.to"
-                        class="px-2 py-1 w-full inline-flex items-center"
-                        :class="[childNonDropFontClass]">
+                        class="px-2 py-1 w-full inline-flex items-center focus:outline-none"
+                        :class="[childNonDropFontClass]"
+                        :active="isRouteActive(dropOption.route_active)"
+                        :active-style="dropActiveStyle">
                         <Icon v-if="dropOption.icon" :class="[dropDownIconClass]" :name="dropOption.icon" class="mr-1" /><span>{{dropOption.title}}</span>
-                    </NuxtLink>
+                    </LinkWrapper>
 
-                    <a v-if="dropOption.type == 'anchor-link'" :href="dropOption.to">
+                    <a
+                        v-if="dropOption.type == 'anchor-link'"
+                       :href="dropOption.to"
+                        class="w-full h-full flex">
                         <NuxtLink
-                            class="px-2 py-1 w-full inline-flex items-center"
+                            class="px-2 py-1 w-full inline-flex items-center focus:outline-none"
                             :class="[childNonDropFontClass]">
                             <Icon v-if="dropOption.icon" :class="[dropDownIconClass]" :name="dropOption.icon" class="mr-1" /><span>{{dropOption.title}}</span>
                         </NuxtLink>
@@ -47,7 +55,7 @@
 
                     <div v-if="dropOption.type === 'action'"
                          @click="typeof dropOption.callback == 'function' ? dropOption.callback() : false;"
-                         class="px-2 py-1 w-full inline-flex items-center"
+                         class="px-2 py-1 w-full inline-flex items-center focus:outline-none"
                          :class="[childNonDropFontClass]">
                         <Icon v-if="dropOption.icon" :name="dropOption.icon" :class="[dropDownIconClass]" class="mr-1" /><span>{{dropOption.title}}</span>
                     </div>
@@ -63,6 +71,7 @@
                         :title="dropOption.title"
                         :icon="dropOption.icon"
                         :drop-options="dropOption.options"
+                        :drop-active-style="dropActiveStyle"
                     />
                 </div>
             </div>
@@ -73,6 +82,8 @@
 import {storeToRefs} from 'pinia';
 
 const {$themeStore} = useNuxtApp();
+const nuxtApp = useNuxtApp();
+const isRouteActive = nuxtApp.$isRouteActive as (name: string | undefined) => boolean;
 const {
     navigationMode,
 } = useLayout();
@@ -116,6 +127,10 @@ const props = defineProps({
     parent: {
         type: Boolean,
         default: true
+    },
+    dropActiveStyle: {
+        type: String,
+        default: 'bg',
     },
     alwaysActive: {
         type: Boolean,
