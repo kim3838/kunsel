@@ -27,7 +27,7 @@
                     v-for="(dropOption, dropOptionIndex) in dropOptions" :key="dropOption.title"
                     :style="{'text-shadow': navigationTextShadow,}"
                     :class="[
-                        dropOptionIndex == (dropOptions.length - 1) ? 'no-border-bottom' : 'transparent-border-bottom',
+                        dropOptionIndex == (dropOptions.length - 1) ? 'no-border-bottom' : `${divider ? 'scaffold' : 'transparent'}-border-bottom`,
                         _includes(['anchor-link', 'action'], dropOption.type) ? 'nav-drop-link' : ''
                     ]"
                     class="cursor-pointer flex items-center">
@@ -156,6 +156,10 @@ const props = defineProps({
     checkboxCellReference: {
         type: Object as PropType<HTMLElement | null>,
         default: null
+    },
+    divider: {
+        type: Boolean,
+        default: false
     },
 });
 

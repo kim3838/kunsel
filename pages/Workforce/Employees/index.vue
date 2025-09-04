@@ -27,6 +27,46 @@
                     </div>
                 </form>
 
+                <!-- Employment Profiles -->
+                <DialogModal
+                    :max-width="'960px'"
+                    :show="employmentProfilesModal"
+                    :closeable="false">
+                    <template #title>
+                        {{employmentProfilesModalTitle}}
+                    </template>
+                    <template #content>
+                        <div ref='employmentProfilesContentContainer' :class="[employmentProfilesLoadingOverlay ? '' : 'pt-4 space-y-4 ']" class="min-h-[100px]">
+                            <div v-if="employmentProfilesLoadingOverlay" :style="employmentProfilesLoadingOverlayDimensionStyle" class="absolute tint-background  z-50">
+                                <div class="h-full flex items-center justify-center">
+                                    <UnorderedList :size="'lg'" :icon="'eos-icons:loading'">Loading Employment Profiles...</UnorderedList>
+                                </div>
+                            </div>
+                            <div v-else>
+                                Changes are autosaved.
+                            </div>
+
+                            <EmploymentProfiles
+                                v-show="!(employmentProfilesLoadingOverlay)"
+                                isolated
+                                ref="employeeEmploymentProfile"
+                                v-model:employment-profiles-pending="employmentProfilesPending"
+                                v-model:employment-profiles-data="employmentProfileData"
+                                v-model:child-component-employee-payload="stagedEmployee"
+                                v-model:disable-actions="disableActions"
+                            />
+                        </div>
+                    </template>
+                    <template #footer>
+                        <div class="flex space-x-2 justify-between">
+                            <div></div>
+                            <div class="space-x-2 inline-flex items-center">
+                                <Button :variant="'outline'" @click="closeEmploymentProfilesModal" :label="'Close'" />
+                            </div>
+                        </div>
+                    </template>
+                </DialogModal>
+
                 <!-- Payroll Components -->
                 <DialogModal
                     :max-width="'1280px'"
@@ -151,14 +191,16 @@
                                     :disabled="disableActions"
                                     :parent-icon="'ic:baseline-arrow-right'"
                                     in-horizontal-scrollable
+                                    divider
                                     :size="`sm`"
                                     :drop-shadow-size="`lg`"
                                     :title="'Menu'"
                                     :drop-align="'top'"
                                     :drop-justify="'right'"
                                     :drop-options="[
-                                        {type: 'link',title: 'Details',to: `/workforce/employees/${cell.ulid}`},
-                                        {type: 'action',title: 'Payroll Components',callback: () => {showPayrollComponentsModal(cell);},},
+                                        {type: 'link', icon: 'ix:open-external', title: 'Details',to: `/workforce/employees/${cell.ulid}`},
+                                        {type: 'action', title: 'Employment Profiles',callback: () => {showEmploymentProfilesModal(cell);}},
+                                        {type: 'action', title: 'Payroll Components',callback: () => {showPayrollComponentsModal(cell);}},
                                     ]">
                                 </NavDrop>
                             </div>
@@ -379,7 +421,10 @@ function paginate(page = 1, clearSelection = false){
 watch(() => {return filters.page;}, () => {paginate(filters.page);});
 watch(() => {return filters.perPage;}, () => {paginate(1);});
 
-//Employee Payroll Components
+/**
+ * Staged employee for isolated components usage
+ *
+ **/
 const stagedEmployee = ref<{
     'id': sring | number | null,
     'ulid': string | null,
@@ -387,6 +432,12 @@ const stagedEmployee = ref<{
     'id': null,
     'ulid': null,
 });
+
+/**
+ * Isolated component
+ *
+ * Employee Payroll Components Modal
+ **/
 const payrollComponentsLoadingOverlay = computed(()=>{
     return employeePayrollComponentsPending.value;
 });
@@ -428,6 +479,52 @@ const showPayrollComponentsModal = (cell: TableRowT)=> {
 
     payrollComponentsModalTitle.value = `${cell.number} ${cell.full_name}`;
     payrollComponentsModal.value = true;
+};
+
+/**
+ * Isolated component
+ *
+ * Employee Employment Profile
+ **/
+const employmentProfilesLoadingOverlay = computed(()=>{
+    return employmentProfilesPending.value;
+});
+const {
+    width: employmentProfilesContentContainerWidth,
+    height: employmentProfilesContentContainerHeight
+} = useElementSize(useTemplateRef('employmentProfilesContentContainer'));
+const employmentProfilesLoadingOverlayDimensionStyle = computed(() => {
+    return {
+        width: `${employmentProfilesContentContainerWidth.value}px`,
+        height: `${employmentProfilesContentContainerHeight.value}px`
+    };
+});
+const employmentProfilesPending = ref(false);
+const employmentProfileData = ref([]);
+
+const employmentProfilesModal = ref(false);
+const employmentProfilesModalTitle = ref('');
+const closeEmploymentProfilesModal = () => {
+    employmentProfilesModal.value = false;
+    employmentProfilesModalTitle.value = '';
+
+    stagedEmployee.value = {
+        'id': null,
+        'ulid': null,
+    };
+    employmentProfilesPending.value = false;
+};
+const showEmploymentProfilesModal = (cell: TableRowT)=> {
+
+    employmentProfilesPending.value = true;
+
+    stagedEmployee.value = {
+        'id': _get(cell, 'id', null),
+        'ulid': _get(cell, 'ulid', null),
+    };
+
+    employmentProfilesModalTitle.value = `${cell.number} ${cell.full_name}`;
+    employmentProfilesModal.value = true;
 };
 </script>
 

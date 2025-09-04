@@ -142,7 +142,7 @@ const emit = defineEmits([
 
 watch(() => props.childComponentEmployeePayload, async (employeePayload) => {
 
-    if(props.isolated && Boolean(employeePayload.id)){
+    if(props.isolated && Boolean(employeePayload.id) && props.employmentProfilesPending){
 
         await employmentProfileExecute();
         emit('update:employmentProfilesPending', false);

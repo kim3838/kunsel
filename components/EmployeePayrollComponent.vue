@@ -354,7 +354,7 @@ await fetchPayFrequencySelection();
 
 watch(() => props.childComponentEmployeePayload, async (employeePayload) => {
 
-    if(props.isolated && Boolean(employeePayload.id)){
+    if(props.isolated && Boolean(employeePayload.id) && props.payrollComponentsPending){
 
         await employeeCompensationExecute();
         await employeeDeductionExecute();
