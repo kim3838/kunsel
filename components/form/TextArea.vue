@@ -1,10 +1,9 @@
 <template>
-    <div class="font-data relative box-border">
+    <div class="relative box-border">
         <textarea
             :tabindex="tabindex"
             :disabled="disabled"
             :rows="rows"
-            :cols="cols"
             :class="[
                     fontClass,
                     spacingClass,
@@ -14,10 +13,11 @@
                     rounded ? 'rounded-[2px]': ''
                 ]"
             :style="{'top': absoluteTopAllocation, 'min-height': minHeight}"
-            class="relative box-border outline-none"
+            class="relative box-border outline-none w-full"
             :value="modelValue"
             :placeholder="placeholder"
             :readonly="readonly"
+            spellcheck="false"
             @input="$emit('update:modelValue', $event.target.value)"
             ref="textarea"></textarea>
     </div>
@@ -69,10 +69,6 @@ const props = defineProps({
     rows: {
         type: Number,
         default: 5
-    },
-    cols: {
-        type: Number,
-        default: 40
     },
     minHeight: {
         type: String,
@@ -155,7 +151,7 @@ const fontClass = computed(() => {
         '2xs': 'text-xs',
         'xs': 'text-xs',
         'sm': 'text-sm',
-        'md': 'text-sm',
+        'md': 'text-base',
         'lg': 'text-lg',
         'xl': 'text-2xl font-semibold',
         '2xl': 'text-3xl font-bold',
