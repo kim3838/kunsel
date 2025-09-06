@@ -68,6 +68,7 @@ module.exports = {
                     'serif',
                 ],
                 mono : [
+                    'M2m',
                     'Roboto Mono',
                     'Spline Sans Mono',
                     'monospace',
