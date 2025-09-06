@@ -3,28 +3,29 @@
         <DefaultWrapper>
             <div class="mx-auto max-w-screen-2xl">
 
-                <FansyFrame>
-                    <template v-slot:content>
+                <div class="p-[20px]">
+                    <div class="mb-2 flex gap-2 items-center min-h-8">
                         <UnorderedList
                             v-if="disableActions"
                             :icon="'eos-icons:loading'"
                             :size="'md'"
                             :label="'Please wait...'"/>
-                        <DataTable
-                            :headers="salaryStatementModulesHeaders"
-                            :size="'lg'"
-                            :rows="salaryStatementModulesData"
-                            :disabled="disableDataTable"
-                            v-model="selectedSalaryStatementModules"
-                            manual-sortable
-                            @manualSorted="manualSorted"
-                            selection>
-                            <template v-slot:cell.formulable_type="{cell,slot}">
-                                <div class="p-[3px]">{{cell.formulable_type.text}}</div>
-                            </template>
-                        </DataTable>
-                    </template>
-                </FansyFrame>
+                    </div>
+
+                    <DataTable
+                        :headers="salaryStatementModulesHeaders"
+                        :size="'lg'"
+                        :rows="salaryStatementModulesData"
+                        :disabled="disableActions"
+                        v-model="selectedSalaryStatementModules"
+                        manual-sortable
+                        @manualSorted="manualSorted"
+                        selection>
+                        <template v-slot:cell.formulable_type="{cell,slot}">
+                            <div class="p-[3px]">{{cell.formulable_type.text}}</div>
+                        </template>
+                    </DataTable>
+                </div>
             </div>
         </DefaultWrapper>
     </div>
@@ -68,9 +69,6 @@ const selectedSalaryStatementModules = ref([]);
 const disableActions = computed(() => {
     return salaryStatementModulesPending.value || creatingOrEditing.value || salaryStatementModulesReOrderPending.value || deleting.value;
 });
-const disableDataTable = computed(() => {
-    return salaryStatementModulesPending.value || deleting.value
-})
 const salaryStatementModulesExecute = async() =>{
 
     if(import.meta.server || !selectedAssociatedCompanyId.value){
