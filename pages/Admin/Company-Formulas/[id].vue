@@ -141,7 +141,7 @@ definePageMeta({
     middleware: ['auth', 'super-admin',
         async (to) => {
 
-            if(import.meta.server || to.params.id === 'create-company'){return true;}
+            if(import.meta.server){return true;}
 
             const {data, error} = await laraUseFetch(`/api/company-check/${to.params.id}`, {method: 'GET',}, {}, false);
 
@@ -156,8 +156,6 @@ definePageMeta({
 
 //Fetch Company Information
 const fetchCompany = async () => {
-    if(route.params.id === 'create-company'){return;}
-
     await laraFetch(`/api/company/${route.params.id}`, {
         method: 'GET',
     }, {
