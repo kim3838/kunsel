@@ -22,7 +22,7 @@
                                     <tr><td class="font-semibold">Name</td><td class="pl-2">{{ _get(resolvedFormula, 'name', null) }}</td></tr>
                                     <tr><td class="font-semibold">Formulable Type</td><td class="pl-2">{{ _get(resolvedFormula, 'formulable_type.text', null) }}</td></tr>
                                     <tr><td class="font-semibold">Component Type</td><td class="pl-2">{{ _get(resolvedFormula, 'component_type.text', null) }}</td></tr>
-                                    <tr><td class="font-semibold">Interpolation</td><td class="pl-2"><NonModelCheckBox disabled :checked="_get(resolvedFormula, 'interpolation', false)"></NonModelCheckBox></td></tr>
+                                    <tr><td class="font-semibold">Aggregation</td><td class="pl-2"><NonModelCheckBox disabled :checked="_get(resolvedFormula, 'aggregation', false)"></NonModelCheckBox></td></tr>
                                     </tbody>
                                 </table>
                             </fieldset>
@@ -86,9 +86,9 @@
                                                 class="px-[0.3rem] "
                                                 :disabled="disableActions"
                                                 name="remember"
-                                                v-model="interpolation"
+                                                v-model="aggregation"
                                                 :size="'md'"
-                                                :label="'Interpolation'" />
+                                                :label="'Aggregation'" />
                                         </label>
                                     </div>
                                 </div>
@@ -149,7 +149,7 @@ const creatingFormula = computed(() => {
     return route.params.id === 'create-formula';
 });
 const formulaName = ref<string | null>('');
-const interpolation = ref<boolean | null>(false);
+const aggregation = ref<boolean | null>(false);
 const formulaSettings = ref<any[] | null>([]);
 
 definePageMeta({
@@ -265,7 +265,7 @@ const fetchFormula = async () => {
         onSuccessResponse: async (request, options, response) => {
             formula.value = _get(response, '_data.values.formula', null);
             formulaName.value = _get(response, '_data.values.formula.name', null);
-            interpolation.value = _get(response, '_data.values.formula.interpolation', false);
+            aggregation.value = _get(response, '_data.values.formula.aggregation', false);
             formulaSettings.value = _get(response, '_data.values.formula.default_settings', []);
             formulableOptions.selected = _get(response, '_data.values.formula.formulable_type', null);
 
@@ -304,12 +304,12 @@ const formBody = computed(() => {
         name: string | null,
         formulable_type: number | null,
         component_type?: number | null,
-        interpolation: boolean | null,
+        aggregation: boolean | null,
         default_settings: any[] | null,
     } = {
         name: formulaName.value,
         formulable_type: formulableOptions.selected,
-        interpolation: interpolation.value,
+        aggregation: aggregation.value,
         default_settings: defaultSettings,
     };
 

@@ -108,9 +108,9 @@
                                 <Label :size="slot.labelSize" :type="cell._payload.label_shade.value" shade :label="_get(cell, 'formulable_component_type.text', 'Non-component')" />
                             </div>
                         </template>
-                        <template v-slot:cell.formula_is_interpolation="{cell, slot, scrollReference}">
+                        <template v-slot:cell.formula_is_aggregation="{cell, slot, scrollReference}">
                             <div class="flex justify-center">
-                                <NonModelCheckBox disabled :size="slot.checkBoxSize" :checked="cell.formula_is_interpolation" ></NonModelCheckBox>
+                                <NonModelCheckBox disabled :size="slot.checkBoxSize" :checked="cell.formula_is_aggregation" ></NonModelCheckBox>
                             </div>
                         </template>
                     </DataTable>
@@ -199,7 +199,7 @@ const formulaSettingsHeaders = reactive<TableHeaderT[]>([
     { text: 'Formula', value: 'formula_name'},
     { text: 'Type', value: 'formulable_type', alignData: 'left'},
     { text: 'Component', value: 'formulable_component_type', alignData: 'left'},
-    { text: 'Interpolation', value: 'formula_is_interpolation', alignData: 'left'},
+    { text: 'Aggregation', value: 'formula_is_aggregation', alignData: 'left'},
 ]);
 const formulaSettingsPending = ref(false)
 const formulaSettingsData = ref<CompanyFormulaSetting[]>([]);

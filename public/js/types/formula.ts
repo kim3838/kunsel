@@ -10,7 +10,7 @@ export type CompanyFormulaSetting = {
     company_code : string,
     company_name : string,
     formula_name : string,
-    formula_is_interpolation : boolean,
+    formula_is_aggregation : boolean,
     formulable_type : Enum,
     formulable_component_type : Enum,
     default_settings : unknown[],

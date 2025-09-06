@@ -37,9 +37,9 @@
                                 <Label :size="slot.labelSize" :type="cell._payload.label_shade.value" shade :label="_get(cell, 'formulable_component_type.text', 'Not Specified')" />
                             </div>
                         </template>
-                        <template v-slot:cell.formula_is_interpolation="{cell, slot, scrollReference}">
+                        <template v-slot:cell.formula_is_aggregation="{cell, slot, scrollReference}">
                             <div class="flex justify-center">
-                                <NonModelCheckBox disabled :size="slot.checkBoxSize" :checked="cell.formula_is_interpolation" ></NonModelCheckBox>
+                                <NonModelCheckBox disabled :size="slot.checkBoxSize" :checked="cell.formula_is_aggregation" ></NonModelCheckBox>
                             </div>
                         </template>
                         <template v-slot:sub_row_slot="{rowIndex, cell, slot}">
@@ -80,9 +80,9 @@
                                 <Label :size="slot.labelSize" :type="cell._payload.label_shade.value" shade :label="_get(cell, 'formulable_component_type.text', 'Not Specified')" />
                             </div>
                         </template>
-                        <template v-slot:cell.formula_is_interpolation="{cell, slot, scrollReference}">
+                        <template v-slot:cell.formula_is_aggregation="{cell, slot, scrollReference}">
                             <div class="flex justify-center">
-                                <NonModelCheckBox disabled :size="slot.checkBoxSize" :checked="cell.formula_is_interpolation" ></NonModelCheckBox>
+                                <NonModelCheckBox disabled :size="slot.checkBoxSize" :checked="cell.formula_is_aggregation" ></NonModelCheckBox>
                             </div>
                         </template>
                         <template v-slot:sub_row_slot="{rowIndex, cell, slot}">
@@ -121,9 +121,9 @@
                                 <Label :size="slot.labelSize" :type="cell._payload.label_shade.value" shade :label="_get(cell, 'formulable_component_type.text', 'Not Specified')" />
                             </div>
                         </template>
-                        <template v-slot:cell.formula_is_interpolation="{cell, slot, scrollReference}">
+                        <template v-slot:cell.formula_is_aggregation="{cell, slot, scrollReference}">
                             <div class="flex justify-center">
-                                <NonModelCheckBox disabled :size="slot.checkBoxSize" :checked="cell.formula_is_interpolation" ></NonModelCheckBox>
+                                <NonModelCheckBox disabled :size="slot.checkBoxSize" :checked="cell.formula_is_aggregation" ></NonModelCheckBox>
                             </div>
                         </template>
                         <template v-slot:sub_row_slot="{rowIndex, cell, slot}">
@@ -198,7 +198,7 @@ const formulaSettingsExecute = async() =>{
         params: {
             filters: {
                 'company_id': selectedAssociatedCompanyId.value,
-                'formula_interpolation': [0]
+                'aggregations': [0]
             }
         }
     }, {

@@ -26,8 +26,8 @@
                             <MultiSelect glint drop-shadow :selection-max-viewable-line="10" :size="'md'" :options="incomeTaxComponentOptions" :icon="'tdesign:component-checkbox'"/>
                         </div>
                         <div>
-                            <InputLabel :size="'sm'" value="Interpolation" />
-                            <MultiSelect glint drop-shadow :selection-max-viewable-line="10" :size="'md'" :options="interpolationOptions" />
+                            <InputLabel :size="'sm'" value="Aggregation" />
+                            <MultiSelect glint drop-shadow :selection-max-viewable-line="10" :size="'md'" :options="aggregationOptions" />
                         </div>
                     </div>
 
@@ -87,9 +87,9 @@
                         <template v-slot:cell.component_type="{cell,slot}">
                             <div class="p-[3px]">{{cell.component_type?.text}}</div>
                         </template>
-                        <template v-slot:cell.interpolation="{cell, slot, scrollReference}">
+                        <template v-slot:cell.aggregation="{cell, slot, scrollReference}">
                             <div class="flex justify-center">
-                                <NonModelCheckBox disabled :size="slot.checkBoxSize" :checked="cell.interpolation"></NonModelCheckBox>
+                                <NonModelCheckBox disabled :size="slot.checkBoxSize" :checked="cell.aggregation"></NonModelCheckBox>
                             </div>
                         </template>
                     </DataTable>
@@ -110,7 +110,7 @@ const formulasHeaders = reactive<TableHeaderT[]>([
     { text: 'Name', value: 'name', alignData: 'left'},
     { text: 'Formulable Type', value: 'formulable_type', alignData: 'left'},
     { text: 'Component', value: 'component_type', alignData: 'left'},
-    { text: 'Interpolation', value: 'interpolation', alignData: 'left'},
+    { text: 'Aggregation', value: 'aggregation', alignData: 'left'},
 ]);
 
 const formulas = reactive<{
@@ -165,7 +165,7 @@ const incomeTaxComponentOptions = reactive({
     ],
     selected: []
 });
-const interpolationOptions = reactive({
+const aggregationOptions = reactive({
     search: '',
     selection: [
         {text : 'Yes', value: 1},
@@ -210,7 +210,7 @@ let paramsComputed = computed(() => {
             'earning_components': earningComponentOptions.selected,
             'deduction_components': deductionComponentOptions.selected,
             'income_tax_components': incomeTaxComponentOptions.selected,
-            'interpolations': interpolationOptions.selected,
+            'aggregations': aggregationOptions.selected,
         }
     };
 });
