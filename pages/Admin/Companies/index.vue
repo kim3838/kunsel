@@ -61,6 +61,7 @@
                                     :drop-options="[
                                         {type: 'link',icon: 'mdi:pen',title: 'Edit',to: `/admin/companies/${cell.ulid}`},
                                         {type: 'link',icon: 'ri:formula',title: 'Formulas',to: `/admin/company-formulas/${cell.ulid}`},
+                                        {type: 'link',icon: 'tdesign:component-checkbox', title: 'Salary Statement Modules',to: `/admin/company-salary-statement-modules/${cell.ulid}`},
                                     ]">
                                 </NavDrop>
                             </div>
