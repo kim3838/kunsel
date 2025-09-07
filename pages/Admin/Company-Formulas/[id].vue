@@ -193,6 +193,7 @@ const formulaShade = (formulableType, componentType) => {
 };
 
 const formulaSettingsHeaders = reactive<TableHeaderT[]>([
+    { text: '#', value: 'row_number'},
     { text: '', value: 'actions'},
     { text: 'Formula', value: 'formula_name'},
     { text: 'Type', value: 'formulable_type', alignData: 'left'},
