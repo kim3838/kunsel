@@ -181,20 +181,6 @@ const fetchCompany = async () => {
 };
 await fetchCompany();
 
-const formulableShade = (formulableType) => {
-    let shadeValue = 'default';
-
-    if(_includes([FORMULABLE.EARNINGS], formulableType)){
-        shadeValue = 'success';
-    } else if(_includes([FORMULABLE.DEDUCTIONS], formulableType)) {
-        shadeValue = 'danger';
-    } else if(_includes([FORMULABLE.INCOME_TAX], formulableType)) {
-        shadeValue = 'caution';
-    }
-
-    return shadeValue;
-};
-
 const salaryStatementModulesHeaders = reactive<TableHeaderT[]>([
     { text: '', value: 'actions'},
     { text: 'Order', value: 'order'},
@@ -243,7 +229,7 @@ const salaryStatementModulesExecute = async() =>{
                     _payload: {
                         'label_shade': {
                             'cell': ['formulable_type'],
-                            'value': formulableShade(formulableType)
+                            'value': useCosmetic().formulableShade(formulableType)
                         }
                     }
                 };

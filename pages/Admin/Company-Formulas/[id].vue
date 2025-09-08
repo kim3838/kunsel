@@ -168,30 +168,6 @@ const fetchCompany = async () => {
 };
 await fetchCompany();
 
-const formulaShade = (formulableType, componentType) => {
-    let shadeValue = 'default';
-
-    if(_includes([FORMULABLE.EARNINGS], formulableType)){
-        shadeValue = {
-            [COMPENSATION.BASIC_SALARY]: 'success',
-            [COMPENSATION.OVERTIME]: 'success',
-            [COMPENSATION.BENEFIT]: 'success',
-            [COMPENSATION.REGULAR_ALLOWANCE]: 'success',
-        }[componentType] || 'default';
-    } else if(_includes([FORMULABLE.DEDUCTIONS], formulableType)) {
-        shadeValue = {
-            [DEDUCTION.DEDUCTION]: 'danger',
-            [DEDUCTION.CONTRIBUTION]: 'warning',
-        }[componentType] || 'default';
-    } else if(_includes([FORMULABLE.INCOME_TAX], formulableType)) {
-        shadeValue = {
-            [INCOME_TAX.COMPENSATION_TAX]: 'caution',
-        }[componentType] || 'default';
-    }
-
-    return shadeValue;
-};
-
 const formulaSettingsHeaders = reactive<TableHeaderT[]>([
     { text: '#', value: 'row_number'},
     { text: '', value: 'actions'},
@@ -229,7 +205,7 @@ const formulaSettingsExecute = async() =>{
 
             formulaSettingsData.value = formulaSettings.map((item: CompanyFormulaSetting) => {
 
-                let shade = formulaShade(item.formulable_type.value, item.formulable_component_type?.value);
+                let shade = useCosmetic().formulableComponentShade(item.formulable_type.value, item.formulable_component_type?.value);
 
                 return {
                     ...item,

@@ -215,19 +215,12 @@ const formulaSettingsExecute = async() =>{
                 return _includes([FORMULABLE.EARNINGS], item.formulable_type.value);
             }).map((item: CompanyFormulaSetting) => {
 
-                let shadeValue = _some([
-                    COMPENSATION.BASIC_SALARY,
-                    COMPENSATION.OVERTIME,
-                    COMPENSATION.BENEFIT,
-                    COMPENSATION.REGULAR_ALLOWANCE
-                ],value => value == item.formulable_component_type?.value) ? 'success' : 'default'
-
                 return {
                     ...item,
                     _payload: {
                         'label_shade': {
                             'cell': ['formulable_type', 'formulable_component_type'],
-                            'value': shadeValue
+                            'value': useCosmetic().formulableComponentShade(FORMULABLE.EARNINGS, item.formulable_component_type?.value)
                         }
                     }
                 };
@@ -237,17 +230,12 @@ const formulaSettingsExecute = async() =>{
                 return _includes([FORMULABLE.DEDUCTIONS], item.formulable_type.value);
             }).map((item: CompanyFormulaSetting) => {
 
-                let shadeValue = {
-                    [DEDUCTION.DEDUCTION]: 'danger',
-                    [DEDUCTION.CONTRIBUTION]: 'warning',
-                }[item.formulable_component_type?.value] || 'default';
-
                 return {
                     ...item,
                     _payload: {
                         'label_shade': {
                             'cell': ['formulable_type', 'formulable_component_type'],
-                            'value': shadeValue
+                            'value': useCosmetic().formulableComponentShade(FORMULABLE.DEDUCTIONS, item.formulable_component_type?.value)
                         }
                     }
                 };
@@ -257,16 +245,12 @@ const formulaSettingsExecute = async() =>{
                 return _includes([FORMULABLE.INCOME_TAX], item.formulable_type.value);
             }).map((item: CompanyFormulaSetting) => {
 
-                let shadeValue = {
-                    [INCOME_TAX.COMPENSATION_TAX]: 'caution',
-                }[item.formulable_component_type?.value] || 'default';
-
                 return {
                     ...item,
                     _payload: {
                         'label_shade': {
                             'cell': ['formulable_type', 'formulable_component_type'],
-                            'value': shadeValue
+                            'value': useCosmetic().formulableComponentShade(FORMULABLE.INCOME_TAX, item.formulable_component_type?.value)
                         }
                     }
                 };
