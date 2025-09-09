@@ -1,5 +1,7 @@
-import _default from "@speed-highlight/core/common";
-import num = _default.num;
+
+export interface Validatable {
+    validation_errors: string[],
+}
 
 export interface Sequenceable {
     order: number
