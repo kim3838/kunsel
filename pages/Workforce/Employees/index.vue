@@ -5,6 +5,10 @@
                 <form @submit.prevent="paginate(1, true)" class="space-y-2 p-[20px]">
                     <div class="grid gap-2 grid-cols-3 sm:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-8">
                         <div>
+                            <InputLabel :size="'sm'" value="Search" />
+                            <Input :size="'md'" ref="searchInput" v-model="filters.search.keyword" class="w-full" placeholder="Search" type="text"/>
+                        </div>
+                        <div>
                             <InputLabel :size="'sm'" value="Employee Status" />
                             <MultiSelect glint drop-shadow :selection-max-viewable-line="5" :size="'md'" :options="employmentStatusOptions" :icon="'tdesign:component-checkbox'"/>
                         </div>
@@ -54,6 +58,7 @@
                                 v-model:employment-profiles-data="employmentProfileData"
                                 v-model:child-component-employee-payload="stagedEmployee"
                                 v-model:disable-actions="disableActions"
+                                @resolved="employmentProfileModalResolved"
                             />
                         </div>
                     </template>
@@ -178,6 +183,7 @@
 
                     <DataTable
                         v-if="viewMode.selected == DATA_VIEW_MODE.LIST"
+                        :sup-headers="employeesSupHeaders"
                         :headers="employeesHeaders"
                         :size="'lg'"
                         :rows="employees.data"
@@ -193,7 +199,7 @@
                                     in-horizontal-scrollable
                                     divider
                                     :size="`sm`"
-                                    :drop-shadow-size="`lg`"
+                                    :drop-shadow-size="`xl`"
                                     :title="'Menu'"
                                     :drop-align="'top'"
                                     :drop-justify="'right'"
@@ -204,6 +210,14 @@
                                     ]">
                                 </NavDrop>
                             </div>
+                        </template>
+                        <template v-slot:cell.current_employment_profile="{cell,slot}">
+                            <div class="flex space-x-1 px-[0.3rem] items-center">
+                                <Label :size="slot.labelSize" :type="cell._payload.label_shade.value" shade :label="cell.current_employment_profile.status.text" />
+                            </div>
+                        </template>
+                        <template v-slot:cell.current_employment_type="{cell,slot}">
+                            <div class="px-[3px]">{{cell.current_employment_profile?.employment_type?.text}}</div>
                         </template>
                         <template v-slot:cell.gender="{cell,slot}">
                             <div class="p-[3px]">{{cell.gender.text}}</div>
@@ -248,7 +262,7 @@
 </template>
 
 <script setup lang="ts">
-import type {DataTableMeta, TableHeaderT, TableRowT} from "@/public/js/types/data";
+import type {DataTableMeta, TableSupHeaderT, TableHeaderT, TableRowT} from "@/public/js/types/data";
 import {storeToRefs} from "pinia";
 
 definePageMeta({middleware: ['auth', 'admin-of-selected-company']});
@@ -278,18 +292,30 @@ const employmentStatusOptions = reactive({
     selected: []
 });
 
+const employeesSupHeaders = reactive<TableSupHeaderT[]>([
+    {text: ''},
+    {text: ''},
+    {text: ''},
+    {text: 'Full name', alignHeader: 'left'},
+    {text: 'Employment', colspan: 2, alignHeader: 'left'},
+    {text: '', colspan: 3},
+    {text: 'Contact', colspan: 4, alignHeader: 'left'},
+]);
+
 const employeesHeaders = reactive<TableHeaderT[]>([
     { text: '#', value: 'row_number'},
     { text: '', value: 'actions'},
     { text: 'Employee #', value: 'number', alignData: 'left'},
-    { text: 'Family name, Middle, Given', value: 'full_name'},
+    { text: 'Family, Middle, Given', value: 'full_name'},
+    { text: 'Status', value: 'current_employment_profile'},
+    { text: 'Type', value: 'current_employment_type'},
     { text: 'Department', value: 'department'},
     { text: 'Designation', value: 'designation'},
     { text: 'Manager', value: 'manager'},
-    { text: 'Email', value: 'office_email'},
-    { text: '', value: 'personal_email'},
-    { text: 'Phone', value: 'office_phone'},
-    { text: '', value: 'personal_phone'},
+    { text: 'Email 1', value: 'office_email'},
+    { text: 'Email 2', value: 'personal_email'},
+    { text: 'Phone 2', value: 'office_phone'},
+    { text: 'Phone 2', value: 'personal_phone'},
 ]);
 
 const employees = reactive<{
@@ -358,6 +384,7 @@ let paramsComputed = computed(() => {
         filters: {
             company_id: selectedAssociatedCompanyId.value,
             search: filters.search.keyword,
+            employment_status: employmentStatusOptions.selected
         }
     };
 });
@@ -389,7 +416,23 @@ const employeesExecute = async() =>{
             employeesPending.value = false;
         },
         onSuccessResponse: async (request, options, response) => {
-            employees.data = _get(response, '_data.values.data', []);
+            employees.data = _get(response, '_data.values.data', []).map(employee => {
+
+                let shade = _get(employee, 'current_employment_profile.is_active', false)
+                    ? 'success'
+                    : 'default';
+
+                return {
+                    ...employee,
+                    _payload: {
+                        'label_shade': {
+                            'cell': ['current_employment_profile', 'current_employment_type'],
+                            'value': shade
+                        }
+                    }
+                };
+            });
+
             employees.meta = _get(response, '_data.values.meta', {
                 pagination: {
                     total: 0,
@@ -501,6 +544,10 @@ const employmentProfilesLoadingOverlayDimensionStyle = computed(() => {
 });
 const employmentProfilesPending = ref(false);
 const employmentProfileData = ref([]);
+
+const employmentProfileModalResolved = (data) => {
+    employeesExecute();
+}
 
 const employmentProfilesModal = ref(false);
 const employmentProfilesModalTitle = ref('');

@@ -138,6 +138,7 @@ const emit = defineEmits([
     'update:creatingOrEditing',
     'update:employmentProfilesPending',
     'update:employmentProfilesData',
+    'resolved'
 ]);
 
 watch(() => props.childComponentEmployeePayload, async (employeePayload) => {
@@ -265,6 +266,8 @@ const deleteSelected = async () => {
     selectedEmploymentProfiles.value = [];
     await employmentProfileExecute();
 
+    emit('resolved', employmentProfilesData.value);
+
     deleting.value = false;
 }
 
@@ -279,6 +282,7 @@ const employmentProfileModalResolved = (attributes, rowIndex = -1) => {
 
         employmentProfileExecute();
 
+        emit('resolved', employmentProfilesData.value);
     } else {
 
         if(_isEmpty(attributes)){
