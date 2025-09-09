@@ -1,6 +1,14 @@
+import _default from "@speed-highlight/core/common";
+import num = _default.num;
 
 export interface Sequenceable {
     order: number
+}
+
+export interface TableSupHeaderT {
+    text: string;
+    colspan?: number;
+    alignHeader?: 'left' | 'center' | 'right';
 }
 
 export interface TableHeaderT {

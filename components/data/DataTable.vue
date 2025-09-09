@@ -5,6 +5,19 @@
 
         <table ref="tableReference" class="border-collapse font-data">
             <thead class="table-header-background">
+                <tr v-if="supHeaders.length > 0">
+                    <td v-if="selection"></td>
+                    <td v-if="manualSortable"></td>
+                    <td v-for="header in supHeaders"
+                        style="padding:0.25rem;"
+                        :class="[
+                            headerFontClass,
+                            cellAlignClass(header?.alignHeader),
+                        ]"
+                        :colspan="header?.colspan ?? 1">
+                        {{header?.text}}
+                    </td>
+                </tr>
                 <tr>
                     <td v-if="selection" style="padding:3px 0.5rem;" ref="checkboxCell">
                         <NonModelCheckBox :disabled="disabled" :size="checkBoxSize" :checked="checkedAllCurrentSelection()" @click="toggleCheck()" />
@@ -107,7 +120,13 @@
 import {useSortable} from '@vueuse/integrations/useSortable';
 import {moveArrayElement} from '@vueuse/integrations/useSortable'
 import {storeToRefs} from 'pinia';
-import type {TableCellStyleT, TableHeaderT, TableRowPayloadShadeT, TableRowT} from "@/public/js/types/data";
+import type {
+    TableCellStyleT,
+    TableHeaderT,
+    TableRowPayloadShadeT,
+    TableRowT,
+    TableSupHeaderT
+} from "@/public/js/types/data";
 import type {CommonColorsT} from "@/stores/theme";
 import type {LabelTypesT} from "@/public/js/types/theme";
 const {$themeStore} = useNuxtApp();
@@ -134,6 +153,10 @@ const liningColor10 = computed(() => {
 });
 
 const props = defineProps({
+    supHeaders: {
+        type: Array as PropType<TableSupHeaderT[]>,
+        default: () => [],
+    },
     headers: {
         type: Array as PropType<TableHeaderT[]>,
         default: () => [],
