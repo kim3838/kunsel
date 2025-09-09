@@ -259,23 +259,14 @@ const transformValidated = (validated: EmployeePreImportT[]) => {
 
     return _map(validated, (item: EmployeePreImportT) => {
 
-        let payload: TableRowPayloadT = {};
-
-        if(item.validation_errors.length > 0){
-            payload['label_shade'] = {
-                'cell': ['row', 'actions', 'validation_summary', 'validation'],
-                'value': 'danger'
-            }
-        } else {
-            payload['label_shade'] = {
-                'cell': ['row', 'actions', 'validation_summary', 'validation'],
-                'value': 'success'
-            }
-        }
-
         return {
             ...item,
-            _payload: payload
+            _payload: <TableRowPayloadT>{
+                label_shade: {
+                    'cell': ['row', 'actions', 'validation_summary', 'validation'],
+                    'value': useCosmetic().validationShade(item)
+                }
+            }
         };
     });
 }

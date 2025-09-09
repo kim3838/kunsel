@@ -1,4 +1,5 @@
 
+import type {Validatable} from "@/public/js/types/data";
 
 export const useCosmetic = () => {
 
@@ -58,8 +59,21 @@ export const useCosmetic = () => {
         return shadeValue;
     }
 
+    const validationShade = (validatable: Validatable) => {
+        let shadeValue = 'default';
+
+        if(validatable.validation_errors.length > 0){
+            shadeValue = 'danger';
+        } else {
+            shadeValue = 'success';
+        }
+
+        return shadeValue;
+    }
+
     return {
         formulableComponentShade,
-        formulableShade
+        formulableShade,
+        validationShade
     }
 }
