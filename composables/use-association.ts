@@ -29,11 +29,11 @@ export const useAssociation = () => {
             'workforce-employees',
             'workforce-departments',
             'workforce-designations',
-            'policies-payfrequencies',
-            'policies-payrollcomponents',
+            'policies-pay-frequencies',
+            'policies-payroll-components',
             'policies-shifts',
-            'settings-salarystatementmodules',
-            'settings-formulasettings',
+            'settings-salary-statement-modules',
+            'settings-formula-settings',
             'import-employees',
         ], _toLower(String(route.name)));
     });

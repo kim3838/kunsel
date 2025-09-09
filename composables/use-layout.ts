@@ -277,15 +277,15 @@ export const useLayout = () => {
                         key: 'policies/pay-frequencies',
                         type: 'link',
                         title: 'Pay Frequency',
-                        to: '/policies/payfrequencies',
-                        route_active: 'policies-payfrequencies'
+                        to: '/policies/pay-frequencies',
+                        route_active: 'policies-pay-frequencies'
                     },
                     {
                         key: 'policies/payroll-components',
                         type: 'link',
                         title: 'Payroll Components',
-                        to: '/policies/payrollcomponents',
-                        route_active: 'policies-payrollcomponents'
+                        to: '/policies/payroll-components',
+                        route_active: 'policies-payroll-components'
                     },
                     {
                         key: 'policies/shifts',
@@ -307,16 +307,16 @@ export const useLayout = () => {
                         type: 'link',
                         title: 'Salary Statement Modules',
                         //icon: 'ic:baseline-dynamic-form',
-                        to: '/settings/salarystatementmodules',
-                        route_active: 'settings-salarystatementmodules'
+                        to: '/settings/salary-statement-modules',
+                        route_active: 'settings-salary-statement-modules'
                     },
                     {
                         key: 'settings/formula-settings',
                         type: 'link',
                         title: 'Formula Settings',
                         //icon: 'ic:baseline-architecture',
-                        to: '/settings/formulasettings',
-                        route_active: 'settings-formulasettings'
+                        to: '/settings/formula-settings',
+                        route_active: 'settings-formula-settings'
                     },
                 ]
             },{
