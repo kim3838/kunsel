@@ -334,6 +334,13 @@ export const useLayout = () => {
                         to: '/import/employees',
                         route_active: 'import-employees'
                     },
+                    {
+                        key: 'import/employment-profile',
+                        type: 'link',
+                        title: 'Employment Profile',
+                        to: '/import/employment-profile',
+                        route_active: 'import-employment-profile'
+                    },
                 ],
             }] : []) as NavigationLinkInterface[],
             ...((userIsSuperAdmin.value || adminInAnyCompany.value) ? [{
