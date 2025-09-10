@@ -76,6 +76,10 @@ const props = defineProps({
     size: {
         default: 'md'
     },
+    id: {
+        type: String,
+        default: null,
+    },
     tabindex: {
         type: Number,
         default: 0
