@@ -60,6 +60,7 @@ export function dateTimePicker(options: DateTimePickerOptionsT[] = []) {
                         "singleDatePicker": true,
                         "showDropdowns": true,
                         "autoApply": true,
+                        "autoUpdateInput": false,
                         locale: {
                             format: 'YYYY-MM-DD'
                         }
@@ -117,10 +118,17 @@ export function dateTimePicker(options: DateTimePickerOptionsT[] = []) {
         })
     }
 
-    async function render(options: DateTimePickerOptionsT[] = []){
-        clearScaffold();
+    async function render(options: DateTimePickerOptionsT[] = [], clearExisting: boolean = true){
+
+        if(clearExisting){
+            clearScaffold();
+        }
+
         await scaffold(options);
     }
 
-    return {render};
+    return {
+        render,
+        clearScaffold
+    };
 }
