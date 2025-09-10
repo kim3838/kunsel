@@ -233,7 +233,7 @@ const preImportSupHeaders = reactive<TableSupHeaderT[]>([
 
 const preImportSupRows = reactive<TableSupRowT[]>([
     {
-        'number': "Must be unique accross all company's employees.",
+        'number': "Must be unique across all employees of the company.",
     }
 ]);
 
