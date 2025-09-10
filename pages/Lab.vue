@@ -3,6 +3,35 @@
         <LandingWrapper>
             <div class="mx-auto space-y-2 py-24">
 
+                <div v-if="true" class="max-w-screen-lg mx-auto space-y-2">
+                    customList: {{customList}}<br><br>
+                    datePickersComputed: {{datePickersComputed}}<br><br>
+                    <Button class="w-min" :label="'Render editing rows'" @click="renderEditingRowsDates" />
+                    <Button class="w-min" :label="'Render all'" @click="renderAllRowsDates" />
+                    <DataTable
+                        :headers="[
+                            { text: 'Id', value: 'id', alignData: 'left'},
+                            { text: 'Date', value: 'date', alignData: 'left'},
+                        ]"
+                        :size="'lg'"
+                        :rows="customList">
+                        <template v-slot:cell.date="{cell, slot, scrollReference}">
+                            <div v-if="!cell.isEditing" class="p-[3px] cursor-pointer" @click="customListEditRow(cell)">
+                                {{cell.date}}
+                            </div>
+                            <div v-else class="mx-0.5 flex items-center">
+                                <InputWithIcon
+                                    :icon="'mdi:calendar-cursor-outline'"
+                                    :override="{font_family_class: 'font-sans'}"
+                                    :id="`${cell.id}-date`"
+                                    v-model="cell.date"
+                                    :size="slot.inputSize"
+                                    readonly/>
+                            </div>
+                        </template>
+                    </DataTable>
+                </div>
+
                 <!-- Navdrop Justify Horizontally with Origin Arrow -->
                 <div v-if="false" class="relative w-full flex justify-center font-[Inclusive_Sans]">
                     <div class="max-w-screen-2xl w-full flex justify-start px-20  h-8 scaffold-border" style="overflow-y:hidden;">
@@ -890,6 +919,56 @@ watch(clientReadyState, async (clientReady) => {
 
 const navDropAlwaysActive = ref(true);
 const navDropInHorizontalScrollable = ref(false);
+
+const customList = ref([
+    {
+        'id': 1,
+        'date': '2024-02-01',
+        'isEditing': false,
+    },{
+        'id': 2,
+        'date': '2025-09-01',
+        'isEditing': false,
+    },{
+        'id': 3,
+        'date': null,
+        'isEditing': false,
+    },
+]);
+const customListEditRow = (cell) => {
+    cell.isEditing = true;
+}
+const datePickersComputed = computed(() => {
+    return _map(_filter(customList.value, filterCustomList => {
+        return filterCustomList.isEditing;
+    }), (list) => {
+        return {
+            id: `${list.id}-date`,
+            type: 'date',
+            selectedCallback: (payload: {value: string}) => {
+                list.date = payload.value;
+            }
+        }
+    })
+})
+watch(datePickersComputed, (newValue) => {
+    console.log({'watch datePickersComputed': datePickersComputed.value});
+    render(datePickersComputed.value);
+});
+
+const renderEditingRowsDates = () => {
+    render(datePickersComputed.value);
+}
+const renderAllRowsDates = () => {
+    customList.value = _map(customList.value, (customListMapper) => {
+        return {
+            ...customListMapper,
+            isEditing: true,
+        }
+    })
+
+    render(datePickersComputed.value);
+}
 </script>
 
 <style scoped lang="scss">
