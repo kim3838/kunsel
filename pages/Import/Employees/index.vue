@@ -79,13 +79,19 @@
                             </div>
                         </div>
                         <DataTable
-                            v-if="preImportData.length > 0"
+                            :sup-headers="preImportSupHeaders"
+                            :sup-rows="preImportSupRows"
                             :headers="preImportHeaders"
                             :size="'lg'"
                             :rows="preImportData"
                             v-model="selectedPreImportDataId"
                             :disabled="disableActions"
                             selection>
+                            <template v-slot:sup.header.cell.number="{cell}">
+                                <div class="p-[3px] whitespace-pre-line">
+                                    {{cell.number}}
+                                </div>
+                            </template>
                             <template v-slot:cell.row="{cell, slot, scrollReference}">
                                 <div class="p-[3px] font-[Funnel_Sans]">
                                     {{cell.row}}
@@ -153,7 +159,7 @@
 </template>
 
 <script setup lang="ts">
-import type {TableHeaderT, TableRowPayloadT, TableRowT} from "@/public/js/types/data";
+import type {TableHeaderT, TableRowPayloadT, TableRowT, TableSupHeaderT, TableSupRowT} from "@/public/js/types/data";
 import type {EmployeePreImportT} from "@/public/js/types/import";
 import {storeToRefs} from "pinia";
 
@@ -214,6 +220,22 @@ const showSave = computed(() => {
 const disableActions = computed(() => {
     return pending.value;
 });
+
+const preImportSupHeaders = reactive<TableSupHeaderT[]>([
+    {text: ''},
+    {text: ''},
+    {text: ''},
+    {text: 'Required', colspan: 1, value: 'number', alignHeader: 'left', justifyData: 'top', width: '140px', maxWidth: '140px'},
+    {text: 'Required', colspan: 1, value: 'family_name', alignHeader: 'left'},
+    {text: 'Required', colspan: 1, value: 'given_name'},
+    {text: ''},
+]);
+
+const preImportSupRows = reactive<TableSupRowT[]>([
+    {
+        'number': "Must be unique accross all company's employees.",
+    }
+]);
 
 const preImportHeaders = reactive<TableHeaderT[]>([
     { text: 'Row #', value: 'row', alignData: 'center'},
