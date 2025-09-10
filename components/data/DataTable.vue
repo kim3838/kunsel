@@ -9,15 +9,38 @@
                     <td v-if="selection"></td>
                     <td v-if="manualSortable"></td>
                     <td v-for="header in supHeaders"
+                        :style="{'min-width': header.minWidth, 'width': header.width, 'max-width': header.maxWidth}"
                         style="padding:0.25rem;"
                         :class="[
                             headerFontClass,
                             cellAlignClass(header?.alignHeader),
+                            cellJustifyClass(header?.justifyHeader)
                         ]"
                         :colspan="header?.colspan ?? 1">
                         {{header?.text}}
                     </td>
                 </tr>
+                <tr v-for="(row, rowIndex) in supRows">
+                    <td v-if="selection"></td>
+                    <td v-if="manualSortable"></td>
+                    <td v-for="(header, headerIndex) in supHeaders"
+                        class="whitespace-pre"
+                        :style="cellStyle(row, header)"
+                        :class="[
+                            bodyFontClass,
+                            cellAlignClass(header?.alignData),
+                            cellJustifyClass(header?.justifyData)
+                        ]"
+                        :colspan="header?.colspan ?? 1">
+                        <slot
+                            :name="`sup.header.cell.${header.value}`"
+                            :cell="row"
+                            :headerIndex="headerIndex">
+                            <div class="p-[3px]">{{row[header?.value]}}</div>
+                        </slot>
+                    </td>
+                </tr>
+
                 <tr>
                     <td v-if="selection" style="padding:3px 0.5rem;" ref="checkboxCell">
                         <NonModelCheckBox :disabled="disabled" :size="checkBoxSize" :checked="checkedAllCurrentSelection()" @click="toggleCheck()" />
@@ -30,11 +53,12 @@
                     <td
                         v-for="header in headers"
                         :key="header.value"
-                        :style="{'min-width': header.minWidth, 'width': header.width}"
+                        :style="{'min-width': header.minWidth, 'width': header.width, 'max-width': header.maxWidth}"
                         style="padding:0.25rem;"
                         :class="[
                             headerFontClass,
                             cellAlignClass(header?.alignHeader),
+                            cellJustifyClass(header?.justifyHeader),
                         ]">
                         <span>{{header.text}}</span>
                     </td>
@@ -60,7 +84,7 @@
                             v-for="(header, headerIndex) in headers" :key="row.id"
                             class="whitespace-pre"
                             :style="cellStyle(row, header)"
-                            :class="[bodyFontClass, cellClass(header), cellAlignClass(header?.alignData)]">
+                            :class="[bodyFontClass, cellClass(header), cellAlignClass(header?.alignData), cellJustifyClass(header?.justifyData)]">
                             <slot
                                 :name="`cell.${header.value}`"
                                 :scrollReference="dataTableScroll"
@@ -125,7 +149,8 @@ import type {
     TableHeaderT,
     TableRowPayloadShadeT,
     TableRowT,
-    TableSupHeaderT
+    TableSupHeaderT,
+    TableSupRowT
 } from "@/public/js/types/data";
 import type {CommonColorsT} from "@/stores/theme";
 import type {LabelTypesT} from "@/public/js/types/theme";
@@ -155,6 +180,10 @@ const liningColor10 = computed(() => {
 const props = defineProps({
     supHeaders: {
         type: Array as PropType<TableSupHeaderT[]>,
+        default: () => [],
+    },
+    supRows: {
+        type: Array as PropType<TableSupRowT[]>,
         default: () => [],
     },
     headers: {
@@ -264,6 +293,17 @@ function cellAlignClass(align: 'left' | 'center' | 'right' | undefined = undefin
     };
 
     return alignmentClasses[align as keyof typeof alignmentClasses] ?? 'text-left';
+}
+
+function cellJustifyClass(justify: 'top' | 'middle' | 'bottom' | undefined = undefined){
+
+    const justificationClasses = {
+        top: 'align-top',
+        middle: 'align-middle',
+        bottom: 'align-bottom'
+    };
+
+    return justificationClasses[justify as keyof typeof justificationClasses] ?? 'align-middle';
 }
 
 function checkedAllCurrentSelection(): boolean {
