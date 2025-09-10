@@ -8,6 +8,7 @@
                     datePickersComputed: {{datePickersComputed}}<br><br>
                     <Button class="w-min" :label="'Render editing rows'" @click="renderEditingRowsDates" />
                     <Button class="w-min" :label="'Render all'" @click="renderAllRowsDates" />
+                    <Button class="w-min" :label="'Clear all'" @click="clearAllRowsDates" />
                     <DataTable
                         :headers="[
                             { text: 'Id', value: 'id', alignData: 'left'},
@@ -858,7 +859,7 @@ const tabGroupIconGrid = computed(() => {
     }[tabGroup.size];
 });
 
-const {render} = dateTimePicker();
+const {render, clearScaffold} = dateTimePicker();
 
 //Render sample datetime pickers
 let dateTimePickers = ref([
@@ -968,6 +969,9 @@ const renderAllRowsDates = () => {
     })
 
     render(datePickersComputed.value);
+}
+const clearAllRowsDates = () => {
+    clearScaffold();
 }
 </script>
 
