@@ -19,11 +19,11 @@ export function dateTimePicker(options: DateTimePickerOptionsT[] = []) {
 
     function clearScaffold(){
         //Clear datetimepicker elements on dom
-        const elements = document.getElementsByClassName("daterangepicker ltr single opensright");
+        const elements: HTMLCollectionOf<Element> = document.getElementsByClassName("daterangepicker ltr single opensright");
 
         while (elements.length > 0) {
-            if (elements[0].parentNode) {
-                elements[0].parentNode.removeChild(elements[0]);
+            if (elements[0]?.parentNode) {
+                elements[0]?.parentNode.removeChild(elements[0]);
             }
         }
     }
