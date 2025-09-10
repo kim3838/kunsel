@@ -54,3 +54,9 @@ export type DataTableMeta = {
 }
 
 export type SequenceableTableRow = Sequenceable & TableRowT;
+
+export type DatePickerT = {
+    id: string,
+    type: string,
+    selectedCallback: (payload: string) => void;
+}

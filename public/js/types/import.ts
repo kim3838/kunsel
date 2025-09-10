@@ -4,6 +4,7 @@ import type {Validatable} from "@/public/js/types/data";
 export interface ImportRow extends Validatable{
     id: number,
     row: number,
+    isEditing?: boolean,
 }
 
 export type EmployeePreImportT = {
