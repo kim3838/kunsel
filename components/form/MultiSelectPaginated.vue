@@ -70,6 +70,7 @@
 
             <div v-show="selectedComputed.length" class="px-2 py-2 gap-1 flex overflow-x-scroll" :class="[optionsFontClass]">
                 <Button
+                    :type="'button'"
                     @focus-state-changed="toggleSelectedButtonVisibilityFocusStateChangedHandler"
                     @click="toggleSelectedVisibility"
                     :disabled="!selectedComputed.length"
@@ -77,6 +78,7 @@
                     :icon="showSelectedToggleButton.icon"
                     :label="showSelectedToggleButton.label" />
                 <Button
+                    :type="'button'"
                     @focus-state-changed="clearSelectedButtonFocusStateChangedHandler"
                     @click="clearSelected"
                     :size="headerActionSize"
