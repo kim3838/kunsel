@@ -1,5 +1,5 @@
 <template>
-    <label :for="radioId" class="font-data">
+    <label :for="radioId" :class="[baseFontFamilyClass]">
         <span class="flex items-start justify-start">
             <span :style="{'height': radioBoxSlotHeight}" class="flex items-center">
                 <Icon v-if="selected == value" :data-theme="themeType" class="radio" :class="[radioSize]" name="ic:sharp-radio-button-checked"></Icon>
@@ -64,6 +64,12 @@ const props = defineProps({
         type: Boolean,
         default: false
     },
+    override: {
+        type: Object,
+        default: function () {
+            return {}
+        }
+    },
 });
 
 const radioId = computed(() => `radio-${props.radioKey}-${props.value}`);
@@ -97,6 +103,14 @@ const fontClass = computed(() => {
     }[props.size]
 });
 
+const baseFontFamilyClass = computed(() => {
+
+    if(props.override.font_family_class){
+        return props.override.font_family_class;
+    }
+
+    return 'font-data';
+});
 </script>
 
 <style scoped>

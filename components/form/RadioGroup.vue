@@ -1,5 +1,5 @@
 <template>
-    <div class="font-data flex" :class="[orientationClass, heightClass]">
+    <div class="flex" :class="[orientationClass, heightClass]">
         <RadioBox
             class="flex items-center"
             v-for="selection in selections"
@@ -9,6 +9,8 @@
             :radioKey="radioKey"
             :value="selection.value"
             :label="selection.text"
+            :override="override"
+            :key="selection.value"
             :size="size"/>
     </div>
 </template>
@@ -40,6 +42,12 @@ const props = defineProps({
     disabled: {
         type: Boolean,
         default: false
+    },
+    override: {
+        type: Object,
+        default: function () {
+            return {}
+        }
     },
 });
 
