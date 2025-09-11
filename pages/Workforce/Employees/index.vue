@@ -314,7 +314,7 @@ const employeesHeaders = reactive<TableHeaderT[]>([
     { text: 'Manager', value: 'manager'},
     { text: 'Email 1', value: 'office_email'},
     { text: 'Email 2', value: 'personal_email'},
-    { text: 'Phone 2', value: 'office_phone'},
+    { text: 'Phone 1', value: 'office_phone'},
     { text: 'Phone 2', value: 'personal_phone'},
 ]);
 
