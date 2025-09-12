@@ -12,6 +12,10 @@
                             <InputLabel :size="'sm'" value="Employee Status" />
                             <MultiSelect glint drop-shadow :selection-max-viewable-line="5" :size="'md'" :options="employmentStatusOptions" :icon="'tdesign:component-checkbox'"/>
                         </div>
+                        <div>
+                            <InputLabel :size="'sm'" value="Employment Type"/>
+                            <MultiSelect glint drop-shadow :selection-max-viewable-line="15" :size="'md'" :options="employmentTypeOptions" :icon="'tdesign:component-checkbox'"/>
+                        </div>
                     </div>
 
                     <div class="flex flex-row flex-wrap gap-2 items-center min-h-8">
@@ -291,6 +295,19 @@ const employmentStatusOptions = reactive({
     ],
     selected: []
 });
+const employmentTypeOptions = reactive({
+    search: '',
+    selection: [
+        {text : EMPLOYMENT_TYPE_NAME[EMPLOYMENT_TYPE.OJT], value: EMPLOYMENT_TYPE.OJT},
+        {text : EMPLOYMENT_TYPE_NAME[EMPLOYMENT_TYPE.INTERN], value: EMPLOYMENT_TYPE.INTERN},
+        {text : EMPLOYMENT_TYPE_NAME[EMPLOYMENT_TYPE.PROBATIONARY], value: EMPLOYMENT_TYPE.PROBATIONARY},
+        {text : EMPLOYMENT_TYPE_NAME[EMPLOYMENT_TYPE.FULL_TIME], value: EMPLOYMENT_TYPE.FULL_TIME},
+        {text : EMPLOYMENT_TYPE_NAME[EMPLOYMENT_TYPE.PART_TIME], value: EMPLOYMENT_TYPE.PART_TIME},
+        {text : EMPLOYMENT_TYPE_NAME[EMPLOYMENT_TYPE.CONTRACT], value: EMPLOYMENT_TYPE.CONTRACT},
+        {text : EMPLOYMENT_TYPE_NAME[EMPLOYMENT_TYPE.NOT_SPECIFIED], value: EMPLOYMENT_TYPE.NOT_SPECIFIED},
+    ],
+    selected: []
+});
 
 const employeesSupHeaders = reactive<TableSupHeaderT[]>([
     {text: ''},
@@ -384,7 +401,8 @@ let paramsComputed = computed(() => {
         filters: {
             company_id: selectedAssociatedCompanyId.value,
             search: filters.search.keyword,
-            employment_status: employmentStatusOptions.selected
+            employment_status: employmentStatusOptions.selected,
+            employment_type: employmentTypeOptions.selected,
         }
     };
 });
