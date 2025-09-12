@@ -149,6 +149,7 @@ watch(() => {return showSchedulesPerShift.value;}, (show) => {
 })
 
 const shiftsHeaders = reactive<TableHeaderT[]>([
+    { text: '#', value: 'row_number'},
     { text: '', value: 'actions'},
     { text: 'Code', value: 'code'},
     { text: 'Name', value: 'name'},
