@@ -28,7 +28,7 @@
                     </div>
                 </div>
                 <div class="p-3 pt-4 mx-auto max-w-screen-lg grid gap-2 grid-cols-3">
-                    <div>
+                    <div class="col-span-2 sm:col-span-1">
                         <InputLabel :size="'sm'" value="Employment Status"/>
                         <RadioGroup
                             :selections="employmentStatusSelection"
@@ -38,7 +38,7 @@
                             @change="employmentStatusSelectedChange"
                             v-model="employmentStatus" />
                     </div>
-                    <div class="col-span-full grid gap-2 grid-cols-3">
+                    <div class="col-span-full grid gap-2 grid-cols-2 sm:grid-cols-3">
                         <div>
                             <InputLabel :size="'sm'" value="Employment Type"/>
                             <SingleSelect :searchable="false" drop-shadow value-persist :size="'md'" v-model="employmentType" :options="employmentTypeOptions"/>
@@ -57,12 +57,12 @@
                         <RadioGroup
                             :selections="stateEndOfEmploymentSelection"
                             :size="'md'"
-                            :orientation="'horizontal'"
+                            :orientation="stateEndOfEmploymentRadioGroupOrientation"
                             :radio-key="'state-end-of-employment'"
                             @change="stateEndOfEmploymentSelectedChange"
                             v-model="stateEndOfEmployment" />
                     </div>
-                    <div v-if="stateEndOfEmployment == 1" class="col-span-full grid gap-2 grid-cols-3">
+                    <div v-if="stateEndOfEmployment == 1" class="col-span-full grid gap-2 grid-cols-2 sm:grid-cols-3">
                         <div>
                             <InputLabel :size="'sm'" value="End of Service Type"/>
                             <SingleSelect :searchable="false" drop-shadow :size="'md'" v-model="endOfServiceType" :options="endOfServiceTypeOptions"/>
@@ -122,6 +122,7 @@ import {storeToRefs} from "pinia";
 const nuxtApp = useNuxtApp();
 const moment = useNuxtApp().$moment;
 const {render} = dateTimePicker();
+const {screenWidthBreakpoint, width: screenWidth} = useScreen();
 
 const props = defineProps({
     creatingOrEditing: {
@@ -179,6 +180,9 @@ const employmentTypeOptions = reactive({
     ]
 });
 
+const stateEndOfEmploymentRadioGroupOrientation = computed(() => {
+    return screenWidth.value >= screenWidthBreakpoint['md'] ? 'horizontal' : 'vertical';
+})
 const stateEndOfEmploymentSelection = reactive([
     {text : 'End of employment not specified', value: 0},
     {text : 'State end of employment', value: 1},
