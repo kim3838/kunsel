@@ -51,7 +51,14 @@
             <div class="scaffold-border px-2 font-[National_Park]">
                 <span><span class="font-semibold">{{proxySelectedEmployees.length}}</span> Selected</span>
             </div>
-            <Button @click="proxySelectedEmployees = []" :size="'sm'" :icon="'mdi:delete-outline'" :variant="'outline'" :override="{font_family: 'National Park'}" :label="'Clear selection'" />
+            <Button
+                :variant="'outline'"
+                :size="'sm'"
+                :icon="'tdesign:close'"
+                :disabled="disableActions"
+                :label="'Clear selection'"
+                :override="{font_family: 'National Park'}"
+                @click="proxySelectedEmployees = []" />
 
             <slot name="selection-actions"></slot>
         </div>
