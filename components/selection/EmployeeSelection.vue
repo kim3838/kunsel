@@ -37,7 +37,11 @@
             <div>
                 <PageInformation :pagination="employees.meta.pagination" :pending="employeesPending"/>
                 <div class="flex items-center gap-2">
-                    <Pagination :size="'lg'" :pagination="employees.meta.pagination" :pending="employeesPending" v-model="pageComputed"/>
+                    <Pagination
+                        :size="'lg'"
+                        :pagination="employees.meta.pagination"
+                        :pending="employeesPending"
+                        v-model="pageComputed"/>
                     <UnorderedList
                         v-if="disableActions"
                         :icon="'eos-icons:loading'"
@@ -189,12 +193,6 @@ const employeeHeaders = reactive<TableHeaderT[]>([
     { text: 'Department', value: 'department'},
     { text: 'Designation', value: 'designation'},
 ]);
-
-console.log({
-    'props.eagerLoad' : props.eagerLoad,
-    'employeeSupHeaders' : employeeSupHeaders,
-    'employeeHeaders' : employeeHeaders,
-});
 
 const employees = reactive<{
     data: TableRowT[];
