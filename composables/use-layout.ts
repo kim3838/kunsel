@@ -266,6 +266,13 @@ export const useLayout = () => {
                         to: '/workforce/designations',
                         route_active: 'workforce-designations'
                     },
+                    {
+                        key: 'workforce/shift-assignment',
+                        type: 'link',
+                        title: 'Shift Assignment',
+                        to: '/workforce/shift-assignment',
+                        route_active: 'workforce-shift-assignment'
+                    },
                 ]
             },{
                 key: 'policies',
