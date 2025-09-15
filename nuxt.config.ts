@@ -131,7 +131,9 @@ export default defineNuxtConfig({
         {path: '@/components/list'},
         {path: '@/components/layout'},
         {path: '@/components/card'},
-        {path: '@/components/settings', pathPrefix: false},
+        {path: '@/components/settings'},
+        {path: '@/components/selection'},
+        {path: '@/components/shift'},
     ],
 
     lodash: {
