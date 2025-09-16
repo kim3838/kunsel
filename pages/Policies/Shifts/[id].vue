@@ -30,6 +30,7 @@
                         <div class="flex space-x-2 justify-between">
                             <div class="space-x-2 inline-flex items-center">
                                 <Button :icon="'ic:sharp-keyboard-arrow-left'" @click="navigateTo({path: `/policies/shifts`, replace: true})" :label="'Back to shifts'" />
+                                <Button @click="resetResolved" :label="'Close'" />
                             </div>
                         </div>
                     </template>
@@ -478,6 +479,10 @@ const resolvedShift = ref({});
 const resolvedShiftModalTitle = computed(() => {
     return `Shift ${creatingShift.value ? 'Created' : 'Updated'}`;
 })
+const resetResolved = () => {
+    resolvedShiftModal.value = false;
+    resolvedShift.value = {};
+}
 </script>
 
 <style scoped>

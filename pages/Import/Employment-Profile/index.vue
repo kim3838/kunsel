@@ -19,7 +19,7 @@
                         <Button class="inline-block" :icon="'tdesign:scan'" :size="'sm'" :disabled="disableActions" v-if="showRead" :label="readLabel"  @click="read"/>
                         <Button class="inline-block" :icon="'tdesign:upload'" :size="'sm'" :variant="'outline'" :disabled="disableActions" v-if="showUploadNewFile" :label="uploadNewFileLabel"  @click="reset"/>
                         <Button class="inline-block" :icon="'tdesign:scan'" :size="'sm'" :disabled="disableActions" v-if="showReValidate" :label="reValidateLabel"  @click="reValidate"/>
-                        <Button class="inline-block" :icon="'tdesign:save-filled'" :size="'sm'" :disabled="disableActions"  v-if="showSave" :label="saveLabel"  @click="save"/>
+                        <Button class="inline-block" :icon="'ic:sharp-save'" :size="'sm'" :disabled="disableActions"  v-if="showSave" :label="saveLabel"  @click="save"/>
                     </div>
 
                     <div class="flex items-center min-h-8">

@@ -369,11 +369,19 @@ const userCompanyAssignmentFormSubmit = async(userId = null) => {
             userCompanyAssignmentFormPending.value = false;
         },
         onSuccessResponse: async (request, options, response) => {
+            useNuxtApp().$promptStore.setPrompt({
+                resetable: false,
+                icon: null,
+                title: `Request successful`,
+                message: `User updated`,
+                action: {
+                    callback: () => {},
+                    label: 'Okay'
+                }
+            });
+
             await fetchAssociatedCompanies();
             await storeAssociatedCompanies();
-            await navigateTo({
-                path: '/admin/associated-users',
-            });
         },
     });
 }
@@ -409,7 +417,6 @@ const createUserFormSubmit = async() => {
         },
         onSuccessResponse: async (request, options, response) => {
             const userUlid = _get(response, '_data.values.user.ulid', null);
-            await navigateTo({path: `/admin/associated-users/${userUlid}`, replace: true});
         },
     });
 }

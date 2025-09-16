@@ -332,11 +332,19 @@ const userCompanyAssignmentFormSubmit = async(userId = null) => {
             userCompanyAssignmentFormPending.value = false;
         },
         onSuccessResponse: async (request, options, response) => {
+            useNuxtApp().$promptStore.setPrompt({
+                resetable: false,
+                icon: null,
+                title: `Request successful`,
+                message: `User updated`,
+                action: {
+                    callback: () => {},
+                    label: 'Okay'
+                }
+            });
+
             await fetchAssociatedCompanies();
             await storeAssociatedCompanies();
-            await navigateTo({
-                path: '/admin/users',
-            });
         },
     });
 }

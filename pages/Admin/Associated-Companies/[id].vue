@@ -202,11 +202,19 @@ const formSubmit = async() => {
             formPending.value = false;
         },
         onSuccessResponse: async (request, options, response) => {
+            useNuxtApp().$promptStore.setPrompt({
+                resetable: false,
+                icon: null,
+                title: `Request successful`,
+                message: `Company updated`,
+                action: {
+                    callback: () => {},
+                    label: 'Okay'
+                }
+            });
+
             await fetchAssociatedCompanies();
             await storeAssociatedCompanies();
-            await navigateTo({
-                path: '/admin/associated-companies',
-            });
         },
     });
 }

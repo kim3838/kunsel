@@ -373,10 +373,14 @@ const confirmDeleteSelected = () => {
 
     if(selectedShiftAssignments.value.length == 0){
 
-        coreStore.setServiceError({
-            prompt: true,
-            payload: {
-                message: 'No selected shift assignments to delete.'
+        useNuxtApp().$promptStore.setPrompt({
+            resetable: false,
+            icon: null,
+            title: `Validation Error`,
+            message: `No selected shift assignments to delete.`,
+            action: {
+                callback: () => {},
+                label: 'Okay'
             }
         });
 
@@ -386,8 +390,8 @@ const confirmDeleteSelected = () => {
     useNuxtApp().$promptStore.setPrompt({
         resetable: true,
         icon: null,
-        title: `Confirm delete selected shift assignments`,
-        message: null,
+        title: 'Confirm Action',
+        message: `Confirm delete selected shift assignments`,
         action: {
             callback: async () => {
                 await deleteSelected();
@@ -426,10 +430,14 @@ const deleteSelected = async () => {
         },
         onSuccessResponse: async (request, options, response) => {
 
-            coreStore.setServiceError({
-                prompt: true,
-                payload: {
-                    message: 'Shift assignments deleted successfully.'
+            useNuxtApp().$promptStore.setPrompt({
+                resetable: false,
+                icon: null,
+                title: `Request successful`,
+                message: `Shift assignments deleted successfully.`,
+                action: {
+                    callback: () => {},
+                    label: 'Okay'
                 }
             });
         }

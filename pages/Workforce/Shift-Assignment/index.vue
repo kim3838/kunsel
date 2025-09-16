@@ -211,7 +211,6 @@ const {
 } = storeToRefs(nuxtApp.$authStore);
 
 const moment = useNuxtApp().$moment;
-const coreStore = useCoreStore();
 const {render: renderDatePicker} = dateTimePicker();
 const {screenWidthBreakpoint, width: screenWidth} = useScreen();
 const shiftAssignmentTab = ref(SHIFT_ASSIGNMENT_TAB.LIST);
@@ -273,20 +272,28 @@ const shiftAssignmentDatePickers = reactive([
 const assignShifts = () => {
 
     if(shiftAssignmentTab.value == SHIFT_ASSIGNMENT_TAB.CREATE_SHIFT_ASSIGNMENTS && selectedEmployees.value.length == 0){
-        coreStore.setServiceError({
-            prompt: true,
-            payload: {
-                message: 'Please select at least one employee to assign shift(s) to.'
+        useNuxtApp().$promptStore.setPrompt({
+            resetable: false,
+            icon: null,
+            title: 'Validation Error',
+            message: `Please select at least one employee to assign shift(s) to.`,
+            action: {
+                callback: () => {},
+                label: 'Okay'
             }
         });
         return;
     }
 
     if(shiftAssignmentTab.value == SHIFT_ASSIGNMENT_TAB.MANAGE_ASSIGNED_SHIFTS && selectedShifts.value.length == 0){
-        coreStore.setServiceError({
-            prompt: true,
-            payload: {
-                message: 'Please select at least one shift to assign to employee(s).'
+        useNuxtApp().$promptStore.setPrompt({
+            resetable: false,
+            icon: null,
+            title: 'Validation Error',
+            message: 'Please select at least one shift to assign to employee(s).',
+            action: {
+                callback: () => {},
+                label: 'Okay'
             }
         });
         return;
@@ -387,7 +394,7 @@ const shiftAssignmentForm = computed(() => {
 });
 
 const submitStagedIcon = computed(() => {
-    return stagedShiftAssignmentId.value ? 'tdesign:save-filled' : 'mdi:plus'
+    return stagedShiftAssignmentId.value ? 'ic:sharp-save' : 'mdi:plus'
 });
 const submitStagedLabel = computed(() => {
     return stagedShiftAssignmentId.value ? 'Update Shift Settings' : 'Assign shifts'
@@ -403,20 +410,28 @@ const submitStaged = () => {
 const submitShiftAssignment = () => {
 
     if(shiftAssignmentTab.value == SHIFT_ASSIGNMENT_TAB.CREATE_SHIFT_ASSIGNMENTS && selectedModalShifts.value.length == 0){
-        coreStore.setServiceError({
-            prompt: true,
-            payload: {
-                message: 'Please select at least one shift to assign to employee(s).'
+        useNuxtApp().$promptStore.setPrompt({
+            resetable: false,
+            icon: null,
+            title: 'Validation Error',
+            message: 'Please select at least one shift to assign to employee(s).',
+            action: {
+                callback: () => {},
+                label: 'Okay'
             }
         });
         return;
     }
 
     if(shiftAssignmentTab.value == SHIFT_ASSIGNMENT_TAB.MANAGE_ASSIGNED_SHIFTS && selectedModalEmployees.value.length == 0){
-        coreStore.setServiceError({
-            prompt: true,
-            payload: {
-                message: 'Please select at least one employee to assign shift(s) to.'
+        useNuxtApp().$promptStore.setPrompt({
+            resetable: false,
+            icon: null,
+            title: 'Validation Error',
+            message: 'Please select at least one employee to assign shift(s) to.',
+            action: {
+                callback: () => {},
+                label: 'Okay'
             }
         });
         return;
@@ -438,10 +453,14 @@ const submitShiftAssignment = () => {
         },
         onSuccessResponse: async (request, options, response) => {
 
-            coreStore.setServiceError({
-                prompt: true,
-                payload: {
-                    message: 'Shifts assigned successfully.'
+            useNuxtApp().$promptStore.setPrompt({
+                resetable: false,
+                icon: null,
+                title: `Request successful`,
+                message: 'Shifts assigned successfully.',
+                action: {
+                    callback: () => {},
+                    label: 'Okay'
                 }
             });
 
@@ -455,10 +474,14 @@ const confirmShiftAssignmentBatchDetach = () => {
 
     if(shiftAssignmentTab.value == SHIFT_ASSIGNMENT_TAB.CREATE_SHIFT_ASSIGNMENTS){
         if(selectedEmployees.value.length == 0){
-            coreStore.setServiceError({
-                prompt: true,
-                payload: {
-                    message: 'Please select at least one employee to clear shifts from.'
+            useNuxtApp().$promptStore.setPrompt({
+                resetable: false,
+                icon: null,
+                title: `Validation Error`,
+                message: 'Please select at least one employee to clear shifts from.',
+                action: {
+                    callback: () => {},
+                    label: 'Okay'
                 }
             });
             return;
@@ -467,17 +490,21 @@ const confirmShiftAssignmentBatchDetach = () => {
 
     if(shiftAssignmentTab.value == SHIFT_ASSIGNMENT_TAB.MANAGE_ASSIGNED_SHIFTS){
         if(selectedShifts.value.length == 0){
-            coreStore.setServiceError({
-                prompt: true,
-                payload: {
-                    message: 'Please select at least one shift to clear from employees.'
+            useNuxtApp().$promptStore.setPrompt({
+                resetable: false,
+                icon: null,
+                title: `Validation Error`,
+                message: 'Please select at least one shift to clear from employees.',
+                action: {
+                    callback: () => {},
+                    label: 'Okay'
                 }
             });
             return;
         }
     }
 
-    let title = {
+    let confirmMessage = {
         [SHIFT_ASSIGNMENT_TAB.CREATE_SHIFT_ASSIGNMENTS]: "Confirm clear all selected employee's shifts",
         [SHIFT_ASSIGNMENT_TAB.MANAGE_ASSIGNED_SHIFTS]: "Confirm clear selected shifts from all employees",
     }[shiftAssignmentTab.value] ?? '';
@@ -485,8 +512,8 @@ const confirmShiftAssignmentBatchDetach = () => {
     useNuxtApp().$promptStore.setPrompt({
         resetable: true,
         icon: null,
-        title: title,
-        message: null,
+        title: 'Confirm Action',
+        message: confirmMessage,
         action: {
             callback: async () => {
                 await submitShiftAssignmentBatchDetach();
@@ -539,10 +566,14 @@ const submitShiftAssignmentBatchDetach = async () => {
         },
         onSuccessResponse: async (request, options, response) => {
 
-            coreStore.setServiceError({
-                prompt: true,
-                payload: {
-                    message: 'Shifts cleared successfully.'
+            useNuxtApp().$promptStore.setPrompt({
+                resetable: false,
+                icon: null,
+                title: `Request successful`,
+                message: 'Shifts cleared successfully.',
+                action: {
+                    callback: () => {},
+                    label: 'Okay'
                 }
             });
 
@@ -596,10 +627,14 @@ const submitUpdateShiftAssignment = async () => {
         },
         onSuccessResponse: async (request, options, response) => {
 
-            coreStore.setServiceError({
-                prompt: true,
-                payload: {
-                    message: 'Shift settings updated successfully.'
+            useNuxtApp().$promptStore.setPrompt({
+                resetable: false,
+                icon: null,
+                title: `Request successful`,
+                message: 'Shift settings updated successfully.',
+                action: {
+                    callback: () => {},
+                    label: 'Okay'
                 }
             });
 
