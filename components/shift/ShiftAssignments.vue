@@ -30,6 +30,7 @@
                         hydrate-on-interaction="mouseover"
                         :icon="'tdesign:component-checkbox'"
                         :disabled="disableActions"
+                        glint
                         drop-shadow
                         :size="'md'"
                         :label="'Filter Shift(s)'"
@@ -62,7 +63,6 @@
                 :icon="'tdesign:close'"
                 :disabled="disableActions"
                 :label="'Clear selection'"
-                :override="{font_family: 'National Park'}"
                 @click="selectedShiftAssignments = []" />
             <Button
                 :variant="'outline'"
@@ -70,7 +70,6 @@
                 :icon="'mdi:delete-outline'"
                 :disabled="disableActions"
                 :label="'Delete selected shift assignments'"
-                :override="{font_family: 'National Park'}"
                 @click="confirmDeleteSelected()" />
             <UnorderedList
                 v-if="disableActions"

@@ -234,7 +234,7 @@ const borderStyle = computed(() => {
 });
 
 const contentStyle = computed(() => {
-    let condensedFontFamily = props.override.font_family ? props.override.font_family : `Bricolage Grotesque`;
+    let condensedFontFamily = props.override.font_family ? props.override.font_family : `National Park`;
     let fontFamily = props.override.font_family ? props.override.font_family : `Bricolage Grotesque`;
 
     fontFamily = {

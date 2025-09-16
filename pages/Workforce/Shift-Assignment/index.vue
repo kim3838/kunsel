@@ -157,8 +157,8 @@
                             ref="employeeSelectionReference"
                             v-model:selected="selectedEmployees">
                             <template #selection-actions>
-                                <Button :override="{font_family: 'National Park'}" @click="assignShifts" class="inline-block" :size="'sm'" :icon="'mdi:plus'" :variant="'outline'" :label="'Assign shift from selected employees'" />
-                                <Button :override="{font_family: 'National Park'}" @click="confirmShiftAssignmentBatchDetach" class="inline-block" :size="'sm'" :icon="'mdi:delete-outline'" :variant="'outline'" :label="'Clear shift from selected employees'" />
+                                <Button @click="assignShifts" class="inline-block" :size="'sm'" :icon="'mdi:plus'" :variant="'outline'" :label="'Assign shift from selected employees'" />
+                                <Button @click="confirmShiftAssignmentBatchDetach" class="inline-block" :size="'sm'" :icon="'mdi:delete-outline'" :variant="'outline'" :label="'Clear shift from selected employees'" />
                             </template>
                         </ShiftsByEmployeesSelection>
 
@@ -179,8 +179,8 @@
                             ref="shiftSelectionReference"
                             v-model:selected="selectedShifts">
                             <template #selection-actions>
-                                <Button :override="{font_family: 'National Park'}" @click="assignShifts" class="inline-block" :size="'sm'" :icon="'mdi:plus'" :variant="'outline'" :label="'Assign selected shifts to employees'" />
-                                <Button :override="{font_family: 'National Park'}" @click="confirmShiftAssignmentBatchDetach" class="inline-block" :size="'sm'" :icon="'mdi:delete-outline'" :variant="'outline'" :label="'Remove selected shifts from employees'" />
+                                <Button @click="assignShifts" class="inline-block" :size="'sm'" :icon="'mdi:plus'" :variant="'outline'" :label="'Assign selected shifts to employees'" />
+                                <Button @click="confirmShiftAssignmentBatchDetach" class="inline-block" :size="'sm'" :icon="'mdi:delete-outline'" :variant="'outline'" :label="'Remove selected shifts from employees'" />
                             </template>
                         </ShiftSelection>
 

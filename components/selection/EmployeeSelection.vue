@@ -61,7 +61,6 @@
                 :icon="'tdesign:close'"
                 :disabled="disableActions"
                 :label="'Clear selection'"
-                :override="{font_family: 'National Park'}"
                 @click="proxySelectedEmployees = []" />
 
             <slot name="selection-actions"></slot>

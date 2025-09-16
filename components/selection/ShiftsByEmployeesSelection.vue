@@ -31,6 +31,7 @@
                         hydrate-on-interaction="mouseover"
                         :icon="'tdesign:component-checkbox'"
                         :disabled="disableActions"
+                        glint
                         drop-shadow
                         :size="'md'"
                         :label="'Filter Shift(s)'"
@@ -43,6 +44,7 @@
                         hydrate-on-interaction="mouseover"
                         :icon="'tdesign:component-checkbox'"
                         :disabled="disableActions"
+                        glint
                         drop-shadow
                         :size="'md'"
                         :label="'Filter Shift(s)'"
@@ -88,7 +90,6 @@
                 :icon="'tdesign:close'"
                 :disabled="disableActions"
                 :label="'Clear selection'"
-                :override="{font_family: 'National Park'}"
                 @click="proxySelectedEmployees = []" />
 
             <slot name="selection-actions"></slot>
