@@ -50,6 +50,7 @@
                         </NuxtLink>
                     </div>
                     <DataTable
+                        :key="usersKey"
                         :headers="usersHeaders"
                         :size="'lg'"
                         :rows="users.data"
@@ -137,6 +138,7 @@ watch(() => {return showAssociatedCompanies.value;}, (show) => {
     }
 })
 
+const usersKey = ref(0);
 const users = reactive<{
     data: TableRowT[];
     meta: DataTableMeta
@@ -226,16 +228,6 @@ const usersExecute = async () => {
     if(import.meta.server){return;}
 
     usersPending.value = true;
-    users.data = [];
-    users.meta = {
-        pagination: {
-            total: 0,
-            count: 0,
-            per_page: 0,
-            current_page: 0,
-            total_pages: 0
-        }
-    };
 
     await laraFetch("/api/users", {
         method: 'GET',
@@ -258,6 +250,7 @@ const usersExecute = async () => {
                     total_pages: 0
                 }
             });
+            usersKey.value += 1;
         }
     });
 }
