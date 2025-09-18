@@ -14,7 +14,7 @@ export type EmployeePreImportT = {
 } & ImportRow;
 
 export type EmploymentProfilePreImportT = {
-    number: string,
+    employee_number: string,
     employment_type: string,
     start_date: string,
     end_of_service_type: string,

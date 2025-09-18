@@ -197,7 +197,6 @@ import type {
 } from "@/public/js/types/data";
 import type {EmploymentProfilePreImportT, ImportRow} from "@/public/js/types/import";
 import {storeToRefs} from "pinia";
-import {END_OF_SERVICE_TYPE} from "~/utils/employment_profile";
 
 definePageMeta({middleware: ['auth', 'admin-of-selected-company']});
 useLayout().setNavigationMode('solid');
