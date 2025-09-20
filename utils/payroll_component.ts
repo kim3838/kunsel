@@ -67,6 +67,23 @@ export const PAY_PERIOD_NAME = {
     [PAY_PERIOD.MONTHLY]: 'Monthly'
 };
 
+export const PAY_TYPE ={
+    BY_ATTENDANCE : 0,
+    FIXED : 1,
+}
+
+export const PAY_TYPE_NAME = {
+    [PAY_TYPE.BY_ATTENDANCE]: 'By attendance',
+    [PAY_TYPE.FIXED]: 'Fixed',
+};
+
+export const PAY_FREQUENCY_CODES = [
+    'DAILY',
+    'WEEKLY',
+    'SEMI_MONTHLY',
+    'MONTHLY',
+]
+
 export const PAY_FREQUENCY_TYPE ={
     DAILY : 0,
     WEEKLY : 1,

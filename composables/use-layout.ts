@@ -348,6 +348,13 @@ export const useLayout = () => {
                         to: '/import/employment-profile',
                         route_active: 'import-employment-profile'
                     },
+                    {
+                        key: 'import/employee-payroll-component',
+                        type: 'link',
+                        title: 'Employee Payroll Component',
+                        to: '/import/employee-payroll-component',
+                        route_active: 'import-employee-payroll-component'
+                    },
                 ],
             }] : []) as NavigationLinkInterface[],
             ...((userIsSuperAdmin.value || adminInAnyCompany.value) ? [{
