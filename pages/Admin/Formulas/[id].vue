@@ -86,7 +86,7 @@
                                             <Checkbox
                                                 class="px-[0.3rem] "
                                                 :disabled="disableActions"
-                                                name="remember"
+                                                name="aggregation"
                                                 v-model="aggregation"
                                                 :size="'md'"
                                                 :label="'Aggregation'" />
