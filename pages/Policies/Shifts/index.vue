@@ -153,7 +153,10 @@ const shiftsHeaders = reactive<TableHeaderT[]>([
     { text: '', value: 'actions'},
     { text: 'Code', value: 'code'},
     { text: 'Name', value: 'name'},
-    { text: 'Type', value: 'type'}
+    { text: 'Type', value: 'type'},
+    { text: 'Work Start Grace', value: 'work_start_grace_time', alignData: 'right'},
+    { text: 'Require Lunch Time In & Out', value: 'require_lunch_time_in_and_out'},
+    { text: 'Lunch Start Grace', value: 'lunch_start_grace_time', alignData: 'right'},
 ]);
 
 const shifts = reactive<{
