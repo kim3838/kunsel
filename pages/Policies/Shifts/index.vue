@@ -52,6 +52,7 @@
 
                     <DataTable
                         v-if="viewMode.selected == DATA_VIEW_MODE.LIST"
+                        :key="shiftsKey"
                         :headers="shiftsHeaders"
                         :size="'lg'"
                         :rows="shifts.data"
@@ -159,6 +160,7 @@ const shiftsHeaders = reactive<TableHeaderT[]>([
     { text: 'Lunch Start Grace', value: 'lunch_start_grace_time', alignData: 'right'},
 ]);
 
+const shiftsKey = ref(0);
 const shifts = reactive<{
     data: TableRowT[];
     meta: DataTableMeta
@@ -251,16 +253,6 @@ const shiftsExecute = async () => {
     if(import.meta.server){return;}
 
     shiftsPending.value = true;
-    shifts.data = [];
-    shifts.meta = {
-        pagination: {
-            total: 0,
-            count: 0,
-            per_page: 0,
-            current_page: 0,
-            total_pages: 0
-        }
-    };
 
     await laraFetch("/api/shifts", {
         method: 'GET',
@@ -283,6 +275,7 @@ const shiftsExecute = async () => {
                     total_pages: 0
                 }
             });
+            shiftsKey.value += 1;
         }
     });
 }
