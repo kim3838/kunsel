@@ -57,13 +57,31 @@
                     <div class="grid gap-2 grid-cols-3 sm:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
                         <div>
                             <InputLabel :size="'sm'" value="Code"/>
-                            <Input :disabled="disableActions" :size="'md'" v-model="shiftCode" type="text"/>
+                            <Input :disabled="disableActions" :size="'md'" v-model="shiftCode"/>
                         </div>
                         <div class="col-span-full lg:col-span-4">
                             <InputLabel :size="'sm'" value="Name"/>
-                            <Input :disabled="disableActions" :size="'md'" v-model="shiftName" type="text"/>
+                            <Input :disabled="disableActions" :size="'md'" v-model="shiftName"/>
                         </div>
-
+                    </div>
+                    <div class="grid gap-2 grid-cols-3 sm:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
+                        <div>
+                            <InputLabel :size="'sm'" value="Work Start Grace Time"/>
+                            <Input :disabled="disableActions" :size="'md'" v-model="shiftWorkStartGraceTime" high-light-all-text-on-focus type-strict :type="'number'"/>
+                        </div>
+                        <div class="flex flex-col">
+                            <InputLabel :size="'sm'" value="Require Lunch Time in and Out"/>
+                            <RadioGroup
+                                :selections="shiftRequireLunchTimeInAndOutSelection"
+                                :size="'md'"
+                                :orientation="'horizontal'"
+                                :radio-key="'shift_require_lunch_time_in_and_out'"
+                                v-model="shiftRequireLunchTimeInAndOut" />
+                        </div>
+                        <div v-if="shiftRequireLunchTimeInAndOut == 1">
+                            <InputLabel :size="'sm'" value="Lunch Start Grace Time"/>
+                            <Input :disabled="disableActions" :size="'md'" v-model="shiftLunchStartGraceTime" high-light-all-text-on-focus type-strict :type="'number'"/>
+                        </div>
                     </div>
 
                     <div class="mt-8">
@@ -227,6 +245,15 @@ const shiftTypeOptions = reactive({
     ],
     selected: SHIFT_TYPE.REGULAR
 });
+const shiftWorkStartGraceTime = ref('0');
+const shiftRequireLunchTimeInAndOut = ref(0);
+const shiftRequireLunchTimeInAndOutSelection = reactive([
+    {text : 'Yes', value: 1},
+    {text : 'No', value: 0},
+]);
+
+const shiftLunchStartGraceTime = ref('0');
+
 const shiftType = computed(() => {
     return shiftTypeOptions.selected;
 });
@@ -298,6 +325,10 @@ const fetchShift = async () => {
             shiftCode.value = _get(response, '_data.values.shift.code', '');
             shiftName.value = _get(response, '_data.values.shift.name', '');
             shiftTypeOptions.selected = _get(response, '_data.values.shift.type.value', null);
+            shiftWorkStartGraceTime.value = _get(response, '_data.values.shift.work_start_grace_time', 0);
+            shiftRequireLunchTimeInAndOut.value = _get(response, '_data.values.shift.require_lunch_time_in_and_out', 0);
+            shiftLunchStartGraceTime.value = _get(response, '_data.values.shift.lunch_start_grace_time', 0);
+
             shiftIsDefault.selected = _get(response, '_data.values.shift.is_default', false) ? 1 : 0;
         },
     });
@@ -447,6 +478,9 @@ const formBody = computed(() => {
         'code': shiftCode.value,
         'name': shiftName.value,
         'type': shiftTypeOptions.selected,
+        'work_start_grace_time': shiftWorkStartGraceTime.value,
+        'require_lunch_time_in_and_out': shiftRequireLunchTimeInAndOut.value,
+        'lunch_start_grace_time': shiftLunchStartGraceTime.value,
         'shift_schedules': shiftSchedules.value,
     };
 });
