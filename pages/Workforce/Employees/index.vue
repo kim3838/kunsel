@@ -258,6 +258,22 @@
                                 {{cell.contact?.personal_phone}}
                             </div>
                         </template>
+                        <template v-slot:cell.user_name="{cell,slot}">
+                            <div class="p-[3px]">
+                                {{cell.user?.username}}
+                            </div>
+                        </template>
+                        <template v-slot:cell.user_email="{cell,slot}">
+                            <div class="p-[3px]">
+                                {{cell.user?.email}}
+                            </div>
+                        </template>
+                        <template v-slot:cell.user_status="{cell,slot}">
+                            <div class="p-[3px]">{{cell.user?.status?.text}}</div>
+                        </template>
+                        <template v-slot:cell.email_verified_at="{cell,slot}">
+                            <div class="p-[3px]">{{cell.user.email_verified_at != null ? `Verified` : ``}}</div>
+                        </template>
                     </DataTable>
                 </div>
             </div>
@@ -317,6 +333,7 @@ const employeesSupHeaders = reactive<TableSupHeaderT[]>([
     {text: 'Employment', colspan: 2, alignHeader: 'left'},
     {text: '', colspan: 3},
     {text: 'Contact', colspan: 4, alignHeader: 'left'},
+    {text: 'User', colspan: 4, alignHeader: 'left'},
 ]);
 
 const employeesHeaders = reactive<TableHeaderT[]>([
@@ -333,6 +350,10 @@ const employeesHeaders = reactive<TableHeaderT[]>([
     { text: 'Email 2', value: 'personal_email'},
     { text: 'Phone 1', value: 'office_phone'},
     { text: 'Phone 2', value: 'personal_phone'},
+    { text: 'Username', value: 'user_name'},
+    { text: 'Email', value: 'user_email'},
+    { text: 'Status', value: 'user_status'},
+    { text: 'Email Verified', value: 'user_email_verified_at'},
 ]);
 
 const employees = reactive<{
