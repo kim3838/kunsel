@@ -30,7 +30,7 @@
                         <div class="flex space-x-2 justify-between">
                             <div class="space-x-2 inline-flex items-center">
                                 <Button :icon="'ic:sharp-keyboard-arrow-left'" @click="navigateTo({path: `/policies/shifts`, replace: true})" :label="'Back to shifts'" />
-                                <Button @click="resetResolved" :label="'Close'" />
+                                <Button v-if="!creatingShift" @click="resetResolved" :label="'Close'" />
                             </div>
                         </div>
                     </template>

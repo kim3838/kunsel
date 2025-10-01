@@ -36,7 +36,7 @@
                         <div class="flex space-x-2 justify-between">
                             <div class="space-x-2 inline-flex items-center">
                                 <Button :icon="'ic:sharp-keyboard-arrow-left'" @click="navigateTo({path: `/admin/jsonpresets`, replace: true});" :label="'Back to json presets'" />
-                                <Button @click="resetResolved" :label="'Close'" />
+                                <Button v-if="!creatingJsonPreset" @click="resetResolved" :label="'Close'" />
                             </div>
                         </div>
                     </template>

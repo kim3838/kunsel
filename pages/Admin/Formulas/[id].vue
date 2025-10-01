@@ -38,7 +38,7 @@
                         <div class="flex space-x-2 justify-between">
                             <div class="space-x-2 inline-flex items-center">
                                 <Button :icon="'ic:sharp-keyboard-arrow-left'" @click="navigateTo({path: `/admin/formulas`, replace: true});" :label="'Back to formulas'" />
-                                <Button @click="resetResolved" :label="'Close'" />
+                                <Button v-if="!creatingFormula" @click="resetResolved" :label="'Close'" />
                             </div>
                         </div>
                     </template>
