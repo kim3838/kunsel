@@ -165,9 +165,17 @@ const formatTime = (value) => {
         }
     }
 
-    // Clamp values
-    hours = Math.min(Math.max(hours, 0), 23);
-    minutes = Math.min(Math.max(minutes, 0), 59);
+    // Special case for 24:00 - only allow if minutes are 0
+    if (hours === 24) {
+        minutes = 0;
+    } else {
+        // Clamp values for regular times
+        hours = Math.min(Math.max(hours, 0), 23);
+        minutes = Math.min(Math.max(minutes, 0), 59);
+    }
+
+    // Clamp hours to maximum of 24
+    hours = Math.min(Math.max(hours, 0), 24);
 
     return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
 }
