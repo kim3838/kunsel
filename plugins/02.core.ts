@@ -77,8 +77,8 @@ export default defineNuxtPlugin(nuxtApp => {
         const startMoment = moment(start, "HH:mm");
         const endMoment = moment(end, "HH:mm");
 
-        // Handle overnight shift
-        if (endMoment.isBefore(startMoment)) {
+        // Add 1 day if end is lesser or equal to start
+        if (endMoment.isSameOrBefore(startMoment)) {
             endMoment.add(1, 'day');
         }
 
