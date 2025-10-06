@@ -364,7 +364,7 @@ const isFlexibleChanged = (cell: ShiftScheduleT) => {
 
     if(cell.is_flexible){
         cell.work_start = shiftTypeIsRegular.value ? '00:00' : '22:00';
-        cell.work_end = shiftTypeIsRegular.value ? '23:59' : '06:00';
+        cell.work_end = shiftTypeIsRegular.value ? '00:00' : '06:00';
         cell.total_work_hours_with_breaks = '08:00';
     } else {
         cell.work_start = shiftTypeIsRegular.value ? '09:00' : '22:00';
