@@ -258,20 +258,24 @@
                         </fieldset>
                     </div>
 
-                    <div v-if="employmentProfilesPending" class="flex items-center min-h-8"  >
-                        <UnorderedList
-                            :icon="'eos-icons:loading'"
-                            :size="'md'"
-                            :label="'Loading Employment Profiles...'"/>
-                    </div>
+                    <Suspense>
+                        <EmploymentProfiles
+                            ref="employeeEmploymentProfile"
+                            v-model:employment-profiles-pending="employmentProfilesPending"
+                            v-model:employment-profiles-data="employmentProfiles"
+                            v-model:child-component-employee-payload="childComponentEmployeePayload"
+                            v-model:disable-actions="disableActions"
+                        />
 
-                    <EmploymentProfiles
-                        ref="employeeEmploymentProfile"
-                        v-model:employment-profiles-pending="employmentProfilesPending"
-                        v-model:employment-profiles-data="employmentProfiles"
-                        v-model:child-component-employee-payload="childComponentEmployeePayload"
-                        v-model:disable-actions="disableActions"
-                    />
+                        <template #fallback>
+                            <div class="flex items-center min-h-8">
+                                <UnorderedList
+                                    :icon="'eos-icons:loading'"
+                                    :size="'md'"
+                                    :label="'Loading Employment Profiles...'"/>
+                            </div>
+                        </template>
+                    </Suspense>
 
                     <div v-if="employeePayrollComponentsPending" class="flex items-center min-h-8"  >
                         <UnorderedList
@@ -280,15 +284,26 @@
                             :label="'Loading Payroll Components...'"/>
                     </div>
 
-                    <EmployeePayrollComponent
-                        ref="employeePayrollComponent"
-                        v-model:payroll-components-pending="employeePayrollComponentsPending"
-                        v-model:child-component-employee-payload="childComponentEmployeePayload"
-                        v-model:employee-compensation-data="employeeCompensationData"
-                        v-model:employee-deduction-data="employeeDeductionData"
-                        v-model:employee-income-tax-data="employeeIncomeTaxData"
-                        v-model:disable-actions="disableActions"
-                    />
+                    <Suspense>
+                        <EmployeePayrollComponent
+                            ref="employeePayrollComponent"
+                            v-model:payroll-components-pending="employeePayrollComponentsPending"
+                            v-model:child-component-employee-payload="childComponentEmployeePayload"
+                            v-model:employee-compensation-data="employeeCompensationData"
+                            v-model:employee-deduction-data="employeeDeductionData"
+                            v-model:employee-income-tax-data="employeeIncomeTaxData"
+                            v-model:disable-actions="disableActions"
+                        />
+
+                        <template #fallback>
+                            <div class="flex items-center min-h-8">
+                                <UnorderedList
+                                    :icon="'eos-icons:loading'"
+                                    :size="'md'"
+                                    :label="'Loading Payroll Components...'"/>
+                            </div>
+                        </template>
+                    </Suspense>
 
                     <div class="grid gap-2 grid-cols-4 sm:grid-cols-5 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-8">
                         <Button class="w-min" :disabled="disableActions" @click="coreFormSubmit(null, {})" :size="'md'" :icon="disableActions ? 'eos-icons:loading' : 'mdi:data'" :label="coreFormSubmitLabel"></Button>
