@@ -17,10 +17,9 @@
 import {storeToRefs} from 'pinia';
 import type {CommonColorsT} from "@/stores/theme";
 
-const {$debug, $moment, $themeStore, $coreStore, $layoutStore} = useNuxtApp();
-const runtimeConfig = useRuntimeConfig();
-const appConfig = useAppConfig();
+const {$themeStore, $layoutStore} = useNuxtApp();
 const route = useRoute();
+
 const {
     activeSubNavigationLink,
 } = useLayout();
@@ -63,18 +62,6 @@ watch(() => route.name,() => {
     $layoutStore.setSubNavigationOptions(_get(activeSubNavigationLink.value, 'options', []));
 });
 
-//const nuxtWrapper = ref(null);
-//const {x: nuxtWrapperXScroll,y: nuxtWrapperYScroll,arrivedState: nuxtWrapperArrivedState } = useScroll(nuxtWrapper)
-//const {top: nuxtWrapperTopReached} = toRefs(nuxtWrapperArrivedState);
-
-// $debug('runtimeConfig',runtimeConfig);
-// $debug('appConfig', appConfig);
-// $debug('NODE_ENV', process.env.NODE_ENV);
-// $debug('themeStore', $themeStore['colors']['light']);
-// $debug('moment', $moment().format('YYYY-MM-DD'));
-// $debug('lodash', _upperCase('lodash uppercase'));
-
-// const mountains = await $fetch('https://api.nuxtjs.dev/mountains').catch((error) => error.data)
 </script>
 <style lang="scss">
 ::-webkit-scrollbar {
