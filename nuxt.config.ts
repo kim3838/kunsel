@@ -1,8 +1,8 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 
+import {defineNuxtConfig} from "nuxt/config";
 import tailwindcss from "@tailwindcss/vite";
 
-// @ts-ignore
 export default defineNuxtConfig({
     app: {
         baseURL: "/",
@@ -61,10 +61,6 @@ export default defineNuxtConfig({
                 class: 'font-standard'
             }
         },
-        layoutTransition: false,
-        pageTransition: false,
-        rootId: "__nuxt",
-        rootTag: "div"
     },
 
     //prints out hook names and timings on the server, and logs hook arguments as well in the browser.
@@ -114,7 +110,6 @@ export default defineNuxtConfig({
     css: [
         '@/assets/css/main.css',
         '@/assets/css/tailwind.css',
-        '@/assets/css/fonts.css',
         '@/assets/css/datetimepicker.css'
     ],
 
@@ -192,5 +187,5 @@ export default defineNuxtConfig({
         port: 3000,
     },
 
-    compatibilityDate: '2024-08-30'
+    compatibilityDate: '2025-10-07'
 })
