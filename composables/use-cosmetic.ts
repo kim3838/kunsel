@@ -3,7 +3,7 @@ import type {Validatable} from "@/public/js/types/data";
 
 export const useCosmetic = () => {
 
-    const formulableComponentShade = (formulableType, componentType) => {
+    const formulableComponentShade = (formulableType: number|null, componentType: number|null) => {
         let shadeValue = 'default';
 
         if(formulableType == null || componentType == null){
@@ -39,7 +39,7 @@ export const useCosmetic = () => {
         return shadeValue;
     };
 
-    const formulableShade = (formulableType) => {
+    const formulableShade = (formulableType: number) => {
         let shadeValue = 'default';
 
         if(formulableType == null){
