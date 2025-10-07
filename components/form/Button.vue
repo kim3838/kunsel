@@ -19,7 +19,7 @@
                     disabled:cursor-not-allowed
                     relative">
                 <slot :fontClass="fontClass">
-                    <div class="w-full h-full flex" :style="[contentStyle]">
+                    <div class="w-full h-full flex" :class="contentFontClass" :style="[contentStyle]">
                         <div
                             :style="{'filter': variant === 'default' ? 'drop-shadow(rgba(0, 0, 0, 0.3) 0px 1px 1px)' : 'none'}"
                             v-if="icon?.trim()"
@@ -234,23 +234,27 @@ const borderStyle = computed(() => {
 });
 
 const contentStyle = computed(() => {
-    let condensedFontFamily = props.override.font_family ? props.override.font_family : `National Park`;
-    let fontFamily = props.override.font_family ? props.override.font_family : `Bricolage Grotesque`;
-
-    fontFamily = {
-        '2xs': condensedFontFamily,
-        'xs': condensedFontFamily,
-        'sm': condensedFontFamily,
-        'md': condensedFontFamily,
-        'lg': fontFamily,
-        'xl': fontFamily,
-        '2xl': fontFamily,
-    }[props.size];
 
     return {
         'justify-content': props.justifyContent,
-        'font-family': fontFamily
     }
+});
+
+const contentFontClass = computed(() => {
+
+    if(props.override.font_family_class){
+        return props.override.font_family_class;
+    }
+
+    return {
+        '2xs': 'condensed_font',
+        'xs': 'condensed_font',
+        'sm': 'condensed_font',
+        'md': 'condensed_font',
+        'lg': 'bold_font',
+        'xl': 'bold_font',
+        '2xl': 'bold_font',
+    }[props.size];
 });
 
 const activeBorderComputed = computed(() => {
@@ -264,6 +268,14 @@ watch(buttonFocused, (focused) => {
 </script>
 
 <style scoped>
+
+.condensed_font {
+    font-family: 'National Park';
+}
+
+.bold_font{
+    font-family: 'Bricolage Grotesque';
+}
 
 .focus-ring-enable:focus{
     border-color: v-bind(activeBorderComputed) !important;
