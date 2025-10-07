@@ -9,10 +9,27 @@ export default defineNuxtPlugin(nuxtApp => {
     });
 
     nuxtApp.provide('ordinal', function (num: number | string): string {
-        let s = ["th", "st", "nd", "rd"];
-        // @ts-ignore
-        let v = num % 100;
-        return num + (s[(v - 20) % 10] || s[v] || s[0]);
+
+        if(num == 0){
+            return '0';
+        }
+
+        const suffixes = ["th", "st", "nd", "rd"];
+        const numValue = Number(num);
+        const v = numValue % 100;
+
+        // Handle special cases (11th, 12th, 13th)
+        if (v >= 11 && v <= 13) {
+            return num + "th";
+        }
+
+        // Get the last digit for suffix determination
+        const lastDigit = v % 10;
+        const suffix = suffixes[lastDigit] || "th";
+
+        return num + suffix;
+
+
     });
 
     nuxtApp.provide('toRomanNumeral', function (num: number): string {
@@ -20,7 +37,6 @@ export default defineNuxtPlugin(nuxtApp => {
         if(num == 0){
             return 'i';
         }
-
         const romanNumerals = [
             { value: 1000, symbol: "M" },
             { value: 900, symbol: "CM" },
@@ -36,10 +52,8 @@ export default defineNuxtPlugin(nuxtApp => {
             { value: 4, symbol: "IV" },
             { value: 1, symbol: "I" }
         ];
-
         let result = "";
-        for (let i = 0; i < romanNumerals.length; i++) {
-            const { value, symbol } = romanNumerals[i];
+        for (const { value, symbol } of romanNumerals) {
             while (num >= value) {
                 result += symbol;
                 num -= value;
