@@ -11,14 +11,14 @@
                 class="w-full flex justify-start"
                 :class="[backgroundClass, heightClass, borderClass]">
                 <div :class="[iconHolderClass]" class="flex-none flex justify-end items-center">
-                    <ClientOnly><Icon :class="[iconClass]" :name="pending ? 'eos-icons:loading' : icon"/></ClientOnly>
+                    <Icon :class="[iconClass]" :name="pending ? 'eos-icons:loading' : icon"/>
                 </div>
                 <div v-if="!active" class="w-full relative" :class="[disabled ? 'cursor-not-allowed' : 'cursor-pointer']">
                     <div :class="[selectionClass]" class="absolute truncate flex items-center">
                         {{selectionSummary}}
                     </div>
                     <div :class="[dropDownIconHolderClass]" class="absolute right-0 top-0 flex justify-center items-center">
-                        <ClientOnly><Icon :class="[dropDownIconClass]" name="ic:baseline-arrow-drop-down" /></ClientOnly>
+                        <Icon :class="[dropDownIconClass]" name="ic:baseline-arrow-drop-down" />
                     </div>
                 </div>
 
@@ -46,14 +46,12 @@
                     <div
                         :class="[dropDownIconHolderClass]"
                         class="absolute right-0 top-0 flex justify-center items-center">
-                        <ClientOnly>
-                            <Icon
-                                v-if="searchable"
-                                @click="clearSearch"
-                                :class="[dropDownIconClass]"
-                                class="cursor-pointer"
-                                :name="pending ? 'eos-icons:loading' : 'ic:baseline-clear'" />
-                        </ClientOnly>
+                        <Icon
+                            v-if="searchable"
+                            @click="clearSearch"
+                            :class="[dropDownIconClass]"
+                            class="cursor-pointer"
+                            :name="pending ? 'eos-icons:loading' : 'ic:baseline-clear'" />
                     </div>
                 </div>
             </div>
