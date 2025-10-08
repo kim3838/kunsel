@@ -134,7 +134,6 @@ export default defineNuxtConfig({
     modules: [
         '@vueuse/nuxt',
         '@pinia/nuxt',
-        //'nuxt-lodash'
         '@nuxt/icon'
     ],
 
