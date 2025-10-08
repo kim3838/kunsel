@@ -131,14 +131,6 @@ export default defineNuxtConfig({
         {path: '@/components/shift'},
     ],
 
-    // lodash: {
-    //     prefix: "_",
-    //     prefixSkip: false,
-    //     upperAfterPrefix: false,
-    //     exclude: [],
-    //     alias: [],
-    // },
-
     modules: [
         '@vueuse/nuxt',
         '@pinia/nuxt',
