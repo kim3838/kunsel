@@ -64,9 +64,20 @@ watch(() => route.name,() => {
 
 </script>
 <style lang="scss">
+:root {
+    --scrollbar-width: 7px;
+    --scrollbar-height: 5px;
+}
+
+@-moz-document url-prefix() {
+    :root {
+        --scrollbar-width: 12px;
+    }
+}
+
 ::-webkit-scrollbar {
-    width: $scrollBarWidth;
-    height: $scrollBarHeight;
+    width: var(--scrollbar-width);
+    height: var(--scrollbar-height);
 }
 
 ::-webkit-scrollbar-track {

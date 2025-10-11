@@ -258,6 +258,6 @@ const subNavigationFontClass = computed(() => {
 .primary-navigation-parent {
     background-color: v-bind(navigationBackground) !important;
     left: 0;
-    right: $scrollBarWidth;
+    right: var(--scrollbar-width);
 }
 </style>
