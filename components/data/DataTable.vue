@@ -1,9 +1,9 @@
 <template>
     <div id="table-division" ref="dataTableScroll">
         <!-- Disabled Layer -->
-        <div v-if="disabled" class="absolute disabled-overlay opacity-25 z-30"></div>
+        <div v-show="disableable && disabled" class="absolute disabled-overlay opacity-25 z-30" :style="[disabledLayerStyle]"></div>
 
-        <table ref="tableReference" class="border-collapse font-data">
+        <table ref="tableReference" class="font-data">
             <thead class="table-header-background">
                 <tr v-if="supHeaders.length > 0">
                     <td v-if="selection"></td>
@@ -211,6 +211,10 @@ const props = defineProps({
         type: Boolean,
         default: false,
     },
+    disableable: {
+        type: Boolean,
+        default: true,
+    },
     disabled: {
         type: Boolean,
         default: false,
@@ -245,44 +249,55 @@ const emit = defineEmits(["update:modelValue", "manualSorted", "selectionChanged
 
 const dataTableReference = useTemplateRef('dataTableScroll');
 const tableReference = useTemplateRef('tableReference');
-const { width: dataTableReferenceWidth, height: dataTableReferenceHeight } = useElementSize(dataTableReference)
-const { width: tableReferenceWidth, height: tableReferenceHeight } = useElementSize(tableReference)
+const dataTableWidth = shallowRef('0px');
+const dataTableHeight = shallowRef('0px');
 
-const dataTableReferenceWidthComputed = computed(() => {
-    let width = dataTableReferenceWidth.value > tableReferenceWidth.value ? tableReferenceWidth.value : dataTableReferenceWidth.value;
+watch(()=> props.disabled, disabled => {
 
-    return width + 'px';
-})
-const dataTableReferenceHeightComputed = computed(() => {
+    if(props.disableable && disabled){
 
-    let height = dataTableReferenceHeight.value > tableReferenceHeight.value ? tableReferenceHeight.value : dataTableReferenceHeight.value;
+        const { width: dataTableReferenceWidth, height: dataTableReferenceHeight } = useElementSize(dataTableReference);
+        const { width: tableReferenceWidth, height: tableReferenceHeight } = useElementSize(tableReference);
 
-    return height + 'px';
-});
-const tableBody = useTemplateRef('tableBody');
-const {option} = useSortable(tableBody, props.rows, {
-    handle: '.handleOrder',
-    animation: 200,
-    disabled: !props.manualSortable,
-    ghostClass: 'sortable-ghost',
-    chosenClass: 'sortable-chosen',
-    dragClass: 'sortable-drag',
-    onUpdate: (event: { oldIndex: number; newIndex: number; [key: string]: any }) => {
-        moveArrayElement(props.rows, event.oldIndex, event.newIndex, event);
-
-        nextTick(() => {
-            emit('manualSorted', event.oldIndex, event.newIndex, event)
-        })
+        dataTableWidth.value = `${dataTableReferenceWidth.value > tableReferenceWidth.value ? tableReferenceWidth.value : dataTableReferenceWidth.value}px`;
+        dataTableHeight.value = `${dataTableReferenceHeight.value > tableReferenceHeight.value ? tableReferenceHeight.value : dataTableReferenceHeight.value}px`;
     }
+});
+
+const disabledLayerStyle = computed(() => {
+    return {
+        width: dataTableWidth.value,
+        height: dataTableHeight.value,
+    };
 })
 
-useMutationObserver(dataTableScroll, () => {
-    const elements = dataTableScroll.value?.querySelectorAll('[draggable="false"]') || [];
-    elements.forEach(el => el.remove())
-}, {
-    childList: true,
-    subtree: true,
-});
+if(props.manualSortable){
+
+    const tableBody = useTemplateRef('tableBody');
+    const {option} = useSortable(tableBody, props.rows, {
+        handle: '.handleOrder',
+        animation: 200,
+        disabled: !props.manualSortable,
+        ghostClass: 'sortable-ghost',
+        chosenClass: 'sortable-chosen',
+        dragClass: 'sortable-drag',
+        onUpdate: (event: { oldIndex: number; newIndex: number; [key: string]: any }) => {
+            moveArrayElement(props.rows, event.oldIndex, event.newIndex, event);
+
+            nextTick(() => {
+                emit('manualSorted', event.oldIndex, event.newIndex, event)
+            })
+        }
+    });
+
+    useMutationObserver(dataTableScroll, () => {
+        const elements = dataTableScroll.value?.querySelectorAll('[draggable="false"]') || [];
+        elements.forEach(el => el.remove())
+    }, {
+        childList: true,
+        subtree: true,
+    });
+}
 
 function cellAlignClass(align: 'left' | 'center' | 'right' | undefined = undefined){
 
@@ -498,11 +513,20 @@ $cellBorder: v-bind(liningColor70);
 
 table{
     white-space: nowrap;
-    border: 0;
+    box-sizing: border-box;
+    border-top: 0;
 }
 
-table thead tr td,tbody tr td {
+table thead tr td,
+tbody tr td {
     border: 1px solid $cellBorder;
+}
+
+table thead tr,
+tbody tr,
+table thead tr td:nth-last-child(1),
+tbody tr td:nth-last-child(1){
+    border-right: 1px solid $cellBorder;
 }
 
 .table-row-odd-background {
@@ -522,7 +546,5 @@ table thead tr td,tbody tr td {
 
 .disabled-overlay {
     background-color: transparent !important;
-    height: v-bind(dataTableReferenceHeightComputed);
-    width: v-bind(dataTableReferenceWidthComputed);
 }
 </style>
