@@ -437,8 +437,6 @@ const submitShiftAssignment = () => {
         return;
     }
 
-    console.log({'shiftAssignmentForm': shiftAssignmentForm.value})
-
     shiftAssignmentPending.value = true;
 
     laraFetch("/api/shift-assignment-sync-without-detaching", {
