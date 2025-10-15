@@ -130,7 +130,7 @@
                         </template>
                     </DataTableSubRow>
                 </template>
-                <tr v-if="!rows.length">
+                <tr v-if="!rows.length && props.showNoData">
                     <td colspan="100%" class="text-center font-semibold" :class="[bodyFontClass]">
                         {{noDataLabel}}
                     </td>
@@ -206,6 +206,10 @@ const props = defineProps({
     noDataLabel: {
         type: String,
         default: 'No Record',
+    },
+    showNoData: {
+        type: Boolean,
+        default: true,
     },
     manualSortable: {
         type: Boolean,
@@ -340,7 +344,9 @@ function checkRow(row: TableRowT): void{
         _remove(props.modelValue, (value) => value == row.id);
         emit('selectionChanged', {action: SELECTION_ACTION.REMOVE, value: _castArray(row.id)});
     } else {
-        props.modelValue.push(row.id);
+
+        emit('update:modelValue', props.modelValue.concat(row.id));
+
         nextTick(()=>{
             emit('selectionChanged', {action: SELECTION_ACTION.ADD, value: _castArray(props.modelValue)});
         });
