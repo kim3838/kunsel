@@ -131,8 +131,12 @@
                     </DataTableSubRow>
                 </template>
                 <tr v-if="!rows.length && props.showNoData">
-                    <td colspan="100%" class="text-center font-semibold" :class="[bodyFontClass]">
+                    <td colspan="100%" class="text-center" :class="[bodyFontClass]">
                         {{noDataLabel}}
+                    </td>
+                </tr><tr v-if="!rows.length && props.showPending && props.pending">
+                    <td colspan="100%" class="text-center" :class="[bodyFontClass]">
+                        {{pendingLabel}}
                     </td>
                 </tr>
             </tbody>
@@ -210,6 +214,18 @@ const props = defineProps({
     showNoData: {
         type: Boolean,
         default: true,
+    },
+    pending: {
+        type: Boolean,
+        default: false,
+    },
+    showPending: {
+        type: Boolean,
+        default: true,
+    },
+    pendingLabel: {
+        type: String,
+        default: 'Loading...',
     },
     manualSortable: {
         type: Boolean,
