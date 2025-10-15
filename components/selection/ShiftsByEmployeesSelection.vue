@@ -1,6 +1,6 @@
 <template>
     <div class="space-y-2" :class="[compact ? '' : 'px-[20px]']">
-        <form @submit.prevent="paginate(1, true)" class="space-y-2" :class="[compact ? '' : 'pb-[20px]']">
+        <form @submit.prevent="paginate(1, clearSelectionOnFormSubmit)" class="space-y-2" :class="[compact ? '' : 'pb-[20px]']">
             <div class="grid gap-2 grid-cols-3 sm:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
                 <div>
                     <InputLabel :size="'sm'" value="Search" />
@@ -69,7 +69,7 @@
                     <Pagination
                         :size="'lg'"
                         :pagination="employees.meta.pagination"
-                        :pending="employeesPending"
+                        :pending="disableDataTable"
                         v-model="pageComputed"/>
                     <UnorderedList
                         v-if="disableActions"
@@ -82,16 +82,24 @@
 
         <div class="flex flex-row flex-wrap gap-2 items-center min-h-8">
             <div class="scaffold-border px-2 font-[National_Park]">
-                <span><span class="font-semibold">{{proxySelectedEmployees.length}}</span> Selected</span>
+                <span><span class="font-semibold">{{proxySelectedEmployees.length}}</span> {{selectedLabel}}</span>
             </div>
             <Button
                 :variant="'outline'"
                 :size="'sm'"
                 :icon="'tdesign:close'"
                 :disabled="disableActions"
-                :label="'Clear selection'"
+                :label="clearSelectionLabel"
                 @click="proxySelectedEmployees = []" />
-
+            <label class="scaffold-border">
+                <Checkbox
+                    :disabled="disableActions"
+                    @valueChanged="selectedFlagInteracted"
+                    class="px-[0.3rem]"
+                    v-model="showOnlySelected"
+                    :size="'md'"
+                    :label="showOnlySelectedLabel" />
+            </label>
             <slot name="selection-actions"></slot>
         </div>
 
@@ -101,6 +109,8 @@
             :size="'lg'"
             :rows="employees.data"
             :disabled="disableDataTable"
+            :show-no-data="false"
+            :pending="proxyPending"
             v-model="proxySelectedEmployees"
             selection>
             <template v-slot:cell.employee_current_employment_profile="{cell,slot}">
@@ -143,6 +153,9 @@ const props = defineProps({
             return [];
         }
     },
+    pending: {
+        type: Boolean,
+    },
     disableActions: {
         type: Boolean,
         default: false,
@@ -151,15 +164,45 @@ const props = defineProps({
         type: Boolean,
         default: false,
     },
+    clearSelectionOnFormSubmit: {
+        type: Boolean,
+        default: true,
+    },
+    selectedLabel: {
+        type: String,
+        default: 'Selected'
+    },
+    clearSelectionLabel: {
+        type: String,
+        default: 'Clear selection'
+    },
+    showOnlySelectedLabel: {
+        type: String,
+        default: 'Show only selected'
+    },
+    filters: {
+        type: Object,
+        default: function () {
+            return {}
+        }
+    },
 });
 
-const emit = defineEmits(["update:selected"]);
+const emit = defineEmits(["update:selected", "update:pending"]);
 const proxySelectedEmployees = computed({
     get() {
         return props.selected;
     },
     set(newValue) {
         emit("update:selected", newValue);
+    }
+});
+const proxyPending = computed({
+    get() {
+        return props.pending;
+    },
+    set(newValue) {
+        emit("update:pending", newValue);
     }
 });
 
@@ -267,6 +310,19 @@ const employees = reactive<{
         }
     }
 });
+const clearData = () => {
+    employees.data = [];
+    employees.meta = {
+        pagination: {
+            total: 0,
+            count: 0,
+            per_page: 0,
+            current_page: 0,
+            total_pages: 0
+        }
+    };
+};
+
 let filters = reactive<{
     page: number,
     perPage: number,
@@ -294,11 +350,47 @@ let pageComputed = computed({
         filters[payload.key] = payload.value;
     }
 });
+
+let filterSelectedComputed = computed(() => {
+    return {
+        employee_ids: proxySelectedEmployees.value
+    }
+});
+const showOnlySelected = ref(false);
+const clearFlags = () => {
+    showOnlySelected.value = false;
+}
+
+const selectedFlagInteracted = async () => {
+
+    if(showOnlySelected.value && proxySelectedEmployees.value.length == 0){
+        useNuxtApp().$promptStore.setPrompt({
+            resetable: false,
+            icon: null,
+            title: null,
+            message: 'No selected.',
+            action: {
+                callback: () => {
+                    showOnlySelected.value = false
+                },
+                label: 'Okay'
+            }
+        });
+
+        return;
+    }
+
+    await nextTick();
+    await paginate(1, false);
+}
+
 let paramsComputed = computed(() => {
     return {
         page: filters.page,
         perPage: filters.perPage,
         filters: {
+            ...props.filters,
+            ...(showOnlySelected.value ? filterSelectedComputed.value : {}),
             company_id: selectedAssociatedCompanyId.value,
             search: filters.search.keyword,
             employment_status: employmentStatusOptions.selected,
@@ -325,6 +417,7 @@ const employeesExecute = async() =>{
     }
 
     employeesPending.value = true;
+    emit("update:pending", true);
 
     await laraFetch(`/api/shifts-by-employees`, {
         method: 'GET',
@@ -332,9 +425,11 @@ const employeesExecute = async() =>{
     }, {
         onRequestError: () => {
             employeesPending.value = false;
+            emit("update:pending", false);
         },
         onResponse: () => {
             employeesPending.value = false;
+            emit("update:pending", false);
         },
         onSuccessResponse: async (request, options, response) => {
             employees.data = _get(response, '_data.values.data', []).map(employee => {
@@ -368,7 +463,7 @@ const employeesExecute = async() =>{
 }
 await employeesExecute();
 
-function paginate(page = 1, clearSelection = false){
+const paginate = async (page: number = 1, clearSelection: boolean = false) => {
     clearTimeout(filters.search.callback);
 
     if(clearSelection){
@@ -376,7 +471,7 @@ function paginate(page = 1, clearSelection = false){
     }
 
     if(filters.page === page){
-        employeesExecute();
+        await employeesExecute();
     } else {
         filters.page = page;
     }
@@ -385,8 +480,16 @@ function paginate(page = 1, clearSelection = false){
 watch(() => {return filters.page;}, () => {paginate(filters.page);});
 watch(() => {return filters.perPage;}, () => {paginate(1);});
 
+const reset = async () => {
+    clearFlags();
+    clearData();
+    await paginate(1, true);
+}
 defineExpose({
     paginate,
+    clearFlags,
+    clearData,
+    reset
 });
 </script>
 

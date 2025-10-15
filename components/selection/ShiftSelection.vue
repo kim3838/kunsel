@@ -1,6 +1,6 @@
 <template>
     <div class="space-y-2" :class="[compact ? '' : 'px-[20px]']">
-        <form @submit.prevent="paginate(1, true)" class="space-y-2" :class="[compact ? '' : 'pb-[20px]']">
+        <form @submit.prevent="paginate(1, clearSelectionOnFormSubmit)" class="space-y-2" :class="[compact ? '' : 'pb-[20px]']">
             <div class="grid gap-2 grid-cols-3 sm:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
                 <div>
                     <InputLabel :size="'sm'" value="Search" />
@@ -25,7 +25,7 @@
                     <Pagination
                         :size="'lg'"
                         :pagination="shifts.meta.pagination"
-                        :pending="shiftsPending"
+                        :pending="disableDataTable"
                         v-model="pageComputed"/>
                     <UnorderedList
                         v-if="disableActions"
@@ -56,6 +56,7 @@
             :size="'lg'"
             :rows="shifts.data"
             :disabled="disableDataTable"
+            :pending="proxyPending"
             v-model="proxySelectedShifts"
             selection>
             <template v-slot:cell.type="{cell,slot}">
@@ -86,6 +87,9 @@ const props = defineProps({
             return [];
         }
     },
+    pending: {
+        type: Boolean,
+    },
     disableActions: {
         type: Boolean,
         default: false,
@@ -94,15 +98,27 @@ const props = defineProps({
         type: Boolean,
         default: false,
     },
+    clearSelectionOnFormSubmit: {
+        type: Boolean,
+        default: true,
+    },
 });
 
-const emit = defineEmits(["update:selected"]);
+const emit = defineEmits(["update:selected", "update:pending"]);
 const proxySelectedShifts = computed({
     get() {
         return props.selected;
     },
     set(newValue) {
         emit("update:selected", newValue);
+    }
+});
+const proxyPending = computed({
+    get() {
+        return props.pending;
+    },
+    set(newValue) {
+        emit("update:pending", newValue);
     }
 });
 
@@ -186,6 +202,7 @@ const shiftsExecute = async() =>{
     }
 
     shiftsPending.value = true;
+    emit("update:pending", true);
 
     await laraFetch(`/api/shifts`, {
         method: 'GET',
@@ -193,9 +210,11 @@ const shiftsExecute = async() =>{
     }, {
         onRequestError: () => {
             shiftsPending.value = false;
+            emit("update:pending", false);
         },
         onResponse: () => {
             shiftsPending.value = false;
+            emit("update:pending", false);
         },
         onSuccessResponse: async (request, options, response) => {
             shifts.data = _get(response, '_data.values.data', []);
@@ -213,7 +232,7 @@ const shiftsExecute = async() =>{
 }
 await shiftsExecute();
 
-function paginate(page = 1, clearSelection = false){
+const paginate = async (page: number = 1, clearSelection: boolean = false) => {
     clearTimeout(filters.search.callback);
 
     if(clearSelection){
@@ -221,7 +240,7 @@ function paginate(page = 1, clearSelection = false){
     }
 
     if(filters.page === page){
-        shiftsExecute();
+        await shiftsExecute();
     } else {
         filters.page = page;
     }
