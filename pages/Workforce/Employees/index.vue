@@ -508,7 +508,7 @@ watch(() => {return filters.perPage;}, () => {paginate(1);});
  *
  **/
 const stagedEmployee = ref<{
-    'id': sring | number | null,
+    'id': string | number | null,
     'ulid': string | null,
 }>({
     'id': null,
