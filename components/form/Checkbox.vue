@@ -52,7 +52,7 @@ const props = defineProps({
     }
 });
 
-const emit = defineEmits(["update:modelValue"]);
+const emit = defineEmits(["update:modelValue", 'valueChanged']);
 
 const proxyModel = computed({
     get() {
@@ -60,6 +60,7 @@ const proxyModel = computed({
     },
     set(newValue) {
         emit("update:modelValue", newValue);
+        emit('valueChanged', newValue)
     }
 });
 
