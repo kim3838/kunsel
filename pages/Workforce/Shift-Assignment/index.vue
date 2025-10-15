@@ -85,6 +85,7 @@
                                     <Suspense>
                                         <ShiftSelection
                                             compact
+                                            :clear-selection-on-form-submit="false"
                                             :disable-actions="disableShiftAssignmentActions"
                                             v-model:selected="selectedModalShifts"/>
 
@@ -105,7 +106,10 @@
                                     <Suspense>
                                         <ShiftsByEmployeesSelection
                                             compact
+                                            :clear-selection-on-form-submit="false"
+                                            ref="modalEmployeeSelectionReference"
                                             :disable-actions="disableShiftAssignmentActions"
+                                            v-model:pending="modalEmployeeSelectionPending"
                                             v-model:selected="selectedModalEmployees"/>
 
                                         <template #fallback>
@@ -133,7 +137,7 @@
                                         class="w-min"
                                         :variant=" 'outline'"
                                         :size="'md'"
-                                        :disabled="disableShiftAssignmentActions"
+                                        :disabled="disableShiftAssignmentActions || disableEmployeeModalSelectionActions"
                                         :icon="'mdi:cancel'"
                                         :label="'Cancel'"
                                         @click="closeStagedShiftModal"/>
@@ -142,7 +146,7 @@
                                         :variant="'default'"
                                         :size="'md'"
                                         :icon="submitStagedIcon"
-                                        :disabled="disableShiftAssignmentActions"
+                                        :disabled="disableShiftAssignmentActions || disableEmployeeModalSelectionActions"
                                         :label="submitStagedLabel"
                                         @click="submitStaged"/>
                                 </div>
@@ -154,11 +158,14 @@
                 <div v-if="shiftAssignmentTab == SHIFT_ASSIGNMENT_TAB.CREATE_SHIFT_ASSIGNMENTS">
                     <Suspense>
                         <ShiftsByEmployeesSelection
+                            :clear-selection-on-form-submit="false"
                             ref="employeeSelectionReference"
+                            :disable-actions="disableShiftAssignmentActions"
+                            v-model:pending="employeeSelectionPending"
                             v-model:selected="selectedEmployees">
                             <template #selection-actions>
-                                <Button @click="assignShifts" class="inline-block" :size="'sm'" :icon="'mdi:plus'" :variant="'outline'" :label="'Assign shift from selected employees'" />
-                                <Button @click="confirmShiftAssignmentBatchDetach" class="inline-block" :size="'sm'" :icon="'mdi:delete-outline'" :variant="'outline'" :label="'Clear shift from selected employees'" />
+                                <Button :disabled="disableShiftAssignmentActions || employeeSelectionPending" @click="assignShifts" class="inline-block" :size="'sm'" :icon="'mdi:plus'" :variant="'outline'" :label="'Assign shift from selected employees'" />
+                                <Button :disabled="disableShiftAssignmentActions || employeeSelectionPending" @click="confirmShiftAssignmentBatchDetach" class="inline-block" :size="'sm'" :icon="'mdi:delete-outline'" :variant="'outline'" :label="'Clear shift from selected employees'" />
                             </template>
                         </ShiftsByEmployeesSelection>
 
@@ -176,11 +183,14 @@
                 <div v-if="shiftAssignmentTab == SHIFT_ASSIGNMENT_TAB.MANAGE_ASSIGNED_SHIFTS">
                     <Suspense>
                         <ShiftSelection
+                            :clear-selection-on-form-submit="false"
                             ref="shiftSelectionReference"
+                            :disable-actions="disableShiftAssignmentActions"
+                            v-model:pending="shiftSelectionPending"
                             v-model:selected="selectedShifts">
                             <template #selection-actions>
-                                <Button @click="assignShifts" class="inline-block" :size="'sm'" :icon="'mdi:plus'" :variant="'outline'" :label="'Assign selected shifts to employees'" />
-                                <Button @click="confirmShiftAssignmentBatchDetach" class="inline-block" :size="'sm'" :icon="'mdi:delete-outline'" :variant="'outline'" :label="'Remove selected shifts from employees'" />
+                                <Button :disabled="disableShiftAssignmentActions || shiftSelectionPending" @click="assignShifts" class="inline-block" :size="'sm'" :icon="'mdi:plus'" :variant="'outline'" :label="'Assign selected shifts to employees'" />
+                                <Button :disabled="disableShiftAssignmentActions || shiftSelectionPending" @click="confirmShiftAssignmentBatchDetach" class="inline-block" :size="'sm'" :icon="'mdi:delete-outline'" :variant="'outline'" :label="'Remove selected shifts from employees'" />
                             </template>
                         </ShiftSelection>
 
@@ -201,6 +211,7 @@
 
 <script setup lang="ts">
 import {storeToRefs} from "pinia";
+import type {ShiftAssignmentsInstance, ShiftByEmployeeSelectionInstance, ShiftSelectionInstance} from "@/public/js/types/component-instance";
 
 definePageMeta({middleware: ['auth', 'admin-of-selected-company']});
 useLayout().setNavigationMode('solid');
@@ -229,14 +240,25 @@ const shiftSelectionsRadioGroupOrientation = computed(() => {
 
 const assignShiftModalShow = ref(false);
 const editShiftSettingsModalShow = ref(false);
+
+const modalEmployeeSelectionReference = useTemplateRef<ShiftByEmployeeSelectionInstance>('modalEmployeeSelectionReference');
+const modalEmployeeSelectionReferencePending = computed(() => {
+    return !Boolean(modalEmployeeSelectionReference.value);
+});
+
+const modalEmployeeSelectionPending = ref(false);
 const selectedModalEmployees = ref([]);
+
 const selectedModalShifts = ref([]);
 
-const shiftAssignmentsReference = useTemplateRef('shiftAssignmentsReference');
+const shiftAssignmentsReference = useTemplateRef<ShiftAssignmentsInstance>('shiftAssignmentsReference');
 
-const employeeSelectionReference = useTemplateRef('employeeSelectionReference');
+const employeeSelectionReference = useTemplateRef<ShiftByEmployeeSelectionInstance>('employeeSelectionReference');
+const employeeSelectionPending = ref(false);
 const selectedEmployees = ref([]);
-const shiftSelectionReference = useTemplateRef('shiftSelectionReference');
+
+const shiftSelectionReference = useTemplateRef<ShiftSelectionInstance>('shiftSelectionReference');
+const shiftSelectionPending = ref(false);
 const selectedShifts = ref([]);
 
 const resetShiftAssignment = () => {
@@ -244,6 +266,9 @@ const resetShiftAssignment = () => {
     editShiftSettingsModalShow.value = false;
 
     selectedModalEmployees.value = [];
+    if(shiftAssignmentTab.value == SHIFT_ASSIGNMENT_TAB.MANAGE_ASSIGNED_SHIFTS){
+        modalEmployeeSelectionReference.value?.reset();
+    }
     selectedModalShifts.value = [];
     selectedShifts.value = [];
     selectedEmployees.value = [];
@@ -321,26 +346,32 @@ const editShiftSettings = (shift) => {
 }
 const closeStagedShiftModal = () => {
 
+    if(stagedShiftAssignmentId.value){
+        editShiftSettingsModalShow.value = false;
+    } else {
+        assignShiftModalShow.value = false;
+    }
+
     if(shiftAssignmentTab.value == SHIFT_ASSIGNMENT_TAB.CREATE_SHIFT_ASSIGNMENTS){
         selectedModalShifts.value = [];
     }
 
     if(shiftAssignmentTab.value == SHIFT_ASSIGNMENT_TAB.MANAGE_ASSIGNED_SHIFTS){
         selectedModalEmployees.value = [];
+        modalEmployeeSelectionReference.value?.reset();
     }
 
     shiftAssignmentStartDate.value = moment().format("YYYY-MM-DD");
     stateEndOfShift.value = 0;
     shiftAssignmentEndDate.value = null;
-
-    if(stagedShiftAssignmentId.value){
-        editShiftSettingsModalShow.value = false;
-    } else {
-        assignShiftModalShow.value = false;
-    }
 }
 const disableShiftAssignmentActions = computed(() => {
-    return shiftAssignmentPending.value || updateShiftSettingsPending.value;
+    return shiftAssignmentPending.value || updateShiftSettingsPending.value
+});
+const disableEmployeeModalSelectionActions = computed(() => {
+    return (shiftAssignmentTab.value == SHIFT_ASSIGNMENT_TAB.MANAGE_ASSIGNED_SHIFTS &&
+        (modalEmployeeSelectionPending.value || modalEmployeeSelectionReferencePending.value)
+    );
 })
 const shiftAssignmentPending = ref(false);
 const updateShiftSettingsPending = ref(false);
@@ -394,10 +425,10 @@ const shiftAssignmentForm = computed(() => {
 });
 
 const submitStagedIcon = computed(() => {
-    return stagedShiftAssignmentId.value ? 'ic:sharp-save' : 'mdi:plus'
+    return disableShiftAssignmentActions.value ? 'eos-icons:loading' : stagedShiftAssignmentId.value ? 'ic:sharp-save' : 'mdi:plus'
 });
 const submitStagedLabel = computed(() => {
-    return stagedShiftAssignmentId.value ? 'Update Shift Settings' : 'Assign shifts'
+    return disableShiftAssignmentActions.value ? 'Please wait' : stagedShiftAssignmentId.value ? 'Update Shift Settings' : 'Assign shifts'
 });
 const submitStaged = () => {
 
@@ -463,7 +494,7 @@ const submitShiftAssignment = () => {
             });
 
             resetShiftAssignment();
-            employeeSelectionReference.value?.paginate(1, true);
+            await employeeSelectionReference.value?.paginate(1, true);
         }
     });
 }
