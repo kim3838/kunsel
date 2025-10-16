@@ -68,7 +68,7 @@
             </div>
 
             <div>
-                <PageInformation :pagination="employees.meta.pagination" :pending="employeesPending"/>
+                <PageInformation :pagination="employees.meta.pagination" :pending="disableDataTable"/>
                 <div class="flex items-center gap-2">
                     <Pagination
                         :size="'lg'"

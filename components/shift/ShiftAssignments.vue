@@ -48,11 +48,11 @@
             </div>
 
             <div>
-                <PageInformation :pagination="shiftAssignments.meta.pagination" :pending="shiftAssignmentsPending"/>
+                <PageInformation :pagination="shiftAssignments.meta.pagination" :pending="disableDataTable"/>
                 <Pagination
                     :size="'lg'"
                     :pagination="shiftAssignments.meta.pagination"
-                    :pending="shiftAssignmentsPending"
+                    :pending="disableDataTable"
                     v-model="pageComputed"/>
             </div>
         </form>
