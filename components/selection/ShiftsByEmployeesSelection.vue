@@ -15,6 +15,10 @@
                     <MultiSelect glint drop-shadow :selection-max-viewable-line="15" :size="'md'" :options="employmentTypeOptions" :disabled="disableActions" :icon="'tdesign:component-checkbox'"/>
                 </div>
                 <div>
+                    <InputLabel :size="'sm'" value="Group" />
+                    <MultiSelect glint drop-shadow :selection-max-viewable-line="15" :size="'md'" :options="employeeGroupOptions" :disabled="disableActions" :icon="'tdesign:component-checkbox'"/>
+                </div>
+                <div>
                     <InputLabel :size="'sm'" value="Department" />
                     <MultiSelect glint drop-shadow :selection-max-viewable-line="15" :size="'md'" :options="departmentOptions" :disabled="disableActions" :icon="'ic:baseline-all-inbox'"/>
                 </div>
@@ -264,6 +268,11 @@ const notAssignedShiftSelectionsOptions = reactive({
 
 //Employee Organization
 const companyOrganizationSelections = companyOrganizationSelectionsState();
+const employeeGroupOptions = reactive({
+    search: '',
+    selection: companyOrganizationSelections.value.employee_groups,
+    selected: []
+});
 const departmentOptions = reactive({
     search: '',
     selection: companyOrganizationSelections.value.departments,
@@ -395,6 +404,7 @@ let paramsComputed = computed(() => {
             search: filters.search.keyword,
             employment_status: employmentStatusOptions.selected,
             employment_type: employmentTypeOptions.selected,
+            assigned_employee_group_ids: employeeGroupOptions.selected,
             department_ids: departmentOptions.selected,
             designation_ids: designationOptions.selected,
             assigned_shift_ids: assignedShiftSelectionsOptions.selected,

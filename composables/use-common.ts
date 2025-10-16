@@ -12,6 +12,7 @@ export const payrollComponentPaySelectionsState = () => {
 export const companyOrganizationSelectionsState = () => {
     return useState('organization', () => {
         return {
+            employee_groups: [],
             departments: [],
             designations: [],
         }
@@ -74,6 +75,23 @@ export const useCommon = () => {
         });
     }
 
+    const fetchEmployeeGroupSelections = async () => {
+        const {$authStore} = useNuxtApp();
+
+        await laraFetch("/api/employee-group-selections", {
+            method: 'GET',
+            params: {
+                filters: {
+                    'company_id': $authStore.selectedAssociatedCompanyId,
+                }
+            }
+        }, {
+            onSuccessResponse: async (request, options, response) => {
+                companyOrganizationSelections.value.employee_groups = _get(response, '_data.values.selection', []);
+            }
+        });
+    };
+
     const fetchDepartmentSelections = async () => {
         const {$authStore} = useNuxtApp();
 
@@ -111,6 +129,7 @@ export const useCommon = () => {
     const fetchOrganizationSelections = async () => {
 
         if(useAuth().isAuthenticated.value){
+            await fetchEmployeeGroupSelections();
             await fetchDepartmentSelections();
             await fetchDesignationSelections();
         }
