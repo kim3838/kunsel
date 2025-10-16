@@ -251,6 +251,13 @@ export const useLayout = () => {
                         route_active: 'workforce-employees'
                     },
                     {
+                        key: 'workforce/employee-groups',
+                        type: 'link',
+                        title: 'Employee Groups',
+                        to: '/workforce/employee-groups',
+                        route_active: 'workforce-employee-groups'
+                    },
+                    {
                         key: 'workforce/departments',
                         type: 'link',
                         title: 'Departments',
