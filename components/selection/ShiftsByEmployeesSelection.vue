@@ -31,8 +31,7 @@
             <div class="grid gap-2 grid-cols-2 sm:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
                 <div class="col-span-2">
                     <InputLabel :size="'sm'" value="Assigned Shift" />
-                    <LazyMultiSelectPaginated
-                        hydrate-on-interaction="mouseover"
+                    <MultiSelectPaginated
                         :icon="'tdesign:component-checkbox'"
                         :disabled="disableActions"
                         glint
@@ -44,8 +43,7 @@
                 </div>
                 <div class="col-span-2">
                     <InputLabel :size="'sm'" value="Not Assigned Shift" />
-                    <LazyMultiSelectPaginated
-                        hydrate-on-interaction="mouseover"
+                    <MultiSelectPaginated
                         :icon="'tdesign:component-checkbox'"
                         :disabled="disableActions"
                         glint
