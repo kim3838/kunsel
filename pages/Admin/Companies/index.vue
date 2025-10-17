@@ -7,11 +7,11 @@
                     <div class="grid gap-2 grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-8">
                         <div>
                             <InputLabel :size="'sm'" value="Account" />
-                            <MultiSelect glint drop-shadow :selection-max-viewable-line="5" :size="'md'" :options="accountOptions" :icon="'tdesign:component-checkbox'"/>
+                            <MultiSelect :disabled="disableActions" glint drop-shadow :selection-max-viewable-line="5" :size="'md'" :options="accountOptions" :icon="'tdesign:component-checkbox'"/>
                         </div>
                         <div>
                             <InputLabel :size="'sm'" value="Search" />
-                            <Input :size="'md'" ref="searchInput" v-model="filters.search.keyword" class="w-full" placeholder="Search" type="text"/>
+                            <Input :disabled="disableActions" :size="'md'" ref="searchInput" v-model="filters.search.keyword" class="w-full" placeholder="Search" type="text"/>
                         </div>
                     </div>
 
@@ -20,8 +20,8 @@
                     </div>
 
                     <div>
-                        <PageInformation :pagination="companies.meta.pagination" :pending="companiesPending"/>
-                        <Pagination :size="'lg'" :pagination="companies.meta.pagination" :pending="companiesPending" v-model="pageComputed"/>
+                        <PageInformation :pagination="companies.meta.pagination" :pending="disableDataTable"/>
+                        <Pagination :size="'lg'" :pagination="companies.meta.pagination" :pending="disableDataTable" v-model="pageComputed"/>
                     </div>
                 </form>
 

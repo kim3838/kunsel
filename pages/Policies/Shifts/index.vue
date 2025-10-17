@@ -6,11 +6,11 @@
                     <div class="grid gap-2 grid-cols-3 sm:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-8">
                         <div>
                             <InputLabel :size="'sm'" value="Search" />
-                            <Input :size="'md'" ref="searchInput" v-model="filters.search.keyword" class="w-full" placeholder="Search" type="text"/>
+                            <Input :disabled="disableActions" :size="'md'" ref="searchInput" v-model="filters.search.keyword" class="w-full" placeholder="Search" type="text"/>
                         </div>
                         <div>
                             <InputLabel :size="'sm'" value="Type" />
-                            <MultiSelect glint drop-shadow :size="'md'" :options="shiftTypeOptions" :icon="'tdesign:component-checkbox'"/>
+                            <MultiSelect :disabled="disableActions" glint drop-shadow :size="'md'" :options="shiftTypeOptions" :icon="'tdesign:component-checkbox'"/>
                         </div>
                     </div>
 
@@ -34,8 +34,8 @@
                     </div>
 
                     <div>
-                        <PageInformation :pagination="shifts.meta.pagination" :pending="shiftsPending" />
-                        <Pagination :size="'lg'" :pagination="shifts.meta.pagination" :pending="shiftsPending" v-model="pageComputed"/>
+                        <PageInformation :pagination="shifts.meta.pagination" :pending="disableDataTable" />
+                        <Pagination :size="'lg'" :pagination="shifts.meta.pagination" :pending="disableDataTable" v-model="pageComputed"/>
                     </div>
                 </form>
 
@@ -283,10 +283,10 @@ const shiftsExecute = async () => {
 await shiftsExecute();
 
 const disableActions = computed(() => {
-    return shiftsPending.value || deleting.value;
+    return shiftsPending.value || deleting.value || companyAssociationPendingState().value;
 });
 const disableDataTable = computed(() => {
-    return shiftsPending.value || deleting.value;
+    return shiftsPending.value || deleting.value || companyAssociationPendingState().value;
 });
 
 function paginate(page = 1, clearSelection = false){

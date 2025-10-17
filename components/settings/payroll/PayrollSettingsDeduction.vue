@@ -100,10 +100,10 @@ const deductionsPending = ref(false);
 const selectedDeductions = ref([]);
 
 const disableActions = computed(() => {
-    return deductionsPending.value || creatingOrEditing.value || deductionsReOrderPending.value || deleting.value;
+    return deductionsPending.value || creatingOrEditing.value || deductionsReOrderPending.value || deleting.value || companyAssociationPendingState().value;
 });
 const disableDataTable = computed(() => {
-    return deductionsPending.value || deleting.value
+    return deductionsPending.value || deleting.value || companyAssociationPendingState().value;
 })
 
 const deductionsExecute = async () => {

@@ -67,7 +67,7 @@ const salaryStatementModulesPending = ref(false)
 const selectedSalaryStatementModules = ref([]);
 
 const disableActions = computed(() => {
-    return salaryStatementModulesPending.value || creatingOrEditing.value || salaryStatementModulesReOrderPending.value || deleting.value;
+    return salaryStatementModulesPending.value || creatingOrEditing.value || salaryStatementModulesReOrderPending.value || deleting.value || companyAssociationPendingState().value;
 });
 const salaryStatementModulesExecute = async() =>{
 

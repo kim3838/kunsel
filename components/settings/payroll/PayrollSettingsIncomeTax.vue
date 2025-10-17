@@ -100,10 +100,10 @@ const incomeTaxesPending = ref(false);
 const selectedIncomeTaxes = ref([]);
 
 const disableActions = computed(() => {
-    return incomeTaxesPending.value || creatingOrEditing.value || incomeTaxesReOrderPending.value || deleting.value;
+    return incomeTaxesPending.value || creatingOrEditing.value || incomeTaxesReOrderPending.value || deleting.value || companyAssociationPendingState().value;
 });
 const disableDataTable = computed(() => {
-    return incomeTaxesPending.value || deleting.value
+    return incomeTaxesPending.value || deleting.value || companyAssociationPendingState().value;
 })
 
 const incomeTaxesExecute = async () => {

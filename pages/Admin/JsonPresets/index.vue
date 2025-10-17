@@ -7,7 +7,7 @@
                     <div class="grid gap-2 grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-8">
                         <div>
                             <InputLabel :size="'sm'" value="Search" />
-                            <Input :size="'md'" ref="searchInput" v-model="filters.search.keyword" class="w-full" placeholder="Search" type="text"/>
+                            <Input :disabled="disableActions" :size="'md'" ref="searchInput" v-model="filters.search.keyword" class="w-full" placeholder="Search" type="text"/>
                         </div>
                     </div>
 
@@ -16,8 +16,8 @@
                     </div>
 
                     <div>
-                        <PageInformation :pagination="jsonPresets.meta.pagination" :pending="jsonPresetsPending"/>
-                        <Pagination :size="'lg'" :pagination="jsonPresets.meta.pagination" :pending="jsonPresetsPending" v-model="pageComputed"/>
+                        <PageInformation :pagination="jsonPresets.meta.pagination" :pending="disableDataTable"/>
+                        <Pagination :size="'lg'" :pagination="jsonPresets.meta.pagination" :pending="disableDataTable" v-model="pageComputed"/>
                     </div>
                 </form>
 

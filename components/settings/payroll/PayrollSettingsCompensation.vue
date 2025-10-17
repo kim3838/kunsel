@@ -100,10 +100,10 @@ const compensationsPending = ref(false);
 const selectedCompensations = ref([]);
 
 const disableActions = computed(() => {
-    return compensationsPending.value || creatingOrEditing.value || compensationsReOrderPending.value || deleting.value;
+    return compensationsPending.value || creatingOrEditing.value || compensationsReOrderPending.value || deleting.value || companyAssociationPendingState().value;
 });
 const disableDataTable = computed(() => {
-    return compensationsPending.value || deleting.value
+    return compensationsPending.value || deleting.value || companyAssociationPendingState().value;
 })
 
 const compensationsExecute = async () => {

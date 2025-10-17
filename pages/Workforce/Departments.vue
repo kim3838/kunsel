@@ -218,10 +218,10 @@ const departmentsExecute = async () => {
 await departmentsExecute();
 
 const disableActions = computed(() => {
-    return departmentsPending.value || creatingOrEditing.value || deleting.value;
+    return departmentsPending.value || creatingOrEditing.value || deleting.value || companyAssociationPendingState().value;
 });
 const disableDataTable = computed(() => {
-    return departmentsPending.value || deleting.value;
+    return departmentsPending.value || deleting.value || companyAssociationPendingState().value;
 });
 
 const creatingOrEditing = ref(false);

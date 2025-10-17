@@ -7,27 +7,27 @@
                     <div class="grid gap-2 grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-8">
                         <div>
                             <InputLabel :size="'sm'" value="Search" />
-                            <Input :size="'md'" ref="searchInput" v-model="filters.search.keyword" class="w-full" placeholder="Search" type="text"/>
+                            <Input :disabled="disableActions" :size="'md'" ref="searchInput" v-model="filters.search.keyword" class="w-full" placeholder="Search" type="text"/>
                         </div>
                         <div>
                             <InputLabel :size="'sm'" value="Formulable Type" />
-                            <MultiSelect glint drop-shadow :selection-max-viewable-line="10" :size="'md'" :options="formulableOptions" :icon="'ri:formula'"/>
+                            <MultiSelect :disabled="disableActions" glint drop-shadow :selection-max-viewable-line="10" :size="'md'" :options="formulableOptions" :icon="'ri:formula'"/>
                         </div>
                         <div>
                             <InputLabel :size="'sm'" value="Earning Component" />
-                            <MultiSelect glint drop-shadow :selection-max-viewable-line="10" :size="'md'" :options="earningComponentOptions" :icon="'tdesign:component-checkbox'"/>
+                            <MultiSelect :disabled="disableActions" glint drop-shadow :selection-max-viewable-line="10" :size="'md'" :options="earningComponentOptions" :icon="'tdesign:component-checkbox'"/>
                         </div>
                         <div>
                             <InputLabel :size="'sm'" value="Deduction Component" />
-                            <MultiSelect glint drop-shadow :selection-max-viewable-line="10" :size="'md'" :options="deductionComponentOptions" :icon="'tdesign:component-checkbox'"/>
+                            <MultiSelect :disabled="disableActions" glint drop-shadow :selection-max-viewable-line="10" :size="'md'" :options="deductionComponentOptions" :icon="'tdesign:component-checkbox'"/>
                         </div>
                         <div>
                             <InputLabel :size="'sm'" value="Income Tax Component" />
-                            <MultiSelect glint drop-shadow :selection-max-viewable-line="10" :size="'md'" :options="incomeTaxComponentOptions" :icon="'tdesign:component-checkbox'"/>
+                            <MultiSelect :disabled="disableActions" glint drop-shadow :selection-max-viewable-line="10" :size="'md'" :options="incomeTaxComponentOptions" :icon="'tdesign:component-checkbox'"/>
                         </div>
                         <div>
                             <InputLabel :size="'sm'" value="Aggregation" />
-                            <MultiSelect glint drop-shadow :selection-max-viewable-line="10" :size="'md'" :options="aggregationOptions" />
+                            <MultiSelect :disabled="disableActions" glint drop-shadow :selection-max-viewable-line="10" :size="'md'" :options="aggregationOptions" />
                         </div>
                     </div>
 
@@ -36,8 +36,8 @@
                     </div>
 
                     <div>
-                        <PageInformation :pagination="formulas.meta.pagination" :pending="formulasPending"/>
-                        <Pagination :size="'lg'" :pagination="formulas.meta.pagination" :pending="formulasPending" v-model="pageComputed"/>
+                        <PageInformation :pagination="formulas.meta.pagination" :pending="disableDataTable"/>
+                        <Pagination :size="'lg'" :pagination="formulas.meta.pagination" :pending="disableDataTable" v-model="pageComputed"/>
                     </div>
                 </form>
 

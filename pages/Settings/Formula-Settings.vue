@@ -4,6 +4,7 @@
             <div class="mx-auto max-w-screen-2xl p-[20px] space-y-4">
 
                 <RadioGroup
+                    :disabled="disableActions"
                     :selections="formulableSelection"
                     :size="'md'"
                     :orientation="'horizontal'"
@@ -14,6 +15,7 @@
                     <legend class="text-lg font-header">Earnings</legend>
 
                     <DataTable
+                        :disabled="disableDataTable"
                         :headers="formulaSettingsHeaders"
                         :size="'lg'"
                         :rows="earningsFormulaSettings"
@@ -57,6 +59,7 @@
                     <legend class="text-lg font-header">Deductions</legend>
 
                     <DataTable
+                        :disabled="disableDataTable"
                         :headers="formulaSettingsHeaders"
                         :size="'lg'"
                         :rows="deductionsFormulaSettings"
@@ -98,6 +101,7 @@
                     <legend class="text-lg font-header">Income Tax</legend>
 
                     <DataTable
+                        :disabled="disableDataTable"
                         :headers="formulaSettingsHeaders"
                         :size="'lg'"
                         :rows="taxFormulaSettings"
@@ -184,6 +188,13 @@ const earningsFormulaSettings = ref<CompanyFormulaSetting[]>([]);
 const deductionsFormulaSettings = ref<CompanyFormulaSetting[]>([]);
 const taxFormulaSettings = ref<CompanyFormulaSetting[]>([]);
 const formulaSettingsPending = ref(false)
+
+const disableActions = computed(() => {
+    return formulaSettingsPending.value || companyAssociationPendingState().value;
+});
+const disableDataTable = computed(() => {
+    return formulaSettingsPending.value || companyAssociationPendingState().value;
+});
 
 const formulaSettingsExecute = async() =>{
 

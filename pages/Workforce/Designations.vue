@@ -148,10 +148,10 @@ const designationsExecute = async () => {
 await designationsExecute();
 
 const disableActions = computed(() => {
-    return designationsPending.value || creatingOrEditing.value || deleting.value;
+    return designationsPending.value || creatingOrEditing.value || deleting.value || companyAssociationPendingState().value;
 });
 const disableDataTable = computed(() => {
-    return designationsPending.value || deleting.value;
+    return designationsPending.value || deleting.value || companyAssociationPendingState().value;
 });
 
 const creatingOrEditing = ref(false);

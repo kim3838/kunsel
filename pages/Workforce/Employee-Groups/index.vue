@@ -6,7 +6,7 @@
                     <div class="grid gap-2 grid-cols-3 sm:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-8">
                         <div>
                             <InputLabel :size="'sm'" value="Search" />
-                            <Input :size="'md'" ref="searchInput" v-model="filters.search.keyword" class="w-full" placeholder="Search" type="text"/>
+                            <Input :disabled="disableActions" :size="'md'" ref="searchInput" v-model="filters.search.keyword" class="w-full" placeholder="Search" type="text"/>
                         </div>
                     </div>
 
@@ -22,8 +22,8 @@
                     </div>
 
                     <div>
-                        <PageInformation :pagination="employeeGroups.meta.pagination" :pending="employeeGroupsPending"/>
-                        <Pagination :size="'lg'" :pagination="employeeGroups.meta.pagination" :pending="employeeGroupsPending" v-model="pageComputed"/>
+                        <PageInformation :pagination="employeeGroups.meta.pagination" :pending="disableDataTable"/>
+                        <Pagination :size="'lg'" :pagination="employeeGroups.meta.pagination" :pending="disableDataTable" v-model="pageComputed"/>
                     </div>
                 </form>
 
@@ -292,13 +292,13 @@ const selectedEmployeeGroups = ref([]);
 const deleting = ref(false);
 
 const disableActions = computed(() => {
-    return employeeGroupsPending.value || groupAssignmentPending.value || createEditPending.value || deleting.value;
+    return employeeGroupsPending.value || groupAssignmentPending.value || createEditPending.value || deleting.value || companyAssociationPendingState().value;
 });
 const disableEmployeeModalSelectionActions = computed(() => {
-    return disableActions.value || employeeSelectionPending.value || employeeSelectionReferencePending.value;
+    return disableActions.value || employeeSelectionPending.value || employeeSelectionReferencePending.value || companyAssociationPendingState().value;
 })
 const disableDataTable = computed(() => {
-    return employeeGroupsPending.value
+    return employeeGroupsPending.value || companyAssociationPendingState().value;
 });
 const employeeGroupsExecute = async() =>{
 

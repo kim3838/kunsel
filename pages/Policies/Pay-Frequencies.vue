@@ -324,10 +324,10 @@ await payFrequenciesExecute();
 
 const weeklyPayFrequencyFormPending = ref(false);
 const weeklyPayFrequencyDisableActions = computed(() => {
-    return weeklyPayFrequencyFormPending.value;
+    return payFrequenciesPending.value || weeklyPayFrequencyFormPending.value || companyAssociationPendingState().value;
 });
 const weeklyPayFrequencyFormSubmitLabel = computed(() => {
-    return weeklyPayFrequencyFormPending.value ? 'Saving...' : 'Save';
+    return payFrequenciesPending.value || companyAssociationPendingState().value ? 'Please wait...' : weeklyPayFrequencyFormPending.value ? 'Saving...' : 'Save';
 });
 const weeklyPayFrequencyFormSubmit = async () => {
     weeklyPayFrequencyFormPending.value = true;
@@ -352,10 +352,10 @@ const weeklyPayFrequencyFormSubmit = async () => {
 
 const monthlySemimonthlyPayFrequencyFormPending = ref(false);
 const monthlySemimonthlyPayFrequencyDisableActions = computed(() => {
-    return monthlySemimonthlyPayFrequencyFormPending.value;
+    return payFrequenciesPending.value || monthlySemimonthlyPayFrequencyFormPending.value || companyAssociationPendingState().value;
 });
 const monthlySemimonthlyPayFrequencyFormSubmitLabel = computed(() => {
-    return monthlySemimonthlyPayFrequencyFormPending.value ? 'Saving...' : 'Save';
+    return payFrequenciesPending.value || companyAssociationPendingState().value ? 'Please wait...' : monthlySemimonthlyPayFrequencyFormPending.value ? 'Saving...' : 'Save';
 });
 const monthlySemimonthlyPayFrequencyFormSubmit = async () => {
     monthlySemimonthlyPayFrequencyFormPending.value = true;

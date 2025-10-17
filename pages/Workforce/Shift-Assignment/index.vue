@@ -366,7 +366,7 @@ const closeStagedShiftModal = () => {
     shiftAssignmentEndDate.value = null;
 }
 const disableShiftAssignmentActions = computed(() => {
-    return shiftAssignmentPending.value || updateShiftSettingsPending.value
+    return shiftAssignmentPending.value || updateShiftSettingsPending.value || companyAssociationPendingState().value;
 });
 const disableEmployeeModalSelectionActions = computed(() => {
     return (shiftAssignmentTab.value == SHIFT_ASSIGNMENT_TAB.MANAGE_ASSIGNED_SHIFTS &&
