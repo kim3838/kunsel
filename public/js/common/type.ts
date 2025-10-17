@@ -21,11 +21,17 @@ export interface StringEnumInterface {
     [key: number]: string;
 }
 
-
 export type Enum = {
     label: string,
     value: number
 }
+
+export type EnumOption = {
+    text: string,
+    value: number | string
+}
+
+export type EnumSelection = EnumOption[]
 
 export interface ErrorPayloadInterface {
     message: string | null,
