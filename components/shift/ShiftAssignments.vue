@@ -8,38 +8,38 @@
                 </div>
                 <div>
                     <InputLabel :size="'sm'" value="Employee Status" />
-                    <MultiSelect glint drop-shadow :selection-max-viewable-line="15" :size="'md'" :options="employmentStatusOptions" :disabled="disableActions" :icon="'tdesign:component-checkbox'"/>
+                    <MultiSelect :key="employmentStatusOptionsKey" glint drop-shadow :selection-max-viewable-line="15" :size="'md'" :options="employmentStatusOptions" :disabled="disableActions" :icon="'tdesign:component-checkbox'"/>
                 </div>
                 <div>
                     <InputLabel :size="'sm'" value="Employment Type"/>
-                    <MultiSelect glint drop-shadow :selection-max-viewable-line="15" :size="'md'" :options="employmentTypeOptions" :disabled="disableActions" :icon="'tdesign:component-checkbox'"/>
+                    <MultiSelect :key="employmentTypeOptionsKey" glint drop-shadow :selection-max-viewable-line="15" :size="'md'" :options="employmentTypeOptions" :disabled="disableActions" :icon="'tdesign:component-checkbox'"/>
                 </div>
                 <div>
                     <InputLabel :size="'sm'" value="Group" />
-                    <MultiSelect glint drop-shadow :selection-max-viewable-line="15" :size="'md'" :options="employeeGroupOptions" :disabled="disableActions" :icon="'tdesign:component-checkbox'"/>
+                    <MultiSelect :key="employeeGroupOptionsKey" glint drop-shadow :selection-max-viewable-line="15" :size="'md'" :options="employeeGroupOptions" :disabled="disableActions" :icon="'tdesign:component-checkbox'"/>
                 </div>
                 <div>
                     <InputLabel :size="'sm'" value="Department" />
-                    <MultiSelect glint drop-shadow :selection-max-viewable-line="15" :size="'md'" :options="departmentOptions" :disabled="disableActions" :icon="'ic:baseline-all-inbox'"/>
+                    <MultiSelect :key="departmentOptionsKey" glint drop-shadow :selection-max-viewable-line="15" :size="'md'" :options="departmentOptions" :disabled="disableActions" :icon="'ic:baseline-all-inbox'"/>
                 </div>
                 <div>
                     <InputLabel :size="'sm'" value="Designation" />
-                    <MultiSelect glint drop-shadow :selection-max-viewable-line="15" :size="'md'" :options="designationOptions" :disabled="disableActions" :icon="'ic:baseline-inbox'"/>
+                    <MultiSelect :key="designationOptionsKey" glint drop-shadow :selection-max-viewable-line="15" :size="'md'" :options="designationOptions" :disabled="disableActions" :icon="'ic:baseline-inbox'"/>
                 </div>
             </div>
             <div class="grid gap-2 grid-cols-2 sm:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
                 <div class="col-span-2">
                     <InputLabel :size="'sm'" value="Assigned Shift" />
-                    <LazyMultiSelectPaginated
-                        hydrate-on-interaction="mouseover"
-                        :icon="'tdesign:component-checkbox'"
-                        :disabled="disableActions"
-                        glint
-                        drop-shadow
-                        :size="'md'"
-                        :label="'Filter Shift(s)'"
-                        :payload="assignedShiftSelectionsOptions"
-                    />
+                        <MultiSelectPaginated
+                            :key="assignedShiftSelectionsOptionsKey"
+                            :icon="'tdesign:component-checkbox'"
+                            :disabled="disableActions"
+                            glint
+                            drop-shadow
+                            :size="'md'"
+                            :label="'Filter Shift(s)'"
+                            :payload="assignedShiftSelectionsOptions"
+                        />
                 </div>
             </div>
 
@@ -136,13 +136,17 @@
 </template>
 
 <script setup lang="ts">
-import type {DataTableMeta, TableHeaderT, TableRowT, TableSupHeaderT} from "~/public/js/types/data";
-
+import type {DataTableMeta, TableHeaderT, TableRowT, TableSupHeaderT} from "@/public/js/types/data";
+import type {EnumOption, EnumSelection, StringEnumInterface} from "@/public/js/common/type";
 import {storeToRefs} from "pinia";
 
 const {isAuthenticated} = useAuth();
 const nuxtApp = useNuxtApp();
-const coreStore = useCoreStore();
+const $enumerableOption = nuxtApp.$enumerableOption as (enumerable: StringEnumInterface, value: number) => {
+    text: string,
+    value: number
+};
+const common = useCommon();
 const {
     updatedAssociatedCompanyFlag
 } = storeToRefs(nuxtApp.$associationStore);
@@ -161,32 +165,79 @@ const emit = defineEmits(['editShiftSettings', 'update:pending'])
 
 watch(updatedAssociatedCompanyFlag, (newValue) => {
     if(isAuthenticated.value && selectedAssociatedCompanyId.value){
+        rebuildSelections();
         paginate(1, true);
     }
-})
+});
 
+const rebuildSelections = (selection: string[] = []) => {
+
+    if(_isEmpty(selection) || selection.indexOf('employment_status') >= 0){
+        common.rebuildSelectionsOnSelectedCompanyChanged(
+            employmentStatusOptions, employmentStatusOptionsKey, SELECT.MULTI_STATIC, employmentStatusOptions.selection
+        );
+    }
+
+    if(_isEmpty(selection) || selection.indexOf('employment_type') >= 0){
+        common.rebuildSelectionsOnSelectedCompanyChanged(
+            employmentTypeOptions, employmentTypeOptionsKey, SELECT.MULTI_STATIC, employmentTypeOptions.selection
+        );
+    }
+
+    if(_isEmpty(selection) || selection.indexOf('employee_group') >= 0){
+        common.rebuildSelectionsOnSelectedCompanyChanged(
+            employeeGroupOptions, employeeGroupOptionsKey, SELECT.MULTI_STATIC, companyOrganizationSelections.value.employee_groups
+        );
+    }
+
+    if(_isEmpty(selection) || selection.indexOf('department') >= 0){
+        common.rebuildSelectionsOnSelectedCompanyChanged(
+            departmentOptions, departmentOptionsKey, SELECT.MULTI_STATIC, companyOrganizationSelections.value.departments
+        );
+    }
+
+    if(_isEmpty(selection) || selection.indexOf('designation') >= 0){
+        common.rebuildSelectionsOnSelectedCompanyChanged(
+            designationOptions, designationOptionsKey, SELECT.MULTI_STATIC, companyOrganizationSelections.value.designations
+        );
+    }
+
+    if(_isEmpty(selection) || selection.indexOf('assigned_shift') >= 0){
+        common.rebuildSelectionsOnSelectedCompanyChanged(
+            assignedShiftSelectionsOptions, assignedShiftSelectionsOptionsKey, SELECT.MULTI_PAGINATED
+        );
+    }
+}
+
+const employmentStatusOptionsKey = shallowRef(0);
 const employmentStatusOptions = reactive({
     search: '',
     selection: [
-        {text : 'Active', value: USER_STATUS.ACTIVE},
-        {text : 'Inactive', value: USER_STATUS.INACTIVE},
+        {text : 'Active', value: USER_STATUS.ACTIVE} as EnumOption,
+        {text : 'Inactive', value: USER_STATUS.INACTIVE} as EnumOption,
     ],
     selected: [USER_STATUS.ACTIVE]
 });
-const employmentTypeOptions = reactive({
+const employmentTypeOptionsKey = shallowRef(0);
+const employmentTypeOptions = reactive<{
+    search: string,
+    selection: EnumSelection,
+    selected: number[]
+}>({
     search: '',
     selection: [
-        {text : EMPLOYMENT_TYPE_NAME[EMPLOYMENT_TYPE.OJT], value: EMPLOYMENT_TYPE.OJT},
-        {text : EMPLOYMENT_TYPE_NAME[EMPLOYMENT_TYPE.INTERN], value: EMPLOYMENT_TYPE.INTERN},
-        {text : EMPLOYMENT_TYPE_NAME[EMPLOYMENT_TYPE.PROBATIONARY], value: EMPLOYMENT_TYPE.PROBATIONARY},
-        {text : EMPLOYMENT_TYPE_NAME[EMPLOYMENT_TYPE.FULL_TIME], value: EMPLOYMENT_TYPE.FULL_TIME},
-        {text : EMPLOYMENT_TYPE_NAME[EMPLOYMENT_TYPE.PART_TIME], value: EMPLOYMENT_TYPE.PART_TIME},
-        {text : EMPLOYMENT_TYPE_NAME[EMPLOYMENT_TYPE.CONTRACT], value: EMPLOYMENT_TYPE.CONTRACT},
-        {text : EMPLOYMENT_TYPE_NAME[EMPLOYMENT_TYPE.NOT_SPECIFIED], value: EMPLOYMENT_TYPE.NOT_SPECIFIED},
+        $enumerableOption(EMPLOYMENT_TYPE_NAME, EMPLOYMENT_TYPE.OJT as number),
+        $enumerableOption(EMPLOYMENT_TYPE_NAME, EMPLOYMENT_TYPE.INTERN as number),
+        $enumerableOption(EMPLOYMENT_TYPE_NAME, EMPLOYMENT_TYPE.PROBATIONARY as number),
+        $enumerableOption(EMPLOYMENT_TYPE_NAME, EMPLOYMENT_TYPE.FULL_TIME as number),
+        $enumerableOption(EMPLOYMENT_TYPE_NAME, EMPLOYMENT_TYPE.PART_TIME as number),
+        $enumerableOption(EMPLOYMENT_TYPE_NAME, EMPLOYMENT_TYPE.CONTRACT as number),
+        $enumerableOption(EMPLOYMENT_TYPE_NAME, EMPLOYMENT_TYPE.NOT_SPECIFIED as number),
     ],
     selected: []
 });
 
+const assignedShiftSelectionsOptionsKey = shallowRef(0);
 const assignedShiftSelectionsOptions = reactive({
     fetch: {
         url: '/api/shift-selections',
@@ -203,16 +254,19 @@ const assignedShiftSelectionsOptions = reactive({
 
 //Employee Organization
 const companyOrganizationSelections = companyOrganizationSelectionsState();
+const employeeGroupOptionsKey = shallowRef(0);
 const employeeGroupOptions = reactive({
     search: '',
     selection: companyOrganizationSelections.value.employee_groups,
     selected: []
 });
+const departmentOptionsKey = shallowRef(0);
 const departmentOptions = reactive({
     search: '',
     selection: companyOrganizationSelections.value.departments,
     selected: []
 });
+const designationOptionsKey = shallowRef(0);
 const designationOptions = reactive({
     search: '',
     selection: companyOrganizationSelections.value.designations,
@@ -307,10 +361,10 @@ const selectedShiftAssignments = ref([]);
 const deleting = ref(false);
 
 const disableActions = computed(() => {
-    return shiftAssignmentsPending.value || deleting.value;
+    return shiftAssignmentsPending.value || deleting.value || companyAssociationPendingState().value;
 });
 const disableDataTable = computed(() => {
-    return shiftAssignmentsPending.value || deleting.value;
+    return shiftAssignmentsPending.value || deleting.value || companyAssociationPendingState().value;
 });
 const shiftAssignmentsExecute = async() =>{
 
@@ -459,6 +513,7 @@ const deleteSelected = async () => {
 
 defineExpose({
     paginate,
+    rebuildSelections
 });
 </script>
 

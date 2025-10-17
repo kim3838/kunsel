@@ -204,6 +204,7 @@ definePageMeta({middleware: ['auth', 'admin-of-selected-company']});
 useLayout().setNavigationMode('solid');
 
 const {isAuthenticated} = useAuth();
+const {fetchEmployeeGroupSelections} = useCommon();
 const nuxtApp = useNuxtApp();
 const {
     updatedAssociatedCompanyFlag
@@ -427,6 +428,8 @@ const deleteSelected = async () => {
 
     selectedEmployeeGroups.value = [];
     await employeeGroupsExecute();
+    await fetchEmployeeGroupSelections();
+    employeeSelectionReference.value?.rebuildSelections(['employee_group']);
 }
 
 const employeeSelectionReference = useTemplateRef<EmployeeSelectionInstance>('employeeSelectionReference');
@@ -711,6 +714,8 @@ const submitCreateEdit = async () => {
             resetCreatingOrEditing();
             await nextTick();
             await employeeGroupsExecute();
+            await fetchEmployeeGroupSelections();
+            employeeSelectionReference.value?.rebuildSelections(['employee_group']);
         }
     });
 };

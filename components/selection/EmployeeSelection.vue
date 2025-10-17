@@ -16,7 +16,7 @@
                 </div>
                 <div>
                     <InputLabel :size="'sm'" value="Group" />
-                    <MultiSelect glint drop-shadow :selection-max-viewable-line="15" :size="'md'" :options="employeeGroupOptions" :disabled="disableActions" :icon="'tdesign:component-checkbox'"/>
+                    <MultiSelect :key="employeeGroupOptionsKey" glint drop-shadow :selection-max-viewable-line="15" :size="'md'" :options="employeeGroupOptions" :disabled="disableActions" :icon="'tdesign:component-checkbox'"/>
                 </div>
                 <div>
                     <InputLabel :size="'sm'" value="Department" />
@@ -109,11 +109,16 @@
 
 <script setup lang="ts">
 import type {DataTableMeta, TableHeaderT, TableRowT, TableSupHeaderT} from "@/public/js/types/data";
-
+import type {EnumOption, EnumSelection, StringEnumInterface} from "@/public/js/common/type";
 import {storeToRefs} from "pinia";
 
 const {isAuthenticated} = useAuth();
 const nuxtApp = useNuxtApp();
+const $enumerableOption = nuxtApp.$enumerableOption as (enumerable: StringEnumInterface, value: number) => {
+    text: string,
+    value: number
+};
+const common = useCommon();
 const {
     updatedAssociatedCompanyFlag
 } = storeToRefs(nuxtApp.$associationStore);
@@ -183,34 +188,52 @@ const proxyPending = computed({
 
 watch(updatedAssociatedCompanyFlag, (newValue) => {
     if(isAuthenticated.value && selectedAssociatedCompanyId.value){
+        rebuildSelections();
         paginate(1, true);
     }
 })
 
+const rebuildSelections = (selection: string[] = []) => {
+
+    if(_isEmpty(selection) || selection.indexOf('employee_group') >= 0){
+        common.rebuildSelectionsOnSelectedCompanyChanged(
+            employeeGroupOptions,
+            employeeGroupOptionsKey,
+            SELECT.MULTI_STATIC,
+            companyOrganizationSelections.value.employee_groups
+        );
+    }
+}
+
 const employmentStatusOptions = reactive({
     search: '',
     selection: [
-        {text : 'Active', value: USER_STATUS.ACTIVE},
-        {text : 'Inactive', value: USER_STATUS.INACTIVE},
+        {text : 'Active', value: USER_STATUS.ACTIVE} as EnumOption,
+        {text : 'Inactive', value: USER_STATUS.INACTIVE} as EnumOption,
     ],
     selected: [USER_STATUS.ACTIVE]
 });
-const employmentTypeOptions = reactive({
+const employmentTypeOptions = reactive<{
+    search: string,
+    selection: EnumSelection,
+    selected: number[]
+}>({
     search: '',
     selection: [
-        {text : EMPLOYMENT_TYPE_NAME[EMPLOYMENT_TYPE.OJT], value: EMPLOYMENT_TYPE.OJT},
-        {text : EMPLOYMENT_TYPE_NAME[EMPLOYMENT_TYPE.INTERN], value: EMPLOYMENT_TYPE.INTERN},
-        {text : EMPLOYMENT_TYPE_NAME[EMPLOYMENT_TYPE.PROBATIONARY], value: EMPLOYMENT_TYPE.PROBATIONARY},
-        {text : EMPLOYMENT_TYPE_NAME[EMPLOYMENT_TYPE.FULL_TIME], value: EMPLOYMENT_TYPE.FULL_TIME},
-        {text : EMPLOYMENT_TYPE_NAME[EMPLOYMENT_TYPE.PART_TIME], value: EMPLOYMENT_TYPE.PART_TIME},
-        {text : EMPLOYMENT_TYPE_NAME[EMPLOYMENT_TYPE.CONTRACT], value: EMPLOYMENT_TYPE.CONTRACT},
-        {text : EMPLOYMENT_TYPE_NAME[EMPLOYMENT_TYPE.NOT_SPECIFIED], value: EMPLOYMENT_TYPE.NOT_SPECIFIED},
+        $enumerableOption(EMPLOYMENT_TYPE_NAME, EMPLOYMENT_TYPE.OJT as number),
+        $enumerableOption(EMPLOYMENT_TYPE_NAME, EMPLOYMENT_TYPE.INTERN as number),
+        $enumerableOption(EMPLOYMENT_TYPE_NAME, EMPLOYMENT_TYPE.PROBATIONARY as number),
+        $enumerableOption(EMPLOYMENT_TYPE_NAME, EMPLOYMENT_TYPE.FULL_TIME as number),
+        $enumerableOption(EMPLOYMENT_TYPE_NAME, EMPLOYMENT_TYPE.PART_TIME as number),
+        $enumerableOption(EMPLOYMENT_TYPE_NAME, EMPLOYMENT_TYPE.CONTRACT as number),
+        $enumerableOption(EMPLOYMENT_TYPE_NAME, EMPLOYMENT_TYPE.NOT_SPECIFIED as number),
     ],
     selected: []
 });
 
 //Employee Organization
 const companyOrganizationSelections = companyOrganizationSelectionsState();
+const employeeGroupOptionsKey = shallowRef(0);
 const employeeGroupOptions = reactive({
     search: '',
     selection: companyOrganizationSelections.value.employee_groups,
@@ -438,7 +461,8 @@ defineExpose({
     paginate,
     clearFlags,
     clearData,
-    reset
+    reset,
+    rebuildSelections
 });
 </script>
 

@@ -190,10 +190,10 @@ let paramsComputed = computed(() => {
 const shiftsPending = ref(false)
 
 const disableActions = computed(() => {
-    return shiftsPending.value || props.disableActions
+    return shiftsPending.value || props.disableActions || companyAssociationPendingState().value;
 });
 const disableDataTable = computed(() => {
-    return shiftsPending.value || props.disableActions
+    return shiftsPending.value || props.disableActions || companyAssociationPendingState().value;
 });
 const shiftsExecute = async() =>{
 

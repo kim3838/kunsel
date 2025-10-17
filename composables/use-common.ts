@@ -1,5 +1,7 @@
 //@ts-nocheck
 
+import type {EnumSelection} from "@/public/js/common/type";
+
 export const payrollComponentPaySelectionsState = () => {
     return useState('payroll_component_pay_selections', () => {
         return {
@@ -129,10 +131,45 @@ export const useCommon = () => {
     const fetchOrganizationSelections = async () => {
 
         if(useAuth().isAuthenticated.value){
+            companyOrganizationSelections.value = {
+                employee_groups: [],
+                departments: [],
+                designations: [],
+            };
             await fetchEmployeeGroupSelections();
             await fetchDepartmentSelections();
             await fetchDesignationSelections();
         }
+    }
+
+    const rebuildSelectionsOnSelectedCompanyChanged = (payload, key, selectionType, staticSelection: EnumSelection = []) => {
+        const {$authStore} = useNuxtApp();
+
+        if(selectionType == SELECT.MULTI_PAGINATED){
+            payload.fetch.filters.company_id = $authStore.selectedAssociatedCompanyId;
+            payload.fetch.filters.search.keyword = '';
+            payload.selected = [];
+        }
+
+        if(selectionType == SELECT.SINGLE_PAGINATED){
+            payload.fetch.filters.company_id = $authStore.selectedAssociatedCompanyId;
+            payload.fetch.filters.search.keyword = '';
+            payload.selected = null;
+        }
+
+        if(selectionType == SELECT.MULTI_STATIC){
+            payload.search = '';
+            payload.selection = staticSelection;
+            payload.selected = [];
+        }
+
+        if(selectionType == SELECT.SINGLE_STATIC){
+            payload.search = '';
+            payload.selection = staticSelection;
+            payload.selected = null;
+        }
+
+        key.value += 1;
     }
 
     const resetCommon = async () => {
@@ -143,6 +180,7 @@ export const useCommon = () => {
         };
         timezoneSelections.value = [];
         companyOrganizationSelections.value = {
+            employee_groups: [],
             departments: [],
             designations: [],
         };
@@ -152,9 +190,11 @@ export const useCommon = () => {
         ssrFetchPayrollComponentPaySelections,
         ssrFetchTimezoneSelections,
         fetchCommon,
+        fetchEmployeeGroupSelections,
         fetchDepartmentSelections,
         fetchDesignationSelections,
         fetchOrganizationSelections,
+        rebuildSelectionsOnSelectedCompanyChanged,
         payrollComponentPaySelections,
         timezoneSelections,
         companyOrganizationSelections,

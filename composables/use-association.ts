@@ -1,6 +1,10 @@
 
 import type {AssignedCompanyT, AssociatedCompanyT, SelectedCompanyT} from "@/public/js/types/association";
 
+export const companyAssociationPendingState = () => {
+    return useState("company_association_pending", () => false);
+}
+
 export const associatedCompanyState = () => {
     return useState<AssociatedCompanyT>("associated_company", () => {
         return {
@@ -18,6 +22,7 @@ export const adminInAnyCompanyState = () => {
 }
 
 export const useAssociation = () => {
+    const companyAssociationPending = companyAssociationPendingState();
     const user = userState();
     const companyAssignmentTypeIsAdmin = companyAssignmentTypeIsAdminState();
     const adminInAnyCompany = adminInAnyCompanyState();
@@ -160,16 +165,11 @@ export const useAssociation = () => {
     }
 
     const selectedAssociatedCompanyChanged = async (newValue: SelectedCompanyT) => {
-
-        updateStoredAssociatedCompany(newValue);
-
-        if(useAuth().isAuthenticated.value){
-
-            await useCommon().fetchOrganizationSelections();
-        }
+        companyAssociationPending.value = true;
+        await updateStoredAssociatedCompany(newValue);
     };
 
-    const updateStoredAssociatedCompany = (newValue: SelectedCompanyT) => {
+    const updateStoredAssociatedCompany = async (newValue: SelectedCompanyT) => {
         const {sessionDomain} = useRuntimeConfig().public;
         const {$authStore, $associationStore} = useNuxtApp();
         const {userIsSuperAdmin} = useAuth();
@@ -187,10 +187,24 @@ export const useAssociation = () => {
 
         if(currentRouteNameIsCompanyAdminProtected.value && !(userIsSuperAdmin.value || companyAssignmentTypeIsAdmin.value)){
             navigateTo("/", {replace: true});
+
+            if(useAuth().isAuthenticated.value){
+
+                await useCommon().fetchOrganizationSelections();
+                companyAssociationPending.value = false;
+            }
+
         } else {
+
+            if(useAuth().isAuthenticated.value){
+
+                await useCommon().fetchOrganizationSelections();
+            }
 
             //Increment updatedAssociatedCompanyFlag and use it on a watcher as is the associated company updated
             $associationStore.updatedAssociatedCompanyFlag++;
+
+            companyAssociationPending.value = false;
         }
     }
 
