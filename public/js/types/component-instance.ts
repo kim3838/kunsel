@@ -12,6 +12,7 @@ export interface EmployeeSelectionInstance {
     clearData: () => void;
     paginate: (page?: number, clearSelection?: boolean) => Promise<void>;
     reset: () => void;
+    rebuildSelections: (selection?: string[]) => void;
 }
 
 export interface ShiftSelectionInstance {
