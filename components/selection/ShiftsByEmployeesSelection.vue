@@ -138,7 +138,7 @@
 
 <script setup lang="ts">
 import type {DataTableMeta, TableHeaderT, TableRowT, TableSupHeaderT} from "@/public/js/types/data";
-import type {EnumOption, StringEnumInterface} from "@/public/js/common/type";
+import type {EnumOption, EnumSelection, StringEnumInterface} from "@/public/js/common/type";
 import {storeToRefs} from "pinia";
 
 const {isAuthenticated} = useAuth();
@@ -277,7 +277,11 @@ const employmentStatusOptions = reactive({
     selected: [USER_STATUS.ACTIVE]
 });
 const employmentTypeOptionsKey = shallowRef(0);
-const employmentTypeOptions = reactive({
+const employmentTypeOptions = reactive<{
+    search: string,
+    selection: EnumSelection,
+    selected: number[]
+}>({
     search: '',
     selection: [
         $enumerableOption(EMPLOYMENT_TYPE_NAME, EMPLOYMENT_TYPE.OJT as number),
@@ -557,7 +561,8 @@ defineExpose({
     paginate,
     clearFlags,
     clearData,
-    reset
+    reset,
+    rebuildSelections
 });
 </script>
 
