@@ -1,5 +1,6 @@
 
 import type {Sequenceable} from "@/public/js/types/data";
+import type {StringEnumInterface} from "@/public/js/common/type";
 
 export default defineNuxtPlugin(nuxtApp => {
     const route = useRoute();
@@ -104,5 +105,19 @@ export default defineNuxtPlugin(nuxtApp => {
         const minutes = String(duration.minutes()).padStart(2, '0');
 
         return `${hours}:${minutes}`;
+    })
+
+    nuxtApp.provide('enumerableOption', function (
+        enumerable: StringEnumInterface,
+        value: number,
+    ): {
+        text: string,
+        value: number
+    } {
+
+        return {
+            text: enumerable[value] as string,
+            value: value
+        };
     })
 });
