@@ -13,6 +13,15 @@ declare module 'vue' {
     interface ComponentCustomProperties extends MomentPlugin {}
 }
 
+export interface NumericEnumInterface {
+    [key: string]: number;
+}
+
+export interface StringEnumInterface {
+    [key: number]: string;
+}
+
+
 export type Enum = {
     label: string,
     value: number

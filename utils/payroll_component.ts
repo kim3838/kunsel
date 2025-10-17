@@ -1,4 +1,7 @@
-export const  FORMULABLE = {
+
+import type {NumericEnumInterface, StringEnumInterface} from "@/public/js/common/type";
+
+export const  FORMULABLE: NumericEnumInterface = {
     EARNINGS : 0,
     DEDUCTIONS : 1,
     TAXABLE_INCOME : 2,
@@ -7,115 +10,115 @@ export const  FORMULABLE = {
     NET_INCOME : 5
 }
 
-export const  FORMULABLE_NAME = {
-    [FORMULABLE.EARNINGS] : 'Earnings',
-    [FORMULABLE.DEDUCTIONS] : 'Deductions',
-    [FORMULABLE.TAXABLE_INCOME] : 'Taxable Income',
-    [FORMULABLE.NON_TAXABLE_INCOME] : 'Non-Taxable Income',
-    [FORMULABLE.INCOME_TAX] : 'Income Tax',
-    [FORMULABLE.NET_INCOME] : 'Net Income'
+export const  FORMULABLE_NAME: StringEnumInterface = {
+    [FORMULABLE.EARNINGS as number] : 'Earnings',
+    [FORMULABLE.DEDUCTIONS as number] : 'Deductions',
+    [FORMULABLE.TAXABLE_INCOME as number] : 'Taxable Income',
+    [FORMULABLE.NON_TAXABLE_INCOME as number] : 'Non-Taxable Income',
+    [FORMULABLE.INCOME_TAX as number] : 'Income Tax',
+    [FORMULABLE.NET_INCOME as number] : 'Net Income'
 }
 
-export const FORMULABLE_MODEL_MAP_KEY = {
-    [FORMULABLE.EARNINGS]: 'compensation',
-    [FORMULABLE.DEDUCTIONS]: 'deduction',
-    [FORMULABLE.INCOME_TAX]: 'income_tax',
+export const FORMULABLE_MODEL_MAP_KEY: StringEnumInterface = {
+    [FORMULABLE.EARNINGS as number]: 'compensation',
+    [FORMULABLE.DEDUCTIONS as number]: 'deduction',
+    [FORMULABLE.INCOME_TAX as number]: 'income_tax',
 };
 
-export const  COMPENSATION = {
+export const  COMPENSATION: NumericEnumInterface = {
     BASIC_SALARY : 0,
     OVERTIME : 1,
     REGULAR_ALLOWANCE : 2,
     BENEFIT : 3,
 }
 
-export const  COMPENSATION_NAME = {
-    [COMPENSATION.BASIC_SALARY] : 'Basic Salary',
-    [COMPENSATION.OVERTIME] : 'Overtime',
-    [COMPENSATION.BENEFIT] : 'Benefit',
-    [COMPENSATION.REGULAR_ALLOWANCE] : 'Regular Allowance',
+export const  COMPENSATION_NAME: StringEnumInterface = {
+    [COMPENSATION.BASIC_SALARY as number] : 'Basic Salary',
+    [COMPENSATION.OVERTIME as number] : 'Overtime',
+    [COMPENSATION.BENEFIT as number] : 'Benefit',
+    [COMPENSATION.REGULAR_ALLOWANCE as number] : 'Regular Allowance',
 }
 
-export const  DEDUCTION = {
+export const  DEDUCTION: NumericEnumInterface = {
     DEDUCTION : 0,
     CONTRIBUTION : 1
 }
 
-export const  DEDUCTION_NAME = {
-    [DEDUCTION.DEDUCTION] : 'Deduction',
-    [DEDUCTION.CONTRIBUTION] : 'Contribution',
+export const  DEDUCTION_NAME: StringEnumInterface = {
+    [DEDUCTION.DEDUCTION as number] : 'Deduction',
+    [DEDUCTION.CONTRIBUTION as number] : 'Contribution',
 }
 
-export const  INCOME_TAX = {
+export const  INCOME_TAX: NumericEnumInterface = {
     COMPENSATION_TAX : 0
 }
 
-export const  INCOME_TAX_NAME = {
-    [INCOME_TAX.COMPENSATION_TAX] : 'Compensation Tax',
+export const  INCOME_TAX_NAME: StringEnumInterface = {
+    [INCOME_TAX.COMPENSATION_TAX as number] : 'Compensation Tax',
 }
-export const PAY_PERIOD ={
+export const PAY_PERIOD: NumericEnumInterface ={
     HOURLY : 0,
     DAILY : 1,
     SEMI_MONTHLY : 2,
     MONTHLY : 3
 }
 
-export const PAY_PERIOD_NAME = {
-    [PAY_PERIOD.HOURLY]: 'Hourly',
-    [PAY_PERIOD.DAILY]: 'Daily',
-    [PAY_PERIOD.SEMI_MONTHLY]: 'Semimonthly',
-    [PAY_PERIOD.MONTHLY]: 'Monthly'
+export const PAY_PERIOD_NAME: StringEnumInterface = {
+    [PAY_PERIOD.HOURLY as number]: 'Hourly',
+    [PAY_PERIOD.DAILY as number]: 'Daily',
+    [PAY_PERIOD.SEMI_MONTHLY as number]: 'Semimonthly',
+    [PAY_PERIOD.MONTHLY as number]: 'Monthly'
 };
 
-export const PAY_TYPE ={
+export const PAY_TYPE: NumericEnumInterface ={
     BY_ATTENDANCE : 0,
     FIXED : 1,
 }
 
-export const PAY_TYPE_NAME = {
-    [PAY_TYPE.BY_ATTENDANCE]: 'By attendance',
-    [PAY_TYPE.FIXED]: 'Fixed',
+export const PAY_TYPE_NAME: StringEnumInterface = {
+    [PAY_TYPE.BY_ATTENDANCE as number]: 'By attendance',
+    [PAY_TYPE.FIXED as number]: 'Fixed',
 };
 
-export const PAY_FREQUENCY_CODES = [
+export const PAY_FREQUENCY_CODES: string[] = [
     'DAILY',
     'WEEKLY',
     'SEMI_MONTHLY',
     'MONTHLY',
 ]
 
-export const PAY_FREQUENCY_TYPE ={
+export const PAY_FREQUENCY_TYPE: NumericEnumInterface ={
     DAILY : 0,
     WEEKLY : 1,
     SEMI_MONTHLY : 2,
     MONTHLY : 3
 }
 
-export const PAY_FREQUENCY_NAME = {
-    [PAY_FREQUENCY_TYPE.DAILY]: 'Daily',
-    [PAY_FREQUENCY_TYPE.WEEKLY]: 'Weekly',
-    [PAY_FREQUENCY_TYPE.SEMI_MONTHLY]: 'Semimonthly',
-    [PAY_FREQUENCY_TYPE.MONTHLY]: 'Monthly'
+export const PAY_FREQUENCY_NAME: StringEnumInterface = {
+    [PAY_FREQUENCY_TYPE.DAILY as number]: 'Daily',
+    [PAY_FREQUENCY_TYPE.WEEKLY as number]: 'Weekly',
+    [PAY_FREQUENCY_TYPE.SEMI_MONTHLY as number]: 'Semimonthly',
+    [PAY_FREQUENCY_TYPE.MONTHLY as number]: 'Monthly'
 };
 
-export const AMOUNTABLE_PAYROLL_COMPONENT_START ={
+export const AMOUNTABLE_PAYROLL_COMPONENT_START: NumericEnumInterface ={
     NOT_SPECIFIED : 0,
     EMPLOYMENT_START_DATE : 1,
     CUSTOM_DATE : 2,
 }
 
-export const AMOUNTABLE_PAYROLL_COMPONENT_START_NAME = {
-    [AMOUNTABLE_PAYROLL_COMPONENT_START.NOT_SPECIFIED]: 'Not specified',
-    [AMOUNTABLE_PAYROLL_COMPONENT_START.EMPLOYMENT_START_DATE]: 'Employment start date',
-    [AMOUNTABLE_PAYROLL_COMPONENT_START.CUSTOM_DATE]: 'Custom date',
+export const AMOUNTABLE_PAYROLL_COMPONENT_START_NAME: StringEnumInterface = {
+    [AMOUNTABLE_PAYROLL_COMPONENT_START.NOT_SPECIFIED as number]: 'Not specified',
+    [AMOUNTABLE_PAYROLL_COMPONENT_START.EMPLOYMENT_START_DATE as number]: 'Employment start date',
+    [AMOUNTABLE_PAYROLL_COMPONENT_START.CUSTOM_DATE as number]: 'Custom date',
 };
 
-export const AMOUNTABLE_PAYROLL_COMPONENT_END ={
+export const AMOUNTABLE_PAYROLL_COMPONENT_END: NumericEnumInterface ={
     NOT_SPECIFIED : 0,
     CUSTOM_DATE : 1,
 }
 
-export const AMOUNTABLE_PAYROLL_COMPONENT_END_NAME = {
-    [AMOUNTABLE_PAYROLL_COMPONENT_END.NOT_SPECIFIED]: 'Not specified',
-    [AMOUNTABLE_PAYROLL_COMPONENT_END.CUSTOM_DATE]: 'Custom date',
+export const AMOUNTABLE_PAYROLL_COMPONENT_END_NAME: StringEnumInterface = {
+    [AMOUNTABLE_PAYROLL_COMPONENT_END.NOT_SPECIFIED as number]: 'Not specified',
+    [AMOUNTABLE_PAYROLL_COMPONENT_END.CUSTOM_DATE as number]: 'Custom date',
 };
