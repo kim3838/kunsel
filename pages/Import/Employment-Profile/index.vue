@@ -58,24 +58,21 @@
                         </template>
                     </DialogModal>
 
-                    <div v-if="false" class="text-xs font-mono">
-                        <span class="font-semibold">preImportData: </span>{{preImportData}}<br>
-                        <span class="font-semibold">selectedPreImportDataId: </span>{{selectedPreImportDataId}}<br>
-                        <span class="font-semibold">selectedPreImportData: </span>{{selectedPreImportData}}<br>
-                        <span class="font-semibold">selectedPreImportDataThatHasValidationError: </span>{{selectedPreImportDataThatHasValidationError}}<br>
-                    </div>
-
                     <div class="space-y-2">
-                        <div v-if="preImportData.length > 0" class="flex space-x-2">
-                            <span><span class="font-semibold">{{preImportData.length}}</span> total rows.</span>
-                            <span><span class="font-semibold">{{selectedPreImportDataId.length}}</span> total selected.</span>
-                        </div>
-                        <div v-if="preImportData.length > 0">
-                            <div v-if="preImportDataThatHasValidationError.length > 0">
-                                <Label invert :size="'md'" :type="'danger'" :label="`${preImportDataThatHasValidationError.length} row(s) with validation error(s).`" />
+                        <div class="flex flex-row flex-wrap gap-2 items-center min-h-8">
+                            <div class="scaffold-border px-2">
+                                <span><span class="font-semibold font-sans">{{selectedPreImportDataId.length}}</span> Selected</span>
                             </div>
-                            <div v-else>
-                                <Label invert :size="'md'" :type="'success'" :label="'Validation successful.'" />
+                            <div class="px-2">
+                                <span><span class="font-semibold font-sans">{{preImportData.length}}</span> Total Row{{preImportData.length > 1 ? 's' : ''}}</span>
+                            </div>
+                            <div v-if="preImportData.length > 0">
+                                <div v-if="preImportDataThatHasValidationError.length > 0">
+                                    <Label invert :size="'md'" :type="'danger'" :label="`${preImportDataThatHasValidationError.length} Row${preImportDataThatHasValidationError.length > 1 ? 's' : ''} with validation error.`" />
+                                </div>
+                                <div v-else>
+                                    <Label invert :size="'md'" :type="'success'" :label="'Validation successful.'" />
+                                </div>
                             </div>
                         </div>
 
@@ -87,6 +84,8 @@
                             :rows="preImportData"
                             v-model="selectedPreImportDataId"
                             :disabled="disableActions"
+                            :stripped="false"
+                            :disableable-layer="false"
                             selection>
                             <template v-slot:sup.header.cell.end_date="{cell}">
                                 <div class="p-[3px] whitespace-pre-line">
@@ -94,26 +93,15 @@
                                 </div>
                             </template>
                             <template v-slot:cell.row="{cell, slot, scrollReference}">
-                                <div class="p-[3px] font-[Funnel_Sans]">
+                                <div class="p-[3px] font-sans">
                                     {{cell.row}}
                                 </div>
                             </template>
                             <template v-slot:cell.actions="{cell, slot, scrollReference}">
-                                <div class="flex items-center">
-                                    <NavDrop
-                                        class="z-10"
-                                        :disabled="disableActions"
-                                        :parent-icon="'ic:baseline-arrow-left'"
-                                        in-horizontal-scrollable
-                                        :size="`sm`"
-                                        :drop-shadow-size="`lg`"
-                                        :title="'Menu'"
-                                        :drop-align="'top'"
-                                        :drop-justify="'left'"
-                                        :drop-options="[
-                                            {type: 'action',icon: 'mdi:pen',title: 'Edit',callback: () => editRow(cell),},
-                                        ]">
-                                    </NavDrop>
+                                <div class="text-base h-[32px]">
+                                    <div class="h-full flex items-center px-2 cursor-pointer accent-hover" @click="editRow(cell)">
+                                        <span class="text-base font-sans">Edit</span>
+                                    </div>
                                 </div>
                             </template>
                             <template v-slot:cell.validation_summary="{cell, slot, scrollReference}">
@@ -138,7 +126,7 @@
                                 </div>
                             </template>
                             <template v-slot:cell.start_date="{cell, slot, scrollReference}">
-                                <div v-if="!cell.isEditing" class="p-[3px] cursor-pointer" @click="editRow(cell)">
+                                <div v-if="!cell.isEditing" class="p-[3px] cursor-pointer font-sans" @click="editRow(cell)">
                                     {{cell.start_date}}
                                 </div>
                                 <div v-else class="mx-0.5 flex items-center">
@@ -160,7 +148,7 @@
                                 </div>
                             </template>
                             <template v-slot:cell.end_date="{cell, slot, scrollReference}">
-                                <div v-if="!cell.isEditing" class="p-[3px] cursor-pointer" @click="editRow(cell)">
+                                <div v-if="!cell.isEditing" class="p-[3px] cursor-pointer font-sans" @click="editRow(cell)">
                                     {{cell.end_date}}
                                 </div>
                                 <div v-else class="mx-0.5 flex items-center">
@@ -175,8 +163,8 @@
                             </template>
                             <template v-slot:cell.validation="{cell, slot, scrollReference}">
                                 <div class="flex space-x-1 px-[0.3rem] items-center">
-                                    <Label v-if="cell.validation_errors.length > 0" v-for="validation_error in cell.validation_errors" :size="slot.labelSize" :type="'danger'" shade :label="validation_error" />
-                                    <Label v-else :size="slot.labelSize" :type="'success'" shade :label="'Validation successful.'" />
+                                    <span v-if="cell.validation_errors.length > 0" v-for="validation_error in cell.validation_errors" class="label-danger">{{validation_error}}</span>
+                                    <span v-else class="label-success">Validation successful.</span>
                                 </div>
                             </template>
                         </DataTable>
@@ -188,13 +176,7 @@
 </template>
 
 <script setup lang="ts">
-import type {
-    DatePickerT,
-    TableHeaderT,
-    TableRowPayloadT,
-    TableSupHeaderT,
-    TableSupRowT
-} from "@/public/js/types/data";
+import type {DatePickerT, TableHeaderT, TableRowPayloadT, TableSupHeaderT, TableSupRowT} from "@/public/js/types/data";
 import type {EmploymentProfilePreImportT, ImportRow} from "@/public/js/types/import";
 import {storeToRefs} from "pinia";
 
@@ -259,7 +241,6 @@ const disableActions = computed(() => {
 const preImportSupHeaders = reactive<TableSupHeaderT[]>([
     {text: ''},
     {text: ''},
-    {text: ''},
     {text: 'Required', colspan: 1, value: 'employee_number', alignHeader: 'left'},
     {text: 'Required', colspan: 1, value: 'employment_type', alignHeader: 'left', justifyData: 'top'},
     {text: 'Required', colspan: 1, value: 'start_date', width: '8rem', maxWidth: '8rem'},
@@ -278,8 +259,7 @@ const preImportSupRows = reactive<TableSupRowT[]>([
 
 const preImportHeaders = reactive<TableHeaderT[]>([
     { text: 'Row #', value: 'row', alignData: 'center'},
-    { text: '', value: 'actions'},
-    { text: '', value: 'validation_summary', alignData: 'center', width: '2rem', minWidth: '2rem'},
+    { text: '', value: 'actions', minWidth: '2.5rem'},
     { text: 'Employee Number', value: 'employee_number', alignData: 'left'},
     { text: 'Employment Type', value: 'employment_type', alignData: 'left'},
     { text: 'Start Date', value: 'start_date', alignData: 'left'},
@@ -368,7 +348,7 @@ const read = async () => {
             onSuccessResponse: async (request, options, response) => {
                 let validated = _get(response, '_data.values.validated', []);
 
-                preImportData.value = transformValidated(validated);
+                preImportData.value = validated;
             }
         }, false);
 
@@ -420,7 +400,7 @@ const reValidate = async () => {
                 if(row){row.validation_errors = validated.validation_errors;}
             });
 
-            preImportData.value = transformValidated(preImportData.value);
+            preImportData.value = preImportData.value;
 
             pending.value = false;
         }
@@ -485,7 +465,7 @@ const save = async () => {
                 if(row){row.validation_errors = validated.validation_errors;}
             });
 
-            preImportData.value = transformValidated(preImportData.value);
+            preImportData.value = preImportData.value;
 
             if(selectedPreImportDataThatHasValidationError.value.length > 0){
                 coreStore.setServiceError({
