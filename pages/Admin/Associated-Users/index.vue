@@ -138,7 +138,7 @@ watch(() => {return showAssociatedCompanies.value;}, (show) => {
     }
 })
 
-const usersKey = ref(0);
+const usersKey = shallowRef(0);
 const users = reactive<{
     data: TableRowT[];
     meta: DataTableMeta

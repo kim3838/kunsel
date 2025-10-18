@@ -172,7 +172,7 @@ const departmentsHeaders = reactive<TableHeaderT[]>([
     { text: 'Name', value: 'name', alignData: 'left'},
 ]);
 
-const departmentsKey = ref(0);
+const departmentsKey = shallowRef(0);
 const departmentsData = ref([]);
 const departmentsPending = ref(false);
 const selectedDepartments = ref([]);
