@@ -1,7 +1,7 @@
 <template>
     <div id="table-division" ref="dataTableScroll">
         <!-- Disabled Layer -->
-        <div v-show="disableable && disabled" class="absolute disabled-overlay opacity-25 z-30" :style="[disabledLayerStyle]"></div>
+        <div v-show="disableableLayer && disabled" class="absolute disabled-overlay opacity-25 z-30" :style="[disabledLayerStyle]"></div>
 
         <table ref="tableReference" class="font-data">
             <thead class="table-header-background">
@@ -67,7 +67,7 @@
             <tbody ref="tableBody">
                 <!-- Table cell height: sm = 23px, md = 27px(29px w/ xs menu), lg = 31px(33px w/ sm menu), xl = 35px(37px w/ md menu) -->
                 <template v-for="(row, rowIndex) in rows" :key="row.id">
-                    <tr :class="[rowBackgroundClass(rowIndex)]" >
+                    <tr :class="[rowBackgroundClass(rowIndex), disabled ? 'pointer-events-none' : '']" >
                         <td v-if="selection" style="padding:0 0.5rem;">
                             <NonModelCheckBox
                                 :size="checkBoxSize"
@@ -231,7 +231,7 @@ const props = defineProps({
         type: Boolean,
         default: false,
     },
-    disableable: {
+    disableableLayer: {
         type: Boolean,
         default: true,
     },
@@ -274,7 +274,7 @@ const dataTableHeight = shallowRef('0px');
 
 watch(()=> props.disabled, disabled => {
 
-    if(props.disableable && disabled){
+    if(props.disableableLayer && disabled){
 
         const { width: dataTableReferenceWidth, height: dataTableReferenceHeight } = useElementSize(dataTableReference);
         const { width: tableReferenceWidth, height: tableReferenceHeight } = useElementSize(tableReference);
