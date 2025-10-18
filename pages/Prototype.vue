@@ -235,7 +235,7 @@
                                 </template>
                                 <template v-slot:cell.label="{cell, slot, scrollReference}">
                                     <div class="flex px-[0.3rem] items-center">
-                                        <Label :type="cell.label_type" :size="slot.labelSize" :label="cell.name" />
+                                        <Label :type="cell.label_type" shade :size="slot.labelSize" :label="cell.name" />
                                     </div>
                                 </template>
                                 <template v-slot:cell.datetime_added="{cell, slot, scrollReference}">
@@ -1059,37 +1059,37 @@
                     </div>
 
                     <!-- Labels -->
-                    <div v-if="false" class="block p-2 neutral-border space-y-4">
+                    <div v-if="true" class="block p-2 neutral-border space-y-4">
                         <div>
                             <span class="space-x-1">
-                                <Label :size="'sm'" :type="'default'" :label="'No Daily Totals'" />
-                                <Label :size="'sm'" :type="'success'" :label="'Tallied'" />
-                                <Label :size="'sm'" :type="'danger'" :label="'Not Tallied'" />
-                                <Label :size="'sm'" :type="'caution'" :label="'Caution'" />
-                                <Label :size="'sm'" :type="'warning'" :label="'Warning'" />
-                                <Label :size="'sm'" :type="'info'" :label="'Information'" />
+                                <Label shade :size="'sm'" :type="'default'" :label="'No Daily Totals'" />
+                                <Label shade :size="'sm'" :type="'success'" :label="'Tallied'" />
+                                <Label shade :size="'sm'" :type="'danger'" :label="'Not Tallied'" />
+                                <Label shade :size="'sm'" :type="'caution'" :label="'Caution'" />
+                                <Label shade :size="'sm'" :type="'warning'" :label="'Warning'" />
+                                <Label shade :size="'sm'" :type="'info'" :label="'Information'" />
                             </span>
                         </div>
 
                         <div>
                             <span class="space-x-1">
-                                <Label :size="'md'" :type="'default'" :label="'No Daily Totals'" />
-                                <Label :size="'md'" :type="'success'" :label="'Tallied'" />
-                                <Label :size="'md'" :type="'danger'" :label="'Not Tallied'" />
-                                <Label :size="'md'" :type="'caution'" :label="'Caution'" />
-                                <Label :size="'md'" :type="'warning'" :label="'Warning'" />
-                                <Label :size="'md'" :type="'info'" :label="'Information'" />
+                                <Label shade :size="'md'" :type="'default'" :label="'No Daily Totals'" />
+                                <Label shade :size="'md'" :type="'success'" :label="'Tallied'" />
+                                <Label shade :size="'md'" :type="'danger'" :label="'Not Tallied'" />
+                                <Label shade :size="'md'" :type="'caution'" :label="'Caution'" />
+                                <Label shade :size="'md'" :type="'warning'" :label="'Warning'" />
+                                <Label shade :size="'md'" :type="'info'" :label="'Information'" />
                             </span>
                         </div>
 
                         <div>
                             <span class="space-x-1">
-                                <Label :size="'lg'" :type="'default'" :label="'No Daily Totals'" />
-                                <Label :size="'lg'" :type="'success'" :label="'Tallied'" />
-                                <Label :size="'lg'" :type="'danger'" :label="'Not Tallied'" />
-                                <Label :size="'lg'" :type="'caution'" :label="'Caution'" />
-                                <Label :size="'lg'" :type="'warning'" :label="'Warning'" />
-                                <Label :size="'lg'" :type="'info'" :label="'Information'" />
+                                <Label shade :size="'lg'" :type="'default'" :label="'No Daily Totals'" />
+                                <Label shade :size="'lg'" :type="'success'" :label="'Tallied'" />
+                                <Label shade :size="'lg'" :type="'danger'" :label="'Not Tallied'" />
+                                <Label shade :size="'lg'" :type="'caution'" :label="'Caution'" />
+                                <Label shade :size="'lg'" :type="'warning'" :label="'Warning'" />
+                                <Label shade :size="'lg'" :type="'info'" :label="'Information'" />
                             </span>
                         </div>
                     </div>

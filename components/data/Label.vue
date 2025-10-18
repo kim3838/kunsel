@@ -81,7 +81,9 @@ const backgroundColor = computed(() => {
 const style = computed(() => {
 
     return {
-        'background-color': props.invert ? 'transparent' : backgroundColor.value,
+        ...(props.invert ? {} : {
+            'background-color': backgroundColor.value
+        }),
         'color': props.invert ? backgroundColor.value : '#fff',
         'border-radius': '.25em'
     };
