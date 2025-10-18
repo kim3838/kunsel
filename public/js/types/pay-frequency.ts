@@ -1,5 +1,5 @@
 
-import type {ParsableT} from "@/utils/parsable";
+import type {ParsableT} from "@/public/js/types/parsable";
 
 export type PayFrequencyT = {
     id: number,
