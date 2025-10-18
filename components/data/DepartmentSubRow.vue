@@ -60,7 +60,7 @@ const edit = (cell: TableRowT) => {
     emit('proxyEdit', cell);
 }
 
-const selectionChanged = (selectionPayload) => {
+const selectionChanged = (selectionPayload: {action: number, value: number[]}) => {
     emit('syncSelected', selectionPayload);
 }
 </script>

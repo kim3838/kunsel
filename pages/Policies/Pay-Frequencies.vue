@@ -188,6 +188,8 @@
 <script setup lang="ts">
 import {storeToRefs} from "pinia";
 import type {TimePeriodPresetSelectionT} from "@/public/js/types/time";
+import type {EnumSelection, StringEnumInterface} from "@/public/js/common/type";
+import type {PayFrequencyT} from "@/public/js/types/pay-frequency";
 
 definePageMeta({middleware: ['auth', 'admin-of-selected-company']});
 useLayout().setNavigationMode('solid');
@@ -196,6 +198,10 @@ const {screenWidthBreakpoint, width: screenWidth} = useScreen();
 const coreStore = useCoreStore();
 const {isAuthenticated} = useAuth();
 const nuxtApp = useNuxtApp();
+const $enumerableOption = nuxtApp.$enumerableOption as (enumerable: StringEnumInterface, value: number) => {
+    text: string,
+    value: number
+};
 const {
     updatedAssociatedCompanyFlag
 } = storeToRefs(nuxtApp.$associationStore);
@@ -253,8 +259,9 @@ await timePeriodPresetExecute();
 const monthlyTimePeriodChanged = () => {
 
     const selectedTimePeriodPreset: TimePeriodPresetSelectionT | undefined = timePeriodPresetSelection.value.find((timePeriodPresetOption) => {
-        return timePeriodPresetOption.value == String(monthlyPayFrequenciesData.value.time_period_preset_id);
+        return timePeriodPresetOption.value == String((monthlyPayFrequenciesData.value as PayFrequencyT).time_period_preset_id);
     });
+
 
     if(!selectedTimePeriodPreset){
         let message = 'Selected time period preset is not found. Please contact the administrator.';
@@ -268,27 +275,36 @@ const monthlyTimePeriodChanged = () => {
     }
 
     //Update both monthly and semimonthly period
-    monthlyPayFrequenciesData.value.period = selectedTimePeriodPreset['monthly_period'];
+    if (monthlyPayFrequenciesData.value && 'period' in monthlyPayFrequenciesData.value) {
 
-    semimonthlyPayFrequenciesData.value.time_period_preset_id = selectedTimePeriodPreset.value;
-    semimonthlyPayFrequenciesData.value.period = selectedTimePeriodPreset['semimonthly_period'];
+        monthlyPayFrequenciesData.value.period = selectedTimePeriodPreset['monthly_period'];
+    }
+
+    if (semimonthlyPayFrequenciesData.value && (
+        'time_period_preset_id' in semimonthlyPayFrequenciesData.value &&
+        'period' in semimonthlyPayFrequenciesData.value
+    )) {
+
+        semimonthlyPayFrequenciesData.value.time_period_preset_id = selectedTimePeriodPreset.value;
+        semimonthlyPayFrequenciesData.value.period = selectedTimePeriodPreset['semimonthly_period'];
+    }
 }
 
-const weekDaySelection = reactive([
-    {text : WEEK_DAY_NAMES[WEEK_DAY.SUNDAY], value: WEEK_DAY.SUNDAY},
-    {text : WEEK_DAY_NAMES[WEEK_DAY.MONDAY], value: WEEK_DAY.MONDAY},
-    {text : WEEK_DAY_NAMES[WEEK_DAY.TUESDAY], value: WEEK_DAY.TUESDAY},
-    {text : WEEK_DAY_NAMES[WEEK_DAY.WEDNESDAY], value: WEEK_DAY.WEDNESDAY},
-    {text : WEEK_DAY_NAMES[WEEK_DAY.THURSDAY], value: WEEK_DAY.THURSDAY},
-    {text : WEEK_DAY_NAMES[WEEK_DAY.FRIDAY], value: WEEK_DAY.FRIDAY},
-    {text : WEEK_DAY_NAMES[WEEK_DAY.SATURDAY], value: WEEK_DAY.SATURDAY},
+const weekDaySelection = reactive<EnumSelection>([
+    $enumerableOption(WEEK_DAY_NAMES, WEEK_DAY.SUNDAY as number),
+    $enumerableOption(WEEK_DAY_NAMES, WEEK_DAY.MONDAY as number),
+    $enumerableOption(WEEK_DAY_NAMES, WEEK_DAY.TUESDAY as number),
+    $enumerableOption(WEEK_DAY_NAMES, WEEK_DAY.WEDNESDAY as number),
+    $enumerableOption(WEEK_DAY_NAMES, WEEK_DAY.THURSDAY as number),
+    $enumerableOption(WEEK_DAY_NAMES, WEEK_DAY.FRIDAY as number),
+    $enumerableOption(WEEK_DAY_NAMES, WEEK_DAY.SATURDAY as number),
 ]);
 
 const payFrequenciesData = ref([]);
-const dailyPayFrequenciesData = ref({});
-const weeklyPayFrequenciesData = ref({});
-const monthlyPayFrequenciesData = ref({});
-const semimonthlyPayFrequenciesData = ref({});
+const dailyPayFrequenciesData = ref<PayFrequencyT | {}>({});
+const weeklyPayFrequenciesData = ref<PayFrequencyT | {}>({});
+const monthlyPayFrequenciesData = ref<PayFrequencyT | {}>({});
+const semimonthlyPayFrequenciesData = ref<PayFrequencyT | {}>({});
 const payFrequenciesPending = ref(false);
 const payFrequenciesExecute = async () => {
 
@@ -313,10 +329,10 @@ const payFrequenciesExecute = async () => {
         onSuccessResponse: async (request, options, response) => {
             payFrequenciesData.value = _get(response, '_data.values.pay_frequencies', []);
 
-            dailyPayFrequenciesData.value = _find(payFrequenciesData.value, item => item.type == PAY_FREQUENCY_TYPE.DAILY);
-            weeklyPayFrequenciesData.value = _find(payFrequenciesData.value, item => item.type == PAY_FREQUENCY_TYPE.WEEKLY);
-            semimonthlyPayFrequenciesData.value = _find(payFrequenciesData.value, item => item.type == PAY_FREQUENCY_TYPE.SEMI_MONTHLY);
-            monthlyPayFrequenciesData.value = _find(payFrequenciesData.value, item => item.type == PAY_FREQUENCY_TYPE.MONTHLY);
+            dailyPayFrequenciesData.value = _find(payFrequenciesData.value, (item: PayFrequencyT) => item.type == PAY_FREQUENCY_TYPE.DAILY) as PayFrequencyT;
+            weeklyPayFrequenciesData.value = _find(payFrequenciesData.value, (item: PayFrequencyT) => item.type == PAY_FREQUENCY_TYPE.WEEKLY) as PayFrequencyT;
+            semimonthlyPayFrequenciesData.value = _find(payFrequenciesData.value, (item: PayFrequencyT) => item.type == PAY_FREQUENCY_TYPE.SEMI_MONTHLY) as PayFrequencyT;
+            monthlyPayFrequenciesData.value = _find(payFrequenciesData.value, (item: PayFrequencyT) => item.type == PAY_FREQUENCY_TYPE.MONTHLY) as PayFrequencyT;
         }
     });
 }
@@ -343,7 +359,7 @@ const weeklyPayFrequencyFormSubmit = async () => {
             weeklyPayFrequencyFormPending.value = false;
         },
         onSuccessResponse: async (request, options, response) => {
-            const payFrequency = _get(response, '_data.values.pay_frequency', null);
+            const payFrequency: PayFrequencyT = _get(response, '_data.values.pay_frequency', null) as PayFrequencyT;
             resolvedFrequencies.value = [payFrequency];
             resolvedModal.value = true;
         },
@@ -359,15 +375,15 @@ const monthlySemimonthlyPayFrequencyFormSubmitLabel = computed(() => {
 });
 const monthlySemimonthlyPayFrequencyFormSubmit = async () => {
     monthlySemimonthlyPayFrequencyFormPending.value = true;
-    let monthlyPayFrequency = null;
-    let semimonthlyPayFrequency = null;
+    let monthlyPayFrequency: PayFrequencyT;
+    let semimonthlyPayFrequency: PayFrequencyT;
 
     await laraFetch(`/api/pay-frequency/${monthlyPayFrequenciesData.value.id}`, {
         method: 'PATCH',
         body: monthlyPayFrequenciesData.value,
     }, {
         onSuccessResponse: async (request, options, response) => {
-            monthlyPayFrequency = _get(response, '_data.values.pay_frequency', null);
+            monthlyPayFrequency = _get(response, '_data.values.pay_frequency', null) as PayFrequencyT;
         },
     });
 
@@ -382,7 +398,7 @@ const monthlySemimonthlyPayFrequencyFormSubmit = async () => {
             monthlySemimonthlyPayFrequencyFormPending.value = false;
         },
         onSuccessResponse: async (request, options, response) => {
-            semimonthlyPayFrequency = _get(response, '_data.values.pay_frequency', null);
+            semimonthlyPayFrequency = _get(response, '_data.values.pay_frequency', null) as PayFrequencyT;
 
             resolvedFrequencies.value = [monthlyPayFrequency, semimonthlyPayFrequency];
             resolvedModal.value = true;
@@ -391,7 +407,7 @@ const monthlySemimonthlyPayFrequencyFormSubmit = async () => {
 };
 
 const resolvedModal = ref(false);
-const resolvedFrequencies = ref([]);
+const resolvedFrequencies = ref<PayFrequencyT[]>([]);
 const resetResolvedModal = () => {
     resolvedModal.value = false;
     resolvedFrequencies.value = [];

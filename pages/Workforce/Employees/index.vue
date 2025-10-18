@@ -283,13 +283,18 @@
 
 <script setup lang="ts">
 import type {DataTableMeta, TableSupHeaderT, TableHeaderT, TableRowT} from "@/public/js/types/data";
+import type {EnumOption, EnumSelection, StringEnumInterface} from "@/public/js/common/type";
 import {storeToRefs} from "pinia";
 
 definePageMeta({middleware: ['auth', 'admin-of-selected-company']});
-useLayout().setNavigationMode('solid', 'Employees.vue');
+useLayout().setNavigationMode('solid');
 
 const {isAuthenticated} = useAuth();
 const nuxtApp = useNuxtApp();
+const $enumerableOption = nuxtApp.$enumerableOption as (enumerable: StringEnumInterface, value: number) => {
+    text: string,
+    value: number
+};
 const {
     updatedAssociatedCompanyFlag
 } = storeToRefs(nuxtApp.$associationStore);
@@ -311,16 +316,20 @@ const employmentStatusOptions = reactive({
     ],
     selected: []
 });
-const employmentTypeOptions = reactive({
+const employmentTypeOptions = reactive<{
+    search: string,
+    selection: EnumSelection,
+    selected: number[]
+}>({
     search: '',
     selection: [
-        {text : EMPLOYMENT_TYPE_NAME[EMPLOYMENT_TYPE.OJT], value: EMPLOYMENT_TYPE.OJT},
-        {text : EMPLOYMENT_TYPE_NAME[EMPLOYMENT_TYPE.INTERN], value: EMPLOYMENT_TYPE.INTERN},
-        {text : EMPLOYMENT_TYPE_NAME[EMPLOYMENT_TYPE.PROBATIONARY], value: EMPLOYMENT_TYPE.PROBATIONARY},
-        {text : EMPLOYMENT_TYPE_NAME[EMPLOYMENT_TYPE.FULL_TIME], value: EMPLOYMENT_TYPE.FULL_TIME},
-        {text : EMPLOYMENT_TYPE_NAME[EMPLOYMENT_TYPE.PART_TIME], value: EMPLOYMENT_TYPE.PART_TIME},
-        {text : EMPLOYMENT_TYPE_NAME[EMPLOYMENT_TYPE.CONTRACT], value: EMPLOYMENT_TYPE.CONTRACT},
-        {text : EMPLOYMENT_TYPE_NAME[EMPLOYMENT_TYPE.NOT_SPECIFIED], value: EMPLOYMENT_TYPE.NOT_SPECIFIED},
+        $enumerableOption(EMPLOYMENT_TYPE_NAME, EMPLOYMENT_TYPE.OJT as number),
+        $enumerableOption(EMPLOYMENT_TYPE_NAME, EMPLOYMENT_TYPE.INTERN as number),
+        $enumerableOption(EMPLOYMENT_TYPE_NAME, EMPLOYMENT_TYPE.PROBATIONARY as number),
+        $enumerableOption(EMPLOYMENT_TYPE_NAME, EMPLOYMENT_TYPE.FULL_TIME as number),
+        $enumerableOption(EMPLOYMENT_TYPE_NAME, EMPLOYMENT_TYPE.PART_TIME as number),
+        $enumerableOption(EMPLOYMENT_TYPE_NAME, EMPLOYMENT_TYPE.CONTRACT as number),
+        $enumerableOption(EMPLOYMENT_TYPE_NAME, EMPLOYMENT_TYPE.NOT_SPECIFIED as number),
     ],
     selected: []
 });
@@ -390,14 +399,14 @@ const noEmployeeRecords = computed(() => {
     return employees.meta.pagination.total === 0;
 })
 const viewMode = reactive<{
-    selection: Array<{text: string, value: number}>;
+    selection: EnumSelection;
     selected: number | null;
 }>({
     selection: [
-        {text : 'Flex', value: DATA_VIEW_MODE.FLEX},
-        {text : 'List', value: DATA_VIEW_MODE.LIST},
+        {text : 'Flex', value: DATA_VIEW_MODE.FLEX} as EnumOption,
+        {text : 'List', value: DATA_VIEW_MODE.LIST} as EnumOption,
     ],
-    selected: DATA_VIEW_MODE.LIST
+    selected: DATA_VIEW_MODE.LIST as number
 });
 watch(() => viewMode.selected,async viewModeType => {
     await nextTick();

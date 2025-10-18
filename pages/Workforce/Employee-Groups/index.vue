@@ -197,8 +197,9 @@
 
 <script setup lang="ts">
 import type {DataTableMeta, TableHeaderT, TableRowT} from "@/public/js/types/data";
-import {storeToRefs} from "pinia";
 import type {EmployeeSelectionInstance} from "@/public/js/types/component-instance";
+import type {EnumOption, EnumSelection} from "@/public/js/common/type";
+import {storeToRefs} from "pinia";
 
 definePageMeta({middleware: ['auth', 'admin-of-selected-company']});
 useLayout().setNavigationMode('solid');
@@ -257,14 +258,14 @@ let filters = reactive<{
 });
 
 const viewMode = reactive<{
-    selection: Array<{text: string, value: number}>;
+    selection: EnumSelection;
     selected: number | null;
 }>({
     selection: [
-        {text : 'Flex', value: DATA_VIEW_MODE.FLEX},
-        {text : 'List', value: DATA_VIEW_MODE.LIST},
+        {text : 'Flex', value: DATA_VIEW_MODE.FLEX} as EnumOption,
+        {text : 'List', value: DATA_VIEW_MODE.LIST} as EnumOption,
     ],
-    selected: DATA_VIEW_MODE.LIST
+    selected: DATA_VIEW_MODE.LIST as number
 });
 
 let pageComputed = computed({

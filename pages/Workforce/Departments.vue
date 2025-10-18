@@ -175,10 +175,10 @@ const departmentsHeaders = reactive<TableHeaderT[]>([
 const departmentsKey = shallowRef(0);
 const departmentsData = ref([]);
 const departmentsPending = ref(false);
-const selectedDepartments = ref([]);
-const selectedSubDepartments = ref([]);
+const selectedDepartments = ref<number[]>([]);
+const selectedSubDepartments = ref<number[]>([]);
 
-const syncSelectedSubDepartments = (selectionPayload) => {
+const syncSelectedSubDepartments = (selectionPayload: {action: number, value: number[]}) => {
     if(selectionPayload.action == SELECTION_ACTION.REMOVE){
         selectedSubDepartments.value = _difference(selectedSubDepartments.value, selectionPayload.value);
     }

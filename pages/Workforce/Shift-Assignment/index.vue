@@ -212,11 +212,16 @@
 <script setup lang="ts">
 import {storeToRefs} from "pinia";
 import type {ShiftAssignmentsInstance, ShiftByEmployeeSelectionInstance, ShiftSelectionInstance} from "@/public/js/types/component-instance";
+import type {StringEnumInterface} from "@/public/js/common/type";
 
 definePageMeta({middleware: ['auth', 'admin-of-selected-company']});
 useLayout().setNavigationMode('solid');
 
 const nuxtApp = useNuxtApp();
+const $enumerableOption = nuxtApp.$enumerableOption as (enumerable: StringEnumInterface, value: number) => {
+    text: string,
+    value: number
+};
 const {
     selectedAssociatedCompanyId
 } = storeToRefs(nuxtApp.$authStore);
@@ -226,9 +231,9 @@ const {render: renderDatePicker} = dateTimePicker();
 const {screenWidthBreakpoint, width: screenWidth} = useScreen();
 const shiftAssignmentTab = ref(SHIFT_ASSIGNMENT_TAB.LIST);
 const shiftAssignmentTabs = reactive([
-    {text : SHIFT_ASSIGNMENT_TAB_NAME[SHIFT_ASSIGNMENT_TAB.LIST], value: SHIFT_ASSIGNMENT_TAB.LIST},
-    {text : SHIFT_ASSIGNMENT_TAB_NAME[SHIFT_ASSIGNMENT_TAB.CREATE_SHIFT_ASSIGNMENTS], value: SHIFT_ASSIGNMENT_TAB.CREATE_SHIFT_ASSIGNMENTS},
-    {text : SHIFT_ASSIGNMENT_TAB_NAME[SHIFT_ASSIGNMENT_TAB.MANAGE_ASSIGNED_SHIFTS], value: SHIFT_ASSIGNMENT_TAB.MANAGE_ASSIGNED_SHIFTS},
+    $enumerableOption(SHIFT_ASSIGNMENT_TAB_NAME, SHIFT_ASSIGNMENT_TAB.LIST as number),
+    $enumerableOption(SHIFT_ASSIGNMENT_TAB_NAME, SHIFT_ASSIGNMENT_TAB.CREATE_SHIFT_ASSIGNMENTS as number),
+    $enumerableOption(SHIFT_ASSIGNMENT_TAB_NAME, SHIFT_ASSIGNMENT_TAB.MANAGE_ASSIGNED_SHIFTS as number),
 ]);
 
 watch(shiftAssignmentTab, (value) => {
@@ -255,11 +260,11 @@ const shiftAssignmentsReference = useTemplateRef<ShiftAssignmentsInstance>('shif
 
 const employeeSelectionReference = useTemplateRef<ShiftByEmployeeSelectionInstance>('employeeSelectionReference');
 const employeeSelectionPending = ref(false);
-const selectedEmployees = ref([]);
+const selectedEmployees = ref<number[]>([]);
 
 const shiftSelectionReference = useTemplateRef<ShiftSelectionInstance>('shiftSelectionReference');
 const shiftSelectionPending = ref(false);
-const selectedShifts = ref([]);
+const selectedShifts = ref<number[]>([]);
 
 const resetShiftAssignment = () => {
     assignShiftModalShow.value = false;
@@ -373,10 +378,10 @@ const disableEmployeeModalSelectionActions = computed(() => {
         (modalEmployeeSelectionPending.value || modalEmployeeSelectionReferencePending.value)
     );
 })
-const shiftAssignmentPending = ref(false);
-const updateShiftSettingsPending = ref(false);
-const stagedShiftAssignmentId = ref(null);
-const shiftAssignmentStartDate = ref(moment().format("YYYY-MM-DD"));
+const shiftAssignmentPending = ref<boolean>(false);
+const updateShiftSettingsPending = ref<boolean>(false);
+const stagedShiftAssignmentId = ref<null | number>(null);
+const shiftAssignmentStartDate = ref<string>(moment().format("YYYY-MM-DD"));
 const stateEndOfShiftRadioGroupOrientation = computed(() => {
     return screenWidth.value >= screenWidthBreakpoint['sm'] ? 'horizontal' : 'vertical';
 })
@@ -384,7 +389,7 @@ const stateEndOfShiftSelection = reactive([
     {text : 'Shift End Not Specified', value: 0},
     {text : 'State Shift End Date', value: 1},
 ]);
-const stateEndOfShift = ref(0);
+const stateEndOfShift = ref<number>(0);
 const shiftAssignmentEndDate = ref<null | string>(null);
 
 const stateEndOfShiftSelectedChange = () => {
@@ -395,10 +400,17 @@ const stateEndOfShiftSelectedChange = () => {
 }
 
 const shiftAssignmentForm = computed(() => {
-    let form = {
+    let form: {
+        start_date: string,
+        stated_shift_end_date: number,
+        end_date?: null | string,
+        company_id: number,
+        employees?: number[],
+        shifts?: number[],
+    } = {
         start_date: shiftAssignmentStartDate.value,
         stated_shift_end_date: stateEndOfShift.value,
-        company_id: selectedAssociatedCompanyId.value,
+        company_id: selectedAssociatedCompanyId.value as number,
     }
 
     if(stateEndOfShift.value == 1){
@@ -534,9 +546,9 @@ const confirmShiftAssignmentBatchDetach = () => {
     }
 
     let confirmMessage = {
-        [SHIFT_ASSIGNMENT_TAB.CREATE_SHIFT_ASSIGNMENTS]: "Confirm clear all selected employee's shifts",
-        [SHIFT_ASSIGNMENT_TAB.MANAGE_ASSIGNED_SHIFTS]: "Confirm clear selected shifts from all employees",
-    }[shiftAssignmentTab.value] ?? '';
+        [SHIFT_ASSIGNMENT_TAB.CREATE_SHIFT_ASSIGNMENTS as number]: "Confirm clear all selected employee's shifts",
+        [SHIFT_ASSIGNMENT_TAB.MANAGE_ASSIGNED_SHIFTS as number]: "Confirm clear selected shifts from all employees",
+    }[shiftAssignmentTab.value as number] ?? '';
 
     useNuxtApp().$promptStore.setPrompt({
         resetable: true,
@@ -554,13 +566,16 @@ const confirmShiftAssignmentBatchDetach = () => {
 
 const shiftAssignmentBatchDetachPath = computed<string>(() => {
     return {
-        [SHIFT_ASSIGNMENT_TAB.CREATE_SHIFT_ASSIGNMENTS]: '/api/shift-assignment-detach/employee',
-        [SHIFT_ASSIGNMENT_TAB.MANAGE_ASSIGNED_SHIFTS]: '/api/shift-assignment-detach/shift',
-    }[shiftAssignmentTab.value] ?? '';
+        [SHIFT_ASSIGNMENT_TAB.CREATE_SHIFT_ASSIGNMENTS as number]: '/api/shift-assignment-detach/employee',
+        [SHIFT_ASSIGNMENT_TAB.MANAGE_ASSIGNED_SHIFTS as number]: '/api/shift-assignment-detach/shift',
+    }[shiftAssignmentTab.value as number] ?? '';
 })
 const shiftAssignmentBatchDetachForm = computed(() => {
-    let form = {
-        company_id: selectedAssociatedCompanyId.value,
+    let form:{
+        company_id: number,
+        selectedMorphables?: number[],
+    } = {
+        company_id: selectedAssociatedCompanyId.value as number,
     }
 
     if(shiftAssignmentTab.value == SHIFT_ASSIGNMENT_TAB.CREATE_SHIFT_ASSIGNMENTS){
@@ -624,10 +639,15 @@ const submitShiftAssignmentBatchDetach = async () => {
 };
 
 const updateShiftSettingsForm = computed(() => {
-    let form = {
+    let form: {
+        start_date: string,
+        stated_shift_end_date: number,
+        end_date?: null | string,
+        company_id: number
+    } = {
         start_date: shiftAssignmentStartDate.value,
         stated_shift_end_date: stateEndOfShift.value,
-        company_id: selectedAssociatedCompanyId.value,
+        company_id: selectedAssociatedCompanyId.value as number,
     }
 
     if(stateEndOfShift.value == 1){
