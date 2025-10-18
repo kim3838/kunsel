@@ -1,6 +1,6 @@
 
 export type TimePeriodPresetSelectionT = {
-    value: string,
+    value: string | number,
     text: string | number,
     monthly_period: any,
     semimonthly_period: any,
