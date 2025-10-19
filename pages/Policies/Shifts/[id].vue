@@ -4,7 +4,7 @@
             <div class="mx-auto max-w-screen-2xl">
 
                 <DialogModal
-                    :max-width="'580px'"
+                    :max-width="'700px'"
                     :show="resolvedShiftModal"
                     :closeable="false">
                     <template #title>
@@ -21,6 +21,12 @@
                                         <tr><td class="font-semibold">Code</td><td class="pl-2">{{ _get(resolvedShift, 'code', null) }}</td></tr>
                                         <tr><td class="font-semibold">Name</td><td class="pl-2">{{ _get(resolvedShift, 'name', null) }}</td></tr>
                                         <tr><td class="font-semibold">Type</td><td class="pl-2">{{ _get(resolvedShift, 'type.text', null) }}</td></tr>
+                                        <tr><td class="font-semibold">Work Start Grace</td><td class="pl-2">{{ _get(resolvedShift, 'work_start_grace_time_readable', null) }}</td></tr>
+                                        <tr><td class="font-semibold">Requires Lunch out/in</td><td class="pl-2">{{ _get(resolvedShift, 'require_lunch_time_in_and_out', false) ? 'Yes' : 'No' }}</td></tr>
+                                        <tr v-if="_get(resolvedShift, 'require_lunch_time_in_and_out', false)">
+                                            <td class="font-semibold">Lunch Start Grace</td><td class="pl-2">{{ _get(resolvedShift, 'lunch_start_grace_time_readable', null) }}</td>
+                                        </tr>
+                                        <tr><td class="font-semibold">Max Overtime</td><td class="pl-2">{{ _get(resolvedShift, 'max_overtime_readable', null) }}</td></tr>
                                     </tbody>
                                 </table>
                             </fieldset>
@@ -81,6 +87,10 @@
                         <div v-if="shiftRequireLunchTimeInAndOut == 1">
                             <InputLabel :size="'sm'" value="Lunch Start Grace Time"/>
                             <Input :disabled="disableActions" :size="'md'" v-model="shiftLunchStartGraceTime" high-light-all-text-on-focus type-strict :type="'number'"/>
+                        </div>
+                        <div>
+                            <InputLabel :size="'sm'" value="Max Overtime Hours"/>
+                            <Input :disabled="disableActions" :size="'md'" v-model="shiftMaxOvertime" high-light-all-text-on-focus type-strict :type="'number'"/>
                         </div>
                     </div>
 
@@ -253,6 +263,7 @@ const shiftRequireLunchTimeInAndOutSelection = reactive([
 ]);
 
 const shiftLunchStartGraceTime = ref('0');
+const shiftMaxOvertime = ref('0');
 
 const shiftType = computed(() => {
     return shiftTypeOptions.selected;
@@ -328,6 +339,7 @@ const fetchShift = async () => {
             shiftWorkStartGraceTime.value = _get(response, '_data.values.shift.work_start_grace_time', 0);
             shiftRequireLunchTimeInAndOut.value = _get(response, '_data.values.shift.require_lunch_time_in_and_out', 0);
             shiftLunchStartGraceTime.value = _get(response, '_data.values.shift.lunch_start_grace_time', 0);
+            shiftMaxOvertime.value = _get(response, '_data.values.shift.max_overtime', 0);
 
             shiftIsDefault.selected = _get(response, '_data.values.shift.is_default', false) ? 1 : 0;
         },
@@ -480,7 +492,10 @@ const formBody = computed(() => {
         'type': shiftTypeOptions.selected,
         'work_start_grace_time': shiftWorkStartGraceTime.value,
         'require_lunch_time_in_and_out': shiftRequireLunchTimeInAndOut.value,
-        'lunch_start_grace_time': shiftLunchStartGraceTime.value,
+        ...(shiftRequireLunchTimeInAndOut.value == 1 ? {
+            'lunch_start_grace_time': shiftLunchStartGraceTime.value
+        }: {}),
+        'max_overtime': shiftMaxOvertime.value,
         'shift_schedules': shiftSchedules.value,
     };
 });
@@ -503,6 +518,9 @@ const formSubmit = async() => {
         },
         onSuccessResponse: async (request, options, response) => {
             resolvedShift.value = _get(response, '_data.values.shift', null);
+            shiftWorkStartGraceTime.value = resolvedShift.value.work_start_grace_time;
+            shiftLunchStartGraceTime.value = resolvedShift.value.lunch_start_grace_time;
+            shiftMaxOvertime.value = resolvedShift.value.max_overtime;
             resolvedShiftModal.value = true;
         },
     });
