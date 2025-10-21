@@ -2,8 +2,8 @@
 import type {NumericEnumInterface, StringEnumInterface} from "@/public/js/common/type";
 
 export const  EMPLOYMENT_STATUS: NumericEnumInterface = {
-    ACTIVE : 0,
-    INACTIVE : 1,
+    ACTIVE : 100,
+    INACTIVE : 200,
 }
 
 export const EMPLOYMENT_STATUS_NAME: StringEnumInterface = {
@@ -12,13 +12,13 @@ export const EMPLOYMENT_STATUS_NAME: StringEnumInterface = {
 };
 
 export const EMPLOYMENT_TYPE: NumericEnumInterface = {
-    OJT : 0,
-    INTERN : 1,
-    PROBATIONARY : 2,
-    FULL_TIME : 3,
-    PART_TIME : 4,
-    CONTRACT : 5,
-    NOT_SPECIFIED : 6,
+    NOT_SPECIFIED : 0,
+    OJT : 100,
+    INTERN : 101,
+    PROBATIONARY : 200,
+    FULL_TIME : 201,
+    PART_TIME : 300,
+    CONTRACT : 400,
 }
 
 export const EMPLOYMENT_TYPE_NAME: StringEnumInterface = {
@@ -32,14 +32,14 @@ export const EMPLOYMENT_TYPE_NAME: StringEnumInterface = {
 }
 
 export const  END_OF_SERVICE_TYPE: NumericEnumInterface = {
-    END_OF_CONTRACT : 0,
-    RESIGNED : 1,
-    TERMINATED : 2,
-    RETIRED : 3,
-    DEATH : 4,
-    MEDICAL_SEPARATION : 5,
-    DISABILITY : 6,
-    NOT_SPECIFIED : 7,
+    NOT_SPECIFIED : 0,
+    END_OF_CONTRACT : 100,
+    RESIGNED : 200,
+    TERMINATED : 300,
+    RETIRED : 400,
+    DEATH : 500,
+    MEDICAL_SEPARATION : 600,
+    DISABILITY : 700,
 }
 
 export const END_OF_SERVICE_TYPE_NAME: StringEnumInterface = {

@@ -2,12 +2,12 @@
 import type {NumericEnumInterface, StringEnumInterface} from "@/public/js/common/type";
 
 export const  FORMULABLE: NumericEnumInterface = {
-    EARNINGS : 0,
-    DEDUCTIONS : 1,
-    TAXABLE_INCOME : 2,
-    NON_TAXABLE_INCOME : 3,
-    INCOME_TAX : 4,
-    NET_INCOME : 5
+    EARNINGS : 100,
+    DEDUCTIONS : 200,
+    TAXABLE_INCOME : 300,
+    NON_TAXABLE_INCOME : 400,
+    INCOME_TAX : 500,
+    NET_INCOME : 600
 }
 
 export const  FORMULABLE_NAME: StringEnumInterface = {
@@ -26,10 +26,10 @@ export const FORMULABLE_MODEL_MAP_KEY: StringEnumInterface = {
 };
 
 export const  COMPENSATION: NumericEnumInterface = {
-    BASIC_SALARY : 0,
-    OVERTIME : 1,
-    REGULAR_ALLOWANCE : 2,
-    BENEFIT : 3,
+    BASIC_SALARY : 100,
+    REGULAR_ALLOWANCE : 101,
+    OVERTIME : 200,
+    BENEFIT : 300,
 }
 
 export const  COMPENSATION_NAME: StringEnumInterface = {
@@ -40,8 +40,8 @@ export const  COMPENSATION_NAME: StringEnumInterface = {
 }
 
 export const  DEDUCTION: NumericEnumInterface = {
-    DEDUCTION : 0,
-    CONTRIBUTION : 1
+    DEDUCTION : 100,
+    CONTRIBUTION : 200
 }
 
 export const  DEDUCTION_NAME: StringEnumInterface = {
@@ -50,17 +50,17 @@ export const  DEDUCTION_NAME: StringEnumInterface = {
 }
 
 export const  INCOME_TAX: NumericEnumInterface = {
-    COMPENSATION_TAX : 0
+    COMPENSATION_TAX : 100
 }
 
 export const  INCOME_TAX_NAME: StringEnumInterface = {
     [INCOME_TAX.COMPENSATION_TAX as number] : 'Compensation Tax',
 }
 export const PAY_PERIOD: NumericEnumInterface ={
-    HOURLY : 0,
-    DAILY : 1,
-    SEMI_MONTHLY : 2,
-    MONTHLY : 3
+    HOURLY : 50,
+    DAILY : 100,
+    SEMI_MONTHLY : 300,
+    MONTHLY : 400
 }
 
 export const PAY_PERIOD_NAME: StringEnumInterface = {
@@ -71,8 +71,8 @@ export const PAY_PERIOD_NAME: StringEnumInterface = {
 };
 
 export const PAY_TYPE: NumericEnumInterface ={
-    BY_ATTENDANCE : 0,
-    FIXED : 1,
+    BY_ATTENDANCE : 100,
+    FIXED : 200,
 }
 
 export const PAY_TYPE_NAME: StringEnumInterface = {
@@ -87,11 +87,19 @@ export const PAY_FREQUENCY_CODES: string[] = [
     'MONTHLY',
 ]
 
+export const CUT_OFF_TYPE: NumericEnumInterface ={
+    WEEKLY : 100,
+}
+
+export const CUT_OFF_NAME: StringEnumInterface = {
+    [CUT_OFF_TYPE.WEEKLY as number]: 'Weekly',
+};
+
 export const PAY_FREQUENCY_TYPE: NumericEnumInterface ={
-    DAILY : 0,
-    WEEKLY : 1,
-    SEMI_MONTHLY : 2,
-    MONTHLY : 3
+    DAILY : 100,
+    WEEKLY : 200,
+    SEMI_MONTHLY : 300,
+    MONTHLY : 400
 }
 
 export const PAY_FREQUENCY_NAME: StringEnumInterface = {
@@ -103,8 +111,8 @@ export const PAY_FREQUENCY_NAME: StringEnumInterface = {
 
 export const AMOUNTABLE_PAYROLL_COMPONENT_START: NumericEnumInterface ={
     NOT_SPECIFIED : 0,
-    EMPLOYMENT_START_DATE : 1,
-    CUSTOM_DATE : 2,
+    EMPLOYMENT_START_DATE : 100,
+    CUSTOM_DATE : 200,
 }
 
 export const AMOUNTABLE_PAYROLL_COMPONENT_START_NAME: StringEnumInterface = {
@@ -115,7 +123,7 @@ export const AMOUNTABLE_PAYROLL_COMPONENT_START_NAME: StringEnumInterface = {
 
 export const AMOUNTABLE_PAYROLL_COMPONENT_END: NumericEnumInterface ={
     NOT_SPECIFIED : 0,
-    CUSTOM_DATE : 1,
+    CUSTOM_DATE : 100,
 }
 
 export const AMOUNTABLE_PAYROLL_COMPONENT_END_NAME: StringEnumInterface = {

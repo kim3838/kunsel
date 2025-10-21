@@ -224,7 +224,7 @@ const monthlySemimonthlyCutoffRadioGroupOrientation = computed(() => {
 })
 
 const cutOffTypeSelection = ref([
-    {text : 'Weekday', value: 0},
+    $enumerableOption(CUT_OFF_NAME, CUT_OFF_TYPE.WEEKLY as number),
 ]);
 
 const daysSpanSelection = ref([

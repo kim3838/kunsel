@@ -3,17 +3,17 @@ import type {NumericEnumInterface} from "@/public/js/common/type";
 
 export const  GENDER: NumericEnumInterface = {
     NOT_SPECIFIED : 0,
-    MALE : 1,
-    FEMALE : 2,
+    MALE : 100,
+    FEMALE : 200,
 }
 
 export const  MARITAL_STATUS: NumericEnumInterface = {
     NOT_SPECIFIED : 0,
-    SINGLE : 1,
-    MARRIED : 2,
-    WIDOWED : 3,
-    DIVORCED : 4,
-    SEPARATED : 5,
+    SINGLE : 100,
+    MARRIED : 200,
+    WIDOWED : 201,
+    DIVORCED : 202,
+    SEPARATED : 203,
 }
 
 export const  EMPLOYEE_USER_CREATION: NumericEnumInterface = {
