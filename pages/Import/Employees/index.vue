@@ -16,10 +16,10 @@
                         <NuxtLink :to="`${baseURL}/api/employee-import-template`">
                             <Button class="inline-block" :icon="'tdesign:download'" :variant="'outline'" :size="'sm'" :disabled="disableActions" :label="'CSV Template'"/>
                         </NuxtLink>
-                        <Button class="inline-block" :icon="'tdesign:scan'" :size="'sm'" :disabled="disableActions" v-if="showRead" :label="readLabel"  @click="read"/>
-                        <Button class="inline-block" :icon="'tdesign:upload'" :size="'sm'" :variant="'outline'" :disabled="disableActions" v-if="showUploadNewFile" :label="uploadNewFileLabel"  @click="reset"/>
-                        <Button class="inline-block" :icon="'tdesign:scan'" :size="'sm'" :disabled="disableActions" v-if="showReValidate" :label="reValidateLabel"  @click="reValidate"/>
-                        <Button class="inline-block" :icon="'ic:sharp-save'" :size="'sm'" :disabled="disableActions"  v-if="showSave" :label="saveLabel"  @click="save"/>
+                        <Button class="inline-block" :icon="readIcon" :size="'sm'" :disabled="disableActions" v-if="showRead" :label="readLabel"  @click="read"/>
+                        <Button class="inline-block" :icon="uploadNewFileIcon" :size="'sm'" :variant="'outline'" :disabled="disableActions" v-if="showUploadNewFile" :label="uploadNewFileLabel"  @click="reset"/>
+                        <Button class="inline-block" :icon="reValidateIcon" :size="'sm'" :disabled="disableActions" v-if="showReValidate" :label="reValidateLabel"  @click="reValidate"/>
+                        <Button class="inline-block" :icon="saveIcon" :size="'sm'" :disabled="disableActions"  v-if="showSave" :label="saveLabel"  @click="save"/>
                     </div>
 
                     <div class="flex items-center min-h-8">
@@ -186,6 +186,9 @@ const disableInputFile = computed(() => {
     return preImportData.value.length > 0;
 })
 
+const readIcon = computed(() => {
+    return disableActions.value ? 'eos-icons:loading' : 'tdesign:scan';
+});
 const readLabel = computed(() => {
     return "Read file";
 });
@@ -193,6 +196,9 @@ const showRead = computed(() => {
     return preImportData.value.length == 0;
 });
 
+const uploadNewFileIcon = computed(() => {
+    return disableActions.value ? 'eos-icons:loading' : 'tdesign:upload';
+});
 const uploadNewFileLabel = computed(() => {
     return "Upload new";
 });
@@ -200,6 +206,9 @@ const showUploadNewFile = computed(() => {
     return preImportData.value.length > 0;
 });
 
+const reValidateIcon = computed(() => {
+    return disableActions.value ? 'eos-icons:loading' : 'tdesign:scan';
+});
 const reValidateLabel = computed(() => {
     return "Re-validate selected";
 });
@@ -212,6 +221,9 @@ const showReValidate = computed(() => {
     return hasImportData && hasAtLeastOneValidationErrors;
 });
 
+const saveIcon = computed(() => {
+    return disableActions.value ? 'eos-icons:loading' : 'ic:sharp-save';
+});
 const saveLabel = computed(() => {
     return "Save all selected";
 });
