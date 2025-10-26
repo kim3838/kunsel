@@ -362,6 +362,13 @@ export const useLayout = () => {
                         to: '/import/employee-payroll-component',
                         route_active: 'import-employee-payroll-component'
                     },
+                    {
+                        key: 'import/attendance',
+                        type: 'link',
+                        title: 'Attendance',
+                        to: '/import/attendance',
+                        route_active: 'import-attendance'
+                    },
                 ],
             }] : []) as NavigationLinkInterface[],
             ...((userIsSuperAdmin.value || adminInAnyCompany.value) ? [{

@@ -30,3 +30,17 @@ export type EmployeePayrollComponentPreImportT = {
     pay_type: string,
     pay_frequency: string,
 } & ImportRow;
+
+export type AttendancePreImportT = {
+    employee_id: int,
+    shift_id: int,
+    employee_number: string,
+    shift_code: string,
+    date: string,
+    require_lunch_time_in_and_out: boolean,
+    is_flexible: boolean,
+    first_in: string,
+    lunch_out: string | null,
+    lunch_in: string | null,
+    last_out: string,
+} & ImportRow;
