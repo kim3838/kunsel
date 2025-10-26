@@ -168,6 +168,7 @@ const {
     lining: liningColor,
     thread: threadColor,
     shade: shadeColor,
+    accent: accentColor,
     tint: tintColor,
 } = storeToRefs($themeStore);
 
@@ -177,8 +178,12 @@ const liningColor70 = computed(() => {
     return liningColor.value + hexAlpha.value['70'];
 });
 
-const liningColor10 = computed(() => {
-    return liningColor.value + hexAlpha.value['10'];
+const neutralColor40 = computed(() => {
+    return neutralColor.value + hexAlpha.value['40'];
+});
+
+const accentColor40 = computed(() => {
+    return accentColor.value + hexAlpha.value['40'];
 });
 
 const props = defineProps({
@@ -544,6 +549,10 @@ tbody tr td {
     border: 1px solid $cellBorder;
 }
 
+tbody tr:hover {
+    background-color: v-bind(accentColor40);
+}
+
 table thead tr,
 tbody tr,
 table thead tr td:nth-last-child(1),
@@ -552,7 +561,7 @@ tbody tr td:nth-last-child(1){
 }
 
 .table-row-odd-background {
-    background-color: v-bind(shadeColor);
+    background-color: v-bind(neutralColor40);
 }
 
 .table-default-background,
