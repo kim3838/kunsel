@@ -119,10 +119,13 @@
 <script setup lang="ts">
 import {storeToRefs} from "pinia";
 
-const nuxtApp = useNuxtApp();
+const {$authStore} = useNuxtApp();
 const moment = useNuxtApp().$moment;
 const {render} = dateTimePicker();
 const {screenWidthBreakpoint, width: screenWidth} = useScreen();
+const {
+    selectedAssociatedCompanyId,
+} = storeToRefs($authStore);
 
 const props = defineProps({
     creatingOrEditing: {
@@ -344,6 +347,7 @@ const form = computed(() => {
         'status': employmentStatus.value,
         'employment_type': employmentType.value,
         'start_date': startDate.value,
+        'company_id': selectedAssociatedCompanyId.value,
     };
 
     if(stateEndOfEmployment.value == 1){
