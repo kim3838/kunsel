@@ -378,10 +378,14 @@ const read = async () => {
 const reValidate = async () => {
 
     if(selectedPreImportDataId.value.length == 0){
-        coreStore.setServiceError({
-            prompt: true,
-            payload: {
-                message: 'No record selected to re-validate.'
+        useNuxtApp().$promptStore.setPrompt({
+            resetable: false,
+            icon: null,
+            title: `No record selected to re-validate.`,
+            message: `Toggle checkboxes from rows to select them.`,
+            action: {
+                callback: () => {},
+                label: 'Okay'
             }
         });
         return;
@@ -433,20 +437,28 @@ const editRow = (cell: EmploymentProfilePreImportT) => {
 const save = async () => {
 
     if(selectedPreImportDataId.value.length == 0){
-        coreStore.setServiceError({
-            prompt: true,
-            payload: {
-                message: 'No record selected to save.'
+        useNuxtApp().$promptStore.setPrompt({
+            resetable: false,
+            icon: null,
+            title: `No record selected to save.`,
+            message: `Toggle checkboxes from rows to select them.`,
+            action: {
+                callback: () => {},
+                label: 'Okay'
             }
         });
         return;
     }
 
     if(selectedPreImportDataThatHasValidationError.value.length > 0){
-        coreStore.setServiceError({
-            prompt: true,
-            payload: {
-                message: "Fix validation errors. if selected has validation error(s), Re-validate them first."
+        useNuxtApp().$promptStore.setPrompt({
+            resetable: false,
+            icon: null,
+            title: `Fix validation errors.`,
+            message: `If selected rows have validation error(s), Re-validate them first.`,
+            action: {
+                callback: () => {},
+                label: 'Okay'
             }
         });
         return;
@@ -480,10 +492,14 @@ const save = async () => {
             preImportData.value = preImportData.value;
 
             if(selectedPreImportDataThatHasValidationError.value.length > 0){
-                coreStore.setServiceError({
-                    prompt: true,
-                    payload: {
-                        message: "Fix validation errors. if selected has validation error(s), Re-validate them first."
+                useNuxtApp().$promptStore.setPrompt({
+                    resetable: false,
+                    icon: null,
+                    title: `Fix validation errors.`,
+                    message: `If selected rows have validation error(s), Re-validate them first.`,
+                    action: {
+                        callback: () => {},
+                        label: 'Okay'
                     }
                 });
             }
