@@ -100,7 +100,7 @@ export const useThemeStore = defineStore('theme', {
                     'type': 'light',
                     'primary': '#18418c',
                     'secondary': '#263b62',
-                    'accent': '#dae3f0',
+                    'accent': '#b0caf1',
 
                     'lining': '#90a5cc',
                     'thread': '#c6c9cc',
