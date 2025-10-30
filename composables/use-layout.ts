@@ -280,6 +280,13 @@ export const useLayout = () => {
                         to: '/workforce/shift-assignment',
                         route_active: 'workforce-shift-assignment'
                     },
+                    {
+                        key: 'workforce/attendance',
+                        type: 'link',
+                        title: 'Attendance',
+                        to: '/workforce/attendance',
+                        route_active: 'workforce-attendance'
+                    },
                 ]
             },{
                 key: 'policies',
