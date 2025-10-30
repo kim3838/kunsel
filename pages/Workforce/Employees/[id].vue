@@ -888,6 +888,7 @@ const employeeContactFormAction = computed(() => {
 const employeeContactFormBody = computed(() => {
 
     return {
+        company_id: selectedAssociatedCompanyId.value,
         office_email: employeeOfficeEmail.value,
         personal_email: employeePersonalEmail.value,
         office_phone: employeeOfficePhone.value,
