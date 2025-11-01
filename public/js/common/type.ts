@@ -61,6 +61,8 @@ export type BrowserSessionT = {
 export type StoreFormT = {
     filters: {
         date: string,
+        attendanceDateFrom: string,
+        attendanceDateTo: string,
         dateTime: string,
         monthValue: string,
         monthLabel: string,
