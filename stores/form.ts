@@ -8,6 +8,8 @@ export const useFormStore = defineStore('form', {
         return {
             filters: {
                 date: moment().format('YYYY-MM-DD'),
+                attendanceDateFrom: moment().startOf('month').startOf('day').format('YYYY-MM-DD'),
+                attendanceDateTo: moment().endOf('month').endOf('day').format('YYYY-MM-DD'),
                 dateTime: moment().startOf('day').format('YYYY-MM-DD HH:mm:ss'),
                 monthValue: moment().format('YYYY-MM'),
                 monthLabel: moment().format('YYYY MMMM'),
@@ -20,7 +22,7 @@ export const useFormStore = defineStore('form', {
     },
 
     actions: {
-        setFormFilterValue(payload: {key: 'date' | 'dateTime' | 'monthValue' | 'monthLabel', value: any}){
+        setFormFilterValue(payload: {key: 'date' | 'attendanceDateFrom' | 'attendanceDateTo' | 'dateTime' | 'monthValue' | 'monthLabel', value: any}){
             this.filters[payload.key] = payload.value;
         },
     },

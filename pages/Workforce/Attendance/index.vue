@@ -10,11 +10,11 @@
                         </div>
                         <div>
                             <InputLabel :size="'sm'" value="Date From"/>
-                            <InputWithIcon :icon="'mdi:calendar-today-outline'" :id="'date_from'" readonly v-model="filters.dateFrom" :size="'md'" class="w-full" :override="{font_family_class: 'font-sans'}" />
+                            <InputWithIcon :icon="'mdi:calendar-today-outline'" :id="'date_from'" readonly v-model="formStore.filters.attendanceDateFrom" :size="'md'" class="w-full" :override="{font_family_class: 'font-sans'}" :disabled="disableActions" />
                         </div>
                         <div>
                             <InputLabel :size="'sm'" value="Date To"/>
-                            <InputWithIcon :icon="'mdi:calendar-outline'" :id="'date_to'" readonly v-model="filters.dateTo" :size="'md'" class="w-full" :override="{font_family_class: 'font-sans'}" />
+                            <InputWithIcon :icon="'mdi:calendar-outline'" :id="'date_to'" readonly v-model="formStore.filters.attendanceDateTo" :size="'md'" class="w-full" :override="{font_family_class: 'font-sans'}" :disabled="disableActions" />
                         </div>
                         <div>
                             <InputLabel :size="'sm'" value="Group" />
@@ -271,6 +271,7 @@ const nuxtApp = useNuxtApp();
 const {render} = dateTimePicker();
 const clientReadyState = useClientReadyState();
 const common = useCommon();
+const formStore = nuxtApp.$formStore;
 const {
     updatedAssociatedCompanyFlag
 } = storeToRefs(nuxtApp.$associationStore);
@@ -354,18 +355,14 @@ let filters = reactive<{
     search: {
         keyword: string,
         callback: ReturnType<typeof setTimeout> | number
-    },
-    dateFrom: string,
-    dateTo: string,
+    }
 }>({
     page: 1,
     perPage: 10,
     search: {
         keyword: '',
         callback: 1
-    },
-    dateFrom: nuxtApp.$moment().startOf('month').startOf('day').format('YYYY-MM-DD'),
-    dateTo: nuxtApp.$moment().endOf('month').endOf('day').format('YYYY-MM-DD'),
+    }
 });
 
 const viewMode = reactive<{
@@ -417,8 +414,8 @@ let paramsComputed = computed(() => {
         perPage: filters.perPage,
         filters: {
             company_id: selectedAssociatedCompanyId.value,
-            date_from: filters.dateFrom,
-            date_to: filters.dateTo,
+            date_from: formStore.filters.attendanceDateFrom,
+            date_to: formStore.filters.attendanceDateTo,
             search: filters.search.keyword,
             assigned_employee_group_ids: employeeGroupOptions.selected,
             department_ids: departmentOptions.selected,
@@ -493,13 +490,19 @@ let filtersDateTimePickers = ref([
         id: 'date_from',
         type: 'date',
         selectedCallback: (payload: {value: string}) => {
-            filters.dateFrom = payload.value;
+            formStore.setFormFilterValue({
+                key: 'attendanceDateFrom',
+                value: payload.value
+            });
         }
     }, {
         id: 'date_to',
         type: 'date',
         selectedCallback: (payload: {value: string}) => {
-            filters.dateTo = payload.value;
+            formStore.setFormFilterValue({
+                key: 'attendanceDateTo',
+                value: payload.value
+            });
         }
     }
 ]);
