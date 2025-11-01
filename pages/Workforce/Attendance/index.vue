@@ -71,23 +71,19 @@
                                     <div class="mx-auto max-w-screen-lg grid gap-2 grid-cols-3 sm:grid-cols-4 md:grid-cols-5">
                                         <div class="col-span-2">
                                             <InputLabel :size="'md'" value="Work Period"/>
-                                            <div class="text-lg">{{attendanceWorkPeriod}}</div>
-                                            <Input v-if="false" v-model="attendanceWorkPeriod" readonly :size="'md'" />
+                                            <div class="text-lg">{{scheduleWorkPeriod}}</div>
                                         </div>
                                         <div v-if="attendanceShiftRequiresLunchOutAndIn">
                                             <InputLabel :size="'md'" value="Lunch Period"/>
-                                            <div class="text-lg">{{attendanceLunchPeriod}}</div>
-                                            <Input v-if="false" v-model="attendanceLunchPeriod" readonly :size="'md'" />
+                                            <div class="text-lg">{{scheduleLunchPeriod}}</div>
                                         </div>
                                         <div>
-                                            <InputLabel :size="'md'" value="Total Schedule"/>
-                                            <div class="text-lg">{{attendanceTotalSchedule}}</div>
-                                            <Input v-if="false" v-model="attendanceTotalSchedule" readonly :size="'md'" />
+                                            <InputLabel :size="'md'" value="Total Duration"/>
+                                            <div class="text-lg">{{scheduleTotalDuration}}</div>
                                         </div>
                                         <div>
                                             <InputLabel :size="'md'" value="Is Flexible"/>
-                                            <div class="text-lg">{{attendanceIsFlexibleSchedule}}</div>
-                                            <Input v-if="false" v-model="attendanceIsFlexibleSchedule" readonly :size="'md'" />
+                                            <div class="text-lg">{{scheduleIsFlexible}}</div>
                                         </div>
                                     </div>
                                 </fieldset>
@@ -627,11 +623,11 @@ watch(creatingOrEditing, (creatingOrEditing)=>{
     }
 });
 
-const attendanceWorkPeriod = ref('');
-const attendanceLunchPeriod = ref('');
-const attendanceTotalSchedule = ref('');
+const scheduleWorkPeriod = ref('');
+const scheduleLunchPeriod = ref('');
+const scheduleTotalDuration = ref('');
 const attendanceWeekday = ref('');
-const attendanceIsFlexibleSchedule = ref('');
+const scheduleIsFlexible = ref('');
 const attendanceShiftRequiresLunchOutAndIn = ref(false);
 const attendanceDate = ref('');
 const attendanceFirstIn = ref('');
@@ -648,11 +644,11 @@ const resetEditable = () => {
     };
     editPayload.value = {};
     editableAttendanceDateTimePickers.value = [];
-    attendanceWorkPeriod.value = '';
-    attendanceLunchPeriod.value = '';
-    attendanceTotalSchedule.value = '';
+    scheduleWorkPeriod.value = '';
+    scheduleLunchPeriod.value = '';
+    scheduleTotalDuration.value = '';
     attendanceWeekday.value = '';
-    attendanceIsFlexibleSchedule.value = '';
+    scheduleIsFlexible.value = '';
     attendanceShiftRequiresLunchOutAndIn.value = false;
     attendanceDate.value = '';
     attendanceFirstIn.value = '';
@@ -702,14 +698,15 @@ const loadEditable = () => {
     };
     let shiftRequiresLunchOutAndIn = _get(editPayload.value, 'shift.require_lunch_time_in_and_out', false);
     let shiftIsFlexible = _get(editPayload.value, 'shift_schedule.is_flexible', false);
+    let shiftHasLunchBreak = _get(editPayload.value, 'shift_schedule.has_lunch_break', false);
     editableAttendanceDateTimePickers.value = [];
-    attendanceShiftRequiresLunchOutAndIn.value = shiftRequiresLunchOutAndIn && !shiftIsFlexible;
+    attendanceShiftRequiresLunchOutAndIn.value = shiftRequiresLunchOutAndIn && !shiftIsFlexible && shiftHasLunchBreak;
     
-    attendanceWorkPeriod.value = _get(editPayload.value, 'shift_schedule.work_start', '') + ' - ' + _get(editPayload.value, 'shift_schedule.work_end', '') + '(' + _get(editPayload.value, 'shift_schedule.timezone', '')  + ')';
-    attendanceLunchPeriod.value = attendanceShiftRequiresLunchOutAndIn.value ? (_get(editPayload.value, 'shift_schedule.lunch_break_start', '') + ' - ' + _get(editPayload.value, 'shift_schedule.lunch_break_end', '')) : '';
-    attendanceTotalSchedule.value = _get(editPayload.value, 'shift_schedule.total_work_hours_with_breaks', '');
+    scheduleWorkPeriod.value = _get(editPayload.value, 'shift_schedule.work_start', '') + ' - ' + _get(editPayload.value, 'shift_schedule.work_end', '') + '(' + _get(editPayload.value, 'shift_schedule.timezone', '')  + ')';
+    scheduleLunchPeriod.value = attendanceShiftRequiresLunchOutAndIn.value ? (_get(editPayload.value, 'shift_schedule.lunch_break_start', '') + ' - ' + _get(editPayload.value, 'shift_schedule.lunch_break_end', '')) : '';
+    scheduleTotalDuration.value = _get(editPayload.value, 'shift_schedule.total_work_hours_with_breaks', '');
     attendanceWeekday.value = _get(editPayload.value, 'shift_schedule.week_day_name', '');
-    attendanceIsFlexibleSchedule.value = shiftIsFlexible ? 'Yes' : 'No';
+    scheduleIsFlexible.value = shiftIsFlexible ? 'Yes' : 'No';
 
     attendanceDate.value = _get(editPayload.value, 'date', '');
     attendanceFirstIn.value = _get(editPayload.value, 'first_in', '');
