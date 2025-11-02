@@ -17,7 +17,7 @@
                             <InputWithIcon :icon="'mdi:calendar-outline'" :id="'date_to'" readonly v-model="formStore.filters.attendanceDateTo" :size="'md'" class="w-full" :override="{font_family_class: 'font-sans'}" :disabled="disableActions" />
                         </div>
                         <div>
-                            <InputLabel :size="'sm'" value="Group" />
+                            <InputLabel :size="'sm'" value="Employee Group" />
                             <MultiSelect :key="employeeGroupOptionsKey" glint drop-shadow :selection-max-viewable-line="15" :size="'md'" :options="employeeGroupOptions" :disabled="disableActions" :icon="'tdesign:component-checkbox'"/>
                         </div>
                         <div>

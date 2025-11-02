@@ -15,7 +15,7 @@
                     <MultiSelect :key="employmentTypeOptionsKey" glint drop-shadow :selection-max-viewable-line="15" :size="'md'" :options="employmentTypeOptions" :disabled="disableActions" :icon="'tdesign:component-checkbox'"/>
                 </div>
                 <div>
-                    <InputLabel :size="'sm'" value="Group" />
+                    <InputLabel :size="'sm'" value="Employee Group" />
                     <MultiSelect :key="employeeGroupOptionsKey" glint drop-shadow :selection-max-viewable-line="15" :size="'md'" :options="employeeGroupOptions" :disabled="disableActions" :icon="'tdesign:component-checkbox'"/>
                 </div>
                 <div>
