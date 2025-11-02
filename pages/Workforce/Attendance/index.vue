@@ -635,15 +635,12 @@ const attendanceLunchOut = ref('');
 const attendanceLunchIn = ref('');
 const attendanceLastOut = ref('');
 
-const editableAttendanceDateTimePickers = ref([]);
-
 const resetEditable = () => {
     stagedAttendance.value = {
         'id': null,
         'ulid': null,
     };
     editPayload.value = {};
-    editableAttendanceDateTimePickers.value = [];
     scheduleWorkPeriod.value = '';
     scheduleLunchPeriod.value = '';
     scheduleTotalDuration.value = '';
@@ -699,7 +696,7 @@ const loadEditable = () => {
     let shiftRequiresLunchOutAndIn = _get(editPayload.value, 'shift.require_lunch_time_in_and_out', false);
     let shiftIsFlexible = _get(editPayload.value, 'shift_schedule.is_flexible', false);
     let shiftHasLunchBreak = _get(editPayload.value, 'shift_schedule.has_lunch_break', false);
-    editableAttendanceDateTimePickers.value = [];
+
     attendanceShiftRequiresLunchOutAndIn.value = shiftRequiresLunchOutAndIn && !shiftIsFlexible && shiftHasLunchBreak;
     
     scheduleWorkPeriod.value = _get(editPayload.value, 'shift_schedule.work_start', '') + ' - ' + _get(editPayload.value, 'shift_schedule.work_end', '') + '(' + _get(editPayload.value, 'shift_schedule.timezone', '')  + ')';
