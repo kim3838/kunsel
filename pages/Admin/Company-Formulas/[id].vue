@@ -96,7 +96,7 @@
                         <template v-slot:cell.actions="{cell,slot, headerIndex, rowIndex}">
                             <div class="h-full mx-0.5 space-x-0.5 w-full flex items-center">
                                 <Button type="button" :variant="'outline'" :icon="'mdi:delete-forever'" :size="slot.buttonSize" @click="deleteRow(rowIndex)"/>
-                                <Button type="button" :variant="'outline'" :icon="'ic:baseline-cloud-sync'" :size="slot.buttonSize" @click="cell.sub_row.settings = cell.default_settings"></Button>
+                                <Button type="button" :variant="'outline'" :icon="'ic:baseline-cloud-sync'" :size="slot.buttonSize" @click="confirmSyncWithDefaultSetting(cell)"></Button>
                                 <Button type="button" :variant="'outline'" :icon="'ri:formula'" :size="slot.buttonSize" @click="viewFormulaSettings(cell)"></Button>
                             </div>
                         </template>
@@ -114,10 +114,6 @@
                             </div>
                         </template>
                     </DataTable>
-
-                    <div v-if="false">
-                        formulaSettingsData: {{formulaSettingsData}}<br>
-                    </div>
                 </div>
 
             </div>
@@ -127,7 +123,7 @@
 
 <script setup lang="ts">
 import type {CompanyFormulaSetting} from "@/public/js/types/formula";
-import type {TableHeaderT} from "@/public/js/types/data";
+import type {TableHeaderT, TableRowT} from "@/public/js/types/data";
 import type {MultiSelectPaginatedInstance} from "@/public/js/types/component-instance";
 
 useLayout().setNavigationMode('solid');
@@ -247,6 +243,24 @@ const formBody = computed(() => {
 
     return formulaAssignments;
 });
+
+const confirmSyncWithDefaultSetting = async (cell: TableRowT) => {
+
+    cell = cell as CompanyFormulaSetting;
+
+    useNuxtApp().$promptStore.setPrompt({
+        resetable: true,
+        icon: null,
+        title: 'Confirm Action',
+        message: `Confirm sync default formula settings for ${cell.formula_name}?`,
+        action: {
+            callback: async () => {
+                cell.sub_row.settings = cell.default_settings
+            },
+            label: 'Yes'
+        }
+    });
+}
 
 const confirmFormSubmit = () => {
     useNuxtApp().$promptStore.setPrompt({
