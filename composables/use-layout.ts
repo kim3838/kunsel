@@ -315,6 +315,13 @@ export const useLayout = () => {
                         to: '/policies/shifts',
                         route_active: 'policies-shifts'
                     },
+                    {
+                        key: 'policies/holiday',
+                        type: 'link',
+                        title: 'Holidays',
+                        to: '/policies/holiday',
+                        route_active: 'policies-holiday'
+                    },
                 ]
             }, {
                 key: 'settings',
