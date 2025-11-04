@@ -493,6 +493,7 @@ const datePickers = ref([
         type: 'date',
         selectedCallback: (payload: {value: string}) => {
             holidayEditable.date = payload.value;
+            holidayEditable.effective_date = payload.value;
         }
     },
     {
