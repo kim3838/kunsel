@@ -21,6 +21,7 @@
                                         <tr><td class="font-semibold">Code</td><td class="pl-2">{{ _get(resolvedShift, 'code', null) }}</td></tr>
                                         <tr><td class="font-semibold">Name</td><td class="pl-2">{{ _get(resolvedShift, 'name', null) }}</td></tr>
                                         <tr><td class="font-semibold">Type</td><td class="pl-2">{{ _get(resolvedShift, 'type.text', null) }}</td></tr>
+                                        <tr><td class="font-semibold">Holiday Policy</td><td class="pl-2">{{ _get(resolvedShift, 'holiday_policy.text', null) }}</td></tr>
                                         <tr><td class="font-semibold">Work Start Grace</td><td class="pl-2">{{ _get(resolvedShift, 'work_start_grace_time_readable', null) }}</td></tr>
                                         <tr><td class="font-semibold">Requires Lunch out/in</td><td class="pl-2">{{ _get(resolvedShift, 'require_lunch_time_in_and_out', false) ? 'Yes' : 'No' }}</td></tr>
                                         <tr v-if="_get(resolvedShift, 'require_lunch_time_in_and_out', false)">
@@ -70,6 +71,14 @@
                             <Input :disabled="disableActions" :size="'md'" v-model="shiftName"/>
                         </div>
                     </div>
+
+                    <div class="grid gap-2 grid-cols-3 sm:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
+                        <div>
+                            <InputLabel :size="'sm'" value="Holiday Policy"/>
+                            <SingleSelect :disabled="disableActions" value-persist drop-shadow :size="'md'" :options="shiftHolidayPolicyOptions"/>
+                        </div>
+                    </div>
+
                     <div class="grid gap-2 grid-cols-3 sm:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
                         <div>
                             <InputLabel :size="'sm'" value="Work Start Grace Time"/>
@@ -200,22 +209,25 @@
 <script setup lang="ts">
 import type {TableHeaderT} from "@/public/js/types/data";
 import type {ShiftT, ShiftScheduleT} from "@/public/js/types/shift";
-
+import type {StringEnumInterface} from "@/public/js/common/type";
 import {storeToRefs} from "pinia";
-
 
 useLayout().setNavigationMode('solid');
 const route = useRoute();
 const {isAuthenticated} = useAuth();
-const {$authStore, $associationStore, $moment} = useNuxtApp();
-const timeDifference = useNuxtApp().$timeDifference as (start: string | null, end: string | null) => string | null;
+const nuxtApp = useNuxtApp();
+const $enumerableOption = nuxtApp.$enumerableOption as (enumerable: StringEnumInterface, value: number) => {
+    text: string,
+    value: number
+};
+const timeDifference = nuxtApp.$timeDifference as (start: string | null, end: string | null) => string | null;
 const {
     updatedAssociatedCompanyFlag
-} = storeToRefs($associationStore);
+} = storeToRefs(nuxtApp.$associationStore);
 const {
     selectedAssociatedCompanyId,
     selectedAssociatedCompany
-} = storeToRefs($authStore);
+} = storeToRefs(nuxtApp.$authStore);
 
 watch(updatedAssociatedCompanyFlag, (newValue) => {
     if(isAuthenticated.value && selectedAssociatedCompanyId.value){
@@ -250,10 +262,18 @@ const shiftName = ref('');
 const shiftTypeOptions = reactive({
     search: '',
     selection: [
-        {text : 'Regular', value: SHIFT_TYPE.REGULAR},
-        {text : 'Graveyard', value: SHIFT_TYPE.GRAVEYARD},
+        $enumerableOption(SHIFT_TYPE_NAME, SHIFT_TYPE.REGULAR as number),
+        $enumerableOption(SHIFT_TYPE_NAME, SHIFT_TYPE.GRAVEYARD as number),
     ],
     selected: SHIFT_TYPE.REGULAR
+});
+const shiftHolidayPolicyOptions = reactive({
+    search: '',
+    selection: [
+        $enumerableOption(SHIFT_HOLIDAY_POLICY_NAME, SHIFT_HOLIDAY_POLICY.DAY_OFF as number),
+        $enumerableOption(SHIFT_HOLIDAY_POLICY_NAME, SHIFT_HOLIDAY_POLICY.ATTENDANCE_REQUIRED as number),
+    ],
+    selected: SHIFT_HOLIDAY_POLICY.DAY_OFF
 });
 const shiftWorkStartGraceTime = ref('0');
 const shiftRequireLunchTimeInAndOut = ref(0);
@@ -336,6 +356,7 @@ const fetchShift = async () => {
             shiftCode.value = _get(response, '_data.values.shift.code', '');
             shiftName.value = _get(response, '_data.values.shift.name', '');
             shiftTypeOptions.selected = _get(response, '_data.values.shift.type.value', null);
+            shiftHolidayPolicyOptions.selected = _get(response, '_data.values.shift.holiday_policy.value', null);
             shiftWorkStartGraceTime.value = _get(response, '_data.values.shift.work_start_grace_time', 0);
             shiftRequireLunchTimeInAndOut.value = _get(response, '_data.values.shift.require_lunch_time_in_and_out', 0);
             shiftLunchStartGraceTime.value = _get(response, '_data.values.shift.lunch_start_grace_time', 0);
@@ -490,6 +511,7 @@ const formBody = computed(() => {
         'code': shiftCode.value,
         'name': shiftName.value,
         'type': shiftTypeOptions.selected,
+        'holiday_policy': shiftHolidayPolicyOptions.selected,
         'work_start_grace_time': shiftWorkStartGraceTime.value,
         'require_lunch_time_in_and_out': shiftRequireLunchTimeInAndOut.value,
         ...(shiftRequireLunchTimeInAndOut.value == 1 ? {

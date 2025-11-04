@@ -91,6 +91,9 @@
                         <template v-slot:cell.type="{cell,slot}">
                             <div class="p-[3px]">{{cell.type.text}}</div>
                         </template>
+                        <template v-slot:cell.holiday_policy="{cell,slot}">
+                            <div class="p-[3px]">{{cell.holiday_policy.text}}</div>
+                        </template>
                         <template v-slot:cell.is_default="{cell, slot, scrollReference}">
                             <div class="flex justify-center">
                                 <NonModelCheckBox disabled :size="slot.checkBoxSize" :checked="cell.is_default" ></NonModelCheckBox>
@@ -155,6 +158,7 @@ const shiftsHeaders = reactive<TableHeaderT[]>([
     { text: 'Code', value: 'code'},
     { text: 'Name', value: 'name'},
     { text: 'Type', value: 'type'},
+    { text: 'Holiday Policy', value: 'holiday_policy'},
     { text: 'Work Start Grace', value: 'work_start_grace_time', alignData: 'left'},
     { text: 'Require Lunch Out/In', value: 'require_lunch_time_in_and_out'},
     { text: 'Lunch Start Grace', value: 'lunch_start_grace_time', alignData: 'left'},
