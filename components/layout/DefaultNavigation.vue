@@ -135,7 +135,7 @@
                         :to="navigation.to"
                         :icon="navigation.icon"
                         :active-style="`ripple`"
-                        :active="isRouteActive(navigation.route_active)">
+                        :active="isRouteActive(navigation.route_active) || isRoutePathActive(navigation.path_active)">
                         {{navigation.title}}
                     </NavLink>
 

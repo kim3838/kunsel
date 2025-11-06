@@ -248,7 +248,8 @@ export const useLayout = () => {
                         title: 'Employees',
                         //icon: 'mdi:account-multiple',
                         to: '/workforce/employees',
-                        route_active: 'workforce-employees'
+                        route_active: 'workforce-employees',
+                        path_active: '/workforce/employees',
                     },
                     {
                         key: 'workforce/employee-groups',
@@ -285,7 +286,8 @@ export const useLayout = () => {
                         type: 'link',
                         title: 'Attendance',
                         to: '/workforce/attendance',
-                        route_active: 'workforce-attendance'
+                        route_active: 'workforce-attendance',
+                        path_active: '/workforce/attendance',
                     },
                 ]
             },{
@@ -313,7 +315,8 @@ export const useLayout = () => {
                         type: 'link',
                         title: 'Shifts',
                         to: '/policies/shifts',
-                        route_active: 'policies-shifts'
+                        route_active: 'policies-shifts',
+                        path_active: '/policies/shifts',
                     },
                     {
                         key: 'policies/holiday',
@@ -399,26 +402,30 @@ export const useLayout = () => {
                             title: 'Accounts',
                             //icon: 'ic:baseline-all-inbox',
                             to: '/admin/accounts',
-                            route_active: 'admin-accounts'
+                            route_active: 'admin-accounts',
+                            path_active: '/admin/accounts',
                         },{
                             key: 'admin/companies',
                             type: 'link',
                             title: 'Companies',
                             //icon: 'ic:baseline-curtains-closed',
                             to: '/admin/companies',
-                            route_active: 'admin-companies'
+                            route_active: 'admin-companies',
+                            path_active: '/admin/companies',
                         },{
                             key: 'admin/formulas',
                             type: 'link',
                             title: 'Formulas',
                             to: '/admin/formulas',
-                            route_active: 'admin-formulas'
+                            route_active: 'admin-formulas',
+                            path_active: '/admin/formulas',
                         },{
                             key: 'admin/jsonpresets',
                             type: 'link',
                             title: 'Json Presets',
                             to: '/admin/jsonpresets',
-                            route_active: 'admin-jsonpresets'
+                            route_active: 'admin-jsonpresets',
+                            path_active: '/admin/jsonpresets',
                         },
                         {
                             key: 'admin/users',
@@ -426,7 +433,8 @@ export const useLayout = () => {
                             title: 'Users',
                             //icon: 'ic:baseline-recent-actors',
                             to: '/admin/users',
-                            route_active: 'admin-users'
+                            route_active: 'admin-users',
+                            path_active: '/admin/users',
                         },
                     ]: []),
                     ...(!userIsSuperAdmin.value ? [
@@ -444,7 +452,8 @@ export const useLayout = () => {
                             title: 'Companies',
                             //icon: 'ic:baseline-curtains-closed',
                             to: '/admin/associated-companies',
-                            route_active: 'admin-associated-companies'
+                            route_active: 'admin-associated-companies',
+                            path_active: '/admin/associated-companies',
                         },
                         {
                             key: 'admin/associated-users',
@@ -452,7 +461,8 @@ export const useLayout = () => {
                             title: 'Users',
                             //icon: 'ic:baseline-recent-actors',
                             to: '/admin/associated-users',
-                            route_active: 'admin-associated-users'
+                            route_active: 'admin-associated-users',
+                            path_active: '/admin/associated-users',
                         },
                     ]: []),
                 ]
