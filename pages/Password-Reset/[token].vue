@@ -79,8 +79,8 @@ let password = ref(null);
 const data = reactive({
     email: route.query.email as string,
     token: route.params.token as string,
-    password: "password",
-    password_confirmation: "password",
+    password: "",
+    password_confirmation: "",
 });
 
 //On navigate, focus on identifier input
