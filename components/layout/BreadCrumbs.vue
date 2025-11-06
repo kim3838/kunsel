@@ -60,7 +60,8 @@ const breadcrumbs = computed((): Breadcrumb[] => {
         // In your case, the ID "01K3DDQ4SJ382NZ12C4AHQSVTK" should be skipped
         const isParameter = /^[A-Z0-9]{26}$/.test(segment) || // ULID pattern
             /^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/.test(segment) || // UUID pattern
-            /^\d+$/.test(segment); // Numeric ID
+            /^\d+$/.test(segment) || // Numeric ID
+            /^[a-f0-9]{64}$/.test(segment); // Hash token pattern (64 hex characters)
 
         if (!isParameter) {
             // Capitalize and format the segment name
