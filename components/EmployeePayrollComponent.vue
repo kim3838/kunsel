@@ -1,7 +1,7 @@
 <template>
     <div>
         <PayrollComponentAssignmentModal
-            v-model:creatingOrEditing="creatingOrEditingPayrollComponent"
+            v-model:creatingOrEditing="proxyCreatingOrEditing"
             v-model:employeePayload="employeePayload"
             v-model:editPayloadIndex="editPayrollComponentPayloadIndex"
             v-model:editPayload="payrollComponentEditPayload"
@@ -284,6 +284,10 @@ watch(updatedAssociatedCompanyFlag, async (newValue) => {
 });
 
 const props = defineProps({
+    creatingOrEditing: {
+        type: Boolean,
+        default: false,
+    },
     childComponentEmployeePayload: {
         type: Object,
         default: () => {
@@ -325,12 +329,21 @@ const props = defineProps({
 const employeePayload = toRef(props, 'childComponentEmployeePayload');
 
 const emit = defineEmits([
-    'update:creatingOrEditingPayrollComponent',
+    'update:creatingOrEditing',
     'update:payrollComponentsPending',
     'update:employeeCompensationData',
     'update:employeeDeductionData',
     'update:employeeIncomeTaxData',
 ]);
+
+const proxyCreatingOrEditing = computed({
+    get() {
+        return props.creatingOrEditing;
+    },
+    set(newValue) {
+        emit("update:creatingOrEditing", newValue);
+    }
+});
 
 const payFrequencySelection = ref([]);
 const fetchPayFrequencySelection = async () => {
@@ -370,13 +383,12 @@ const employeeUlid = computed(() => {
     return props.childComponentEmployeePayload.ulid;
 });
 
-const creatingOrEditingPayrollComponent = ref(false);
 const deletingPayrollComponent = ref(false);
 const creatingOrEditingPayrollComponentFormulable = ref<number | undefined>(undefined);
 const editPayrollComponentPayloadIndex = ref(-1);
 const payrollComponentEditPayload = ref({});
 const createOrEditPayrollComponent = (payrollComponent: number, payrollComponentAttributes = {}, rowIndex = -1) => {
-    creatingOrEditingPayrollComponent.value = true;
+    proxyCreatingOrEditing.value = true;
     if(creatingEmployee.value){
         editPayrollComponentPayloadIndex.value = rowIndex;
     }
@@ -429,10 +441,10 @@ const employeeCompensationExecute = async () => {
 }
 
 const disableEmployeeCompensationActions = computed(() => {
-    return anyOfThePayrollComponentPending.value || creatingOrEditingPayrollComponent.value || deletingPayrollComponent.value || props.disableActions;
+    return anyOfThePayrollComponentPending.value || proxyCreatingOrEditing.value || deletingPayrollComponent.value || props.disableActions;
 });
 const disableEmployeeCompensationDataTable = computed(() => {
-    return anyOfThePayrollComponentPending.value || creatingOrEditingPayrollComponent.value || deletingPayrollComponent.value || props.disableActions;
+    return anyOfThePayrollComponentPending.value || proxyCreatingOrEditing.value || deletingPayrollComponent.value || props.disableActions;
 });
 
 //Employee Deduction DataTable
@@ -468,10 +480,10 @@ const employeeDeductionExecute = async () => {
 }
 
 const disableEmployeeDeductionActions = computed(() => {
-    return anyOfThePayrollComponentPending.value || creatingOrEditingPayrollComponent.value || deletingPayrollComponent.value || props.disableActions;
+    return anyOfThePayrollComponentPending.value || proxyCreatingOrEditing.value || deletingPayrollComponent.value || props.disableActions;
 });
 const disableEmployeeDeductionDataTable = computed(() => {
-    return anyOfThePayrollComponentPending.value || creatingOrEditingPayrollComponent.value || deletingPayrollComponent.value || props.disableActions;
+    return anyOfThePayrollComponentPending.value || proxyCreatingOrEditing.value || deletingPayrollComponent.value || props.disableActions;
 })
 
 //Employee Income Tax DataTable
@@ -507,10 +519,10 @@ const employeeIncomeTaxExecute = async () => {
 }
 
 const disableEmployeeIncomeTaxActions = computed(() => {
-    return anyOfThePayrollComponentPending.value || creatingOrEditingPayrollComponent.value || deletingPayrollComponent.value || props.disableActions;
+    return anyOfThePayrollComponentPending.value || proxyCreatingOrEditing.value || deletingPayrollComponent.value || props.disableActions;
 });
 const disableEmployeeIncomeTaxDataTable = computed(() => {
-    return anyOfThePayrollComponentPending.value || creatingOrEditingPayrollComponent.value || deletingPayrollComponent.value || props.disableActions;
+    return anyOfThePayrollComponentPending.value || proxyCreatingOrEditing.value || deletingPayrollComponent.value || props.disableActions;
 });
 
 //Fetch all employee payroll components
@@ -680,7 +692,7 @@ const payrollComponentResolved = (component, attributes, rowIndex = -1) => {
 };
 
 const resetPayrollComponents = () => {
-    creatingOrEditingPayrollComponent.value = false;
+    proxyCreatingOrEditing.value = false;
     employeeCompensationData.value = [];
     employeeDeductionData.value = [];
     employeeIncomeTaxData.value = [];

@@ -1,7 +1,7 @@
 <template>
     <div>
         <EmploymentProfileModal
-            v-model:creatingOrEditing="creatingOrEditing"
+            v-model:creatingOrEditing="proxyCreatingOrEditing"
             v-model:employeePayload="employeePayload"
             v-model:editPayloadIndex="editIndex"
             v-model:editPayload="editPayload"
@@ -105,6 +105,10 @@ import {storeToRefs} from "pinia";
 import type {TableHeaderT} from "@/public/js/types/data";
 
 const props = defineProps({
+    creatingOrEditing: {
+        type: Boolean,
+        default: false,
+    },
     childComponentEmployeePayload: {
         type: Object,
         default: () => {
@@ -141,6 +145,15 @@ const emit = defineEmits([
     'resolved'
 ]);
 
+const proxyCreatingOrEditing = computed({
+    get() {
+        return props.creatingOrEditing;
+    },
+    set(newValue) {
+        emit("update:creatingOrEditing", newValue);
+    }
+});
+
 watch(() => props.childComponentEmployeePayload, async (employeePayload) => {
 
     if(props.isolated && Boolean(employeePayload.id) && props.employmentProfilesPending){
@@ -160,13 +173,12 @@ const employeeUlid = computed(() => {
     return props.childComponentEmployeePayload.ulid;
 });
 
-const creatingOrEditing = ref(false);
 const deleting = ref(false);
 const editIndex = ref(-1);
 const editPayload = ref({});
 
 const createOrEdit = (attributes = {}, rowIndex = -1) => {
-    creatingOrEditing.value = true;
+    proxyCreatingOrEditing.value = true;
     if(creatingEmployee.value){
         editIndex.value = rowIndex;
     }
@@ -225,10 +237,10 @@ if(!props.isolated && !creatingEmployee.value){
 }
 
 const disableActions = computed(() => {
-    return employmentProfilesPending.value || creatingOrEditing.value || deleting.value || props.disableActions;
+    return employmentProfilesPending.value || proxyCreatingOrEditing.value || deleting.value || props.disableActions;
 });
 const disableDataTable = computed(() => {
-    return employmentProfilesPending.value || creatingOrEditing.value || deleting.value || props.disableActions;
+    return employmentProfilesPending.value || proxyCreatingOrEditing.value || deleting.value || props.disableActions;
 });
 
 const deleteSelected = async () => {
@@ -300,7 +312,7 @@ const employmentProfileModalResolved = (attributes, rowIndex = -1) => {
 };
 
 const reset = () => {
-    creatingOrEditing.value = false;
+    proxyCreatingOrEditing.value = false;
     employmentProfilesData.value = [];
     selectedEmploymentProfiles.value = [];
     editIndex.value = -1;

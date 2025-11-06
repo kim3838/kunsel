@@ -58,6 +58,7 @@
                                 v-show="!(employmentProfilesLoadingOverlay)"
                                 isolated
                                 ref="employeeEmploymentProfile"
+                                v-model:creating-or-editing="employmentProfileCreatingOrEditing"
                                 v-model:employment-profiles-pending="employmentProfilesPending"
                                 v-model:employment-profiles-data="employmentProfileData"
                                 v-model:child-component-employee-payload="stagedEmployee"
@@ -99,6 +100,7 @@
                                 v-show="!(payrollComponentsLoadingOverlay)"
                                 isolated
                                 ref="employeePayrollComponent"
+                                v-model:creating-or-editing="employeePayrollComponentCreatingOrEditing"
                                 v-model:payroll-components-pending="employeePayrollComponentsPending"
                                 v-model:child-component-employee-payload="stagedEmployee"
                                 v-model:employee-compensation-data="employeeCompensationData"
@@ -543,6 +545,7 @@ const payrollComponentsLoadingOverlayDimensionStyle = computed(() => {
     };
 });
 const employeePayrollComponentsPending = ref(false);
+const employeePayrollComponentCreatingOrEditing = ref(false);
 const employeeCompensationData = ref([]);
 const employeeDeductionData = ref([]);
 const employeeIncomeTaxData = ref([]);
@@ -591,6 +594,7 @@ const employmentProfilesLoadingOverlayDimensionStyle = computed(() => {
     };
 });
 const employmentProfilesPending = ref(false);
+const employmentProfileCreatingOrEditing = ref(false);
 const employmentProfileData = ref([]);
 
 const employmentProfileModalResolved = (data) => {

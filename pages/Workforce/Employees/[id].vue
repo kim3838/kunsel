@@ -261,6 +261,7 @@
                     <Suspense>
                         <EmploymentProfiles
                             ref="employeeEmploymentProfile"
+                            v-model:creating-or-editing="employeeEmploymentProfileCreatingOrEditing"
                             v-model:employment-profiles-pending="employmentProfilesPending"
                             v-model:employment-profiles-data="employmentProfiles"
                             v-model:child-component-employee-payload="childComponentEmployeePayload"
@@ -287,6 +288,7 @@
                     <Suspense>
                         <EmployeePayrollComponent
                             ref="employeePayrollComponent"
+                            v-model:creating-or-editing="employeePayrollComponentCreatingOrEditing"
                             v-model:payroll-components-pending="employeePayrollComponentsPending"
                             v-model:child-component-employee-payload="childComponentEmployeePayload"
                             v-model:employee-compensation-data="employeeCompensationData"
@@ -511,6 +513,14 @@ const maritalStatusOptions = reactive({
 const employeeBirthdate = ref('1990-01-01');
 
 //Employment Profiles
+const employeeEmploymentProfileCreatingOrEditing = ref(false);
+//Rebuild Date Pickers on Employment Profile Creating or Editing Modal Close
+watch(employeeEmploymentProfileCreatingOrEditing, async(value) => {
+    if(!value){
+        await nextTick();
+        await render(datePickers.value);
+    }
+});
 const employmentProfilesPending = ref(true);
 if(creatingEmployee){
     employmentProfilesPending.value = false;
@@ -595,6 +605,14 @@ watch(updatedAssociatedCompanyFlag, (newValue) => {
 });
 
 //Employee Payroll Components
+const employeePayrollComponentCreatingOrEditing = ref(false);
+//Rebuild Date Pickers on Payroll Components Creating or Editing Modal Close
+watch(employeePayrollComponentCreatingOrEditing, async(value) => {
+    if(!value){
+        await nextTick();
+        await render(datePickers.value);
+    }
+});
 const employeePayrollComponentsPending = ref(true);
 if(creatingEmployee){
     employeePayrollComponentsPending.value = false;
