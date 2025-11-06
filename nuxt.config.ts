@@ -7,7 +7,7 @@ export default defineNuxtConfig({
     app: {
         baseURL: "/",
         head: {
-            title: 'sn-f v3',
+            title: 'Kunsel',
             "meta": [
                 {"name": "viewport", "content": "width=device-width, initial-scale=1"},
                 {"charset": "utf-8"}
@@ -178,5 +178,5 @@ export default defineNuxtConfig({
         port: 3000,
     },
 
-    compatibilityDate: '2025-10-07'
+    compatibilityDate: '2025-11-06'
 })
