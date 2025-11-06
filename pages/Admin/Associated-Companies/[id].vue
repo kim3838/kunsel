@@ -53,6 +53,8 @@
 
 const {fetchAssociatedCompanies, storeAssociatedCompanies} = useAssociation();
 const {timezoneSelections} = useCommon();
+
+useHead({titleTemplate: (titleChunk) => {return `${titleChunk} - Companies`}});
 useLayout().setNavigationMode('solid', 'Associated-Companies/[id].vue');
 
 const route = useRoute();

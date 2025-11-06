@@ -121,6 +121,7 @@ import type {DataTableMeta, TableHeaderT, TableRowT} from "@/public/js/types/dat
 
 import {storeToRefs} from "pinia";
 
+useHead({titleTemplate: (titleChunk) => {return `${titleChunk} - Shifts`}});
 definePageMeta({middleware: ['auth', 'admin-of-selected-company']});
 useLayout().setNavigationMode('solid');
 

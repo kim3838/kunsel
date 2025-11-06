@@ -52,6 +52,8 @@
 <script setup lang="ts">
 
 const {fetchAssociatedCompanies, storeAssociatedCompanies} = useAssociation();
+
+useHead({titleTemplate: (titleChunk) => {return `${titleChunk} - Companies`}});
 useLayout().setNavigationMode('solid', 'Companies/[id].vue');
 
 const route = useRoute();

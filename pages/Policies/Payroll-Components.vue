@@ -11,6 +11,7 @@
 </template>
 
 <script setup lang="ts">
+useHead({titleTemplate: (titleChunk) => {return `${titleChunk} - Payroll Components`}});
 definePageMeta({middleware: ['auth', 'admin-of-selected-company']});
 useLayout().setNavigationMode('solid');
 </script>

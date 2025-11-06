@@ -70,6 +70,7 @@
 </template>
 
 <script setup lang="ts">
+useHead({titleTemplate: (titleChunk) => {return `${titleChunk} - Login`}});
 definePageMeta({middleware: 'guest'});
 useLayout().setNavigationMode('solid');
 const clientReadyState = useClientReadyState();

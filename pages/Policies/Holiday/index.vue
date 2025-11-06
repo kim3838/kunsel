@@ -198,6 +198,7 @@ import type {DataTableMeta, TableHeaderT, TableRowT} from "@/public/js/types/dat
 import type {EnumOption, EnumSelection, StringEnumInterface} from "@/public/js/common/type";
 import {storeToRefs} from "pinia";
 
+useHead({titleTemplate: (titleChunk) => {return `${titleChunk} - Holidays`}});
 definePageMeta({middleware: ['auth', 'admin-of-selected-company']});
 useLayout().setNavigationMode('solid');
 

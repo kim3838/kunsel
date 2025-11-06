@@ -107,6 +107,7 @@
 
 <script setup lang="ts">
 
+useHead({titleTemplate: (titleChunk) => {return `${titleChunk} - Json Presets`}});
 useLayout().setNavigationMode('solid');
 
 const route = useRoute();

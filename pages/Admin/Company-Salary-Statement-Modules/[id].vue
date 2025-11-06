@@ -140,6 +140,7 @@
 <script setup lang="ts">
 import type {Sequenceable, TableHeaderT, TableRowT} from "@/public/js/types/data";
 
+useHead({titleTemplate: (titleChunk) => {return `${titleChunk} - Company Salary Statement Modules`}});
 useLayout().setNavigationMode('solid');
 const route = useRoute();
 const nuxtApp = useNuxtApp();

@@ -61,6 +61,7 @@
 </template>
 
 <script setup lang="ts">
+useHead({titleTemplate: (titleChunk) => {return `${titleChunk} - Password Reset`}});
 definePageMeta({middleware: 'guest'});
 useLayout().setNavigationMode('solid');
 const clientReadyState = useClientReadyState();

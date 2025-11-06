@@ -322,6 +322,7 @@ import type {TableHeaderT} from "@/public/js/types/data";
 import type {SelectionOptionsT} from "@/public/js/types/form";
 import type {EmployeePayrollComponentT, EmploymentProfileT} from "@/public/js/types/employee";
 
+useHead({titleTemplate: (titleChunk) => {return `${titleChunk} - Employees`}});
 useLayout().setNavigationMode('solid', 'Employees/[id].vue');
 
 const {render} = dateTimePicker();

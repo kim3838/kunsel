@@ -142,6 +142,7 @@
 <script setup lang="ts">
 import type {SelectDataType} from "@/public/js/types/form";
 
+useHead({titleTemplate: (titleChunk) => {return `${titleChunk} - Formulas`}});
 useLayout().setNavigationMode('solid');
 
 const route = useRoute();

@@ -30,6 +30,7 @@
 </template>
 
 <script setup lang="ts">
+useHead({titleTemplate: (titleChunk) => {return `${titleChunk} - Accounts`}});
 useLayout().setNavigationMode('solid', 'Accounts/[id].vue');
 
 const route = useRoute();

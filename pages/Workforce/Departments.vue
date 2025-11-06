@@ -147,6 +147,7 @@
 import type {TableHeaderT, TableRowT} from "@/public/js/types/data";
 import {storeToRefs} from "pinia";
 
+useHead({titleTemplate: (titleChunk) => {return `${titleChunk} - Departments`}});
 definePageMeta({middleware: ['auth', 'admin-of-selected-company']});
 useLayout().setNavigationMode('solid', 'Departments.vue');
 

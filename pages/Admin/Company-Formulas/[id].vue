@@ -126,6 +126,7 @@ import type {CompanyFormulaSetting} from "@/public/js/types/formula";
 import type {TableHeaderT, TableRowT} from "@/public/js/types/data";
 import type {MultiSelectPaginatedInstance} from "@/public/js/types/component-instance";
 
+useHead({titleTemplate: (titleChunk) => {return `${titleChunk} - Company Formula`}});
 useLayout().setNavigationMode('solid');
 const route = useRoute();
 const company = ref(null);

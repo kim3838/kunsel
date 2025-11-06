@@ -148,6 +148,7 @@ import {storeToRefs} from "pinia";
 import type {TableHeaderT} from "@/public/js/types/data";
 import type {CompanyFormulaSetting} from "@/public/js/types/formula";
 
+useHead({titleTemplate: (titleChunk) => {return `${titleChunk} - Formula Settings`}});
 definePageMeta({middleware: ['auth', 'admin-of-selected-company']});
 useLayout().setNavigationMode('solid', 'FormulaSettings.vue');
 

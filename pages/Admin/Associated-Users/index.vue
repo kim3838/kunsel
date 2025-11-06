@@ -112,6 +112,7 @@
 <script setup lang="ts">
 import type {DataTableMeta, TableHeaderT, TableRowT} from "@/public/js/types/data";
 
+useHead({titleTemplate: (titleChunk) => {return `${titleChunk} - Users`}});
 definePageMeta({middleware: ['auth', 'admin-in-any-company']});
 useLayout().setNavigationMode('solid');
 const user = userState();

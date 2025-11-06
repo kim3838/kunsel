@@ -190,6 +190,7 @@
 <script setup lang="ts">
 import type {BrowserSessionT} from "@/public/js/common/type";
 
+useHead({titleTemplate: (titleChunk) => {return `${titleChunk} - Account Settings`}});
 definePageMeta({middleware: 'auth'});
 useLayout().setNavigationMode('solid', 'Profile.vue');
 

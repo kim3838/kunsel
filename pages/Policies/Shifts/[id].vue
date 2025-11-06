@@ -212,6 +212,7 @@ import type {ShiftT, ShiftScheduleT} from "@/public/js/types/shift";
 import type {StringEnumInterface} from "@/public/js/common/type";
 import {storeToRefs} from "pinia";
 
+useHead({titleTemplate: (titleChunk) => {return `${titleChunk} - Shifts`}});
 useLayout().setNavigationMode('solid');
 const route = useRoute();
 const {isAuthenticated} = useAuth();

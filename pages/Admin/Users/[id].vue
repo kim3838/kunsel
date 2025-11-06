@@ -94,6 +94,7 @@
 
 import type {TableHeaderT} from "@/public/js/types/data";
 
+useHead({titleTemplate: (titleChunk) => {return `${titleChunk} - Users`}});
 useLayout().setNavigationMode('solid', 'Associated-Users/[id].vue');
 
 const route = useRoute();

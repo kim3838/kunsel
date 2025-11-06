@@ -165,6 +165,7 @@ import type {TableHeaderT, TableRowPayloadT, TableRowT, TableSupHeaderT, TableSu
 import type {EmployeePreImportT} from "@/public/js/types/import";
 import {storeToRefs} from "pinia";
 
+useHead({titleTemplate: (titleChunk) => {return `${titleChunk} - Import Employees`}});
 definePageMeta({middleware: ['auth', 'admin-of-selected-company']});
 useLayout().setNavigationMode('solid');
 
