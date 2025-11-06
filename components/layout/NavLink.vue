@@ -2,7 +2,7 @@
     <NuxtLink
         :to="to"
         :style="{'text-shadow': navigationTextShadow, 'font-family': fontFamily}"
-        class="relative box-border inline-flex items-center px-2 focus:outline-none"
+        class="relative box-border inline-flex items-center px-2 focus:outline-none rounded-[2px]"
         :class="[classes, headerFontClass, 'nav-link']">
         <Icon class="flex-none mr-1" :class="[iconClass]" v-if="icon" :name="icon" />
         <slot></slot>

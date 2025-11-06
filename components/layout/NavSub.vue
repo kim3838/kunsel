@@ -4,7 +4,7 @@
         tabindex="0"
         :style="{'text-shadow': navigationTextShadow, 'font-family': fontFamily}"
         :class="[classes]"
-        class="nav relative inline-flex items-center h-full px-2 py-1 cursor-pointer focus:outline-none">
+        class="nav relative inline-flex items-center h-full px-2 py-1 cursor-pointer focus:outline-none rounded-[2px]">
         <Icon v-if="icon" :name="icon" :class="[iconClass]" class="mr-1" />
         <span :class="[headerFontClass]">{{title}}</span>
         <Icon class="flex-none" :class="[dropDownIconClass]" :name="navHeaderIcon"/>
@@ -21,6 +21,7 @@ const {
 const {
     hexAlpha,
     accent: accentColor,
+    lining: liningColor,
 } = storeToRefs($themeStore);
 
 const props = defineProps({
@@ -118,7 +119,7 @@ const dropDownIconClass = computed(() => {
 </script>
 <style scoped>
 .nav-active{
-    background-color: v-bind(accentColor70);
+    border: 1px dashed v-bind(liningColor);
 }
 
 .nav{
