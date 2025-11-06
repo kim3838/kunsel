@@ -70,10 +70,10 @@
                             </div>
                         </template>
                         <template v-slot:cell.work_hour="{cell,slot}">
-                            <div class="p-[3px]">{{cell.work_hour_type.text}}</div>
+                            <div class="p-[3px]">{{cell.work_hour_type?.text}}</div>
                         </template>
                         <template v-slot:cell.hourly_rate="{cell,slot}">
-                            <div class="p-[3px]">{{cell.hourly_rate_type.text}}</div>
+                            <div class="p-[3px]">{{cell.hourly_rate_type?.text}}</div>
                         </template>
                         <template v-slot:cell.hourly_rate_multiplier="{cell,slot}">
                             <div class="p-[3px] font-sans">{{cell.hourly_rate_multiplier}}</div>
