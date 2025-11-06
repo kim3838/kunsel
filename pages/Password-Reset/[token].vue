@@ -1,59 +1,60 @@
 <template>
     <div>
         <LandingWrapper>
-            <div class="mx-auto px-4 flex justify-center max-w-screen-2xl scaffold-border-left-bottom-right">
-                <AccentFrame class="my-4">
-                    <template #content>
-                        <div class="relative py-4">
-                            <form @submit.prevent="handleResetPassword" class="w-80">
-                                <div class="block mt-4">
-                                    <InputWithIcon
-                                        :icon="'ic:round-mail-outline'"
-                                        readonly
-                                        :size="'lg'"
-                                        id="email"
-                                        :type="'email'"
-                                        class="w-full"
-                                        v-model="data.email"
-                                        autofocus />
-                                </div>
+            <div class="mx-auto pt-4 max-w-screen-2xl">
+                <div class="flex justify-center">
+                    <AccentFrame class="my-4">
+                        <template #content>
+                            <div class="relative py-4">
+                                <form @submit.prevent="handleResetPassword" class="w-80">
+                                    <div class="block mt-4">
+                                        <InputWithIcon
+                                            :icon="'ic:round-mail-outline'"
+                                            readonly
+                                            :size="'lg'"
+                                            id="email"
+                                            :type="'email'"
+                                            class="w-full"
+                                            v-model="data.email"
+                                            autofocus />
+                                    </div>
 
-                                <div class="block mt-4">
-                                    <InputLabel :size="'md'" for="password" value="Password" />
-                                    <Input
-                                        ref="password"
-                                        :disabled="pending"
-                                        :size="'lg'"
-                                        id="password"
-                                        :type="'password'"
-                                        class="w-full"
-                                        v-model="data.password" />
-                                </div>
+                                    <div class="block mt-4">
+                                        <InputLabel :size="'md'" for="password" value="Password" />
+                                        <Input
+                                            ref="password"
+                                            :disabled="pending"
+                                            :size="'lg'"
+                                            id="password"
+                                            :type="'password'"
+                                            class="w-full"
+                                            v-model="data.password" />
+                                    </div>
 
-                                <div class="block mt-4">
-                                    <InputLabel :size="'md'" for="password_confirmation" value="Confirm Password" />
-                                    <Input
-                                        :disabled="pending"
-                                        :size="'lg'"
-                                        id="password_confirmation"
-                                        :type="'password'"
-                                        class="w-full"
-                                        v-model="data.password_confirmation" />
-                                </div>
+                                    <div class="block mt-4">
+                                        <InputLabel :size="'md'" for="password_confirmation" value="Confirm Password" />
+                                        <Input
+                                            :disabled="pending"
+                                            :size="'lg'"
+                                            id="password_confirmation"
+                                            :type="'password'"
+                                            class="w-full"
+                                            v-model="data.password_confirmation" />
+                                    </div>
 
-                                <div class="flex mt-4 items-center justify-end">
-                                    <Button
-                                        :disabled="pending"
-                                        :size="'md'"
-                                        :variant="'default'"
-                                        :icon="pending ? 'eos-icons:installing' : 'mdi:key-chain'"
-                                        :label="pending ? 'Please wait...' : 'Reset Password'"></Button>
-                                </div>
-                            </form>
-                        </div>
-                    </template>
-                </AccentFrame>
-
+                                    <div class="flex mt-4 items-center justify-end">
+                                        <Button
+                                            :disabled="pending"
+                                            :size="'md'"
+                                            :variant="'default'"
+                                            :icon="pending ? 'eos-icons:installing' : 'mdi:key-chain'"
+                                            :label="pending ? 'Please wait...' : 'Reset Password'"></Button>
+                                    </div>
+                                </form>
+                            </div>
+                        </template>
+                    </AccentFrame>
+                </div>
             </div>
         </LandingWrapper>
     </div>
@@ -61,11 +62,10 @@
 
 <script setup lang="ts">
 definePageMeta({middleware: 'guest'});
-useLayout().setNavigationMode('solid', 'Password-Reset[token].vue');
+useLayout().setNavigationMode('solid');
 const clientReadyState = useClientReadyState();
 const {$promptStore} = useNuxtApp();
 
-//Todo: Query email check on route could also use bootRedirectRule
 const route = useRoute();
 if (!route.query.email) {
     navigateTo({
