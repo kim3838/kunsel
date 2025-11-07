@@ -1,7 +1,7 @@
 
 import {defineStore} from 'pinia'
 
-type PaletteNames = 'light' | 'dark' | 'blue' | 'tulip' | 'emerald';
+type PaletteNames = 'light' | 'dark' | 'blue' | 'green'| 'tulip' | 'emerald';
 
 type ThemeT = {
     type: string;
@@ -36,7 +36,7 @@ export type CommonColorsT = {
 export const useThemeStore = defineStore('theme', {
     state: () => {
         return {
-            appTheme: 'blue' as PaletteNames,
+            appTheme: 'green' as PaletteNames,
             common: {
                 'default': {primary: '#777', secondary: '#e5e5e5'},
                 'success': {primary: '#4cb74c', secondary: '#ccffcc'},
@@ -114,6 +114,25 @@ export const useThemeStore = defineStore('theme', {
                     'text': '#545c72',
                     'text-invert': '#dbe8ee',
                     'text-secondary': '#99aed0',
+                },
+                green: {
+                    'type': 'light',
+                    'primary': '#438c18',
+                    'secondary': '#2e6226',
+                    'accent': '#b0caf1',
+
+                    'lining': '#a1cc90',
+                    'thread': '#c6c9cc',
+
+                    'neutral': '#e5e5e5',
+
+                    'tint': '#fdfdfd',
+                    'body': '#ffffff',
+                    'shade': '#f5f5f5',
+
+                    'text': '#435b45',
+                    'text-invert': '#ddeedb',
+                    'text-secondary': '#a9d099',
                 },
                 tulip: {
                     'type': 'light',
