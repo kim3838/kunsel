@@ -119,10 +119,10 @@ export const useThemeStore = defineStore('theme', {
                     'type': 'light',
                     'primary': '#438c18',
                     'secondary': '#2e6226',
-                    'accent': '#b0caf1',
+                    'accent': '#b9f1b0',
 
-                    'lining': '#a1cc90',
-                    'thread': '#c6c9cc',
+                    'lining': '#8bbd77',
+                    'thread': '#c6ccc6',
 
                     'neutral': '#e5e5e5',
 
