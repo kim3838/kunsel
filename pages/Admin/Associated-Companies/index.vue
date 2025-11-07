@@ -48,6 +48,7 @@
                                     :to="`/admin/associated-companies/${company.ulid}`">
                                     <div class="text-lg font-header cursor-pointer hover:underline">{{company.name}}</div>
                                 </NuxtLink>
+                                <div class="text-base">{{company.short_name}}</div>
                             </div>
 
                             <table class="border-separate font-sans">

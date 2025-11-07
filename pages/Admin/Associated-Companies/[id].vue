@@ -19,10 +19,14 @@
                             <SingleSelect value-persist drop-shadow :size="'md'" :options="associatedAccountOptions"/>
                         </div>
                         <div>
-                            <InputLabel :size="'sm'" value="Code"/>
+                            <InputLabel :size="'sm'" value="Company Code"/>
                             <Input :size="'md'" v-model="companyCode" type="text"/>
                         </div>
                         <div>
+                            <InputLabel :size="'sm'" value="Short Name"/>
+                            <Input :size="'md'" v-model="companyShortName" type="text"/>
+                        </div>
+                        <div class="col-span-2">
                             <InputLabel :size="'sm'" value="Name"/>
                             <Input :size="'md'" v-model="companyName" type="text"/>
                         </div>
@@ -55,7 +59,7 @@ const {fetchAssociatedCompanies, storeAssociatedCompanies} = useAssociation();
 const {timezoneSelections} = useCommon();
 
 useHead({titleTemplate: (titleChunk) => {return `${titleChunk} - Companies`}});
-useLayout().setNavigationMode('solid', 'Associated-Companies/[id].vue');
+useLayout().setNavigationMode('solid');
 
 const route = useRoute();
 const user = userState();
@@ -64,6 +68,7 @@ const creatingAccount = computed(() => {
     return route.params.id === 'create-company';
 });
 const companyCode = ref('');
+const companyShortName = ref('');
 const companyName = ref('');
 
 definePageMeta({
@@ -154,6 +159,7 @@ const fetchCompany = async () => {
             company.value = _get(response, '_data.values.company', null);
             associatedAccountOptions.selected = _get(response, '_data.values.company.account_id', null);
             companyCode.value = _get(response, '_data.values.company.code', '');
+            companyShortName.value = _get(response, '_data.values.company.short_name', '');
             companyName.value = _get(response, '_data.values.company.name', '');
             countryOptions.selected = _get(response, '_data.values.company.country_id', null);
             currencyOptions.selected = _get(response, '_data.values.company.currency', null);
@@ -183,6 +189,7 @@ const formBody = computed(() => {
     return {
         account_id: associatedAccountOptions.selected,
         code: companyCode.value,
+        short_name: companyShortName.value,
         name: companyName.value,
         country_id: countryOptions.selected,
         currency: currencyOptions.selected,

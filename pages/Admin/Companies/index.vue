@@ -79,11 +79,11 @@ import type {DataTableMeta, TableHeaderT, TableRowT} from "@/public/js/types/dat
 useHead({titleTemplate: (titleChunk) => {return `${titleChunk} - Companies`}});
 definePageMeta({middleware: ['auth', 'super-admin']});
 useLayout().setNavigationMode('solid');
-const user = userState();
 
 const companiesHeaders = reactive<TableHeaderT[]>([
     { text: '', value: 'actions'},
     { text: 'Account #', value: 'account_number', alignData: 'left'},
+    { text: 'Short Name', value: 'short_name', alignData: 'left'},
     { text: 'Name', value: 'name', alignData: 'left'},
     { text: 'Code', value: 'code', alignData: 'left'},
     { text: 'Country', value: 'country', alignData: 'left'},
