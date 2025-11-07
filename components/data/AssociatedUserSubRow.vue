@@ -2,10 +2,11 @@
     <div>
         <DataTable
             v-if="!rowsIsEmpty"
+            :sup-headers="associationsSupHeaders"
             :headers="associationsHeaders"
             v-model="selectedAssociations"
             :disabled="disabled"
-            :size="'md'"
+            :size="'sm'"
             :rows="rows"
             :stripped="false"
             @selectionChanged="selectionChanged">
@@ -22,7 +23,7 @@
 </template>
 
 <script setup lang="ts">
-import type {TableHeaderT, TableRowT} from "@/public/js/types/data";
+import type {TableHeaderT, TableRowT, TableSupHeaderT} from "@/public/js/types/data";
 
 const props = defineProps({
     rows: {
@@ -40,11 +41,15 @@ const emit = defineEmits(['proxyEdit', 'syncSelected']);
 const rowsIsEmpty = computed(() => props.rows.length === 0);
 
 const selectedAssociations = ref([]);
+const associationsSupHeaders = reactive<TableSupHeaderT[]>([
+    {text: '', colspan: 2, alignHeader: 'left'},
+    {text: 'Employee', colspan: 3, alignHeader: 'left'},
+]);
 const associationsHeaders = reactive<TableHeaderT[]>([
     { text: 'Company', value: 'name', alignData: 'left'},
     { text: 'Assignment', value: 'assignment', alignData: 'left'},
-    { text: 'Is Employee', value: 'is_employee', alignData: 'left'},
-    { text: '#', value: 'employee_number', alignData: 'left'},
+    { text: 'Is Employee?', value: 'is_employee', alignData: 'left'},
+    { text: 'Employee #', value: 'employee_number', alignData: 'left'},
     { text: 'Name', value: 'employee_full_name', alignData: 'left'},
 ]);
 

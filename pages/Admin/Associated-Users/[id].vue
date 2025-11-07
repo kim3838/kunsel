@@ -54,6 +54,7 @@
 
                         <DataTable
                             v-if="!creatingAssociatedUser"
+                            :sup-headers="userCompanyAssignmentSupHeaders"
                             :headers="userCompanyAssignmentHeaders"
                             :size="'lg'"
                             :rows="userCompanyAssignmentData">
@@ -93,7 +94,7 @@
 
 <script setup lang="ts">
 
-import type {TableHeaderT} from "@/public/js/types/data";
+import type {TableHeaderT, TableSupHeaderT} from "@/public/js/types/data";
 
 useHead({titleTemplate: (titleChunk) => {return `${titleChunk} - Users`}});
 useLayout().setNavigationMode('solid', 'Associated-Users/[id].vue');
@@ -253,6 +254,10 @@ const fetchUserAssociatedCompanies = async() => {
 }
 await fetchUserAssociatedCompanies();
 
+const userCompanyAssignmentSupHeaders = reactive<TableSupHeaderT[]>([
+    {text: '', colspan: 3, alignHeader: 'left'},
+    {text: 'Employee', colspan: 3, alignHeader: 'left'},
+]);
 const userCompanyAssignmentHeaders = reactive<TableHeaderT[]>([
     { text: 'Company', value: 'company_name', alignData: 'left'},
     { text: 'Code', value: 'company_code', alignData: 'left'},
