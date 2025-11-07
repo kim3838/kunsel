@@ -88,7 +88,7 @@ export const useLayout = () => {
                     type: 'link',
                     title: 'Account Settings',
                     //icon: 'ic:baseline-miscellaneous-services',
-                    to: '/profile',
+                    to: '/account-settings',
                 },
                 {
                     key: 'login',
@@ -99,7 +99,6 @@ export const useLayout = () => {
                         destroyAuthentication();
                     },
                 },
-                //...(debugRequests as NavigationLinkInterface[])
             ]);
 
         } else {
@@ -111,9 +110,12 @@ export const useLayout = () => {
             });
         }
 
-        links = links.concat([
-            ...(debugRequests as NavigationLinkInterface[])
-        ]);
+        if(process.env.NODE_ENV === 'development'){
+
+            links = links.concat([
+                ...(debugRequests as NavigationLinkInterface[])
+            ]);
+        }
 
         return links;
     });
