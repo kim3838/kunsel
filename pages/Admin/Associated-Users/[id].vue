@@ -187,8 +187,8 @@ const companyAssignmentIcon = (companyAssignmentType: number | null = null) => {
     }
 
     return {
-        [COMPANY_ASSIGNMENT_TYPE.DEFAULT]: 'tdesign:user-checked',
-        [COMPANY_ASSIGNMENT_TYPE.ADMIN]: 'tdesign:secured'
+        [COMPANY_ASSIGNMENT_TYPE.DEFAULT as number]: 'tdesign:user-checked',
+        [COMPANY_ASSIGNMENT_TYPE.ADMIN as number]: 'tdesign:secured'
     }[companyAssignmentType];
 }
 
