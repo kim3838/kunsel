@@ -535,7 +535,7 @@ const selectionWidthComputed = computed(()=>{
 });
 
 const backgroundClass = computed(() => {
-    return props.disabled ? 'disabled-background' : 'background';
+    return props.disabled && !props.navigationMode ? 'disabled-background' : 'background';
 });
 
 function keepFocusAlive(){
