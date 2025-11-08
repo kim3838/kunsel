@@ -32,14 +32,21 @@ export const useAssociation = () => {
 
         return _includes([
             'workforce-employees',
+            'workforce-employee-groups',
             'workforce-departments',
             'workforce-designations',
+            'workforce-shift-assignment',
+            'workforce-attendance',
             'policies-pay-frequencies',
             'policies-payroll-components',
             'policies-shifts',
+            'policies-holiday',
             'settings-salary-statement-modules',
             'settings-formula-settings',
             'import-employees',
+            'import-employment-profile',
+            'import-employee-payroll-component',
+            'import-attendance',
         ], _toLower(String(route.name)));
     });
 
