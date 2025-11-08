@@ -168,20 +168,20 @@ const shiftIsFlexible = computed(() => {
 
     return _get(attendance.value, 'shift_schedule.is_flexible', false);
 });
-const shiftHasLunchBreak = computed(() => {
+const shiftScheduleHasLunchBreak = computed(() => {
 
     if(_isEmpty(attendance.value)){return false;}
 
     return _get(attendance.value, 'shift_schedule.has_lunch_break', false);
 });
 const attendanceShiftRequiresLunchOutAndIn = computed(() => {
-    return shiftRequiresLunchOutAndIn.value && !shiftIsFlexible.value && shiftHasLunchBreak.value;
+    return shiftRequiresLunchOutAndIn.value && !shiftIsFlexible.value && shiftScheduleHasLunchBreak.value;
 })
 const scheduleLunchPeriod = computed(() => {
 
     if(_isEmpty(attendance.value)){return 'Not found.';}
 
-    return attendanceShiftRequiresLunchOutAndIn.value
+    return shiftScheduleHasLunchBreak.value
         ? (_get(attendance.value, 'shift_schedule.lunch_break_start', '') + ' - ' + _get(attendance.value, 'shift_schedule.lunch_break_end', ''))
         : '';
 });
