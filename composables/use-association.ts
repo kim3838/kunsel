@@ -1,5 +1,13 @@
 
-import type {AssignedCompanyT, AssociatedCompanyT, SelectedCompanyT} from "@/public/js/types/association";
+import type {
+    AssignedCompanyT,
+    AssociatedCompanyT,
+    SelectedAccountSubscriptionT,
+    SelectedCompanyT
+} from "@/public/js/types/association";
+import type {
+    EnumOption
+} from "@/public/js/common/type";
 
 export const companyAssociationPendingState = () => {
     return useState("company_association_pending", () => false);
@@ -141,8 +149,6 @@ export const useAssociation = () => {
             const {sessionDomain} = useRuntimeConfig().public;
             const {$authStore} = useNuxtApp();
 
-            let associatedCompaniesSingleSelectPayload = $authStore.associatedCompanies.singleSelectPayload;
-
             const storedCompany = useCookie<SelectedCompanyT>($authStore.SELECTED_ASSOCIATED_COMPANY_STORAGE_KEY,{
                 domain: sessionDomain,
                 sameSite: 'lax',
@@ -160,7 +166,7 @@ export const useAssociation = () => {
             }
 
             $authStore.associatedCompanies.singleSelectPayload = {
-                ...associatedCompaniesSingleSelectPayload,
+                ...$authStore.associatedCompanies.singleSelectPayload,
                 selection: associatedCompany.value.selection,
                 selected: storedCompany.value
             };
@@ -168,12 +174,72 @@ export const useAssociation = () => {
             if(!userIsSuperAdmin.value){
                 updateCompanyAssignmentType(storedCompany.value);
             }
+
+            //Store company's account subscriptions
+            await updateStoreAssociatedAccountSubscriptions();
         }
     }
 
     const selectedAssociatedCompanyChanged = async (newValue: SelectedCompanyT) => {
         companyAssociationPending.value = true;
         await updateStoredAssociatedCompany(newValue);
+    };
+
+    const updateStoreAssociatedAccountSubscriptions = async() => {
+
+        const {sessionDomain} = useRuntimeConfig().public;
+        const {$authStore} = useNuxtApp();
+
+        if(!$authStore.selectedAssociatedCompany){
+            return;
+        }
+
+        const storedAccountSubscription = useCookie<SelectedAccountSubscriptionT>($authStore.SELECTED_ACCOUNT_SUBSCRIPTION_STORAGE_KEY,{
+            domain: sessionDomain,
+            sameSite: 'lax',
+        });
+
+        let companySubscriptions: EnumOption[] = $authStore.selectedAssociatedCompany?.payload.account.subscriptions as EnumOption[];
+
+        if(storedAccountSubscription.value == undefined && _first(companySubscriptions)){
+
+            storedAccountSubscription.value = _first(companySubscriptions)?.value as number;
+        }
+
+        //Check if the stored selected account subscription is one from the selection
+        const storedAccountSubscriptionExistsOnSelection = _some(companySubscriptions, subscription => subscription.value == storedAccountSubscription.value);
+
+        if(!storedAccountSubscriptionExistsOnSelection){
+
+            //If selection has at least 1 options, set the first one as selected
+            if(_first(companySubscriptions)){
+                storedAccountSubscription.value = _first(companySubscriptions)?.value as number;
+            } else {
+                storedAccountSubscription.value = null;
+            }
+        }
+
+        $authStore.accountSubscriptions.singleSelectPayload = {
+            ...$authStore.accountSubscriptions.singleSelectPayload,
+            selection: companySubscriptions,
+            selected: storedAccountSubscription.value
+        };
+    }
+
+    const selectedAssociatedAccountSubscriptionChanged = async (newValue: SelectedAccountSubscriptionT) => {
+
+        const {sessionDomain} = useRuntimeConfig().public;
+        const {$authStore, $associationStore} = useNuxtApp();
+
+        const storedAccountSubscription = useCookie<SelectedAccountSubscriptionT>($authStore.SELECTED_ACCOUNT_SUBSCRIPTION_STORAGE_KEY,{
+            domain: sessionDomain,
+            sameSite: 'lax',
+        });
+
+        storedAccountSubscription.value = newValue;
+
+        $associationStore.associatedAccountSubscriptionSelectionKey++;
+        $associationStore.updatedAssociatedAccountSubscriptionFlag++;
     };
 
     const updateStoredAssociatedCompany = async (newValue: SelectedCompanyT) => {
@@ -198,6 +264,10 @@ export const useAssociation = () => {
             if(useAuth().isAuthenticated.value){
 
                 await useCommon().fetchOrganizationSelections();
+
+                //Update stored account subscription
+                await updateStoreAssociatedAccountSubscriptions();
+
                 companyAssociationPending.value = false;
             }
 
@@ -206,6 +276,9 @@ export const useAssociation = () => {
             if(useAuth().isAuthenticated.value){
 
                 await useCommon().fetchOrganizationSelections();
+
+                //Update stored account subscription before company update flag increment
+                await updateStoreAssociatedAccountSubscriptions();
             }
 
             //Increment updatedAssociatedCompanyFlag and use it on a watcher as is the associated company updated
@@ -245,6 +318,7 @@ export const useAssociation = () => {
         storeAssociatedCompanies,
         updateStoredAssociatedCompany,
         selectedAssociatedCompanyChanged,
+        selectedAssociatedAccountSubscriptionChanged,
         updateCompanyAssignmentType,
         resetUserAssociationStates
     };

@@ -127,7 +127,6 @@ export const useLayout = () => {
                 key: 'dashboard',
                 type: 'link',
                 title: 'Dashboard',
-                icon: 'ic:sharp-double-arrow',
                 to: '/',
                 route_active: 'index'
             }] : []) as NavigationLinkInterface[],

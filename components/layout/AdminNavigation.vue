@@ -42,6 +42,28 @@
                 <div class="flex">
                     <!-- Navigation Links -->
                     <div class="flex">
+                        <SingleSelect
+                            v-if="isAuthenticated"
+                            drop-shadow
+                            :searchable="false"
+                            :always-active="false"
+                            value-persist
+                            disable-header-border
+                            navigation-mode
+                            :icon="'ic:sharp-double-arrow'"
+                            :size="navigationHeaderSize"
+                            :label="'Select Module'"
+                            :none-selected-label="'No Associated Subscription'"
+                            :key="$associationStore.associatedAccountSubscriptionSelectionKey"
+                            :options="$authStore.accountSubscriptions.singleSelectPayload"
+                            :override="associatedSubscriptionSelectOverrides"
+                            @valueChange="selectedAssociatedAccountSubscriptionChanged"
+                        />
+                    </div>
+                    <div class="w-[1rem] flex justify-center items-center">
+                        <div class="horizontal-divider"></div>
+                    </div>
+                    <div class="flex">
                         <NavDrop
                             class="lg:hidden"
                             :size="navigationHeaderSize"
@@ -153,6 +175,7 @@
 import {storeToRefs} from 'pinia';
 import type {NavigationLinkInterface} from "@/public/js/types/layout";
 
+const {selectedAssociatedAccountSubscriptionChanged} = useAssociation();
 const clientReadyState = useClientReadyState();
 const nuxtApp = useNuxtApp();
 const isRouteActive = nuxtApp.$isRouteActive as (name: string | undefined) => boolean;
@@ -252,6 +275,13 @@ const mainNavigationFontClass = computed(() => {
 const subNavigationFontClass = computed(() => {
     return 'font-business';
 });
+
+const associatedSubscriptionSelectOverrides = computed(() => {
+    return {
+        'height': 'h-full',
+        'font_family_class': mainNavigationFontClass.value
+    };
+})
 </script>
 
 <style lang="scss" scoped>

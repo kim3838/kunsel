@@ -16,10 +16,41 @@
         <PromptModal />
         <!-- Footer -->
         <Footer top-rule-divider class="w-full allocate-body absolute" />
+
+        <!-- Company Change Pending Mask -->
+        <DialogModal
+            :show="companyAssociationPending"
+            :max-width="'410px'"
+            :body-border-bottom="false"
+            :closeable="false">
+            <template #title>
+            </template>
+            <template #content>
+                <div v-if="$authStore.selectedAssociatedCompany">
+                    {{`Setting ${$authStore.selectedAssociatedCompany?.text}`}}
+                </div>
+            </template>
+            <template #footer>
+                <div class="flex space-x-2 justify-between">
+                    <div class="space-x-2 inline-flex">
+                        <div class="space-x-2 inline-flex items-center">
+                            <UnorderedList
+                                :icon="'eos-icons:loading'"
+                                :size="'md'"
+                                :label="'Please wait...'"/>
+                        </div>
+                    </div>
+                    <div class="space-x-2 inline-flex items-center">
+
+                    </div>
+                </div>
+            </template>
+        </DialogModal>
     </div>
 </template>
 
 <script setup lang="ts">
+const companyAssociationPending = companyAssociationPendingState();
 const clientReadyState = useClientReadyState();
 const topAllocation = ref(0);
 const topAllocationComputed = computed(() => {
