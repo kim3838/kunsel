@@ -1,6 +1,6 @@
 <template>
     <footer>
-        <div v-if="topRuleDivider" class="mt-24 footer-rule"></div>
+        <div v-if="topRuleDivider" class="mt-24 vertical-divider"></div>
 
         <LandingLinks v-if="landingLinks" />
 
@@ -116,15 +116,5 @@ defineProps({
 </script>
 
 <style scoped>
-.footer-rule{
-    height: 1px;
-    width: 100%;
-    background: linear-gradient(
-        to right,
-        transparent 0%,
-        v-bind(neutralColor) 10%,
-        v-bind(neutralColor) 90%,
-        transparent 100%
-    );
-}
+
 </style>

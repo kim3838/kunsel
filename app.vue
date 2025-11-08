@@ -97,6 +97,30 @@ watch(() => route.name,() => {
     color: v-bind(textColor);
 }
 
+.vertical-divider{
+    height: 1px;
+    width: 100%;
+    background: linear-gradient(
+            to right,
+            transparent 0%,
+            v-bind(threadColor) 10%,
+            v-bind(threadColor) 90%,
+            transparent 100%
+    );
+}
+
+.horizontal-divider{
+    height: 100%;
+    width: 1px;
+    background: linear-gradient(
+            to bottom,
+            transparent 0%,
+            v-bind(threadColor) 35%,
+            v-bind(threadColor) 65%,
+            transparent 100%
+    );
+}
+
 .tint-background {
     background-color: v-bind(tintColor);
 }
