@@ -179,10 +179,10 @@ const viewMode = reactive<{
     selected: number | null;
 }>({
     selection: [
-        {text : 'Flex', value: DATA_VIEW_MODE.FLEX},
-        {text : 'List', value: DATA_VIEW_MODE.LIST},
+        {text : 'Flex', value: DATA_VIEW_MODE.FLEX as number},
+        {text : 'List', value: DATA_VIEW_MODE.LIST as number},
     ],
-    selected: DATA_VIEW_MODE.FLEX
+    selected: DATA_VIEW_MODE.FLEX as number
 });
 let pageComputed = computed({
     get() {
