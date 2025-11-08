@@ -8,7 +8,7 @@
         :contentPadding="contentPadding"
         @close="close"
     >
-        <div :style=[modalBodySpacingStyle] class="modal-body">
+        <div :style=[modalBodySpacingStyle] :class="[bodyBorderBottom ? 'body-bottom-border' : '']">
             <div class="text-xl font-medium font-header">
                 <slot name="title" />
             </div>
@@ -57,6 +57,10 @@ const props = defineProps({
         type: String,
         default: 'calc(0.25rem * 3)'
     },
+    bodyBorderBottom: {
+        type: Boolean,
+        default: true
+    }
 });
 
 const emit = defineEmits(['close']);
@@ -80,7 +84,7 @@ const modalBodySpacingStyle = computed(() => {
 </script>
 <style scoped>
 
-.modal-body{
+.body-bottom-border{
     border-bottom:1px solid v-bind(neutralColor);
 }
 </style>
