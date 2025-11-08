@@ -215,7 +215,7 @@ const formSubmit = async() => {
                 resetable: false,
                 icon: null,
                 title: `Request successful`,
-                message: `Company updated`,
+                message: `Company ${!creatingAccount.value ? 'updated' : 'created'}`,
                 action: {
                     callback: () => {},
                     label: 'Okay'
