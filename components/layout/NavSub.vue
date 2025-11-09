@@ -25,6 +25,9 @@ const {
 } = storeToRefs($themeStore);
 
 const props = defineProps({
+    dropAlign: {
+        default: 'left'
+    },
     dropOptions: {
         type: Array,
         default: []
@@ -79,7 +82,10 @@ const navigationLinkColor = computed(()=>{
 const { focused: navigationFocused } = useFocus(navHeader);
 
 watch(navigationFocused, focused => {
-    emit('updateSubNavigationOptions', props.dropOptions);
+    emit('updateSubNavigationOptions', {
+        drop_align: props.dropAlign,
+        options: props.dropOptions,
+    });
 });
 
 const classes = computed(() => {
