@@ -2,6 +2,9 @@ import {storeToRefs} from "pinia";
 import type {
     NavigationLinkInterface
 } from "@/public/js/types/layout";
+import type {
+    SelectedAccountSubscriptionT
+} from "@/public/js/types/association";
 
 export const useLayout = () => {
     const nuxtApp = useNuxtApp();
@@ -120,6 +123,9 @@ export const useLayout = () => {
         return links;
     });
     const navigationLinks = computed<NavigationLinkInterface[]>(()=>{
+        const {sessionDomain} = useRuntimeConfig().public;
+        const {$authStore} = useNuxtApp();
+
         let links: NavigationLinkInterface[] = [];
 
         links = links.concat([
@@ -236,162 +242,190 @@ export const useLayout = () => {
                     }
                 ] : []
             ) as NavigationLinkInterface[],
-            ...((isAuthenticated.value && (userIsSuperAdmin.value || companyAssignmentTypeIsAdmin.value)) ? [{
-                key: 'workforce',
-                type: 'sub-nav',
-                title: 'Workforce',
-                //icon: 'ic:round-diversity-3',
-                path_active: '/workforce',
-                options:[
-                    {
-                        key: 'workforce/employees',
-                        type: 'link',
-                        title: 'Employees',
-                        //icon: 'mdi:account-multiple',
-                        to: '/workforce/employees',
-                        route_active: 'workforce-employees',
-                        path_active: '/workforce/employees',
-                    },
-                    {
-                        key: 'workforce/employee-groups',
-                        type: 'link',
-                        title: 'Employee Groups',
-                        to: '/workforce/employee-groups',
-                        route_active: 'workforce-employee-groups'
-                    },
-                    {
-                        key: 'workforce/departments',
-                        type: 'link',
-                        title: 'Departments',
-                        //icon: 'ic:baseline-all-inbox',
-                        to: '/workforce/departments',
-                        route_active: 'workforce-departments'
-                    },
-                    {
-                        key: 'workforce/designations',
-                        type: 'link',
-                        title: 'Designations',
-                        //icon: 'ic:baseline-inbox',
-                        to: '/workforce/designations',
-                        route_active: 'workforce-designations'
-                    },
-                    {
-                        key: 'workforce/shift-assignment',
-                        type: 'link',
-                        title: 'Shift Assignment',
-                        to: '/workforce/shift-assignment',
-                        route_active: 'workforce-shift-assignment'
-                    },
-                    {
-                        key: 'workforce/attendance',
-                        type: 'link',
-                        title: 'Attendance',
-                        to: '/workforce/attendance',
-                        route_active: 'workforce-attendance',
-                        path_active: '/workforce/attendance',
-                    },
-                ]
-            },{
-                key: 'policies',
-                type: 'sub-nav',
-                title: 'Policies',
-                path_active: '/policies',
-                options:[
-                    {
-                        key: 'policies/pay-frequencies',
-                        type: 'link',
-                        title: 'Pay Frequency',
-                        to: '/policies/pay-frequencies',
-                        route_active: 'policies-pay-frequencies'
-                    },
-                    {
-                        key: 'policies/payroll-components',
-                        type: 'link',
-                        title: 'Payroll Components',
-                        to: '/policies/payroll-components',
-                        route_active: 'policies-payroll-components'
-                    },
-                    {
-                        key: 'policies/shifts',
-                        type: 'link',
-                        title: 'Shifts',
-                        to: '/policies/shifts',
-                        route_active: 'policies-shifts',
-                        path_active: '/policies/shifts',
-                    },
-                    {
-                        key: 'policies/holiday',
-                        type: 'link',
-                        title: 'Holidays',
-                        to: '/policies/holiday',
-                        route_active: 'policies-holiday'
-                    },
-                ]
-            }, {
-                key: 'settings',
-                type: 'sub-nav',
-                title: 'Settings',
-                //icon: 'ic:baseline-miscellaneous-services',
-                path_active: '/settings',
-                options: [
-                    {
-                        key: 'settings/salary-statement-modules',
-                        type: 'link',
-                        title: 'Salary Statement Modules',
-                        //icon: 'ic:baseline-dynamic-form',
-                        to: '/settings/salary-statement-modules',
-                        route_active: 'settings-salary-statement-modules'
-                    },
-                    {
-                        key: 'settings/formula-settings',
-                        type: 'link',
-                        title: 'Formula Settings',
-                        //icon: 'ic:baseline-architecture',
-                        to: '/settings/formula-settings',
-                        route_active: 'settings-formula-settings'
-                    },
-                ]
-            },{
-                key: 'import',
-                type: 'sub-nav',
-                title: 'Import',
-                path_active: '/import',
-                //icon: 'mdi:file-upload',
-                options: [
-                    {
-                        key: 'import/employees',
-                        type: 'link',
-                        title: 'Employees',
-                        //icon: 'mdi:account-multiple',
-                        to: '/import/employees',
-                        route_active: 'import-employees'
-                    },
-                    {
-                        key: 'import/employment-profile',
-                        type: 'link',
-                        title: 'Employment Profile',
-                        to: '/import/employment-profile',
-                        route_active: 'import-employment-profile'
-                    },
-                    {
-                        key: 'import/employee-payroll-component',
-                        type: 'link',
-                        title: 'Employee Payroll Component',
-                        to: '/import/employee-payroll-component',
-                        route_active: 'import-employee-payroll-component'
-                    },
-                    {
-                        key: 'import/attendance',
-                        type: 'link',
-                        title: 'Attendance',
-                        to: '/import/attendance',
-                        route_active: 'import-attendance'
-                    },
-                ],
-            }] : []) as NavigationLinkInterface[],
+
+        ] as NavigationLinkInterface[]);
+
+        const storedAccountSubscription = useCookie<SelectedAccountSubscriptionT>($authStore.SELECTED_ACCOUNT_SUBSCRIPTION_STORAGE_KEY,{
+            domain: sessionDomain,
+            sameSite: 'lax',
+        });
+
+        let moduleNavigationLinkMap = {
+            [SUBSCRIPTION_MODULE.HR_PAYROLL as number]: [
+                ...((isAuthenticated.value && (userIsSuperAdmin.value || companyAssignmentTypeIsAdmin.value)) ? [{
+                    key: 'workforce',
+                    type: 'sub-nav',
+                    title: 'Workforce',
+                    //icon: 'ic:round-diversity-3',
+                    path_active: '/workforce',
+                    options:[
+                        {
+                            key: 'workforce/employees',
+                            type: 'link',
+                            title: 'Employees',
+                            //icon: 'mdi:account-multiple',
+                            to: '/workforce/employees',
+                            route_active: 'workforce-employees',
+                            path_active: '/workforce/employees',
+                        },
+                        {
+                            key: 'workforce/employee-groups',
+                            type: 'link',
+                            title: 'Employee Groups',
+                            to: '/workforce/employee-groups',
+                            route_active: 'workforce-employee-groups'
+                        },
+                        {
+                            key: 'workforce/departments',
+                            type: 'link',
+                            title: 'Departments',
+                            //icon: 'ic:baseline-all-inbox',
+                            to: '/workforce/departments',
+                            route_active: 'workforce-departments'
+                        },
+                        {
+                            key: 'workforce/designations',
+                            type: 'link',
+                            title: 'Designations',
+                            //icon: 'ic:baseline-inbox',
+                            to: '/workforce/designations',
+                            route_active: 'workforce-designations'
+                        },
+                        {
+                            key: 'workforce/shift-assignment',
+                            type: 'link',
+                            title: 'Shift Assignment',
+                            to: '/workforce/shift-assignment',
+                            route_active: 'workforce-shift-assignment'
+                        },
+                        {
+                            key: 'workforce/attendance',
+                            type: 'link',
+                            title: 'Attendance',
+                            to: '/workforce/attendance',
+                            route_active: 'workforce-attendance',
+                            path_active: '/workforce/attendance',
+                        },
+                    ]
+                },{
+                    key: 'policies',
+                    type: 'sub-nav',
+                    title: 'Policies',
+                    path_active: '/policies',
+                    options:[
+                        {
+                            key: 'policies/pay-frequencies',
+                            type: 'link',
+                            title: 'Pay Frequency',
+                            to: '/policies/pay-frequencies',
+                            route_active: 'policies-pay-frequencies'
+                        },
+                        {
+                            key: 'policies/payroll-components',
+                            type: 'link',
+                            title: 'Payroll Components',
+                            to: '/policies/payroll-components',
+                            route_active: 'policies-payroll-components'
+                        },
+                        {
+                            key: 'policies/shifts',
+                            type: 'link',
+                            title: 'Shifts',
+                            to: '/policies/shifts',
+                            route_active: 'policies-shifts',
+                            path_active: '/policies/shifts',
+                        },
+                        {
+                            key: 'policies/holiday',
+                            type: 'link',
+                            title: 'Holidays',
+                            to: '/policies/holiday',
+                            route_active: 'policies-holiday'
+                        },
+                    ]
+                }, {
+                    key: 'settings',
+                    type: 'sub-nav',
+                    title: 'Settings',
+                    //icon: 'ic:baseline-miscellaneous-services',
+                    path_active: '/settings',
+                    options: [
+                        {
+                            key: 'settings/salary-statement-modules',
+                            type: 'link',
+                            title: 'Salary Statement Modules',
+                            //icon: 'ic:baseline-dynamic-form',
+                            to: '/settings/salary-statement-modules',
+                            route_active: 'settings-salary-statement-modules'
+                        },
+                        {
+                            key: 'settings/formula-settings',
+                            type: 'link',
+                            title: 'Formula Settings',
+                            //icon: 'ic:baseline-architecture',
+                            to: '/settings/formula-settings',
+                            route_active: 'settings-formula-settings'
+                        },
+                    ]
+                },{
+                    key: 'import',
+                    type: 'sub-nav',
+                    title: 'Import',
+                    path_active: '/import',
+                    //icon: 'mdi:file-upload',
+                    options: [
+                        {
+                            key: 'import/employees',
+                            type: 'link',
+                            title: 'Employees',
+                            //icon: 'mdi:account-multiple',
+                            to: '/import/employees',
+                            route_active: 'import-employees'
+                        },
+                        {
+                            key: 'import/employment-profile',
+                            type: 'link',
+                            title: 'Employment Profile',
+                            to: '/import/employment-profile',
+                            route_active: 'import-employment-profile'
+                        },
+                        {
+                            key: 'import/employee-payroll-component',
+                            type: 'link',
+                            title: 'Employee Payroll Component',
+                            to: '/import/employee-payroll-component',
+                            route_active: 'import-employee-payroll-component'
+                        },
+                        {
+                            key: 'import/attendance',
+                            type: 'link',
+                            title: 'Attendance',
+                            to: '/import/attendance',
+                            route_active: 'import-attendance'
+                        },
+                    ],
+                }] : []) as NavigationLinkInterface[],
+            ],
+            [SUBSCRIPTION_MODULE.INVENTORY as number]: [],
+            [SUBSCRIPTION_MODULE.FINANCE_ACCOUNTING as number]: [],
+        }
+
+        let moduleNavigationLinks: NavigationLinkInterface[] = (storedAccountSubscription.value != null && typeof storedAccountSubscription.value === 'number')
+            ? (moduleNavigationLinkMap[storedAccountSubscription.value] || [])
+            : [];
+
+        links = links.concat(moduleNavigationLinks);
+
+        return links;
+    });
+
+    const adminNavigationLinks = computed<NavigationLinkInterface[]>(()=>{
+
+        return [
             ...((userIsSuperAdmin.value || adminInAnyCompany.value) ? [{
                 key: 'admin',
                 type: 'sub-nav',
+                drop_align: 'right',
                 title: 'Admin',
                 path_active: '/admin',
                 //icon: 'ep:management',
@@ -468,12 +502,20 @@ export const useLayout = () => {
                     ]: []),
                 ]
             }] : []) as NavigationLinkInterface[],
-        ] as NavigationLinkInterface[]);
+        ]
+    });
+
+    const allNavigationLinks = computed<NavigationLinkInterface[]>(()=>{
+
+        let links: NavigationLinkInterface[] = [];
+
+        links = links.concat(navigationLinks.value);
+        links = links.concat(adminNavigationLinks.value);
 
         return links;
-    })
+    });
 
-    const subNavigationLinks = computed<NavigationLinkInterface[]>(()=> navigationLinks.value.filter(navigationLink => navigationLink.type == 'sub-nav'));
+    const subNavigationLinks = computed<NavigationLinkInterface[]>(()=> allNavigationLinks.value.filter(navigationLink => navigationLink.type == 'sub-nav'));
     const activeSubNavigationLink = computed<NavigationLinkInterface|null>( () => {
         return subNavigationLinks.value.filter((subNavigationLink: NavigationLinkInterface|null) => isRoutePathActive(subNavigationLink?.path_active)).pop() || null;
     })
@@ -535,6 +577,7 @@ export const useLayout = () => {
 
     return {
         navigationLinks,
+        adminNavigationLinks,
         subNavigationLinks,
         activeSubNavigationLink,
         navigationAccountLinks,
