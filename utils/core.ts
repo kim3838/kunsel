@@ -3,8 +3,8 @@ import type {NumericEnumInterface, StringEnumInterface} from "@/public/js/common
 
 export const  SUBSCRIPTION_MODULE: NumericEnumInterface = {
     HR_PAYROLL : 100,
-    INVENTORY : 100,
-    FINANCE_ACCOUNTING : 100,
+    INVENTORY : 200,
+    FINANCE_ACCOUNTING : 300,
 }
 
 export const  SUBSCRIPTION_MODULE_NAME: StringEnumInterface = {
