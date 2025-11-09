@@ -2,10 +2,10 @@
     <div>
         <AdminWrapper>
             <div class="mx-auto max-w-screen-2xl">
-                <div class="flex px-[20px] pt-[20px] mb-2">
+                <div class="flex px-[20px] pt-[20px] mb-2" :class="disableActions ? 'pointer-events-none' : ''">
                     <NuxtLink
                         :to="`/admin/associated-users`">
-                        <Button class="w-min" :variant="`outline`" :disabled="disableActions" :size="'sm'" :icon="disableActions ? 'eos-icons:loading' : 'ic:sharp-keyboard-arrow-left'" :label="disableActions ? 'Please wait' : ''"></Button>
+                        <Button class="w-min" :variant="`outline`" :disabled="disableActions" :size="'sm'" :icon="'ic:sharp-keyboard-arrow-left'" :label="''"></Button>
                     </NuxtLink>
                 </div>
 
@@ -409,20 +409,22 @@ const createUserFormBody = computed(() => {
 
 const createUserFormSubmit = async() => {
 
-    userCompanyAssignmentFormPending.value = true;
+    createUserFormPending.value = true;
 
     await laraFetch(`/api/user`, {
         method: 'POST',
         body: createUserFormBody.value,
     }, {
         onRequestError: () => {
-            userCompanyAssignmentFormPending.value = false;
+            createUserFormPending.value = false;
         },
         onResponse: () => {
-            userCompanyAssignmentFormPending.value = false;
+            createUserFormPending.value = false;
         },
         onSuccessResponse: async (request, options, response) => {
+            createUserFormPending.value = true;
             const userUlid = _get(response, '_data.values.user.ulid', null);
+            await navigateTo({path: `/admin/associated-users/${userUlid}`, replace: true});
         },
     });
 }
