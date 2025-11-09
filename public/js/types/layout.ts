@@ -1,6 +1,7 @@
 
 export type NavigationLinkInterface = {
     type: 'link' | 'action' | 'anchor-link' | 'drop' | 'sub-nav';
+    drop_align?: string;
     title: string;
     key: string;
     to?: string;
