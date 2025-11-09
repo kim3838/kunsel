@@ -51,7 +51,9 @@
 
 <script setup lang="ts">
 const companyAssociationPending = companyAssociationPendingState();
+const {$layoutStore} = useNuxtApp();
 const clientReadyState = useClientReadyState();
+const {activeSubNavigationLink} = useLayout();
 const topAllocation = ref(0);
 const topAllocationComputed = computed(() => {
     return (topAllocation.value + 'px');
@@ -64,6 +66,12 @@ const { height: mainContentReferenceHeight } = useElementSize(mainContentReferen
 const footerTopAllocationComputed = computed(() => {
     return ((topAllocation.value + mainContentReferenceHeight.value) + 'px');
 });
+
+watch(clientReadyState, async (clientReady) => {
+    if(clientReady){
+        $layoutStore.setSubNavigationDropAlign(activeSubNavigationLink.value?.drop_align || 'left');
+    }
+})
 </script>
 <style lang="scss" scoped>
 main{

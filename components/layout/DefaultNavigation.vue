@@ -42,6 +42,7 @@
                 <div class="flex">
                     <!-- Navigation Links -->
                     <div class="flex">
+                        <!-- Subscribed module selection -->
                         <SingleSelect
                             v-if="isAuthenticated"
                             drop-shadow
@@ -60,7 +61,7 @@
                             @valueChange="selectedAssociatedAccountSubscriptionChanged"
                         />
                     </div>
-                    <div class="w-[1rem] flex justify-center items-center">
+                    <div class="mx-1.5 flex justify-center items-center">
                         <div class="horizontal-divider"></div>
                     </div>
                     <div class="flex">
@@ -106,6 +107,7 @@
                                 :title="navigation.title"
                                 :icon="navigation.icon"
                                 :drop-options="navigation.options"
+                                :drop-align="navigation.drop_align"
                                 :active="isRoutePathActive(navigation.path_active)"
                                 @update-sub-navigation-options="updateSubNavigationOptions"
                             />
@@ -129,6 +131,46 @@
                         :override="associatedCompaniesSelectOverrides"
                         @valueChange="selectedAssociatedCompanyChanged"
                     />
+                    <span class="flex" v-for="navigation in adminNavigationLinks" :key="navigation.key">
+                        <NavLink
+                            v-if="navigation.type == 'link'"
+                            :size="navigationHeaderSize"
+                            :to="navigation.to"
+                            :icon="navigation.icon"
+                            :active-style="`ripple`"
+                            :active="isRouteActive(navigation.route_active)">
+                            {{navigation.title}}
+                        </NavLink>
+
+                        <a
+                            v-if="navigation.type == 'anchor-link'"
+                            :href="navigation.to"
+                            class="w-full h-full flex">
+                            <NavLink
+                                :icon="navigation.icon"
+                                :size="navigationHeaderSize">
+                                {{navigation.title}}
+                            </NavLink>
+                        </a>
+
+                        <NavDrop
+                            v-if="navigation.type === 'drop'"
+                            :size="navigationHeaderSize"
+                            :title="navigation.title"
+                            :icon="navigation.icon"
+                            :drop-options="navigation.options"
+                        />
+                        <NavSub
+                            v-if="navigation.type === 'sub-nav'"
+                            :size="navigationHeaderSize"
+                            :title="navigation.title"
+                            :icon="navigation.icon"
+                            :drop-options="navigation.options"
+                            :drop-align="navigation.drop_align"
+                            :active="isRoutePathActive(navigation.path_active)"
+                            @update-sub-navigation-options="updateSubNavigationOptions"
+                        />
+                    </span>
                     <component
                         :is="navDrop"
                         v-if="isAuthenticated"
@@ -147,9 +189,20 @@
             </div>
         </div>
         <!-- Sub Navigation -->
-        <div v-show="subNavigationOptions.length" class="mt-2 relative w-full flex justify-center" :class="subNavigationFontClass">
-            <div ref="subNavigationRef" tabindex="0" class="max-w-screen-2xl w-full flex flex-wrap gap-y-2 justify-start focus:outline-none" :class="[subNavigationOptions.length ? '' : '']">
-                <span class="flex" :class="subNavigationHeightClass" v-for="navigation in subNavigationOptions" :key="navigation.key">
+        <div
+            v-show="subNavigationOptions.length"
+            class="mt-2 relative w-full flex justify-center"
+            :class="subNavigationFontClass">
+            <div
+                ref="subNavigationRef"
+                tabindex="0"
+                class="max-w-screen-2xl w-full flex flex-wrap gap-y-2 justify-start focus:outline-none"
+                :class="[subNavigationOptions.length ? '' : '', subNavigationDropAlign == 'right' ? 'flex-row-reverse' : 'flex-row']">
+                <span
+                    class="flex"
+                    :class="[subNavigationHeightClass]"
+                    v-for="navigation in subNavigationOptions"
+                    :key="navigation.key">
                     <NavLink
                         class="h-full"
                         v-if="navigation.type == 'link'"
@@ -210,10 +263,12 @@ const {
     neutral: neutralColor,
 } = storeToRefs($themeStore);
 const {
-    subNavigationOptions
+    subNavigationDropAlign,
+    subNavigationOptions,
 } = storeToRefs($layoutStore);
 const {
     navigationLinks,
+    adminNavigationLinks,
     activeSubNavigationLink,
     navigationAccountLinks,
     navigationBackground,
@@ -222,17 +277,25 @@ const {
     rightNavigationDropAlign
 } = useLayout();
 
-const updateSubNavigationOptions = (options: NavigationLinkInterface[]) => {
-    $layoutStore.setSubNavigationOptions(options);
+const updateSubNavigationOptions = (subNavigationPayload: {
+    drop_align: string,
+    options: NavigationLinkInterface[]
+}) => {
+    $layoutStore.setSubNavigationDropAlign(subNavigationPayload.drop_align);
+    $layoutStore.setSubNavigationOptions(subNavigationPayload.options);
 
     subNavigationRef?.value?.focus();
 }
 
 watch(subNavigationFocused, (focused) => {
 
+    const activeSubNavigationDropAlign = _get(activeSubNavigationLink.value, 'drop_align', 'left');
     const activeSubNavigationLinkOptions = _get(activeSubNavigationLink.value, 'options', []);
 
-    if(!focused){
+    if(focused){
+
+    } else {
+        $layoutStore.setSubNavigationDropAlign(activeSubNavigationDropAlign);
         $layoutStore.setSubNavigationOptions(activeSubNavigationLinkOptions);
     }
 });
@@ -246,13 +309,6 @@ onMounted(async () => {
     setNavigationHeight(navigationReferenceHeight.value);
     navigationHeightModel.value = navigationHeight.value;
 });
-
-watch(clientReadyState, async (clientReady) => {
-    if(clientReady){
-        setNavigationHeight(navigationReferenceHeight.value);
-        navigationHeightModel.value = navigationHeight.value;
-    }
-})
 
 watch(screenWidth, value => {
     setNavigationHeight(navigationReferenceHeight.value);
