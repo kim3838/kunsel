@@ -117,8 +117,8 @@ export const useThemeStore = defineStore('theme', {
                 },
                 green: {
                     'type': 'light',
-                    'primary': '#438c18',
-                    'secondary': '#2e6226',
+                    'primary': '#317e25',
+                    'secondary': '#2d6026',
                     'accent': '#b9f1b0',
 
                     'lining': '#8bbd77',
