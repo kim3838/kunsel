@@ -10,11 +10,23 @@
                         </div>
                         <div>
                             <InputLabel :size="'sm'" value="Employee Status" />
-                            <MultiSelect :disabled="disableActions" glint drop-shadow :selection-max-viewable-line="5" :size="'md'" :options="employmentStatusOptions" :icon="'tdesign:component-checkbox'"/>
+                            <MultiSelect :key="employmentStatusOptionsKey" :disabled="disableActions" glint drop-shadow :selection-max-viewable-line="5" :size="'md'" :options="employmentStatusOptions" :icon="'tdesign:component-checkbox'"/>
                         </div>
                         <div>
                             <InputLabel :size="'sm'" value="Employment Type"/>
-                            <MultiSelect :disabled="disableActions" glint drop-shadow :selection-max-viewable-line="15" :size="'md'" :options="employmentTypeOptions" :icon="'tdesign:component-checkbox'"/>
+                            <MultiSelect :key="employmentTypeOptionsKey" :disabled="disableActions" glint drop-shadow :selection-max-viewable-line="15" :size="'md'" :options="employmentTypeOptions" :icon="'tdesign:component-checkbox'"/>
+                        </div>
+                        <div>
+                            <InputLabel :size="'sm'" value="Employee Group" />
+                            <MultiSelect :key="employeeGroupOptionsKey" glint drop-shadow :selection-max-viewable-line="15" :size="'md'" :options="employeeGroupOptions" :disabled="disableActions" :icon="'tdesign:component-checkbox'"/>
+                        </div>
+                        <div>
+                            <InputLabel :size="'sm'" value="Department" />
+                            <MultiSelect :key="departmentOptionsKey" glint drop-shadow :selection-max-viewable-line="15" :size="'md'" :options="departmentOptions" :disabled="disableActions" :icon="'ic:baseline-all-inbox'"/>
+                        </div>
+                        <div>
+                            <InputLabel :size="'sm'" value="Designation" />
+                            <MultiSelect :key="designationOptionsKey" glint drop-shadow :selection-max-viewable-line="15" :size="'md'" :options="designationOptions" :disabled="disableActions" :icon="'ic:baseline-inbox'"/>
                         </div>
                     </div>
 
@@ -298,6 +310,7 @@ const $enumerableOption = nuxtApp.$enumerableOption as (enumerable: StringEnumIn
     text: string,
     value: number
 };
+const common = useCommon();
 const {
     updatedAssociatedCompanyFlag
 } = storeToRefs(nuxtApp.$associationStore);
@@ -307,18 +320,54 @@ const {
 
 watch(updatedAssociatedCompanyFlag, (newValue) => {
     if(isAuthenticated.value && selectedAssociatedCompanyId.value){
+        rebuildSelections();
         paginate();
     }
 });
 
+const rebuildSelections = (selection: string[] = []) => {
+
+    if(_isEmpty(selection) || selection.indexOf('employment_status') >= 0){
+        common.rebuildSelectionsOnSelectedCompanyChanged(
+            employmentStatusOptions, employmentStatusOptionsKey, SELECT.MULTI_STATIC, employmentStatusOptions.selection
+        );
+    }
+
+    if(_isEmpty(selection) || selection.indexOf('employment_type') >= 0){
+        common.rebuildSelectionsOnSelectedCompanyChanged(
+            employmentTypeOptions, employmentTypeOptionsKey, SELECT.MULTI_STATIC, employmentTypeOptions.selection
+        );
+    }
+
+    if(_isEmpty(selection) || selection.indexOf('employee_group') >= 0){
+        common.rebuildSelectionsOnSelectedCompanyChanged(
+            employeeGroupOptions, employeeGroupOptionsKey, SELECT.MULTI_STATIC, companyOrganizationSelections.value.employee_groups
+        );
+    }
+
+    if(_isEmpty(selection) || selection.indexOf('department') >= 0){
+        common.rebuildSelectionsOnSelectedCompanyChanged(
+            departmentOptions, departmentOptionsKey, SELECT.MULTI_STATIC, companyOrganizationSelections.value.departments
+        );
+    }
+
+    if(_isEmpty(selection) || selection.indexOf('designation') >= 0){
+        common.rebuildSelectionsOnSelectedCompanyChanged(
+            designationOptions, designationOptionsKey, SELECT.MULTI_STATIC, companyOrganizationSelections.value.designations
+        );
+    }
+}
+
+const employmentStatusOptionsKey = shallowRef(0);
 const employmentStatusOptions = reactive({
     search: '',
     selection: [
-        {text : 'Active', value: USER_STATUS.ACTIVE},
-        {text : 'Inactive', value: USER_STATUS.INACTIVE},
+        {text : 'Active', value: USER_STATUS.ACTIVE} as EnumOption,
+        {text : 'Inactive', value: USER_STATUS.INACTIVE} as EnumOption,
     ],
     selected: []
 });
+const employmentTypeOptionsKey = shallowRef(0);
 const employmentTypeOptions = reactive<{
     search: string,
     selection: EnumSelection,
@@ -334,6 +383,27 @@ const employmentTypeOptions = reactive<{
         $enumerableOption(EMPLOYMENT_TYPE_NAME, EMPLOYMENT_TYPE.CONTRACT as number),
         $enumerableOption(EMPLOYMENT_TYPE_NAME, EMPLOYMENT_TYPE.NOT_SPECIFIED as number),
     ],
+    selected: []
+});
+
+//Employee Organization
+const companyOrganizationSelections = companyOrganizationSelectionsState();
+const employeeGroupOptionsKey = shallowRef(0);
+const employeeGroupOptions = reactive({
+    search: '',
+    selection: companyOrganizationSelections.value.employee_groups,
+    selected: []
+});
+const departmentOptionsKey = shallowRef(0);
+const departmentOptions = reactive({
+    search: '',
+    selection: companyOrganizationSelections.value.departments,
+    selected: []
+});
+const designationOptionsKey = shallowRef(0);
+const designationOptions = reactive({
+    search: '',
+    selection: companyOrganizationSelections.value.designations,
     selected: []
 });
 
@@ -436,6 +506,9 @@ let paramsComputed = computed(() => {
             search: filters.search.keyword,
             employment_status: employmentStatusOptions.selected,
             employment_type: employmentTypeOptions.selected,
+            assigned_employee_group_ids: employeeGroupOptions.selected,
+            department_ids: departmentOptions.selected,
+            designation_ids: designationOptions.selected,
         }
     };
 });
