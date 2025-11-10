@@ -11,8 +11,8 @@
                     :radio-key="`formulable_type`"
                     v-model="formulableSelected" />
 
-                <fieldset v-if="formulableSelected == FORMULABLE.EARNINGS" class="neutral-border px-2 pb-2 space-y-4">
-                    <legend class="text-lg font-header">Earnings</legend>
+                <div v-if="formulableSelected == FORMULABLE.EARNINGS" class="space-y-4">
+                    <div class="text-lg font-header">Earnings</div>
 
                     <DataTable
                         :disabled="disableDataTable"
@@ -53,10 +53,10 @@
                             <component v-else :is="FormulaSettingsCaster" :settings="cell.sub_row.settings" />
                         </template>
                     </DataTable>
-                </fieldset>
+                </div>
 
-                <fieldset v-if="formulableSelected == FORMULABLE.DEDUCTIONS" class="neutral-border px-2 pb-2 space-y-4">
-                    <legend class="text-lg font-header">Deductions</legend>
+                <div v-if="formulableSelected == FORMULABLE.DEDUCTIONS" class="space-y-4">
+                    <div class="text-lg font-header">Deductions</div>
 
                     <DataTable
                         :disabled="disableDataTable"
@@ -95,10 +95,10 @@
                             <component :is="FormulaSettingsCaster" :settings="cell.sub_row.settings" />
                         </template>
                     </DataTable>
-                </fieldset>
+                </div>
 
-                <fieldset v-if="formulableSelected == FORMULABLE.INCOME_TAX" class="neutral-border px-2 pb-2 space-y-4">
-                    <legend class="text-lg font-header">Income Tax</legend>
+                <div v-if="formulableSelected == FORMULABLE.INCOME_TAX" class="space-y-4">
+                    <div class="text-lg font-header">Income Tax</div>
 
                     <DataTable
                         :disabled="disableDataTable"
@@ -137,7 +137,7 @@
                             <component :is="FormulaSettingsCaster" :settings="cell.sub_row.settings" />
                         </template>
                     </DataTable>
-                </fieldset>
+                </div>
             </div>
         </DefaultWrapper>
     </div>
