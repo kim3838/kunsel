@@ -307,8 +307,7 @@ const rebuildSelections = (selection: string[] = []) => {
 const attendancesSupHeaders = reactive<TableSupHeaderT[]>([
     {text: ''},
     {text: ''},
-    {text: ''},
-    {text: 'Full name', alignHeader: 'left'},
+    {text: 'Employee', colspan: 2,  alignHeader: 'left'},
     {text: 'Schedule', colspan: 3,  alignHeader: 'left'},
     {text: 'Attendance', colspan: 6,  alignHeader: 'left'},
 ]);
@@ -317,7 +316,7 @@ const attendancesHeaders = reactive<TableHeaderT[]>([
     { text: '#', value: 'row_number'},
     { text: '', value: 'actions'},
     { text: 'Employee #', value: 'employee_number', alignData: 'left'},
-    { text: 'Family, Middle, Given', value: 'employee_full_name', alignData: 'left'},
+    { text: 'Name', value: 'employee_full_name', alignData: 'left'},
 
     { text: 'Week Day', value: 'shift_schedule_week_day_name', alignData: 'left'},
     { text: 'Start', value: 'shift_schedule_work_start', alignData: 'left'},
