@@ -306,6 +306,14 @@ export const useLayout = () => {
                             route_active: 'workforce-attendance',
                             path_active: '/workforce/attendance',
                         },
+                        {
+                            key: 'workforce/overtime',
+                            type: 'link',
+                            title: 'Overtime',
+                            to: '/workforce/overtime',
+                            route_active: 'workforce-overtime',
+                            path_active: '/workforce/overtime',
+                        },
                     ]
                 },{
                     key: 'policies',
