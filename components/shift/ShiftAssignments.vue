@@ -125,11 +125,7 @@
                 <div class="p-[3px]">{{cell.employee_designation?.name}}</div>
             </template>
             <template v-slot:cell.shift_code="{cell,slot}">
-                <div class="p-[3px] font-semibold">
-                    <NuxtLink :to="`/policies/shifts/${cell.shift_ulid}`" target="_blank" rel="noopener noreferrer" class="hover:underline">
-                        {{cell.shift_code}}
-                    </NuxtLink>
-                </div>
+                <div class="p-[3px]">{{cell.shift_code}}</div>
             </template>
         </DataTable>
     </div>
@@ -276,8 +272,7 @@ const designationOptions = reactive({
 const shiftAssignmentSupHeaders = reactive<TableSupHeaderT[]>([
     {text: ''},
     {text: ''},
-    {text: ''},
-    {text: 'Employee Full Name', alignHeader: 'left'},
+    {text: 'Employee', colspan: 2, alignHeader: 'left'},
     {text: 'Employment', colspan: 2, alignHeader: 'left'},
     {text: '', colspan: 2},
     {text: 'Shift', colspan: 4},
@@ -287,13 +282,12 @@ const shiftAssignmentHeaders = reactive<TableHeaderT[]>([
     { text: '#', value: 'row_number'},
     { text: '', value: 'actions'},
     { text: 'Employee #', value: 'employee_number', alignData: 'left'},
-    { text: 'Family, Middle, Given', value: 'employee_full_name'},
+    { text: 'Name', value: 'employee_full_name'},
     { text: 'Status', value: 'employee_current_employment_profile'},
     { text: 'Type', value: 'employee_current_employment_type'},
     { text: 'Department', value: 'employee_department'},
     { text: 'Designation', value: 'employee_designation'},
     { text: 'Code', value: 'shift_code'},
-    { text: 'Name', value: 'shift_name'},
     { text: 'Start Date', value: 'shift_start_date'},
     { text: 'End Date', value: 'shift_end_date'},
 ]);

@@ -348,8 +348,7 @@ const designationOptions = reactive({
 
 const employeeSupHeaders = reactive<TableSupHeaderT[]>([
     {text: ''},
-    {text: ''},
-    {text: 'Employee Full Name', alignHeader: 'left'},
+    {text: 'Employee', colspan: 2, alignHeader: 'left'},
     {text: 'Employment', colspan: 2, alignHeader: 'left'},
     {text: '', colspan: 2},
     {text: 'Shift', colspan: 4},
@@ -358,7 +357,7 @@ const employeeSupHeaders = reactive<TableSupHeaderT[]>([
 const employeeHeaders = reactive<TableHeaderT[]>([
     { text: '#', value: 'row_number'},
     { text: 'Employee #', value: 'employee_number', alignData: 'left'},
-    { text: 'Family, Middle, Given', value: 'employee_full_name'},
+    { text: 'Name', value: 'employee_full_name'},
     { text: 'Status', value: 'employee_current_employment_profile'},
     { text: 'Type', value: 'employee_current_employment_type'},
     { text: 'Department', value: 'employee_department'},
