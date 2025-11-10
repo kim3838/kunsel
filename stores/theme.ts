@@ -36,7 +36,7 @@ export type CommonColorsT = {
 export const useThemeStore = defineStore('theme', {
     state: () => {
         return {
-            appTheme: 'green' as PaletteNames,
+            appTheme: 'blue' as PaletteNames,
             common: {
                 'default': {primary: '#777', secondary: '#e5e5e5'},
                 'success': {primary: '#4cb74c', secondary: '#ccffcc'},
