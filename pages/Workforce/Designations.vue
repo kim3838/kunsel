@@ -3,6 +3,27 @@
         <DefaultWrapper>
             <div class="mx-auto max-w-screen-2xl">
 
+                <form @submit.prevent="designationsExecute" class="space-y-2 p-[20px]">
+                    <div class="grid gap-2 grid-cols-3 sm:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-8">
+                        <div>
+                            <InputLabel :size="'sm'" value="Search" />
+                            <Input :disabled="disableActions" :size="'md'" ref="searchInput" v-model="filters.search.keyword" class="w-full" placeholder="Search" type="text"/>
+                        </div>
+                    </div>
+
+                    <div class="flex flex-row flex-wrap gap-2 items-center min-h-8">
+                        <Button class="w-min" ref="submitButton" type="submit" :disabled="disableActions" :size="'md'" :icon="disableActions ? 'eos-icons:loading' : 'mdi:data'" :label="disableActions ? 'Loading' : 'Load'"></Button>
+                        <RadioGroup
+                            class="scaffold-border px-2"
+                            :disabled="disableActions"
+                            :selections="viewMode.selection"
+                            :radio-key="`view_mode`"
+                            :size="'md'"
+                            :orientation="'horizontal'"
+                            v-model="viewMode.selected" />
+                    </div>
+                </form>
+
                 <DialogModal
                     :max-width="'410px'"
                     :show="creatingOrEditing"
@@ -42,20 +63,29 @@
                     </template>
                 </DialogModal>
 
-                <div class="space-y-2 p-[20px]">
-                    <div class="flex flex-row flex-wrap gap-2 items-center min-h-8">
-                        <Button class="inline-block" :icon="'mdi:plus'" :size="'sm'" :disabled="disableActions"  @click="create"/>
-                        <Button :variant="'outline'" :icon="'mdi:delete-outline'" class="inline-block" :size="'sm'" :disabled="disableActions" @click="deleteSelected"/>
-                        <Button :variant="'outline'" :icon="'ic:sharp-restart-alt'" class="inline-block" :size="'sm'" :disabled="disableActions" @click="designationsExecute"/>
-                        <UnorderedList
-                            v-if="disableActions"
-                            :icon="'eos-icons:loading'"
-                            :size="'md'"
-                            :label="'Please wait...'"/>
-                    </div>
-                </div>
-
                 <div class="px-[20px]">
+
+                    <div class="mb-2 flex flex-row flex-wrap gap-2 items-center min-h-8">
+                        <Button
+                            class="inline-block"
+                            :icon="'mdi:plus'"
+                            :size="'sm'"
+                            :disabled="disableActions"
+                            @click="create"/>
+
+                        <div class="scaffold-border px-2 font-[National_Park]">
+                            <span><span class="font-semibold">{{selectedDesignations.length}}</span> Selected</span>
+                        </div>
+
+                        <Button
+                            :variant="'outline'"
+                            :size="'sm'"
+                            :icon="'mdi:delete-outline'"
+                            :disabled="disableActions"
+                            :label="'Delete selected'"
+                            @click="confirmDeleteSelected()" />
+                    </div>
+
                     <DataTable
                         :headers="designationsHeaders"
                         :size="'lg'"
@@ -91,10 +121,11 @@
 <script setup lang="ts">
 import type {TableHeaderT, TableRowT} from "@/public/js/types/data";
 import {storeToRefs} from "pinia";
+import type {EnumOption, EnumSelection} from "@/public/js/common/type";
 
 useHead({titleTemplate: (titleChunk) => {return `${titleChunk} - Designations`}});
 definePageMeta({middleware: ['auth', 'admin-of-selected-company']});
-useLayout().setNavigationMode('solid', 'designations.vue');
+useLayout().setNavigationMode('solid');
 
 const {isAuthenticated} = useAuth();
 const {fetchDesignationSelections} = useCommon();
@@ -121,6 +152,33 @@ const designationsData = ref([]);
 const designationsPending = ref(false);
 const selectedDesignations = ref([]);
 
+let filters = reactive<{
+    page: number,
+    perPage: number,
+    search: {
+        keyword: string,
+        callback: ReturnType<typeof setTimeout> | number
+    }
+}>({
+    page: 1,
+    perPage: 10,
+    search: {
+        keyword: '',
+        callback: 1
+    }
+});
+
+const viewMode = reactive<{
+    selection: EnumSelection;
+    selected: number | null;
+}>({
+    selection: [
+        {text : 'Flex', value: DATA_VIEW_MODE.FLEX} as EnumOption,
+        {text : 'List', value: DATA_VIEW_MODE.LIST} as EnumOption,
+    ],
+    selected: DATA_VIEW_MODE.LIST as number
+});
+
 const designationsExecute = async () => {
 
     if(import.meta.server){return;}
@@ -132,6 +190,7 @@ const designationsExecute = async () => {
         params: {
             filters: {
                 'company_id': selectedAssociatedCompanyId.value,
+                'search' : filters.search.keyword,
             }
         }
     },{
@@ -173,6 +232,40 @@ const create = () => {
 const edit = (cell: TableRowT) => {
     creatingOrEditing.value = true;
     editPayload.value = cell;
+}
+
+const confirmDeleteSelected = () => {
+
+    const selectedIds = selectedDesignations.value;
+
+    if(selectedIds.length == 0){
+
+        useNuxtApp().$promptStore.setPrompt({
+            resetable: false,
+            icon: null,
+            title: `Validation Error`,
+            message: `No selected designation to delete.`,
+            action: {
+                callback: () => {},
+                label: 'Okay'
+            }
+        });
+
+        return false;
+    }
+
+    useNuxtApp().$promptStore.setPrompt({
+        resetable: true,
+        icon: null,
+        title: 'Confirm Action',
+        message: `Confirm delete selected designations?`,
+        action: {
+            callback: async () => {
+                await deleteSelected();
+            },
+            label: 'Yes'
+        }
+    });
 }
 
 const deleteSelected = async () => {
