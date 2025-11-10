@@ -197,7 +197,7 @@
                 ref="subNavigationRef"
                 tabindex="0"
                 class="max-w-screen-2xl w-full flex flex-wrap gap-y-2 justify-start focus:outline-none"
-                :class="[subNavigationOptions.length ? '' : '', subNavigationDropAlign == 'right' ? 'flex-row-reverse' : 'flex-row']">
+                :class="[subNavigationOptions.length ? '' : '', subNavigationDropAlignComputed]">
                 <span
                     class="flex"
                     :class="[subNavigationHeightClass]"
@@ -251,7 +251,7 @@ const isRouteActive = nuxtApp.$isRouteActive as (name: string | undefined) => bo
 const isRoutePathActive = nuxtApp.$isRoutePathActive as (path: string | undefined) => boolean;
 
 const {isAuthenticated, user} = useAuth();
-const {width: screenWidth} = useScreen();
+const {width: screenWidth, screenWidthBreakpoint} = useScreen();
 const navDrop = resolveComponent('navDrop');
 const navigationHeightModel = defineModel('navigationHeight');
 const navigation = useTemplateRef('navigation');
@@ -286,6 +286,14 @@ const updateSubNavigationOptions = (subNavigationPayload: {
 
     subNavigationRef?.value?.focus();
 }
+
+const subNavigationDropAlignComputed = computed(() => {
+
+    let rightDropAligned = subNavigationDropAlign.value == 'right';
+    let screenWidthLteLarge = screenWidth.value >= screenWidthBreakpoint['lg'];
+
+    return rightDropAligned && screenWidthLteLarge ? 'flex-row-reverse' : 'flex-row'
+});
 
 watch(subNavigationFocused, (focused) => {
 
