@@ -241,7 +241,7 @@ const scheduleHeaders = reactive<TableHeaderT[]>([
     { text: 'Is Flexible', value: 'is_flexible', alignData: 'left'},
     { text: 'Work Start Grace', value: 'work_start_grace', alignData: 'left'},
     { text: 'Lunch Start Grace', value: 'lunch_start_grace', alignData: 'left'},
-    { text: 'Overtime', value: 'overtime', alignData: 'left'},
+    { text: 'Max Overtime', value: 'overtime', alignData: 'left'},
 ]);
 const scheduleData = computed<TableRowT[]>(() => {
     return [

@@ -49,7 +49,7 @@
 
                 <DialogModal
                     :show="creatingOrEditing"
-                    :max-width="'1024px'"
+                    :max-width="'1280px'"
                     :closeable="false">
                     <template #title>
 
@@ -57,18 +57,22 @@
                     <template #content>
                         <div ref='modalContentContainer'>
 
-                            <div class="px-5 pt-2 mx-auto max-w-screen-lg">
+                            <div class="mx-auto max-w-screen-xl">
                                 <div class="text-lg font-header">
-                                    {{attendanceDate}}&nbsp;{{attendanceWeekday}} {{_get(editPayload, 'employee.number', '')}}&nbsp;{{_get(editPayload, 'employee.full_name', '')}}
+                                    {{attendanceDate}}&nbsp;{{attendanceWeekday}}&nbsp;Attendance
                                 </div>
+                                <div>
+                                    {{_get(editPayload, 'employee.number', '')}}&nbsp;{{_get(editPayload, 'employee.full_name', '')}}
+                                </div>
+
                             </div>
 
-                            <div class="p-3 pt-2 mx-auto max-w-screen-lg space-y-4">
+                            <div class="pt-2 mx-auto max-w-screen-xl space-y-4">
 
                                 <fieldset class="neutral-border px-2 pb-2 space-y-2">
                                     <legend class="text-lg font-header">Schedule</legend>
 
-                                    <div class="mx-auto max-w-screen-lg grid gap-2 grid-cols-3 sm:grid-cols-4 md:grid-cols-5">
+                                    <div class="mx-auto max-w-screen-xl grid gap-2 grid-cols-3 sm:grid-cols-4 md:grid-cols-5">
                                         <div class="col-span-2">
                                             <InputLabel :size="'md'" value="Work Period"/>
                                             <div class="text-lg">{{scheduleWorkPeriod}}</div>
@@ -91,7 +95,7 @@
                                 <fieldset class="neutral-border px-2 pb-2 space-y-2">
                                     <legend class="text-lg font-header">Attendance</legend>
 
-                                    <div class="mx-auto max-w-screen-lg grid gap-2 grid-cols-2 sm:grid-cols-3 md:grid-cols-4">
+                                    <div class="mx-auto max-w-screen-xl grid gap-2 grid-cols-2 sm:grid-cols-3 md:grid-cols-4">
                                         <div>
                                             <InputLabel :size="'sm'" value="First In"/>
                                             <InputWithIcon
@@ -146,7 +150,7 @@
                         </div>
                     </template>
                     <template #footer>
-                        <div class="mx-auto max-w-screen-lg">
+                        <div class="mx-auto max-w-screen-xl">
                             <div class="flex space-x-2 justify-between">
                                 <div class="space-x-2 inline-flex">
                                     <div class="space-x-2 inline-flex items-center">
