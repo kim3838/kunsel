@@ -131,7 +131,7 @@
                 <div class="px-[20px]">
 
                     <div class="mb-2 flex flex-row flex-wrap gap-2 items-center min-h-8">
-                        <Button @click="put" class="w-min" :disabled="disableActions" :size="'sm'" :icon="disableActions ? 'eos-icons:loading' : 'mdi:plus'" :label="disableActions ? 'Please wait' : ''"></Button>
+                        <Button @click="put(null)" class="w-min" :disabled="disableActions" :size="'sm'" :icon="disableActions ? 'eos-icons:loading' : 'mdi:plus'" :label="disableActions ? 'Please wait' : ''"></Button>
 
                         <Button
                             :variant="'outline'"
