@@ -16,5 +16,6 @@ export interface DateTimePickerPayloadT{
 export interface DateTimePickerOptionsT {
     id: string;
     type: string;
+    format?: string;
     selectedCallback: (payload: DateTimePickerPayloadT) => void;
 }

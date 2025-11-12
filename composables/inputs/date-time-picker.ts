@@ -32,9 +32,12 @@ export function dateTimePicker(options: DateTimePickerOptionsT[] = []) {
         await nextTick();
 
         _forEach(options, (option: DateTimePickerOptionsT) => {
+
             switch (option.type) {
                 case 'datetime':
                     //@ts-ignore
+                    let dateTimeFormat = option.format ?? 'YYYY-MM-DD HH:mm:ss';
+
                     $(`#${option.id}`).daterangepicker({
                         "singleDatePicker": true,
                         "showDropdowns": true,
@@ -44,13 +47,13 @@ export function dateTimePicker(options: DateTimePickerOptionsT[] = []) {
                         "autoApply": false,
                         "autoUpdateInput": false,
                         locale: {
-                            format: 'YYYY-MM-DD HH:mm:ss'
+                            format: dateTimeFormat
                         }
 
                     }).on('apply.daterangepicker', function (event: any, pickerOptions: DateRangePickerOptions) {
 
                         option.selectedCallback({
-                            value: pickerOptions.startDate.format('YYYY-MM-DD HH:mm:ss')
+                            value: pickerOptions.startDate.format(dateTimeFormat)
                         });
                     });
                     break;
