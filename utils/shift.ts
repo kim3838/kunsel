@@ -20,3 +20,9 @@ export const  SHIFT_HOLIDAY_POLICY_NAME: StringEnumInterface = {
     [SHIFT_HOLIDAY_POLICY.DAY_OFF as number] : 'Day off',
     [SHIFT_HOLIDAY_POLICY.ATTENDANCE_REQUIRED as number] : 'Attendance required',
 }
+
+export const  SHIFT_BREAKDOWN_SPLIT: NumericEnumInterface = {
+    WORK : 100,
+    LUNCH : 200,
+    OVERTIME : 300,
+}
