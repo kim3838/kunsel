@@ -122,7 +122,7 @@ watch(screenWidth, value => {
 .primary-navigation-parent {
     background-color: v-bind(navigationBackground) !important;
     left: 0;
-    right: 5px;
+    right: var(--scrollbar-width);
     z-index: 30;
 }
 </style>
