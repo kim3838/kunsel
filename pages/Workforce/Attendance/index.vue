@@ -67,36 +67,36 @@
 
                             </div>
 
-                            <div class="pt-2 mx-auto max-w-screen-xl space-y-4">
+                            <div class="pt-2 mx-auto max-w-screen-xl flex flex-row gap-4">
 
-                                <fieldset class="neutral-border px-2 pb-2 space-y-2">
+                                <fieldset class="basis-1/3 neutral-border px-2 pb-2 space-y-2">
                                     <legend class="text-lg font-header">Schedule</legend>
 
-                                    <div class="mx-auto max-w-screen-xl grid gap-2 grid-cols-3 sm:grid-cols-4 md:grid-cols-5">
-                                        <div class="col-span-2">
-                                            <InputLabel :size="'md'" value="Work Period"/>
-                                            <div class="text-lg">{{scheduleWorkPeriod}}</div>
+                                    <div class="grid gap-2 grid-cols-1">
+                                        <div>
+                                            <InputLabel :size="'sm'" value="Work Period"/>
+                                            <div class="text-base">{{scheduleWorkPeriod}}</div>
                                         </div>
                                         <div v-if="attendanceShiftRequiresLunchOutAndIn">
-                                            <InputLabel :size="'md'" value="Lunch Period"/>
-                                            <div class="text-lg">{{scheduleLunchPeriod}}</div>
+                                            <InputLabel :size="'sm'" value="Lunch Period"/>
+                                            <div class="text-base">{{scheduleLunchPeriod}}</div>
                                         </div>
                                         <div>
-                                            <InputLabel :size="'md'" value="Total Duration"/>
-                                            <div class="text-lg">{{scheduleTotalDuration}}</div>
+                                            <InputLabel :size="'sm'" value="Total Duration"/>
+                                            <div class="text-base">{{scheduleTotalDuration}}</div>
                                         </div>
                                         <div>
-                                            <InputLabel :size="'md'" value="Is Flexible"/>
-                                            <div class="text-lg">{{scheduleIsFlexible}}</div>
+                                            <InputLabel :size="'sm'" value="Is Flexible"/>
+                                            <div class="text-base">{{scheduleIsFlexible}}</div>
                                         </div>
                                     </div>
                                 </fieldset>
 
-                                <fieldset class="neutral-border px-2 pb-2 space-y-2">
+                                <fieldset class="basis-2/3 neutral-border px-2 pb-2 space-y-2">
                                     <legend class="text-lg font-header">Attendance</legend>
 
-                                    <div class="mx-auto max-w-screen-xl grid gap-2 grid-cols-2 sm:grid-cols-3 md:grid-cols-4">
-                                        <div>
+                                    <div class="grid gap-2 grid-cols-6">
+                                        <div class="col-span-4 md:col-span-2">
                                             <InputLabel :size="'sm'" value="First In"/>
                                             <InputWithIcon
                                                 :disabled="modalDisableActions"
@@ -108,7 +108,7 @@
                                                 :id="`first_in`"
                                                 :size="'md'" />
                                         </div>
-                                        <div v-if="attendanceShiftRequiresLunchOutAndIn">
+                                        <div v-if="attendanceShiftRequiresLunchOutAndIn" class="col-span-4 md:col-span-2">
                                             <InputLabel :size="'sm'" value="Lunch Out"/>
                                             <InputWithIcon
                                                 :disabled="modalDisableActions"
@@ -120,7 +120,7 @@
                                                 :id="`lunch_out`"
                                                 :size="'md'" />
                                         </div>
-                                        <div v-if="attendanceShiftRequiresLunchOutAndIn">
+                                        <div v-if="attendanceShiftRequiresLunchOutAndIn" class="col-span-4 md:col-span-2">
                                             <InputLabel :size="'sm'" value="Lunch In"/>
                                             <InputWithIcon
                                                 :disabled="modalDisableActions"
@@ -132,7 +132,7 @@
                                                 :id="`lunch_in`"
                                                 :size="'md'" />
                                         </div>
-                                        <div>
+                                        <div class="col-span-4 md:col-span-2">
                                             <InputLabel :size="'sm'" value="Last Out"/>
                                             <InputWithIcon
                                                 :disabled="modalDisableActions"
@@ -152,15 +152,6 @@
                     <template #footer>
                         <div class="mx-auto max-w-screen-xl">
                             <div class="flex space-x-2 justify-between">
-                                <div class="space-x-2 inline-flex">
-                                    <div class="space-x-2 inline-flex items-center">
-                                        <UnorderedList
-                                            v-if="modalSubmitPending"
-                                            :icon="'eos-icons:loading'"
-                                            :size="'md'"
-                                            :label="'Please wait...'"/>
-                                    </div>
-                                </div>
                                 <div class="space-x-2 inline-flex items-center">
                                     <Button
                                         class="w-min"
@@ -178,6 +169,15 @@
                                         :disabled="modalDisableActions"
                                         :label="modalSaveButtonLabel"
                                         @click="modalSubmit"/>
+                                </div>
+                                <div class="space-x-2 inline-flex items-center">
+                                    <div class="space-x-2 inline-flex items-center">
+                                        <UnorderedList
+                                            v-if="modalSubmitPending"
+                                            :icon="'eos-icons:loading'"
+                                            :size="'md'"
+                                            :label="'Please wait...'"/>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -238,6 +238,9 @@
                         </template>
                         <template v-slot:cell.employee_full_name="{cell,slot}">
                             <div class="p-[3px]">{{cell.employee.full_name}}</div>
+                        </template>
+                        <template v-slot:cell.shift_code="{cell,slot}">
+                            <div class="p-[3px]">{{cell.shift.code}}</div>
                         </template>
                         <template v-slot:cell.shift_schedule_week_day_name="{cell,slot}">
                             <div class="p-[3px]">{{cell.shift_schedule.week_day_name}}</div>
@@ -312,6 +315,7 @@ const attendancesSupHeaders = reactive<TableSupHeaderT[]>([
     {text: ''},
     {text: ''},
     {text: 'Employee', colspan: 2,  alignHeader: 'left'},
+    {text: 'Shift', colspan: 1,  alignHeader: 'left'},
     {text: 'Schedule', colspan: 3,  alignHeader: 'left'},
     {text: 'Attendance', colspan: 6,  alignHeader: 'left'},
 ]);
@@ -321,6 +325,8 @@ const attendancesHeaders = reactive<TableHeaderT[]>([
     { text: '', value: 'actions'},
     { text: 'Employee #', value: 'employee_number', alignData: 'left'},
     { text: 'Name', value: 'employee_full_name', alignData: 'left'},
+
+    { text: 'Code', value: 'shift_code', alignData: 'left'},
 
     { text: 'Week Day', value: 'shift_schedule_week_day_name', alignData: 'left'},
     { text: 'Start', value: 'shift_schedule_work_start', alignData: 'left'},

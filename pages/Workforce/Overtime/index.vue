@@ -47,7 +47,177 @@
                     </div>
                 </form>
 
+                <DialogModal
+                    :show="creatingOrEditing"
+                    :max-width="'1280px'"
+                    :closeable="false">
+                    <template #title>
+
+                    </template>
+                    <template #content>
+                        <div ref='modalContentContainer'>
+
+                            <div v-if="!creatingOvertime || validOvertimeFoundations" class="mx-auto max-w-screen-xl">
+                                <div class="text-lg font-header">
+                                    {{attendanceDate}}&nbsp;{{attendanceWeekday}}&nbsp;{{creatingOvertime ? 'Create overtime' : 'Overtime'}}
+                                </div>
+                                <div>
+                                    {{attendanceEmployeeNumber}}&nbsp;{{attendanceEmployeeFullName}}
+                                </div>
+                            </div>
+
+                            <div class="pt-2 mx-auto max-w-screen-xl flex flex-row gap-4">
+
+                                <fieldset v-if="!creatingOvertime || validOvertimeFoundations" class="basis-1/3 neutral-border px-2 pb-2 space-y-2">
+                                    <legend class="text-lg font-header">Schedule</legend>
+
+                                    <div class="grid gap-2 grid-cols-1">
+                                        <div>
+                                            <InputLabel :size="'sm'" value="Work Period"/>
+                                            <div class="text-base">{{scheduleWorkPeriod}}</div>
+                                        </div>
+                                        <div>
+                                            <InputLabel :size="'sm'" value="Total Duration"/>
+                                            <div class="text-base">{{scheduleTotalDuration}}</div>
+                                        </div>
+                                        <div>
+                                            <InputLabel :size="'sm'" value="Attendance Last Out"/>
+                                            <div class="text-base">{{attendanceLastOut}}</div>
+                                        </div>
+                                        <div>
+                                            <InputLabel :size="'sm'" value="Overtime Max Duration"/>
+                                            <div class="text-base">{{overtimeMaxDuration}}</div>
+                                        </div>
+                                        <div>
+                                            <InputLabel :size="'sm'" value="Is Flexible"/>
+                                            <div class="text-base">{{scheduleIsFlexible}}</div>
+                                        </div>
+                                    </div>
+                                </fieldset>
+                                <div v-else class="basis-1/3 flex justify-center items-center">
+                                    Select Employee, Shift, and Attendance
+                                </div>
+
+                                <fieldset class="basis-2/3 neutral-border px-2 pb-2 space-y-2">
+                                    <legend class="text-lg font-header">{{creatingOvertime ? 'Create overtime' : 'Overtime'}}</legend>
+
+                                    <div class="grid gap-2 grid-cols-3">
+                                        <div class="col-span-3 md:col-span-2">
+                                            <InputLabel :size="'sm'" value="Employee (Number, Full Name)"/>
+                                            <SingleSelectPaginated
+                                                :key="employeeOptionsKey"
+                                                :disabled="modalDisableActions || !creatingOvertime"
+                                                drop-shadow
+                                                value-persist
+                                                :selection-max-viewable-line="10"
+                                                :label="'Select Employee'"
+                                                :size="'md'"
+                                                :icon="'mdi:badge-account-outline'"
+                                                :payload="employeeOptions"
+                                                @valueChange="selectedEmployeeChanged"/>
+                                        </div>
+                                        <div v-if="creatingOvertime" class="col-span-3 md:col-span-2">
+                                            <InputLabel :size="'sm'" value="Assigned Shift"/>
+                                            <SingleSelectPaginated
+                                                :key="assignedShiftSelectionsOptionsKey"
+                                                :disabled="modalDisableActions || !employeeOptions.selected"
+                                                drop-shadow
+                                                value-persist
+                                                :selection-max-viewable-line="10"
+                                                :label="'Select Assigned Shift'"
+                                                :icon="'mdi:calendar-cursor-outline'"
+                                                :size="'md'"
+                                                :payload="assignedShiftSelectionsOptions"
+                                                @valueChange="selectedShiftChanged"/>
+                                        </div>
+                                        <div class="col-span-3 md:col-span-1">
+                                            <InputLabel :size="'sm'" value="Attendance Date"/>
+                                            <InputWithIcon
+                                                :disabled="modalDisableActions || !creatingOvertime || !assignedShiftSelectionsOptions.selected"
+                                                high-light-all-text-on-focus
+                                                v-model="attendanceDate"
+                                                :override="{font_family_class: 'font-sans'}"
+                                                :icon="'mdi:calendar-cursor-outline'"
+                                                :id="`attendance_date`"
+                                                :size="'md'" />
+                                        </div>
+                                    </div>
+
+                                    <div v-if="$coreStore.hasNonPromptableServicePayloadMessage" class="block">
+                                        <Label invert :size="'sm'" :type="'danger'" :label="$coreStore.servicePayloadMessage" />
+                                    </div>
+
+                                    <div class="grid gap-2 grid-cols-1 md:grid-cols-3">
+                                        <div>
+                                            <InputLabel :size="'sm'" value="Start"/>
+                                            <InputWithIcon
+                                                :disabled="modalDisableActions || creatingAttendanceWithNonValidOvertimeFoundations"
+                                                high-light-all-text-on-focus
+                                                @valueChanged="overtimeStartChanged"
+                                                v-model="overtimeStart"
+                                                :override="{font_family_class: 'font-sans'}"
+                                                :icon="'mdi:calendar-cursor-outline'"
+                                                :id="`overtime_start`"
+                                                :size="'md'" />
+                                        </div>
+                                        <div>
+                                            <InputLabel :size="'sm'" value="End"/>
+                                            <InputWithIcon
+                                                :disabled="modalDisableActions || creatingAttendanceWithNonValidOvertimeFoundations"
+                                                high-light-all-text-on-focus
+                                                @valueChanged="overtimeEndChanged"
+                                                v-model="overtimeEnd"
+                                                :override="{font_family_class: 'font-sans'}"
+                                                :icon="'mdi:calendar-cursor-outline'"
+                                                :id="`overtime_end`"
+                                                :size="'md'" />
+                                        </div>
+                                    </div>
+                                </fieldset>
+                            </div>
+                        </div>
+                    </template>
+                    <template #footer>
+                        <div class="mx-auto max-w-screen-xl">
+                            <div class="flex space-x-2 justify-between">
+                                <div class="space-x-2 inline-flex items-center">
+                                    <Button
+                                        class="w-min"
+                                        :variant=" 'outline'"
+                                        :size="'md'"
+                                        :disabled="modalDisableActions"
+                                        :icon="'mdi:cancel'"
+                                        :label="'Cancel'"
+                                        @click="closeModal"/>
+                                    <Button
+                                        class="w-min"
+                                        :variant="'default'"
+                                        :size="'md'"
+                                        :icon="modalSubmitButtonIcon"
+                                        :disabled="modalDisableActions || creatingAttendanceWithNonValidOvertimeFoundations"
+                                        :label="modalSaveButtonLabel"
+                                        @click="modalSubmit"/>
+                                </div>
+                                <div class="space-x-2 inline-flex">
+                                    <div class="space-x-2 inline-flex items-center">
+                                        <UnorderedList
+                                            v-if="modalDisableActions"
+                                            :icon="'eos-icons:loading'"
+                                            :size="'md'"
+                                            :label="'Please wait...'"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </template>
+                </DialogModal>
+
                 <div class="px-[20px]">
+
+                    <div class="mb-2 flex flex-row flex-wrap gap-2 items-center min-h-8">
+                        <Button @click="put(null)" class="w-min" :disabled="disableActions" :size="'sm'" :icon="disableActions ? 'eos-icons:loading' : 'mdi:plus'" :label="disableActions ? 'Please wait' : ''"></Button>
+                    </div>
+
                     <div class="mb-2 flex flex-row flex-wrap gap-2 items-center min-h-8">
                         <div class="scaffold-border px-2 font-[National_Park]">
                             <span><span class="font-semibold">{{selectedOvertimes.length}}</span> Selected</span>
@@ -90,7 +260,7 @@
                                     :drop-align="'top'"
                                     :drop-justify="'right'"
                                     :drop-options="[
-
+                                        {type: 'action', icon: 'mdi:edit', title: 'Edit Overtime',callback: () => {put(cell);}},
                                     ]">
                                 </NavDrop>
                             </div>
@@ -126,6 +296,9 @@
 <script setup lang="ts">
 import type {DataTableMeta, TableHeaderT, TableRowT, TableSupHeaderT} from "@/public/js/types/data";
 import type {EnumOption, EnumSelection} from "@/public/js/common/type";
+import type {SelectDataType} from "@/public/js/types/form";
+import type {AttendanceT} from "@/public/js/types/attendance";
+import type {DateTimePickerOptionsT} from "@/public/js/datetimepicker/type";
 import {storeToRefs} from "pinia";
 
 useHead({titleTemplate: (titleChunk) => {return `${titleChunk} - Overtime`}});
@@ -137,6 +310,7 @@ const nuxtApp = useNuxtApp();
 const {render} = dateTimePicker();
 const clientReadyState = useClientReadyState();
 const common = useCommon();
+const coreStore = useCoreStore();
 const formStore = nuxtApp.$formStore;
 const {
     updatedAssociatedCompanyFlag
@@ -169,6 +343,18 @@ const rebuildSelections = (selection: string[] = []) => {
     if(_isEmpty(selection) || selection.indexOf('designation') >= 0){
         common.rebuildSelectionsOnSelectedCompanyChanged(
             designationOptions, designationOptionsKey, SELECT.MULTI_STATIC, companyOrganizationSelections.value.designations
+        );
+    }
+
+    if(_isEmpty(selection) || selection.indexOf('employee') >= 0){
+        common.rebuildSelectionsOnSelectedCompanyChanged(
+            employeeOptions, employeeOptionsKey, SELECT.SINGLE_PAGINATED
+        );
+    }
+
+    if(_isEmpty(selection) || selection.indexOf('assigned_shift') >= 0){
+        common.rebuildSelectionsOnSelectedCompanyChanged(
+            assignedShiftSelectionsOptions, assignedShiftSelectionsOptionsKey, SELECT.SINGLE_PAGINATED
         );
     }
 }
@@ -479,6 +665,469 @@ const stagedOvertime = ref<{
 const creatingOrEditing = ref(false);
 const createEditPending = ref(false);
 const editPayload = ref({});
+
+const put = (row: TableRowT | null = null) => {
+
+    if(row){
+        editPayload.value = row;
+
+        stagedOvertime.value = {
+            'id': _get(editPayload.value, 'id', null),
+            'ulid': _get(editPayload.value, 'ulid', null),
+        };
+
+        scheduleWorkPeriod.value = _get(editPayload.value, 'shift_schedule.work_start', '') + ' - ' + _get(editPayload.value, 'shift_schedule.work_end', '') + '(' + _get(editPayload.value, 'shift_schedule.timezone', '')  + ')';
+        scheduleTotalDuration.value = _get(editPayload.value, 'shift_schedule.total_work_hours_with_breaks', '');
+        scheduleIsFlexible.value = _get(editPayload.value, 'shift_schedule.is_flexible', false) ? 'Yes' : 'No';
+        overtimeMaxDuration.value = _get(editPayload.value, 'shift.max_overtime_readable', '');
+        employeeOptions.selected = _get(editPayload.value, 'employee.id', null);
+        employeeOptionsKey.value++;
+        assignedShiftSelectionsOptions.selected = _get(editPayload.value, 'shift.id', null);
+        assignedShiftSelectionsOptionsKey.value++;
+        attendanceId.value = _get(editPayload.value, 'attendance.id', '');
+        attendanceEmployeeNumber.value = _get(editPayload.value, 'employee.number', '');
+        attendanceEmployeeFullName.value = _get(editPayload.value, 'employee.full_name', '');
+        attendanceDate.value = _get(editPayload.value, 'attendance.date', '');
+        attendanceWeekday.value = _get(editPayload.value, 'shift_schedule.week_day_name', '');
+        attendanceLastOut.value = _get(editPayload.value, 'attendance.last_out', '');
+        overtimeStart.value = _get(editPayload.value, 'start', '');
+        overtimeEnd.value = _get(editPayload.value, 'end', '');
+    } else {
+
+        scheduleWorkPeriod.value = '';
+        overtimeMaxDuration.value = '';
+        scheduleTotalDuration.value = '';
+        scheduleIsFlexible.value = '';
+        attendanceId.value = '';
+        attendanceEmployeeNumber.value = '';
+        attendanceEmployeeFullName.value = '';
+        attendanceDate.value = nuxtApp.$moment().format("YYYY-MM-DD");
+        attendanceWeekday.value = '';
+        attendanceLastOut.value = '';
+        validOvertimeFoundations.value = false;
+        overtimeStart.value = nuxtApp.$moment().format("YYYY-MM-DD HH:mm");
+        overtimeEnd.value = nuxtApp.$moment().format("YYYY-MM-DD HH:mm");
+    }
+
+    renderDatePickers();
+    creatingOrEditing.value = true;
+}
+
+const renderDatePickers = () => {
+
+    let overtimeDateTimePickers: DateTimePickerOptionsT[] = [
+        {
+            id: 'attendance_date',
+            type: 'date',
+            selectedCallback: (payload: {value: string}) => {
+                attendanceDate.value = payload.value;
+            }
+        },
+        {
+            id: 'overtime_start',
+            type: 'datetime',
+            format: 'YYYY-MM-DD HH:mm',
+            selectedCallback: (payload: {value: string}) => {
+                overtimeStart.value = payload.value;
+            }
+        },
+        {
+            id: 'overtime_end',
+            type: 'datetime',
+            format: 'YYYY-MM-DD HH:mm',
+            selectedCallback: (payload: {value: string}) => {
+                overtimeEnd.value = payload.value;
+            }
+        },
+    ];
+
+    let filtersAndAttendanceDatePickers = filtersDateTimePickers.value.concat(overtimeDateTimePickers);
+
+    render(filtersAndAttendanceDatePickers);
+}
+
+const creatingOvertime = computed(() => {
+    return stagedOvertime.value.id == null;
+});
+
+const scheduleWorkPeriod = ref('');
+const scheduleTotalDuration = ref('');
+const scheduleIsFlexible = ref('');
+const overtimeMaxDuration = ref('');
+const attendanceId = ref<string | number>('');
+const attendanceEmployeeNumber = ref('');
+const attendanceEmployeeFullName = ref('');
+const attendanceDate = ref('');
+const attendanceWeekday = ref('');
+const attendanceLastOut = ref('');
+const validOvertimeFoundations = ref(false);
+const overtimeStart = ref('');
+const overtimeEnd = ref('');
+
+const resetEditable = () => {
+    stagedOvertime.value = {
+        'id': null,
+        'ulid': null,
+    };
+    editPayload.value = {};
+    employeeOptions.selected = null;
+    employeeOptionsKey.value++;
+    assignedShiftSelectionsOptions.selected = null;
+    assignedShiftSelectionsOptionsKey.value++;
+    scheduleWorkPeriod.value = '';
+    scheduleTotalDuration.value = '';
+    scheduleIsFlexible.value = '';
+    overtimeMaxDuration.value = '';
+    attendanceId.value = '';
+    attendanceEmployeeNumber.value = '';
+    attendanceEmployeeFullName.value = '';
+    attendanceDate.value = '';
+    attendanceWeekday.value = '';
+    attendanceLastOut.value = '';
+    validOvertimeFoundations.value = false;
+    overtimeStart.value = '';
+    overtimeEnd.value = '';
+}
+
+const overtimeStartChanged = (value: string) => {
+    let dateValid = nuxtApp.$moment(value.trim(), "YYYY-MM-DD HH:mm:ss", true).isValid();
+
+    if(!dateValid){
+        overtimeStart.value = nuxtApp.$moment().format("YYYY-MM-DD HH:mm:ss")
+    }
+}
+
+const overtimeEndChanged = (value: string) => {
+    let dateValid = nuxtApp.$moment(value.trim(), "YYYY-MM-DD HH:mm:ss", true).isValid();
+
+    if(!dateValid){
+        overtimeEnd.value = nuxtApp.$moment().format("YYYY-MM-DD HH:mm:ss")
+    }
+}
+
+const employeeOptionsKey = shallowRef(0);
+const employeeOptions = reactive({
+    fetch: {
+        url: '/api/employee-selections',
+        filters: {
+            company_id: selectedAssociatedCompanyId.value,
+            search: {
+                keyword: '',
+                callback: 1
+            }
+        }
+    },
+    selected: null,
+});
+
+const selectedEmployeeChanged = (selectedEmployee: SelectDataType) => {
+
+    if(creatingOvertime.value){
+
+        if(selectedEmployee){
+            assignedShiftSelectionsOptions.fetch.filters.employee_id = selectedEmployee.value as number;
+            assignedShiftSelectionsOptions.selected = null;
+            assignedShiftSelectionsOptionsKey.value++;
+        } else {
+            assignedShiftSelectionsOptions.fetch.filters.employee_id = null;
+            assignedShiftSelectionsOptions.selected = null;
+            assignedShiftSelectionsOptionsKey.value++;
+        }
+    }
+}
+const selectedShiftChanged = async (selectedShift: SelectDataType) => {
+
+    if(creatingOvertime.value && employeeOptions.selected && assignedShiftSelectionsOptions.selected){
+        await creatingAttendanceInitializedAttendanceDate(attendanceDate.value);
+    }
+}
+
+const assignedShiftSelectionsOptionsKey = shallowRef(0);
+const assignedShiftSelectionsOptions = reactive({
+    fetch: {
+        url: '/api/shift-assignment-selections',
+        filters: {
+            employee_id: employeeOptions.selected as number | null,
+            company_id: selectedAssociatedCompanyId.value,
+            search: {
+                keyword: '',
+                callback: 1
+            }
+        }
+    },
+    selected: null,
+});
+
+watch(attendanceDate, async (newAttendanceDate) => {
+
+    if(creatingOvertime.value && employeeOptions.selected && assignedShiftSelectionsOptions.selected){
+        await creatingAttendanceInitializedAttendanceDate(newAttendanceDate);
+    }
+});
+
+const creatingAttendanceWithNonValidOvertimeFoundations = computed(() => {
+    return creatingOvertime.value && !validOvertimeFoundations.value;
+});
+
+const creatingAttendanceInitializedAttendanceDate = async (value: string) => {
+
+    if(creatingOvertime.value){
+
+        let _attendanceData: AttendanceT[] = [];
+        let _attendanceOvertime = null;
+        let _attendanceDetails: any[] = [];
+        let _attendanceMeta = {
+            pagination: {
+                total: 0,
+                count: 0,
+                per_page: 0,
+                current_page: 0,
+                total_pages: 0
+            }
+        };
+
+        modalLoading.value = true;
+
+        await laraFetch(`/api/attendances`, {
+            method: 'GET',
+            params: {
+                filters: {
+                    company_id: selectedAssociatedCompanyId.value,
+                    employee_ids: [employeeOptions.selected],
+                    attendance_shift_ids: [assignedShiftSelectionsOptions.selected],
+                    date_from: value,
+                    date_to: value,
+                }
+            }
+        }, {
+            onRequestError: () => {
+                modalLoading.value = false;
+            },
+            onResponse: () => {
+                modalLoading.value = false;
+            },
+            onSuccessResponse: async (request, options, response) => {
+                _attendanceData = _get(response, '_data.values.data', [])
+                _attendanceMeta = _get(response, '_data.values.meta', {
+                    pagination: {
+                        total: 0,
+                        count: 0,
+                        per_page: 0,
+                        current_page: 0,
+                        total_pages: 0
+                    }
+                });
+            }
+        }, false);
+
+        let _attendance = _attendanceData[0] as AttendanceT;
+
+        if(_attendanceMeta.pagination.total > 0){
+
+            modalLoading.value = true;
+
+            await laraFetch(`/api/attendance/${_get(_attendance, 'ulid', '')}`, {
+                method: 'GET',
+                params: {
+                    filters: {
+                        shift_breakdown_splits: [
+                            SHIFT_BREAKDOWN_SPLIT.WORK,
+                            SHIFT_BREAKDOWN_SPLIT.LUNCH,
+                        ]
+                    }
+                }
+            }, {
+                onRequestError: () => {
+                    modalLoading.value = false;
+                },
+                onResponse: () => {
+                    modalLoading.value = false;
+                },
+                onSuccessResponse: async (request, options, response) => {
+                    _attendanceDetails = _get(response, '_data.values.details', []);
+                    _attendanceOvertime = _get(response, '_data.values.overtime', null);
+                },
+            });
+        }
+
+        if(_attendanceMeta.pagination.total == 0 || !Boolean(_attendanceDetails.length)){
+            validOvertimeFoundations.value = false;
+
+            coreStore.setServiceError({
+                prompt: false,
+                payload: {
+                    message: 'No attendance found for the selected employee, shift, and date.'
+                }
+            });
+
+            return;
+
+        } else if(Boolean(_attendanceOvertime)){
+            validOvertimeFoundations.value = false;
+
+            coreStore.setServiceError({
+                prompt: false,
+                payload: {
+                    message: 'Attendance already has overtime'
+                }
+            });
+
+            return;
+
+        } else {
+
+            let _shiftMaxOvertime = parseFloat(_attendance.shift.max_overtime);
+            let _shiftScheduleIsFlexible = _attendance.shift_schedule.is_flexible;
+            let _attendanceLastOut = nuxtApp.$moment(`${_attendance.last_out}`);
+            let _lastAttendanceDetailSplit = _attendanceDetails[_attendanceDetails.length - 1];
+            let _lastScheduleWorkEnd = nuxtApp.$moment(`${_get(_lastAttendanceDetailSplit, 'date', '')} ${_get(_lastAttendanceDetailSplit, 'split_end', '')}`);
+
+            let _isLastOutLesserOrEqualToScheduleWorkEnd = _attendanceLastOut.isSameOrBefore(_lastScheduleWorkEnd);
+
+            console.log({
+                '_attendanceLastOut': _attendanceLastOut,
+                '_lastScheduleWorkEnd': _lastScheduleWorkEnd,
+                '_isLastOutLesserOrEqualToScheduleWorkEnd': _isLastOutLesserOrEqualToScheduleWorkEnd,
+            });
+
+            let preRequestErrors = [];
+
+            if(_shiftMaxOvertime <= 0){
+                preRequestErrors.push('Shift schedule has no overtime.')
+            }
+
+            if(_shiftScheduleIsFlexible){
+                preRequestErrors.push('Overtime cannot be applied to flexible shift schedule.')
+            }
+
+            if(preRequestErrors.length == 0) {
+
+                if(_isLastOutLesserOrEqualToScheduleWorkEnd){
+                    preRequestErrors.push('Unable to create overtime if last out does not exceed schedule work end.')
+                }
+            }
+
+            if(preRequestErrors.length > 0){
+
+                validOvertimeFoundations.value = false;
+
+                coreStore.setServiceError({
+                    prompt: false,
+                    payload: {
+                        message: preRequestErrors.join(', ')
+                    }
+                });
+            } else {
+
+                validOvertimeFoundations.value = true;
+
+                scheduleWorkPeriod.value = _get(_attendance, 'shift_schedule.work_start', '') + ' - ' + _get(_attendance, 'shift_schedule.work_end', '') + '(' + _get(_attendance, 'shift_schedule.timezone', '')  + ')';
+                scheduleTotalDuration.value = _get(_attendance, 'shift_schedule.total_work_hours_with_breaks', '');
+                scheduleIsFlexible.value = _get(_attendance, 'shift_schedule.is_flexible', false) ? 'Yes' : 'No';
+                overtimeMaxDuration.value = _get(_attendance, 'shift.max_overtime_readable', '');
+                attendanceId.value = _get(_attendance, 'id', '');
+                attendanceEmployeeNumber.value = _get(_attendance, 'employee.number', '');
+                attendanceEmployeeFullName.value = _get(_attendance, 'employee.full_name', '');
+                attendanceWeekday.value = _get(_attendance, 'shift_schedule.week_day_name', '');
+                attendanceLastOut.value = _get(_attendance, 'last_out', '');
+
+                overtimeStart.value = nuxtApp.$moment(`${attendanceDate.value} ${_get(_attendance, 'shift_schedule.work_end', '00:00')}`).format("YYYY-MM-DD HH:mm");
+                overtimeEnd.value = nuxtApp.$moment(_get(_attendance, 'last_out', '')).format("YYYY-MM-DD HH:mm");
+                renderDatePickers();
+            }
+
+        }
+    }
+}
+
+const closeModal = () => {
+    creatingOrEditing.value = false;
+    resetEditable();
+};
+
+const modalDisableActions = computed(()=>{
+    return  modalLoading.value || modalSubmitPending.value;
+});
+const modalLoading = ref(false);
+const modalSubmitPending = ref(false);
+
+const modalSubmitButtonIcon = computed(()=>{
+    const ICON = {
+        CREATE: 'mdi:plus',
+        EDIT: 'ic:sharp-save'
+    } as const;
+
+    const isEditMode = !creatingOvertime.value;
+
+    return isEditMode ? ICON.EDIT : ICON.CREATE;
+});
+const modalSaveButtonLabel = computed(()=>{
+    const LABEL = {
+        CREATE: `Create`,
+        EDIT: `Save`
+    } as const;
+
+    const isEditMode = !creatingOvertime.value;
+
+    return isEditMode ? LABEL.EDIT : LABEL.CREATE;
+});
+
+const modalSubmitPath = computed(() => {
+    if(!creatingOvertime.value){
+        return `/api/overtime/${stagedOvertime.value.ulid}`;
+    } else {
+        return `/api/overtime`
+    }
+});
+const modalSubmitAction = computed(() => {
+    if(!creatingOvertime.value){
+        return `PATCH`;
+    } else {
+        return `POST`;
+    }
+});
+const modalForm = computed(()=>{
+    return {
+        id: stagedOvertime.value.id,
+        ulid: stagedOvertime.value.ulid,
+        company_id: selectedAssociatedCompanyId.value,
+        attendance_id: attendanceId.value,
+        date: attendanceDate.value,
+        start: nuxtApp.$moment(overtimeStart.value).format("YYYY-MM-DD HH:mm"),
+        end: nuxtApp.$moment(overtimeEnd.value).format("YYYY-MM-DD HH:mm"),
+    }
+})
+const modalSubmit = async() => {
+    modalSubmitPending.value = true;
+
+    await laraFetch(modalSubmitPath.value, {
+        method: modalSubmitAction.value,
+        body: modalForm.value,
+    }, {
+        onRequestError: () => {
+            modalSubmitPending.value = false;
+        },
+        onResponse: () => {
+            modalSubmitPending.value = false;
+        },
+        onSuccessResponse: async (request, options, response) => {
+
+            useNuxtApp().$promptStore.setPrompt({
+                resetable: false,
+                icon: null,
+                title: `Request successful`,
+                message: `Overtime ${creatingOvertime.value ? 'created' : 'updated'}.`,
+                action: {
+                    callback: () => {},
+                    label: 'Okay'
+                }
+            });
+
+            closeModal();
+            await overtimesExecute();
+        },
+    });
+}
 </script>
 
 <style scoped>
