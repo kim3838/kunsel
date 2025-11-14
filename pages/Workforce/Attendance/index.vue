@@ -722,6 +722,7 @@ const loadEditable = () => {
         {
             id: 'first_in',
             type: 'datetime',
+            format: 'YYYY-MM-DD HH:mm',
             selectedCallback: (payload: {value: string}) => {
                 attendanceFirstIn.value = payload.value;
             }
@@ -730,12 +731,14 @@ const loadEditable = () => {
             {
                 id: 'lunch_out',
                 type: 'datetime',
+                format: 'YYYY-MM-DD HH:mm',
                 selectedCallback: (payload: {value: string}) => {
                     attendanceLunchOut.value = payload.value;
                 }
             },{
                 id: 'lunch_in',
                 type: 'datetime',
+                format: 'YYYY-MM-DD HH:mm',
                 selectedCallback: (payload: {value: string}) => {
                     attendanceLunchIn.value = payload.value;
                 }
@@ -744,6 +747,7 @@ const loadEditable = () => {
         {
             id: 'last_out',
             type: 'datetime',
+            format: 'YYYY-MM-DD HH:mm',
             selectedCallback: (payload: {value: string}) => {
                 attendanceLastOut.value = payload.value;
             }
