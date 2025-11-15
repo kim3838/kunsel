@@ -3,7 +3,7 @@
         <LandingWrapper>
             <div class="mx-auto space-y-2 py-24">
 
-                <div v-if="true" class="max-w-screen-lg mx-auto space-y-2">
+                <div v-if="false" class="max-w-screen-lg mx-auto space-y-2">
                     customList: {{customList}}<br><br>
                     datePickersComputed: {{datePickersComputed}}<br><br>
                     <Button class="w-min" :label="'Render editing rows'" @click="renderEditingRowsDates" />
@@ -719,6 +719,56 @@
                             :icon="'emojione-monotone:japanese-no-vacancy-button'"/>
                     </div>
                 </div>
+
+                <!-- Keyed Paginated Single and MultiSelect -->
+                <div v-if="true" class="mt-6 grid gap-2 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
+                    <div class="block gap-2 grid grid-cols-2">
+                        <div class="col-span-2">
+                            exceptHolidayOptions.selected: {{exceptHolidayOptions.selected}}<br>
+                            exceptHolidayOptionsKey: {{exceptHolidayOptionsKey}}<br>
+                        </div>
+                        <div class="col-span-2">
+                            <InputLabel :size="'md'" value="Paginated Multi Select" />
+                            <MultiSelectPaginated
+                                :key="exceptHolidayOptionsKey"
+                                drop-shadow
+                                :selection-max-viewable-line="10"
+                                :label="'Select Holiday to Exclude'"
+                                :size="'md'"
+                                :icon="'tdesign:component-checkbox'"
+                                :payload="exceptHolidayOptions"/>
+                        </div>
+                        <div>
+                            <Button :label="'Set Selected'" @click="exceptHolidayOptions.selected = [1,2]" />
+                        </div>
+                        <div>
+                            <Button :label="'Increment Key'" @click="exceptHolidayOptionsKey++" />
+                        </div>
+                    </div>
+                    <div class="block gap-2 grid grid-cols-2">
+                        <div class="col-span-2">
+                            anotherExceptHolidayOptions.selected: {{anotherExceptHolidayOptions.selected}}<br>
+                            anotherExceptHolidayOptionsKey: {{anotherExceptHolidayOptionsKey}}
+                        </div>
+                        <div class="col-span-2">
+                            <InputLabel :size="'md'" value="Paginated Single Select" />
+                            <SingleSelectPaginated
+                                :key="anotherExceptHolidayOptionsKey"
+                                :value-persist="true"
+                                :selection-max-viewable-line="10"
+                                :label="'Select Holiday to Exclude'"
+                                :size="'md'"
+                                :payload="anotherExceptHolidayOptions"
+                                :icon="'tdesign:component-checkbox'"/>
+                        </div>
+                        <div>
+                            <Button :label="'Set Selected'" @click="anotherExceptHolidayOptions.selected = 1" />
+                        </div>
+                        <div>
+                            <Button :label="'Increment Key'" @click="anotherExceptHolidayOptionsKey++" />
+                        </div>
+                    </div>
+                </div>
             </div>
         </LandingWrapper>
     </div>
@@ -827,6 +877,36 @@ const carouselBreakpoints = ref({
 });
 const carouselTrendingItem = ref(0);
 const carouselTrendingItems = ref(dataPayload['carousel']['trendingItems']);
+
+const exceptHolidayOptionsKey = shallowRef(0);
+const exceptHolidayOptions = reactive({
+    fetch: {
+        url: '/api/holiday-selections',
+        filters: {
+            company_id: 4,
+            search: {
+                keyword: '',
+                callback: 1
+            }
+        }
+    },
+    selected: [],
+})
+
+const anotherExceptHolidayOptionsKey = shallowRef(0);
+const anotherExceptHolidayOptions = reactive({
+    fetch: {
+        url: '/api/holiday-selections',
+        filters: {
+            company_id: 4,
+            search: {
+                keyword: '',
+                callback: 1
+            }
+        }
+    },
+    selected: null,
+})
 
 let multiSelectPrototypePayload = reactive(dataPayload['prototype']['multiSelectPrototypePayload']);
 let singleSelectPrototypePayload = reactive(dataPayload['prototype']['singleSelectPrototypePayload']);
