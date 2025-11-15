@@ -44,3 +44,13 @@ export type AttendancePreImportT = {
     lunch_in: string | null,
     last_out: string,
 } & ImportRow;
+
+export type OvertimePreImportT = {
+    employee_id: int,
+    shift_id: int,
+    employee_number: string,
+    shift_code: string,
+    attendance_date: string,
+    overtime_start: string,
+    overtime_end: string,
+} & ImportRow;

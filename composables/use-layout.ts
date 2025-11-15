@@ -411,6 +411,13 @@ export const useLayout = () => {
                             to: '/import/attendance',
                             route_active: 'import-attendance'
                         },
+                        {
+                            key: 'import/overtime',
+                            type: 'link',
+                            title: 'Overtime',
+                            to: '/import/overtime',
+                            route_active: 'import-overtime'
+                        },
                     ],
                 }] : []) as NavigationLinkInterface[],
             ],
