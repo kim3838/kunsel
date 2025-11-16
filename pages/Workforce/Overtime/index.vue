@@ -153,7 +153,7 @@
                                             <InputWithIcon
                                                 :disabled="modalDisableActions || creatingAttendanceWithNonValidOvertimeFoundations"
                                                 high-light-all-text-on-focus
-                                                @valueChanged="overtimeStartChanged"
+                                                readonly
                                                 v-model="overtimeStart"
                                                 :override="{font_family_class: 'font-sans'}"
                                                 :icon="'mdi:calendar-cursor-outline'"
@@ -165,7 +165,7 @@
                                             <InputWithIcon
                                                 :disabled="modalDisableActions || creatingAttendanceWithNonValidOvertimeFoundations"
                                                 high-light-all-text-on-focus
-                                                @valueChanged="overtimeEndChanged"
+                                                readonly
                                                 v-model="overtimeEnd"
                                                 :override="{font_family_class: 'font-sans'}"
                                                 :icon="'mdi:calendar-cursor-outline'"

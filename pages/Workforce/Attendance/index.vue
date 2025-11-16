@@ -101,7 +101,7 @@
                                             <InputWithIcon
                                                 :disabled="modalDisableActions"
                                                 high-light-all-text-on-focus
-                                                @valueChanged="attendanceFirstInChanged"
+                                                readonly
                                                 v-model="attendanceFirstIn"
                                                 :override="{font_family_class: 'font-sans'}"
                                                 :icon="'mdi:calendar-cursor-outline'"
@@ -113,7 +113,7 @@
                                             <InputWithIcon
                                                 :disabled="modalDisableActions"
                                                 high-light-all-text-on-focus
-                                                @valueChanged="attendanceLunchOutChanged"
+                                                readonly
                                                 v-model="attendanceLunchOut"
                                                 :override="{font_family_class: 'font-sans'}"
                                                 :icon="'mdi:calendar-cursor-outline'"
@@ -125,7 +125,7 @@
                                             <InputWithIcon
                                                 :disabled="modalDisableActions"
                                                 high-light-all-text-on-focus
-                                                @valueChanged="attendanceLunchInChanged"
+                                                readonly
                                                 v-model="attendanceLunchIn"
                                                 :override="{font_family_class: 'font-sans'}"
                                                 :icon="'mdi:calendar-cursor-outline'"
@@ -137,7 +137,7 @@
                                             <InputWithIcon
                                                 :disabled="modalDisableActions"
                                                 high-light-all-text-on-focus
-                                                @valueChanged="attendanceLastOutChanged"
+                                                readonly
                                                 v-model="attendanceLastOut"
                                                 :override="{font_family_class: 'font-sans'}"
                                                 :icon="'mdi:calendar-cursor-outline'"
