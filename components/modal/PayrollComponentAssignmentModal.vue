@@ -145,9 +145,14 @@
 
 <script setup lang="ts">
 import {storeToRefs} from "pinia";
+import type {EnumSelection, StringEnumInterface} from "@/public/js/common/type";
 
 const coreStore = useCoreStore();
 const nuxtApp = useNuxtApp();
+const $enumerableOption = nuxtApp.$enumerableOption as (enumerable: StringEnumInterface, value: number) => {
+    text: string,
+    value: number
+};
 const moment = useNuxtApp().$moment;
 const {payrollComponentPaySelections} = useCommon();
 const {render} = dateTimePicker();
@@ -202,15 +207,14 @@ const props = defineProps({
     },
 });
 
-const amountableStartSelection = reactive([
-    {text : AMOUNTABLE_PAYROLL_COMPONENT_START_NAME[AMOUNTABLE_PAYROLL_COMPONENT_START.NOT_SPECIFIED], value: AMOUNTABLE_PAYROLL_COMPONENT_START.NOT_SPECIFIED},
-    {text : AMOUNTABLE_PAYROLL_COMPONENT_START_NAME[AMOUNTABLE_PAYROLL_COMPONENT_START.EMPLOYMENT_START_DATE], value: AMOUNTABLE_PAYROLL_COMPONENT_START.EMPLOYMENT_START_DATE},
-    {text : AMOUNTABLE_PAYROLL_COMPONENT_START_NAME[AMOUNTABLE_PAYROLL_COMPONENT_START.CUSTOM_DATE], value: AMOUNTABLE_PAYROLL_COMPONENT_START.CUSTOM_DATE},
+const amountableStartSelection = reactive<EnumSelection>([
+    $enumerableOption(AMOUNTABLE_PAYROLL_COMPONENT_START_NAME, AMOUNTABLE_PAYROLL_COMPONENT_START.NOT_SPECIFIED as number),
+    $enumerableOption(AMOUNTABLE_PAYROLL_COMPONENT_START_NAME, AMOUNTABLE_PAYROLL_COMPONENT_START.CUSTOM_DATE as number),
 ]);
 
-const amountableEndSelection = reactive([
-    {text : AMOUNTABLE_PAYROLL_COMPONENT_END_NAME[AMOUNTABLE_PAYROLL_COMPONENT_END.NOT_SPECIFIED], value: AMOUNTABLE_PAYROLL_COMPONENT_END.NOT_SPECIFIED},
-    {text : AMOUNTABLE_PAYROLL_COMPONENT_END_NAME[AMOUNTABLE_PAYROLL_COMPONENT_END.CUSTOM_DATE], value: AMOUNTABLE_PAYROLL_COMPONENT_END.CUSTOM_DATE},
+const amountableEndSelection = reactive<EnumSelection>([
+    $enumerableOption(AMOUNTABLE_PAYROLL_COMPONENT_END_NAME, AMOUNTABLE_PAYROLL_COMPONENT_END.NOT_SPECIFIED as number),
+    $enumerableOption(AMOUNTABLE_PAYROLL_COMPONENT_END_NAME, AMOUNTABLE_PAYROLL_COMPONENT_END.CUSTOM_DATE as number),
 ]);
 
 const {width: contentContainerWidth, height: contentContainerHeight} = useElementSize(useTemplateRef('contentContainer'));
