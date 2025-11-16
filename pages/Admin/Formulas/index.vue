@@ -101,10 +101,17 @@
 
 <script setup lang="ts">
 import type {DataTableMeta, TableHeaderT, TableRowT} from "@/public/js/types/data";
+import type {StringEnumInterface} from "@/public/js/common/type";
 
 useHead({titleTemplate: (titleChunk) => {return `${titleChunk} - Formulas`}});
 definePageMeta({middleware: ['auth', 'super-admin']});
 useLayout().setNavigationMode('solid');
+
+const nuxtApp = useNuxtApp();
+const $enumerableOption = nuxtApp.$enumerableOption as (enumerable: StringEnumInterface, value: number) => {
+    text: string,
+    value: number
+};
 
 const formulasHeaders = reactive<TableHeaderT[]>([
     { text: '', value: 'actions', alignData: 'left'},
@@ -132,37 +139,37 @@ const formulas = reactive<{
 const formulableOptions = reactive({
     search: '',
     selection: [
-        {text : FORMULABLE_NAME[FORMULABLE.EARNINGS], value: FORMULABLE.EARNINGS},
-        {text : FORMULABLE_NAME[FORMULABLE.DEDUCTIONS], value: FORMULABLE.DEDUCTIONS},
-        {text : FORMULABLE_NAME[FORMULABLE.TAXABLE_INCOME], value: FORMULABLE.TAXABLE_INCOME},
-        {text : FORMULABLE_NAME[FORMULABLE.NON_TAXABLE_INCOME], value: FORMULABLE.NON_TAXABLE_INCOME},
-        {text : FORMULABLE_NAME[FORMULABLE.INCOME_TAX], value: FORMULABLE.INCOME_TAX},
-        {text : FORMULABLE_NAME[FORMULABLE.NET_INCOME], value: FORMULABLE.NET_INCOME},
+        $enumerableOption(FORMULABLE_NAME, FORMULABLE.EARNINGS as number),
+        $enumerableOption(FORMULABLE_NAME, FORMULABLE.DEDUCTIONS as number),
+        $enumerableOption(FORMULABLE_NAME, FORMULABLE.TAXABLE_INCOME as number),
+        $enumerableOption(FORMULABLE_NAME, FORMULABLE.NON_TAXABLE_INCOME as number),
+        $enumerableOption(FORMULABLE_NAME, FORMULABLE.INCOME_TAX as number),
+        $enumerableOption(FORMULABLE_NAME, FORMULABLE.NET_INCOME as number),
     ],
     selected: []
 });
 const earningComponentOptions = reactive({
     search: '',
     selection: [
-        {text : COMPENSATION_NAME[COMPENSATION.BASIC_SALARY], value: COMPENSATION.BASIC_SALARY},
-        {text : COMPENSATION_NAME[COMPENSATION.OVERTIME], value: COMPENSATION.OVERTIME},
-        {text : COMPENSATION_NAME[COMPENSATION.BENEFIT], value: COMPENSATION.BENEFIT},
-        {text : COMPENSATION_NAME[COMPENSATION.REGULAR_ALLOWANCE], value: COMPENSATION.REGULAR_ALLOWANCE},
+        $enumerableOption(COMPENSATION_NAME, COMPENSATION.BASIC_SALARY as number),
+        $enumerableOption(COMPENSATION_NAME, COMPENSATION.OVERTIME as number),
+        $enumerableOption(COMPENSATION_NAME, COMPENSATION.BENEFIT as number),
+        $enumerableOption(COMPENSATION_NAME, COMPENSATION.REGULAR_ALLOWANCE as number),
     ],
     selected: []
 });
 const deductionComponentOptions = reactive({
     search: '',
     selection: [
-        {text : DEDUCTION_NAME[DEDUCTION.DEDUCTION], value: DEDUCTION.DEDUCTION},
-        {text : DEDUCTION_NAME[DEDUCTION.CONTRIBUTION], value: DEDUCTION.CONTRIBUTION},
+        $enumerableOption(DEDUCTION_NAME, DEDUCTION.DEDUCTION as number),
+        $enumerableOption(DEDUCTION_NAME, DEDUCTION.CONTRIBUTION as number),
     ],
     selected: []
 });
 const incomeTaxComponentOptions = reactive({
     search: '',
     selection: [
-        {text : INCOME_TAX_NAME[INCOME_TAX.COMPENSATION_TAX], value: INCOME_TAX.COMPENSATION_TAX},
+        $enumerableOption(INCOME_TAX_NAME, INCOME_TAX.COMPENSATION_TAX as number),
     ],
     selected: []
 });

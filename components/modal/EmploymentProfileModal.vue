@@ -118,8 +118,14 @@
 
 <script setup lang="ts">
 import {storeToRefs} from "pinia";
+import type {StringEnumInterface} from "@/public/js/common/type";
 
 const {$authStore} = useNuxtApp();
+const nuxtApp = useNuxtApp();
+const $enumerableOption = nuxtApp.$enumerableOption as (enumerable: StringEnumInterface, value: number) => {
+    text: string,
+    value: number
+};
 const moment = useNuxtApp().$moment;
 const {render} = dateTimePicker();
 const {screenWidthBreakpoint, width: screenWidth} = useScreen();
@@ -166,20 +172,20 @@ const loadingOverlayDimensionStyle = computed(() => {
 });
 
 const employmentStatusSelection = reactive([
-    {text : EMPLOYMENT_STATUS_NAME[EMPLOYMENT_STATUS.ACTIVE], value: EMPLOYMENT_STATUS.ACTIVE},
-    {text : EMPLOYMENT_STATUS_NAME[EMPLOYMENT_STATUS.INACTIVE], value: EMPLOYMENT_STATUS.INACTIVE},
+    $enumerableOption(EMPLOYMENT_STATUS_NAME, EMPLOYMENT_STATUS.ACTIVE as number),
+    $enumerableOption(EMPLOYMENT_STATUS_NAME, EMPLOYMENT_STATUS.INACTIVE as number),
 ]);
 
 const employmentTypeOptions = reactive({
     search: '',
     selection: [
-        {text : EMPLOYMENT_TYPE_NAME[EMPLOYMENT_TYPE.OJT], value: EMPLOYMENT_TYPE.OJT},
-        {text : EMPLOYMENT_TYPE_NAME[EMPLOYMENT_TYPE.INTERN], value: EMPLOYMENT_TYPE.INTERN},
-        {text : EMPLOYMENT_TYPE_NAME[EMPLOYMENT_TYPE.PROBATIONARY], value: EMPLOYMENT_TYPE.PROBATIONARY},
-        {text : EMPLOYMENT_TYPE_NAME[EMPLOYMENT_TYPE.FULL_TIME], value: EMPLOYMENT_TYPE.FULL_TIME},
-        {text : EMPLOYMENT_TYPE_NAME[EMPLOYMENT_TYPE.PART_TIME], value: EMPLOYMENT_TYPE.PART_TIME},
-        {text : EMPLOYMENT_TYPE_NAME[EMPLOYMENT_TYPE.CONTRACT], value: EMPLOYMENT_TYPE.CONTRACT},
-        {text : EMPLOYMENT_TYPE_NAME[EMPLOYMENT_TYPE.NOT_SPECIFIED], value: EMPLOYMENT_TYPE.NOT_SPECIFIED},
+        $enumerableOption(EMPLOYMENT_TYPE_NAME, EMPLOYMENT_TYPE.OJT as number),
+        $enumerableOption(EMPLOYMENT_TYPE_NAME, EMPLOYMENT_TYPE.INTERN as number),
+        $enumerableOption(EMPLOYMENT_TYPE_NAME, EMPLOYMENT_TYPE.PROBATIONARY as number),
+        $enumerableOption(EMPLOYMENT_TYPE_NAME, EMPLOYMENT_TYPE.FULL_TIME as number),
+        $enumerableOption(EMPLOYMENT_TYPE_NAME, EMPLOYMENT_TYPE.PART_TIME as number),
+        $enumerableOption(EMPLOYMENT_TYPE_NAME, EMPLOYMENT_TYPE.CONTRACT as number),
+        $enumerableOption(EMPLOYMENT_TYPE_NAME, EMPLOYMENT_TYPE.NOT_SPECIFIED as number),
     ]
 });
 
@@ -194,15 +200,14 @@ const stateEndOfEmploymentSelection = reactive([
 const endOfServiceTypeOptions = reactive({
     search: '',
     selection: [
-        {text : END_OF_SERVICE_TYPE_NAME[END_OF_SERVICE_TYPE.END_OF_CONTRACT], value: END_OF_SERVICE_TYPE.END_OF_CONTRACT},
-        {text : END_OF_SERVICE_TYPE_NAME[END_OF_SERVICE_TYPE.RESIGNED], value: END_OF_SERVICE_TYPE.RESIGNED},
-        {text : END_OF_SERVICE_TYPE_NAME[END_OF_SERVICE_TYPE.TERMINATED], value: END_OF_SERVICE_TYPE.TERMINATED},
-        {text : END_OF_SERVICE_TYPE_NAME[END_OF_SERVICE_TYPE.RETIRED], value: END_OF_SERVICE_TYPE.RETIRED},
-        {text : END_OF_SERVICE_TYPE_NAME[END_OF_SERVICE_TYPE.DEATH], value: END_OF_SERVICE_TYPE.DEATH},
-        {text : END_OF_SERVICE_TYPE_NAME[END_OF_SERVICE_TYPE.MEDICAL_SEPARATION], value: END_OF_SERVICE_TYPE.MEDICAL_SEPARATION},
-        {text : END_OF_SERVICE_TYPE_NAME[END_OF_SERVICE_TYPE.DISABILITY], value: END_OF_SERVICE_TYPE.DISABILITY},
-        {text : END_OF_SERVICE_TYPE_NAME[END_OF_SERVICE_TYPE.NOT_SPECIFIED], value: END_OF_SERVICE_TYPE.NOT_SPECIFIED},
-
+        $enumerableOption(END_OF_SERVICE_TYPE_NAME, END_OF_SERVICE_TYPE.END_OF_CONTRACT as number),
+        $enumerableOption(END_OF_SERVICE_TYPE_NAME, END_OF_SERVICE_TYPE.RESIGNED as number),
+        $enumerableOption(END_OF_SERVICE_TYPE_NAME, END_OF_SERVICE_TYPE.TERMINATED as number),
+        $enumerableOption(END_OF_SERVICE_TYPE_NAME, END_OF_SERVICE_TYPE.RETIRED as number),
+        $enumerableOption(END_OF_SERVICE_TYPE_NAME, END_OF_SERVICE_TYPE.DEATH as number),
+        $enumerableOption(END_OF_SERVICE_TYPE_NAME, END_OF_SERVICE_TYPE.MEDICAL_SEPARATION as number),
+        $enumerableOption(END_OF_SERVICE_TYPE_NAME, END_OF_SERVICE_TYPE.DISABILITY as number),
+        $enumerableOption(END_OF_SERVICE_TYPE_NAME, END_OF_SERVICE_TYPE.NOT_SPECIFIED as number),
     ]
 });
 
