@@ -1092,6 +1092,7 @@ const employeeAdditionalForms = (employee = null) => {
 
         let employeeEmploymentProfileFormBody: EmploymentProfileT = {
             employee_id: employeeId,
+            company_id: selectedAssociatedCompanyId.value,
             status: _get(employmentProfile, 'status.value', null),
             employment_type: _get(employmentProfile, 'employment_type.value', null),
             start_date: _get(employmentProfile, 'start_date', null),

@@ -18,6 +18,7 @@ export type EmployeePayrollComponentT = {
 
 export type EmploymentProfileT = {
     employee_id: string | number | null,
+    company_id: string | number | null,
     status: string | number | null,
     employment_type: string | number | null,
     start_date: string | number | null,
