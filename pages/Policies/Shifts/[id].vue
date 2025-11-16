@@ -77,6 +77,18 @@
                             <InputLabel :size="'sm'" value="Holiday Policy"/>
                             <SingleSelect :disabled="disableActions" value-persist drop-shadow :size="'md'" :options="shiftHolidayPolicyOptions"/>
                         </div>
+                        <div class="col-span-3 md:col-span-2">
+                            <InputLabel :size="'sm'" value="Except Holidays"/>
+                            <MultiSelectPaginated
+                                :key="exceptHolidayOptionsKey"
+                                :disabled="disableActions"
+                                drop-shadow
+                                :selection-max-viewable-line="10"
+                                :label="'Select Holiday to Exclude'"
+                                :size="'md'"
+                                :icon="'tdesign:component-checkbox'"
+                                :payload="exceptHolidayOptions"/>
+                        </div>
                     </div>
 
                     <div class="grid gap-2 grid-cols-3 sm:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
@@ -276,6 +288,20 @@ const shiftHolidayPolicyOptions = reactive({
     ],
     selected: SHIFT_HOLIDAY_POLICY.DAY_OFF
 });
+const exceptHolidayOptionsKey = shallowRef(0);
+const exceptHolidayOptions = reactive({
+    fetch: {
+        url: '/api/holiday-selections',
+        filters: {
+            company_id: selectedAssociatedCompanyId.value,
+            search: {
+                keyword: '',
+                callback: 1
+            }
+        }
+    },
+    selected: [],
+})
 const shiftWorkStartGraceTime = ref('0');
 const shiftRequireLunchTimeInAndOut = ref(0);
 const shiftRequireLunchTimeInAndOutSelection = reactive([
@@ -358,6 +384,8 @@ const fetchShift = async () => {
             shiftName.value = _get(response, '_data.values.shift.name', '');
             shiftTypeOptions.selected = _get(response, '_data.values.shift.type.value', null);
             shiftHolidayPolicyOptions.selected = _get(response, '_data.values.shift.holiday_policy.value', null);
+            exceptHolidayOptions.selected = _get(response, '_data.values.shift.except_holidays', []);
+            exceptHolidayOptionsKey.value++;
             shiftWorkStartGraceTime.value = _get(response, '_data.values.shift.work_start_grace_time', 0);
             shiftRequireLunchTimeInAndOut.value = _get(response, '_data.values.shift.require_lunch_time_in_and_out', 0);
             shiftLunchStartGraceTime.value = _get(response, '_data.values.shift.lunch_start_grace_time', 0);
@@ -513,6 +541,7 @@ const formBody = computed(() => {
         'name': shiftName.value,
         'type': shiftTypeOptions.selected,
         'holiday_policy': shiftHolidayPolicyOptions.selected,
+        'except_holidays' : exceptHolidayOptions.selected,
         'work_start_grace_time': shiftWorkStartGraceTime.value,
         'require_lunch_time_in_and_out': shiftRequireLunchTimeInAndOut.value,
         ...(shiftRequireLunchTimeInAndOut.value == 1 ? {
