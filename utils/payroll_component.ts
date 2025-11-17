@@ -28,8 +28,8 @@ export const FORMULABLE_MODEL_MAP_KEY: StringEnumInterface = {
 export const  COMPENSATION: NumericEnumInterface = {
     BASIC_SALARY : 100,
     REGULAR_ALLOWANCE : 101,
-    OVERTIME : 200,
-    BENEFIT : 300,
+    OVERTIME : 110,
+    BENEFIT : 120,
 }
 
 export const  COMPENSATION_NAME: StringEnumInterface = {
@@ -40,8 +40,8 @@ export const  COMPENSATION_NAME: StringEnumInterface = {
 }
 
 export const  DEDUCTION: NumericEnumInterface = {
-    DEDUCTION : 100,
-    CONTRIBUTION : 200
+    DEDUCTION : 200,
+    CONTRIBUTION : 210
 }
 
 export const  DEDUCTION_NAME: StringEnumInterface = {
@@ -50,7 +50,7 @@ export const  DEDUCTION_NAME: StringEnumInterface = {
 }
 
 export const  INCOME_TAX: NumericEnumInterface = {
-    COMPENSATION_TAX : 100
+    COMPENSATION_TAX : 300
 }
 
 export const  INCOME_TAX_NAME: StringEnumInterface = {
