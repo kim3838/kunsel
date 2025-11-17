@@ -397,9 +397,9 @@ const payrollComponentSubject = computed(()=>{
     if(props.payrollComponentFormulable == undefined){return '';}
 
     return {
-        [FORMULABLE.EARNINGS]: 'compensation',
-        [FORMULABLE.DEDUCTIONS]: 'deduction',
-        [FORMULABLE.INCOME_TAX]: 'income tax',
+        [FORMULABLE.EARNINGS as number]: 'compensation',
+        [FORMULABLE.DEDUCTIONS as number]: 'deduction',
+        [FORMULABLE.INCOME_TAX as number]: 'income tax',
         null: ''
     }[props.payrollComponentFormulable];
 });
