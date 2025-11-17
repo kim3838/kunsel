@@ -1,15 +1,15 @@
 
 export interface SelectValueInterface {
-    value: number
+    value: number | string
 }
 
 export type SelectDataType = SelectValueInterface & {
     text: string,
 }
 
-export type SelectSelectedT = number;
+export type SelectSelectedT = number | string;
 
-export type SelectSearchPoolT = number[];
+export type SelectSearchPoolT = (string | number)[];
 
 export type SelectionOffsetT = {
     origin: number | null;
