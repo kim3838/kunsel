@@ -525,38 +525,11 @@ const disableEmployeeIncomeTaxDataTable = computed(() => {
     return anyOfThePayrollComponentPending.value || proxyCreatingOrEditing.value || deletingPayrollComponent.value || props.disableActions;
 });
 
-//Fetch all employee payroll components
-
-const employeePayrollComponentsExecute = async () => {
-
-    if(import.meta.server || creatingEmployee.value){
-        emit('update:payrollComponentsPending', false);
-        return;
-    }
-
-    await laraFetch(`/api/employee-payroll-components/${employeeUlid.value}`, {
-        method: 'GET',
-    },{
-        onRequestError: () => {
-            emit('update:payrollComponentsPending', false);
-        },
-        onResponse: () => {
-            emit('update:payrollComponentsPending', false);
-        },
-        onSuccessResponse: async (request, options, response) => {
-            employeeCompensationData.value = _get(response, '_data.values.compensations.data', []);
-            employeeDeductionData.value = _get(response, '_data.values.deductions.data', []);
-            employeeIncomeTaxData.value = _get(response, '_data.values.income_taxes.data', []);
-
-            emit('update:employeeCompensationData', employeeCompensationData.value);
-            emit('update:employeeDeductionData', employeeDeductionData.value);
-            emit('update:employeeIncomeTaxData', employeeIncomeTaxData.value);
-        }
-    });
-}
-
+//Fetch all employee payroll components when not isolated and editing employee
 if(!props.isolated && !creatingEmployee.value){
-    await employeePayrollComponentsExecute();
+    await employeeCompensationExecute();
+    await employeeDeductionExecute();
+    await employeeIncomeTaxExecute();
 }
 
 
