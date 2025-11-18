@@ -17,6 +17,10 @@ export const companyOrganizationSelectionsState = () => {
             employee_groups: [],
             departments: [],
             designations: [],
+            payroll_component: {
+                names: [],
+                types: [],
+            }
         }
     });
 }
@@ -128,6 +132,40 @@ export const useCommon = () => {
         });
     }
 
+    const fetchPayrollComponentTypeSelections = async () => {
+        const {$authStore} = useNuxtApp();
+
+        await laraFetch("/api/employee-payroll-component-type-selections", {
+            method: 'GET',
+            params: {
+                filters: {
+                    'company_id': $authStore.selectedAssociatedCompanyId,
+                }
+            }
+        }, {
+            onSuccessResponse: async (request, options, response) => {
+                companyOrganizationSelections.value.payroll_component.types = _get(response, '_data.values.selection', []);
+            }
+        });
+    }
+
+    const fetchPayrollComponentNameSelections = async () => {
+        const {$authStore} = useNuxtApp();
+
+        await laraFetch("/api/employee-payroll-component-name-selections", {
+            method: 'GET',
+            params: {
+                filters: {
+                    'company_id': $authStore.selectedAssociatedCompanyId,
+                }
+            }
+        }, {
+            onSuccessResponse: async (request, options, response) => {
+                companyOrganizationSelections.value.payroll_component.names = _get(response, '_data.values.selection', []);
+            }
+        });
+    }
+
     const fetchOrganizationSelections = async () => {
 
         if(useAuth().isAuthenticated.value){
@@ -135,10 +173,16 @@ export const useCommon = () => {
                 employee_groups: [],
                 departments: [],
                 designations: [],
+                payroll_component: {
+                    names: [],
+                    types: [],
+                }
             };
             await fetchEmployeeGroupSelections();
             await fetchDepartmentSelections();
             await fetchDesignationSelections();
+            await fetchPayrollComponentTypeSelections();
+            await fetchPayrollComponentNameSelections();
         }
     }
 
@@ -183,6 +227,10 @@ export const useCommon = () => {
             employee_groups: [],
             departments: [],
             designations: [],
+            payroll_component: {
+                names: [],
+                types: [],
+            }
         };
     }
 
@@ -193,6 +241,8 @@ export const useCommon = () => {
         fetchEmployeeGroupSelections,
         fetchDepartmentSelections,
         fetchDesignationSelections,
+        fetchPayrollComponentTypeSelections,
+        fetchPayrollComponentNameSelections,
         fetchOrganizationSelections,
         rebuildSelectionsOnSelectedCompanyChanged,
         payrollComponentPaySelections,

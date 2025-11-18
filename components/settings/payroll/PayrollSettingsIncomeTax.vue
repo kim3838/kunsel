@@ -70,6 +70,7 @@ import type {Sequenceable, TableHeaderT} from "@/public/js/types/data";
 import type {SequenceablePayrollComponent} from "@/public/js/types/payroll-component";
 import {storeToRefs} from "pinia";
 const {isAuthenticated} = useAuth();
+const {fetchPayrollComponentNameSelections} = useCommon();
 const nuxtApp = useNuxtApp();
 const {
     updatedAssociatedCompanyFlag
@@ -173,6 +174,7 @@ const incomeTaxResolved = async () => {
     creatingOrEditing.value = false;
     editPayload.value = {};
     await incomeTaxesExecute();
+    await fetchPayrollComponentNameSelections();
 }
 
 const create = () => {
@@ -218,6 +220,7 @@ const deleteSelected = async () => {
     await incomeTaxesExecute();
     orderSequenceable(incomeTaxesData.value);
     await incomeTaxesReOrderExecute();
+    await fetchPayrollComponentNameSelections();
 
     deleting.value = false;
 }
