@@ -388,13 +388,14 @@ const creatingOrEditingPayrollComponentFormulable = ref<number | undefined>(unde
 const editPayrollComponentPayloadIndex = ref(-1);
 const payrollComponentEditPayload = ref({});
 const createOrEditPayrollComponent = (payrollComponent: number, payrollComponentAttributes = {}, rowIndex = -1) => {
-    proxyCreatingOrEditing.value = true;
     if(creatingEmployee.value){
         editPayrollComponentPayloadIndex.value = rowIndex;
     }
     creatingOrEditingPayrollComponentFormulable.value = payrollComponent;
 
     payrollComponentEditPayload.value = payrollComponentAttributes;
+
+    proxyCreatingOrEditing.value = true;
 };
 
 const anyOfThePayrollComponentPending = computed(() => {
