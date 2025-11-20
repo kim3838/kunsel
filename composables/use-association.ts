@@ -308,6 +308,10 @@ export const useAssociation = () => {
     const resetUserAssociationStates = async() => {
         companyAssignmentTypeIsAdmin.value = false;
         adminInAnyCompany.value = false;
+        associatedCompany.value = {
+            selection: [],
+            selected: null,
+        }
     }
 
     return {
