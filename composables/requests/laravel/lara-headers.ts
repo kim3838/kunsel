@@ -17,7 +17,7 @@ export const laraHeaders = () => {
         headers[CSRF_HEADER] = token.value;
     }
 
-    if(process.server){
+    if(import.meta.server){
         headers = {
             ...headers,
             ...useRequestHeaders(['cookie'])

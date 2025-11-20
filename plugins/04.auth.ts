@@ -4,7 +4,7 @@ export default defineNuxtPlugin({
     async setup(nuxtApp){
         const {user, ssrFetchUser} = useAuth();
 
-        const userAuthenticatedOrDuringClientSideRendering: Boolean = (user.value !== undefined || process.client);
+        const userAuthenticatedOrDuringClientSideRendering: Boolean = (user.value !== undefined || import.meta.client);
 
         if (userAuthenticatedOrDuringClientSideRendering) return;
 

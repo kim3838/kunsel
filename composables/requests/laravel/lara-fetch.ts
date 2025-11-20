@@ -20,7 +20,7 @@ export async function laraFetch<DataT, ErrorT>(
     //Re-fetch csrf token when performing modifying action
     const method = options?.method ? String(options.method).toLowerCase() : "";
 
-    if (process.client && ["post", "delete", "put", "patch"].includes(method)) {
+    if (import.meta.client && ["post", "delete", "put", "patch"].includes(method)) {
         await $fetch("/sanctum/csrf-cookie", {
             baseURL: baseURL,
             credentials: "include",
