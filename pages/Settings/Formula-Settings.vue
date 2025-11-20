@@ -147,6 +147,7 @@
 import {storeToRefs} from "pinia";
 import type {TableHeaderT} from "@/public/js/types/data";
 import type {CompanyFormulaSetting} from "@/public/js/types/formula";
+import type {StringEnumInterface} from "@/public/js/common/type";
 
 useHead({titleTemplate: (titleChunk) => {return `${titleChunk} - Formula Settings`}});
 definePageMeta({middleware: ['auth', 'admin-of-selected-company']});
@@ -158,6 +159,10 @@ const FormulaSettingsCaster = resolveComponent('FormulaSettingsCaster');
 
 const {isAuthenticated} = useAuth();
 const nuxtApp = useNuxtApp();
+const $enumerableOption = nuxtApp.$enumerableOption as (enumerable: StringEnumInterface, value: number) => {
+    text: string,
+    value: number
+};
 const {
     updatedAssociatedCompanyFlag
 } = storeToRefs(nuxtApp.$associationStore);
@@ -179,9 +184,9 @@ const formulaSettingsHeaders = reactive<TableHeaderT[]>([
 
 const formulableSelected = ref(FORMULABLE.EARNINGS);
 const formulableSelection = reactive([
-    {text : FORMULABLE_NAME[FORMULABLE.EARNINGS], value: FORMULABLE.EARNINGS},
-    {text : FORMULABLE_NAME[FORMULABLE.DEDUCTIONS], value: FORMULABLE.DEDUCTIONS},
-    {text : FORMULABLE_NAME[FORMULABLE.INCOME_TAX], value: FORMULABLE.INCOME_TAX},
+    $enumerableOption(FORMULABLE_NAME, FORMULABLE.EARNINGS as number),
+    $enumerableOption(FORMULABLE_NAME, FORMULABLE.DEDUCTIONS as number),
+    $enumerableOption(FORMULABLE_NAME, FORMULABLE.INCOME_TAX as number),
 ]);
 
 const formulaSettingsData = ref<CompanyFormulaSetting[]>([]);
