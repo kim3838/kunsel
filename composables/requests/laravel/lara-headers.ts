@@ -8,10 +8,7 @@ export const laraHeaders = () => {
         accept: 'application/json, text/plain, */*'
     };
 
-    let token = useCookie(CSRF_COOKIE, {
-        secure: true,
-        sameSite: 'lax'
-    });
+    let token = useCookie(CSRF_COOKIE);
 
     if(token.value){
         headers[CSRF_HEADER] = token.value;

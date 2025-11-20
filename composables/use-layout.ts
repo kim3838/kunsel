@@ -245,10 +245,7 @@ export const useLayout = () => {
 
         ] as NavigationLinkInterface[]);
 
-        const storedAccountSubscription = useCookie<SelectedAccountSubscriptionT>($authStore.SELECTED_ACCOUNT_SUBSCRIPTION_STORAGE_KEY,{
-            domain: sessionDomain,
-            sameSite: 'lax',
-        });
+        const storedAccountSubscription = useCookie<SelectedAccountSubscriptionT>($authStore.SELECTED_ACCOUNT_SUBSCRIPTION_STORAGE_KEY);
 
         let moduleNavigationLinkMap = {
             [SUBSCRIPTION_MODULE.HR_PAYROLL as number]: [
