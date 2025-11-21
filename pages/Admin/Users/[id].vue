@@ -328,7 +328,7 @@ const userCompanyAssignmentFormSubmit = async(userId = null) => {
 
     userCompanyAssignmentFormPending.value = true;
 
-    await laraFetch(`/api/user-company-assignment/${userId}`, {
+    await laraFetch(`/api/user-company-assignment-sync/${userId}`, {
         method: 'POST',
         body: userCompanyAssignmentFormBody.value,
     }, {
