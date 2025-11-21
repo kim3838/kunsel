@@ -95,6 +95,7 @@
 <script setup lang="ts">
 
 import type {TableHeaderT, TableSupHeaderT} from "@/public/js/types/data";
+import type {UserT} from "@/public/js/types/user";
 
 useHead({titleTemplate: (titleChunk) => {return `${titleChunk} - Users`}});
 useLayout().setNavigationMode('solid', 'Associated-Users/[id].vue');
@@ -103,7 +104,7 @@ const route = useRoute();
 const user = userState();
 const {fetchAssociatedCompanies, storeAssociatedCompanies} = useAssociation();
 const {timezoneSelections} = useCommon();
-const associatedUser = ref(null);
+const associatedUser = ref<UserT | null>(null);
 
 definePageMeta({
     middleware: ['auth', 'admin-in-any-company',
@@ -201,7 +202,7 @@ const fetchAssociatedUser = async () => {
         method: 'GET',
     }, {
         onSuccessResponse: async (request, options, response) => {
-            associatedUser.value = _get(response, '_data.values.user', null);
+            associatedUser.value = _get(response, '_data.values.user', null) as UserT;
             username.value = _get(response, '_data.values.user.username', '');
             email.value = _get(response, '_data.values.user.email', '');
             emailVerifiedAt.value = _get(response, '_data.values.user.email_verified_at', '');
@@ -236,7 +237,7 @@ await fetchAuthUserAssociatedCompanies();
 // Fetch User Associated Companies
 const fetchUserAssociatedCompanies = async() => {
 
-    if(import.meta.server || route.params.id === 'create-user'){return;}
+    if(import.meta.server || route.params.id === 'create-user' || associatedUser.value == null){return;}
 
     await laraFetch("/api/associated-company-selections", {
         method: 'GET',
@@ -270,9 +271,9 @@ const userCompanyAssignmentData  = ref([]);
 // Fetch User Company Assignment
 const fetchUserCompanyAssignment = async () => {
 
-    if(import.meta.server || route.params.id === 'create-user'){return;}
+    if(import.meta.server || route.params.id === 'create-user' || associatedUser.value == null){return;}
 
-    await laraFetch(`/api/user-company-assignment/${route.params.id}`, {
+    await laraFetch(`/api/user-company-assignment`, {
         method: 'GET',
         params: {
             filters: {
@@ -302,7 +303,7 @@ const userFormSubmitAction = computed(() => {
     return !creatingAssociatedUser.value ? 'PATCH' : 'POST';
 });
 const userFormSubmitPath = computed(() => {
-    return !creatingAssociatedUser.value ? `/api/user/${associatedUser.value.id}` : `/api/user`;
+    return !creatingAssociatedUser.value ? `/api/user/${associatedUser.value?.id}` : `/api/user`;
 });
 
 const userFormBody = computed(() => {
