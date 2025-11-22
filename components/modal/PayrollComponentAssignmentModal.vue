@@ -278,11 +278,11 @@ const assignablePayrollComponentSelectedChange = (value: null | number) => {
         } else {
 
             if(amountableStart.value == null){
-                amountableStart.value = AMOUNTABLE_PAYROLL_COMPONENT_START.NOT_SPECIFIED;
+                amountableStart.value = AMOUNTABLE_PAYROLL_COMPONENT_START.NOT_SPECIFIED as number;
             }
 
             if(amountableEnd.value == null){
-                amountableEnd.value = AMOUNTABLE_PAYROLL_COMPONENT_END.NOT_SPECIFIED;
+                amountableEnd.value = AMOUNTABLE_PAYROLL_COMPONENT_END.NOT_SPECIFIED as number;
             }
         }
 
@@ -296,17 +296,17 @@ const assignablePayrollComponentSelectedChange = (value: null | number) => {
 }
 
 const PAY_PERIOD_VALID_FREQUENCIES = {
-    [PAY_PERIOD.HOURLY]: [PAY_FREQUENCY_TYPE.DAILY, PAY_FREQUENCY_TYPE.WEEKLY, PAY_FREQUENCY_TYPE.SEMI_MONTHLY, PAY_FREQUENCY_TYPE.MONTHLY],
-    [PAY_PERIOD.DAILY]: [PAY_FREQUENCY_TYPE.DAILY, PAY_FREQUENCY_TYPE.WEEKLY, PAY_FREQUENCY_TYPE.SEMI_MONTHLY, PAY_FREQUENCY_TYPE.MONTHLY],
-    [PAY_PERIOD.SEMI_MONTHLY]: [PAY_FREQUENCY_TYPE.SEMI_MONTHLY, PAY_FREQUENCY_TYPE.MONTHLY],
-    [PAY_PERIOD.MONTHLY]: [PAY_FREQUENCY_TYPE.SEMI_MONTHLY, PAY_FREQUENCY_TYPE.MONTHLY]
+    [PAY_PERIOD.HOURLY as number]: [PAY_FREQUENCY_TYPE.DAILY, PAY_FREQUENCY_TYPE.WEEKLY, PAY_FREQUENCY_TYPE.SEMI_MONTHLY, PAY_FREQUENCY_TYPE.MONTHLY],
+    [PAY_PERIOD.DAILY as number]: [PAY_FREQUENCY_TYPE.DAILY, PAY_FREQUENCY_TYPE.WEEKLY, PAY_FREQUENCY_TYPE.SEMI_MONTHLY, PAY_FREQUENCY_TYPE.MONTHLY],
+    [PAY_PERIOD.SEMI_MONTHLY as number]: [PAY_FREQUENCY_TYPE.SEMI_MONTHLY, PAY_FREQUENCY_TYPE.MONTHLY],
+    [PAY_PERIOD.MONTHLY as number]: [PAY_FREQUENCY_TYPE.SEMI_MONTHLY, PAY_FREQUENCY_TYPE.MONTHLY]
 };
 
 const PAY_FREQUENCY_VALID_PERIODS = {
-    [PAY_FREQUENCY_TYPE.DAILY]: [PAY_PERIOD.HOURLY, PAY_PERIOD.DAILY],
-    [PAY_FREQUENCY_TYPE.WEEKLY]: [PAY_PERIOD.HOURLY, PAY_PERIOD.DAILY],
-    [PAY_FREQUENCY_TYPE.SEMI_MONTHLY]: [PAY_PERIOD.HOURLY, PAY_PERIOD.DAILY, PAY_PERIOD.SEMI_MONTHLY, PAY_PERIOD.MONTHLY],
-    [PAY_FREQUENCY_TYPE.MONTHLY]: [PAY_PERIOD.HOURLY, PAY_PERIOD.DAILY, PAY_PERIOD.SEMI_MONTHLY, PAY_PERIOD.MONTHLY]
+    [PAY_FREQUENCY_TYPE.DAILY as number]: [PAY_PERIOD.HOURLY, PAY_PERIOD.DAILY],
+    [PAY_FREQUENCY_TYPE.WEEKLY as number]: [PAY_PERIOD.HOURLY, PAY_PERIOD.DAILY],
+    [PAY_FREQUENCY_TYPE.SEMI_MONTHLY as number]: [PAY_PERIOD.HOURLY, PAY_PERIOD.DAILY, PAY_PERIOD.SEMI_MONTHLY, PAY_PERIOD.MONTHLY],
+    [PAY_FREQUENCY_TYPE.MONTHLY as number]: [PAY_PERIOD.HOURLY, PAY_PERIOD.DAILY, PAY_PERIOD.SEMI_MONTHLY, PAY_PERIOD.MONTHLY]
 };
 
 const validatePayPeriodFrequencyCombination = (payPeriodValue: number, frequencyType: number): boolean => {
@@ -392,7 +392,7 @@ const payFrequencySelectedChange = (value: null | number) => {
 };
 
 //Payroll Component Label
-const payrollComponentSubject = computed(()=>{
+const payrollComponentSubject = computed<string>(() => {
 
     if(props.payrollComponentFormulable == undefined){return '';}
 
@@ -405,10 +405,10 @@ const payrollComponentSubject = computed(()=>{
 });
 
 //Payroll Component Model Map Key
-const formulableModelMapKey = computed(()=>{
+const formulableModelMapKey = computed<string>(() => {
     if(props.payrollComponentFormulable == undefined){return '';}
 
-    return FORMULABLE_MODEL_MAP_KEY[props.payrollComponentFormulable];
+    return FORMULABLE_MODEL_MAP_KEY[props.payrollComponentFormulable as number] as string;
 });
 
 //Assignable Employee Payroll Component Selections

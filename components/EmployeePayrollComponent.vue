@@ -427,6 +427,11 @@ const employeeCompensationExecute = async () => {
 
     await laraFetch(`/api/employee-payroll-info/${employeeUlid.value}/compensations`, {
         method: 'GET',
+        params: {
+            filters: {
+                company_id: selectedAssociatedCompanyId.value
+            }
+        }
     },{
         onRequestError: () => {
             employeeCompensationPending.value = false;
@@ -466,6 +471,11 @@ const employeeDeductionExecute = async () => {
 
     await laraFetch(`/api/employee-payroll-info/${employeeUlid.value}/deductions`, {
         method: 'GET',
+        params: {
+            filters: {
+                company_id: selectedAssociatedCompanyId.value
+            }
+        }
     },{
         onRequestError: () => {
             employeeDeductionPending.value = false;
@@ -505,6 +515,11 @@ const employeeIncomeTaxExecute = async () => {
 
     await laraFetch(`/api/employee-payroll-info/${employeeUlid.value}/income-taxes`, {
         method: 'GET',
+        params: {
+            filters: {
+                company_id: selectedAssociatedCompanyId.value
+            }
+        }
     },{
         onRequestError: () => {
             employeeIncomeTaxPending.value = false;
