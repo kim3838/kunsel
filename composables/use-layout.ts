@@ -123,7 +123,6 @@ export const useLayout = () => {
         return links;
     });
     const navigationLinks = computed<NavigationLinkInterface[]>(()=>{
-        const {sessionDomain} = useRuntimeConfig().public;
         const {$authStore} = useNuxtApp();
 
         let links: NavigationLinkInterface[] = [];
