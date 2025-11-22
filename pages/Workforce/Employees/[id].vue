@@ -782,7 +782,7 @@ const defaultAssignUserCompanyAssignment = async(userId = null) => {
         'assignment_type': COMPANY_ASSIGNMENT_TYPE.DEFAULT
     };
 
-    await laraFetch(`/api/user-company-assignment/${userId}`, {
+    await laraFetch(`/api/user-company-assignment-sync/${userId}`, {
         method: 'POST',
         body: formBody,
     }, {
