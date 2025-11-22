@@ -371,7 +371,21 @@ export const useLayout = () => {
                             route_active: 'settings-formula-settings'
                         },
                     ]
-                },{
+                }, {
+                    key: 'payroll',
+                    type: 'sub-nav',
+                    title: 'Payroll',
+                    path_active: '/payroll',
+                    options: [
+                        {
+                            key: 'payroll/employee-pay-items',
+                            type: 'link',
+                            title: 'Employee Pay Items',
+                            to: '/payroll/employee-pay-items',
+                            route_active: 'payroll-employee-pay-items'
+                        },
+                    ]
+                }, {
                     key: 'import',
                     type: 'sub-nav',
                     title: 'Import',

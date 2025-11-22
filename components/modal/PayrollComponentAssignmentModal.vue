@@ -36,10 +36,28 @@
                         <UnorderedList :size="'lg'" :icon="'eos-icons:loading'">Please wait...</UnorderedList>
                     </div>
                 </div>
+
                 <div class="p-3 pt-4 mx-auto max-w-screen-lg grid gap-2 grid-cols-3 sm:grid-cols-4 md:grid-cols-5">
+                    <div v-if="formulableTabSelectable && !singleFormulableMode" class="col-span-full">
+                        <RadioGroup
+                            :disabled="disableActions"
+                            :selections="formulableTypeTabs"
+                            :size="'md'"
+                            :orientation="'horizontal'"
+                            :radio-key="`formulable_type`"
+                            v-model="formulableTypeTab" />
+                    </div>
                     <div class="col-span-2">
-                        <InputLabel :size="'sm'" value="Select"/>
-                        <SingleSelect :searchable="false" drop-shadow value-persist :size="'md'" :options="assignablePayrollComponentOptions" @valueChange="assignablePayrollComponentSelectedChange"/>
+                        <InputLabel :size="'sm'" value="Select Payroll Component"/>
+                        <SingleSelect
+                            :key="assignablePayrollComponentOptionsKey"
+                            :disabled="assignablePayrollComponentPending"
+                            :searchable="false"
+                            drop-shadow
+                            value-persist
+                            :size="'md'"
+                            :options="assignablePayrollComponentOptions"
+                            @valueChange="assignablePayrollComponentSelectedChange"/>
                     </div>
                     <div v-if="selectedPayrollComponentIsAmountable">
                         <InputLabel :size="'sm'" value="Amount"/>
@@ -127,7 +145,7 @@
                             :disabled="disableActions"
                             :icon="'mdi:cancel'"
                             :label="'Cancel'"
-                            @click="closeModal"/>
+                            @click="closeModal(true)"/>
                         <Button
                             class="w-min"
                             :variant="'default'"
@@ -167,6 +185,10 @@ const props = defineProps({
         type: Boolean,
         default: false,
     },
+    singleFormulableMode: {
+        type: Boolean,
+        default: true,
+    },
     employeePayload: {
         type: Object,
         default: () => {
@@ -184,7 +206,7 @@ const props = defineProps({
         default: -1,
     },
     payrollComponentFormulable: {
-        type: Number,
+        type: [String, Number],
         default: undefined
     },
     payPeriodSelection: {
@@ -206,6 +228,13 @@ const props = defineProps({
         }
     },
 });
+
+const formulableTypeTab = ref(FORMULABLE.EARNINGS);
+const formulableTypeTabs = reactive([
+    $enumerableOption(FORMULABLE_NAME, FORMULABLE.EARNINGS as number),
+    $enumerableOption(FORMULABLE_NAME, FORMULABLE.DEDUCTIONS as number),
+    $enumerableOption(FORMULABLE_NAME, FORMULABLE.INCOME_TAX as number),
+]);
 
 const amountableStartSelection = reactive<EnumSelection>([
     $enumerableOption(AMOUNTABLE_PAYROLL_COMPONENT_START_NAME, AMOUNTABLE_PAYROLL_COMPONENT_START.NOT_SPECIFIED as number),
@@ -229,7 +258,20 @@ const payPeriodSelection = payrollComponentPaySelections.value.pay_period;
 const payTypeSelection = payrollComponentPaySelections.value.pay_type;
 const payFrequencySelection = toRef(props, 'payFrequencySelection');
 
-const emit = defineEmits(['update:creatingOrEditing', 'update:payrollComponentFormulable', 'update:editPayload', 'update:editPayloadIndex', 'resolved']);
+const emit = defineEmits(['update:creatingOrEditing', 'update:payrollComponentFormulable', 'update:editPayload', 'update:editPayloadIndex', 'resolved', 'cancelled']);
+
+watch(formulableTypeTab, async (formulableTypeTab) => {
+
+    if(props.creatingOrEditing && formulableTabSelectable.value && !props.singleFormulableMode){
+        emit('update:payrollComponentFormulable', formulableTypeTab);
+
+        assignablePayrollComponentOptions.selected = null;
+        assignablePayrollComponentOptionsKey.value++;
+        selectedPayrollComponentIsAmountable.value = false;
+        await nextTick();
+        await assignablePayrollComponentExecute();
+    }
+});
 
 const payPeriodOptions = reactive({search: '', selection: payPeriodSelection, selected: null});
 const payTypeOptions = reactive({search: '', selection: payTypeSelection, selected: null});
@@ -401,7 +443,7 @@ const payrollComponentSubject = computed<string>(() => {
         [FORMULABLE.DEDUCTIONS as number]: 'deduction',
         [FORMULABLE.INCOME_TAX as number]: 'income tax',
         null: ''
-    }[props.payrollComponentFormulable];
+    }[props.payrollComponentFormulable] as string;
 });
 
 //Payroll Component Model Map Key
@@ -412,6 +454,7 @@ const formulableModelMapKey = computed<string>(() => {
 });
 
 //Assignable Employee Payroll Component Selections
+const assignablePayrollComponentOptionsKey = shallowRef(0);
 const assignablePayrollComponentOptions = reactive({
     search: '',
     selection: [],
@@ -451,7 +494,15 @@ const assignablePayrollComponentExecute = async () => {
 }
 
 watch(() => props.creatingOrEditing, (creatingOrEditing) => {
+
+    formulableTabSelectable.value = !props.singleFormulableMode && !employeePayrollComponentExists.value;
+
     if(creatingOrEditing){
+
+        if(!props.singleFormulableMode){
+            formulableTypeTab.value = props.payrollComponentFormulable as number;
+        }
+
         assignablePayrollComponentExecute();
     }
 });
@@ -509,6 +560,7 @@ const amountableStart = ref<number | null>(null);
 const startDate = ref<string | null>(moment().format("YYYY-MM-DD"));
 const amountableEnd = ref<number | null>(null);
 const endDate = ref<string | null>(moment().format("YYYY-MM-DD"));
+const formulableTabSelectable = ref(false);
 
 const loadEditable = () => {
     amount.value = _get(props.editPayload, 'amount', 0);
@@ -530,14 +582,19 @@ const loadEditable = () => {
     endDate.value = endDateTemp ? moment(endDateTemp).format("YYYY-MM-DD") : null;
 };
 
-const closeModal = () => {
+const closeModal = (cancelled = false) => {
     emit('update:creatingOrEditing', false);
     emit('update:payrollComponentFormulable', null);
     emit('update:editPayload', {});
     emit('update:editPayloadIndex', -1);
+
+    if(cancelled){
+        emit('cancelled');
+    }
     reset();
 };
 const reset = () => {
+    formulableTabSelectable.value = false;
     amount.value = 0;
     currency.value = defaultCurrency.value;
     assignablePayrollComponentOptions.selected = null;
@@ -556,7 +613,7 @@ const reset = () => {
 }
 
 const loadingOverlay = computed(()=>{
-    return assignablePayrollComponentPending.value;
+    return !formulableTabSelectable.value && assignablePayrollComponentPending.value;
 });
 const disableActions = computed(()=>{
     return submitPending.value  || loadingOverlay.value;
