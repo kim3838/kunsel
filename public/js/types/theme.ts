@@ -1,2 +1,2 @@
 
-export type LabelTypesT = 'default' | 'success' | 'caution' | 'danger' | 'warning' | 'info';
+export type LabelTypeT = 'default' | 'success' | 'caution' | 'danger' | 'warning' | 'info';

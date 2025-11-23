@@ -13,7 +13,7 @@
 <script setup lang="ts">
 import type {CommonColorsT} from "@/stores/theme";
 import {storeToRefs} from "pinia";
-import type {LabelTypesT} from "@/public/js/types/theme";
+import type {LabelTypeT} from "@/public/js/types/theme";
 const {$themeStore} = useNuxtApp();
 
 const {
@@ -43,7 +43,7 @@ const props = defineProps({
         default: 'inherit'
     },
     type: {
-        type: String as PropType<LabelTypesT>,
+        type: String as PropType<LabelTypeT>,
         default: 'default'
     }
 });
