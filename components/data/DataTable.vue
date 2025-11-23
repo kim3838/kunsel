@@ -36,7 +36,7 @@
                             :name="`sup.header.cell.${header.value}`"
                             :cell="row"
                             :headerIndex="headerIndex">
-                            <div class="p-[3px]">{{row[header?.value]}}</div>
+                            <div v-if="header?.value" class="p-[3px]">{{row[header?.value]}}</div>
                         </slot>
                     </td>
                 </tr>
@@ -157,7 +157,7 @@ import type {
     TableSupRowT
 } from "@/public/js/types/data";
 import type {CommonColorsT} from "@/stores/theme";
-import type {LabelTypesT} from "@/public/js/types/theme";
+import type {LabelTypeT} from "@/public/js/types/theme";
 const {$themeStore} = useNuxtApp();
 
 const {
@@ -268,7 +268,7 @@ const props = defineProps({
     },
 });
 
-const dataTableScroll = ref(null);
+const dataTableScroll = ref<HTMLElement | null>(null);
 const checkboxCellReference = useTemplateRef('checkboxCell');
 const emit = defineEmits(["update:modelValue", "manualSorted", "selectionChanged"]);
 
@@ -316,8 +316,11 @@ if(props.manualSortable){
     });
 
     useMutationObserver(dataTableScroll, () => {
-        const elements = dataTableScroll.value?.querySelectorAll('[draggable="false"]') || [];
-        elements.forEach(el => el.remove())
+        const elements = Array.from(
+            dataTableScroll.value?.querySelectorAll('[draggable="false"]') ?? []
+        );
+
+        elements.forEach(el => el.remove());
     }, {
         childList: true,
         subtree: true,
@@ -502,7 +505,7 @@ const rowBackgroundClass = (rowIndex: number) => {
     return rowIndex % 2 === 0 ? 'table-row-odd-background' : 'table-row-even-background'
 };
 
-const cellStyle = (row, header) => {
+const cellStyle = (row: TableRowT | TableSupRowT, header: TableSupHeaderT) => {
 
     let rowPayload = row?._payload;
 
@@ -513,7 +516,7 @@ const cellStyle = (row, header) => {
         let labelShade: (TableRowPayloadShadeT | boolean) = _get(rowPayload, 'label_shade', false);
         let shadeCell: (string | string[]) = _get(labelShade, 'cell', []);
         let shadeValue: (string | boolean) = _get(labelShade, 'value', false);
-        const validShadeValue = (shadeValue as LabelTypesT) in typedCommonColor.value;
+        const validShadeValue = (shadeValue as LabelTypeT) in typedCommonColor.value;
 
         if(validShadeValue && shadeCell == '*'){
 
