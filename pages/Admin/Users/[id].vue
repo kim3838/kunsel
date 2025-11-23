@@ -94,7 +94,7 @@
 <script setup lang="ts">
 
 import type {TableHeaderT, TableSupHeaderT} from "@/public/js/types/data";
-import type {UserT} from "@/public/js/types/user";
+import type {UserCompanyAssignmentSyncT, UserCompanyAssignmentT, UserFormT, UserT} from "@/public/js/types/user";
 
 useHead({titleTemplate: (titleChunk) => {return `${titleChunk} - Users`}});
 useLayout().setNavigationMode('solid', 'Associated-Users/[id].vue');
@@ -230,7 +230,7 @@ const userCompanyAssignmentHeaders = reactive<TableHeaderT[]>([
     { text: 'Employee #', value: 'employee_number', alignData: 'left'},
     { text: 'Name', value: 'employee_full_name', alignData: 'left'},
 ]);
-const userCompanyAssignmentData  = ref([]);
+const userCompanyAssignmentData  = ref<UserCompanyAssignmentT[]>([]);
 // Fetch User Company Assignment
 const fetchUserCompanyAssignment = async () => {
 
@@ -270,8 +270,8 @@ const userFormSubmitPath = computed(() => {
 });
 
 const userFormBody = computed(() => {
-    let formBody = {
-        status: userStatusOptions.selected,
+    let formBody: UserFormT = {
+        status: userStatusOptions.selected as number,
         timezone: timezoneOptions.selected,
     };
 
@@ -288,7 +288,7 @@ const userFormBody = computed(() => {
     return formBody;
 });
 const userCompanyAssignmentFormBody = computed(() => {
-    const assignments = {};
+    const assignments: UserCompanyAssignmentSyncT = {};
 
     userCompanyAssignmentData.value.forEach((assignment) => {
         if (assignment.company_assignment_type !== null) {
