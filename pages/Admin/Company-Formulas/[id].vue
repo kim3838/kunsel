@@ -97,7 +97,7 @@
                             <div class="h-full mx-0.5 space-x-0.5 w-full flex items-center">
                                 <Button type="button" :variant="'outline'" :icon="'mdi:delete-forever'" :size="slot.buttonSize" @click="deleteRow(rowIndex)"/>
                                 <Button type="button" :variant="'outline'" :icon="'ic:baseline-cloud-sync'" :size="slot.buttonSize" @click="confirmSyncWithDefaultSetting(cell)"></Button>
-                                <Button type="button" :variant="'outline'" :icon="'ri:formula'" :size="slot.buttonSize" @click="viewFormulaSettings(cell)"></Button>
+                                <Button type="button" :variant="'outline'" :icon="'ri:formula'" :size="slot.buttonSize" @click="viewFormulaSettings(cell as CompanyFormulaSetting)"></Button>
                             </div>
                         </template>
                         <template v-slot:cell.formulable_type="{cell,slot}">
@@ -105,7 +105,7 @@
                         </template>
                         <template v-slot:cell.formulable_component_type="{cell,slot}">
                             <div class="flex space-x-1 px-[0.3rem] items-center">
-                                <Label :size="slot.labelSize" :type="cell._payload.label_shade.value" shade :label="_get(cell, 'formulable_component_type.text', 'Non-component')" />
+                                <Label :size="slot.labelSize" :type="(cell._payload?.label_shade?.value || 'default') as LabelTypeT" shade :label="_get(cell, 'formulable_component_type.text', 'Non-component')" />
                             </div>
                         </template>
                         <template v-slot:cell.formula_is_aggregation="{cell, slot, scrollReference}">
@@ -122,14 +122,16 @@
 </template>
 
 <script setup lang="ts">
-import type {CompanyFormulaSetting} from "@/public/js/types/formula";
+import type {CompanyFormulaSetting, CompanyFormulaSettingSyncT} from "@/public/js/types/formula";
 import type {TableHeaderT, TableRowT} from "@/public/js/types/data";
 import type {MultiSelectPaginatedInstance} from "@/public/js/types/component-instance";
+import type {LabelTypeT} from "@/public/js/types/theme";
+import type {CompanyT} from "@/public/js/types/company";
 
 useHead({titleTemplate: (titleChunk) => {return `${titleChunk} - Company Formula`}});
 useLayout().setNavigationMode('solid');
 const route = useRoute();
-const company = ref(null);
+const company = ref<CompanyT | null>(null);
 
 const companyCode = ref('');
 const companyName = ref('');
@@ -225,16 +227,13 @@ const disableActions = computed(() => {
 });
 
 const submitLabel = computed(() => {
-    return formPending.value ? 'Please wait' : 'Sync Formula(s)';
-});
-const submitAction = computed(() => {
-    return 'POST';
+    return formPending.value ? 'Please wait' : 'Save Company Formula(s)';
 });
 const submitPath = computed(() => {
-    return `/api/company-formula-assignment-sync/${company.value.id}`;
+    return `/api/company-formula-assignment-sync/${company.value?.id}`;
 });
 const formBody = computed(() => {
-    const formulaAssignments = {};
+    const formulaAssignments: CompanyFormulaSettingSyncT = {};
 
     formulaSettingsData.value.forEach((formulaSetting: CompanyFormulaSetting) => {
         formulaAssignments[formulaSetting.formula_id] = {
@@ -281,7 +280,7 @@ const formSubmit = async() => {
     formPending.value = true;
 
     await laraFetch(submitPath.value, {
-        method: submitAction.value,
+        method: 'POST',
         body: formBody.value,
     }, {
         onRequestError: () => {
@@ -321,7 +320,7 @@ const confirmAddUpdateFormula = async () => {
 
     addFormulaPending.value = true;
 
-    await laraFetch(`/api/company-formula-assignment-sync-without-detaching/${company.value.id}`, {
+    await laraFetch(`/api/company-formula-assignment-sync-without-detaching/${company.value?.id}`, {
         method: 'POST',
         body: {
             'formula_ulids': formulaOptions.selected
@@ -349,8 +348,8 @@ const addFormula = async () => {
 }
 
 const viewFormulaSettingsModal = ref(false);
-const viewFormulaSettingsModalValue = ref(null);
-const viewFormulaSettings = async (cell) => {
+const viewFormulaSettingsModalValue = ref<CompanyFormulaSetting | null>(null);
+const viewFormulaSettings = async (cell: CompanyFormulaSetting) => {
     viewFormulaSettingsModalValue.value = cell;
     viewFormulaSettingsModal.value = true;
 }
@@ -361,7 +360,7 @@ const closeFormulaSettingsModal = () => {
 const viewFormulaSettingsModalClosed = () => {
     closeFormulaSettingsModal();
 }
-const deleteRow = async (rowIndex) => {
+const deleteRow = async (rowIndex: number) => {
     formulaSettingsData.value.splice(rowIndex, 1);
 }
 </script>
