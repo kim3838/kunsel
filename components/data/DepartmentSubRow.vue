@@ -33,7 +33,7 @@
 </template>
 
 <script setup lang="ts">
-import type {TableHeaderT, TableRowT} from "@/public/js/types/data";
+import type {DataTableSelectionActionT, TableHeaderT, TableRowT} from "@/public/js/types/data";
 
 const props = defineProps({
     rows: {
@@ -60,7 +60,7 @@ const edit = (cell: TableRowT) => {
     emit('proxyEdit', cell);
 }
 
-const selectionChanged = (selectionPayload: {action: number, value: number[]}) => {
+const selectionChanged = (selectionPayload: DataTableSelectionActionT) => {
     emit('syncSelected', selectionPayload);
 }
 </script>

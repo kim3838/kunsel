@@ -76,3 +76,8 @@ export type DatePickerT = {
     type: string,
     selectedCallback: (payload: string) => void;
 }
+
+export type DataTableSelectionActionT = {
+    action: number
+    value: number[]
+}
