@@ -61,6 +61,11 @@ export const useAssociation = () => {
             'import-attendance',
         ], _toLower(String(route.name)));
     });
+    const employeeSelfServicesSubscriptions = computed(() => {
+        return [
+            SUBSCRIPTION_MODULE.EMPLOYEE_PORTAL
+        ];
+    })
 
     const ssrFetchAssociatedCompanies = async() => {
         const {userIsSuperAdmin} = useAuth();
@@ -191,6 +196,7 @@ export const useAssociation = () => {
 
     const updateStoreAssociatedAccountSubscriptions = async() => {
 
+        const {userIsSuperAdmin} = useAuth();
         const {sessionDomain} = useRuntimeConfig().public;
         const {$authStore} = useNuxtApp();
 
@@ -204,6 +210,27 @@ export const useAssociation = () => {
         });
 
         let companySubscriptions: EnumOption[] = $authStore.selectedAssociatedCompany?.payload.account.subscriptions as EnumOption[];
+
+        // Subscription options
+
+        //If user is employee and not an admin, show only employee self-services options
+        if(!userIsAdminOfSelectedCompany.value && userIsEmployeeOfSelectedCompany.value){
+            companySubscriptions = companySubscriptions.filter((subscription: EnumOption) => {
+                return employeeSelfServicesSubscriptions.value.includes(subscription.value as number)
+            })
+        }
+
+        //If superadmin or (admin and not an employee), filter out employee self-services options
+        if(userIsSuperAdmin.value || (userIsAdminOfSelectedCompany.value && !userIsEmployeeOfSelectedCompany.value)){
+            companySubscriptions = companySubscriptions.filter((subscription: EnumOption) => {
+                return !employeeSelfServicesSubscriptions.value.includes(subscription.value as number)
+            })
+        }
+
+        //If not superadmin and (not admin and not an employee), filter out all options
+        if(!userIsSuperAdmin.value && (!userIsAdminOfSelectedCompany.value && !userIsEmployeeOfSelectedCompany.value)){
+            companySubscriptions = [];
+        }
 
         if(storedAccountSubscription.value == undefined && _first(companySubscriptions)){
 
