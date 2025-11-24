@@ -176,7 +176,7 @@ const deductionFormulaSettings = ref<CompanyFormulaT[]>([]);
 const deductionFormulaSettingsPending = ref(false)
 const deductionFormulaSettingsExecute = async (companyFormulaId: null | number | string = '') => {
 
-    if (_isNull(companyFormulaId)) return;
+    if (companyFormulaId == null) return;
     deductionFormulaSettingsPending.value = true;
 
     await laraFetch(`/api/company-formula/${companyFormulaId}`, {

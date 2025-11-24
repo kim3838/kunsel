@@ -176,7 +176,7 @@ const incomeTaxFormulaSettings = ref<CompanyFormulaT[]>([]);
 const incomeTaxFormulaSettingsPending = ref(false)
 const incomeTaxFormulaSettingsExecute = async (companyFormulaId: null | number | string = '') => {
 
-    if (_isNull(companyFormulaId)) return;
+    if (companyFormulaId == null) return;
     incomeTaxFormulaSettingsPending.value = true;
 
     await laraFetch(`/api/company-formula/${companyFormulaId}`, {

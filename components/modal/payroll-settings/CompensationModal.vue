@@ -175,7 +175,7 @@ const compensationFormulaSettings = ref<CompanyFormulaT[]>([]);
 const compensationFormulaSettingsPending = ref(false)
 const compensationFormulaSettingsExecute = async (companyFormulaId: null | number | string = '') => {
 
-    if (_isNull(companyFormulaId)) return;
+    if (companyFormulaId == null) return;
     compensationFormulaSettingsPending.value = true;
 
     await laraFetch(`/api/company-formula/${companyFormulaId}`, {
