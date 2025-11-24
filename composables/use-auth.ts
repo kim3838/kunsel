@@ -149,6 +149,7 @@ export const useAuth = () => {
 
     async function prepareAuthentication(){
         await resetUserAssociationStates();
+        await resetCommon();
         await fetchUser();
         await fetchAssociatedCompanies();
         await storeAssociatedCompanies();
