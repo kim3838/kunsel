@@ -25,8 +25,6 @@ export const associatedCompanyState = () => {
 export const userIsAdminOfSelectedCompanyState = () => {
     return useState("user_is_admin_of_selected_company", () => false);
 }
-export const adminInAnyCompanyState = () => {
-    return useState("admin_in_any_company", () => false);
 export const userIsEmployeeOfSelectedCompanyState = () => {
     return useState("user_is_employee_of_selected_company", () => false);
 }
@@ -37,8 +35,6 @@ export const userIsAdminInAnyCompanyState = () => {
 export const useAssociation = () => {
     const companyAssociationPending = companyAssociationPendingState();
     const user = userState();
-    const companyAssignmentTypeIsAdmin = companyAssignmentTypeIsAdminState();
-    const adminInAnyCompany = adminInAnyCompanyState();
     const userIsAdminOfSelectedCompany = userIsAdminOfSelectedCompanyState();
     const userIsEmployeeOfSelectedCompany = userIsEmployeeOfSelectedCompanyState();
     const userIsAdminInAnyCompany = userIsAdminInAnyCompanyState();
@@ -313,7 +309,6 @@ export const useAssociation = () => {
 
         userIsAdminOfSelectedCompany.value = selectedCompany.payload?.assignment_type?.value == COMPANY_ASSIGNMENT_TYPE.ADMIN;
         userIsEmployeeOfSelectedCompany.value = selectedCompany.payload?.is_employee || false;
-
     }
 
     const resetUserAssociationStates = async() => {
