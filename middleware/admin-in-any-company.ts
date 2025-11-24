@@ -1,17 +1,17 @@
 export default defineNuxtRouteMiddleware(async (to, from) => {
     const {userIsSuperAdmin} = useAuth();
-    const adminInAnyCompany = adminInAnyCompanyState();
-    const {ssrFetchIsAdminInAnyCompany, fetchIsAdminInAnyCompany} = useAssociation();
+    const userIsAdminInAnyCompany = userIsAdminInAnyCompanyState();
+    const {ssrFetchUserIsAdminInAnyCompany, fetchUserIsAdminInAnyCompany} = useAssociation();
 
     if(!userIsSuperAdmin.value){
         if(import.meta.server){
-            await ssrFetchIsAdminInAnyCompany();
+            await ssrFetchUserIsAdminInAnyCompany();
         } else if(import.meta.client){
-            await fetchIsAdminInAnyCompany();
+            await fetchUserIsAdminInAnyCompany();
         }
     }
 
-    if(!(userIsSuperAdmin.value || adminInAnyCompany.value)){
+    if(!(userIsSuperAdmin.value || userIsAdminInAnyCompany.value)){
         return navigateTo("/", {replace: true});
     }
 })

@@ -4,6 +4,7 @@ import type {Enum, EnumOption} from "@/public/js/common/type";
 export interface AssignedCompanyPayloadT {
     ulid: string,
     assignment_type?: Enum,
+    is_employee?: boolean,
     currency: string,
     timezone: string,
     account: {

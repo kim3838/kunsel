@@ -3,7 +3,7 @@ import type {SelectedCompanyT} from "@/public/js/types/association";
 export default defineNuxtRouteMiddleware(async (to, from) => {
     const {$authStore} = useNuxtApp();
     const {userIsSuperAdmin} = useAuth();
-    const companyAssignmentTypeIsAdmin = companyAssignmentTypeIsAdminState();
+    const userIsAdminOfSelectedCompany = userIsAdminOfSelectedCompanyState();
     const {ssrFetchAssociatedCompanies,fetchAssociatedCompanies,storeAssociatedCompanies,updateCompanyAssignmentType} = useAssociation();
 
     if(!userIsSuperAdmin.value){
@@ -18,7 +18,7 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
         updateCompanyAssignmentType(storedCompany.value);
     }
 
-    if(!(userIsSuperAdmin.value || companyAssignmentTypeIsAdmin.value)){
+    if(!(userIsSuperAdmin.value || userIsAdminOfSelectedCompany.value)){
         return navigateTo("/", {replace: true});
     }
 })

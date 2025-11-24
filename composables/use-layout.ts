@@ -10,8 +10,9 @@ export const useLayout = () => {
     const nuxtApp = useNuxtApp();
     const isRoutePathActive = nuxtApp.$isRoutePathActive as (path: string | undefined) => boolean;
     const {isAuthenticated, userIsSuperAdmin, destroyAuthentication} = useAuth();
-    const companyAssignmentTypeIsAdmin = companyAssignmentTypeIsAdminState();
-    const adminInAnyCompany = adminInAnyCompanyState();
+    const userIsAdminOfSelectedCompany = userIsAdminOfSelectedCompanyState();
+    const userIsEmployeeOfSelectedCompany = userIsEmployeeOfSelectedCompanyState();
+    const userIsAdminInAnyCompany = userIsAdminInAnyCompanyState();
     const {screenWidthBreakpoint, width: screenWidth, height: screenHeight } = useScreen();
     const $themeStore = useThemeStore();
     const {body: bodyColor} = storeToRefs($themeStore);
@@ -247,8 +248,17 @@ export const useLayout = () => {
         const storedAccountSubscription = useCookie<SelectedAccountSubscriptionT>($authStore.SELECTED_ACCOUNT_SUBSCRIPTION_STORAGE_KEY);
 
         let moduleNavigationLinkMap = {
+            [SUBSCRIPTION_MODULE.EMPLOYEE_PORTAL as number]: [
+                ...((isAuthenticated.value && (userIsSuperAdmin.value || userIsEmployeeOfSelectedCompany.value)) ? [{
+                    key: `${SUBSCRIPTION_MODULE.EMPLOYEE_PORTAL}-attendance`,
+                    type: 'link',
+                    title: 'Attendance',
+                    to: `/${SUBSCRIPTION_MODULE.EMPLOYEE_PORTAL}/attendance`,
+                    route_active: `${SUBSCRIPTION_MODULE.EMPLOYEE_PORTAL}/attendance`
+                }] : []) as NavigationLinkInterface[],
+            ],
             [SUBSCRIPTION_MODULE.HR_PAYROLL as number]: [
-                ...((isAuthenticated.value && (userIsSuperAdmin.value || companyAssignmentTypeIsAdmin.value)) ? [{
+                ...((isAuthenticated.value && (userIsSuperAdmin.value || userIsAdminOfSelectedCompany.value)) ? [{
                     key: 'workforce',
                     type: 'sub-nav',
                     title: 'Workforce',
@@ -447,7 +457,7 @@ export const useLayout = () => {
     const adminNavigationLinks = computed<NavigationLinkInterface[]>(()=>{
 
         return [
-            ...((userIsSuperAdmin.value || adminInAnyCompany.value) ? [{
+            ...((userIsSuperAdmin.value || userIsAdminInAnyCompany.value) ? [{
                 key: 'admin',
                 type: 'sub-nav',
                 drop_align: 'right',

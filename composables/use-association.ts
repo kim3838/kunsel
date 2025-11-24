@@ -22,11 +22,16 @@ export const associatedCompanyState = () => {
     });
 };
 
-export const companyAssignmentTypeIsAdminState = () => {
-    return useState("company_assignment_type_is_admin", () => false);
+export const userIsAdminOfSelectedCompanyState = () => {
+    return useState("user_is_admin_of_selected_company", () => false);
 }
 export const adminInAnyCompanyState = () => {
     return useState("admin_in_any_company", () => false);
+export const userIsEmployeeOfSelectedCompanyState = () => {
+    return useState("user_is_employee_of_selected_company", () => false);
+}
+export const userIsAdminInAnyCompanyState = () => {
+    return useState("user_is_admin_in_any_company", () => false);
 }
 
 export const useAssociation = () => {
@@ -34,6 +39,9 @@ export const useAssociation = () => {
     const user = userState();
     const companyAssignmentTypeIsAdmin = companyAssignmentTypeIsAdminState();
     const adminInAnyCompany = adminInAnyCompanyState();
+    const userIsAdminOfSelectedCompany = userIsAdminOfSelectedCompanyState();
+    const userIsEmployeeOfSelectedCompany = userIsEmployeeOfSelectedCompanyState();
+    const userIsAdminInAnyCompany = userIsAdminInAnyCompanyState();
     const associatedCompany = associatedCompanyState();
     const currentRouteNameIsCompanyAdminProtected = computed(() => {
         const route = useRoute();
@@ -116,27 +124,27 @@ export const useAssociation = () => {
         }, false);
     }
 
-    const ssrFetchIsAdminInAnyCompany = async() => {
+    const ssrFetchUserIsAdminInAnyCompany = async() => {
 
         await callOnce(async () => {
 
-            await laraSsrUseFetch('/api/is-admin-in-any-company', {
+            await laraSsrUseFetch('/api/user-is-admin-in-any-company', {
                 method: 'GET',
             }, {
                 onSuccessResponse: async (request, options, response) => {
-                    adminInAnyCompany.value = _get(response, '_data.values.is_admin_in_any_company', false);
+                    userIsAdminInAnyCompany.value = _get(response, '_data.values.user_is_admin_in_any_company', false);
                 }
             });
         });
     }
 
-    const fetchIsAdminInAnyCompany = async() => {
+    const fetchUserIsAdminInAnyCompany = async() => {
 
-        await laraFetch('/api/is-admin-in-any-company', {
+        await laraFetch('/api/user-is-admin-in-any-company', {
             method: 'GET',
         }, {
             onSuccessResponse: async (request, options, response) => {
-                adminInAnyCompany.value = _get(response, '_data.values.is_admin_in_any_company', false);
+                userIsAdminInAnyCompany.value = _get(response, '_data.values.user_is_admin_in_any_company', false);
             }
         }, false);
     }
@@ -258,7 +266,7 @@ export const useAssociation = () => {
             updateCompanyAssignmentType(newValue);
         }
 
-        if(currentRouteNameIsCompanyAdminProtected.value && !(userIsSuperAdmin.value || companyAssignmentTypeIsAdmin.value)){
+        if(currentRouteNameIsCompanyAdminProtected.value && !(userIsSuperAdmin.value || userIsAdminOfSelectedCompany.value)){
             navigateTo("/", {replace: true});
 
             if(useAuth().isAuthenticated.value){
@@ -298,16 +306,20 @@ export const useAssociation = () => {
         );
 
         if (!selectedCompany) {
-            companyAssignmentTypeIsAdmin.value = false;
+            userIsAdminOfSelectedCompany.value = false;
+            userIsEmployeeOfSelectedCompany.value = false;
             return;
         }
 
-        companyAssignmentTypeIsAdmin.value = selectedCompany.payload?.assignment_type?.value == COMPANY_ASSIGNMENT_TYPE.ADMIN;
+        userIsAdminOfSelectedCompany.value = selectedCompany.payload?.assignment_type?.value == COMPANY_ASSIGNMENT_TYPE.ADMIN;
+        userIsEmployeeOfSelectedCompany.value = selectedCompany.payload?.is_employee || false;
+
     }
 
     const resetUserAssociationStates = async() => {
-        companyAssignmentTypeIsAdmin.value = false;
-        adminInAnyCompany.value = false;
+        userIsAdminOfSelectedCompany.value = false;
+        userIsEmployeeOfSelectedCompany.value = false;
+        userIsAdminInAnyCompany.value = false;
         associatedCompany.value = {
             selection: [],
             selected: null,
@@ -317,8 +329,8 @@ export const useAssociation = () => {
     return {
         ssrFetchAssociatedCompanies,
         fetchAssociatedCompanies,
-        ssrFetchIsAdminInAnyCompany,
-        fetchIsAdminInAnyCompany,
+        ssrFetchUserIsAdminInAnyCompany,
+        fetchUserIsAdminInAnyCompany,
         storeAssociatedCompanies,
         updateStoredAssociatedCompany,
         selectedAssociatedCompanyChanged,

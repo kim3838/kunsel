@@ -5,13 +5,13 @@ export default defineNuxtPlugin({
 
         if(import.meta.server){
 
-            const {ssrFetchAssociatedCompanies, ssrFetchIsAdminInAnyCompany} = useAssociation();
+            const {ssrFetchAssociatedCompanies, ssrFetchUserIsAdminInAnyCompany} = useAssociation();
             const {ssrFetchPayrollComponentPaySelections, ssrFetchTimezoneSelections} = useCommon();
             const {isAuthenticated} = useAuth();
 
             if(isAuthenticated.value){
                 await ssrFetchAssociatedCompanies();
-                await ssrFetchIsAdminInAnyCompany();
+                await ssrFetchUserIsAdminInAnyCompany();
                 await ssrFetchPayrollComponentPaySelections();
                 await ssrFetchTimezoneSelections();
             }

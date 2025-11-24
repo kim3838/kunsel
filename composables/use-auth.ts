@@ -27,7 +27,7 @@ export const useAuth = () => {
     const isAuthenticated = computed(() => !!user.value);
     const userIsSuperAdmin = computed(() => user.value?.type == USER_TYPE.SUPERADMIN);
     const authPending = ref(false);
-    const {fetchAssociatedCompanies, storeAssociatedCompanies, fetchIsAdminInAnyCompany, resetUserAssociationStates} = useAssociation();
+    const {fetchAssociatedCompanies, storeAssociatedCompanies, fetchUserIsAdminInAnyCompany, resetUserAssociationStates} = useAssociation();
     const {fetchCommon, fetchOrganizationSelections, resetCommon} = useCommon();
 
     const ssrFetchUser = async () => {
@@ -153,7 +153,7 @@ export const useAuth = () => {
         await fetchUser();
         await fetchAssociatedCompanies();
         await storeAssociatedCompanies();
-        await fetchIsAdminInAnyCompany();
+        await fetchUserIsAdminInAnyCompany();
         await fetchCommon();
         await fetchOrganizationSelections();
     }
