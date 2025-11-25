@@ -49,16 +49,26 @@ export const useAssociation = () => {
             'workforce-designations',
             'workforce-shift-assignment',
             'workforce-attendance',
+            'workforce-overtime',
             'policies-pay-frequencies',
             'policies-payroll-components',
             'policies-shifts',
             'policies-holiday',
             'settings-salary-statement-modules',
             'settings-formula-settings',
+            'payroll-employee-pay-items',
             'import-employees',
             'import-employment-profile',
             'import-employee-payroll-component',
             'import-attendance',
+            'import-overtime',
+        ], _toLower(String(route.name)));
+    });
+    const currentRouteNameIsEmployeeProtected = computed(() => {
+        const route = useRoute();
+
+        return _includes([
+            `${SUBSCRIPTION_MODULE.EMPLOYEE_PORTAL}-attendance`,
         ], _toLower(String(route.name)));
     });
     const employeeSelfServicesSubscriptions = computed(() => {
@@ -289,7 +299,15 @@ export const useAssociation = () => {
             updateCompanyAssignmentType(newValue);
         }
 
-        if(currentRouteNameIsCompanyAdminProtected.value && !(userIsSuperAdmin.value || userIsAdminOfSelectedCompany.value)){
+        const routeIsAdminProtectedAndUserIsNotAdmin = currentRouteNameIsCompanyAdminProtected.value && !(userIsSuperAdmin.value || userIsAdminOfSelectedCompany.value);
+        const routeIsEmployeeProtectedAndUserIsNotEmployee = currentRouteNameIsEmployeeProtected.value && !userIsEmployeeOfSelectedCompany.value;
+
+        //If the navigating user does not have the right on the current protected route while changing company,
+        //redirect to dashboard
+        if(
+            routeIsAdminProtectedAndUserIsNotAdmin
+            || routeIsEmployeeProtectedAndUserIsNotEmployee
+        ){
             navigateTo("/", {replace: true});
 
             if(useAuth().isAuthenticated.value){
@@ -302,21 +320,23 @@ export const useAssociation = () => {
                 companyAssociationPending.value = false;
             }
 
-        } else {
-
-            if(useAuth().isAuthenticated.value){
-
-                await useCommon().fetchOrganizationSelections();
-
-                //Update stored account subscription before company update flag increment
-                await updateStoreAssociatedAccountSubscriptions();
-            }
-
-            //Increment updatedAssociatedCompanyFlag and use it on a watcher as is the associated company updated
-            $associationStore.updatedAssociatedCompanyFlag++;
-
-            companyAssociationPending.value = false;
+            return;
         }
+
+        //If the navigating user has the right on the current protected route while changing company,
+        //do not redirect and increment the company update flag
+        if(useAuth().isAuthenticated.value){
+
+            await useCommon().fetchOrganizationSelections();
+
+            //Update stored account subscription before company update flag increment
+            await updateStoreAssociatedAccountSubscriptions();
+        }
+
+        //Increment updatedAssociatedCompanyFlag and use it on a watcher as is the associated company updated
+        $associationStore.updatedAssociatedCompanyFlag++;
+
+        companyAssociationPending.value = false;
     }
 
     const updateCompanyAssignmentType = (selectedCompanyValue: null | number | string = null): void => {
