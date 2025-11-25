@@ -1,8 +1,11 @@
 export default defineNuxtRouteMiddleware((to, from) => {
     const user = userState();
+    const _debug = useNuxtApp().$debug as (key: string, payload: any) => void;
+    const log = false;
 
-    //console.log({'AUTH MIDDLEWARE TO PATH': to.path});
-    //console.log({'AUTH MIDDLEWARE TO NAME': to.name.toLowerCase()});
+    if(log){
+        _debug('Middleware auth to', JSON.stringify({'name': (to.name as string).toLowerCase(), 'path': to.path}));
+    }
 
     if(!user.value && to.path !== '/login'){
 
