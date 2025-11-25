@@ -254,7 +254,7 @@ export const useLayout = () => {
                     type: 'link',
                     title: 'Attendance',
                     to: `/${SUBSCRIPTION_MODULE.EMPLOYEE_PORTAL}/attendance`,
-                    route_active: `${SUBSCRIPTION_MODULE.EMPLOYEE_PORTAL}/attendance`
+                    route_active: `${SUBSCRIPTION_MODULE.EMPLOYEE_PORTAL}-attendance`
                 }] : []) as NavigationLinkInterface[],
             ],
             [SUBSCRIPTION_MODULE.HR_PAYROLL as number]: [
