@@ -1,4 +1,4 @@
-
+//@ts-nocheck
 import type {UseFetchOptions} from "nuxt/app";
 import type {CallbackResponseT} from "@/public/js/types/request";
 
@@ -9,6 +9,9 @@ export async function laraFetch<DataT, ErrorT>(
     promptErrorResponse = true
 ){
     if(import.meta.server)return;
+
+    const debug = useNuxtApp().$debug as (key: string, payload: any) => void;
+    const log = false;
 
     const {
         onRequest: laraInterceptorOnRequest,
@@ -28,11 +31,11 @@ export async function laraFetch<DataT, ErrorT>(
     }
 
     await $fetch(baseURL + path, {
-        //@ts-ignore
         credentials: 'include',
-        //@ts-ignore
         async onRequest({request, options}){
-            console.log({'LARA 0FETCH' : 'START: ' + baseURL + path})
+            if(log){
+                debug('LARA 0FETCH START', baseURL + path);
+            }
 
             await laraInterceptorOnRequest(
                 callbacks,
@@ -40,9 +43,10 @@ export async function laraFetch<DataT, ErrorT>(
                 {request: request, options: options}
             );
         },
-        //@ts-ignore
         async onRequestError({ request, options, error }) {
-            console.log({'LARA 0FETCH ERROR' : error.message})
+            if(log){
+                debug('LARA 0FETCH ERROR', error.message);
+            }
 
             await laraInterceptorOnRequestError(
                 callbacks,
@@ -50,9 +54,10 @@ export async function laraFetch<DataT, ErrorT>(
                 {request: request, options: options, error: error}
             );
         },
-        //@ts-ignore
         async onResponse({request, options, response}) {
-            console.log({'LARA 0FETCH RESPONSE CODE' : response?._data?.code})
+            if(log){
+                debug('LARA 0FETCH RESPONSE CODE', response?._data?.code);
+            }
 
             await laraInterceptorOnResponse(
                 callbacks,
@@ -65,5 +70,10 @@ export async function laraFetch<DataT, ErrorT>(
             ...laraHeaders(),
             ...options?.headers
         },
-    }).catch((error) => console.log({'LARA 0FETCH ERROR': error}));
+    }).catch((error) => {
+
+        if(log){
+            debug('LARA 0FETCH ERROR', error);
+        }
+    });
 }
