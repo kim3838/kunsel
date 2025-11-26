@@ -1,10 +1,12 @@
 
-import type {Enum, EnumOption} from "@/public/js/common/type";
+import type {EnumOption} from "@/public/js/common/type";
+import type {EmployeeT} from "@/public/js/types/employee";
 
 export interface AssignedCompanyPayloadT {
     ulid: string,
-    assignment_type?: Enum,
+    assignment_type?: EnumOption,
     is_employee?: boolean,
+    employee: EmployeeT | null,
     currency: string,
     timezone: string,
     account: {

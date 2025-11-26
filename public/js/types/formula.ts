@@ -1,5 +1,5 @@
 
-import type {Enum} from "@/public/js/common/type";
+import type {EnumOption} from "@/public/js/common/type";
 import type {TableRowPayloadT} from "@/public/js/types/data";
 
 export type FormulaSettingT = {
@@ -20,8 +20,8 @@ export type CompanyFormulaSetting = {
     company_name : string,
     formula_name : string,
     formula_is_aggregation : boolean,
-    formulable_type : Enum,
-    formulable_component_type : Enum,
+    formulable_type : EnumOption,
+    formulable_component_type : EnumOption,
     default_settings : unknown[],
     formula_settings : unknown[],
     sub_row: {
