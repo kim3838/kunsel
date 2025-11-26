@@ -8,6 +8,7 @@ import type {
 import type {
     EnumOption
 } from "@/public/js/common/type";
+import type {EmployeeT} from "@/public/js/types/employee";
 
 export const companyAssociationPendingState = () => {
     return useState("company_association_pending", () => false);
@@ -31,12 +32,16 @@ export const userIsEmployeeOfSelectedCompanyState = () => {
 export const userIsAdminInAnyCompanyState = () => {
     return useState("user_is_admin_in_any_company", () => false);
 }
+export const userCompanyEmployeeState = () => {
+    return useState<EmployeeT | null>("user_company_employee", () => null);
+}
 
 export const useAssociation = () => {
     const companyAssociationPending = companyAssociationPendingState();
     const user = userState();
     const userIsAdminOfSelectedCompany = userIsAdminOfSelectedCompanyState();
     const userIsEmployeeOfSelectedCompany = userIsEmployeeOfSelectedCompanyState();
+    const userCompanyEmployee = userCompanyEmployeeState();
     const userIsAdminInAnyCompany = userIsAdminInAnyCompanyState();
     const associatedCompany = associatedCompanyState();
     const currentRouteNameIsCompanyAdminProtected = computed(() => {
@@ -351,16 +356,21 @@ export const useAssociation = () => {
         if (!selectedCompany) {
             userIsAdminOfSelectedCompany.value = false;
             userIsEmployeeOfSelectedCompany.value = false;
+            userCompanyEmployee.value = null;
             return;
         }
 
         userIsAdminOfSelectedCompany.value = selectedCompany.payload?.assignment_type?.value == COMPANY_ASSIGNMENT_TYPE.ADMIN;
         userIsEmployeeOfSelectedCompany.value = selectedCompany.payload?.is_employee || false;
+        if(userIsEmployeeOfSelectedCompany.value){
+            userCompanyEmployee.value = selectedCompany.payload?.employee;
+        }
     }
 
     const resetUserAssociationStates = async() => {
         userIsAdminOfSelectedCompany.value = false;
         userIsEmployeeOfSelectedCompany.value = false;
+        userCompanyEmployee.value = null;
         userIsAdminInAnyCompany.value = false;
         associatedCompany.value = {
             selection: [],
