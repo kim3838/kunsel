@@ -320,7 +320,7 @@
 import {storeToRefs} from "pinia";
 import type {TableHeaderT} from "@/public/js/types/data";
 import type {SelectionOptionsT} from "@/public/js/types/form";
-import type {EmployeePayrollComponentT, EmploymentProfileT} from "@/public/js/types/employee";
+import type {EmployeePayrollComponentFormT, EmploymentProfileFormT} from "@/public/js/types/employee";
 
 useHead({titleTemplate: (titleChunk) => {return `${titleChunk} - Employees`}});
 useLayout().setNavigationMode('solid', 'Employees/[id].vue');
@@ -1019,7 +1019,7 @@ const employeeAdditionalForms = (employee = null) => {
     let payrollComponents = _concat(employeeCompensationData.value, employeeDeductionData.value, employeeIncomeTaxData.value);
     let payrollComponentFormPayload: {
         api: string;
-        forms: EmployeePayrollComponentT[];
+        forms: EmployeePayrollComponentFormT[];
     } = {
         api: '/api/employee-payroll-component',
         forms: []
@@ -1029,7 +1029,7 @@ const employeeAdditionalForms = (employee = null) => {
         let payrollFormulableType = _get(payrollComponent, 'formulable_type.value');
         let payrollComponentType = _get(payrollComponent, 'payroll_componentable.type.value');
 
-        let employeePayrollComponentFormBody: EmployeePayrollComponentT = {
+        let employeePayrollComponentFormBody: EmployeePayrollComponentFormT = {
             employee_id: employeeId,
             company_id: selectedAssociatedCompanyId.value,
             formulable_type: payrollFormulableType,
@@ -1081,7 +1081,7 @@ const employeeAdditionalForms = (employee = null) => {
 
     let employmentProfileFormPayload: {
         api: string;
-        forms: EmploymentProfileT[];
+        forms: EmploymentProfileFormT[];
     } = {
         api: '/api/employment-profile',
         forms: []
@@ -1090,7 +1090,7 @@ const employeeAdditionalForms = (employee = null) => {
     employmentProfiles.value.forEach((employmentProfile) => {
         let endOfServiceType = _get(employmentProfile, 'end_of_service_type.value', null);
 
-        let employeeEmploymentProfileFormBody: EmploymentProfileT = {
+        let employeeEmploymentProfileFormBody: EmploymentProfileFormT = {
             employee_id: employeeId,
             company_id: selectedAssociatedCompanyId.value,
             status: _get(employmentProfile, 'status.value', null),

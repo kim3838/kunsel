@@ -1,5 +1,5 @@
 
-export type EmployeePayrollComponentT = {
+export type EmployeePayrollComponentFormT = {
     employee_id: string | number | null,
     company_id: string | number | null,
     formulable_type: string | number,
@@ -16,7 +16,7 @@ export type EmployeePayrollComponentT = {
     end_date?: string | number | null,
 }
 
-export type EmploymentProfileT = {
+export type EmploymentProfileFormT = {
     employee_id: string | number | null,
     company_id: string | number | null,
     status: string | number | null,
