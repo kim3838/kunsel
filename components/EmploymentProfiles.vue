@@ -208,14 +208,8 @@ const employmentProfileExecute = async () => {
 
     employmentProfilesPending.value = true;
 
-    await laraFetch(`/api/employment-profiles`, {
-        method: 'GET',
-        params: {
-            filters: {
-                //Employee ids,filter out null and undefined
-                employee_id: _filter([employeeId.value], _negate(_isNil)),
-            }
-        }
+    await laraFetch(`/api/employee-employment-profiles/${employeeId.value}`, {
+        method: 'GET'
     },{
         onRequestError: () => {
             employmentProfilesPending.value = false;
