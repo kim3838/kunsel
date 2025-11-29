@@ -54,8 +54,8 @@
                                     :drop-align="'top'"
                                     :drop-justify="'right'"
                                     :drop-options="[
-                                        {type: 'link', icon: 'ix:open-external', title: 'Details',to: `/workforce/attendance/${cell.ulid}`},
-                                        {type: 'action', icon: 'mdi:edit', title: 'Edit Attendance',callback: () => {edit(cell);}},
+                                        {type: 'link', icon: 'ix:open-external', title: 'Details',to: `/${SUBSCRIPTION_MODULE.EMPLOYEE_PORTAL}/attendance/${cell.ulid}`},
+                                        {type: 'action', icon: 'mdi:edit', title: 'Adjust Attendance',callback: () => {adjust(cell);}},
                                     ]">
                                 </NavDrop>
                             </div>
@@ -315,7 +315,22 @@ watch(clientReadyState, async (clientReady) => {
     }
 })
 
+const stagedAttendance = ref<{
+    'id': string | number | null,
+    'ulid': string | null,
+}>({
+    'id': null,
+    'ulid': null,
+});
+
 const attendanceAdjusting = ref(false);
+const adjustPending = ref(false);
+const adjustPayload = ref({});
+
+const adjust = (cell: TableRowT) => {
+    //adjustPayload.value = cell;
+    //attendanceAdjusting.value = true;
+}
 </script>
 
 <style scoped>
