@@ -160,7 +160,8 @@ const emit = defineEmits([
     'update:creatingOrEditing',
     'update:editPayload',
     'update:editPayloadIndex',
-    'resolved'
+    'resolved',
+    'cancelled',
 ]);
 
 const {width: contentContainerWidth, height: contentContainerHeight} = useElementSize(useTemplateRef('contentContainer'));
@@ -262,10 +263,14 @@ const loadEditable = () => {
     render(dateStartAndEndDatePickers.value);
 };
 
-const closeModal = () => {
+const closeModal = (cancelled = false) => {
     emit('update:creatingOrEditing', false);
     emit('update:editPayload', {});
     emit('update:editPayloadIndex', -1);
+
+    if(cancelled){
+        emit('cancelled');
+    }
     reset();
 };
 

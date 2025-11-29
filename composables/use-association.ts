@@ -50,6 +50,7 @@ export const useAssociation = () => {
         return _includes([
             'workforce-employees',
             'workforce-employee-groups',
+            'workforce-employment-profiles',
             'workforce-departments',
             'workforce-designations',
             'workforce-shift-assignment',
