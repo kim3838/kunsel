@@ -552,7 +552,7 @@ const confirmDeleteSelected = () => {
         resetable: true,
         icon: null,
         title: 'Confirm Action',
-        message: `Confirm delete payroll components?`,
+        message: `Confirm delete payroll component${selectedPayrollComponents.value.length > 1 ? 's' : ''}?`,
         action: {
             callback: async () => {
                 await deleteSelected();
@@ -592,7 +592,7 @@ const deleteSelected = async () => {
                 resetable: false,
                 icon: null,
                 title: `Request successful`,
-                message: `Payroll component deleted successfully.`,
+                message: `Payroll component${selectedIds.length > 1 ? 's' : ''} deleted successfully.`,
                 action: {
                     callback: () => {},
                     label: 'Okay'
