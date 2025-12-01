@@ -120,6 +120,7 @@
 
 <script setup lang="ts">
 import type {DataTableMeta, TableHeaderT, TableRowT} from "@/public/js/types/data";
+import type {EnumOption, EnumSelection} from "@/public/js/common/type";
 
 useHead({titleTemplate: (titleChunk) => {return `${titleChunk} - Accounts`}});
 definePageMeta({middleware: ['auth', 'super-admin']});
@@ -175,14 +176,14 @@ const noAccountRecords = computed(() => {
     return accounts.meta.pagination.total === 0;
 })
 const viewMode = reactive<{
-    selection: Array<{text: string, value: number}>;
+    selection: EnumSelection;
     selected: number | null;
 }>({
     selection: [
-        {text : 'Flex', value: DATA_VIEW_MODE.FLEX as number},
-        {text : 'List', value: DATA_VIEW_MODE.LIST as number},
+        {text : 'Flex', value: DATA_VIEW_MODE.FLEX} as EnumOption,
+        {text : 'List', value: DATA_VIEW_MODE.LIST} as EnumOption,
     ],
-    selected: DATA_VIEW_MODE.FLEX as number
+    selected: DATA_VIEW_MODE.LIST as number
 });
 let pageComputed = computed({
     get() {
