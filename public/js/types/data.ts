@@ -48,7 +48,7 @@ export interface TableHeaderT {
 }
 
 export interface TableRowT {
-    id: string | number;
+    id?: string | number;
     [key: string]: any;
     _payload?: TableRowPayloadT;
 }
