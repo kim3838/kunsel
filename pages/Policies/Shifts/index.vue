@@ -51,7 +51,6 @@
                     </div>
 
                     <DataTable
-                        v-if="viewMode.selected == DATA_VIEW_MODE.LIST"
                         :key="shiftsKey"
                         :headers="shiftsHeaders"
                         :size="'lg'"
