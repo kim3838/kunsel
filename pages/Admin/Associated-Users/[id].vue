@@ -59,7 +59,7 @@
                             :size="'lg'"
                             :rows="userCompanyAssignmentData">
                             <template v-slot:cell.company_assignment_type="{cell, slot, scrollReference}">
-                                <div class="p-[1px]">
+                                <div class="mx-0.5 flex items-center h-[32px]">
                                     <SingleSelectWrapper
                                         :disabled="!isAdminInCompany(cell.company_id) || disableActions"
                                         in-horizontal-scrollable

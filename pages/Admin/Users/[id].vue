@@ -59,7 +59,7 @@
                             :size="'lg'"
                             :rows="userCompanyAssignmentData">
                             <template v-slot:cell.company_assignment_type="{cell, slot, scrollReference}">
-                                <div class="mx-[1px] flex items-center">
+                                <div class="mx-0.5 flex items-center h-[32px]">
                                     <SingleSelectWrapper
                                         in-horizontal-scrollable
                                         drop-shadow
