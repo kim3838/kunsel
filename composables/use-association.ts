@@ -59,6 +59,7 @@ export const useAssociation = () => {
             'policies-pay-frequencies',
             'policies-payroll-components',
             'policies-shifts',
+            'policies-leave-types',
             'policies-holiday',
             'settings-salary-statement-modules',
             'settings-formula-settings',

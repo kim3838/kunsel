@@ -357,6 +357,14 @@ export const useLayout = () => {
                             path_active: '/policies/shifts',
                         },
                         {
+                            key: 'policies/leave-types',
+                            type: 'link',
+                            title: 'Leave Types',
+                            to: '/policies/leave-types',
+                            route_active: 'policies-leave-types',
+                            path_active: '/policies/leave-types',
+                        },
+                        {
                             key: 'policies/holiday',
                             type: 'link',
                             title: 'Holidays',

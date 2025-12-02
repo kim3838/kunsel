@@ -1,0 +1,383 @@
+<template>
+    <div>
+        <DefaultWrapper>
+            <div class="mx-auto max-w-screen-2xl">
+                <form @submit.prevent="paginate(1, true)" class="space-y-2 p-[20px]">
+                    <div class="grid gap-2 grid-cols-3 sm:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-8">
+                        <div>
+                            <InputLabel :size="'sm'" value="Search" />
+                            <Input :disabled="disableActions" :size="'md'" ref="searchInput" v-model="filters.search.keyword" class="w-full" placeholder="Search" type="text"/>
+                        </div>
+                        <div>
+                            <InputLabel :size="'sm'" value="Type" />
+                            <MultiSelect :disabled="disableActions" glint drop-shadow :size="'md'" :options="leaveTypeOptions" :icon="'tdesign:component-checkbox'"/>
+                        </div>
+                    </div>
+
+                    <div class="flex flex-row flex-wrap gap-2">
+                        <Button class="w-min" ref="submitButton" type="submit" :disabled="disableActions" :size="'md'" :icon="disableActions ? 'eos-icons:loading' : 'mdi:data'" :label="disableActions ? 'Loading' : 'Load'"></Button>
+                        <RadioGroup
+                            class="scaffold-border px-2"
+                            :disabled="disableActions"
+                            :selections="viewMode.selection"
+                            :size="'md'"
+                            :orientation="'horizontal'"
+                            v-model="viewMode.selected" />
+                        <label class="flex items-center">
+                            <Checkbox
+                                :disabled="disableActions"
+                                name="remember"
+                                v-model="showBalancePerPeriod"
+                                :size="'md'"
+                                :label="'Show Balance Per Period'" />
+                        </label>
+                    </div>
+
+                    <div>
+                        <PageInformation :pagination="leaveTypes.meta.pagination" :pending="disableDataTable" />
+                        <Pagination :size="'lg'" :pagination="leaveTypes.meta.pagination" :pending="disableDataTable" v-model="pageComputed"/>
+                    </div>
+                </form>
+
+                <div class="px-[20px]">
+                    <div class="mb-2 flex flex-row flex-wrap gap-2 items-center min-h-8">
+                        <UnorderedList v-if="disableActions" :icon="'eos-icons:loading'" :size="'md'" :label="'Please wait...'"/>
+                        <NuxtLink
+                            v-if="!disableActions"
+                            :to="`/policies/leave-types/create-leave-type`">
+                            <Button class="w-min" :disabled="disableActions" :size="'sm'" :icon="disableActions ? 'eos-icons:loading' : 'mdi:plus'" :label="disableActions ? 'Please wait' : ''"></Button>
+                        </NuxtLink>
+                        <Button v-if="!disableActions" :variant="'outline'" :icon="'mdi:delete-outline'" class="inline-block" :size="'sm'" :disabled="disableActions" @click="deleteSelected"/>
+                    </div>
+
+                    <DataTable
+                        :key="leaveTypesKey"
+                        :sup-headers="leaveTypesSupHeaders"
+                        :headers="leaveTypesHeaders"
+                        :size="'lg'"
+                        :rows="leaveTypes.data"
+                        :disabled="disableDataTable"
+                        v-model="selectedLeaveTypes"
+                        :sub-row-slug="leaveTypeSubRowSlug"
+                        :sub-row-settings="{
+                            type: DATATABLE_SUBROW_TYPE.TITLED,
+                            containerPaddingTop: 0.25,
+                            containerPaddingBottom: 0.75,
+                            titleSize: 'md',
+                            rowVerticalLine: true,
+                            verticalBorderType: 'dashed',
+                            horizontalBorderType: 'dashed',
+                        }"
+                        :stripped="false"
+                        selection>
+                        <template v-slot:cell.actions="{cell,slot}">
+                            <div class="flex items-center">
+                                <NavDrop
+                                    class="z-10"
+                                    :disabled="disableActions"
+                                    :parent-icon="'ic:baseline-arrow-right'"
+                                    in-horizontal-scrollable
+                                    :size="`sm`"
+                                    :drop-shadow-size="`lg`"
+                                    :title="'Menu'"
+                                    :drop-align="'top'"
+                                    :drop-justify="'right'"
+                                    :drop-options="[
+                                        {type: 'link',icon: 'mdi:pen',title: 'Edit',to: `/policies/leave-types/${cell.ulid}`},
+                                    ]">
+                                </NavDrop>
+                            </div>
+                        </template>
+                        <template v-slot:cell.type="{cell,slot}">
+                            <div class="p-[3px]">{{cell.type?.text}}</div>
+                        </template>
+                        <template v-slot:cell.is_paid="{cell,slot}">
+                            <div class="p-[3px]">{{cell.is_paid ? 'Yes' : 'No'}}</div>
+                        </template>
+                        <template v-slot:cell.monetizable="{cell,slot}">
+                            <div class="p-[3px]">{{cell.monetizable ? 'Yes' : 'No'}}</div>
+                        </template>
+                        <template v-slot:cell.period_type="{cell,slot}">
+                            <div class="p-[3px]">{{cell.period_type?.text}}</div>
+                        </template>
+                        <template v-slot:cell.is_default="{cell, slot, scrollReference}">
+                            <div class="flex justify-center">
+                                <NonModelCheckBox disabled :size="slot.checkBoxSize" :checked="cell.is_default" ></NonModelCheckBox>
+                            </div>
+                        </template>
+                        <template v-slot:sub_row_slot="{rowIndex, cell, slot}">
+                            <div class="inline-flex items-center scaffold-border pr-2">
+                                <Icon name="mdi:info-variant" :class="[slot.iconSizeClass]" /><div :class="[slot.titleSizeClass]">Balance Per Period</div>
+                            </div>
+
+                            <BalancePerPeriodSubRow
+                                :rows="cell[slot.slug]"
+                                :disabled="disableDataTable"
+                            ></BalancePerPeriodSubRow>
+                        </template>
+                    </DataTable>
+                </div>
+            </div>
+        </DefaultWrapper>
+    </div>
+</template>
+
+<script setup lang="ts">
+import type {DataTableMeta, TableHeaderT, TableRowT, TableSupHeaderT} from "@/public/js/types/data";
+import type {EnumOption, EnumSelection, StringEnumInterface} from "@/public/js/common/type";
+import {storeToRefs} from "pinia";
+
+useHead({titleTemplate: (titleChunk) => {return `${titleChunk} - Leave Types`}});
+definePageMeta({middleware: ['auth', 'admin-of-selected-company']});
+useLayout().setNavigationMode('solid');
+
+const {isAuthenticated} = useAuth();
+const nuxtApp = useNuxtApp();
+const $enumerableOption = nuxtApp.$enumerableOption as (enumerable: StringEnumInterface, value: number) => {
+    text: string,
+    value: number
+};
+const {
+    updatedAssociatedCompanyFlag
+} = storeToRefs(nuxtApp.$associationStore);
+const {
+    selectedAssociatedCompanyId
+} = storeToRefs(nuxtApp.$authStore);
+
+watch(updatedAssociatedCompanyFlag, (newValue) => {
+    if(isAuthenticated.value && selectedAssociatedCompanyId.value){
+        paginate();
+    }
+})
+
+const showBalancePerPeriod = ref(false);
+const leaveTypeSubRowSlug = ref('');
+
+watch(() => {return showBalancePerPeriod.value;}, (show) => {
+    if(show){
+        leaveTypeSubRowSlug.value = 'balance_per_period';
+        paginate(1, true)
+    } else {
+        leaveTypeSubRowSlug.value = '';
+        paginate(1, true)
+    }
+})
+
+const leaveTypesSupHeaders = reactive<TableSupHeaderT[]>([
+    {text: ''},
+    {text: ''},
+    {text: 'Leave Type', colspan: 5,  alignHeader: 'left'},
+    {text: '', colspan: 1,  alignHeader: 'left'},
+    {text: 'Eligibility', colspan: 1,  alignHeader: 'left'},
+    {text: 'Period', colspan: 2,  alignHeader: 'left'},
+    {text: 'Balance', colspan: 2,  alignHeader: 'left'},
+]);
+
+const leaveTypesHeaders = reactive<TableHeaderT[]>([
+    { text: '#', value: 'row_number'},
+    { text: '', value: 'actions'},
+    { text: 'Code', value: 'code'},
+    { text: 'Name', value: 'name'},
+    { text: 'Type', value: 'type'},
+    { text: 'Is Paid', value: 'is_paid'},
+    { text: 'Monetizable', value: 'monetizable', alignData: 'left'},
+
+    { text: 'Usage Limit', value: 'limit_usage_value_readable', alignData: 'left'},
+
+    { text: 'Employment Profiles', value: 'eligibility_employment_types_readable', alignData: 'left'},
+
+    { text: 'Period Type', value: 'period_type', alignData: 'left'},
+    { text: '', value: 'period_readable', alignData: 'left'},
+
+    { text: 'on Eligibility', value: 'initial_balance_upon_eligibility', alignData: 'left'},
+    { text: 'Carry over per new period', value: 'carry_over_readable', alignData: 'left'},
+]);
+
+const leaveTypesKey = ref(0);
+const leaveTypes = reactive<{
+    data: TableRowT[];
+    meta: DataTableMeta
+}>({
+    'data': [],
+    'meta': {
+        pagination: {
+            total: 0,
+            count: 0,
+            per_page: 0,
+            current_page: 0,
+            total_pages: 0
+        }
+    }
+});
+
+let filters = reactive<{
+    page: number,
+    perPage: number,
+    search: {
+        keyword: string,
+        callback: ReturnType<typeof setTimeout> | number
+    }
+}>({
+    page: 1,
+    perPage: 25,
+    search: {
+        keyword: '',
+        callback: 1
+    }
+});
+
+const viewMode = reactive<{
+    selection: EnumSelection;
+    selected: number | null;
+}>({
+    selection: [
+        {text : 'Flex', value: DATA_VIEW_MODE.FLEX} as EnumOption,
+        {text : 'List', value: DATA_VIEW_MODE.LIST} as EnumOption,
+    ],
+    selected: DATA_VIEW_MODE.LIST as number
+});
+
+watch(() => viewMode.selected,async viewModeType => {
+    // await nextTick();
+    // selectedLeaveTypes.value = [];
+    // paginate(1, true);
+});
+
+const leaveTypeOptions = reactive({
+    search: '',
+    selection: [
+        $enumerableOption(LEAVE_TYPE_NAME, LEAVE_TYPE.VACATION as number),
+        $enumerableOption(LEAVE_TYPE_NAME, LEAVE_TYPE.SICK as number),
+        $enumerableOption(LEAVE_TYPE_NAME, LEAVE_TYPE.EMERGENCY as number),
+    ],
+    selected: []
+});
+
+let pageComputed = computed({
+    get() {
+        return {
+            page: filters.page,
+            perPage: filters.perPage,
+        }
+    },
+    set(payload: { key: 'page' | 'perPage', value: number }) {
+        filters[payload.key] = payload.value;
+    }
+});
+
+let paramsComputed = computed(() => {
+    return {
+        page: filters.page,
+        perPage: filters.perPage,
+        filters: {
+            company_id: selectedAssociatedCompanyId.value,
+            search: filters.search.keyword,
+            type: leaveTypeOptions.selected,
+        }
+    };
+});
+const leaveTypesPending = ref(false);
+const selectedLeaveTypes = ref([]);
+
+const leaveTypesExecute = async () => {
+
+    if(import.meta.server){return;}
+
+    leaveTypesPending.value = true;
+
+    await laraFetch("/api/leave-types", {
+        method: 'GET',
+        params: paramsComputed.value
+    },{
+        onRequestError: () => {
+            leaveTypesPending.value = false;
+        },
+        onResponse: () => {
+            leaveTypesPending.value = false;
+        },
+        onSuccessResponse: async (request, options, response) => {
+            leaveTypes.data = _get(response, '_data.values.data', []);
+            leaveTypes.meta = _get(response, '_data.values.meta', {
+                pagination: {
+                    total: 0,
+                    count: 0,
+                    per_page: 0,
+                    current_page: 0,
+                    total_pages: 0
+                }
+            });
+            leaveTypesKey.value += 1;
+        }
+    });
+}
+
+await leaveTypesExecute();
+
+const disableActions = computed(() => {
+    return leaveTypesPending.value || deleting.value || companyAssociationPendingState().value;
+});
+const disableDataTable = computed(() => {
+    return leaveTypesPending.value || deleting.value || companyAssociationPendingState().value;
+});
+
+function paginate(page = 1, clearSelection = false){
+    clearTimeout(filters.search.callback);
+
+    if(clearSelection){
+        selectedLeaveTypes.value = [];
+    }
+
+    if(filters.page === page){
+        leaveTypesExecute();
+    } else {
+        filters.page = page;
+    }
+}
+
+watch(() => {return filters.page;}, () => {paginate(filters.page);});
+watch(() => {return filters.perPage;}, () => {paginate(1);});
+
+const deleting = ref(false);
+const deleteSelected = async () => {
+
+    const selectedIds = selectedLeaveTypes.value;
+
+    if(_isEmpty(selectedIds)){
+        return;
+    }
+
+    deleting.value = true;
+
+    let batchDelete: Promise<any>[] = [];
+
+    selectedIds.forEach((id) => {
+        batchDelete.push(
+            new Promise((resolve, reject) => {
+                laraFetch(`/api/leave-type/${id}`, {
+                    method: 'DELETE',
+                    body: {
+                        'company_id': selectedAssociatedCompanyId.value,
+                    }
+                },{
+                    onRequestError: (request, options, error) => {
+                        reject(error);
+                    },
+                    onResponse: (request, options, response) => {
+                        resolve(response);
+                    }
+                })
+            })
+        );
+    });
+
+    await Promise.all(batchDelete);
+    selectedLeaveTypes.value = [];
+    await leaveTypesExecute();
+
+    deleting.value = false;
+}
+</script>
+
+<style scoped>
+
+</style>
