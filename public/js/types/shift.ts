@@ -1,4 +1,5 @@
 
+import type {EnumOption} from "@/public/js/common/type";
 
 export type ShiftT = {
     id: string | number,
@@ -6,7 +7,13 @@ export type ShiftT = {
     company_id: string | number,
     code: string,
     name: string,
-    type: number,
+    type: EnumOption,
+    holiday_policy: EnumOption,
+    except_holidays: number[] | null,
+    work_start_grace_time: number,
+    require_lunch_time_in_and_out: boolean,
+    lunch_start_grace_time: number,
+    max_overtime: number
 }
 
 export type ShiftSchedulePatchableT = {
@@ -14,7 +21,7 @@ export type ShiftSchedulePatchableT = {
 }
 
 export type ShiftScheduleT = ShiftSchedulePatchableT & {
-    week_day: number,
+    week_day: EnumOption,
     is_rest_day: boolean,
     is_day_off: boolean,
     is_flexible: boolean,
