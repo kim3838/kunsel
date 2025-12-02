@@ -213,12 +213,6 @@ const viewMode = reactive<{
     selected: DATA_VIEW_MODE.LIST as number
 });
 
-watch(() => viewMode.selected,async viewModeType => {
-    // await nextTick();
-    // selectedShifts.value = [];
-    // paginate(1, true);
-});
-
 const shiftTypeOptions = reactive({
     search: '',
     selection: [
