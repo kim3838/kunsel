@@ -237,12 +237,6 @@ const viewMode = reactive<{
     selected: DATA_VIEW_MODE.LIST as number
 });
 
-watch(() => viewMode.selected,async viewModeType => {
-    // await nextTick();
-    // selectedLeaveTypes.value = [];
-    // paginate(1, true);
-});
-
 const leaveTypeOptions = reactive({
     search: '',
     selection: [
