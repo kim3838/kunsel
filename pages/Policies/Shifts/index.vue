@@ -118,7 +118,7 @@
 
 <script setup lang="ts">
 import type {DataTableMeta, TableHeaderT, TableRowT} from "@/public/js/types/data";
-
+import type {EnumOption, EnumSelection} from "@/public/js/common/type";
 import {storeToRefs} from "pinia";
 
 useHead({titleTemplate: (titleChunk) => {return `${titleChunk} - Shifts`}});
@@ -204,19 +204,20 @@ const noShiftRecords = computed(() => {
 })
 
 const viewMode = reactive<{
-    selection: Array<{text: string, value: number}>;
+    selection: EnumSelection;
     selected: number | null;
 }>({
     selection: [
-        {text : 'List', value: DATA_VIEW_MODE.LIST},
+        {text : 'Flex', value: DATA_VIEW_MODE.FLEX} as EnumOption,
+        {text : 'List', value: DATA_VIEW_MODE.LIST} as EnumOption,
     ],
-    selected: DATA_VIEW_MODE.LIST
+    selected: DATA_VIEW_MODE.LIST as number
 });
 
 watch(() => viewMode.selected,async viewModeType => {
-    await nextTick();
-    selectedShifts.value = [];
-    paginate(1, true);
+    // await nextTick();
+    // selectedShifts.value = [];
+    // paginate(1, true);
 });
 
 const shiftTypeOptions = reactive({
