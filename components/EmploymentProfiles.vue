@@ -62,7 +62,7 @@
                         v-model="selectedEmploymentProfiles"
                         selection>
                         <template v-slot:cell.action="{cell,slot, headerIndex, rowIndex}">
-                            <div class="h-full mx-0.5 space-x-0.5 w-full flex items-center">
+                            <div class="h-[32px] mx-0.5 space-x-0.5 w-full flex items-center">
                                 <Button
                                     v-if="creatingEmployee"
                                     class="w-min"

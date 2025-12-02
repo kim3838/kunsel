@@ -94,7 +94,7 @@
                         selection
                         :stripped="false">
                         <template v-slot:cell.actions="{cell,slot, headerIndex, rowIndex}">
-                            <div class="h-full mx-0.5 space-x-0.5 w-full flex items-center">
+                            <div class="h-[32px] mx-0.5 space-x-0.5 w-full flex items-center">
                                 <Button type="button" :variant="'outline'" :icon="'mdi:delete-forever'" :size="slot.buttonSize" @click="deleteRow(rowIndex)"/>
                                 <Button type="button" :variant="'outline'" :icon="'ic:baseline-cloud-sync'" :size="slot.buttonSize" @click="confirmSyncWithDefaultSetting(cell)"></Button>
                                 <Button type="button" :variant="'outline'" :icon="'ri:formula'" :size="slot.buttonSize" @click="viewFormulaSettings(cell as CompanyFormulaSetting)"></Button>
