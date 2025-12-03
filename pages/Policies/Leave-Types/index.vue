@@ -167,10 +167,10 @@ const leaveTypesSupHeaders = reactive<TableSupHeaderT[]>([
     {text: ''},
     {text: ''},
     {text: 'Leave Type', colspan: 5,  alignHeader: 'left'},
-    {text: '', colspan: 1,  alignHeader: 'left'},
-    {text: 'Eligibility', colspan: 1,  alignHeader: 'left'},
+    {text: 'Eligibility', colspan: 2,  alignHeader: 'left'},
     {text: 'Period', colspan: 2,  alignHeader: 'left'},
-    {text: 'Balance', colspan: 2,  alignHeader: 'left'},
+    {text: 'Limit', colspan: 1,  alignHeader: 'left'},
+    {text: 'Carry Over', colspan: 2,  alignHeader: 'left'},
 ]);
 
 const leaveTypesHeaders = reactive<TableHeaderT[]>([
@@ -182,15 +182,15 @@ const leaveTypesHeaders = reactive<TableHeaderT[]>([
     { text: 'Is Paid', value: 'is_paid'},
     { text: 'Monetizable', value: 'monetizable', alignData: 'left'},
 
-    { text: 'Usage Limit', value: 'limit_usage_value_readable', alignData: 'left'},
-
     { text: 'Employment Profiles', value: 'eligibility_employment_types_readable', alignData: 'left'},
+    { text: 'Balance on eligibility', value: 'initial_balance_upon_eligibility', alignData: 'right'},
 
-    { text: 'Period Type', value: 'period_type', alignData: 'left'},
+    { text: '', value: 'period_type', alignData: 'left'},
     { text: '', value: 'period_readable', alignData: 'left'},
 
-    { text: 'on Eligibility', value: 'initial_balance_upon_eligibility', alignData: 'left'},
-    { text: 'Carry over per new period', value: 'carry_over_readable', alignData: 'left'},
+    { text: '', value: 'limit_usage_value_readable', alignData: 'left'},
+
+    { text: '', value: 'carry_over_readable', alignData: 'left'},
 ]);
 
 const leaveTypesKey = ref(0);
