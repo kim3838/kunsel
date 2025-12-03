@@ -7,7 +7,7 @@
             :disabled="disabled"
             :size="'md'"
             :rows="rows"
-            :stripped="true">
+            :stripped="false">
         </DataTable>
     </div>
 </template>
