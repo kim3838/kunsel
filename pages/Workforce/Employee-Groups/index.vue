@@ -131,44 +131,18 @@
                 <div class="px-[20px]">
 
                     <div class="mb-2 flex flex-row flex-wrap gap-2 items-center min-h-8">
-                        <Button @click="put(null)" class="w-min" :disabled="disableActions" :size="'sm'" :icon="disableActions ? 'eos-icons:loading' : 'mdi:plus'" :label="disableActions ? 'Please wait' : ''"></Button>
-
-                        <Button
-                            :variant="'outline'"
-                            :size="'sm'"
-                            :icon="'mdi:delete-outline'"
-                            :disabled="disableActions"
-                            :label="'Delete selected groups'"
-                            @click="confirmDeleteSelected()" />
+                        <UnorderedList v-if="disableActions" :icon="'eos-icons:loading'" :size="'md'" :label="'Please wait...'"/>
+                        <Button v-if="!disableActions" @click="put(null)" class="w-min" :disabled="disableActions" :size="'sm'" :icon="disableActions ? 'eos-icons:loading' : 'mdi:plus'" :label="disableActions ? 'Please wait' : ''"></Button>
+                        <Button v-if="!disableActions" :variant="'outline'" :size="'sm'" :icon="'mdi:delete-outline'" :disabled="disableActions" :label="'Delete selected'" @click="confirmDeleteSelected()" />
                     </div>
 
                     <div class="mb-2 flex flex-row flex-wrap gap-2 items-center min-h-8">
                         <div class="scaffold-border px-2 font-[National_Park]">
                             <span><span class="font-semibold">{{selectedEmployeeGroups.length}}</span> Selected</span>
                         </div>
-                        <Button
-                            :variant="'outline'"
-                            :size="'sm'"
-                            :icon="'tdesign:close'"
-                            :disabled="disableActions"
-                            :label="'Clear selection'"
-                            @click="selectedEmployeeGroups = []" />
-                        <Button
-                            @click="assignGroups"
-                            class="inline-block"
-                            :size="'sm'"
-                            :icon="'mdi:plus'"
-                            :disabled="disableActions"
-                            :variant="'outline'"
-                            :label="'Assign selected groups to employees'" />
-                        <Button
-                            @click="confirmGroupAssignmentBatchDetach"
-                            class="inline-block"
-                            :size="'sm'"
-                            :icon="'mdi:delete-outline'"
-                            :disabled="disableActions"
-                            :variant="'outline'"
-                            :label="'Remove selected groups from employees'" />
+                        <Button :variant="'outline'" :size="'sm'" :icon="'tdesign:close'" :disabled="disableActions" :label="'Clear selection'" @click="selectedEmployeeGroups = []" />
+                        <Button @click="assignGroups" class="inline-block" :size="'sm'" :icon="'mdi:plus'" :disabled="disableActions" :variant="'outline'" :label="'Assign selected to employees'" />
+                        <Button @click="confirmGroupAssignmentBatchDetach" class="inline-block" :size="'sm'" :icon="'mdi:delete-outline'" :disabled="disableActions" :variant="'outline'" :label="'Remove selected from employees'" />
                     </div>
 
                     <DataTable
@@ -404,7 +378,7 @@ const deleteSelected = async () => {
         method: 'DELETE',
         body: {
             company_id: selectedAssociatedCompanyId.value,
-            groups: selectedIds,
+            group_ids: selectedIds,
         },
     },{
         onRequestError: (request, options, error) => {
