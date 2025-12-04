@@ -53,7 +53,7 @@
                             :to="`/admin/formulas/create-formula`">
                             <Button class="w-min" :disabled="disableActions" :size="'sm'" :icon="disableActions ? 'eos-icons:loading' : 'mdi:plus'" :label="disableActions ? 'Please wait' : ''"></Button>
                         </NuxtLink>
-                        <Button v-if="!disableActions" :variant="'outline'" :icon="'mdi:delete-outline'" class="inline-block" :size="'sm'" :disabled="disableActions" @click="deleteSelected"/>
+                        <Button v-if="!disableActions" :variant="'outline'" :icon="'mdi:delete-outline'" class="inline-block" :size="'sm'" :disabled="disableActions" :label="'Delete selected'" @click="confirmDeleteSelected"/>
                     </div>
 
                     <DataTable
@@ -282,6 +282,39 @@ const disableDataTable = computed(() => {
 });
 
 const deleting = ref(false);
+const confirmDeleteSelected = () => {
+
+    const selectedIds = selectedFormulas.value;
+
+    if(selectedIds.length == 0){
+
+        useNuxtApp().$promptStore.setPrompt({
+            resetable: false,
+            icon: null,
+            title: `Validation Error`,
+            message: `No selected formula to delete.`,
+            action: {
+                callback: () => {},
+                label: 'Okay'
+            }
+        });
+
+        return false;
+    }
+
+    useNuxtApp().$promptStore.setPrompt({
+        resetable: true,
+        icon: null,
+        title: 'Confirm Action',
+        message: `Confirm delete selected formula${selectedIds.length > 1 ? 's' : ''}?`,
+        action: {
+            callback: async () => {
+                await deleteSelected();
+            },
+            label: 'Yes'
+        }
+    });
+}
 const deleteSelected = async () => {
 
     const selectedIds = selectedFormulas.value;
