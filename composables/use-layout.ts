@@ -305,13 +305,6 @@ export const useLayout = () => {
                             route_active: 'workforce-designations'
                         },
                         {
-                            key: 'workforce/shift-assignment',
-                            type: 'link',
-                            title: 'Shift Assignment',
-                            to: '/workforce/shift-assignment',
-                            route_active: 'workforce-shift-assignment'
-                        },
-                        {
                             key: 'workforce/attendance',
                             type: 'link',
                             title: 'Attendance',
@@ -355,6 +348,13 @@ export const useLayout = () => {
                             to: '/policies/shifts',
                             route_active: 'policies-shifts',
                             path_active: '/policies/shifts',
+                        },
+                        {
+                            key: 'policies/shift-assignment',
+                            type: 'link',
+                            title: 'Shift Assignment',
+                            to: '/policies/shift-assignment',
+                            route_active: 'policies-shift-assignment'
                         },
                         {
                             key: 'policies/leave-types',
