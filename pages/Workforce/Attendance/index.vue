@@ -43,7 +43,14 @@
 
                     <div>
                         <PageInformation :pagination="attendances.meta.pagination" :pending="disableDataTable"/>
-                        <Pagination :size="'lg'" :pagination="attendances.meta.pagination" :pending="disableDataTable" v-model="pageComputed"/>
+                        <div class="flex items-center gap-2">
+                            <Pagination :size="'lg'" :pagination="attendances.meta.pagination" :pending="disableDataTable" v-model="pageComputed"/>
+                            <UnorderedList
+                                v-if="disableActions"
+                                :icon="'eos-icons:loading'"
+                                :size="'md'"
+                                :label="'Please wait...'"/>
+                        </div>
                     </div>
                 </form>
 

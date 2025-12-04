@@ -20,14 +20,14 @@
                             ref="shiftAssignmentsReference"
                             v-model:pending="shiftAssignmentPending"
                             @editShiftSettings="editShiftSettings" />
-                        <template #fallback>
-                            <div class="px-[20px]">
-                                <UnorderedList
-                                    :icon="'eos-icons:loading'"
-                                    :size="'md'"
-                                    :label="'Loading shift assignments...'"/>
-                            </div>
-                        </template>
+                            <template #fallback>
+                                <div class="px-[20px]">
+                                    <UnorderedList
+                                        :icon="'eos-icons:loading'"
+                                        :size="'md'"
+                                        :label="'Loading shift assignments...'"/>
+                                </div>
+                            </template>
                     </Suspense>
                 </div>
 

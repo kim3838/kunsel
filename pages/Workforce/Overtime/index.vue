@@ -215,7 +215,9 @@
                 <div class="px-[20px]">
 
                     <div class="mb-2 flex flex-row flex-wrap gap-2 items-center min-h-8">
-                        <Button @click="put(null)" class="w-min" :disabled="disableActions" :size="'sm'" :icon="disableActions ? 'eos-icons:loading' : 'mdi:plus'" :label="disableActions ? 'Please wait' : ''"></Button>
+                        <UnorderedList v-if="disableActions" :icon="'eos-icons:loading'" :size="'md'" :label="'Please wait...'"/>
+                        <Button v-if="!disableActions" @click="put(null)" class="w-min" :disabled="disableActions" :size="'sm'" :icon="disableActions ? 'eos-icons:loading' : 'mdi:plus'" :label="disableActions ? 'Please wait' : ''"></Button>
+                        <Button v-if="!disableActions" :variant="'outline'" :size="'sm'" :icon="'mdi:delete-outline'" :disabled="disableActions" :label="'Delete selected'" @click="confirmDeleteSelected()" />
                     </div>
 
                     <div class="mb-2 flex flex-row flex-wrap gap-2 items-center min-h-8">
@@ -229,13 +231,6 @@
                             :disabled="disableActions"
                             :label="'Clear selection'"
                             @click="selectedOvertimes = []" />
-                        <Button
-                            :variant="'outline'"
-                            :size="'sm'"
-                            :icon="'mdi:delete-outline'"
-                            :disabled="disableActions"
-                            :label="'Delete selected'"
-                            @click="confirmDeleteSelected()" />
                     </div>
 
                     <DataTable

@@ -49,11 +49,18 @@
 
             <div>
                 <PageInformation :pagination="shiftAssignments.meta.pagination" :pending="disableDataTable"/>
-                <Pagination
-                    :size="'lg'"
-                    :pagination="shiftAssignments.meta.pagination"
-                    :pending="disableDataTable"
-                    v-model="pageComputed"/>
+                <div class="flex items-center gap-2">
+                    <Pagination
+                        :size="'lg'"
+                        :pagination="shiftAssignments.meta.pagination"
+                        :pending="disableDataTable"
+                        v-model="pageComputed"/>
+                    <UnorderedList
+                        v-if="disableActions"
+                        :icon="'eos-icons:loading'"
+                        :size="'md'"
+                        :label="'Please wait...'"/>
+                </div>
             </div>
         </form>
 
@@ -75,11 +82,6 @@
                 :disabled="disableActions"
                 :label="'Delete selected shift assignments'"
                 @click="confirmDeleteSelected()" />
-            <UnorderedList
-                v-if="disableActions"
-                :icon="'eos-icons:loading'"
-                :size="'md'"
-                :label="'Please wait...'"/>
         </div>
 
         <DataTable
