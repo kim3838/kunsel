@@ -47,7 +47,14 @@
                             :to="`/policies/leave-types/create-leave-type`">
                             <Button class="w-min" :disabled="disableActions" :size="'sm'" :icon="disableActions ? 'eos-icons:loading' : 'mdi:plus'" :label="disableActions ? 'Please wait' : ''"></Button>
                         </NuxtLink>
-                        <Button v-if="!disableActions" :variant="'outline'" :icon="'mdi:delete-outline'" class="inline-block" :size="'sm'" :disabled="disableActions" @click="deleteSelected"/>
+                        <Button v-if="!disableActions" :variant="'outline'" :icon="'mdi:delete-outline'" class="inline-block" :size="'sm'" :disabled="disableActions" :label="'Delete selected'" @click="confirmDeleteSelected"/>
+                    </div>
+
+                    <div class="mb-2 flex flex-row flex-wrap gap-2 items-center min-h-8">
+                        <div class="scaffold-border px-2 font-[National_Park]">
+                            <span><span class="font-semibold">{{selectedLeaveTypes.length}}</span> Selected</span>
+                        </div>
+                        <Button :variant="'outline'" :size="'sm'" :icon="'tdesign:close'" :disabled="disableActions" :label="'Clear selection'" @click="selectedLeaveTypes = []" />
                     </div>
 
                     <DataTable
@@ -183,7 +190,7 @@ const leaveTypesHeaders = reactive<TableHeaderT[]>([
     { text: 'Monetizable', value: 'monetizable', alignData: 'left'},
 
     { text: 'Employment Profiles', value: 'eligibility_employment_types_readable', alignData: 'left'},
-    { text: 'Balance on eligibility', value: 'initial_balance_upon_eligibility', alignData: 'right'},
+    { text: 'Balance upon eligibility', value: 'initial_balance_upon_eligibility', alignData: 'right'},
 
     { text: '', value: 'period_type', alignData: 'left'},
     { text: '', value: 'period_readable', alignData: 'left'},
@@ -272,6 +279,7 @@ let paramsComputed = computed(() => {
 });
 const leaveTypesPending = ref(false);
 const selectedLeaveTypes = ref([]);
+const deleting = ref(false);
 
 const leaveTypesExecute = async () => {
 
@@ -331,10 +339,44 @@ function paginate(page = 1, clearSelection = false){
 watch(() => {return filters.page;}, () => {paginate(filters.page);});
 watch(() => {return filters.perPage;}, () => {paginate(1);});
 
-const deleting = ref(false);
-const deleteSelected = async () => {
+const confirmDeleteSelected = () => {
 
     const selectedIds = selectedLeaveTypes.value;
+
+    if(selectedIds.length == 0){
+
+        useNuxtApp().$promptStore.setPrompt({
+            resetable: false,
+            icon: null,
+            title: `Validation Error`,
+            message: `No selected leave type to delete.`,
+            action: {
+                callback: () => {},
+                label: 'Okay'
+            }
+        });
+
+        return false;
+    }
+
+    useNuxtApp().$promptStore.setPrompt({
+        resetable: true,
+        icon: null,
+        title: 'Confirm Action',
+        message: `Confirm delete selected leave type${selectedIds.length > 1 ? 's' : ''}?`,
+        action: {
+            callback: async () => {
+                await deleteSelected();
+            },
+            label: 'Yes'
+        }
+    });
+}
+const deleteSelected = async () => {
+
+    let selectedIds: number[] = [];
+
+    selectedIds = selectedLeaveTypes.value;
 
     if(_isEmpty(selectedIds)){
         return;
@@ -342,33 +384,36 @@ const deleteSelected = async () => {
 
     deleting.value = true;
 
-    let batchDelete: Promise<any>[] = [];
+    await laraFetch("/api/leave-types", {
+        method: 'DELETE',
+        body: {
+            company_id: selectedAssociatedCompanyId.value,
+            leave_type_ids: selectedIds,
+        },
+    },{
+        onRequestError: (request, options, error) => {
+            deleting.value = false;
+        },
+        onResponse: () => {
+            deleting.value = false;
+        },
+        onSuccessResponse: async (request, options, response) => {
 
-    selectedIds.forEach((id) => {
-        batchDelete.push(
-            new Promise((resolve, reject) => {
-                laraFetch(`/api/leave-type/${id}`, {
-                    method: 'DELETE',
-                    body: {
-                        'company_id': selectedAssociatedCompanyId.value,
-                    }
-                },{
-                    onRequestError: (request, options, error) => {
-                        reject(error);
-                    },
-                    onResponse: (request, options, response) => {
-                        resolve(response);
-                    }
-                })
-            })
-        );
+            useNuxtApp().$promptStore.setPrompt({
+                resetable: false,
+                icon: null,
+                title: `Request successful`,
+                message: `Leave type${selectedIds.length > 1 ? 's' : ''} deleted successfully.`,
+                action: {
+                    callback: () => {},
+                    label: 'Okay'
+                }
+            });
+        }
     });
 
-    await Promise.all(batchDelete);
     selectedLeaveTypes.value = [];
     await leaveTypesExecute();
-
-    deleting.value = false;
 }
 </script>
 
