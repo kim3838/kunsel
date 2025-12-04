@@ -333,7 +333,9 @@ const groupName = ref('');
 
 const confirmDeleteSelected = () => {
 
-    if(selectedEmployeeGroups.value.length == 0){
+    const selectedIds = selectedEmployeeGroups.value;
+
+    if(selectedIds.length == 0){
 
         useNuxtApp().$promptStore.setPrompt({
             resetable: false,
@@ -353,7 +355,7 @@ const confirmDeleteSelected = () => {
         resetable: true,
         icon: null,
         title: 'Confirm Action',
-        message: `Confirm delete selected groups`,
+        message: `Confirm delete selected group${selectedIds.length > 1 ? 's' : ''}?`,
         action: {
             callback: async () => {
                 await deleteSelected();
@@ -393,7 +395,7 @@ const deleteSelected = async () => {
                 resetable: false,
                 icon: null,
                 title: `Request successful`,
-                message: `Groups deleted successfully.`,
+                message: `Group${selectedIds.length > 1 ? 's' : ''} deleted successfully.`,
                 action: {
                     callback: () => {},
                     label: 'Okay'

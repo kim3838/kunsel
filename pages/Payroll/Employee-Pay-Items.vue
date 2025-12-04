@@ -532,13 +532,15 @@ watch(() => {return filters.perPage;}, () => {paginate(1);});
 
 const confirmDeleteSelected = () => {
 
-    if(selectedPayrollComponents.value.length == 0){
+    const selectedIds = selectedPayrollComponents.value;
+
+    if(selectedIds.length == 0){
 
         useNuxtApp().$promptStore.setPrompt({
             resetable: false,
             icon: null,
             title: `Validation Error`,
-            message: `No selected payroll components to delete.`,
+            message: `No selected payroll component to delete.`,
             action: {
                 callback: () => {},
                 label: 'Okay'
@@ -552,7 +554,7 @@ const confirmDeleteSelected = () => {
         resetable: true,
         icon: null,
         title: 'Confirm Action',
-        message: `Confirm delete payroll component${selectedPayrollComponents.value.length > 1 ? 's' : ''}?`,
+        message: `Confirm delete payroll component${selectedIds.length > 1 ? 's' : ''}?`,
         action: {
             callback: async () => {
                 await deleteSelected();

@@ -335,7 +335,7 @@ const confirmDeleteSelected = () => {
         resetable: true,
         icon: null,
         title: 'Confirm Action',
-        message: `Confirm delete selected departments?`,
+        message: `Confirm delete selected department${selectedIds.length > 1 ? 's' : ''}?`,
         action: {
             callback: async () => {
                 await deleteSelected();

@@ -357,7 +357,9 @@ watch(() => {return filters.perPage;}, () => {paginate(1);});
 
 const confirmDeleteSelected = () => {
 
-    if(selectedHolidays.value.length == 0){
+    const selectedIds = selectedHolidays.value;
+
+    if(selectedIds.length == 0){
 
         useNuxtApp().$promptStore.setPrompt({
             resetable: false,
@@ -377,7 +379,7 @@ const confirmDeleteSelected = () => {
         resetable: true,
         icon: null,
         title: 'Confirm Action',
-        message: `Confirm delete selected holiday`,
+        message: `Confirm delete selected holiday${selectedIds.length > 1 ? 's' : ''}?`,
         action: {
             callback: async () => {
                 await deleteSelected();
@@ -417,7 +419,7 @@ const deleteSelected = async () => {
                 resetable: false,
                 icon: null,
                 title: `Request successful`,
-                message: `Holiday deleted successfully.`,
+                message: `Holiday${selectedIds.length > 1 ? 's' : ''} deleted successfully.`,
                 action: {
                     callback: () => {},
                     label: 'Okay'

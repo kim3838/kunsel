@@ -581,7 +581,9 @@ watch(clientReadyState, async (clientReady) => {
 
 const confirmDeleteSelected = () => {
 
-    if(selectedOvertimes.value.length == 0){
+    const selectedIds = selectedOvertimes.value;
+
+    if(selectedIds.length == 0){
 
         useNuxtApp().$promptStore.setPrompt({
             resetable: false,
@@ -601,7 +603,7 @@ const confirmDeleteSelected = () => {
         resetable: true,
         icon: null,
         title: 'Confirm Action',
-        message: `Confirm delete selected overtime`,
+        message: `Confirm delete selected overtime${selectedIds.length > 1 ? 's' : ''}?`,
         action: {
             callback: async () => {
                 await deleteSelected();
@@ -641,7 +643,7 @@ const deleteSelected = async () => {
                 resetable: false,
                 icon: null,
                 title: `Request successful`,
-                message: `Overtime deleted successfully.`,
+                message: `Overtime${selectedIds.length > 1 ? 's' : ''} deleted successfully.`,
                 action: {
                     callback: () => {},
                     label: 'Okay'

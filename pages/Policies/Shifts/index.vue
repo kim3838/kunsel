@@ -47,7 +47,14 @@
                             :to="`/policies/shifts/create-shift`">
                             <Button class="w-min" :disabled="disableActions" :size="'sm'" :icon="disableActions ? 'eos-icons:loading' : 'mdi:plus'" :label="disableActions ? 'Please wait' : ''"></Button>
                         </NuxtLink>
-                        <Button v-if="!disableActions" :variant="'outline'" :icon="'mdi:delete-outline'" class="inline-block" :size="'sm'" :disabled="disableActions" @click="deleteSelected"/>
+                        <Button v-if="!disableActions" :variant="'outline'" :icon="'mdi:delete-outline'" class="inline-block" :size="'sm'" :disabled="disableActions" :label="'Delete selected'" @click="deleteSelected"/>
+                    </div>
+
+                    <div class="mb-2 flex flex-row flex-wrap gap-2 items-center min-h-8">
+                        <div class="scaffold-border px-2 font-[National_Park]">
+                            <span><span class="font-semibold">{{selectedShifts.length}}</span> Selected</span>
+                        </div>
+                        <Button :variant="'outline'" :size="'sm'" :icon="'tdesign:close'" :disabled="disableActions" :label="'Clear selection'" @click="selectedShifts = []" />
                     </div>
 
                     <DataTable
