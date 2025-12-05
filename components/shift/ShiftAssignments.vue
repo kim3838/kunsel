@@ -277,7 +277,7 @@ const shiftAssignmentSupHeaders = reactive<TableSupHeaderT[]>([
     {text: 'Employee', colspan: 2, alignHeader: 'left'},
     {text: 'Employment', colspan: 2, alignHeader: 'left'},
     {text: '', colspan: 2},
-    {text: 'Shift', colspan: 4},
+    {text: 'Shift', colspan: 3},
 ]);
 
 const shiftAssignmentHeaders = reactive<TableHeaderT[]>([
