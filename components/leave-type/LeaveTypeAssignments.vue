@@ -452,7 +452,7 @@ const deleteSelected = async () => {
         method: 'DELETE',
         body: {
             company_id: selectedAssociatedCompanyId.value,
-            shift_assignment_ids: selectedIds,
+            leave_type_assignment_ids: selectedIds,
         },
     },{
         onRequestError: (request, options, error) => {
