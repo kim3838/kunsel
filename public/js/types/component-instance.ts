@@ -25,3 +25,18 @@ export interface ShiftByEmployeeSelectionInstance {
     paginate: (page?: number, clearSelection?: boolean) => Promise<void>;
     reset: () => void;
 }
+
+export interface LeaveTypeAssignmentsInstance {
+    paginate: (page?: number, clearSelection?: boolean) => Promise<void>;
+}
+
+export interface LeaveTypeSelectionInstance {
+    paginate: (page?: number, clearSelection?: boolean) => Promise<void>;
+}
+
+export interface LeaveTypeByEmployeeSelectionInstance {
+    clearFlags: () => void;
+    clearData: () => void;
+    paginate: (page?: number, clearSelection?: boolean) => Promise<void>;
+    reset: () => void;
+}
