@@ -431,7 +431,9 @@ watch(() => {return filters.perPage;}, () => {paginate(1);});
 
 const confirmDeleteSelected = () => {
 
-    if(selectedShiftAssignments.value.length == 0){
+    const selectedIds = selectedShiftAssignments.value;
+
+    if(selectedIds.length == 0){
 
         useNuxtApp().$promptStore.setPrompt({
             resetable: false,
@@ -451,7 +453,7 @@ const confirmDeleteSelected = () => {
         resetable: true,
         icon: null,
         title: 'Confirm Action',
-        message: `Confirm delete selected shift assignments`,
+        message: `Confirm delete selected shift assignment${selectedIds.length > 1 ? 's' : ''}?`,
         action: {
             callback: async () => {
                 await deleteSelected();
@@ -494,7 +496,7 @@ const deleteSelected = async () => {
                 resetable: false,
                 icon: null,
                 title: `Request successful`,
-                message: `Shift assignments deleted successfully.`,
+                message: `Shift assignment${selectedIds.length > 1 ? 's' : ''} deleted successfully.`,
                 action: {
                     callback: () => {},
                     label: 'Okay'
