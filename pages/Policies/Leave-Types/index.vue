@@ -107,11 +107,6 @@
                         <template v-slot:cell.period_type="{cell,slot}">
                             <div class="p-[3px]">{{cell.period_type?.text}}</div>
                         </template>
-                        <template v-slot:cell.is_default="{cell, slot, scrollReference}">
-                            <div class="flex justify-center">
-                                <NonModelCheckBox disabled :size="slot.checkBoxSize" :checked="cell.is_default" ></NonModelCheckBox>
-                            </div>
-                        </template>
                         <template v-slot:sub_row_slot="{rowIndex, cell, slot}">
                             <div class="inline-flex items-center scaffold-border pr-2">
                                 <Icon name="mdi:info-variant" :class="[slot.iconSizeClass]" /><div :class="[slot.titleSizeClass]">Balance Per Period</div>
