@@ -1,7 +1,7 @@
 <template>
-    <div class="space-y-2 px-[20px]">
-        <form @submit.prevent="paginate(1, true)" class="space-y-2 pb-[20px]">
-            <div class="grid gap-2 grid-cols-3 sm:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 ">
+    <div class="space-y-2" :class="[compact ? '' : 'px-[20px]']">
+        <form @submit.prevent="paginate(1, clearSelectionOnFormSubmit)" class="space-y-2" :class="[compact ? '' : 'pb-[20px]']">
+            <div class="grid gap-2 grid-cols-3 sm:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
                 <div>
                     <InputLabel :size="'sm'" value="Search" />
                     <Input :size="'md'" ref="searchInput" v-model="filters.search.keyword" class="w-full" placeholder="Search" :disabled="disableActions" type="text"/>
@@ -42,18 +42,37 @@
                         :payload="assignedLeaveTypeSelectionsOptions"
                     />
                 </div>
+                <div class="col-span-2">
+                    <InputLabel :size="'sm'" value="Not Assigned Leave Type" />
+                    <MultiSelectPaginated
+                        :key="notAssignedLeaveTypeSelectionsOptionsKey"
+                        :icon="'tdesign:component-checkbox'"
+                        :disabled="disableActions"
+                        glint
+                        drop-shadow
+                        :size="'md'"
+                        :label="'Filter Leave Type(s)'"
+                        :payload="notAssignedLeaveTypeSelectionsOptions"
+                    />
+                </div>
+                <div v-if="compact" class="flex flex-col">
+                    <div class="flex-none h-[1rem]"></div>
+                    <div class="grow">
+                        <Button class="w-min" ref="submitButton" type="submit" :disabled="disableActions" :size="'md'" :icon="disableActions ? 'eos-icons:loading' : 'mdi:data'" :label="disableActions ? 'Loading' : 'Load'"></Button>
+                    </div>
+                </div>
             </div>
 
-            <div class="flex flex-row flex-wrap gap-2 items-center min-h-8">
+            <div v-if="!compact" class="flex flex-row flex-wrap gap-2 items-center min-h-8">
                 <Button class="w-min" ref="submitButton" type="submit" :disabled="disableActions" :size="'md'" :icon="disableActions ? 'eos-icons:loading' : 'mdi:data'" :label="disableActions ? 'Loading' : 'Load'"></Button>
             </div>
 
             <div>
-                <PageInformation :pagination="leaveTypeAssignments.meta.pagination" :pending="disableDataTable"/>
+                <PageInformation :pagination="employees.meta.pagination" :pending="disableDataTable"/>
                 <div class="flex items-center gap-2">
                     <Pagination
                         :size="'lg'"
-                        :pagination="leaveTypeAssignments.meta.pagination"
+                        :pagination="employees.meta.pagination"
                         :pending="disableDataTable"
                         v-model="pageComputed"/>
                     <UnorderedList
@@ -67,51 +86,37 @@
 
         <div class="flex flex-row flex-wrap gap-2 items-center min-h-8">
             <div class="scaffold-border px-2 font-[National_Park]">
-                <span><span class="font-semibold">{{selectedLeaveTypeAssignments.length}}</span> Selected</span>
+                <span><span class="font-semibold">{{proxySelectedEmployees.length}}</span> {{selectedLabel}}</span>
             </div>
             <Button
                 :variant="'outline'"
                 :size="'sm'"
                 :icon="'tdesign:close'"
                 :disabled="disableActions"
-                :label="'Clear selection'"
-                @click="selectedLeaveTypeAssignments = []" />
-            <Button
-                :variant="'outline'"
-                :size="'sm'"
-                :icon="'mdi:delete-outline'"
-                :disabled="disableActions"
-                :label="'Delete selected leave type assignments'"
-                @click="confirmDeleteSelected()" />
+                :label="clearSelectionLabel"
+                @click="proxySelectedEmployees = []" />
+            <label class="scaffold-border">
+                <Checkbox
+                    :disabled="disableActions"
+                    @valueChanged="selectedFlagInteracted"
+                    class="px-[0.3rem]"
+                    v-model="showOnlySelected"
+                    :size="'md'"
+                    :label="showOnlySelectedLabel" />
+            </label>
+            <slot name="selection-actions"></slot>
         </div>
 
         <DataTable
-            :sup-headers="leaveTypeAssignmentSupHeaders"
-            :headers="leaveTypeAssignmentHeaders"
+            :sup-headers="employeeSupHeaders"
+            :headers="employeeHeaders"
             :size="'lg'"
-            :rows="leaveTypeAssignments.data"
+            :rows="employees.data"
             :disabled="disableDataTable"
-            v-model="selectedLeaveTypeAssignments"
+            :show-no-data="false"
+            :pending="proxyPending"
+            v-model="proxySelectedEmployees"
             selection>
-            <template v-slot:cell.actions="{cell,slot: cellSlot}">
-                <div class="flex items-center">
-                    <NavDrop
-                        class="z-10"
-                        :disabled="disableActions"
-                        :parent-icon="'ic:baseline-arrow-right'"
-                        in-horizontal-scrollable
-                        divider
-                        :size="`sm`"
-                        :drop-shadow-size="`xl`"
-                        :title="'Menu'"
-                        :drop-align="'top'"
-                        :drop-justify="'right'"
-                        :drop-options="[
-                            {type: 'action', title: 'Edit assignment settings',callback: () => {$emit('editLeaveTypeSettings', cell)}}
-                        ]">
-                    </NavDrop>
-                </div>
-            </template>
             <template v-slot:cell.employee_current_employment_profile="{cell,slot}">
                 <div class="flex space-x-1 px-[0.3rem] items-center">
                     <Label :size="slot.labelSize" :type="cell._payload.label_shade.value" shade :label="cell.employee_current_employment_profile?.status?.text" />
@@ -126,19 +131,6 @@
             </template>
             <template v-slot:cell.employee_designation="{cell,slot}">
                 <div class="p-[3px]">{{cell.employee_designation?.name}}</div>
-            </template>
-            <template v-slot:cell.leave_type_code="{cell,slot}">
-                <div class="p-[3px]">{{cell.leave_type_code}}</div>
-            </template>
-            <template v-slot:cell.leave_type_assignment_override_balance_upon_eligibility="{cell,slot}">
-                <div class="p-[3px]">{{cell.leave_type_assignment_override_balance_upon_eligibility ? 'Yes' : 'No'}}</div>
-            </template>
-            <template v-slot:cell.leave_type_assignment_balance_upon_eligibility="{cell,slot}">
-                <div class="p-[3px]">
-                    <span v-if="Boolean(cell.leave_type_assignment_override_balance_upon_eligibility)">
-                        {{cell.leave_type_assignment_balance_upon_eligibility}}
-                    </span>
-                </div>
             </template>
         </DataTable>
     </div>
@@ -164,20 +156,71 @@ const {
 } = storeToRefs(nuxtApp.$authStore);
 
 const props = defineProps({
+    selected: {
+        type: Array,
+        default: () => {
+            return [];
+        }
+    },
     pending: {
+        type: Boolean,
+    },
+    disableActions: {
         type: Boolean,
         default: false,
     },
+    compact: {
+        type: Boolean,
+        default: false,
+    },
+    clearSelectionOnFormSubmit: {
+        type: Boolean,
+        default: true,
+    },
+    selectedLabel: {
+        type: String,
+        default: 'Selected'
+    },
+    clearSelectionLabel: {
+        type: String,
+        default: 'Clear selection'
+    },
+    showOnlySelectedLabel: {
+        type: String,
+        default: 'Show only selected'
+    },
+    filters: {
+        type: Object,
+        default: function () {
+            return {}
+        }
+    },
 });
 
-const emit = defineEmits(['editLeaveTypeSettings', 'update:pending'])
+const emit = defineEmits(["update:selected", "update:pending"]);
+const proxySelectedEmployees = computed({
+    get() {
+        return props.selected;
+    },
+    set(newValue) {
+        emit("update:selected", newValue);
+    }
+});
+const proxyPending = computed({
+    get() {
+        return props.pending;
+    },
+    set(newValue) {
+        emit("update:pending", newValue);
+    }
+});
 
 watch(updatedAssociatedCompanyFlag, (newValue) => {
     if(isAuthenticated.value && selectedAssociatedCompanyId.value){
         rebuildSelections();
         paginate(1, true);
     }
-});
+})
 
 const rebuildSelections = (selection: string[] = []) => {
 
@@ -214,6 +257,12 @@ const rebuildSelections = (selection: string[] = []) => {
     if(_isEmpty(selection) || selection.indexOf('assigned_leave_type') >= 0){
         common.rebuildSelectionsOnSelectedCompanyChanged(
             assignedLeaveTypeSelectionsOptions, assignedLeaveTypeSelectionsOptionsKey, SELECT.MULTI_PAGINATED
+        );
+    }
+
+    if(_isEmpty(selection) || selection.indexOf('not_assigned_leave_type') >= 0){
+        common.rebuildSelectionsOnSelectedCompanyChanged(
+            notAssignedLeaveTypeSelectionsOptions, notAssignedLeaveTypeSelectionsOptionsKey, SELECT.MULTI_PAGINATED
         );
     }
 }
@@ -261,6 +310,21 @@ const assignedLeaveTypeSelectionsOptions = reactive({
     selected: [],
 });
 
+const notAssignedLeaveTypeSelectionsOptionsKey = shallowRef(0);
+const notAssignedLeaveTypeSelectionsOptions = reactive({
+    fetch: {
+        url: '/api/leave-type-selections',
+        filters: {
+            company_id: selectedAssociatedCompanyId.value,
+            search: {
+                keyword: '',
+                callback: 1
+            }
+        }
+    },
+    selected: [],
+});
+
 //Employee Organization
 const companyOrganizationSelections = companyOrganizationSelectionsState();
 const employeeGroupOptionsKey = shallowRef(0);
@@ -282,32 +346,26 @@ const designationOptions = reactive({
     selected: []
 });
 
-const leaveTypeAssignmentSupHeaders = reactive<TableSupHeaderT[]>([
-    {text: ''},
+const employeeSupHeaders = reactive<TableSupHeaderT[]>([
     {text: ''},
     {text: 'Employee', colspan: 2, alignHeader: 'left'},
     {text: 'Employment', colspan: 2, alignHeader: 'left'},
     {text: '', colspan: 2},
-    {text: 'Leave Type', colspan: 2},
-    {text: 'Override initial balance', colspan: 2},
+    {text: 'Leave Types', colspan: 4},
 ]);
 
-const leaveTypeAssignmentHeaders = reactive<TableHeaderT[]>([
+const employeeHeaders = reactive<TableHeaderT[]>([
     { text: '#', value: 'row_number'},
-    { text: '', value: 'actions'},
     { text: 'Employee #', value: 'employee_number', alignData: 'left'},
     { text: 'Name', value: 'employee_full_name'},
     { text: 'Status', value: 'employee_current_employment_profile'},
     { text: 'Type', value: 'employee_current_employment_type'},
     { text: 'Department', value: 'employee_department'},
     { text: 'Designation', value: 'employee_designation'},
-    { text: 'Code', value: 'leave_type_code'},
-    { text: 'Balance upon eligibility', value: 'leave_type_initial_balance_upon_eligibility'},
-    { text: '', value: 'leave_type_assignment_override_balance_upon_eligibility'},
-    { text: '', value: 'leave_type_assignment_balance_upon_eligibility'},
+    { text: 'Assigned Leave Types', value: 'assigned_leave_type_codes'},
 ]);
 
-const leaveTypeAssignments = reactive<{
+const employees = reactive<{
     data: TableRowT[];
     meta: DataTableMeta
 }>({
@@ -322,6 +380,19 @@ const leaveTypeAssignments = reactive<{
         }
     }
 });
+const clearData = () => {
+    employees.data = [];
+    employees.meta = {
+        pagination: {
+            total: 0,
+            count: 0,
+            per_page: 0,
+            current_page: 0,
+            total_pages: 0
+        }
+    };
+};
+
 let filters = reactive<{
     page: number,
     perPage: number,
@@ -349,11 +420,47 @@ let pageComputed = computed({
         filters[payload.key] = payload.value;
     }
 });
+
+let filterSelectedComputed = computed(() => {
+    return {
+        employee_ids: proxySelectedEmployees.value
+    }
+});
+const showOnlySelected = ref(false);
+const clearFlags = () => {
+    showOnlySelected.value = false;
+}
+
+const selectedFlagInteracted = async () => {
+
+    if(showOnlySelected.value && proxySelectedEmployees.value.length == 0){
+        useNuxtApp().$promptStore.setPrompt({
+            resetable: false,
+            icon: null,
+            title: null,
+            message: 'No selected.',
+            action: {
+                callback: () => {
+                    showOnlySelected.value = false
+                },
+                label: 'Okay'
+            }
+        });
+
+        return;
+    }
+
+    await nextTick();
+    await paginate(1, false);
+}
+
 let paramsComputed = computed(() => {
     return {
         page: filters.page,
         perPage: filters.perPage,
         filters: {
+            ...props.filters,
+            ...(showOnlySelected.value ? filterSelectedComputed.value : {}),
             company_id: selectedAssociatedCompanyId.value,
             search: filters.search.keyword,
             employment_status: employmentStatusOptions.selected,
@@ -362,46 +469,48 @@ let paramsComputed = computed(() => {
             department_ids: departmentOptions.selected,
             designation_ids: designationOptions.selected,
             assigned_leave_type_ids: assignedLeaveTypeSelectionsOptions.selected,
+            not_assigned_leave_type_ids: notAssignedLeaveTypeSelectionsOptions.selected,
         }
     };
 });
-const leaveTypeAssignmentsPending = ref(false);
-const selectedLeaveTypeAssignments = ref([]);
-const deleting = ref(false);
+const employeesPending = ref(false)
 
 const disableActions = computed(() => {
-    return leaveTypeAssignmentsPending.value || deleting.value || companyAssociationPendingState().value;
+    return employeesPending.value || props.disableActions || companyAssociationPendingState().value;
 });
 const disableDataTable = computed(() => {
-    return leaveTypeAssignmentsPending.value || deleting.value || companyAssociationPendingState().value;
+    return employeesPending.value || props.disableActions || companyAssociationPendingState().value;
 });
-const leaveTypeAssignmentsExecute = async() =>{
+const employeesExecute = async() =>{
 
     if(import.meta.server || !selectedAssociatedCompanyId.value){
         return;
     }
 
-    leaveTypeAssignmentsPending.value = true;
+    employeesPending.value = true;
+    emit("update:pending", true);
 
-    await laraFetch(`/api/leave-type-assignments`, {
+    await laraFetch(`/api/leave-types-by-employees`, {
         method: 'GET',
         params: paramsComputed.value
     }, {
         onRequestError: () => {
-            leaveTypeAssignmentsPending.value = false;
+            employeesPending.value = false;
+            emit("update:pending", false);
         },
         onResponse: () => {
-            leaveTypeAssignmentsPending.value = false;
+            employeesPending.value = false;
+            emit("update:pending", false);
         },
         onSuccessResponse: async (request, options, response) => {
-            leaveTypeAssignments.data = _get(response, '_data.values.data', []).map(leaveTypeAssignment => {
+            employees.data = _get(response, '_data.values.data', []).map(employee => {
 
-                let shade = _get(leaveTypeAssignment, 'employee_current_employment_profile.is_active', false)
+                let shade = _get(employee, 'employee_current_employment_profile.is_active', false)
                     ? 'success'
                     : 'default';
 
                 return {
-                    ...leaveTypeAssignment,
+                    ...employee,
                     _payload: {
                         'label_shade': {
                             'cell': ['employee_current_employment_profile', 'employee_current_employment_type'],
@@ -411,7 +520,7 @@ const leaveTypeAssignmentsExecute = async() =>{
                 };
             });
 
-            leaveTypeAssignments.meta = _get(response, '_data.values.meta', {
+            employees.meta = _get(response, '_data.values.meta', {
                 pagination: {
                     total: 0,
                     count: 0,
@@ -423,17 +532,17 @@ const leaveTypeAssignmentsExecute = async() =>{
         }
     }, false);
 }
-await leaveTypeAssignmentsExecute();
+await employeesExecute();
 
-function paginate(page = 1, clearSelection = false){
+const paginate = async (page: number = 1, clearSelection: boolean = false) => {
     clearTimeout(filters.search.callback);
 
     if(clearSelection){
-        selectedLeaveTypeAssignments.value = [];
+        emit("update:selected", []);
     }
 
     if(filters.page === page){
-        leaveTypeAssignmentsExecute();
+        await employeesExecute();
     } else {
         filters.page = page;
     }
@@ -442,88 +551,16 @@ function paginate(page = 1, clearSelection = false){
 watch(() => {return filters.page;}, () => {paginate(filters.page);});
 watch(() => {return filters.perPage;}, () => {paginate(1);});
 
-const confirmDeleteSelected = () => {
-
-    const selectedIds = selectedLeaveTypeAssignments.value;
-
-    if(selectedIds.length == 0){
-
-        useNuxtApp().$promptStore.setPrompt({
-            resetable: false,
-            icon: null,
-            title: `Validation Error`,
-            message: `No selected leave type assignments to delete.`,
-            action: {
-                callback: () => {},
-                label: 'Okay'
-            }
-        });
-
-        return false;
-    }
-
-    useNuxtApp().$promptStore.setPrompt({
-        resetable: true,
-        icon: null,
-        title: 'Confirm Action',
-        message: `Confirm delete selected leave type assignment${selectedIds.length > 1 ? 's' : ''}?`,
-        action: {
-            callback: async () => {
-                await deleteSelected();
-            },
-            label: 'Yes'
-        }
-    });
+const reset = async () => {
+    clearFlags();
+    clearData();
+    await paginate(1, true);
 }
-const deleteSelected = async () => {
-
-    let selectedIds: number[] = [];
-
-    selectedIds = selectedLeaveTypeAssignments.value;
-
-    if(_isEmpty(selectedIds)){
-        return;
-    }
-
-    deleting.value = true;
-    emit('update:pending', true);
-
-    await laraFetch("/api/leave-type-assignments", {
-        method: 'DELETE',
-        body: {
-            company_id: selectedAssociatedCompanyId.value,
-            leave_type_assignment_ids: selectedIds,
-        },
-    },{
-        onRequestError: (request, options, error) => {
-            deleting.value = false;
-            emit('update:pending', false);
-        },
-        onResponse: () => {
-            deleting.value = false;
-            emit('update:pending', false);
-        },
-        onSuccessResponse: async (request, options, response) => {
-
-            useNuxtApp().$promptStore.setPrompt({
-                resetable: false,
-                icon: null,
-                title: `Request successful`,
-                message: `Leave type assignment${selectedIds.length > 1 ? 's' : ''} deleted successfully.`,
-                action: {
-                    callback: () => {},
-                    label: 'Okay'
-                }
-            });
-        }
-    });
-
-    selectedLeaveTypeAssignments.value = [];
-    await leaveTypeAssignmentsExecute();
-}
-
 defineExpose({
     paginate,
+    clearFlags,
+    clearData,
+    reset,
     rebuildSelections
 });
 </script>

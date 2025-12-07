@@ -60,6 +60,7 @@ export const useAssociation = () => {
             'policies-shifts',
             'policies-shift-assignment',
             'policies-leave-types',
+            'policies-leave-type-assignment',
             'policies-holiday',
             'settings-salary-statement-modules',
             'settings-formula-settings',

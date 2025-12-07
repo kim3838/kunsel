@@ -365,6 +365,13 @@ export const useLayout = () => {
                             path_active: '/policies/leave-types',
                         },
                         {
+                            key: 'policies/leave-type-assignment',
+                            type: 'link',
+                            title: 'Leave Type Assignment',
+                            to: '/policies/leave-type-assignment',
+                            route_active: 'policies-leave-type-assignment'
+                        },
+                        {
                             key: 'policies/holiday',
                             type: 'link',
                             title: 'Holidays',
