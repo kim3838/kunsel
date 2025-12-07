@@ -28,6 +28,22 @@
                 </div>
             </div>
 
+            <div class="grid gap-2 grid-cols-2 sm:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
+                <div class="col-span-2">
+                    <InputLabel :size="'sm'" value="Assigned Leave Type" />
+                    <MultiSelectPaginated
+                        :key="assignedLeaveTypeSelectionsOptionsKey"
+                        :icon="'tdesign:component-checkbox'"
+                        :disabled="disableActions"
+                        glint
+                        drop-shadow
+                        :size="'md'"
+                        :label="'Filter Leave Type(s)'"
+                        :payload="assignedLeaveTypeSelectionsOptions"
+                    />
+                </div>
+            </div>
+
             <div class="flex flex-row flex-wrap gap-2 items-center min-h-8">
                 <Button class="w-min" ref="submitButton" type="submit" :disabled="disableActions" :size="'md'" :icon="disableActions ? 'eos-icons:loading' : 'mdi:data'" :label="disableActions ? 'Loading' : 'Load'"></Button>
             </div>
@@ -194,6 +210,12 @@ const rebuildSelections = (selection: string[] = []) => {
             designationOptions, designationOptionsKey, SELECT.MULTI_STATIC, companyOrganizationSelections.value.designations
         );
     }
+
+    if(_isEmpty(selection) || selection.indexOf('assigned_leave_type') >= 0){
+        common.rebuildSelectionsOnSelectedCompanyChanged(
+            assignedLeaveTypeSelectionsOptions, assignedLeaveTypeSelectionsOptionsKey, SELECT.MULTI_PAGINATED
+        );
+    }
 }
 
 const employmentStatusOptionsKey = shallowRef(0);
@@ -222,6 +244,21 @@ const employmentTypeOptions = reactive<{
         $enumerableOption(EMPLOYMENT_TYPE_NAME, EMPLOYMENT_TYPE.NOT_SPECIFIED as number),
     ],
     selected: []
+});
+
+const assignedLeaveTypeSelectionsOptionsKey = shallowRef(0);
+const assignedLeaveTypeSelectionsOptions = reactive({
+    fetch: {
+        url: '/api/leave-type-selections',
+        filters: {
+            company_id: selectedAssociatedCompanyId.value,
+            search: {
+                keyword: '',
+                callback: 1
+            }
+        }
+    },
+    selected: [],
 });
 
 //Employee Organization
@@ -324,6 +361,7 @@ let paramsComputed = computed(() => {
             assigned_employee_group_ids: employeeGroupOptions.selected,
             department_ids: departmentOptions.selected,
             designation_ids: designationOptions.selected,
+            assigned_leave_type_ids: assignedLeaveTypeSelectionsOptions.selected,
         }
     };
 });
@@ -406,7 +444,9 @@ watch(() => {return filters.perPage;}, () => {paginate(1);});
 
 const confirmDeleteSelected = () => {
 
-    if(selectedLeaveTypeAssignments.value.length == 0){
+    const selectedIds = selectedLeaveTypeAssignments.value;
+
+    if(selectedIds.length == 0){
 
         useNuxtApp().$promptStore.setPrompt({
             resetable: false,
@@ -426,7 +466,7 @@ const confirmDeleteSelected = () => {
         resetable: true,
         icon: null,
         title: 'Confirm Action',
-        message: `Confirm delete selected leave type assignments`,
+        message: `Confirm delete selected leave type assignment${selectedIds.length > 1 ? 's' : ''}?`,
         action: {
             callback: async () => {
                 await deleteSelected();
@@ -469,7 +509,7 @@ const deleteSelected = async () => {
                 resetable: false,
                 icon: null,
                 title: `Request successful`,
-                message: `Leave type assignments deleted successfully.`,
+                message: `Leave type assignment${selectedIds.length > 1 ? 's' : ''} deleted successfully.`,
                 action: {
                     callback: () => {},
                     label: 'Okay'
