@@ -91,14 +91,12 @@ export const useLayout = () => {
                     key: 'account-settings',
                     type: 'link',
                     title: 'Account Settings',
-                    //icon: 'ic:baseline-miscellaneous-services',
                     to: '/account-settings',
                 },
                 {
                     key: 'login',
                     type: 'action',
                     title: 'Logout',
-                    //icon: 'mdi:connection',
                     callback: () => {
                         destroyAuthentication();
                     },
@@ -476,14 +474,12 @@ export const useLayout = () => {
                 drop_align: 'right',
                 title: 'Admin',
                 path_active: '/admin',
-                //icon: 'ep:management',
                 options: [
                     ...(userIsSuperAdmin.value ? [
                         {
                             key: 'admin/accounts',
                             type: 'link',
                             title: 'Accounts',
-                            //icon: 'ic:baseline-all-inbox',
                             to: '/admin/accounts',
                             route_active: 'admin-accounts',
                             path_active: '/admin/accounts',
@@ -491,7 +487,6 @@ export const useLayout = () => {
                             key: 'admin/companies',
                             type: 'link',
                             title: 'Companies',
-                            //icon: 'ic:baseline-curtains-closed',
                             to: '/admin/companies',
                             route_active: 'admin-companies',
                             path_active: '/admin/companies',
@@ -514,7 +509,6 @@ export const useLayout = () => {
                             key: 'admin/users',
                             type: 'link',
                             title: 'Users',
-                            //icon: 'ic:baseline-recent-actors',
                             to: '/admin/users',
                             route_active: 'admin-users',
                             path_active: '/admin/users',
@@ -525,7 +519,6 @@ export const useLayout = () => {
                             key: 'admin/associated-accounts',
                             type: 'link',
                             title: 'Subscription',
-                            //icon: 'ic:baseline-all-inbox',
                             to: '/admin/associated-accounts',
                             route_active: 'admin-associated-accounts'
                         },
@@ -533,7 +526,6 @@ export const useLayout = () => {
                             key: 'admin/associated-companies',
                             type: 'link',
                             title: 'Companies',
-                            //icon: 'ic:baseline-curtains-closed',
                             to: '/admin/associated-companies',
                             route_active: 'admin-associated-companies',
                             path_active: '/admin/associated-companies',
@@ -542,7 +534,6 @@ export const useLayout = () => {
                             key: 'admin/associated-users',
                             type: 'link',
                             title: 'Users',
-                            //icon: 'ic:baseline-recent-actors',
                             to: '/admin/associated-users',
                             route_active: 'admin-associated-users',
                             path_active: '/admin/associated-users',
