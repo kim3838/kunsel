@@ -262,14 +262,12 @@ export const useLayout = () => {
                     key: 'workforce',
                     type: 'sub-nav',
                     title: 'Workforce',
-                    //icon: 'ic:round-diversity-3',
                     path_active: '/workforce',
                     options:[
                         {
                             key: 'workforce/employees',
                             type: 'link',
                             title: 'Employees',
-                            //icon: 'mdi:account-multiple',
                             to: '/workforce/employees',
                             route_active: 'workforce-employees',
                             path_active: '/workforce/employees',
@@ -292,7 +290,6 @@ export const useLayout = () => {
                             key: 'workforce/departments',
                             type: 'link',
                             title: 'Departments',
-                            //icon: 'ic:baseline-all-inbox',
                             to: '/workforce/departments',
                             route_active: 'workforce-departments'
                         },
@@ -300,7 +297,6 @@ export const useLayout = () => {
                             key: 'workforce/designations',
                             type: 'link',
                             title: 'Designations',
-                            //icon: 'ic:baseline-inbox',
                             to: '/workforce/designations',
                             route_active: 'workforce-designations'
                         },
@@ -383,14 +379,12 @@ export const useLayout = () => {
                     key: 'settings',
                     type: 'sub-nav',
                     title: 'Settings',
-                    //icon: 'ic:baseline-miscellaneous-services',
                     path_active: '/settings',
                     options: [
                         {
                             key: 'settings/salary-statement-modules',
                             type: 'link',
                             title: 'Salary Statement Modules',
-                            //icon: 'ic:baseline-dynamic-form',
                             to: '/settings/salary-statement-modules',
                             route_active: 'settings-salary-statement-modules'
                         },
@@ -398,7 +392,6 @@ export const useLayout = () => {
                             key: 'settings/formula-settings',
                             type: 'link',
                             title: 'Formula Settings',
-                            //icon: 'ic:baseline-architecture',
                             to: '/settings/formula-settings',
                             route_active: 'settings-formula-settings'
                         },
@@ -422,13 +415,11 @@ export const useLayout = () => {
                     type: 'sub-nav',
                     title: 'Import',
                     path_active: '/import',
-                    //icon: 'mdi:file-upload',
                     options: [
                         {
                             key: 'import/employees',
                             type: 'link',
                             title: 'Employees',
-                            //icon: 'mdi:account-multiple',
                             to: '/import/employees',
                             route_active: 'import-employees'
                         },
