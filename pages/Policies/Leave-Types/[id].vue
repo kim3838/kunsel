@@ -144,7 +144,7 @@
                             <div class="grid gap-2 grid-cols-2 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-3 xl:grid-cols-4">
                                 <div>
                                     <InputLabel :size="'sm'" value="Period type"/>
-                                    <SingleSelect :searchable="false" drop-shadow :size="'md'" :options="leaveTypePeriodTypeOptions" @valueChange="leaveTypePeriodTypeChanged"/>
+                                    <SingleSelect :disabled="disableActions" value-persist drop-shadow :size="'md'" :options="leaveTypePeriodTypeOptions" @valueChange="leaveTypePeriodTypeChanged"/>
                                 </div>
                                 <div v-if="leaveTypePeriodTypeOptions.selected == LEAVE_PERIOD_TYPE.INTERVAL">
                                     <InputLabel :size="'sm'" value="Interval span"/>
