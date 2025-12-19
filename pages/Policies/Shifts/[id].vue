@@ -59,14 +59,14 @@
                             <InputLabel :size="'sm'" value="Type"/>
                             <SingleSelect :disabled="disableActions" value-persist drop-shadow :size="'md'" :options="shiftTypeOptions" @valueChange="shiftTypeChanged"/>
                         </div>
-                        <div class="col-span-full lg:col-span-4">
+                        <div class="col-span-full md:col-span-2">
                             <InputLabel :size="'sm'" value="Code"/>
                             <Input :disabled="disableActions" :size="'md'" v-model="shiftCode"/>
                         </div>
                     </div>
 
                     <div class="grid gap-2 grid-cols-3 sm:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
-                        <div class="col-span-full lg:col-span-5">
+                        <div class="col-span-full lg:col-span-4">
                             <InputLabel :size="'sm'" value="Name"/>
                             <Input :disabled="disableActions" :size="'md'" v-model="shiftName"/>
                         </div>
