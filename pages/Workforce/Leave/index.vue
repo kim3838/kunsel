@@ -66,6 +66,10 @@
                                             <InputLabel :size="'sm'" :value="leaveDate"/>
                                             <div class="text-base font-sans">{{leaveRunningBalance}}</div>
                                         </div>
+                                        <div>
+                                            <InputLabel :size="'sm'" value="Eligible"/>
+                                            <div class="text-base">{{leaveEligibilityReadable}}</div>
+                                        </div>
                                     </div>
                                 </fieldset>
                                 <div v-else class="basis-1/4 flex justify-center items-center">
@@ -605,6 +609,8 @@ const put = (row: TableRowT | null = null) => {
         validLeaveTypeFoundations.value = false;
         showLeaveBalance.value = false;
         leaveRunningBalance.value = 0;
+        leaveEligibility.value = 0;
+        leaveEligibilityReadable.value = 'N/A';
     }
 
     renderDatePickers();
@@ -638,6 +644,8 @@ const leaveDate = ref('');
 const validLeaveTypeFoundations = ref(false);
 const showLeaveBalance = ref(false);
 const leaveRunningBalance = ref(0);
+const leaveEligibility = ref(0);
+const leaveEligibilityReadable = ref('N/A');
 
 const resetEditable = () => {
     stagedLeave.value = {
@@ -655,6 +663,8 @@ const resetEditable = () => {
     validLeaveTypeFoundations.value = false;
     showLeaveBalance.value = false;
     leaveRunningBalance.value = 0;
+    leaveEligibility.value = 0;
+    leaveEligibilityReadable.value = 'N/A';
 }
 
 const employeeOptionsKey = shallowRef(0);
@@ -773,6 +783,9 @@ const creatingLeaveInitializedLeaveDate = async (value: string) => {
             validLeaveTypeFoundations.value = false;
             showLeaveBalance.value = false;
 
+            leaveEligibility.value = 0;
+            leaveEligibilityReadable.value = 'N/A';
+
             coreStore.setServiceError({
                 prompt: false,
                 payload: {
@@ -785,6 +798,7 @@ const creatingLeaveInitializedLeaveDate = async (value: string) => {
         } else {
 
             modalLoading.value = true;
+            let leaveBalanceSuccessResponse = false;
 
             await laraFetch(`/api/leave-balance`, {
                 method: 'GET',
@@ -800,13 +814,20 @@ const creatingLeaveInitializedLeaveDate = async (value: string) => {
                 onResponse: () => {
                     modalLoading.value = false;
                 },
+                onUnprocessableContentResponse: () => {
+                    modalLoading.value = false;
+                },
                 onSuccessResponse: async (request, options, response) => {
                     leaveRunningBalance.value = _get(response, '_data.values.date_series.running_balance', 0);
+                    leaveEligibility.value = _get(response, '_data.values.date_series.eligible', 0);
+                    leaveEligibilityReadable.value = leaveEligibility.value ? 'Yes' : 'No';
+
                     showLeaveBalance.value = true;
+                    leaveBalanceSuccessResponse = true;
                 }
             }, false);
 
-            if(!isNumeric(leaveRunningBalance.value)){
+            if(leaveBalanceSuccessResponse && !isNumeric(leaveRunningBalance.value)){
                 validLeaveTypeFoundations.value = false;
 
                 coreStore.setServiceError({
@@ -819,7 +840,20 @@ const creatingLeaveInitializedLeaveDate = async (value: string) => {
                 return;
             }
 
-            if(isNumeric(leaveRunningBalance.value) && leaveRunningBalance.value < 1){
+            if(leaveBalanceSuccessResponse && !leaveEligibility.value){
+                validLeaveTypeFoundations.value = false;
+
+                coreStore.setServiceError({
+                    prompt: false,
+                    payload: {
+                        message: 'Not eligible'
+                    }
+                });
+
+                return;
+            }
+
+            if(leaveBalanceSuccessResponse && leaveEligibility.value && isNumeric(leaveRunningBalance.value) && leaveRunningBalance.value < 1){
                 validLeaveTypeFoundations.value = false;
 
                 coreStore.setServiceError({
@@ -832,7 +866,7 @@ const creatingLeaveInitializedLeaveDate = async (value: string) => {
                 return;
             }
 
-            if(isNumeric(leaveRunningBalance.value) && leaveRunningBalance.value > 0){
+            if(leaveBalanceSuccessResponse && leaveEligibility.value && isNumeric(leaveRunningBalance.value) && leaveRunningBalance.value > 0){
 
                 validLeaveTypeFoundations.value = true;
                 renderDatePickers();
