@@ -58,13 +58,13 @@
                         <div ref='modalContentContainer'>
                             <div class="pt-2 mx-auto max-w-screen-xl flex flex-row gap-4">
 
-                                <fieldset v-if="!creatingLeave || validLeaveTypeFoundations" class="basis-1/4 neutral-border px-2 pb-2 space-y-2">
+                                <fieldset v-if="showLeaveBalance" class="basis-1/4 neutral-border px-2 pb-2 space-y-2">
                                     <legend class="text-lg font-header">Balance</legend>
 
                                     <div class="grid gap-2 grid-cols-1">
                                         <div>
                                             <InputLabel :size="'sm'" :value="leaveDate"/>
-                                            <div class="text-base">{{`Todo: fetch leave type balance`}}</div>
+                                            <div class="text-base font-sans">{{leaveRunningBalance}}</div>
                                         </div>
                                     </div>
                                 </fieldset>
@@ -228,6 +228,7 @@ useLayout().setNavigationMode('solid');
 
 const {isAuthenticated} = useAuth();
 const nuxtApp = useNuxtApp();
+const isNumeric = nuxtApp.$isNumeric as (value: any) => boolean;
 const $moment = nuxtApp.$moment;
 const {render} = dateTimePicker();
 const clientReadyState = useClientReadyState();
@@ -602,6 +603,8 @@ const put = (row: TableRowT | null = null) => {
         leaveEmployeeFullName.value = '';
         leaveDate.value = nuxtApp.$moment().format("YYYY-MM-DD");
         validLeaveTypeFoundations.value = false;
+        showLeaveBalance.value = false;
+        leaveRunningBalance.value = 0;
     }
 
     renderDatePickers();
@@ -633,6 +636,8 @@ const leaveEmployeeNumber = ref('');
 const leaveEmployeeFullName = ref('');
 const leaveDate = ref('');
 const validLeaveTypeFoundations = ref(false);
+const showLeaveBalance = ref(false);
+const leaveRunningBalance = ref(0);
 
 const resetEditable = () => {
     stagedLeave.value = {
@@ -648,6 +653,8 @@ const resetEditable = () => {
     leaveEmployeeFullName.value = '';
     leaveDate.value = '';
     validLeaveTypeFoundations.value = false;
+    showLeaveBalance.value = false;
+    leaveRunningBalance.value = 0;
 }
 
 const employeeOptionsKey = shallowRef(0);
@@ -764,6 +771,7 @@ const creatingLeaveInitializedLeaveDate = async (value: string) => {
         if(_leaveMeta.pagination.total > 0){
 
             validLeaveTypeFoundations.value = false;
+            showLeaveBalance.value = false;
 
             coreStore.setServiceError({
                 prompt: false,
@@ -776,9 +784,59 @@ const creatingLeaveInitializedLeaveDate = async (value: string) => {
 
         } else {
 
-            validLeaveTypeFoundations.value = true;
+            modalLoading.value = true;
 
-            renderDatePickers();
+            await laraFetch(`/api/leave-balance`, {
+                method: 'GET',
+                params: {
+                    employee_id: employeeOptions.selected,
+                    leave_type_id: assignedLeaveTypeSelectionsOptions.selected,
+                    date: value,
+                }
+            }, {
+                onRequestError: () => {
+                    modalLoading.value = false;
+                },
+                onResponse: () => {
+                    modalLoading.value = false;
+                },
+                onSuccessResponse: async (request, options, response) => {
+                    leaveRunningBalance.value = _get(response, '_data.values.date_series.running_balance', 0);
+                    showLeaveBalance.value = true;
+                }
+            }, false);
+
+            if(!isNumeric(leaveRunningBalance.value)){
+                validLeaveTypeFoundations.value = false;
+
+                coreStore.setServiceError({
+                    prompt: false,
+                    payload: {
+                        message: 'Balance not found'
+                    }
+                });
+
+                return;
+            }
+
+            if(isNumeric(leaveRunningBalance.value) && leaveRunningBalance.value < 1){
+                validLeaveTypeFoundations.value = false;
+
+                coreStore.setServiceError({
+                    prompt: false,
+                    payload: {
+                        message: 'Insufficient balance.'
+                    }
+                });
+
+                return;
+            }
+
+            if(isNumeric(leaveRunningBalance.value) && leaveRunningBalance.value > 0){
+
+                validLeaveTypeFoundations.value = true;
+                renderDatePickers();
+            }
         }
     }
 }
