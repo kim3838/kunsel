@@ -63,6 +63,11 @@ export default defineNuxtPlugin(nuxtApp => {
         return result;
     });
 
+    nuxtApp.provide('isNumeric', function (value: any): boolean {
+
+        return !isNaN(value) && !isNaN(parseFloat(value));
+    });
+
     nuxtApp.provide('isRouteActive', function (name: string | undefined): boolean {
         // @ts-ignore
         return [route.path, _toLower(route.name)].indexOf(_toLower(name)) >= 0;
