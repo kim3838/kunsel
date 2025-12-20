@@ -58,7 +58,17 @@
                         <div ref='modalContentContainer'>
                             <div class="pt-2 mx-auto max-w-screen-xl flex flex-row gap-4">
 
-                                <div class="basis-1/4 flex justify-center items-center">
+                                <fieldset v-if="!creatingLeave || validLeaveTypeFoundations" class="basis-1/4 neutral-border px-2 pb-2 space-y-2">
+                                    <legend class="text-lg font-header">Balance</legend>
+
+                                    <div class="grid gap-2 grid-cols-1">
+                                        <div>
+                                            <InputLabel :size="'sm'" :value="leaveDate"/>
+                                            <div class="text-base">{{`Todo: fetch leave type balance`}}</div>
+                                        </div>
+                                    </div>
+                                </fieldset>
+                                <div v-else class="basis-1/4 flex justify-center items-center">
                                     Select Employee, Leave Type and Date of leave
                                 </div>
 
