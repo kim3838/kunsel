@@ -68,7 +68,7 @@
 
                             <div class="pt-2 mx-auto max-w-screen-xl flex flex-row gap-4">
 
-                                <fieldset v-if="!creatingOvertime || validOvertimeFoundations" class="basis-1/3 neutral-border px-2 pb-2 space-y-2">
+                                <fieldset v-if="!creatingOvertime || validOvertimeFoundations" class="basis-1/4 neutral-border px-2 pb-2 space-y-2">
                                     <legend class="text-lg font-header">Schedule</legend>
 
                                     <div class="grid gap-2 grid-cols-1">
@@ -94,15 +94,15 @@
                                         </div>
                                     </div>
                                 </fieldset>
-                                <div v-else class="basis-1/3 flex justify-center items-center">
+                                <div v-else class="basis-1/4 flex justify-center items-center">
                                     Select Employee, Shift, and Attendance
                                 </div>
 
-                                <fieldset class="basis-2/3 neutral-border px-2 pb-2 space-y-2">
+                                <fieldset class="basis-3/4 neutral-border px-2 pb-2 space-y-2">
                                     <legend class="text-lg font-header">{{creatingOvertime ? 'Create overtime' : 'Overtime'}}</legend>
 
-                                    <div class="grid gap-2 grid-cols-3">
-                                        <div class="col-span-3 md:col-span-2">
+                                    <div class="grid gap-2 grid-cols-4">
+                                        <div class="col-span-4 lg:col-span-2">
                                             <InputLabel :size="'sm'" value="Employee (Number, Full Name)"/>
                                             <SingleSelectPaginated
                                                 :key="employeeOptionsKey"
@@ -116,7 +116,8 @@
                                                 :payload="employeeOptions"
                                                 @valueChange="selectedEmployeeChanged"/>
                                         </div>
-                                        <div v-if="creatingOvertime" class="col-span-3 md:col-span-2">
+                                        <div class="hidden lg:block"></div>
+                                        <div v-if="creatingOvertime" class="col-span-4 md:col-span-3 lg:col-span-2">
                                             <InputLabel :size="'sm'" value="Assigned Shift"/>
                                             <SingleSelectPaginated
                                                 :key="assignedShiftSelectionsOptionsKey"
@@ -130,7 +131,7 @@
                                                 :payload="assignedShiftSelectionsOptions"
                                                 @valueChange="selectedShiftChanged"/>
                                         </div>
-                                        <div class="col-span-3 md:col-span-1">
+                                        <div class="col-span-4 md:col-span-1">
                                             <InputLabel :size="'sm'" value="Attendance Date"/>
                                             <InputWithIcon
                                                 :disabled="modalDisableActions || !creatingOvertime || !assignedShiftSelectionsOptions.selected"
