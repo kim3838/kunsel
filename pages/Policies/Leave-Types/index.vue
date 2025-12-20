@@ -168,7 +168,7 @@ watch(() => {return showBalancePerPeriod.value;}, (show) => {
 const leaveTypesSupHeaders = reactive<TableSupHeaderT[]>([
     {text: ''},
     {text: ''},
-    {text: 'Leave Type', colspan: 5,  alignHeader: 'left'},
+    {text: 'Leave Type', colspan: 4,  alignHeader: 'left'},
     {text: 'Eligibility', colspan: 2,  alignHeader: 'left'},
     {text: 'Period', colspan: 2,  alignHeader: 'left'},
     {text: 'Limit', colspan: 1,  alignHeader: 'left'},
@@ -182,7 +182,6 @@ const leaveTypesHeaders = reactive<TableHeaderT[]>([
     { text: 'Name', value: 'name'},
     { text: 'Type', value: 'type'},
     { text: 'Is Paid', value: 'is_paid'},
-    { text: 'Monetizable', value: 'monetizable', alignData: 'left'},
 
     { text: 'Employment Profiles', value: 'eligibility_employment_types_readable', alignData: 'left'},
     { text: 'Balance upon eligibility', value: 'initial_balance_upon_eligibility', alignData: 'right'},

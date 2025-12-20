@@ -110,7 +110,7 @@
                                     :radio-key="'leave_type_is_paid'"
                                     v-model="leaveTypeIsPaid" />
                             </div>
-                            <div class="flex flex-col">
+                            <div v-if="false" class="flex flex-col">
                                 <InputLabel :size="'sm'" value="Is monetizable?"/>
                                 <RadioGroup
                                     :selections="leaveTypeIsMonetizableSelection"
