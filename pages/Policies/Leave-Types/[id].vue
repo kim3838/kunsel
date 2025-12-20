@@ -22,7 +22,7 @@
                                     <tr><td class="font-semibold">Name</td><td class="pl-2">{{ _get(resolvedLeaveType, 'name', null) }}</td></tr>
                                     <tr><td class="font-semibold">Type</td><td class="pl-2">{{ _get(resolvedLeaveType, 'type.text', null) }}</td></tr>
                                     <tr><td class="font-semibold">Paid</td><td class="pl-2">{{ _get(resolvedLeaveType, 'is_paid', false) ? 'Yes' : 'No' }}</td></tr>
-                                    <tr><td class="font-semibold">Monetizable</td><td class="pl-2">{{ _get(resolvedLeaveType, 'monetizable', false) ? 'Yes' : 'No' }}</td></tr>
+                                    <tr v-if="false"><td class="font-semibold">Monetizable</td><td class="pl-2">{{ _get(resolvedLeaveType, 'monetizable', false) ? 'Yes' : 'No' }}</td></tr>
 
                                     <tr><td class="font-semibold">Eligibility Employment Types</td><td class="pl-2">{{ _get(resolvedLeaveType, 'eligibility_employment_types_readable', null) }}</td></tr>
                                     <tr><td class="font-semibold">Balance upon eligibility</td><td class="pl-2">{{ _get(resolvedLeaveType, 'initial_balance_upon_eligibility', null) }}</td></tr>
