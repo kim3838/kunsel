@@ -981,12 +981,6 @@ const creatingAttendanceInitializedAttendanceDate = async (value: string) => {
 
             let _isLastOutLesserOrEqualToScheduleWorkEnd = _attendanceLastOut.isSameOrBefore(_lastScheduleWorkEnd);
 
-            console.log({
-                '_attendanceLastOut': _attendanceLastOut,
-                '_lastScheduleWorkEnd': _lastScheduleWorkEnd,
-                '_isLastOutLesserOrEqualToScheduleWorkEnd': _isLastOutLesserOrEqualToScheduleWorkEnd,
-            });
-
             let preRequestErrors = [];
 
             if(_shiftMaxOvertime <= 0){
