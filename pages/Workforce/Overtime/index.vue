@@ -116,7 +116,7 @@
                                                 :payload="employeeOptions"
                                                 @valueChange="selectedEmployeeChanged"/>
                                         </div>
-                                        <div class="hidden lg:block"></div>
+                                        <div v-if="creatingOvertime" class="hidden lg:block"></div>
                                         <div v-if="creatingOvertime" class="col-span-4 md:col-span-3 lg:col-span-2">
                                             <InputLabel :size="'sm'" value="Assigned Shift"/>
                                             <SingleSelectPaginated
