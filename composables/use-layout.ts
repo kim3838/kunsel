@@ -330,20 +330,6 @@ export const useLayout = () => {
                     path_active: '/policies',
                     options:[
                         {
-                            key: 'policies/pay-frequencies',
-                            type: 'link',
-                            title: 'Pay Frequency',
-                            to: '/policies/pay-frequencies',
-                            route_active: 'policies-pay-frequencies'
-                        },
-                        {
-                            key: 'policies/payroll-components',
-                            type: 'link',
-                            title: 'Payroll Components',
-                            to: '/policies/payroll-components',
-                            route_active: 'policies-payroll-components'
-                        },
-                        {
                             key: 'policies/shifts',
                             type: 'link',
                             title: 'Shifts',
@@ -382,6 +368,34 @@ export const useLayout = () => {
                         },
                     ]
                 }, {
+                    key: 'payroll',
+                    type: 'sub-nav',
+                    title: 'Payroll',
+                    path_active: '/payroll',
+                    options: [
+                        {
+                            key: 'payroll/pay-frequencies',
+                            type: 'link',
+                            title: 'Frequency',
+                            to: '/payroll/pay-frequencies',
+                            route_active: 'payroll-pay-frequencies'
+                        },
+                        {
+                            key: 'payroll/payroll-components',
+                            type: 'link',
+                            title: 'Components',
+                            to: '/payroll/payroll-components',
+                            route_active: 'payroll-payroll-components'
+                        },
+                        {
+                            key: 'payroll/employee-pay-items',
+                            type: 'link',
+                            title: 'Employee Pay Items',
+                            to: '/payroll/employee-pay-items',
+                            route_active: 'payroll-employee-pay-items'
+                        },
+                    ]
+                }, {
                     key: 'settings',
                     type: 'sub-nav',
                     title: 'Settings',
@@ -400,20 +414,6 @@ export const useLayout = () => {
                             title: 'Formula Settings',
                             to: '/settings/formula-settings',
                             route_active: 'settings-formula-settings'
-                        },
-                    ]
-                }, {
-                    key: 'payroll',
-                    type: 'sub-nav',
-                    title: 'Payroll',
-                    path_active: '/payroll',
-                    options: [
-                        {
-                            key: 'payroll/employee-pay-items',
-                            type: 'link',
-                            title: 'Employee Pay Items',
-                            to: '/payroll/employee-pay-items',
-                            route_active: 'payroll-employee-pay-items'
                         },
                     ]
                 }, {

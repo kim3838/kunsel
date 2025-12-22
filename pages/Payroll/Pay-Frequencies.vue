@@ -187,9 +187,9 @@
 
 <script setup lang="ts">
 import {storeToRefs} from "pinia";
-import type {TimePeriodPresetSelectionT} from "@/public/js/types/time";
-import type {EnumSelection, StringEnumInterface} from "@/public/js/common/type";
-import type {PayFrequencyT} from "@/public/js/types/pay-frequency";
+import type {TimePeriodPresetSelectionT} from "~/public/js/types/time";
+import type {EnumSelection, StringEnumInterface} from "~/public/js/common/type";
+import type {PayFrequencyT} from "~/public/js/types/pay-frequency";
 
 useHead({titleTemplate: (titleChunk) => {return `${titleChunk} - Pay Frequencies`}});
 definePageMeta({middleware: ['auth', 'admin-of-selected-company']});
