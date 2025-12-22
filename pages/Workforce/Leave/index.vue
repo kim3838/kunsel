@@ -799,6 +799,7 @@ const creatingLeaveInitializedLeaveDate = async (value: string) => {
 
             modalLoading.value = true;
             let leaveBalanceSuccessResponse = false;
+            let leaveUsageLimitReached = false;
 
             await laraFetch(`/api/leave-balance`, {
                 method: 'GET',
@@ -821,6 +822,7 @@ const creatingLeaveInitializedLeaveDate = async (value: string) => {
                     leaveRunningBalance.value = _get(response, '_data.values.date_series.running_balance', 0);
                     leaveEligibility.value = _get(response, '_data.values.date_series.eligible', 0);
                     leaveEligibilityReadable.value = leaveEligibility.value ? 'Yes' : 'No';
+                    leaveUsageLimitReached = _get(response, '_data.values.limit_reached', false);
 
                     showLeaveBalance.value = true;
                     leaveBalanceSuccessResponse = true;
@@ -847,6 +849,19 @@ const creatingLeaveInitializedLeaveDate = async (value: string) => {
                     prompt: false,
                     payload: {
                         message: 'Not eligible'
+                    }
+                });
+
+                return;
+            }
+
+            if(leaveBalanceSuccessResponse && leaveUsageLimitReached){
+                validLeaveTypeFoundations.value = false;
+
+                coreStore.setServiceError({
+                    prompt: false,
+                    payload: {
+                        message: 'Limit reached'
                     }
                 });
 
