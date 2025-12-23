@@ -56,27 +56,36 @@
                     </template>
                     <template #content>
                         <div ref='modalContentContainer'>
-                            <div class="pt-2 mx-auto max-w-screen-xl flex flex-row gap-4">
+                            <div class="pt-2 mx-auto max-w-screen-xl flex flex-col-reverse md:flex-row gap-4">
 
-                                <fieldset v-if="showLeaveBalance" class="basis-1/4 neutral-border px-2 pb-2 space-y-2">
-                                    <legend class="text-lg font-header">Balance</legend>
+                                <fieldset v-if="showResultPerDate" class="md:basis-5/12 neutral-border px-2 pb-2 space-y-2">
+                                    <legend class="text-lg font-header">Results</legend>
 
-                                    <div class="grid gap-2 grid-cols-1">
-                                        <div>
-                                            <InputLabel :size="'sm'" :value="leaveDate"/>
-                                            <div class="text-base font-sans">{{leaveRunningBalance}}</div>
-                                        </div>
-                                        <div>
-                                            <InputLabel :size="'sm'" value="Eligible"/>
-                                            <div class="text-base">{{leaveEligibilityReadable}}</div>
-                                        </div>
+                                    <div v-if="modalSubmitPending" class="inline-flex items-center">
+                                        <UnorderedList
+                                            v-if="modalDisableActions"
+                                            :icon="'eos-icons:loading'"
+                                            :size="'md'"
+                                            :label="'Please wait...'"/>
+                                    </div>
+                                    <div v-else class="max-h-[135px] md:max-h-[270px] overflow-y-auto">
+                                        <table class="border-separate font-sans">
+                                            <tbody>
+                                            <tr v-for="submitResult in submitResults">
+                                                <td>{{submitResult.date}}</td>
+                                                <td class="pl-2">
+                                                    <Label :size="'md'" invert :type="submitResult.result.type" :label="submitResult.result.label" />
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
                                     </div>
                                 </fieldset>
-                                <div v-else class="basis-1/4 flex justify-center items-center">
+                                <div v-else class="md:basis-5/12 flex justify-center items-center">
                                     Select Employee, Leave Type and Date of leave
                                 </div>
 
-                                <fieldset class="basis-3/4 neutral-border px-2 pb-2 space-y-2">
+                                <fieldset class="md:basis-7/12 neutral-border px-2 pb-2 space-y-2">
                                     <legend class="text-lg font-header">{{creatingLeave ? 'Create leave' : 'Leave'}}</legend>
 
                                     <div class="grid gap-2 grid-cols-4">
@@ -84,7 +93,7 @@
                                             <InputLabel :size="'sm'" value="Employee (Number, Full Name)"/>
                                             <SingleSelectPaginated
                                                 :key="employeeOptionsKey"
-                                                :disabled="modalDisableActions || !creatingLeave"
+                                                :disabled="modalDisableActions || !creatingLeave || modalCreatingAndCreatedAtLeaseOne"
                                                 drop-shadow
                                                 value-persist
                                                 :selection-max-viewable-line="10"
@@ -96,28 +105,57 @@
                                         </div>
                                         <div class="hidden lg:block"></div>
                                         <div v-if="creatingLeave" class="col-span-4 md:col-span-3 lg:col-span-2">
+                                            <InputLabel :size="'sm'" value="Assigned Shift"/>
+                                            <SingleSelectPaginated
+                                                :key="assignedShiftSelectionsOptionsKey"
+                                                :disabled="modalDisableActions || !employeeOptions.selected || modalCreatingAndCreatedAtLeaseOne"
+                                                drop-shadow
+                                                value-persist
+                                                :selection-max-viewable-line="10"
+                                                :label="'Select Assigned Shift'"
+                                                :icon="'mdi:calendar-cursor-outline'"
+                                                :size="'md'"
+                                                :payload="assignedShiftSelectionsOptions"
+                                                @valueChange="selectedShiftChanged"/>
+                                        </div>
+                                        <div v-if="creatingLeave" class="col-span-4 md:col-span-3 lg:col-span-2">
                                             <InputLabel :size="'sm'" value="Assigned Leave Type"/>
                                             <SingleSelectPaginated
                                                 :key="assignedLeaveTypeSelectionsOptionsKey"
-                                                :disabled="modalDisableActions || !employeeOptions.selected"
+                                                :disabled="modalDisableActions || !employeeOptions.selected || !assignedShiftSelectionsOptions.selected || modalCreatingAndCreatedAtLeaseOne"
                                                 drop-shadow
                                                 value-persist
                                                 :selection-max-viewable-line="10"
                                                 :label="'Select Assigned Leave Type'"
-                                                :icon="'mdi:calendar-cursor-outline'"
+                                                :icon="'tdesign:component-checkbox'"
                                                 :size="'md'"
                                                 :payload="assignedLeaveTypeSelectionsOptions"
                                                 @valueChange="selectedLeaveTypeChanged"/>
                                         </div>
-                                        <div class="col-span-4 md:col-span-1">
-                                            <InputLabel :size="'sm'" value="Leave Date"/>
+                                    </div>
+
+                                    <div class="grid gap-2 grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+                                        <div class="col-span-full">Date range automatically skips existing leaves and day offs</div>
+                                        <div class="col-span-2 sm:col-span-1">
+                                            <InputLabel :size="'sm'" value="Leave Date From"/>
                                             <InputWithIcon
-                                                :disabled="modalDisableActions || !creatingLeave || !assignedLeaveTypeSelectionsOptions.selected"
+                                                :disabled="modalDisableActions || !creatingLeave || !assignedLeaveTypeSelectionsOptions.selected || modalCreatingAndCreatedAtLeaseOne"
                                                 high-light-all-text-on-focus
-                                                v-model="leaveDate"
+                                                v-model="leaveDateFrom"
                                                 :override="{font_family_class: 'font-sans'}"
                                                 :icon="'mdi:calendar-cursor-outline'"
-                                                :id="`leave_date`"
+                                                :id="`leave_date_from`"
+                                                :size="'md'" />
+                                        </div>
+                                        <div class="col-span-2 sm:col-span-1">
+                                            <InputLabel :size="'sm'" value="Leave Date To"/>
+                                            <InputWithIcon
+                                                :disabled="modalDisableActions || !creatingLeave || !assignedLeaveTypeSelectionsOptions.selected || modalCreatingAndCreatedAtLeaseOne"
+                                                high-light-all-text-on-focus
+                                                v-model="leaveDateTo"
+                                                :override="{font_family_class: 'font-sans'}"
+                                                :icon="'mdi:calendar-cursor-outline'"
+                                                :id="`leave_date_to`"
                                                 :size="'md'" />
                                         </div>
                                     </div>
@@ -134,6 +172,7 @@
                             <div class="flex space-x-2 justify-between">
                                 <div class="space-x-2 inline-flex items-center">
                                     <Button
+                                        v-if="!createdAtLeastOne"
                                         class="w-min"
                                         :variant=" 'outline'"
                                         :size="'md'"
@@ -142,13 +181,21 @@
                                         :label="'Cancel'"
                                         @click="closeModal"/>
                                     <Button
+                                        v-if="!createdAtLeastOne"
                                         class="w-min"
                                         :variant="'default'"
                                         :size="'md'"
-                                        :icon="modalSubmitButtonIcon"
-                                        :disabled="modalDisableActions || creatingLeaveWithNonValidLeaveFoundations"
-                                        :label="modalSaveButtonLabel"
-                                        @click="modalSubmit"/>
+                                        :icon="`mdi:plus`"
+                                        :disabled="modalDisableActions || !creatingLeave || !assignedLeaveTypeSelectionsOptions.selected"
+                                        :label="`Submit`"
+                                        @click="attemptFilterAndSubmitLeaveDateRange"/>
+                                    <Button
+                                        v-if="createdAtLeastOne"
+                                        class="w-min"
+                                        :variant=" 'outline'"
+                                        :size="'md'"
+                                        :label="'Close'"
+                                        @click="closeModal"/>
                                 </div>
                                 <div class="space-x-2 inline-flex">
                                     <div class="space-x-2 inline-flex items-center">
@@ -221,8 +268,8 @@
 <script setup lang="ts">
 import type {DataTableMeta, TableHeaderT, TableRowT, TableSupHeaderT} from "@/public/js/types/data";
 import type {EnumOption, EnumSelection} from "@/public/js/common/type";
+import type {LabelTypeT} from "@/public/js/types/theme";
 import type {SelectDataType} from "@/public/js/types/form";
-import type {AttendanceT} from "@/public/js/types/attendance";
 import type {DateTimePickerOptionsT} from "@/public/js/datetimepicker/type";
 import {storeToRefs} from "pinia";
 
@@ -276,6 +323,12 @@ const rebuildSelections = (selection: string[] = []) => {
     if(_isEmpty(selection) || selection.indexOf('employee') >= 0){
         common.rebuildSelectionsOnSelectedCompanyChanged(
             employeeOptions, employeeOptionsKey, SELECT.SINGLE_PAGINATED
+        );
+    }
+
+    if(_isEmpty(selection) || selection.indexOf('assigned_shift') >= 0){
+        common.rebuildSelectionsOnSelectedCompanyChanged(
+            assignedShiftSelectionsOptions, assignedShiftSelectionsOptionsKey, SELECT.SINGLE_PAGINATED
         );
     }
 
@@ -600,17 +653,15 @@ const put = (row: TableRowT | null = null) => {
         assignedLeaveTypeSelectionsOptionsKey.value++;
         leaveEmployeeNumber.value = _get(editPayload.value, 'employee.number', '');
         leaveEmployeeFullName.value = _get(editPayload.value, 'employee.full_name', '');
-        leaveDate.value = _get(editPayload.value, 'date', '');
+
     } else {
 
         leaveEmployeeNumber.value = '';
         leaveEmployeeFullName.value = '';
-        leaveDate.value = nuxtApp.$moment().format("YYYY-MM-DD");
-        validLeaveTypeFoundations.value = false;
-        showLeaveBalance.value = false;
-        leaveRunningBalance.value = 0;
-        leaveEligibility.value = 0;
-        leaveEligibilityReadable.value = 'N/A';
+        leaveDateFrom.value = nuxtApp.$moment().format("YYYY-MM-DD");
+        leaveDateTo.value = nuxtApp.$moment().format("YYYY-MM-DD");
+
+        showResultPerDate.value = false;
     }
 
     renderDatePickers();
@@ -619,17 +670,23 @@ const put = (row: TableRowT | null = null) => {
 
 const renderDatePickers = () => {
 
-    let leaveDatePicker: DateTimePickerOptionsT[] = [
+    let leaveDateRangePickers: DateTimePickerOptionsT[] = [
         {
-            id: 'leave_date',
+            id: 'leave_date_from',
             type: 'date',
             selectedCallback: (payload: {value: string}) => {
-                leaveDate.value = payload.value;
+                leaveDateFrom.value = payload.value;
+            }
+        },{
+            id: 'leave_date_to',
+            type: 'date',
+            selectedCallback: (payload: {value: string}) => {
+                leaveDateTo.value = payload.value;
             }
         },
     ];
 
-    let filtersAndAttendanceDatePickers = filtersDateTimePickers.value.concat(leaveDatePicker);
+    let filtersAndAttendanceDatePickers = filtersDateTimePickers.value.concat(leaveDateRangePickers);
 
     render(filtersAndAttendanceDatePickers);
 }
@@ -640,12 +697,11 @@ const creatingLeave = computed(() => {
 
 const leaveEmployeeNumber = ref('');
 const leaveEmployeeFullName = ref('');
-const leaveDate = ref('');
-const validLeaveTypeFoundations = ref(false);
-const showLeaveBalance = ref(false);
-const leaveRunningBalance = ref(0);
-const leaveEligibility = ref(0);
-const leaveEligibilityReadable = ref('N/A');
+const leaveDateFrom = ref('');
+const leaveDateTo = ref('');
+
+const showResultPerDate = ref(false);
+const createdAtLeastOne = ref(false);
 
 const resetEditable = () => {
     stagedLeave.value = {
@@ -655,16 +711,17 @@ const resetEditable = () => {
     editPayload.value = {};
     employeeOptions.selected = null;
     employeeOptionsKey.value++;
+    assignedShiftSelectionsOptions.selected = null;
+    assignedShiftSelectionsOptionsKey.value++;
     assignedLeaveTypeSelectionsOptions.selected = null;
     assignedLeaveTypeSelectionsOptionsKey.value++;
     leaveEmployeeNumber.value = '';
     leaveEmployeeFullName.value = '';
-    leaveDate.value = '';
-    validLeaveTypeFoundations.value = false;
-    showLeaveBalance.value = false;
-    leaveRunningBalance.value = 0;
-    leaveEligibility.value = 0;
-    leaveEligibilityReadable.value = 'N/A';
+    leaveDateFrom.value = '';
+    leaveDateTo.value = '';
+
+    showResultPerDate.value = false;
+    createdAtLeastOne.value = false;
 }
 
 const employeeOptionsKey = shallowRef(0);
@@ -686,23 +743,59 @@ const selectedEmployeeChanged = (selectedEmployee: SelectDataType) => {
 
     if(creatingLeave.value){
 
+        showResultPerDate.value = false;
+
         if(selectedEmployee){
+            assignedShiftSelectionsOptions.fetch.filters.employee_id = selectedEmployee.value as number;
+            assignedShiftSelectionsOptions.selected = null;
+            assignedShiftSelectionsOptionsKey.value++;
+
             assignedLeaveTypeSelectionsOptions.fetch.filters.employee_id = selectedEmployee.value as number;
             assignedLeaveTypeSelectionsOptions.selected = null;
             assignedLeaveTypeSelectionsOptionsKey.value++;
         } else {
+            assignedShiftSelectionsOptions.fetch.filters.employee_id = null;
+            assignedShiftSelectionsOptions.selected = null;
+            assignedShiftSelectionsOptionsKey.value++;
+
             assignedLeaveTypeSelectionsOptions.fetch.filters.employee_id = null;
             assignedLeaveTypeSelectionsOptions.selected = null;
             assignedLeaveTypeSelectionsOptionsKey.value++;
         }
     }
 }
-const selectedLeaveTypeChanged = async (selectedLeaveType: SelectDataType) => {
 
-    if(creatingLeave.value && employeeOptions.selected && assignedLeaveTypeSelectionsOptions.selected){
-        await creatingLeaveInitializedLeaveDate(leaveDate.value);
+const selectedShiftChanged = () => {
+
+    if(creatingLeave.value) {
+
+        showResultPerDate.value = false;
     }
 }
+
+const selectedLeaveTypeChanged = () => {
+
+    if(creatingLeave.value) {
+
+        showResultPerDate.value = false;
+    }
+}
+
+const assignedShiftSelectionsOptionsKey = shallowRef(0);
+const assignedShiftSelectionsOptions = reactive({
+    fetch: {
+        url: '/api/shift-assignment-selections',
+        filters: {
+            employee_id: employeeOptions.selected as number | null,
+            company_id: selectedAssociatedCompanyId.value,
+            search: {
+                keyword: '',
+                callback: 1
+            }
+        }
+    },
+    selected: null,
+});
 
 const assignedLeaveTypeSelectionsOptionsKey = shallowRef(0);
 const assignedLeaveTypeSelectionsOptions = reactive({
@@ -720,238 +813,59 @@ const assignedLeaveTypeSelectionsOptions = reactive({
     selected: null,
 });
 
-watch(leaveDate, async (newAttendanceDate) => {
-
-    if(creatingLeave.value && employeeOptions.selected && assignedLeaveTypeSelectionsOptions.selected){
-        await creatingLeaveInitializedLeaveDate(newAttendanceDate);
-    }
-});
-
-const creatingLeaveWithNonValidLeaveFoundations = computed(() => {
-    return creatingLeave.value && !validLeaveTypeFoundations.value;
-});
-
-const creatingLeaveInitializedLeaveDate = async (value: string) => {
-
-    if(creatingLeave.value){
-
-        let _leaveMeta = {
-            pagination: {
-                total: 0,
-                count: 0,
-                per_page: 0,
-                current_page: 0,
-                total_pages: 0
-            }
-        };
-
-        modalLoading.value = true;
-
-        await laraFetch(`/api/leaves`, {
-            method: 'GET',
-            params: {
-                filters: {
-                    company_id: selectedAssociatedCompanyId.value,
-                    employee_ids: [employeeOptions.selected],
-                    leave_type_ids: [assignedLeaveTypeSelectionsOptions.selected],
-                    date_from: value,
-                    date_to: value,
-                }
-            }
-        }, {
-            onRequestError: () => {
-                modalLoading.value = false;
-            },
-            onResponse: () => {
-                modalLoading.value = false;
-            },
-            onSuccessResponse: async (request, options, response) => {
-                _leaveMeta = _get(response, '_data.values.meta', {
-                    pagination: {
-                        total: 0,
-                        count: 0,
-                        per_page: 0,
-                        current_page: 0,
-                        total_pages: 0
-                    }
-                });
-            }
-        }, false);
-
-        if(_leaveMeta.pagination.total > 0){
-
-            validLeaveTypeFoundations.value = false;
-            showLeaveBalance.value = false;
-
-            leaveEligibility.value = 0;
-            leaveEligibilityReadable.value = 'N/A';
-
-            coreStore.setServiceError({
-                prompt: false,
-                payload: {
-                    message: 'Date already has leave'
-                }
-            });
-
-            return;
-
-        } else {
-
-            modalLoading.value = true;
-            let leaveBalanceSuccessResponse = false;
-            let leaveUsageLimitReached = false;
-
-            await laraFetch(`/api/leave-balance`, {
-                method: 'GET',
-                params: {
-                    employee_id: employeeOptions.selected,
-                    leave_type_id: assignedLeaveTypeSelectionsOptions.selected,
-                    date: value,
-                }
-            }, {
-                onRequestError: () => {
-                    modalLoading.value = false;
-                },
-                onResponse: () => {
-                    modalLoading.value = false;
-                },
-                onUnprocessableContentResponse: () => {
-                    modalLoading.value = false;
-                },
-                onSuccessResponse: async (request, options, response) => {
-                    leaveRunningBalance.value = _get(response, '_data.values.date_series.running_balance', 0);
-                    leaveEligibility.value = _get(response, '_data.values.date_series.eligible', 0);
-                    leaveEligibilityReadable.value = leaveEligibility.value ? 'Yes' : 'No';
-                    leaveUsageLimitReached = _get(response, '_data.values.limit_reached', false);
-
-                    showLeaveBalance.value = true;
-                    leaveBalanceSuccessResponse = true;
-                }
-            }, false);
-
-            if(leaveBalanceSuccessResponse && !isNumeric(leaveRunningBalance.value)){
-                validLeaveTypeFoundations.value = false;
-
-                coreStore.setServiceError({
-                    prompt: false,
-                    payload: {
-                        message: 'Balance not found'
-                    }
-                });
-
-                return;
-            }
-
-            if(leaveBalanceSuccessResponse && !leaveEligibility.value){
-                validLeaveTypeFoundations.value = false;
-
-                coreStore.setServiceError({
-                    prompt: false,
-                    payload: {
-                        message: 'Not eligible'
-                    }
-                });
-
-                return;
-            }
-
-            if(leaveBalanceSuccessResponse && leaveUsageLimitReached){
-                validLeaveTypeFoundations.value = false;
-
-                coreStore.setServiceError({
-                    prompt: false,
-                    payload: {
-                        message: 'Limit reached'
-                    }
-                });
-
-                return;
-            }
-
-            if(leaveBalanceSuccessResponse && leaveEligibility.value && isNumeric(leaveRunningBalance.value) && leaveRunningBalance.value < 1){
-                validLeaveTypeFoundations.value = false;
-
-                coreStore.setServiceError({
-                    prompt: false,
-                    payload: {
-                        message: 'Insufficient balance.'
-                    }
-                });
-
-                return;
-            }
-
-            if(leaveBalanceSuccessResponse && leaveEligibility.value && isNumeric(leaveRunningBalance.value) && leaveRunningBalance.value > 0){
-
-                validLeaveTypeFoundations.value = true;
-                renderDatePickers();
-            }
-        }
-    }
-}
-
 const closeModal = () => {
     creatingOrEditing.value = false;
     resetEditable();
 };
 
-const modalDisableActions = computed(()=>{
+const modalDisableActions = computed(() => {
     return  modalLoading.value || modalSubmitPending.value;
+});
+const modalCreatingAndCreatedAtLeaseOne = computed(() => {
+    return  creatingLeave.value && createdAtLeastOne.value;
 });
 const modalLoading = ref(false);
 const modalSubmitPending = ref(false);
 
-const modalSubmitButtonIcon = computed(()=>{
-    const ICON = {
-        CREATE: 'mdi:plus',
-        EDIT: 'ic:sharp-save'
-    } as const;
-
-    const isEditMode = !creatingLeave.value;
-
-    return isEditMode ? ICON.EDIT : ICON.CREATE;
-});
-const modalSaveButtonLabel = computed(()=>{
-    const LABEL = {
-        CREATE: `Create`,
-        EDIT: `Save`
-    } as const;
-
-    const isEditMode = !creatingLeave.value;
-
-    return isEditMode ? LABEL.EDIT : LABEL.CREATE;
-});
-
-const modalSubmitPath = computed(() => {
-    if(!creatingLeave.value){
-        return `/api/leave/${stagedLeave.value.ulid}`;
-    } else {
-        return `/api/leave`
-    }
-});
-const modalSubmitAction = computed(() => {
-    if(!creatingLeave.value){
-        return `PATCH`;
-    } else {
-        return `POST`;
-    }
-});
-const modalForm = computed(()=>{
+const attemptFilterAndSubmitLeaveDateRangeForm = computed(() => {
     return {
-        id: stagedLeave.value.id,
-        ulid: stagedLeave.value.ulid,
         company_id: selectedAssociatedCompanyId.value,
         employee_id: employeeOptions.selected,
+        shift_id: assignedShiftSelectionsOptions.selected,
         leave_type_id: assignedLeaveTypeSelectionsOptions.selected,
-        date: leaveDate.value,
+        date_from: leaveDateFrom.value,
+        date_to: leaveDateTo.value,
     }
 })
-const modalSubmit = async() => {
-    modalSubmitPending.value = true;
+const attemptFilterAndSubmitLeaveDateRange = async() => {
 
-    await laraFetch(modalSubmitPath.value, {
-        method: modalSubmitAction.value,
-        body: modalForm.value,
+    let dateRangeReadable = leaveDateFrom.value == leaveDateTo.value
+        ? `on ${leaveDateFrom.value}?`
+        : `from ${leaveDateFrom.value} to ${leaveDateTo.value}? automatically skips existing leaves and day offs.`;
+
+    useNuxtApp().$promptStore.setPrompt({
+        resetable: true,
+        icon: null,
+        title: 'Confirm Action',
+        message: `Confirm create leave ${dateRangeReadable}`,
+        action: {
+            callback: async () => {
+                await filterAndSubmitLeaveDateRange();
+            },
+            label: 'Yes'
+        }
+    });
+}
+
+const filterAndSubmitLeaveDateRange = async() => {
+    modalSubmitPending.value = true;
+    createdAtLeastOne.value = false;
+    filteredLeaveDates.value = [];
+    submitResults.value = [];
+
+    await laraFetch(`/api/leave-date-range-filter`, {
+        method: `POST`,
+        body: attemptFilterAndSubmitLeaveDateRangeForm.value,
     }, {
         onRequestError: () => {
             modalSubmitPending.value = false;
@@ -960,20 +874,76 @@ const modalSubmit = async() => {
             modalSubmitPending.value = false;
         },
         onSuccessResponse: async (request, options, response) => {
+            filteredLeaveDates.value = _get(response, '_data.values.dates', []);
+
+            if(filteredLeaveDates.value.length > 0){
+
+                showResultPerDate.value = true;
+                await submit();
+            } else {
+                showResultPerDate.value = false;
+                useNuxtApp().$promptStore.setPrompt({
+                    resetable: false,
+                    icon: null,
+                    title: `No date found`,
+                    message: `Selected dates are either day off or already has leave.`,
+                    action: {
+                        callback: () => {},
+                        label: 'Okay'
+                    }
+                });
+            }
+        },
+    });
+}
+
+const filteredLeaveDates = ref([]);
+const submitForm = computed(()=>{
+    return {
+        company_id: selectedAssociatedCompanyId.value,
+        employee_id: employeeOptions.selected,
+        leave_type_id: assignedLeaveTypeSelectionsOptions.selected,
+        dates: filteredLeaveDates.value
+    }
+})
+const submitResults = ref<{date: string, result: {label: 'string', type: LabelTypeT}}[]>([]);
+const submit = async() => {
+    modalSubmitPending.value = true;
+    submitResults.value = [];
+
+    await laraFetch(`/api/leave`, {
+        method: `POST`,
+        body: submitForm.value,
+    }, {
+        onRequestError: () => {
+            modalSubmitPending.value = false;
+        },
+        onResponse: () => {
+            modalSubmitPending.value = false;
+        },
+        onSuccessResponse: async (request, options, response) => {
+            submitResults.value = _get(response, '_data.values.results', []);
+            let leaveCreatedCount = _get(response, '_data.values.created', 0);
+
+            if(leaveCreatedCount > 0){
+                createdAtLeastOne.value = true;
+                await leavesExecute();
+            }
+
+            let leaveCreatedCountMessage = `${leaveCreatedCount} Leave created`;
 
             useNuxtApp().$promptStore.setPrompt({
                 resetable: false,
                 icon: null,
                 title: `Request successful`,
-                message: `Leave ${creatingLeave.value ? 'created' : 'updated'}.`,
+                message: leaveCreatedCountMessage,
                 action: {
                     callback: () => {},
                     label: 'Okay'
                 }
             });
 
-            closeModal();
-            await leavesExecute();
+
         },
     });
 }
