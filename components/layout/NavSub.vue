@@ -4,7 +4,7 @@
         tabindex="0"
         :style="{'text-shadow': navigationTextShadow, 'font-family': fontFamily}"
         :class="[classes]"
-        class="nav relative inline-flex items-center h-full px-2 py-1 cursor-pointer focus:outline-none rounded-[2px]">
+        class="nav relative inline-flex items-center h-full px-2 lg:px-1.5 xl:px-2 py-1 cursor-pointer focus:outline-none rounded-[2px]">
         <Icon v-if="icon" :name="icon" :class="[iconClass]" class="mr-1" />
         <span :class="[headerFontClass]">{{title}}</span>
         <Icon class="flex-none" :class="[dropDownIconClass]" :name="navHeaderIcon"/>

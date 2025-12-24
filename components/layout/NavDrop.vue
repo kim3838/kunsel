@@ -8,7 +8,7 @@
             <div
                 :style="{'text-shadow': navigationTextShadow, 'font-family': fontFamily}"
                 :class="[classes, parent ? 'rounded-[2px]' : '']"
-                class="nav-drop flex items-center h-full px-2 py-1 focus:outline-none">
+                class="nav-drop flex items-center h-full px-2 lg:px-1.5 xl:px-2 py-1 focus:outline-none">
                 <Icon v-if="icon" :class="[iconClass]" :name="icon" class="mr-1" />
                 <span :class="[headerFontClass]">{{title}}</span>
                 <Icon :class="[dropDownIconClass]" :name="navDropIcon"/>

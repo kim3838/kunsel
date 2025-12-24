@@ -19,6 +19,7 @@ module.exports = {
                     'Protest Revolution',
                 ],
                 business: [
+                    'Roboto Condensed',
                     'GG Sans',
                     'Inclusive Sans',
                     'Radio Canada Big',

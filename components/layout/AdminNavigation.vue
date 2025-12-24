@@ -3,7 +3,7 @@
         ref="navigation"
         class="primary-navigation-parent z-40 fixed">
         <div class="relative z-[42] w-full flex justify-center font-[Inclusive_Sans]">
-            <div class="max-w-screen-2xl w-full flex justify-end h-5">
+            <div class="max-w-screen-2xl w-full flex gap-1 justify-end h-5">
                 <NavLink
                     class="h-full cursor-pointer hover:underline"
                     :size="`xs`">
@@ -19,7 +19,7 @@
                     :size="`xs`">
                     Support
                 </NavLink>
-                <div v-if="user?.timezone" class=" text-sm h-full flex items-center gap-1 cursor-pointer accent-hover">
+                <div v-if="false && user?.timezone" class=" text-sm h-full flex items-center gap-1 cursor-pointer accent-hover">
                     <Icon size="0.75rem" :name="'file-icons:moment-timezone'"/>
                     <div>{{user?.timezone}}</div>
                 </div>
@@ -61,7 +61,7 @@
                             @valueChange="selectedAssociatedAccountSubscriptionChanged"
                         />
                     </div>
-                    <div class="mx-1.5 flex justify-center items-center">
+                    <div class="mx-1 flex justify-center items-center">
                         <div class="horizontal-divider"></div>
                     </div>
                     <div class="flex">
@@ -160,7 +160,7 @@
                         v-if="isAuthenticated"
                         :size="navigationHeaderSize"
                         :drop-align="rightNavigationDropAlign"
-                        :title="wordClamp(user?.name as string, 6)"
+                        :title="username"
                         :drop-options="navigationAccountLinks"
                     />
                     <NavDrop
@@ -236,6 +236,11 @@ const isRoutePathActive = nuxtApp.$isRoutePathActive as (path: string | undefine
 const wordClamp = nuxtApp.$wordClamp as (text: string, length: number) => string;
 
 const {isAuthenticated, user} = useAuth();
+const username = computed(() => {
+    return screenWidth.value < screenWidthBreakpoint['lg'] || screenWidth.value > screenWidthBreakpoint['xl']
+        ? user.value?.name
+        : wordClamp(user.value?.name as string, 12);
+});
 const {width: screenWidth, screenWidthBreakpoint} = useScreen();
 const navDrop = resolveComponent('navDrop');
 const navigationHeightModel = defineModel('navigationHeight');
