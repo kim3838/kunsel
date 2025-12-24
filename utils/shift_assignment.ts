@@ -9,6 +9,6 @@ export const SHIFT_ASSIGNMENT_TAB: NumericEnumInterface = {
 
 export const SHIFT_ASSIGNMENT_TAB_NAME: StringEnumInterface = {
     [SHIFT_ASSIGNMENT_TAB.LIST as number]: 'List',
-    [SHIFT_ASSIGNMENT_TAB.CREATE_SHIFT_ASSIGNMENTS as number]: 'Create Shift Assignments',
-    [SHIFT_ASSIGNMENT_TAB.MANAGE_ASSIGNED_SHIFTS as number]: 'Manage Assigned Shifts',
+    [SHIFT_ASSIGNMENT_TAB.CREATE_SHIFT_ASSIGNMENTS as number]: 'Create Shift Assignment',
+    [SHIFT_ASSIGNMENT_TAB.MANAGE_ASSIGNED_SHIFTS as number]: 'Bulk Remove Assigned Shifts',
 }

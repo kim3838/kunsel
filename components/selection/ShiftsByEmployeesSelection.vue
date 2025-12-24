@@ -362,7 +362,7 @@ const employeeHeaders = reactive<TableHeaderT[]>([
     { text: 'Type', value: 'employee_current_employment_type'},
     { text: 'Department', value: 'employee_department'},
     { text: 'Designation', value: 'employee_designation'},
-    { text: 'Assigned Shift Codes', value: 'assigned_shift_codes'},
+    { text: 'Code', value: 'assigned_shift_codes'},
 ]);
 
 const employees = reactive<{

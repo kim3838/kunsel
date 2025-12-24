@@ -58,7 +58,8 @@
             :disabled="disableDataTable"
             :pending="proxyPending"
             v-model="proxySelectedShifts"
-            selection>
+            selection
+            :single-select="singleSelect">
             <template v-slot:cell.type="{cell,slot}">
                 <div class="p-[3px]">{{cell.type.text}}</div>
             </template>
@@ -102,6 +103,10 @@ const props = defineProps({
         type: Boolean,
         default: true,
     },
+    singleSelect: {
+        type: Boolean,
+        default: false,
+    }
 });
 
 const emit = defineEmits(["update:selected", "update:pending"]);

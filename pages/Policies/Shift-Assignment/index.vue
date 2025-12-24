@@ -80,11 +80,12 @@
                                 </fieldset>
 
                                 <fieldset v-if="shiftAssignmentTab == SHIFT_ASSIGNMENT_TAB.CREATE_SHIFT_ASSIGNMENTS" class="neutral-border px-2 pb-2 space-y-2">
-                                    <legend class="text-lg font-header">Select Shifts</legend>
+                                    <legend class="text-lg font-header">Select Shift</legend>
 
                                     <Suspense>
                                         <ShiftSelection
                                             compact
+                                            :single-select="true"
                                             :clear-selection-on-form-submit="false"
                                             :disable-actions="disableShiftAssignmentActions"
                                             v-model:selected="selectedModalShifts"/>
@@ -189,7 +190,7 @@
                             v-model:pending="shiftSelectionPending"
                             v-model:selected="selectedShifts">
                             <template #selection-actions>
-                                <Button :disabled="disableShiftAssignmentActions || shiftSelectionPending" @click="assignShifts" class="inline-block" :size="'sm'" :icon="'mdi:plus'" :variant="'outline'" :label="'Assign selected shifts to employees'" />
+                                <Button v-if="false" :disabled="disableShiftAssignmentActions || shiftSelectionPending" @click="assignShifts" class="inline-block" :size="'sm'" :icon="'mdi:plus'" :variant="'outline'" :label="'Assign selected shifts to employees'" />
                                 <Button :disabled="disableShiftAssignmentActions || shiftSelectionPending" @click="confirmShiftAssignmentBatchDetach" class="inline-block" :size="'sm'" :icon="'mdi:delete-outline'" :variant="'outline'" :label="'Remove selected shifts from employees'" />
                             </template>
                         </ShiftSelection>
@@ -307,7 +308,7 @@ const assignShifts = () => {
             resetable: false,
             icon: null,
             title: 'Validation Error',
-            message: `Please select at least one employee to assign shift(s) to.`,
+            message: `Please select at least one employee to assign shift to.`,
             action: {
                 callback: () => {},
                 label: 'Okay'
@@ -472,7 +473,7 @@ const submitShiftAssignment = () => {
             resetable: false,
             icon: null,
             title: 'Validation Error',
-            message: 'Please select at least one employee to assign shift(s) to.',
+            message: 'Please select at least one employee to assign shift to.',
             action: {
                 callback: () => {},
                 label: 'Okay'
@@ -483,7 +484,7 @@ const submitShiftAssignment = () => {
 
     shiftAssignmentPending.value = true;
 
-    laraFetch("/api/shift-assignment-sync-without-detaching", {
+    laraFetch("/api/shift-assignment-sync", {
         method: 'POST',
         body: shiftAssignmentForm.value,
     },{
