@@ -115,22 +115,6 @@
                     </div>
                 </div>
                 <div class="flex">
-                    <SingleSelect
-                        v-if="isAuthenticated"
-                        drop-shadow
-                        :searchable="false"
-                        :always-active="false"
-                        value-persist
-                        disable-header-border
-                        navigation-mode
-                        :size="navigationHeaderSize"
-                        :label="'Select Association'"
-                        :none-selected-label="'No Associated Company'"
-                        :options="$authStore.associatedCompanies.singleSelectPayload"
-                        :drop-align="rightNavigationDropAlign"
-                        :override="associatedCompaniesSelectOverrides"
-                        @valueChange="selectedAssociatedCompanyChanged"
-                    />
                     <span class="flex" v-for="navigation in adminNavigationLinks" :key="navigation.key">
                         <NavLink
                             v-if="navigation.type == 'link'"
@@ -171,12 +155,28 @@
                             @update-sub-navigation-options="updateSubNavigationOptions"
                         />
                     </span>
+                    <SingleSelect
+                        v-if="isAuthenticated"
+                        drop-shadow
+                        :searchable="false"
+                        :always-active="false"
+                        value-persist
+                        disable-header-border
+                        navigation-mode
+                        :size="navigationHeaderSize"
+                        :label="'Select Association'"
+                        :none-selected-label="'No Associated Company'"
+                        :options="$authStore.associatedCompanies.singleSelectPayload"
+                        :drop-align="rightNavigationDropAlign"
+                        :override="associatedCompaniesSelectOverrides"
+                        @valueChange="selectedAssociatedCompanyChanged"
+                    />
                     <component
                         :is="navDrop"
                         v-if="isAuthenticated"
                         :size="navigationHeaderSize"
                         :drop-align="rightNavigationDropAlign"
-                        :title="user?.name"
+                        :title="wordClamp(user?.name as string, 6)"
                         :drop-options="navigationAccountLinks"
                     />
                     <NavDrop
@@ -249,6 +249,7 @@ const clientReadyState = useClientReadyState();
 const nuxtApp = useNuxtApp();
 const isRouteActive = nuxtApp.$isRouteActive as (name: string | undefined) => boolean;
 const isRoutePathActive = nuxtApp.$isRoutePathActive as (path: string | undefined) => boolean;
+const wordClamp = nuxtApp.$wordClamp as (text: string, length: number) => string;
 
 const {isAuthenticated, user} = useAuth();
 const {width: screenWidth, screenWidthBreakpoint} = useScreen();

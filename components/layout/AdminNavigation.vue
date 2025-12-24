@@ -160,7 +160,7 @@
                         v-if="isAuthenticated"
                         :size="navigationHeaderSize"
                         :drop-align="rightNavigationDropAlign"
-                        :title="user?.name"
+                        :title="wordClamp(user?.name as string, 6)"
                         :drop-options="navigationAccountLinks"
                     />
                     <NavDrop
@@ -233,6 +233,7 @@ const clientReadyState = useClientReadyState();
 const nuxtApp = useNuxtApp();
 const isRouteActive = nuxtApp.$isRouteActive as (name: string | undefined) => boolean;
 const isRoutePathActive = nuxtApp.$isRoutePathActive as (path: string | undefined) => boolean;
+const wordClamp = nuxtApp.$wordClamp as (text: string, length: number) => string;
 
 const {isAuthenticated, user} = useAuth();
 const {width: screenWidth, screenWidthBreakpoint} = useScreen();
