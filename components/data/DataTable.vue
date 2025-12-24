@@ -43,7 +43,7 @@
 
                 <tr>
                     <td v-if="selection" style="padding:3px 0.5rem;" ref="checkboxCell">
-                        <NonModelCheckBox :disabled="disabled" :size="checkBoxSize" :checked="checkedAllCurrentSelection()" @click="toggleCheck()" />
+                        <NonModelCheckBox v-if="!singleSelect" :disabled="disabled" :size="checkBoxSize" :checked="checkedAllCurrentSelection()" @click="toggleCheck()" />
                     </td>
                     <td v-if="manualSortable" :class="[headerFontClass]">
                         <div class="flex px-[3px]" >
@@ -212,6 +212,10 @@ const props = defineProps({
         default: () => [],
     },
     selection: Boolean,
+    singleSelect: {
+        type: Boolean,
+        default: false,
+    },
     noDataLabel: {
         type: String,
         default: 'No Record',
@@ -364,16 +368,31 @@ function isRowSelected(row: TableRowT): boolean{
 }
 
 function checkRow(row: TableRowT): void{
-    if(isRowSelected(row)){
-        _remove(props.modelValue, (value) => value == row.id);
-        emit('selectionChanged', {action: SELECTION_ACTION.REMOVE, value: _castArray(row.id)});
-    } else {
 
-        emit('update:modelValue', props.modelValue.concat(row.id));
+    if(props.singleSelect){
+
+        emit('update:modelValue', isRowSelected(row) ? [] : [row.id]);
 
         nextTick(()=>{
-            emit('selectionChanged', {action: SELECTION_ACTION.ADD, value: _castArray(props.modelValue)});
+            emit('selectionChanged', {action: SELECTION_ACTION.REPLACE, value: _castArray(props.modelValue)});
         });
+
+    } else {
+
+        if(isRowSelected(row)){
+
+            _remove(props.modelValue, (value) => value == row.id);
+
+            emit('selectionChanged', {action: SELECTION_ACTION.REMOVE, value: _castArray(row.id)});
+
+        } else {
+
+            emit('update:modelValue', props.modelValue.concat(row.id));
+
+            nextTick(()=>{
+                emit('selectionChanged', {action: SELECTION_ACTION.ADD, value: _castArray(props.modelValue)});
+            });
+        }
     }
 }
 
