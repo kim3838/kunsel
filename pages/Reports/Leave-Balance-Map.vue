@@ -1,0 +1,404 @@
+<template>
+    <div>
+        <DefaultWrapper>
+            <div class="mx-auto max-w-screen-2xl">
+                <form @submit.prevent="balanceMapExecute()" class="space-y-2 p-[20px]">
+                    <div class="grid gap-2 grid-cols-3 sm:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-8">
+                        <div class="col-span-4 md:col-span-3 lg:col-span-2">
+                            <InputLabel :size="'sm'" value="Employee"/>
+                            <SingleSelectPaginated
+                                :key="employeeOptionsKey"
+                                :disabled="disableActions"
+                                drop-shadow
+                                value-persist
+                                :selection-max-viewable-line="10"
+                                :label="'Select Employee'"
+                                :size="'md'"
+                                :icon="'mdi:badge-account-outline'"
+                                :payload="employeeOptions"
+                                @valueChange="selectedEmployeeChanged"/>
+                        </div>
+                        <div class="col-span-4 md:col-span-3 lg:col-span-2">
+                            <InputLabel :size="'sm'" value="Leave Type"/>
+                            <SingleSelectPaginated
+                                :key="assignedLeaveTypeSelectionsOptionsKey"
+                                :disabled="disableActions || !employeeOptions.selected"
+                                drop-shadow
+                                value-persist
+                                :selection-max-viewable-line="10"
+                                :label="'Select Assigned Leave Type'"
+                                :icon="'tdesign:component-checkbox'"
+                                :size="'md'"
+                                :payload="assignedLeaveTypeSelectionsOptions"
+                                @valueChange="selectedLeaveTypeChanged"/>
+                        </div>
+                        <div class="col-span-2 sm:col-span-1">
+                            <InputLabel :size="'sm'" value="Up to date"/>
+                            <InputWithIcon
+                                :disabled="disableActions"
+                                high-light-all-text-on-focus
+                                v-model="uptoDate"
+                                :override="{font_family_class: 'font-sans'}"
+                                :icon="'mdi:calendar-cursor-outline'"
+                                :id="`up_to_date`"
+                                :size="'md'"/>
+                        </div>
+                        <div class="flex flex-col">
+                            <div class="flex-none h-[1rem]"></div>
+                            <div class="grow">
+                                <Button class="w-min" ref="submitButton" type="submit" :disabled="disableActions" :size="'md'" :icon="disableActions ? 'eos-icons:loading' : 'mdi:data'" :label="disableActions ? 'Loading' : 'Load'"></Button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
+                <div class="px-[20px] space-y-2">
+                    <div v-if="$coreStore.hasNonPromptableServicePayloadMessage" class="block">
+                        <Label invert :size="'md'" :type="'danger'" :label="$coreStore.servicePayloadMessage" />
+                    </div>
+
+                    <div v-if="upToDateMessage.show" class="block">
+                        <Label invert :size="'md'" :type="'info'" :label="upToDateMessage.message" />
+                    </div>
+
+                    <div v-if="balanceMapPending" class="inline-flex items-center">
+                        <UnorderedList
+                            :icon="'eos-icons:loading'"
+                            :size="'md'"
+                            :label="'Please wait...'"/>
+                    </div>
+                    <div v-else-if="showBalanceMap" class="space-y-2 overflow-x-scroll">
+
+                        <div v-for="periodSeries in balanceMap">
+
+                            <table class="period-series-table">
+                                <tbody>
+                                    <tr class="font-semibold">
+                                        <td class="px-[2px]">Period</td>
+                                        <td class="px-[2px]" v-for="yearMonthSeries in periodSeries.value">{{yearMonthSeries.period}}</td>
+                                    </tr>
+                                    <tr class="">
+                                        <td class="px-[2px] font-semibold">Year</td>
+                                        <td class="px-[2px]" v-for="yearMonthSeries in periodSeries.value">{{yearMonthSeries.year}}</td>
+                                    </tr>
+                                    <tr class="">
+                                        <td class="px-[2px] font-semibold">Month</td>
+                                        <td class="px-[2px]" v-for="yearMonthSeries in periodSeries.value">{{yearMonthSeries.month_readable}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div class="employment-series-header flex flex-col">
+                                                <div class="px-[2px] font-semibold">Employment Type</div>
+                                                <div class="px-[2px] font-semibold">Eligible</div>
+                                                <div class="px-[2px] font-semibold">Calendar Day</div>
+                                                <div class="px-[2px] font-semibold">Running Balance</div>
+                                            </div>
+                                        </td>
+                                        <td v-for="yearMonthSeries in periodSeries.value" class="">
+                                            <div class="employment-series-grid flex">
+                                                <div class="w-full" v-for="employmentSeries in yearMonthSeries.value">
+                                                    <div class="px-[2px]">{{employmentSeries.type.text}}</div>
+                                                    <div class="px-[2px]">
+                                                        <Label shade :size="'sm'" :type="employmentSeries.eligible ? 'success' : 'default'" :label="employmentSeries.eligible ? 'Eligible' : 'Ineligible'" />
+                                                    </div>
+                                                    <div class="date-series-grid flex font-sans">
+                                                        <div class="w-full" v-for="dateSeries in employmentSeries.value">
+                                                            <div>{{ordinal(dateSeries.day)}}</div>
+                                                            <div>{{dateSeries.running_balance}}</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </DefaultWrapper>
+    </div>
+</template>
+
+<script setup lang="ts">
+import {storeToRefs} from "pinia";
+import type {SelectDataType} from "@/public/js/types/form";
+
+useHead({titleTemplate: (titleChunk) => {return `${titleChunk} - Leave Balance Map`}});
+definePageMeta({middleware: ['auth', 'admin-of-selected-company']});
+useLayout().setNavigationMode('solid');
+
+const {isAuthenticated} = useAuth();
+const nuxtApp = useNuxtApp();
+const ordinal = nuxtApp.$ordinal as (num: number | string) => string;
+const {$themeStore} = useNuxtApp();
+const $moment = nuxtApp.$moment;
+const {render} = dateTimePicker();
+const clientReadyState = useClientReadyState();
+const common = useCommon();
+const coreStore = useCoreStore();
+const {
+    updatedAssociatedCompanyFlag
+} = storeToRefs(nuxtApp.$associationStore);
+const {
+    selectedAssociatedCompanyId
+} = storeToRefs(nuxtApp.$authStore);
+
+const {
+    lining: liningColor,
+    thread: threadColor,
+} = storeToRefs($themeStore);
+
+watch(updatedAssociatedCompanyFlag, async (newValue) => {
+    if(isAuthenticated.value && selectedAssociatedCompanyId.value){
+        rebuildSelections();
+        reset();
+    }
+})
+
+const rebuildSelections = (selection: string[] = []) => {
+
+    if(_isEmpty(selection) || selection.indexOf('employee') >= 0){
+        common.rebuildSelectionsOnSelectedCompanyChanged(
+            employeeOptions, employeeOptionsKey, SELECT.SINGLE_PAGINATED
+        );
+    }
+
+    if(_isEmpty(selection) || selection.indexOf('assigned_leave_type') >= 0){
+        common.rebuildSelectionsOnSelectedCompanyChanged(
+            assignedLeaveTypeSelectionsOptions, assignedLeaveTypeSelectionsOptionsKey, SELECT.SINGLE_PAGINATED
+        );
+    }
+}
+
+const reset = () => {
+    employeeOptions.selected = null;
+    employeeOptionsKey.value++;
+    assignedLeaveTypeSelectionsOptions.fetch.filters.employee_id = null;
+    assignedLeaveTypeSelectionsOptions.selected = null;
+    assignedLeaveTypeSelectionsOptionsKey.value++;
+    upToDateMessage.show = false;
+    upToDateMessage.message = '';
+}
+
+const employeeOptionsKey = shallowRef(0);
+const employeeOptions = reactive({
+    fetch: {
+        url: '/api/employee-selections',
+        filters: {
+            company_id: selectedAssociatedCompanyId.value,
+            search: {
+                keyword: '',
+                callback: 1
+            }
+        }
+    },
+    selected: null,
+});
+
+const assignedLeaveTypeSelectionsOptionsKey = shallowRef(0);
+const assignedLeaveTypeSelectionsOptions = reactive({
+    fetch: {
+        url: '/api/leave-type-assignment-selections',
+        filters: {
+            employee_id: employeeOptions.selected as number | null,
+            company_id: selectedAssociatedCompanyId.value,
+            search: {
+                keyword: '',
+                callback: 1
+            }
+        }
+    },
+    selected: null,
+});
+
+const showBalanceMap = ref(false);
+const uptoDate = ref($moment().format("YYYY-MM-DD"));
+const upToDateMessage = reactive({
+    show: false,
+    message: ''
+});
+
+const selectedEmployeeChanged = (selectedEmployee: SelectDataType) => {
+
+    showBalanceMap.value = false;
+    upToDateMessage.show = false;
+    upToDateMessage.message = '';
+
+    if(selectedEmployee){
+
+        assignedLeaveTypeSelectionsOptions.fetch.filters.employee_id = selectedEmployee.value as number;
+        assignedLeaveTypeSelectionsOptions.selected = null;
+        assignedLeaveTypeSelectionsOptionsKey.value++;
+    } else {
+
+        assignedLeaveTypeSelectionsOptions.fetch.filters.employee_id = null;
+        assignedLeaveTypeSelectionsOptions.selected = null;
+        assignedLeaveTypeSelectionsOptionsKey.value++;
+    }
+}
+const selectedLeaveTypeChanged = () => {
+
+    showBalanceMap.value = false;
+    upToDateMessage.show = false;
+    upToDateMessage.message = '';
+}
+
+const balanceMapPending = ref(false);
+
+const disableActions = computed(() => {
+    return balanceMapPending.value || companyAssociationPendingState().value;
+});
+
+const balanceMap = ref([]);
+
+const balanceMapExecute = async () => {
+
+    showBalanceMap.value = false;
+    upToDateMessage.show = false;
+    upToDateMessage.message = '';
+
+    balanceMapPending.value = true;
+    let leaveBalanceMapMinimumDateSuccessResponse = false;
+
+    await laraFetch(`/api/leave-balance-map-minimum-date`, {
+        method: 'POST',
+        body: {
+            company_id: selectedAssociatedCompanyId.value,
+            employee_id: employeeOptions.selected,
+            leave_type_id: assignedLeaveTypeSelectionsOptions.selected,
+            date: uptoDate.value,
+        }
+    }, {
+        onSuccessResponse: async (request, options, response) => {
+            let minimumDate = _get(response, '_data.values.minimum_date', uptoDate.value);
+
+            if(uptoDate.value !== minimumDate){
+                upToDateMessage.show = true;
+                upToDateMessage.message = 'Up to date adjusted to minimum date.';
+
+                uptoDate.value = minimumDate;
+                renderUpToDatePicker();
+            }
+
+            leaveBalanceMapMinimumDateSuccessResponse = true;
+        }
+    }, true);
+
+    if(!leaveBalanceMapMinimumDateSuccessResponse){
+
+        balanceMapPending.value = false;
+
+        coreStore.setServiceError({
+            prompt: false,
+            payload: {
+                message: 'Minimum date not found'
+            }
+        });
+
+        return;
+
+    } else {
+
+        await laraFetch(`/api/leave-balance-map`, {
+            method: 'GET',
+            params: {
+                company_id: selectedAssociatedCompanyId.value,
+                employee_id: employeeOptions.selected,
+                leave_type_id: assignedLeaveTypeSelectionsOptions.selected,
+                up_to_date: uptoDate.value,
+            }
+        }, {
+            onRequestError: () => {
+                balanceMapPending.value = false;
+            },
+            onResponse: () => {
+                balanceMapPending.value = false;
+            },
+            onUnprocessableContentResponse: () => {
+                balanceMapPending.value = false;
+            },
+            onSuccessResponse: async (request, options, response) => {
+                balanceMap.value = _get(response, '_data.values.balance_map', []);
+                showBalanceMap.value = true;
+            }
+        }, false);
+
+    }
+}
+
+let datePickers = ref([
+    {
+        id: 'up_to_date',
+        type: 'date',
+        selectedCallback: (payload: {value: string}) => {
+            uptoDate.value = payload.value;
+        }
+    },
+]);
+
+const renderUpToDatePicker = () => {
+    render(datePickers.value);
+}
+
+//Render date time pickers on navigate
+if(clientReadyState.value){
+    onMounted(async () => {
+        await nextTick(() => {
+            renderUpToDatePicker();
+        });
+    });
+}
+
+//Render date time pickers on load
+watch(clientReadyState, async (clientReady) => {
+    if(clientReady){
+        await nextTick(() => {
+            renderUpToDatePicker();
+        });
+    }
+})
+</script>
+
+<style lang="scss" scoped>
+$tableBorder: v-bind(liningColor);
+$cellBorder: v-bind(threadColor);
+
+table{
+    white-space: nowrap;
+    box-sizing: border-box;
+    border-top: 0;
+}
+
+.period-series-table>thead>tr>td,
+.period-series-table>tbody>tr>td {
+    border: 1px solid $cellBorder;
+}
+
+
+.employment-series-header>div:not(:last-child){
+    border-bottom: 1px solid $cellBorder;
+}
+.employment-series-grid>div>div:nth-child(1){
+    border-bottom: 1px solid $cellBorder;
+}
+.employment-series-grid>div:not(:first-child){
+    border-left: 1px solid $cellBorder;
+}
+
+
+.date-series-grid{
+    border-top: 1px solid $cellBorder;
+}
+.date-series-grid>div:not(:first-child){
+    border-left: 1px solid $cellBorder;
+}
+.date-series-grid>div>div:not(:first-child){
+    border-top: 1px solid $cellBorder;
+}
+.date-series-grid>div>div{
+    padding-left: 4px;
+    padding-right: 4px;
+}
+</style>

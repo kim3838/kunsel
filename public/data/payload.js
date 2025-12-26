@@ -2070,5 +2070,1048 @@ export default {
         //         'source': '/images/cod-bg-hero.png'
         //     }
         // },
+    ],
+    'balanceMap': [
+        {
+            "period": 0,
+            "year_month_item_count": 3,
+            "value": [
+                {
+                    "period": 0,
+                    "year": 2025,
+                    "month": 1,
+                    "month_readable": "January",
+                    "value": [
+                        {
+                            "type": {
+                                "value": 200,
+                                "text": "Probationary"
+                            },
+                            "eligible": false,
+                            "value": [
+                                {
+                                    "day": 1,
+                                    "running_balance": 0
+                                },
+                                {
+                                    "day": 31,
+                                    "running_balance": 0
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "period": 0,
+                    "year": 2025,
+                    "month": 2,
+                    "month_readable": "February",
+                    "value": [
+                        {
+                            "type": {
+                                "value": 200,
+                                "text": "Probationary"
+                            },
+                            "eligible": false,
+                            "value": [
+                                {
+                                    "day": 1,
+                                    "running_balance": 0
+                                },
+                                {
+                                    "day": 28,
+                                    "running_balance": 0
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "period": 0,
+                    "year": 2025,
+                    "month": 3,
+                    "month_readable": "March",
+                    "value": [
+                        {
+                            "type": {
+                                "value": 200,
+                                "text": "Probationary"
+                            },
+                            "eligible": false,
+                            "value": [
+                                {
+                                    "day": 1,
+                                    "running_balance": 0
+                                },
+                                {
+                                    "day": 10,
+                                    "running_balance": 0
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "period": 1,
+            "year_month_item_count": 14,
+            "value": [
+                {
+                    "period": 1,
+                    "year": 2025,
+                    "month": 3,
+                    "month_readable": "March",
+                    "value": [
+                        {
+                            "type": {
+                                "value": 201,
+                                "text": "Full time"
+                            },
+                            "eligible": true,
+                            "value": [
+                                {
+                                    "day": 11,
+                                    "running_balance": -15.5
+                                },
+                                {
+                                    "day": 19,
+                                    "running_balance": -15.5
+                                }
+                            ]
+                        },
+                        {
+                            "type": {
+                                "value": 400,
+                                "text": "Contract"
+                            },
+                            "eligible": false,
+                            "value": [
+                                {
+                                    "day": 20,
+                                    "running_balance": -15.5
+                                },
+                                {
+                                    "day": 25,
+                                    "running_balance": -15.5
+                                }
+                            ]
+                        },
+                        {
+                            "type": {
+                                "value": 201,
+                                "text": "Full time"
+                            },
+                            "eligible": true,
+                            "value": [
+                                {
+                                    "day": 26,
+                                    "running_balance": -15.5
+                                },
+                                {
+                                    "day": 31,
+                                    "running_balance": -15.5
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "period": 1,
+                    "year": 2025,
+                    "month": 4,
+                    "month_readable": "April",
+                    "value": [
+                        {
+                            "type": {
+                                "value": 201,
+                                "text": "Full time"
+                            },
+                            "eligible": true,
+                            "value": [
+                                {
+                                    "day": 1,
+                                    "running_balance": -15.5
+                                },
+                                {
+                                    "day": 30,
+                                    "running_balance": -15.5
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "period": 1,
+                    "year": 2025,
+                    "month": 5,
+                    "month_readable": "May",
+                    "value": [
+                        {
+                            "type": {
+                                "value": 201,
+                                "text": "Full time"
+                            },
+                            "eligible": true,
+                            "value": [
+                                {
+                                    "day": 1,
+                                    "running_balance": -15.5
+                                },
+                                {
+                                    "day": 10,
+                                    "running_balance": -15.5
+                                }
+                            ]
+                        },
+                        {
+                            "type": {
+                                "value": 300,
+                                "text": "Part time"
+                            },
+                            "eligible": false,
+                            "value": [
+                                {
+                                    "day": 11,
+                                    "running_balance": -15.5
+                                },
+                                {
+                                    "day": 15,
+                                    "running_balance": -15.5
+                                }
+                            ]
+                        },
+                        {
+                            "type": {
+                                "value": 201,
+                                "text": "Full time"
+                            },
+                            "eligible": true,
+                            "value": [
+                                {
+                                    "day": 16,
+                                    "running_balance": -15.5
+                                },
+                                {
+                                    "day": 31,
+                                    "running_balance": -15.5
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "period": 1,
+                    "year": 2025,
+                    "month": 6,
+                    "month_readable": "June",
+                    "value": [
+                        {
+                            "type": {
+                                "value": 201,
+                                "text": "Full time"
+                            },
+                            "eligible": true,
+                            "value": [
+                                {
+                                    "day": 1,
+                                    "running_balance": -15.5
+                                },
+                                {
+                                    "day": 30,
+                                    "running_balance": -15.5
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "period": 1,
+                    "year": 2025,
+                    "month": 7,
+                    "month_readable": "July",
+                    "value": [
+                        {
+                            "type": {
+                                "value": 201,
+                                "text": "Full time"
+                            },
+                            "eligible": true,
+                            "value": [
+                                {
+                                    "day": 1,
+                                    "running_balance": -15.5
+                                },
+                                {
+                                    "day": 31,
+                                    "running_balance": -15.5
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "period": 1,
+                    "year": 2025,
+                    "month": 8,
+                    "month_readable": "August",
+                    "value": [
+                        {
+                            "type": {
+                                "value": 201,
+                                "text": "Full time"
+                            },
+                            "eligible": true,
+                            "value": [
+                                {
+                                    "day": 1,
+                                    "running_balance": -15.5
+                                },
+                                {
+                                    "day": 31,
+                                    "running_balance": -15.5
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "period": 1,
+                    "year": 2025,
+                    "month": 9,
+                    "month_readable": "September",
+                    "value": [
+                        {
+                            "type": {
+                                "value": 201,
+                                "text": "Full time"
+                            },
+                            "eligible": true,
+                            "value": [
+                                {
+                                    "day": 1,
+                                    "running_balance": -15.5
+                                },
+                                {
+                                    "day": 30,
+                                    "running_balance": -15.5
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "period": 1,
+                    "year": 2025,
+                    "month": 10,
+                    "month_readable": "October",
+                    "value": [
+                        {
+                            "type": {
+                                "value": 201,
+                                "text": "Full time"
+                            },
+                            "eligible": true,
+                            "value": [
+                                {
+                                    "day": 1,
+                                    "running_balance": -15.5
+                                },
+                                {
+                                    "day": 31,
+                                    "running_balance": -15.5
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "period": 1,
+                    "year": 2025,
+                    "month": 11,
+                    "month_readable": "November",
+                    "value": [
+                        {
+                            "type": {
+                                "value": 201,
+                                "text": "Full time"
+                            },
+                            "eligible": true,
+                            "value": [
+                                {
+                                    "day": 1,
+                                    "running_balance": -15.5
+                                },
+                                {
+                                    "day": 30,
+                                    "running_balance": -15.5
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "period": 1,
+                    "year": 2025,
+                    "month": 12,
+                    "month_readable": "December",
+                    "value": [
+                        {
+                            "type": {
+                                "value": 201,
+                                "text": "Full time"
+                            },
+                            "eligible": true,
+                            "value": [
+                                {
+                                    "day": 1,
+                                    "running_balance": -15.5
+                                },
+                                {
+                                    "day": 31,
+                                    "running_balance": -15.5
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "period": 2,
+            "year_month_item_count": 12,
+            "value": [
+                {
+                    "period": 2,
+                    "year": 2026,
+                    "month": 1,
+                    "month_readable": "January",
+                    "value": [
+                        {
+                            "type": {
+                                "value": 201,
+                                "text": "Full time"
+                            },
+                            "eligible": true,
+                            "value": [
+                                {
+                                    "day": 1,
+                                    "running_balance": -13.5
+                                },
+                                {
+                                    "day": 31,
+                                    "running_balance": -13.5
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "period": 2,
+                    "year": 2026,
+                    "month": 2,
+                    "month_readable": "February",
+                    "value": [
+                        {
+                            "type": {
+                                "value": 201,
+                                "text": "Full time"
+                            },
+                            "eligible": true,
+                            "value": [
+                                {
+                                    "day": 1,
+                                    "running_balance": -13.5
+                                },
+                                {
+                                    "day": 28,
+                                    "running_balance": -13.5
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "period": 2,
+                    "year": 2026,
+                    "month": 3,
+                    "month_readable": "March",
+                    "value": [
+                        {
+                            "type": {
+                                "value": 201,
+                                "text": "Full time"
+                            },
+                            "eligible": true,
+                            "value": [
+                                {
+                                    "day": 1,
+                                    "running_balance": -13.5
+                                },
+                                {
+                                    "day": 31,
+                                    "running_balance": -13.5
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "period": 2,
+                    "year": 2026,
+                    "month": 4,
+                    "month_readable": "April",
+                    "value": [
+                        {
+                            "type": {
+                                "value": 201,
+                                "text": "Full time"
+                            },
+                            "eligible": true,
+                            "value": [
+                                {
+                                    "day": 1,
+                                    "running_balance": -13.5
+                                },
+                                {
+                                    "day": 30,
+                                    "running_balance": -13.5
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "period": 2,
+                    "year": 2026,
+                    "month": 5,
+                    "month_readable": "May",
+                    "value": [
+                        {
+                            "type": {
+                                "value": 201,
+                                "text": "Full time"
+                            },
+                            "eligible": true,
+                            "value": [
+                                {
+                                    "day": 1,
+                                    "running_balance": -13.5
+                                },
+                                {
+                                    "day": 20,
+                                    "running_balance": -13.5
+                                },
+                                {
+                                    "day": 21,
+                                    "running_balance": -9.5
+                                },
+                                {
+                                    "day": 31,
+                                    "running_balance": -9.5
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "period": 2,
+                    "year": 2026,
+                    "month": 6,
+                    "month_readable": "June",
+                    "value": [
+                        {
+                            "type": {
+                                "value": 201,
+                                "text": "Full time"
+                            },
+                            "eligible": true,
+                            "value": [
+                                {
+                                    "day": 1,
+                                    "running_balance": -9.5
+                                },
+                                {
+                                    "day": 30,
+                                    "running_balance": -9.5
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "period": 2,
+                    "year": 2026,
+                    "month": 7,
+                    "month_readable": "July",
+                    "value": [
+                        {
+                            "type": {
+                                "value": 201,
+                                "text": "Full time"
+                            },
+                            "eligible": true,
+                            "value": [
+                                {
+                                    "day": 1,
+                                    "running_balance": -9.5
+                                },
+                                {
+                                    "day": 31,
+                                    "running_balance": -9.5
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "period": 2,
+                    "year": 2026,
+                    "month": 8,
+                    "month_readable": "August",
+                    "value": [
+                        {
+                            "type": {
+                                "value": 201,
+                                "text": "Full time"
+                            },
+                            "eligible": true,
+                            "value": [
+                                {
+                                    "day": 1,
+                                    "running_balance": -9.5
+                                },
+                                {
+                                    "day": 31,
+                                    "running_balance": -9.5
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "period": 2,
+                    "year": 2026,
+                    "month": 9,
+                    "month_readable": "September",
+                    "value": [
+                        {
+                            "type": {
+                                "value": 201,
+                                "text": "Full time"
+                            },
+                            "eligible": true,
+                            "value": [
+                                {
+                                    "day": 1,
+                                    "running_balance": -9.5
+                                },
+                                {
+                                    "day": 30,
+                                    "running_balance": -9.5
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "period": 2,
+                    "year": 2026,
+                    "month": 10,
+                    "month_readable": "October",
+                    "value": [
+                        {
+                            "type": {
+                                "value": 201,
+                                "text": "Full time"
+                            },
+                            "eligible": true,
+                            "value": [
+                                {
+                                    "day": 1,
+                                    "running_balance": -9.5
+                                },
+                                {
+                                    "day": 31,
+                                    "running_balance": -9.5
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "period": 2,
+                    "year": 2026,
+                    "month": 11,
+                    "month_readable": "November",
+                    "value": [
+                        {
+                            "type": {
+                                "value": 201,
+                                "text": "Full time"
+                            },
+                            "eligible": true,
+                            "value": [
+                                {
+                                    "day": 1,
+                                    "running_balance": -9.5
+                                },
+                                {
+                                    "day": 30,
+                                    "running_balance": -9.5
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "period": 2,
+                    "year": 2026,
+                    "month": 12,
+                    "month_readable": "December",
+                    "value": [
+                        {
+                            "type": {
+                                "value": 201,
+                                "text": "Full time"
+                            },
+                            "eligible": true,
+                            "value": [
+                                {
+                                    "day": 1,
+                                    "running_balance": -9.5
+                                },
+                                {
+                                    "day": 31,
+                                    "running_balance": -9.5
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "period": 3,
+            "year_month_item_count": 12,
+            "value": [
+                {
+                    "period": 3,
+                    "year": 2027,
+                    "month": 1,
+                    "month_readable": "January",
+                    "value": [
+                        {
+                            "type": {
+                                "value": 201,
+                                "text": "Full time"
+                            },
+                            "eligible": true,
+                            "value": [
+                                {
+                                    "day": 1,
+                                    "running_balance": -4
+                                },
+                                {
+                                    "day": 31,
+                                    "running_balance": -4
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "period": 3,
+                    "year": 2027,
+                    "month": 2,
+                    "month_readable": "February",
+                    "value": [
+                        {
+                            "type": {
+                                "value": 201,
+                                "text": "Full time"
+                            },
+                            "eligible": true,
+                            "value": [
+                                {
+                                    "day": 1,
+                                    "running_balance": -4
+                                },
+                                {
+                                    "day": 28,
+                                    "running_balance": -4
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "period": 3,
+                    "year": 2027,
+                    "month": 3,
+                    "month_readable": "March",
+                    "value": [
+                        {
+                            "type": {
+                                "value": 201,
+                                "text": "Full time"
+                            },
+                            "eligible": true,
+                            "value": [
+                                {
+                                    "day": 1,
+                                    "running_balance": -4
+                                },
+                                {
+                                    "day": 31,
+                                    "running_balance": -4
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "period": 3,
+                    "year": 2027,
+                    "month": 4,
+                    "month_readable": "April",
+                    "value": [
+                        {
+                            "type": {
+                                "value": 201,
+                                "text": "Full time"
+                            },
+                            "eligible": true,
+                            "value": [
+                                {
+                                    "day": 1,
+                                    "running_balance": -4
+                                },
+                                {
+                                    "day": 30,
+                                    "running_balance": -4
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "period": 3,
+                    "year": 2027,
+                    "month": 5,
+                    "month_readable": "May",
+                    "value": [
+                        {
+                            "type": {
+                                "value": 201,
+                                "text": "Full time"
+                            },
+                            "eligible": true,
+                            "value": [
+                                {
+                                    "day": 1,
+                                    "running_balance": -4
+                                },
+                                {
+                                    "day": 20,
+                                    "running_balance": -4
+                                },
+                                {
+                                    "day": 21,
+                                    "running_balance": 6
+                                },
+                                {
+                                    "day": 31,
+                                    "running_balance": 6
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "period": 3,
+                    "year": 2027,
+                    "month": 6,
+                    "month_readable": "June",
+                    "value": [
+                        {
+                            "type": {
+                                "value": 201,
+                                "text": "Full time"
+                            },
+                            "eligible": true,
+                            "value": [
+                                {
+                                    "day": 1,
+                                    "running_balance": 6
+                                },
+                                {
+                                    "day": 30,
+                                    "running_balance": 6
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "period": 3,
+                    "year": 2027,
+                    "month": 7,
+                    "month_readable": "July",
+                    "value": [
+                        {
+                            "type": {
+                                "value": 201,
+                                "text": "Full time"
+                            },
+                            "eligible": true,
+                            "value": [
+                                {
+                                    "day": 1,
+                                    "running_balance": 6
+                                },
+                                {
+                                    "day": 31,
+                                    "running_balance": 6
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "period": 3,
+                    "year": 2027,
+                    "month": 8,
+                    "month_readable": "August",
+                    "value": [
+                        {
+                            "type": {
+                                "value": 201,
+                                "text": "Full time"
+                            },
+                            "eligible": true,
+                            "value": [
+                                {
+                                    "day": 1,
+                                    "running_balance": 6
+                                },
+                                {
+                                    "day": 31,
+                                    "running_balance": 6
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "period": 3,
+                    "year": 2027,
+                    "month": 9,
+                    "month_readable": "September",
+                    "value": [
+                        {
+                            "type": {
+                                "value": 201,
+                                "text": "Full time"
+                            },
+                            "eligible": true,
+                            "value": [
+                                {
+                                    "day": 1,
+                                    "running_balance": 6
+                                },
+                                {
+                                    "day": 20,
+                                    "running_balance": 6
+                                },
+                                {
+                                    "day": 21,
+                                    "running_balance": 7
+                                },
+                                {
+                                    "day": 30,
+                                    "running_balance": 7
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "period": 3,
+                    "year": 2027,
+                    "month": 10,
+                    "month_readable": "October",
+                    "value": [
+                        {
+                            "type": {
+                                "value": 201,
+                                "text": "Full time"
+                            },
+                            "eligible": true,
+                            "value": [
+                                {
+                                    "day": 1,
+                                    "running_balance": 7
+                                },
+                                {
+                                    "day": 31,
+                                    "running_balance": 7
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "period": 3,
+                    "year": 2027,
+                    "month": 11,
+                    "month_readable": "November",
+                    "value": [
+                        {
+                            "type": {
+                                "value": 201,
+                                "text": "Full time"
+                            },
+                            "eligible": true,
+                            "value": [
+                                {
+                                    "day": 1,
+                                    "running_balance": 7
+                                },
+                                {
+                                    "day": 30,
+                                    "running_balance": 7
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "period": 3,
+                    "year": 2027,
+                    "month": 12,
+                    "month_readable": "December",
+                    "value": [
+                        {
+                            "type": {
+                                "value": 201,
+                                "text": "Full time"
+                            },
+                            "eligible": true,
+                            "value": [
+                                {
+                                    "day": 1,
+                                    "running_balance": 7
+                                },
+                                {
+                                    "day": 5,
+                                    "running_balance": 7
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
     ]
 };

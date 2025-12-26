@@ -417,6 +417,20 @@ export const useLayout = () => {
                         },
                     ]
                 }, {
+                    key: 'reports',
+                    type: 'sub-nav',
+                    title: 'Reports',
+                    path_active: '/reports',
+                    options: [
+                        {
+                            key: 'reports/leave-balance-map',
+                            type: 'link',
+                            title: 'Leave Balance Map',
+                            to: '/reports/leave-balance-map',
+                            route_active: 'reports-leave-balance-map'
+                        },
+                    ],
+                }, {
                     key: 'import',
                     type: 'sub-nav',
                     title: 'Import',
