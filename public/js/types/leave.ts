@@ -37,3 +37,27 @@ export type LeaveTypeBalancePerPeriodT = {
     to_period: number | null,
     balance: number,
 }
+
+export type LeaveBalanceDateSeriesT = {
+    day: number,
+    running_balance: number,
+}
+
+export type LeaveBalanceEmploymentSeriesT = {
+    type: EnumOption,
+    eligible: boolean,
+    value: LeaveBalanceDateSeriesT[]
+}
+
+export type LeaveBalanceMapYearMonthSeriesT = {
+    period: number,
+    year: number,
+    month: number,
+    month_readable: string,
+    value: LeaveBalanceEmploymentSeriesT[],
+}
+
+export type LeaveBalanceMapPeriodSeriesT = {
+    period: number,
+    value: LeaveBalanceMapYearMonthSeriesT[],
+}

@@ -124,6 +124,7 @@
 <script setup lang="ts">
 import {storeToRefs} from "pinia";
 import type {SelectDataType} from "@/public/js/types/form";
+import type {LeaveBalanceMapPeriodSeriesT} from "@/public/js/types/leave";
 
 useHead({titleTemplate: (titleChunk) => {return `${titleChunk} - Leave Balance Map`}});
 definePageMeta({middleware: ['auth', 'admin-of-selected-company']});
@@ -251,7 +252,7 @@ const disableActions = computed(() => {
     return balanceMapPending.value || companyAssociationPendingState().value;
 });
 
-const balanceMap = ref([]);
+const balanceMap = ref<LeaveBalanceMapPeriodSeriesT[]>([]);
 
 const balanceMapExecute = async () => {
 

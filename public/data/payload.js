@@ -2074,7 +2074,6 @@ export default {
     'balanceMap': [
         {
             "period": 0,
-            "year_month_item_count": 3,
             "value": [
                 {
                     "period": 0,
@@ -2155,7 +2154,6 @@ export default {
         },
         {
             "period": 1,
-            "year_month_item_count": 14,
             "value": [
                 {
                     "period": 1,
@@ -2479,7 +2477,6 @@ export default {
         },
         {
             "period": 2,
-            "year_month_item_count": 12,
             "value": [
                 {
                     "period": 2,
@@ -2793,7 +2790,6 @@ export default {
         },
         {
             "period": 3,
-            "year_month_item_count": 12,
             "value": [
                 {
                     "period": 3,
