@@ -707,6 +707,10 @@ watch(clientReadyState, async (clientReady) => {
         });
     }
 })
+
+defineExpose({
+    pending
+});
 </script>
 <style scoped>
 .background {

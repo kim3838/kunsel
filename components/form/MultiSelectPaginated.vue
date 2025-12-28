@@ -822,6 +822,7 @@ watch(clientReadyState, async (clientReady) => {
 })
 
 defineExpose({
+    pending,
     clearSelected
 });
 </script>
