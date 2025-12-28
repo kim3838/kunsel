@@ -268,7 +268,6 @@ export const useLayout = () => {
                             title: 'Employees',
                             to: '/workforce/employees',
                             route_active: 'workforce-employees',
-                            path_active: '/workforce/employees',
                         },
                         {
                             key: 'workforce/employee-groups',
@@ -304,7 +303,6 @@ export const useLayout = () => {
                             title: 'Attendance',
                             to: '/workforce/attendance',
                             route_active: 'workforce-attendance',
-                            path_active: '/workforce/attendance',
                         },
                         {
                             key: 'workforce/overtime',
@@ -312,7 +310,6 @@ export const useLayout = () => {
                             title: 'Overtime',
                             to: '/workforce/overtime',
                             route_active: 'workforce-overtime',
-                            path_active: '/workforce/overtime',
                         },
                         {
                             key: 'workforce/leave',
@@ -320,7 +317,6 @@ export const useLayout = () => {
                             title: 'Leave',
                             to: '/workforce/leave',
                             route_active: 'workforce-leave',
-                            path_active: '/workforce/leave',
                         },
                     ]
                 },{
@@ -335,7 +331,6 @@ export const useLayout = () => {
                             title: 'Shifts',
                             to: '/policies/shifts',
                             route_active: 'policies-shifts',
-                            path_active: '/policies/shifts',
                         },
                         {
                             key: 'policies/shift-assignment',
@@ -350,7 +345,6 @@ export const useLayout = () => {
                             title: 'Leave Types',
                             to: '/policies/leave-types',
                             route_active: 'policies-leave-types',
-                            path_active: '/policies/leave-types',
                         },
                         {
                             key: 'policies/leave-type-assignment',
