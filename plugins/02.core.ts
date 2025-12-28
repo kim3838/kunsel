@@ -132,4 +132,28 @@ export default defineNuxtPlugin(nuxtApp => {
             ? text.slice(0, length) + '…'
             : text;
     });
+
+    nuxtApp.provide('waitUntil', function (condition: () => boolean, interval: number = 100, timeout: number = 5000, debug: boolean = false): Promise<void> {
+
+        return new Promise<void>((resolve, reject) => {
+            const start: number = Date.now();
+
+            let iteration = 1;
+
+            const timer: ReturnType<typeof setInterval> = setInterval(() => {
+
+                if(debug){
+                    console.log('Iteration: ' + iteration++ + ' | Condition: ' + condition() + ' | Time elapsed: ' + (Date.now() - start) + 'ms');
+                }
+
+                if (condition()) {
+                    clearInterval(timer);
+                    resolve();
+                } else if (Date.now() - start > timeout) {
+                    clearInterval(timer);
+                    reject(new Error('Timeout waiting for condition'));
+                }
+            }, interval);
+        });
+    });
 });
