@@ -58,3 +58,13 @@ export const LEAVE_CARRY_OVER_TYPE_NAME: StringEnumInterface = {
     [LEAVE_CARRY_OVER_TYPE.LIMIT as number]: 'Limit',
     [LEAVE_CARRY_OVER_TYPE.PERCENTAGE as number]: 'Percentage',
 };
+
+export const  LEAVE_BALANCE_ADJUSTMENT_TYPE: NumericEnumInterface = {
+    ADD : 100,
+    DEDUCT : 200,
+}
+
+export const LEAVE_BALANCE_ADJUSTMENT_TYPE_NAME: StringEnumInterface = {
+    [LEAVE_BALANCE_ADJUSTMENT_TYPE.ADD as number]: 'Add',
+    [LEAVE_BALANCE_ADJUSTMENT_TYPE.DEDUCT as number]: 'Deduct',
+};
