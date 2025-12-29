@@ -9,7 +9,7 @@
                         class="scaffold-border px-2"
                         :selections="shiftAssignmentTabs"
                         :size="'md'"
-                        :orientation="shiftSelectionsRadioGroupOrientation"
+                        :orientation="shiftAssignmentTabRadioGroupOrientation"
                         :radio-key="`shift_assignment_tab`"
                         v-model="shiftAssignmentTab" />
                 </div>
@@ -241,7 +241,7 @@ const shiftAssignmentTabs = reactive([
 watch(shiftAssignmentTab, (value) => {
     resetShiftAssignment();
 })
-const shiftSelectionsRadioGroupOrientation = computed(() => {
+const shiftAssignmentTabRadioGroupOrientation = computed(() => {
     return screenWidth.value >= screenWidthBreakpoint['md'] ? 'horizontal' : 'vertical';
 })
 
