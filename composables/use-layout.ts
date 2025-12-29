@@ -318,6 +318,13 @@ export const useLayout = () => {
                             to: '/workforce/leave',
                             route_active: 'workforce-leave',
                         },
+                        {
+                            key: 'workforce/leave-balance-adjustment',
+                            type: 'link',
+                            title: 'Leave Balance Adjustment',
+                            to: '/workforce/leave-balance-adjustment',
+                            route_active: 'workforce-leave-balance-adjustment',
+                        },
                     ]
                 },{
                     key: 'policies',

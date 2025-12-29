@@ -1,5 +1,10 @@
 
+export interface SingleSelectPaginatedInstance {
+    pending: boolean;
+}
+
 export interface MultiSelectPaginatedInstance {
+    pending: boolean;
     clearSelected: () => void;
 }
 
