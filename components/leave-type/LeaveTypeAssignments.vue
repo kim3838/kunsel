@@ -114,7 +114,7 @@
             </template>
             <template v-slot:cell.employee_current_employment_profile="{cell,slot}">
                 <div class="flex space-x-1 px-[0.3rem] items-center">
-                    <Label :size="slot.labelSize" :type="cell._payload.label_shade.value" shade :label="cell.employee_current_employment_profile?.status?.text" />
+                    <Label :size="slot.labelSize" :type="cell?._payload?.label_shade?.value as LabelTypeT" shade :label="cell.employee_current_employment_profile?.status?.text" />
                 </div>
             </template>
             <template v-slot:cell.employee_current_employment_type="{cell,slot}">
@@ -147,6 +147,7 @@
 <script setup lang="ts">
 import type {DataTableMeta, TableHeaderT, TableRowT, TableSupHeaderT} from "@/public/js/types/data";
 import type {EnumOption, EnumSelection, StringEnumInterface} from "@/public/js/common/type";
+import type {LabelTypeT} from "@/public/js/types/theme";
 import {storeToRefs} from "pinia";
 
 const {isAuthenticated} = useAuth();
@@ -394,7 +395,7 @@ const leaveTypeAssignmentsExecute = async() =>{
             leaveTypeAssignmentsPending.value = false;
         },
         onSuccessResponse: async (request, options, response) => {
-            leaveTypeAssignments.data = _get(response, '_data.values.data', []).map(leaveTypeAssignment => {
+            leaveTypeAssignments.data = _get(response, '_data.values.data', []).map((leaveTypeAssignment: TableRowT) => {
 
                 let shade = _get(leaveTypeAssignment, 'employee_current_employment_profile.is_active', false)
                     ? 'success'

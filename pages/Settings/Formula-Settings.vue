@@ -36,7 +36,7 @@
                         </template>
                         <template v-slot:cell.formulable_component_type="{cell,slot}">
                             <div class="flex space-x-1 px-[0.3rem] items-center">
-                                <Label :size="slot.labelSize" :type="cell._payload.label_shade.value" shade :label="_get(cell, 'formulable_component_type.text', 'Not Specified')" />
+                                <Label :size="slot.labelSize" :type="cell?._payload?.label_shade?.value as LabelTypeT" shade :label="_get(cell, 'formulable_component_type.text', 'Not Specified')" />
                             </div>
                         </template>
                         <template v-slot:cell.formula_is_aggregation="{cell, slot, scrollReference}">
@@ -80,7 +80,7 @@
                         </template>
                         <template v-slot:cell.formulable_component_type="{cell,slot}">
                             <div class="flex space-x-1 px-[0.3rem] items-center">
-                                <Label :size="slot.labelSize" :type="cell._payload.label_shade.value" shade :label="_get(cell, 'formulable_component_type.text', 'Not Specified')" />
+                                <Label :size="slot.labelSize" :type="cell?._payload?.label_shade?.value as LabelTypeT" shade :label="_get(cell, 'formulable_component_type.text', 'Not Specified')" />
                             </div>
                         </template>
                         <template v-slot:cell.formula_is_aggregation="{cell, slot, scrollReference}">
@@ -122,7 +122,7 @@
                         </template>
                         <template v-slot:cell.formulable_component_type="{cell,slot}">
                             <div class="flex space-x-1 px-[0.3rem] items-center">
-                                <Label :size="slot.labelSize" :type="cell._payload.label_shade.value" shade :label="_get(cell, 'formulable_component_type.text', 'Not Specified')" />
+                                <Label :size="slot.labelSize" :type="cell?._payload?.label_shade?.value as LabelTypeT" shade :label="_get(cell, 'formulable_component_type.text', 'Not Specified')" />
                             </div>
                         </template>
                         <template v-slot:cell.formula_is_aggregation="{cell, slot, scrollReference}">
@@ -148,6 +148,7 @@ import {storeToRefs} from "pinia";
 import type {TableHeaderT} from "@/public/js/types/data";
 import type {CompanyFormulaSetting} from "@/public/js/types/formula";
 import type {StringEnumInterface} from "@/public/js/common/type";
+import type {LabelTypeT} from "@/public/js/types/theme";
 
 useHead({titleTemplate: (titleChunk) => {return `${titleChunk} - Formula Settings`}});
 definePageMeta({middleware: ['auth', 'admin-of-selected-company']});

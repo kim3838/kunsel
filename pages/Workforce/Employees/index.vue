@@ -231,7 +231,7 @@
                         </template>
                         <template v-slot:cell.current_employment_profile="{cell,slot}">
                             <div class="flex space-x-1 px-[0.3rem] items-center">
-                                <Label :size="slot.labelSize" :type="cell._payload.label_shade.value" shade :label="cell.current_employment_profile.status.text" />
+                                <Label :size="slot.labelSize" :type="cell?._payload?.label_shade?.value as LabelTypeT" shade :label="cell.current_employment_profile.status.text" />
                             </div>
                         </template>
                         <template v-slot:cell.current_employment_type="{cell,slot}">
@@ -298,6 +298,7 @@
 <script setup lang="ts">
 import type {DataTableMeta, TableSupHeaderT, TableHeaderT, TableRowT} from "@/public/js/types/data";
 import type {EnumOption, EnumSelection, StringEnumInterface} from "@/public/js/common/type";
+import type {LabelTypeT} from "@/public/js/types/theme";
 import {storeToRefs} from "pinia";
 
 useHead({titleTemplate: (titleChunk) => {return `${titleChunk} - Employees`}});
@@ -539,7 +540,7 @@ const employeesExecute = async() =>{
             employeesPending.value = false;
         },
         onSuccessResponse: async (request, options, response) => {
-            employees.data = _get(response, '_data.values.data', []).map(employee => {
+            employees.data = _get(response, '_data.values.data', []).map((employee: TableRowT) => {
 
                 let shade = _get(employee, 'current_employment_profile.is_active', false)
                     ? 'success'

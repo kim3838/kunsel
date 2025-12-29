@@ -119,7 +119,7 @@
                         </template>
                         <template v-slot:cell.formulable_type="{cell,slot}">
                             <div class="flex space-x-1 px-[0.3rem] items-center">
-                                <Label :size="slot.labelSize" :type="cell._payload.label_shade.value" shade :label="cell.formulable_type.text" />
+                                <Label :size="slot.labelSize" :type="cell?._payload?.label_shade?.value as LabelTypeT" shade :label="cell.formulable_type.text" />
                             </div>
                         </template>
                         <template v-slot:cell.aggregation="{cell, slot, scrollReference}">
@@ -139,6 +139,7 @@
 
 <script setup lang="ts">
 import type {Sequenceable, TableHeaderT, TableRowT} from "@/public/js/types/data";
+import type {LabelTypeT} from "@/public/js/types/theme";
 
 useHead({titleTemplate: (titleChunk) => {return `${titleChunk} - Company Salary Statement Modules`}});
 useLayout().setNavigationMode('solid');
@@ -146,7 +147,7 @@ const route = useRoute();
 const nuxtApp = useNuxtApp();
 const orderSequenceable = nuxtApp.$orderSequenceable as (data: Sequenceable[]) => void;
 
-const company = ref(null);
+const company = ref<{id: number}>(null);
 const companyId = computed(() => _get(company.value, 'id', null));
 const companyCode = ref('');
 const companyName = ref('');
@@ -193,7 +194,7 @@ const salaryStatementModulesHeaders = reactive<TableHeaderT[]>([
     { text: 'Conditions', value: 'conditions'},
 ]);
 const salaryStatementModulesPending = ref(false)
-const salaryStatementModulesData = ref([]);
+const salaryStatementModulesData = ref<TableRowT[]>([]);
 const selectedSalaryStatementModules = ref([]);
 
 const salaryStatementModulesExecute = async() =>{
@@ -208,7 +209,7 @@ const salaryStatementModulesExecute = async() =>{
         method: 'GET',
         params: {
             filters: {
-                'company_id': company.value.id,
+                'company_id': company.value?.id,
             }
         }
     }, {
@@ -221,7 +222,7 @@ const salaryStatementModulesExecute = async() =>{
         onSuccessResponse: async (request, options, response) => {
             let salaryStatementModules = _get(response, '_data.values.salary_statement_modules', []);
 
-            salaryStatementModulesData.value = salaryStatementModules.map(module => {
+            salaryStatementModulesData.value = salaryStatementModules.map((module: TableRowT) => {
 
                 let formulableType = _get(module, 'formulable_type.value', null);
 
