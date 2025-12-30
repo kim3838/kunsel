@@ -459,6 +459,7 @@ let paramsComputed = computed(() => {
     return {
         page: filters.page,
         perPage: filters.perPage,
+        company_id: selectedAssociatedCompanyId.value,
         filters: {
             ...props.filters,
             ...(showOnlySelected.value ? filterSelectedComputed.value : {}),
