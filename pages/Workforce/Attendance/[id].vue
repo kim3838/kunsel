@@ -201,7 +201,8 @@ definePageMeta({
 
             if(import.meta.server){return true;}
 
-            const {data, error} = await laraUseFetch(`/api/attendance-check/${to.params.id}`, {method: 'GET',}, {}, false);
+            const {selectedAssociatedCompanyId} = storeToRefs(useAuthStore());
+            const {data, error} = await laraUseFetch(`/api/attendance-gate/${to.params.id}`, {method: 'GET', params: {company_id: selectedAssociatedCompanyId.value}}, {}, false);
 
             if(_isEmpty(data.value) && !_isEmpty(error.value)){
                 let responseCode = _get(error.value, 'data.code', null);
@@ -333,6 +334,9 @@ const fetchAttendance = async () => {
 
     await laraFetch(`/api/attendance/${route.params.id}`, {
         method: 'GET',
+        params: {
+            company_id: selectedAssociatedCompanyId.value
+        }
     }, {
         onSuccessResponse: async (request, options, response) => {
             attendance.value = _get(response, '_data.values.attendance', {}) as AttendanceT;
