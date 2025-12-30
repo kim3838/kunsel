@@ -649,17 +649,25 @@ const closePayrollComponentsModal = () => {
     };
     employeePayrollComponentsPending.value = false;
 };
-const showPayrollComponentsModal = (cell: TableRowT)=> {
+const showPayrollComponentsModal = async(cell: TableRowT)=> {
 
-    employeePayrollComponentsPending.value = true;
+    await laraFetch(`/api/employee-payroll-components-gate`, {
+        method: 'GET',
+        params: {company_id: selectedAssociatedCompanyId.value}
+    }, {
+        onSuccessResponse: async (request, options, response) => {
 
-    stagedEmployee.value = {
-        'id': _get(cell, 'id', null),
-        'ulid': _get(cell, 'ulid', null),
-    };
+            employeePayrollComponentsPending.value = true;
 
-    payrollComponentsModalTitle.value = `${cell.number} ${cell.full_name}`;
-    payrollComponentsModal.value = true;
+            stagedEmployee.value = {
+                'id': _get(cell, 'id', null),
+                'ulid': _get(cell, 'ulid', null),
+            };
+
+            payrollComponentsModalTitle.value = `${cell.number} ${cell.full_name}`;
+            payrollComponentsModal.value = true;
+        }
+    }, true);
 };
 
 /**
