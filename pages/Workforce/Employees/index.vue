@@ -700,17 +700,25 @@ const closeEmploymentProfilesModal = () => {
     };
     employmentProfilesPending.value = false;
 };
-const showEmploymentProfilesModal = (cell: TableRowT)=> {
+const showEmploymentProfilesModal = async (cell: TableRowT)=> {
 
-    employmentProfilesPending.value = true;
+    await laraFetch(`/api/employment-profiles-gate`, {
+        method: 'GET',
+        params: {company_id: selectedAssociatedCompanyId.value}
+    }, {
+        onSuccessResponse: async (request, options, response) => {
 
-    stagedEmployee.value = {
-        'id': _get(cell, 'id', null),
-        'ulid': _get(cell, 'ulid', null),
-    };
+            employmentProfilesPending.value = true;
 
-    employmentProfilesModalTitle.value = `${cell.number} ${cell.full_name}`;
-    employmentProfilesModal.value = true;
+            stagedEmployee.value = {
+                'id': _get(cell, 'id', null),
+                'ulid': _get(cell, 'ulid', null),
+            };
+
+            employmentProfilesModalTitle.value = `${cell.number} ${cell.full_name}`;
+            employmentProfilesModal.value = true;
+        }
+    }, true);
 };
 </script>
 

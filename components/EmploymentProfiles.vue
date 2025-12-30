@@ -104,6 +104,11 @@
 import {storeToRefs} from "pinia";
 import type {TableHeaderT} from "@/public/js/types/data";
 
+const nuxtApp = useNuxtApp();
+const {
+    selectedAssociatedCompanyId
+} = storeToRefs(nuxtApp.$authStore);
+
 const props = defineProps({
     creatingOrEditing: {
         type: Boolean,
@@ -209,7 +214,10 @@ const employmentProfileExecute = async () => {
     employmentProfilesPending.value = true;
 
     await laraFetch(`/api/employee-employment-profiles/${employeeId.value}`, {
-        method: 'GET'
+        method: 'GET',
+        params: {
+            company_id: selectedAssociatedCompanyId.value,
+        }
     },{
         onRequestError: () => {
             employmentProfilesPending.value = false;
