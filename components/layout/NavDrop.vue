@@ -62,6 +62,7 @@
 
                     <NavDrop
                         class="w-full"
+                        :data-path-active="dropOption.path_active"
                         v-if="_includes([ 'drop', 'sub-nav'], dropOption.type)"
                         :parent="false"
                         :size="childDropSize"
@@ -71,6 +72,7 @@
                         :title="dropOption.title"
                         :icon="dropOption.icon"
                         :drop-options="dropOption.options"
+                        :proxy-active="isRoutePathActive(dropOption.path_active)"
                         :drop-active-style="dropActiveStyle"
                     />
                 </div>
@@ -84,6 +86,7 @@ import {storeToRefs} from 'pinia';
 const {$themeStore} = useNuxtApp();
 const nuxtApp = useNuxtApp();
 const isRouteActive = nuxtApp.$isRouteActive as (name: string | undefined) => boolean;
+const isRoutePathActive = nuxtApp.$isRoutePathActive as (path: string | undefined) => boolean;
 const {
     navigationMode,
 } = useLayout();
@@ -128,9 +131,17 @@ const props = defineProps({
         type: Boolean,
         default: true
     },
+    activeStyle: {
+        type: String,
+        default: 'bg',
+    },
     dropActiveStyle: {
         type: String,
         default: 'bg',
+    },
+    proxyActive: {
+        type: Boolean,
+        default: false
     },
     alwaysActive: {
         type: Boolean,
@@ -348,9 +359,16 @@ watch(navigationFocused, value => {
 });
 
 const classes = computed(() => {
-    return activeComputed.value
-        ? 'nav-drop-active'
-        : ''
+
+    if(props.proxyActive){
+        return `nav-drop-active-dashed`;
+    }
+
+    if(activeComputed.value){
+        return `nav-drop-active-${props.activeStyle}`;
+    }
+
+    return ``;
 });
 
 const headerFontClass = computed(() => {
@@ -482,8 +500,32 @@ const dropDownIconClass = computed(() => {
 });
 </script>
 <style scoped>
-.nav-drop-active{
+.nav-drop-active-bg{
     background-color: v-bind(accentColor70);
+}
+
+.nav-drop-active-dashed::before{
+    content: '';
+    position: absolute;
+    top:-1px;
+    bottom: 0;
+    left:0;
+    right:0;
+    border-top: 1px dashed v-bind(liningColor);
+}
+
+.nav-drop-active-dashed{
+    position: relative;
+}
+
+.nav-drop-active-dashed::after{
+    content: '';
+    position: absolute;
+    top:0;
+    bottom: -1px;
+    left:0;
+    right:0;
+    border-bottom: 1px dashed v-bind(liningColor);
 }
 
 .nav-drop{
