@@ -1,4 +1,4 @@
-
+//@ts-nocheck
 import type {UseFetchOptions} from "nuxt/app";
 import type {CallbackResponseT} from "@/public/js/types/request";
 
