@@ -13,8 +13,12 @@
                             <MultiSelect :disabled="disableActions" glint drop-shadow :selection-max-viewable-line="5" :size="'md'" :options="userStatusOptions" :icon="'tdesign:component-checkbox'"/>
                         </div>
                         <div>
-                            <InputLabel :size="'sm'" value="Search" />
-                            <Input :disabled="disableActions" :size="'md'" ref="searchInput" v-model="filters.search.keyword" class="w-full" placeholder="Search" type="text"/>
+                            <InputLabel :size="'sm'" value="User Search" />
+                            <Input :disabled="disableActions" :size="'md'" ref="searchInput" v-model="filters.userSearch.keyword" class="w-full" placeholder="Search" type="text"/>
+                        </div>
+                        <div>
+                            <InputLabel :size="'sm'" value="Employee Search" />
+                            <Input :disabled="disableActions" :size="'md'" ref="searchInput" v-model="filters.employeeSearch.keyword" class="w-full" placeholder="Search" type="text"/>
                         </div>
                     </div>
 
@@ -190,17 +194,25 @@ const userStatusOptions = reactive({
 let filters = reactive<{
     page: number,
     perPage: number,
-    search: {
+    userSearch: {
         keyword: string,
         callback: ReturnType<typeof setTimeout> | number
-    }
+    },
+    employeeSearch: {
+        keyword: string,
+        callback: ReturnType<typeof setTimeout> | number
+    },
 }>({
     page: 1,
     perPage: 10,
-    search: {
+    userSearch: {
         keyword: '',
         callback: 1
-    }
+    },
+    employeeSearch: {
+        keyword: '',
+        callback: 1
+    },
 });
 let pageComputed = computed({
     get() {
@@ -221,7 +233,8 @@ let paramsComputed = computed(() => {
 
     let baseFilters = {
         ...(_isEmpty(associatedCompanyOptions.selected) ? {'user_id': user?.value?.id} : null),
-        'search': filters.search.keyword,
+        'user_search': filters.userSearch.keyword,
+        'employee_search': filters.employeeSearch.keyword,
         'associated_companies': associatedCompanies,
         'status': userStatusOptions.selected
     };
@@ -269,7 +282,8 @@ const usersExecute = async () => {
 await usersExecute();
 
 function paginate(page = 1, clearSelection = false){
-    clearTimeout(filters.search.callback);
+    clearTimeout(filters.userSearch.callback);
+    clearTimeout(filters.employeeSearch.callback);
 
     if(clearSelection){
         selectedUsers.value = [];

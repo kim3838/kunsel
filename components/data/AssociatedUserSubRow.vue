@@ -6,7 +6,7 @@
             :headers="associationsHeaders"
             v-model="selectedAssociations"
             :disabled="disabled"
-            :size="'sm'"
+            :size="'md'"
             :rows="rows"
             :stripped="false"
             @selectionChanged="selectionChanged">
