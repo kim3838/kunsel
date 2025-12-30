@@ -424,11 +424,11 @@ export const useLayout = () => {
                     path_active: '/reports',
                     options: [
                         {
-                            key: 'reports/leave-balance-map',
+                            key: 'reports/leave-balance',
                             type: 'link',
-                            title: 'Leave Balance Map',
-                            to: '/reports/leave-balance-map',
-                            route_active: 'reports-leave-balance-map'
+                            title: 'Leave Balance',
+                            to: '/reports/leave-balance',
+                            route_active: 'reports-leave-balance'
                         },
                     ],
                 }, {
