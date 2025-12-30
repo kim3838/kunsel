@@ -84,7 +84,7 @@
                             v-for="(header, headerIndex) in headers" :key="row.id"
                             class="whitespace-pre"
                             :style="cellStyle(row, header)"
-                            :class="[bodyFontClass, cellClass(header), cellAlignClass(header?.alignData), cellJustifyClass(header?.justifyData)]">
+                            :class="[bodyFontClass, cellFontClass(header), cellAlignClass(header?.alignData), cellJustifyClass(header?.justifyData)]">
                             <slot
                                 :name="`cell.${header.value}`"
                                 :scrollReference="dataTableScroll"
@@ -439,10 +439,15 @@ const bodyFontClass = computed(() => {
     }[props.size];
 });
 
-const cellClass = (header: TableHeaderT) => {
-    return {
-        'row_number': 'font-sans'
-    }[header.value];
+const cellFontClass = (header: TableHeaderT) => {
+
+    let fontClass = '';
+
+    if(header.value == 'row_number' || header.isNumeric){
+        fontClass = 'font-sans';
+    }
+
+    return fontClass;
 }
 
 const buttonSize = computed(() => {

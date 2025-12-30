@@ -38,6 +38,7 @@ export interface TableSupRowT {
 export interface TableHeaderT {
     value: string;
     text: string;
+    isNumeric?: boolean;
     minWidth?: string;
     width?: string;
     maxWidth?: string;
