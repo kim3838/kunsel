@@ -259,7 +259,8 @@ definePageMeta({
 
             if(import.meta.server || to.params.id === 'create-shift'){return true;}
 
-            const {data, error} = await laraUseFetch(`/api/shift-check/${to.params.id}`, {method: 'GET',}, {}, false);
+            const {selectedAssociatedCompanyId} = storeToRefs(useAuthStore());
+            const {data, error} = await laraUseFetch(`/api/shift-gate/${to.params.id}`, {method: 'GET', params: {company_id: selectedAssociatedCompanyId.value}}, {}, false);
 
             if(_isEmpty(data.value) && !_isEmpty(error.value)){
                 let responseCode = _get(error.value, 'data.code', null);
@@ -375,6 +376,9 @@ const fetchShift = async () => {
 
     await laraFetch(`/api/shift/${route.params.id}`, {
         method: 'GET',
+        params: {
+            company_id: selectedAssociatedCompanyId.value
+        }
     }, {
         onSuccessResponse: async (request, options, response) => {
             shift.value = _get(response, '_data.values.shift', null);
