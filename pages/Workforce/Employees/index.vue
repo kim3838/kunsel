@@ -302,7 +302,19 @@ import type {LabelTypeT} from "@/public/js/types/theme";
 import {storeToRefs} from "pinia";
 
 useHead({titleTemplate: (titleChunk) => {return `${titleChunk} - Employees`}});
-definePageMeta({middleware: ['auth', 'admin-of-selected-company']});
+definePageMeta({middleware: ['auth', 'admin-of-selected-company',
+    async () => {
+
+        const {selectedAssociatedCompanyId} = storeToRefs(useAuthStore());
+        const {data, error} = await laraUseFetch(`/api/employees-gate`, {method: 'GET', params: {company_id: selectedAssociatedCompanyId.value}}, {}, false);
+
+        if(_isEmpty(data.value) && !_isEmpty(error.value)){
+            let responseCode = _get(error.value, 'data.code', null);
+
+            throw createError({ statusCode: responseCode, statusMessage: useCoreStore().servicePayloadMessage, fatal: true});
+        }
+    }
+]});
 useLayout().setNavigationMode('solid');
 
 const {isAuthenticated} = useAuth();
@@ -501,6 +513,7 @@ let paramsComputed = computed(() => {
     return {
         page: filters.page,
         perPage: filters.perPage,
+        company_id: selectedAssociatedCompanyId.value,
         filters: {
             company_id: selectedAssociatedCompanyId.value,
             search: filters.search.keyword,

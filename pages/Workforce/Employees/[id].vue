@@ -362,7 +362,8 @@ definePageMeta({
 
             if(import.meta.server || to.params.id === 'create-employee'){return true;}
 
-            const {data, error} = await laraUseFetch(`/api/employee-check/${to.params.id}`, {method: 'GET',}, {}, false);
+            const {selectedAssociatedCompanyId} = storeToRefs(useAuthStore());
+            const {data, error} = await laraUseFetch(`/api/employee-gate/${to.params.id}`, {method: 'GET', params: {company_id: selectedAssociatedCompanyId.value}}, {}, false);
 
             if(_isEmpty(data.value) && !_isEmpty(error.value)){
                 let responseCode = _get(error.value, 'data.code', null);
@@ -551,6 +552,9 @@ const fetchEmployee = async () => {
 
     await laraFetch(`/api/employee/${route.params.id}`, {
         method: 'GET',
+        params: {
+            company_id: selectedAssociatedCompanyId.value
+        }
     }, {
         onSuccessResponse: async (request, options, response) => {
             employee.value = _get(response, '_data.values.employee', null);
