@@ -38,7 +38,7 @@
             </div>
         </div>
         <div class="relative z-[41] w-full flex justify-center" :class="mainNavigationFontClass">
-            <div class="max-w-screen-2xl w-full flex justify-start lg:justify-between" :class="mainNavigationHeightClass">
+            <div class="max-w-screen-2xl w-full flex justify-start md:justify-between" :class="mainNavigationHeightClass">
                 <div class="flex">
                     <!-- Navigation Links -->
                     <div class="flex">
@@ -66,13 +66,18 @@
                     </div>
                     <div class="flex">
                         <NavDrop
-                            class="lg:hidden"
+                            v-if="!isMainNavigationLastItemVisible"
                             :size="navigationHeaderSize"
                             :title="'Menu'"
                             :drop-options="navigationLinks" />
                     </div>
-                    <div class="hidden lg:flex">
-                        <span class="flex" v-for="navigation in navigationLinks" :key="navigation.key">
+                    <div class="hidden sm:flex flex-wrap overflow-hidden" ref="mainNavigation">
+                        <div
+                            class="flex"
+                            :class="[mainNavigationHeightClass]"
+                            v-for="(navigation, index) in navigationLinks"
+                            :key="navigation.key">
+
                             <NavLink
                                 v-if="navigation.type == 'link'"
                                 :size="navigationHeaderSize"
@@ -111,11 +116,11 @@
                                 :active="isRoutePathActive(navigation.path_active)"
                                 @update-sub-navigation-options="updateSubNavigationOptions"
                             />
-                        </span>
+                        </div>
                     </div>
                 </div>
                 <div class="flex">
-                    <span class="flex" v-for="navigation in adminNavigationLinks" :key="navigation.key">
+                    <div class="flex" v-for="navigation in adminNavigationLinks" :key="navigation.key">
                         <NavLink
                             v-if="navigation.type == 'link'"
                             :size="navigationHeaderSize"
@@ -154,7 +159,7 @@
                             :active="isRoutePathActive(navigation.path_active)"
                             @update-sub-navigation-options="updateSubNavigationOptions"
                         />
-                    </span>
+                    </div>
                     <SingleSelect
                         v-if="isAuthenticated"
                         drop-shadow
@@ -253,7 +258,7 @@ const wordClamp = nuxtApp.$wordClamp as (text: string, length: number) => string
 
 const {isAuthenticated, user} = useAuth();
 const username = computed(() => {
-    return screenWidth.value < screenWidthBreakpoint['lg'] || screenWidth.value > screenWidthBreakpoint['xl']
+    return screenWidth.value > screenWidthBreakpoint['md']
         ? user.value?.name
         : wordClamp(user.value?.name as string, 6);
 });
@@ -261,6 +266,11 @@ const {width: screenWidth, screenWidthBreakpoint} = useScreen();
 const navDrop = resolveComponent('navDrop');
 const navigationHeightModel = defineModel('navigationHeight');
 const navigation = useTemplateRef('navigation');
+const mainNavigation = useTemplateRef('mainNavigation');
+const mainNavigationLastItem = ref<HTMLElement | null>(null)
+const isMainNavigationLastItemVisible = useElementVisibility(mainNavigationLastItem, {
+    threshold: 0.1
+});
 const subNavigationRef = useTemplateRef('subNavigationRef');
 const { focused: subNavigationFocused } = useFocusWithin (subNavigationRef);
 const { height: navigationReferenceHeight} = useElementSize(navigation);
@@ -296,9 +306,9 @@ const updateSubNavigationOptions = (subNavigationPayload: {
 const subNavigationDropAlignComputed = computed(() => {
 
     let rightDropAligned = subNavigationDropAlign.value == 'right';
-    let screenWidthLteLarge = screenWidth.value >= screenWidthBreakpoint['lg'];
+    let screenWidthLteMedium = screenWidth.value >= screenWidthBreakpoint['md'];
 
-    return rightDropAligned && screenWidthLteLarge ? 'flex-row-reverse' : 'flex-row'
+    return rightDropAligned && screenWidthLteMedium ? 'flex-row-reverse' : 'flex-row'
 });
 
 watch(subNavigationFocused, (focused) => {
@@ -322,6 +332,10 @@ watch(navigationReferenceHeight, (newNavigationHeight) => {
 onMounted(async () => {
     setNavigationHeight(navigationReferenceHeight.value);
     navigationHeightModel.value = navigationHeight.value;
+
+    const mainNavigationReference = mainNavigation.value
+
+    mainNavigationLastItem.value = (!mainNavigationReference) ? null : mainNavigationReference.lastElementChild as HTMLElement
 });
 
 watch(screenWidth, value => {
