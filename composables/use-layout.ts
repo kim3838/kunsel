@@ -618,7 +618,7 @@ export const useLayout = () => {
     const rightNavigationDropAlign = computed(()=>{
         let dropAlign = 'right';
 
-        if (screenWidth.value >= screenWidthBreakpoint['lg']) {
+        if (screenWidth.value >= screenWidthBreakpoint['zero']) {
             dropAlign = 'right';
         } else {
             dropAlign = 'left';

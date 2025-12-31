@@ -1,5 +1,6 @@
 export const useScreen = () => {
     const screenWidthBreakpoint = {
+        'zero': 0,
         'sm': 640,
         'md': 768,
         'lg': 1024,
@@ -8,6 +9,7 @@ export const useScreen = () => {
     };
 
     const screenHeightBreakpoint = {
+        'zero': 0,
         'xs': 560,
         'sm': 620,
         'md': 780,
