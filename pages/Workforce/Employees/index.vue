@@ -147,7 +147,11 @@
                         </NuxtLink>
                     </div>
 
-                    <div v-if="viewMode.selected == DATA_VIEW_MODE.FLEX" class="flex flex-row flex-wrap gap-4">
+                    <div v-if="!employees.successful" class="flex flex-row flex-wrap gap-2 items-center min-h-8">
+                        <Label invert :size="'md'" :type="'danger'" :label="employees.message" />
+                    </div>
+
+                    <div v-if="employees.successful && viewMode.selected == DATA_VIEW_MODE.FLEX" class="flex flex-row flex-wrap gap-4">
 
                         <div v-for="employee in employees.data" :key="employee.id" class="flex-grow scaffold-border p-4 space-y-2">
                             <div>
@@ -200,7 +204,7 @@
                     </div>
 
                     <DataTable
-                        v-if="viewMode.selected == DATA_VIEW_MODE.LIST"
+                        v-if="employees.successful && viewMode.selected == DATA_VIEW_MODE.LIST"
                         :sup-headers="employeesSupHeaders"
                         :headers="employeesHeaders"
                         :size="'lg'"
@@ -296,7 +300,7 @@
 </template>
 
 <script setup lang="ts">
-import type {DataTableMeta, TableSupHeaderT, TableHeaderT, TableRowT} from "@/public/js/types/data";
+import type {TableSupHeaderT, TableHeaderT, TableRowT, DataTableT} from "@/public/js/types/data";
 import type {EnumOption, EnumSelection, StringEnumInterface} from "@/public/js/common/type";
 import type {LabelTypeT} from "@/public/js/types/theme";
 import {storeToRefs} from "pinia";
@@ -450,10 +454,7 @@ const employeesHeaders = reactive<TableHeaderT[]>([
     { text: 'Email Verified', value: 'user_email_verified_at'},
 ]);
 
-const employees = reactive<{
-    data: TableRowT[];
-    meta: DataTableMeta
-}>({
+const employees = reactive<DataTableT>({
     'data': [],
     'meta': {
         pagination: {
@@ -463,7 +464,9 @@ const employees = reactive<{
             current_page: 0,
             total_pages: 0
         }
-    }
+    },
+    'successful': true,
+    'message': ''
 });
 let filters = reactive<{
     page: number,
@@ -549,8 +552,10 @@ const employeesExecute = async() =>{
         onRequestError: () => {
             employeesPending.value = false;
         },
-        onResponse: () => {
+        onResponse: (request, options, response) => {
             employeesPending.value = false;
+            employees.successful = _get(response, '_data.successful', false);
+            employees.message = _get(response, '_data.message', '');
         },
         onSuccessResponse: async (request, options, response) => {
             employees.data = _get(response, '_data.values.data', []).map((employee: TableRowT) => {
@@ -569,7 +574,6 @@ const employeesExecute = async() =>{
                     }
                 };
             });
-
             employees.meta = _get(response, '_data.values.meta', {
                 pagination: {
                     total: 0,

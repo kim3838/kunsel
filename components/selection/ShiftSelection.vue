@@ -36,7 +36,7 @@
             </div>
         </form>
 
-        <div class="flex flex-row flex-wrap gap-2 items-center min-h-8">
+        <div v-if="shifts.successful" class="flex flex-row flex-wrap gap-2 items-center min-h-8">
             <div class="scaffold-border px-2 font-[National_Park]">
                 <span><span class="font-semibold">{{proxySelectedShifts.length}}</span> Selected</span>
             </div>
@@ -51,7 +51,12 @@
             <slot name="selection-actions"></slot>
         </div>
 
+        <div v-if="!shifts.successful" class="flex flex-row flex-wrap gap-2 items-center min-h-8">
+            <Label invert :size="'md'" :type="'danger'" :label="shifts.message" />
+        </div>
+
         <DataTable
+            v-if="shifts.successful"
             :headers="shiftsHeaders"
             :size="'lg'"
             :rows="shifts.data"
@@ -68,7 +73,7 @@
 </template>
 
 <script setup lang="ts">
-import type {DataTableMeta, TableHeaderT, TableRowT, TableSupHeaderT} from "@/public/js/types/data";
+import type {DataTableT, TableHeaderT} from "@/public/js/types/data";
 
 import {storeToRefs} from "pinia";
 
@@ -140,10 +145,7 @@ const shiftsHeaders = reactive<TableHeaderT[]>([
     { text: 'Type', value: 'type'}
 ]);
 
-const shifts = reactive<{
-    data: TableRowT[];
-    meta: DataTableMeta
-}>({
+const shifts = reactive<DataTableT>({
     'data': [],
     'meta': {
         pagination: {
@@ -153,7 +155,9 @@ const shifts = reactive<{
             current_page: 0,
             total_pages: 0
         }
-    }
+    },
+    'successful': true,
+    'message': ''
 });
 let filters = reactive<{
     page: number,
@@ -218,9 +222,11 @@ const shiftsExecute = async() =>{
             shiftsPending.value = false;
             emit("update:pending", false);
         },
-        onResponse: () => {
+        onResponse: (request, options, response) => {
             shiftsPending.value = false;
             emit("update:pending", false);
+            shifts.successful = _get(response, '_data.successful', false);
+            shifts.message = _get(response, '_data.message', '');
         },
         onSuccessResponse: async (request, options, response) => {
             shifts.data = _get(response, '_data.values.data', []);

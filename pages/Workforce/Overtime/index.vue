@@ -218,10 +218,10 @@
                     <div class="mb-2 flex flex-row flex-wrap gap-2 items-center min-h-8">
                         <UnorderedList v-if="disableActions" :icon="'eos-icons:loading'" :size="'md'" :label="'Please wait...'"/>
                         <Button v-if="!disableActions" @click="put(null)" class="w-min" :disabled="disableActions" :size="'sm'" :icon="disableActions ? 'eos-icons:loading' : 'mdi:plus'" :label="disableActions ? 'Please wait' : ''"></Button>
-                        <Button v-if="!disableActions" :variant="'outline'" :size="'sm'" :icon="'mdi:delete-outline'" :disabled="disableActions" :label="'Delete selected'" @click="confirmDeleteSelected()" />
+                        <Button v-if="overtimes.successful && !disableActions" :variant="'outline'" :size="'sm'" :icon="'mdi:delete-outline'" :disabled="disableActions" :label="'Delete selected'" @click="confirmDeleteSelected()" />
                     </div>
 
-                    <div class="mb-2 flex flex-row flex-wrap gap-2 items-center min-h-8">
+                    <div v-if="overtimes.successful" class="mb-2 flex flex-row flex-wrap gap-2 items-center min-h-8">
                         <div class="scaffold-border px-2 font-[National_Park]">
                             <span><span class="font-semibold">{{selectedOvertimes.length}}</span> Selected</span>
                         </div>
@@ -234,7 +234,12 @@
                             @click="selectedOvertimes = []" />
                     </div>
 
+                    <div v-if="!overtimes.successful" class="flex flex-row flex-wrap gap-2 items-center min-h-8">
+                        <Label invert :size="'md'" :type="'danger'" :label="overtimes.message" />
+                    </div>
+
                     <DataTable
+                        v-if="overtimes.successful"
                         :sup-headers="overtimesSupHeaders"
                         :headers="overtimesHeaders"
                         :size="'lg'"
@@ -290,7 +295,7 @@
 </template>
 
 <script setup lang="ts">
-import type {DataTableMeta, TableHeaderT, TableRowT, TableSupHeaderT} from "@/public/js/types/data";
+import type {DataTableT, TableHeaderT, TableRowT, TableSupHeaderT} from "@/public/js/types/data";
 import type {EnumOption, EnumSelection} from "@/public/js/common/type";
 import type {SelectDataType} from "@/public/js/types/form";
 import type {AttendanceT} from "@/public/js/types/attendance";
@@ -298,7 +303,19 @@ import type {DateTimePickerOptionsT} from "@/public/js/datetimepicker/type";
 import {storeToRefs} from "pinia";
 
 useHead({titleTemplate: (titleChunk) => {return `${titleChunk} - Overtime`}});
-definePageMeta({middleware: ['auth', 'admin-of-selected-company']});
+definePageMeta({middleware: ['auth', 'admin-of-selected-company',
+    async () => {
+
+        const {selectedAssociatedCompanyId} = storeToRefs(useAuthStore());
+        const {data, error} = await laraUseFetch(`/api/overtimes-gate`, {method: 'GET', params: {company_id: selectedAssociatedCompanyId.value}}, {}, false);
+
+        if(_isEmpty(data.value) && !_isEmpty(error.value)){
+            let responseCode = _get(error.value, 'data.code', null);
+
+            throw createError({ statusCode: responseCode, statusMessage: useCoreStore().servicePayloadMessage, fatal: true});
+        }
+    }
+]});
 useLayout().setNavigationMode('solid');
 
 const {isAuthenticated} = useAuth();
@@ -384,10 +401,7 @@ const overtimesHeaders = reactive<TableHeaderT[]>([
     { text: 'Duration', value: 'duration_readable', alignData: 'right'},
 ]);
 
-const overtimes = reactive<{
-    data: TableRowT[];
-    meta: DataTableMeta
-}>({
+const overtimes = reactive<DataTableT>({
     'data': [],
     'meta': {
         pagination: {
@@ -397,7 +411,9 @@ const overtimes = reactive<{
             current_page: 0,
             total_pages: 0
         }
-    }
+    },
+    'successful': true,
+    'message': ''
 });
 let filters = reactive<{
     page: number,
@@ -462,6 +478,7 @@ let paramsComputed = computed(() => {
     return {
         page: filters.page,
         perPage: filters.perPage,
+        company_id: selectedAssociatedCompanyId.value,
         filters: {
             company_id: selectedAssociatedCompanyId.value,
             date_from: formStore.filters.attendanceDateFrom,
@@ -498,12 +515,13 @@ const overtimesExecute = async() =>{
         onRequestError: () => {
             overtimesPending.value = false;
         },
-        onResponse: () => {
+        onResponse: (request, options, response) => {
             overtimesPending.value = false;
+            overtimes.successful = _get(response, '_data.successful', false);
+            overtimes.message = _get(response, '_data.message', '');
         },
         onSuccessResponse: async (request, options, response) => {
             overtimes.data = _get(response, '_data.values.data', [])
-
             overtimes.meta = _get(response, '_data.values.meta', {
                 pagination: {
                     total: 0,
@@ -514,7 +532,7 @@ const overtimesExecute = async() =>{
                 }
             });
         }
-    }, true);
+    }, false);
 }
 await overtimesExecute();
 
@@ -665,6 +683,8 @@ const createEditPending = ref(false);
 const editPayload = ref({});
 
 const put = (row: TableRowT | null = null) => {
+
+    coreStore.resetServiceError();
 
     if(row){
         editPayload.value = row;

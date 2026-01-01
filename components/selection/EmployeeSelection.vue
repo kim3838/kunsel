@@ -55,7 +55,11 @@
             </div>
         </form>
 
-        <div class="flex flex-row flex-wrap gap-2 items-center min-h-8">
+        <div v-if="!employees.successful" class="flex flex-row flex-wrap gap-2 items-center min-h-8">
+            <Label invert :size="'md'" :type="'danger'" :label="employees.message" />
+        </div>
+
+        <div v-if="employees.successful" class="flex flex-row flex-wrap gap-2 items-center min-h-8">
             <div class="scaffold-border px-2 font-[National_Park]">
                 <span><span class="font-semibold">{{proxySelectedEmployees.length}}</span> {{selectedLabel}}</span>
             </div>
@@ -79,6 +83,7 @@
         </div>
 
         <DataTable
+            v-if="employees.successful"
             :sup-headers="employeeSupHeaders"
             :headers="employeeHeaders"
             :size="'lg'"
@@ -108,7 +113,7 @@
 </template>
 
 <script setup lang="ts">
-import type {DataTableMeta, TableHeaderT, TableRowT, TableSupHeaderT} from "@/public/js/types/data";
+import type {DataTableT, TableHeaderT, TableRowT, TableSupHeaderT} from "@/public/js/types/data";
 import type {EnumOption, EnumSelection, StringEnumInterface} from "@/public/js/common/type";
 import type {LabelTypeT} from "@/public/js/types/theme";
 import {storeToRefs} from "pinia";
@@ -293,10 +298,7 @@ const employeeHeaders = reactive<TableHeaderT[]>([
     { text: 'Designation', value: 'designation'},
 ]);
 
-const employees = reactive<{
-    data: TableRowT[];
-    meta: DataTableMeta
-}>({
+const employees = reactive<DataTableT>({
     'data': [],
     'meta': {
         pagination: {
@@ -306,7 +308,9 @@ const employees = reactive<{
             current_page: 0,
             total_pages: 0
         }
-    }
+    },
+    'successful': true,
+    'message': ''
 });
 const clearData = () => {
     employees.data = [];
@@ -425,9 +429,11 @@ const employeesExecute = async() =>{
             employeesPending.value = false;
             emit("update:pending", false);
         },
-        onResponse: () => {
+        onResponse: (request, options, response) => {
             employeesPending.value = false;
             emit("update:pending", false);
+            employees.successful = _get(response, '_data.successful', false);
+            employees.message = _get(response, '_data.message', '');
         },
         onSuccessResponse: async (request, options, response) => {
             employees.data = _get(response, '_data.values.data', []).map((employee: TableRowT) => {

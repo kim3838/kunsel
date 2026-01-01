@@ -138,17 +138,22 @@
                     <div class="mb-2 flex flex-row flex-wrap gap-2 items-center min-h-8">
                         <UnorderedList v-if="disableActions" :icon="'eos-icons:loading'" :size="'md'" :label="'Please wait...'"/>
                         <Button v-if="!disableActions" @click="put(null)" class="w-min" :disabled="disableActions" :size="'sm'" :icon="disableActions ? 'eos-icons:loading' : 'mdi:plus'" :label="disableActions ? 'Please wait' : ''"></Button>
-                        <Button v-if="!disableActions" :variant="'outline'" :size="'sm'" :icon="'mdi:delete-outline'" :disabled="disableActions" :label="'Delete selected'" @click="confirmDeleteSelected()" />
+                        <Button v-if="holidays.successful && !disableActions" :variant="'outline'" :size="'sm'" :icon="'mdi:delete-outline'" :disabled="disableActions" :label="'Delete selected'" @click="confirmDeleteSelected()" />
                     </div>
 
-                    <div class="mb-2 flex flex-row flex-wrap gap-2 items-center min-h-8">
+                    <div v-if="holidays.successful" class="mb-2 flex flex-row flex-wrap gap-2 items-center min-h-8">
                         <div class="scaffold-border px-2 font-[National_Park]">
                             <span><span class="font-semibold">{{selectedHolidays.length}}</span> Selected</span>
                         </div>
                         <Button :variant="'outline'" :size="'sm'" :icon="'tdesign:close'" :disabled="disableActions" :label="'Clear selection'" @click="selectedHolidays = []" />
                     </div>
 
+                    <div v-if="!holidays.successful" class="flex flex-row flex-wrap gap-2 items-center min-h-8">
+                        <Label invert :size="'md'" :type="'danger'" :label="holidays.message" />
+                    </div>
+
                     <DataTable
+                        v-if="holidays.successful"
                         :headers="holidaysHeaders"
                         :size="'lg'"
                         :rows="holidays.data"
@@ -183,12 +188,24 @@
 </template>
 
 <script setup lang="ts">
-import type {DataTableMeta, TableHeaderT, TableRowT} from "@/public/js/types/data";
+import type {DataTableT, TableHeaderT, TableRowT} from "@/public/js/types/data";
 import type {EnumOption, EnumSelection, StringEnumInterface} from "@/public/js/common/type";
 import {storeToRefs} from "pinia";
 
 useHead({titleTemplate: (titleChunk) => {return `${titleChunk} - Holidays`}});
-definePageMeta({middleware: ['auth', 'admin-of-selected-company']});
+definePageMeta({middleware: ['auth', 'admin-of-selected-company',
+    async () => {
+
+        const {selectedAssociatedCompanyId} = storeToRefs(useAuthStore());
+        const {data, error} = await laraUseFetch(`/api/holidays-gate`, {method: 'GET', params: {company_id: selectedAssociatedCompanyId.value}}, {}, false);
+
+        if(_isEmpty(data.value) && !_isEmpty(error.value)){
+            let responseCode = _get(error.value, 'data.code', null);
+
+            throw createError({ statusCode: responseCode, statusMessage: useCoreStore().servicePayloadMessage, fatal: true});
+        }
+    }
+]});
 useLayout().setNavigationMode('solid');
 
 const {isAuthenticated} = useAuth();
@@ -201,7 +218,6 @@ const moment = nuxtApp.$moment;
 const {render} = dateTimePicker();
 const {screenWidthBreakpoint, width: screenWidth} = useScreen();
 const clientReadyState = useClientReadyState();
-const formStore = nuxtApp.$formStore;
 const {
     updatedAssociatedCompanyFlag
 } = storeToRefs(nuxtApp.$associationStore);
@@ -226,10 +242,7 @@ const holidaysHeaders = reactive<TableHeaderT[]>([
     { text: 'Effective Date', value: 'effective_date', alignData: 'left'},
 ]);
 
-const holidays = reactive<{
-    data: TableRowT[];
-    meta: DataTableMeta
-}>({
+const holidays = reactive<DataTableT>({
     'data': [],
     'meta': {
         pagination: {
@@ -239,7 +252,9 @@ const holidays = reactive<{
             current_page: 0,
             total_pages: 0
         }
-    }
+    },
+    'successful': true,
+    'message': ''
 });
 let filters = reactive<{
     page: number,
@@ -284,6 +299,7 @@ let paramsComputed = computed(() => {
     return {
         page: filters.page,
         perPage: filters.perPage,
+        company_id: selectedAssociatedCompanyId.value,
         filters: {
             company_id: selectedAssociatedCompanyId.value,
             search: filters.search.keyword,
@@ -318,12 +334,13 @@ const holidaysExecute = async() =>{
         onRequestError: () => {
             attendancesPending.value = false;
         },
-        onResponse: () => {
+        onResponse: (request, options, response) => {
             attendancesPending.value = false;
+            holidays.successful = _get(response, '_data.successful', false);
+            holidays.message = _get(response, '_data.message', '');
         },
         onSuccessResponse: async (request, options, response) => {
             holidays.data = _get(response, '_data.values.data', [])
-
             holidays.meta = _get(response, '_data.values.meta', {
                 pagination: {
                     total: 0,
@@ -334,7 +351,7 @@ const holidaysExecute = async() =>{
                 }
             });
         }
-    }, true);
+    }, false);
 }
 await holidaysExecute();
 

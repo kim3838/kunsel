@@ -318,7 +318,6 @@
 
 <script setup lang="ts">
 import {storeToRefs} from "pinia";
-import type {TableHeaderT} from "@/public/js/types/data";
 import type {SelectionOptionsT} from "@/public/js/types/form";
 import type {EmployeePayrollComponentFormT, EmploymentProfileFormT} from "@/public/js/types/employee";
 

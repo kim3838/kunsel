@@ -47,17 +47,22 @@
                             :to="`/policies/leave-types/create-leave-type`">
                             <Button class="w-min" :disabled="disableActions" :size="'sm'" :icon="disableActions ? 'eos-icons:loading' : 'mdi:plus'" :label="disableActions ? 'Please wait' : ''"></Button>
                         </NuxtLink>
-                        <Button v-if="!disableActions" :variant="'outline'" :icon="'mdi:delete-outline'" class="inline-block" :size="'sm'" :disabled="disableActions" :label="'Delete selected'" @click="confirmDeleteSelected"/>
+                        <Button v-if="leaveTypes.successful && !disableActions" :variant="'outline'" :icon="'mdi:delete-outline'" class="inline-block" :size="'sm'" :disabled="disableActions" :label="'Delete selected'" @click="confirmDeleteSelected"/>
                     </div>
 
-                    <div class="mb-2 flex flex-row flex-wrap gap-2 items-center min-h-8">
+                    <div v-if="leaveTypes.successful" class="mb-2 flex flex-row flex-wrap gap-2 items-center min-h-8">
                         <div class="scaffold-border px-2 font-[National_Park]">
                             <span><span class="font-semibold">{{selectedLeaveTypes.length}}</span> Selected</span>
                         </div>
                         <Button :variant="'outline'" :size="'sm'" :icon="'tdesign:close'" :disabled="disableActions" :label="'Clear selection'" @click="selectedLeaveTypes = []" />
                     </div>
 
+                    <div v-if="!leaveTypes.successful" class="flex flex-row flex-wrap gap-2 items-center min-h-8">
+                        <Label invert :size="'md'" :type="'danger'" :label="leaveTypes.message" />
+                    </div>
+
                     <DataTable
+                        v-if="leaveTypes.successful"
                         :key="leaveTypesKey"
                         :sup-headers="leaveTypesSupHeaders"
                         :headers="leaveTypesHeaders"
@@ -125,12 +130,24 @@
 </template>
 
 <script setup lang="ts">
-import type {DataTableMeta, TableHeaderT, TableRowT, TableSupHeaderT} from "@/public/js/types/data";
+import type {DataTableT, TableHeaderT, TableSupHeaderT} from "@/public/js/types/data";
 import type {EnumOption, EnumSelection, StringEnumInterface} from "@/public/js/common/type";
 import {storeToRefs} from "pinia";
 
 useHead({titleTemplate: (titleChunk) => {return `${titleChunk} - Leave Types`}});
-definePageMeta({middleware: ['auth', 'admin-of-selected-company']});
+definePageMeta({middleware: ['auth', 'admin-of-selected-company',
+    async () => {
+
+        const {selectedAssociatedCompanyId} = storeToRefs(useAuthStore());
+        const {data, error} = await laraUseFetch(`/api/leave-types-gate`, {method: 'GET', params: {company_id: selectedAssociatedCompanyId.value}}, {}, false);
+
+        if(_isEmpty(data.value) && !_isEmpty(error.value)){
+            let responseCode = _get(error.value, 'data.code', null);
+
+            throw createError({ statusCode: responseCode, statusMessage: useCoreStore().servicePayloadMessage, fatal: true});
+        }
+    }
+]});
 useLayout().setNavigationMode('solid');
 
 const {isAuthenticated} = useAuth();
@@ -195,10 +212,7 @@ const leaveTypesHeaders = reactive<TableHeaderT[]>([
 ]);
 
 const leaveTypesKey = ref(0);
-const leaveTypes = reactive<{
-    data: TableRowT[];
-    meta: DataTableMeta
-}>({
+const leaveTypes = reactive<DataTableT>({
     'data': [],
     'meta': {
         pagination: {
@@ -208,7 +222,9 @@ const leaveTypes = reactive<{
             current_page: 0,
             total_pages: 0
         }
-    }
+    },
+    'successful': true,
+    'message': ''
 });
 
 let filters = reactive<{
@@ -264,6 +280,7 @@ let paramsComputed = computed(() => {
     return {
         page: filters.page,
         perPage: filters.perPage,
+        company_id: selectedAssociatedCompanyId.value,
         filters: {
             company_id: selectedAssociatedCompanyId.value,
             search: filters.search.keyword,
@@ -288,8 +305,10 @@ const leaveTypesExecute = async () => {
         onRequestError: () => {
             leaveTypesPending.value = false;
         },
-        onResponse: () => {
+        onResponse: (request, options, response) => {
             leaveTypesPending.value = false;
+            leaveTypes.successful = _get(response, '_data.successful', false);
+            leaveTypes.message = _get(response, '_data.message', '');
         },
         onSuccessResponse: async (request, options, response) => {
             leaveTypes.data = _get(response, '_data.values.data', []);
@@ -304,7 +323,7 @@ const leaveTypesExecute = async () => {
             });
             leaveTypesKey.value += 1;
         }
-    });
+    }, false);
 }
 
 await leaveTypesExecute();

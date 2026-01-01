@@ -65,7 +65,7 @@
             </div>
         </form>
 
-        <div class="flex flex-row flex-wrap gap-2 items-center min-h-8">
+        <div v-if="leaveTypeAssignments.successful" class="flex flex-row flex-wrap gap-2 items-center min-h-8">
             <div class="scaffold-border px-2 font-[National_Park]">
                 <span><span class="font-semibold">{{selectedLeaveTypeAssignments.length}}</span> Selected</span>
             </div>
@@ -85,7 +85,12 @@
                 @click="confirmDeleteSelected()" />
         </div>
 
+        <div v-if="!leaveTypeAssignments.successful" class="flex flex-row flex-wrap gap-2 items-center min-h-8">
+            <Label invert :size="'md'" :type="'danger'" :label="leaveTypeAssignments.message" />
+        </div>
+
         <DataTable
+            v-if="leaveTypeAssignments.successful"
             :sup-headers="leaveTypeAssignmentSupHeaders"
             :headers="leaveTypeAssignmentHeaders"
             :size="'lg'"
@@ -145,7 +150,7 @@
 </template>
 
 <script setup lang="ts">
-import type {DataTableMeta, TableHeaderT, TableRowT, TableSupHeaderT} from "@/public/js/types/data";
+import type {DataTableT, TableHeaderT, TableRowT, TableSupHeaderT} from "@/public/js/types/data";
 import type {EnumOption, EnumSelection, StringEnumInterface} from "@/public/js/common/type";
 import type {LabelTypeT} from "@/public/js/types/theme";
 import {storeToRefs} from "pinia";
@@ -308,10 +313,7 @@ const leaveTypeAssignmentHeaders = reactive<TableHeaderT[]>([
     { text: '', value: 'leave_type_assignment_balance_upon_eligibility'},
 ]);
 
-const leaveTypeAssignments = reactive<{
-    data: TableRowT[];
-    meta: DataTableMeta
-}>({
+const leaveTypeAssignments = reactive<DataTableT>({
     'data': [],
     'meta': {
         pagination: {
@@ -321,7 +323,9 @@ const leaveTypeAssignments = reactive<{
             current_page: 0,
             total_pages: 0
         }
-    }
+    },
+    'successful': true,
+    'message': ''
 });
 let filters = reactive<{
     page: number,
@@ -354,6 +358,7 @@ let paramsComputed = computed(() => {
     return {
         page: filters.page,
         perPage: filters.perPage,
+        company_id: selectedAssociatedCompanyId.value,
         filters: {
             company_id: selectedAssociatedCompanyId.value,
             search: filters.search.keyword,
@@ -391,8 +396,10 @@ const leaveTypeAssignmentsExecute = async() =>{
         onRequestError: () => {
             leaveTypeAssignmentsPending.value = false;
         },
-        onResponse: () => {
+        onResponse: (request, options, response) => {
             leaveTypeAssignmentsPending.value = false;
+            leaveTypeAssignments.successful = _get(response, '_data.successful', false);
+            leaveTypeAssignments.message = _get(response, '_data.message', '');
         },
         onSuccessResponse: async (request, options, response) => {
             leaveTypeAssignments.data = _get(response, '_data.values.data', []).map((leaveTypeAssignment: TableRowT) => {

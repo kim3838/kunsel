@@ -216,10 +216,10 @@
                     <div class="mb-2 flex flex-row flex-wrap gap-2 items-center min-h-8">
                         <UnorderedList v-if="disableActions" :icon="'eos-icons:loading'" :size="'md'" :label="'Please wait...'"/>
                         <Button v-if="!disableActions" @click="put(null)" class="w-min" :disabled="disableActions" :size="'sm'" :icon="disableActions ? 'eos-icons:loading' : 'mdi:plus'" :label="disableActions ? 'Please wait' : ''"></Button>
-                        <Button v-if="!disableActions" :variant="'outline'" :size="'sm'" :icon="'mdi:delete-outline'" :disabled="disableActions" :label="'Delete selected'" @click="confirmDeleteSelected()" />
+                        <Button v-if="leaves.successful && !disableActions" :variant="'outline'" :size="'sm'" :icon="'mdi:delete-outline'" :disabled="disableActions" :label="'Delete selected'" @click="confirmDeleteSelected()" />
                     </div>
 
-                    <div class="mb-2 flex flex-row flex-wrap gap-2 items-center min-h-8">
+                    <div v-if="leaves.successful" class="mb-2 flex flex-row flex-wrap gap-2 items-center min-h-8">
                         <div class="scaffold-border px-2 font-[National_Park]">
                             <span><span class="font-semibold">{{selectedLeaves.length}}</span> Selected</span>
                         </div>
@@ -232,7 +232,12 @@
                             @click="selectedLeaves = []" />
                     </div>
 
+                    <div v-if="!leaves.successful" class="flex flex-row flex-wrap gap-2 items-center min-h-8">
+                        <Label invert :size="'md'" :type="'danger'" :label="leaves.message" />
+                    </div>
+
                     <DataTable
+                        v-if="leaves.successful"
                         :sup-headers="leavesSupHeaders"
                         :headers="leavesHeaders"
                         :size="'lg'"
@@ -266,7 +271,7 @@
 </template>
 
 <script setup lang="ts">
-import type {DataTableMeta, TableHeaderT, TableRowT, TableSupHeaderT} from "@/public/js/types/data";
+import type {DataTableT, TableHeaderT, TableRowT, TableSupHeaderT} from "@/public/js/types/data";
 import type {EnumOption, EnumSelection} from "@/public/js/common/type";
 import type {LabelTypeT} from "@/public/js/types/theme";
 import type {SelectDataType} from "@/public/js/types/form";
@@ -274,18 +279,28 @@ import type {DateTimePickerOptionsT} from "@/public/js/datetimepicker/type";
 import {storeToRefs} from "pinia";
 
 useHead({titleTemplate: (titleChunk) => {return `${titleChunk} - Leave`}});
-definePageMeta({middleware: ['auth', 'admin-of-selected-company']});
+definePageMeta({middleware: ['auth', 'admin-of-selected-company',
+    async () => {
+
+        const {selectedAssociatedCompanyId} = storeToRefs(useAuthStore());
+        const {data, error} = await laraUseFetch(`/api/leaves-gate`, {method: 'GET', params: {company_id: selectedAssociatedCompanyId.value}}, {}, false);
+
+        if(_isEmpty(data.value) && !_isEmpty(error.value)){
+            let responseCode = _get(error.value, 'data.code', null);
+
+            throw createError({ statusCode: responseCode, statusMessage: useCoreStore().servicePayloadMessage, fatal: true});
+        }
+    }
+]});
 useLayout().setNavigationMode('solid');
 
 const {isAuthenticated} = useAuth();
 const nuxtApp = useNuxtApp();
-const isNumeric = nuxtApp.$isNumeric as (value: any) => boolean;
 const $moment = nuxtApp.$moment;
 const {render} = dateTimePicker();
 const clientReadyState = useClientReadyState();
 const common = useCommon();
 const coreStore = useCoreStore();
-const formStore = nuxtApp.$formStore;
 const {
     updatedAssociatedCompanyFlag
 } = storeToRefs(nuxtApp.$associationStore);
@@ -359,10 +374,7 @@ const leavesHeaders = reactive<TableHeaderT[]>([
     { text: '', value: 'date'},
 ]);
 
-const leaves = reactive<{
-    data: TableRowT[];
-    meta: DataTableMeta
-}>({
+const leaves = reactive<DataTableT>({
     'data': [],
     'meta': {
         pagination: {
@@ -372,7 +384,9 @@ const leaves = reactive<{
             current_page: 0,
             total_pages: 0
         }
-    }
+    },
+    'successful': true,
+    'message': ''
 });
 let filters = reactive<{
     page: number,
@@ -441,6 +455,7 @@ let paramsComputed = computed(() => {
     return {
         page: filters.page,
         perPage: filters.perPage,
+        company_id: selectedAssociatedCompanyId.value,
         filters: {
             company_id: selectedAssociatedCompanyId.value,
             date_from: filters.dateFrom,
@@ -477,12 +492,13 @@ const leavesExecute = async() =>{
         onRequestError: () => {
             leavesPending.value = false;
         },
-        onResponse: () => {
+        onResponse: (request, options, response) => {
             leavesPending.value = false;
+            leaves.successful = _get(response, '_data.successful', false);
+            leaves.message = _get(response, '_data.message', '');
         },
         onSuccessResponse: async (request, options, response) => {
             leaves.data = _get(response, '_data.values.data', [])
-
             leaves.meta = _get(response, '_data.values.meta', {
                 pagination: {
                     total: 0,
@@ -493,7 +509,7 @@ const leavesExecute = async() =>{
                 }
             });
         }
-    }, true);
+    }, false);
 }
 await leavesExecute();
 
@@ -638,6 +654,8 @@ const createEditPending = ref(false);
 const editPayload = ref({});
 
 const put = (row: TableRowT | null = null) => {
+
+    coreStore.resetServiceError();
 
     if(row){
         editPayload.value = row;

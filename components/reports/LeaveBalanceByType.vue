@@ -64,7 +64,12 @@
             </div>
         </form>
 
+        <div v-if="!leaveBalanceByTypes.successful" class="flex flex-row flex-wrap gap-2 items-center min-h-8">
+            <Label invert :size="'md'" :type="'danger'" :label="leaveBalanceByTypes.message" />
+        </div>
+
         <DataTable
+            v-if="leaveBalanceByTypes.successful"
             :sup-headers="leaveBalanceByTypeSupHeaders"
             :headers="leaveBalanceByTypeHeaders"
             :size="'lg'"
@@ -86,7 +91,7 @@
 </template>
 
 <script setup lang="ts">
-import type {DataTableMeta, TableHeaderT, TableRowT, TableSupHeaderT} from "@/public/js/types/data";
+import type {DataTableT, TableHeaderT, TableRowT, TableSupHeaderT} from "@/public/js/types/data";
 import type {EnumOption} from "@/public/js/common/type";
 import type {LabelTypeT} from "@/public/js/types/theme";
 import {storeToRefs} from "pinia";
@@ -198,10 +203,7 @@ const leaveBalanceByTypeHeaders = computed<TableHeaderT[]>(() => {
     return headers.concat(leaveTypes);
 });
 
-const leaveBalanceByTypes = reactive<{
-    data: TableRowT[];
-    meta: DataTableMeta
-}>({
+const leaveBalanceByTypes = reactive<DataTableT>({
     'data': [],
     'meta': {
         pagination: {
@@ -211,7 +213,9 @@ const leaveBalanceByTypes = reactive<{
             current_page: 0,
             total_pages: 0
         }
-    }
+    },
+    'successful': true,
+    'message': ''
 });
 let filters = reactive<{
     page: number,
@@ -244,6 +248,7 @@ let paramsComputed = computed(() => {
     return {
         page: filters.page,
         perPage: filters.perPage,
+        company_id: selectedAssociatedCompanyId.value,
         filters: {
             company_id: selectedAssociatedCompanyId.value,
             search: filters.search.keyword,
@@ -282,8 +287,10 @@ const leaveBalanceByTypeExecute = async() =>{
         onRequestError: () => {
             leaveBalanceByTypePending.value = false;
         },
-        onResponse: () => {
+        onResponse: (request, options, response) => {
             leaveBalanceByTypePending.value = false;
+            leaveBalanceByTypes.successful = _get(response, '_data.successful', false);
+            leaveBalanceByTypes.message = _get(response, '_data.message', '');
         },
         onSuccessResponse: async (request, options, response) => {
             leaveBalanceByTypes.data = _get(response, '_data.values.employees.data', []).map((employee: TableRowT) => {

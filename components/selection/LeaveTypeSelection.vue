@@ -36,7 +36,7 @@
             </div>
         </form>
 
-        <div class="flex flex-row flex-wrap gap-2 items-center min-h-8">
+        <div v-if="leaveTypes.successful" class="flex flex-row flex-wrap gap-2 items-center min-h-8">
             <div class="scaffold-border px-2 font-[National_Park]">
                 <span><span class="font-semibold">{{proxySelectedLeaveTypes.length}}</span> Selected</span>
             </div>
@@ -51,7 +51,12 @@
             <slot name="selection-actions"></slot>
         </div>
 
+        <div v-if="!leaveTypes.successful" class="flex flex-row flex-wrap gap-2 items-center min-h-8">
+            <Label invert :size="'md'" :type="'danger'" :label="leaveTypes.message" />
+        </div>
+
         <DataTable
+            v-if="leaveTypes.successful"
             :sup-headers="leaveTypesSupHeaders"
             :headers="leaveTypesHeaders"
             :size="'lg'"
@@ -77,7 +82,7 @@
 </template>
 
 <script setup lang="ts">
-import type {DataTableMeta, TableHeaderT, TableRowT, TableSupHeaderT} from "@/public/js/types/data";
+import type {DataTableT, TableHeaderT, TableSupHeaderT} from "@/public/js/types/data";
 
 import {storeToRefs} from "pinia";
 
@@ -166,10 +171,7 @@ const leaveTypesHeaders = reactive<TableHeaderT[]>([
     { text: '', value: 'carry_over_readable', alignData: 'left'},
 ]);
 
-const leaveTypes = reactive<{
-    data: TableRowT[];
-    meta: DataTableMeta
-}>({
+const leaveTypes = reactive<DataTableT>({
     'data': [],
     'meta': {
         pagination: {
@@ -179,7 +181,9 @@ const leaveTypes = reactive<{
             current_page: 0,
             total_pages: 0
         }
-    }
+    },
+    'successful': true,
+    'message': ''
 });
 let filters = reactive<{
     page: number,
@@ -212,6 +216,7 @@ let paramsComputed = computed(() => {
     return {
         page: filters.page,
         perPage: filters.perPage,
+        company_id: selectedAssociatedCompanyId.value,
         filters: {
             company_id: selectedAssociatedCompanyId.value,
             search: filters.search.keyword,
@@ -243,9 +248,11 @@ const leaveTypesExecute = async() =>{
             leaveTypesPending.value = false;
             emit("update:pending", false);
         },
-        onResponse: () => {
+        onResponse: (request, options, response) => {
             leaveTypesPending.value = false;
             emit("update:pending", false);
+            leaveTypes.successful = _get(response, '_data.successful', false);
+            leaveTypes.message = _get(response, '_data.message', '');
         },
         onSuccessResponse: async (request, options, response) => {
             leaveTypes.data = _get(response, '_data.values.data', []);

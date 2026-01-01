@@ -32,7 +32,13 @@
                 </form>
 
                 <div class="px-[20px]">
+
+                    <div v-if="!attendances.successful" class="flex flex-row flex-wrap gap-2 items-center min-h-8">
+                        <Label invert :size="'md'" :type="'danger'" :label="attendances.message" />
+                    </div>
+
                     <DataTable
+                        v-if="attendances.successful"
                         :sup-headers="attendancesSupHeaders"
                         :headers="attendancesHeaders"
                         :size="'lg'"
@@ -89,7 +95,7 @@
 </template>
 
 <script setup lang="ts">
-import type {DataTableMeta, TableHeaderT, TableRowT, TableSupHeaderT} from "@/public/js/types/data";
+import type {DataTableT, TableHeaderT, TableRowT, TableSupHeaderT} from "@/public/js/types/data";
 import type {EnumOption, EnumSelection} from "@/public/js/common/type";
 import {storeToRefs} from "pinia";
 
@@ -147,10 +153,7 @@ const attendancesHeaders = reactive<TableHeaderT[]>([
     { text: 'Status', value: 'status', alignData: 'left'},
 ]);
 
-const attendances = reactive<{
-    data: TableRowT[];
-    meta: DataTableMeta
-}>({
+const attendances = reactive<DataTableT>({
     'data': [],
     'meta': {
         pagination: {
@@ -160,7 +163,9 @@ const attendances = reactive<{
             current_page: 0,
             total_pages: 0
         }
-    }
+    },
+    'successful': true,
+    'message': ''
 });
 let filters = reactive<{
     page: number,
@@ -205,6 +210,7 @@ let paramsComputed = computed(() => {
     return {
         page: filters.page,
         perPage: filters.perPage,
+        company_id: selectedAssociatedCompanyId.value,
         filters: {
             company_id: selectedAssociatedCompanyId.value,
             employee_ulids: [userCompanyEmployee.value?.ulid],
@@ -238,12 +244,13 @@ const attendancesExecute = async() =>{
         onRequestError: () => {
             attendancesPending.value = false;
         },
-        onResponse: () => {
+        onResponse: (request, options, response) => {
             attendancesPending.value = false;
+            attendances.successful = _get(response, '_data.successful', false);
+            attendances.message = _get(response, '_data.message', '');
         },
         onSuccessResponse: async (request, options, response) => {
             attendances.data = _get(response, '_data.values.data', [])
-
             attendances.meta = _get(response, '_data.values.meta', {
                 pagination: {
                     total: 0,
@@ -254,7 +261,7 @@ const attendancesExecute = async() =>{
                 }
             });
         }
-    }, true);
+    }, false);
 }
 await attendancesExecute();
 

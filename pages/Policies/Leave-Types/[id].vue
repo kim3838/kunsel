@@ -320,7 +320,8 @@ definePageMeta({
 
             if(import.meta.server || to.params.id === 'create-leave-type'){return true;}
 
-            const {data, error} = await laraUseFetch(`/api/leave-type-check/${to.params.id}`, {method: 'GET',}, {}, false);
+            const {selectedAssociatedCompanyId} = storeToRefs(useAuthStore());
+            const {data, error} = await laraUseFetch(`/api/leave-type-gate/${to.params.id}`, {method: 'GET', params: {company_id: selectedAssociatedCompanyId.value}}, {}, false);
 
             if(_isEmpty(data.value) && !_isEmpty(error.value)){
                 let responseCode = _get(error.value, 'data.code', null);
@@ -520,6 +521,9 @@ const fetchLeaveType = async () => {
 
     await laraFetch(`/api/leave-type/${route.params.id}`, {
         method: 'GET',
+        params: {
+            company_id: selectedAssociatedCompanyId.value
+        }
     }, {
         onSuccessResponse: async (request, options, response) => {
             leaveType.value = _get(response, '_data.values.leave_type', null);

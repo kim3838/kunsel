@@ -152,7 +152,7 @@
                         <Button @click="selectEmployee" class="w-min" :disabled="disableActions" :size="'sm'" :icon="disableActions ? 'eos-icons:loading' : 'mdi:plus'" :label="disableActions ? 'Please wait' : ''"></Button>
                     </div>
 
-                    <div class="mb-2 flex flex-row flex-wrap gap-2 items-center min-h-8">
+                    <div v-if="payrollComponents.successful" class="mb-2 flex flex-row flex-wrap gap-2 items-center min-h-8">
                         <div class="scaffold-border px-2 font-[National_Park]">
                             <span><span class="font-semibold">{{selectedPayrollComponents.length}}</span> Selected</span>
                         </div>
@@ -172,7 +172,12 @@
                             @click="confirmDeleteSelected()"/>
                     </div>
 
+                    <div v-if="!payrollComponents.successful" class="flex flex-row flex-wrap gap-2 items-center min-h-8">
+                        <Label invert :size="'md'" :type="'danger'" :label="payrollComponents.message" />
+                    </div>
+
                     <DataTable
+                        v-if="payrollComponents.successful"
                         :sup-headers="payrollComponentsSupHeaders"
                         :headers="payrollComponentsHeaders"
                         :size="'lg'"
@@ -232,7 +237,7 @@
 
 <script setup lang="ts">
 import {storeToRefs} from "pinia";
-import type {DataTableMeta, TableHeaderT, TableRowT, TableSupHeaderT} from "@/public/js/types/data";
+import type {DataTableT, TableHeaderT, TableRowT, TableSupHeaderT} from "@/public/js/types/data";
 import type {EnumOption, EnumSelection, StringEnumInterface} from "@/public/js/common/type";
 
 useHead({titleTemplate: (titleChunk) => {return `${titleChunk} - Employee Pay Items`}});
@@ -346,10 +351,7 @@ const payrollComponentsHeaders = reactive<TableHeaderT[]>([
     { text: 'To', value: 'amountable_end'},
 ]);
 
-const payrollComponents = reactive<{
-    data: TableRowT[];
-    meta: DataTableMeta
-}>({
+const payrollComponents = reactive<DataTableT>({
     'data': [],
     'meta': {
         pagination: {
@@ -359,7 +361,9 @@ const payrollComponents = reactive<{
             current_page: 0,
             total_pages: 0
         }
-    }
+    },
+    'successful': true,
+    'message': ''
 });
 let filters = reactive<{
     page: number,
@@ -506,12 +510,13 @@ const payrollComponentsExecute = async() =>{
         onRequestError: () => {
             payrollComponentsPending.value = false;
         },
-        onResponse: () => {
+        onResponse: (request, options, response) => {
             payrollComponentsPending.value = false;
+            payrollComponents.successful = _get(response, '_data.successful', false);
+            payrollComponents.message = _get(response, '_data.message', '');
         },
         onSuccessResponse: async (request, options, response) => {
             payrollComponents.data = _get(response, '_data.values.data', [])
-
             payrollComponents.meta = _get(response, '_data.values.meta', {
                 pagination: {
                     total: 0,
@@ -522,7 +527,7 @@ const payrollComponentsExecute = async() =>{
                 }
             });
         }
-    }, true);
+    }, false);
 }
 await payrollComponentsExecute();
 
@@ -655,6 +660,8 @@ const payrollComponentEditPayload = ref({});
 
 const selectingEmployee = ref(false);
 const selectEmployee = () => {
+
+    coreStore.resetServiceError();
 
     stagedEmployee.value = {
         'id': null,

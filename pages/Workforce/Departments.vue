@@ -109,11 +109,12 @@
                             :disabled="disableActions"
                             @click="create"/>
 
-                        <div class="scaffold-border px-2 font-[National_Park]">
+                        <div v-if="departmentsSuccessful" class="scaffold-border px-2 font-[National_Park]">
                             <span><span class="font-semibold">{{allSelectedComputed.length}}</span> Selected</span>
                         </div>
 
                         <Button
+                            v-if="departmentsSuccessful"
                             :variant="'outline'"
                             :size="'sm'"
                             :icon="'mdi:delete-outline'"
@@ -122,7 +123,12 @@
                             @click="confirmDeleteSelected()" />
                     </div>
 
+                    <div v-if="!departmentsSuccessful" class="flex flex-row flex-wrap gap-2 items-center min-h-8">
+                        <Label invert :size="'md'" :type="'danger'" :label="departmentsMessage" />
+                    </div>
+
                     <DataTable
+                        v-if="departmentsSuccessful"
                         :key="departmentsKey"
                         :headers="departmentsHeaders"
                         :size="'lg'"
@@ -221,6 +227,8 @@ const departmentsHeaders = reactive<TableHeaderT[]>([
 
 const departmentsKey = shallowRef(0);
 const departmentsData = ref([]);
+const departmentsSuccessful = ref(true);
+const departmentsMessage = ref('');
 const departmentsPending = ref(false);
 const selectedDepartments = ref<number[]>([]);
 const selectedSubDepartments = ref<number[]>([]);
@@ -282,14 +290,16 @@ const departmentsExecute = async () => {
         onRequestError: () => {
             departmentsPending.value = false;
         },
-        onResponse: () => {
+        onResponse: (request, options, response) => {
             departmentsPending.value = false;
+            departmentsSuccessful.value = _get(response, '_data.successful', false);
+            departmentsMessage.value = _get(response, '_data.message', '');
         },
         onSuccessResponse: async (request, options, response) => {
             departmentsData.value = _get(response, '_data.values.departments', []);
             departmentsKey.value += 1;
         }
-    });
+    }, false);
 }
 await departmentsExecute();
 

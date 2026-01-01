@@ -51,11 +51,11 @@
         </form>
 
         <div class="space-y-2">
-            <div v-if="$coreStore.hasNonPromptableServicePayloadMessage" class="block">
-                <Label invert :size="'md'" :type="'danger'" :label="$coreStore.servicePayloadMessage" />
+            <div v-if="!balancePeriodSeriesSuccessful" class="flex flex-row flex-wrap gap-2 items-center min-h-8">
+                <Label invert :size="'md'" :type="'danger'" :label="balancePeriodSeriesMessage" />
             </div>
 
-            <div v-if="upToDateMessage.show" class="block">
+            <div v-if="balancePeriodSeriesSuccessful && !disableActions && upToDateMessage.show" class="block">
                 <Label invert :size="'md'" :type="'info'" :label="upToDateMessage.message" />
             </div>
 
@@ -246,6 +246,8 @@ const disableActions = computed(() => {
 });
 
 const balancePeriodSeries = ref<LeaveBalancePeriodSeriesT[]>([]);
+const balancePeriodSeriesSuccessful = ref(true);
+const balancePeriodSeriesMessage = ref('');
 
 const balancePeriodSeriesExecute = async () => {
 
@@ -307,8 +309,10 @@ const balancePeriodSeriesExecute = async () => {
             onRequestError: () => {
                 balancePeriodSeriesPending.value = false;
             },
-            onResponse: () => {
+            onResponse: (request, options, response) => {
                 balancePeriodSeriesPending.value = false;
+                balancePeriodSeriesSuccessful.value = _get(response, '_data.successful', false);
+                balancePeriodSeriesMessage.value = _get(response, '_data.message', '');
             },
             onUnprocessableContentResponse: () => {
                 balancePeriodSeriesPending.value = false;

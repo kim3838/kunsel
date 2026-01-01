@@ -64,7 +64,7 @@
             </div>
         </form>
 
-        <div class="flex flex-row flex-wrap gap-2 items-center min-h-8">
+        <div v-if="shiftAssignments.successful" class="flex flex-row flex-wrap gap-2 items-center min-h-8">
             <div class="scaffold-border px-2 font-[National_Park]">
                 <span><span class="font-semibold">{{selectedShiftAssignments.length}}</span> Selected</span>
             </div>
@@ -84,7 +84,12 @@
                 @click="confirmDeleteSelected()" />
         </div>
 
+        <div v-if="!shiftAssignments.successful" class="flex flex-row flex-wrap gap-2 items-center min-h-8">
+            <Label invert :size="'md'" :type="'danger'" :label="shiftAssignments.message" />
+        </div>
+
         <DataTable
+            v-if="shiftAssignments.successful"
             :sup-headers="shiftAssignmentSupHeaders"
             :headers="shiftAssignmentHeaders"
             :size="'lg'"
@@ -134,7 +139,7 @@
 </template>
 
 <script setup lang="ts">
-import type {DataTableMeta, TableHeaderT, TableRowT, TableSupHeaderT} from "@/public/js/types/data";
+import type {DataTableT, TableHeaderT, TableRowT, TableSupHeaderT} from "@/public/js/types/data";
 import type {EnumOption, EnumSelection, StringEnumInterface} from "@/public/js/common/type";
 import type {LabelTypeT} from "@/public/js/types/theme";
 import {storeToRefs} from "pinia";
@@ -295,10 +300,7 @@ const shiftAssignmentHeaders = reactive<TableHeaderT[]>([
     { text: 'End Date', value: 'shift_end_date'},
 ]);
 
-const shiftAssignments = reactive<{
-    data: TableRowT[];
-    meta: DataTableMeta
-}>({
+const shiftAssignments = reactive<DataTableT>({
     'data': [],
     'meta': {
         pagination: {
@@ -308,7 +310,9 @@ const shiftAssignments = reactive<{
             current_page: 0,
             total_pages: 0
         }
-    }
+    },
+    'successful': true,
+    'message': ''
 });
 let filters = reactive<{
     page: number,
@@ -379,8 +383,10 @@ const shiftAssignmentsExecute = async() =>{
         onRequestError: () => {
             shiftAssignmentsPending.value = false;
         },
-        onResponse: () => {
+        onResponse: (request, options, response) => {
             shiftAssignmentsPending.value = false;
+            shiftAssignments.successful = _get(response, '_data.successful', false);
+            shiftAssignments.message = _get(response, '_data.message', '');
         },
         onSuccessResponse: async (request, options, response) => {
             shiftAssignments.data = _get(response, '_data.values.data', []).map((shiftAssignment: TableRowT) => {

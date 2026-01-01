@@ -73,11 +73,12 @@
                             :disabled="disableActions"
                             @click="create"/>
 
-                        <div class="scaffold-border px-2 font-[National_Park]">
+                        <div v-if="designationsSuccessful" class="scaffold-border px-2 font-[National_Park]">
                             <span><span class="font-semibold">{{selectedDesignations.length}}</span> Selected</span>
                         </div>
 
                         <Button
+                            v-if="designationsSuccessful"
                             :variant="'outline'"
                             :size="'sm'"
                             :icon="'mdi:delete-outline'"
@@ -86,7 +87,12 @@
                             @click="confirmDeleteSelected()" />
                     </div>
 
+                    <div v-if="!designationsSuccessful" class="flex flex-row flex-wrap gap-2 items-center min-h-8">
+                        <Label invert :size="'md'" :type="'danger'" :label="designationsMessage" />
+                    </div>
+
                     <DataTable
+                        v-if="designationsSuccessful"
                         :headers="designationsHeaders"
                         :size="'lg'"
                         :rows="designationsData"
@@ -161,6 +167,8 @@ const designationsHeaders = reactive<TableHeaderT[]>([
 ]);
 
 const designationsData = ref([]);
+const designationsSuccessful = ref(true);
+const designationsMessage = ref('');
 const designationsPending = ref(false);
 const selectedDesignations = ref([]);
 
@@ -210,13 +218,15 @@ const designationsExecute = async () => {
         onRequestError: () => {
             designationsPending.value = false;
         },
-        onResponse: () => {
+        onResponse: (request, options, response) => {
             designationsPending.value = false;
+            designationsSuccessful.value = _get(response, '_data.successful', false);
+            designationsMessage.value = _get(response, '_data.message', '');
         },
         onSuccessResponse: async (request, options, response) => {
             designationsData.value = _get(response, '_data.values.designations', []);
         }
-    });
+    }, false);
 }
 await designationsExecute();
 

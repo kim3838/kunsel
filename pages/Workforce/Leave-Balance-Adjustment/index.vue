@@ -157,10 +157,10 @@
                     <div class="mb-2 flex flex-row flex-wrap gap-2 items-center min-h-8">
                         <UnorderedList v-if="disableActions" :icon="'eos-icons:loading'" :size="'md'" :label="'Please wait...'"/>
                         <Button v-if="!disableActions" @click="put(null)" class="w-min" :disabled="disableActions" :size="'sm'" :icon="disableActions ? 'eos-icons:loading' : 'mdi:plus'" :label="disableActions ? 'Please wait' : ''"></Button>
-                        <Button v-if="!disableActions" :variant="'outline'" :size="'sm'" :icon="'mdi:delete-outline'" :disabled="disableActions" :label="'Delete selected'" @click="confirmDeleteSelected()" />
+                        <Button v-if="leaveBalanceAdjustments.successful && !disableActions" :variant="'outline'" :size="'sm'" :icon="'mdi:delete-outline'" :disabled="disableActions" :label="'Delete selected'" @click="confirmDeleteSelected()" />
                     </div>
 
-                    <div class="mb-2 flex flex-row flex-wrap gap-2 items-center min-h-8">
+                    <div v-if="leaveBalanceAdjustments.successful" class="mb-2 flex flex-row flex-wrap gap-2 items-center min-h-8">
                         <div class="scaffold-border px-2 font-[National_Park]">
                             <span><span class="font-semibold">{{selectedLeaveBalanceAdjustments.length}}</span> Selected</span>
                         </div>
@@ -173,7 +173,12 @@
                             @click="selectedLeaveBalanceAdjustments = []" />
                     </div>
 
+                    <div v-if="!leaveBalanceAdjustments.successful" class="flex flex-row flex-wrap gap-2 items-center min-h-8">
+                        <Label invert :size="'md'" :type="'danger'" :label="leaveBalanceAdjustments.message" />
+                    </div>
+
                     <DataTable
+                        v-if="leaveBalanceAdjustments.successful"
                         :sup-headers="leaveBalanceAdjustmentsSupHeaders"
                         :headers="leaveBalanceAdjustmentsHeaders"
                         :size="'lg'"
@@ -223,7 +228,7 @@
 </template>
 
 <script setup lang="ts">
-import type {DataTableMeta, TableHeaderT, TableRowT, TableSupHeaderT} from "@/public/js/types/data";
+import type {DataTableT, TableHeaderT, TableRowT, TableSupHeaderT} from "@/public/js/types/data";
 import type {EnumOption, EnumSelection, StringEnumInterface} from "@/public/js/common/type";
 import type {SelectDataType} from "@/public/js/types/form";
 import type {DateTimePickerOptionsT} from "@/public/js/datetimepicker/type";
@@ -231,7 +236,19 @@ import type {SingleSelectPaginatedInstance} from "@/public/js/types/component-in
 import {storeToRefs} from "pinia";
 
 useHead({titleTemplate: (titleChunk) => {return `${titleChunk} - Leave Balance Adjustments`}});
-definePageMeta({middleware: ['auth', 'admin-of-selected-company']});
+definePageMeta({middleware: ['auth', 'admin-of-selected-company',
+    async () => {
+
+        const {selectedAssociatedCompanyId} = storeToRefs(useAuthStore());
+        const {data, error} = await laraUseFetch(`/api/leave-balance-adjustments-gate`, {method: 'GET', params: {company_id: selectedAssociatedCompanyId.value}}, {}, false);
+
+        if(_isEmpty(data.value) && !_isEmpty(error.value)){
+            let responseCode = _get(error.value, 'data.code', null);
+
+            throw createError({ statusCode: responseCode, statusMessage: useCoreStore().servicePayloadMessage, fatal: true});
+        }
+    }
+]});
 useLayout().setNavigationMode('solid');
 
 const {isAuthenticated} = useAuth();
@@ -315,10 +332,7 @@ const leaveBalanceAdjustmentsHeaders = reactive<TableHeaderT[]>([
     { text: 'Balance', value: 'balance', alignData: 'right'},
 ]);
 
-const leaveBalanceAdjustments = reactive<{
-    data: TableRowT[];
-    meta: DataTableMeta
-}>({
+const leaveBalanceAdjustments = reactive<DataTableT>({
     'data': [],
     'meta': {
         pagination: {
@@ -328,7 +342,9 @@ const leaveBalanceAdjustments = reactive<{
             current_page: 0,
             total_pages: 0
         }
-    }
+    },
+    'successful': true,
+    'message': ''
 });
 let filters = reactive<{
     page: number,
@@ -393,6 +409,7 @@ let paramsComputed = computed(() => {
     return {
         page: filters.page,
         perPage: filters.perPage,
+        company_id: selectedAssociatedCompanyId.value,
         filters: {
             company_id: selectedAssociatedCompanyId.value,
             search: filters.search.keyword,
@@ -428,12 +445,13 @@ const leaveBalanceAdjustmentsExecute = async() =>{
         onRequestError: () => {
             leaveBalanceAdjustmentsPending.value = false;
         },
-        onResponse: () => {
+        onResponse: (request, options, response) => {
             leaveBalanceAdjustmentsPending.value = false;
+            leaveBalanceAdjustments.successful = _get(response, '_data.successful', false);
+            leaveBalanceAdjustments.message = _get(response, '_data.message', '');
         },
         onSuccessResponse: async (request, options, response) => {
             leaveBalanceAdjustments.data = _get(response, '_data.values.data', [])
-
             leaveBalanceAdjustments.meta = _get(response, '_data.values.meta', {
                 pagination: {
                     total: 0,
@@ -444,7 +462,7 @@ const leaveBalanceAdjustmentsExecute = async() =>{
                 }
             });
         }
-    }, true);
+    }, false);
 }
 await leaveBalanceAdjustmentsExecute();
 

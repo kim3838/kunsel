@@ -47,10 +47,14 @@
                             :to="`/policies/shifts/create-shift`">
                             <Button class="w-min" :disabled="disableActions" :size="'sm'" :icon="disableActions ? 'eos-icons:loading' : 'mdi:plus'" :label="disableActions ? 'Please wait' : ''"></Button>
                         </NuxtLink>
-                        <Button v-if="!disableActions" :variant="'outline'" :icon="'mdi:delete-outline'" class="inline-block" :size="'sm'" :disabled="disableActions" :label="'Delete selected'" @click="deleteSelected"/>
+                        <Button v-if="shifts.successful && !disableActions" :variant="'outline'" :icon="'mdi:delete-outline'" class="inline-block" :size="'sm'" :disabled="disableActions" :label="'Delete selected'" @click="deleteSelected"/>
                     </div>
 
-                    <div class="mb-2 flex flex-row flex-wrap gap-2 items-center min-h-8">
+                    <div v-if="!shifts.successful" class="flex flex-row flex-wrap gap-2 items-center min-h-8">
+                        <Label invert :size="'md'" :type="'danger'" :label="shifts.message" />
+                    </div>
+
+                    <div v-if="shifts.successful" class="mb-2 flex flex-row flex-wrap gap-2 items-center min-h-8">
                         <div class="scaffold-border px-2 font-[National_Park]">
                             <span><span class="font-semibold">{{selectedShifts.length}}</span> Selected</span>
                         </div>
@@ -58,6 +62,7 @@
                     </div>
 
                     <DataTable
+                        v-if="shifts.successful"
                         :key="shiftsKey"
                         :headers="shiftsHeaders"
                         :size="'lg'"
@@ -123,7 +128,7 @@
 </template>
 
 <script setup lang="ts">
-import type {DataTableMeta, TableHeaderT, TableRowT} from "@/public/js/types/data";
+import type {DataTableT, TableHeaderT} from "@/public/js/types/data";
 import type {EnumOption, EnumSelection} from "@/public/js/common/type";
 import {storeToRefs} from "pinia";
 
@@ -185,10 +190,7 @@ const shiftsHeaders = reactive<TableHeaderT[]>([
 ]);
 
 const shiftsKey = ref(0);
-const shifts = reactive<{
-    data: TableRowT[];
-    meta: DataTableMeta
-}>({
+const shifts = reactive<DataTableT>({
     'data': [],
     'meta': {
         pagination: {
@@ -198,7 +200,9 @@ const shifts = reactive<{
             current_page: 0,
             total_pages: 0
         }
-    }
+    },
+    'successful': true,
+    'message': ''
 });
 
 let filters = reactive<{
@@ -281,8 +285,10 @@ const shiftsExecute = async () => {
         onRequestError: () => {
             shiftsPending.value = false;
         },
-        onResponse: () => {
+        onResponse: (request, options, response) => {
             shiftsPending.value = false;
+            shifts.successful = _get(response, '_data.successful', false);
+            shifts.message = _get(response, '_data.message', '');
         },
         onSuccessResponse: async (request, options, response) => {
             shifts.data = _get(response, '_data.values.data', []);
@@ -297,7 +303,7 @@ const shiftsExecute = async () => {
             });
             shiftsKey.value += 1;
         }
-    });
+    }, false);
 }
 
 await shiftsExecute();

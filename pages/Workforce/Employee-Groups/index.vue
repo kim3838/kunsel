@@ -133,10 +133,10 @@
                     <div class="mb-2 flex flex-row flex-wrap gap-2 items-center min-h-8">
                         <UnorderedList v-if="disableActions" :icon="'eos-icons:loading'" :size="'md'" :label="'Please wait...'"/>
                         <Button v-if="!disableActions" @click="put(null)" class="w-min" :disabled="disableActions" :size="'sm'" :icon="disableActions ? 'eos-icons:loading' : 'mdi:plus'" :label="disableActions ? 'Please wait' : ''"></Button>
-                        <Button v-if="!disableActions" :variant="'outline'" :size="'sm'" :icon="'mdi:delete-outline'" :disabled="disableActions" :label="'Delete selected'" @click="confirmDeleteSelected()" />
+                        <Button v-if="employeeGroups.successful && !disableActions" :variant="'outline'" :size="'sm'" :icon="'mdi:delete-outline'" :disabled="disableActions" :label="'Delete selected'" @click="confirmDeleteSelected()" />
                     </div>
 
-                    <div class="mb-2 flex flex-row flex-wrap gap-2 items-center min-h-8">
+                    <div v-if="employeeGroups.successful" class="mb-2 flex flex-row flex-wrap gap-2 items-center min-h-8">
                         <div class="scaffold-border px-2 font-[National_Park]">
                             <span><span class="font-semibold">{{selectedEmployeeGroups.length}}</span> Selected</span>
                         </div>
@@ -145,7 +145,12 @@
                         <Button @click="confirmGroupAssignmentBatchDetach" class="inline-block" :size="'sm'" :icon="'mdi:delete-outline'" :disabled="disableActions" :variant="'outline'" :label="'Remove selected from employees'" />
                     </div>
 
+                    <div v-if="!employeeGroups.successful" class="flex flex-row flex-wrap gap-2 items-center min-h-8">
+                        <Label invert :size="'md'" :type="'danger'" :label="employeeGroups.message" />
+                    </div>
+
                     <DataTable
+                        v-if="employeeGroups.successful"
                         :headers="employeeGroupsHeaders"
                         :size="'lg'"
                         :rows="employeeGroups.data"
@@ -170,7 +175,7 @@
 </template>
 
 <script setup lang="ts">
-import type {DataTableMeta, TableHeaderT, TableRowT} from "@/public/js/types/data";
+import type {DataTableT, TableHeaderT, TableRowT} from "@/public/js/types/data";
 import type {EmployeeSelectionInstance} from "@/public/js/types/component-instance";
 import type {EnumOption, EnumSelection} from "@/public/js/common/type";
 import {storeToRefs} from "pinia";
@@ -213,10 +218,7 @@ const employeeGroupsHeaders = reactive<TableHeaderT[]>([
     { text: 'Groupables Count', value: 'groupables_count', alignData: 'right'},
 ]);
 
-const employeeGroups = reactive<{
-    data: TableRowT[];
-    meta: DataTableMeta
-}>({
+const employeeGroups = reactive<DataTableT>({
     'data': [],
     'meta': {
         pagination: {
@@ -226,7 +228,9 @@ const employeeGroups = reactive<{
             current_page: 0,
             total_pages: 0
         }
-    }
+    },
+    'successful': true,
+    'message': ''
 });
 let filters = reactive<{
     page: number,
@@ -305,12 +309,13 @@ const employeeGroupsExecute = async() =>{
         onRequestError: () => {
             employeeGroupsPending.value = false;
         },
-        onResponse: () => {
+        onResponse: (request, options, response) => {
             employeeGroupsPending.value = false;
+            employeeGroups.successful = _get(response, '_data.successful', false);
+            employeeGroups.message = _get(response, '_data.message', '');
         },
         onSuccessResponse: async (request, options, response) => {
             employeeGroups.data = _get(response, '_data.values.data', [])
-
             employeeGroups.meta = _get(response, '_data.values.meta', {
                 pagination: {
                     total: 0,
@@ -321,7 +326,7 @@ const employeeGroupsExecute = async() =>{
                 }
             });
         }
-    }, true);
+    }, false);
 }
 await employeeGroupsExecute();
 

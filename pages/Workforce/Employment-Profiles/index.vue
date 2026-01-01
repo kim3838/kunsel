@@ -106,10 +106,10 @@
                     <div class="mb-2 flex flex-row flex-wrap gap-2 items-center min-h-8">
                         <UnorderedList v-if="disableActions" :icon="'eos-icons:loading'" :size="'md'" :label="'Please wait...'"/>
                         <Button v-if="!disableActions" @click="selectEmployee" class="w-min" :disabled="disableActions" :size="'sm'" :icon="disableActions ? 'eos-icons:loading' : 'mdi:plus'" :label="disableActions ? 'Please wait' : ''"></Button>
-                        <Button v-if="!disableActions" :variant="'outline'" :size="'sm'" :icon="'mdi:delete-outline'" :disabled="disableActions" :label="'Delete selected'" @click="confirmDeleteSelected()"/>
+                        <Button v-if="employmentProfiles.successful && !disableActions" :variant="'outline'" :size="'sm'" :icon="'mdi:delete-outline'" :disabled="disableActions" :label="'Delete selected'" @click="confirmDeleteSelected()"/>
                     </div>
 
-                    <div class="mb-2 flex flex-row flex-wrap gap-2 items-center min-h-8">
+                    <div v-if="employmentProfiles.successful" class="mb-2 flex flex-row flex-wrap gap-2 items-center min-h-8">
                         <div class="scaffold-border px-2 font-[National_Park]">
                             <span><span class="font-semibold">{{selectedEmploymentProfiles.length}}</span> Selected</span>
                         </div>
@@ -122,7 +122,12 @@
                             @click="selectedEmploymentProfiles = []" />
                     </div>
 
+                    <div v-if="!employmentProfiles.successful" class="flex flex-row flex-wrap gap-2 items-center min-h-8">
+                        <Label invert :size="'md'" :type="'danger'" :label="employmentProfiles.message" />
+                    </div>
+
                     <DataTable
+                        v-if="employmentProfiles.successful"
                         :sup-headers="employmentProfilesSupHeaders"
                         :headers="employmentProfilesHeaders"
                         :size="'lg'"
@@ -162,7 +167,7 @@
 
 <script setup lang="ts">
 import {storeToRefs} from "pinia";
-import type {DataTableMeta, TableHeaderT, TableRowT, TableSupHeaderT} from "@/public/js/types/data";
+import type {DataTableT, TableHeaderT, TableRowT, TableSupHeaderT} from "@/public/js/types/data";
 import type {EnumOption, EnumSelection, StringEnumInterface} from "@/public/js/common/type";
 
 useHead({titleTemplate: (titleChunk) => {return `${titleChunk} - Employment Profiles`}});
@@ -250,10 +255,7 @@ const employmentProfilesHeaders = reactive<TableHeaderT[]>([
     { text: 'End Date', value: 'end_date'},
 ]);
 
-const employmentProfiles = reactive<{
-    data: TableRowT[];
-    meta: DataTableMeta
-}>({
+const employmentProfiles = reactive<DataTableT>({
     'data': [],
     'meta': {
         pagination: {
@@ -263,7 +265,9 @@ const employmentProfiles = reactive<{
             current_page: 0,
             total_pages: 0
         }
-    }
+    },
+    'successful': true,
+    'message': ''
 });
 let filters = reactive<{
     page: number,
@@ -379,12 +383,13 @@ const employmentProfilesExecute = async() =>{
         onRequestError: () => {
             employmentProfilesPending.value = false;
         },
-        onResponse: () => {
+        onResponse: (request, options, response) => {
             employmentProfilesPending.value = false;
+            employmentProfiles.successful = _get(response, '_data.successful', false);
+            employmentProfiles.message = _get(response, '_data.message', '');
         },
         onSuccessResponse: async (request, options, response) => {
             employmentProfiles.data = _get(response, '_data.values.data', [])
-
             employmentProfiles.meta = _get(response, '_data.values.meta', {
                 pagination: {
                     total: 0,
@@ -395,7 +400,7 @@ const employmentProfilesExecute = async() =>{
                 }
             });
         }
-    }, true);
+    }, false);
 }
 await employmentProfilesExecute();
 
@@ -507,6 +512,8 @@ const employmentProfileEditPayload = ref({});
 
 const selectingEmployee = ref(false);
 const selectEmployee = () => {
+
+    coreStore.resetServiceError();
 
     stagedEmployee.value = {
         'id': null,
