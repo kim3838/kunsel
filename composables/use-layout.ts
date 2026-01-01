@@ -388,6 +388,13 @@ export const useLayout = () => {
                             to: '/payroll/employee-pay-items',
                             route_active: 'payroll-employee-pay-items'
                         },
+                        {
+                            key: 'payroll/payroll-frequencies',
+                            type: 'link',
+                            title: 'Frequency',
+                            to: '/payroll/payroll-frequencies',
+                            route_active: 'payroll-payroll-frequencies'
+                        },
                     ]
                 }, {
                     key: 'settings',
@@ -395,13 +402,6 @@ export const useLayout = () => {
                     title: 'Settings',
                     path_active: '/settings',
                     options: [
-                        {
-                            key: 'settings/payroll-frequencies',
-                            type: 'link',
-                            title: 'Payroll Frequency',
-                            to: '/settings/payroll-frequencies',
-                            route_active: 'settings-payroll-frequencies'
-                        },
                         {
                             key: 'settings/salary-statement-modules',
                             type: 'link',

@@ -63,7 +63,7 @@ export const useAssociation = () => {
             'policies-holiday',
             'payroll-payroll-components',
             'payroll-employee-pay-items',
-            'settings-payroll-frequencies',
+            'payroll-payroll-frequencies',
             'settings-salary-statement-modules',
             'settings-formula-settings',
             'reports-leave-balance-map',
