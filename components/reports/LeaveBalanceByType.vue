@@ -275,7 +275,7 @@ const leaveBalanceByTypeExecute = async() =>{
 
     leaveBalanceByTypePending.value = true;
 
-    await laraFetch(`/api/leave-balance-by-type`, {
+    await laraFetch(`/api/leave-running-balance-by-type`, {
         method: 'GET',
         params: paramsComputed.value
     }, {

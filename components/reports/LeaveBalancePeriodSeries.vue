@@ -256,7 +256,7 @@ const balancePeriodSeriesExecute = async () => {
     balancePeriodSeriesPending.value = true;
     let leaveBalancePeriodSeriesMinimumDateSuccessResponse = false;
 
-    await laraFetch(`/api/leave-balance-period-series-minimum-date`, {
+    await laraFetch(`/api/leave-running-balance-period-series-minimum-date`, {
         method: 'POST',
         body: {
             company_id: selectedAssociatedCompanyId.value,
@@ -295,7 +295,7 @@ const balancePeriodSeriesExecute = async () => {
 
     } else {
 
-        await laraFetch(`/api/leave-balance-period-series`, {
+        await laraFetch(`/api/leave-running-balance-period-series`, {
             method: 'GET',
             params: {
                 company_id: selectedAssociatedCompanyId.value,
