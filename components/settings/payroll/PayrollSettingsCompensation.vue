@@ -4,7 +4,7 @@
             <div class="text-lg font-header">Earnings</div>
             <div class="flex flex-row flex-wrap gap-2 items-center min-h-8">
                 <Button class="inline-block" :icon="'mdi:plus'" :size="'sm'" :disabled="disableActions" @click="create"/>
-                <Button :variant="'outline'" :icon="'mdi:delete-outline'" class="inline-block" :size="'sm'" :disabled="disableActions" @click="deleteSelected"/>
+                <Button v-if="compensationsSuccessful" :variant="'outline'" :icon="'mdi:delete-outline'" class="inline-block" :size="'sm'" :disabled="disableActions" @click="deleteSelected"/>
             </div>
         </div>
 
@@ -15,12 +15,15 @@
         ></CompensationModal>
 
         <div class="px-[20px]">
-            <UnorderedList
-                v-if="disableActions"
-                :icon="'eos-icons:loading'"
-                :size="'md'"
-                :label="'Please wait...'"/>
+
+            <UnorderedList v-if="disableActions" :icon="'eos-icons:loading'" :size="'md'" :label="'Please wait...'"/>
+
+            <div v-if="!compensationsSuccessful" class="mb-2 flex flex-row flex-wrap gap-2 items-center min-h-8">
+                <Label invert :size="'md'" :type="'danger'" :label="compensationsMessage" />
+            </div>
+
             <DataTable
+                v-if="compensationsSuccessful"
                 :headers="compensationsHeaders"
                 :size="'lg'"
                 :rows="compensationsData"
@@ -97,6 +100,8 @@ watch(updatedAssociatedCompanyFlag, (newValue) => {
 })
 
 const compensationsData = ref<SequenceablePayrollComponent[]>([]);
+const compensationsSuccessful = ref(true);
+const compensationsMessage = ref('');
 const compensationsPending = ref(false);
 const selectedCompensations = ref([]);
 
@@ -116,6 +121,7 @@ const compensationsExecute = async () => {
     await laraFetch("/api/compensations", {
         method: 'GET',
         params: {
+            company_id: selectedAssociatedCompanyId.value,
             filters: {
                 'company_id': selectedAssociatedCompanyId.value,
             }
@@ -124,13 +130,15 @@ const compensationsExecute = async () => {
         onRequestError: () => {
             compensationsPending.value = false;
         },
-        onResponse: () => {
+        onResponse: (request, options, response) => {
             compensationsPending.value = false;
+            compensationsSuccessful.value = _get(response, '_data.successful', false);
+            compensationsMessage.value = _get(response, '_data.message', '');
         },
         onSuccessResponse: async (request, options, response) => {
             compensationsData.value = _get(response, '_data.values.compensations', []);
         }
-    });
+    }, false);
 }
 await compensationsExecute();
 

@@ -4,7 +4,7 @@
             <div class="text-lg font-header">Tax</div>
             <div class="flex flex-row flex-wrap gap-2 items-center min-h-8">
                 <Button class="inline-block" :icon="'mdi:plus'" :size="'sm'" :disabled="disableActions" @click="create"/>
-                <Button :variant="'outline'" :icon="'mdi:delete-outline'" class="inline-block" :size="'sm'" :disabled="disableActions" @click="deleteSelected"/>
+                <Button v-if="incomeTaxesSuccessful" :variant="'outline'" :icon="'mdi:delete-outline'" class="inline-block" :size="'sm'" :disabled="disableActions" @click="deleteSelected"/>
             </div>
         </div>
 
@@ -15,12 +15,15 @@
         ></IncomeTaxModal>
 
         <div class="px-[20px]">
-            <UnorderedList
-                v-if="disableActions"
-                :icon="'eos-icons:loading'"
-                :size="'md'"
-                :label="'Please wait...'"/>
+
+            <UnorderedList v-if="disableActions" :icon="'eos-icons:loading'" :size="'md'" :label="'Please wait...'"/>
+
+            <div v-if="!incomeTaxesSuccessful" class="mb-2 flex flex-row flex-wrap gap-2 items-center min-h-8">
+                <Label invert :size="'md'" :type="'danger'" :label="incomeTaxesMessage" />
+            </div>
+
             <DataTable
+                v-if="incomeTaxesSuccessful"
                 :headers="incomeTaxesHeaders"
                 :size="'lg'"
                 :rows="incomeTaxesData"
@@ -97,6 +100,8 @@ watch(updatedAssociatedCompanyFlag, (newValue) => {
 })
 
 const incomeTaxesData = ref<SequenceablePayrollComponent[]>([]);
+const incomeTaxesSuccessful = ref(true);
+const incomeTaxesMessage = ref('');
 const incomeTaxesPending = ref(false);
 const selectedIncomeTaxes = ref([]);
 
@@ -116,6 +121,7 @@ const incomeTaxesExecute = async () => {
     await laraFetch("/api/income-taxes", {
         method: 'GET',
         params: {
+            company_id: selectedAssociatedCompanyId.value,
             filters: {
                 'company_id': selectedAssociatedCompanyId.value,
             }
@@ -124,13 +130,15 @@ const incomeTaxesExecute = async () => {
         onRequestError: () => {
             incomeTaxesPending.value = false;
         },
-        onResponse: () => {
+        onResponse: (request, options, response) => {
             incomeTaxesPending.value = false;
+            incomeTaxesSuccessful.value = _get(response, '_data.successful', false);
+            incomeTaxesMessage.value = _get(response, '_data.message', '');
         },
         onSuccessResponse: async (request, options, response) => {
             incomeTaxesData.value = _get(response, '_data.values.income_taxes', []);
         }
-    });
+    }, false);
 }
 await incomeTaxesExecute();
 

@@ -4,7 +4,7 @@
             <div class="text-lg font-header">Deductions</div>
             <div class="flex flex-row flex-wrap gap-2 items-center min-h-8">
                 <Button class="inline-block" :icon="'mdi:plus'" :size="'sm'" :disabled="disableActions" @click="create"/>
-                <Button :variant="'outline'" :icon="'mdi:delete-outline'" class="inline-block" :size="'sm'" :disabled="disableActions" @click="deleteSelected"/>
+                <Button v-if="deductionsSuccessful" :variant="'outline'" :icon="'mdi:delete-outline'" class="inline-block" :size="'sm'" :disabled="disableActions" @click="deleteSelected"/>
             </div>
         </div>
 
@@ -15,12 +15,15 @@
         ></DeductionModal>
 
         <div class="px-[20px]">
-            <UnorderedList
-                v-if="disableActions"
-                :icon="'eos-icons:loading'"
-                :size="'md'"
-                :label="'Please wait...'"/>
+
+            <UnorderedList v-if="disableActions" :icon="'eos-icons:loading'" :size="'md'" :label="'Please wait...'"/>
+
+            <div v-if="!deductionsSuccessful" class="mb-2 flex flex-row flex-wrap gap-2 items-center min-h-8">
+                <Label invert :size="'md'" :type="'danger'" :label="deductionsMessage" />
+            </div>
+
             <DataTable
+                v-if="deductionsSuccessful"
                 :headers="deductionsHeaders"
                 :size="'lg'"
                 :rows="deductionsData"
@@ -97,6 +100,8 @@ watch(updatedAssociatedCompanyFlag, (newValue) => {
 })
 
 const deductionsData = ref<SequenceablePayrollComponent[]>([]);
+const deductionsSuccessful = ref(true);
+const deductionsMessage = ref('');
 const deductionsPending = ref(false);
 const selectedDeductions = ref([]);
 
@@ -116,6 +121,7 @@ const deductionsExecute = async () => {
     await laraFetch("/api/deductions", {
         method: 'GET',
         params: {
+            company_id: selectedAssociatedCompanyId.value,
             filters: {
                 'company_id': selectedAssociatedCompanyId.value,
             }
@@ -124,13 +130,15 @@ const deductionsExecute = async () => {
         onRequestError: () => {
             deductionsPending.value = false;
         },
-        onResponse: () => {
+        onResponse: (request, options, response) => {
             deductionsPending.value = false;
+            deductionsSuccessful.value = _get(response, '_data.successful', false);
+            deductionsMessage.value = _get(response, '_data.message', '');
         },
         onSuccessResponse: async (request, options, response) => {
             deductionsData.value = _get(response, '_data.values.deductions', []);
         }
-    });
+    }, false);
 }
 await deductionsExecute();
 
