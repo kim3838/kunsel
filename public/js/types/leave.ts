@@ -49,7 +49,7 @@ export type LeaveBalanceEmploymentSeriesT = {
     value: LeaveBalanceDateSeriesT[]
 }
 
-export type LeaveBalanceMapYearMonthSeriesT = {
+export type LeaveBalanceYearMonthSeriesT = {
     period: number,
     year: number,
     month: number,
@@ -57,7 +57,7 @@ export type LeaveBalanceMapYearMonthSeriesT = {
     value: LeaveBalanceEmploymentSeriesT[],
 }
 
-export type LeaveBalanceMapPeriodSeriesT = {
+export type LeaveBalancePeriodSeriesT = {
     period: number,
-    value: LeaveBalanceMapYearMonthSeriesT[],
+    value: LeaveBalanceYearMonthSeriesT[],
 }

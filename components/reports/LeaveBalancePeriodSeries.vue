@@ -1,6 +1,6 @@
 <template>
     <div class="space-y-2 px-[20px]">
-        <form @submit.prevent="balanceMapExecute()" class="space-y-2 pb-[20px]">
+        <form @submit.prevent="balancePeriodSeriesExecute()" class="space-y-2 pb-[20px]">
             <div class="grid gap-2 grid-cols-3 sm:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-8">
                 <div class="col-span-4 md:col-span-3 lg:col-span-2">
                     <InputLabel :size="'sm'" value="Employee"/>
@@ -59,15 +59,15 @@
                 <Label invert :size="'md'" :type="'info'" :label="upToDateMessage.message" />
             </div>
 
-            <div v-if="balanceMapPending" class="inline-flex items-center">
+            <div v-if="balancePeriodSeriesPending" class="inline-flex items-center">
                 <UnorderedList
                     :icon="'eos-icons:loading'"
                     :size="'md'"
                     :label="'Please wait...'"/>
             </div>
-            <div v-else-if="showBalanceMap" class="space-y-2 overflow-x-scroll">
+            <div v-else-if="showBalancePeriodSeries" class="space-y-2 overflow-x-scroll">
 
-                <div v-for="periodSeries in balanceMap">
+                <div v-for="periodSeries in balancePeriodSeries">
 
                     <table class="period-series-table">
                         <tbody>
@@ -119,7 +119,7 @@
 
 <script setup lang="ts">
 import type {SelectDataType} from "@/public/js/types/form";
-import type {LeaveBalanceMapPeriodSeriesT} from "@/public/js/types/leave";
+import type {LeaveBalancePeriodSeriesT} from "@/public/js/types/leave";
 import {storeToRefs} from "pinia";
 
 const {isAuthenticated} = useAuth();
@@ -147,7 +147,7 @@ watch(updatedAssociatedCompanyFlag, async (newValue) => {
     if(isAuthenticated.value && selectedAssociatedCompanyId.value){
         rebuildSelections();
         reset();
-        showBalanceMap.value = false;
+        showBalancePeriodSeries.value = false;
     }
 })
 
@@ -207,7 +207,7 @@ const assignedLeaveTypeSelectionsOptions = reactive({
     selected: null,
 });
 
-const showBalanceMap = ref(false);
+const showBalancePeriodSeries = ref(false);
 const uptoDate = ref($moment().format("YYYY-MM-DD"));
 const upToDateMessage = reactive({
     show: false,
@@ -216,7 +216,7 @@ const upToDateMessage = reactive({
 
 const selectedEmployeeChanged = (selectedEmployee: SelectDataType) => {
 
-    showBalanceMap.value = false;
+    showBalancePeriodSeries.value = false;
     upToDateMessage.show = false;
     upToDateMessage.message = '';
 
@@ -234,27 +234,27 @@ const selectedEmployeeChanged = (selectedEmployee: SelectDataType) => {
 }
 const selectedLeaveTypeChanged = () => {
 
-    showBalanceMap.value = false;
+    showBalancePeriodSeries.value = false;
     upToDateMessage.show = false;
     upToDateMessage.message = '';
 }
 
-const balanceMapPending = ref(false);
+const balancePeriodSeriesPending = ref(false);
 
 const disableActions = computed(() => {
-    return balanceMapPending.value || companyAssociationPendingState().value;
+    return balancePeriodSeriesPending.value || companyAssociationPendingState().value;
 });
 
-const balanceMap = ref<LeaveBalanceMapPeriodSeriesT[]>([]);
+const balancePeriodSeries = ref<LeaveBalancePeriodSeriesT[]>([]);
 
-const balanceMapExecute = async () => {
+const balancePeriodSeriesExecute = async () => {
 
-    showBalanceMap.value = false;
+    showBalancePeriodSeries.value = false;
     upToDateMessage.show = false;
     upToDateMessage.message = '';
 
-    balanceMapPending.value = true;
-    let leaveBalanceMapMinimumDateSuccessResponse = false;
+    balancePeriodSeriesPending.value = true;
+    let leaveBalancePeriodSeriesMinimumDateSuccessResponse = false;
 
     await laraFetch(`/api/leave-balance-period-series-minimum-date`, {
         method: 'POST',
@@ -276,13 +276,13 @@ const balanceMapExecute = async () => {
                 renderUpToDatePicker();
             }
 
-            leaveBalanceMapMinimumDateSuccessResponse = true;
+            leaveBalancePeriodSeriesMinimumDateSuccessResponse = true;
         }
     }, true);
 
-    if(!leaveBalanceMapMinimumDateSuccessResponse){
+    if(!leaveBalancePeriodSeriesMinimumDateSuccessResponse){
 
-        balanceMapPending.value = false;
+        balancePeriodSeriesPending.value = false;
 
         coreStore.setServiceError({
             prompt: false,
@@ -305,17 +305,17 @@ const balanceMapExecute = async () => {
             }
         }, {
             onRequestError: () => {
-                balanceMapPending.value = false;
+                balancePeriodSeriesPending.value = false;
             },
             onResponse: () => {
-                balanceMapPending.value = false;
+                balancePeriodSeriesPending.value = false;
             },
             onUnprocessableContentResponse: () => {
-                balanceMapPending.value = false;
+                balancePeriodSeriesPending.value = false;
             },
             onSuccessResponse: async (request, options, response) => {
-                balanceMap.value = _get(response, '_data.values.balance_map', []);
-                showBalanceMap.value = true;
+                balancePeriodSeries.value = _get(response, '_data.values.balance_period_series', []);
+                showBalancePeriodSeries.value = true;
             }
         }, false);
 
