@@ -350,7 +350,6 @@ const renderUpToDatePicker = () => {
 
 //Render date time pickers on navigate
 if(clientReadyState.value){
-    console.log('LeaveBalanceByType clientReadyState on navigate');
     onMounted(async () => {
         await nextTick(() => {
             renderUpToDatePicker();
@@ -360,7 +359,6 @@ if(clientReadyState.value){
 
 //Render date time pickers on load
 watch(clientReadyState, async (clientReady) => {
-    console.log('LeaveBalanceByType clientReadyState on load');
     if(clientReady){
         await nextTick(() => {
             renderUpToDatePicker();
