@@ -64,11 +64,12 @@
             </div>
         </form>
 
-        <div v-if="shiftAssignments.successful" class="flex flex-row flex-wrap gap-2 items-center min-h-8">
-            <div class="scaffold-border px-2 font-[National_Park]">
+        <div class="flex flex-row flex-wrap gap-2 items-center min-h-8">
+            <div v-if="shiftAssignments.successful" class="scaffold-border px-2 font-[National_Park]">
                 <span><span class="font-semibold">{{selectedShiftAssignments.length}}</span> Selected</span>
             </div>
             <Button
+                v-if="shiftAssignments.successful"
                 :variant="'outline'"
                 :size="'sm'"
                 :icon="'tdesign:close'"
@@ -76,16 +77,14 @@
                 :label="'Clear selection'"
                 @click="selectedShiftAssignments = []" />
             <Button
+                v-if="shiftAssignments.successful"
                 :variant="'outline'"
                 :size="'sm'"
                 :icon="'mdi:delete-outline'"
                 :disabled="disableActions"
                 :label="'Delete selected shift assignments'"
                 @click="confirmDeleteSelected()" />
-        </div>
-
-        <div v-if="!shiftAssignments.successful" class="flex flex-row flex-wrap gap-2 items-center min-h-8">
-            <Label invert :size="'md'" :type="'danger'" :label="shiftAssignments.message" />
+            <Label v-if="!shiftAssignments.successful" invert :size="'md'" :type="'danger'" :label="shiftAssignments.message" />
         </div>
 
         <DataTable

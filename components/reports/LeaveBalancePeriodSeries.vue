@@ -51,21 +51,21 @@
         </form>
 
         <div class="space-y-2">
-            <div v-if="!balancePeriodSeriesSuccessful" class="flex flex-row flex-wrap gap-2 items-center min-h-8">
-                <Label invert :size="'md'" :type="'danger'" :label="balancePeriodSeriesMessage" />
-            </div>
-
-            <div v-if="balancePeriodSeriesSuccessful && !disableActions && upToDateMessage.show" class="block">
-                <Label invert :size="'md'" :type="'info'" :label="upToDateMessage.message" />
-            </div>
-
-            <div v-if="balancePeriodSeriesPending" class="inline-flex items-center">
+            <div  class="flex flex-row flex-wrap gap-2 items-center min-h-8">
                 <UnorderedList
+                    v-if="balancePeriodSeriesPending"
                     :icon="'eos-icons:loading'"
                     :size="'md'"
                     :label="'Please wait...'"/>
+                <Label
+                    v-if="!balancePeriodSeriesPending && balancePeriodSeriesSuccessful && !disableActions && upToDateMessage.show"
+                    invert :size="'md'" :type="'info'" :label="upToDateMessage.message" />
+                <Label
+                    v-if="!balancePeriodSeriesPending && !balancePeriodSeriesSuccessful"
+                    invert :size="'md'" :type="'danger'" :label="balancePeriodSeriesMessage" />
             </div>
-            <div v-else-if="showBalancePeriodSeries" class="space-y-2 overflow-x-scroll">
+
+            <div v-if="!balancePeriodSeriesPending && showBalancePeriodSeries" class="space-y-2 overflow-x-scroll">
 
                 <div v-for="periodSeries in balancePeriodSeries">
 

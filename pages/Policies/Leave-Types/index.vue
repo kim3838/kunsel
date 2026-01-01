@@ -50,15 +50,12 @@
                         <Button v-if="leaveTypes.successful && !disableActions" :variant="'outline'" :icon="'mdi:delete-outline'" class="inline-block" :size="'sm'" :disabled="disableActions" :label="'Delete selected'" @click="confirmDeleteSelected"/>
                     </div>
 
-                    <div v-if="leaveTypes.successful" class="mb-2 flex flex-row flex-wrap gap-2 items-center min-h-8">
-                        <div class="scaffold-border px-2 font-[National_Park]">
+                    <div class="mb-2 flex flex-row flex-wrap gap-2 items-center min-h-8">
+                        <div v-if="leaveTypes.successful" class="scaffold-border px-2 font-[National_Park]">
                             <span><span class="font-semibold">{{selectedLeaveTypes.length}}</span> Selected</span>
                         </div>
-                        <Button :variant="'outline'" :size="'sm'" :icon="'tdesign:close'" :disabled="disableActions" :label="'Clear selection'" @click="selectedLeaveTypes = []" />
-                    </div>
-
-                    <div v-if="!leaveTypes.successful" class="flex flex-row flex-wrap gap-2 items-center min-h-8">
-                        <Label invert :size="'md'" :type="'danger'" :label="leaveTypes.message" />
+                        <Button v-if="leaveTypes.successful" :variant="'outline'" :size="'sm'" :icon="'tdesign:close'" :disabled="disableActions" :label="'Clear selection'" @click="selectedLeaveTypes = []" />
+                        <Label v-if="!leaveTypes.successful" invert :size="'md'" :type="'danger'" :label="leaveTypes.message" />
                     </div>
 
                     <DataTable

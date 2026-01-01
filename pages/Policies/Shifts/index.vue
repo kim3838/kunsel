@@ -50,15 +50,12 @@
                         <Button v-if="shifts.successful && !disableActions" :variant="'outline'" :icon="'mdi:delete-outline'" class="inline-block" :size="'sm'" :disabled="disableActions" :label="'Delete selected'" @click="deleteSelected"/>
                     </div>
 
-                    <div v-if="!shifts.successful" class="flex flex-row flex-wrap gap-2 items-center min-h-8">
-                        <Label invert :size="'md'" :type="'danger'" :label="shifts.message" />
-                    </div>
-
-                    <div v-if="shifts.successful" class="mb-2 flex flex-row flex-wrap gap-2 items-center min-h-8">
-                        <div class="scaffold-border px-2 font-[National_Park]">
+                    <div class="mb-2 flex flex-row flex-wrap gap-2 items-center min-h-8">
+                        <div v-if="shifts.successful" class="scaffold-border px-2 font-[National_Park]">
                             <span><span class="font-semibold">{{selectedShifts.length}}</span> Selected</span>
                         </div>
-                        <Button :variant="'outline'" :size="'sm'" :icon="'tdesign:close'" :disabled="disableActions" :label="'Clear selection'" @click="selectedShifts = []" />
+                        <Button v-if="shifts.successful" :variant="'outline'" :size="'sm'" :icon="'tdesign:close'" :disabled="disableActions" :label="'Clear selection'" @click="selectedShifts = []" />
+                        <Label v-if="!shifts.successful" invert :size="'md'" :type="'danger'" :label="shifts.message" />
                     </div>
 
                     <DataTable

@@ -36,11 +36,12 @@
             </div>
         </form>
 
-        <div v-if="shifts.successful" class="flex flex-row flex-wrap gap-2 items-center min-h-8">
-            <div class="scaffold-border px-2 font-[National_Park]">
+        <div class="flex flex-row flex-wrap gap-2 items-center min-h-8">
+            <div v-if="shifts.successful" class="scaffold-border px-2 font-[National_Park]">
                 <span><span class="font-semibold">{{proxySelectedShifts.length}}</span> Selected</span>
             </div>
             <Button
+                v-if="shifts.successful"
                 :variant="'outline'"
                 :size="'sm'"
                 :icon="'tdesign:close'"
@@ -48,11 +49,8 @@
                 :label="'Clear selection'"
                 @click="proxySelectedShifts = []" />
 
-            <slot name="selection-actions"></slot>
-        </div>
-
-        <div v-if="!shifts.successful" class="flex flex-row flex-wrap gap-2 items-center min-h-8">
-            <Label invert :size="'md'" :type="'danger'" :label="shifts.message" />
+            <slot v-if="shifts.successful" name="selection-actions"></slot>
+            <Label v-if="!shifts.successful" invert :size="'md'" :type="'danger'" :label="shifts.message" />
         </div>
 
         <DataTable

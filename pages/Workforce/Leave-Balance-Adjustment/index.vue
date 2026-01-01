@@ -160,21 +160,19 @@
                         <Button v-if="leaveBalanceAdjustments.successful && !disableActions" :variant="'outline'" :size="'sm'" :icon="'mdi:delete-outline'" :disabled="disableActions" :label="'Delete selected'" @click="confirmDeleteSelected()" />
                     </div>
 
-                    <div v-if="leaveBalanceAdjustments.successful" class="mb-2 flex flex-row flex-wrap gap-2 items-center min-h-8">
-                        <div class="scaffold-border px-2 font-[National_Park]">
+                    <div class="mb-2 flex flex-row flex-wrap gap-2 items-center min-h-8">
+                        <div v-if="leaveBalanceAdjustments.successful" class="scaffold-border px-2 font-[National_Park]">
                             <span><span class="font-semibold">{{selectedLeaveBalanceAdjustments.length}}</span> Selected</span>
                         </div>
                         <Button
+                            v-if="leaveBalanceAdjustments.successful"
                             :variant="'outline'"
                             :size="'sm'"
                             :icon="'tdesign:close'"
                             :disabled="disableActions"
                             :label="'Clear selection'"
                             @click="selectedLeaveBalanceAdjustments = []" />
-                    </div>
-
-                    <div v-if="!leaveBalanceAdjustments.successful" class="flex flex-row flex-wrap gap-2 items-center min-h-8">
-                        <Label invert :size="'md'" :type="'danger'" :label="leaveBalanceAdjustments.message" />
+                        <Label v-if="!leaveBalanceAdjustments.successful" invert :size="'md'" :type="'danger'" :label="leaveBalanceAdjustments.message" />
                     </div>
 
                     <DataTable

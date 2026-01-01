@@ -192,11 +192,12 @@
                 </DialogModal>
 
                 <div class="px-[20px]">
-                    <div v-if="attendances.successful" class="mb-2 flex flex-row flex-wrap gap-2 items-center min-h-8">
-                        <div class="scaffold-border px-2 font-[National_Park]">
+                    <div class="mb-2 flex flex-row flex-wrap gap-2 items-center min-h-8">
+                        <div v-if="attendances.successful" class="scaffold-border px-2 font-[National_Park]">
                             <span><span class="font-semibold">{{selectedAttendances.length}}</span> Selected</span>
                         </div>
                         <Button
+                            v-if="attendances.successful"
                             :variant="'outline'"
                             :size="'sm'"
                             :icon="'tdesign:close'"
@@ -204,16 +205,14 @@
                             :label="'Clear selection'"
                             @click="selectedAttendances = []" />
                         <Button
+                            v-if="attendances.successful"
                             :variant="'outline'"
                             :size="'sm'"
                             :icon="'mdi:delete-outline'"
                             :disabled="disableActions"
                             :label="'Delete selected'"
                             @click="confirmDeleteSelected()" />
-                    </div>
-
-                    <div v-if="!attendances.successful" class="flex flex-row flex-wrap gap-2 items-center min-h-8">
-                        <Label invert :size="'md'" :type="'danger'" :label="attendances.message" />
+                        <Label v-if="!attendances.successful" invert :size="'md'" :type="'danger'" :label="attendances.message" />
                     </div>
 
                     <DataTable

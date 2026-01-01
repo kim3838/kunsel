@@ -149,14 +149,16 @@
                 <div class="px-[20px]">
 
                     <div class="mb-2 flex flex-row flex-wrap gap-2 items-center min-h-8">
-                        <Button @click="selectEmployee" class="w-min" :disabled="disableActions" :size="'sm'" :icon="disableActions ? 'eos-icons:loading' : 'mdi:plus'" :label="disableActions ? 'Please wait' : ''"></Button>
+                        <UnorderedList v-if="disableActions" :icon="'eos-icons:loading'" :size="'md'" :label="'Please wait...'"/>
+                        <Button v-else @click="selectEmployee" class="w-min" :disabled="disableActions" :size="'sm'" :icon="disableActions ? 'eos-icons:loading' : 'mdi:plus'" :label="disableActions ? 'Please wait' : ''"></Button>
                     </div>
 
-                    <div v-if="payrollComponents.successful" class="mb-2 flex flex-row flex-wrap gap-2 items-center min-h-8">
-                        <div class="scaffold-border px-2 font-[National_Park]">
+                    <div class="mb-2 flex flex-row flex-wrap gap-2 items-center min-h-8">
+                        <div v-if="payrollComponents.successful" class="scaffold-border px-2 font-[National_Park]">
                             <span><span class="font-semibold">{{selectedPayrollComponents.length}}</span> Selected</span>
                         </div>
                         <Button
+                            v-if="payrollComponents.successful"
                             :variant="'outline'"
                             :size="'sm'"
                             :icon="'tdesign:close'"
@@ -164,16 +166,14 @@
                             :label="'Clear selection'"
                             @click="selectedPayrollComponents = []" />
                         <Button
+                            v-if="payrollComponents.successful"
                             :variant="'outline'"
                             :size="'sm'"
                             :icon="'mdi:delete-outline'"
                             :disabled="disableActions"
                             :label="'Delete selected'"
                             @click="confirmDeleteSelected()"/>
-                    </div>
-
-                    <div v-if="!payrollComponents.successful" class="flex flex-row flex-wrap gap-2 items-center min-h-8">
-                        <Label invert :size="'md'" :type="'danger'" :label="payrollComponents.message" />
+                        <Label v-if="!payrollComponents.successful" invert :size="'md'" :type="'danger'" :label="payrollComponents.message" />
                     </div>
 
                     <DataTable

@@ -84,18 +84,19 @@
             </div>
         </form>
 
-        <div v-if="employees.successful" class="flex flex-row flex-wrap gap-2 items-center min-h-8">
-            <div class="scaffold-border px-2 font-[National_Park]">
+        <div class="flex flex-row flex-wrap gap-2 items-center min-h-8">
+            <div v-if="employees.successful" class="scaffold-border px-2 font-[National_Park]">
                 <span><span class="font-semibold">{{proxySelectedEmployees.length}}</span> {{selectedLabel}}</span>
             </div>
             <Button
+                v-if="employees.successful"
                 :variant="'outline'"
                 :size="'sm'"
                 :icon="'tdesign:close'"
                 :disabled="disableActions"
                 :label="clearSelectionLabel"
                 @click="proxySelectedEmployees = []" />
-            <label class="scaffold-border">
+            <label v-if="employees.successful" class="scaffold-border">
                 <Checkbox
                     :disabled="disableActions"
                     @valueChanged="selectedFlagInteracted"
@@ -104,11 +105,8 @@
                     :size="'md'"
                     :label="showOnlySelectedLabel" />
             </label>
-            <slot name="selection-actions"></slot>
-        </div>
-
-        <div v-if="!employees.successful" class="flex flex-row flex-wrap gap-2 items-center min-h-8">
-            <Label invert :size="'md'" :type="'danger'" :label="employees.message" />
+            <slot v-if="employees.successful" name="selection-actions"></slot>
+            <Label v-if="!employees.successful" invert :size="'md'" :type="'danger'" :label="employees.message" />
         </div>
 
         <DataTable

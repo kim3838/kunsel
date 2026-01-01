@@ -136,17 +136,14 @@
                         <Button v-if="employeeGroups.successful && !disableActions" :variant="'outline'" :size="'sm'" :icon="'mdi:delete-outline'" :disabled="disableActions" :label="'Delete selected'" @click="confirmDeleteSelected()" />
                     </div>
 
-                    <div v-if="employeeGroups.successful" class="mb-2 flex flex-row flex-wrap gap-2 items-center min-h-8">
-                        <div class="scaffold-border px-2 font-[National_Park]">
+                    <div class="mb-2 flex flex-row flex-wrap gap-2 items-center min-h-8">
+                        <div v-if="employeeGroups.successful" class="scaffold-border px-2 font-[National_Park]">
                             <span><span class="font-semibold">{{selectedEmployeeGroups.length}}</span> Selected</span>
                         </div>
-                        <Button :variant="'outline'" :size="'sm'" :icon="'tdesign:close'" :disabled="disableActions" :label="'Clear selection'" @click="selectedEmployeeGroups = []" />
-                        <Button @click="assignGroups" class="inline-block" :size="'sm'" :icon="'mdi:plus'" :disabled="disableActions" :variant="'outline'" :label="'Assign selected to employees'" />
-                        <Button @click="confirmGroupAssignmentBatchDetach" class="inline-block" :size="'sm'" :icon="'mdi:delete-outline'" :disabled="disableActions" :variant="'outline'" :label="'Remove selected from employees'" />
-                    </div>
-
-                    <div v-if="!employeeGroups.successful" class="flex flex-row flex-wrap gap-2 items-center min-h-8">
-                        <Label invert :size="'md'" :type="'danger'" :label="employeeGroups.message" />
+                        <Button v-if="employeeGroups.successful" :variant="'outline'" :size="'sm'" :icon="'tdesign:close'" :disabled="disableActions" :label="'Clear selection'" @click="selectedEmployeeGroups = []" />
+                        <Button v-if="employeeGroups.successful" @click="assignGroups" class="inline-block" :size="'sm'" :icon="'mdi:plus'" :disabled="disableActions" :variant="'outline'" :label="'Assign selected to employees'" />
+                        <Button v-if="employeeGroups.successful" @click="confirmGroupAssignmentBatchDetach" class="inline-block" :size="'sm'" :icon="'mdi:delete-outline'" :disabled="disableActions" :variant="'outline'" :label="'Remove selected from employees'" />
+                        <Label v-if="!employeeGroups.successful" invert :size="'md'" :type="'danger'" :label="employeeGroups.message" />
                     </div>
 
                     <DataTable
