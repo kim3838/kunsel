@@ -4,13 +4,6 @@
             <div class="mx-auto max-w-screen-2xl">
 
                 <div class="p-[20px]">
-                    <div class="mb-2 flex gap-2 items-center min-h-8">
-                        <UnorderedList
-                            v-if="disableActions"
-                            :icon="'eos-icons:loading'"
-                            :size="'md'"
-                            :label="'Please wait...'"/>
-                    </div>
 
                     <DataTable
                         :headers="salaryStatementModulesHeaders"
