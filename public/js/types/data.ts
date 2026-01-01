@@ -70,6 +70,13 @@ export type DataTableMeta = {
     pagination: MetaPaginationT
 }
 
+export type DataTableT = {
+    data: TableRowT[];
+    meta: DataTableMeta,
+    successful: boolean,
+    message: string
+}
+
 export type SequenceableTableRow = Sequenceable & TableRowT;
 
 export type DatePickerT = {
