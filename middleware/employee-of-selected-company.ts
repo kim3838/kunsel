@@ -1,4 +1,4 @@
-import type {SelectedCompanyT} from "~/public/js/types/association";
+import type {SelectedCompanyT} from "@/public/js/types/association";
 
 export default defineNuxtRouteMiddleware(async (to, from) => {
     const {$authStore} = useNuxtApp();
