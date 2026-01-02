@@ -53,7 +53,13 @@
                     </template>
                 </DialogModal>
 
-                <div class="space-y-2 p-[20px] flex flex-col gap-4">
+                <div v-if="!payFrequenciesSuccessful" class="space-y-2 p-[20px]">
+                    <div class="mb-2 flex flex-row flex-wrap gap-2 items-center min-h-8">
+                        <Label invert :size="'md'" :type="'danger'" :label="payFrequenciesMessage" />
+                    </div>
+                </div>
+
+                <div v-if="payFrequenciesSuccessful" class="space-y-2 p-[20px] flex flex-col gap-4">
 
                     <fieldset class="neutral-border px-2 pb-2 space-y-2">
                         <legend class="text-lg font-header">{{PAY_FREQUENCY_NAME[dailyPayFrequenciesData.type]}}</legend>
@@ -187,12 +193,24 @@
 
 <script setup lang="ts">
 import {storeToRefs} from "pinia";
-import type {TimePeriodPresetSelectionT} from "~/public/js/types/time";
-import type {EnumSelection, StringEnumInterface} from "~/public/js/common/type";
-import type {PayFrequencyT} from "~/public/js/types/pay-frequency";
+import type {TimePeriodPresetSelectionT} from "@/public/js/types/time";
+import type {EnumSelection, StringEnumInterface} from "@/public/js/common/type";
+import type {PayFrequencyT} from "@/public/js/types/pay-frequency";
 
 useHead({titleTemplate: (titleChunk) => {return `${titleChunk} - Payroll Frequencies`}});
-definePageMeta({middleware: ['auth', 'admin-of-selected-company']});
+definePageMeta({middleware: ['auth', 'admin-of-selected-company',
+    async () => {
+
+        const {selectedAssociatedCompanyId} = storeToRefs(useAuthStore());
+        const {data, error} = await laraUseFetch(`/api/pay-frequencies-gate`, {method: 'GET', params: {company_id: selectedAssociatedCompanyId.value}}, {}, false);
+
+        if(_isEmpty(data.value) && !_isEmpty(error.value)){
+            let responseCode = _get(error.value, 'data.code', null);
+
+            throw createError({ statusCode: responseCode, statusMessage: useCoreStore().servicePayloadMessage, fatal: true});
+        }
+    }
+]});
 useLayout().setNavigationMode('solid');
 
 const {screenWidthBreakpoint, width: screenWidth} = useScreen();
@@ -302,6 +320,8 @@ const weekDaySelection = reactive<EnumSelection>([
 ]);
 
 const payFrequenciesData = ref([]);
+const payFrequenciesSuccessful = ref(true);
+const payFrequenciesMessage = ref('');
 const dailyPayFrequenciesData = ref<PayFrequencyT | {}>({});
 const weeklyPayFrequenciesData = ref<PayFrequencyT | {}>({});
 const monthlyPayFrequenciesData = ref<PayFrequencyT | {}>({});
@@ -316,6 +336,7 @@ const payFrequenciesExecute = async () => {
     await laraFetch("/api/pay-frequencies", {
         method: 'GET',
         params: {
+            company_id: selectedAssociatedCompanyId.value,
             filters: {
                 'company_id': selectedAssociatedCompanyId.value,
             }
@@ -324,8 +345,10 @@ const payFrequenciesExecute = async () => {
         onRequestError: () => {
             payFrequenciesPending.value = false;
         },
-        onResponse: () => {
+        onResponse: (request, options, response) => {
             payFrequenciesPending.value = false;
+            payFrequenciesSuccessful.value = _get(response, '_data.successful', false);
+            payFrequenciesMessage.value = _get(response, '_data.message', '');
         },
         onSuccessResponse: async (request, options, response) => {
             payFrequenciesData.value = _get(response, '_data.values.pay_frequencies', []);
@@ -335,7 +358,7 @@ const payFrequenciesExecute = async () => {
             semimonthlyPayFrequenciesData.value = _find(payFrequenciesData.value, (item: PayFrequencyT) => item.type == PAY_FREQUENCY_TYPE.SEMI_MONTHLY) as PayFrequencyT;
             monthlyPayFrequenciesData.value = _find(payFrequenciesData.value, (item: PayFrequencyT) => item.type == PAY_FREQUENCY_TYPE.MONTHLY) as PayFrequencyT;
         }
-    });
+    }, false);
 }
 await payFrequenciesExecute();
 
