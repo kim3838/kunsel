@@ -49,7 +49,13 @@
                     </NuxtLink>
                 </div>
 
-                <form @submit.prevent="formSubmit" class="px-[20px] space-y-2">
+                <div v-if="!jsonPresetSuccessful" class="px-[20px]">
+                    <div class="mb-2 flex flex-row flex-wrap gap-2 items-center min-h-8">
+                        <Label invert :size="'md'" :type="'danger'" :label="jsonPresetMessage" />
+                    </div>
+                </div>
+
+                <form v-if="jsonPresetSuccessful" @submit.prevent="formSubmit" class="px-[20px] space-y-2">
 
                     <fieldset class="neutral-border px-2 pb-2 space-y-2">
                         <legend class="text-lg font-header">Json Preset</legend>
@@ -108,10 +114,13 @@
 <script setup lang="ts">
 
 useHead({titleTemplate: (titleChunk) => {return `${titleChunk} - Json Presets`}});
+definePageMeta({middleware: ['auth', 'super-admin']});
 useLayout().setNavigationMode('solid');
 
 const route = useRoute();
 const jsonPreset = ref(null);
+const jsonPresetSuccessful = ref(true);
+const jsonPresetMessage = ref('');
 const creatingJsonPreset = computed(() => {
     return route.params.id === 'create-jsonpreset';
 });
@@ -122,23 +131,6 @@ const inputJsonFileContent = ref<any[] | null>([]);
 const jsonContent = ref<any[] | null>([]);
 const jsonFile = ref<HTMLInputElement | null>(null);
 
-definePageMeta({
-    middleware: ['auth', 'super-admin',
-        async (to) => {
-
-            if(import.meta.server || to.params.id === 'create-jsonpreset'){return true;}
-
-            const {data, error} = await laraUseFetch(`/api/json-preset-check/${to.params.id}`, {method: 'GET',}, {}, false);
-
-            if(_isEmpty(data.value) && !_isEmpty(error.value)){
-                let responseCode = _get(error.value, 'data.code', null);
-
-                throw createError({ statusCode: responseCode, statusMessage: useCoreStore().servicePayloadMessage, fatal: true});
-            }
-        }
-    ]
-});
-
 const jsonPresetPending = ref(false);
 
 //Fetch Json Preset Information
@@ -148,6 +140,10 @@ const fetchJsonPreset = async () => {
     await laraFetch(`/api/json-preset/${route.params.id}`, {
         method: 'GET',
     }, {
+        onResponse: (request, options, response) => {
+            jsonPresetSuccessful.value = _get(response, '_data.successful', false);
+            jsonPresetMessage.value = _get(response, '_data.message', '');
+        },
         onSuccessResponse: async (request, options, response) => {
             jsonPreset.value = _get(response, '_data.values.json_preset', null);
             jsonPresetKey.value = _get(response, '_data.values.json_preset.key', null);
@@ -155,7 +151,7 @@ const fetchJsonPreset = async () => {
             jsonPresetFileBaseName.value = _get(response, '_data.values.json_preset.json_base_name', null);
             jsonContent.value = _get(response, '_data.values.json_preset.json_value', null);
         },
-    });
+    }, false);
 };
 await fetchJsonPreset();
 

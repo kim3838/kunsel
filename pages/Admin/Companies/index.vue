@@ -35,7 +35,12 @@
                         </NuxtLink>
                     </div>
 
+                    <div v-if="!companies.successful" class="mb-2 flex flex-row flex-wrap gap-2 items-center min-h-8">
+                        <Label invert :size="'md'" :type="'danger'" :label="companies.message" />
+                    </div>
+
                     <DataTable
+                        v-if="companies.successful"
                         :headers="companiesHeaders"
                         :size="'lg'"
                         :rows="companies.data"
@@ -70,7 +75,7 @@
 </template>
 
 <script setup lang="ts">
-import type {DataTableMeta, TableHeaderT, TableRowT} from "@/public/js/types/data";
+import type {DataTableT, TableHeaderT} from "@/public/js/types/data";
 
 useHead({titleTemplate: (titleChunk) => {return `${titleChunk} - Companies`}});
 definePageMeta({middleware: ['auth', 'super-admin']});
@@ -87,10 +92,7 @@ const companiesHeaders = reactive<TableHeaderT[]>([
     { text: 'Timezone', value: 'timezone', alignData: 'left'},
 ]);
 
-const companies = reactive<{
-    data: TableRowT[];
-    meta: DataTableMeta
-}>({
+const companies = reactive<DataTableT>({
     'data': [],
     'meta': {
         pagination: {
@@ -100,7 +102,9 @@ const companies = reactive<{
             current_page: 0,
             total_pages: 0
         }
-    }
+    },
+    'successful': true,
+    'message': ''
 });
 const accountOptions = reactive({
     search: '',
@@ -160,8 +164,10 @@ const companiesExecute = async () => {
         onRequestError: () => {
             companiesPending.value = false;
         },
-        onResponse: () => {
+        onResponse: (request, options, response) => {
             companiesPending.value = false;
+            companies.successful = _get(response, '_data.successful', false);
+            companies.message = _get(response, '_data.message', '');
         },
         onSuccessResponse: async (request, options, response) => {
             companies.data = _get(response, '_data.values.data', []);
@@ -175,7 +181,7 @@ const companiesExecute = async () => {
                 }
             });
         }
-    });
+    }, false);
 }
 await companiesExecute();
 const fetchAccounts = async() => {

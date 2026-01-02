@@ -32,7 +32,12 @@
                         <Button v-if="!disableActions" :variant="'outline'" :icon="'mdi:delete-outline'" class="inline-block" :size="'sm'" :disabled="disableActions" @click="deleteSelected"/>
                     </div>
 
+                    <div v-if="!jsonPresets.successful" class="mb-2 flex flex-row flex-wrap gap-2 items-center min-h-8">
+                        <Label invert :size="'md'" :type="'danger'" :label="jsonPresets.message" />
+                    </div>
+
                     <DataTable
+                        v-if="jsonPresets.successful"
                         :headers="jsonPresetsHeaders"
                         :size="'lg'"
                         :rows="jsonPresets.data"
@@ -65,7 +70,7 @@
 </template>
 
 <script setup lang="ts">
-import type {DataTableMeta, TableHeaderT, TableRowT} from "@/public/js/types/data";
+import type {DataTableT, TableHeaderT} from "@/public/js/types/data";
 
 useHead({titleTemplate: (titleChunk) => {return `${titleChunk} - Json Presets`}});
 definePageMeta({middleware: ['auth', 'super-admin']});
@@ -78,10 +83,7 @@ const jsonPresetsHeaders = reactive<TableHeaderT[]>([
     { text: 'Path', value: 'path', alignData: 'left'},
 ]);
 
-const jsonPresets = reactive<{
-    data: TableRowT[];
-    meta: DataTableMeta
-}>({
+const jsonPresets = reactive<DataTableT>({
     'data': [],
     'meta': {
         pagination: {
@@ -91,7 +93,9 @@ const jsonPresets = reactive<{
             current_page: 0,
             total_pages: 0
         }
-    }
+    },
+    'successful': true,
+    'message': ''
 });
 
 let filters = reactive<{
@@ -138,15 +142,17 @@ const jsonPresetsExecute = async () => {
 
     jsonPresetsPending.value = true;
 
-        await laraFetch("/api/json-presets", {
+    await laraFetch("/api/json-presets", {
         method: 'GET',
         params: paramsComputed.value
     },{
         onRequestError: () => {
             jsonPresetsPending.value = false;
         },
-        onResponse: () => {
+        onResponse: (request, options, response) => {
             jsonPresetsPending.value = false;
+            jsonPresets.successful = _get(response, '_data.successful', false);
+            jsonPresets.message = _get(response, '_data.message', '');
         },
         onSuccessResponse: async (request, options, response) => {
             jsonPresets.data = _get(response, '_data.values.data', []);
@@ -160,7 +166,7 @@ const jsonPresetsExecute = async () => {
                 }
             });
         }
-    });
+    }, false);
 }
 await jsonPresetsExecute();
 

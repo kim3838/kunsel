@@ -35,7 +35,11 @@
                         </NuxtLink>
                     </div>
 
-                    <div class="mx-auto max-w-screen-2xl flex flex-row flex-wrap gap-4">
+                    <div v-if="!companies.successful" class="mb-2 flex flex-row flex-wrap gap-2 items-center min-h-8">
+                        <Label invert :size="'md'" :type="'danger'" :label="companies.message" />
+                    </div>
+
+                    <div v-if="companies.successful" class="mx-auto max-w-screen-2xl flex flex-row flex-wrap gap-4">
 
                         <div v-for="company in companies.data" :key="company.id" class="scaffold-border p-4 space-y-4">
                             <div>
@@ -65,17 +69,14 @@
 </template>
 
 <script setup lang="ts">
-import type {DataTableMeta, TableHeaderT, TableRowT} from "@/public/js/types/data";
+import type {DataTableT} from "@/public/js/types/data";
 
 useHead({titleTemplate: (titleChunk) => {return `${titleChunk} - Companies`}});
 definePageMeta({middleware: ['auth', 'admin-in-any-company']});
 useLayout().setNavigationMode('solid');
 const user = userState();
 
-const companies = reactive<{
-    data: TableRowT[];
-    meta: DataTableMeta
-}>({
+const companies = reactive<DataTableT>({
     'data': [],
     'meta': {
         pagination: {
@@ -85,7 +86,9 @@ const companies = reactive<{
             current_page: 0,
             total_pages: 0
         }
-    }
+    },
+    'successful': true,
+    'message': ''
 });
 const associatedAccountOptions = reactive({
     search: '',
@@ -149,8 +152,10 @@ const companiesExecute = async () => {
         onRequestError: () => {
             companiesPending.value = false;
         },
-        onResponse: () => {
+        onResponse: (request, options, response) => {
             companiesPending.value = false;
+            companies.successful = _get(response, '_data.successful', false);
+            companies.message = _get(response, '_data.message', '');
         },
         onSuccessResponse: async (request, options, response) => {
             companies.data = _get(response, '_data.values.data', []);
@@ -164,7 +169,7 @@ const companiesExecute = async () => {
                 }
             });
         }
-    });
+    }, false);
 }
 await companiesExecute();
 const fetchAssociatedAccounts = async() => {

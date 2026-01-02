@@ -38,7 +38,11 @@
                         </NuxtLink>
                     </div>
 
-                    <div v-if="viewMode.selected == DATA_VIEW_MODE.FLEX" class="flex flex-row flex-wrap gap-4">
+                    <div v-if="!accounts.successful" class="mb-2 flex flex-row flex-wrap gap-2 items-center min-h-8">
+                        <Label invert :size="'md'" :type="'danger'" :label="accounts.message" />
+                    </div>
+
+                    <div v-if="accounts.successful && viewMode.selected == DATA_VIEW_MODE.FLEX" class="flex flex-row flex-wrap gap-4">
 
                         <div v-for="account in accounts.data" :key="account.id" class="scaffold-border p-4 space-y-2">
 
@@ -78,7 +82,7 @@
                     </div>
 
                     <DataTable
-                        v-if="viewMode.selected == DATA_VIEW_MODE.LIST"
+                        v-if="accounts.successful && viewMode.selected == DATA_VIEW_MODE.LIST"
                         :headers="accountsHeaders"
                         :size="'lg'"
                         :rows="accounts.data"
@@ -115,7 +119,7 @@
 </template>
 
 <script setup lang="ts">
-import type {DataTableMeta, TableHeaderT, TableRowT} from "@/public/js/types/data";
+import type {DataTableT, TableHeaderT} from "@/public/js/types/data";
 import type {EnumOption, EnumSelection} from "@/public/js/common/type";
 
 useHead({titleTemplate: (titleChunk) => {return `${titleChunk} - Accounts`}});
@@ -138,10 +142,7 @@ const accountPlanOptions = reactive({
     selected: []
 });
 
-const accounts = reactive<{
-    data: TableRowT[];
-    meta: DataTableMeta
-}>({
+const accounts = reactive<DataTableT>({
     'data': [],
     'meta': {
         pagination: {
@@ -151,7 +152,9 @@ const accounts = reactive<{
             current_page: 0,
             total_pages: 0
         }
-    }
+    },
+    'successful': true,
+    'message': ''
 });
 let filters = reactive<{
     page: number,
@@ -217,8 +220,10 @@ const accountsExecute = async () => {
         onRequestError: () => {
             accountsPending.value = false;
         },
-        onResponse: () => {
+        onResponse: (request, options, response) => {
             accountsPending.value = false;
+            accounts.successful = _get(response, '_data.successful', false);
+            accounts.message = _get(response, '_data.message', '');
         },
         onSuccessResponse: async (request, options, response) => {
             accounts.data = _get(response, '_data.values.data', []);
@@ -232,7 +237,7 @@ const accountsExecute = async () => {
                 }
             });
         }
-    });
+    }, false);
 }
 await accountsExecute();
 

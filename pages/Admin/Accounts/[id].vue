@@ -8,7 +8,14 @@
                         <Button class="w-min" :variant="`outline`" :disabled="disableActions" :size="'sm'" :icon="disableActions ? 'eos-icons:loading' : 'ic:sharp-keyboard-arrow-left'" :label="disableActions ? 'Please wait' : ''"></Button>
                     </NuxtLink>
                 </div>
-                <form @submit.prevent="formSubmit" class="px-[20px] space-y-2">
+
+                <div v-if="!accountSuccessful" class="px-[20px]">
+                    <div class="mb-2 flex flex-row flex-wrap gap-2 items-center min-h-8">
+                        <Label invert :size="'md'" :type="'danger'" :label="accountMessage" />
+                    </div>
+                </div>
+
+                <form v-if="accountSuccessful" @submit.prevent="formSubmit" class="px-[20px] space-y-2">
                     <div class="grid gap-2 grid-cols-4 sm:grid-cols-5 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-8">
                         <div>
                             <InputLabel :size="'sm'" value="Account number"/>
@@ -31,31 +38,17 @@
 
 <script setup lang="ts">
 useHead({titleTemplate: (titleChunk) => {return `${titleChunk} - Accounts`}});
-useLayout().setNavigationMode('solid', 'Accounts/[id].vue');
+definePageMeta({middleware: ['auth', 'super-admin']});
+useLayout().setNavigationMode('solid');
 
 const route = useRoute();
 const account = ref(null);
+const accountSuccessful = ref(true);
+const accountMessage = ref('');
 const creatingAccount = computed(() => {
     return route.params.id === 'create-account';
 });
 const accountNumber = ref('');
-
-definePageMeta({
-    middleware: ['auth', 'super-admin',
-        async (to) => {
-
-            if(import.meta.server || to.params.id === 'create-account'){return true;}
-
-            const {data, error} = await laraUseFetch(`/api/account-check/${to.params.id}`, {method: 'GET',}, {}, false);
-
-            if(_isEmpty(data.value) && !_isEmpty(error.value)){
-                let responseCode = _get(error.value, 'data.code', null);
-
-                throw createError({ statusCode: responseCode, statusMessage: useCoreStore().servicePayloadMessage, fatal: true});
-            }
-        }
-    ]
-});
 
 const accountPlanOptions = reactive({
     search: '',
@@ -73,12 +66,16 @@ const fetchAccount = async () => {
     await laraFetch(`/api/account/${route.params.id}`, {
         method: 'GET',
     }, {
+        onResponse: (request, options, response) => {
+            accountSuccessful.value = _get(response, '_data.successful', false);
+            accountMessage.value = _get(response, '_data.message', '');
+        },
         onSuccessResponse: async (request, options, response) => {
             account.value = _get(response, '_data.values.account', null);
             accountNumber.value = _get(response, '_data.values.account.number', '');
             accountPlanOptions.selected = _get(response, '_data.values.account.plan.value', ACCOUNT_PLAN.STANDARD);
         },
-    });
+    }, false);
 };
 
 await fetchAccount();

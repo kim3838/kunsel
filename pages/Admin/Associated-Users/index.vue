@@ -49,7 +49,13 @@
                             <Button class="w-min" :disabled="disableActions" :size="'sm'" :icon="disableActions ? 'eos-icons:loading' : 'mdi:plus'" :label="disableActions ? 'Please wait' : ''"></Button>
                         </NuxtLink>
                     </div>
+
+                    <div v-if="!users.successful" class="mb-2 flex flex-row flex-wrap gap-2 items-center min-h-8">
+                        <Label invert :size="'md'" :type="'danger'" :label="users.message" />
+                    </div>
+
                     <DataTable
+                        v-if="users.successful"
                         :key="usersKey"
                         :headers="usersHeaders"
                         :size="'lg'"
@@ -110,7 +116,7 @@
 </template>
 
 <script setup lang="ts">
-import type {DataTableMeta, TableHeaderT, TableRowT} from "@/public/js/types/data";
+import type {DataTableT, TableHeaderT} from "@/public/js/types/data";
 
 useHead({titleTemplate: (titleChunk) => {return `${titleChunk} - Users`}});
 definePageMeta({middleware: ['auth', 'admin-in-any-company']});
@@ -140,10 +146,7 @@ watch(() => {return showAssociatedCompanies.value;}, (show) => {
 })
 
 const usersKey = shallowRef(0);
-const users = reactive<{
-    data: TableRowT[];
-    meta: DataTableMeta
-}>({
+const users = reactive<DataTableT>({
     'data': [],
     'meta': {
         pagination: {
@@ -153,7 +156,9 @@ const users = reactive<{
             current_page: 0,
             total_pages: 0
         }
-    }
+    },
+    'successful': true,
+    'message': ''
 });
 
 const associatedCompanyOptions = reactive({
@@ -257,8 +262,10 @@ const usersExecute = async () => {
         onRequestError: () => {
             usersPending.value = false;
         },
-        onResponse: () => {
+        onResponse: (request, options, response) => {
             usersPending.value = false;
+            users.successful = _get(response, '_data.successful', false);
+            users.message = _get(response, '_data.message', '');
         },
         onSuccessResponse: async (request, options, response) => {
             users.data = _get(response, '_data.values.data', []);
@@ -273,7 +280,7 @@ const usersExecute = async () => {
             });
             usersKey.value += 1;
         }
-    });
+    }, false);
 }
 await usersExecute();
 

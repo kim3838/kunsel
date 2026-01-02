@@ -51,7 +51,13 @@
                     </NuxtLink>
                 </div>
 
-                <form @submit.prevent="formSubmit" class="px-[20px] space-y-2">
+                <div v-if="!formulaSuccessful" class="px-[20px]">
+                    <div class="mb-2 flex flex-row flex-wrap gap-2 items-center min-h-8">
+                        <Label invert :size="'md'" :type="'danger'" :label="formulaMessage" />
+                    </div>
+                </div>
+
+                <form v-if="formulaSuccessful" @submit.prevent="formSubmit" class="px-[20px] space-y-2">
 
                     <fieldset class="neutral-border px-2 pb-2 space-y-2">
                         <legend class="text-lg font-header">Formula Information</legend>
@@ -141,45 +147,37 @@
 
 <script setup lang="ts">
 import type {SelectDataType} from "@/public/js/types/form";
+import type {StringEnumInterface} from "~/public/js/common/type";
 
 useHead({titleTemplate: (titleChunk) => {return `${titleChunk} - Formulas`}});
+definePageMeta({middleware: ['auth', 'super-admin']});
 useLayout().setNavigationMode('solid');
 
 const route = useRoute();
 const formula = ref(null);
+const formulaSuccessful = ref(true);
+const formulaMessage = ref('');
 const creatingFormula = computed(() => {
     return route.params.id === 'create-formula';
 });
 const formulaName = ref<string | null>('');
 const aggregation = ref<boolean | null>(false);
 const formulaSettings = ref<any[] | null>([]);
-
-definePageMeta({
-    middleware: ['auth', 'super-admin',
-        async (to) => {
-
-            if(import.meta.server || to.params.id === 'create-formula'){return true;}
-
-            const {data, error} = await laraUseFetch(`/api/formula-check/${to.params.id}`, {method: 'GET',}, {}, false);
-
-            if(_isEmpty(data.value) && !_isEmpty(error.value)){
-                let responseCode = _get(error.value, 'data.code', null);
-
-                throw createError({ statusCode: responseCode, statusMessage: useCoreStore().servicePayloadMessage, fatal: true});
-            }
-        }
-    ]
-});
+const nuxtApp = useNuxtApp();
+const $enumerableOption = nuxtApp.$enumerableOption as (enumerable: StringEnumInterface, value: number) => {
+    text: string,
+    value: number
+};
 
 const formulableOptions = reactive({
     search: '',
     selection: [
-        {text : FORMULABLE_NAME[FORMULABLE.EARNINGS], value: FORMULABLE.EARNINGS},
-        {text : FORMULABLE_NAME[FORMULABLE.DEDUCTIONS], value: FORMULABLE.DEDUCTIONS},
-        {text : FORMULABLE_NAME[FORMULABLE.TAXABLE_INCOME], value: FORMULABLE.TAXABLE_INCOME},
-        {text : FORMULABLE_NAME[FORMULABLE.NON_TAXABLE_INCOME], value: FORMULABLE.NON_TAXABLE_INCOME},
-        {text : FORMULABLE_NAME[FORMULABLE.INCOME_TAX], value: FORMULABLE.INCOME_TAX},
-        {text : FORMULABLE_NAME[FORMULABLE.NET_INCOME], value: FORMULABLE.NET_INCOME},
+        $enumerableOption(FORMULABLE_NAME, FORMULABLE.EARNINGS as number),
+        $enumerableOption(FORMULABLE_NAME, FORMULABLE.DEDUCTIONS as number),
+        $enumerableOption(FORMULABLE_NAME, FORMULABLE.TAXABLE_INCOME as number),
+        $enumerableOption(FORMULABLE_NAME, FORMULABLE.NON_TAXABLE_INCOME as number),
+        $enumerableOption(FORMULABLE_NAME, FORMULABLE.INCOME_TAX as number),
+        $enumerableOption(FORMULABLE_NAME, FORMULABLE.NET_INCOME as number),
     ],
     selected: null
 });
@@ -195,25 +193,25 @@ const selectedFormulableOptionsIsIncomeTax = computed(() => {
 const earningComponentOptions = reactive({
     search: '',
     selection: [
-        {text : COMPENSATION_NAME[COMPENSATION.BASIC_SALARY], value: COMPENSATION.BASIC_SALARY},
-        {text : COMPENSATION_NAME[COMPENSATION.OVERTIME], value: COMPENSATION.OVERTIME},
-        {text : COMPENSATION_NAME[COMPENSATION.BENEFIT], value: COMPENSATION.BENEFIT},
-        {text : COMPENSATION_NAME[COMPENSATION.REGULAR_ALLOWANCE], value: COMPENSATION.REGULAR_ALLOWANCE},
+        $enumerableOption(COMPENSATION_NAME, COMPENSATION.BASIC_SALARY as number),
+        $enumerableOption(COMPENSATION_NAME, COMPENSATION.OVERTIME as number),
+        $enumerableOption(COMPENSATION_NAME, COMPENSATION.BENEFIT as number),
+        $enumerableOption(COMPENSATION_NAME, COMPENSATION.REGULAR_ALLOWANCE as number),
     ],
     selected: null
 });
 const deductionComponentOptions = reactive({
     search: '',
     selection: [
-        {text : DEDUCTION_NAME[DEDUCTION.DEDUCTION], value: DEDUCTION.DEDUCTION},
-        {text : DEDUCTION_NAME[DEDUCTION.CONTRIBUTION], value: DEDUCTION.CONTRIBUTION},
+        $enumerableOption(DEDUCTION_NAME, DEDUCTION.DEDUCTION as number),
+        $enumerableOption(DEDUCTION_NAME, DEDUCTION.CONTRIBUTION as number),
     ],
     selected: null
 });
 const incomeTaxComponentOptions = reactive({
     search: '',
     selection: [
-        {text : INCOME_TAX_NAME[INCOME_TAX.COMPENSATION_TAX], value: INCOME_TAX.COMPENSATION_TAX},
+        $enumerableOption(INCOME_TAX_NAME, INCOME_TAX.COMPENSATION_TAX as number),
     ],
     selected: null
 });
@@ -264,6 +262,10 @@ const fetchFormula = async () => {
     await laraFetch(`/api/formula/${route.params.id}`, {
         method: 'GET',
     }, {
+        onResponse: (request, options, response) => {
+            formulaSuccessful.value = _get(response, '_data.successful', false);
+            formulaMessage.value = _get(response, '_data.message', '');
+        },
         onSuccessResponse: async (request, options, response) => {
             formula.value = _get(response, '_data.values.formula', null);
             formulaName.value = _get(response, '_data.values.formula.name', null);
@@ -279,7 +281,7 @@ const fetchFormula = async () => {
                 incomeTaxComponentOptions.selected = _get(response, '_data.values.formula.component_type', null);
             }
         },
-    });
+    }, false);
 };
 
 await fetchFormula();

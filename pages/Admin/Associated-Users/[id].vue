@@ -9,7 +9,13 @@
                     </NuxtLink>
                 </div>
 
-                <div class="px-[20px] space-y-2">
+                <div v-if="!associatedUserSuccessful" class="px-[20px]">
+                    <div class="mb-2 flex flex-row flex-wrap gap-2 items-center min-h-8">
+                        <Label invert :size="'md'" :type="'danger'" :label="associatedUserMessage" />
+                    </div>
+                </div>
+
+                <div v-if="associatedUserSuccessful" class="px-[20px] space-y-2">
 
                     <div class="text-lg font-header">User</div>
 
@@ -98,30 +104,16 @@ import type {TableHeaderT, TableSupHeaderT} from "@/public/js/types/data";
 import type {UserCompanyAssignmentSyncT, UserCompanyAssignmentT, UserFormT, UserT} from "@/public/js/types/user";
 
 useHead({titleTemplate: (titleChunk) => {return `${titleChunk} - Users`}});
-useLayout().setNavigationMode('solid', 'Associated-Users/[id].vue');
+definePageMeta({middleware: ['auth', 'admin-in-any-company']});
+useLayout().setNavigationMode('solid');
 
 const route = useRoute();
 const user = userState();
 const {fetchAssociatedCompanies, storeAssociatedCompanies} = useAssociation();
 const {timezoneSelections} = useCommon();
 const associatedUser = ref<UserT | null>(null);
-
-definePageMeta({
-    middleware: ['auth', 'admin-in-any-company',
-        async (to) => {
-
-            if(import.meta.server || to.params.id === 'create-user'){return true;}
-
-            const {data, error} = await laraUseFetch(`/api/user-check/${to.params.id}`, {method: 'GET',}, {}, false);
-
-            if(_isEmpty(data.value) && !_isEmpty(error.value)){
-                let responseCode = _get(error.value, 'data.code', null);
-
-                throw createError({ statusCode: responseCode, statusMessage: useCoreStore().servicePayloadMessage, fatal: true});
-            }
-        }
-    ]
-});
+const associatedUserSuccessful = ref(true);
+const associatedUserMessage = ref('');
 
 const creatingAssociatedUser = computed(() => {
     return route.params.id === 'create-user';
@@ -201,6 +193,10 @@ const fetchAssociatedUser = async () => {
     await laraFetch(`/api/user/${route.params.id}`, {
         method: 'GET',
     }, {
+        onResponse: (request, options, response) => {
+            associatedUserSuccessful.value = _get(response, '_data.successful', false);
+            associatedUserMessage.value = _get(response, '_data.message', '');
+        },
         onSuccessResponse: async (request, options, response) => {
             associatedUser.value = _get(response, '_data.values.user', null) as UserT;
             username.value = _get(response, '_data.values.user.username', '');
@@ -209,7 +205,7 @@ const fetchAssociatedUser = async () => {
             userStatusOptions.selected = _get(response, '_data.values.user.status.value', userStatusOptions.selected);
             timezoneOptions.selected = _get(response, '_data.values.user.timezone', null);
         },
-    });
+    }, false);
 };
 await fetchAssociatedUser();
 

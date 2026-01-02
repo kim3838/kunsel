@@ -9,7 +9,13 @@
                     </NuxtLink>
                 </div>
 
-                <form @submit.prevent="formSubmit" class="px-[20px] space-y-2">
+                <div v-if="!companySuccessful" class="px-[20px]">
+                    <div class="mb-2 flex flex-row flex-wrap gap-2 items-center min-h-8">
+                        <Label invert :size="'md'" :type="'danger'" :label="companyMessage" />
+                    </div>
+                </div>
+
+                <form v-if="companySuccessful" @submit.prevent="formSubmit" class="px-[20px] space-y-2">
 
                     <div class="text-lg font-header">Company</div>
 
@@ -58,33 +64,19 @@
 const {fetchAssociatedCompanies, storeAssociatedCompanies} = useAssociation();
 
 useHead({titleTemplate: (titleChunk) => {return `${titleChunk} - Companies`}});
+definePageMeta({middleware: ['auth', 'super-admin']});
 useLayout().setNavigationMode('solid');
 
 const route = useRoute();
 const company = ref(null);
+const companySuccessful = ref(true);
+const companyMessage = ref('');
 const creatingAccount = computed(() => {
     return route.params.id === 'create-company';
 });
 const companyCode = ref('');
 const companyShortName = ref('');
 const companyName = ref('');
-
-definePageMeta({
-    middleware: ['auth', 'super-admin',
-        async (to) => {
-
-            if(import.meta.server || to.params.id === 'create-company'){return true;}
-
-            const {data, error} = await laraUseFetch(`/api/company-check/${to.params.id}`, {method: 'GET',}, {}, false);
-
-            if(_isEmpty(data.value) && !_isEmpty(error.value)){
-                let responseCode = _get(error.value, 'data.code', null);
-
-                throw createError({ statusCode: responseCode, statusMessage: useCoreStore().servicePayloadMessage, fatal: true});
-            }
-        }
-    ]
-});
 
 const accountOptions = reactive({
     search: '',
@@ -158,6 +150,10 @@ const fetchCompany = async () => {
     await laraFetch(`/api/company/${route.params.id}`, {
         method: 'GET',
     }, {
+        onResponse: (request, options, response) => {
+            companySuccessful.value = _get(response, '_data.successful', false);
+            companyMessage.value = _get(response, '_data.message', '');
+        },
         onSuccessResponse: async (request, options, response) => {
             company.value = _get(response, '_data.values.company', null);
             accountOptions.selected = _get(response, '_data.values.company.account_id', null);
@@ -168,7 +164,7 @@ const fetchCompany = async () => {
             currencyOptions.selected = _get(response, '_data.values.company.currency', null);
             timezoneOptions.selected = _get(response, '_data.values.company.timezone', null);
         },
-    });
+    }, false);
 };
 
 await fetchCompany();

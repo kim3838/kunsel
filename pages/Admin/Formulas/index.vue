@@ -52,7 +52,12 @@
                         <Button v-if="!disableActions" :variant="'outline'" :icon="'mdi:delete-outline'" class="inline-block" :size="'sm'" :disabled="disableActions" :label="'Delete selected'" @click="confirmDeleteSelected"/>
                     </div>
 
+                    <div v-if="!formulas.successful" class="mb-2 flex flex-row flex-wrap gap-2 items-center min-h-8">
+                        <Label invert :size="'md'" :type="'danger'" :label="formulas.message" />
+                    </div>
+
                     <DataTable
+                        v-if="formulas.successful"
                         :headers="formulasHeaders"
                         :size="'lg'"
                         :rows="formulas.data"
@@ -96,7 +101,7 @@
 </template>
 
 <script setup lang="ts">
-import type {DataTableMeta, TableHeaderT, TableRowT} from "@/public/js/types/data";
+import type {DataTableT, TableHeaderT} from "@/public/js/types/data";
 import type {StringEnumInterface} from "@/public/js/common/type";
 
 useHead({titleTemplate: (titleChunk) => {return `${titleChunk} - Formulas`}});
@@ -117,10 +122,7 @@ const formulasHeaders = reactive<TableHeaderT[]>([
     { text: 'Aggregation', value: 'aggregation', alignData: 'left'},
 ]);
 
-const formulas = reactive<{
-    data: TableRowT[];
-    meta: DataTableMeta
-}>({
+const formulas = reactive<DataTableT>({
     'data': [],
     'meta': {
         pagination: {
@@ -130,7 +132,9 @@ const formulas = reactive<{
             current_page: 0,
             total_pages: 0
         }
-    }
+    },
+    'successful': true,
+    'message': ''
 });
 const formulableOptions = reactive({
     search: '',
@@ -234,8 +238,10 @@ const formulasExecute = async () => {
         onRequestError: () => {
             formulasPending.value = false;
         },
-        onResponse: () => {
+        onResponse: (request, options, response) => {
             formulasPending.value = false;
+            formulas.successful = _get(response, '_data.successful', false);
+            formulas.message = _get(response, '_data.message', '');
         },
         onSuccessResponse: async (request, options, response) => {
             formulas.data = _get(response, '_data.values.data', []);
@@ -249,7 +255,7 @@ const formulasExecute = async () => {
                 }
             });
         }
-    });
+    }, false);
 }
 await formulasExecute();
 
