@@ -1,5 +1,5 @@
 <template>
-    <div class="space-y-2 px-[20px]">
+    <div class="px-[20px]">
         <form @submit.prevent="paginate(1, true)" class="space-y-2 pb-[20px]">
             <div class="grid gap-2 grid-cols-3 sm:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 ">
                 <div>

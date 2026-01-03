@@ -1,5 +1,5 @@
 <template>
-    <div class="space-y-2 px-[20px]">
+    <div class="px-[20px]">
         <form @submit.prevent="balancePeriodSeriesExecute()" class="space-y-2 pb-[20px]">
             <div class="grid gap-2 grid-cols-3 sm:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-8">
                 <div class="col-span-4 md:col-span-3 lg:col-span-2">
@@ -51,7 +51,7 @@
         </form>
 
         <div class="space-y-2">
-            <div  class="flex flex-row flex-wrap gap-2 items-center min-h-8">
+            <div class="flex flex-row flex-wrap gap-2 items-center min-h-8">
                 <UnorderedList
                     v-if="balancePeriodSeriesPending"
                     :icon="'eos-icons:loading'"

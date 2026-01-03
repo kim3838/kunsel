@@ -1,5 +1,5 @@
 <template>
-    <div class="space-y-2" :class="[compact ? '' : 'px-[20px]']">
+    <div :class="[compact ? '' : 'px-[20px]']">
         <form @submit.prevent="paginate(1, clearSelectionOnFormSubmit)" class="space-y-2" :class="[compact ? '' : 'pb-[20px]']">
             <div class="grid gap-2 grid-cols-3 sm:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
                 <div>
@@ -111,6 +111,7 @@
 
         <DataTable
             v-if="employees.successful"
+            class="mt-2"
             :sup-headers="employeeSupHeaders"
             :headers="employeeHeaders"
             :size="'lg'"
