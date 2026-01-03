@@ -81,7 +81,7 @@
                                     :size="slot.buttonSize"
                                     :disabled="disableEmployeeCompensationActions"
                                     :icon="'mdi:pen'"
-                                    @click="createOrEditPayrollComponent(FORMULABLE.EARNINGS as number, cell, rowIndex)"/>
+                                    @click="createOrEditPayrollComponent(FORMULABLE.EARNINGS as number, cell as EmployeePayrollComponentT, rowIndex)"/>
                             </div>
                         </template>
                         <template v-slot:cell.name="{cell, slot, scrollReference}">
@@ -176,7 +176,7 @@
                                     :size="slot.buttonSize"
                                     :disabled="disableEmployeeDeductionActions"
                                     :icon="'mdi:pen'"
-                                    @click="createOrEditPayrollComponent(FORMULABLE.DEDUCTIONS as number, cell, rowIndex)"/>
+                                    @click="createOrEditPayrollComponent(FORMULABLE.DEDUCTIONS as number, cell as EmployeePayrollComponentT, rowIndex)"/>
                             </div>
                         </template>
                         <template v-slot:cell.name="{cell, slot, scrollReference}">
@@ -248,7 +248,7 @@
                                     :size="slot.buttonSize"
                                     :disabled="disableEmployeeIncomeTaxActions"
                                     :icon="'mdi:pen'"
-                                    @click="createOrEditPayrollComponent(FORMULABLE.INCOME_TAX as number, cell, rowIndex)"/>
+                                    @click="createOrEditPayrollComponent(FORMULABLE.INCOME_TAX as number, cell as EmployeePayrollComponentT, rowIndex)"/>
                             </div>
                         </template>
                         <template v-slot:cell.name="{cell, slot, scrollReference}">

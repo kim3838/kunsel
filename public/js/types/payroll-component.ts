@@ -1,6 +1,6 @@
 
 import type {EnumOption} from "@/public/js/common/type";
-import type {SequenceableTableRow} from "@/public/js/types/data";
+import type {SequenceableTableRow, TableRowT} from "@/public/js/types/data";
 
 export type CompanyPayrollComponent = {
     id: string | number,
@@ -12,7 +12,7 @@ export type CompanyPayrollComponent = {
 
 export type SequenceablePayrollComponent = CompanyPayrollComponent & SequenceableTableRow;
 
-export type EmployeePayrollComponentT = {
+export type EmployeePayrollComponentT = TableRowT & {
     id: number,
     employee_id: number,
     payroll_componentable_type: string,
