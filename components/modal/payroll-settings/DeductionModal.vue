@@ -228,10 +228,10 @@ const disableActions = computed(() => {
     return submitPending.value || deductionFormulaSettingsPending.value || deductionFormulaPending.value;
 });
 const actionIcon = computed(() => {
-    return Boolean(props.editPayload.id) ? 'mdi:pen' : 'mdi:plus';
+    return Boolean(props.editPayload.id) ? 'ic:sharp-save' : 'mdi:plus';
 });
 const actionLabel = computed(() => {
-    return Boolean(props.editPayload.id) ? 'Update' : 'Create';
+    return Boolean(props.editPayload.id) ? 'Save' : 'Create';
 });
 const submitAction = computed(() => {
     return Boolean(props.editPayload.id) ? 'PATCH' : 'POST';

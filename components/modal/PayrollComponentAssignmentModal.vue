@@ -627,7 +627,7 @@ const employeePayrollComponentExists = computed(()=>{
 const submitButtonIcon = computed(()=>{
     const ICON = {
         CREATE: 'mdi:plus',
-        EDIT: 'mdi:pen'
+        EDIT: 'ic:sharp-save'
     } as const;
 
     const isEditMode = props.editPayloadIndex >= 0 || employeePayrollComponentExists.value;
@@ -637,7 +637,7 @@ const submitButtonIcon = computed(()=>{
 const saveButtonLabel = computed(()=>{
     const LABEL = {
         CREATE: `Assign ${_startCase(payrollComponentSubject.value)}`,
-        EDIT: `Update`
+        EDIT: `Save`
     } as const;
 
     const isEditMode = props.editPayloadIndex >= 0 || employeePayrollComponentExists.value;

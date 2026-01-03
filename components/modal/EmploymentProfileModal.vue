@@ -298,7 +298,7 @@ const employmentProfileExists = computed(()=>{
 const submitButtonIcon = computed(()=>{
     const ICON = {
         CREATE: 'mdi:plus',
-        EDIT: 'mdi:pen'
+        EDIT: 'ic:sharp-save'
     } as const;
 
     const isEditMode = props.editPayloadIndex >= 0 || employmentProfileExists.value;
@@ -308,7 +308,7 @@ const submitButtonIcon = computed(()=>{
 const saveButtonLabel = computed(()=>{
     const LABEL = {
         CREATE: `Create`,
-        EDIT: `Update`
+        EDIT: `Save`
     } as const;
 
     const isEditMode = props.editPayloadIndex >= 0 || employmentProfileExists.value;

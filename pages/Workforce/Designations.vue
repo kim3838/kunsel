@@ -349,10 +349,10 @@ const createEditModalDisableActions = computed(() => {
     return createEditModalSubmitPending.value;
 });
 const createEditModalActionIcon = computed(() => {
-    return Boolean(editPayload.value.id) ? 'mdi:pen' : 'mdi:plus';
+    return Boolean(editPayload.value.id) ? 'ic:sharp-save' : 'mdi:plus';
 });
 const createEditModalActionLabel = computed(() => {
-    return Boolean(editPayload.value.id) ? 'Update' : 'Create';
+    return Boolean(editPayload.value.id) ? 'Save' : 'Create';
 });
 const createEditModalSubmitAction = computed(() => {
     return Boolean(editPayload.value.id) ? 'PATCH' : 'POST';

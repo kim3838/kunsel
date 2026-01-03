@@ -396,7 +396,7 @@ const submitStagedIcon = computed(() => {
     return disableLeaveTypeAssignmentActions.value ? 'eos-icons:loading' : stagedLeaveTypeAssignmentId.value ? 'ic:sharp-save' : 'mdi:plus'
 });
 const submitStagedLabel = computed(() => {
-    return disableLeaveTypeAssignmentActions.value ? 'Please wait' : stagedLeaveTypeAssignmentId.value ? 'Update Leave Type Settings' : 'Assign leave types'
+    return disableLeaveTypeAssignmentActions.value ? 'Please wait' : stagedLeaveTypeAssignmentId.value ? 'Save Leave Type Settings' : 'Assign leave types'
 });
 const submitStaged = () => {
 
