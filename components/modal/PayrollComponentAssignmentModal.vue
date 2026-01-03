@@ -164,6 +164,7 @@
 <script setup lang="ts">
 import {storeToRefs} from "pinia";
 import type {EnumSelection, StringEnumInterface} from "@/public/js/common/type";
+import type {EmployeePayrollComponentT} from "@/public/js/types/payroll-component";
 
 const coreStore = useCoreStore();
 const nuxtApp = useNuxtApp();
@@ -196,7 +197,7 @@ const props = defineProps({
         }
     },
     editPayload: {
-        type: Object,
+        type: Object as PropType<EmployeePayrollComponentT | {}>,
         default: () => {
             return {};
         }

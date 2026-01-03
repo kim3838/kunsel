@@ -35,7 +35,7 @@
                             :size="'sm'"
                             :disabled="disableEmployeeCompensationActions"
                             :icon="'mdi:plus'"
-                            @click="createOrEditPayrollComponent(FORMULABLE.EARNINGS)"/>
+                            @click="createOrEditPayrollComponent(FORMULABLE.EARNINGS as number)"/>
                         <Button
                             v-if="!creatingEmployee"
                             class="w-min"
@@ -43,7 +43,7 @@
                             :size="'sm'"
                             :icon="'mdi:delete-outline'"
                             :disabled="disableEmployeeCompensationActions"
-                            @click="deleteSelectedPayrollComponent(FORMULABLE.EARNINGS)" />
+                            @click="deleteSelectedPayrollComponent(FORMULABLE.EARNINGS as number)" />
                         <Button
                             v-if="!creatingEmployee"
                             class="w-min"
@@ -74,14 +74,14 @@
                                     :size="slot.buttonSize"
                                     :disabled="disableEmployeeCompensationActions"
                                     :icon="'mdi:delete-forever'"
-                                    @click="deletePayrollComponentRow(FORMULABLE.EARNINGS, rowIndex)"/>
+                                    @click="deletePayrollComponentRow(FORMULABLE.EARNINGS as number, rowIndex)"/>
                                 <Button
                                     class="w-min"
                                     :variant="'outline'"
                                     :size="slot.buttonSize"
                                     :disabled="disableEmployeeCompensationActions"
                                     :icon="'mdi:pen'"
-                                    @click="createOrEditPayrollComponent(FORMULABLE.EARNINGS, cell, rowIndex)"/>
+                                    @click="createOrEditPayrollComponent(FORMULABLE.EARNINGS as number, cell, rowIndex)"/>
                             </div>
                         </template>
                         <template v-slot:cell.name="{cell, slot, scrollReference}">
@@ -130,7 +130,7 @@
                             :size="'sm'"
                             :disabled="disableEmployeeDeductionActions"
                             :icon="'mdi:plus'"
-                            @click="createOrEditPayrollComponent(FORMULABLE.DEDUCTIONS)"/>
+                            @click="createOrEditPayrollComponent(FORMULABLE.DEDUCTIONS as number)"/>
                         <Button
                             v-if="!creatingEmployee"
                             class="w-min"
@@ -138,7 +138,7 @@
                             :size="'sm'"
                             :icon="'mdi:delete-outline'"
                             :disabled="disableEmployeeDeductionActions"
-                            @click="deleteSelectedPayrollComponent(FORMULABLE.DEDUCTIONS)" />
+                            @click="deleteSelectedPayrollComponent(FORMULABLE.DEDUCTIONS as number)" />
                         <Button
                             v-if="!creatingEmployee"
                             class="w-min"
@@ -169,14 +169,14 @@
                                     :size="slot.buttonSize"
                                     :disabled="disableEmployeeDeductionActions"
                                     :icon="'mdi:delete-forever'"
-                                    @click="deletePayrollComponentRow(FORMULABLE.DEDUCTIONS, rowIndex)"/>
+                                    @click="deletePayrollComponentRow(FORMULABLE.DEDUCTIONS as number, rowIndex)"/>
                                 <Button
                                     class="w-min"
                                     :variant="'outline'"
                                     :size="slot.buttonSize"
                                     :disabled="disableEmployeeDeductionActions"
                                     :icon="'mdi:pen'"
-                                    @click="createOrEditPayrollComponent(FORMULABLE.DEDUCTIONS, cell, rowIndex)"/>
+                                    @click="createOrEditPayrollComponent(FORMULABLE.DEDUCTIONS as number, cell, rowIndex)"/>
                             </div>
                         </template>
                         <template v-slot:cell.name="{cell, slot, scrollReference}">
@@ -202,7 +202,7 @@
                             :size="'sm'"
                             :disabled="disableEmployeeIncomeTaxActions"
                             :icon="'mdi:plus'"
-                            @click="createOrEditPayrollComponent(FORMULABLE.INCOME_TAX)"/>
+                            @click="createOrEditPayrollComponent(FORMULABLE.INCOME_TAX as number)"/>
                         <Button
                             v-if="!creatingEmployee"
                             class="w-min"
@@ -210,7 +210,7 @@
                             :size="'sm'"
                             :icon="'mdi:delete-outline'"
                             :disabled="disableEmployeeIncomeTaxActions"
-                            @click="deleteSelectedPayrollComponent(FORMULABLE.INCOME_TAX)" />
+                            @click="deleteSelectedPayrollComponent(FORMULABLE.INCOME_TAX as number)" />
                         <Button
                             v-if="!creatingEmployee"
                             class="w-min"
@@ -241,14 +241,14 @@
                                     :size="slot.buttonSize"
                                     :disabled="disableEmployeeIncomeTaxActions"
                                     :icon="'mdi:delete-forever'"
-                                    @click="deletePayrollComponentRow(FORMULABLE.INCOME_TAX, rowIndex)"/>
+                                    @click="deletePayrollComponentRow(FORMULABLE.INCOME_TAX as number, rowIndex)"/>
                                 <Button
                                     class="w-min"
                                     :variant="'outline'"
                                     :size="slot.buttonSize"
                                     :disabled="disableEmployeeIncomeTaxActions"
                                     :icon="'mdi:pen'"
-                                    @click="createOrEditPayrollComponent(FORMULABLE.INCOME_TAX, cell, rowIndex)"/>
+                                    @click="createOrEditPayrollComponent(FORMULABLE.INCOME_TAX as number, cell, rowIndex)"/>
                             </div>
                         </template>
                         <template v-slot:cell.name="{cell, slot, scrollReference}">
@@ -267,6 +267,7 @@
 <script setup lang="ts">
 import {storeToRefs} from "pinia";
 import type {TableHeaderT} from "@/public/js/types/data";
+import type {EmployeePayrollComponentT} from "@/public/js/types/payroll-component";
 
 const {isAuthenticated} = useAuth();
 const nuxtApp = useNuxtApp();
@@ -386,8 +387,8 @@ const employeeUlid = computed(() => {
 const deletingPayrollComponent = ref(false);
 const creatingOrEditingPayrollComponentFormulable = ref<number | undefined>(undefined);
 const editPayrollComponentPayloadIndex = ref(-1);
-const payrollComponentEditPayload = ref({});
-const createOrEditPayrollComponent = (payrollComponent: number, payrollComponentAttributes = {}, rowIndex = -1) => {
+const payrollComponentEditPayload = ref<EmployeePayrollComponentT | {}>({});
+const createOrEditPayrollComponent = (payrollComponent: number, payrollComponentAttributes:Partial<EmployeePayrollComponentT> = {}, rowIndex:number = -1) => {
     if(creatingEmployee.value){
         editPayrollComponentPayloadIndex.value = rowIndex;
     }
@@ -416,7 +417,7 @@ const employeeCompensationHeaders = reactive<TableHeaderT[]>([
     { text: 'To', value: 'amountable_end'},
 ]);
 
-const employeeCompensationData = ref([]);
+const employeeCompensationData = ref<EmployeePayrollComponentT[]>([]);
 const selectedEmployeeCompensation = ref([]);
 const employeeCompensationPending = ref(false);
 const employeeCompensationExecute = async () => {
@@ -460,7 +461,7 @@ const employeeDeductionHeaders = reactive<TableHeaderT[]>([
     { text: 'Type', value: 'type'},
 ]);
 
-const employeeDeductionData = ref([]);
+const employeeDeductionData = ref<EmployeePayrollComponentT[]>([]);
 const selectedEmployeeDeduction = ref([]);
 const employeeDeductionPending = ref(false);
 const employeeDeductionExecute = async () => {
@@ -504,7 +505,7 @@ const employeeIncomeTaxHeaders = reactive<TableHeaderT[]>([
     { text: 'Type', value: 'type'},
 ]);
 
-const employeeIncomeTaxData = ref([]);
+const employeeIncomeTaxData = ref<EmployeePayrollComponentT[]>([]);
 const selectedEmployeeIncomeTax = ref([]);
 const employeeIncomeTaxPending = ref(false);
 const employeeIncomeTaxExecute = async () => {
@@ -549,7 +550,7 @@ if(!props.isolated && !creatingEmployee.value){
 }
 
 
-const deleteSelectedPayrollComponent = async (component) => {
+const deleteSelectedPayrollComponent = async (component: number) => {
 
     let selectedIds: number[] = [];
 
@@ -610,7 +611,7 @@ const deleteSelectedPayrollComponent = async (component) => {
 
     deletingPayrollComponent.value = false;
 }
-const deletePayrollComponentRow = async (component, rowIndex) => {
+const deletePayrollComponentRow = async (component: number, rowIndex: number) => {
     if(component == FORMULABLE.EARNINGS){
         employeeCompensationData.value.splice(rowIndex, 1);
         emit('update:employeeCompensationData', employeeCompensationData.value);
@@ -625,7 +626,7 @@ const deletePayrollComponentRow = async (component, rowIndex) => {
     }
 }
 
-const payrollComponentResolved = (component, attributes, rowIndex = -1) => {
+const payrollComponentResolved = (component: number, attributes: any, rowIndex = -1) => {
 
     if(!creatingEmployee.value){
 
