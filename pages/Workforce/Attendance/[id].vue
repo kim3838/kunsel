@@ -10,7 +10,13 @@
                     </NuxtLink>
                 </div>
 
-                <div class="px-[20px] space-y-2">
+                <div v-if="!attendanceSuccessful" class="px-[20px]">
+                    <div class="mb-2 flex flex-row flex-wrap gap-2 items-center min-h-8">
+                        <Label invert :size="'md'" :type="'danger'" :label="attendanceMessage" />
+                    </div>
+                </div>
+
+                <div v-if="attendanceSuccessful" class="px-[20px] space-y-2">
 
                     <div>
                         <div class="text-lg font-header">{{title}}</div>
@@ -121,6 +127,7 @@ import {storeToRefs} from "pinia";
 import type {AttendanceT} from "@/public/js/types/attendance";
 
 useHead({titleTemplate: (titleChunk) => {return `${titleChunk} - Attendance`}});
+definePageMeta({middleware: ['auth', 'admin-of-selected-company']});
 useLayout().setNavigationMode('solid');
 const route = useRoute();
 const {isAuthenticated} = useAuth();
@@ -147,6 +154,8 @@ const subTitle = computed(() => {
 });
 
 const attendance = ref<AttendanceT>({} as AttendanceT);
+const attendanceSuccessful = ref(true);
+const attendanceMessage = ref('');
 const attendanceBreakdown = ref<TableRowT[]>([]);
 
 const scheduleWorkPeriod = computed(() => {
@@ -194,24 +203,6 @@ const scheduleTotalDuration = computed(() => {
 const scheduleIsFlexible = computed(() => {
     return shiftIsFlexible.value ? 'Yes' : 'No';
 })
-
-definePageMeta({
-    middleware: ['auth', 'admin-of-selected-company',
-        async (to) => {
-
-            if(import.meta.server){return true;}
-
-            const {selectedAssociatedCompanyId} = storeToRefs(useAuthStore());
-            const {data, error} = await laraUseFetch(`/api/attendance-gate/${to.params.id}`, {method: 'GET', params: {company_id: selectedAssociatedCompanyId.value}}, {}, false);
-
-            if(_isEmpty(data.value) && !_isEmpty(error.value)){
-                let responseCode = _get(error.value, 'data.code', null);
-
-                throw createError({ statusCode: responseCode, statusMessage: useCoreStore().servicePayloadMessage, fatal: true});
-            }
-        }
-    ]
-});
 
 const disableActions = computed(() => {
     return false;
@@ -338,11 +329,15 @@ const fetchAttendance = async () => {
             company_id: selectedAssociatedCompanyId.value
         }
     }, {
+        onResponse: (request, options, response) => {
+            attendanceSuccessful.value = _get(response, '_data.successful', false);
+            attendanceMessage.value = _get(response, '_data.message', '');
+        },
         onSuccessResponse: async (request, options, response) => {
             attendance.value = _get(response, '_data.values.attendance', {}) as AttendanceT;
             attendanceBreakdown.value = _get(response, '_data.values.details', []);
         },
-    });
+    }, false);
 };
 
 await fetchAttendance();

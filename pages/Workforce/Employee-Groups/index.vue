@@ -178,19 +178,7 @@ import type {EnumOption, EnumSelection} from "@/public/js/common/type";
 import {storeToRefs} from "pinia";
 
 useHead({titleTemplate: (titleChunk) => {return `${titleChunk} - Employee Groups`}});
-definePageMeta({middleware: ['auth', 'admin-of-selected-company',
-    async () => {
-
-        const {selectedAssociatedCompanyId} = storeToRefs(useAuthStore());
-        const {data, error} = await laraUseFetch(`/api/employee-groups-gate`, {method: 'GET', params: {company_id: selectedAssociatedCompanyId.value}}, {}, false);
-
-        if(_isEmpty(data.value) && !_isEmpty(error.value)){
-            let responseCode = _get(error.value, 'data.code', null);
-
-            throw createError({ statusCode: responseCode, statusMessage: useCoreStore().servicePayloadMessage, fatal: true});
-        }
-    }
-]});
+definePageMeta({middleware: ['auth', 'admin-of-selected-company']});
 useLayout().setNavigationMode('solid');
 
 const {isAuthenticated} = useAuth();

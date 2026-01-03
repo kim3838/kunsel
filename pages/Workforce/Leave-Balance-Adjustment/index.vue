@@ -234,19 +234,7 @@ import type {SingleSelectPaginatedInstance} from "@/public/js/types/component-in
 import {storeToRefs} from "pinia";
 
 useHead({titleTemplate: (titleChunk) => {return `${titleChunk} - Leave Balance Adjustments`}});
-definePageMeta({middleware: ['auth', 'admin-of-selected-company',
-    async () => {
-
-        const {selectedAssociatedCompanyId} = storeToRefs(useAuthStore());
-        const {data, error} = await laraUseFetch(`/api/leave-balance-adjustments-gate`, {method: 'GET', params: {company_id: selectedAssociatedCompanyId.value}}, {}, false);
-
-        if(_isEmpty(data.value) && !_isEmpty(error.value)){
-            let responseCode = _get(error.value, 'data.code', null);
-
-            throw createError({ statusCode: responseCode, statusMessage: useCoreStore().servicePayloadMessage, fatal: true});
-        }
-    }
-]});
+definePageMeta({middleware: ['auth', 'admin-of-selected-company']});
 useLayout().setNavigationMode('solid');
 
 const {isAuthenticated} = useAuth();

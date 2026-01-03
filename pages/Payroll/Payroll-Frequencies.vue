@@ -198,19 +198,7 @@ import type {EnumSelection, StringEnumInterface} from "@/public/js/common/type";
 import type {PayFrequencyT} from "@/public/js/types/pay-frequency";
 
 useHead({titleTemplate: (titleChunk) => {return `${titleChunk} - Payroll Frequencies`}});
-definePageMeta({middleware: ['auth', 'admin-of-selected-company',
-    async () => {
-
-        const {selectedAssociatedCompanyId} = storeToRefs(useAuthStore());
-        const {data, error} = await laraUseFetch(`/api/pay-frequencies-gate`, {method: 'GET', params: {company_id: selectedAssociatedCompanyId.value}}, {}, false);
-
-        if(_isEmpty(data.value) && !_isEmpty(error.value)){
-            let responseCode = _get(error.value, 'data.code', null);
-
-            throw createError({ statusCode: responseCode, statusMessage: useCoreStore().servicePayloadMessage, fatal: true});
-        }
-    }
-]});
+definePageMeta({middleware: ['auth', 'admin-of-selected-company']});
 useLayout().setNavigationMode('solid');
 
 const {screenWidthBreakpoint, width: screenWidth} = useScreen();

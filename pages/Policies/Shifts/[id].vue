@@ -50,7 +50,13 @@
                     </NuxtLink>
                 </div>
 
-                <div class="px-[20px] space-y-2">
+                <div v-if="!shiftSuccessful" class="px-[20px]">
+                    <div class="mb-2 flex flex-row flex-wrap gap-2 items-center min-h-8">
+                        <Label invert :size="'md'" :type="'danger'" :label="shiftMessage" />
+                    </div>
+                </div>
+
+                <div v-if="shiftSuccessful" class="px-[20px] space-y-2">
 
                     <div class="text-lg font-header">Shift information</div>
 
@@ -225,6 +231,7 @@ import type {StringEnumInterface} from "@/public/js/common/type";
 import {storeToRefs} from "pinia";
 
 useHead({titleTemplate: (titleChunk) => {return `${titleChunk} - Shifts`}});
+definePageMeta({middleware: ['auth', 'admin-of-selected-company']});
 useLayout().setNavigationMode('solid');
 const route = useRoute();
 const {isAuthenticated} = useAuth();
@@ -249,26 +256,10 @@ watch(updatedAssociatedCompanyFlag, (newValue) => {
 });
 
 const shift = ref<ShiftT | null>(null);
+const shiftSuccessful = ref(true);
+const shiftMessage = ref('');
 const creatingShift = computed(() => {
     return route.params.id === 'create-shift';
-});
-
-definePageMeta({
-    middleware: ['auth', 'admin-of-selected-company',
-        async (to) => {
-
-            if(import.meta.server || to.params.id === 'create-shift'){return true;}
-
-            const {selectedAssociatedCompanyId} = storeToRefs(useAuthStore());
-            const {data, error} = await laraUseFetch(`/api/shift-gate/${to.params.id}`, {method: 'GET', params: {company_id: selectedAssociatedCompanyId.value}}, {}, false);
-
-            if(_isEmpty(data.value) && !_isEmpty(error.value)){
-                let responseCode = _get(error.value, 'data.code', null);
-
-                throw createError({ statusCode: responseCode, statusMessage: useCoreStore().servicePayloadMessage, fatal: true});
-            }
-        }
-    ]
 });
 
 const shiftCode = ref('');
@@ -380,6 +371,10 @@ const fetchShift = async () => {
             company_id: selectedAssociatedCompanyId.value
         }
     }, {
+        onResponse: (request, options, response) => {
+            shiftSuccessful.value = _get(response, '_data.successful', false);
+            shiftMessage.value = _get(response, '_data.message', '');
+        },
         onSuccessResponse: async (request, options, response) => {
             shift.value = _get(response, '_data.values.shift', null);
             shiftSchedules.value = _get(response, '_data.values.shift_schedules', []);
@@ -397,7 +392,7 @@ const fetchShift = async () => {
 
             shiftIsDefault.selected = _get(response, '_data.values.shift.is_default', false) ? 1 : 0;
         },
-    });
+    }, false);
 };
 
 await fetchShift();

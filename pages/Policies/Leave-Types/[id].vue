@@ -55,7 +55,13 @@
                     </NuxtLink>
                 </div>
 
-                <div class="px-[20px] space-y-6">
+                <div v-if="!leaveTypeSuccessful" class="px-[20px]">
+                    <div class="mb-2 flex flex-row flex-wrap gap-2 items-center min-h-8">
+                        <Label invert :size="'md'" :type="'danger'" :label="leaveTypeMessage" />
+                    </div>
+                </div>
+
+                <div v-if="leaveTypeSuccessful" class="px-[20px] space-y-6">
 
                     <div v-if="false">
                         <span class="font-semibold">Code:</span> {{leaveTypeCode}}<br>
@@ -287,6 +293,7 @@ import type {LeaveTypeT, LeaveTypeBalancePerPeriodT} from "@/public/js/types/lea
 import {storeToRefs} from "pinia";
 
 useHead({titleTemplate: (titleChunk) => {return `${titleChunk} - Leave Types`}});
+definePageMeta({middleware: ['auth', 'admin-of-selected-company']});
 useLayout().setNavigationMode('solid');
 const route = useRoute();
 const {isAuthenticated} = useAuth();
@@ -310,26 +317,10 @@ watch(updatedAssociatedCompanyFlag, (newValue) => {
 });
 
 const leaveType = ref<LeaveTypeT | null>(null);
+const leaveTypeSuccessful = ref(true);
+const leaveTypeMessage = ref('');
 const creatingLeaveType = computed(() => {
     return route.params.id === 'create-leave-type';
-});
-
-definePageMeta({
-    middleware: ['auth', 'admin-of-selected-company',
-        async (to) => {
-
-            if(import.meta.server || to.params.id === 'create-leave-type'){return true;}
-
-            const {selectedAssociatedCompanyId} = storeToRefs(useAuthStore());
-            const {data, error} = await laraUseFetch(`/api/leave-type-gate/${to.params.id}`, {method: 'GET', params: {company_id: selectedAssociatedCompanyId.value}}, {}, false);
-
-            if(_isEmpty(data.value) && !_isEmpty(error.value)){
-                let responseCode = _get(error.value, 'data.code', null);
-
-                throw createError({ statusCode: responseCode, statusMessage: useCoreStore().servicePayloadMessage, fatal: true});
-            }
-        }
-    ]
 });
 
 const leaveTypeCode = ref('');
@@ -525,6 +516,10 @@ const fetchLeaveType = async () => {
             company_id: selectedAssociatedCompanyId.value
         }
     }, {
+        onResponse: (request, options, response) => {
+            leaveTypeSuccessful.value = _get(response, '_data.successful', false);
+            leaveTypeMessage.value = _get(response, '_data.message', '');
+        },
         onSuccessResponse: async (request, options, response) => {
             leaveType.value = _get(response, '_data.values.leave_type', null);
             splicedLeaveTypeBalancePerPeriods.value = [];
@@ -557,7 +552,7 @@ const fetchLeaveType = async () => {
             leaveTypeCarryOverBalanceTypeValue.value = _get(response, '_data.values.leave_type.carry_over_balance_type.value', LEAVE_CARRY_OVER_TYPE.ALL as number);
             leaveTypeCarryOverBalanceValue.value = _get(response, '_data.values.leave_type.carry_over_balance_value', 0);
         },
-    });
+    }, false);
 };
 await fetchLeaveType();
 
