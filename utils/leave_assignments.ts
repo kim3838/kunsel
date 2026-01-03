@@ -10,5 +10,5 @@ export const LEAVE_TYPE_ASSIGNMENT_TAB: NumericEnumInterface = {
 export const LEAVE_TYPE_ASSIGNMENT_TAB_NAME: StringEnumInterface = {
     [LEAVE_TYPE_ASSIGNMENT_TAB.LIST as number]: 'List',
     [LEAVE_TYPE_ASSIGNMENT_TAB.CREATE_LEAVE_TYPE_ASSIGNMENTS as number]: 'Create Leave Type Assignments',
-    [LEAVE_TYPE_ASSIGNMENT_TAB.MANAGE_ASSIGNED_LEAVE_TYPES as number]: 'Manage Assigned Leave Types',
+    [LEAVE_TYPE_ASSIGNMENT_TAB.MANAGE_ASSIGNED_LEAVE_TYPES as number]: 'Bulk Assign or Bulk Remove Assigned Leave Types',
 }
