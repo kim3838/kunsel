@@ -18,17 +18,20 @@
 
                         <table class="border-separate font-sans">
                             <tbody>
-                                <tr><td>Plan:</td><td class="pl-2">{{account.plan.text}}</td></tr>
+                                <tr><td>Email:</td><td class="pl-2">{{account.email}}</td></tr>
+                                <tr><td>Date registered:</td><td class="pl-2">{{account.date_registered}}</td></tr>
+                                <tr><td colspan="2">Subscriptions:</td></tr>
+                                <tr><td colspan="2">
+                                    <div v-for="subscription in account.subscriptions" class="flex flex-row gap-4">
+                                        <UnorderedList
+                                            :icon="'ic:sharp-radio-button-checked'"
+                                            :label="subscription.module.text" />
+
+                                        <div class="font-serif">{{subscription.plan.text}}</div>
+                                    </div>
+                                </td></tr>
                             </tbody>
                         </table>
-
-                        <div>
-                            <div class="mb-2">Subscriptions:</div>
-                            <UnorderedList
-                                v-for="subscription in account.subscriptions"
-                                :icon="'ic:sharp-radio-button-checked'"
-                                :label="subscription.module.text" />
-                        </div>
                     </div>
                 </div>
             </div>
@@ -37,12 +40,14 @@
 </template>
 
 <script setup lang="ts">
+import type {AccountT} from "@/public/js/types/account";
+
 useHead({titleTemplate: (titleChunk) => {return `${titleChunk} - Accounts`}});
 definePageMeta({middleware: ['auth', 'admin-in-any-company']});
 useLayout().setNavigationMode('solid');
 const user = userState();
 
-const accountsData = ref([]);
+const accountsData = ref<AccountT[]>([]);
 
 let paramsComputed = computed(() => {
     return {
