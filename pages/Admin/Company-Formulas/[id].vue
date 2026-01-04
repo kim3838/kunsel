@@ -125,29 +125,14 @@ import type {LabelTypeT} from "@/public/js/types/theme";
 import type {CompanyT} from "@/public/js/types/company";
 
 useHead({titleTemplate: (titleChunk) => {return `${titleChunk} - Company Formula`}});
+definePageMeta({middleware: ['auth', 'super-admin']});
 useLayout().setNavigationMode('solid');
+
 const route = useRoute();
 const company = ref<CompanyT | null>(null);
 
 const companyCode = ref('');
 const companyName = ref('');
-
-definePageMeta({
-    middleware: ['auth', 'super-admin',
-        async (to) => {
-
-            if(import.meta.server){return true;}
-
-            const {data, error} = await laraUseFetch(`/api/company-check/${to.params.id}`, {method: 'GET',}, {}, false);
-
-            if(_isEmpty(data.value) && !_isEmpty(error.value)){
-                let responseCode = _get(error.value, 'data.code', null);
-
-                throw createError({ statusCode: responseCode, statusMessage: useCoreStore().servicePayloadMessage, fatal: true});
-            }
-        }
-    ]
-});
 
 //Fetch Company Information
 const fetchCompany = async () => {

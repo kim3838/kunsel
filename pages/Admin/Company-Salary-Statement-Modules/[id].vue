@@ -142,6 +142,7 @@ import type {Sequenceable, TableHeaderT, TableRowT} from "@/public/js/types/data
 import type {LabelTypeT} from "@/public/js/types/theme";
 
 useHead({titleTemplate: (titleChunk) => {return `${titleChunk} - Company Salary Statement Modules`}});
+definePageMeta({middleware: ['auth', 'super-admin']});
 useLayout().setNavigationMode('solid');
 const route = useRoute();
 const nuxtApp = useNuxtApp();
@@ -151,23 +152,6 @@ const company = ref<{id: number}>(null);
 const companyId = computed(() => _get(company.value, 'id', null));
 const companyCode = ref('');
 const companyName = ref('');
-
-definePageMeta({
-    middleware: ['auth', 'super-admin',
-        async (to) => {
-
-            if(import.meta.server){return true;}
-
-            const {data, error} = await laraUseFetch(`/api/company-check/${to.params.id}`, {method: 'GET',}, {}, false);
-
-            if(_isEmpty(data.value) && !_isEmpty(error.value)){
-                let responseCode = _get(error.value, 'data.code', null);
-
-                throw createError({ statusCode: responseCode, statusMessage: useCoreStore().servicePayloadMessage, fatal: true});
-            }
-        }
-    ]
-});
 
 //Fetch Company Information
 const fetchCompany = async () => {
