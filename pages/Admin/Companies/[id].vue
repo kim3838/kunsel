@@ -15,7 +15,7 @@
                     </div>
                 </div>
 
-                <form v-if="companySuccessful" @submit.prevent="formSubmit" class="px-[20px] space-y-2">
+                <div v-if="companySuccessful" class="px-[20px] space-y-2">
 
                     <div class="text-lg font-header">Company</div>
 
@@ -52,14 +52,16 @@
                         </div>
                     </div>
 
-                    <Button class="w-min" ref="submitButton" type="submit" :disabled="disableActions" :size="'md'" :icon="disableActions ? 'eos-icons:loading' : 'mdi:data'" :label="submitLabel"></Button>
-                </form>
+                    <Button class="w-min" ref="submitButton" type="submit" @click="formSubmit" :disabled="disableActions" :size="'md'" :icon="disableActions ? 'eos-icons:loading' : 'mdi:data'" :label="submitLabel"></Button>
+                </div>
             </div>
         </AdminWrapper>
     </div>
 </template>
 
 <script setup lang="ts">
+
+import type {CompanyT} from "@/public/js/types/company";
 
 const {fetchAssociatedCompanies, storeAssociatedCompanies} = useAssociation();
 
@@ -68,10 +70,10 @@ definePageMeta({middleware: ['auth', 'super-admin']});
 useLayout().setNavigationMode('solid');
 
 const route = useRoute();
-const company = ref(null);
+const company = ref<Partial<CompanyT>>({});
 const companySuccessful = ref(true);
 const companyMessage = ref('');
-const creatingAccount = computed(() => {
+const creatingCompany = computed(() => {
     return route.params.id === 'create-company';
 });
 const companyCode = ref('');
@@ -155,7 +157,7 @@ const fetchCompany = async () => {
             companyMessage.value = _get(response, '_data.message', '');
         },
         onSuccessResponse: async (request, options, response) => {
-            company.value = _get(response, '_data.values.company', null);
+            company.value = _get(response, '_data.values.company', {}) as CompanyT;
             accountOptions.selected = _get(response, '_data.values.company.account_id', null);
             companyCode.value = _get(response, '_data.values.company.code', '');
             companyShortName.value = _get(response, '_data.values.company.short_name', '');
@@ -175,13 +177,13 @@ const disableActions = computed(() => {
 });
 
 const submitLabel = computed(() => {
-    return formPending.value ? 'Please wait' : (!creatingAccount.value ? 'Save' : 'Submit');
+    return formPending.value ? 'Please wait' : (!creatingCompany.value ? 'Save' : 'Submit');
 });
 const submitAction = computed(() => {
-    return !creatingAccount.value ? 'PATCH' : 'POST';
+    return !creatingCompany.value ? 'PATCH' : 'POST';
 });
 const submitPath = computed(() => {
-    return !creatingAccount.value ? `/api/company/${company.value.id}` : `/api/company`;
+    return !creatingCompany.value ? `/api/company/${company.value.id}` : `/api/company`;
 });
 const formBody = computed(() => {
 
@@ -214,7 +216,7 @@ const formSubmit = async() => {
                 resetable: false,
                 icon: null,
                 title: `Request successful`,
-                message: `Company updated`,
+                message: `Company ${creatingCompany.value ? 'Created' : 'Updated'}`,
                 action: {
                     callback: () => {},
                     label: 'Okay'
