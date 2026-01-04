@@ -25,7 +25,7 @@
                                     </table>
 
                                     <div v-if="employeeHasNewlyCreatedUser && _get(resolvedEmployee, 'user_id', false)" class="mt-4 text-sm">
-                                        An email will be sent to the employee regarding of his account registration and login credentials.
+                                        An email will be sent to the user regarding their account registration and login credentials.
                                     </div>
                                 </div>
 
