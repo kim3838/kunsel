@@ -2,6 +2,40 @@
     <div>
         <AdminWrapper>
             <div class="mx-auto max-w-screen-2xl">
+
+                <DialogModal
+                    :max-width="'440px'"
+                    :show="resolvedUserModal"
+                    :closeable="false">
+                    <template #title>
+                        {{resolvedUserModalTitle}}
+                    </template>
+                    <template #content>
+
+                        <div class="mt-4 space-y-2">
+
+                            <table class="border-separate font-data">
+                                <tbody>
+                                    <tr><td>Username:</td><td class="pl-2">{{resolvedUser.username}}</td></tr>
+                                    <tr><td>Email:</td><td class="pl-2">{{resolvedUser.email}}</td></tr>
+                                </tbody>
+                            </table>
+
+                            <div class="mt-4 text-sm">
+                                An email will be sent to the user regarding their account registration and login credentials.
+                            </div>
+                        </div>
+                    </template>
+                    <template #footer>
+                        <div class="flex space-x-2 justify-between">
+                            <div class="space-x-2 inline-flex items-center">
+                                <Button :icon="'ic:sharp-keyboard-arrow-left'" :variant="'outline'" @click="navigateTo({path: `/admin/users`, replace: true})" :label="'Back to users'" />
+                                <Button v-if="creatingAssociatedUser" :variant="'outline'" @click="manageCompanyAssignment" :label="'Manage company assignment'" />
+                            </div>
+                        </div>
+                    </template>
+                </DialogModal>
+
                 <div class="flex px-[20px] pt-[20px] mb-2" :class="disableActions ? 'pointer-events-none' : ''">
                     <NuxtLink
                         :to="`/admin/users`">
@@ -383,13 +417,23 @@ const createUserFormSubmit = async() => {
         },
         onSuccessResponse: async (request, options, response) => {
             createUserFormPending.value = true;
-            const userUlid = _get(response, '_data.values.user.ulid', null);
-            await navigateTo({path: `/admin/users/${userUlid}`, replace: true});
+
+            resolvedUser.value = _get(response, '_data.values.user', {}) as UserT;
+            resolvedUserModal.value = true;
         },
     });
 }
 
+const resolvedUserModal = ref(false);
+const resolvedUser = ref<Partial<UserT>>({});
+const resolvedUserModalTitle = computed(() => {
+    return `User ${creatingAssociatedUser.value ? 'Created' : 'Updated'}`;
+})
 
+const manageCompanyAssignment = async () => {
+    const userUlid = _get(resolvedUser.value, 'ulid', null);
+    await navigateTo({path: `/admin/users/${userUlid}`, replace: true})
+}
 </script>
 
 <style scoped>
