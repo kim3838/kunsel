@@ -6,8 +6,8 @@
                 <form @submit.prevent="paginate(1, true)" class="space-y-2 p-[20px]">
                     <div class="grid gap-2 grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-8">
                         <div>
-                            <InputLabel :size="'sm'" value="Account Type" />
-                            <MultiSelect :disabled="disableActions" glint drop-shadow :selection-max-viewable-line="5" :size="'md'" :options="accountPlanOptions" :icon="'tdesign:component-checkbox'"/>
+                            <InputLabel :size="'sm'" value="Search" />
+                            <Input :disabled="disableActions" :size="'md'" ref="searchInput" v-model="filters.search.keyword" class="w-full" placeholder="Search" type="text"/>
                         </div>
                     </div>
 
@@ -61,23 +61,21 @@
 
                                 <table class="border-separate font-sans">
                                     <tbody>
-                                        <tr><td>Plan:</td><td class="pl-2">{{account.plan.text}}</td></tr>
+                                        <tr><td>Email:</td><td class="pl-2">{{account.email}}</td></tr>
                                         <tr><td>Date registered:</td><td class="pl-2">{{account.date_registered}}</td></tr>
+                                        <tr><td colspan="2">Subscriptions:</td></tr>
+                                        <tr><td colspan="2">
+                                            <div v-for="subscription in account.subscriptions" class="flex flex-row gap-4">
+                                                <UnorderedList
+                                                    :icon="'ic:sharp-radio-button-checked'"
+                                                    :label="subscription.module.text" />
+
+                                                <div class="font-serif">{{subscription.plan.text}}</div>
+                                            </div>
+                                        </td></tr>
                                     </tbody>
                                 </table>
-
-                                <div>
-                                    <div class="mb-2">Subscriptions:</div>
-                                    <UnorderedList
-                                        v-for="subscription in account.subscriptions"
-                                        :icon="'ic:sharp-radio-button-checked'"
-                                        :label="subscription.module.text" />
-                                </div>
                             </div>
-                        </div>
-
-                        <div v-if="noAccountRecords">
-                            No Record Found.
                         </div>
                     </div>
 
@@ -107,9 +105,6 @@
                                 </NavDrop>
                             </div>
                         </template>
-                        <template v-slot:cell.plan="{cell,slot}">
-                            <div class="p-[3px]">{{cell.plan.text}}</div>
-                        </template>
                     </DataTable>
                 </div>
 
@@ -121,6 +116,7 @@
 <script setup lang="ts">
 import type {DataTableT, TableHeaderT} from "@/public/js/types/data";
 import type {EnumOption, EnumSelection} from "@/public/js/common/type";
+import type {AccountT} from "@/public/js/types/account";
 
 useHead({titleTemplate: (titleChunk) => {return `${titleChunk} - Accounts`}});
 definePageMeta({middleware: ['auth', 'super-admin']});
@@ -129,18 +125,9 @@ useLayout().setNavigationMode('solid');
 const accountsHeaders = reactive<TableHeaderT[]>([
     { text: '', value: 'actions'},
     { text: 'Account #', value: 'number', alignData: 'left'},
-    { text: 'Plan', value: 'plan', alignData: 'left'},
+    { text: 'Email', value: 'email', alignData: 'left'},
     { text: 'Date Registered', value: 'date_registered', alignData: 'left'},
 ]);
-
-const accountPlanOptions = reactive({
-    search: '',
-    selection: [
-        {text : 'Standard', value: ACCOUNT_PLAN.STANDARD},
-        {text : 'Business', value: ACCOUNT_PLAN.BUSINESS},
-    ],
-    selected: []
-});
 
 const accounts = reactive<DataTableT>({
     'data': [],
@@ -171,9 +158,6 @@ let filters = reactive<{
         callback: 1
     }
 });
-const noAccountRecords = computed(() => {
-    return accounts.meta.pagination.total === 0;
-})
 const viewMode = reactive<{
     selection: EnumSelection;
     selected: number | null;
@@ -200,7 +184,7 @@ let paramsComputed = computed(() => {
         page: filters.page,
         perPage: filters.perPage,
         filters: {
-            'account_plan': accountPlanOptions.selected
+            'search': filters.search.keyword,
         }
     };
 });
@@ -226,7 +210,7 @@ const accountsExecute = async () => {
             accounts.message = _get(response, '_data.message', '');
         },
         onSuccessResponse: async (request, options, response) => {
-            accounts.data = _get(response, '_data.values.data', []);
+            accounts.data = _get(response, '_data.values.data', []) as AccountT[];
             accounts.meta = _get(response, '_data.values.meta', {
                 pagination: {
                     total: 0,
