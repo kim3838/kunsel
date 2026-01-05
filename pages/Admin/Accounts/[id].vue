@@ -61,7 +61,7 @@
                     <div class="text-lg font-header">Account</div>
 
                     <div class="grid gap-2 grid-cols-4 sm:grid-cols-5 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-8">
-                        <div v-show="!creatingAccount">
+                        <div  class="col-span-2" v-show="!creatingAccount">
                             <InputLabel :size="'sm'" value="Account number"/>
                             <Input :disabled="!creatingAccount" :size="'md'" v-model="accountNumber" type="text"/>
                         </div>
