@@ -81,7 +81,6 @@ export const PAY_TYPE_NAME: StringEnumInterface = {
 };
 
 export const PAY_FREQUENCY_CODES: string[] = [
-    'DAILY',
     'WEEKLY',
     'SEMI_MONTHLY',
     'MONTHLY',
@@ -96,14 +95,12 @@ export const CUT_OFF_NAME: StringEnumInterface = {
 };
 
 export const PAY_FREQUENCY_TYPE: NumericEnumInterface ={
-    DAILY : 100,
     WEEKLY : 200,
     SEMI_MONTHLY : 300,
     MONTHLY : 400
 }
 
 export const PAY_FREQUENCY_NAME: StringEnumInterface = {
-    [PAY_FREQUENCY_TYPE.DAILY as number]: 'Daily',
     [PAY_FREQUENCY_TYPE.WEEKLY as number]: 'Weekly',
     [PAY_FREQUENCY_TYPE.SEMI_MONTHLY as number]: 'Semimonthly',
     [PAY_FREQUENCY_TYPE.MONTHLY as number]: 'Monthly'

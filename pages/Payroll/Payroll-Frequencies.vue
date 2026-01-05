@@ -61,15 +61,6 @@
 
                 <div v-if="payFrequenciesSuccessful" class="space-y-2 p-[20px] flex flex-col gap-4">
 
-                    <fieldset class="neutral-border px-2 pb-2 space-y-2">
-                        <legend class="text-lg font-header">{{PAY_FREQUENCY_NAME[dailyPayFrequenciesData.type]}}</legend>
-
-                        <div>
-                            <div class="text-base"><span class="font-semibold">Code: </span><span>{{dailyPayFrequenciesData?.code}}</span></div>
-                        </div>
-
-                    </fieldset>
-
                     <form @submit.prevent="weeklyPayFrequencyFormSubmit">
                         <fieldset class="neutral-border px-2 pb-2 grid grid-cols-2 md:grid-cols-4 gap-4">
                             <legend class="text-lg font-header">{{PAY_FREQUENCY_NAME[weeklyPayFrequenciesData.type]}}</legend>
@@ -180,7 +171,6 @@
                 </div>
 
                 <div v-if="false">
-                    <div><span class="font-semibold text-xs font-mono">dailyPayFrequenciesData: </span><div>{{dailyPayFrequenciesData}}</div></div>
                     <div><span class="font-semibold text-xs font-mono">weeklyPayFrequenciesData: </span><div>{{weeklyPayFrequenciesData}}</div></div>
                     <div><span class="font-semibold text-xs font-mono">monthlyPayFrequenciesData: </span><div>{{monthlyPayFrequenciesData}}</div></div>
                     <div><span class="font-semibold text-xs font-mono">semimonthlyPayFrequenciesData: </span><div>{{semimonthlyPayFrequenciesData}}</div></div>
@@ -310,7 +300,6 @@ const weekDaySelection = reactive<EnumSelection>([
 const payFrequenciesData = ref([]);
 const payFrequenciesSuccessful = ref(true);
 const payFrequenciesMessage = ref('');
-const dailyPayFrequenciesData = ref<PayFrequencyT | {}>({});
 const weeklyPayFrequenciesData = ref<PayFrequencyT | {}>({});
 const monthlyPayFrequenciesData = ref<PayFrequencyT | {}>({});
 const semimonthlyPayFrequenciesData = ref<PayFrequencyT | {}>({});
@@ -341,7 +330,6 @@ const payFrequenciesExecute = async () => {
         onSuccessResponse: async (request, options, response) => {
             payFrequenciesData.value = _get(response, '_data.values.pay_frequencies', []);
 
-            dailyPayFrequenciesData.value = _find(payFrequenciesData.value, (item: PayFrequencyT) => item.type == PAY_FREQUENCY_TYPE.DAILY) as PayFrequencyT;
             weeklyPayFrequenciesData.value = _find(payFrequenciesData.value, (item: PayFrequencyT) => item.type == PAY_FREQUENCY_TYPE.WEEKLY) as PayFrequencyT;
             semimonthlyPayFrequenciesData.value = _find(payFrequenciesData.value, (item: PayFrequencyT) => item.type == PAY_FREQUENCY_TYPE.SEMI_MONTHLY) as PayFrequencyT;
             monthlyPayFrequenciesData.value = _find(payFrequenciesData.value, (item: PayFrequencyT) => item.type == PAY_FREQUENCY_TYPE.MONTHLY) as PayFrequencyT;
