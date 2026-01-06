@@ -1,7 +1,7 @@
 <template>
     <div>
         <DefaultWrapper>
-            <div class="mx-auto max-w-screen-2xl">
+            <div class="mx-auto max-w-screen-2xl p-[20px]">
 
             </div>
         </DefaultWrapper>
@@ -9,6 +9,7 @@
 </template>
 
 <script setup lang="ts">
+useHead({titleTemplate: (titleChunk) => {return `${titleChunk} - Dashboard`}});
 definePageMeta({middleware: 'auth'});
 useLayout().setNavigationMode('solid');
 </script>
