@@ -1,5 +1,6 @@
 
 import type {
+    AssignedAccountSubscriptionT,
     AssignedCompanyT,
     AssociatedCompanyT,
     SelectedAccountSubscriptionT,
@@ -229,7 +230,7 @@ export const useAssociation = () => {
             sameSite: 'lax',
         });
 
-        let companySubscriptions: EnumOption[] = $authStore.selectedAssociatedCompany?.payload.account.subscriptions as EnumOption[];
+        let companySubscriptions: AssignedAccountSubscriptionT[] = $authStore.selectedAssociatedCompany?.payload.account.subscriptions as AssignedAccountSubscriptionT[];
 
         // Subscription options
 

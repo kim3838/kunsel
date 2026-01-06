@@ -5,7 +5,8 @@ import type {
     StoreAssociatedCompanyT,
     AssignedCompanyT,
     StoreAccountSubscriptionT,
-    SelectedAccountSubscriptionT
+    SelectedAccountSubscriptionT,
+    AssignedAccountSubscriptionT
 } from "@/public/js/types/association";
 
 export const useAuthStore = defineStore('auth', () => {
@@ -47,6 +48,12 @@ export const useAuthStore = defineStore('auth', () => {
         return accountSubscriptions.value.singleSelectPayload.selected;
     });
 
+    const selectedAccountSubscription = computed<AssignedAccountSubscriptionT | undefined>(() => {
+        return accountSubscriptions.value.singleSelectPayload.selection.find(
+            subscription => subscription.value == selectedAccountSubscriptionValue.value
+        );
+    });
+
     function resetAssociatedCompanies() {
         const {sessionDomain} = useRuntimeConfig().public;
         const storedCompany = useCookie<SelectedCompanyT>(SELECTED_ASSOCIATED_COMPANY_STORAGE_KEY,{
@@ -75,10 +82,14 @@ export const useAuthStore = defineStore('auth', () => {
     return {
         SELECTED_ASSOCIATED_COMPANY_STORAGE_KEY,
         SELECTED_ACCOUNT_SUBSCRIPTION_STORAGE_KEY,
+
         associatedCompanies,
-        accountSubscriptions,
-        resetAssociatedCompanies,
         selectedAssociatedCompanyId,
-        selectedAssociatedCompany
+        selectedAssociatedCompany,
+        resetAssociatedCompanies,
+
+        accountSubscriptions,
+        selectedAccountSubscriptionValue,
+        selectedAccountSubscription,
     }
 })
