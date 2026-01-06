@@ -44,7 +44,7 @@
                         <UnorderedList v-if="disableActions" :icon="'eos-icons:loading'" :size="'md'" :label="'Please wait...'"/>
                         <NuxtLink
                             v-if="!disableActions"
-                            :to="`/policies/leave-types/create-leave-type`">
+                            :to="`/hr-payroll/policies/leave-types/create-leave-type`">
                             <Button class="w-min" :disabled="disableActions" :size="'sm'" :icon="disableActions ? 'eos-icons:loading' : 'mdi:plus'" :label="disableActions ? 'Please wait' : ''"></Button>
                         </NuxtLink>
                         <Button v-if="leaveTypes.successful && !disableActions" :variant="'outline'" :icon="'mdi:delete-outline'" class="inline-block" :size="'sm'" :disabled="disableActions" :label="'Delete selected'" @click="confirmDeleteSelected"/>
@@ -92,7 +92,7 @@
                                     :drop-align="'top'"
                                     :drop-justify="'right'"
                                     :drop-options="[
-                                        {type: 'link',icon: 'mdi:pen',title: 'Edit',to: `/policies/leave-types/${cell.ulid}`},
+                                        {type: 'link',icon: 'mdi:pen',title: 'Edit',to: `/hr-payroll/policies/leave-types/${cell.ulid}`},
                                     ]">
                                 </NavDrop>
                             </div>

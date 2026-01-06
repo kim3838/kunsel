@@ -238,7 +238,7 @@
                                     :drop-align="'top'"
                                     :drop-justify="'right'"
                                     :drop-options="[
-                                        {type: 'link', icon: 'ix:open-external', title: 'Details',to: `/workforce/attendance/${cell.ulid}`},
+                                        {type: 'link', icon: 'ix:open-external', title: 'Details',to: `/hr-payroll/workforce/attendance/${cell.ulid}`},
                                         {type: 'action', icon: 'mdi:edit', title: 'Edit Attendance',callback: () => {edit(cell);}},
                                     ]">
                                 </NavDrop>

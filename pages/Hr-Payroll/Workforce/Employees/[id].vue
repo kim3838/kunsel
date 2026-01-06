@@ -48,7 +48,7 @@
 
                             </div>
                             <div class="space-x-2 inline-flex items-center">
-                                <Button :icon="'ic:sharp-keyboard-arrow-left'" @click="navigateTo({path: `/workforce/employees`, replace: true})" :label="'Back to employees'" />
+                                <Button :icon="'ic:sharp-keyboard-arrow-left'" @click="navigateTo({path: `/hr-payroll/workforce/employees`, replace: true})" :label="'Back to employees'" />
                                 <Button :icon="'mdi:plus'" :variant="'outline'" v-if="creatingEmployee" @click="resetPageToInitialState" :label="'Create another'" />
                             </div>
                         </div>
@@ -58,7 +58,7 @@
                 <div class="p-[20px] space-y-2">
                     <div class="flex">
                         <NuxtLink
-                            :to="`/workforce/employees`">
+                            :to="`/hr-payroll/workforce/employees`">
                             <Button class="w-min" :variant="`outline`" :disabled="disableActions" :size="'sm'" :icon="disableActions ? 'eos-icons:loading' : 'ic:sharp-keyboard-arrow-left'" :label="disableActions ? 'Please wait' : ''"></Button>
                         </NuxtLink>
                     </div>
@@ -599,7 +599,7 @@ const managerOptions = reactive({
 
 watch(updatedAssociatedCompanyFlag, (newValue) => {
     if(isAuthenticated.value && selectedAssociatedCompanyId.value){
-        navigateTo("/workforce/employees", {replace: true});
+        navigateTo("/hr-payroll/workforce/employees", {replace: true});
     }
 });
 

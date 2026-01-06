@@ -138,7 +138,7 @@
                         <UnorderedList v-if="disableActions" :icon="'eos-icons:loading'" :size="'md'" :label="'Please wait...'"/>
                         <NuxtLink
                             v-else
-                            :to="`/workforce/employees/create-employee`">
+                            :to="`/hr-payroll/workforce/employees/create-employee`">
                             <Button class="w-min" :disabled="disableActions" :size="'sm'" :icon="disableActions ? 'eos-icons:loading' : 'mdi:plus'" :label="disableActions ? 'Please wait' : ''"></Button>
                         </NuxtLink>
                     </div>
@@ -155,14 +155,14 @@
                                     <div>
                                         <div class="text-xs">Family name,(Middle), Given</div>
                                         <NuxtLink
-                                            :to="`/workforce/employees/${employee.ulid}`">
+                                            :to="`/hr-payroll/workforce/employees/${employee.ulid}`">
                                             <span class="text-lg font-header cursor-pointer hover:underline">{{employee.full_name}}</span>
                                         </NuxtLink>
                                     </div>
 
                                     <NuxtLink
                                         v-if="false"
-                                        :to="`/workforce/employees/${employee.ulid}`">
+                                        :to="`/hr-payroll/workforce/employees/${employee.ulid}`">
                                         <Button type="button" :variant="'outline'" :icon="'mdi:checkbook'" :size="'sm'"  :label="'info'"></Button>
                                     </NuxtLink>
                                 </div>
@@ -183,7 +183,7 @@
                                             <td class="">Manager:</td>
                                             <td class="pl-2">
                                                 <NuxtLink
-                                                    :to="`/workforce/employees/${_get(employee, 'manager.ulid', null)}`">
+                                                    :to="`/hr-payroll/workforce/employees/${_get(employee, 'manager.ulid', null)}`">
                                                     <span class="cursor-pointer hover:underline">{{ _get(employee, 'manager.full_name', null) }}</span>
                                                 </NuxtLink>
                                             </td>
@@ -222,7 +222,7 @@
                                     :drop-align="'top'"
                                     :drop-justify="'right'"
                                     :drop-options="[
-                                        {type: 'link', icon: 'ix:open-external', title: 'Details',to: `/workforce/employees/${cell.ulid}`},
+                                        {type: 'link', icon: 'ix:open-external', title: 'Details',to: `/hr-payroll/workforce/employees/${cell.ulid}`},
                                         {type: 'action', title: 'Employment Profiles',callback: () => {showEmploymentProfilesModal(cell);}},
                                         {type: 'action', title: 'Payroll Components',callback: () => {showPayrollComponentsModal(cell);}},
                                     ]">

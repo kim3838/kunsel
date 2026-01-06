@@ -44,7 +44,7 @@
                         <UnorderedList v-if="disableActions" :icon="'eos-icons:loading'" :size="'md'" :label="'Please wait...'"/>
                         <NuxtLink
                             v-if="!disableActions"
-                            :to="`/policies/shifts/create-shift`">
+                            :to="`/hr-payroll/policies/shifts/create-shift`">
                             <Button class="w-min" :disabled="disableActions" :size="'sm'" :icon="disableActions ? 'eos-icons:loading' : 'mdi:plus'" :label="disableActions ? 'Please wait' : ''"></Button>
                         </NuxtLink>
                         <Button v-if="shifts.successful && !disableActions" :variant="'outline'" :icon="'mdi:delete-outline'" class="inline-block" :size="'sm'" :disabled="disableActions" :label="'Delete selected'" @click="deleteSelected"/>
@@ -91,7 +91,7 @@
                                     :drop-align="'top'"
                                     :drop-justify="'right'"
                                     :drop-options="[
-                                        {type: 'link',icon: 'mdi:pen',title: 'Edit',to: `/policies/shifts/${cell.ulid}`},
+                                        {type: 'link',icon: 'mdi:pen',title: 'Edit',to: `/hr-payroll/policies/shifts/${cell.ulid}`},
                                     ]">
                                 </NavDrop>
                             </div>

@@ -1,14 +1,12 @@
 import {storeToRefs} from "pinia";
-import type {
-    NavigationLinkInterface
-} from "@/public/js/types/layout";
-import type {
-    SelectedAccountSubscriptionT
-} from "@/public/js/types/association";
+import type {NavigationLinkInterface} from "@/public/js/types/layout";
+import type {SelectedAccountSubscriptionT} from "@/public/js/types/association";
+import type {StringEnumInterface} from "@/public/js/common/type";
 
 export const useLayout = () => {
     const nuxtApp = useNuxtApp();
     const isRoutePathActive = nuxtApp.$isRoutePathActive as (path: string | undefined) => boolean;
+    const stringEnumerableValue = nuxtApp.$stringEnumerableValue as (enumerable: StringEnumInterface, value: number) => string;
     const {isAuthenticated, userIsSuperAdmin, destroyAuthentication} = useAuth();
     const userIsAdminOfSelectedCompany = userIsAdminOfSelectedCompanyState();
     const userIsEmployeeOfSelectedCompany = userIsEmployeeOfSelectedCompanyState();
@@ -128,9 +126,9 @@ export const useLayout = () => {
 
         links = links.concat([
             ...((isAuthenticated.value) ? [{
-                key: 'dashboard',
+                key: 'home',
                 type: 'link',
-                title: 'Dashboard',
+                title: 'Home',
                 to: '/',
                 route_active: 'index'
             }] : []) as NavigationLinkInterface[],
@@ -245,238 +243,245 @@ export const useLayout = () => {
 
         const storedAccountSubscription = useCookie<SelectedAccountSubscriptionT>($authStore.SELECTED_ACCOUNT_SUBSCRIPTION_STORAGE_KEY);
 
+        const employeePortalRouteSlug = stringEnumerableValue(SUBSCRIPTION_MODULE_ROUTE_NAME, SUBSCRIPTION_MODULE.EMPLOYEE_PORTAL as number);
+        const hrPayrollRouteSlug = stringEnumerableValue(SUBSCRIPTION_MODULE_ROUTE_NAME, SUBSCRIPTION_MODULE.HR_PAYROLL as number);
+
         let moduleNavigationLinkMap = {
             [SUBSCRIPTION_MODULE.EMPLOYEE_PORTAL as number]: [
                 ...((isAuthenticated.value && (userIsSuperAdmin.value || userIsEmployeeOfSelectedCompany.value)) ? [{
-                    key: `${SUBSCRIPTION_MODULE.EMPLOYEE_PORTAL}-attendance`,
+                    key: `${employeePortalRouteSlug}-attendance`,
                     type: 'link',
                     title: 'Attendance',
-                    to: `/${SUBSCRIPTION_MODULE.EMPLOYEE_PORTAL}/attendance`,
-                    route_active: `${SUBSCRIPTION_MODULE.EMPLOYEE_PORTAL}-attendance`
+                    to: `/${employeePortalRouteSlug}/attendance`,
+                    route_active: `${employeePortalRouteSlug}-attendance`
                 }] : []) as NavigationLinkInterface[],
             ],
             [SUBSCRIPTION_MODULE.HR_PAYROLL as number]: [
                 ...((isAuthenticated.value && (userIsSuperAdmin.value || userIsAdminOfSelectedCompany.value)) ? [{
-                    key: 'workforce',
+                    key: `${hrPayrollRouteSlug}-workforce`,
                     type: 'sub-nav',
                     title: 'Workforce',
-                    path_active: '/workforce',
+                    path_active: `/${hrPayrollRouteSlug}/workforce`,
                     options:[
                         {
-                            key: 'workforce/employees',
+                            key: `${hrPayrollRouteSlug}/workforce/employees`,
                             type: 'link',
                             title: 'Employees',
-                            to: '/workforce/employees',
-                            route_active: 'workforce-employees',
+                            to: `/${hrPayrollRouteSlug}/workforce/employees`,
+                            route_active: `${hrPayrollRouteSlug}-workforce-employees`
                         },
                         {
-                            key: 'workforce/employee-groups',
+                            key: `${hrPayrollRouteSlug}/workforce/employee-groups`,
                             type: 'link',
                             title: 'Employee Groups',
-                            to: '/workforce/employee-groups',
-                            route_active: 'workforce-employee-groups'
+                            to: `/${hrPayrollRouteSlug}/workforce/employee-groups`,
+                            route_active: `${hrPayrollRouteSlug}-workforce-employee-groups`
                         },
                         {
-                            key: 'workforce/employment-profiles',
+                            key: `${hrPayrollRouteSlug}/workforce/employment-profiles`,
                             type: 'link',
                             title: 'Employment Profiles',
-                            to: '/workforce/employment-profiles',
-                            route_active: 'workforce-employment-profiles'
+                            to: `/${hrPayrollRouteSlug}/workforce/employment-profiles`,
+                            route_active: `${hrPayrollRouteSlug}-workforce-employment-profiles`
                         },
                         {
-                            key: 'workforce/departments',
+                            key: `${hrPayrollRouteSlug}/workforce/departments`,
                             type: 'link',
                             title: 'Departments',
-                            to: '/workforce/departments',
-                            route_active: 'workforce-departments'
+                            to: `/${hrPayrollRouteSlug}/workforce/departments`,
+                            route_active: `${hrPayrollRouteSlug}-workforce-departments`
                         },
                         {
-                            key: 'workforce/designations',
+                            key: `${hrPayrollRouteSlug}/workforce/designations`,
                             type: 'link',
                             title: 'Designations',
-                            to: '/workforce/designations',
-                            route_active: 'workforce-designations'
+                            to: `/${hrPayrollRouteSlug}/workforce/designations`,
+                            route_active: `${hrPayrollRouteSlug}-workforce-designations`
                         },
                         {
-                            key: 'workforce/attendance',
+                            key: `${hrPayrollRouteSlug}/workforce/attendance`,
                             type: 'link',
                             title: 'Attendance',
-                            to: '/workforce/attendance',
-                            route_active: 'workforce-attendance',
+                            to: `/${hrPayrollRouteSlug}/workforce/attendance`,
+                            route_active: `${hrPayrollRouteSlug}-workforce-attendance`
                         },
                         {
-                            key: 'workforce/overtime',
+                            key: `${hrPayrollRouteSlug}/workforce/overtime`,
                             type: 'link',
                             title: 'Overtime',
-                            to: '/workforce/overtime',
-                            route_active: 'workforce-overtime',
+                            to: `/${hrPayrollRouteSlug}/workforce/overtime`,
+                            route_active: `${hrPayrollRouteSlug}-workforce-overtime`
                         },
                         {
-                            key: 'workforce/leave',
+                            key: `${hrPayrollRouteSlug}/workforce/leave`,
                             type: 'link',
                             title: 'Leave',
-                            to: '/workforce/leave',
-                            route_active: 'workforce-leave',
+                            to: `/${hrPayrollRouteSlug}/workforce/leave`,
+                            route_active: `${hrPayrollRouteSlug}-workforce-leave`
                         },
                         {
-                            key: 'workforce/leave-balance-adjustment',
+                            key: `${hrPayrollRouteSlug}/workforce/leave-balance-adjustment`,
                             type: 'link',
                             title: 'Leave Balance Adjustment',
-                            to: '/workforce/leave-balance-adjustment',
-                            route_active: 'workforce-leave-balance-adjustment',
+                            to: `/${hrPayrollRouteSlug}/workforce/leave-balance-adjustment`,
+                            route_active: `${hrPayrollRouteSlug}-workforce-leave-balance-adjustment`
                         },
                     ]
                 },{
-                    key: 'policies',
+                    key: `${hrPayrollRouteSlug}-policies`,
                     type: 'sub-nav',
                     title: 'Policies',
-                    path_active: '/policies',
+                    path_active: `/${hrPayrollRouteSlug}/policies`,
                     options:[
                         {
-                            key: 'policies/shifts',
+                            key: `${hrPayrollRouteSlug}/policies/shifts`,
                             type: 'link',
                             title: 'Shifts',
-                            to: '/policies/shifts',
-                            route_active: 'policies-shifts',
+                            to: `/${hrPayrollRouteSlug}/policies/shifts`,
+                            route_active: `${hrPayrollRouteSlug}-policies-shifts`
                         },
                         {
-                            key: 'policies/shift-assignment',
+                            key: `${hrPayrollRouteSlug}/policies/shift-assignment`,
                             type: 'link',
                             title: 'Shift Assignment',
-                            to: '/policies/shift-assignment',
-                            route_active: 'policies-shift-assignment'
+                            to: `/${hrPayrollRouteSlug}/policies/shift-assignment`,
+                            route_active: `${hrPayrollRouteSlug}-policies-shift-assignment`
                         },
                         {
-                            key: 'policies/leave-types',
+                            key: `${hrPayrollRouteSlug}/policies/leave-types`,
                             type: 'link',
                             title: 'Leave Types',
-                            to: '/policies/leave-types',
-                            route_active: 'policies-leave-types',
+                            to: `/${hrPayrollRouteSlug}/policies/leave-types`,
+                            route_active: `${hrPayrollRouteSlug}-policies-leave-types`
                         },
                         {
-                            key: 'policies/leave-type-assignment',
+                            key: `${hrPayrollRouteSlug}/policies/leave-type-assignment`,
                             type: 'link',
                             title: 'Leave Type Assignment',
-                            to: '/policies/leave-type-assignment',
-                            route_active: 'policies-leave-type-assignment'
+                            to: `/${hrPayrollRouteSlug}/policies/leave-type-assignment`,
+                            route_active: `${hrPayrollRouteSlug}-policies-leave-type-assignment`
                         },
                         {
-                            key: 'policies/holiday',
+                            key: `${hrPayrollRouteSlug}/policies/holiday`,
                             type: 'link',
                             title: 'Holidays',
-                            to: '/policies/holiday',
-                            route_active: 'policies-holiday'
+                            to: `/${hrPayrollRouteSlug}/policies/holiday`,
+                            route_active: `${hrPayrollRouteSlug}-policies-holiday`
                         },
                     ]
                 }, {
-                    key: 'payroll',
+                    key: `${hrPayrollRouteSlug}-payroll`,
                     type: 'sub-nav',
                     title: 'Payroll',
-                    path_active: '/payroll',
+                    path_active: `/${hrPayrollRouteSlug}/payroll`,
                     options: [
                         {
-                            key: 'payroll/payroll-components',
+                            key: `${hrPayrollRouteSlug}/payroll/payroll-components`,
                             type: 'link',
                             title: 'Components',
-                            to: '/payroll/payroll-components',
-                            route_active: 'payroll-payroll-components'
+                            to: `/${hrPayrollRouteSlug}/payroll/payroll-components`,
+                            route_active: `${hrPayrollRouteSlug}-payroll-payroll-components`
                         },
                         {
-                            key: 'payroll/employee-pay-items',
+                            key: `${hrPayrollRouteSlug}/payroll/employee-pay-items`,
                             type: 'link',
                             title: 'Employee Pay Items',
-                            to: '/payroll/employee-pay-items',
-                            route_active: 'payroll-employee-pay-items'
+                            to: `/${hrPayrollRouteSlug}/payroll/employee-pay-items`,
+                            route_active: `${hrPayrollRouteSlug}-payroll-employee-pay-items`
                         },
                         {
-                            key: 'payroll/payroll-frequencies',
+                            key: `${hrPayrollRouteSlug}/payroll/payroll-frequencies`,
                             type: 'link',
                             title: 'Frequency',
-                            to: '/payroll/payroll-frequencies',
-                            route_active: 'payroll-payroll-frequencies'
+                            to: `/${hrPayrollRouteSlug}/payroll/payroll-frequencies`,
+                            route_active: `${hrPayrollRouteSlug}-payroll-payroll-frequencies`
                         },
                     ]
                 }, {
-                    key: 'settings',
+                    key: `${hrPayrollRouteSlug}-settings`,
                     type: 'sub-nav',
                     title: 'Settings',
-                    path_active: '/settings',
+                    path_active: `/${hrPayrollRouteSlug}/settings`,
                     options: [
                         {
-                            key: 'settings/salary-statement-modules',
+                            key: `${hrPayrollRouteSlug}/settings/salary-statement-modules`,
                             type: 'link',
                             title: 'Salary Statement Modules',
-                            to: '/settings/salary-statement-modules',
-                            route_active: 'settings-salary-statement-modules'
+                            to: `/${hrPayrollRouteSlug}/settings/salary-statement-modules`,
+                            route_active: `${hrPayrollRouteSlug}-settings-salary-statement-modules`
                         },
                         {
-                            key: 'settings/formula-settings',
+                            key: `${hrPayrollRouteSlug}/settings/formula-settings`,
                             type: 'link',
                             title: 'Formula Settings',
-                            to: '/settings/formula-settings',
-                            route_active: 'settings-formula-settings'
+                            to: `/${hrPayrollRouteSlug}/settings/formula-settings`,
+                            route_active: `${hrPayrollRouteSlug}-settings-formula-settings`
                         },
                     ]
                 }, {
-                    key: 'reports',
+                    key: `${hrPayrollRouteSlug}-reports`,
                     type: 'sub-nav',
                     title: 'Reports',
-                    path_active: '/reports',
+                    path_active: `/${hrPayrollRouteSlug}/reports`,
                     options: [
                         {
-                            key: 'reports/leave-balance',
+                            key: `${hrPayrollRouteSlug}/reports/leave-balance`,
                             type: 'link',
                             title: 'Leave Balance',
-                            to: '/reports/leave-balance',
-                            route_active: 'reports-leave-balance'
+                            to: `/${hrPayrollRouteSlug}/reports/leave-balance`,
+                            route_active: `${hrPayrollRouteSlug}-reports-leave-balance`
                         },
                     ],
                 }, {
-                    key: 'import',
+                    key: `${hrPayrollRouteSlug}-import`,
                     type: 'sub-nav',
                     title: 'Import',
-                    path_active: '/import',
+                    path_active: `/${hrPayrollRouteSlug}/import`,
                     options: [
                         {
-                            key: 'import/employees',
+                            key: `${hrPayrollRouteSlug}/import/employees`,
                             type: 'link',
                             title: 'Employees',
-                            to: '/import/employees',
-                            route_active: 'import-employees'
+                            to: `/${hrPayrollRouteSlug}/import/employees`,
+                            route_active: `${hrPayrollRouteSlug}-import-employees`
                         },
                         {
-                            key: 'import/employment-profile',
+                            key: `${hrPayrollRouteSlug}/import/employment-profile`,
                             type: 'link',
                             title: 'Employment Profile',
-                            to: '/import/employment-profile',
-                            route_active: 'import-employment-profile'
+                            to: `/${hrPayrollRouteSlug}/import/employment-profile`,
+                            route_active: `${hrPayrollRouteSlug}-import-employment-profile`
                         },
                         {
-                            key: 'import/employee-payroll-component',
+                            key: `${hrPayrollRouteSlug}/import/employee-payroll-component`,
                             type: 'link',
                             title: 'Employee Payroll Component',
-                            to: '/import/employee-payroll-component',
-                            route_active: 'import-employee-payroll-component'
+                            to: `/${hrPayrollRouteSlug}/import/employee-payroll-component`,
+                            route_active: `${hrPayrollRouteSlug}-import-employee-payroll-component`
                         },
                         {
-                            key: 'import/attendance',
+                            key: `${hrPayrollRouteSlug}/import/attendance`,
                             type: 'link',
                             title: 'Attendance',
-                            to: '/import/attendance',
-                            route_active: 'import-attendance'
+                            to: `/${hrPayrollRouteSlug}/import/attendance`,
+                            route_active: `${hrPayrollRouteSlug}-import-attendance`
                         },
                         {
-                            key: 'import/overtime',
+                            key: `${hrPayrollRouteSlug}/import/overtime`,
                             type: 'link',
                             title: 'Overtime',
-                            to: '/import/overtime',
-                            route_active: 'import-overtime'
+                            to: `/${hrPayrollRouteSlug}/import/overtime`,
+                            route_active: `${hrPayrollRouteSlug}-import-overtime`
                         },
                     ],
                 }] : []) as NavigationLinkInterface[],
             ],
-            [SUBSCRIPTION_MODULE.INVENTORY as number]: [],
-            [SUBSCRIPTION_MODULE.FINANCE_ACCOUNTING as number]: [],
+            [SUBSCRIPTION_MODULE.INVENTORY as number]: [
+                ...((isAuthenticated.value && (userIsSuperAdmin.value || userIsAdminOfSelectedCompany.value)) ? [] : []) as NavigationLinkInterface[],
+            ],
+            [SUBSCRIPTION_MODULE.FINANCE_ACCOUNTING as number]: [
+                ...((isAuthenticated.value && (userIsSuperAdmin.value || userIsAdminOfSelectedCompany.value)) ? [] : []) as NavigationLinkInterface[],
+            ],
         }
 
         let moduleNavigationLinks: NavigationLinkInterface[] = (storedAccountSubscription.value != null && typeof storedAccountSubscription.value === 'number')

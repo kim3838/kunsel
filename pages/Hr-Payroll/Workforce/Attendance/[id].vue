@@ -5,7 +5,7 @@
 
                 <div class="flex px-[20px] pt-[20px] mb-2">
                     <NuxtLink
-                        :to="`/workforce/attendance`">
+                        :to="`/hr-payroll/workforce/attendance`">
                         <Button class="w-min" :variant="`outline`" :disabled="disableActions" :size="'sm'" :icon="disableActions ? 'eos-icons:loading' : 'ic:sharp-keyboard-arrow-left'" :label="disableActions ? 'Please wait' : ''"></Button>
                     </NuxtLink>
                 </div>
@@ -142,7 +142,7 @@ const {
 
 watch(updatedAssociatedCompanyFlag, (newValue) => {
     if(isAuthenticated.value && selectedAssociatedCompanyId.value){
-        navigateTo("/workforce/attendance", {replace: true});
+        navigateTo("/hr-payroll/workforce/attendance", {replace: true});
     }
 });
 

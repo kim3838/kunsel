@@ -18,9 +18,16 @@ export const  SUBSCRIPTION_MODULE: NumericEnumInterface = {
     FINANCE_ACCOUNTING : 300,
 }
 
-export const  SUBSCRIPTION_MODULE_NAME: StringEnumInterface = {
+export const SUBSCRIPTION_MODULE_NAME: StringEnumInterface = {
     [SUBSCRIPTION_MODULE.EMPLOYEE_PORTAL as number] : 'Employee Portal',
     [SUBSCRIPTION_MODULE.HR_PAYROLL as number] : 'HR & Payroll',
     [SUBSCRIPTION_MODULE.INVENTORY as number] : 'Inventory',
     [SUBSCRIPTION_MODULE.FINANCE_ACCOUNTING as number] : 'Finance & Accounting',
+}
+
+export const SUBSCRIPTION_MODULE_ROUTE_NAME: StringEnumInterface = {
+    [SUBSCRIPTION_MODULE.EMPLOYEE_PORTAL as number] : 'employee-portal',
+    [SUBSCRIPTION_MODULE.HR_PAYROLL as number] : 'hr-payroll',
+    [SUBSCRIPTION_MODULE.INVENTORY as number] : 'inventory',
+    [SUBSCRIPTION_MODULE.FINANCE_ACCOUNTING as number] : 'finance-accounting',
 }

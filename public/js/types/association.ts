@@ -33,10 +33,15 @@ export interface StoreAssociatedCompanyT extends AssociatedCompanyT {
     search: string;
 }
 
+export type AssignedAccountSubscriptionT = {
+    text: string;
+    value: number;
+}
+
 export type SelectedAccountSubscriptionT = string | number | null;
 
 export interface AccountSubscriptionT {
-    selection: EnumOption[];
+    selection: AssignedAccountSubscriptionT[];
     selected: SelectedAccountSubscriptionT,
 }
 

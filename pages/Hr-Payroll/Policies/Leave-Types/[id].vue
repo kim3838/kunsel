@@ -41,7 +41,7 @@
                     <template #footer>
                         <div class="flex space-x-2 justify-between">
                             <div class="space-x-2 inline-flex items-center">
-                                <Button :icon="'ic:sharp-keyboard-arrow-left'" @click="navigateTo({path: `/policies/leave-types`, replace: true})" :label="'Back to leave types'" />
+                                <Button :icon="'ic:sharp-keyboard-arrow-left'" @click="navigateTo({path: `/hr-payroll/policies/leave-types`, replace: true})" :label="'Back to leave types'" />
                                 <Button v-if="!creatingLeaveType" @click="resetResolved" :label="'Close'" />
                             </div>
                         </div>
@@ -50,7 +50,7 @@
 
                 <div class="flex px-[20px] pt-[20px] mb-2">
                     <NuxtLink
-                        :to="`/policies/leave-types`">
+                        :to="`/hr-payroll/policies/leave-types`">
                         <Button class="w-min" :variant="`outline`" :disabled="disableActions" :size="'sm'" :icon="disableActions ? 'eos-icons:loading' : 'ic:sharp-keyboard-arrow-left'" :label="disableActions ? 'Please wait' : ''"></Button>
                     </NuxtLink>
                 </div>
@@ -312,7 +312,7 @@ const {
 
 watch(updatedAssociatedCompanyFlag, (newValue) => {
     if(isAuthenticated.value && selectedAssociatedCompanyId.value){
-        navigateTo("/policies/leave-types", {replace: true});
+        navigateTo("/hr-payroll/policies/leave-types", {replace: true});
     }
 });
 

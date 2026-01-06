@@ -112,6 +112,14 @@ export default defineNuxtPlugin(nuxtApp => {
         return `${hours}:${minutes}`;
     })
 
+    nuxtApp.provide('stringEnumerableValue', function (
+        enumerable: StringEnumInterface,
+        value: number,
+    ): string {
+
+        return enumerable[value] as string;
+    })
+
     nuxtApp.provide('enumerableOption', function (
         enumerable: StringEnumInterface,
         value: number,

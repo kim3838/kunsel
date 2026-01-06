@@ -147,7 +147,7 @@
 
 <script setup lang="ts">
 import type {SelectDataType} from "@/public/js/types/form";
-import type {StringEnumInterface} from "~/public/js/common/type";
+import type {StringEnumInterface} from "@/public/js/common/type";
 
 useHead({titleTemplate: (titleChunk) => {return `${titleChunk} - Formulas`}});
 definePageMeta({middleware: ['auth', 'super-admin']});

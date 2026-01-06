@@ -36,7 +36,7 @@
                     <template #footer>
                         <div class="flex space-x-2 justify-between">
                             <div class="space-x-2 inline-flex items-center">
-                                <Button :icon="'ic:sharp-keyboard-arrow-left'" @click="navigateTo({path: `/policies/shifts`, replace: true})" :label="'Back to shifts'" />
+                                <Button :icon="'ic:sharp-keyboard-arrow-left'" @click="navigateTo({path: `/hr-payroll/policies/shifts`, replace: true})" :label="'Back to shifts'" />
                                 <Button v-if="!creatingShift" @click="resetResolved" :label="'Close'" />
                             </div>
                         </div>
@@ -45,7 +45,7 @@
 
                 <div class="flex px-[20px] pt-[20px] mb-2">
                     <NuxtLink
-                        :to="`/policies/shifts`">
+                        :to="`/hr-payroll/policies/shifts`">
                         <Button class="w-min" :variant="`outline`" :disabled="disableActions" :size="'sm'" :icon="disableActions ? 'eos-icons:loading' : 'ic:sharp-keyboard-arrow-left'" :label="disableActions ? 'Please wait' : ''"></Button>
                     </NuxtLink>
                 </div>
@@ -251,7 +251,7 @@ const {
 
 watch(updatedAssociatedCompanyFlag, (newValue) => {
     if(isAuthenticated.value && selectedAssociatedCompanyId.value){
-        navigateTo("/policies/shifts", {replace: true});
+        navigateTo("/hr-payroll/policies/shifts", {replace: true});
     }
 });
 

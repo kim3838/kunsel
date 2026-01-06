@@ -7,7 +7,7 @@ import type {
     SelectedCompanyT
 } from "@/public/js/types/association";
 import type {
-    EnumOption
+    EnumOption, StringEnumInterface
 } from "@/public/js/common/type";
 import type {
     EmployeeT
@@ -40,8 +40,12 @@ export const userCompanyEmployeeState = () => {
 }
 
 export const useAssociation = () => {
-    const companyAssociationPending = companyAssociationPendingState();
+
+    const nuxtApp = useNuxtApp();
+    const stringEnumerableValue = nuxtApp.$stringEnumerableValue as (enumerable: StringEnumInterface, value: number) => string;
     const user = userState();
+
+    const companyAssociationPending = companyAssociationPendingState();
     const userIsAdminOfSelectedCompany = userIsAdminOfSelectedCompanyState();
     const userIsEmployeeOfSelectedCompany = userIsEmployeeOfSelectedCompanyState();
     const userCompanyEmployee = userCompanyEmployeeState();
@@ -49,39 +53,41 @@ export const useAssociation = () => {
     const associatedCompany = associatedCompanyState();
     const currentRouteNameIsCompanyAdminProtected = computed(() => {
         const route = useRoute();
+        const hrPayrollRouteSlug = stringEnumerableValue(SUBSCRIPTION_MODULE_ROUTE_NAME, SUBSCRIPTION_MODULE.HR_PAYROLL as number);
 
         return _includes([
-            'workforce-employees',
-            'workforce-employee-groups',
-            'workforce-employment-profiles',
-            'workforce-departments',
-            'workforce-designations',
-            'workforce-attendance',
-            'workforce-overtime',
-            'workforce-leave',
-            'policies-shifts',
-            'policies-shift-assignment',
-            'policies-leave-types',
-            'policies-leave-type-assignment',
-            'policies-holiday',
-            'payroll-payroll-components',
-            'payroll-employee-pay-items',
-            'payroll-payroll-frequencies',
-            'settings-salary-statement-modules',
-            'settings-formula-settings',
-            'reports-leave-balance-map',
-            'import-employees',
-            'import-employment-profile',
-            'import-employee-payroll-component',
-            'import-attendance',
-            'import-overtime',
+            `${hrPayrollRouteSlug}-workforce-employees`,
+            `${hrPayrollRouteSlug}-workforce-employee-groups`,
+            `${hrPayrollRouteSlug}-workforce-employment-profiles`,
+            `${hrPayrollRouteSlug}-workforce-departments`,
+            `${hrPayrollRouteSlug}-workforce-designations`,
+            `${hrPayrollRouteSlug}-workforce-attendance`,
+            `${hrPayrollRouteSlug}-workforce-overtime`,
+            `${hrPayrollRouteSlug}-workforce-leave`,
+            `${hrPayrollRouteSlug}-policies-shifts`,
+            `${hrPayrollRouteSlug}-policies-shift-assignment`,
+            `${hrPayrollRouteSlug}-policies-leave-types`,
+            `${hrPayrollRouteSlug}-policies-leave-type-assignment`,
+            `${hrPayrollRouteSlug}-policies-holiday`,
+            `${hrPayrollRouteSlug}-payroll-payroll-components`,
+            `${hrPayrollRouteSlug}-payroll-employee-pay-items`,
+            `${hrPayrollRouteSlug}-payroll-payroll-frequencies`,
+            `${hrPayrollRouteSlug}-settings-salary-statement-modules`,
+            `${hrPayrollRouteSlug}-settings-formula-settings`,
+            `${hrPayrollRouteSlug}-reports-leave-balance-map`,
+            `${hrPayrollRouteSlug}-import-employees`,
+            `${hrPayrollRouteSlug}-import-employment-profile`,
+            `${hrPayrollRouteSlug}-import-employee-payroll-component`,
+            `${hrPayrollRouteSlug}-import-attendance`,
+            `${hrPayrollRouteSlug}-import-overtime`,
         ], _toLower(String(route.name)));
     });
     const currentRouteNameIsEmployeeProtected = computed(() => {
         const route = useRoute();
+        const employeePortalRouteSlug = stringEnumerableValue(SUBSCRIPTION_MODULE_ROUTE_NAME, SUBSCRIPTION_MODULE.EMPLOYEE_PORTAL as number);
 
         return _includes([
-            `${SUBSCRIPTION_MODULE.EMPLOYEE_PORTAL}-attendance`,
+            `${employeePortalRouteSlug}-attendance`
         ], _toLower(String(route.name)));
     });
     const employeeSelfServicesSubscriptions = computed(() => {
