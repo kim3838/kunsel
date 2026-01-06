@@ -9,7 +9,9 @@ import type {
 import type {
     EnumOption
 } from "@/public/js/common/type";
-import type {EmployeeT} from "@/public/js/types/employee";
+import type {
+    EmployeeT
+} from "@/public/js/types/employee";
 
 export const companyAssociationPendingState = () => {
     return useState("company_association_pending", () => false);
