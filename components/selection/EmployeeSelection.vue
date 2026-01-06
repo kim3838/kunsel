@@ -1,5 +1,5 @@
 <template>
-    <div class="space-y-2" :class="[compact ? '' : 'px-[20px]']">
+    <div :class="[compact ? '' : 'px-[20px]']">
         <form @submit.prevent="paginate(1, clearSelectionOnFormSubmit)" class="space-y-2" :class="[compact ? '' : 'pb-[20px]']">
             <div class="grid gap-2 grid-cols-3 sm:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
                 <div>
@@ -55,7 +55,7 @@
             </div>
         </form>
 
-        <div class="flex flex-row flex-wrap gap-2 items-center min-h-8">
+        <div class="flex flex-row flex-wrap gap-2 items-center min-h-8" :class="[compact ? 'mt-2' : '']">
             <div v-if="employees.successful" class="scaffold-border px-2 font-[National_Park]">
                 <span><span class="font-semibold">{{proxySelectedEmployees.length}}</span> {{selectedLabel}}</span>
             </div>
@@ -82,6 +82,7 @@
 
         <DataTable
             v-if="employees.successful"
+            class="mt-2"
             :sup-headers="employeeSupHeaders"
             :headers="employeeHeaders"
             :size="'lg'"

@@ -36,7 +36,7 @@
             </div>
         </form>
 
-        <div class="flex flex-row flex-wrap gap-2 items-center min-h-8">
+        <div class="flex flex-row flex-wrap gap-2 items-center min-h-8" :class="[compact ? 'mt-2' : '']">
             <div v-if="leaveTypes.successful" class="scaffold-border px-2 font-[National_Park]">
                 <span><span class="font-semibold">{{proxySelectedLeaveTypes.length}}</span> Selected</span>
             </div>
