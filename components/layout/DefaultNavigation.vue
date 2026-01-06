@@ -66,7 +66,7 @@
                     </div>
                     <div class="flex">
                         <NavDrop
-                            v-if="!isMainNavigationLastItemVisible"
+                            v-if="screenWidth < screenWidthBreakpoint['md'] || (navigationLinks.length > 2 && !isMainNavigationLastItemVisible)"
                             :size="navigationHeaderSize"
                             :title="'Menu'"
                             :drop-options="navigationLinks" />
