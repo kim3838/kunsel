@@ -178,6 +178,10 @@ const liningColor70 = computed(() => {
     return liningColor.value + hexAlpha.value['70'];
 });
 
+const liningColor50 = computed(() => {
+    return liningColor.value + hexAlpha.value['50'];
+});
+
 const neutralColor40 = computed(() => {
     return neutralColor.value + hexAlpha.value['40'];
 });
@@ -574,6 +578,11 @@ table{
 table thead tr td,
 tbody tr td {
     border: 1px solid $cellBorder;
+}
+
+table thead tr:last-child td{
+    border-bottom-width: 2px;
+    border-bottom-color: v-bind(liningColor50);
 }
 
 tbody tr:hover {
