@@ -2,7 +2,8 @@
     <div>
         <DefaultWrapper>
             <div class="mx-auto max-w-screen-2xl">
-                <div class="space-y-2 p-[20px]">
+                <div ref="action" class="mx-auto max-w-screen-2xl space-y-2 action z-30 fixed">
+
                     <div class="grid gap-2 grid-cols-3 sm:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-8">
                         <div class="col-span-3">
                             <InputWithIcon v-show="!disableInputFile" ref="fileToImport" :size="'md'" class="mt-2" :icon="'ic:baseline-file-open'" type="file" />
@@ -12,51 +13,16 @@
                         </div>
                     </div>
 
-                    <div class="space-x-1">
-                        <NuxtLink :to="`${baseURL}/api/employee-import-template`">
+                    <div class="flex flex-row flex-wrap gap-2 items-center min-h-8">
+                        <NuxtLink class="inline-flex" :to="`${baseURL}/api/employee-import-template`">
                             <Button class="inline-block" :icon="'tdesign:download'" :variant="'outline'" :size="'sm'" :disabled="disableActions" :label="'CSV Template'"/>
                         </NuxtLink>
                         <Button class="inline-block" :icon="readIcon" :size="'sm'" :disabled="disableActions" v-if="showRead" :label="readLabel"  @click="read"/>
                         <Button class="inline-block" :icon="uploadNewFileIcon" :size="'sm'" :variant="'outline'" :disabled="disableActions" v-if="showUploadNewFile" :label="uploadNewFileLabel"  @click="reset"/>
                         <Button class="inline-block" :icon="reValidateIcon" :size="'sm'" :disabled="disableActions" v-if="showReValidate" :label="reValidateLabel"  @click="reValidate"/>
                         <Button class="inline-block" :icon="saveIcon" :size="'sm'" :disabled="disableActions"  v-if="showSave" :label="saveLabel"  @click="save"/>
+                        <UnorderedList v-if="disableActions" :icon="'eos-icons:loading'" :size="'md'" :label="'Please wait...'"/>
                     </div>
-
-                    <div class="flex items-center min-h-8">
-                        <UnorderedList
-                            v-if="disableActions"
-                            :icon="'eos-icons:loading'"
-                            :size="'md'"
-                            :label="'Please wait...'"/>
-                    </div>
-
-                    <DialogModal
-                        :max-width="'380px'"
-                        :show="resolvedModal"
-                        :closeable="false">
-                        <template #title>
-                            {{resolvedModalTitle}}
-                        </template>
-                        <template #content>
-
-                            <div class="mt-4 space-y-2">
-
-                                <fieldset class="neutral-border px-2 pb-2 space-y-2">
-                                    <legend class="font-header">Result</legend>
-
-                                    <p>{{resolvedModalMessage}}</p>
-                                </fieldset>
-                            </div>
-                        </template>
-                        <template #footer>
-                            <div class="flex space-x-2 justify-between">
-                                <div></div>
-                                <div class="space-x-2 inline-flex items-center">
-                                    <Button @click="resetResolvedModal" :label="'Okay'" />
-                                </div>
-                            </div>
-                        </template>
-                    </DialogModal>
 
                     <div class="space-y-2">
                         <div class="flex flex-row flex-wrap gap-2 items-center min-h-8">
@@ -75,85 +41,115 @@
                                 </div>
                             </div>
                         </div>
-
-                        <DataTable
-                            :sup-headers="preImportSupHeaders"
-                            :sup-rows="preImportSupRows"
-                            :headers="preImportHeaders"
-                            :size="'lg'"
-                            :rows="preImportData"
-                            v-model="selectedPreImportDataId"
-                            :disabled="disableActions"
-                            :stripped="false"
-                            :disableable-layer="false"
-                            selection>
-                            <template v-slot:sup.header.cell.number="{cell}">
-                                <div class="p-[3px] whitespace-pre-line">
-                                    {{cell.number}}
-                                </div>
-                            </template>
-                            <template v-slot:sup.header.cell.office_email="{cell}">
-                                <div class="p-[3px] whitespace-pre-line">
-                                    {{cell.office_email}}
-                                </div>
-                            </template>
-                            <template v-slot:cell.row="{cell, slot, scrollReference}">
-                                <div class="p-[3px] font-sans">
-                                    {{cell.row}}
-                                </div>
-                            </template>
-                            <template v-slot:cell.actions="{cell, slot, scrollReference}">
-                                <div class="text-base h-[32px]">
-                                    <div class="h-full flex items-center px-2 cursor-pointer accent-hover" @click="editRow(cell)">
-                                        <span class="text-base font-sans">Edit</span>
-                                    </div>
-                                </div>
-                            </template>
-                            <template v-slot:cell.validation_summary="{cell, slot, scrollReference}">
-                                <div class="flex items-center justify-center">
-                                    <Icon v-if="cell.validation_errors.length > 0" class="label-danger w-6 h-6" name="ic:baseline-warning"/>
-                                </div>
-                            </template>
-                            <template v-slot:cell.number="{cell, slot, scrollReference}">
-                                <div v-if="!cell.isEditing" class="p-[3px] cursor-pointer min-h-[30px]" @click="editRow(cell)">
-                                    {{cell.number}}
-                                </div>
-                                <div v-else class="mx-0.5 flex items-center">
-                                    <Input v-model="cell.number" :size="slot.inputSize" />
-                                </div>
-                            </template>
-                            <template v-slot:cell.family_name="{cell, slot, scrollReference}">
-                                <div v-if="!cell.isEditing" class="p-[3px] cursor-pointer min-h-[30px]" @click="editRow(cell)">
-                                    {{cell.family_name}}
-                                </div>
-                                <div v-else class="mx-0.5 flex items-center">
-                                    <Input v-model="cell.family_name" :size="slot.inputSize" />
-                                </div>
-                            </template>
-                            <template v-slot:cell.given_name="{cell, slot, scrollReference}">
-                                <div v-if="!cell.isEditing" class="p-[3px] cursor-pointer min-h-[30px]" @click="editRow(cell)">
-                                    {{cell.given_name}}
-                                </div>
-                                <div v-else class="mx-0.5 flex items-center">
-                                    <Input v-model="cell.given_name" :size="slot.inputSize" />
-                                </div>
-                            </template>
-                            <template v-slot:cell.office_email="{cell, slot, scrollReference}">
-                                <div v-if="!cell.isEditing" class="p-[3px] cursor-pointer min-h-[30px]" @click="editRow(cell)">
-                                    {{cell.office_email}}
-                                </div>
-                                <div v-else class="mx-0.5 flex items-center">
-                                    <Input class="w-full" v-model="cell.office_email" :size="slot.inputSize" :type="'email'" />
-                                </div>
-                            </template>
-                            <template v-slot:cell.validation="{cell, slot, scrollReference}">
-                                <div class="flex space-x-1 px-[0.3rem] items-center">
-                                    <span v-if="cell.validation_errors.length > 0" v-for="validation_error in cell.validation_errors" class="label-danger">{{validation_error}}</span>
-                                    <span v-else class="label-success">Validation successful.</span>
-                                </div>
-                            </template>
-                        </DataTable>
                     </div>
+                </div>
+
+                <DialogModal
+                    :max-width="'380px'"
+                    :show="resolvedModal"
+                    :closeable="false">
+                    <template #title>
+                        {{resolvedModalTitle}}
+                    </template>
+                    <template #content>
+
+                        <div class="mt-4 space-y-2">
+
+                            <fieldset class="neutral-border px-2 pb-2 space-y-2">
+                                <legend class="font-header">Result</legend>
+
+                                <p>{{resolvedModalMessage}}</p>
+                            </fieldset>
+                        </div>
+                    </template>
+                    <template #footer>
+                        <div class="flex space-x-2 justify-between">
+                            <div></div>
+                            <div class="space-x-2 inline-flex items-center">
+                                <Button @click="resetResolvedModal" :label="'Okay'" />
+                            </div>
+                        </div>
+                    </template>
+                </DialogModal>
+
+                <div class="px-[20px] allocate">
+                    <DataTable
+                        :sup-headers="preImportSupHeaders"
+                        :sup-rows="preImportSupRows"
+                        :headers="preImportHeaders"
+                        :size="'lg'"
+                        :rows="preImportData"
+                        v-model="selectedPreImportDataId"
+                        :disabled="disableActions"
+                        :stripped="false"
+                        :disableable-layer="false"
+                        selection>
+                        <template v-slot:sup.header.cell.number="{cell}">
+                            <div class="p-[3px] whitespace-pre-line">
+                                {{cell.number}}
+                            </div>
+                        </template>
+                        <template v-slot:sup.header.cell.office_email="{cell}">
+                            <div class="p-[3px] whitespace-pre-line">
+                                {{cell.office_email}}
+                            </div>
+                        </template>
+                        <template v-slot:cell.row="{cell, slot, scrollReference}">
+                            <div class="p-[3px] font-sans">
+                                {{cell.row}}
+                            </div>
+                        </template>
+                        <template v-slot:cell.actions="{cell, slot, scrollReference}">
+                            <div class="text-base h-[32px]">
+                                <div class="h-full flex items-center px-2 cursor-pointer accent-hover" @click="editRow(cell)">
+                                    <span class="text-base font-sans">Edit</span>
+                                </div>
+                            </div>
+                        </template>
+                        <template v-slot:cell.validation_summary="{cell, slot, scrollReference}">
+                            <div class="flex items-center justify-center">
+                                <Icon v-if="cell.validation_errors.length > 0" class="label-danger w-6 h-6" name="ic:baseline-warning"/>
+                            </div>
+                        </template>
+                        <template v-slot:cell.number="{cell, slot, scrollReference}">
+                            <div v-if="!cell.isEditing" class="p-[3px] cursor-pointer min-h-[30px]" @click="editRow(cell)">
+                                {{cell.number}}
+                            </div>
+                            <div v-else class="mx-0.5 flex items-center">
+                                <Input v-model="cell.number" :size="slot.inputSize" />
+                            </div>
+                        </template>
+                        <template v-slot:cell.family_name="{cell, slot, scrollReference}">
+                            <div v-if="!cell.isEditing" class="p-[3px] cursor-pointer min-h-[30px]" @click="editRow(cell)">
+                                {{cell.family_name}}
+                            </div>
+                            <div v-else class="mx-0.5 flex items-center">
+                                <Input v-model="cell.family_name" :size="slot.inputSize" />
+                            </div>
+                        </template>
+                        <template v-slot:cell.given_name="{cell, slot, scrollReference}">
+                            <div v-if="!cell.isEditing" class="p-[3px] cursor-pointer min-h-[30px]" @click="editRow(cell)">
+                                {{cell.given_name}}
+                            </div>
+                            <div v-else class="mx-0.5 flex items-center">
+                                <Input v-model="cell.given_name" :size="slot.inputSize" />
+                            </div>
+                        </template>
+                        <template v-slot:cell.office_email="{cell, slot, scrollReference}">
+                            <div v-if="!cell.isEditing" class="p-[3px] cursor-pointer min-h-[30px]" @click="editRow(cell)">
+                                {{cell.office_email}}
+                            </div>
+                            <div v-else class="mx-0.5 flex items-center">
+                                <Input class="w-full" v-model="cell.office_email" :size="slot.inputSize" :type="'email'" />
+                            </div>
+                        </template>
+                        <template v-slot:cell.validation="{cell, slot, scrollReference}">
+                            <div class="flex space-x-1 px-[0.3rem] items-center">
+                                <span v-if="cell.validation_errors.length > 0" v-for="validation_error in cell.validation_errors" class="label-danger">{{validation_error}}</span>
+                                <span v-else class="label-success">Validation successful.</span>
+                            </div>
+                        </template>
+                    </DataTable>
                 </div>
             </div>
         </DefaultWrapper>
@@ -173,6 +169,26 @@ const {baseURL} = useRuntimeConfig().public;
 const {isAuthenticated} = useAuth();
 const nuxtApp = useNuxtApp();
 const coreStore = useCoreStore();
+const {
+    navigationBackground,
+} = useLayout();
+const action = useTemplateRef('action');
+const { height: actionReferenceHeight} = useElementSize(action);
+const actionPadding = ref(20);
+const actionPaddingComputed = computed(() => {
+    return (actionPadding.value + 'px');
+})
+const actionAllocation = ref(0);
+const actionAllocationComputed = computed(() => {
+    return (actionAllocation.value + (actionPadding.value * 2) + 'px');
+});
+
+watch(actionReferenceHeight, () => {
+    actionAllocation.value = actionReferenceHeight.value;
+});
+onMounted(async () => {
+    actionAllocation.value = actionReferenceHeight.value;
+});
 const {
     updatedAssociatedCompanyFlag
 } = storeToRefs(nuxtApp.$associationStore);
@@ -509,6 +525,14 @@ const save = async () => {
 };
 </script>
 
-<style scoped>
-
+<style lang="scss" scoped>
+.action{
+    padding: v-bind(actionPaddingComputed);
+    background-color: v-bind(navigationBackground) !important;
+    left: 0;
+    right: var(--scrollbar-width);
+}
+.allocate {
+    padding-top: v-bind(actionAllocationComputed);
+}
 </style>
