@@ -9,7 +9,7 @@
 </template>
 
 <script setup lang="ts">
-useHead({titleTemplate: (titleChunk) => {return `${titleChunk} - Dashboard`}});
+useHead({titleTemplate: (titleChunk) => {return `${titleChunk} - Home`}});
 definePageMeta({middleware: 'auth'});
 useLayout().setNavigationMode('solid');
 </script>
