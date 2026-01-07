@@ -1,6 +1,6 @@
 <template>
     <footer>
-        <div v-if="topRuleDivider" class="mt-24 vertical-divider"></div>
+        <div v-if="topRuleDivider" class="mt-18 scaffold-border-top"></div>
 
         <LandingLinks v-if="landingLinks" />
 
