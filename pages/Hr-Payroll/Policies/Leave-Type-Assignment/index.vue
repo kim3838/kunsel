@@ -3,15 +3,20 @@
         <DefaultWrapper>
             <div class="mx-auto max-w-screen-2xl">
 
-                <div class="flex flex-row p-[20px]">
-                    <RadioGroup
-                        :disabled="disableLeaveTypeAssignmentActions"
-                        class="scaffold-border px-2"
-                        :selections="leaveTypeAssignmentTabs"
-                        :size="'md'"
-                        :orientation="leaveTypeSelectionsRadioGroupOrientation"
-                        :radio-key="`leave_type_assignment_tab`"
-                        v-model="leaveTypeAssignmentTab" />
+                <div class="p-[20px]">
+
+                    <BreadCrumbs prefix-company :size="`sm`" />
+
+                    <div class="flex flex-row">
+                        <RadioGroup
+                            :disabled="disableLeaveTypeAssignmentActions"
+                            class="flex-none scaffold-border px-2"
+                            :selections="leaveTypeAssignmentTabs"
+                            :size="'md'"
+                            :orientation="leaveTypeSelectionsRadioGroupOrientation"
+                            :radio-key="`leave_type_assignment_tab`"
+                            v-model="leaveTypeAssignmentTab" />
+                    </div>
                 </div>
 
                 <div v-if="leaveTypeAssignmentTab == LEAVE_TYPE_ASSIGNMENT_TAB.LIST">

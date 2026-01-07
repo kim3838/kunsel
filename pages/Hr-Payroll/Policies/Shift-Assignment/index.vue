@@ -3,15 +3,20 @@
         <DefaultWrapper>
             <div class="mx-auto max-w-screen-2xl">
 
-                <div class="flex flex-row p-[20px]">
-                    <RadioGroup
-                        :disabled="disableShiftAssignmentActions"
-                        class="scaffold-border px-2"
-                        :selections="shiftAssignmentTabs"
-                        :size="'md'"
-                        :orientation="shiftAssignmentTabRadioGroupOrientation"
-                        :radio-key="`shift_assignment_tab`"
-                        v-model="shiftAssignmentTab" />
+                <div class="p-[20px]">
+
+                    <BreadCrumbs prefix-company :size="`sm`" />
+
+                    <div class="flex flex-row">
+                        <RadioGroup
+                            :disabled="disableShiftAssignmentActions"
+                            class="scaffold-border px-2"
+                            :selections="shiftAssignmentTabs"
+                            :size="'md'"
+                            :orientation="shiftAssignmentTabRadioGroupOrientation"
+                            :radio-key="`shift_assignment_tab`"
+                            v-model="shiftAssignmentTab" />
+                    </div>
                 </div>
 
                 <div v-if="shiftAssignmentTab == SHIFT_ASSIGNMENT_TAB.LIST">

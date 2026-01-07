@@ -4,6 +4,9 @@
             <div class="mx-auto max-w-screen-2xl">
 
                 <form @submit.prevent="departmentsExecute" class="space-y-2 p-[20px]">
+
+                    <BreadCrumbs prefix-company :size="`sm`" />
+
                     <div class="grid gap-2 grid-cols-3 sm:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-8">
                         <div>
                             <InputLabel :size="'sm'" value="Search" />
