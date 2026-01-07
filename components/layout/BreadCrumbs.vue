@@ -1,11 +1,11 @@
 <template>
-    <ol class="h-8 flex items-center space-x-1">
+    <ol class="min-h-8 flex flex-wrap items-center space-x-1">
 
-        <li v-if="prefixArrow && breadcrumbs.length > 0" class="flex items-center">
+        <li v-if="prefixArrow && breadcrumbs.length > 0" class="shrink-0 flex items-center">
             <Icon class="h-5 w-5" name="ic:sharp-keyboard-arrow-right"/>
         </li>
 
-        <li v-for="(breadcrumb, index) in breadcrumbs" :key="index" class="flex items-center">
+        <li v-for="(breadcrumb, index) in breadcrumbs" :key="index" class="shrink-0 flex items-center" :class="[fontClass]">
             <span>
                 {{ breadcrumb.name }}
             </span>
@@ -42,6 +42,18 @@ const props = defineProps({
         type: Boolean,
         default: false,
     },
+    size: {
+        type: String,
+        default: 'md',
+    },
+});
+
+const fontClass = computed(() => {
+    return {
+        'sm': 'text-sm',
+        'md': 'text-base',
+        'lg': 'text-lg',
+    }[props.size];
 });
 
 const breadcrumbs = computed((): Breadcrumb[] => {
