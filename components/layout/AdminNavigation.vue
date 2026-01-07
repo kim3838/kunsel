@@ -51,7 +51,6 @@
                             value-persist
                             disable-header-border
                             navigation-mode
-                            :icon="'ic:sharp-double-arrow'"
                             :size="navigationHeaderSize"
                             :label="'Select Module'"
                             :none-selected-label="'No Associated Subscription'"
