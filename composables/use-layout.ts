@@ -376,11 +376,11 @@ export const useLayout = () => {
                     path_active: `/${hrPayrollRouteSlug}/payroll`,
                     options: [
                         {
-                            key: `${hrPayrollRouteSlug}/payroll/payroll-components`,
+                            key: `${hrPayrollRouteSlug}/payroll/components`,
                             type: 'link',
                             title: 'Components',
-                            to: `/${hrPayrollRouteSlug}/payroll/payroll-components`,
-                            route_active: `${hrPayrollRouteSlug}-payroll-payroll-components`
+                            to: `/${hrPayrollRouteSlug}/payroll/components`,
+                            route_active: `${hrPayrollRouteSlug}-payroll-components`
                         },
                         {
                             key: `${hrPayrollRouteSlug}/payroll/employee-pay-items`,
@@ -390,11 +390,11 @@ export const useLayout = () => {
                             route_active: `${hrPayrollRouteSlug}-payroll-employee-pay-items`
                         },
                         {
-                            key: `${hrPayrollRouteSlug}/payroll/payroll-frequencies`,
+                            key: `${hrPayrollRouteSlug}/payroll/frequencies`,
                             type: 'link',
                             title: 'Frequency',
-                            to: `/${hrPayrollRouteSlug}/payroll/payroll-frequencies`,
-                            route_active: `${hrPayrollRouteSlug}-payroll-payroll-frequencies`
+                            to: `/${hrPayrollRouteSlug}/payroll/frequencies`,
+                            route_active: `${hrPayrollRouteSlug}-payroll-frequencies`
                         },
                     ]
                 }, {

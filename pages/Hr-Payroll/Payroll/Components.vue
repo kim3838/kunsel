@@ -2,6 +2,9 @@
     <div>
         <DefaultWrapper>
             <div class="mx-auto max-w-screen-2xl">
+                <div class="px-[20px] pt-[20px]">
+                    <BreadCrumbs prefix-company :size="`sm`" />
+                </div>
                 <PayrollSettingsCompensation/>
                 <PayrollSettingsDeduction/>
                 <PayrollSettingsIncomeTax/>
