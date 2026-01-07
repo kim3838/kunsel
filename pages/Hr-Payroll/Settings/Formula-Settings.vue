@@ -3,13 +3,21 @@
         <DefaultWrapper>
             <div class="mx-auto max-w-screen-2xl p-[20px] space-y-4">
 
-                <RadioGroup
-                    :disabled="disableActions"
-                    :selections="formulableSelection"
-                    :size="'md'"
-                    :orientation="'horizontal'"
-                    :radio-key="`formulable_type`"
-                    v-model="formulableSelected" />
+                <div class="space-y-2">
+
+                    <BreadCrumbs prefix-company :size="`sm`" />
+
+                    <div class="flex flex-row">
+                        <RadioGroup
+                            :disabled="disableActions"
+                            class="flex-none scaffold-border px-2"
+                            :selections="formulableSelection"
+                            :size="'md'"
+                            :orientation="'horizontal'"
+                            :radio-key="`formulable_type`"
+                            v-model="formulableSelected" />
+                    </div>
+                </div>
 
                 <div v-if="formulableSelected == FORMULABLE.EARNINGS" class="space-y-4">
                     <div class="text-lg font-header">Earnings</div>

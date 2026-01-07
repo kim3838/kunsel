@@ -3,7 +3,7 @@
         <DefaultWrapper>
             <div class="mx-auto max-w-screen-2xl">
 
-                <div class="p-[20px]">
+                <div class="space-y-2 p-[20px]">
 
                     <BreadCrumbs prefix-company :size="`sm`" />
 

@@ -3,14 +3,19 @@
         <DefaultWrapper>
             <div class="mx-auto max-w-screen-2xl">
 
-                <div class="flex flex-row p-[20px]">
-                    <RadioGroup
-                        class="scaffold-border px-2"
-                        :selections="leaveBalanceTabs"
-                        :size="'md'"
-                        :orientation="leaveBalanceTabRadioGroupOrientation"
-                        :radio-key="`leave_balance_tab`"
-                        v-model="leaveBalanceTab" />
+                <div class="space-y-2 p-[20px]">
+
+                    <BreadCrumbs prefix-company :size="`sm`" />
+
+                    <div class="flex flex-row">
+                        <RadioGroup
+                            class="flex-none scaffold-border px-2"
+                            :selections="leaveBalanceTabs"
+                            :size="'md'"
+                            :orientation="leaveBalanceTabRadioGroupOrientation"
+                            :radio-key="`leave_balance_tab`"
+                            v-model="leaveBalanceTab" />
+                    </div>
                 </div>
 
                 <div v-if="leaveBalanceTab == LEAVE_BALANCE_TAB.PERIOD_SERIES">
