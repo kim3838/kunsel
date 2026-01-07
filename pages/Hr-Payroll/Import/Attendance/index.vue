@@ -1,43 +1,47 @@
 <template>
     <div>
         <DefaultWrapper>
-            <div class="mx-auto max-w-screen-2xl">
-                <div ref="action" class="mx-auto max-w-screen-2xl space-y-2 action z-30 fixed">
+            <div>
+                <div ref="action" class="z-30 fixed action-container scaffold-border-bottom">
 
-                    <div class="grid gap-2 grid-cols-3 sm:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-8">
-                        <div class="col-span-3">
-                            <InputWithIcon v-show="!disableInputFile" ref="fileToImport" :size="'md'" class="mt-2" :icon="'ic:baseline-file-open'" type="file" />
-                            <div v-if="$coreStore.hasNonPromptableServicePayloadMessage" class="block">
-                                <Label invert :size="'sm'" :type="'danger'" :label="$coreStore.servicePayloadMessage" />
+                    <div class="mx-auto max-w-screen-2xl space-y-2 p-[20px]">
+                        <BreadCrumbs prefix-company :size="`sm`" />
+
+                        <div class="grid gap-2 grid-cols-3 sm:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-8">
+                            <div class="col-span-3">
+                                <InputWithIcon v-show="!disableInputFile" ref="fileToImport" :size="'md'" :icon="'ic:baseline-file-open'" type="file" />
+                                <div v-if="$coreStore.hasNonPromptableServicePayloadMessage" class="block">
+                                    <Label invert :size="'sm'" :type="'danger'" :label="$coreStore.servicePayloadMessage" />
+                                </div>
                             </div>
                         </div>
-                    </div>
 
-                    <div class="flex flex-row flex-wrap gap-2 items-center min-h-8">
-                        <NuxtLink class="inline-flex" :to="`${baseURL}/api/attendance-import-template`">
-                            <Button class="inline-block" :icon="'tdesign:download'" :variant="'outline'" :size="'sm'" :disabled="disableActions" :label="'CSV Template'"/>
-                        </NuxtLink>
-                        <Button class="inline-block" :icon="readIcon" :size="'sm'" :disabled="disableActions" v-if="showRead" :label="readLabel"  @click="read"/>
-                        <Button class="inline-block" :icon="uploadNewFileIcon" :size="'sm'" :variant="'outline'" :disabled="disableActions" v-if="showUploadNewFile" :label="uploadNewFileLabel"  @click="reset"/>
-                        <Button class="inline-block" :icon="reValidateIcon" :size="'sm'" :disabled="disableActions" v-if="showReValidate" :label="reValidateLabel"  @click="reValidate"/>
-                        <Button class="inline-block" :icon="saveIcon" :size="'sm'" :disabled="disableActions"  v-if="showSave" :label="saveLabel"  @click="save"/>
-                        <UnorderedList v-if="disableActions" :icon="'eos-icons:loading'" :size="'md'" :label="'Please wait...'"/>
-                    </div>
-
-                    <div class="space-y-2">
                         <div class="flex flex-row flex-wrap gap-2 items-center min-h-8">
-                            <div class="scaffold-border px-2">
-                                <span><span class="font-semibold font-sans">{{selectedPreImportDataId.length}}</span> Selected</span>
-                            </div>
-                            <div class="px-2">
-                                <span><span class="font-semibold font-sans">{{preImportData.length}}</span> Total Row{{preImportData.length > 1 ? 's' : ''}}</span>
-                            </div>
-                            <div v-if="preImportData.length > 0">
-                                <div v-if="preImportDataThatHasValidationError.length > 0">
-                                    <Label invert :size="'md'" :type="'danger'" :label="`${preImportDataThatHasValidationError.length} Row${preImportDataThatHasValidationError.length > 1 ? 's' : ''} with validation error.`" />
+                            <NuxtLink class="inline-flex" :to="`${baseURL}/api/attendance-import-template`">
+                                <Button class="inline-block" :icon="'tdesign:download'" :variant="'outline'" :size="'sm'" :disabled="disableActions" :label="'CSV Template'"/>
+                            </NuxtLink>
+                            <Button class="inline-block" :icon="readIcon" :size="'sm'" :disabled="disableActions" v-if="showRead" :label="readLabel"  @click="read"/>
+                            <Button class="inline-block" :icon="uploadNewFileIcon" :size="'sm'" :variant="'outline'" :disabled="disableActions" v-if="showUploadNewFile" :label="uploadNewFileLabel"  @click="reset"/>
+                            <Button class="inline-block" :icon="reValidateIcon" :size="'sm'" :disabled="disableActions" v-if="showReValidate" :label="reValidateLabel"  @click="reValidate"/>
+                            <Button class="inline-block" :icon="saveIcon" :size="'sm'" :disabled="disableActions"  v-if="showSave" :label="saveLabel"  @click="save"/>
+                            <UnorderedList v-if="disableActions" :icon="'eos-icons:loading'" :size="'md'" :label="'Please wait...'"/>
+                        </div>
+
+                        <div class="space-y-2">
+                            <div class="flex flex-row flex-wrap gap-2 items-center min-h-8">
+                                <div class="scaffold-border px-2">
+                                    <span><span class="font-semibold font-sans">{{selectedPreImportDataId.length}}</span> Selected</span>
                                 </div>
-                                <div v-else>
-                                    <Label invert :size="'md'" :type="'success'" :label="'Validation successful.'" />
+                                <div class="px-2">
+                                    <span><span class="font-semibold font-sans">{{preImportData.length}}</span> Total Row{{preImportData.length > 1 ? 's' : ''}}</span>
+                                </div>
+                                <div v-if="preImportData.length > 0">
+                                    <div v-if="preImportDataThatHasValidationError.length > 0">
+                                        <Label invert :size="'md'" :type="'danger'" :label="`${preImportDataThatHasValidationError.length} Row${preImportDataThatHasValidationError.length > 1 ? 's' : ''} with validation error.`" />
+                                    </div>
+                                    <div v-else>
+                                        <Label invert :size="'md'" :type="'success'" :label="'Validation successful.'" />
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -72,103 +76,105 @@
                     </template>
                 </DialogModal>
 
-                <div class="px-[20px] allocate">
-                    <DataTable
-                        :sup-headers="preImportSupHeaders"
-                        :sup-rows="preImportSupRows"
-                        :headers="preImportHeaders"
-                        :size="'lg'"
-                        :rows="preImportData"
-                        v-model="selectedPreImportDataId"
-                        :disabled="disableActions"
-                        :stripped="false"
-                        :disableable-layer="false"
-                        selection>
-                        <template v-slot:sup.header.cell.lunch_out_and_in="{cell}">
-                            <div class="p-[3px] whitespace-pre-line">
-                                {{cell.lunch_out_and_in}}
-                            </div>
-                        </template>
-                        <template v-slot:cell.row="{cell, slot, scrollReference}">
-                            <div class="p-[3px] font-sans">
-                                {{cell.row}}
-                            </div>
-                        </template>
-                        <template v-slot:cell.actions="{cell, slot, scrollReference}">
-                            <div class="text-base h-[32px]">
-                                <div class="h-full flex items-center px-2 cursor-pointer accent-hover" @click="editRow(cell)">
-                                    <span class="text-base font-sans">Edit</span>
+                <div class="mx-auto max-w-screen-2xl">
+                    <div class="px-[20px] allocate">
+                        <DataTable
+                            :sup-headers="preImportSupHeaders"
+                            :sup-rows="preImportSupRows"
+                            :headers="preImportHeaders"
+                            :size="'lg'"
+                            :rows="preImportData"
+                            v-model="selectedPreImportDataId"
+                            :disabled="disableActions"
+                            :stripped="false"
+                            :disableable-layer="false"
+                            selection>
+                            <template v-slot:sup.header.cell.lunch_out_and_in="{cell}">
+                                <div class="p-[3px] whitespace-pre-line">
+                                    {{cell.lunch_out_and_in}}
                                 </div>
-                            </div>
-                        </template>
-                        <template v-slot:cell.validation_summary="{cell, slot, scrollReference}">
-                            <div class="flex items-center justify-center">
-                                <Icon v-if="cell.validation_errors.length > 0" class="label-danger w-6 h-6" name="ic:baseline-warning"/>
-                            </div>
-                        </template>
-                        <template v-slot:cell.employee_number="{cell, slot, scrollReference}">
-                            <div v-if="!cell.isEditing" class="p-[3px] cursor-pointer" @click="editRow(cell)">
-                                {{cell.employee_number}}
-                            </div>
-                            <div v-else class="mx-0.5 flex items-center">
-                                <Input class="w-full" v-model="cell.employee_number" :size="slot.inputSize" />
-                            </div>
-                        </template>
-                        <template v-slot:cell.shift_code="{cell, slot, scrollReference}">
-                            <div v-if="!cell.isEditing" class="p-[3px] cursor-pointer" @click="editRow(cell)">
-                                {{cell.shift_code}}
-                            </div>
-                            <div v-else class="mx-0.5 flex items-center">
-                                <Input class="w-full" high-light-all-text-on-focus v-model="cell.shift_code" :size="slot.inputSize" />
-                            </div>
-                        </template>
-                        <template v-slot:cell.date="{cell, slot, scrollReference}">
-                            <div v-if="!cell.isEditing" class="p-[3px] cursor-pointer" @click="editRow(cell)">
-                                {{cell.date}}
-                            </div>
-                            <div v-else class="mx-0.5 flex items-center">
-                                <Input class="w-full" high-light-all-text-on-focus v-model="cell.date" :size="slot.inputSize" />
-                            </div>
-                        </template>
-                        <template v-slot:cell.first_in="{cell, slot, scrollReference}">
-                            <div v-if="!cell.isEditing" class="p-[3px] cursor-pointer" @click="editRow(cell)">
-                                {{cell.first_in}}
-                            </div>
-                            <div v-else class="mx-0.5 flex items-center">
-                                <Input class="w-full" high-light-all-text-on-focus v-model="cell.first_in" :size="slot.inputSize" />
-                            </div>
-                        </template>
-                        <template v-slot:cell.lunch_out="{cell, slot, scrollReference}">
-                            <div v-if="!cell.is_flexible && cell.require_lunch_time_in_and_out && !cell.isEditing" class="p-[3px] cursor-pointer" @click="editRow(cell)">
-                                {{cell.lunch_out}}
-                            </div>
-                            <div v-else-if="!cell.is_flexible && cell.require_lunch_time_in_and_out" class="mx-0.5 flex items-center">
-                                <Input class="w-full" high-light-all-text-on-focus v-model="cell.lunch_out" :size="slot.inputSize" />
-                            </div>
-                        </template>
-                        <template v-slot:cell.lunch_in="{cell, slot, scrollReference}">
-                            <div v-if="!cell.is_flexible && cell.require_lunch_time_in_and_out && !cell.isEditing" class="p-[3px] cursor-pointer" @click="editRow(cell)">
-                                {{cell.lunch_in}}
-                            </div>
-                            <div v-else-if="!cell.is_flexible && cell.require_lunch_time_in_and_out" class="mx-0.5 flex items-center">
-                                <Input class="w-full" high-light-all-text-on-focus v-model="cell.lunch_in" :size="slot.inputSize" />
-                            </div>
-                        </template>
-                        <template v-slot:cell.last_out="{cell, slot, scrollReference}">
-                            <div v-if="!cell.isEditing" class="p-[3px] cursor-pointer" @click="editRow(cell)">
-                                {{cell.last_out}}
-                            </div>
-                            <div v-else class="mx-0.5 flex items-center">
-                                <Input class="w-full" high-light-all-text-on-focus v-model="cell.last_out" :size="slot.inputSize" />
-                            </div>
-                        </template>
-                        <template v-slot:cell.validation="{cell, slot, scrollReference}">
-                            <div class="flex space-x-1 px-[0.3rem] items-center">
-                                <span v-if="cell.validation_errors.length > 0" v-for="validation_error in cell.validation_errors" class="label-danger">{{validation_error}}</span>
-                                <span v-else class="label-success">Validation successful.</span>
-                            </div>
-                        </template>
-                    </DataTable>
+                            </template>
+                            <template v-slot:cell.row="{cell, slot, scrollReference}">
+                                <div class="p-[3px] font-sans">
+                                    {{cell.row}}
+                                </div>
+                            </template>
+                            <template v-slot:cell.actions="{cell, slot, scrollReference}">
+                                <div class="text-base h-[32px]">
+                                    <div class="h-full flex items-center px-2 cursor-pointer accent-hover" @click="editRow(cell)">
+                                        <span class="text-base font-sans">Edit</span>
+                                    </div>
+                                </div>
+                            </template>
+                            <template v-slot:cell.validation_summary="{cell, slot, scrollReference}">
+                                <div class="flex items-center justify-center">
+                                    <Icon v-if="cell.validation_errors.length > 0" class="label-danger w-6 h-6" name="ic:baseline-warning"/>
+                                </div>
+                            </template>
+                            <template v-slot:cell.employee_number="{cell, slot, scrollReference}">
+                                <div v-if="!cell.isEditing" class="p-[3px] cursor-pointer" @click="editRow(cell)">
+                                    {{cell.employee_number}}
+                                </div>
+                                <div v-else class="mx-0.5 flex items-center">
+                                    <Input class="w-full" v-model="cell.employee_number" :size="slot.inputSize" />
+                                </div>
+                            </template>
+                            <template v-slot:cell.shift_code="{cell, slot, scrollReference}">
+                                <div v-if="!cell.isEditing" class="p-[3px] cursor-pointer" @click="editRow(cell)">
+                                    {{cell.shift_code}}
+                                </div>
+                                <div v-else class="mx-0.5 flex items-center">
+                                    <Input class="w-full" high-light-all-text-on-focus v-model="cell.shift_code" :size="slot.inputSize" />
+                                </div>
+                            </template>
+                            <template v-slot:cell.date="{cell, slot, scrollReference}">
+                                <div v-if="!cell.isEditing" class="p-[3px] cursor-pointer" @click="editRow(cell)">
+                                    {{cell.date}}
+                                </div>
+                                <div v-else class="mx-0.5 flex items-center">
+                                    <Input class="w-full" high-light-all-text-on-focus v-model="cell.date" :size="slot.inputSize" />
+                                </div>
+                            </template>
+                            <template v-slot:cell.first_in="{cell, slot, scrollReference}">
+                                <div v-if="!cell.isEditing" class="p-[3px] cursor-pointer" @click="editRow(cell)">
+                                    {{cell.first_in}}
+                                </div>
+                                <div v-else class="mx-0.5 flex items-center">
+                                    <Input class="w-full" high-light-all-text-on-focus v-model="cell.first_in" :size="slot.inputSize" />
+                                </div>
+                            </template>
+                            <template v-slot:cell.lunch_out="{cell, slot, scrollReference}">
+                                <div v-if="!cell.is_flexible && cell.require_lunch_time_in_and_out && !cell.isEditing" class="p-[3px] cursor-pointer" @click="editRow(cell)">
+                                    {{cell.lunch_out}}
+                                </div>
+                                <div v-else-if="!cell.is_flexible && cell.require_lunch_time_in_and_out" class="mx-0.5 flex items-center">
+                                    <Input class="w-full" high-light-all-text-on-focus v-model="cell.lunch_out" :size="slot.inputSize" />
+                                </div>
+                            </template>
+                            <template v-slot:cell.lunch_in="{cell, slot, scrollReference}">
+                                <div v-if="!cell.is_flexible && cell.require_lunch_time_in_and_out && !cell.isEditing" class="p-[3px] cursor-pointer" @click="editRow(cell)">
+                                    {{cell.lunch_in}}
+                                </div>
+                                <div v-else-if="!cell.is_flexible && cell.require_lunch_time_in_and_out" class="mx-0.5 flex items-center">
+                                    <Input class="w-full" high-light-all-text-on-focus v-model="cell.lunch_in" :size="slot.inputSize" />
+                                </div>
+                            </template>
+                            <template v-slot:cell.last_out="{cell, slot, scrollReference}">
+                                <div v-if="!cell.isEditing" class="p-[3px] cursor-pointer" @click="editRow(cell)">
+                                    {{cell.last_out}}
+                                </div>
+                                <div v-else class="mx-0.5 flex items-center">
+                                    <Input class="w-full" high-light-all-text-on-focus v-model="cell.last_out" :size="slot.inputSize" />
+                                </div>
+                            </template>
+                            <template v-slot:cell.validation="{cell, slot, scrollReference}">
+                                <div class="flex space-x-1 px-[0.3rem] items-center">
+                                    <span v-if="cell.validation_errors.length > 0" v-for="validation_error in cell.validation_errors" class="label-danger">{{validation_error}}</span>
+                                    <span v-else class="label-success">Validation successful.</span>
+                                </div>
+                            </template>
+                        </DataTable>
+                    </div>
                 </div>
             </div>
         </DefaultWrapper>
@@ -193,13 +199,9 @@ const {
 } = useLayout();
 const action = useTemplateRef('action');
 const { height: actionReferenceHeight} = useElementSize(action);
-const actionPadding = ref(20);
-const actionPaddingComputed = computed(() => {
-    return (actionPadding.value + 'px');
-})
 const actionAllocation = ref(0);
 const actionAllocationComputed = computed(() => {
-    return (actionAllocation.value + (actionPadding.value * 2) + 'px');
+    return `calc(${(actionAllocation.value + 'px')} + 20px)`;
 });
 
 watch(actionReferenceHeight, () => {
@@ -576,8 +578,7 @@ const save = async () => {
 </script>
 
 <style lang="scss" scoped>
-.action{
-    padding: v-bind(actionPaddingComputed);
+.action-container{
     background-color: v-bind(navigationBackground) !important;
     left: 0;
     right: var(--scrollbar-width);
