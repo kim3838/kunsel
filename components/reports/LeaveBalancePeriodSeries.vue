@@ -135,6 +135,7 @@ const {
     updatedAssociatedCompanyFlag
 } = storeToRefs(nuxtApp.$associationStore);
 const {
+    selectedAssociatedCompanyAccountId,
     selectedAssociatedCompanyId
 } = storeToRefs(nuxtApp.$authStore);
 
@@ -300,6 +301,7 @@ const balancePeriodSeriesExecute = async () => {
         await laraFetch(`/api/leave-running-balance-period-series`, {
             method: 'GET',
             params: {
+                account_id: selectedAssociatedCompanyAccountId.value,
                 company_id: selectedAssociatedCompanyId.value,
                 employee_id: employeeOptions.selected,
                 leave_type_id: assignedLeaveTypeSelectionsOptions.selected,
