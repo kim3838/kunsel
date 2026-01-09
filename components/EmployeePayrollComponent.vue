@@ -28,7 +28,7 @@
                         <span class="font-semibold">Employee Compensations[1]:</span> {{employeeCompensationData[1]}}<br>
                         <span class="font-semibold">Selected Employee Compensations:</span> {{selectedEmployeeCompensation}}<br>
                     </div>
-                    <div class="inline-flex gap-2 items-center">
+                    <div v-if="employeeCompensationsSuccessful" class="inline-flex gap-2 items-center">
                         <Button
                             class="w-min"
                             :variant=" 'outline'"
@@ -58,7 +58,13 @@
                             :size="'md'"
                             :label="'Please wait...'"/>
                     </div>
+
+                    <div v-if="!employeeCompensationsSuccessful" class="flex flex-row flex-wrap gap-2 items-center min-h-8">
+                        <Label invert :size="'md'" :type="'danger'" :label="employeeCompensationsMessage" />
+                    </div>
+
                     <DataTable
+                        v-if="employeeCompensationsSuccessful"
                         :headers="employeeCompensationHeaders"
                         :size="'lg'"
                         :rows="employeeCompensationData"
@@ -123,7 +129,7 @@
                         <span class="font-semibold">Employee Deductions[1]:</span> {{employeeDeductionData[1]}}<br>
                         <span class="font-semibold">Selected Employee Deductions:</span> {{selectedEmployeeDeduction}}<br>
                     </div>
-                    <div class="inline-flex gap-2 items-center">
+                    <div v-if="employeeDeductionsSuccessful" class="inline-flex gap-2 items-center">
                         <Button
                             class="w-min"
                             :variant=" 'outline'"
@@ -153,7 +159,13 @@
                             :size="'md'"
                             :label="'Please wait...'"/>
                     </div>
+
+                    <div v-if="!employeeDeductionsSuccessful" class="flex flex-row flex-wrap gap-2 items-center min-h-8">
+                        <Label invert :size="'md'" :type="'danger'" :label="employeeDeductionsMessage" />
+                    </div>
+
                     <DataTable
+                        v-if="employeeDeductionsSuccessful"
                         :headers="employeeDeductionHeaders"
                         :size="'lg'"
                         :rows="employeeDeductionData"
@@ -195,7 +207,7 @@
                         <span class="font-semibold">Employee Income Taxes[1]:</span> {{employeeIncomeTaxData[1]}}<br>
                         <span class="font-semibold">Selected Employee Income Taxes:</span> {{selectedEmployeeIncomeTax}}<br>
                     </div>
-                    <div class="inline-flex gap-2 items-center">
+                    <div v-if="employeeIncomeTaxesSuccessful" class="inline-flex gap-2 items-center">
                         <Button
                             class="w-min"
                             :variant=" 'outline'"
@@ -225,7 +237,13 @@
                             :size="'md'"
                             :label="'Please wait...'"/>
                     </div>
+
+                    <div v-if="!employeeIncomeTaxesSuccessful" class="flex flex-row flex-wrap gap-2 items-center min-h-8">
+                        <Label invert :size="'md'" :type="'danger'" :label="employeeIncomeTaxesMessage" />
+                    </div>
+
                     <DataTable
+                        v-if="employeeIncomeTaxesSuccessful"
                         :headers="employeeIncomeTaxHeaders"
                         :size="'lg'"
                         :rows="employeeIncomeTaxData"
@@ -275,6 +293,7 @@ const {
     updatedAssociatedCompanyFlag
 } = storeToRefs(nuxtApp.$associationStore);
 const {
+    selectedAssociatedCompanyAccountId,
     selectedAssociatedCompanyId,
 } = storeToRefs(nuxtApp.$authStore);
 
@@ -418,6 +437,8 @@ const employeeCompensationHeaders = reactive<TableHeaderT[]>([
 ]);
 
 const employeeCompensationData = ref<EmployeePayrollComponentT[]>([]);
+const employeeCompensationsSuccessful = ref(true);
+const employeeCompensationsMessage = ref('');
 const selectedEmployeeCompensation = ref([]);
 const employeeCompensationPending = ref(false);
 const employeeCompensationExecute = async () => {
@@ -429,6 +450,8 @@ const employeeCompensationExecute = async () => {
     await laraFetch(`/api/employee-payroll-info/${employeeUlid.value}/compensations`, {
         method: 'GET',
         params: {
+            account_id: selectedAssociatedCompanyAccountId.value,
+            company_id: selectedAssociatedCompanyId.value,
             filters: {
                 company_id: selectedAssociatedCompanyId.value
             }
@@ -437,14 +460,16 @@ const employeeCompensationExecute = async () => {
         onRequestError: () => {
             employeeCompensationPending.value = false;
         },
-        onResponse: () => {
+        onResponse: (request, options, response) => {
             employeeCompensationPending.value = false;
+            employeeCompensationsSuccessful.value = _get(response, '_data.successful', false);
+            employeeCompensationsMessage.value = _get(response, '_data.message', '');
         },
         onSuccessResponse: async (request, options, response) => {
             employeeCompensationData.value = _get(response, '_data.values.compensations', []);
             emit('update:employeeCompensationData', employeeCompensationData.value);
         }
-    });
+    }, false);
 }
 
 const disableEmployeeCompensationActions = computed(() => {
@@ -462,6 +487,8 @@ const employeeDeductionHeaders = reactive<TableHeaderT[]>([
 ]);
 
 const employeeDeductionData = ref<EmployeePayrollComponentT[]>([]);
+const employeeDeductionsSuccessful = ref(true);
+const employeeDeductionsMessage = ref('');
 const selectedEmployeeDeduction = ref([]);
 const employeeDeductionPending = ref(false);
 const employeeDeductionExecute = async () => {
@@ -473,6 +500,8 @@ const employeeDeductionExecute = async () => {
     await laraFetch(`/api/employee-payroll-info/${employeeUlid.value}/deductions`, {
         method: 'GET',
         params: {
+            account_id: selectedAssociatedCompanyAccountId.value,
+            company_id: selectedAssociatedCompanyId.value,
             filters: {
                 company_id: selectedAssociatedCompanyId.value
             }
@@ -481,14 +510,16 @@ const employeeDeductionExecute = async () => {
         onRequestError: () => {
             employeeDeductionPending.value = false;
         },
-        onResponse: () => {
+        onResponse: (request, options, response) => {
             employeeDeductionPending.value = false;
+            employeeDeductionsSuccessful.value = _get(response, '_data.successful', false);
+            employeeDeductionsMessage.value = _get(response, '_data.message', '');
         },
         onSuccessResponse: async (request, options, response) => {
             employeeDeductionData.value = _get(response, '_data.values.deductions', []);
             emit('update:employeeDeductionData', employeeDeductionData.value);
         }
-    });
+    }, false);
 }
 
 const disableEmployeeDeductionActions = computed(() => {
@@ -506,6 +537,8 @@ const employeeIncomeTaxHeaders = reactive<TableHeaderT[]>([
 ]);
 
 const employeeIncomeTaxData = ref<EmployeePayrollComponentT[]>([]);
+const employeeIncomeTaxesSuccessful = ref(true);
+const employeeIncomeTaxesMessage = ref('');
 const selectedEmployeeIncomeTax = ref([]);
 const employeeIncomeTaxPending = ref(false);
 const employeeIncomeTaxExecute = async () => {
@@ -517,6 +550,8 @@ const employeeIncomeTaxExecute = async () => {
     await laraFetch(`/api/employee-payroll-info/${employeeUlid.value}/income-taxes`, {
         method: 'GET',
         params: {
+            account_id: selectedAssociatedCompanyAccountId.value,
+            company_id: selectedAssociatedCompanyId.value,
             filters: {
                 company_id: selectedAssociatedCompanyId.value
             }
@@ -525,14 +560,16 @@ const employeeIncomeTaxExecute = async () => {
         onRequestError: () => {
             employeeIncomeTaxPending.value = false;
         },
-        onResponse: () => {
+        onResponse: (request, options, response) => {
             employeeIncomeTaxPending.value = false;
+            employeeIncomeTaxesSuccessful.value = _get(response, '_data.successful', false);
+            employeeIncomeTaxesMessage.value = _get(response, '_data.message', '');
         },
         onSuccessResponse: async (request, options, response) => {
             employeeIncomeTaxData.value = _get(response, '_data.values.income_taxes', []);
             emit('update:employeeIncomeTaxData', employeeIncomeTaxData.value);
         }
-    });
+    }, false);
 }
 
 const disableEmployeeIncomeTaxActions = computed(() => {
@@ -578,6 +615,7 @@ const deleteSelectedPayrollComponent = async (component: number) => {
                 laraFetch(`/api/employee-payroll-component/${id}`, {
                     method: 'DELETE',
                     body: {
+                        'account_id': selectedAssociatedCompanyAccountId.value,
                         'company_id': selectedAssociatedCompanyId.value
                     }
                 },{

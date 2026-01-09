@@ -177,6 +177,7 @@ const {payrollComponentPaySelections} = useCommon();
 const {render} = dateTimePicker();
 
 const {
+    selectedAssociatedCompanyAccountId,
     selectedAssociatedCompanyId,
     selectedAssociatedCompany
 } = storeToRefs(nuxtApp.$authStore);
@@ -738,11 +739,13 @@ const componentForm = computed(() => {
 });
 const form = computed(() => {
     let formTemp = <{
+        account_id: number,
         company_id: number,
         payroll_componentable_id: number | null,
         payroll_componentable_type: string,
         employee_id?: number | null,
     }>{
+        'account_id': selectedAssociatedCompanyAccountId.value,
         'company_id': selectedAssociatedCompanyId.value,
         'payroll_componentable_id' : assignablePayrollComponentOptions.selected,
         'payroll_componentable_type' : formulableModelMapKey.value,

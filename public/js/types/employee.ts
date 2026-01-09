@@ -43,6 +43,7 @@ export type EmploymentProfileT = {
 
 export type EmployeePayrollComponentFormT = {
     employee_id: string | number | null,
+    account_id: undefined | number,
     company_id: string | number | null,
     formulable_type: string | number,
     payroll_componentable_type: string,
@@ -60,6 +61,7 @@ export type EmployeePayrollComponentFormT = {
 
 export type EmploymentProfileFormT = {
     employee_id: string | number | null,
+    account_id: undefined | number,
     company_id: string | number | null,
     status: string | number | null,
     employment_type: string | number | null,
