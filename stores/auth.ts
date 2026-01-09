@@ -34,6 +34,10 @@ export const useAuthStore = defineStore('auth', () => {
         );
     });
 
+    const selectedAssociatedCompanyAccountId = computed<number | undefined>(() => {
+        return selectedAssociatedCompany.value?.payload.account.id;
+    });
+
     const accountSubscriptions = ref<{
         singleSelectPayload: StoreAccountSubscriptionT;
     }>({
@@ -86,6 +90,7 @@ export const useAuthStore = defineStore('auth', () => {
         associatedCompanies,
         selectedAssociatedCompanyId,
         selectedAssociatedCompany,
+        selectedAssociatedCompanyAccountId,
         resetAssociatedCompanies,
 
         accountSubscriptions,
