@@ -318,6 +318,8 @@ const userFormBody = computed(() => {
     return formBody;
 });
 const userCompanyAssignmentFormBody = computed(() => {
+    const form = {};
+
     const assignments: UserCompanyAssignmentSyncT = {};
 
     userCompanyAssignmentData.value.forEach((assignment) => {
@@ -328,8 +330,10 @@ const userCompanyAssignmentFormBody = computed(() => {
         }
     });
 
-    return assignments;
-
+    return {
+        ...form,
+        assignments: assignments
+    };
 });
 
 const userFormSubmit = async() => {
