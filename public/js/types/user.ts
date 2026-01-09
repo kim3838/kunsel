@@ -8,6 +8,7 @@ export type UserT = {
 }
 
 export type UserFormT = {
+    account_id: string | number,
     status: string | number,
     timezone: string | null,
     name?: string,
