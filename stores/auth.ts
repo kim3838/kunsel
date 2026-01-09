@@ -11,6 +11,7 @@ import type {
 
 export const useAuthStore = defineStore('auth', () => {
 
+    const SELECTED_ASSOCIATED_ACCOUNT_STORAGE_KEY = 'pa';
     const SELECTED_ASSOCIATED_COMPANY_STORAGE_KEY = 'pc';
     const SELECTED_ACCOUNT_SUBSCRIPTION_STORAGE_KEY = 'pas';
 
@@ -70,6 +71,11 @@ export const useAuthStore = defineStore('auth', () => {
             sameSite: 'lax',
         });
         storedAccountSubscription.value = null;
+        const storedAccount = useCookie<number | null>(SELECTED_ASSOCIATED_ACCOUNT_STORAGE_KEY,{
+            domain: sessionDomain,
+            sameSite: 'lax',
+        });
+        storedAccount.value = null;
 
         let defaultSelectionPayload = {
             singleSelectPayload: {
@@ -84,6 +90,7 @@ export const useAuthStore = defineStore('auth', () => {
     }
 
     return {
+        SELECTED_ASSOCIATED_ACCOUNT_STORAGE_KEY,
         SELECTED_ASSOCIATED_COMPANY_STORAGE_KEY,
         SELECTED_ACCOUNT_SUBSCRIPTION_STORAGE_KEY,
 
