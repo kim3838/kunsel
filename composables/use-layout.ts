@@ -512,13 +512,6 @@ export const useLayout = () => {
                             route_active: 'admin-accounts',
                             path_active: '/admin/accounts',
                         },{
-                            key: 'admin/companies',
-                            type: 'link',
-                            title: 'Companies',
-                            to: '/admin/companies',
-                            route_active: 'admin-companies',
-                            path_active: '/admin/companies',
-                        },{
                             key: 'admin/formulas',
                             type: 'link',
                             title: 'Formulas',
@@ -532,8 +525,7 @@ export const useLayout = () => {
                             to: '/admin/jsonpresets',
                             route_active: 'admin-jsonpresets',
                             path_active: '/admin/jsonpresets',
-                        },
-                        {
+                        },{
                             key: 'admin/users',
                             type: 'link',
                             title: 'Users',
@@ -549,8 +541,14 @@ export const useLayout = () => {
                             title: 'Subscription',
                             to: '/admin/associated-accounts',
                             route_active: 'admin-associated-accounts'
-                        },
-                        {
+                        },{
+                            key: 'admin/associated-users',
+                            type: 'link',
+                            title: 'Users',
+                            to: '/admin/associated-users',
+                            route_active: 'admin-associated-users',
+                            path_active: '/admin/associated-users',
+                        },{
                             key: 'admin/associated-companies',
                             type: 'link',
                             title: 'Companies',
@@ -558,15 +556,24 @@ export const useLayout = () => {
                             route_active: 'admin-associated-companies',
                             path_active: '/admin/associated-companies',
                         },
-                        {
-                            key: 'admin/associated-users',
-                            type: 'link',
-                            title: 'Users',
-                            to: '/admin/associated-users',
-                            route_active: 'admin-associated-users',
-                            path_active: '/admin/associated-users',
-                        },
                     ]: []),
+                    ...(userIsSuperAdmin.value ? [
+                        {
+                            key: 'admin/companies',
+                            type: 'link',
+                            title: 'Companies',
+                            to: '/admin/companies',
+                            route_active: 'admin-companies',
+                            path_active: '/admin/companies',
+                        },
+                    ]: []),{
+                        key: 'admin/roles',
+                        type: 'link',
+                        title: 'Roles',
+                        to: '/admin/roles',
+                        route_active: 'admin-roles',
+                        path_active: '/admin/roles',
+                    },
                 ]
             }] : []) as NavigationLinkInterface[],
         ]
