@@ -79,6 +79,7 @@ const {
     updatedAssociatedCompanyFlag
 } = storeToRefs(nuxtApp.$associationStore);
 const {
+    selectedAssociatedCompanyAccountId,
     selectedAssociatedCompanyId
 } = storeToRefs(nuxtApp.$authStore);
 const orderSequenceable = nuxtApp.$orderSequenceable as (data: Sequenceable[]) => void;
@@ -121,6 +122,7 @@ const compensationsExecute = async () => {
     await laraFetch("/api/compensations", {
         method: 'GET',
         params: {
+            account_id: selectedAssociatedCompanyAccountId.value,
             company_id: selectedAssociatedCompanyId.value,
             filters: {
                 'company_id': selectedAssociatedCompanyId.value,
@@ -212,6 +214,9 @@ const deleteSelected = async () => {
             new Promise((resolve, reject) => {
                 laraFetch(`/api/compensation/${id}`, {
                     method: 'DELETE',
+                    body: {
+                        account_id: selectedAssociatedCompanyAccountId.value,
+                    }
                 },{
                     onRequestError: (request, options, error) => {
                         reject(error);

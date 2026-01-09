@@ -85,6 +85,7 @@ const {
     updatedAssociatedCompanyFlag
 } = storeToRefs(nuxtApp.$associationStore);
 const {
+    selectedAssociatedCompanyAccountId,
     selectedAssociatedCompanyId
 } = storeToRefs(nuxtApp.$authStore);
 
@@ -195,6 +196,7 @@ const compensationFormulaSettingsExecute = async (companyFormulaId: null | numbe
 
 const form = computed(() => {
     return {
+        'account_id': selectedAssociatedCompanyAccountId.value,
         'company_id': selectedAssociatedCompanyId.value,
         'code': compensationCode.value,
         'name': compensationName.value,

@@ -20,8 +20,11 @@ useHead({titleTemplate: (titleChunk) => {return `${titleChunk} - Payroll Compone
 definePageMeta({middleware: ['auth', 'admin-of-selected-company',
     async () => {
 
-        const {selectedAssociatedCompanyId} = storeToRefs(useAuthStore());
-        const {data, error} = await laraUseFetch(`/api/payroll-components-gate`, {method: 'GET', params: {company_id: selectedAssociatedCompanyId.value}}, {}, false);
+        const {selectedAssociatedCompanyAccountId, selectedAssociatedCompanyId} = storeToRefs(useAuthStore());
+        const {data, error} = await laraUseFetch(`/api/payroll-components-gate`, {method: 'GET', params: {
+            account_id: selectedAssociatedCompanyAccountId.value,
+            company_id: selectedAssociatedCompanyId.value
+        }}, {}, false);
 
         if(_isEmpty(data.value) && !_isEmpty(error.value)){
             let responseCode = _get(error.value, 'data.code', null);

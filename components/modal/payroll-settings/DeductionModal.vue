@@ -85,6 +85,7 @@ const {
     updatedAssociatedCompanyFlag
 } = storeToRefs(nuxtApp.$associationStore);
 const {
+    selectedAssociatedCompanyAccountId,
     selectedAssociatedCompanyId
 } = storeToRefs(nuxtApp.$authStore);
 
@@ -196,6 +197,7 @@ const deductionFormulaSettingsExecute = async (companyFormulaId: null | number |
 
 const form = computed(() => {
     return {
+        'account_id': selectedAssociatedCompanyAccountId.value,
         'company_id': selectedAssociatedCompanyId.value,
         'code': deductionCode.value,
         'name': deductionName.value,

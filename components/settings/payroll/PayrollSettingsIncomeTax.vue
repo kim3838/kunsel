@@ -79,6 +79,7 @@ const {
     updatedAssociatedCompanyFlag
 } = storeToRefs(nuxtApp.$associationStore);
 const {
+    selectedAssociatedCompanyAccountId,
     selectedAssociatedCompanyId
 } = storeToRefs(nuxtApp.$authStore);
 const orderSequenceable = nuxtApp.$orderSequenceable as (data: Sequenceable[]) => void;
@@ -121,6 +122,7 @@ const incomeTaxesExecute = async () => {
     await laraFetch("/api/income-taxes", {
         method: 'GET',
         params: {
+            account_id: selectedAssociatedCompanyAccountId.value,
             company_id: selectedAssociatedCompanyId.value,
             filters: {
                 'company_id': selectedAssociatedCompanyId.value,
