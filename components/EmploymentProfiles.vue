@@ -106,6 +106,7 @@ import type {TableHeaderT} from "@/public/js/types/data";
 
 const nuxtApp = useNuxtApp();
 const {
+    selectedAssociatedCompanyAccountId,
     selectedAssociatedCompanyId
 } = storeToRefs(nuxtApp.$authStore);
 
@@ -216,6 +217,7 @@ const employmentProfileExecute = async () => {
     await laraFetch(`/api/employee-employment-profiles/${employeeId.value}`, {
         method: 'GET',
         params: {
+            account_id: selectedAssociatedCompanyAccountId.value,
             company_id: selectedAssociatedCompanyId.value,
         }
     },{
@@ -264,6 +266,10 @@ const deleteSelected = async () => {
             new Promise((resolve, reject) => {
                 laraFetch(`/api/employment-profile/${id}`, {
                     method: 'DELETE',
+                    body:{
+                        account_id: selectedAssociatedCompanyAccountId.value,
+                        company_id: selectedAssociatedCompanyId.value,
+                    }
                 },{
                     onRequestError: (request, options, error) => {
                         reject(error);

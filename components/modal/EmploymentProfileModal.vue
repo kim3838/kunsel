@@ -130,6 +130,7 @@ const moment = useNuxtApp().$moment;
 const {render} = dateTimePicker();
 const {screenWidthBreakpoint, width: screenWidth} = useScreen();
 const {
+    selectedAssociatedCompanyAccountId,
     selectedAssociatedCompanyId,
 } = storeToRefs($authStore);
 
@@ -357,6 +358,7 @@ const form = computed(() => {
         'status': employmentStatus.value,
         'employment_type': employmentType.value,
         'start_date': startDate.value,
+        'account_id': selectedAssociatedCompanyAccountId.value,
         'company_id': selectedAssociatedCompanyId.value,
     };
 
