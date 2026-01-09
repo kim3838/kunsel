@@ -342,6 +342,7 @@ const {
     updatedAssociatedCompanyFlag
 } = storeToRefs($associationStore);
 const {
+    selectedAssociatedCompanyAccountId,
     selectedAssociatedCompanyId,
     selectedAssociatedCompany
 } = storeToRefs($authStore);
@@ -543,6 +544,7 @@ const fetchEmployee = async () => {
     await laraFetch(`/api/employee/${route.params.id}`, {
         method: 'GET',
         params: {
+            account_id: selectedAssociatedCompanyAccountId.value,
             company_id: selectedAssociatedCompanyId.value
         }
     }, {
@@ -822,6 +824,7 @@ const employeeFormAction = computed(() => {
 const employeeFormBody = computed(() => {
 
     return {
+        account_id: selectedAssociatedCompanyAccountId.value,
         company_id: selectedAssociatedCompanyId.value,
         department_id: departmentOptions.selected,
         designation_id: designationOptions.selected,
@@ -905,6 +908,7 @@ const employeeContactFormAction = computed(() => {
 const employeeContactFormBody = computed(() => {
 
     return {
+        account_id: selectedAssociatedCompanyAccountId.value,
         company_id: selectedAssociatedCompanyId.value,
         office_email: employeeOfficeEmail.value,
         personal_email: employeePersonalEmail.value,
@@ -1029,6 +1033,7 @@ const employeeAdditionalForms = (employee = null) => {
 
         let employeePayrollComponentFormBody: EmployeePayrollComponentFormT = {
             employee_id: employeeId,
+            account_id: selectedAssociatedCompanyAccountId.value,
             company_id: selectedAssociatedCompanyId.value,
             formulable_type: payrollFormulableType,
             payroll_componentable_type: payrollComponent.payroll_componentable_type,
@@ -1090,6 +1095,7 @@ const employeeAdditionalForms = (employee = null) => {
 
         let employeeEmploymentProfileFormBody: EmploymentProfileFormT = {
             employee_id: employeeId,
+            account_id: selectedAssociatedCompanyAccountId.value,
             company_id: selectedAssociatedCompanyId.value,
             status: _get(employmentProfile, 'status.value', null),
             employment_type: _get(employmentProfile, 'employment_type.value', null),

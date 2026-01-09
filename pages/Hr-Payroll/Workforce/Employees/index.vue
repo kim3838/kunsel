@@ -319,6 +319,7 @@ const {
     updatedAssociatedCompanyFlag
 } = storeToRefs(nuxtApp.$associationStore);
 const {
+    selectedAssociatedCompanyAccountId,
     selectedAssociatedCompanyId
 } = storeToRefs(nuxtApp.$authStore);
 
@@ -503,6 +504,7 @@ let paramsComputed = computed(() => {
     return {
         page: filters.page,
         perPage: filters.perPage,
+        account_id: selectedAssociatedCompanyAccountId.value,
         company_id: selectedAssociatedCompanyId.value,
         filters: {
             company_id: selectedAssociatedCompanyId.value,
@@ -644,7 +646,10 @@ const showPayrollComponentsModal = async(cell: TableRowT)=> {
 
     await laraFetch(`/api/employee-payroll-components-gate`, {
         method: 'GET',
-        params: {company_id: selectedAssociatedCompanyId.value}
+        params: {
+            account_id: selectedAssociatedCompanyAccountId.value,
+            company_id: selectedAssociatedCompanyId.value
+        }
     }, {
         onSuccessResponse: async (request, options, response) => {
 
@@ -703,7 +708,10 @@ const showEmploymentProfilesModal = async (cell: TableRowT)=> {
 
     await laraFetch(`/api/employment-profiles-gate`, {
         method: 'GET',
-        params: {company_id: selectedAssociatedCompanyId.value}
+        params: {
+            account_id: selectedAssociatedCompanyAccountId.value,
+            company_id: selectedAssociatedCompanyId.value
+        }
     }, {
         onSuccessResponse: async (request, options, response) => {
 
