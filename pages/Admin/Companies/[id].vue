@@ -147,7 +147,7 @@ await fetchTimezones();
 
 //Fetch Company Information
 const fetchCompany = async () => {
-    if(route.params.id === 'create-company'){return;}
+    if(import.meta.server || route.params.id === 'create-company'){return;}
 
     await laraFetch(`/api/company/${route.params.id}`, {
         method: 'GET',

@@ -257,7 +257,7 @@ const selectedJsonPresetChanged = async (selectedJsonPreset: SelectDataType) => 
 
 //Fetch Formula Information
 const fetchFormula = async () => {
-    if(route.params.id === 'create-formula'){return;}
+    if(import.meta.server || route.params.id === 'create-formula'){return;}
 
     await laraFetch(`/api/formula/${route.params.id}`, {
         method: 'GET',
