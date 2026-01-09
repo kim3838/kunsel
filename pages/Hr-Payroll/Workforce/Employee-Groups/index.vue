@@ -191,6 +191,7 @@ const {
     updatedAssociatedCompanyFlag
 } = storeToRefs(nuxtApp.$associationStore);
 const {
+    selectedAssociatedCompanyAccountId,
     selectedAssociatedCompanyId
 } = storeToRefs(nuxtApp.$authStore);
 
@@ -262,6 +263,7 @@ let paramsComputed = computed(() => {
     return {
         page: filters.page,
         perPage: filters.perPage,
+        account_id: selectedAssociatedCompanyAccountId.value,
         company_id: selectedAssociatedCompanyId.value,
         filters: {
             company_id: selectedAssociatedCompanyId.value,
@@ -385,6 +387,7 @@ const deleteSelected = async () => {
     await laraFetch("/api/employee-groups", {
         method: 'DELETE',
         body: {
+            account_id: selectedAssociatedCompanyAccountId.value,
             company_id: selectedAssociatedCompanyId.value,
             group_ids: selectedIds,
         },
@@ -474,9 +477,10 @@ const submitGroupAssignmentLabel = computed(() => {
 const groupAssignmentForm = computed(() => {
 
     return {
+        account_id: selectedAssociatedCompanyAccountId.value,
         company_id: selectedAssociatedCompanyId.value,
         employees: selectedModalEmployees.value,
-        groups: selectedEmployeeGroups.value
+        group_ids: selectedEmployeeGroups.value
     };
 });
 
@@ -560,8 +564,9 @@ const confirmGroupAssignmentBatchDetach = () => {
 const groupAssignmentBatchDetachForm = computed(() => {
 
     return {
+        account_id: selectedAssociatedCompanyAccountId.value,
         company_id: selectedAssociatedCompanyId.value,
-        groups: selectedEmployeeGroups.value
+        group_ids: selectedEmployeeGroups.value
     };
 });
 const submitGroupAssignmentBatchDetach = async () => {
@@ -654,6 +659,7 @@ const submitCreateEditPath = computed(() => {
 
 const submitCreateEditForm = computed(() => {
     return {
+        'account_id': selectedAssociatedCompanyAccountId.value,
         'company_id': selectedAssociatedCompanyId.value,
         'name': groupName.value,
         'employees': selectedModalEmployees.value ?? [],
