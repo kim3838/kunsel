@@ -55,11 +55,14 @@
 <script setup lang="ts">
 
 import type {RolePermissionT, RoleT} from "@/public/js/types/role_permission";
+import type {SelectDataType} from "@/public/js/types/form";
+import type {EnumSelection} from "@/public/js/common/type";
 
 useHead({titleTemplate: (titleChunk) => {return `${titleChunk} - Roles`}});
 definePageMeta({middleware: ['auth', 'admin-in-any-company']});
 useLayout().setNavigationMode('solid');
 
+const {persistAccount, storeAccount} = useAccount();
 const route = useRoute();
 const role = ref<Partial<RoleT>>({});
 const rolePermissions = ref<RolePermissionT>({});
@@ -75,7 +78,11 @@ const creatingRole = computed(() => {
 });
 const roleName = ref('');
 
-const accountOptions = reactive({
+const accountOptions = reactive<{
+    search: string,
+    selection: EnumSelection,
+    selected: string | number | null
+}>({
     search: '',
     selection: [],
     selected: null
@@ -95,6 +102,9 @@ await fetchAccounts();
 
 //Fetch Role Information
 const fetchRole = async () => {
+
+    if(import.meta.server) return;
+
     if(route.params.id === 'create-role'){
 
         await laraFetch(`/api/role-permission-template`, {
@@ -105,7 +115,12 @@ const fetchRole = async () => {
             },
         }, false);
 
-        accountOptions.selected = accountOptions.selection[0]?.value ?? null;
+        if(accountOptions.selection.map((item: SelectDataType) => item.value).indexOf(persistAccount.value as number) >= 0){
+            accountOptions.selected = persistAccount.value as number;
+        } else {
+            accountOptions.selected = accountOptions.selection[0]?.value ?? null;
+            storeAccount(accountOptions.selected as number);
+        }
 
         return;
     }

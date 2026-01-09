@@ -144,6 +144,7 @@ useLayout().setNavigationMode('solid');
 
 const route = useRoute();
 const user = userState();
+const {persistAccount} = useAccount();
 const {fetchAssociatedCompanies, storeAssociatedCompanies} = useAssociation();
 const {timezoneSelections} = useCommon();
 const associatedUser = ref<UserT | null>(null);
@@ -227,6 +228,9 @@ const fetchAssociatedUser = async () => {
 
     await laraFetch(`/api/user/${route.params.id}`, {
         method: 'GET',
+        params: {
+            account_id: persistAccount.value
+        }
     }, {
         onResponse: (request, options, response) => {
             associatedUserSuccessful.value = _get(response, '_data.successful', false);
@@ -339,6 +343,7 @@ const userFormSubmitPath = computed(() => {
 
 const userFormBody = computed(() => {
     let formBody: UserFormT = {
+        account_id: persistAccount.value,
         status: userStatusOptions.selected as number,
         timezone: timezoneOptions.selected,
     };
@@ -356,6 +361,10 @@ const userFormBody = computed(() => {
     return formBody;
 });
 const userCompanyAssignmentFormBody = computed(() => {
+    const form = {
+        account_id: persistAccount.value
+    };
+
     const assignments: UserCompanyAssignmentSyncT = {};
 
     userCompanyAssignmentData.value.forEach((assignment) => {
@@ -366,7 +375,10 @@ const userCompanyAssignmentFormBody = computed(() => {
         }
     });
 
-    return assignments;
+    return {
+        ...form,
+        assignments: assignments
+    };
 
 });
 
@@ -430,6 +442,7 @@ const createUserFormSubmitLabel = computed(() => {
 });
 const createUserFormBody = computed(() => {
     return {
+        'account_id': persistAccount.value,
         'name': username.value,
         'email': email.value,
         'password': password.value,

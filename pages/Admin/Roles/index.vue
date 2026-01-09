@@ -5,9 +5,9 @@
 
                 <form @submit.prevent="paginate(1, true)" class="space-y-2 p-[20px]">
                     <div class="grid gap-2 grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-8">
-                        <div>
+                        <div class="col-span-full md:col-span-2">
                             <InputLabel :size="'sm'" value="Account" />
-                            <SingleSelect :disabled="disableActions" glint drop-shadow :selection-max-viewable-line="5" value-persist :size="'md'" :options="accountOptions" :icon="'tdesign:component-checkbox'"/>
+                            <SingleSelect :disabled="disableActions" glint drop-shadow :selection-max-viewable-line="5" value-persist :size="'md'" :options="accountOptions" :icon="'tdesign:component-checkbox'" @valueChange="selectedAccountChanged"/>
                         </div>
                         <div>
                             <InputLabel :size="'sm'" value="Search" />
@@ -76,11 +76,13 @@
 <script setup lang="ts">
 import type {DataTableT, TableHeaderT} from "@/public/js/types/data";
 import type {EnumSelection} from "@/public/js/common/type";
+import type {SelectDataType} from "@/public/js/types/form";
 
 useHead({titleTemplate: (titleChunk) => {return `${titleChunk} - Roles`}});
 definePageMeta({middleware: ['auth', 'admin-in-any-company']});
 useLayout().setNavigationMode('solid');
 
+const {persistAccount, storeAccount} = useAccount();
 const rolesHeaders = reactive<TableHeaderT[]>([
     { text: '', value: 'actions'},
     { text: 'Name', value: 'name', alignData: 'left'},
@@ -136,6 +138,35 @@ let pageComputed = computed({
         filters[payload.key] = payload.value;
     }
 });
+
+const fetchAccounts = async() => {
+
+    await laraFetch("/api/account-selections", {
+        method: 'GET',
+    }, {
+        onSuccessResponse: async (request, options, response) => {
+            accountOptions.selection = _get(response, '_data.values.selection', []);
+
+            if(accountOptions.selection.map((item: SelectDataType) => item.value).indexOf(persistAccount.value as number) >= 0){
+                accountOptions.selected = persistAccount.value as number;
+            } else {
+                accountOptions.selected = accountOptions.selection[0]?.value ?? null;
+                storeAccount(accountOptions.selected as number);
+            }
+        }
+    })
+}
+await fetchAccounts();
+
+const selectedAccountChanged = async (selectedAccount: SelectDataType) => {
+
+    rolesPending.value = true;
+
+    storeAccount(accountOptions.selected as number);
+
+    await rolesExecute();
+}
+
 let paramsComputed = computed(() => {
     return {
         page: filters.page,
@@ -148,19 +179,6 @@ let paramsComputed = computed(() => {
     };
 });
 
-const fetchAccounts = async() => {
-
-    await laraFetch("/api/account-selections", {
-        method: 'GET',
-    }, {
-        onSuccessResponse: async (request, options, response) => {
-            accountOptions.selection = _get(response, '_data.values.selection', []);
-
-            accountOptions.selected = accountOptions.selection[0]?.value ?? null;
-        }
-    })
-}
-await fetchAccounts();
 
 const rolesPending = ref(false);
 const selectedRoles = ref([]);
