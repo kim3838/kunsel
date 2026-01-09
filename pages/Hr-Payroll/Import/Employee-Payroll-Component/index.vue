@@ -206,6 +206,7 @@ const {
     updatedAssociatedCompanyFlag
 } = storeToRefs(nuxtApp.$associationStore);
 const {
+    selectedAssociatedCompanyAccountId,
     selectedAssociatedCompanyId
 } = storeToRefs(nuxtApp.$authStore);
 
@@ -355,6 +356,7 @@ const read = async () => {
 
         const formData = new FormData();
         formData.append('file', file);
+        formData.append('account_id', selectedAssociatedCompanyAccountId.value);
         formData.append('company_id', selectedAssociatedCompanyId.value);
 
         await laraFetch("/api/employee-payroll-component-import-validate", {
@@ -413,6 +415,7 @@ const reValidate = async () => {
     await laraFetch("/api/employee-payroll-component-import-re-validate", {
         method: 'POST',
         body: {
+            account_id: selectedAssociatedCompanyAccountId.value,
             company_id: selectedAssociatedCompanyId.value,
             re_validate: selectedPreImportData.value,
         },
@@ -493,6 +496,7 @@ const save = async () => {
     await laraFetch("/api/employee-payroll-component-import-save", {
         method: 'POST',
         body: {
+            account_id: selectedAssociatedCompanyAccountId.value,
             company_id: selectedAssociatedCompanyId.value,
             save: selectedPreImportData.value,
         },
