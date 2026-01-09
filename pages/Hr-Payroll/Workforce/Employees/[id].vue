@@ -329,7 +329,7 @@ import type {EmployeePayrollComponentFormT, EmploymentProfileFormT} from "@/publ
 
 useHead({titleTemplate: (titleChunk) => {return `${titleChunk} - Employees`}});
 definePageMeta({middleware: ['auth', 'admin-of-selected-company']});
-useLayout().setNavigationMode('solid', 'Employees/[id].vue');
+useLayout().setNavigationMode('solid');
 
 const {render} = dateTimePicker();
 const route = useRoute();
@@ -537,7 +537,7 @@ const designationOptions = reactive({
 const tempSelectedManager = ref(null);
 
 //Fetch Employee Information, Contact Information
-const fetchEmployee = async () => {
+const fetchEmployee = async (callback: (() => void) | null = null) => {
 
     if(import.meta.server){return;}
 
@@ -576,6 +576,10 @@ const fetchEmployee = async () => {
             employeeUserCreationOptions.selected = _get(response, '_data.values.employee.user_id', false) ? null : EMPLOYEE_USER_CREATION.NONE as number;
 
             employmentProfiles.value = _get(response, '_data.values.employee.employment_profiles', []);
+
+            if(callback !== null && typeof callback == 'function'){
+                callback();
+            }
         },
     }, false);
 };
@@ -931,6 +935,7 @@ const employeeContactFormSubmit = async(employee = null, formPayload = {}) => {
     employeeContactFormPending.value = true;
 
     let includeEmployee = !validateForms.value || employeeHasContact.value;
+    const tempEmployeeContactFormBody = employeeContactFormBody.value;
 
     await laraFetch(employeeContactFormSubmitPath.value, {
         method: employeeContactFormAction.value,
@@ -956,7 +961,12 @@ const employeeContactFormSubmit = async(employee = null, formPayload = {}) => {
             employeeContactFormPending.value = false;
             validateForms.value = true;
             if(!creatingEmployee.value){
-                await fetchEmployee();
+                await fetchEmployee(() => {
+                    employeeOfficeEmail.value = _get(tempEmployeeContactFormBody, 'office_email', '');
+                    employeePersonalEmail.value = _get(tempEmployeeContactFormBody, 'personal_email', '');
+                    employeeOfficePhone.value = _get(tempEmployeeContactFormBody, 'office_phone', '');
+                    employeePersonalPhone.value = _get(tempEmployeeContactFormBody, 'personal_phone','');
+                });
             }
         },
         onSuccessResponse: async (request, options, response) => {
