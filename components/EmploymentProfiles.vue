@@ -23,7 +23,7 @@
 
             <div class="grid grid-cols-1 md:gap-2 lg:grid-cols-1">
                 <div class="space-y-2">
-                    <div class="inline-flex gap-2 items-center">
+                    <div v-if="employmentProfilesSuccessful" class="inline-flex gap-2 items-center">
                         <Button
                             class="w-min"
                             :variant=" 'outline'"
@@ -54,7 +54,12 @@
                             :label="'Please wait...'"/>
                     </div>
 
+                    <div v-if="!employmentProfilesSuccessful" class="flex flex-row flex-wrap gap-2 items-center min-h-8">
+                        <Label invert :size="'md'" :type="'danger'" :label="employmentProfilesMessage" />
+                    </div>
+
                     <DataTable
+                        v-if="employmentProfilesSuccessful"
                         :headers="employmentProfileHeaders"
                         :size="'lg'"
                         :rows="employmentProfilesData"
@@ -203,6 +208,8 @@ const employmentProfileHeaders = reactive<TableHeaderT[]>([
 ]);
 
 const employmentProfilesData = ref([]);
+const employmentProfilesSuccessful = ref(true);
+const employmentProfilesMessage = ref('');
 const selectedEmploymentProfiles = ref([]);
 const employmentProfilesPending = ref(false);
 const employmentProfileExecute = async () => {
@@ -225,15 +232,17 @@ const employmentProfileExecute = async () => {
             employmentProfilesPending.value = false;
             emit('update:employmentProfilesPending', false);
         },
-        onResponse: () => {
+        onResponse: (request, options, response) => {
             employmentProfilesPending.value = false;
             emit('update:employmentProfilesPending', false);
+            employmentProfilesSuccessful.value = _get(response, '_data.successful', false);
+            employmentProfilesMessage.value = _get(response, '_data.message', '');
         },
         onSuccessResponse: async (request, options, response) => {
             employmentProfilesData.value = _get(response, '_data.values.employment_profiles', []);
             emit('update:employmentProfilesData', employmentProfilesData.value);
         }
-    });
+    }, false);
 }
 
 if(!props.isolated && !creatingEmployee.value){
