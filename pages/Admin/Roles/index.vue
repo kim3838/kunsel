@@ -114,33 +114,6 @@ const accountOptions = reactive<{
     selected: null
 });
 
-let filters = reactive<{
-    page: number,
-    perPage: number,
-    search: {
-        keyword: string,
-        callback: ReturnType<typeof setTimeout> | number
-    }
-}>({
-    page: 1,
-    perPage: 25,
-    search: {
-        keyword: '',
-        callback: 1
-    }
-});
-let pageComputed = computed({
-    get() {
-        return {
-            page: filters.page,
-            perPage: filters.perPage,
-        }
-    },
-    set(payload: { key: 'page' | 'perPage', value: number }) {
-        filters[payload.key] = payload.value;
-    }
-});
-
 const fetchAssociatedAccounts = async() => {
 
     let associatedAccountsApi = userIsSuperAdmin.value ? '/api/account-selections' : '/api/associated-account-selections';
@@ -178,6 +151,33 @@ const selectedAccountChanged = async (selectedAccount: SelectDataType) => {
     await rolesExecute();
 }
 
+let filters = reactive<{
+    page: number,
+    perPage: number,
+    search: {
+        keyword: string,
+        callback: ReturnType<typeof setTimeout> | number
+    }
+}>({
+    page: 1,
+    perPage: 25,
+    search: {
+        keyword: '',
+        callback: 1
+    }
+});
+let pageComputed = computed({
+    get() {
+        return {
+            page: filters.page,
+            perPage: filters.perPage,
+        }
+    },
+    set(payload: { key: 'page' | 'perPage', value: number }) {
+        filters[payload.key] = payload.value;
+    }
+});
+
 let paramsComputed = computed(() => {
     return {
         page: filters.page,
@@ -189,7 +189,6 @@ let paramsComputed = computed(() => {
         }
     };
 });
-
 
 const rolesPending = ref(false);
 const selectedRoles = ref([]);
