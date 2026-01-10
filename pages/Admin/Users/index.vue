@@ -4,10 +4,16 @@
             <div class="mx-auto max-w-screen-2xl">
                 <form @submit.prevent="paginate(1, true)" class="space-y-2 p-[20px]">
                     <div class="grid gap-2 grid-cols-3 sm:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-8">
+                        <div class="col-span-full md:col-span-2">
+                            <InputLabel :size="'sm'" value="Account" />
+                            <MultiSelect :disabled="disableActions" glint drop-shadow :selection-max-viewable-line="5" :size="'md'" :options="accountOptions" :icon="'tdesign:component-checkbox'"/>
+                        </div>
                         <div>
                             <InputLabel :size="'sm'" value="Company" />
-                            <MultiSelect :disabled="disableActions" glint drop-shadow :max-viewable-summary-count="1" :selection-max-viewable-line="5" :size="'md'" :options="companyOptions" :icon="'tdesign:component-checkbox'"/>
+                            <MultiSelect :key="companyOptionsKey" :disabled="disableActions" glint drop-shadow :max-viewable-summary-count="1" :selection-max-viewable-line="5" :size="'md'" :options="companyOptions" :icon="'tdesign:component-checkbox'"/>
                         </div>
+                    </div>
+                    <div class="grid gap-2 grid-cols-3 sm:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-8">
                         <div>
                             <InputLabel :size="'sm'" value="User Status" />
                             <MultiSelect :disabled="disableActions" glint drop-shadow :selection-max-viewable-line="5" :size="'md'" :options="userStatusOptions" :icon="'tdesign:component-checkbox'"/>
@@ -121,6 +127,7 @@
 
 <script setup lang="ts">
 import type {DataTableT, TableHeaderT} from "@/public/js/types/data";
+import type {EnumSelection} from "@/public/js/common/type";
 
 useHead({titleTemplate: (titleChunk) => {return `${titleChunk} - Users`}});
 definePageMeta({middleware: ['auth', 'super-admin']});
@@ -134,6 +141,8 @@ const usersHeaders = reactive<TableHeaderT[]>([
     { text: 'Email', value: 'email', alignData: 'left'},
     { text: 'Email Verification', value: 'email_verified_at', alignData: 'left'},
     { text: 'Timezone', value: 'timezone', alignData: 'left'},
+    { text: 'Account roles', value: 'account_roles', alignData: 'left'},
+    { text: 'Created by', value: 'created_by', alignData: 'left'},
 ]);
 
 const showAssociatedCompanies = ref(true);
@@ -165,6 +174,46 @@ const users = reactive<DataTableT>({
     'message': ''
 });
 
+const accountOptions = reactive<{
+    search: string,
+    selection: EnumSelection,
+    selected: number[]
+}>({
+    search: '',
+    selection: [],
+    selected: []
+});
+
+const fetchAccounts = async() => {
+
+    await laraFetch("/api/account-selections", {
+        method: 'GET',
+    }, {
+        onSuccessResponse: async (request, options, response) => {
+            accountOptions.selection = _get(response, '_data.values.selection', []);
+        }
+    })
+}
+await fetchAccounts();
+
+watch(() => accountOptions.selected, async () => {
+    await selectedAccountChanged()
+},{ deep: true })
+
+const selectedAccountChanged = async() => {
+
+    usersPending.value = true;
+
+    companyOptions.search = '';
+    companyOptions.selected = [];
+
+    await fetchCompanies();
+    companyOptionsKey.value++;
+
+    await usersExecute();
+}
+
+const companyOptionsKey = shallowRef(0);
 const companyOptions = reactive({
     search: '',
     selection: [],
@@ -174,6 +223,11 @@ const fetchCompanies = async() => {
 
     await laraFetch("/api/company-selections", {
         method: 'GET',
+        params: {
+            filters: {
+                account_id: accountOptions.selected,
+            }
+        }
     }, {
         onSuccessResponse: async (request, options, response) => {
             companyOptions.selection = _get(response, '_data.values.selection', []);
@@ -227,6 +281,7 @@ let pageComputed = computed({
 let paramsComputed = computed(() => {
 
     let baseFilters = {
+        'account_ids': accountOptions.selected,
         'user_search': filters.userSearch.keyword,
         'employee_search': filters.employeeSearch.keyword,
         'companies': companyOptions.selected,
