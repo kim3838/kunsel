@@ -22,7 +22,7 @@
                     <div class="grid gap-2 grid-cols-1 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
                         <div>
                             <InputLabel :size="'sm'" value="Account"/>
-                            <SingleSelect value-persist drop-shadow :size="'md'" :options="associatedAccountOptions"/>
+                            <SingleSelect :disabled="!creatingCompany" value-persist drop-shadow :size="'md'" :options="accountOptions"/>
                         </div>
                         <div>
                             <InputLabel :size="'sm'" value="Company Code"/>
@@ -61,6 +61,10 @@
 
 <script setup lang="ts">
 
+import type {EnumSelection} from "@/public/js/common/type";
+import type {SelectDataType} from "@/public/js/types/form";
+import type {CompanyT} from "@/public/js/types/company";
+
 const {fetchAssociatedCompanies, storeAssociatedCompanies} = useAssociation();
 const {timezoneSelections} = useCommon();
 
@@ -68,19 +72,24 @@ useHead({titleTemplate: (titleChunk) => {return `${titleChunk} - Companies`}});
 definePageMeta({middleware: ['auth', 'admin-in-any-company']});
 useLayout().setNavigationMode('solid');
 
-const route = useRoute();
 const user = userState();
-const company = ref(null);
+const {persistAccount, storePersistAccount} = useAccount();
+const route = useRoute();
+const company = ref<Partial<CompanyT>>({});
 const companySuccessful = ref(true);
 const companyMessage = ref('');
-const creatingAccount = computed(() => {
+const creatingCompany = computed(() => {
     return route.params.id === 'create-company';
 });
 const companyCode = ref('');
 const companyShortName = ref('');
 const companyName = ref('');
 
-const associatedAccountOptions = reactive({
+const accountOptions = reactive<{
+    search: string,
+    selection: EnumSelection,
+    selected: string | number | null
+}>({
     search: '',
     selection: [],
     selected: null
@@ -112,11 +121,19 @@ const fetchAssociatedAccounts = async() => {
         }
     }, {
         onSuccessResponse: async (request, options, response) => {
-            associatedAccountOptions.selection = _get(response, '_data.values.selection', []);
+            accountOptions.selection = _get(response, '_data.values.selection', []);
+
+            if(accountOptions.selection.map((item: SelectDataType) => item.value).indexOf(persistAccount.value as number) >= 0){
+                accountOptions.selected = persistAccount.value as number;
+            } else {
+                accountOptions.selected = accountOptions.selection[0]?.value ?? null;
+                storePersistAccount(accountOptions.selected as number);
+            }
         }
     })
 }
 await fetchAssociatedAccounts();
+
 const fetchCountries = async() => {
 
     await laraFetch("/api/country-selections", {
@@ -142,18 +159,22 @@ await fetchCurrencies();
 
 //Fetch Company Information
 const fetchCompany = async () => {
-    if(route.params.id === 'create-company'){return;}
+
+    if(import.meta.server || route.params.id === 'create-company'){return;}
 
     await laraFetch(`/api/associated-company/${route.params.id}`, {
         method: 'GET',
+        params: {
+            account_id: accountOptions.selected
+        }
     }, {
         onResponse: (request, options, response) => {
             companySuccessful.value = _get(response, '_data.successful', false);
             companyMessage.value = _get(response, '_data.message', '');
         },
         onSuccessResponse: async (request, options, response) => {
-            company.value = _get(response, '_data.values.company', null);
-            associatedAccountOptions.selected = _get(response, '_data.values.company.account_id', null);
+            company.value = _get(response, '_data.values.company', {}) as CompanyT;
+            accountOptions.selected = _get(response, '_data.values.company.account_id', null);
             companyCode.value = _get(response, '_data.values.company.code', '');
             companyShortName.value = _get(response, '_data.values.company.short_name', '');
             companyName.value = _get(response, '_data.values.company.name', '');
@@ -172,18 +193,18 @@ const disableActions = computed(() => {
 });
 
 const submitLabel = computed(() => {
-    return formPending.value ? 'Please wait' : (!creatingAccount.value ? 'Save' : 'Submit');
+    return formPending.value ? 'Please wait' : (!creatingCompany.value ? 'Save' : 'Submit');
 });
 const submitAction = computed(() => {
-    return !creatingAccount.value ? 'PATCH' : 'POST';
+    return !creatingCompany.value ? 'PATCH' : 'POST';
 });
 const submitPath = computed(() => {
-    return !creatingAccount.value ? `/api/associated-company/${company.value.id}` : `/api/company`;
+    return !creatingCompany.value ? `/api/associated-company/${company.value.id}` : `/api/company`;
 });
 const formBody = computed(() => {
 
     return {
-        account_id: associatedAccountOptions.selected,
+        account_id: accountOptions.selected,
         code: companyCode.value,
         short_name: companyShortName.value,
         name: companyName.value,
@@ -211,7 +232,7 @@ const formSubmit = async() => {
                 resetable: false,
                 icon: null,
                 title: `Request successful`,
-                message: `Company ${!creatingAccount.value ? 'updated' : 'created'}`,
+                message: `Company ${!creatingCompany.value ? 'updated' : 'created'}`,
                 action: {
                     callback: () => {},
                     label: 'Okay'

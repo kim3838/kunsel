@@ -5,9 +5,9 @@
 
                 <form @submit.prevent="paginate(1, true)" class="space-y-2 p-[20px]">
                     <div class="grid gap-2 grid-cols-3 sm:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-8">
-                        <div>
+                        <div class="col-span-full md:col-span-2">
                             <InputLabel :size="'sm'" value="Account" />
-                            <MultiSelect :disabled="disableActions" glint drop-shadow :selection-max-viewable-line="5" :size="'md'" :options="associatedAccountOptions" :icon="'tdesign:component-checkbox'"/>
+                            <SingleSelect :disabled="disableActions" glint drop-shadow :selection-max-viewable-line="5" value-persist :size="'md'" :options="accountOptions" :icon="'tdesign:component-checkbox'" @valueChange="selectedAccountChanged"/>
                         </div>
                         <div>
                             <InputLabel :size="'sm'" value="Search" />
@@ -70,11 +70,15 @@
 
 <script setup lang="ts">
 import type {DataTableT} from "@/public/js/types/data";
+import type {SelectDataType} from "@/public/js/types/form";
+import type {EnumSelection} from "~/public/js/common/type";
 
 useHead({titleTemplate: (titleChunk) => {return `${titleChunk} - Companies`}});
 definePageMeta({middleware: ['auth', 'admin-in-any-company']});
 useLayout().setNavigationMode('solid');
+
 const user = userState();
+const {persistAccount, storePersistAccount} = useAccount();
 
 const companies = reactive<DataTableT>({
     'data': [],
@@ -90,11 +94,49 @@ const companies = reactive<DataTableT>({
     'successful': true,
     'message': ''
 });
-const associatedAccountOptions = reactive({
+const accountOptions = reactive<{
+    search: string,
+    selection: EnumSelection,
+    selected: string | number | null
+}>({
     search: '',
     selection: [],
-    selected: []
+    selected: null
 });
+
+const fetchAssociatedAccounts = async() => {
+
+    await laraFetch("/api/associated-account-selections", {
+        method: 'GET',
+        params: {
+            filters: {
+                user_id: user?.value?.id,
+                assignment_types: [COMPANY_ASSIGNMENT_TYPE.ADMIN],
+            }
+        }
+    }, {
+        onSuccessResponse: async (request, options, response) => {
+            accountOptions.selection = _get(response, '_data.values.selection', []);
+
+            if(accountOptions.selection.map((item: SelectDataType) => item.value).indexOf(persistAccount.value as number) >= 0){
+                accountOptions.selected = persistAccount.value as number;
+            } else {
+                accountOptions.selected = accountOptions.selection[0]?.value ?? null;
+                storePersistAccount(accountOptions.selected as number);
+            }
+        }
+    })
+}
+await fetchAssociatedAccounts();
+
+const selectedAccountChanged = async (selectedAccount: SelectDataType) => {
+
+    companiesPending.value = true;
+
+    storePersistAccount(accountOptions.selected as number);
+
+    await companiesExecute();
+}
 
 let filters = reactive<{
     page: number,
@@ -128,6 +170,7 @@ let paramsComputed = computed(() => {
     return {
         page: filters.page,
         perPage: filters.perPage,
+        account_id: accountOptions.selected,
         filters: {
             'user_id': user?.value?.id,
             'search': filters.search.keyword,
@@ -172,23 +215,6 @@ const companiesExecute = async () => {
     }, false);
 }
 await companiesExecute();
-const fetchAssociatedAccounts = async() => {
-
-    await laraFetch("/api/associated-account-selections", {
-        method: 'GET',
-        params: {
-            filters: {
-                user_id: user?.value?.id,
-                assignment_type: [COMPANY_ASSIGNMENT_TYPE.ADMIN],
-            }
-        }
-    }, {
-        onSuccessResponse: async (request, options, response) => {
-            associatedAccountOptions.selection = _get(response, '_data.values.selection', []);
-        }
-    })
-}
-await fetchAssociatedAccounts();
 
 function paginate(page = 1, clearSelection = false){
     clearTimeout(filters.search.callback);
