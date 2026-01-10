@@ -200,7 +200,6 @@ const fetchAccounts = async() => {
 }
 await fetchAccounts();
 
-
 const selectedAccountChanged = async (selectedAccount: SelectDataType) => {
 
     usersPending.value = true;
