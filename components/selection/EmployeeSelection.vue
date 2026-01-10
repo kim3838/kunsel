@@ -128,6 +128,7 @@ const {
     updatedAssociatedCompanyFlag
 } = storeToRefs(nuxtApp.$associationStore);
 const {
+    selectedAssociatedCompanyAccountId,
     selectedAssociatedCompanyId
 } = storeToRefs(nuxtApp.$authStore);
 
@@ -389,6 +390,7 @@ let paramsComputed = computed(() => {
     return {
         page: filters.page,
         perPage: filters.perPage,
+        account_id: selectedAssociatedCompanyAccountId.value,
         company_id: selectedAssociatedCompanyId.value,
         filters: {
             ...props.filters,
