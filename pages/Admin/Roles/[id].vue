@@ -22,7 +22,7 @@
                     <div class="grid gap-2 grid-cols-1 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
                         <div>
                             <InputLabel :size="'sm'" value="Account"/>
-                            <SingleSelect :disabled="!creatingRole" :icon="'mdi:checkbook'" value-persist drop-shadow :size="'md'" :options="accountOptions"/>
+                            <SingleSelect :disabled="!creatingRole" :icon="'mdi:checkbook'" value-persist drop-shadow :size="'md'" :options="accountOptions" @valueChange="selectedAccountChanged"/>
                         </div>
                         
                         <div class="col-span-2">
@@ -110,6 +110,11 @@ const fetchAssociatedAccounts = async() => {
     })
 }
 await fetchAssociatedAccounts();
+
+const selectedAccountChanged = async (selectedAccount: SelectDataType) => {
+
+    storePersistAccount(accountOptions.selected as number);
+}
 
 //Fetch Role Information
 const fetchRole = async () => {
