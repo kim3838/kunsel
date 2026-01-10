@@ -9,7 +9,7 @@ export const useAccount = () => {
         });
     };
 
-    const storeAccount = (value: number) => {
+    const storePersistAccount = (value: number) => {
         const storedAccount = createAccountCookie();
 
         if ((!Number.isNaN(value) && typeof value === 'number') && storedAccount.value !== value) {
@@ -23,7 +23,7 @@ export const useAccount = () => {
     });
 
     return {
-        storeAccount,
+        storePersistAccount,
         persistAccount
     };
 };

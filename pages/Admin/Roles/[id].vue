@@ -62,7 +62,7 @@ useHead({titleTemplate: (titleChunk) => {return `${titleChunk} - Roles`}});
 definePageMeta({middleware: ['auth', 'admin-in-any-company']});
 useLayout().setNavigationMode('solid');
 
-const {persistAccount, storeAccount} = useAccount();
+const {persistAccount, storePersistAccount} = useAccount();
 const route = useRoute();
 const role = ref<Partial<RoleT>>({});
 const rolePermissions = ref<RolePermissionT>({});
@@ -119,7 +119,7 @@ const fetchRole = async () => {
             accountOptions.selected = persistAccount.value as number;
         } else {
             accountOptions.selected = accountOptions.selection[0]?.value ?? null;
-            storeAccount(accountOptions.selected as number);
+            storePersistAccount(accountOptions.selected as number);
         }
 
         return;

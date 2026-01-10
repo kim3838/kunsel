@@ -131,7 +131,7 @@ definePageMeta({middleware: ['auth', 'admin-in-any-company']});
 useLayout().setNavigationMode('solid');
 const user = userState();
 const {$associationStore} = useNuxtApp();
-const {persistAccount, storeAccount} = useAccount();
+const {persistAccount, storePersistAccount} = useAccount();
 
 const usersHeaders = reactive<TableHeaderT[]>([
     { text: '', value: 'actions'},
@@ -193,7 +193,7 @@ const fetchAccounts = async() => {
                 accountOptions.selected = persistAccount.value as number;
             } else {
                 accountOptions.selected = accountOptions.selection[0]?.value ?? null;
-                storeAccount(accountOptions.selected as number);
+                storePersistAccount(accountOptions.selected as number);
             }
         }
     })
@@ -210,7 +210,7 @@ const selectedAccountChanged = async (selectedAccount: SelectDataType) => {
     await fetchAssociatedCompanies();
     associatedCompanyOptionsKey.value++;
 
-    storeAccount(accountOptions.selected as number);
+    storePersistAccount(accountOptions.selected as number);
 
     await usersExecute();
 }

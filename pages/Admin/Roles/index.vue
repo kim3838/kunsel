@@ -82,7 +82,7 @@ useHead({titleTemplate: (titleChunk) => {return `${titleChunk} - Roles`}});
 definePageMeta({middleware: ['auth', 'admin-in-any-company']});
 useLayout().setNavigationMode('solid');
 
-const {persistAccount, storeAccount} = useAccount();
+const {persistAccount, storePersistAccount} = useAccount();
 const rolesHeaders = reactive<TableHeaderT[]>([
     { text: '', value: 'actions'},
     { text: 'Name', value: 'name', alignData: 'left'},
@@ -151,7 +151,7 @@ const fetchAccounts = async() => {
                 accountOptions.selected = persistAccount.value as number;
             } else {
                 accountOptions.selected = accountOptions.selection[0]?.value ?? null;
-                storeAccount(accountOptions.selected as number);
+                storePersistAccount(accountOptions.selected as number);
             }
         }
     })
@@ -162,7 +162,7 @@ const selectedAccountChanged = async (selectedAccount: SelectDataType) => {
 
     rolesPending.value = true;
 
-    storeAccount(accountOptions.selected as number);
+    storePersistAccount(accountOptions.selected as number);
 
     await rolesExecute();
 }
