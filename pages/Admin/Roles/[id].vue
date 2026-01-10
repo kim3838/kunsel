@@ -1,51 +1,61 @@
 <template>
     <div>
         <AdminWrapper>
-            <div class="mx-auto max-w-screen-2xl">
-                <div class="flex px-[20px] pt-[20px] mb-2">
-                    <NuxtLink
-                        :to="`/admin/roles`">
-                        <Button class="w-min" :variant="`outline`" :disabled="disableActions" :size="'sm'" :icon="disableActions ? 'eos-icons:loading' : 'ic:sharp-keyboard-arrow-left'" :label="disableActions ? 'Please wait' : ''"></Button>
-                    </NuxtLink>
-                </div>
+            <div>
+                <div ref="nav-extender" class="z-30 fixed nav-extender-container scaffold-border-bottom">
 
-                <div v-if="!roleSuccessful" class="px-[20px]">
-                    <div class="mb-2 flex flex-row flex-wrap gap-2 items-center min-h-8">
-                        <Label invert :size="'md'" :type="'danger'" :label="roleMessage" />
-                    </div>
-                </div>
-
-                <div v-if="roleSuccessful" class="px-[20px] space-y-2">
-
-                    <div class="text-lg font-header">Role</div>
-
-                    <div class="grid gap-2 grid-cols-1 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
-                        <div>
-                            <InputLabel :size="'sm'" value="Account"/>
-                            <SingleSelect :disabled="!creatingRole" :icon="'mdi:checkbook'" value-persist drop-shadow :size="'md'" :options="accountOptions" @valueChange="selectedAccountChanged"/>
+                    <div class="mx-auto max-w-screen-2xl space-y-2 p-[20px]">
+                        <div class="flex">
+                            <NuxtLink
+                                :to="`/admin/roles`">
+                                <Button class="w-min" :variant="`outline`" :disabled="disableActions" :size="'sm'" :icon="disableActions ? 'eos-icons:loading' : 'ic:sharp-keyboard-arrow-left'" :label="disableActions ? 'Please wait' : ''"></Button>
+                            </NuxtLink>
                         </div>
-                        
-                        <div class="col-span-2">
-                            <InputLabel :size="'sm'" value="Name"/>
-                            <Input :size="'md'" v-model="roleName" type="text"/>
-                        </div>
-                    </div>
 
-                    <div class="text-lg font-header">Permissions</div>
-
-                    <Suspense>
-                        <Permissions :role-permissions="rolePermissions" />
-                        <template #fallback>
-                            <div class="flex items-center min-h-8">
-                                <UnorderedList
-                                    :icon="'eos-icons:loading'"
-                                    :size="'md'"
-                                    :label="'Loading Permissions...'"/>
+                        <div v-if="!roleSuccessful">
+                            <div class="mb-2 flex flex-row flex-wrap gap-2 items-center min-h-8">
+                                <Label invert :size="'md'" :type="'danger'" :label="roleMessage" />
                             </div>
-                        </template>
-                    </Suspense>
+                        </div>
 
-                    <Button class="w-min" ref="submitButton" type="submit" @click="formSubmit" :disabled="disableActions" :size="'md'" :icon="disableActions ? 'eos-icons:loading' : 'mdi:data'" :label="submitLabel"></Button>
+                        <div class="text-lg font-header">Role</div>
+
+                        <div class="grid gap-2 grid-cols-1 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+                            <div>
+                                <InputLabel :size="'sm'" value="Account"/>
+                                <SingleSelect :disabled="!creatingRole" :icon="'mdi:checkbook'" value-persist drop-shadow :size="'md'" :options="accountOptions" @valueChange="selectedAccountChanged"/>
+                            </div>
+
+                            <div class="col-span-2">
+                                <InputLabel :size="'sm'" value="Name"/>
+                                <Input :size="'md'" v-model="roleName" type="text"/>
+                            </div>
+
+                            <div class="flex flex-col">
+                                <div class="flex-none h-[1rem]"></div>
+                                <Button class="w-min" ref="submitButton" type="submit" @click="formSubmit" :disabled="disableActions" :size="'md'" :icon="disableActions ? 'eos-icons:loading' : 'mdi:data'" :label="submitLabel"></Button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mx-auto max-w-screen-2xl">
+                    <div class="px-[20px] space-y-2 nav-extender-allocate">
+
+                        <div class="text-lg font-header">Permissions</div>
+
+                        <Suspense>
+                            <Permissions :role-permissions="rolePermissions" />
+                            <template #fallback>
+                                <div class="flex items-center min-h-8">
+                                    <UnorderedList
+                                        :icon="'eos-icons:loading'"
+                                        :size="'md'"
+                                        :label="'Loading Permissions...'"/>
+                                </div>
+                            </template>
+                        </Suspense>
+                    </div>
                 </div>
             </div>
         </AdminWrapper>
@@ -63,6 +73,13 @@ definePageMeta({middleware: ['auth', 'admin-in-any-company']});
 useLayout().setNavigationMode('solid');
 
 const user = userState();
+const {navigationBackground} = useLayout();
+const navExtender = useTemplateRef('nav-extender');
+const { height: navExtenderReferenceHeight} = useElementSize(navExtender);
+const navExtenderAllocation = ref(0);
+const navExtenderAllocationComputed = computed(() => {
+    return `calc(${(navExtenderAllocation.value + 'px')} + 20px)`;
+});
 const {userIsSuperAdmin} = useAuth();
 const {persistAccount, storePersistAccount} = useAccount();
 const route = useRoute();
@@ -209,8 +226,22 @@ const formSubmit = async() => {
         },
     });
 }
+
+watch(navExtenderReferenceHeight, () => {
+    navExtenderAllocation.value = navExtenderReferenceHeight.value;
+});
+onMounted(async () => {
+    navExtenderAllocation.value = navExtenderReferenceHeight.value;
+});
 </script>
 
-<style scoped>
-
+<style lang="scss" scoped>
+.nav-extender-container{
+    background-color: v-bind(navigationBackground) !important;
+    left: 0;
+    right: var(--scrollbar-width);
+}
+.nav-extender-allocate {
+    padding-top: v-bind(navExtenderAllocationComputed);
+}
 </style>
