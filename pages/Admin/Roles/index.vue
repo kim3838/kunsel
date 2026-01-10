@@ -119,7 +119,7 @@ const fetchAssociatedAccounts = async() => {
     let associatedAccountsApi = userIsSuperAdmin.value ? '/api/account-selections' : '/api/associated-account-selections';
     let associatedAccountsApiFilters = userIsSuperAdmin.value ? {} : {
         user_id: user?.value?.id,
-        assignment_type: [COMPANY_ASSIGNMENT_TYPE.ADMIN],
+        assignment_types: [COMPANY_ASSIGNMENT_TYPE.ADMIN],
     };
 
     await laraFetch(associatedAccountsApi, {

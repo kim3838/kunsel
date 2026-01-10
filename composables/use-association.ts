@@ -103,7 +103,7 @@ export const useAssociation = () => {
             let associatedCompaniesApi = userIsSuperAdmin.value ? '/api/company-selections' : '/api/associated-company-selections';
             let associatedCompaniesApiFilters = userIsSuperAdmin.value ? {} : {
                 user_id: user?.value?.id,
-                assignment_type: [COMPANY_ASSIGNMENT_TYPE.DEFAULT, COMPANY_ASSIGNMENT_TYPE.ADMIN],
+                assignment_types: [COMPANY_ASSIGNMENT_TYPE.DEFAULT, COMPANY_ASSIGNMENT_TYPE.ADMIN],
             };
 
             await laraSsrUseFetch(associatedCompaniesApi, {
@@ -132,7 +132,7 @@ export const useAssociation = () => {
         let associatedCompaniesApi = userIsSuperAdmin.value ? '/api/company-selections' : '/api/associated-company-selections';
         let associatedCompaniesApiFilters = userIsSuperAdmin.value ? {} : {
             user_id: user?.value?.id,
-            assignment_type: [COMPANY_ASSIGNMENT_TYPE.DEFAULT, COMPANY_ASSIGNMENT_TYPE.ADMIN],
+            assignment_types: [COMPANY_ASSIGNMENT_TYPE.DEFAULT, COMPANY_ASSIGNMENT_TYPE.ADMIN],
         };
 
         await laraFetch(associatedCompaniesApi, {

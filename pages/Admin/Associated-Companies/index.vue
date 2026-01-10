@@ -174,8 +174,8 @@ let paramsComputed = computed(() => {
         filters: {
             'user_id': user?.value?.id,
             'search': filters.search.keyword,
-            'assignment_type': [COMPANY_ASSIGNMENT_TYPE.ADMIN],
-            'account_id': associatedAccountOptions.selected
+            'assignment_types': [COMPANY_ASSIGNMENT_TYPE.ADMIN],
+            'account_ids': [accountOptions.selected]
         }
     };
 });

@@ -258,7 +258,7 @@ const fetchAuthUserAssociatedCompanies = async() => {
         params: {
             filters: {
                 user_id: user?.value?.id,
-                assignment_type: [COMPANY_ASSIGNMENT_TYPE.ADMIN],
+                assignment_types: [COMPANY_ASSIGNMENT_TYPE.ADMIN],
             }
         }
     }, {
@@ -279,7 +279,7 @@ const fetchUserAssociatedCompanies = async() => {
         params: {
             filters: {
                 user_id: associatedUser.value.id,
-                assignment_type: [COMPANY_ASSIGNMENT_TYPE.DEFAULT, COMPANY_ASSIGNMENT_TYPE.ADMIN],
+                assignment_types: [COMPANY_ASSIGNMENT_TYPE.DEFAULT, COMPANY_ASSIGNMENT_TYPE.ADMIN],
             }
         }
     }, {

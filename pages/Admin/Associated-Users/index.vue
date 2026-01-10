@@ -191,7 +191,7 @@ const fetchAssociatedAccounts = async() => {
         params: {
             filters: {
                 user_id: user?.value?.id,
-                assignment_type: [COMPANY_ASSIGNMENT_TYPE.ADMIN],
+                assignment_types: [COMPANY_ASSIGNMENT_TYPE.ADMIN],
             }
         }
     }, {
@@ -236,9 +236,9 @@ const fetchAssociatedCompanies = async() => {
         method: 'GET',
         params: {
             filters: {
-                account_id: [accountOptions.selected],
+                account_ids: [accountOptions.selected],
                 user_id: user?.value?.id,
-                assignment_type: [COMPANY_ASSIGNMENT_TYPE.ADMIN],
+                assignment_types: [COMPANY_ASSIGNMENT_TYPE.ADMIN],
             }
         }
     }, {

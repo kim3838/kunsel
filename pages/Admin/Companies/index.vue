@@ -144,7 +144,7 @@ let paramsComputed = computed(() => {
         perPage: filters.perPage,
         filters: {
             'search': filters.search.keyword,
-            'account_id': accountOptions.selected
+            'account_ids': accountOptions.selected
         }
     };
 });

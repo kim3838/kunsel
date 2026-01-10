@@ -225,7 +225,7 @@ const fetchCompanies = async() => {
         method: 'GET',
         params: {
             filters: {
-                account_id: accountOptions.selected,
+                account_ids: accountOptions.selected,
             }
         }
     }, {
