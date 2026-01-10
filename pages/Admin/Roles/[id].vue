@@ -63,6 +63,7 @@ definePageMeta({middleware: ['auth', 'admin-in-any-company']});
 useLayout().setNavigationMode('solid');
 
 const user = userState();
+const {userIsSuperAdmin} = useAuth();
 const {persistAccount, storePersistAccount} = useAccount();
 const route = useRoute();
 const role = ref<Partial<RoleT>>({});
@@ -91,13 +92,16 @@ const accountOptions = reactive<{
 
 const fetchAssociatedAccounts = async() => {
 
-    await laraFetch("/api/associated-account-selections", {
+    let associatedAccountsApi = userIsSuperAdmin.value ? '/api/account-selections' : '/api/associated-account-selections';
+    let associatedAccountsApiFilters = userIsSuperAdmin.value ? {} : {
+        user_id: user?.value?.id,
+        assignment_type: [COMPANY_ASSIGNMENT_TYPE.ADMIN],
+    };
+
+    await laraFetch(associatedAccountsApi, {
         method: 'GET',
         params: {
-            filters: {
-                user_id: user?.value?.id,
-                assignment_type: [COMPANY_ASSIGNMENT_TYPE.ADMIN],
-            }
+            filters: associatedAccountsApiFilters
         }
     }, {
         onSuccessResponse: async (request, options, response) => {
