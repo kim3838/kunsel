@@ -129,6 +129,7 @@ import type {SelectDataType} from "@/public/js/types/form";
 useHead({titleTemplate: (titleChunk) => {return `${titleChunk} - Users`}});
 definePageMeta({middleware: ['auth', 'admin-in-any-company']});
 useLayout().setNavigationMode('solid');
+
 const user = userState();
 const {$associationStore} = useNuxtApp();
 const {persistAccount, storePersistAccount} = useAccount();
@@ -140,6 +141,8 @@ const usersHeaders = reactive<TableHeaderT[]>([
     { text: 'Email', value: 'email', alignData: 'left'},
     { text: 'Email Verification', value: 'email_verified_at', alignData: 'left'},
     { text: 'Timezone', value: 'timezone', alignData: 'left'},
+    { text: 'Account roles', value: 'account_roles', alignData: 'left'},
+    { text: 'Created by', value: 'created_by', alignData: 'left'},
 ]);
 
 const showAssociatedCompanies = ref(true);
@@ -181,10 +184,16 @@ const accountOptions = reactive<{
     selected: null
 });
 
-const fetchAccounts = async() => {
+const fetchAssociatedAccounts = async() => {
 
-    await laraFetch("/api/account-selections", {
+    await laraFetch("/api/associated-account-selections", {
         method: 'GET',
+        params: {
+            filters: {
+                user_id: user?.value?.id,
+                assignment_type: [COMPANY_ASSIGNMENT_TYPE.ADMIN],
+            }
+        }
     }, {
         onSuccessResponse: async (request, options, response) => {
             accountOptions.selection = _get(response, '_data.values.selection', []);
@@ -198,7 +207,7 @@ const fetchAccounts = async() => {
         }
     })
 }
-await fetchAccounts();
+await fetchAssociatedAccounts();
 
 const selectedAccountChanged = async (selectedAccount: SelectDataType) => {
 
@@ -289,6 +298,7 @@ let paramsComputed = computed(() => {
         : associatedCompanyOptions.selected;
 
     let baseFilters = {
+        'account_id': accountOptions.selected,
         ...(_isEmpty(associatedCompanyOptions.selected) ? {'user_id': user?.value?.id} : null),
         'user_search': filters.userSearch.keyword,
         'employee_search': filters.employeeSearch.keyword,

@@ -82,6 +82,7 @@ useHead({titleTemplate: (titleChunk) => {return `${titleChunk} - Roles`}});
 definePageMeta({middleware: ['auth', 'admin-in-any-company']});
 useLayout().setNavigationMode('solid');
 
+const user = userState();
 const {persistAccount, storePersistAccount} = useAccount();
 const rolesHeaders = reactive<TableHeaderT[]>([
     { text: '', value: 'actions'},
@@ -139,10 +140,16 @@ let pageComputed = computed({
     }
 });
 
-const fetchAccounts = async() => {
+const fetchAssociatedAccounts = async() => {
 
-    await laraFetch("/api/account-selections", {
+    await laraFetch("/api/associated-account-selections", {
         method: 'GET',
+        params: {
+            filters: {
+                user_id: user?.value?.id,
+                assignment_type: [COMPANY_ASSIGNMENT_TYPE.ADMIN],
+            }
+        }
     }, {
         onSuccessResponse: async (request, options, response) => {
             accountOptions.selection = _get(response, '_data.values.selection', []);
@@ -156,7 +163,7 @@ const fetchAccounts = async() => {
         }
     })
 }
-await fetchAccounts();
+await fetchAssociatedAccounts();
 
 const selectedAccountChanged = async (selectedAccount: SelectDataType) => {
 
