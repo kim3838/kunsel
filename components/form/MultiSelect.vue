@@ -22,7 +22,7 @@
                     </div>
                 </div>
 
-                <div :class="[active ? 'block pl-2' : 'hidden']" class="flex items-center">
+                <div v-if="toggleable" :class="[active ? 'block pl-2' : 'hidden']" class="flex items-center">
                     <NonModelCheckBox @focusStateChanged="selectionToggleFocusStateChangedHandler" :tabable="false" :size="checkBoxSize" :checked="selectedAllCurrentSelection()" @click="toggleSelection" />
                 </div>
                 <div :class="[active ? 'block' : 'hidden']" class="w-full h-full relative overflow-hidden items-center">
@@ -177,6 +177,10 @@ const props = defineProps({
         default: true
     },
     searchable: {
+        type: Boolean,
+        default: true
+    },
+    toggleable: {
         type: Boolean,
         default: true
     },
