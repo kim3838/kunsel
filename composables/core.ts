@@ -27,3 +27,5 @@ export const deviceState = () => {
 }
 
 export const isDesktop = () => deviceState() === 'Desktop';
+
+export const isFirefox = () => navigator.userAgent.toLowerCase().includes('firefox');

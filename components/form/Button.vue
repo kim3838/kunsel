@@ -2,6 +2,7 @@
     <div class="relative box-border">
         <Glint :height-style="glintHeightStyle" :enable="glint" :orientation="'landscape'" :color="activeBorderComputed">
             <button
+                @pointerdown="pointerDownEvent()"
                 ref="button"
                 :disabled="disabled"
                 :style="{'border-radius': '2px', 'direction': 'ltr', 'border': borderStyle}"
@@ -82,6 +83,10 @@ const props = defineProps({
         type: String,
         default: 'submit',
     },
+    sound: {
+        type: String,
+        default: '/sounds/y7o5j10dp3m-mouse-click-sfx-0.mp3'
+    },
     variant: {
         type: String,
         default: 'default',
@@ -130,6 +135,12 @@ const props = defineProps({
 });
 
 const emit = defineEmits(['focusStateChanged']);
+
+const { play: clickSound } = useSound(props.sound)
+
+const pointerDownEvent = () => {
+    clickSound();
+}
 
 const heightClass = computed(() => {
     return {
