@@ -247,14 +247,7 @@ const reValidateIcon = computed(() => {
 const reValidateLabel = computed(() => {
     return "Re-validate selected";
 });
-const showReValidate = computed(() => {
-
-    let hasImportData = preImportData.value.length > 0;
-
-    let hasAtLeastOneValidationErrors = preImportDataThatHasValidationError.value.length > 0;
-
-    return hasImportData && hasAtLeastOneValidationErrors;
-});
+const showReValidate = computed(() => preImportData.value.length > 0);
 
 const saveIcon = computed(() => {
     return disableActions.value ? 'eos-icons:loading' : 'ic:sharp-save';
