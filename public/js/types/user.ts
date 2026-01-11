@@ -15,6 +15,7 @@ export type UserFormT = {
     email?: string,
     password?: string,
     password_confirmation?: string,
+    role_ids: number[]
 }
 
 export type UserCompanyAssignmentT = {

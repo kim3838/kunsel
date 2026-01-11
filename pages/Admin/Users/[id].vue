@@ -62,6 +62,10 @@
                             <InputLabel :size="'sm'" :value="emailLabelComputed.label" :class="emailLabelComputed.class"/>
                             <Input :disabled="!creatingAssociatedUser || disableActions" :size="'md'" v-model="email" type="email"/>
                         </div>
+                        <div>
+                            <InputLabel :size="'sm'" value="Role"/>
+                            <MultiSelect :disabled="disableActions" :selection-max-viewable-line="10" :max-viewable-summary-count="1" drop-shadow :size="'md'" :options="roleOptions"/>
+                        </div>
                     </div>
 
                     <div class="grid gap-2 grid-cols-2 lg:grid-cols-5 xl:grid-cols-6">
@@ -135,6 +139,7 @@
 
 import type {TableHeaderT, TableSupHeaderT} from "@/public/js/types/data";
 import type {UserCompanyAssignmentSyncT, UserCompanyAssignmentT, UserFormT, UserT} from "@/public/js/types/user";
+import type {EnumSelection} from "@/public/js/common/type";
 
 useHead({titleTemplate: (titleChunk) => {return `${titleChunk} - Users`}});
 definePageMeta({middleware: ['auth', 'super-admin']});
@@ -179,6 +184,27 @@ const timezoneOptions = reactive({
     selection: timezoneSelections.value,
     selected: null
 });
+
+const roleOptions = reactive<{
+    search: string,
+    selection: EnumSelection,
+    selected: number[]
+}>({
+    search: '',
+    selection: [],
+    selected: []
+});
+const fetchAssociatedRoles = async() => {
+
+    await laraFetch('/api/role-selections', {
+        method: 'GET',
+    }, {
+        onSuccessResponse: async (request, options, response) => {
+            roleOptions.selection = _get(response, '_data.values.selection', []);
+        }
+    })
+}
+await fetchAssociatedRoles();
 
 const companyAssignmentTypeOptions = reactive({
     search: '',
@@ -228,6 +254,7 @@ const fetchUser = async () => {
             emailVerifiedAt.value = _get(response, '_data.values.user.email_verified_at', '');
             userStatusOptions.selected = _get(response, '_data.values.user.status.value', userStatusOptions.selected);
             timezoneOptions.selected = _get(response, '_data.values.user.timezone', null);
+            roleOptions.selected = _get(response, '_data.values.user.roles', []);
         },
     }, false);
 };
@@ -303,6 +330,7 @@ const userFormBody = computed(() => {
     let formBody: UserFormT = {
         status: userStatusOptions.selected as number,
         timezone: timezoneOptions.selected,
+        role_ids: roleOptions.selected
     };
 
     if(creatingAssociatedUser.value){
