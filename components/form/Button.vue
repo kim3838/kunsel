@@ -85,7 +85,7 @@ const props = defineProps({
     },
     sound: {
         type: String,
-        default: '/sounds/y7o5j10dp3m-mouse-click-sfx-0.mp3'
+        default: '/sounds/mouse-click-sfx-0.mp3'
     },
     variant: {
         type: String,
@@ -139,7 +139,10 @@ const emit = defineEmits(['focusStateChanged']);
 const { play: clickSound } = useSound(props.sound)
 
 const pointerDownEvent = () => {
-    clickSound();
+
+    if(!props.disabled){
+        clickSound();
+    }
 }
 
 const heightClass = computed(() => {

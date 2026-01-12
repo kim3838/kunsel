@@ -1,7 +1,7 @@
 
 export function useSound(src: string) {
 
-    const BASE_VOLUME = 0.15
+    const BASE_VOLUME = 0.2
     const FIREFOX_MULTIPLIER = 0.50
 
     let ctx: AudioContext
@@ -13,9 +13,7 @@ export function useSound(src: string) {
         ctx = new AudioContext()
 
         gain = ctx.createGain()
-        gain.gain.value = isFirefox()
-            ? BASE_VOLUME * FIREFOX_MULTIPLIER
-            : BASE_VOLUME
+        gain.gain.value = BASE_VOLUME
         gain.connect(ctx.destination)
 
         const res = await fetch(src)
