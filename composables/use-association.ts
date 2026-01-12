@@ -64,6 +64,7 @@ export const useAssociation = () => {
             `${hrPayrollRouteSlug}-workforce-attendance`,
             `${hrPayrollRouteSlug}-workforce-overtime`,
             `${hrPayrollRouteSlug}-workforce-leave`,
+            `${hrPayrollRouteSlug}-workforce-leave-balance-adjustment`,
             `${hrPayrollRouteSlug}-policies-shifts`,
             `${hrPayrollRouteSlug}-policies-shift-assignment`,
             `${hrPayrollRouteSlug}-policies-leave-types`,
@@ -87,7 +88,10 @@ export const useAssociation = () => {
         const employeePortalRouteSlug = stringEnumerableValue(SUBSCRIPTION_MODULE_ROUTE_NAME, SUBSCRIPTION_MODULE.EMPLOYEE_PORTAL as number);
 
         return _includes([
-            `${employeePortalRouteSlug}-attendance`
+            `${employeePortalRouteSlug}-attendance`,
+            `${employeePortalRouteSlug}-overtime`,
+            `${employeePortalRouteSlug}-leave`,
+            `${employeePortalRouteSlug}-leave-balance-adjustment`,
         ], _toLower(String(route.name)));
     });
     const employeeSelfServicesSubscriptions = computed(() => {

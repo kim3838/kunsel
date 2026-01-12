@@ -3,6 +3,9 @@
         <DefaultWrapper>
             <div class="mx-auto max-w-screen-2xl">
                 <form @submit.prevent="paginate(1, true)" class="space-y-2 p-[20px]">
+
+                    <BreadCrumbs prefix-company :size="`sm`" />
+
                     <div class="grid gap-2 grid-cols-3 sm:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-8">
                         <div>
                             <InputLabel :size="'sm'" value="Date From"/>
@@ -31,10 +34,11 @@
                     </div>
                 </form>
 
-                <div class="px-[20px]">
+                <div class="px-[20px] space-y-2">
 
-                    <div v-if="!attendances.successful" class="flex flex-row flex-wrap gap-2 items-center min-h-8">
-                        <Label invert :size="'md'" :type="'danger'" :label="attendances.message" />
+                    <div class="flex flex-row flex-wrap gap-2 items-center min-h-8">
+                        <UnorderedList v-if="disableActions" :icon="'eos-icons:loading'" :size="'md'" :label="'Please wait...'"/>
+                        <Label v-if="!attendances.successful" invert :size="'md'" :type="'danger'" :label="attendances.message" />
                     </div>
 
                     <DataTable
@@ -60,7 +64,7 @@
                                     :drop-align="'top'"
                                     :drop-justify="'right'"
                                     :drop-options="[
-                                        {type: 'link', icon: 'ix:open-external', title: 'Details',to: `/${SUBSCRIPTION_MODULE.EMPLOYEE_PORTAL}/attendance/${cell.ulid}`},
+                                        {type: 'link', icon: 'ix:open-external', title: 'Details',to: `/employee-portal/attendance/${cell.ulid}`},
                                         {type: 'action', icon: 'mdi:edit', title: 'Adjust Attendance',callback: () => {adjust(cell);}},
                                     ]">
                                 </NavDrop>
@@ -210,7 +214,6 @@ let paramsComputed = computed(() => {
     return {
         page: filters.page,
         perPage: filters.perPage,
-        company_id: selectedAssociatedCompanyId.value,
         filters: {
             company_id: selectedAssociatedCompanyId.value,
             employee_ulids: [userCompanyEmployee.value?.ulid],
@@ -237,7 +240,7 @@ const attendancesExecute = async() =>{
 
     attendancesPending.value = true;
 
-    await laraFetch(`/api/attendances`, {
+    await laraFetch(`/api/employee-attendances`, {
         method: 'GET',
         params: paramsComputed.value
     }, {
@@ -337,6 +340,7 @@ const adjustPayload = ref({});
 const adjust = (cell: TableRowT) => {
     //adjustPayload.value = cell;
     //attendanceAdjusting.value = true;
+    //File attendance adjustment request
 }
 </script>
 

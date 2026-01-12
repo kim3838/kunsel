@@ -55,7 +55,7 @@
                             <div class="pt-2 mx-auto max-w-screen-xl flex flex-row gap-4">
 
                                 <fieldset class="neutral-border px-2 pb-2 space-y-2">
-                                    <legend class="text-lg font-header">{{creatingLeaveBalanceAdjustment ? 'Create adjustment' : 'Adjustment'}}</legend>
+                                    <legend class="text-lg font-header">{{creatingLeaveBalanceAdjustment ? 'Create adjustment' : 'Edit Adjustment'}}</legend>
 
                                     <div class="grid gap-2 grid-cols-4">
                                         <div class="col-span-2">
@@ -114,6 +114,13 @@
                                                 v-model="balance"
                                                 high-light-all-text-on-focus type-strict
                                                 :type="'number'"/>
+                                        </div>
+                                        <div>
+                                            <InputLabel :size="'sm'" value="Remarks"/>
+                                            <Input
+                                                :disabled="modalDisableActions"
+                                                :size="'md'"
+                                                v-model="remarks"/>
                                         </div>
                                     </div>
                                 </fieldset>
@@ -305,7 +312,7 @@ const leaveBalanceAdjustmentsSupHeaders = reactive<TableSupHeaderT[]>([
     {text: ''},
     {text: 'Employee', colspan: 2,  alignHeader: 'left'},
     {text: 'Leave Type', colspan: 2,  alignHeader: 'left'},
-    {text: 'Leave Balance Adjustment', colspan: 3,  alignHeader: 'left'},
+    {text: 'Leave Balance Adjustment', colspan: 4,  alignHeader: 'left'},
 ]);
 
 const leaveBalanceAdjustmentsHeaders = reactive<TableHeaderT[]>([
@@ -320,6 +327,7 @@ const leaveBalanceAdjustmentsHeaders = reactive<TableHeaderT[]>([
     { text: 'Type', value: 'type'},
     { text: 'Effective Date', value: 'effective_date'},
     { text: 'Balance', value: 'balance', alignData: 'right'},
+    { text: 'Remarks', value: 'remarks', alignData: 'left'},
 ]);
 
 const leaveBalanceAdjustments = reactive<DataTableT>({
@@ -602,6 +610,7 @@ const put = async (row: TableRowT | null = null) => {
         effectiveDate.value = _get(editPayload.value, 'effective_date', '');
         adjustmentTypeOptions.selected = _get(editPayload.value, 'type.value', null);
         balance.value = _get(editPayload.value, 'balance', 0);
+        remarks.value = _get(editPayload.value, 'remarks', '');
 
         settingUpEditable.value = false;
     } else {
@@ -609,6 +618,7 @@ const put = async (row: TableRowT | null = null) => {
         effectiveDate.value = nuxtApp.$moment().format("YYYY-MM-DD");
         adjustmentTypeOptions.selected = LEAVE_BALANCE_ADJUSTMENT_TYPE.ADD as number
         balance.value = 0;
+        remarks.value = '';
     }
 
     renderDatePickers();
@@ -645,6 +655,7 @@ const adjustmentTypeOptions = reactive<{
     selected: LEAVE_BALANCE_ADJUSTMENT_TYPE.ADD as number
 });
 const balance = ref(0);
+const remarks = ref('');
 
 const resetEditable = () => {
     stagedLeaveBalanceAdjustment.value = {
@@ -660,6 +671,7 @@ const resetEditable = () => {
     effectiveDate.value = '';
     adjustmentTypeOptions.selected = LEAVE_BALANCE_ADJUSTMENT_TYPE.ADD as number
     balance.value = 0;
+    remarks.value = '';
 }
 
 const employeeSingleSelectPaginatedReference = useTemplateRef<SingleSelectPaginatedInstance>('employeeSingleSelectPaginated');
@@ -770,6 +782,7 @@ const modalForm = computed(()=>{
         type: adjustmentTypeOptions.selected,
         effective_date: effectiveDate.value,
         balance: balance.value,
+        remarks: remarks.value,
     }
 })
 const modalSubmit = async() => {

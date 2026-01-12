@@ -5,7 +5,7 @@
 
                 <div class="flex px-[20px] pt-[20px] mb-2">
                     <NuxtLink
-                        :to="`/${SUBSCRIPTION_MODULE.EMPLOYEE_PORTAL}/attendance`">
+                        :to="`/employee-portal/attendance`">
                         <Button class="w-min" :variant="`outline`" :disabled="disableActions" :size="'sm'" :icon="disableActions ? 'eos-icons:loading' : 'ic:sharp-keyboard-arrow-left'" :label="disableActions ? 'Please wait' : ''"></Button>
                     </NuxtLink>
                 </div>
@@ -201,7 +201,7 @@ definePageMeta({
 
             if(import.meta.server){return true;}
 
-            const {data, error} = await laraUseFetch(`/api/attendance-check/${to.params.id}`, {method: 'GET',}, {}, false);
+            const {data, error} = await laraUseFetch(`/api/employee-attendances-gate/${to.params.id}`, {method: 'GET',}, {}, false);
 
             if(_isEmpty(data.value) && !_isEmpty(error.value)){
                 let responseCode = _get(error.value, 'data.code', null);
@@ -331,7 +331,7 @@ const fetchAttendance = async () => {
 
     if(import.meta.server){return;}
 
-    await laraFetch(`/api/attendance/${route.params.id}`, {
+    await laraFetch(`/api/employee-attendance/${route.params.id}`, {
         method: 'GET',
     }, {
         onSuccessResponse: async (request, options, response) => {

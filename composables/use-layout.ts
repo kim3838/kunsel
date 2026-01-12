@@ -248,12 +248,30 @@ export const useLayout = () => {
 
         let moduleNavigationLinkMap = {
             [SUBSCRIPTION_MODULE.EMPLOYEE_PORTAL as number]: [
-                ...((isAuthenticated.value && (userIsSuperAdmin.value || userIsEmployeeOfSelectedCompany.value)) ? [{
+                ...((isAuthenticated.value && userIsEmployeeOfSelectedCompany.value) ? [{
                     key: `${employeePortalRouteSlug}-attendance`,
                     type: 'link',
                     title: 'Attendance',
                     to: `/${employeePortalRouteSlug}/attendance`,
                     route_active: `${employeePortalRouteSlug}-attendance`
+                },{
+                    key: `${employeePortalRouteSlug}-overtime`,
+                    type: 'link',
+                    title: 'Overtime',
+                    to: `/${employeePortalRouteSlug}/overtime`,
+                    route_active: `${employeePortalRouteSlug}-overtime`
+                },{
+                    key: `${employeePortalRouteSlug}-leave`,
+                    type: 'link',
+                    title: 'Leave',
+                    to: `/${employeePortalRouteSlug}/leave`,
+                    route_active: `${employeePortalRouteSlug}-leave`
+                },{
+                    key: `${employeePortalRouteSlug}-leave-balance-adjustment`,
+                    type: 'link',
+                    title: 'Leave balance adjustments',
+                    to: `/${employeePortalRouteSlug}/leave-balance-adjustment`,
+                    route_active: `${employeePortalRouteSlug}-leave-balance-adjustment`
                 }] : []) as NavigationLinkInterface[],
             ],
             [SUBSCRIPTION_MODULE.HR_PAYROLL as number]: [
