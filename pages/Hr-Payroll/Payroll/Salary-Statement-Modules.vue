@@ -7,19 +7,14 @@
 
                     <BreadCrumbs prefix-company :size="`sm`" />
 
-                    <DataTable
-                        :headers="salaryStatementModulesHeaders"
-                        :size="'lg'"
-                        :rows="salaryStatementModulesData"
-                        :disabled="disableActions"
-                        v-model="selectedSalaryStatementModules"
-                        manual-sortable
-                        @manualSorted="manualSorted"
-                        selection>
-                        <template v-slot:cell.formulable_type="{cell,slot}">
-                            <div class="p-[3px]">{{cell.formulable_type.text}}</div>
-                        </template>
-                    </DataTable>
+                    <ol v-if="salaryStatementModulesData.length" class="list-inside list-decimal">
+                        <li v-for="(item, index) in salaryStatementModulesData" :key="index">
+                            <span>{{item.name}}</span>
+                        </li>
+                    </ol>
+                    <div v-else class="flex flex-row flex-wrap gap-2 items-center min-h-8">
+                        <Label invert :size="'md'" :type="'danger'" :label="`Not found`" />
+                    </div>
                 </div>
             </div>
         </DefaultWrapper>
@@ -28,12 +23,12 @@
 
 <script setup lang="ts">
 import type {Sequenceable, TableHeaderT} from "@/public/js/types/data";
-import type {SalaryStatementModuleT} from "@/public/js/types/company-component";
+import type {BasicSalaryStatementModuleT} from "@/public/js/types/company-component";
 import {storeToRefs} from "pinia";
 
 useHead({titleTemplate: (titleChunk) => {return `${titleChunk} - Salary Statement Modules`}});
 definePageMeta({middleware: ['auth', 'admin-of-selected-company']});
-useLayout().setNavigationMode('solid', 'SalaryStatementModules.vue');
+useLayout().setNavigationMode('solid');
 const route = useRoute();
 
 const {isAuthenticated} = useAuth();
@@ -53,12 +48,12 @@ watch(updatedAssociatedCompanyFlag, (newValue) => {
 });
 
 const salaryStatementModulesHeaders = reactive<TableHeaderT[]>([
-    { text: 'Formulable Type', value: 'formulable_type', alignData: 'left'},
-    { text: 'Order', value: 'order'},
+    { text: 'Formulable', value: 'formulable_type_name', alignData: 'left'},
+    { text: 'Sequence', value: 'order'},
     { text: 'Name', value: 'name'},
 ]);
 
-const salaryStatementModulesData = ref<SalaryStatementModuleT[]>([]);
+const salaryStatementModulesData = ref<BasicSalaryStatementModuleT[]>([]);
 const salaryStatementModulesPending = ref(false)
 const selectedSalaryStatementModules = ref([]);
 

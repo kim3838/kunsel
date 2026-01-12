@@ -160,7 +160,7 @@ import type {LabelTypeT} from "@/public/js/types/theme";
 
 useHead({titleTemplate: (titleChunk) => {return `${titleChunk} - Formula Settings`}});
 definePageMeta({middleware: ['auth', 'admin-of-selected-company']});
-useLayout().setNavigationMode('solid', 'FormulaSettings.vue');
+useLayout().setNavigationMode('solid');
 
 const StandardOvertimeSettings = resolveComponent('StandardOvertimeSettings');
 const StandardSalarySettings = resolveComponent('StandardSalarySettings');

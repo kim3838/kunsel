@@ -376,6 +376,20 @@ export const useLayout = () => {
                     path_active: `/${hrPayrollRouteSlug}/payroll`,
                     options: [
                         {
+                            key: `${hrPayrollRouteSlug}/payroll/formulas`,
+                            type: 'link',
+                            title: 'Formulas',
+                            to: `/${hrPayrollRouteSlug}/payroll/formulas`,
+                            route_active: `${hrPayrollRouteSlug}-payroll-formulas`
+                        },
+                        {
+                            key: `${hrPayrollRouteSlug}/payroll/salary-statement-modules`,
+                            type: 'link',
+                            title: 'Salary Statement Modules',
+                            to: `/${hrPayrollRouteSlug}/payroll/salary-statement-modules`,
+                            route_active: `${hrPayrollRouteSlug}-payroll-salary-statement-modules`
+                        },
+                        {
                             key: `${hrPayrollRouteSlug}/payroll/components`,
                             type: 'link',
                             title: 'Components',
@@ -395,27 +409,6 @@ export const useLayout = () => {
                             title: 'Frequency',
                             to: `/${hrPayrollRouteSlug}/payroll/frequencies`,
                             route_active: `${hrPayrollRouteSlug}-payroll-frequencies`
-                        },
-                    ]
-                }, {
-                    key: `${hrPayrollRouteSlug}-settings`,
-                    type: 'sub-nav',
-                    title: 'Settings',
-                    path_active: `/${hrPayrollRouteSlug}/settings`,
-                    options: [
-                        {
-                            key: `${hrPayrollRouteSlug}/settings/salary-statement-modules`,
-                            type: 'link',
-                            title: 'Salary Statement Modules',
-                            to: `/${hrPayrollRouteSlug}/settings/salary-statement-modules`,
-                            route_active: `${hrPayrollRouteSlug}-settings-salary-statement-modules`
-                        },
-                        {
-                            key: `${hrPayrollRouteSlug}/settings/formula-settings`,
-                            type: 'link',
-                            title: 'Formula Settings',
-                            to: `/${hrPayrollRouteSlug}/settings/formula-settings`,
-                            route_active: `${hrPayrollRouteSlug}-settings-formula-settings`
                         },
                     ]
                 }, {
