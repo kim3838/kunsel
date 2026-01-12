@@ -90,8 +90,8 @@ export const useAssociation = () => {
         return _includes([
             `${employeePortalRouteSlug}-attendance`,
             `${employeePortalRouteSlug}-overtime`,
-            `${employeePortalRouteSlug}-leave`,
-            `${employeePortalRouteSlug}-leave-balance-adjustment`,
+            `${employeePortalRouteSlug}-leave-leaves`,
+            `${employeePortalRouteSlug}-leave-balance-adjustments`,
         ], _toLower(String(route.name)));
     });
     const employeeSelfServicesSubscriptions = computed(() => {

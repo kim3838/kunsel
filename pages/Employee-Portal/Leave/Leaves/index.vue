@@ -18,8 +18,8 @@
                     </div>
 
                     <div>
-                        <PageInformation :pagination="leaveBalanceAdjustments.meta.pagination" :pending="disableDataTable"/>
-                        <Pagination :size="'lg'" :pagination="leaveBalanceAdjustments.meta.pagination" :pending="disableDataTable" v-model="pageComputed"/>
+                        <PageInformation :pagination="leaves.meta.pagination" :pending="disableDataTable"/>
+                        <Pagination :size="'lg'" :pagination="leaves.meta.pagination" :pending="disableDataTable" v-model="pageComputed"/>
                     </div>
                 </form>
 
@@ -27,17 +27,17 @@
 
                     <div class="flex flex-row flex-wrap gap-2 items-center min-h-8">
                         <UnorderedList v-if="disableActions" :icon="'eos-icons:loading'" :size="'md'" :label="'Please wait...'"/>
-                        <Label v-if="!leaveBalanceAdjustments.successful" invert :size="'md'" :type="'danger'" :label="leaveBalanceAdjustments.message" />
+                        <Label v-if="!leaves.successful" invert :size="'md'" :type="'danger'" :label="leaves.message" />
                     </div>
 
                     <DataTable
-                        v-if="leaveBalanceAdjustments.successful"
-                        :sup-headers="leaveBalanceAdjustmentsSupHeaders"
-                        :headers="leaveBalanceAdjustmentsHeaders"
+                        v-if="leaves.successful"
+                        :sup-headers="leavesSupHeaders"
+                        :headers="leavesHeaders"
                         :size="'lg'"
-                        :rows="leaveBalanceAdjustments.data"
+                        :rows="leaves.data"
                         :disabled="disableDataTable"
-                        v-model="selectedLeaveBalanceAdjustments"
+                        v-model="selectedLeaves"
                         selection>
                         <template v-slot:cell.employee_number="{cell,slot}">
                             <div class="p-[3px]">{{cell.employee.number}}</div>
@@ -52,7 +52,10 @@
                             <div class="p-[3px]">{{cell.leave_type?.name}}</div>
                         </template>
                         <template v-slot:cell.type="{cell,slot}">
-                            <div class="p-[3px]">{{cell.type?.text}}</div>
+                            <div class="p-[3px]">{{cell.leave_type?.type?.text}}</div>
+                        </template>
+                        <template v-slot:cell.is_paid="{cell,slot}">
+                            <div class="p-[3px]">{{cell.leave_type?.is_paid ? 'Yes' : 'No'}}</div>
                         </template>
                     </DataTable>
                 </div>
@@ -62,11 +65,11 @@
 </template>
 
 <script setup lang="ts">
-import type {DataTableT, TableHeaderT, TableRowT, TableSupHeaderT} from "@/public/js/types/data";
-import type {EnumOption, EnumSelection, StringEnumInterface} from "@/public/js/common/type";
+import type {DataTableT, TableHeaderT, TableRowT, TableSupHeaderT} from "~/public/js/types/data";
+import type {EnumOption, EnumSelection} from "~/public/js/common/type";
 import {storeToRefs} from "pinia";
 
-useHead({titleTemplate: (titleChunk) => {return `${titleChunk} - Leave Balance Adjustments`}});
+useHead({titleTemplate: (titleChunk) => {return `${titleChunk} - Leave`}});
 definePageMeta({middleware: ['auth', 'employee-of-selected-company']});
 useLayout().setNavigationMode('solid');
 
@@ -87,28 +90,27 @@ watch(updatedAssociatedCompanyFlag, (newValue) => {
     }
 });
 
-const leaveBalanceAdjustmentsSupHeaders = reactive<TableSupHeaderT[]>([
+const leavesSupHeaders = reactive<TableSupHeaderT[]>([
     {text: ''},
     {text: 'Employee', colspan: 2,  alignHeader: 'left'},
-    {text: 'Leave Type', colspan: 2,  alignHeader: 'left'},
-    {text: 'Leave Balance Adjustment', colspan: 4,  alignHeader: 'left'},
+    {text: 'Leave Type', colspan: 4,  alignHeader: 'left'},
+    {text: 'Leave Date', colspan: 1,  alignHeader: 'left'},
 ]);
 
-const leaveBalanceAdjustmentsHeaders = reactive<TableHeaderT[]>([
+const leavesHeaders = reactive<TableHeaderT[]>([
     { text: '#', value: 'row_number'},
     { text: 'Employee #', value: 'employee_number', alignData: 'left'},
     { text: 'Name', value: 'employee_full_name', alignData: 'left'},
-
+    
     { text: 'Code', value: 'code'},
     { text: 'Name', value: 'name'},
-    
     { text: 'Type', value: 'type'},
-    { text: 'Effective Date', value: 'effective_date'},
-    { text: 'Balance', value: 'balance', alignData: 'right'},
-    { text: 'Remarks', value: 'remarks', alignData: 'left'},
+    { text: 'Is Paid', value: 'is_paid'},
+    
+    { text: '', value: 'date'},
 ]);
 
-const leaveBalanceAdjustments = reactive<DataTableT>({
+const leaves = reactive<DataTableT>({
     'data': [],
     'meta': {
         pagination: {
@@ -128,14 +130,14 @@ let filters = reactive<{
     search: {
         keyword: string,
         callback: ReturnType<typeof setTimeout> | number
-    }
+    },
 }>({
     page: 1,
     perPage: 25,
     search: {
         keyword: '',
         callback: 1
-    }
+    },
 });
 
 const viewMode = reactive<{
@@ -171,39 +173,38 @@ let paramsComputed = computed(() => {
         }
     };
 });
-
-const leaveBalanceAdjustmentsPending = ref(false)
-const selectedLeaveBalanceAdjustments = ref([]);
+const leavesPending = ref(false)
+const selectedLeaves = ref([]);
 
 const disableActions = computed(() => {
-    return leaveBalanceAdjustmentsPending.value || companyAssociationPendingState().value;
+    return leavesPending.value || companyAssociationPendingState().value;
 });
 const disableDataTable = computed(() => {
-    return leaveBalanceAdjustmentsPending.value || companyAssociationPendingState().value;
+    return leavesPending.value || companyAssociationPendingState().value;
 });
-const leaveBalanceAdjustmentsExecute = async() =>{
+const leavesExecute = async() =>{
 
     if(import.meta.server || !selectedAssociatedCompanyId.value){
         return;
     }
 
-    leaveBalanceAdjustmentsPending.value = true;
+    leavesPending.value = true;
 
-    await laraFetch(`/api/employee-leave-balance-adjustments`, {
+    await laraFetch(`/api/employee-leaves`, {
         method: 'GET',
         params: paramsComputed.value
     }, {
         onRequestError: () => {
-            leaveBalanceAdjustmentsPending.value = false;
+            leavesPending.value = false;
         },
         onResponse: (request, options, response) => {
-            leaveBalanceAdjustmentsPending.value = false;
-            leaveBalanceAdjustments.successful = _get(response, '_data.successful', false);
-            leaveBalanceAdjustments.message = _get(response, '_data.message', '');
+            leavesPending.value = false;
+            leaves.successful = _get(response, '_data.successful', false);
+            leaves.message = _get(response, '_data.message', '');
         },
         onSuccessResponse: async (request, options, response) => {
-            leaveBalanceAdjustments.data = _get(response, '_data.values.data', [])
-            leaveBalanceAdjustments.meta = _get(response, '_data.values.meta', {
+            leaves.data = _get(response, '_data.values.data', [])
+            leaves.meta = _get(response, '_data.values.meta', {
                 pagination: {
                     total: 0,
                     count: 0,
@@ -215,17 +216,17 @@ const leaveBalanceAdjustmentsExecute = async() =>{
         }
     }, false);
 }
-await leaveBalanceAdjustmentsExecute();
+await leavesExecute();
 
 function paginate(page = 1, clearSelection = false){
     clearTimeout(filters.search.callback);
 
     if(clearSelection){
-        selectedLeaveBalanceAdjustments.value = [];
+        selectedLeaves.value = [];
     }
 
     if(filters.page === page){
-        leaveBalanceAdjustmentsExecute();
+        leavesExecute();
     } else {
         filters.page = page;
     }
@@ -233,7 +234,6 @@ function paginate(page = 1, clearSelection = false){
 
 watch(() => {return filters.page;}, () => {paginate(filters.page);});
 watch(() => {return filters.perPage;}, () => {paginate(1);});
-
 </script>
 
 <style scoped>

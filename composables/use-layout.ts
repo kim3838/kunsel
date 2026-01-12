@@ -262,16 +262,25 @@ export const useLayout = () => {
                     route_active: `${employeePortalRouteSlug}-overtime`
                 },{
                     key: `${employeePortalRouteSlug}-leave`,
-                    type: 'link',
+                    type: 'sub-nav',
                     title: 'Leave',
-                    to: `/${employeePortalRouteSlug}/leave`,
-                    route_active: `${employeePortalRouteSlug}-leave`
-                },{
-                    key: `${employeePortalRouteSlug}-leave-balance-adjustment`,
-                    type: 'link',
-                    title: 'Leave balance adjustments',
-                    to: `/${employeePortalRouteSlug}/leave-balance-adjustment`,
-                    route_active: `${employeePortalRouteSlug}-leave-balance-adjustment`
+                    path_active: `/${employeePortalRouteSlug}/leave`,
+                    options: [
+                        {
+                            key: `${employeePortalRouteSlug}-leave-leaves`,
+                            type: 'link',
+                            title: 'Leaves',
+                            to: `/${employeePortalRouteSlug}/leave/leaves`,
+                            route_active: `${employeePortalRouteSlug}-leave-leaves`
+                        },
+                        {
+                            key: `${employeePortalRouteSlug}-leave-balance-adjustments`,
+                            type: 'link',
+                            title: 'Balance adjustments',
+                            to: `/${employeePortalRouteSlug}/leave/balance-adjustments`,
+                            route_active: `${employeePortalRouteSlug}-leave-balance-adjustments`
+                        }
+                    ]
                 }] : []) as NavigationLinkInterface[],
             ],
             [SUBSCRIPTION_MODULE.HR_PAYROLL as number]: [
