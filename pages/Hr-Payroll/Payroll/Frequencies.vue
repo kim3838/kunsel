@@ -206,6 +206,7 @@ const {
     updatedAssociatedCompanyFlag
 } = storeToRefs(nuxtApp.$associationStore);
 const {
+    selectedAssociatedCompanyAccountId,
     selectedAssociatedCompanyId
 } = storeToRefs(nuxtApp.$authStore);
 
@@ -316,6 +317,7 @@ const payFrequenciesExecute = async () => {
     await laraFetch("/api/pay-frequencies", {
         method: 'GET',
         params: {
+            account_id: selectedAssociatedCompanyAccountId.value,
             company_id: selectedAssociatedCompanyId.value,
             filters: {
                 'company_id': selectedAssociatedCompanyId.value,
@@ -353,7 +355,10 @@ const weeklyPayFrequencyFormSubmit = async () => {
 
     await laraFetch(`/api/pay-frequency/${weeklyPayFrequenciesData.value.id}`, {
         method: 'PATCH',
-        body: weeklyPayFrequenciesData.value,
+        body: {
+            account_id: selectedAssociatedCompanyAccountId.value,
+            ...weeklyPayFrequenciesData.value
+        },
     }, {
         onRequestError: () => {
             weeklyPayFrequencyFormPending.value = false;
@@ -383,7 +388,10 @@ const monthlySemimonthlyPayFrequencyFormSubmit = async () => {
 
     await laraFetch(`/api/pay-frequency/${monthlyPayFrequenciesData.value.id}`, {
         method: 'PATCH',
-        body: monthlyPayFrequenciesData.value,
+        body: {
+            account_id: selectedAssociatedCompanyAccountId.value,
+            ...monthlyPayFrequenciesData.value
+        },
     }, {
         onSuccessResponse: async (request, options, response) => {
             monthlyPayFrequency = _get(response, '_data.values.pay_frequency', null) as PayFrequencyT;
@@ -392,7 +400,10 @@ const monthlySemimonthlyPayFrequencyFormSubmit = async () => {
 
     await laraFetch(`/api/pay-frequency/${semimonthlyPayFrequenciesData.value.id}`, {
         method: 'PATCH',
-        body: semimonthlyPayFrequenciesData.value,
+        body: {
+            account_id: selectedAssociatedCompanyAccountId.value,
+            ...semimonthlyPayFrequenciesData.value
+        },
     }, {
         onRequestError: () => {
             monthlySemimonthlyPayFrequencyFormPending.value = false;
