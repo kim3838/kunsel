@@ -46,7 +46,7 @@ const disabledBackgroundColor = computed(() => {
 });
 
 const props = defineProps({
-    modelValue: [String, Number],
+    modelValue: [null, String, Number],
     type: {
         type: String,
         default: 'text'
