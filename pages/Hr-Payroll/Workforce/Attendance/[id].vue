@@ -136,6 +136,7 @@ const {
     updatedAssociatedCompanyFlag
 } = storeToRefs($associationStore);
 const {
+    selectedAssociatedCompanyAccountId,
     selectedAssociatedCompanyId,
     selectedAssociatedCompany
 } = storeToRefs($authStore);
@@ -326,6 +327,7 @@ const fetchAttendance = async () => {
     await laraFetch(`/api/attendance/${route.params.id}`, {
         method: 'GET',
         params: {
+            account_id: selectedAssociatedCompanyAccountId.value,
             company_id: selectedAssociatedCompanyId.value
         }
     }, {

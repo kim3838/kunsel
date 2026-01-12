@@ -129,8 +129,8 @@
 
 <script setup lang="ts">
 import type {TableHeaderT, TableRowT} from "@/public/js/types/data";
-import {storeToRefs} from "pinia";
 import type {EnumOption, EnumSelection} from "@/public/js/common/type";
+import {storeToRefs} from "pinia";
 
 useHead({titleTemplate: (titleChunk) => {return `${titleChunk} - Designations`}});
 definePageMeta({middleware: ['auth', 'admin-of-selected-company']});
@@ -143,6 +143,7 @@ const {
     updatedAssociatedCompanyFlag
 } = storeToRefs(nuxtApp.$associationStore);
 const {
+    selectedAssociatedCompanyAccountId,
     selectedAssociatedCompanyId
 } = storeToRefs(nuxtApp.$authStore);
 
@@ -199,6 +200,7 @@ const designationsExecute = async () => {
     await laraFetch("/api/designations", {
         method: 'GET',
         params: {
+            account_id: selectedAssociatedCompanyAccountId.value,
             company_id: selectedAssociatedCompanyId.value,
             filters: {
                 'company_id': selectedAssociatedCompanyId.value,
@@ -300,7 +302,8 @@ const deleteSelected = async () => {
                 laraFetch(`/api/designation/${id}`, {
                     method: 'DELETE',
                     body: {
-                        'company_id': selectedAssociatedCompanyId.value,
+                        account_id: selectedAssociatedCompanyAccountId.value,
+                        company_id: selectedAssociatedCompanyId.value,
                     }
                 },{
                     onRequestError: (request, options, error) => {
@@ -326,8 +329,9 @@ const designationName = ref('');
 
 const createEditModalForm = computed(() => {
     return {
-        'company_id': selectedAssociatedCompanyId.value,
-        'name': designationName.value,
+        account_id: selectedAssociatedCompanyAccountId.value,
+        company_id: selectedAssociatedCompanyId.value,
+        name: designationName.value,
     }
 });
 

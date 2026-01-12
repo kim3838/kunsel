@@ -256,6 +256,7 @@ const {
     updatedAssociatedCompanyFlag
 } = storeToRefs(nuxtApp.$associationStore);
 const {
+    selectedAssociatedCompanyAccountId,
     selectedAssociatedCompanyId
 } = storeToRefs(nuxtApp.$authStore);
 
@@ -398,6 +399,7 @@ let paramsComputed = computed(() => {
     return {
         page: filters.page,
         perPage: filters.perPage,
+        account_id: selectedAssociatedCompanyAccountId.value,
         company_id: selectedAssociatedCompanyId.value,
         filters: {
             company_id: selectedAssociatedCompanyId.value,
@@ -520,6 +522,7 @@ const deleteSelected = async () => {
     await laraFetch("/api/leave-balance-adjustments", {
         method: 'DELETE',
         body: {
+            account_id: selectedAssociatedCompanyAccountId.value,
             company_id: selectedAssociatedCompanyId.value,
             leave_balance_adjustment_ids: selectedIds,
         },
@@ -760,6 +763,7 @@ const modalSubmitAction = computed(() => {
 });
 const modalForm = computed(()=>{
     return {
+        account_id: selectedAssociatedCompanyAccountId.value,
         company_id: selectedAssociatedCompanyId.value,
         employee_id: employeeOptions.selected,
         leave_type_id: assignedLeaveTypeSelectionsOptions.selected,

@@ -294,6 +294,7 @@ const {
     updatedAssociatedCompanyFlag
 } = storeToRefs(nuxtApp.$associationStore);
 const {
+    selectedAssociatedCompanyAccountId,
     selectedAssociatedCompanyId
 } = storeToRefs(nuxtApp.$authStore);
 
@@ -431,6 +432,7 @@ let paramsComputed = computed(() => {
     return {
         page: filters.page,
         perPage: filters.perPage,
+        account_id: selectedAssociatedCompanyAccountId.value,
         company_id: selectedAssociatedCompanyId.value,
         filters: {
             company_id: selectedAssociatedCompanyId.value,
@@ -594,6 +596,7 @@ const deleteSelected = async () => {
     await laraFetch("/api/attendances", {
         method: 'DELETE',
         body: {
+            account_id: selectedAssociatedCompanyAccountId.value,
             company_id: selectedAssociatedCompanyId.value,
             attendance_ids: selectedIds,
         },
@@ -830,6 +833,7 @@ const modalSubmitAction = computed(() => {
 });
 const modalForm = computed(()=>{
     return {
+        account_id: selectedAssociatedCompanyAccountId.value,
         id: stagedAttendance.value.id,
         ulid: stagedAttendance.value.ulid,
         company_id: selectedAssociatedCompanyId.value,

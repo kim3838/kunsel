@@ -318,6 +318,7 @@ const {
     updatedAssociatedCompanyFlag
 } = storeToRefs(nuxtApp.$associationStore);
 const {
+    selectedAssociatedCompanyAccountId,
     selectedAssociatedCompanyId
 } = storeToRefs(nuxtApp.$authStore);
 
@@ -467,6 +468,7 @@ let paramsComputed = computed(() => {
     return {
         page: filters.page,
         perPage: filters.perPage,
+        account_id: selectedAssociatedCompanyAccountId.value,
         company_id: selectedAssociatedCompanyId.value,
         filters: {
             company_id: selectedAssociatedCompanyId.value,
@@ -630,6 +632,7 @@ const deleteSelected = async () => {
     await laraFetch("/api/overtimes", {
         method: 'DELETE',
         body: {
+            account_id: selectedAssociatedCompanyAccountId.value,
             company_id: selectedAssociatedCompanyId.value,
             overtime_ids: selectedIds,
         },
@@ -881,6 +884,8 @@ const creatingAttendanceInitializedAttendanceDate = async (value: string) => {
     if(creatingOvertime.value){
 
         let _attendanceData: AttendanceT[] = [];
+        let _attendanceSuccess = false;
+        let _attendanceMessage = '';
         let _attendanceOvertime = null;
         let _attendanceDetails: any[] = [];
         let _attendanceMeta = {
@@ -898,6 +903,8 @@ const creatingAttendanceInitializedAttendanceDate = async (value: string) => {
         await laraFetch(`/api/attendances`, {
             method: 'GET',
             params: {
+                account_id: selectedAssociatedCompanyAccountId.value,
+                company_id: selectedAssociatedCompanyId.value,
                 filters: {
                     company_id: selectedAssociatedCompanyId.value,
                     employee_ids: [employeeOptions.selected],
@@ -910,8 +917,10 @@ const creatingAttendanceInitializedAttendanceDate = async (value: string) => {
             onRequestError: () => {
                 modalLoading.value = false;
             },
-            onResponse: () => {
+            onResponse: (request, options, response) => {
                 modalLoading.value = false;
+                _attendanceSuccess = _get(response, '_data.successful', false);
+                _attendanceMessage = _get(response, '_data.message', '');
             },
             onSuccessResponse: async (request, options, response) => {
                 _attendanceData = _get(response, '_data.values.data', [])
@@ -927,6 +936,19 @@ const creatingAttendanceInitializedAttendanceDate = async (value: string) => {
             }
         }, false);
 
+        if(!_attendanceSuccess){
+            validOvertimeFoundations.value = false;
+
+            coreStore.setServiceError({
+                prompt: false,
+                payload: {
+                    message: _attendanceMessage
+                }
+            });
+
+            return;
+        }
+
         let _attendance = _attendanceData[0] as AttendanceT;
 
         if(_attendanceMeta.pagination.total > 0){
@@ -936,6 +958,8 @@ const creatingAttendanceInitializedAttendanceDate = async (value: string) => {
             await laraFetch(`/api/attendance/${_get(_attendance, 'ulid', '')}`, {
                 method: 'GET',
                 params: {
+                    account_id: selectedAssociatedCompanyAccountId.value,
+                    company_id: selectedAssociatedCompanyId.value,
                     filters: {
                         shift_breakdown_splits: [
                             SHIFT_BREAKDOWN_SPLIT.WORK,
@@ -1091,6 +1115,7 @@ const modalForm = computed(()=>{
     return {
         id: stagedOvertime.value.id,
         ulid: stagedOvertime.value.ulid,
+        account_id: selectedAssociatedCompanyAccountId.value,
         company_id: selectedAssociatedCompanyId.value,
         attendance_id: attendanceId.value,
         date: attendanceDate.value,

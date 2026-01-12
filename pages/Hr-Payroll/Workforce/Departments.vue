@@ -187,8 +187,8 @@
 
 <script setup lang="ts">
 import type {TableHeaderT, TableRowT} from "@/public/js/types/data";
-import {storeToRefs} from "pinia";
 import type {EnumOption, EnumSelection} from "@/public/js/common/type";
+import {storeToRefs} from "pinia";
 
 useHead({titleTemplate: (titleChunk) => {return `${titleChunk} - Departments`}});
 definePageMeta({middleware: ['auth', 'admin-of-selected-company']});
@@ -201,6 +201,7 @@ const {
     updatedAssociatedCompanyFlag
 } = storeToRefs(nuxtApp.$associationStore);
 const {
+    selectedAssociatedCompanyAccountId,
     selectedAssociatedCompanyId
 } = storeToRefs(nuxtApp.$authStore);
 
@@ -270,6 +271,7 @@ const departmentsExecute = async () => {
     await laraFetch("/api/departments", {
         method: 'GET',
         params: {
+            account_id: selectedAssociatedCompanyAccountId.value,
             company_id: selectedAssociatedCompanyId.value,
             filters: {
                 'company_id': selectedAssociatedCompanyId.value,
@@ -377,7 +379,8 @@ const deleteSelected = async () => {
                 laraFetch(`/api/department/${id}`, {
                     method: 'DELETE',
                     body: {
-                        'company_id': selectedAssociatedCompanyId.value,
+                        account_id: selectedAssociatedCompanyAccountId.value,
+                        company_id: selectedAssociatedCompanyId.value,
                     }
                 },{
                     onRequestError: (request, options, error) => {
@@ -460,12 +463,18 @@ const loadingOverlayDimensionStyle = computed(() => {
 });
 
 const createEditModalForm = computed(() => {
-    let formTemp:{company_id: string | number | null, name: string, parent_id?: number | null} = {
+    let formTemp:{
+        account_id: number,
+        company_id: string | number | null,
+        name: string,
+        parent_id?: number | null
+    } = {
+        account_id: selectedAssociatedCompanyAccountId.value as number,
         company_id: selectedAssociatedCompanyId.value,
         name: departmentName.value,
     };
 
-    if(Boolean(parseInt(departmentOptions.selected))){
+    if(Boolean(departmentOptions.selected)){
         formTemp = {...formTemp, parent_id: parentDepartmentSelectionOption.selected}
     }
 

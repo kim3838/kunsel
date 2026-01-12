@@ -85,7 +85,13 @@
                                     </div>
                                 </fieldset>
                                 <div v-else class="md:basis-5/12 flex justify-center items-center">
-                                    Select Employee, Leave Type and Date of leave
+
+                                    <div v-if="leaveModalSubmitSuccessful">
+                                        Employee, Leave Type and Date of leave
+                                    </div>
+                                    <div v-else class="flex flex-row flex-wrap gap-2 items-center min-h-8">
+                                        <Label invert :size="'md'" :type="'danger'" :label="leaveModalSubmitMessage" />
+                                    </div>
                                 </div>
 
                                 <fieldset class="md:basis-7/12 neutral-border px-2 pb-2 space-y-2">
@@ -294,6 +300,7 @@ const {
     updatedAssociatedCompanyFlag
 } = storeToRefs(nuxtApp.$associationStore);
 const {
+    selectedAssociatedCompanyAccountId,
     selectedAssociatedCompanyId
 } = storeToRefs(nuxtApp.$authStore);
 
@@ -444,6 +451,7 @@ let paramsComputed = computed(() => {
     return {
         page: filters.page,
         perPage: filters.perPage,
+        account_id: selectedAssociatedCompanyAccountId.value,
         company_id: selectedAssociatedCompanyId.value,
         filters: {
             company_id: selectedAssociatedCompanyId.value,
@@ -601,6 +609,7 @@ const deleteSelected = async () => {
     await laraFetch("/api/leaves", {
         method: 'DELETE',
         body: {
+            account_id: selectedAssociatedCompanyAccountId.value,
             company_id: selectedAssociatedCompanyId.value,
             leave_ids: selectedIds,
         },
@@ -729,6 +738,9 @@ const resetEditable = () => {
 
     showResultPerDate.value = false;
     createdAtLeastOne.value = false;
+
+    leaveModalSubmitSuccessful.value = true;
+    leaveModalSubmitMessage.value = '';
 }
 
 const employeeOptionsKey = shallowRef(0);
@@ -836,6 +848,7 @@ const modalSubmitPending = ref(false);
 
 const attemptFilterAndSubmitLeaveDateRangeForm = computed(() => {
     return {
+        account_id: selectedAssociatedCompanyAccountId.value,
         company_id: selectedAssociatedCompanyId.value,
         employee_id: employeeOptions.selected,
         shift_id: assignedShiftSelectionsOptions.selected,
@@ -907,6 +920,7 @@ const filterAndSubmitLeaveDateRange = async() => {
 const filteredLeaveDates = ref([]);
 const submitForm = computed(()=>{
     return {
+        account_id: selectedAssociatedCompanyAccountId.value,
         company_id: selectedAssociatedCompanyId.value,
         employee_id: employeeOptions.selected,
         leave_type_id: assignedLeaveTypeSelectionsOptions.selected,
@@ -914,6 +928,9 @@ const submitForm = computed(()=>{
     }
 })
 const submitResults = ref<{date: string, result: {label: 'string', type: LabelTypeT}}[]>([]);
+
+const leaveModalSubmitSuccessful = ref(true);
+const leaveModalSubmitMessage = ref('');
 const submit = async() => {
     modalSubmitPending.value = true;
     submitResults.value = [];
@@ -925,8 +942,11 @@ const submit = async() => {
         onRequestError: () => {
             modalSubmitPending.value = false;
         },
-        onResponse: () => {
+        onResponse: (request, options, response) => {
             modalSubmitPending.value = false;
+            showResultPerDate.value = _get(response, '_data.successful', false);
+            leaveModalSubmitSuccessful.value = _get(response, '_data.successful', false);
+            leaveModalSubmitMessage.value = _get(response, '_data.message', '');
         },
         onSuccessResponse: async (request, options, response) => {
             submitResults.value = _get(response, '_data.values.results', []);
