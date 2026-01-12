@@ -230,6 +230,7 @@ const $enumerableOption = nuxtApp.$enumerableOption as (enumerable: StringEnumIn
     value: number
 };
 const {
+    selectedAssociatedCompanyAccountId,
     selectedAssociatedCompanyId
 } = storeToRefs(nuxtApp.$authStore);
 
@@ -408,16 +409,18 @@ const stateEndOfShiftSelectedChange = () => {
 
 const shiftAssignmentForm = computed(() => {
     let form: {
+        account_id: number,
+        company_id: number,
         start_date: string,
         stated_shift_end_date: number,
         end_date?: null | string,
-        company_id: number,
         employees?: number[],
         shifts?: number[],
     } = {
+        account_id: selectedAssociatedCompanyAccountId.value as number,
+        company_id: selectedAssociatedCompanyId.value as number,
         start_date: shiftAssignmentStartDate.value,
         stated_shift_end_date: stateEndOfShift.value,
-        company_id: selectedAssociatedCompanyId.value as number,
     }
 
     if(stateEndOfShift.value == 1){
@@ -579,9 +582,11 @@ const shiftAssignmentBatchDetachPath = computed<string>(() => {
 })
 const shiftAssignmentBatchDetachForm = computed(() => {
     let form:{
+        account_id: number,
         company_id: number,
         selectedMorphables?: number[],
     } = {
+        account_id: selectedAssociatedCompanyAccountId.value as number,
         company_id: selectedAssociatedCompanyId.value as number,
     }
 
@@ -647,14 +652,16 @@ const submitShiftAssignmentBatchDetach = async () => {
 
 const updateShiftSettingsForm = computed(() => {
     let form: {
+        account_id: number,
+        company_id: number,
         start_date: string,
         stated_shift_end_date: number,
         end_date?: null | string,
-        company_id: number
     } = {
+        account_id: selectedAssociatedCompanyAccountId.value as number,
+        company_id: selectedAssociatedCompanyId.value as number,
         start_date: shiftAssignmentStartDate.value,
         stated_shift_end_date: stateEndOfShift.value,
-        company_id: selectedAssociatedCompanyId.value as number,
     }
 
     if(stateEndOfShift.value == 1){

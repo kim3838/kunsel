@@ -216,6 +216,7 @@ const $enumerableOption = nuxtApp.$enumerableOption as (enumerable: StringEnumIn
     value: number
 };
 const {
+    selectedAssociatedCompanyAccountId,
     selectedAssociatedCompanyId
 } = storeToRefs(nuxtApp.$authStore);
 
@@ -364,14 +365,16 @@ const balanceUponEligibility = ref<number>(0);
 
 const leaveTypeAssignmentForm = computed(() => {
     let form: {
+        account_id: number,
+        company_id: number,
         override_balance_upon_eligibility: number,
         balance_upon_eligibility?: number,
-        company_id: number,
         employees?: number[],
         leave_types?: number[],
     } = {
-        override_balance_upon_eligibility: overrideBalanceUponEligibility.value,
+        account_id: selectedAssociatedCompanyAccountId.value as number,
         company_id: selectedAssociatedCompanyId.value as number,
+        override_balance_upon_eligibility: overrideBalanceUponEligibility.value,
     }
 
     if(overrideBalanceUponEligibility.value == 1){
@@ -533,9 +536,11 @@ const leaveTypeAssignmentBatchDetachPath = computed<string>(() => {
 })
 const leaveTypeAssignmentBatchDetachForm = computed(() => {
     let form:{
+        account_id: number,
         company_id: number,
         selectedMorphables?: number[],
     } = {
+        account_id: selectedAssociatedCompanyAccountId.value as number,
         company_id: selectedAssociatedCompanyId.value as number,
     }
 
@@ -601,12 +606,14 @@ const submitLeaveTypeAssignmentBatchDetach = async () => {
 
 const updateLeaveTypeSettingsForm = computed(() => {
     let form: {
+        account_id: number,
+        company_id: number,
         override_balance_upon_eligibility: number,
         balance_upon_eligibility?: number,
-        company_id: number
     } = {
-        override_balance_upon_eligibility: overrideBalanceUponEligibility.value,
+        account_id: selectedAssociatedCompanyAccountId.value as number,
         company_id: selectedAssociatedCompanyId.value as number,
+        override_balance_upon_eligibility: overrideBalanceUponEligibility.value,
     }
 
     if(overrideBalanceUponEligibility.value == 1){

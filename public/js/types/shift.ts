@@ -13,15 +13,12 @@ export type ShiftT = {
     work_start_grace_time: number,
     require_lunch_time_in_and_out: boolean,
     lunch_start_grace_time: number,
-    max_overtime: number
+    max_overtime: string | number
 }
 
-export type ShiftSchedulePatchableT = {
-    week_day_name?: string,
-}
-
-export type ShiftScheduleT = ShiftSchedulePatchableT & {
+export type ShiftScheduleT = {
     week_day: EnumOption,
+    week_day_name?: string,
     is_rest_day: boolean,
     is_day_off: boolean,
     is_flexible: boolean,

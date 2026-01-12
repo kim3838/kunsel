@@ -50,7 +50,7 @@
                             :to="`/hr-payroll/policies/shifts/create-shift`">
                             <Button class="w-min" :disabled="disableActions" :size="'sm'" :icon="disableActions ? 'eos-icons:loading' : 'mdi:plus'" :label="disableActions ? 'Please wait' : ''"></Button>
                         </NuxtLink>
-                        <Button v-if="shifts.successful && !disableActions" :variant="'outline'" :icon="'mdi:delete-outline'" class="inline-block" :size="'sm'" :disabled="disableActions" :label="'Delete selected'" @click="deleteSelected"/>
+                        <Button v-if="shifts.successful && !disableActions" :variant="'outline'" :icon="'mdi:delete-outline'" class="inline-block" :size="'sm'" :disabled="disableActions" :label="'Delete selected'" @click="confirmDeleteSelected"/>
                     </div>
 
                     <div class="mb-2 flex flex-row flex-wrap gap-2 items-center min-h-8">
@@ -142,6 +142,7 @@ const {
     updatedAssociatedCompanyFlag
 } = storeToRefs(nuxtApp.$associationStore);
 const {
+    selectedAssociatedCompanyAccountId,
     selectedAssociatedCompanyId
 } = storeToRefs(nuxtApp.$authStore);
 
@@ -249,6 +250,7 @@ let paramsComputed = computed(() => {
     return {
         page: filters.page,
         perPage: filters.perPage,
+        account_id: selectedAssociatedCompanyAccountId.value,
         company_id: selectedAssociatedCompanyId.value,
         filters: {
             company_id: selectedAssociatedCompanyId.value,
@@ -321,9 +323,44 @@ watch(() => {return filters.page;}, () => {paginate(filters.page);});
 watch(() => {return filters.perPage;}, () => {paginate(1);});
 
 const deleting = ref(false);
-const deleteSelected = async () => {
+const confirmDeleteSelected = () => {
 
     const selectedIds = selectedShifts.value;
+
+    if(selectedIds.length == 0){
+
+        useNuxtApp().$promptStore.setPrompt({
+            resetable: false,
+            icon: null,
+            title: `Validation Error`,
+            message: `No selected shift to delete.`,
+            action: {
+                callback: () => {},
+                label: 'Okay'
+            }
+        });
+
+        return false;
+    }
+
+    useNuxtApp().$promptStore.setPrompt({
+        resetable: true,
+        icon: null,
+        title: 'Confirm Action',
+        message: `Confirm delete selected shift${selectedIds.length > 1 ? 's' : ''}?`,
+        action: {
+            callback: async () => {
+                await deleteSelected();
+            },
+            label: 'Yes'
+        }
+    });
+}
+const deleteSelected = async () => {
+
+    let selectedIds: number[] = [];
+
+    selectedIds = selectedShifts.value;
 
     if(_isEmpty(selectedIds)){
         return;
@@ -331,33 +368,37 @@ const deleteSelected = async () => {
 
     deleting.value = true;
 
-    let batchDelete: Promise<any>[] = [];
+    await laraFetch("/api/shifts", {
+        method: 'DELETE',
+        body: {
+            account_id: selectedAssociatedCompanyAccountId.value,
+            company_id: selectedAssociatedCompanyId.value,
+            shift_ids: selectedIds,
+        },
+    },{
+        onRequestError: (request, options, error) => {
+            deleting.value = false;
+        },
+        onResponse: () => {
+            deleting.value = false;
+        },
+        onSuccessResponse: async (request, options, response) => {
 
-    selectedIds.forEach((id) => {
-        batchDelete.push(
-            new Promise((resolve, reject) => {
-                laraFetch(`/api/shift/${id}`, {
-                    method: 'DELETE',
-                    body: {
-                        'company_id': selectedAssociatedCompanyId.value,
-                    }
-                },{
-                    onRequestError: (request, options, error) => {
-                        reject(error);
-                    },
-                    onResponse: (request, options, response) => {
-                        resolve(response);
-                    }
-                })
-            })
-        );
+            useNuxtApp().$promptStore.setPrompt({
+                resetable: false,
+                icon: null,
+                title: `Request successful`,
+                message: `Shift${selectedIds.length > 1 ? 's' : ''} deleted successfully.`,
+                action: {
+                    callback: () => {},
+                    label: 'Okay'
+                }
+            });
+        }
     });
 
-    await Promise.all(batchDelete);
     selectedShifts.value = [];
     await shiftsExecute();
-
-    deleting.value = false;
 }
 </script>
 

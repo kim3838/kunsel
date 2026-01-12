@@ -306,6 +306,7 @@ const {
     updatedAssociatedCompanyFlag
 } = storeToRefs(nuxtApp.$associationStore);
 const {
+    selectedAssociatedCompanyAccountId,
     selectedAssociatedCompanyId,
     selectedAssociatedCompany
 } = storeToRefs(nuxtApp.$authStore);
@@ -513,6 +514,7 @@ const fetchLeaveType = async () => {
     await laraFetch(`/api/leave-type/${route.params.id}`, {
         method: 'GET',
         params: {
+            account_id: selectedAssociatedCompanyAccountId.value,
             company_id: selectedAssociatedCompanyId.value
         }
     }, {
@@ -573,36 +575,37 @@ const leaveTypeSubmitPath = computed(() => {
 const leaveTypeFormBody = computed(() => {
 
     return{
-        'company_id': selectedAssociatedCompanyId.value,
-        'code': leaveTypeCode.value,
-        'name': leaveTypeName.value,
-        'type': leaveTypeOptions.selected,
-        'is_paid': leaveTypeIsPaid.value,
-        'monetizable': leaveTypeIsMonetizable.value,
+        account_id: selectedAssociatedCompanyAccountId.value,
+        company_id: selectedAssociatedCompanyId.value,
+        code: leaveTypeCode.value,
+        name: leaveTypeName.value,
+        type: leaveTypeOptions.selected,
+        is_paid: leaveTypeIsPaid.value,
+        monetizable: leaveTypeIsMonetizable.value,
 
-        'limit_usage': leaveTypeLimitUsage.value,
-        'limit_usage_span_type': leaveTypeLimitUsageSpanTypeOptions.selected,
-        'limit_usage_span_value': leaveTypeLimitUsage.value == 1 ? leaveTypeLimitUsageSpanValue.value : 0,
-        'limit_usage_value': leaveTypeLimitUsage.value == 1 ? leaveTypeLimitUsageValue.value : 0,
+        limit_usage: leaveTypeLimitUsage.value,
+        limit_usage_span_type: leaveTypeLimitUsageSpanTypeOptions.selected,
+        limit_usage_span_value: leaveTypeLimitUsage.value == 1 ? leaveTypeLimitUsageSpanValue.value : 0,
+        limit_usage_value: leaveTypeLimitUsage.value == 1 ? leaveTypeLimitUsageValue.value : 0,
 
-        'eligibility_employment_types': leaveTypeEligibilityEmploymentTypes.selected,
-        'initial_balance_upon_eligibility': leaveTypeInitialBalanceUponEligibility.value,
+        eligibility_employment_types: leaveTypeEligibilityEmploymentTypes.selected,
+        initial_balance_upon_eligibility: leaveTypeInitialBalanceUponEligibility.value,
 
-        'period_type': leaveTypePeriodTypeOptions.selected,
-        'period_interval_span_type': leaveTypePeriodIntervalSpanTypeOptions.selected,
-        'period_interval_span_value': leaveTypePeriodTypeOptions.selected == LEAVE_PERIOD_TYPE.INTERVAL
+        period_type: leaveTypePeriodTypeOptions.selected,
+        period_interval_span_type: leaveTypePeriodIntervalSpanTypeOptions.selected,
+        period_interval_span_value: leaveTypePeriodTypeOptions.selected == LEAVE_PERIOD_TYPE.INTERVAL
             ? leaveTypePeriodIntervalSpanValue.value
             : 0,
-        'period_calendar_span_value': leaveTypePeriodCalendarSpanValue.value,
+        period_calendar_span_value: leaveTypePeriodCalendarSpanValue.value,
 
-        'carry_over_balance_per_new_period': leaveTypeCarryOverBalancePerPeriodValue.value,
-        'carry_over_balance_type': leaveTypeCarryOverBalanceTypeValue.value,
-        'carry_over_balance_value': leaveTypeCarryOverBalancePerPeriodValue.value == 1 && leaveTypeCarryOverBalanceTypeValue.value == LEAVE_CARRY_OVER_TYPE.LIMIT
+        carry_over_balance_per_new_period: leaveTypeCarryOverBalancePerPeriodValue.value,
+        carry_over_balance_type: leaveTypeCarryOverBalanceTypeValue.value,
+        carry_over_balance_value: leaveTypeCarryOverBalancePerPeriodValue.value == 1 && leaveTypeCarryOverBalanceTypeValue.value == LEAVE_CARRY_OVER_TYPE.LIMIT
             ? leaveTypeCarryOverBalanceValue.value
             : 0,
 
-        'spliced_leave_type_balance_per_period' : splicedLeaveTypeBalancePerPeriods.value,
-        'leave_type_balance_per_period': leaveTypeBalancePerPeriods.value
+        spliced_leave_type_balance_per_period : splicedLeaveTypeBalancePerPeriods.value,
+        leave_type_balance_per_period: leaveTypeBalancePerPeriods.value
     };
 });
 

@@ -210,6 +210,7 @@ const {
     updatedAssociatedCompanyFlag
 } = storeToRefs(nuxtApp.$associationStore);
 const {
+    selectedAssociatedCompanyAccountId,
     selectedAssociatedCompanyId
 } = storeToRefs(nuxtApp.$authStore);
 
@@ -287,6 +288,7 @@ let paramsComputed = computed(() => {
     return {
         page: filters.page,
         perPage: filters.perPage,
+        account_id: selectedAssociatedCompanyAccountId.value,
         company_id: selectedAssociatedCompanyId.value,
         filters: {
             company_id: selectedAssociatedCompanyId.value,
@@ -408,6 +410,7 @@ const deleteSelected = async () => {
     await laraFetch("/api/holidays", {
         method: 'DELETE',
         body: {
+            account_id: selectedAssociatedCompanyAccountId.value,
             company_id: selectedAssociatedCompanyId.value,
             holiday_ids: selectedIds,
         },
@@ -543,8 +546,8 @@ const put = async(row: TableRowT | null = null) => {
 
     if(row){
         stagedHoliday.value = {
-            'id': row.id,
-            'ulid': row.ulid,
+            'id': row.id as number,
+            'ulid': row.ulid as string,
         };
 
         holidayEditable.name = row.name;
@@ -572,7 +575,8 @@ const submitCreateEditPath = computed(() => {
 
 const submitCreateEditForm = computed(() => {
     return {
-        'company_id': selectedAssociatedCompanyId.value,
+        account_id: selectedAssociatedCompanyAccountId.value,
+        company_id: selectedAssociatedCompanyId.value,
         ...holidayEditable
     }
 });

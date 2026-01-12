@@ -245,6 +245,7 @@ const {
     updatedAssociatedCompanyFlag
 } = storeToRefs(nuxtApp.$associationStore);
 const {
+    selectedAssociatedCompanyAccountId,
     selectedAssociatedCompanyId,
     selectedAssociatedCompany
 } = storeToRefs(nuxtApp.$authStore);
@@ -255,7 +256,7 @@ watch(updatedAssociatedCompanyFlag, (newValue) => {
     }
 });
 
-const shift = ref<ShiftT | null>(null);
+const shift = ref<Partial<ShiftT>>({});
 const shiftSuccessful = ref(true);
 const shiftMessage = ref('');
 const creatingShift = computed(() => {
@@ -294,15 +295,15 @@ const exceptHolidayOptions = reactive({
     },
     selected: [],
 })
-const shiftWorkStartGraceTime = ref('0');
-const shiftRequireLunchTimeInAndOut = ref(0);
+const shiftWorkStartGraceTime = ref<number>(0);
+const shiftRequireLunchTimeInAndOut = ref<number>(0);
 const shiftRequireLunchTimeInAndOutSelection = reactive([
     {text : 'Yes', value: 1},
     {text : 'No', value: 0},
 ]);
 
-const shiftLunchStartGraceTime = ref('0');
-const shiftMaxOvertime = ref('0');
+const shiftLunchStartGraceTime = ref<number>(0);
+const shiftMaxOvertime = ref<string>('0.00');
 
 const shiftType = computed(() => {
     return shiftTypeOptions.selected;
@@ -354,7 +355,7 @@ const fetchShift = async () => {
         await laraFetch(`/api/shift-schedules-preset`, {
             method: 'GET',
             params: {
-                'company_id': selectedAssociatedCompanyId.value,
+                company_id: selectedAssociatedCompanyId.value,
             }
         }, {
             onSuccessResponse: async (request, options, response) => {
@@ -368,6 +369,7 @@ const fetchShift = async () => {
     await laraFetch(`/api/shift/${route.params.id}`, {
         method: 'GET',
         params: {
+            account_id: selectedAssociatedCompanyAccountId.value,
             company_id: selectedAssociatedCompanyId.value
         }
     }, {
@@ -376,19 +378,19 @@ const fetchShift = async () => {
             shiftMessage.value = _get(response, '_data.message', '');
         },
         onSuccessResponse: async (request, options, response) => {
-            shift.value = _get(response, '_data.values.shift', null);
+            shift.value = _get(response, '_data.values.shift', null) as ShiftT;
             shiftSchedules.value = _get(response, '_data.values.shift_schedules', []);
 
             shiftCode.value = _get(response, '_data.values.shift.code', '');
             shiftName.value = _get(response, '_data.values.shift.name', '');
-            shiftTypeOptions.selected = _get(response, '_data.values.shift.type.value', null);
-            shiftHolidayPolicyOptions.selected = _get(response, '_data.values.shift.holiday_policy.value', null);
+            shiftTypeOptions.selected = _get(response, '_data.values.shift.type.value', null) as number;
+            shiftHolidayPolicyOptions.selected = _get(response, '_data.values.shift.holiday_policy.value', null) as number;
             exceptHolidayOptions.selected = _get(response, '_data.values.shift.except_holidays', []);
             exceptHolidayOptionsKey.value++;
-            shiftWorkStartGraceTime.value = _get(response, '_data.values.shift.work_start_grace_time', 0);
-            shiftRequireLunchTimeInAndOut.value = _get(response, '_data.values.shift.require_lunch_time_in_and_out', 0);
-            shiftLunchStartGraceTime.value = _get(response, '_data.values.shift.lunch_start_grace_time', 0);
-            shiftMaxOvertime.value = _get(response, '_data.values.shift.max_overtime', 0);
+            shiftWorkStartGraceTime.value = _get(response, '_data.values.shift.work_start_grace_time', 0) as number;
+            shiftRequireLunchTimeInAndOut.value = _get(response, '_data.values.shift.require_lunch_time_in_and_out', 0) as number;
+            shiftLunchStartGraceTime.value = _get(response, '_data.values.shift.lunch_start_grace_time', 0) as number;
+            shiftMaxOvertime.value = _get(response, '_data.values.shift.max_overtime', '0.00');
 
             shiftIsDefault.selected = _get(response, '_data.values.shift.is_default', false) ? 1 : 0;
         },
@@ -535,19 +537,20 @@ const submitPath = computed(() => {
 const formBody = computed(() => {
 
     return{
-        'company_id': selectedAssociatedCompanyId.value,
-        'code': shiftCode.value,
-        'name': shiftName.value,
-        'type': shiftTypeOptions.selected,
-        'holiday_policy': shiftHolidayPolicyOptions.selected,
-        'except_holidays' : exceptHolidayOptions.selected,
-        'work_start_grace_time': shiftWorkStartGraceTime.value,
-        'require_lunch_time_in_and_out': shiftRequireLunchTimeInAndOut.value,
+        account_id: selectedAssociatedCompanyAccountId.value,
+        company_id: selectedAssociatedCompanyId.value,
+        code: shiftCode.value,
+        name: shiftName.value,
+        type: shiftTypeOptions.selected,
+        holiday_policy: shiftHolidayPolicyOptions.selected,
+        except_holidays : exceptHolidayOptions.selected,
+        work_start_grace_time: shiftWorkStartGraceTime.value,
+        require_lunch_time_in_and_out: shiftRequireLunchTimeInAndOut.value,
         ...(shiftRequireLunchTimeInAndOut.value == 1 ? {
-            'lunch_start_grace_time': shiftLunchStartGraceTime.value
+            lunch_start_grace_time: shiftLunchStartGraceTime.value
         }: {}),
-        'max_overtime': shiftMaxOvertime.value,
-        'shift_schedules': shiftSchedules.value,
+        max_overtime: shiftMaxOvertime.value,
+        shift_schedules: shiftSchedules.value,
     };
 });
 
@@ -568,17 +571,17 @@ const formSubmit = async() => {
             formPending.value = false;
         },
         onSuccessResponse: async (request, options, response) => {
-            resolvedShift.value = _get(response, '_data.values.shift', null);
-            shiftWorkStartGraceTime.value = resolvedShift.value.work_start_grace_time;
-            shiftLunchStartGraceTime.value = resolvedShift.value.lunch_start_grace_time;
-            shiftMaxOvertime.value = resolvedShift.value.max_overtime;
+            resolvedShift.value = _get(response, '_data.values.shift', {}) as ShiftT;
+            shiftWorkStartGraceTime.value = resolvedShift.value.work_start_grace_time as number;
+            shiftLunchStartGraceTime.value = resolvedShift.value.lunch_start_grace_time as number;
+            shiftMaxOvertime.value = resolvedShift.value.max_overtime as string;
             resolvedShiftModal.value = true;
         },
     });
 }
 
 const resolvedShiftModal = ref(false);
-const resolvedShift = ref({});
+const resolvedShift = ref<Partial<ShiftT>>({});
 const resolvedShiftModalTitle = computed(() => {
     return `Shift ${creatingShift.value ? 'Created' : 'Updated'}`;
 })
