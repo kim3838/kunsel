@@ -140,6 +140,9 @@
 <script setup lang="ts">
 import type {Sequenceable, TableHeaderT, TableRowT} from "@/public/js/types/data";
 import type {LabelTypeT} from "@/public/js/types/theme";
+import type {SalaryStatementModuleT} from "@/public/js/types/company-component";
+import type {StringEnumInterface} from "@/public/js/common/type";
+import type {CompanyT} from "@/public/js/types/company";
 
 useHead({titleTemplate: (titleChunk) => {return `${titleChunk} - Company Salary Statement Modules`}});
 definePageMeta({middleware: ['auth', 'super-admin']});
@@ -147,8 +150,11 @@ useLayout().setNavigationMode('solid');
 const route = useRoute();
 const nuxtApp = useNuxtApp();
 const orderSequenceable = nuxtApp.$orderSequenceable as (data: Sequenceable[]) => void;
-
-const company = ref<{id: number}>(null);
+const $enumerableOption = nuxtApp.$enumerableOption as (enumerable: StringEnumInterface, value: number) => {
+    text: string,
+    value: number
+};
+const company = ref<Partial<CompanyT>>({});
 const companyId = computed(() => _get(company.value, 'id', null));
 const companyCode = ref('');
 const companyName = ref('');
@@ -159,7 +165,7 @@ const fetchCompany = async () => {
         method: 'GET',
     }, {
         onSuccessResponse: async (request, options, response) => {
-            company.value = _get(response, '_data.values.company', null);
+            company.value = _get(response, '_data.values.company', {}) as CompanyT;
             companyCode.value = _get(response, '_data.values.company.code', '');
             companyName.value = _get(response, '_data.values.company.name', '');
         },
@@ -178,7 +184,7 @@ const salaryStatementModulesHeaders = reactive<TableHeaderT[]>([
     { text: 'Conditions', value: 'conditions'},
 ]);
 const salaryStatementModulesPending = ref(false)
-const salaryStatementModulesData = ref<TableRowT[]>([]);
+const salaryStatementModulesData = ref<SalaryStatementModuleT[]>([]);
 const selectedSalaryStatementModules = ref([]);
 
 const salaryStatementModulesExecute = async() =>{
@@ -204,9 +210,9 @@ const salaryStatementModulesExecute = async() =>{
             salaryStatementModulesPending.value = false;
         },
         onSuccessResponse: async (request, options, response) => {
-            let salaryStatementModules = _get(response, '_data.values.salary_statement_modules', []);
+            let salaryStatementModules = _get(response, '_data.values.salary_statement_modules', []) as SalaryStatementModuleT[];
 
-            salaryStatementModulesData.value = salaryStatementModules.map((module: TableRowT) => {
+            salaryStatementModulesData.value = salaryStatementModules.map((module: SalaryStatementModuleT) => {
 
                 let formulableType = _get(module, 'formulable_type.value', null);
 
@@ -266,18 +272,18 @@ const manualSorted = async () => {
 
 const creatingOrEditing = ref(false);
 const deleting = ref(false);
-const editPayload = ref({});
+const editPayload = ref<Partial<SalaryStatementModuleT>>({});
 
 const moduleName = ref('');
 const formulableOptions = reactive({
     search: '',
     selection: [
-        {text : FORMULABLE_NAME[FORMULABLE.EARNINGS], value: FORMULABLE.EARNINGS},
-        {text : FORMULABLE_NAME[FORMULABLE.DEDUCTIONS], value: FORMULABLE.DEDUCTIONS},
-        {text : FORMULABLE_NAME[FORMULABLE.TAXABLE_INCOME], value: FORMULABLE.TAXABLE_INCOME},
-        {text : FORMULABLE_NAME[FORMULABLE.NON_TAXABLE_INCOME], value: FORMULABLE.NON_TAXABLE_INCOME},
-        {text : FORMULABLE_NAME[FORMULABLE.INCOME_TAX], value: FORMULABLE.INCOME_TAX},
-        {text : FORMULABLE_NAME[FORMULABLE.NET_INCOME], value: FORMULABLE.NET_INCOME},
+        $enumerableOption(FORMULABLE_NAME, FORMULABLE.EARNINGS as number),
+        $enumerableOption(FORMULABLE_NAME, FORMULABLE.DEDUCTIONS as number),
+        $enumerableOption(FORMULABLE_NAME, FORMULABLE.TAXABLE_INCOME as number),
+        $enumerableOption(FORMULABLE_NAME, FORMULABLE.NON_TAXABLE_INCOME as number),
+        $enumerableOption(FORMULABLE_NAME, FORMULABLE.INCOME_TAX as number),
+        $enumerableOption(FORMULABLE_NAME, FORMULABLE.NET_INCOME as number),
     ],
     selected: null
 });
@@ -288,7 +294,7 @@ const conditions = ref<string | null>('');
 
 const edit = (cell: TableRowT) => {
 
-    editPayload.value = cell;
+    editPayload.value = cell as SalaryStatementModuleT;
 
     if(Boolean(cell.id)){
         moduleName.value = _get(cell, 'name', '');

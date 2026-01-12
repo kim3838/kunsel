@@ -29,3 +29,10 @@ export type SalaryStatementModuleT = SequenceableTableRow & {
     reference: string,
     conditions: ConditionT[]
 }
+
+export type BasicSalaryStatementModuleT = SequenceableTableRow & {
+    id: string | number,
+    company_id: string | number,
+    formulable_type: string,
+    name: string,
+}
