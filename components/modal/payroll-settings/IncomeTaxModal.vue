@@ -29,7 +29,7 @@
                     </tr>
                     <tr>
                         <td><InputLabel :size="'md'" value="Name" /></td>
-                        <td><Input v-model="incomeTaxName" placeholder="Enter income tax" type="text" /></td>
+                        <td><Input v-model="incomeTaxName" type="text" /></td>
                     </tr>
                     <tr>
                         <td></td>

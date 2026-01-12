@@ -4,7 +4,7 @@
             <div class="text-lg font-header">Tax</div>
             <div class="flex flex-row flex-wrap gap-2 items-center min-h-8">
                 <Button class="inline-block" :icon="'mdi:plus'" :size="'sm'" :disabled="disableActions" @click="create"/>
-                <Button v-if="incomeTaxesSuccessful" :variant="'outline'" :icon="'mdi:delete-outline'" class="inline-block" :size="'sm'" :disabled="disableActions" @click="deleteSelected"/>
+                <Button v-if="incomeTaxesSuccessful" :variant="'outline'" :icon="'mdi:delete-outline'" class="inline-block" :size="'sm'" :disabled="disableActions" @click="confirmDeleteSelected"/>
             </div>
         </div>
 
@@ -197,8 +197,44 @@ const edit = (cell: SequenceablePayrollComponent) => {
     editPayload.value = cell;
 }
 
-const deleteSelected = async () => {
+const confirmDeleteSelected = () => {
+
     const selectedIds = selectedIncomeTaxes.value;
+
+    if(selectedIds.length == 0){
+
+        useNuxtApp().$promptStore.setPrompt({
+            resetable: false,
+            icon: null,
+            title: `Validation Error`,
+            message: `No selected income tax to delete.`,
+            action: {
+                callback: () => {},
+                label: 'Okay'
+            }
+        });
+
+        return false;
+    }
+
+    useNuxtApp().$promptStore.setPrompt({
+        resetable: true,
+        icon: null,
+        title: 'Confirm Action',
+        message: `Confirm delete selected income tax${selectedIds.length > 1 ? 's' : ''}?`,
+        action: {
+            callback: async () => {
+                await deleteSelected();
+            },
+            label: 'Yes'
+        }
+    });
+}
+const deleteSelected = async () => {
+
+    let selectedIds: number[] = [];
+
+    selectedIds = selectedIncomeTaxes.value;
 
     if(_isEmpty(selectedIds)){
         return;
@@ -206,33 +242,40 @@ const deleteSelected = async () => {
 
     deleting.value = true;
 
-    let batchDelete: Promise<any>[] = [];
+    await laraFetch("/api/income-taxes", {
+        method: 'DELETE',
+        body: {
+            account_id: selectedAssociatedCompanyAccountId.value,
+            company_id: selectedAssociatedCompanyId.value,
+            income_tax_ids: selectedIds,
+        },
+    },{
+        onRequestError: (request, options, error) => {
+            deleting.value = false;
+        },
+        onResponse: () => {
+            deleting.value = false;
+        },
+        onSuccessResponse: async (request, options, response) => {
 
-    selectedIds.forEach((id) => {
-        batchDelete.push(
-            new Promise((resolve, reject) => {
-                laraFetch(`/api/income-tax/${id}`, {
-                    method: 'DELETE',
-                },{
-                    onRequestError: (request, options, error) => {
-                        reject(error);
-                    },
-                    onResponse: (request, options, response) => {
-                        resolve(response);
-                    }
-                })
-            })
-        );
+            useNuxtApp().$promptStore.setPrompt({
+                resetable: false,
+                icon: null,
+                title: `Request successful`,
+                message: `Income tax${selectedIds.length > 1 ? 'es' : ''} deleted successfully.`,
+                action: {
+                    callback: () => {},
+                    label: 'Okay'
+                }
+            });
+        }
     });
 
-    await Promise.all(batchDelete);
     selectedIncomeTaxes.value = [];
     await incomeTaxesExecute();
     orderSequenceable(incomeTaxesData.value);
     await incomeTaxesReOrderExecute();
     await fetchPayrollComponentNameSelections();
-
-    deleting.value = false;
 }
 </script>
 

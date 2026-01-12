@@ -4,7 +4,7 @@
             <div class="text-lg font-header">Deductions</div>
             <div class="flex flex-row flex-wrap gap-2 items-center min-h-8">
                 <Button class="inline-block" :icon="'mdi:plus'" :size="'sm'" :disabled="disableActions" @click="create"/>
-                <Button v-if="deductionsSuccessful" :variant="'outline'" :icon="'mdi:delete-outline'" class="inline-block" :size="'sm'" :disabled="disableActions" @click="deleteSelected"/>
+                <Button v-if="deductionsSuccessful" :variant="'outline'" :icon="'mdi:delete-outline'" class="inline-block" :size="'sm'" :disabled="disableActions" @click="confirmDeleteSelected"/>
             </div>
         </div>
 
@@ -197,8 +197,44 @@ const edit = (cell: SequenceablePayrollComponent) => {
     editPayload.value = cell;
 }
 
-const deleteSelected = async () => {
+const confirmDeleteSelected = () => {
+
     const selectedIds = selectedDeductions.value;
+
+    if(selectedIds.length == 0){
+
+        useNuxtApp().$promptStore.setPrompt({
+            resetable: false,
+            icon: null,
+            title: `Validation Error`,
+            message: `No selected deduction to delete.`,
+            action: {
+                callback: () => {},
+                label: 'Okay'
+            }
+        });
+
+        return false;
+    }
+
+    useNuxtApp().$promptStore.setPrompt({
+        resetable: true,
+        icon: null,
+        title: 'Confirm Action',
+        message: `Confirm delete selected deduction${selectedIds.length > 1 ? 's' : ''}?`,
+        action: {
+            callback: async () => {
+                await deleteSelected();
+            },
+            label: 'Yes'
+        }
+    });
+}
+const deleteSelected = async () => {
+
+    let selectedIds: number[] = [];
+
+    selectedIds = selectedDeductions.value;
 
     if(_isEmpty(selectedIds)){
         return;
@@ -206,33 +242,40 @@ const deleteSelected = async () => {
 
     deleting.value = true;
 
-    let batchDelete: Promise<any>[] = [];
+    await laraFetch("/api/deductions", {
+        method: 'DELETE',
+        body: {
+            account_id: selectedAssociatedCompanyAccountId.value,
+            company_id: selectedAssociatedCompanyId.value,
+            deduction_ids: selectedIds,
+        },
+    },{
+        onRequestError: (request, options, error) => {
+            deleting.value = false;
+        },
+        onResponse: () => {
+            deleting.value = false;
+        },
+        onSuccessResponse: async (request, options, response) => {
 
-    selectedIds.forEach((id) => {
-        batchDelete.push(
-            new Promise((resolve, reject) => {
-                laraFetch(`/api/deduction/${id}`, {
-                    method: 'DELETE',
-                },{
-                    onRequestError: (request, options, error) => {
-                        reject(error);
-                    },
-                    onResponse: (request, options, response) => {
-                        resolve(response);
-                    }
-                })
-            })
-        );
+            useNuxtApp().$promptStore.setPrompt({
+                resetable: false,
+                icon: null,
+                title: `Request successful`,
+                message: `Deduction${selectedIds.length > 1 ? 's' : ''} deleted successfully.`,
+                action: {
+                    callback: () => {},
+                    label: 'Okay'
+                }
+            });
+        }
     });
 
-    await Promise.all(batchDelete);
     selectedDeductions.value = [];
     await deductionsExecute();
     orderSequenceable(deductionsData.value);
     await deductionsReOrderExecute();
     await fetchPayrollComponentNameSelections();
-
-    deleting.value = false;
 }
 </script>
 
