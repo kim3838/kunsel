@@ -18,7 +18,8 @@ export type EmployeeT = {
     marital_status: EnumOption,
     full_name: string,
     contact: EmployeeContactT,
-    employment_profiles: EmploymentProfileT[],
+    current_employment_profile?: EmploymentProfileT,
+    employment_profiles?: EmploymentProfileT[],
     user: UserT
 }
 
@@ -35,9 +36,9 @@ export type EmploymentProfileT = {
     id: string | number,
     status: EnumOption,
     employee_id: string | number,
-    employment_type: EnumOption,
+    employment_type: EnumOption | null,
     start_date: string | null,
-    end_of_service_type: EnumOption,
+    end_of_service_type: EnumOption | null,
     end_date: string | null,
 }
 
