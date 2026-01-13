@@ -46,6 +46,10 @@ const props = defineProps({
         type: String,
         default: 'md',
     },
+    extender: {
+        type: Array as PropType<Breadcrumb[]>,
+        default: () => []
+    }
 });
 
 const fontClass = computed(() => {
@@ -88,7 +92,7 @@ const breadcrumbs = computed((): Breadcrumb[] => {
         }
     });
 
-    return breadcrumbs;
+    return breadcrumbs.concat(props.extender);
 });
 </script>
 
