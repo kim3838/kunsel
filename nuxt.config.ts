@@ -137,6 +137,7 @@ export default defineNuxtConfig({
         {path: '@/components/shift'},
         {path: '@/components/leave-type'},
         {path: '@/components/reports'},
+        {path: '@/components/dashboard'},
     ],
 
     modules: [
