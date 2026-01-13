@@ -190,7 +190,7 @@ const leavesExecute = async() =>{
 
     leavesPending.value = true;
 
-    await laraFetch(`/api/employee-leaves`, {
+    await laraFetch(`/api/employee-portal-leaves`, {
         method: 'GET',
         params: paramsComputed.value
     }, {

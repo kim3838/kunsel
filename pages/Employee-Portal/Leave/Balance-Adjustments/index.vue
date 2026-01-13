@@ -189,7 +189,7 @@ const leaveBalanceAdjustmentsExecute = async() =>{
 
     leaveBalanceAdjustmentsPending.value = true;
 
-    await laraFetch(`/api/employee-leave-balance-adjustments`, {
+    await laraFetch(`/api/employee-portal-leave-balance-adjustments`, {
         method: 'GET',
         params: paramsComputed.value
     }, {

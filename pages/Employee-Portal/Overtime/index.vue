@@ -200,7 +200,7 @@ const overtimesExecute = async() =>{
 
     overtimesPending.value = true;
 
-    await laraFetch(`/api/employee-overtimes`, {
+    await laraFetch(`/api/employee-portal-overtimes`, {
         method: 'GET',
         params: paramsComputed.value
     }, {

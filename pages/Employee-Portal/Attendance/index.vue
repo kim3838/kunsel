@@ -240,7 +240,7 @@ const attendancesExecute = async() =>{
 
     attendancesPending.value = true;
 
-    await laraFetch(`/api/employee-attendances`, {
+    await laraFetch(`/api/employee-portal-attendances`, {
         method: 'GET',
         params: paramsComputed.value
     }, {

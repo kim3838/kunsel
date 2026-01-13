@@ -331,7 +331,7 @@ const fetchAttendance = async () => {
 
     if(import.meta.server){return;}
 
-    await laraFetch(`/api/employee-attendance/${route.params.id}`, {
+    await laraFetch(`/api/employee-portal-attendance/${route.params.id}`, {
         method: 'GET',
     }, {
         onSuccessResponse: async (request, options, response) => {
