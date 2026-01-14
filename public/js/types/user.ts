@@ -1,4 +1,6 @@
 
+import type {EnumOption} from "@/public/js/common/type";
+
 export type UserT = {
     id: string | number,
     ulid: string,
@@ -35,4 +37,26 @@ export type UserCompanyAssignmentSyncT = {
     [key: string | number]: {
         assignment_type: string | number
     }
+}
+
+export type CompanyUserSelectionT = {
+    account_roles: {
+        value: string,
+        extender: string
+    },
+    associated_company: {
+        assignment: EnumOption,
+        employee_full_name: string
+        employee_number: string,
+        id: number,
+        is_employee: boolean,
+        name: string
+    },
+    email: string,
+    email_verified_at: string,
+    id: number,
+    status: EnumOption,
+    timezone: string,
+    ulid: string,
+    username: string,
 }

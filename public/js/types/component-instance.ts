@@ -1,4 +1,6 @@
 
+import type {CompanyUserSelectionT} from "@/public/js/types/user";
+
 export interface SingleSelectPaginatedInstance {
     pending: boolean;
 }
@@ -10,6 +12,14 @@ export interface MultiSelectPaginatedInstance {
 
 export interface ShiftAssignmentsInstance {
     paginate: (page?: number, clearSelection?: boolean) => Promise<void>;
+}
+
+export interface UserSelectionInstance {
+    clearFlags: () => void;
+    clearData: () => void;
+    paginate: (page?: number, clearSelection?: boolean) => Promise<void>;
+    reset: () => void;
+    getSelectedData: () => CompanyUserSelectionT[];
 }
 
 export interface EmployeeSelectionInstance {
