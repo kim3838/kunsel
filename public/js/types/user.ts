@@ -40,7 +40,7 @@ export type UserCompanyAssignmentSyncT = {
 }
 
 export type CompanyUserSelectionT = {
-    account_roles: {
+    account_roles_summary: {
         value: string,
         extender: string
     },

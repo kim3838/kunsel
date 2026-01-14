@@ -94,6 +94,12 @@
                     {{cell.associated_company?.assignment?.text}}
                 </div>
             </template>
+            <template v-slot:cell.account_roles_summary="{cell,slot}">
+                <div class="p-[3px] flex items-center gap-1">
+                    <div>{{cell.account_roles_summary?.value}}</div>
+                    <div v-if="cell.account_roles_summary?.extender" class="text-xs font-sans">{{cell.account_roles_summary?.extender}}</div>
+                </div>
+            </template>
         </DataTable>
     </div>
 </template>
@@ -198,6 +204,7 @@ const usersHeaders = reactive<TableHeaderT[]>([
     {text: 'Employee #', value: 'employee_number', alignData: 'left'},
     {text: 'Name', value: 'employee_full_name', alignData: 'left'},
     {text: 'Company Assignment', value: 'company_assignment', alignData: 'left'},
+    {text: 'Account roles', value: 'account_roles_summary', alignData: 'left'},
 ]);
 
 const users = reactive<DataTableT>({
@@ -330,7 +337,7 @@ const usersExecute = async() =>{
     usersPending.value = true;
     emit("update:pending", true);
 
-    await laraFetch(`/api/associated-user-selections`, {
+    await laraFetch(`/api/company-user-selections`, {
         method: 'GET',
         params: paramsComputed.value
     }, {
