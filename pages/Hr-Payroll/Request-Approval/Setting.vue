@@ -67,8 +67,6 @@
                                         </div>
                                     </template>
                                 </DataTable>
-
-                                <pre>{{approverSequence}}</pre>
                             </fieldset>
                         </div>
                     </template>
