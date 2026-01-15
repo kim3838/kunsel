@@ -439,6 +439,20 @@ export const useLayout = () => {
                         },
                     ]
                 }, {
+                    key: `${hrPayrollRouteSlug}-request-approval`,
+                    type: 'sub-nav',
+                    title: 'Request & Approval',
+                    path_active: `/${hrPayrollRouteSlug}/request-approval`,
+                    options: [
+                        {
+                            key: `${hrPayrollRouteSlug}/request-approval/setting`,
+                            type: 'link',
+                            title: 'Approval Setting',
+                            to: `/${hrPayrollRouteSlug}/request-approval/setting`,
+                            route_active: `${hrPayrollRouteSlug}-request-approval-setting`
+                        },
+                    ],
+                },{
                     key: `${hrPayrollRouteSlug}-reports`,
                     type: 'sub-nav',
                     title: 'Reports',
