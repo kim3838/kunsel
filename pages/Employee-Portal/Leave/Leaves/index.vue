@@ -65,8 +65,8 @@
 </template>
 
 <script setup lang="ts">
-import type {DataTableT, TableHeaderT, TableRowT, TableSupHeaderT} from "~/public/js/types/data";
-import type {EnumOption, EnumSelection} from "~/public/js/common/type";
+import type {DataTableT, TableHeaderT, TableSupHeaderT} from "@/public/js/types/data";
+import type {EnumOption, EnumSelection} from "@/public/js/common/type";
 import {storeToRefs} from "pinia";
 
 useHead({titleTemplate: (titleChunk) => {return `${titleChunk} - Leave`}});
