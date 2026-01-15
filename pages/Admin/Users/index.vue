@@ -114,10 +114,10 @@
                                 <div v-if="cell.associated_companies_summary.extender" class="text-xs font-sans">{{cell.associated_companies_summary.extender}}</div>
                             </div>
                         </template>
-                        <template v-slot:cell.account_roles="{cell,slot}">
+                        <template v-slot:cell.account_roles_summary="{cell,slot}">
                             <div class="p-[3px] flex items-center gap-1">
-                                <div>{{cell.account_roles.value}}</div>
-                                <div v-if="cell.account_roles.extender" class="text-xs font-sans">{{cell.account_roles.extender}}</div>
+                                <div>{{cell.account_roles_summary?.value}}</div>
+                                <div v-if="cell.account_roles_summary?.extender" class="text-xs font-sans">{{cell.account_roles_summary?.extender}}</div>
                             </div>
                         </template>
                         <template v-slot:sub_row_slot="{rowIndex, cell, slot}">
@@ -155,7 +155,7 @@ const usersHeaders = reactive<TableHeaderT[]>([
     { text: 'Timezone', value: 'timezone', alignData: 'left'},
     { text: 'Created by', value: 'created_by', alignData: 'left'},
     { text: 'Associated', value: 'associated_companies_summary', alignData: 'left'},
-    { text: 'Account roles', value: 'account_roles', alignData: 'left'},
+    { text: 'Account roles', value: 'account_roles_summary', alignData: 'left'},
 ]);
 
 const showAssociatedCompanies = ref(true);
