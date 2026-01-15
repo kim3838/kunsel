@@ -40,23 +40,23 @@ export type UserCompanyAssignmentSyncT = {
 }
 
 export type CompanyUserSelectionT = {
+    company_id: number,
+    company_name: string,
+    company_assignment_type: EnumOption,
+    is_employee: boolean,
+    company_employee_number: string,
+    company_employee_full_name: string,
+
+    id: number,
+    ulid: string,
+    username: string,
+    email: string,
+    status: EnumOption,
+    email_verified_at: string,
+    timezone: string,
+
     account_roles_summary: {
         value: string,
         extender: string
     },
-    associated_company: {
-        assignment: EnumOption,
-        employee_full_name: string
-        employee_number: string,
-        id: number,
-        is_employee: boolean,
-        name: string
-    },
-    email: string,
-    email_verified_at: string,
-    id: number,
-    status: EnumOption,
-    timezone: string,
-    ulid: string,
-    username: string,
 }

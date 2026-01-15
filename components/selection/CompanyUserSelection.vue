@@ -83,15 +83,9 @@
             <template v-slot:cell.status="{cell,slot}">
                 <div class="p-[3px]">{{cell.status?.text}}</div>
             </template>
-            <template v-slot:cell.employee_number="{cell,slot}">
-                <div class="px-[3px]">{{cell.associated_company?.employee_number}}</div>
-            </template>
-            <template v-slot:cell.employee_full_name="{cell,slot}">
-                <div class="px-[3px]">{{cell.associated_company?.employee_full_name}}</div>
-            </template>
-            <template v-slot:cell.company_assignment="{cell,slot}">
-                <div v-if="cell.associated_company?.assignment?.value == COMPANY_ASSIGNMENT_TYPE.ADMIN" class="px-[3px]">
-                    {{cell.associated_company?.assignment?.text}}
+            <template v-slot:cell.company_assignment_type="{cell,slot}">
+                <div class="px-[3px]">
+                    <span v-if="cell.company_assignment_type?.value">{{cell.company_assignment_type?.text}}</span>
                 </div>
             </template>
             <template v-slot:cell.account_roles_summary="{cell,slot}">
@@ -201,9 +195,9 @@ const userStatusOptions = reactive({
 const usersHeaders = reactive<TableHeaderT[]>([
     {text: 'User Status', value: 'status', alignData: 'left'},
     {text: 'Username', value: 'username', alignData: 'left'},
-    {text: 'Employee #', value: 'employee_number', alignData: 'left'},
-    {text: 'Name', value: 'employee_full_name', alignData: 'left'},
-    {text: 'Company Assignment', value: 'company_assignment', alignData: 'left'},
+    {text: 'Employee #', value: 'company_employee_number', alignData: 'left'},
+    {text: 'Name', value: 'company_employee_full_name', alignData: 'left'},
+    {text: 'Company Assignment', value: 'company_assignment_type', alignData: 'left'},
     {text: 'Account roles', value: 'account_roles_summary', alignData: 'left'},
 ]);
 
