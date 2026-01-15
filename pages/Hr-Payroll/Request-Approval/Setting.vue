@@ -208,9 +208,8 @@
 
 <script setup lang="ts">
 import {storeToRefs} from "pinia";
-import type {EnumSelection, StringEnumInterface} from "@/public/js/common/type";
 import type {ApprovalSettingApproverT, ApprovalSettingT} from "@/public/js/types/request-approval";
-import type {Sequenceable, TableHeaderT, TableRowT} from "@/public/js/types/data";
+import type {TableHeaderT, TableRowT} from "@/public/js/types/data";
 import type {UserSelectionInstance} from "@/public/js/types/component-instance";
 import type {CompanyUserSelectionT} from "@/public/js/types/user";
 
@@ -219,14 +218,8 @@ definePageMeta({middleware: ['auth', 'admin-of-selected-company']});
 useLayout().setNavigationMode('solid');
 
 const {screenWidthBreakpoint, width: screenWidth} = useScreen();
-const coreStore = useCoreStore();
 const {isAuthenticated} = useAuth();
 const nuxtApp = useNuxtApp();
-const orderSequenceable = nuxtApp.$orderSequenceable as (data: Sequenceable[]) => void;
-const $enumerableOption = nuxtApp.$enumerableOption as (enumerable: StringEnumInterface, value: number) => {
-    text: string,
-    value: number
-};
 const {
     updatedAssociatedCompanyFlag
 } = storeToRefs(nuxtApp.$associationStore);
