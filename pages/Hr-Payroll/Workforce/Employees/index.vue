@@ -156,45 +156,51 @@
                             <div>
                                 <div class="mb-2 flex justify-between min-h-8">
                                     <div>
-                                        <div class="text-xs">Family name,(Middle), Given</div>
+                                        <InputLabel :size="'sm'" value="Family name,(Middle), Given" />
                                         <NuxtLink
                                             :to="`/hr-payroll/workforce/employees/${employee.ulid}`">
-                                            <span class="text-lg font-header cursor-pointer hover:underline">{{employee.full_name}}</span>
+                                            <span class="text-lg font-sans cursor-pointer hover:underline">{{employee.full_name}}</span>
                                         </NuxtLink>
                                     </div>
-
-                                    <NuxtLink
-                                        v-if="false"
-                                        :to="`/hr-payroll/workforce/employees/${employee.ulid}`">
-                                        <Button type="button" :variant="'outline'" :icon="'mdi:checkbook'" :size="'sm'"  :label="'info'"></Button>
-                                    </NuxtLink>
                                 </div>
 
-                                <table class="border-separate font-sans">
-                                    <tbody>
-                                        <tr><td class="">Number:</td><td class="pl-2 font-semibold">{{ _get(employee, 'number', null) }}</td></tr>
-                                        <tr>
-                                            <td class="flex justify-start">Contact:</td>
-                                            <td class="pl-2">
-                                                <span v-if="_isEmpty(_compact([employee.contact?.office_email, employee.contact?.personal_email, employee.contact?.office_phone, employee.contact?.personal_phone]))">None</span>
-                                                <div v-else class="text-sm" :class="index == 0 ? 'inline-block' : 'block'" v-for="(contact, index) in _compact([employee.contact?.office_email, employee.contact?.personal_email, employee.contact?.office_phone, employee.contact?.personal_phone])">{{contact}}</div>
-                                            </td>
-                                        </tr>
-                                        <tr><td class="">Department:</td><td class="pl-2">{{ _get(employee, 'department.name', null) }}</td></tr>
-                                        <tr><td class="">Designation:</td><td class="pl-2">{{ _get(employee, 'designation.name', null) }}</td></tr>
-                                        <tr>
-                                            <td class="">Manager:</td>
-                                            <td class="pl-2">
-                                                <NuxtLink
-                                                    :to="`/hr-payroll/workforce/employees/${_get(employee, 'manager.ulid', null)}`">
-                                                    <span class="cursor-pointer hover:underline">{{ _get(employee, 'manager.full_name', null) }}</span>
-                                                </NuxtLink>
-                                            </td>
-                                        </tr>
-                                        <tr><td class="">Gender:</td><td class="pl-2">{{ _get(employee, 'gender.text', null) }}</td></tr>
-                                        <tr><td class="">Marital Status:</td><td class="pl-2">{{ _get(employee, 'marital_status.text', null) }}</td></tr>
-                                    </tbody>
-                                </table>
+                                <div class="grid grid-cols-2 gap-x-6 gap-y-3">
+                                    <div>
+                                        <InputLabel :size="'sm'" value="Number" />
+                                        <div class="font-sans">{{ _get(employee, 'number', '--') }}</div>
+                                    </div>
+                                    <div class="flex items-center">
+                                        <div class="p-1 pr-4 rounded-sm flex gap-1" :style="employmentProfileStyle(employee?._payload?.label_shade?.value as LabelTypeT)">
+                                            <Label :size="'md'" :type="employee?._payload?.label_shade?.value as LabelTypeT" shade :label="employee.current_employment_profile.status.text" />
+                                            <div>{{employee.current_employment_profile?.employment_type?.text}}</div>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <InputLabel :size="'sm'" value="Department" />
+                                        <div>{{ _get(employee, 'department.name', '--') }}</div>
+                                    </div>
+                                    <div>
+                                        <InputLabel :size="'sm'" value="Designation" />
+                                        <div>{{ _get(employee, 'designation.name', '--') }}</div>
+                                    </div>
+                                    <div>
+                                        <InputLabel :size="'sm'" value="Contact" />
+                                        <span v-if="_isEmpty(_compact([employee.contact?.office_email, employee.contact?.personal_email, employee.contact?.office_phone, employee.contact?.personal_phone]))">--</span>
+                                        <div v-else :class="index == 0 ? 'inline-block' : 'block'" v-for="(contact, index) in _compact([employee.contact?.office_email, employee.contact?.personal_email, employee.contact?.office_phone, employee.contact?.personal_phone])">{{contact}}</div>
+                                    </div>
+                                    <div>
+                                        <InputLabel :size="'sm'" value="Manager" />
+                                        <div class="cursor-pointer hover:underline">{{ _get(employee, 'manager.full_name', '--') }}</div>
+                                    </div>
+                                    <div>
+                                        <InputLabel :size="'sm'" value="Gender" />
+                                        <div>{{ _get(employee, 'gender.text', '--') }}</div>
+                                    </div>
+                                    <div>
+                                        <InputLabel :size="'sm'" value="Marital Status" />
+                                        <div>{{ _get(employee, 'marital_status.text', '--') }}</div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <div v-if="noEmployeeRecords">
@@ -302,13 +308,19 @@
 import type {TableSupHeaderT, TableHeaderT, TableRowT, DataTableT} from "@/public/js/types/data";
 import type {EnumOption, EnumSelection, StringEnumInterface} from "@/public/js/common/type";
 import type {LabelTypeT} from "@/public/js/types/theme";
+import type {CommonColorsT} from "@/stores/theme";
 import {storeToRefs} from "pinia";
 
 useHead({titleTemplate: (titleChunk) => {return `${titleChunk} - Employees`}});
 definePageMeta({middleware: ['auth', 'admin-of-selected-company']});
 useLayout().setNavigationMode('solid');
 
+const {$themeStore} = useNuxtApp();
 const {isAuthenticated} = useAuth();
+const {
+    common: commonColor,
+} = storeToRefs($themeStore);
+const typedCommonColor = commonColor as Ref<CommonColorsT>;
 const nuxtApp = useNuxtApp();
 const $enumerableOption = nuxtApp.$enumerableOption as (enumerable: StringEnumInterface, value: number) => {
     text: string,
@@ -727,6 +739,13 @@ const showEmploymentProfilesModal = async (cell: TableRowT)=> {
         }
     }, true);
 };
+
+const employmentProfileStyle = (shade: LabelTypeT = 'default') => {
+
+    return {
+        'background-color':  typedCommonColor.value[shade as keyof CommonColorsT].secondary
+    };
+}
 </script>
 
 
