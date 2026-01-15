@@ -46,23 +46,31 @@
 
                         <div v-for="account in accounts.data" :key="account.id" class="scaffold-border p-4 space-y-2">
 
-                            <div class="font-sans">
-                                <div>
-                                    Account ID:
-                                </div>
-                                <div class="text-lg font-header cursor-pointer hover:underline">
+                            <div>
+                                <InputLabel :size="'sm'" value="Account #" />
+                                <div class="text-lg font-sans cursor-pointer hover:underline">
                                     <NuxtLink :to="`/admin/accounts/${account.ulid}`">
                                         <span>{{account.number}}</span>
                                     </NuxtLink>
                                 </div>
                             </div>
 
-                            <div class="space-y-2 font-sans">
+                            <div class="space-y-2">
 
-                                <table class="border-separate font-sans">
+                                <div class="grid grid-cols-2 gap-6">
+                                    <div>
+                                        <InputLabel :size="'sm'" value="Email" />
+                                        <div>{{account.email}}</div>
+                                    </div>
+                                    <div>
+                                        <InputLabel :size="'sm'" value="Date registered" />
+                                        <div>{{account.date_registered}}</div>
+                                    </div>
+                                </div>
+
+
+                                <table class="border-separate">
                                     <tbody>
-                                        <tr><td>Email:</td><td class="pl-2">{{account.email}}</td></tr>
-                                        <tr><td>Date registered:</td><td class="pl-2">{{account.date_registered}}</td></tr>
                                         <tr><td colspan="2">Subscriptions:</td></tr>
                                         <tr><td colspan="2">
                                             <div v-for="subscription in account.subscriptions" class="flex flex-row gap-4">
@@ -70,7 +78,7 @@
                                                     :icon="'ic:sharp-radio-button-checked'"
                                                     :label="subscription.module.text" />
 
-                                                <div class="font-serif">{{subscription.plan.text}}</div>
+                                                <div class="font-[STIX_Two_Text]">{{subscription.plan.text}}</div>
                                             </div>
                                         </td></tr>
                                     </tbody>

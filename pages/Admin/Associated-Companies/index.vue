@@ -51,15 +51,28 @@
                                 <div class="text-base">{{company.short_name}}</div>
                             </div>
 
-                            <table class="border-separate font-sans">
-                                <tbody>
-                                    <tr><td class="">Account #:</td><td class="pl-2 font-semibold">{{ _get(company, 'account_number', null) }}</td></tr>
-                                    <tr><td class="">Code:</td><td class="pl-2 font-semibold">{{ _get(company, 'code', null) }}</td></tr>
-                                    <tr><td class="">Country:</td><td class="pl-2">{{ _get(company, 'country', null) }}</td></tr>
-                                    <tr><td class="">Currency:</td><td class="pl-2">{{ _get(company, 'currency', null) }}</td></tr>
-                                    <tr><td class="">Timezone:</td><td class="pl-2">{{ _get(company, 'timezone', null) }}</td></tr>
-                                </tbody>
-                            </table>
+                            <div class="grid grid-cols-2 gap-6">
+                                <div>
+                                    <InputLabel :size="'sm'" value="Code" />
+                                    <div>{{ _get(company, 'code', null) }}</div>
+                                </div>
+                                <div>
+                                    <InputLabel :size="'sm'" value="Account #" />
+                                    <div>{{ _get(company, 'account_number', null) }}</div>
+                                </div>
+                                <div>
+                                    <InputLabel :size="'sm'" value="Country" />
+                                    <div>{{ _get(company, 'country', null) }}</div>
+                                </div>
+                                <div>
+                                    <InputLabel :size="'sm'" value="Currency" />
+                                    <div>{{ _get(company, 'currency', null) }}</div>
+                                </div>
+                                <div>
+                                    <InputLabel :size="'sm'" value="Timezone" />
+                                    <div>{{ _get(company, 'timezone', null) }}</div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
