@@ -46,7 +46,7 @@
                                 <NuxtLink
                                     :class="[disableActions ? 'pointer-events-none' : '']"
                                     :to="`/admin/associated-companies/${company.ulid}`">
-                                    <div class="text-lg font-header cursor-pointer hover:underline">{{company.name}}</div>
+                                    <div class="text-lg font-sans cursor-pointer hover:underline">{{company.name}}</div>
                                 </NuxtLink>
                                 <div class="text-base">{{company.short_name}}</div>
                             </div>
