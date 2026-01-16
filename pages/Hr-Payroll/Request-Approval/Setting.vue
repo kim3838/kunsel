@@ -168,6 +168,7 @@
                         :key="approvalSettingKey"
                         :headers="approvalSettingsHeaders"
                         :size="'lg'"
+                        :stripped="false"
                         :rows="approvalSettingsData"
                         :disabled="disableDataTable"
                         :sub-row-slug="'approvers'"
