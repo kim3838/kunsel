@@ -234,7 +234,7 @@ watch(updatedAssociatedCompanyFlag, (newValue) => {
 });
 
 const approvalSettingsHeaders = reactive<TableHeaderT[]>([
-    { text: '', value: 'actions'},
+    { text: '', value: 'actions', minWidth: '44.73px'},
     { text: 'Request approval setting', value: 'request_title'},
 ]);
 const approvalSettingKey = ref(0);
