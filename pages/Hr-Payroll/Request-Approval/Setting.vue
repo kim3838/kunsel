@@ -392,6 +392,7 @@ const edit = (cell: TableRowT) => {
 
 const resetEditable = () => {
     editPayload.value = {};
+    splicedApproverSequence.value = [];
 }
 
 const closeEdit = () => {
@@ -409,10 +410,18 @@ const modalForm = computed(()=>{
         account_id: selectedAssociatedCompanyAccountId.value,
         company_id: selectedAssociatedCompanyId.value,
         approval_setting_id: editPayload.value.id,
-        approver_sequence: approverSequence.value,
+        approver_sequence: approverSequence.value.map((sequence) => {return{
+            id: sequence.id,
+            approval_setting_id: sequence.approval_setting_id,
+            order: sequence.order,
+            approver_id: sequence.approver_id,
+        }}),
+        spliced_approver_sequence: splicedApproverSequence.value,
     }
 })
+
 const submit = async() => {
+
     editPending.value = true;
 
     await laraFetch(`/api/approval-setting/${editPayload.value.id}`, {
