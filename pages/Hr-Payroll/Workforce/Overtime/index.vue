@@ -155,7 +155,7 @@
                                         <div>
                                             <InputLabel :size="'sm'" value="Start"/>
                                             <InputWithIcon
-                                                :disabled="modalDisableActions || creatingAttendanceWithNonValidOvertimeFoundations"
+                                                :disabled="modalDisableActions || creatingOvertimeWithNonValidOvertimeFoundations"
                                                 high-light-all-text-on-focus
                                                 readonly
                                                 v-model="overtimeStart"
@@ -167,7 +167,7 @@
                                         <div>
                                             <InputLabel :size="'sm'" value="End"/>
                                             <InputWithIcon
-                                                :disabled="modalDisableActions || creatingAttendanceWithNonValidOvertimeFoundations"
+                                                :disabled="modalDisableActions || creatingOvertimeWithNonValidOvertimeFoundations"
                                                 high-light-all-text-on-focus
                                                 readonly
                                                 v-model="overtimeEnd"
@@ -198,7 +198,7 @@
                                         :variant="'default'"
                                         :size="'md'"
                                         :icon="modalSubmitButtonIcon"
-                                        :disabled="modalDisableActions || creatingAttendanceWithNonValidOvertimeFoundations"
+                                        :disabled="modalDisableActions || creatingOvertimeWithNonValidOvertimeFoundations"
                                         :label="modalSaveButtonLabel"
                                         @click="modalSubmit"/>
                                 </div>
@@ -875,7 +875,7 @@ watch(attendanceDate, async (newAttendanceDate) => {
     }
 });
 
-const creatingAttendanceWithNonValidOvertimeFoundations = computed(() => {
+const creatingOvertimeWithNonValidOvertimeFoundations = computed(() => {
     return creatingOvertime.value && !validOvertimeFoundations.value;
 });
 
