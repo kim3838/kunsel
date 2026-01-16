@@ -643,6 +643,49 @@ const edit = (cell: TableRowT) => {
     creatingOrEditing.value = true;
 }
 
+const renderDatePickers = () => {
+
+    let attendanceDateTimePickers = [
+        {
+            id: 'first_in',
+            type: 'datetime',
+            format: 'YYYY-MM-DD HH:mm',
+            selectedCallback: (payload: {value: string}) => {
+                attendanceFirstIn.value = payload.value;
+            }
+        },
+        ...(attendanceShiftRequiresLunchOutAndIn.value ? [
+            {
+                id: 'lunch_out',
+                type: 'datetime',
+                format: 'YYYY-MM-DD HH:mm',
+                selectedCallback: (payload: {value: string}) => {
+                    attendanceLunchOut.value = payload.value;
+                }
+            },{
+                id: 'lunch_in',
+                type: 'datetime',
+                format: 'YYYY-MM-DD HH:mm',
+                selectedCallback: (payload: {value: string}) => {
+                    attendanceLunchIn.value = payload.value;
+                }
+            },
+        ] : []),
+        {
+            id: 'last_out',
+            type: 'datetime',
+            format: 'YYYY-MM-DD HH:mm',
+            selectedCallback: (payload: {value: string}) => {
+                attendanceLastOut.value = payload.value;
+            }
+        },
+    ];
+
+    let filtersAndAttendanceDatePickers = filtersDateTimePickers.value.concat(attendanceDateTimePickers);
+
+    render(filtersAndAttendanceDatePickers);
+}
+
 const creatingAttendance = computed(() => {
     return stagedAttendance.value.id == null;
 });
@@ -738,51 +781,13 @@ const loadEditable = () => {
     attendanceDate.value = _get(editPayload.value, 'date', '');
     attendanceFirstIn.value = _get(editPayload.value, 'first_in', '');
 
-    let attendanceDateTimePickers = [
-        {
-            id: 'first_in',
-            type: 'datetime',
-            format: 'YYYY-MM-DD HH:mm',
-            selectedCallback: (payload: {value: string}) => {
-                attendanceFirstIn.value = payload.value;
-            }
-        },
-        ...(shiftRequiresLunchOutAndIn ? [
-            {
-                id: 'lunch_out',
-                type: 'datetime',
-                format: 'YYYY-MM-DD HH:mm',
-                selectedCallback: (payload: {value: string}) => {
-                    attendanceLunchOut.value = payload.value;
-                }
-            },{
-                id: 'lunch_in',
-                type: 'datetime',
-                format: 'YYYY-MM-DD HH:mm',
-                selectedCallback: (payload: {value: string}) => {
-                    attendanceLunchIn.value = payload.value;
-                }
-            },
-        ] : []),
-        {
-            id: 'last_out',
-            type: 'datetime',
-            format: 'YYYY-MM-DD HH:mm',
-            selectedCallback: (payload: {value: string}) => {
-                attendanceLastOut.value = payload.value;
-            }
-        },
-    ];
-
     if(attendanceShiftRequiresLunchOutAndIn.value){
         attendanceLunchOut.value = _get(editPayload.value, 'lunch_out', '');
         attendanceLunchIn.value = _get(editPayload.value, 'lunch_in', '');
     }
     attendanceLastOut.value = _get(editPayload.value, 'last_out', '');
 
-    let filtersAndAttendanceDatePickers = filtersDateTimePickers.value.concat(attendanceDateTimePickers);
-
-    render(filtersAndAttendanceDatePickers);
+    renderDatePickers();
 };
 
 const closeModal = () => {
