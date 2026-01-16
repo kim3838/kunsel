@@ -151,6 +151,7 @@ const props = defineProps({
             return {
                 fetch: {
                     url: null,
+                    query_params: {},
                     filters: {
                         search: {
                             keyword: '',
@@ -502,6 +503,7 @@ let paramsComputed = computed(() => {
     return {
         page: page.value,
         perPage: perPage.value,
+        ...props.payload.fetch.query_params,
         filters: {
             ...props.payload.fetch.filters,
             search: props.payload.fetch.filters.search.keyword
@@ -516,6 +518,7 @@ let selectedParamsComputed = computed(() => {
     return {
         page: 1,
         perPage: selected.length,
+        ...props.payload.fetch.query_params,
         filters: {
             id: selected
         }
