@@ -105,7 +105,7 @@
                                 <fieldset class="basis-2/3 neutral-border px-2 pb-2 space-y-2">
                                     <legend class="text-lg font-header">Attendance</legend>
 
-                                    <div class="grid gap-2 grid-cols-6">
+                                    <div class="grid gap-2 grid-cols-4 lg:grid-cols-8">
                                         <div class="col-span-4 md:col-span-2">
                                             <InputLabel :size="'sm'" value="First In"/>
                                             <InputWithIcon
