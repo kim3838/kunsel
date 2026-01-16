@@ -83,13 +83,25 @@
                                     <legend class="text-lg font-header">Schedule</legend>
 
                                     <div class="grid gap-2 grid-cols-1">
-                                        <div>
-                                            <InputLabel :size="'sm'" value="Work Period"/>
-                                            <div class="text-base">{{scheduleWorkPeriod}}</div>
+                                        <div class="grid grid-cols-2 gap-x-2">
+                                            <div>
+                                                <InputLabel :size="'sm'" value="Work Period"/>
+                                                <div class="text-base">{{scheduleWorkPeriod}}</div>
+                                            </div>
+                                            <div>
+                                                <InputLabel :size="'sm'" value="Work Start Grace"/>
+                                                <div class="text-base">{{shiftWorkStartGrace}}</div>
+                                            </div>
                                         </div>
-                                        <div v-if="attendanceShiftRequiresLunchOutAndIn">
-                                            <InputLabel :size="'sm'" value="Lunch Period"/>
-                                            <div class="text-base">{{scheduleLunchPeriod}}</div>
+                                        <div v-if="attendanceShiftRequiresLunchOutAndIn" class="grid grid-cols-2 gap-x-2">
+                                            <div >
+                                                <InputLabel :size="'sm'" value="Lunch Period"/>
+                                                <div class="text-base">{{scheduleLunchPeriod}}</div>
+                                            </div>
+                                            <div>
+                                                <InputLabel :size="'sm'" value="Lunch Start Grace"/>
+                                                <div class="text-base">{{shiftLunchStartGrace}}</div>
+                                            </div>
                                         </div>
                                         <div>
                                             <InputLabel :size="'sm'" value="Total Duration"/>
@@ -697,7 +709,9 @@ watch(creatingOrEditing, (creatingOrEditing)=>{
 });
 
 const scheduleWorkPeriod = ref('');
+const shiftWorkStartGrace = ref('');
 const scheduleLunchPeriod = ref('');
+const shiftLunchStartGrace = ref('');
 const scheduleTotalDuration = ref('');
 const attendanceWeekday = ref('');
 const scheduleIsFlexible = ref('');
@@ -715,7 +729,9 @@ const resetEditable = () => {
     };
     editPayload.value = {};
     scheduleWorkPeriod.value = '';
+    shiftWorkStartGrace.value = '';
     scheduleLunchPeriod.value = '';
+    shiftLunchStartGrace.value = '';
     scheduleTotalDuration.value = '';
     attendanceWeekday.value = '';
     scheduleIsFlexible.value = '';
@@ -773,7 +789,11 @@ const loadEditable = () => {
     attendanceShiftRequiresLunchOutAndIn.value = shiftRequiresLunchOutAndIn && !shiftIsFlexible && shiftHasLunchBreak;
     
     scheduleWorkPeriod.value = _get(editPayload.value, 'shift_schedule.work_start', '') + ' - ' + _get(editPayload.value, 'shift_schedule.work_end', '') + '(' + _get(editPayload.value, 'shift_schedule.timezone', '')  + ')';
+    shiftWorkStartGrace.value = _get(editPayload.value, 'shift.work_start_grace_time_readable', 'Not found');
+
     scheduleLunchPeriod.value = attendanceShiftRequiresLunchOutAndIn.value ? (_get(editPayload.value, 'shift_schedule.lunch_break_start', '') + ' - ' + _get(editPayload.value, 'shift_schedule.lunch_break_end', '')) : '';
+    shiftLunchStartGrace.value = attendanceShiftRequiresLunchOutAndIn.value ? _get(editPayload.value, 'shift.lunch_start_grace_time_readable', 'Not found') : '';
+
     scheduleTotalDuration.value = _get(editPayload.value, 'shift_schedule.total_work_hours_with_breaks', '');
     attendanceWeekday.value = _get(editPayload.value, 'shift_schedule.week_day_name', '');
     scheduleIsFlexible.value = shiftIsFlexible ? 'Yes' : 'No';
