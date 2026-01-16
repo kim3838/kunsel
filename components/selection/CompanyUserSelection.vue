@@ -331,7 +331,7 @@ const usersExecute = async() =>{
     usersPending.value = true;
     emit("update:pending", true);
 
-    await laraFetch(`/api/company-user-selections`, {
+    await laraFetch(`/api/company-users`, {
         method: 'GET',
         params: paramsComputed.value
     }, {
