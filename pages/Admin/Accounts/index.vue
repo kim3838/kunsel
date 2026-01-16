@@ -68,17 +68,16 @@
                                     </div>
                                 </div>
 
-
                                 <table class="border-separate">
                                     <tbody>
                                         <tr><td colspan="2">Subscriptions:</td></tr>
                                         <tr><td colspan="2">
-                                            <div v-for="subscription in account.subscriptions" class="flex flex-row gap-4">
+                                            <div v-for="subscription in account.subscriptions" class="flex flex-row items-center gap-4">
                                                 <UnorderedList
                                                     :icon="'ic:sharp-radio-button-checked'"
                                                     :label="subscription.module.text" />
 
-                                                <div class="font-[STIX_Two_Text]">{{subscription.plan.text}}</div>
+                                                <div class="text-sm font-[STIX_Two_Text]">{{subscription.plan.text}}</div>
                                             </div>
                                         </td></tr>
                                     </tbody>
