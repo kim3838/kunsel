@@ -774,7 +774,7 @@ const loadEditable = () => {
         },
     ];
 
-    if(shiftRequiresLunchOutAndIn){
+    if(attendanceShiftRequiresLunchOutAndIn.value){
         attendanceLunchOut.value = _get(editPayload.value, 'lunch_out', '');
         attendanceLunchIn.value = _get(editPayload.value, 'lunch_in', '');
     }
