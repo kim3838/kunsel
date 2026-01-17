@@ -11,6 +11,10 @@ const props = defineProps({
         type: [String, Number],
         default: undefined,
     },
+    customIdentifier: {
+        type: [String, Number],
+        default: undefined,
+    },
     options: {
         type: Object,
         default: function () {
@@ -24,7 +28,7 @@ const props = defineProps({
 
 const optionsRef = ref({ ...props.options });
 
-const emit = defineEmits(["update:modelValue"]);
+const emit = defineEmits(["valueChange", "update:modelValue"]);
 
 const proxyModel = computed({
     get() {
@@ -38,6 +42,11 @@ const proxyModel = computed({
 if(proxyModel.value !== undefined){
     props.options.selected = proxyModel.value;
 }
+
+watch(proxyModel, newValue => {
+    proxyModel.value = newValue;
+    emit('valueChange', newValue, props.customIdentifier);
+})
 </script>
 
 <style scoped>
