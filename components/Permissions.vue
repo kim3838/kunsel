@@ -2,12 +2,12 @@
     <div class="space-y-6">
 
         <div class="flex flex-row flex-wrap gap-4" v-for="(series, index) in permissionSeries" :key="index">
-            <div class="font-business text-lg w-full scaffold-border-bottom">{{series.name}}</div>
+            <div class="font-header text-lg w-full scaffold-border-bottom">{{series.name}}</div>
 
             <div
                 class="flex flex-col"
                 v-for="(permission_group, index) in series.permission_group" :key="index">
-                <div class="font-business">{{permission_group.name}}</div>
+                <div class="font-data">{{permission_group.name}}</div>
 
                 <div
                      v-for="(permission_form_input, index) in permission_group.permissions" :key="index">
