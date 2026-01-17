@@ -1,6 +1,8 @@
 
 import type {Validatable} from "@/public/js/types/data";
 import type {LabelTypeT} from "@/public/js/types/theme";
+import {storeToRefs} from "pinia";
+import type {CommonColorsT} from "~/stores/theme";
 
 export const useCosmetic = () => {
 
@@ -72,9 +74,23 @@ export const useCosmetic = () => {
         return shadeValue;
     }
 
+    const shadedStyle = (shade: LabelTypeT = 'default') => {
+
+        const {$themeStore} = useNuxtApp();
+        const {
+            common: commonColor,
+        } = storeToRefs($themeStore);
+        const typedCommonColor = commonColor as Ref<CommonColorsT>;
+
+        return {
+            'background-color':  typedCommonColor.value[shade as keyof CommonColorsT].secondary
+        };
+    }
+
     return {
         formulableComponentShade,
         formulableShade,
-        validationShade
+        validationShade,
+        shadedStyle,
     }
 }

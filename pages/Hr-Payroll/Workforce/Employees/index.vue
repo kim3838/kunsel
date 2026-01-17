@@ -152,7 +152,7 @@
 
                     <div v-if="employees.successful && viewMode.selected == DATA_VIEW_MODE.FLEX" class="flex flex-row flex-wrap gap-4">
 
-                        <div v-for="employee in employees.data" :key="employee.id" class="flex-grow scaffold-border p-4 space-y-2">
+                        <div v-for="employee in employees.data" :key="employee.id" class="flex-grow scaffold-border p-4 space-y-2 tint-background">
                             <div>
                                 <div class="mb-2 flex justify-between min-h-8">
                                     <div>
@@ -170,7 +170,7 @@
                                         <div class="font-sans">{{ _get(employee, 'number', '--') }}</div>
                                     </div>
                                     <div class="flex items-center">
-                                        <div class="p-1 pr-4 rounded-sm flex gap-1" :style="employmentProfileStyle(employee?._payload?.label_shade?.value as LabelTypeT)">
+                                        <div class="p-1 pr-4 rounded-sm flex items-center gap-1" :style="cosmetic.shadedStyle(employee?._payload?.label_shade?.value as LabelTypeT)">
                                             <Label :size="'md'" :type="employee?._payload?.label_shade?.value as LabelTypeT" shade :label="employee.current_employment_profile.status.text" />
                                             <div>{{employee.current_employment_profile?.employment_type?.text}}</div>
                                         </div>
@@ -308,24 +308,19 @@
 import type {TableSupHeaderT, TableHeaderT, TableRowT, DataTableT} from "@/public/js/types/data";
 import type {EnumOption, EnumSelection, StringEnumInterface} from "@/public/js/common/type";
 import type {LabelTypeT} from "@/public/js/types/theme";
-import type {CommonColorsT} from "@/stores/theme";
 import {storeToRefs} from "pinia";
 
 useHead({titleTemplate: (titleChunk) => {return `${titleChunk} - Employees`}});
 definePageMeta({middleware: ['auth', 'admin-of-selected-company']});
 useLayout().setNavigationMode('solid');
 
-const {$themeStore} = useNuxtApp();
 const {isAuthenticated} = useAuth();
-const {
-    common: commonColor,
-} = storeToRefs($themeStore);
-const typedCommonColor = commonColor as Ref<CommonColorsT>;
 const nuxtApp = useNuxtApp();
 const $enumerableOption = nuxtApp.$enumerableOption as (enumerable: StringEnumInterface, value: number) => {
     text: string,
     value: number
 };
+const cosmetic = useCosmetic();
 const common = useCommon();
 const {
     updatedAssociatedCompanyFlag
@@ -739,13 +734,6 @@ const showEmploymentProfilesModal = async (cell: TableRowT)=> {
         }
     }, true);
 };
-
-const employmentProfileStyle = (shade: LabelTypeT = 'default') => {
-
-    return {
-        'background-color':  typedCommonColor.value[shade as keyof CommonColorsT].secondary
-    };
-}
 </script>
 
 

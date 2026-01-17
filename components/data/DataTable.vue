@@ -190,6 +190,8 @@ const accentColor40 = computed(() => {
     return accentColor.value + hexAlpha.value['40'];
 });
 
+const cosmetic = useCosmetic();
+
 const props = defineProps({
     supHeaders: {
         type: Array as PropType<TableSupHeaderT[]>,
@@ -548,11 +550,15 @@ const cellStyle = (row: TableRowT | TableSupRowT, header: TableSupHeaderT) => {
 
         if(validShadeValue && shadeCell == '*'){
 
-            style['background-color'] = typedCommonColor.value[shadeValue as keyof CommonColorsT].secondary;
+            style = {
+                ...cosmetic.shadedStyle(shadeValue as keyof CommonColorsT)
+            }
 
         } else if (validShadeValue && _includes(shadeCell, header.value)) {
 
-            style['background-color'] = typedCommonColor.value[shadeValue as keyof CommonColorsT].secondary;
+            style = {
+                ...cosmetic.shadedStyle(shadeValue as keyof CommonColorsT)
+            }
         }
     }
 
@@ -597,7 +603,7 @@ tbody tr td:nth-last-child(1){
 }
 
 .table-row-odd-background {
-    background-color: v-bind(neutralColor40);
+    background-color: v-bind(shadeColor);
 }
 
 .table-default-background,
