@@ -245,11 +245,21 @@
                                         <InputLabel :size="'sm'" value="Department"/>
                                         <SingleSelect :icon="'ic:baseline-all-inbox'" :disabled="disableActions" drop-shadow :size="'md'" :options="departmentOptions"/>
                                     </div>
+                                    <div v-if="departmentOptions.selected" class="col-span-2 sm:col-span-3">
+                                        <InputLabel :size="'sm'" value="Department Assignment"/>
+                                        <RadioGroup
+                                            :selections="departmentAssignmentSelections"
+                                            :size="'md'"
+                                            :orientation="'horizontal'"
+                                            :radio-key="'department-assignment'"
+                                            v-model="departmentAssignment" />
+                                    </div>
+                                </div>
+                                <div class="grid gap-2 grid-cols-2 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-5 xl:grid-cols-6">
                                     <div class="lg:col-span-2">
                                         <InputLabel :size="'sm'" value="Designation"/>
                                         <SingleSelect :icon="'ic:baseline-inbox'" :disabled="disableActions" drop-shadow :size="'md'" :options="designationOptions"/>
                                     </div>
-                                    <div class="hidden lg:block"></div>
                                     <div class="col-span-2">
                                         <InputLabel :size="'sm'" value="Manager"/>
                                         <SingleSelectPaginated
@@ -326,6 +336,7 @@
 import {storeToRefs} from "pinia";
 import type {SelectionOptionsT} from "@/public/js/types/form";
 import type {EmployeePayrollComponentFormT, EmploymentProfileFormT} from "@/public/js/types/employee";
+import type {StringEnumInterface} from "@/public/js/common/type";
 
 useHead({titleTemplate: (titleChunk) => {return `${titleChunk} - Employees`}});
 definePageMeta({middleware: ['auth', 'admin-of-selected-company']});
@@ -337,6 +348,11 @@ const {timezoneSelections} = useCommon();
 const {screenWidthBreakpoint, width: screenWidth} = useScreen();
 const {isAuthenticated} = useAuth();
 const {$authStore, $associationStore, $moment} = useNuxtApp();
+const nuxtApp = useNuxtApp();
+const $enumerableOption = nuxtApp.$enumerableOption as (enumerable: StringEnumInterface, value: number) => {
+    text: string,
+    value: number
+};
 const clientReadyState = useClientReadyState();
 const {
     updatedAssociatedCompanyFlag
@@ -528,6 +544,12 @@ const departmentOptions = reactive({
     selection: companyOrganizationSelections.value.departments,
     selected: null
 });
+const departmentAssignmentSelections = reactive([
+    $enumerableOption(DEPARTMENT_EMPLOYEE_ASSIGNMENT_NAME, DEPARTMENT_EMPLOYEE_ASSIGNMENT.DEFAULT as number),
+    $enumerableOption(DEPARTMENT_EMPLOYEE_ASSIGNMENT_NAME, DEPARTMENT_EMPLOYEE_ASSIGNMENT.HEAD as number),
+])
+const departmentAssignment = ref(DEPARTMENT_EMPLOYEE_ASSIGNMENT.DEFAULT);
+
 const designationOptions = reactive({
     search: '',
     selection: companyOrganizationSelections.value.designations,
@@ -562,7 +584,8 @@ const fetchEmployee = async (callback: (() => void) | null = null) => {
             employeeBirthdate.value = _get(response, '_data.values.employee.birth_date', '1990-01-01');
             genderOptions.selected = _get(response, '_data.values.employee.gender.value', GENDER.NOT_SPECIFIED);
             maritalStatusOptions.selected = _get(response, '_data.values.employee.marital_status.value', MARITAL_STATUS.NOT_SPECIFIED);
-            departmentOptions.selected = _get(response, '_data.values.employee.department_id', null);
+            departmentOptions.selected = _get(response, '_data.values.employee.department.id', null);
+            departmentAssignment.value = _get(response, '_data.values.employee.department.pivot.department_assignment_type', DEPARTMENT_EMPLOYEE_ASSIGNMENT.DEFAULT);
             designationOptions.selected = _get(response, '_data.values.employee.designation_id', null);
             tempSelectedManager.value = _get(response, '_data.values.employee.manager_id', null);
 
@@ -831,6 +854,7 @@ const employeeFormBody = computed(() => {
         account_id: selectedAssociatedCompanyAccountId.value,
         company_id: selectedAssociatedCompanyId.value,
         department_id: departmentOptions.selected,
+        department_assignment_type: departmentOptions.selected ? departmentAssignment.value : null,
         designation_id: designationOptions.selected,
         manager_id: managerOptions.selected,
         number: employeeNumber.value,

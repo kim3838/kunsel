@@ -28,6 +28,21 @@
                     </NavDrop>
                 </div>
             </template>
+            <template v-slot:cell.department_head_number="{cell,slot}">
+                <div class="p-[3px]">
+                    <span v-if="cell.head">{{`${cell.head?.number}`}}</span>
+                </div>
+            </template>
+            <template v-slot:cell.department_head_full_name="{cell,slot}">
+                <div class="p-[3px]">
+                    <span v-if="cell.head">{{`${cell.head?.full_name}`}}</span>
+                </div>
+            </template>
+            <template v-slot:cell.department_head_designation="{cell,slot}">
+                <div class="p-[3px]">
+                    <span v-if="cell.head && cell.head?.designation">{{`${cell.head?.designation?.name}`}}</span>
+                </div>
+            </template>
         </DataTable>
     </div>
 </template>
@@ -53,7 +68,10 @@ const rowsIsEmpty = computed(() => props.rows.length === 0);
 const selectedDepartments = ref([]);
 const departmentsHeaders = reactive<TableHeaderT[]>([
     { text: '', value: 'actions'},
-    { text: '', value: 'name', alignData: 'left'},
+    { text: 'Name', value: 'name', alignData: 'left'},
+    { text: 'Department Head', value: 'department_head_number', alignData: 'left', minWidth: '30px'},
+    { text: '', value: 'department_head_full_name', alignData: 'left', minWidth: '30px'},
+    { text: '', value: 'department_head_designation', alignData: 'left',minWidth: '30px'},
 ]);
 
 const edit = (cell: TableRowT) => {

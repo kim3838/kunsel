@@ -141,8 +141,8 @@
                         :sub-row-slug="'details'"
                         :sub-row-settings="{
                             type: DATATABLE_SUBROW_TYPE.TITLED,
-                            containerPaddingTop: 0.25,
-                            containerPaddingBottom: 0.75,
+                            containerPaddingTop: 0.75,
+                            containerPaddingBottom: 1.75,
                             titleSize: 'sm',
                             rowVerticalLine: true,
                             verticalBorderType: 'dashed',
@@ -165,6 +165,21 @@
                                         {type: 'action',icon: 'mdi:pen',title: 'Edit',callback: () => edit(cell),},
                                     ]">
                                 </NavDrop>
+                            </div>
+                        </template>
+                        <template v-slot:cell.department_head_number="{cell,slot}">
+                            <div class="p-[3px]">
+                                <span v-if="cell.head">{{`${cell.head?.number}`}}</span>
+                            </div>
+                        </template>
+                        <template v-slot:cell.department_head_full_name="{cell,slot}">
+                            <div class="p-[3px]">
+                                <span v-if="cell.head">{{`${cell.head?.full_name}`}}</span>
+                            </div>
+                        </template>
+                        <template v-slot:cell.department_head_designation="{cell,slot}">
+                            <div class="p-[3px]">
+                                <span v-if="cell.head && cell.head?.designation">{{`${cell.head?.designation?.name}`}}</span>
                             </div>
                         </template>
                         <template v-slot:sub_row_slot="{rowIndex, cell, slot}">
@@ -215,6 +230,9 @@ watch(updatedAssociatedCompanyFlag, async (newValue) => {
 const departmentsHeaders = reactive<TableHeaderT[]>([
     { text: '', value: 'actions'},
     { text: 'Name', value: 'name', alignData: 'left'},
+    { text: 'Department Head', value: 'department_head_number', alignData: 'left', minWidth: '33px'},
+    { text: '', value: 'department_head_full_name', alignData: 'left', minWidth: '33px'},
+    { text: '', value: 'department_head_designation', alignData: 'left', minWidth: '33px'},
 ]);
 
 const departmentsKey = shallowRef(0);
@@ -474,7 +492,7 @@ const createEditModalForm = computed(() => {
         name: departmentName.value,
     };
 
-    if(Boolean(departmentOptions.selected)){
+    if(departmentOptions.selected == 1){
         formTemp = {...formTemp, parent_id: parentDepartmentSelectionOption.selected}
     }
 
