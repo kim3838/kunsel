@@ -160,6 +160,10 @@ const accentColor70 = computed(() => {
     return accentColor.value + hexAlpha.value['70'];
 });
 
+const accentColor40 = computed(() => {
+    return accentColor.value + hexAlpha.value['40'];
+});
+
 const props = defineProps({
     modelValue: {
         type: [String, Number],
@@ -743,7 +747,7 @@ watch(() => props.options.selected, newValue => {
 }
 
 .options-class:hover{
-    background-color: v-bind(neutralColor);
+    background-color: v-bind(accentColor40);
 }
 
 .options-active{

@@ -131,12 +131,17 @@ const {
     hexAlpha,
     type: themeType,
     primary: primaryColor,
+    accent: accentColor,
     lining: liningColor,
     thread: threadColor,
     neutral: neutralColor,
     tint: tintColor,
     textInvert: textInvertColor,
 } = storeToRefs($themeStore);
+
+const accentColor40 = computed(() => {
+    return accentColor.value + hexAlpha.value['40'];
+});
 
 const disabledBackgroundColor = computed(() => {
     return themeType.value == 'light'
@@ -863,6 +868,6 @@ defineExpose({
 }
 
 .options-class:hover{
-    background-color: v-bind(neutralColor);
+    background-color: v-bind(accentColor40);
 }
 </style>

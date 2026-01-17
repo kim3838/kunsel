@@ -23,6 +23,7 @@ const {
     neutral: neutralColor,
     body: bodyColor,
     thread: threadColor,
+    tint: tintColor,
 } = storeToRefs($themeStore)
 
 const props = defineProps({
@@ -88,6 +89,6 @@ const modalContainerClass = computed(() => {
 }
 
 .modal-body{
-    background-color: v-bind(bodyColor);
+    background-color: v-bind(tintColor);
 }
 </style>

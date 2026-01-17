@@ -105,6 +105,7 @@ const {
     hexAlpha,
     type: themeType,
     primary: primaryColor,
+    accent: accentColor,
     lining: liningColor,
     thread: threadColor,
     neutral: neutralColor,
@@ -116,6 +117,10 @@ const disabledBackgroundColor = computed(() => {
     return themeType.value == 'light'
         ? (primaryColor.value + hexAlpha.value['10'])
         : (textInvertColor.value + hexAlpha.value['40']);
+});
+
+const accentColor40 = computed(() => {
+    return accentColor.value + hexAlpha.value['40'];
 });
 
 const props = defineProps({
@@ -683,6 +688,6 @@ watch(() => props.options.selected, newValue => {
 }
 
 .options-class:hover{
-    background-color: v-bind(neutralColor);
+    background-color: v-bind(accentColor40);
 }
 </style>
