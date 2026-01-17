@@ -195,7 +195,7 @@
         <!-- Sub Navigation -->
         <div
             v-show="subNavigationOptions.length"
-            class="mt-2 relative w-full flex justify-center"
+            class="py-2 relative w-full flex justify-center"
             :class="subNavigationFontClass">
             <div
                 ref="subNavigationRef"
@@ -276,6 +276,7 @@ const { height: navigationReferenceHeight} = useElementSize(navigation);
 const {$themeStore, $layoutStore} = useNuxtApp();
 const {
     neutral: neutralColor,
+    lining: liningColor,
 } = storeToRefs($themeStore);
 const {
     subNavigationDropAlign,
@@ -394,5 +395,7 @@ const associatedCompaniesSelectOverrides = computed(() => {
     background-color: v-bind(navigationBackground) !important;
     left: 0;
     right: var(--scrollbar-width);
+    border: 0;
+    box-shadow: 0 0 1px v-bind(liningColor);
 }
 </style>
