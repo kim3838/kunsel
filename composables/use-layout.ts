@@ -637,7 +637,7 @@ export const useLayout = () => {
             return 'transparent';
         }
 
-        return bodyColor.value;
+        return tintColor.value;
     });
     const navigationHeightInPixels = computed(() => {
         return (navigationHeight.value + 'px');
