@@ -494,9 +494,11 @@ const selectionSummary = computed(() => {
     if(props.options.selected == null){
         return props.noneSelectedLabel;
     } else {
-        return optionsDataComputed.value.filter((item: SelectDataType) => {
+        let selected = optionsDataComputed.value.filter((item: SelectDataType) => {
             return item.value == props.options.selected;
-        })[0].text;
+        })[0];
+
+        return _get(selected, 'text', '--');
     }
 });
 
