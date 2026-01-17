@@ -13,7 +13,7 @@ export const useLayout = () => {
     const userIsAdminInAnyCompany = userIsAdminInAnyCompanyState();
     const {screenWidthBreakpoint, width: screenWidth, height: screenHeight } = useScreen();
     const $themeStore = useThemeStore();
-    const {body: bodyColor} = storeToRefs($themeStore);
+    const {tint: tintColor, body: bodyColor} = storeToRefs($themeStore);
     const navigationMode = useState('navigation-mode', () => 'clear-none-background');
 
     const navigationAccountLinks = computed<NavigationLinkInterface[]>(() => {
