@@ -60,20 +60,20 @@ export const useThemeStore = defineStore('theme', {
             palletes: {
                 light: {
                     'type': 'light',
-                    'primary': '#343333',
+                    'primary': '#4b4949',
                     'secondary': '#787878',
-                    'accent': '#e0e0e0',
+                    'accent': '#c9c9c9',
 
                     'lining': '#b4b4b4',
                     'thread': '#c7c7c7',
 
-                    'neutral': '#e5e5e5',
+                    'neutral': '#dcd9d9',
 
                     'tint': '#fdfdfd',
-                    'body': '#ffffff',
+                    'body': '#f5f5f5',
                     'shade': '#f5f5f5',
 
-                    'text': '#48555e',
+                    'text': '#4b4949',
                     'text-invert': '#e0e8de',
                     'text-secondary': '#b4b4b4',
                 },
@@ -117,7 +117,7 @@ export const useThemeStore = defineStore('theme', {
                 },
                 green: {
                     'type': 'light',
-                    'primary': '#317e25',
+                    'primary': '#307c24',
                     'secondary': '#2d6026',
                     'accent': '#b9f1b0',
 
@@ -127,10 +127,10 @@ export const useThemeStore = defineStore('theme', {
                     'neutral': '#e5e5e5',
 
                     'tint': '#fdfdfd',
-                    'body': '#ffffff',
+                    'body': '#f5f5f5',
                     'shade': '#f5f5f5',
 
-                    'text': '#435b45',
+                    'text': '#324134',
                     'text-invert': '#ddeedb',
                     'text-secondary': '#a9d099',
                 },
@@ -140,16 +140,16 @@ export const useThemeStore = defineStore('theme', {
                     'secondary': '#d78c8c',
                     'accent': '#f4978e',
 
-                    'lining': '#F08080',
-                    'thread': '#F8AD9D',
+                    'lining': '#f18e8e',
+                    'thread': '#fdc0b2',
 
                     'neutral': '#fff8e0',
 
                     'tint': '#fdfdfd',
-                    'body': '#ffffff',
-                    'shade': '#fff6ee',
+                    'body': '#f5f5f5',
+                    'shade': '#f5f5f5',
 
-                    'text': '#755548',
+                    'text': '#6c4637',
                     'text-invert': '#ffffff',
                     'text-secondary': '#ab7676',
                 },
