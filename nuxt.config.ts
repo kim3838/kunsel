@@ -80,6 +80,7 @@ export default defineNuxtConfig({
             {
                 from: 'lodash',
                 imports: [
+                    { name: 'cloneDeep', as: '_cloneDeep'},
                     { name: 'get', as: '_get'},
                     { name: 'isEmpty', as: '_isEmpty'},
                     { name: 'difference', as: '_difference'},
