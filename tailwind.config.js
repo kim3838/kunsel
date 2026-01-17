@@ -19,6 +19,9 @@ module.exports = {
                     'Merienda',
                     'Protest Revolution',
                 ],
+                hero: [
+                    'Hedvig Letters Sans',
+                ],
                 business: [
                     'Gentium Plus',
                     'GG Sans',
