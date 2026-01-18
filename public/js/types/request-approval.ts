@@ -3,11 +3,12 @@ import type {SequenceableTableRow} from "@/public/js/types/data";
 import type {EnumOption} from "@/public/js/common/type";
 
 export type ApprovalSettingApproverT = SequenceableTableRow & {
-    id?: number,
+    id?: number | null,
     approval_setting_id: number | null,
+    type?: EnumOption,
+    type_value: number,
     approver_id: number | null,
     approver_username?: string,
-
 
     company_id?: number,
     company_name?: string,

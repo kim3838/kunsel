@@ -4,7 +4,7 @@
             <div class="mx-auto max-w-screen-2xl">
 
                 <DialogModal
-                    :max-width="'980px'"
+                    :max-width="'1100px'"
                     :show="editing"
                     :closeable="false">
                     <template #title>
@@ -39,20 +39,33 @@
                                                 @click="deleteApprovalSequence(rowIndex, cell.id)"/>
                                         </div>
                                     </template>
+                                    <template v-slot:cell.type="{cell, slot, scrollReference, rowIndex}">
+                                        <div class="mx-0.5 flex items-center h-[32px]">
+                                            <SingleSelectWrapper
+                                                in-horizontal-scrollable
+                                                drop-shadow
+                                                :custom-identifier="rowIndex"
+                                                :scroll-reference="scrollReference"
+                                                :label="'Select Approver Type'"
+                                                :icon="'tdesign:component-checkbox'"
+                                                value-persist
+                                                :size="slot.selectSize"
+                                                v-model="cell.type_value"
+                                                :options="approverTypeOptions"
+                                                @valueChange="approverTypeChange"
+                                            />
+                                        </div>
+                                    </template>
                                     <template v-slot:cell.set_approver="{cell, slot, scrollReference, rowIndex}">
                                         <div class="h-[32px] mx-0.5 space-x-0.5 w-full flex items-center">
                                             <Button
                                                 class="w-min"
+                                                v-if="cell.type_value == APPROVER_TYPE.SELECTED"
                                                 :size="slot.buttonSize"
                                                 :disabled="disableActions"
                                                 :icon="cell.approver_id === null ? 'mdi:plus' : 'mdi:button-cursor'"
                                                 :label="cell.approver_id === null ? 'Select' : 'Reselect'"
                                                 @click="setOrChangeApprover(rowIndex, cell)"/>
-                                        </div>
-                                    </template>
-                                    <template v-slot:cell.approver="{cell, slot, scrollReference}">
-                                        <div class="mx-0.5">
-                                            {{cell.approver_name}}
                                         </div>
                                     </template>
                                     <template v-slot:cell.company_assignment_type="{cell,slot}">
@@ -211,6 +224,7 @@ import type {ApprovalSettingApproverT, ApprovalSettingT} from "@/public/js/types
 import type {TableHeaderT, TableRowT} from "@/public/js/types/data";
 import type {UserSelectionInstance} from "@/public/js/types/component-instance";
 import type {CompanyUserSelectionT} from "@/public/js/types/user";
+import type {StringEnumInterface} from "@/public/js/common/type";
 
 useHead({titleTemplate: (titleChunk) => {return `${titleChunk} - Approval Setting`}});
 definePageMeta({middleware: ['auth', 'admin-of-selected-company']});
@@ -219,6 +233,10 @@ useLayout().setNavigationMode('solid');
 const {screenWidthBreakpoint, width: screenWidth} = useScreen();
 const {isAuthenticated} = useAuth();
 const nuxtApp = useNuxtApp();
+const $enumerableOption = nuxtApp.$enumerableOption as (enumerable: StringEnumInterface, value: number) => {
+    text: string,
+    value: number
+};
 const {
     updatedAssociatedCompanyFlag
 } = storeToRefs(nuxtApp.$associationStore);
@@ -291,16 +309,44 @@ const editPayload = ref<Partial<ApprovalSettingT>>({});
 
 const approverSequenceHeaders = reactive<TableHeaderT[]>([
     {text: '', value: 'actions', minWidth: '41.38px', width: '41.38px', maxWidth: '41.38px'},
+    {text: 'Type', value: 'type', minWidth: '180px'},
     {text: 'Order', value: 'order', alignData: 'left'},
-    {text: '', value: 'set_approver', alignData: 'left'},
+    {text: '', value: 'set_approver', minWidth: '110px', alignData: 'left'},
+
     {text: 'Username', value: 'approver_username', alignData: 'left'},
     {text: 'Employee #', value: 'company_employee_number', alignData: 'left'},
     {text: 'Name', value: 'company_employee_full_name', alignData: 'left'},
+
     {text: 'Company Assignment', value: 'company_assignment_type', alignData: 'left'},
     {text: 'Account roles', value: 'account_roles_summary', alignData: 'left'},
 ]);
 
 const approverSequence = ref<ApprovalSettingApproverT[]>([]);
+
+const approverTypeOptions = reactive({
+    search: '',
+    selection: [
+        $enumerableOption(APPROVER_TYPE_NAME, APPROVER_TYPE.SELECTED as number),
+        $enumerableOption(APPROVER_TYPE_NAME, APPROVER_TYPE.DEPARTMENT_HEAD as number),
+        $enumerableOption(APPROVER_TYPE_NAME, APPROVER_TYPE.MANAGER as number),
+    ]
+});
+
+const approverTypeChange = (value: number, indexIdentifier: number) => {
+
+    if(value !== APPROVER_TYPE.SELECTED){
+
+        let tempApproverSequence = approverSequence.value[indexIdentifier] as ApprovalSettingApproverT;
+
+        approverSequence.value[indexIdentifier] = {
+            ...(Boolean(tempApproverSequence.id) && { id: tempApproverSequence.id }),
+            approval_setting_id: tempApproverSequence.approval_setting_id,
+            type_value: tempApproverSequence.type_value,
+            order: tempApproverSequence.order,
+            approver_id: null
+        }
+    }
+}
 
 const splicedApproverSequence = ref<number[]>([]);
 const setApproverOnApprovalSequenceRowIndexFlag = ref(-1);
@@ -372,21 +418,21 @@ const addApprover = () => {
 
     approverSequence.value.push({
         approval_setting_id: editPayload.value?.id as number,
+        type_value: APPROVER_TYPE.SELECTED as number,
         order: approverSequence.value.length + 1,
         approver_id: null,
     });
 }
 
-const edit = (cell: TableRowT) => {
-
-    let row = cell as ApprovalSettingT;
+const edit = (row: TableRowT) => {
 
     if(row){
 
         editing.value = true;
 
-        editPayload.value = row;
-        approverSequence.value = [...row.approvers];
+        editPayload.value = _cloneDeep(row);
+
+        approverSequence.value = _get(editPayload.value, 'approvers', []) as ApprovalSettingApproverT[];
     }
 };
 
@@ -414,6 +460,7 @@ const modalForm = computed(()=>{
             id: sequence.id,
             approval_setting_id: sequence.approval_setting_id,
             order: sequence.order,
+            type: sequence.type_value,
             approver_id: sequence.approver_id,
         }}),
         spliced_approver_sequence: splicedApproverSequence.value,

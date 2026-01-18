@@ -6,6 +6,9 @@
             :disabled="disabled"
             :size="'md'"
             :rows="rows">
+            <template v-slot:cell.type="{cell,slot}">
+                <div class="px-[3px]">{{cell.type?.text}}</div>
+            </template>
             <template v-slot:cell.company_assignment_type="{cell,slot}">
                 <div class="px-[3px]">
                     <span v-if="cell.company_assignment_type?.value">{{cell.company_assignment_type?.text}}</span>
@@ -41,6 +44,7 @@ const rowsIsEmpty = computed(() => props.rows.length === 0);
 
 const approversHeaders = reactive<TableHeaderT[]>([
     { text: 'Order', value: 'order', alignData: 'left'},
+    { text: 'Type', value: 'type', alignData: 'left'},
     { text: 'Username', value: 'approver_username', alignData: 'left'},
     { text: 'Employee #', value: 'company_employee_number', alignData: 'left'},
     { text: 'Name', value: 'company_employee_full_name', alignData: 'left'},
