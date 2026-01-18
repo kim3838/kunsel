@@ -21,6 +21,10 @@
                             />
                         </div>
                         <div>
+                            <InputLabel :size="'sm'" value="Status" />
+                            <MultiSelect :disabled="disableActions" glint drop-shadow :size="'md'" :options="requestApprovalStatusOptions" :icon="'tdesign:component-checkbox'"/>
+                        </div>
+                        <div>
                             <InputLabel :size="'sm'" value="Attendance Search" />
                             <Input :disabled="disableActions" :size="'md'" ref="searchInput" v-model="filters.search.keyword" class="w-full" placeholder="Search Attendance" type="text"/>
                         </div>
@@ -47,6 +51,14 @@
                             :size="'md'"
                             :orientation="'horizontal'"
                             v-model="viewMode.selected" />
+                        <label class="flex items-center">
+                            <Checkbox
+                                :disabled="disableActions"
+                                name="remember"
+                                v-model="showApprovalStates"
+                                :size="'md'"
+                                :label="'Show Approval Sequence'" />
+                        </label>
                     </div>
 
                     <div>
@@ -294,7 +306,16 @@
                         :rows="attendanceAdjustments.data"
                         :disabled="disableDataTable"
                         v-model="selectedAttendanceAdjustments"
-                        selection>
+                        selection
+                        :sub-row-slug="attendanceAdjustmentSubRowSlug"
+                        :sub-row-settings="{
+                            type: DATATABLE_SUBROW_TYPE.TITLED,
+                            containerPaddingTop: 0.75,
+                            containerPaddingBottom: 1.75,
+                            titleSize: 'md',
+                            rowVerticalLine: true,
+                            verticalBorderType: 'dashed'
+                        }">
                         <template v-slot:cell.actions="{cell,slot: cellSlot}">
                             <div class="flex items-center">
                                 <NavDrop
@@ -314,6 +335,12 @@
                                 </NavDrop>
                             </div>
                         </template>
+                        <template v-slot:cell.status_summary="{cell,slot}">
+                            <div class="flex space-x-1 px-[0.3rem] items-center">
+                                <Label :size="slot.labelSize" :type="cell?._payload?.label_shade?.value as LabelTypeT" shade :label="cell.status_summary?.text" />
+                            </div>
+                        </template>
+
                         <template v-slot:cell.requested_by="{cell,slot}">
                             <div class="p-[3px]">{{cell.requested_by?.name}}</div>
                         </template>
@@ -326,6 +353,15 @@
                         <template v-slot:cell.attendance_date="{cell,slot}">
                             <div class="p-[3px]">{{cell.attendance?.date}}</div>
                         </template>
+                        <template v-slot:sub_row_slot="{rowIndex, cell, slot}">
+                            <div class="inline-flex items-center scaffold-border pr-2">
+                                <Icon name="mdi:info-variant" :class="[slot.iconSizeClass]" /><div :class="[slot.titleSizeClass]">Approval Sequence</div>
+                            </div>
+                            <ApprovalStateSubRow
+                                :rows="cell[slot.slug]"
+                                :disabled="disableDataTable"
+                            ></ApprovalStateSubRow>
+                        </template>
                     </DataTable>
                 </div>
             </div>
@@ -334,11 +370,12 @@
 </template>
 
 <script setup lang="ts">
-import type {DataTableT, TableHeaderT, TableSupHeaderT} from "@/public/js/types/data";
-import type {EnumOption, EnumSelection} from "@/public/js/common/type";
+import type {DataTableT, TableHeaderT, TableRowT, TableSupHeaderT} from "@/public/js/types/data";
+import type {EnumOption, EnumSelection, StringEnumInterface} from "@/public/js/common/type";
 import type {SelectDataType} from "@/public/js/types/form";
 import type {AttendanceT} from "@/public/js/types/attendance";
 import type {DateTimePickerOptionsT} from "@/public/js/datetimepicker/type";
+import type {LabelTypeT} from "@/public/js/types/theme";
 import {storeToRefs} from "pinia";
 
 useHead({titleTemplate: (titleChunk) => {return `${titleChunk} - Attendance Adjustment Requests`}});
@@ -347,6 +384,10 @@ useLayout().setNavigationMode('solid');
 
 const {isAuthenticated} = useAuth();
 const nuxtApp = useNuxtApp();
+const $enumerableOption = nuxtApp.$enumerableOption as (enumerable: StringEnumInterface, value: number) => {
+    text: string,
+    value: number
+};
 const {render} = dateTimePicker();
 const clientReadyState = useClientReadyState();
 const common = useCommon();
@@ -366,10 +407,24 @@ watch(updatedAssociatedCompanyFlag, (newValue) => {
     }
 });
 
+const showApprovalStates = ref(false);
+const attendanceAdjustmentSubRowSlug = ref('');
+
+watch(() => {return showApprovalStates.value;}, (show) => {
+    if(show){
+        attendanceAdjustmentSubRowSlug.value = 'approval_states';
+        paginate(1, true)
+    } else {
+        attendanceAdjustmentSubRowSlug.value = '';
+        paginate(1, true)
+    }
+})
+
 const attendanceAdjustmentsSupHeaders = reactive<TableSupHeaderT[]>([
     {text: ''},
     {text: ''},
 
+    {text: 'Status'},
     {text: ''},
     {text: ''},
     {text: ''},
@@ -384,9 +439,11 @@ const attendanceAdjustmentsHeaders = reactive<TableHeaderT[]>([
     { text: '#', value: 'row_number'},
     { text: '', value: 'actions'},
 
+    { text: '', value: 'status_summary'},
     { text: 'Requested by', value: 'requested_by'},
     { text: 'Request Date', value: 'date_requested'},
     { text: 'Reason', value: 'reason'},
+
 
     { text: '', value: 'employee_number'},
     { text: '', value: 'employee_full_name'},
@@ -438,6 +495,16 @@ const viewMode = reactive<{
         {text : 'List', value: DATA_VIEW_MODE.LIST} as EnumOption,
     ],
     selected: DATA_VIEW_MODE.LIST as number
+});
+
+const requestApprovalStatusOptions = reactive({
+    search: '',
+    selection: [
+        $enumerableOption(REQUEST_APPROVAL_STATUS_NAME, REQUEST_APPROVAL_STATUS.PENDING as number),
+        $enumerableOption(REQUEST_APPROVAL_STATUS_NAME, REQUEST_APPROVAL_STATUS.DECLINED as number),
+        $enumerableOption(REQUEST_APPROVAL_STATUS_NAME, REQUEST_APPROVAL_STATUS.APPROVED as number),
+    ],
+    selected: []
 });
 
 let pageComputed = computed({
@@ -495,6 +562,7 @@ let paramsComputed = computed(() => {
             search: filters.search.keyword,
             assigned_employee_group_ids: employeeGroupOptions.selected,
             requested_by_ids: companyUserSelectionsOptions.selected,
+            statuses: requestApprovalStatusOptions.selected,
         }
     };
 });
@@ -529,7 +597,28 @@ const attendanceAdjustmentsExecute = async() =>{
             attendanceAdjustments.message = _get(response, '_data.message', '');
         },
         onSuccessResponse: async (request, options, response) => {
-            attendanceAdjustments.data = _get(response, '_data.values.data', [])
+            attendanceAdjustments.data = _get(response, '_data.values.data', []).map((attendanceAdjustment: TableRowT) => {
+
+                let statusSummary = _get(attendanceAdjustment, 'status_summary.value', 0);
+
+                let shade = 'default';
+
+                if(statusSummary == REQUEST_APPROVAL_STATUS.DECLINED){
+                    shade = 'danger';
+                } else if(statusSummary == REQUEST_APPROVAL_STATUS.APPROVED){
+                    shade = 'success';
+                }
+
+                return {
+                    ...attendanceAdjustment,
+                    _payload: {
+                        'label_shade': {
+                            'cell': ['status_summary'],
+                            'value': shade
+                        }
+                    }
+                };
+            });
             attendanceAdjustments.meta = _get(response, '_data.values.meta', {
                 pagination: {
                     total: 0,
