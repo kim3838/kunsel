@@ -83,7 +83,7 @@
                                     <legend class="text-lg font-header">Schedule</legend>
 
                                     <div class="grid gap-2 grid-cols-1">
-                                        <div class="grid grid-cols-2 gap-x-2">
+                                        <div class="grid grid-cols-1 gap-y-2 lg:gap-y-0 lg:grid-cols-2 gap-x-2">
                                             <div>
                                                 <InputLabel :size="'sm'" value="Work Period"/>
                                                 <div class="text-base">{{scheduleWorkPeriod}}</div>
@@ -93,7 +93,7 @@
                                                 <div class="text-base">{{shiftWorkStartGrace}}</div>
                                             </div>
                                         </div>
-                                        <div v-if="attendanceShiftRequiresLunchOutAndIn" class="grid grid-cols-2 gap-x-2">
+                                        <div v-if="attendanceShiftRequiresLunchOutAndIn" class="grid grid-cols-1 gap-y-2 lg:gap-y-0 lg:grid-cols-2 gap-x-2">
                                             <div >
                                                 <InputLabel :size="'sm'" value="Lunch Period"/>
                                                 <div class="text-base">{{scheduleLunchPeriod}}</div>
@@ -106,6 +106,10 @@
                                         <div>
                                             <InputLabel :size="'sm'" value="Total Duration"/>
                                             <div class="text-base">{{scheduleTotalDuration}}</div>
+                                        </div>
+                                        <div>
+                                            <InputLabel :size="'sm'" value="Overtime Max Duration"/>
+                                            <div class="text-base">{{overtimeMaxDuration}}</div>
                                         </div>
                                         <div>
                                             <InputLabel :size="'sm'" value="Is Flexible"/>
@@ -715,6 +719,7 @@ const shiftLunchStartGrace = ref('');
 const scheduleTotalDuration = ref('');
 const attendanceWeekday = ref('');
 const scheduleIsFlexible = ref('');
+const overtimeMaxDuration = ref('');
 const attendanceShiftRequiresLunchOutAndIn = ref(false);
 const attendanceDate = ref('');
 const attendanceFirstIn = ref('');
@@ -735,6 +740,7 @@ const resetEditable = () => {
     scheduleTotalDuration.value = '';
     attendanceWeekday.value = '';
     scheduleIsFlexible.value = '';
+    overtimeMaxDuration.value = '';
     attendanceShiftRequiresLunchOutAndIn.value = false;
     attendanceDate.value = '';
     attendanceFirstIn.value = '';
@@ -795,6 +801,8 @@ const loadEditable = () => {
     shiftLunchStartGrace.value = attendanceShiftRequiresLunchOutAndIn.value ? _get(editPayload.value, 'shift.lunch_start_grace_time_readable', 'Not found') : '';
 
     scheduleTotalDuration.value = _get(editPayload.value, 'shift_schedule.total_work_hours_with_breaks', '');
+    overtimeMaxDuration.value = _get(editPayload.value, 'shift.max_overtime_readable', '');
+
     attendanceWeekday.value = _get(editPayload.value, 'shift_schedule.week_day_name', '');
     scheduleIsFlexible.value = shiftIsFlexible ? 'Yes' : 'No';
 
