@@ -690,6 +690,7 @@ const autogenerateUserFormSubmitPath = computed(() => {
 const autogenerateUserFormBody = computed(() => {
 
     return {
+        account_id: selectedAssociatedCompanyAccountId.value,
         company_id: selectedAssociatedCompanyId.value,
         family_name: employeeFamilyName.value,
         given_name: employeeGivenName.value,
@@ -803,10 +804,13 @@ const defaultAssignUserCompanyAssignment = async(userId = null) => {
 
     coreFormPending.value = true;
 
-    let formBody = {};
-
-    formBody[selectedAssociatedCompanyId.value] = {
-        'assignment_type': COMPANY_ASSIGNMENT_TYPE.DEFAULT
+    let formBody = {
+        account_id: selectedAssociatedCompanyAccountId.value,
+        assignments: {
+            [selectedAssociatedCompanyId.value as number]: {
+                'assignment_type': COMPANY_ASSIGNMENT_TYPE.DEFAULT
+            }
+        }
     };
 
     await laraFetch(`/api/user-company-assignment-sync/${userId}`, {
