@@ -451,6 +451,13 @@ export const useLayout = () => {
                             to: `/${hrPayrollRouteSlug}/request-approval/setting`,
                             route_active: `${hrPayrollRouteSlug}-request-approval-setting`
                         },
+                        {
+                            key: `${hrPayrollRouteSlug}/request-approval/attendance-adjustment-request`,
+                            type: 'link',
+                            title: 'Attendance Adjustment Request',
+                            to: `/${hrPayrollRouteSlug}/request-approval/attendance-adjustment-request`,
+                            route_active: `${hrPayrollRouteSlug}-request-approval-attendance-adjustment-request`
+                        },
                     ],
                 },{
                     key: `${hrPayrollRouteSlug}-reports`,
