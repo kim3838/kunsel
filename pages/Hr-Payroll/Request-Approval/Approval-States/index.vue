@@ -187,7 +187,7 @@ const approvalStatesHeaders = reactive<TableHeaderT[]>([
 
     { text: 'Order', value: 'order'},
     { text: 'Status', value: 'status'},
-    { text: '', value: 'current_state_message'},
+    { text: '', value: 'current_state_message', minWidth: '60.84px'},
     { text: 'Remarks', value: 'remarks'},
 
     { text: 'Status', value: 'user_status'},
