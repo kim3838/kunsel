@@ -143,6 +143,7 @@ useHead({titleTemplate: (titleChunk) => {return `${titleChunk} - Approval States
 definePageMeta({middleware: ['auth', 'admin-of-selected-company']});
 useLayout().setNavigationMode('solid');
 
+const user = userState();
 const {isAuthenticated} = useAuth();
 const nuxtApp = useNuxtApp();
 const $enumerableOption = nuxtApp.$enumerableOption as (enumerable: StringEnumInterface, value: number) => {
@@ -336,6 +337,16 @@ const approvalStatesExecute = async() =>{
         },
         onSuccessResponse: async (request, options, response) => {
             approvalStates.data = _get(response, '_data.values.data', []).map((approvalState: TableRowT) => {
+
+                let selfIsApprover = approvalState.approver.user_id == user.value?.id;
+                let isAwaitingForApproval = approvalState.current_state_flag == 1;
+                let hasPermissionToApproveAnyRequest = false;
+
+                return {
+                    ...approvalState,
+                    isSelectable: isAwaitingForApproval && selfIsApprover
+                };
+            }).map((approvalState: TableRowT) => {
 
                 let statusSummary = _get(approvalState, 'status.value', 0);
 
