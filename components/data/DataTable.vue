@@ -68,8 +68,9 @@
                 <!-- Table cell height: sm = 23px, md = 27px(29px w/ xs menu), lg = 31px(33px w/ sm menu), xl = 35px(37px w/ md menu) -->
                 <template v-for="(row, rowIndex) in rows" :key="row.id">
                     <tr :class="[rowBackgroundClass(rowIndex), disabled ? 'pointer-events-none' : '']" >
-                        <td v-if="selection" style="padding:0 0.5rem;">
+                        <td v-if="selection" style="padding:0 0.5rem;" :class="[row.isSelectable == false ? 'pointer-events-none' : '']">
                             <NonModelCheckBox
+                                v-if="row.isSelectable !== false"
                                 :size="checkBoxSize"
                                 :value="row.id"
                                 :selected="props.modelValue"
@@ -424,7 +425,9 @@ function toggleCheck(){
 }
 
 const currentRowIds = computed(() => {
-    return props.rows.map(row => row.id);
+    return props.rows
+        .filter(row => row.isSelectable !== false)
+        .map(row => row.id);
 });
 
 const headerFontClass = computed(() => {
