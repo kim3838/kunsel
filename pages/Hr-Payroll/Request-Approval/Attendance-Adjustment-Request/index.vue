@@ -25,8 +25,12 @@
                             <MultiSelect :disabled="disableActions" glint drop-shadow :size="'md'" :options="requestApprovalStatusOptions" :icon="'tdesign:component-checkbox'"/>
                         </div>
                         <div>
+                            <InputLabel :size="'sm'" value="Request # Search" />
+                            <Input :disabled="disableActions" :size="'md'" ref="searchInput" v-model="filters.search.keyword" class="w-full" placeholder="Search Number" type="text"/>
+                        </div>
+                        <div>
                             <InputLabel :size="'sm'" value="Attendance Search" />
-                            <Input :disabled="disableActions" :size="'md'" ref="searchInput" v-model="filters.search.keyword" class="w-full" placeholder="Search Attendance" type="text"/>
+                            <Input :disabled="disableActions" :size="'md'" ref="attendanceSearchInput" v-model="filters.attendanceSearch.keyword" class="w-full" placeholder="Search Attendance" type="text"/>
                         </div>
                         <div>
                             <InputLabel :size="'sm'" value="Attendance Date From"/>
@@ -341,6 +345,9 @@
                             </div>
                         </template>
 
+                        <template v-slot:cell.request_number="{cell,slot}">
+                            <div class="p-[3px]">{{cell.request_number}}</div>
+                        </template>
                         <template v-slot:cell.requested_by="{cell,slot}">
                             <div class="p-[3px]">{{cell.requested_by?.name}}</div>
                         </template>
@@ -424,6 +431,7 @@ const attendanceAdjustmentsSupHeaders = reactive<TableSupHeaderT[]>([
     {text: ''},
     {text: ''},
 
+    {text: ''},
     {text: 'Status'},
     {text: ''},
     {text: ''},
@@ -438,6 +446,8 @@ const attendanceAdjustmentsSupHeaders = reactive<TableSupHeaderT[]>([
 const attendanceAdjustmentsHeaders = reactive<TableHeaderT[]>([
     { text: '#', value: 'row_number'},
     { text: '', value: 'actions'},
+
+    { text: 'Request #', value: 'number', isNumeric: true},
 
     { text: '', value: 'status_summary'},
     { text: 'Requested by', value: 'requested_by'},
@@ -473,6 +483,10 @@ const attendanceAdjustments = reactive<DataTableT>({
 let filters = reactive<{
     page: number,
     perPage: number,
+    attendanceSearch: {
+        keyword: string,
+        callback: ReturnType<typeof setTimeout> | number
+    }
     search: {
         keyword: string,
         callback: ReturnType<typeof setTimeout> | number
@@ -480,6 +494,10 @@ let filters = reactive<{
 }>({
     page: 1,
     perPage: 25,
+    attendanceSearch: {
+        keyword: '',
+        callback: 1
+    },
     search: {
         keyword: '',
         callback: 1
@@ -559,6 +577,7 @@ let paramsComputed = computed(() => {
             company_id: selectedAssociatedCompanyId.value,
             attendance_date_from: formStore.filters.attendanceDateFrom,
             attendance_date_to: formStore.filters.attendanceDateTo,
+            attendance_search: filters.attendanceSearch.keyword,
             search: filters.search.keyword,
             assigned_employee_group_ids: employeeGroupOptions.selected,
             requested_by_ids: companyUserSelectionsOptions.selected,
