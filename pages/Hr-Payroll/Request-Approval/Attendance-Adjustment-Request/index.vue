@@ -304,6 +304,7 @@
 
                     <DataTable
                         v-if="attendanceAdjustments.successful"
+                        :key="attendanceAdjustmentsKey"
                         :sup-headers="attendanceAdjustmentsSupHeaders"
                         :headers="attendanceAdjustmentsHeaders"
                         :size="'lg'"
@@ -410,9 +411,45 @@ const {
 
 watch(updatedAssociatedCompanyFlag, (newValue) => {
     if(isAuthenticated.value && selectedAssociatedCompanyId.value){
+        rebuildSelections();
         paginate();
     }
 });
+
+const rebuildSelections = (selection: string[] = []) => {
+
+    if(_isEmpty(selection) || selection.indexOf('employee') >= 0){
+        common.rebuildSelectionsOnSelectedCompanyChanged(
+            employeeOptions, employeeOptionsKey, SELECT.SINGLE_PAGINATED
+        );
+    }
+
+    if(_isEmpty(selection) || selection.indexOf('shift_assignment') >= 0){
+        common.rebuildSelectionsOnSelectedCompanyChanged(
+            assignedShiftSelectionsOptions, assignedShiftSelectionsOptionsKey, SELECT.SINGLE_PAGINATED
+        );
+    }
+
+    if(_isEmpty(selection) || selection.indexOf('company_user') >= 0){
+        common.rebuildSelectionsOnSelectedCompanyChanged(
+            companyUserSelectionsOptions, companyUserSelectionsOptionsKey, SELECT.MULTI_PAGINATED, [], {
+                url: '/api/company-user-selections',
+                query_params: {
+                    account_id: selectedAssociatedCompanyAccountId.value,
+                    company_id: selectedAssociatedCompanyId.value,
+                },
+                filters: {
+                    account_id: selectedAssociatedCompanyAccountId.value,
+                    associated_companies: [selectedAssociatedCompanyId.value],
+                    search: {
+                        keyword: '',
+                        callback: 1
+                    }
+                }
+            }
+        );
+    }
+}
 
 const showApprovalStates = ref(false);
 const attendanceAdjustmentSubRowSlug = ref('');
@@ -448,12 +485,10 @@ const attendanceAdjustmentsHeaders = reactive<TableHeaderT[]>([
     { text: '', value: 'actions'},
 
     { text: 'Request #', value: 'number', isNumeric: true},
-
     { text: '', value: 'status_summary'},
-    { text: 'Requested by', value: 'requested_by'},
     { text: 'Request Date', value: 'date_requested'},
+    { text: 'Requested by', value: 'requested_by'},
     { text: 'Reason', value: 'reason'},
-
 
     { text: '', value: 'employee_number'},
     { text: '', value: 'employee_full_name'},
@@ -466,6 +501,7 @@ const attendanceAdjustmentsHeaders = reactive<TableHeaderT[]>([
     { text: 'Last Out', value: 'last_out', alignData: 'left'},
 ]);
 
+const attendanceAdjustmentsKey = shallowRef(0);
 const attendanceAdjustments = reactive<DataTableT>({
     'data': [],
     'meta': {
@@ -647,6 +683,7 @@ const attendanceAdjustmentsExecute = async() =>{
                     total_pages: 0
                 }
             });
+            attendanceAdjustmentsKey.value += 1;
         }
     }, false);
 }

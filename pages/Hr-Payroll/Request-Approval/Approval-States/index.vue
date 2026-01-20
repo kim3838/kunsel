@@ -108,9 +108,11 @@
                                 <Label :size="slot.labelSize" :type="cell?._payload?.label_shade?.value as LabelTypeT" shade :label="cell.status?.text" />
                             </div>
                         </template>
-
                         <template v-slot:cell.user_status="{cell,slot}">
                             <div class="p-[3px]">{{cell.approver.status?.text}}</div>
+                        </template>
+                        <template v-slot:cell.date_requested="{cell,slot}">
+                            <div class="p-[3px]">{{cell.requestable.date_requested}}</div>
                         </template>
                         <template v-slot:cell.username="{cell,slot}">
                             <div class="p-[3px]">{{cell.approver.username}}</div>
@@ -166,9 +168,33 @@ const {
 
 watch(updatedAssociatedCompanyFlag, (newValue) => {
     if(isAuthenticated.value && selectedAssociatedCompanyId.value){
+        rebuildSelections();
         paginate();
     }
 });
+
+const rebuildSelections = (selection: string[] = []) => {
+
+    if(_isEmpty(selection) || selection.indexOf('company_user') >= 0){
+        common.rebuildSelectionsOnSelectedCompanyChanged(
+            companyUserSelectionsOptions, companyUserSelectionsOptionsKey, SELECT.MULTI_PAGINATED, [], {
+                url: '/api/company-user-selections',
+                query_params: {
+                    account_id: selectedAssociatedCompanyAccountId.value,
+                    company_id: selectedAssociatedCompanyId.value,
+                },
+                filters: {
+                    account_id: selectedAssociatedCompanyAccountId.value,
+                    associated_companies: [selectedAssociatedCompanyId.value],
+                    search: {
+                        keyword: '',
+                        callback: 1
+                    }
+                }
+            }
+        );
+    }
+}
 
 const approvalStatesSupHeaders = reactive<TableSupHeaderT[]>([
     {text: ''},
@@ -177,6 +203,8 @@ const approvalStatesSupHeaders = reactive<TableSupHeaderT[]>([
     {text: '', colspan: 1,  alignHeader: 'left'},
 
     {text: 'Approval', colspan: 4,  alignHeader: 'left'},
+
+    {text: '', colspan: 1,  alignHeader: 'left'},
 
     {text: 'Approver', colspan: 5,  alignHeader: 'left'},
 ]);
@@ -191,6 +219,8 @@ const approvalStatesHeaders = reactive<TableHeaderT[]>([
     { text: 'Status', value: 'status'},
     { text: '', value: 'current_state_message', minWidth: '60.84px'},
     { text: 'Remarks', value: 'remarks'},
+
+    { text: 'Request Date', value: 'date_requested'},
 
     { text: 'Status', value: 'user_status'},
     { text: 'Username', value: 'username'},
