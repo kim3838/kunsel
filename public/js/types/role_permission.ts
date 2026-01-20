@@ -25,3 +25,8 @@ export type PermissionSeriesFormT = {
     name: string,
     permission_group: PermissionGroupT[]
 }
+
+export type CompanyUserRolePermissionT = {
+    permission: string,
+    permitted: boolean
+}

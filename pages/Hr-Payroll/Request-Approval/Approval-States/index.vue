@@ -137,6 +137,7 @@
 import type {DataTableT, TableHeaderT, TableRowT, TableSupHeaderT} from "@/public/js/types/data";
 import type {EnumOption, EnumSelection, StringEnumInterface} from "@/public/js/common/type";
 import type {LabelTypeT} from "@/public/js/types/theme";
+import type {CompanyUserRolePermissionT} from "@/public/js/types/role_permission";
 import {storeToRefs} from "pinia";
 
 useHead({titleTemplate: (titleChunk) => {return `${titleChunk} - Approval States`}});
@@ -315,9 +316,41 @@ const disableActions = computed(() => {
 const disableDataTable = computed(() => {
     return approvalStatesPending.value || companyAssociationPendingState().value;
 });
+
+const hasPermissionToApproveAnyRequest = ref(false);
+const companyUserRolePermissionsExecute = async() =>{
+
+    if(import.meta.server || !selectedAssociatedCompanyAccountId.value|| !selectedAssociatedCompanyId.value){
+        return;
+    }
+
+    await laraFetch(`/api/company-user-role-permissions`, {
+        method: 'GET',
+        params: {
+            account_id: selectedAssociatedCompanyAccountId.value,
+            company_id: selectedAssociatedCompanyId.value,
+            filters: {
+                account_id: selectedAssociatedCompanyAccountId.value,
+                associated_company: selectedAssociatedCompanyId.value,
+                user_id: user.value?.id,
+                permission_keys: ['approve-any-request']
+            }
+        }
+    }, {
+        onSuccessResponse: async (request, options, response) => {
+            let permissions = _get(response, '_data.values.data', []) as CompanyUserRolePermissionT[];
+
+            let approveAnyRequest = _find(permissions, {permission: 'approve-any-request'}) as CompanyUserRolePermissionT;
+
+            hasPermissionToApproveAnyRequest.value = approveAnyRequest.permitted;
+        }
+    }, false);
+}
+await companyUserRolePermissionsExecute();
+
 const approvalStatesExecute = async() =>{
 
-    if(import.meta.server || !selectedAssociatedCompanyId.value){
+    if(import.meta.server || !selectedAssociatedCompanyAccountId.value|| !selectedAssociatedCompanyId.value){
         return;
     }
 
@@ -340,11 +373,10 @@ const approvalStatesExecute = async() =>{
 
                 let selfIsApprover = approvalState.approver.user_id == user.value?.id;
                 let isAwaitingForApproval = approvalState.current_state_flag == 1;
-                let hasPermissionToApproveAnyRequest = false;
 
                 return {
                     ...approvalState,
-                    isSelectable: isAwaitingForApproval && selfIsApprover
+                    isSelectable: isAwaitingForApproval && (hasPermissionToApproveAnyRequest.value || selfIsApprover)
                 };
             }).map((approvalState: TableRowT) => {
 
