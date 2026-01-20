@@ -186,17 +186,33 @@ export const useCommon = () => {
         }
     }
 
-    const rebuildSelectionsOnSelectedCompanyChanged = (payload, key, selectionType, staticSelection: EnumSelection = []) => {
+    const rebuildSelectionsOnSelectedCompanyChanged = (
+        payload,
+        key,
+        selectionType,
+        staticSelection: EnumSelection = [],
+        payloadFetch = {}
+    ) => {
         const {$authStore} = useNuxtApp();
 
         if(selectionType == SELECT.MULTI_PAGINATED){
-            payload.fetch.filters.company_id = $authStore.selectedAssociatedCompanyId;
+            if(_isEmpty(payloadFetch)){
+                payload.fetch.filters.company_id = $authStore.selectedAssociatedCompanyId;
+            } else {
+                payload.fetch = {...payloadFetch};
+            }
+
             payload.fetch.filters.search.keyword = '';
             payload.selected = [];
         }
 
         if(selectionType == SELECT.SINGLE_PAGINATED){
-            payload.fetch.filters.company_id = $authStore.selectedAssociatedCompanyId;
+            if(_isEmpty(payloadFetch)){
+                payload.fetch.filters.company_id = $authStore.selectedAssociatedCompanyId;
+            } else {
+                payload.fetch = {...payloadFetch};
+            }
+
             payload.fetch.filters.search.keyword = '';
             payload.selected = null;
         }
