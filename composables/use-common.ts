@@ -199,7 +199,10 @@ export const useCommon = () => {
             if(_isEmpty(payloadFetch)){
                 payload.fetch.filters.company_id = $authStore.selectedAssociatedCompanyId;
             } else {
-                payload.fetch = {...payloadFetch};
+                payload.fetch = {
+                    url: payload.fetch.url,
+                    ...payloadFetch
+                };
             }
 
             payload.fetch.filters.search.keyword = '';
@@ -210,7 +213,10 @@ export const useCommon = () => {
             if(_isEmpty(payloadFetch)){
                 payload.fetch.filters.company_id = $authStore.selectedAssociatedCompanyId;
             } else {
-                payload.fetch = {...payloadFetch};
+                payload.fetch = {
+                    url: payload.fetch.url,
+                    ...payloadFetch
+                };
             }
 
             payload.fetch.filters.search.keyword = '';

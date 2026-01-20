@@ -178,7 +178,6 @@ const rebuildSelections = (selection: string[] = []) => {
     if(_isEmpty(selection) || selection.indexOf('company_user') >= 0){
         common.rebuildSelectionsOnSelectedCompanyChanged(
             companyUserSelectionsOptions, companyUserSelectionsOptionsKey, SELECT.MULTI_PAGINATED, [], {
-                url: '/api/company-user-selections',
                 query_params: {
                     account_id: selectedAssociatedCompanyAccountId.value,
                     company_id: selectedAssociatedCompanyId.value,
