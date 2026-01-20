@@ -50,6 +50,7 @@ export interface TableHeaderT {
 
 export interface TableRowT {
     id?: string | number;
+    isSelectable?: boolean;
     [key: string]: any;
     _payload?: TableRowPayloadT;
 }
