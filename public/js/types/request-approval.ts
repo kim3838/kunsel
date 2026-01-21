@@ -29,3 +29,15 @@ export type ApprovalSettingT = {
     request_title: string,
     approvers: ApprovalSettingApproverT[],
 }
+
+export type RequestableT = {
+    type: string,
+    id: number,
+    number: string,
+}
+
+export type RequestablePayloadT = {
+    type: string,
+    id: number,
+    number: string,
+}
