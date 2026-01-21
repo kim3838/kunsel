@@ -42,6 +42,7 @@
             v-if="userFiledRequests.successful"
             :headers="userFiledRequestsHeaders"
             :size="'md'"
+            :stripped="false"
             :rows="userFiledRequests.data"
             :disabled="disableDataTable"
             v-model="selectedUserFiledRequests"

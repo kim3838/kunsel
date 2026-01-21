@@ -28,6 +28,7 @@
             :sup-headers="approvalStatesSupHeaders"
             :headers="approvalStatesHeaders"
             :size="'md'"
+            :stripped="false"
             :rows="approvalStates.data"
             :disabled="disableDataTable"
             v-model="selectedApprovalStates"
