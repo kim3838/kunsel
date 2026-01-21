@@ -7,13 +7,13 @@
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
 
                 <fieldset class="flex-grow tint-background scaffold-border px-2 pb-2 space-y-2 max-h-[408px] overflow-y-auto">
-                    <legend class="text-xl font-medium font-hero">My Requests</legend>
+                    <legend class="text-xl font-business">My Requests</legend>
 
                     <UserFiledRequest/>
                 </fieldset>
 
                 <fieldset class="flex-grow tint-background scaffold-border px-2 pb-2 space-y-2 max-h-[408px] overflow-y-auto">
-                    <legend class="text-xl font-medium font-hero">Awaiting my approval</legend>
+                    <legend class="text-xl font-business">Awaiting my approval</legend>
 
                     <UserAwaitingApproval/>
                 </fieldset>

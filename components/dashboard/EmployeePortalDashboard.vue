@@ -2,7 +2,7 @@
     <div>
         <BreadCrumbs prefix-company :size="`sm`" :extender="[{name: `Employee Portal Dashboard`}]" />
 
-        <div class="space-y-6">
+        <div class="space-y-6 mt-6">
 
             <div>
                 <div v-if="employeePending || !employeeSuccessful" class="mb-2 flex flex-row flex-wrap gap-2 items-center min-h-8">
@@ -11,7 +11,7 @@
                 </div>
                 <div v-else class="space-y-4">
                     <div class="flex items-center gap-4">
-                        <div class="text-xl font-business">{{userCompanyEmployee?.full_name}}</div>
+                        <div class="text-xl">{{userCompanyEmployee?.full_name}}</div>
                         <div class="flex items-center">
                             <div class="p-1 pr-4 rounded-sm flex items-center gap-1" :style="cosmetic.shadedStyle(employee?._payload?.label_shade?.value as LabelTypeT)">
                                 <Label :size="'md'" :type="employee?._payload?.label_shade?.value as LabelTypeT" shade :label="_get(employee, 'current_employment_profile.status.text', '')" />
@@ -23,25 +23,25 @@
                     <div>
                         <div class="flex flex-wrap gap-6 pt-4 scaffold-border-top">
                             <div>
-                                <InputLabel :size="'sm'" value="Number" />
-                                <div class="font-sans">{{ _get(employee, 'number', '--') }}</div>
+                                <InputLabel :size="'xs'" value="Number" />
+                                <div class="text-sm font-sans">{{ _get(employee, 'number', '--') }}</div>
                             </div>
                             <div>
-                                <InputLabel :size="'sm'" value="Department" />
-                                <div>{{ _get(employee, 'department.name', '--') }}</div>
+                                <InputLabel :size="'xs'" value="Department" />
+                                <div class="text-sm">{{ _get(employee, 'department.name', '--') }}</div>
                             </div>
                             <div>
-                                <InputLabel :size="'sm'" value="Designation" />
-                                <div>{{ _get(employee, 'designation.name', '--') }}</div>
+                                <InputLabel :size="'xs'" value="Designation" />
+                                <div class="text-sm">{{ _get(employee, 'designation.name', '--') }}</div>
                             </div>
                             <div>
-                                <InputLabel :size="'sm'" value="Contact" />
+                                <InputLabel :size="'xs'" value="Contact" />
                                 <span v-if="_isEmpty(_compact([employee.contact?.office_email, employee.contact?.personal_email, employee.contact?.office_phone, employee.contact?.personal_phone]))">--</span>
-                                <div v-else :class="index == 0 ? 'inline-block' : 'block'" v-for="(contact, index) in _compact([employee.contact?.office_email, employee.contact?.personal_email, employee.contact?.office_phone, employee.contact?.personal_phone])">{{contact}}</div>
+                                <div class="text-sm" v-else :class="index == 0 ? 'inline-block' : 'block'" v-for="(contact, index) in _compact([employee.contact?.office_email, employee.contact?.personal_email, employee.contact?.office_phone, employee.contact?.personal_phone])">{{contact}}</div>
                             </div>
                             <div>
-                                <InputLabel :size="'sm'" value="Manager" />
-                                <div class="cursor-pointer hover:underline">{{ _get(employee, 'manager.full_name', '--') }}</div>
+                                <InputLabel :size="'xs'" value="Manager" />
+                                <div class="text-sm">{{ _get(employee, 'manager.full_name', '--') }}</div>
                             </div>
                         </div>
                     </div>
@@ -50,7 +50,7 @@
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <fieldset class="flex-grow tint-background scaffold-border px-2 pb-2 space-y-2">
-                    <legend class="text-xl font-medium font-hero">My Shift</legend>
+                    <legend class="text-xl font-business">My Shift</legend>
 
                 </fieldset>
             </div>
@@ -58,13 +58,13 @@
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
 
                 <fieldset class="flex-grow tint-background scaffold-border px-2 pb-2 space-y-2 max-h-[408px] overflow-y-auto">
-                    <legend class="text-xl font-medium font-hero">My Requests</legend>
+                    <legend class="text-xl font-business">My Requests</legend>
 
                     <UserFiledRequest/>
                 </fieldset>
 
                 <fieldset class="flex-grow tint-background scaffold-border px-2 pb-2 space-y-2 max-h-[408px] overflow-y-auto">
-                    <legend class="text-xl font-medium font-hero">Awaiting my approval</legend>
+                    <legend class="text-xl font-business">Awaiting my approval</legend>
 
                     <UserAwaitingApproval/>
                 </fieldset>
