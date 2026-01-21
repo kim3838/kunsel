@@ -34,6 +34,169 @@
                     </div>
                 </form>
 
+                <DialogModal
+                    :show="creatingAdjustment"
+                    :max-width="'1280px'"
+                    :closeable="false">
+                    <template #title>
+
+                    </template>
+                    <template #content>
+                        <div ref='modalContentContainer'>
+
+                            <div class="mx-auto max-w-screen-xl">
+                                <div class="text-lg font-header">
+                                    {{attendanceDate}}&nbsp;{{attendanceWeekday}}&nbsp;Create adjustment
+                                </div>
+                            </div>
+
+                            <div class="pt-2 mx-auto max-w-screen-xl flex flex-row gap-4">
+
+                                <fieldset v-if="creatingAdjustment" class="basis-1/3 neutral-border px-2 pb-2 space-y-2">
+                                    <legend class="text-lg font-header">Schedule</legend>
+
+                                    <div class="grid gap-2 grid-cols-1">
+                                        <div class="grid grid-cols-1 gap-y-2 lg:gap-y-0 lg:grid-cols-2 gap-x-2">
+                                            <div>
+                                                <InputLabel :size="'sm'" value="Work Period"/>
+                                                <div class="text-base">{{scheduleWorkPeriod}}</div>
+                                            </div>
+                                            <div>
+                                                <InputLabel :size="'sm'" value="Work Start Grace"/>
+                                                <div class="text-base">{{shiftWorkStartGrace}}</div>
+                                            </div>
+                                        </div>
+                                        <div v-if="attendanceShiftRequiresLunchOutAndIn" class="grid grid-cols-1 gap-y-2 lg:gap-y-0 lg:grid-cols-2 gap-x-2">
+                                            <div >
+                                                <InputLabel :size="'sm'" value="Lunch Period"/>
+                                                <div class="text-base">{{scheduleLunchPeriod}}</div>
+                                            </div>
+                                            <div>
+                                                <InputLabel :size="'sm'" value="Lunch Start Grace"/>
+                                                <div class="text-base">{{shiftLunchStartGrace}}</div>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <InputLabel :size="'sm'" value="Total Duration"/>
+                                            <div class="text-base">{{scheduleTotalDuration}}</div>
+                                        </div>
+                                        <div>
+                                            <InputLabel :size="'sm'" value="Overtime Max Duration"/>
+                                            <div class="text-base">{{overtimeMaxDuration}}</div>
+                                        </div>
+                                        <div>
+                                            <InputLabel :size="'sm'" value="Is Flexible"/>
+                                            <div class="text-base">{{scheduleIsFlexible}}</div>
+                                        </div>
+                                    </div>
+                                </fieldset>
+                                <div v-else class="basis-1/4 flex justify-center items-center">
+                                    Select Employee, Shift, and Attendance
+                                </div>
+
+                                <fieldset class="basis-3/4 neutral-border px-2 pb-2 space-y-2">
+                                    <legend class="text-lg font-header">Create adjustment</legend>
+
+                                    <div class="grid gap-2 grid-cols-4 lg:grid-cols-8">
+                                        <div class="col-span-4 md:col-span-2">
+                                            <InputLabel :size="'sm'" value="First In"/>
+                                            <InputWithIcon
+                                                :disabled="modalDisableActions"
+                                                high-light-all-text-on-focus
+                                                readonly
+                                                v-model="attendanceFirstIn"
+                                                :override="{font_family_class: 'font-sans'}"
+                                                :icon="'mdi:calendar-cursor-outline'"
+                                                :id="`first_in`"
+                                                :size="'md'" />
+                                        </div>
+                                        <div v-if="attendanceShiftRequiresLunchOutAndIn" class="col-span-4 md:col-span-2">
+                                            <InputLabel :size="'sm'" value="Lunch Out"/>
+                                            <InputWithIcon
+                                                :disabled="modalDisableActions"
+                                                high-light-all-text-on-focus
+                                                readonly
+                                                v-model="attendanceLunchOut"
+                                                :override="{font_family_class: 'font-sans'}"
+                                                :icon="'mdi:calendar-cursor-outline'"
+                                                :id="`lunch_out`"
+                                                :size="'md'" />
+                                        </div>
+                                        <div v-if="attendanceShiftRequiresLunchOutAndIn" class="col-span-4 md:col-span-2">
+                                            <InputLabel :size="'sm'" value="Lunch In"/>
+                                            <InputWithIcon
+                                                :disabled="modalDisableActions"
+                                                high-light-all-text-on-focus
+                                                readonly
+                                                v-model="attendanceLunchIn"
+                                                :override="{font_family_class: 'font-sans'}"
+                                                :icon="'mdi:calendar-cursor-outline'"
+                                                :id="`lunch_in`"
+                                                :size="'md'" />
+                                        </div>
+                                        <div class="col-span-4 md:col-span-2">
+                                            <InputLabel :size="'sm'" value="Last Out"/>
+                                            <InputWithIcon
+                                                :disabled="modalDisableActions"
+                                                high-light-all-text-on-focus
+                                                readonly
+                                                v-model="attendanceLastOut"
+                                                :override="{font_family_class: 'font-sans'}"
+                                                :icon="'mdi:calendar-cursor-outline'"
+                                                :id="`last_out`"
+                                                :size="'md'" />
+                                        </div>
+                                        <div class="col-span-4 md:col-span-2">
+                                            <InputLabel :size="'sm'" value="Reason"/>
+                                            <Input
+                                                :disabled="modalDisableActions"
+                                                :size="'md'"
+                                                v-model="reason"/>
+                                        </div>
+                                    </div>
+
+                                    <div v-if="$coreStore.hasNonPromptableServicePayloadMessage" class="block">
+                                        <Label invert :size="'sm'" :type="'danger'" :label="$coreStore.servicePayloadMessage" />
+                                    </div>
+                                </fieldset>
+                            </div>
+                        </div>
+                    </template>
+                    <template #footer>
+                        <div class="mx-auto max-w-screen-xl">
+                            <div class="flex space-x-2 justify-between">
+                                <div class="space-x-2 inline-flex items-center">
+                                    <Button
+                                        class="w-min"
+                                        :variant=" 'outline'"
+                                        :size="'md'"
+                                        :disabled="modalDisableActions"
+                                        :icon="'mdi:cancel'"
+                                        :label="'Cancel'"
+                                        @click="closeModal"/>
+                                    <Button
+                                        class="w-min"
+                                        :variant="'default'"
+                                        :size="'md'"
+                                        :icon="'mdi:plus'"
+                                        :disabled="modalDisableActions"
+                                        :label="'Submit Request'"
+                                        @click="modalSubmit"/>
+                                </div>
+                                <div class="space-x-2 inline-flex items-center">
+                                    <div class="space-x-2 inline-flex items-center">
+                                        <UnorderedList
+                                            v-if="modalSubmitPending"
+                                            :icon="'eos-icons:loading'"
+                                            :size="'md'"
+                                            :label="'Please wait...'"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </template>
+                </DialogModal>
+
                 <div class="px-[20px] space-y-2">
 
                     <div class="flex flex-row flex-wrap gap-2 items-center min-h-8">
@@ -101,6 +264,7 @@
 <script setup lang="ts">
 import type {DataTableT, TableHeaderT, TableRowT, TableSupHeaderT} from "@/public/js/types/data";
 import type {EnumOption, EnumSelection} from "@/public/js/common/type";
+import type {DateTimePickerOptionsT} from "@/public/js/datetimepicker/type";
 import {storeToRefs} from "pinia";
 
 useHead({titleTemplate: (titleChunk) => {return `${titleChunk} - Attendance`}});
@@ -114,11 +278,13 @@ const nuxtApp = useNuxtApp();
 const {render} = dateTimePicker();
 const clientReadyState = useClientReadyState();
 const common = useCommon();
+const coreStore = useCoreStore();
 const formStore = nuxtApp.$formStore;
 const {
     updatedAssociatedCompanyFlag
 } = storeToRefs(nuxtApp.$associationStore);
 const {
+    selectedAssociatedCompanyAccountId,
     selectedAssociatedCompanyId
 } = storeToRefs(nuxtApp.$authStore);
 
@@ -226,7 +392,7 @@ const attendancesPending = ref(false)
 const selectedAttendances = ref([]);
 
 const disableActions = computed(() => {
-    return attendancesPending.value || attendanceAdjusting.value || companyAssociationPendingState().value;
+    return attendancesPending.value || creatingAdjustment.value || companyAssociationPendingState().value;
 });
 const disableDataTable = computed(() => {
     return attendancesPending.value || companyAssociationPendingState().value;
@@ -333,14 +499,196 @@ const stagedAttendance = ref<{
     'ulid': null,
 });
 
-const attendanceAdjusting = ref(false);
-const adjustPending = ref(false);
+const creatingAdjustment = ref(false);
 const adjustPayload = ref({});
 
-const adjust = (cell: TableRowT) => {
-    //adjustPayload.value = cell;
-    //attendanceAdjusting.value = true;
-    //File attendance adjustment request
+const adjust = (row: TableRowT) => {
+
+    coreStore.resetServiceError();
+
+    adjustPayload.value = row;
+    stagedAttendance.value = {
+        'id': _get(adjustPayload.value, 'id', null),
+        'ulid': _get(adjustPayload.value, 'ulid', null),
+    };
+    creatingAdjustment.value = true;
+    loadEditable();
+}
+
+const scheduleWorkPeriod = ref('');
+const shiftWorkStartGrace = ref('');
+const scheduleLunchPeriod = ref('');
+const shiftLunchStartGrace = ref('');
+const scheduleTotalDuration = ref('');
+const attendanceWeekday = ref('');
+const scheduleIsFlexible = ref('');
+const overtimeMaxDuration = ref('');
+const attendanceShiftRequiresLunchOutAndIn = ref(false);
+const attendanceDate = ref<string | null>('');
+
+const attendanceFirstIn = ref('');
+const attendanceLunchOut = ref('');
+const attendanceLunchIn = ref('');
+const attendanceLastOut = ref('');
+const reason = ref('');
+
+const resetEditable = () => {
+    stagedAttendance.value = {
+        'id': null,
+        'ulid': null,
+    };
+    adjustPayload.value = {};
+
+    scheduleWorkPeriod.value = '';
+    shiftWorkStartGrace.value = '';
+    scheduleLunchPeriod.value = '';
+    shiftLunchStartGrace.value = '';
+    scheduleTotalDuration.value = '';
+    attendanceWeekday.value = '';
+    scheduleIsFlexible.value = '';
+    overtimeMaxDuration.value = '';
+    attendanceShiftRequiresLunchOutAndIn.value = false;
+    attendanceDate.value = '';
+
+    attendanceFirstIn.value = '';
+    attendanceLunchOut.value = '';
+    attendanceLunchIn.value = '';
+    attendanceLastOut.value = '';
+    reason.value = '';
+}
+
+const renderDatePickers = () => {
+
+    let attendanceAdjustmentDateTimePickers: DateTimePickerOptionsT[] = [
+        {
+            id: 'first_in',
+            type: 'datetime',
+            format: 'YYYY-MM-DD HH:mm',
+            selectedCallback: (payload: {value: string}) => {
+                attendanceFirstIn.value = payload.value;
+            }
+        },
+        ...(attendanceShiftRequiresLunchOutAndIn.value ? [
+            {
+                id: 'lunch_out',
+                type: 'datetime',
+                format: 'YYYY-MM-DD HH:mm',
+                selectedCallback: (payload: {value: string}) => {
+                    attendanceLunchOut.value = payload.value;
+                }
+            },{
+                id: 'lunch_in',
+                type: 'datetime',
+                format: 'YYYY-MM-DD HH:mm',
+                selectedCallback: (payload: {value: string}) => {
+                    attendanceLunchIn.value = payload.value;
+                }
+            },
+        ] : []),
+        {
+            id: 'last_out',
+            type: 'datetime',
+            format: 'YYYY-MM-DD HH:mm',
+            selectedCallback: (payload: {value: string}) => {
+                attendanceLastOut.value = payload.value;
+            }
+        },
+    ];
+
+    let filtersAndAttendanceDatePickers = filtersDateTimePickers.value.concat(attendanceAdjustmentDateTimePickers);
+
+    render(filtersAndAttendanceDatePickers);
+}
+
+const loadEditable = () => {
+
+    attendanceDate.value = _get(adjustPayload.value, 'date', null);
+
+    let shiftRequiresLunchOutAndIn = _get(adjustPayload.value, 'shift.require_lunch_time_in_and_out', false) as boolean;
+    let shiftIsFlexible = _get(adjustPayload.value, 'shift_schedule.is_flexible', false) as boolean;
+    let shiftHasLunchBreak = _get(adjustPayload.value, 'shift_schedule.has_lunch_break', false) as boolean;
+
+    attendanceShiftRequiresLunchOutAndIn.value = shiftRequiresLunchOutAndIn && !shiftIsFlexible && shiftHasLunchBreak;
+
+    scheduleWorkPeriod.value = _get(adjustPayload.value, 'shift_schedule.work_start', '') + ' - ' + _get(adjustPayload.value, 'shift_schedule.work_end', '') + '(' + _get(adjustPayload.value, 'shift_schedule.timezone', '')  + ')';
+    shiftWorkStartGrace.value = _get(adjustPayload.value, 'shift.work_start_grace_time_readable', 'Not found');
+
+    scheduleLunchPeriod.value = attendanceShiftRequiresLunchOutAndIn.value ? (_get(adjustPayload.value, 'shift_schedule.lunch_break_start', '') + ' - ' + _get(adjustPayload.value, 'shift_schedule.lunch_break_end', '')) : '';
+    shiftLunchStartGrace.value = _get(adjustPayload.value, 'shift.lunch_start_grace_time_readable', 'Not found');
+
+    scheduleTotalDuration.value = _get(adjustPayload.value, 'shift_schedule.total_work_hours_with_breaks', '');
+    overtimeMaxDuration.value = _get(adjustPayload.value, 'shift.max_overtime_readable', '');
+    scheduleIsFlexible.value = shiftIsFlexible ? 'Yes' : 'No';
+
+    attendanceWeekday.value = _get(adjustPayload.value, 'shift_schedule.week_day_name', '');
+
+    attendanceFirstIn.value = _get(adjustPayload.value, 'first_in', '');
+
+    if(attendanceShiftRequiresLunchOutAndIn.value){
+        attendanceLunchOut.value = _get(adjustPayload.value, 'lunch_out', '') as string;
+        attendanceLunchIn.value = _get(adjustPayload.value, 'lunch_in', '') as string;
+    }
+
+    attendanceLastOut.value = _get(adjustPayload.value, 'last_out', '');
+
+    renderDatePickers();
+}
+
+const closeModal = () => {
+    creatingAdjustment.value = false;
+    resetEditable();
+};
+
+const modalDisableActions = computed(()=>{
+    return modalSubmitPending.value;
+});
+const modalSubmitPending = ref(false);
+
+const modalForm = computed(()=>{
+    return {
+        account_id: selectedAssociatedCompanyAccountId.value,
+        company_id: selectedAssociatedCompanyId.value,
+        attendance_id: stagedAttendance.value.id,
+        date: attendanceDate.value,
+        first_in: nuxtApp.$moment(attendanceFirstIn.value).format("YYYY-MM-DD HH:mm"),
+        ...(attendanceShiftRequiresLunchOutAndIn.value ? {
+            lunch_out: nuxtApp.$moment(attendanceLunchOut.value).format("YYYY-MM-DD HH:mm"),
+            lunch_in: nuxtApp.$moment(attendanceLunchIn.value).format("YYYY-MM-DD HH:mm"),
+        } : {}),
+        last_out: nuxtApp.$moment(attendanceLastOut.value).format("YYYY-MM-DD HH:mm"),
+        reason: reason.value,
+    }
+})
+
+const modalSubmit = async() => {
+    modalSubmitPending.value = true;
+
+    await laraFetch('/api/employee-portal-attendance-adjustment-request', {
+        method: 'POST',
+        body: modalForm.value,
+    }, {
+        onRequestError: () => {
+            modalSubmitPending.value = false;
+        },
+        onResponse: () => {
+            modalSubmitPending.value = false;
+        },
+        onSuccessResponse: async (request, options, response) => {
+
+            useNuxtApp().$promptStore.setPrompt({
+                resetable: false,
+                icon: null,
+                title: `Request successful`,
+                message: 'Attendance adjustment request created, you can monitor your request status in Home page.',
+                action: {
+                    callback: () => {},
+                    label: 'Okay'
+                }
+            });
+
+            closeModal();
+        },
+    });
 }
 </script>
 

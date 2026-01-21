@@ -201,7 +201,7 @@ definePageMeta({
 
             if(import.meta.server){return true;}
 
-            const {data, error} = await laraUseFetch(`/api/employee-attendances-gate/${to.params.id}`, {method: 'GET',}, {}, false);
+            const {data, error} = await laraUseFetch(`/api/employee-portal-attendances-gate/${to.params.id}`, {method: 'GET',}, {}, false);
 
             if(_isEmpty(data.value) && !_isEmpty(error.value)){
                 let responseCode = _get(error.value, 'data.code', null);
