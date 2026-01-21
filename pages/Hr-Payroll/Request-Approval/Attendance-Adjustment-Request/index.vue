@@ -312,6 +312,7 @@
                         :disabled="disableDataTable"
                         v-model="selectedAttendanceAdjustments"
                         selection
+                        :stripped="!showApprovalStates"
                         :sub-row-slug="attendanceAdjustmentSubRowSlug"
                         :sub-row-settings="{
                             type: DATATABLE_SUBROW_TYPE.TITLED,
@@ -473,8 +474,7 @@ const attendanceAdjustmentsSupHeaders = reactive<TableSupHeaderT[]>([
     {text: ''},
     {text: ''},
 
-    {text: '', colspan: 2,  alignHeader: 'left'},
-    {text: 'Attendance', colspan: 1,  alignHeader: 'left'},
+    {text: 'Attendance', colspan: 3,  alignHeader: 'left'},
 
     {text: 'Adjustment', colspan: 4,  alignHeader: 'left'},
 ]);

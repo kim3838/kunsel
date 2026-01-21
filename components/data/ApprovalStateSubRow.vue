@@ -5,6 +5,7 @@
             :headers="approversHeaders"
             :disabled="disabled"
             :size="'md'"
+            :stripped="false"
             :rows="rowsProxy">
             <template v-slot:cell.status="{cell,slot}">
                 <div class="flex space-x-1 px-[0.3rem] items-center">

@@ -5,6 +5,7 @@
             :headers="approversHeaders"
             :disabled="disabled"
             :size="'md'"
+            :stripped="false"
             :rows="rows">
             <template v-slot:cell.type="{cell,slot}">
                 <div class="px-[3px]">{{cell.type?.text}}</div>
