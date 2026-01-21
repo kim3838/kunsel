@@ -90,6 +90,7 @@ const userFiledRequestsSupHeaders = reactive<TableSupHeaderT[]>([
     {text: ''},
     {text: 'Status'},
     {text: ''},
+    {text: ''},
 ]);
 
 const userFiledRequestsHeaders = reactive<TableHeaderT[]>([
@@ -99,6 +100,7 @@ const userFiledRequestsHeaders = reactive<TableHeaderT[]>([
 
     { text: 'Status', value: 'status_summary'},
     { text: 'Request Date', value: 'date_requested'},
+    { text: '', value: 'company_timezone'},
 ]);
 
 const userFiledRequests = reactive<DataTableT>({
