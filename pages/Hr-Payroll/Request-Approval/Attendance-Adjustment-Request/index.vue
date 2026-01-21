@@ -336,7 +336,7 @@
                                     :drop-align="'top'"
                                     :drop-justify="'right'"
                                     :drop-options="[
-                                        {type: 'action', title: 'View Adjustment Difference',callback: () => {}},
+                                        {type: 'action', title: 'No action',callback: () => {}},
                                     ]">
                                 </NavDrop>
                             </div>
