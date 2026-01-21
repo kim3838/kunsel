@@ -63,8 +63,7 @@
 </template>
 
 <script setup lang="ts">
-
-import type {RolePermissionT, RoleT} from "@/public/js/types/role_permission";
+import type {RolePermissionT, RoleT} from "@/public/js/types/role-permission";
 import type {SelectDataType} from "@/public/js/types/form";
 import type {EnumSelection} from "@/public/js/common/type";
 

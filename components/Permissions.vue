@@ -21,8 +21,7 @@
 </template>
 
 <script setup lang="ts">
-
-import type {PermissionSeriesFormT, RolePermissionT} from "@/public/js/types/role_permission";
+import type {PermissionSeriesFormT, RolePermissionT} from "@/public/js/types/role-permission";
 
 const props = defineProps({
     rolePermissions: {
