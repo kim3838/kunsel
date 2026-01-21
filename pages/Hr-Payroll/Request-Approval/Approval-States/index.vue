@@ -114,6 +114,9 @@
                         <template v-slot:cell.date_requested="{cell,slot}">
                             <div class="p-[3px]">{{cell.requestable.date_requested}}</div>
                         </template>
+                        <template v-slot:cell.company_timezone="{cell,slot}">
+                            <div class="p-[3px]">{{cell.requestable.company_timezone}}</div>
+                        </template>
                         <template v-slot:cell.username="{cell,slot}">
                             <div class="p-[3px]">{{cell.approver.username}}</div>
                         </template>
@@ -203,7 +206,7 @@ const approvalStatesSupHeaders = reactive<TableSupHeaderT[]>([
 
     {text: 'Approval', colspan: 4,  alignHeader: 'left'},
 
-    {text: '', colspan: 1,  alignHeader: 'left'},
+    {text: '', colspan: 2,  alignHeader: 'left'},
 
     {text: 'Approver', colspan: 5,  alignHeader: 'left'},
 ]);
@@ -220,6 +223,7 @@ const approvalStatesHeaders = reactive<TableHeaderT[]>([
     { text: 'Remarks', value: 'remarks'},
 
     { text: 'Request Date', value: 'date_requested'},
+    { text: '', value: 'company_timezone'},
 
     { text: 'Status', value: 'user_status'},
     { text: 'Username', value: 'username'},

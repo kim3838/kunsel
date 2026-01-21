@@ -350,6 +350,9 @@
                         <template v-slot:cell.request_number="{cell,slot}">
                             <div class="p-[3px]">{{cell.request_number}}</div>
                         </template>
+                        <template v-slot:cell.company_timezone="{cell,slot}">
+                            <div class="p-[3px]">{{cell.company_timezone}}</div>
+                        </template>
                         <template v-slot:cell.requested_by="{cell,slot}">
                             <div class="p-[3px]">{{cell.requested_by?.name}}</div>
                         </template>
@@ -473,6 +476,7 @@ const attendanceAdjustmentsSupHeaders = reactive<TableSupHeaderT[]>([
     {text: ''},
     {text: ''},
     {text: ''},
+    {text: ''},
 
     {text: 'Attendance', colspan: 3,  alignHeader: 'left'},
 
@@ -486,6 +490,7 @@ const attendanceAdjustmentsHeaders = reactive<TableHeaderT[]>([
     { text: 'Request #', value: 'number', isNumeric: true},
     { text: '', value: 'status_summary'},
     { text: 'Request Date', value: 'date_requested'},
+    { text: '', value: 'company_timezone'},
     { text: 'Requested by', value: 'requested_by'},
     { text: 'Reason', value: 'reason'},
 
