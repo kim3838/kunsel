@@ -73,6 +73,10 @@
                     </div>
                 </form>
 
+                <ViewRequestable
+                    v-model:view-requestable="showRequestable"
+                    v-model:requestable-payload="requestablePayload"/>
+
                 <DialogModal
                     :show="creatingOrEditing"
                     :max-width="'1280px'"
@@ -341,14 +345,13 @@
                                 </NavDrop>
                             </div>
                         </template>
+                        <template v-slot:cell.number="{cell,slot}">
+                            <div class="p-[3px] hover:underline cursor-pointer" @click="viewRequestable(cell)">{{cell.number}}</div>
+                        </template>
                         <template v-slot:cell.status_summary="{cell,slot}">
                             <div class="flex space-x-1 px-[0.3rem] items-center">
                                 <Label :size="slot.labelSize" :type="cell?._payload?.label_shade?.value as LabelTypeT" shade :label="cell.status_summary?.text" />
                             </div>
-                        </template>
-
-                        <template v-slot:cell.request_number="{cell,slot}">
-                            <div class="p-[3px]">{{cell.request_number}}</div>
                         </template>
                         <template v-slot:cell.company_timezone="{cell,slot}">
                             <div class="p-[3px]">{{cell.company_timezone}}</div>
@@ -388,6 +391,7 @@ import type {SelectDataType} from "@/public/js/types/form";
 import type {AttendanceT} from "@/public/js/types/attendance";
 import type {DateTimePickerOptionsT} from "@/public/js/datetimepicker/type";
 import type {LabelTypeT} from "@/public/js/types/theme";
+import type {RequestablePayloadT} from "@/public/js/types/request-approval";
 import {storeToRefs} from "pinia";
 
 useHead({titleTemplate: (titleChunk) => {return `${titleChunk} - Attendance Adjustment Requests`}});
@@ -1290,6 +1294,23 @@ const modalSubmit = async() => {
             await attendanceAdjustmentsExecute();
         },
     });
+}
+
+const showRequestable = ref(false);
+const requestablePayload = ref<RequestablePayloadT>({
+    type: '',
+    id: -1,
+    number: '',
+});
+
+const viewRequestable = async (row: TableRowT) => {
+
+    requestablePayload.value = {
+        type: 'attendance_adjustment_request',
+        id: row.id,
+        number: row.number,
+    } as RequestablePayloadT;
+    showRequestable.value = true;
 }
 </script>
 

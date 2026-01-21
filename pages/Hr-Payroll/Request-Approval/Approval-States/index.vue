@@ -53,6 +53,10 @@
                     </div>
                 </form>
 
+                <ViewRequestable
+                    v-model:view-requestable="showRequestable"
+                    v-model:requestable-payload="requestablePayload"/>
+
                 <div class="px-[20px]">
                     <div class="mb-2 flex flex-row flex-wrap gap-2 items-center min-h-8">
                         <UnorderedList v-if="disableActions" :icon="'eos-icons:loading'" :size="'md'" :label="'Please wait...'"/>
@@ -100,7 +104,7 @@
                         </template>
 
                         <template v-slot:cell.request_number="{cell,slot}">
-                            <div class="p-[3px]">{{cell.requestable.number}}</div>
+                            <div class="p-[3px] hover:underline cursor-pointer" @click="viewRequestable(cell)">{{cell.requestable.number}}</div>
                         </template>
 
                         <template v-slot:cell.status="{cell,slot}">
@@ -142,7 +146,8 @@
 import type {DataTableT, TableHeaderT, TableRowT, TableSupHeaderT} from "@/public/js/types/data";
 import type {EnumOption, EnumSelection, StringEnumInterface} from "@/public/js/common/type";
 import type {LabelTypeT} from "@/public/js/types/theme";
-import type {CompanyUserRolePermissionT} from "@/public/js/types/role_permission";
+import type {CompanyUserRolePermissionT} from "@/public/js/types/role-permission";
+import type {RequestablePayloadT} from "@/public/js/types/request-approval";
 import {storeToRefs} from "pinia";
 
 useHead({titleTemplate: (titleChunk) => {return `${titleChunk} - Approval States`}});
@@ -464,7 +469,18 @@ function paginate(page = 1, clearSelection = false){
 watch(() => {return filters.page;}, () => {paginate(filters.page);});
 watch(() => {return filters.perPage;}, () => {paginate(1);});
 
-const stagedApprovalState = ref<Partial<{ 'requestable_type': string, 'requestable_id': number, }>>({});
+const showRequestable = ref(false);
+const requestablePayload = ref<RequestablePayloadT>({
+    type: '',
+    id: -1,
+    number: '',
+});
+
+const viewRequestable = async (row: TableRowT) => {
+
+    requestablePayload.value = row.requestable as RequestablePayloadT;
+    showRequestable.value = true;
+}
 </script>
 
 <style scoped>

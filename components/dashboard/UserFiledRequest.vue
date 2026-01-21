@@ -1,5 +1,9 @@
 <template>
     <div>
+        <ViewRequestable
+            v-model:view-requestable="showRequestable"
+            v-model:requestable-payload="requestablePayload"/>
+
         <div class="mb-2 flex flex-row flex-wrap gap-2 items-center min-h-6">
             <div v-if="userFiledRequests.successful" class="scaffold-border px-2 text-sm font-[National_Park]">
                 <span><span class="font-semibold">{{selectedUserFiledRequests.length}}</span> Selected</span>
@@ -47,7 +51,9 @@
             :disabled="disableDataTable"
             v-model="selectedUserFiledRequests"
             selection>
-
+            <template v-slot:cell.number="{cell,slot}">
+                <div class="p-[3px] hover:underline cursor-pointer" @click="viewRequestable(cell)">{{cell.number}}</div>
+            </template>
             <template v-slot:cell.status_summary="{cell,slot}">
                 <div class="flex space-x-1 px-[0.3rem] items-center">
                     <Label :size="slot.labelSize" :type="cell?._payload?.label_shade?.value as LabelTypeT" shade :label="cell.status_summary?.text" />
@@ -61,9 +67,10 @@
 import type {LabelTypeT} from "@/public/js/types/theme";
 import type {DataTableT, TableHeaderT, TableRowT, TableSupHeaderT} from "@/public/js/types/data";
 import type {StringEnumInterface} from "@/public/js/common/type";
+import type {RequestablePayloadT} from "@/public/js/types/request-approval";
 import {storeToRefs} from "pinia";
 
-const {isAuthenticated, userIsSuperAdmin} = useAuth();
+const {isAuthenticated} = useAuth();
 const user = userState();
 const nuxtApp = useNuxtApp();
 const $enumerableOption = nuxtApp.$enumerableOption as (enumerable: StringEnumInterface, value: number) => {
@@ -274,6 +281,23 @@ function paginate(page = 1, clearSelection = false){
 
 watch(() => {return filters.page;}, () => {paginate(filters.page);});
 watch(() => {return filters.perPage;}, () => {paginate(1);});
+
+const showRequestable = ref(false);
+const requestablePayload = ref<RequestablePayloadT>({
+    type: '',
+    id: -1,
+    number: '',
+});
+
+const viewRequestable = async (row: TableRowT) => {
+
+    requestablePayload.value = {
+        type: row.requestable_type,
+        id: row.requestable_id,
+        number: row.number,
+    } as RequestablePayloadT;
+    showRequestable.value = true;
+}
 </script>
 
 <style scoped>

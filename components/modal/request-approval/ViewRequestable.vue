@@ -1,0 +1,156 @@
+<template>
+    <div>
+        <DialogModal
+            :show="viewRequestable"
+            :max-width="'680px'"
+            :closeable="false">
+            <template #title>
+
+            </template>
+            <template #content>
+                <div ref='modalContentContainer'>
+
+                    <div class="pt-2 mx-auto max-w-screen-xl">
+                        <div v-if="pending">
+                            <UnorderedList
+                                v-if="pending"
+                                :icon="'eos-icons:loading'"
+                                :size="'md'"
+                                :label="'Please wait...'"/>
+                        </div>
+                        <div v-else-if="!pending && requestable.successful">
+                            <AttendanceAdjustmentRequest
+                                v-if="requestableType == REQUESTABLE_TYPE.ATTENDANCE_ADJUSTMENT_REQUEST"
+                                v-model:attendance-adjustment-payload="requestable.data"/>
+                        </div>
+
+                        <div v-if="$coreStore.hasNonPromptableServicePayloadMessage" class="block">
+                            <Label invert :size="'sm'" :type="'danger'" :label="$coreStore.servicePayloadMessage" />
+                        </div>
+                    </div>
+                </div>
+            </template>
+            <template #footer>
+                <div class="mx-auto max-w-screen-xl">
+                    <div class="flex space-x-2 justify-between">
+                        <div class="space-x-2 inline-flex items-center">
+
+                        </div>
+                        <div class="space-x-2 inline-flex items-center">
+                            <Button
+                                class="w-min"
+                                :variant=" 'outline'"
+                                :size="'md'"
+                                :disabled="pending"
+                                :label="'Close'"
+                                @click="closeModal"/>
+                        </div>
+                    </div>
+                </div>
+            </template>
+        </DialogModal>
+    </div>
+</template>
+
+<script setup lang="ts">
+import type {RequestablePayloadT, RequestableT} from "@/public/js/types/request-approval";
+import {storeToRefs} from "pinia";
+
+const nuxtApp = useNuxtApp();
+
+const {
+    selectedAssociatedCompanyAccountId,
+    selectedAssociatedCompanyId,
+} = storeToRefs(nuxtApp.$authStore);
+
+const props = defineProps({
+    viewRequestable: {
+        type: Boolean,
+        default: false,
+    },
+    requestablePayload: {
+        type: Object as PropType<RequestablePayloadT>,
+        default: () => {
+            return {};
+        }
+    }
+});
+
+const pending = ref(false);
+const requestable = reactive<{
+    data: Partial<RequestableT>,
+    successful: boolean,
+    message: string
+}>({
+    'data': {},
+    'successful': true,
+    'message': ''
+})
+
+watch(() => props.viewRequestable, (newValue) => {
+
+    if(newValue){
+        fetchRequestable();
+    }
+})
+
+const requestableType = computed(() => {
+
+    return {
+        attendance_adjustment_request: REQUESTABLE_TYPE.ATTENDANCE_ADJUSTMENT_REQUEST
+    }[props.requestablePayload.type];
+})
+
+const fetchRequestable = async () => {
+
+    let requestablePayload = props.requestablePayload;
+
+    let path = {
+        attendance_adjustment_request: 'attendance-adjustment-request'
+    }[requestablePayload.type];
+
+    pending.value = true;
+
+    await laraFetch(`/api/${path}/${requestablePayload.number}`, {
+        method: 'GET',
+        params: {
+            account_id: selectedAssociatedCompanyAccountId.value,
+            company_id: selectedAssociatedCompanyId.value,
+            filters: {
+                company_id: selectedAssociatedCompanyId.value,
+                request_numbers: [requestablePayload.number]
+            }
+        }
+    }, {
+        onRequestError: () => {
+            pending.value = false;
+        },
+        onResponse: (request, options, response) => {
+            pending.value = false;
+            requestable.successful = _get(response, '_data.successful', false);
+            requestable.message = _get(response, '_data.message', '');
+        },
+        onSuccessResponse: async (request, options, response) => {
+            requestable.data = _get(response, '_data.values', {}) as RequestableT;
+        }
+    });
+}
+
+const emit = defineEmits(['update:viewRequestable']);
+
+const closeModal = () => {
+    emit('update:viewRequestable', false);
+    reset();
+}
+
+const reset = () => {
+    pending.value = false;
+    requestable.successful = true;
+    requestable.message = '';
+    requestable.data = {};
+}
+</script>
+
+<style scoped>
+
+</style>

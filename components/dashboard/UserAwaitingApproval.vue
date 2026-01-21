@@ -1,5 +1,9 @@
 <template>
     <div>
+        <ViewRequestable
+            v-model:view-requestable="showRequestable"
+            v-model:requestable-payload="requestablePayload"/>
+
         <div class="mb-2 flex flex-row flex-wrap gap-2 items-center min-h-6">
             <div v-if="approvalStates.successful" class="scaffold-border px-2 text-sm font-[National_Park]">
                 <span><span class="font-semibold">{{selectedApprovalStates.length}}</span> Selected</span>
@@ -35,7 +39,7 @@
             selection>
 
             <template v-slot:cell.request_number="{cell,slot}">
-                <div class="p-[3px]">{{cell.requestable.number}}</div>
+                <div class="p-[3px] hover:underline cursor-pointer" @click="viewRequestable(cell)">{{cell.requestable.number}}</div>
             </template>
 
             <template v-slot:cell.status="{cell,slot}">
@@ -56,6 +60,7 @@
 <script setup lang="ts">
 import type {LabelTypeT} from "@/public/js/types/theme";
 import type {DataTableT, TableHeaderT, TableRowT, TableSupHeaderT} from "@/public/js/types/data";
+import type {RequestablePayloadT} from "@/public/js/types/request-approval";
 import {storeToRefs} from "pinia";
 
 const {isAuthenticated, userIsSuperAdmin} = useAuth();
@@ -195,6 +200,19 @@ approvalStatesExecute();
 const listApprovalStates = () => {
     selectedApprovalStates.value = [];
     approvalStatesExecute();
+}
+
+const showRequestable = ref(false);
+const requestablePayload = ref<RequestablePayloadT>({
+    type: '',
+    id: -1,
+    number: '',
+});
+
+const viewRequestable = async (row: TableRowT) => {
+
+    requestablePayload.value = row.requestable as RequestablePayloadT;
+    showRequestable.value = true;
 }
 </script>
 
