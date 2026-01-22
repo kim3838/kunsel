@@ -390,11 +390,15 @@ function checkRow(row: TableRowT): void{
 
             _remove(props.modelValue, (value) => value == row.id);
 
-            emit('selectionChanged', {action: SELECTION_ACTION.REMOVE, value: _castArray(row.id)});
+            emit('update:modelValue', [...props.modelValue]);
+
+            nextTick(()=>{
+                emit('selectionChanged', {action: SELECTION_ACTION.REMOVE, value: _castArray(row.id)});
+            });
 
         } else {
 
-            emit('update:modelValue', props.modelValue.concat(row.id));
+            emit('update:modelValue', [...props.modelValue.concat(row.id)]);
 
             nextTick(()=>{
                 emit('selectionChanged', {action: SELECTION_ACTION.ADD, value: _castArray(props.modelValue)});
