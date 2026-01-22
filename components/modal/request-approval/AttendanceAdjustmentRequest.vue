@@ -95,8 +95,6 @@
                     <div class="text-base">{{adjustmentAttendanceLastOut}}</div>
                 </div>
                 <div class="col-span-full">
-                    <InputLabel :size="'sm'" value="Reason"/>
-                    <div class="text-base">{{reason}}</div>
                     <InputLabel :size="'sm'" value="Remarks"/>
                     <div class="text-base">{{remarks}}</div>
                 </div>
