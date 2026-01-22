@@ -24,9 +24,7 @@
                                 v-model:attendance-adjustment-payload="requestable.data"/>
                         </div>
 
-                        <div v-if="$coreStore.hasNonPromptableServicePayloadMessage" class="block">
-                            <Label invert :size="'sm'" :type="'danger'" :label="$coreStore.servicePayloadMessage" />
-                        </div>
+                        <Label v-if="!requestable.successful" invert :size="'md'" :type="'danger'" :label="requestable.message" />
                     </div>
                 </div>
             </template>
@@ -133,7 +131,7 @@ const fetchRequestable = async () => {
         onSuccessResponse: async (request, options, response) => {
             requestable.data = _get(response, '_data.values', {}) as RequestableT;
         }
-    });
+    }, false);
 }
 
 const emit = defineEmits(['update:viewRequestable']);
