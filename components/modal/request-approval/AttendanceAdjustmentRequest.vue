@@ -97,6 +97,8 @@
                 <div class="col-span-full">
                     <InputLabel :size="'sm'" value="Reason"/>
                     <div class="text-base">{{reason}}</div>
+                    <InputLabel :size="'sm'" value="Remarks"/>
+                    <div class="text-base">{{remarks}}</div>
                 </div>
             </div>
         </fieldset>
@@ -139,7 +141,7 @@ const adjustmentAttendanceFirstIn = ref('');
 const adjustmentAttendanceLunchOut = ref('');
 const adjustmentAttendanceLunchIn = ref('');
 const adjustmentAttendanceLastOut = ref('');
-const reason = ref('');
+const remarks = ref('');
 
 requestNumber.value = _get(props.attendanceAdjustmentPayload, 'number', '');
 
@@ -182,7 +184,7 @@ if(attendanceShiftRequiresLunchOutAndIn.value){
 }
 
 adjustmentAttendanceLastOut.value = _get(props.attendanceAdjustmentPayload, 'last_out', '');
-reason.value = _get(props.attendanceAdjustmentPayload, 'reason', '');
+remarks.value = _get(props.attendanceAdjustmentPayload, 'remarks', '');
 </script>
 
 <style scoped>

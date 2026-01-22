@@ -147,11 +147,11 @@
                                                 :size="'md'" />
                                         </div>
                                         <div class="col-span-4 md:col-span-2">
-                                            <InputLabel :size="'sm'" value="Reason"/>
+                                            <InputLabel :size="'sm'" value="Remarks"/>
                                             <Input
                                                 :disabled="modalDisableActions"
                                                 :size="'md'"
-                                                v-model="reason"/>
+                                                v-model="remarks"/>
                                         </div>
                                     </div>
 
@@ -530,7 +530,7 @@ const attendanceFirstIn = ref('');
 const attendanceLunchOut = ref('');
 const attendanceLunchIn = ref('');
 const attendanceLastOut = ref('');
-const reason = ref('');
+const remarks = ref('');
 
 const resetEditable = () => {
     stagedAttendance.value = {
@@ -554,7 +554,7 @@ const resetEditable = () => {
     attendanceLunchOut.value = '';
     attendanceLunchIn.value = '';
     attendanceLastOut.value = '';
-    reason.value = '';
+    remarks.value = '';
 }
 
 const renderDatePickers = () => {
@@ -656,7 +656,7 @@ const modalForm = computed(()=>{
             lunch_in: nuxtApp.$moment(attendanceLunchIn.value).format("YYYY-MM-DD HH:mm"),
         } : {}),
         last_out: nuxtApp.$moment(attendanceLastOut.value).format("YYYY-MM-DD HH:mm"),
-        reason: reason.value,
+        remarks: remarks.value,
     }
 })
 
