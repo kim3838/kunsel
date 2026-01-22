@@ -42,6 +42,14 @@ export type RequestableT = {
     number: string,
 }
 
+export type ApprovalStateT = {
+    id: number,
+    order: number,
+    current_state_flag: number,
+    current_state_message: string,
+    requestable: RequestableT,
+}
+
 //Similar to UserCompanyAssignmentSyncT
 export type RequestableIds = Record<string, number[]>;
 

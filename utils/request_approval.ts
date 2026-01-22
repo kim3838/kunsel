@@ -1,6 +1,18 @@
 
 import type {NumericEnumInterface, StringEnumInterface} from "@/public/js/common/type";
 
+export const APPROVAL_ACTION: NumericEnumInterface = {
+    NOT_SPECIFIED: 0,
+    DECLINE: 100,
+    APPROVE: 200
+}
+
+export const APPROVAL_ACTION_NAME: StringEnumInterface = {
+    [APPROVAL_ACTION.NOT_SPECIFIED as number]: 'Not Specified',
+    [APPROVAL_ACTION.DECLINE as number]: 'Decline',
+    [APPROVAL_ACTION.APPROVE as number]: 'Approve',
+}
+
 export const REQUESTABLE_TYPE: NumericEnumInterface = {
     ATTENDANCE_ADJUSTMENT_REQUEST : 100,
     OVERTIME_REQUEST: 200,
