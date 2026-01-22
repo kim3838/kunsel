@@ -9,7 +9,7 @@
                 <span><span class="font-semibold">{{selectedApprovalStates.length}}</span> Selected</span>
             </div>
             <Button
-                v-if="approvalStates.successful"
+                v-if="approvalStates.successful && selectedApprovalStates.length"
                 :variant="'outline'"
                 :size="'xs'"
                 :icon="'tdesign:close'"

@@ -9,7 +9,7 @@
                 <span><span class="font-semibold">{{selectedUserFiledRequests.length}}</span> Selected</span>
             </div>
             <Button
-                v-if="userFiledRequests.successful"
+                v-if="userFiledRequests.successful && selectedUserFiledRequests.length"
                 :variant="'outline'"
                 :size="'xs'"
                 :icon="'tdesign:close'"
