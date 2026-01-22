@@ -97,10 +97,10 @@ const approvalStatesHeaders = reactive<TableHeaderT[]>([
 
     { text: 'Order', value: 'order'},
     { text: 'Status', value: 'status'},
-    { text: '', value: 'current_state_message', minWidth: '60.84px'},
+    { text: '', value: 'current_state_message', minWidth: '33.5px'},
 
     { text: 'Request Date', value: 'date_requested'},
-    { text: '', value: 'company_timezone'},
+    { text: '', value: 'company_timezone', minWidth: '33.5px'},
 ]);
 
 const approvalStates = reactive<DataTableT>({
