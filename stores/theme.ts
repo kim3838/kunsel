@@ -70,7 +70,7 @@ export const useThemeStore = defineStore('theme', {
                     'neutral': '#dcd9d9',
 
                     'tint': '#fdfdfd',
-                    'body': '#f5f5f5',
+                    'body': '#f9f9f9',
                     'shade': '#f5f5f5',
 
                     'text': '#4b4949',
@@ -108,7 +108,7 @@ export const useThemeStore = defineStore('theme', {
                     'neutral': '#e5e5e5',
 
                     'tint': '#fdfdfd',
-                    'body': '#ffffff',
+                    'body': '#f9f9f9',
                     'shade': '#f5f5f5',
 
                     'text': '#3b4662',
@@ -127,7 +127,7 @@ export const useThemeStore = defineStore('theme', {
                     'neutral': '#e5e5e5',
 
                     'tint': '#fdfdfd',
-                    'body': '#f5f5f5',
+                    'body': '#f9f9f9',
                     'shade': '#f5f5f5',
 
                     'text': '#324134',
@@ -146,7 +146,7 @@ export const useThemeStore = defineStore('theme', {
                     'neutral': '#fff8e0',
 
                     'tint': '#fdfdfd',
-                    'body': '#f5f5f5',
+                    'body': '#f9f9f9',
                     'shade': '#f5f5f5',
 
                     'text': '#6c4637',
