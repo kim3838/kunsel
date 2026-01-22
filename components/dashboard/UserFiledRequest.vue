@@ -58,7 +58,7 @@
             :rows="userFiledRequests.data"
             :disabled="disableDataTable"
             v-model="selectedUserFiledRequests"
-            @selectionChanged="syncSelectedUserFiledRequests"
+            @selectionChanged="syncSelectedUserFiledRequestsPool"
             selection>
             <template v-slot:cell.number="{cell,slot}">
                 <div class="p-[3px] hover:underline cursor-pointer" @click="viewRequestable(cell)">{{cell.number}}</div>
@@ -294,7 +294,7 @@ watch(() => {return filters.perPage;}, () => {paginate(1);});
 
 const selectedUserFiledRequestsPool = ref<FiledRequestT[]>([]);
 
-const syncSelectedUserFiledRequests = (selectionPayload: DataTableSelectionActionT) => {
+const syncSelectedUserFiledRequestsPool = (selectionPayload: DataTableSelectionActionT) => {
 
     if(selectionPayload.action == SELECTION_ACTION.REMOVE){
 
