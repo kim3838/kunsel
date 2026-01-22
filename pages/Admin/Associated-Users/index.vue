@@ -101,8 +101,10 @@
                         <template v-slot:cell.status="{cell,slot}">
                             <div class="p-[3px]">{{cell.status.text}}</div>
                         </template>
-                        <template v-slot:cell.email_verified_at="{cell,slot}">
-                            <div class="p-[3px]">{{cell.email_verified_at != null ? `Verified` : `Not verified`}}</div>
+                        <template v-slot:cell.email_verification="{cell,slot}">
+                            <div class="flex space-x-1 px-[0.3rem] items-center">
+                                <Label :size="slot.labelSize" :type="cell?._payload?.label_shade?.value as LabelTypeT" shade :label="cell.email_verified ? `Verified` : `Not verified`" />
+                            </div>
                         </template>
                         <template v-slot:cell.associated_companies_summary="{cell,slot}">
                             <div class="p-[3px] flex items-center gap-1">
@@ -134,9 +136,10 @@
 </template>
 
 <script setup lang="ts">
-import type {DataTableT, TableHeaderT} from "@/public/js/types/data";
+import type {DataTableT, TableHeaderT, TableRowT} from "@/public/js/types/data";
 import type {EnumSelection} from "@/public/js/common/type";
 import type {SelectDataType} from "@/public/js/types/form";
+import type {LabelTypeT} from "@/public/js/types/theme";
 
 useHead({titleTemplate: (titleChunk) => {return `${titleChunk} - Users`}});
 definePageMeta({middleware: ['auth', 'admin-in-any-company']});
@@ -151,7 +154,7 @@ const usersHeaders = reactive<TableHeaderT[]>([
     { text: 'Username', value: 'username', alignData: 'left'},
     { text: 'Status', value: 'status', alignData: 'left'},
     { text: 'Email', value: 'email', alignData: 'left'},
-    { text: 'Email Verification', value: 'email_verified_at', alignData: 'left'},
+    { text: 'Email Verification', value: 'email_verification', alignData: 'left'},
     { text: 'Timezone', value: 'timezone', alignData: 'left'},
     { text: 'Created by', value: 'created_by', alignData: 'left'},
     { text: 'Associated', value: 'associated_companies_summary', alignData: 'left'},
@@ -348,7 +351,21 @@ const usersExecute = async () => {
             users.message = _get(response, '_data.message', '');
         },
         onSuccessResponse: async (request, options, response) => {
-            users.data = _get(response, '_data.values.data', []);
+            users.data = _get(response, '_data.values.data', []).map((user: TableRowT) => {
+
+                let emailVerified = _get(user, 'email_verified', false);
+                let emailVerificationShade = emailVerified ? 'info' : 'caution';
+
+                return {
+                    ...user,
+                    _payload: {
+                        'label_shade': {
+                            'cell': ['email_verification'],
+                            'value': emailVerificationShade
+                        }
+                    }
+                };
+            });
             users.meta = _get(response, '_data.values.meta', {
                 pagination: {
                     total: 0,
