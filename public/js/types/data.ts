@@ -88,5 +88,5 @@ export type DatePickerT = {
 
 export type DataTableSelectionActionT = {
     action: number
-    value: number[]
+    value: number[] | string[]
 }
