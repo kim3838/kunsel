@@ -30,6 +30,12 @@
                     <span v-if="cell.approver.company_assignment_type?.value">{{cell.approver.company_assignment_type?.text}}</span>
                 </div>
             </template>
+            <template v-slot:cell.approved_by_username="{cell,slot}">
+                <div class="p-[3px]">{{cell.approved_by.username}}</div>
+            </template>
+            <template v-slot:cell.approved_at="{cell,slot}">
+                <div class="p-[3px]">{{cell.approved_by.approved_at}}</div>
+            </template>
         </DataTable>
     </div>
 </template>
@@ -94,6 +100,9 @@ const approversHeaders = reactive<TableHeaderT[]>([
     { text: 'Employee #', value: 'company_employee_number'},
     { text: 'Name', value: 'company_employee_full_name'},
     { text: 'Company Assignment', value: 'company_assignment_type'},
+
+    { text: 'Approved By', value: 'approved_by_username'},
+    { text: 'Approval Date', value: 'approved_at'},
 ]);
 </script>
 

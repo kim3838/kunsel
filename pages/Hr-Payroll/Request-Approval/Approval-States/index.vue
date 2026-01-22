@@ -135,6 +135,12 @@
                                 <span v-if="cell.approver.company_assignment_type?.value">{{cell.approver.company_assignment_type?.text}}</span>
                             </div>
                         </template>
+                        <template v-slot:cell.approved_by_username="{cell,slot}">
+                            <div class="p-[3px]">{{cell.approved_by.username}}</div>
+                        </template>
+                        <template v-slot:cell.approved_at="{cell,slot}">
+                            <div class="p-[3px]">{{cell.approved_by.approved_at}}</div>
+                        </template>
                     </DataTable>
                 </div>
             </div>
@@ -214,6 +220,8 @@ const approvalStatesSupHeaders = reactive<TableSupHeaderT[]>([
     {text: '', colspan: 2,  alignHeader: 'left'},
 
     {text: 'Approver', colspan: 5,  alignHeader: 'left'},
+
+    {text: 'Approved by', colspan: 3,  alignHeader: 'left'},
 ]);
 
 const approvalStatesHeaders = reactive<TableHeaderT[]>([
@@ -235,6 +243,9 @@ const approvalStatesHeaders = reactive<TableHeaderT[]>([
     { text: 'Employee #', value: 'company_employee_number'},
     { text: 'Name', value: 'company_employee_full_name'},
     { text: 'Company Assignment', value: 'company_assignment_type'},
+
+    { text: '', value: 'approved_by_username', minWidth: '60.84px'},
+    { text: 'Date', value: 'approved_at', minWidth: '60.84px'},
 ]);
 
 const approvalStates = reactive<DataTableT>({
