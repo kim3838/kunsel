@@ -30,6 +30,12 @@ export type ApprovalSettingT = {
     approvers: ApprovalSettingApproverT[],
 }
 
+export type FiledRequestT = {
+    id: string,
+    requestable_type: string,
+    requestable_id: number,
+}
+
 export type RequestableT = {
     type: string,
     id: number,
