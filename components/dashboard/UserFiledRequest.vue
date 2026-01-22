@@ -17,6 +17,14 @@
                 :label="'Clear selection'"
                 @click="selectedUserFiledRequests = []" />
             <Button
+                v-if="userFiledRequests.successful && selectedUserFiledRequests.length"
+                :variant="'outline'"
+                :size="'xs'"
+                :icon="'mdi:delete-outline'"
+                :disabled="disableActions"
+                :label="`Delete ${selectedUserFiledRequests.length}`"
+                @click="confirmDeleteSelected" />
+            <Button
                 :variant="'outline'"
                 :size="'xs'"
                 :icon="'ic:sharp-restart-alt'"
@@ -50,6 +58,7 @@
             :rows="userFiledRequests.data"
             :disabled="disableDataTable"
             v-model="selectedUserFiledRequests"
+            @selectionChanged="syncSelectedUserFiledRequests"
             selection>
             <template v-slot:cell.number="{cell,slot}">
                 <div class="p-[3px] hover:underline cursor-pointer" @click="viewRequestable(cell)">{{cell.number}}</div>
@@ -65,9 +74,9 @@
 
 <script setup lang="ts">
 import type {LabelTypeT} from "@/public/js/types/theme";
-import type {DataTableT, TableHeaderT, TableRowT, TableSupHeaderT} from "@/public/js/types/data";
+import type {DataTableSelectionActionT, DataTableT, TableHeaderT, TableRowT, TableSupHeaderT} from "@/public/js/types/data";
 import type {StringEnumInterface} from "@/public/js/common/type";
-import type {RequestablePayloadT} from "@/public/js/types/request-approval";
+import type {FiledRequestT, RequestablePayloadT} from "@/public/js/types/request-approval";
 import {storeToRefs} from "pinia";
 
 const {isAuthenticated} = useAuth();
@@ -199,12 +208,13 @@ let paramsComputed = computed(() => {
 });
 const userFiledRequestsPending = ref(false)
 const selectedUserFiledRequests = ref([]);
+const deleting = ref(false);
 
 const disableActions = computed(() => {
-    return userFiledRequestsPending.value || companyAssociationPendingState().value;
+    return userFiledRequestsPending.value || deleting.value || companyAssociationPendingState().value;
 });
 const disableDataTable = computed(() => {
-    return userFiledRequestsPending.value || companyAssociationPendingState().value;
+    return userFiledRequestsPending.value || deleting.value || companyAssociationPendingState().value;
 });
 
 const userFiledRequestsExecute = async() =>{
@@ -281,6 +291,106 @@ function paginate(page = 1, clearSelection = false){
 
 watch(() => {return filters.page;}, () => {paginate(filters.page);});
 watch(() => {return filters.perPage;}, () => {paginate(1);});
+
+const selectedUserFiledRequestsPool = ref<FiledRequestT[]>([]);
+
+const syncSelectedUserFiledRequests = (selectionPayload: DataTableSelectionActionT) => {
+
+    if(selectionPayload.action == SELECTION_ACTION.REMOVE){
+
+        let selectionPayloadString = selectionPayload.value as string[];
+
+        _remove(selectedUserFiledRequestsPool.value, (pool: FiledRequestT) => selectionPayloadString.includes(pool.id as string));
+    }
+
+    if(selectionPayload.action == SELECTION_ACTION.ADD){
+
+        let filteredUserFiledRequestsData = userFiledRequests.data.filter((userFiledRequest: TableRowT) => {
+
+            let filedRequest = userFiledRequest as FiledRequestT;
+            let selectionPayloadString = selectionPayload.value as string[];
+            let filedRequestIsSelected = selectionPayloadString.includes(filedRequest.id as string);
+            let filedRequestIsNotYetInSelectedPool = _isEmpty(_find(selectedUserFiledRequestsPool.value, {id: filedRequest.id}));
+
+            return filedRequestIsSelected && filedRequestIsNotYetInSelectedPool;
+        });
+
+        selectedUserFiledRequestsPool.value.push(...filteredUserFiledRequestsData.map((userFiledRequest: TableRowT) => {
+
+            let filedRequest = userFiledRequest as FiledRequestT;
+
+            return {
+                id: filedRequest.id,
+                requestable_type: filedRequest.requestable_type,
+                requestable_id: filedRequest.requestable_id,
+            }
+        }));
+    }
+}
+
+const confirmDeleteSelected = () => {
+
+    const selectedIds = selectedUserFiledRequests.value;
+
+    useNuxtApp().$promptStore.setPrompt({
+        resetable: true,
+        icon: null,
+        title: 'Confirm Action',
+        message: `Confirm delete selected request${selectedIds.length > 1 ? 's' : ''}?`,
+        action: {
+            callback: async () => {
+                await deleteSelected();
+            },
+            label: 'Yes'
+        }
+    });
+}
+const deleteSelected = async () => {
+
+    let selectedIds: number[] = [];
+
+    selectedIds = selectedUserFiledRequests.value;
+
+    const requestables = selectedUserFiledRequestsPool.value.reduce((acc: Record<string, number[]>, { requestable_id, requestable_type }) => {
+        acc[requestable_type] ??= [];
+        acc[requestable_type].push(requestable_id);
+        return acc;
+    }, {});
+
+    deleting.value = true;
+
+    await laraFetch("/api/user-filed-requests", {
+        method: 'DELETE',
+        body: {
+            account_id: selectedAssociatedCompanyAccountId.value,
+            company_id: selectedAssociatedCompanyId.value,
+            requestables: requestables,
+        },
+    },{
+        onRequestError: (request, options, error) => {
+            deleting.value = false;
+        },
+        onResponse: () => {
+            deleting.value = false;
+        },
+        onSuccessResponse: async (request, options, response) => {
+
+            useNuxtApp().$promptStore.setPrompt({
+                resetable: false,
+                icon: null,
+                title: `Request successful`,
+                message: `Request${selectedIds.length > 1 ? 's' : ''} deleted successfully.`,
+                action: {
+                    callback: () => {},
+                    label: 'Okay'
+                }
+            });
+        }
+    });
+
+    selectedUserFiledRequests.value = [];
+    await userFiledRequestsExecute();
+}
 
 const showRequestable = ref(false);
 const requestablePayload = ref<RequestablePayloadT>({
