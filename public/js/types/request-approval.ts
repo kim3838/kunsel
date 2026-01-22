@@ -42,6 +42,9 @@ export type RequestableT = {
     number: string,
 }
 
+//Similar to UserCompanyAssignmentSyncT
+export type RequestableIds = Record<string, number[]>;
+
 export type RequestablePayloadT = {
     type: string,
     id: number,

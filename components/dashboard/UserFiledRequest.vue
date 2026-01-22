@@ -76,7 +76,7 @@
 import type {LabelTypeT} from "@/public/js/types/theme";
 import type {DataTableSelectionActionT, DataTableT, TableHeaderT, TableRowT, TableSupHeaderT} from "@/public/js/types/data";
 import type {StringEnumInterface} from "@/public/js/common/type";
-import type {FiledRequestT, RequestablePayloadT} from "@/public/js/types/request-approval";
+import type {FiledRequestT, RequestableIds, RequestablePayloadT} from "@/public/js/types/request-approval";
 import {storeToRefs} from "pinia";
 
 const {isAuthenticated} = useAuth();
@@ -351,7 +351,7 @@ const deleteSelected = async () => {
 
     selectedIds = selectedUserFiledRequests.value;
 
-    const requestables = selectedUserFiledRequestsPool.value.reduce((acc: Record<string, number[]>, { requestable_id, requestable_type }) => {
+    const requestables = selectedUserFiledRequestsPool.value.reduce((acc: RequestableIds, { requestable_id, requestable_type }) => {
         acc[requestable_type] ??= [];
         acc[requestable_type].push(requestable_id);
         return acc;
