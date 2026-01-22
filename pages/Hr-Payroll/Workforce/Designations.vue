@@ -59,7 +59,7 @@
                                 </div>
                             </div>
                             <div class="space-x-2 inline-flex items-center">
-                                <Button :variant="'outline'" :icon="'mdi:cancel'" :disabled="createEditModalDisableActions" @click="closeModal" :label="'Cancel'" />
+                                <Button :variant="'outline'" :disabled="createEditModalDisableActions" @click="closeModal" :label="'Cancel'" />
                                 <Button :disabled="createEditModalDisableActions" :icon="createEditModalActionIcon" @click="createEditModalSubmit" :label="createEditModalActionLabel" />
                             </div>
                         </div>

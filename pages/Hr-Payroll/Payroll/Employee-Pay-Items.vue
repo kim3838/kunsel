@@ -123,7 +123,6 @@
                                         class="w-min"
                                         :variant=" 'outline'"
                                         :size="'md'"
-                                        :icon="'mdi:cancel'"
                                         :label="'Cancel'"
                                         @click="cancelSelectEmployee"/>
                                     <Button

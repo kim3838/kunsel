@@ -143,7 +143,6 @@
                             :variant=" 'outline'"
                             :size="'md'"
                             :disabled="disableActions"
-                            :icon="'mdi:cancel'"
                             :label="'Cancel'"
                             @click="closeModal(true)"/>
                         <Button

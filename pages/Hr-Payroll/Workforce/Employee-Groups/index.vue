@@ -95,7 +95,6 @@
                                         :variant=" 'outline'"
                                         :size="'md'"
                                         :disabled="disableEmployeeModalSelectionActions"
-                                        :icon="'mdi:cancel'"
                                         :label="'Cancel'"
                                         @click="closeGroupAssignmentModal"/>
                                     <Button
@@ -113,7 +112,6 @@
                                         :variant=" 'outline'"
                                         :size="'md'"
                                         :disabled="disableEmployeeModalSelectionActions"
-                                        :icon="'mdi:cancel'"
                                         :label="'Cancel'"
                                         @click="closeCreateEditForm"/>
                                     <Button

@@ -119,7 +119,6 @@
                                         :variant=" 'outline'"
                                         :size="'md'"
                                         :disabled="disableModalActions"
-                                        :icon="'mdi:cancel'"
                                         :label="'Cancel'"
                                         @click="closeCreateEditForm"/>
                                     <Button

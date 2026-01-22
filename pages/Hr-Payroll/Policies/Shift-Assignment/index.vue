@@ -144,7 +144,6 @@
                                         :variant=" 'outline'"
                                         :size="'md'"
                                         :disabled="disableShiftAssignmentActions || disableEmployeeModalSelectionActions"
-                                        :icon="'mdi:cancel'"
                                         :label="'Cancel'"
                                         @click="closeStagedShiftModal"/>
                                     <Button

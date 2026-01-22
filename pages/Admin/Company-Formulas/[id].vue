@@ -38,7 +38,7 @@
                         <div class="flex space-x-2 justify-between">
                             <div></div>
                             <div class="space-x-2 inline-flex items-center">
-                                <Button :variant="'outline'" :icon="'mdi:cancel'" @click="addFormulaModal = false" :label="'Cancel'" />
+                                <Button :variant="'outline'" @click="addFormulaModal = false" :label="'Cancel'" />
                                 <Button :icon="'mdi:plus'" @click="confirmAddUpdateFormula" :label="'Add / Update'" />
                             </div>
                         </div>

@@ -130,7 +130,6 @@
                                         :variant=" 'outline'"
                                         :size="'md'"
                                         :disabled="disableLeaveTypeAssignmentActions || disableEmployeeModalSelectionActions"
-                                        :icon="'mdi:cancel'"
                                         :label="'Cancel'"
                                         @click="closeStagedLeaveTypeModal"/>
                                     <Button

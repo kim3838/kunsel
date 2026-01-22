@@ -153,7 +153,7 @@
                             <div class="flex space-x-2 justify-between">
                                 <div></div>
                                 <div class="space-x-2 inline-flex items-center">
-                                    <Button :disabled="disableUserModalSelectionActions" :variant="'outline'" :icon="'mdi:cancel'" @click="closeSetApprover" :label="'Cancel'" />
+                                    <Button :disabled="disableUserModalSelectionActions" :variant="'outline'" @click="closeSetApprover" :label="'Cancel'" />
                                     <Button :disabled="disableUserModalSelectionActions || selectedModalUsers.length == 0" @click="confirmSetApprover" :label="'Select'" />
                                 </div>
                             </div>
