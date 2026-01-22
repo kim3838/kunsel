@@ -222,7 +222,7 @@ watch(updatedAssociatedCompanyFlag, (newValue) => {
 
 const holidaysHeaders = reactive<TableHeaderT[]>([
     { text: '#', value: 'row_number'},
-    { text: '', value: 'actions'},
+    { text: '', value: 'actions', minWidth: '33px'},
     { text: 'Name', value: 'name', alignData: 'left'},
     { text: 'Type', value: 'type', alignData: 'left'},
     { text: 'Date', value: 'date', alignData: 'left'},

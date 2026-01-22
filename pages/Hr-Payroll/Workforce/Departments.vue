@@ -228,7 +228,7 @@ watch(updatedAssociatedCompanyFlag, async (newValue) => {
 })
 
 const departmentsHeaders = reactive<TableHeaderT[]>([
-    { text: '', value: 'actions'},
+    { text: '', value: 'actions', minWidth: '33px'},
     { text: 'Name', value: 'name', alignData: 'left'},
     { text: 'Department Head', value: 'department_head_number', alignData: 'left', minWidth: '33px'},
     { text: '', value: 'department_head_full_name', alignData: 'left', minWidth: '33px'},

@@ -226,17 +226,17 @@ const approvalStatesSupHeaders = reactive<TableSupHeaderT[]>([
 
 const approvalStatesHeaders = reactive<TableHeaderT[]>([
     { text: '#', value: 'row_number'},
-    { text: '', value: 'actions'},
+    { text: '', value: 'actions', minWidth: '33px'},
 
     { text: 'Request #', value: 'request_number', isNumeric: true},
 
     { text: 'Order', value: 'order'},
     { text: 'Status', value: 'status'},
-    { text: '', value: 'current_state_message', minWidth: '60.84px'},
+    { text: '', value: 'current_state_message', minWidth: '33px'},
     { text: 'Remarks', value: 'remarks'},
 
     { text: 'Request Date', value: 'date_requested'},
-    { text: '', value: 'company_timezone'},
+    { text: '', value: 'company_timezone', minWidth: '33px'},
 
     { text: 'Status', value: 'user_status'},
     { text: 'Username', value: 'username'},
@@ -244,8 +244,8 @@ const approvalStatesHeaders = reactive<TableHeaderT[]>([
     { text: 'Name', value: 'company_employee_full_name'},
     { text: 'Company Assignment', value: 'company_assignment_type'},
 
-    { text: '', value: 'approved_by_username', minWidth: '60.84px'},
-    { text: 'Date', value: 'approved_at', minWidth: '60.84px'},
+    { text: '', value: 'approved_by_username', minWidth: '33px'},
+    { text: 'Date', value: 'approved_at', minWidth: '33px'},
 ]);
 
 const approvalStates = reactive<DataTableT>({

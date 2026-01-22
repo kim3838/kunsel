@@ -183,7 +183,7 @@ const leaveTypesSupHeaders = reactive<TableSupHeaderT[]>([
 
 const leaveTypesHeaders = reactive<TableHeaderT[]>([
     { text: '#', value: 'row_number'},
-    { text: '', value: 'actions'},
+    { text: '', value: 'actions', minWidth: '33px'},
     { text: 'Code', value: 'code'},
     { text: 'Name', value: 'name'},
     { text: 'Type', value: 'type'},
@@ -192,8 +192,8 @@ const leaveTypesHeaders = reactive<TableHeaderT[]>([
     { text: 'Employment Profiles', value: 'eligibility_employment_types_readable', alignData: 'left'},
     { text: 'Balance upon eligibility', value: 'initial_balance_upon_eligibility', alignData: 'right'},
 
-    { text: '', value: 'period_type', alignData: 'left'},
-    { text: '', value: 'period_readable', alignData: 'left'},
+    { text: '', value: 'period_type', alignData: 'left', minWidth: '33px'},
+    { text: '', value: 'period_readable', alignData: 'left', minWidth: '33px'},
 
     { text: '', value: 'limit_usage_value_readable', alignData: 'left'},
 

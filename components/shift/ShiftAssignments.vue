@@ -289,7 +289,7 @@ const shiftAssignmentSupHeaders = reactive<TableSupHeaderT[]>([
 
 const shiftAssignmentHeaders = reactive<TableHeaderT[]>([
     { text: '#', value: 'row_number'},
-    { text: '', value: 'actions'},
+    { text: '', value: 'actions', minWidth: '33px'},
     { text: 'Employee #', value: 'employee_number', alignData: 'left'},
     { text: 'Name', value: 'employee_full_name'},
     { text: 'Status', value: 'employee_current_employment_profile'},

@@ -489,17 +489,17 @@ const attendanceAdjustmentsSupHeaders = reactive<TableSupHeaderT[]>([
 
 const attendanceAdjustmentsHeaders = reactive<TableHeaderT[]>([
     { text: '#', value: 'row_number'},
-    { text: '', value: 'actions'},
+    { text: '', value: 'actions', minWidth: '33px'},
 
     { text: 'Request #', value: 'number', isNumeric: true},
     { text: '', value: 'status_summary'},
     { text: 'Request Date', value: 'date_requested'},
-    { text: '', value: 'company_timezone'},
+    { text: '', value: 'company_timezone', minWidth: '33px'},
     { text: 'Requested by', value: 'requested_by'},
     { text: 'Remarks', value: 'remarks'},
 
-    { text: '', value: 'employee_number'},
-    { text: '', value: 'employee_full_name'},
+    { text: '', value: 'employee_number', minWidth: '33px'},
+    { text: '', value: 'employee_full_name', minWidth: '33px'},
 
     { text: 'Date', value: 'attendance_date'},
 

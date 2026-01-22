@@ -202,7 +202,7 @@ watch(updatedAssociatedCompanyFlag, (newValue) => {
 });
 
 const employeeGroupsHeaders = reactive<TableHeaderT[]>([
-    { text: '', value: 'actions'},
+    { text: '', value: 'actions', minWidth: '33px'},
     { text: 'Group', value: 'name', alignData: 'left'},
     { text: 'Groupables Count', value: 'groupables_count', alignData: 'right'},
 ]);
