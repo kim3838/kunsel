@@ -278,6 +278,7 @@ function paginate(page = 1, clearSelection = false){
 
     if(clearSelection){
         selectedUserFiledRequests.value = [];
+        selectedUserFiledRequestsProxy.value = [];
     }
 
     if(filters.page === page){
