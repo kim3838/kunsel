@@ -96,12 +96,12 @@ const approversHeaders = reactive<TableHeaderT[]>([
 
     { text: 'User Status', value: 'user_status'},
     { text: 'Approver', value: 'username'},
-    { text: '#', value: 'company_employee_number', minWidth: '27.5px'},
-    { text: '', value: 'company_employee_full_name', minWidth: '27.5px'},
+    { text: '#', value: 'company_employee_number', minWidth: '33.5px'},
+    { text: '', value: 'company_employee_full_name', minWidth: '33.5px'},
     { text: 'Company Assignment', value: 'company_assignment_type'},
 
     { text: 'Approved By', value: 'approved_by_username'},
-    { text: '', value: 'approved_at_diff', minWidth: '27.5px'},
+    { text: '', value: 'approved_at_diff', minWidth: '33.5px'},
     { text: 'Remarks', value: 'remarks'},
 ]);
 </script>
