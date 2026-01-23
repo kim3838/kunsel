@@ -13,6 +13,12 @@ export const APPROVAL_ACTION_NAME: StringEnumInterface = {
     [APPROVAL_ACTION.APPROVE as number]: 'Approve',
 }
 
+export const APPROVAL_ACTION_NAME_PAST_TENSE: StringEnumInterface = {
+    [APPROVAL_ACTION.NOT_SPECIFIED as number]: 'Not Specified',
+    [APPROVAL_ACTION.DECLINE as number]: 'Declined',
+    [APPROVAL_ACTION.APPROVE as number]: 'Approved',
+}
+
 export const REQUESTABLE_TYPE: NumericEnumInterface = {
     ATTENDANCE_ADJUSTMENT_REQUEST : 100,
     OVERTIME_REQUEST: 200,

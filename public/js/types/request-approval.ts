@@ -50,6 +50,11 @@ export type ApprovalStateT = {
     requestable: RequestableT,
 }
 
+export type ApprovalStateWorkFlowT = {
+    id: number,
+    number: string,
+}
+
 //Similar to UserCompanyAssignmentSyncT
 export type RequestableIds = Record<string, number[]>;
 
