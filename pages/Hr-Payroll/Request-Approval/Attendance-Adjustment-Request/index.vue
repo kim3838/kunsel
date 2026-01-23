@@ -352,9 +352,6 @@
                                 <Label :size="slot.labelSize" :type="cell?._payload?.label_shade?.value as LabelTypeT" shade :label="cell.status_summary?.text" />
                             </div>
                         </template>
-                        <template v-slot:cell.company_timezone="{cell,slot}">
-                            <div class="p-[3px]">{{cell.company_timezone}}</div>
-                        </template>
                         <template v-slot:cell.requested_by="{cell,slot}">
                             <div class="p-[3px]">{{cell.requested_by?.name}}</div>
                         </template>
@@ -475,11 +472,9 @@ const attendanceAdjustmentsSupHeaders = reactive<TableSupHeaderT[]>([
     {text: ''},
 
     {text: ''},
-    {text: 'Status'},
     {text: ''},
-    {text: ''},
-    {text: ''},
-    {text: ''},
+
+    {text: 'Requested by', colspan: 3,  alignHeader: 'left'},
 
     {text: 'Attendance', colspan: 3,  alignHeader: 'left'},
 
@@ -491,15 +486,14 @@ const attendanceAdjustmentsHeaders = reactive<TableHeaderT[]>([
     { text: '', value: 'actions', minWidth: '33px'},
 
     { text: 'Request #', value: 'number', isNumeric: true},
-    { text: '', value: 'status_summary'},
-    { text: 'Request Date', value: 'date_requested'},
-    { text: '', value: 'company_timezone', minWidth: '33px'},
-    { text: 'Requested by', value: 'requested_by'},
-    { text: 'Remarks', value: 'remarks'},
+    { text: 'Status', value: 'status_summary'},
+
+    { text: '', value: 'requested_by'},
+    { text: '', value: 'date_requested_diff', minWidth: '33px'},
+    { text: 'Remarks', value: 'remarks', minWidth: '33px'},
 
     { text: '', value: 'employee_number', minWidth: '33px'},
     { text: '', value: 'employee_full_name', minWidth: '33px'},
-
     { text: 'Date', value: 'attendance_date'},
 
     { text: 'First In', value: 'first_in', alignData: 'left'},

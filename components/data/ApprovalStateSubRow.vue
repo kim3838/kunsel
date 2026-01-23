@@ -33,8 +33,8 @@
             <template v-slot:cell.approved_by_username="{cell,slot}">
                 <div class="p-[3px]">{{cell.approved_by.username}}</div>
             </template>
-            <template v-slot:cell.approved_at="{cell,slot}">
-                <div class="p-[3px]">{{cell.approved_by.approved_at}}</div>
+            <template v-slot:cell.approved_at_diff="{cell,slot}">
+                <div class="p-[3px]">{{cell.approved_by.approved_at_diff}}</div>
             </template>
         </DataTable>
     </div>
@@ -93,16 +93,16 @@ const approversHeaders = reactive<TableHeaderT[]>([
     { text: 'Order', value: 'order'},
     { text: 'Status', value: 'status'},
     { text: '', value: 'current_state_message', minWidth: '54.11px'},
-    { text: 'Remarks', value: 'remarks'},
 
-    { text: 'Status', value: 'user_status'},
-    { text: 'Username', value: 'username'},
-    { text: 'Employee #', value: 'company_employee_number'},
-    { text: 'Name', value: 'company_employee_full_name'},
+    { text: 'User Status', value: 'user_status'},
+    { text: 'Approver', value: 'username'},
+    { text: '#', value: 'company_employee_number', minWidth: '27.5px'},
+    { text: '', value: 'company_employee_full_name', minWidth: '27.5px'},
     { text: 'Company Assignment', value: 'company_assignment_type'},
 
     { text: 'Approved By', value: 'approved_by_username'},
-    { text: 'Approval Date', value: 'approved_at'},
+    { text: '', value: 'approved_at_diff', minWidth: '27.5px'},
+    { text: 'Remarks', value: 'remarks'},
 ]);
 </script>
 

@@ -47,11 +47,8 @@
                     <Label :size="slot.labelSize" :type="cell?._payload?.label_shade?.value as LabelTypeT" shade :label="cell.status?.text" />
                 </div>
             </template>
-            <template v-slot:cell.date_requested="{cell,slot}">
-                <div class="p-[3px]">{{cell.requestable.date_requested}}</div>
-            </template>
-            <template v-slot:cell.company_timezone="{cell,slot}">
-                <div class="p-[3px]">{{cell.requestable.company_timezone}}</div>
+            <template v-slot:cell.date_requested_diff="{cell,slot}">
+                <div class="p-[3px]">{{cell.requestable.date_requested_diff}}</div>
             </template>
         </DataTable>
     </div>
@@ -83,24 +80,20 @@ watch(updatedAssociatedCompanyFlag, (newValue) => {
 const approvalStatesSupHeaders = reactive<TableSupHeaderT[]>([
     {text: ''},
 
-    {text: '', colspan: 1,  alignHeader: 'left'},
+    {text: '', colspan: 2,  alignHeader: 'left'},
 
     {text: 'Approval', colspan: 3,  alignHeader: 'left'},
-
-    {text: '', colspan: 2,  alignHeader: 'left'},
 ]);
 
 const approvalStatesHeaders = reactive<TableHeaderT[]>([
     { text: '#', value: 'row_number'},
 
     { text: 'Request #', value: 'request_number', isNumeric: true},
+    { text: '', value: 'date_requested_diff'},
 
     { text: 'Order', value: 'order'},
     { text: 'Status', value: 'status'},
     { text: '', value: 'current_state_message', minWidth: '33.5px'},
-
-    { text: 'Request Date', value: 'date_requested'},
-    { text: '', value: 'company_timezone', minWidth: '33.5px'},
 ]);
 
 const approvalStates = reactive<DataTableT>({

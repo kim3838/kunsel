@@ -106,6 +106,9 @@
                         <template v-slot:cell.request_number="{cell,slot}">
                             <div class="p-[3px] hover:underline cursor-pointer" @click="viewRequestable(cell)">{{cell.requestable.number}}</div>
                         </template>
+                        <template v-slot:cell.date_requested_diff="{cell,slot}">
+                            <div class="p-[3px]">{{cell.requestable.date_requested_diff}}</div>
+                        </template>
 
                         <template v-slot:cell.status="{cell,slot}">
                             <div class="flex space-x-1 px-[0.3rem] items-center">
@@ -114,9 +117,6 @@
                         </template>
                         <template v-slot:cell.user_status="{cell,slot}">
                             <div class="p-[3px]">{{cell.approver.status?.text}}</div>
-                        </template>
-                        <template v-slot:cell.date_requested="{cell,slot}">
-                            <div class="p-[3px]">{{cell.requestable.date_requested}}</div>
                         </template>
                         <template v-slot:cell.company_timezone="{cell,slot}">
                             <div class="p-[3px]">{{cell.requestable.company_timezone}}</div>
@@ -138,8 +138,8 @@
                         <template v-slot:cell.approved_by_username="{cell,slot}">
                             <div class="p-[3px]">{{cell.approved_by.username}}</div>
                         </template>
-                        <template v-slot:cell.approved_at="{cell,slot}">
-                            <div class="p-[3px]">{{cell.approved_by.approved_at}}</div>
+                        <template v-slot:cell.approved_at_diff="{cell,slot}">
+                            <div class="p-[3px]">{{cell.approved_by.approved_at_diff}}</div>
                         </template>
                     </DataTable>
                 </div>
@@ -213,11 +213,9 @@ const approvalStatesSupHeaders = reactive<TableSupHeaderT[]>([
     {text: ''},
     {text: ''},
 
-    {text: '', colspan: 1,  alignHeader: 'left'},
+    {text: '', colspan: 2,  alignHeader: 'left'},
 
     {text: 'Approval', colspan: 4,  alignHeader: 'left'},
-
-    {text: '', colspan: 2,  alignHeader: 'left'},
 
     {text: 'Approver', colspan: 5,  alignHeader: 'left'},
 
@@ -229,14 +227,12 @@ const approvalStatesHeaders = reactive<TableHeaderT[]>([
     { text: '', value: 'actions', minWidth: '33px'},
 
     { text: 'Request #', value: 'request_number', isNumeric: true},
+    { text: '', value: 'date_requested_diff'},
 
     { text: 'Order', value: 'order'},
     { text: 'Status', value: 'status'},
     { text: '', value: 'current_state_message', minWidth: '33px'},
     { text: 'Remarks', value: 'remarks'},
-
-    { text: 'Request Date', value: 'date_requested'},
-    { text: '', value: 'company_timezone', minWidth: '33px'},
 
     { text: 'Status', value: 'user_status'},
     { text: 'Username', value: 'username'},
@@ -245,7 +241,7 @@ const approvalStatesHeaders = reactive<TableHeaderT[]>([
     { text: 'Company Assignment', value: 'company_assignment_type'},
 
     { text: '', value: 'approved_by_username', minWidth: '33px'},
-    { text: 'Date', value: 'approved_at', minWidth: '33px'},
+    { text: '', value: 'approved_at_diff', minWidth: '33px'},
 ]);
 
 const approvalStates = reactive<DataTableT>({
