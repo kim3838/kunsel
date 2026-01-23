@@ -10,7 +10,7 @@
             Attendance of: {{attendanceEmployeeNumber}} {{attendanceEmployeeFullName}}
         </div>
 
-        <fieldset class="neutral-border px-2 pb-2 space-y-2">
+        <fieldset class="mt-4 neutral-border px-2 pb-2 space-y-2">
             <legend class="text-lg font-header">Schedule</legend>
 
             <div class="grid gap-2">
