@@ -70,7 +70,19 @@
                             :icon="'tdesign:close'"
                             :disabled="disableActions"
                             :label="'Clear selection'"
-                            @click="selectedApprovalStates = []" />
+                            @click="selectedApprovalStates = []; selectedApprovalStatesProxy = []" />
+                        <Button
+                            v-if="approvalStates.successful && selectedApprovalStatesProxy.length"
+                            :size="'sm'"
+                            :disabled="disableActions"
+                            :label="`Approve ${selectedApprovalStatesProxy.length}`"
+                            @click="applyApprovalWorkFlow(APPROVAL_ACTION.APPROVE as number)" />
+                        <Button
+                            v-if="approvalStates.successful && selectedApprovalStatesProxy.length"
+                            :size="'sm'"
+                            :disabled="disableActions"
+                            :label="`Decline ${selectedApprovalStatesProxy.length}`"
+                            @click="applyApprovalWorkFlow(APPROVAL_ACTION.DECLINE as number)" />
                         <Label v-if="!approvalStates.successful" invert :size="'md'" :type="'danger'" :label="approvalStates.message" />
                     </div>
 
@@ -82,6 +94,7 @@
                         :rows="approvalStates.data"
                         :disabled="disableDataTable"
                         v-model="selectedApprovalStates"
+                        @selectionChanged="syncSelectedApprovalStatesProxy"
                         selection>
                         <template v-slot:cell.actions="{cell,slot: cellSlot}">
                             <div class="flex items-center">
@@ -149,11 +162,11 @@
 </template>
 
 <script setup lang="ts">
-import type {DataTableT, TableHeaderT, TableRowT, TableSupHeaderT} from "@/public/js/types/data";
+import type {DataTableSelectionActionT, DataTableT, TableHeaderT, TableRowT, TableSupHeaderT} from "@/public/js/types/data";
 import type {EnumOption, EnumSelection, StringEnumInterface} from "@/public/js/common/type";
 import type {LabelTypeT} from "@/public/js/types/theme";
 import type {CompanyUserRolePermissionT} from "@/public/js/types/role-permission";
-import type {RequestablePayloadT} from "@/public/js/types/request-approval";
+import type {ApprovalStateT, ApprovalStateWorkFlowPayloadT, RequestablePayloadT} from "@/public/js/types/request-approval";
 import {storeToRefs} from "pinia";
 
 useHead({titleTemplate: (titleChunk) => {return `${titleChunk} - Approval States`}});
@@ -363,6 +376,7 @@ const disableDataTable = computed(() => {
 });
 
 const hasPermissionToApproveAnyRequest = ref(false);
+const hasPermissionToDeclineAnyRequest = ref(false);
 const companyUserRolePermissionsExecute = async() =>{
 
     if(import.meta.server || !selectedAssociatedCompanyAccountId.value|| !selectedAssociatedCompanyId.value){
@@ -378,7 +392,7 @@ const companyUserRolePermissionsExecute = async() =>{
                 account_id: selectedAssociatedCompanyAccountId.value,
                 associated_company: selectedAssociatedCompanyId.value,
                 user_id: user.value?.id,
-                permission_keys: ['approve-any-request']
+                permission_keys: ['approve-any-request','decline-any-request',]
             }
         }
     }, {
@@ -386,8 +400,10 @@ const companyUserRolePermissionsExecute = async() =>{
             let permissions = _get(response, '_data.values.data', []) as CompanyUserRolePermissionT[];
 
             let approveAnyRequest = _find(permissions, {permission: 'approve-any-request'}) as CompanyUserRolePermissionT;
+            let declineAnyRequest = _find(permissions, {permission: 'decline-any-request'}) as CompanyUserRolePermissionT;
 
             hasPermissionToApproveAnyRequest.value = approveAnyRequest.permitted;
+            hasPermissionToDeclineAnyRequest.value = declineAnyRequest.permitted;
         }
     }, false);
 }
@@ -418,10 +434,11 @@ const approvalStatesExecute = async() =>{
 
                 let selfIsApprover = approvalState.approver.user_id == user.value?.id;
                 let isAwaitingForApproval = approvalState.current_state_flag == 1;
+                let permittedToApproveOrDeclineAnyRequest = hasPermissionToApproveAnyRequest.value || hasPermissionToDeclineAnyRequest.value;
 
                 return {
                     ...approvalState,
-                    isSelectable: isAwaitingForApproval && (hasPermissionToApproveAnyRequest.value || selfIsApprover)
+                    isSelectable: isAwaitingForApproval && (permittedToApproveOrDeclineAnyRequest || selfIsApprover)
                 };
             }).map((approvalState: TableRowT) => {
 
@@ -464,6 +481,7 @@ function paginate(page = 1, clearSelection = false){
 
     if(clearSelection){
         selectedApprovalStates.value = [];
+        selectedApprovalStatesProxy.value = [];
     }
 
     if(filters.page === page){
@@ -476,6 +494,43 @@ function paginate(page = 1, clearSelection = false){
 watch(() => {return filters.page;}, () => {paginate(filters.page);});
 watch(() => {return filters.perPage;}, () => {paginate(1);});
 
+
+const selectedApprovalStatesProxy = ref<ApprovalStateWorkFlowPayloadT[]>([]);
+
+const syncSelectedApprovalStatesProxy = (selectionPayload: DataTableSelectionActionT) => {
+
+    if(selectionPayload.action == SELECTION_ACTION.REMOVE){
+
+        let selectionPayloadNumber = selectionPayload.value as number[];
+
+        _remove(selectedApprovalStatesProxy.value, (pool: ApprovalStateWorkFlowPayloadT) => selectionPayloadNumber.includes(pool.id as number));
+    }
+
+    if(selectionPayload.action == SELECTION_ACTION.ADD){
+
+        let filteredApprovalStatesData = approvalStates.data.filter((approvalStateRow: TableRowT) => {
+
+            let approvalState = approvalStateRow as ApprovalStateT;
+            let selectionPayloadNumber = selectionPayload.value as number[];
+            let approvalStateIsSelected = selectionPayloadNumber.includes(approvalState.id as number);
+            let approvalStateIsNotYetInSelectedPool = _isEmpty(_find(selectedApprovalStatesProxy.value, {id: approvalState.id}));
+
+            return approvalStateIsSelected && approvalStateIsNotYetInSelectedPool;
+        });
+
+        selectedApprovalStatesProxy.value.push(...filteredApprovalStatesData.map((approvalStateRow: TableRowT) => {
+
+            let approvalState = approvalStateRow as ApprovalStateT;
+
+            return {
+                id: approvalState.id,
+                order: approvalState.order,
+                number: approvalState.requestable.number,
+            }
+        }));
+    }
+}
+
 const showRequestable = ref(false);
 const requestablePayload = ref<RequestablePayloadT>({
     type: '',
@@ -487,6 +542,31 @@ const viewRequestable = async (row: TableRowT) => {
 
     requestablePayload.value = row.requestable as RequestablePayloadT;
     showRequestable.value = true;
+}
+
+const createRequestableWorkFlow = ref(false);
+const requestableWorkFlowAction = ref(APPROVAL_ACTION.NOT_SPECIFIED);
+const applyApprovalWorkFlow = (action: number) => {
+
+    if(action == APPROVAL_ACTION.NOT_SPECIFIED) return;
+
+    requestableWorkFlowAction.value = action;
+    createRequestableWorkFlow.value = true;
+}
+const requestableWorkFlowResolved = () => {
+
+    useNuxtApp().$promptStore.setPrompt({
+        resetable: false,
+        icon: null,
+        title: `Request successful`,
+        message: `Approval workflow${selectedApprovalStates.value.length > 1 ? 's' : ''} updated successfully.`,
+        action: {
+            callback: () => {},
+            label: 'Okay'
+        }
+    });
+
+    paginate(1, true);
 }
 </script>
 

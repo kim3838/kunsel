@@ -50,7 +50,7 @@ export type ApprovalStateT = {
     requestable: RequestableT,
 }
 
-export type ApprovalStateWorkFlowT = {
+export type ApprovalStateWorkFlowPayloadT = {
     id: number,
     number: string,
 }
