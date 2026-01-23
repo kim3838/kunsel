@@ -15,7 +15,7 @@
                 :icon="'tdesign:close'"
                 :disabled="disableActions"
                 :label="'Clear selection'"
-                @click="selectedUserFiledRequests = []" />
+                @click="selectedUserFiledRequests = []; selectedUserFiledRequestsProxy = []" />
             <Button
                 v-if="userFiledRequests.successful && selectedUserFiledRequests.length"
                 :variant="'outline'"
@@ -58,7 +58,7 @@
             :rows="userFiledRequests.data"
             :disabled="disableDataTable"
             v-model="selectedUserFiledRequests"
-            @selectionChanged="syncSelectedUserFiledRequestsPool"
+            @selectionChanged="syncSelectedUserFiledRequestsProxy"
             selection>
             <template v-slot:cell.number="{cell,slot}">
                 <div class="p-[3px] hover:underline cursor-pointer" @click="viewRequestable(cell)">{{cell.number}}</div>
@@ -290,15 +290,15 @@ function paginate(page = 1, clearSelection = false){
 watch(() => {return filters.page;}, () => {paginate(filters.page);});
 watch(() => {return filters.perPage;}, () => {paginate(1);});
 
-const selectedUserFiledRequestsPool = ref<FiledRequestT[]>([]);
+const selectedUserFiledRequestsProxy = ref<FiledRequestT[]>([]);
 
-const syncSelectedUserFiledRequestsPool = (selectionPayload: DataTableSelectionActionT) => {
+const syncSelectedUserFiledRequestsProxy = (selectionPayload: DataTableSelectionActionT) => {
 
     if(selectionPayload.action == SELECTION_ACTION.REMOVE){
 
         let selectionPayloadString = selectionPayload.value as string[];
 
-        _remove(selectedUserFiledRequestsPool.value, (pool: FiledRequestT) => selectionPayloadString.includes(pool.id as string));
+        _remove(selectedUserFiledRequestsProxy.value, (pool: FiledRequestT) => selectionPayloadString.includes(pool.id as string));
     }
 
     if(selectionPayload.action == SELECTION_ACTION.ADD){
@@ -308,12 +308,12 @@ const syncSelectedUserFiledRequestsPool = (selectionPayload: DataTableSelectionA
             let filedRequest = userFiledRequest as FiledRequestT;
             let selectionPayloadString = selectionPayload.value as string[];
             let filedRequestIsSelected = selectionPayloadString.includes(filedRequest.id as string);
-            let filedRequestIsNotYetInSelectedPool = _isEmpty(_find(selectedUserFiledRequestsPool.value, {id: filedRequest.id}));
+            let filedRequestIsNotYetInSelectedPool = _isEmpty(_find(selectedUserFiledRequestsProxy.value, {id: filedRequest.id}));
 
             return filedRequestIsSelected && filedRequestIsNotYetInSelectedPool;
         });
 
-        selectedUserFiledRequestsPool.value.push(...filteredUserFiledRequestsData.map((userFiledRequest: TableRowT) => {
+        selectedUserFiledRequestsProxy.value.push(...filteredUserFiledRequestsData.map((userFiledRequest: TableRowT) => {
 
             let filedRequest = userFiledRequest as FiledRequestT;
 
@@ -349,7 +349,7 @@ const deleteSelected = async () => {
 
     selectedIds = selectedUserFiledRequests.value;
 
-    const requestables = selectedUserFiledRequestsPool.value.reduce((acc: RequestableIds, { requestable_id, requestable_type }) => {
+    const requestables = selectedUserFiledRequestsProxy.value.reduce((acc: RequestableIds, { requestable_id, requestable_type }) => {
         acc[requestable_type] ??= [];
         acc[requestable_type].push(requestable_id);
         return acc;
