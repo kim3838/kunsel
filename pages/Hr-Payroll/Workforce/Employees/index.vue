@@ -285,7 +285,7 @@
                             <div class="p-[3px]">{{cell.user?.status?.text}}</div>
                         </template>
                         <template v-slot:cell.email_verification="{cell,slot}">
-                            <div class="p-[3px]">{{cell.user?.email_verified ? `Verified` : `Not verified`}}</div>
+                            <div class="p-[3px]">{{cell.user?.email_verified_readable}}</div>
                         </template>
                     </DataTable>
                 </div>
