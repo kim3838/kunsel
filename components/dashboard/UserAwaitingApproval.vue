@@ -9,7 +9,9 @@
 
         <ViewRequestable
             v-model:view-requestable="showRequestable"
-            v-model:requestable-payload="requestablePayload"/>
+            v-model:approval-state-payload="approvalStatePayload"
+            v-model:requestable-is-approvable="requestableIsApprovable"
+            @applyApprovalWorkFlowFromViewable="applyApprovalWorkFlowFromViewable"/>
 
         <div class="mb-2 flex flex-row flex-wrap gap-2 items-center min-h-6">
             <div v-if="approvalStates.successful" class="scaffold-border px-2 text-sm font-[National_Park]">
@@ -255,15 +257,13 @@ const syncSelectedApprovalStatesProxy = (selectionPayload: DataTableSelectionAct
 }
 
 const showRequestable = ref(false);
-const requestablePayload = ref<RequestablePayloadT>({
-    type: '',
-    id: -1,
-    number: '',
-});
+const requestableIsApprovable = ref(false);
+const approvalStatePayload = ref<ApprovalStateT>({} as ApprovalStateT);
 
 const viewRequestable = async (row: TableRowT) => {
 
-    requestablePayload.value = row.requestable as RequestablePayloadT;
+    approvalStatePayload.value = row as ApprovalStateT;
+    requestableIsApprovable.value = true;
     showRequestable.value = true;
 }
 
@@ -277,6 +277,14 @@ const applyApprovalWorkFlow = (action: number) => {
     requestableWorkFlowAction.value = action;
     createRequestableWorkFlow.value = true;
 }
+
+const applyApprovalWorkFlowFromViewable = (action: number, preSelectedApprovalStates: ApprovalStateWorkFlowPayloadT[]) => {
+
+    selectedApprovalStatesProxy.value = preSelectedApprovalStates;
+    requestableWorkFlowAction.value = action;
+    createRequestableWorkFlow.value = true;
+}
+
 
 const requestableWorkFlowResolved = () => {
 

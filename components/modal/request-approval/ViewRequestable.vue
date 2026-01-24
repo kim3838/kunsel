@@ -42,6 +42,22 @@
                                 :disabled="pending"
                                 :label="'Close'"
                                 @click="closeModal"/>
+                            <Button
+                                v-if="requestableIsApprovable && approvalStatePayloadIsStillTheCurrentApprovalState"
+                                class="w-min"
+                                :variant=" 'outline'"
+                                :size="'md'"
+                                :disabled="pending"
+                                :label="'Approve'"
+                                @click="emitApplyApprovalWorkFlowFromViewable(APPROVAL_ACTION.APPROVE as number)"/>
+                            <Button
+                                v-if="requestableIsApprovable && approvalStatePayloadIsStillTheCurrentApprovalState"
+                                class="w-min"
+                                :variant=" 'outline'"
+                                :size="'md'"
+                                :disabled="pending"
+                                :label="'Decline'"
+                                @click="emitApplyApprovalWorkFlowFromViewable(APPROVAL_ACTION.DECLINE as number)"/>
                         </div>
                     </div>
                 </div>
@@ -51,7 +67,7 @@
 </template>
 
 <script setup lang="ts">
-import type {RequestablePayloadT, RequestableT} from "@/public/js/types/request-approval";
+import type {ApprovalStateT, ApprovalStateWorkFlowPayloadT, RequestableT} from "@/public/js/types/request-approval";
 import {storeToRefs} from "pinia";
 
 const nuxtApp = useNuxtApp();
@@ -66,12 +82,16 @@ const props = defineProps({
         type: Boolean,
         default: false,
     },
-    requestablePayload: {
-        type: Object as PropType<RequestablePayloadT>,
+    approvalStatePayload: {
+        type: Object as PropType<ApprovalStateT>,
         default: () => {
             return {};
         }
-    }
+    },
+    requestableIsApprovable: {
+        type: Boolean,
+        default: false,
+    },
 });
 
 const pending = ref(false);
@@ -96,12 +116,15 @@ const requestableType = computed(() => {
 
     return {
         attendance_adjustment_request: REQUESTABLE_TYPE.ATTENDANCE_ADJUSTMENT_REQUEST
-    }[props.requestablePayload.type];
-})
+    }[props.approvalStatePayload?.requestable?.type];
+});
+
+const approvalStatePayloadIsStillTheCurrentApprovalState = ref(false);
+const preSelectedApprovalStates = ref<ApprovalStateWorkFlowPayloadT[]>([]);
 
 const fetchRequestable = async () => {
 
-    let requestablePayload = props.requestablePayload;
+    let requestablePayload = props.approvalStatePayload?.requestable;
 
     let path = {
         attendance_adjustment_request: 'attendance-adjustment-request'
@@ -130,19 +153,43 @@ const fetchRequestable = async () => {
         },
         onSuccessResponse: async (request, options, response) => {
             requestable.data = _get(response, '_data.values', {}) as RequestableT;
+
+            const fetchedRequestableCurrentApprovalState = _chain(requestable.data.approval_states)
+                .filter(approvalState => approvalState.current_state_flag == 1 && approvalState.id == props.approvalStatePayload?.id)
+                .first()
+                .value() as ApprovalStateT;
+
+            if(!_isEmpty(fetchedRequestableCurrentApprovalState)){
+
+                preSelectedApprovalStates.value = [{
+                    id: fetchedRequestableCurrentApprovalState.id,
+                    order: fetchedRequestableCurrentApprovalState.order,
+                    number: fetchedRequestableCurrentApprovalState.requestable.number
+                }];
+
+                approvalStatePayloadIsStillTheCurrentApprovalState.value = true;
+            }
         }
     }, false);
 }
 
-const emit = defineEmits(['update:viewRequestable']);
+const emit = defineEmits(['update:viewRequestable', 'update:requestableIsSelectable', 'applyApprovalWorkFlowFromViewable']);
 
 const closeModal = () => {
     emit('update:viewRequestable', false);
+    emit('update:requestableIsSelectable', false);
     reset();
+}
+
+const emitApplyApprovalWorkFlowFromViewable = (action: number) => {
+    emit('applyApprovalWorkFlowFromViewable', action, preSelectedApprovalStates.value)
+    closeModal();
 }
 
 const reset = () => {
     pending.value = false;
+    approvalStatePayloadIsStillTheCurrentApprovalState.value = false;
+    preSelectedApprovalStates.value = [];
     requestable.successful = true;
     requestable.message = '';
     requestable.data = {};

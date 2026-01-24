@@ -61,7 +61,9 @@
 
                 <ViewRequestable
                     v-model:view-requestable="showRequestable"
-                    v-model:requestable-payload="requestablePayload"/>
+                    v-model:approval-state-payload="approvalStatePayload"
+                    v-model:requestable-is-approvable="requestableIsApprovable"
+                    @applyApprovalWorkFlowFromViewable="applyApprovalWorkFlowFromViewable"/>
 
                 <div class="px-[20px]">
                     <div class="mb-2 flex flex-row flex-wrap gap-2 items-center min-h-8">
@@ -175,7 +177,7 @@ import type {DataTableSelectionActionT, DataTableT, TableHeaderT, TableRowT, Tab
 import type {EnumOption, EnumSelection, StringEnumInterface} from "@/public/js/common/type";
 import type {LabelTypeT} from "@/public/js/types/theme";
 import type {CompanyUserRolePermissionT} from "@/public/js/types/role-permission";
-import type {ApprovalStateT, ApprovalStateWorkFlowPayloadT, RequestablePayloadT} from "@/public/js/types/request-approval";
+import type {ApprovalStateT, ApprovalStateWorkFlowPayloadT} from "@/public/js/types/request-approval";
 import {storeToRefs} from "pinia";
 
 useHead({titleTemplate: (titleChunk) => {return `${titleChunk} - Approval States`}});
@@ -542,15 +544,13 @@ const syncSelectedApprovalStatesProxy = (selectionPayload: DataTableSelectionAct
 }
 
 const showRequestable = ref(false);
-const requestablePayload = ref<RequestablePayloadT>({
-    type: '',
-    id: -1,
-    number: '',
-});
+const requestableIsApprovable = ref(false);
+const approvalStatePayload = ref<ApprovalStateT>({} as ApprovalStateT);
 
 const viewRequestable = async (row: TableRowT) => {
 
-    requestablePayload.value = row.requestable as RequestablePayloadT;
+    approvalStatePayload.value = row as ApprovalStateT;
+    requestableIsApprovable.value = row?.isSelectable as boolean;
     showRequestable.value = true;
 }
 
@@ -564,6 +564,14 @@ const applyApprovalWorkFlow = (action: number) => {
     requestableWorkFlowAction.value = action;
     createRequestableWorkFlow.value = true;
 }
+
+const applyApprovalWorkFlowFromViewable = (action: number, preSelectedApprovalStates: ApprovalStateWorkFlowPayloadT[]) => {
+
+    selectedApprovalStatesProxy.value = preSelectedApprovalStates;
+    requestableWorkFlowAction.value = action;
+    createRequestableWorkFlow.value = true;
+}
+
 const requestableWorkFlowResolved = () => {
 
     paginate(1, true);

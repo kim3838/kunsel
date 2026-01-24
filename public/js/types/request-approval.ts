@@ -40,6 +40,7 @@ export type RequestableT = {
     type: string,
     id: number,
     number: string,
+    approval_states: ApprovalStateT[],
 }
 
 export type ApprovalStateT = {
@@ -52,6 +53,7 @@ export type ApprovalStateT = {
 
 export type ApprovalStateWorkFlowPayloadT = {
     id: number,
+    order: number,
     number: string,
 }
 
