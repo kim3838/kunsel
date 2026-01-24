@@ -488,7 +488,7 @@ const attendanceAdjustmentsHeaders = reactive<TableHeaderT[]>([
     { text: 'Request #', value: 'number', isNumeric: true},
     { text: 'Status', value: 'status_summary'},
 
-    { text: '', value: 'requested_by'},
+    { text: '', value: 'requested_by', minWidth: '33px'},
     { text: '', value: 'date_requested_diff', minWidth: '33px'},
     { text: 'Remarks', value: 'remarks', minWidth: '33px'},
 
