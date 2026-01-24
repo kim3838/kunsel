@@ -7,6 +7,9 @@
             :size="'md'"
             :stripped="false"
             :rows="rowsProxy">
+            <template v-slot:cell.order="{cell,slot}">
+                <div class="p-[3px]">{{ordinal(cell.order)}}</div>
+            </template>
             <template v-slot:cell.status="{cell,slot}">
                 <div class="flex space-x-1 px-[0.3rem] items-center">
                     <Label :size="slot.labelSize" :type="cell?._payload?.label_shade?.value as LabelTypeT" shade :label="cell.status?.text" />
@@ -43,6 +46,9 @@
 <script setup lang="ts">
 import type {TableHeaderT, TableRowT} from "@/public/js/types/data";
 import type {LabelTypeT} from "@/public/js/types/theme";
+
+const nuxtApp = useNuxtApp();
+const ordinal = nuxtApp.$ordinal as (num: number | string) => string;
 
 const props = defineProps({
     rows: {

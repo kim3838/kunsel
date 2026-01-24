@@ -128,6 +128,9 @@
                                 <Label :size="slot.labelSize" :type="cell?._payload?.label_shade?.value as LabelTypeT" shade :label="cell.status?.text" />
                             </div>
                         </template>
+                        <template v-slot:cell.order="{cell,slot}">
+                            <div class="p-[3px]">{{ordinal(cell.order)}}</div>
+                        </template>
                         <template v-slot:cell.user_status="{cell,slot}">
                             <div class="p-[3px]">{{cell.approver.status?.text}}</div>
                         </template>
@@ -176,6 +179,7 @@ useLayout().setNavigationMode('solid');
 const user = userState();
 const {isAuthenticated} = useAuth();
 const nuxtApp = useNuxtApp();
+const ordinal = nuxtApp.$ordinal as (num: number | string) => string;
 const $enumerableOption = nuxtApp.$enumerableOption as (enumerable: StringEnumInterface, value: number) => {
     text: string,
     value: number

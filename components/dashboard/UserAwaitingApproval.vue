@@ -41,7 +41,9 @@
             <template v-slot:cell.request_number="{cell,slot}">
                 <div class="p-[3px] hover:underline cursor-pointer" @click="viewRequestable(cell)">{{cell.requestable.number}}</div>
             </template>
-
+            <template v-slot:cell.order="{cell,slot}">
+                <div class="p-[3px]">{{ordinal(cell.order)}}</div>
+            </template>
             <template v-slot:cell.status="{cell,slot}">
                 <div class="flex space-x-1 px-[0.3rem] items-center">
                     <Label :size="slot.labelSize" :type="cell?._payload?.label_shade?.value as LabelTypeT" shade :label="cell.status?.text" />
@@ -63,6 +65,7 @@ import {storeToRefs} from "pinia";
 const {isAuthenticated, userIsSuperAdmin} = useAuth();
 const user = userState();
 const nuxtApp = useNuxtApp();
+const ordinal = nuxtApp.$ordinal as (num: number | string) => string;
 const {
     updatedAssociatedCompanyFlag,
 } = storeToRefs(nuxtApp.$associationStore);
