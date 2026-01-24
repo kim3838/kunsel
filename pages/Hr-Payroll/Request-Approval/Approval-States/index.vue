@@ -78,13 +78,13 @@
                             :label="'Clear selection'"
                             @click="selectedApprovalStates = []; selectedApprovalStatesProxy = []" />
                         <Button
-                            v-if="approvalStates.successful && selectedApprovalStatesProxy.length"
+                            v-if="approvalStates.successful"
                             :size="'sm'"
                             :disabled="disableActions"
                             :label="`Approve ${selectedApprovalStatesProxy.length}`"
                             @click="applyApprovalWorkFlow(APPROVAL_ACTION.APPROVE as number)" />
                         <Button
-                            v-if="approvalStates.successful && selectedApprovalStatesProxy.length"
+                            v-if="approvalStates.successful"
                             :size="'sm'"
                             :disabled="disableActions"
                             :label="`Decline ${selectedApprovalStatesProxy.length}`"
@@ -559,7 +559,7 @@ const requestableWorkFlowAction = ref(APPROVAL_ACTION.NOT_SPECIFIED);
 
 const applyApprovalWorkFlow = (action: number) => {
 
-    if(action == APPROVAL_ACTION.NOT_SPECIFIED) return;
+    if(action == APPROVAL_ACTION.NOT_SPECIFIED || !(selectedApprovalStatesProxy.value.length)) return;
 
     requestableWorkFlowAction.value = action;
     createRequestableWorkFlow.value = true;
