@@ -266,19 +266,9 @@
                                 {{cell.contact?.office_email}}
                             </div>
                         </template>
-                        <template v-slot:cell.personal_email="{cell,slot}">
-                            <div class="p-[3px]">
-                                {{cell.contact?.personal_email}}
-                            </div>
-                        </template>
                         <template v-slot:cell.office_phone="{cell,slot}">
                             <div class="p-[3px]">
                                 {{cell.contact?.office_phone}}
-                            </div>
-                        </template>
-                        <template v-slot:cell.personal_phone="{cell,slot}">
-                            <div class="p-[3px]">
-                                {{cell.contact?.personal_phone}}
                             </div>
                         </template>
                         <template v-slot:cell.user_name="{cell,slot}">
@@ -294,8 +284,8 @@
                         <template v-slot:cell.user_status="{cell,slot}">
                             <div class="p-[3px]">{{cell.user?.status?.text}}</div>
                         </template>
-                        <template v-slot:cell.email_verified_at="{cell,slot}">
-                            <div class="p-[3px]">{{cell.user.email_verified_at != null ? `Verified` : ``}}</div>
+                        <template v-slot:cell.email_verification="{cell,slot}">
+                            <div class="p-[3px]">{{cell.user?.email_verified ? `Verified` : `Not verified`}}</div>
                         </template>
                     </DataTable>
                 </div>
@@ -425,7 +415,7 @@ const employeesSupHeaders = reactive<TableSupHeaderT[]>([
     {text: 'Employee', colspan: 2, alignHeader: 'left'},
     {text: 'Employment', colspan: 2, alignHeader: 'left'},
     {text: '', colspan: 3},
-    {text: 'Contact', colspan: 4, alignHeader: 'left'},
+    {text: 'Contact', colspan: 2, alignHeader: 'left'},
     {text: 'User', colspan: 4, alignHeader: 'left'},
 ]);
 
@@ -439,14 +429,12 @@ const employeesHeaders = reactive<TableHeaderT[]>([
     { text: 'Department', value: 'department'},
     { text: 'Designation', value: 'designation'},
     { text: 'Manager', value: 'manager'},
-    { text: 'Email 1', value: 'office_email'},
-    { text: 'Email 2', value: 'personal_email'},
-    { text: 'Phone 1', value: 'office_phone'},
-    { text: 'Phone 2', value: 'personal_phone'},
+    { text: '', value: 'office_email', minWidth: '33.5px'},
+    { text: '', value: 'office_phone', minWidth: '33.5px'},
     { text: 'Username', value: 'user_name'},
     { text: 'Email', value: 'user_email'},
     { text: 'Status', value: 'user_status'},
-    { text: 'Email Verified', value: 'user_email_verified_at'},
+    { text: 'Email Verification', value: 'email_verification'},
 ]);
 
 const employees = reactive<DataTableT>({
