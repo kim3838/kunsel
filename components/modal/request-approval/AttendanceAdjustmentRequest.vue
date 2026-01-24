@@ -51,7 +51,7 @@
             </div>
         </fieldset>
 
-        <fieldset class="neutral-border px-2 pb-2 space-y-2">
+        <fieldset v-if="adjustmentStatusSummary !== REQUEST_APPROVAL_STATUS.APPROVED" class="neutral-border px-2 pb-2 space-y-2">
             <legend class="text-lg font-header">Attendance</legend>
 
             <div class="grid gap-2 grid-cols-8 lg:grid-cols-8">
@@ -135,6 +135,7 @@ const attendanceLunchIn = ref('');
 const attendanceLastOut = ref('');
 
 const requestNumber = ref('');
+const adjustmentStatusSummary = ref(REQUEST_APPROVAL_STATUS.NOT_SPECIFIED);
 const adjustmentAttendanceFirstIn = ref('');
 const adjustmentAttendanceLunchOut = ref('');
 const adjustmentAttendanceLunchIn = ref('');
@@ -174,6 +175,7 @@ if(attendanceShiftRequiresLunchOutAndIn.value){
 
 attendanceLastOut.value = _get(props.attendanceAdjustmentPayload, 'attendance.last_out', '');
 
+adjustmentStatusSummary.value = _get(props.attendanceAdjustmentPayload, 'status_summary.value', REQUEST_APPROVAL_STATUS.NOT_SPECIFIED);
 adjustmentAttendanceFirstIn.value = _get(props.attendanceAdjustmentPayload, 'first_in', '');
 
 if(attendanceShiftRequiresLunchOutAndIn.value){
