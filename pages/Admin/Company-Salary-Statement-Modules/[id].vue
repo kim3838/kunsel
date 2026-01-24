@@ -98,7 +98,7 @@
                         manual-sortable
                         @manualSorted="manualSorted"
                         selection
-                        :stripped="false">
+                        :stripped="true">
                         <template v-slot:cell.actions="{cell}">
                             <div class="flex items-center">
                                 <NavDrop

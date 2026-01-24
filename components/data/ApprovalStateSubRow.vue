@@ -5,7 +5,7 @@
             :headers="approversHeaders"
             :disabled="disabled"
             :size="'md'"
-            :stripped="false"
+            :stripped="true"
             :rows="rowsProxy">
             <template v-slot:cell.order="{cell,slot}">
                 <div class="p-[3px]">{{ordinal(cell.order)}}</div>

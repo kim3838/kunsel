@@ -101,7 +101,7 @@
                             :sup-headers="userCompanyAssignmentSupHeaders"
                             :headers="userCompanyAssignmentHeaders"
                             :size="'lg'"
-                            :stripped="false"
+                            :stripped="true"
                             :rows="userCompanyAssignmentData">
                             <template v-slot:cell.company_assignment_type="{cell, slot, scrollReference}">
                                 <div class="mx-0.5 flex items-center h-[32px]">

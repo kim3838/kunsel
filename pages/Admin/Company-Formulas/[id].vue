@@ -88,7 +88,7 @@
                         :size="'lg'"
                         :rows="formulaSettingsData"
                         selection
-                        :stripped="false">
+                        :stripped="true">
                         <template v-slot:cell.actions="{cell,slot, headerIndex, rowIndex}">
                             <div class="h-[32px] mx-0.5 space-x-0.5 w-full flex items-center">
                                 <Button type="button" :variant="'outline'" :icon="'mdi:delete-forever'" :size="slot.buttonSize" @click="deleteRow(rowIndex)"/>

@@ -29,7 +29,7 @@
                         :headers="scheduleHeaders"
                         :disabled="disableActions"
                         :size="'lg'"
-                        :stripped="false"
+                        :stripped="true"
                         :rows="scheduleData"></DataTable>
 
                     <div class="text-lg font-header">Attendance</div>
@@ -38,7 +38,7 @@
                         :headers="attendanceHeaders"
                         :disabled="disableActions"
                         :size="'lg'"
-                        :stripped="false"
+                        :stripped="true"
                         :rows="attendanceData"></DataTable>
 
                     <div class="mt-8">
@@ -50,7 +50,7 @@
                         :headers="attendanceBreakdownHeaders"
                         :disabled="disableActions"
                         :size="'lg'"
-                        :stripped="false"
+                        :stripped="true"
                         :rows="attendanceBreakdown">
                         <template v-slot:cell.split_type="{cell,slot}">
                             <div class="p-[3px]">{{cell.split_type.text}}</div>

@@ -109,7 +109,7 @@ const checkMarkSize = computed(() => {
 .checkbox {
     appearance: none;
     color: v-bind(checkBoxColor) !important;
-    border-color: v-bind(liningColor) !important;
+    border-color: v-bind(threadColor) !important;
     box-shadow: none !important;
     outline: none !important;
     cursor: pointer;

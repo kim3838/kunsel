@@ -240,7 +240,7 @@
                             :headers="leaveTypeBalancePerPeriodHeaders"
                             :disabled="disableActions"
                             :size="'lg'"
-                            :stripped="false"
+                            :stripped="true"
                             :rows="leaveTypeBalancePerPeriods">
                             <template v-slot:cell.actions="{cell,slot, headerIndex, rowIndex}">
                                 <div class="h-[32px] mx-0.5 space-x-0.5 w-full flex items-center">

@@ -129,7 +129,7 @@
                         :headers="shiftScheduleHeaders"
                         :disabled="disableActions"
                         :size="'xl'"
-                        :stripped="false"
+                        :stripped="true"
                         :rows="shiftSchedules">
                         <template v-slot:cell.week_day_name="{cell, slot, scrollReference}">
                             <div class="text-base h-[34px]">

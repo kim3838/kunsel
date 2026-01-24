@@ -26,7 +26,7 @@
                                     :headers="approverSequenceHeaders"
                                     :disabled="disableActions"
                                     :size="'lg'"
-                                    :stripped="false"
+                                    :stripped="true"
                                     :rows="approverSequence">
                                     <template v-slot:cell.actions="{cell,slot, headerIndex, rowIndex}">
                                         <div class="h-[32px] mx-0.5 space-x-0.5 w-full flex items-center">
@@ -181,7 +181,7 @@
                         :key="approvalSettingKey"
                         :headers="approvalSettingsHeaders"
                         :size="'lg'"
-                        :stripped="false"
+                        :stripped="true"
                         :rows="approvalSettingsData"
                         :disabled="disableDataTable"
                         :sub-row-slug="'approvers'"

@@ -7,7 +7,7 @@
             :disabled="disabled"
             :size="'md'"
             :rows="rows"
-            :stripped="false"
+            :stripped="true"
             @selectionChanged="selectionChanged">
             <template v-slot:cell.assignment="{cell,slot}">
                 <div class="p-[3px]">{{cell.assignment.text}}</div>

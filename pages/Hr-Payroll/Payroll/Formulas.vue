@@ -28,7 +28,7 @@
                         :size="'lg'"
                         :rows="earningsFormulaSettings"
                         selection
-                        :stripped="false"
+                        :stripped="true"
                         :sub-row-slug="'sub_row'"
                         :sub-row-settings="{
                             type: DATATABLE_SUBROW_TYPE.TITLED,
@@ -72,7 +72,7 @@
                         :size="'lg'"
                         :rows="deductionsFormulaSettings"
                         selection
-                        :stripped="false"
+                        :stripped="true"
                         :sub-row-slug="'sub_row'"
                         :sub-row-settings="{
                             type: DATATABLE_SUBROW_TYPE.TITLED,
@@ -114,7 +114,7 @@
                         :size="'lg'"
                         :rows="taxFormulaSettings"
                         selection
-                        :stripped="false"
+                        :stripped="true"
                         :sub-row-slug="'sub_row'"
                         :sub-row-settings="{
                             type: DATATABLE_SUBROW_TYPE.TITLED,

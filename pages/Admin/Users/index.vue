@@ -82,7 +82,7 @@
                             verticalBorderType: 'dashed',
                             horizontalBorderType: 'dashed',
                         }"
-                        :stripped="false"
+                        :stripped="true"
                         selection>
                         <template v-slot:cell.actions="{cell,slot}">
                             <div class="flex items-center">
