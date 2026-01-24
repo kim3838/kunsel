@@ -67,7 +67,7 @@
 </template>
 
 <script setup lang="ts">
-import type {ApprovalStateT, ApprovalStateWorkFlowPayloadT, RequestableT} from "@/public/js/types/request-approval";
+import type {ApprovalStateT, ApprovalStateWorkFlowPayloadT, RequestablePayloadT, RequestableT} from "@/public/js/types/request-approval";
 import {storeToRefs} from "pinia";
 
 const nuxtApp = useNuxtApp();
@@ -84,6 +84,12 @@ const props = defineProps({
     },
     approvalStatePayload: {
         type: Object as PropType<ApprovalStateT>,
+        default: () => {
+            return {};
+        }
+    },
+    requestablePayload: {
+        type: Object as PropType<Partial<RequestablePayloadT>>,
         default: () => {
             return {};
         }
@@ -114,9 +120,11 @@ watch(() => props.viewRequestable, (newValue) => {
 
 const requestableType = computed(() => {
 
+    let type = props.requestablePayload.type || props.approvalStatePayload?.requestable?.type;
+
     return {
         attendance_adjustment_request: REQUESTABLE_TYPE.ATTENDANCE_ADJUSTMENT_REQUEST
-    }[props.approvalStatePayload?.requestable?.type];
+    }[type];
 });
 
 const approvalStatePayloadIsStillTheCurrentApprovalState = ref(false);
@@ -124,7 +132,7 @@ const preSelectedApprovalStates = ref<ApprovalStateWorkFlowPayloadT[]>([]);
 
 const fetchRequestable = async () => {
 
-    let requestablePayload = props.approvalStatePayload?.requestable;
+    let requestablePayload: RequestableT = props.approvalStatePayload?.requestable || props.requestablePayload;
 
     let path = {
         attendance_adjustment_request: 'attendance-adjustment-request'
