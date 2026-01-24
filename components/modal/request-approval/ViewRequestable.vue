@@ -182,7 +182,7 @@ const closeModal = () => {
 }
 
 const emitApplyApprovalWorkFlowFromViewable = (action: number) => {
-    emit('applyApprovalWorkFlowFromViewable', action, preSelectedApprovalStates.value)
+    emit('applyApprovalWorkFlowFromViewable', action, [...preSelectedApprovalStates.value])
     closeModal();
 }
 
