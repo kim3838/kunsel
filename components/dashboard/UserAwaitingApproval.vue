@@ -1,5 +1,12 @@
 <template>
     <div>
+
+        <SetRequestableApprovalWorkFlow
+            v-model:create-requestable-work-flow="createRequestableWorkFlow"
+            v-model:approval-state-work-flow-payload="selectedApprovalStatesProxy"
+            v-model:requestable-work-flow-action="requestableWorkFlowAction"
+            @resolved="requestableWorkFlowResolved"/>
+
         <ViewRequestable
             v-model:view-requestable="showRequestable"
             v-model:requestable-payload="requestablePayload"/>
@@ -15,7 +22,19 @@
                 :icon="'tdesign:close'"
                 :disabled="disableActions"
                 :label="'Clear selection'"
-                @click="selectedApprovalStates = []" />
+                @click="selectedApprovalStates = []; selectedApprovalStatesProxy = []" />
+            <Button
+                v-if="approvalStates.successful && selectedApprovalStatesProxy.length"
+                :size="'xs'"
+                :disabled="disableActions"
+                :label="`Approve ${selectedApprovalStatesProxy.length}`"
+                @click="applyApprovalWorkFlow(APPROVAL_ACTION.APPROVE as number)" />
+            <Button
+                v-if="approvalStates.successful && selectedApprovalStatesProxy.length"
+                :size="'xs'"
+                :disabled="disableActions"
+                :label="`Decline ${selectedApprovalStatesProxy.length}`"
+                @click="applyApprovalWorkFlow(APPROVAL_ACTION.DECLINE as number)" />
             <Button
                 :variant="'outline'"
                 :size="'xs'"
@@ -36,8 +55,8 @@
             :rows="approvalStates.data"
             :disabled="disableDataTable"
             v-model="selectedApprovalStates"
+            @selectionChanged="syncSelectedApprovalStatesProxy"
             selection>
-
             <template v-slot:cell.request_number="{cell,slot}">
                 <div class="p-[3px] hover:underline cursor-pointer" @click="viewRequestable(cell)">{{cell.requestable.number}}</div>
             </template>
@@ -58,8 +77,8 @@
 
 <script setup lang="ts">
 import type {LabelTypeT} from "@/public/js/types/theme";
-import type {DataTableT, TableHeaderT, TableRowT, TableSupHeaderT} from "@/public/js/types/data";
-import type {RequestablePayloadT} from "@/public/js/types/request-approval";
+import type {DataTableSelectionActionT, DataTableT, TableHeaderT, TableRowT, TableSupHeaderT} from "@/public/js/types/data";
+import type {ApprovalStateT, ApprovalStateWorkFlowPayloadT, RequestablePayloadT} from "@/public/js/types/request-approval";
 import {storeToRefs} from "pinia";
 
 const {isAuthenticated, userIsSuperAdmin} = useAuth();
@@ -195,7 +214,44 @@ approvalStatesExecute();
 
 const listApprovalStates = () => {
     selectedApprovalStates.value = [];
+    selectedApprovalStatesProxy.value = [];
     approvalStatesExecute();
+}
+
+const selectedApprovalStatesProxy = ref<ApprovalStateWorkFlowPayloadT[]>([]);
+
+const syncSelectedApprovalStatesProxy = (selectionPayload: DataTableSelectionActionT) => {
+
+    if(selectionPayload.action == SELECTION_ACTION.REMOVE){
+
+        let selectionPayloadNumber = selectionPayload.value as number[];
+
+        _remove(selectedApprovalStatesProxy.value, (pool: ApprovalStateWorkFlowPayloadT) => selectionPayloadNumber.includes(pool.id as number));
+    }
+
+    if(selectionPayload.action == SELECTION_ACTION.ADD){
+
+        let filteredApprovalStatesData = approvalStates.data.filter((approvalStateRow: TableRowT) => {
+
+            let approvalState = approvalStateRow as ApprovalStateT;
+            let selectionPayloadNumber = selectionPayload.value as number[];
+            let approvalStateIsSelected = selectionPayloadNumber.includes(approvalState.id as number);
+            let approvalStateIsNotYetInSelectedPool = _isEmpty(_find(selectedApprovalStatesProxy.value, {id: approvalState.id}));
+
+            return approvalStateIsSelected && approvalStateIsNotYetInSelectedPool;
+        });
+
+        selectedApprovalStatesProxy.value.push(...filteredApprovalStatesData.map((approvalStateRow: TableRowT) => {
+
+            let approvalState = approvalStateRow as ApprovalStateT;
+
+            return {
+                id: approvalState.id,
+                order: approvalState.order,
+                number: approvalState.requestable.number,
+            }
+        }));
+    }
 }
 
 const showRequestable = ref(false);
@@ -209,6 +265,22 @@ const viewRequestable = async (row: TableRowT) => {
 
     requestablePayload.value = row.requestable as RequestablePayloadT;
     showRequestable.value = true;
+}
+
+const createRequestableWorkFlow = ref(false);
+const requestableWorkFlowAction = ref(APPROVAL_ACTION.NOT_SPECIFIED);
+
+const applyApprovalWorkFlow = (action: number) => {
+
+    if(action == APPROVAL_ACTION.NOT_SPECIFIED) return;
+
+    requestableWorkFlowAction.value = action;
+    createRequestableWorkFlow.value = true;
+}
+
+const requestableWorkFlowResolved = () => {
+
+    listApprovalStates();
 }
 </script>
 

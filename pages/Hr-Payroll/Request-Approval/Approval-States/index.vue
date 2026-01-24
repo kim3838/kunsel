@@ -53,6 +53,12 @@
                     </div>
                 </form>
 
+                <SetRequestableApprovalWorkFlow
+                    v-model:create-requestable-work-flow="createRequestableWorkFlow"
+                    v-model:approval-state-work-flow-payload="selectedApprovalStatesProxy"
+                    v-model:requestable-work-flow-action="requestableWorkFlowAction"
+                    @resolved="requestableWorkFlowResolved"/>
+
                 <ViewRequestable
                     v-model:view-requestable="showRequestable"
                     v-model:requestable-payload="requestablePayload"/>
@@ -550,6 +556,7 @@ const viewRequestable = async (row: TableRowT) => {
 
 const createRequestableWorkFlow = ref(false);
 const requestableWorkFlowAction = ref(APPROVAL_ACTION.NOT_SPECIFIED);
+
 const applyApprovalWorkFlow = (action: number) => {
 
     if(action == APPROVAL_ACTION.NOT_SPECIFIED) return;
@@ -558,17 +565,6 @@ const applyApprovalWorkFlow = (action: number) => {
     createRequestableWorkFlow.value = true;
 }
 const requestableWorkFlowResolved = () => {
-
-    useNuxtApp().$promptStore.setPrompt({
-        resetable: false,
-        icon: null,
-        title: `Request successful`,
-        message: `Approval workflow${selectedApprovalStates.value.length > 1 ? 's' : ''} updated successfully.`,
-        action: {
-            callback: () => {},
-            label: 'Okay'
-        }
-    });
 
     paginate(1, true);
 }
