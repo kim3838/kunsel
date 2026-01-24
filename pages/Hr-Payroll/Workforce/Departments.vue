@@ -133,8 +133,11 @@
                     <DataTable
                         v-if="departmentsSuccessful"
                         :key="departmentsKey"
+                        :sup-headers="departmentsSupHeaders"
                         :headers="departmentsHeaders"
                         :size="'lg'"
+                        :border-appearance="true"
+                        :stripped="false"
                         :rows="departmentsData"
                         :disabled="disableDataTable"
                         v-model="selectedDepartments"
@@ -201,7 +204,7 @@
 </template>
 
 <script setup lang="ts">
-import type {TableHeaderT, TableRowT} from "@/public/js/types/data";
+import type {TableHeaderT, TableRowT, TableSupHeaderT} from "@/public/js/types/data";
 import type {EnumOption, EnumSelection} from "@/public/js/common/type";
 import {storeToRefs} from "pinia";
 
@@ -227,12 +230,19 @@ watch(updatedAssociatedCompanyFlag, async (newValue) => {
     }
 })
 
+const departmentsSupHeaders = reactive<TableSupHeaderT[]>([
+    {text: ''},
+    {text: ''},
+
+    {text: 'Department Head', colspan: 3,  alignHeader: 'left'},
+]);
+
 const departmentsHeaders = reactive<TableHeaderT[]>([
     { text: '', value: 'actions', minWidth: '33px'},
-    { text: 'Name', value: 'name', alignData: 'left'},
-    { text: 'Department Head', value: 'department_head_number', alignData: 'left', minWidth: '33px'},
-    { text: '', value: 'department_head_full_name', alignData: 'left', minWidth: '33px'},
-    { text: '', value: 'department_head_designation', alignData: 'left', minWidth: '33px'},
+    { text: 'Department Name', value: 'name', alignData: 'left'},
+    { text: '#', value: 'department_head_number', alignData: 'left', minWidth: '33px'},
+    { text: 'Name', value: 'department_head_full_name', alignData: 'left', minWidth: '33px'},
+    { text: 'Designation', value: 'department_head_designation', alignData: 'left', minWidth: '33px'},
 ]);
 
 const departmentsKey = shallowRef(0);

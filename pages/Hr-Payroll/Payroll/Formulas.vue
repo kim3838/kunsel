@@ -28,6 +28,7 @@
                         :size="'lg'"
                         :rows="earningsFormulaSettings"
                         selection
+                        :border-appearance="true"
                         :stripped="true"
                         :sub-row-slug="'sub_row'"
                         :sub-row-settings="{

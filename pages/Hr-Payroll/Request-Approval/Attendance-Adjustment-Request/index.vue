@@ -315,7 +315,8 @@
                         :disabled="disableDataTable"
                         v-model="selectedAttendanceAdjustments"
                         selection
-                        :stripped="true"
+                        :border-appearance="showApprovalStates"
+                        :stripped="!showApprovalStates"
                         :sub-row-slug="attendanceAdjustmentSubRowSlug"
                         :sub-row-settings="{
                             type: DATATABLE_SUBROW_TYPE.TITLED,
