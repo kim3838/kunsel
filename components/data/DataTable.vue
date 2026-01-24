@@ -175,20 +175,16 @@ const {
 
 const typedCommonColor = commonColor as Ref<CommonColorsT>;
 
-const liningColor70 = computed(() => {
-    return liningColor.value + hexAlpha.value['70'];
-});
-
-const liningColor50 = computed(() => {
-    return liningColor.value + hexAlpha.value['50'];
-});
-
-const neutralColor40 = computed(() => {
-    return neutralColor.value + hexAlpha.value['40'];
+const liningColor40 = computed(() => {
+    return liningColor.value + hexAlpha.value['40'];
 });
 
 const accentColor40 = computed(() => {
     return accentColor.value + hexAlpha.value['40'];
+});
+
+const cellBorder = computed(() => {
+    return props.borderAppearance ? liningColor40.value : '#f7f7f7';
 });
 
 const cosmetic = useCosmetic();
@@ -230,6 +226,10 @@ const props = defineProps({
     showNoData: {
         type: Boolean,
         default: true,
+    },
+    borderAppearance: {
+        type: Boolean,
+        default: false,
     },
     pending: {
         type: Boolean,
@@ -579,8 +579,8 @@ const cellStyle = (row: TableRowT | TableSupRowT, header: TableSupHeaderT) => {
     overflow-y: hidden;
 }
 
-$tableBorder: v-bind(liningColor);
-$cellBorder: v-bind(liningColor70);
+$tableHeaderBottomBorder: v-bind(liningColor);
+$cellBorder: v-bind(cellBorder);
 
 table{
     white-space: nowrap;
@@ -594,8 +594,8 @@ tbody tr td {
 }
 
 table thead tr:last-child td{
-    border-bottom-width: 2px;
-    border-bottom-color: v-bind(liningColor50);
+    border-bottom-width: 0;
+    border-bottom-color: $tableHeaderBottomBorder;
 }
 
 tbody tr:hover {
