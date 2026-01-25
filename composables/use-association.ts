@@ -76,7 +76,9 @@ export const useAssociation = () => {
             `${hrPayrollRouteSlug}-payroll-employee-pay-items`,
             `${hrPayrollRouteSlug}-payroll-payroll-frequencies`,
             `${hrPayrollRouteSlug}-request-approval-setting`,
+            `${hrPayrollRouteSlug}-request-approval-approvals`,
             `${hrPayrollRouteSlug}-request-approval-attendance-adjustment-request`,
+            `${hrPayrollRouteSlug}-request-approval-overtime-request`,
             `${hrPayrollRouteSlug}-reports-leave-balance-map`,
             `${hrPayrollRouteSlug}-import-employees`,
             `${hrPayrollRouteSlug}-import-employment-profile`,
@@ -94,6 +96,7 @@ export const useAssociation = () => {
             `${employeePortalRouteSlug}-overtime`,
             `${employeePortalRouteSlug}-leave-leaves`,
             `${employeePortalRouteSlug}-leave-balance-adjustments`,
+            `${employeePortalRouteSlug}-file-request-overtime`,
         ], _toLower(String(route.name)));
     });
     const employeeSelfServicesSubscriptions = computed(() => {

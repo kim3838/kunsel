@@ -21,7 +21,10 @@
                         <div v-else-if="!pending && requestable.successful">
                             <AttendanceAdjustmentRequest
                                 v-if="requestableType == REQUESTABLE_TYPE.ATTENDANCE_ADJUSTMENT_REQUEST"
-                                v-model:attendance-adjustment-payload="requestable.data"/>
+                                v-model:attendance-adjustment-request-payload="requestable.data"/>
+                            <OvertimeRequest
+                                v-if="requestableType == REQUESTABLE_TYPE.OVERTIME_REQUEST"
+                                v-model:overtime-request-payload="requestable.data"/>
                         </div>
 
                         <Label v-if="!requestable.successful" invert :size="'md'" :type="'danger'" :label="requestable.message" />
@@ -123,7 +126,8 @@ const requestableType = computed(() => {
     let type = props.requestablePayload.type || props.approvalStatePayload?.requestable?.type;
 
     return {
-        attendance_adjustment_request: REQUESTABLE_TYPE.ATTENDANCE_ADJUSTMENT_REQUEST
+        attendance_adjustment_request: REQUESTABLE_TYPE.ATTENDANCE_ADJUSTMENT_REQUEST,
+        overtime_request: REQUESTABLE_TYPE.OVERTIME_REQUEST,
     }[type];
 });
 
@@ -135,7 +139,8 @@ const fetchRequestable = async () => {
     let requestablePayload: RequestableT = props.approvalStatePayload?.requestable || props.requestablePayload;
 
     let path = {
-        attendance_adjustment_request: 'attendance-adjustment-request'
+        attendance_adjustment_request: 'attendance-adjustment-request',
+        overtime_request: 'overtime-request',
     }[requestablePayload.type];
 
     pending.value = true;

@@ -279,7 +279,21 @@ export const useLayout = () => {
                             title: 'Balance adjustments',
                             to: `/${employeePortalRouteSlug}/leave/balance-adjustments`,
                             route_active: `${employeePortalRouteSlug}-leave-balance-adjustments`
-                        }
+                        },
+                    ]
+                },{
+                    key: `${employeePortalRouteSlug}-file-request`,
+                    type: 'sub-nav',
+                    title: 'File Request',
+                    path_active: `/${employeePortalRouteSlug}/file-request`,
+                    options: [
+                        {
+                            key: `${employeePortalRouteSlug}-file-request-overtime`,
+                            type: 'link',
+                            title: 'Overtime',
+                            to: `/${employeePortalRouteSlug}/file-request/overtime`,
+                            route_active: `${employeePortalRouteSlug}-file-request-overtime`
+                        },
                     ]
                 }] : []) as NavigationLinkInterface[],
             ],
@@ -464,6 +478,13 @@ export const useLayout = () => {
                             title: 'Attendance Adjustment Request',
                             to: `/${hrPayrollRouteSlug}/request-approval/attendance-adjustment-request`,
                             route_active: `${hrPayrollRouteSlug}-request-approval-attendance-adjustment-request`
+                        },
+                        {
+                            key: `${hrPayrollRouteSlug}/request-approval/overtime-request`,
+                            type: 'link',
+                            title: 'Overtime Request',
+                            to: `/${hrPayrollRouteSlug}/request-approval/overtime-request`,
+                            route_active: `${hrPayrollRouteSlug}-request-approval-overtime-request`
                         },
                     ],
                 },{
