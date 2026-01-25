@@ -1117,7 +1117,6 @@ const modalForm = computed(()=>{
         account_id: selectedAssociatedCompanyAccountId.value,
         company_id: selectedAssociatedCompanyId.value,
         attendance_id: attendanceId.value,
-        date: attendanceDate.value,
         start: nuxtApp.$moment(overtimeStart.value).format("YYYY-MM-DD HH:mm"),
         end: nuxtApp.$moment(overtimeEnd.value).format("YYYY-MM-DD HH:mm"),
     }
