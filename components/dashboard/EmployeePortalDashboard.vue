@@ -49,25 +49,34 @@
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <fieldset class="flex-grow tint-background scaffold-border px-2 pb-2 space-y-2">
-                    <legend class="text-xl font-business">My Shift</legend>
 
-                </fieldset>
+                <div class="lining-shadow rounded-sm flex-grow tint-background">
+                    <div class="lining-shadow rounded-t-sm text-lg font-medium font-business px-4 py-2">My Shift</div>
+
+                    <div class="px-4 py-4">
+
+                    </div>
+                </div>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
 
-                <fieldset class="flex-grow tint-background scaffold-border px-2 pb-2 space-y-2 max-h-[408px] overflow-y-auto">
-                    <legend class="text-xl font-business">My Requests</legend>
+                <div class="lining-shadow rounded-sm flex-grow tint-background">
+                    <div class="lining-shadow rounded-t-sm text-lg font-medium font-business px-4 py-2">My Requests</div>
 
-                    <UserFiledRequest/>
-                </fieldset>
+                    <div class="px-4 py-4 max-h-[408px] overflow-y-auto">
 
-                <fieldset class="flex-grow tint-background scaffold-border px-2 pb-2 space-y-2 max-h-[408px] overflow-y-auto">
-                    <legend class="text-xl font-business">Awaiting my approval</legend>
+                        <UserFiledRequest/>
+                    </div>
+                </div>
 
-                    <UserAwaitingApproval/>
-                </fieldset>
+                <div class="lining-shadow rounded-sm flex-grow tint-background">
+                    <div class="lining-shadow rounded-t-sm text-lg font-medium font-business px-4 py-2">Awaiting my approval</div>
+
+                    <div class="px-4 py-4 max-h-[408px] overflow-y-auto">
+                        <UserAwaitingApproval/>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -76,7 +85,7 @@
 <script setup lang="ts">
 import {storeToRefs} from "pinia";
 import type {LabelTypeT} from "@/public/js/types/theme";
-import type {DataTableT, TableHeaderT, TableRowT, TableSupHeaderT} from "@/public/js/types/data";
+import type {TableRowT} from "@/public/js/types/data";
 import type {EmployeeT} from "@/public/js/types/employee";
 
 const {isAuthenticated, userIsSuperAdmin} = useAuth();

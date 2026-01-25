@@ -161,6 +161,10 @@ watch(() => route.name,() => {
     border: 1px solid v-bind(threadColor);
 }
 
+.lining-shadow{
+    box-shadow: 0 0 1px v-bind(liningColor);
+}
+
 .scaffold{
     border: 1px solid v-bind(liningColor);
 }
