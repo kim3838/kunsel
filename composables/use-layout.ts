@@ -452,11 +452,11 @@ export const useLayout = () => {
                             route_active: `${hrPayrollRouteSlug}-request-approval-setting`
                         },
                         {
-                            key: `${hrPayrollRouteSlug}/request-approval/approval-states`,
+                            key: `${hrPayrollRouteSlug}/request-approval/approvals`,
                             type: 'link',
-                            title: 'Approval States',
-                            to: `/${hrPayrollRouteSlug}/request-approval/approval-states`,
-                            route_active: `${hrPayrollRouteSlug}-request-approval-approval-states`
+                            title: 'Approvals',
+                            to: `/${hrPayrollRouteSlug}/request-approval/approvals`,
+                            route_active: `${hrPayrollRouteSlug}-request-approval-approvals`
                         },
                         {
                             key: `${hrPayrollRouteSlug}/request-approval/attendance-adjustment-request`,
