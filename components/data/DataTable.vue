@@ -3,7 +3,7 @@
         <!-- Disabled Layer -->
         <div v-show="disableableLayer && disabled" class="absolute disabled-overlay opacity-25 z-30" :style="[disabledLayerStyle]"></div>
 
-        <table ref="tableReference" class="font-data">
+        <table ref="tableReference" class="font-data" :class="[landscape ? 'w-full' : 'w-auto']">
             <thead class="table-header-background">
                 <tr v-if="supHeaders.length > 0">
                     <td v-if="selection"></td>
@@ -216,6 +216,10 @@ const props = defineProps({
     },
     selection: Boolean,
     singleSelect: {
+        type: Boolean,
+        default: false,
+    },
+    landscape: {
         type: Boolean,
         default: false,
     },
