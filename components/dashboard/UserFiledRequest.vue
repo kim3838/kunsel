@@ -392,7 +392,7 @@ const deleteSelected = async () => {
 }
 
 const showRequestable = ref(false);
-const requestablePayload = ref<RequestablePayloadT>({
+const requestablePayload = ref<Partial<RequestablePayloadT>>({
     type: '',
     id: -1,
     number: '',
