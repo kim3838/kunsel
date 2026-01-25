@@ -55,6 +55,7 @@
             :headers="userFiledRequestsHeaders"
             :size="'lg'"
             :stripped="true"
+            :landscape="true"
             :rows="userFiledRequests.data"
             :disabled="disableDataTable"
             v-model="selectedUserFiledRequests"
