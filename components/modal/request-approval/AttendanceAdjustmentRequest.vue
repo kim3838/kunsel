@@ -107,7 +107,7 @@
 <script setup lang="ts">
 
 const props = defineProps({
-    attendanceAdjustmentPayload: {
+    attendanceAdjustmentRequestPayload: {
         type: Object,
         default: () => {
             return {};
@@ -142,49 +142,49 @@ const adjustmentAttendanceLunchIn = ref('');
 const adjustmentAttendanceLastOut = ref('');
 const remarks = ref('');
 
-requestNumber.value = _get(props.attendanceAdjustmentPayload, 'number', '');
+requestNumber.value = _get(props.attendanceAdjustmentRequestPayload, 'number', '');
 
-attendanceDate.value = _get(props.attendanceAdjustmentPayload, 'attendance.date', '');
-attendanceEmployeeNumber.value = _get(props.attendanceAdjustmentPayload, 'attendance.employee.number', '');
-attendanceEmployeeFullName.value = _get(props.attendanceAdjustmentPayload, 'attendance.employee.full_name', '');
+attendanceDate.value = _get(props.attendanceAdjustmentRequestPayload, 'attendance.date', '');
+attendanceEmployeeNumber.value = _get(props.attendanceAdjustmentRequestPayload, 'attendance.employee.number', '');
+attendanceEmployeeFullName.value = _get(props.attendanceAdjustmentRequestPayload, 'attendance.employee.full_name', '');
 
-let shiftRequiresLunchOutAndIn = _get(props.attendanceAdjustmentPayload, 'attendance.shift.require_lunch_time_in_and_out', false) as boolean;
-let shiftIsFlexible = _get(props.attendanceAdjustmentPayload, 'attendance.shift_schedule.is_flexible', false) as boolean;
-let shiftHasLunchBreak = _get(props.attendanceAdjustmentPayload, 'attendance.shift_schedule.has_lunch_break', false) as boolean;
+let shiftRequiresLunchOutAndIn = _get(props.attendanceAdjustmentRequestPayload, 'attendance.shift.require_lunch_time_in_and_out', false) as boolean;
+let shiftIsFlexible = _get(props.attendanceAdjustmentRequestPayload, 'attendance.shift_schedule.is_flexible', false) as boolean;
+let shiftHasLunchBreak = _get(props.attendanceAdjustmentRequestPayload, 'attendance.shift_schedule.has_lunch_break', false) as boolean;
 
 attendanceShiftRequiresLunchOutAndIn.value = shiftRequiresLunchOutAndIn && !shiftIsFlexible && shiftHasLunchBreak;
 
-scheduleWorkPeriod.value = _get(props.attendanceAdjustmentPayload, 'attendance.shift_schedule.work_start', '') + ' - ' + _get(props.attendanceAdjustmentPayload, 'attendance.shift_schedule.work_end', '') + '(' + _get(props.attendanceAdjustmentPayload, 'attendance.shift_schedule.timezone', '')  + ')';
-shiftWorkStartGrace.value = _get(props.attendanceAdjustmentPayload, 'attendance.shift.work_start_grace_time_readable', 'Not found');
+scheduleWorkPeriod.value = _get(props.attendanceAdjustmentRequestPayload, 'attendance.shift_schedule.work_start', '') + ' - ' + _get(props.attendanceAdjustmentRequestPayload, 'attendance.shift_schedule.work_end', '') + '(' + _get(props.attendanceAdjustmentRequestPayload, 'attendance.shift_schedule.timezone', '')  + ')';
+shiftWorkStartGrace.value = _get(props.attendanceAdjustmentRequestPayload, 'attendance.shift.work_start_grace_time_readable', 'Not found');
 
-scheduleLunchPeriod.value = attendanceShiftRequiresLunchOutAndIn.value ? (_get(props.attendanceAdjustmentPayload, 'attendance.shift_schedule.lunch_break_start', '') + ' - ' + _get(props.attendanceAdjustmentPayload, 'attendance.shift_schedule.lunch_break_end', '')) : '';
-shiftLunchStartGrace.value = _get(props.attendanceAdjustmentPayload, 'attendance.shift.lunch_start_grace_time_readable', 'Not found');
+scheduleLunchPeriod.value = attendanceShiftRequiresLunchOutAndIn.value ? (_get(props.attendanceAdjustmentRequestPayload, 'attendance.shift_schedule.lunch_break_start', '') + ' - ' + _get(props.attendanceAdjustmentRequestPayload, 'attendance.shift_schedule.lunch_break_end', '')) : '';
+shiftLunchStartGrace.value = _get(props.attendanceAdjustmentRequestPayload, 'attendance.shift.lunch_start_grace_time_readable', 'Not found');
 
-scheduleTotalDuration.value = _get(props.attendanceAdjustmentPayload, 'attendance.shift_schedule.total_work_hours_with_breaks', '');
-overtimeMaxDuration.value = _get(props.attendanceAdjustmentPayload, 'attendance.shift.max_overtime_readable', '');
+scheduleTotalDuration.value = _get(props.attendanceAdjustmentRequestPayload, 'attendance.shift_schedule.total_work_hours_with_breaks', '');
+overtimeMaxDuration.value = _get(props.attendanceAdjustmentRequestPayload, 'attendance.shift.max_overtime_readable', '');
 scheduleIsFlexible.value = shiftIsFlexible ? 'Yes' : 'No';
 
-attendanceWeekday.value = _get(props.attendanceAdjustmentPayload, 'attendance.shift_schedule.week_day_name', '');
+attendanceWeekday.value = _get(props.attendanceAdjustmentRequestPayload, 'attendance.shift_schedule.week_day_name', '');
 
-attendanceFirstIn.value = _get(props.attendanceAdjustmentPayload, 'attendance.first_in', '');
-
-if(attendanceShiftRequiresLunchOutAndIn.value){
-    attendanceLunchOut.value = _get(props.attendanceAdjustmentPayload, 'attendance.lunch_out', '');
-    attendanceLunchIn.value = _get(props.attendanceAdjustmentPayload, 'attendance.lunch_in', '');
-}
-
-attendanceLastOut.value = _get(props.attendanceAdjustmentPayload, 'attendance.last_out', '');
-
-adjustmentStatusSummary.value = _get(props.attendanceAdjustmentPayload, 'status_summary.value', REQUEST_APPROVAL_STATUS.NOT_SPECIFIED);
-adjustmentAttendanceFirstIn.value = _get(props.attendanceAdjustmentPayload, 'first_in', '');
+attendanceFirstIn.value = _get(props.attendanceAdjustmentRequestPayload, 'attendance.first_in', '');
 
 if(attendanceShiftRequiresLunchOutAndIn.value){
-    adjustmentAttendanceLunchOut.value = _get(props.attendanceAdjustmentPayload, 'lunch_out', '');
-    adjustmentAttendanceLunchIn.value = _get(props.attendanceAdjustmentPayload, 'lunch_in', '');
+    attendanceLunchOut.value = _get(props.attendanceAdjustmentRequestPayload, 'attendance.lunch_out', '');
+    attendanceLunchIn.value = _get(props.attendanceAdjustmentRequestPayload, 'attendance.lunch_in', '');
 }
 
-adjustmentAttendanceLastOut.value = _get(props.attendanceAdjustmentPayload, 'last_out', '');
-remarks.value = _get(props.attendanceAdjustmentPayload, 'remarks', '');
+attendanceLastOut.value = _get(props.attendanceAdjustmentRequestPayload, 'attendance.last_out', '');
+
+adjustmentStatusSummary.value = _get(props.attendanceAdjustmentRequestPayload, 'status_summary.value', REQUEST_APPROVAL_STATUS.NOT_SPECIFIED);
+adjustmentAttendanceFirstIn.value = _get(props.attendanceAdjustmentRequestPayload, 'first_in', '');
+
+if(attendanceShiftRequiresLunchOutAndIn.value){
+    adjustmentAttendanceLunchOut.value = _get(props.attendanceAdjustmentRequestPayload, 'lunch_out', '');
+    adjustmentAttendanceLunchIn.value = _get(props.attendanceAdjustmentRequestPayload, 'lunch_in', '');
+}
+
+adjustmentAttendanceLastOut.value = _get(props.attendanceAdjustmentRequestPayload, 'last_out', '');
+remarks.value = _get(props.attendanceAdjustmentRequestPayload, 'remarks', '');
 </script>
 
 <style scoped>
