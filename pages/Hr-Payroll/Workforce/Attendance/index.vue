@@ -228,7 +228,7 @@
                             :size="'sm'"
                             :icon="'mdi:delete-outline'"
                             :disabled="disableActions"
-                            :label="'Delete selected'"
+                            :label="'Bulk delete'"
                             @click="confirmDeleteSelected()" />
                         <Label v-if="!attendances.successful" invert :size="'md'" :type="'danger'" :label="attendances.message" />
                     </div>

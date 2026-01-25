@@ -173,7 +173,7 @@
                             :size="'sm'"
                             :icon="'mdi:delete-outline'"
                             :disabled="disableActions"
-                            :label="'Delete selected'"
+                            :label="'Bulk delete'"
                             @click="confirmDeleteSelected()"/>
                         <Label v-if="!payrollComponents.successful" invert :size="'md'" :type="'danger'" :label="payrollComponents.message" />
                     </div>

@@ -140,7 +140,7 @@
                     <div class="mb-2 flex flex-row flex-wrap gap-2 items-center min-h-8">
                         <UnorderedList v-if="disableActions" :icon="'eos-icons:loading'" :size="'md'" :label="'Please wait...'"/>
                         <Button v-if="!disableActions" @click="put(null)" class="w-min" :disabled="disableActions" :size="'sm'" :icon="disableActions ? 'eos-icons:loading' : 'mdi:plus'" :label="disableActions ? 'Please wait' : ''"></Button>
-                        <Button v-if="holidays.successful && !disableActions" :variant="'outline'" :size="'sm'" :icon="'mdi:delete-outline'" :disabled="disableActions" :label="'Delete selected'" @click="confirmDeleteSelected()" />
+                        <Button v-if="holidays.successful && !disableActions" :variant="'outline'" :size="'sm'" :icon="'mdi:delete-outline'" :disabled="disableActions" :label="'Bulk delete'" @click="confirmDeleteSelected()" />
                     </div>
 
                     <div class="mb-2 flex flex-row flex-wrap gap-2 items-center min-h-8">

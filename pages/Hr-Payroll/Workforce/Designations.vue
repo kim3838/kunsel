@@ -86,7 +86,7 @@
                             :size="'sm'"
                             :icon="'mdi:delete-outline'"
                             :disabled="disableActions"
-                            :label="'Delete selected'"
+                            :label="'Bulk delete'"
                             @click="confirmDeleteSelected()" />
                     </div>
 

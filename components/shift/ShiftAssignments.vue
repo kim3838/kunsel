@@ -82,7 +82,7 @@
                 :size="'sm'"
                 :icon="'mdi:delete-outline'"
                 :disabled="disableActions"
-                :label="'Delete selected shift assignments'"
+                :label="'Bulk delete shift assignments'"
                 @click="confirmDeleteSelected()" />
             <Label v-if="!shiftAssignments.successful" invert :size="'md'" :type="'danger'" :label="shiftAssignments.message" />
         </div>

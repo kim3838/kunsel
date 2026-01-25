@@ -83,7 +83,7 @@
                 :size="'sm'"
                 :icon="'mdi:delete-outline'"
                 :disabled="disableActions"
-                :label="'Delete selected leave type assignments'"
+                :label="'Bulk delete leave type assignments'"
                 @click="confirmDeleteSelected()" />
             <Label v-if="!leaveTypeAssignments.successful" invert :size="'md'" :type="'danger'" :label="leaveTypeAssignments.message" />
         </div>
