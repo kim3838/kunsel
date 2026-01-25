@@ -1044,12 +1044,14 @@ const creatingAttendanceInitializedAttendanceDate = async (value: string) => {
             } else {
 
                 validOvertimeFoundations.value = true;
+                attendanceId.value = _get(_attendance, 'id', '');
+                let shiftIsFlexible = _get(_attendance, 'shift_schedule.is_flexible', false) as boolean;
 
                 scheduleWorkPeriod.value = _get(_attendance, 'shift_schedule.work_start', '') + ' - ' + _get(_attendance, 'shift_schedule.work_end', '') + '(' + _get(_attendance, 'shift_schedule.timezone', '')  + ')';
                 scheduleTotalDuration.value = _get(_attendance, 'shift_schedule.total_work_hours_with_breaks', '');
-                scheduleIsFlexible.value = _get(_attendance, 'shift_schedule.is_flexible', false) ? 'Yes' : 'No';
+                scheduleIsFlexible.value = shiftIsFlexible ? 'Yes' : 'No';
                 overtimeMaxDuration.value = _get(_attendance, 'shift.max_overtime_readable', '');
-                attendanceId.value = _get(_attendance, 'id', '');
+
                 attendanceEmployeeNumber.value = _get(_attendance, 'employee.number', '');
                 attendanceEmployeeFullName.value = _get(_attendance, 'employee.full_name', '');
                 attendanceWeekday.value = _get(_attendance, 'shift_schedule.week_day_name', '');
