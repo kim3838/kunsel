@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="font-data">
         <div class="text-lg font-header">
             {{requestNumber}}
         </div>
