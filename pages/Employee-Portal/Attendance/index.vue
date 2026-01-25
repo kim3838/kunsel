@@ -678,7 +678,7 @@ const modalSubmit = async() => {
                 resetable: false,
                 icon: null,
                 title: `Request successful`,
-                message: 'Attendance adjustment request created, you can monitor your request status in Home page.',
+                message: 'Attendance adjustment request submitted, you can monitor your request status at the Home page.',
                 action: {
                     callback: () => {},
                     label: 'Okay'

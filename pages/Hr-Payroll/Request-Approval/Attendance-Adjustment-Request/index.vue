@@ -1231,7 +1231,7 @@ const modalSaveButtonLabel = computed(()=>{
 
 const modalSubmitPath = computed(() => {
     if(!creatingAttendanceAdjustment.value){
-        return `/api/attendance-adjustment-request/${stagedAttendanceAdjustment.value.ulid}`;
+        return `/api/attendance-adjustment-request/${stagedAttendanceAdjustment.value.id}`;
     } else {
         return `/api/attendance-adjustment-request`
     }
@@ -1248,7 +1248,6 @@ const modalForm = computed(()=>{
         account_id: selectedAssociatedCompanyAccountId.value,
         company_id: selectedAssociatedCompanyId.value,
         attendance_id: attendanceId.value,
-        date: attendanceDate.value,
         first_in: nuxtApp.$moment(attendanceFirstIn.value).format("YYYY-MM-DD HH:mm"),
         ...(attendanceShiftRequiresLunchOutAndIn.value ? {
             lunch_out: nuxtApp.$moment(attendanceLunchOut.value).format("YYYY-MM-DD HH:mm"),
