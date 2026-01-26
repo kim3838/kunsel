@@ -80,13 +80,13 @@
                             :label="'Clear selection'"
                             @click="selectedApprovalStates = []; selectedApprovalStatesProxy = []" />
                         <Button
-                            v-if="approvalStates.successful"
+                            v-if="approvalStates.successful && selectedApprovalStatesProxy.length"
                             :size="'sm'"
                             :disabled="disableActions"
                             :label="`Approve ${selectedApprovalStatesProxy.length}`"
                             @click="applyApprovalWorkFlow(APPROVAL_ACTION.APPROVE as number)" />
                         <Button
-                            v-if="approvalStates.successful"
+                            v-if="approvalStates.successful && selectedApprovalStatesProxy.length"
                             :size="'sm'"
                             :disabled="disableActions"
                             :label="`Decline ${selectedApprovalStatesProxy.length}`"
