@@ -61,15 +61,34 @@
                         <div ref='modalContentContainer'>
                             <div class="pt-2 mx-auto max-w-screen-xl flex flex-col-reverse md:flex-row gap-4">
 
-                                <fieldset v-if="showResultPerDate" class="md:basis-5/12 neutral-border px-2 pb-2 space-y-2">
+                                <fieldset v-if="showClaimabilityPerDate" class="md:basis-4/12 neutral-border px-2 pb-2 space-y-2">
+                                    <legend class="text-lg font-header">Leave Date Inquiries</legend>
+
+                                    <div v-if="modalInquireLeaveDatePending" class="inline-flex items-center">
+                                        <UnorderedList v-if="modalDisableActions" :icon="'eos-icons:loading'" :size="'md'" :label="'Please wait...'"/>
+                                    </div>
+                                    <div v-else class="max-h-[135px] md:max-h-[270px] overflow-y-auto space-y-2">
+                                        <div>Claimability does not include claim limit and leave balance.</div>
+
+                                        <div>Total claimable: {{dateInquiryClaimableCount}}</div>
+
+                                        <table class="border-separate font-sans">
+                                            <tbody>
+                                            <tr v-for="dateInquiry in dateInquiries">
+                                                <td>{{dateInquiry.date}}</td>
+                                                <td class="pl-2">
+                                                    <Label :size="'md'" invert :type="dateInquiry.is_claimable ? `default` : `danger`" :label="dateInquiry.message" />
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </fieldset>
+                                <fieldset v-else-if="showResultPerDate" class="md:basis-4/12 neutral-border px-2 pb-2 space-y-2">
                                     <legend class="text-lg font-header">Results</legend>
 
                                     <div v-if="modalSubmitPending" class="inline-flex items-center">
-                                        <UnorderedList
-                                            v-if="modalDisableActions"
-                                            :icon="'eos-icons:loading'"
-                                            :size="'md'"
-                                            :label="'Please wait...'"/>
+                                        <UnorderedList v-if="modalDisableActions" :icon="'eos-icons:loading'" :size="'md'" :label="'Please wait...'"/>
                                     </div>
                                     <div v-else class="max-h-[135px] md:max-h-[270px] overflow-y-auto">
                                         <table class="border-separate font-sans">
@@ -84,7 +103,7 @@
                                         </table>
                                     </div>
                                 </fieldset>
-                                <div v-else class="md:basis-5/12 flex justify-center items-center">
+                                <div v-else class="md:basis-4/12 flex justify-center items-center">
 
                                     <div v-if="leaveModalSubmitSuccessful">
                                         Employee, Leave Type and Date of leave
@@ -94,7 +113,7 @@
                                     </div>
                                 </div>
 
-                                <fieldset class="md:basis-7/12 neutral-border px-2 pb-2 space-y-2">
+                                <fieldset class="md:basis-8/12 neutral-border px-2 pb-2 space-y-2">
                                     <legend class="text-lg font-header">{{creatingLeave ? 'Create leave' : 'Leave'}}</legend>
 
                                     <div class="grid gap-2 grid-cols-4">
@@ -191,12 +210,20 @@
                                     <Button
                                         v-if="!createdAtLeastOne"
                                         class="w-min"
+                                        :variant="'outline'"
+                                        :size="'md'"
+                                        :disabled="modalDisableActions || !assignedLeaveTypeSelectionsOptions.selected"
+                                        :label="`Inquire Leave Dates`"
+                                        @click="modalInquireLeaveDates"/>
+                                    <Button
+                                        v-if="!createdAtLeastOne && dateInquiryHasAtLeastOneClaimableLeave"
+                                        class="w-min"
                                         :variant="'default'"
                                         :size="'md'"
                                         :icon="`mdi:plus`"
                                         :disabled="modalDisableActions || !creatingLeave || !assignedLeaveTypeSelectionsOptions.selected"
                                         :label="`Submit`"
-                                        @click="attemptFilterAndSubmitLeaveDateRange"/>
+                                        @click="filterAndSubmitLeaveDateRange"/>
                                     <Button
                                         v-if="createdAtLeastOne"
                                         class="w-min"
@@ -282,6 +309,7 @@ import type {EnumOption, EnumSelection} from "@/public/js/common/type";
 import type {LabelTypeT} from "@/public/js/types/theme";
 import type {SelectDataType} from "@/public/js/types/form";
 import type {DateTimePickerOptionsT} from "@/public/js/datetimepicker/type";
+import type {LeaveDateInquiryT} from "@/public/js/types/leave";
 import {storeToRefs} from "pinia";
 
 useHead({titleTemplate: (titleChunk) => {return `${titleChunk} - Leave`}});
@@ -716,6 +744,20 @@ const leaveEmployeeFullName = ref('');
 const leaveDateFrom = ref('');
 const leaveDateTo = ref('');
 
+const showClaimabilityPerDate = ref(false);
+const dateInquiries = ref<LeaveDateInquiryT[]>([]);
+const submitResults = ref<{date: string, result: {label: 'string', type: LabelTypeT}}[]>([]);
+const dateInquiryClaimableCount = computed(() => {
+    return dateInquiries.value.filter((dateInquiry) => {
+        return dateInquiry.is_claimable;
+    }).length;
+})
+const dateInquiryHasAtLeastOneClaimableLeave = computed(() => {
+    return dateInquiries.value.some((dateInquiry) => {
+        return dateInquiry.is_claimable;
+    });
+})
+
 const showResultPerDate = ref(false);
 const createdAtLeastOne = ref(false);
 
@@ -741,6 +783,9 @@ const resetEditable = () => {
 
     leaveModalSubmitSuccessful.value = true;
     leaveModalSubmitMessage.value = '';
+
+    dateInquiries.value = [];
+    showClaimabilityPerDate.value = false;
 }
 
 const employeeOptionsKey = shallowRef(0);
@@ -782,6 +827,9 @@ const selectedEmployeeChanged = (selectedEmployee: SelectDataType) => {
             assignedLeaveTypeSelectionsOptionsKey.value++;
         }
     }
+
+    dateInquiries.value = [];
+    showClaimabilityPerDate.value = false;
 }
 
 const selectedShiftChanged = () => {
@@ -789,6 +837,9 @@ const selectedShiftChanged = () => {
     if(creatingLeave.value) {
 
         showResultPerDate.value = false;
+
+        dateInquiries.value = [];
+        showClaimabilityPerDate.value = false;
     }
 }
 
@@ -797,8 +848,21 @@ const selectedLeaveTypeChanged = () => {
     if(creatingLeave.value) {
 
         showResultPerDate.value = false;
+
+        dateInquiries.value = [];
+        showClaimabilityPerDate.value = false;
     }
 }
+
+watch(leaveDateFrom, () => {
+    dateInquiries.value = [];
+    showClaimabilityPerDate.value = false;
+});
+
+watch(leaveDateTo, () => {
+    dateInquiries.value = [];
+    showClaimabilityPerDate.value = false;
+});
 
 const assignedShiftSelectionsOptionsKey = shallowRef(0);
 const assignedShiftSelectionsOptions = reactive({
@@ -838,15 +902,16 @@ const closeModal = () => {
 };
 
 const modalDisableActions = computed(() => {
-    return  modalLoading.value || modalSubmitPending.value;
+    return  modalLoading.value || modalSubmitPending.value || modalInquireLeaveDatePending.value;
 });
 const modalCreatingAndCreatedAtLeaseOne = computed(() => {
     return  creatingLeave.value && createdAtLeastOne.value;
 });
 const modalLoading = ref(false);
 const modalSubmitPending = ref(false);
+const modalInquireLeaveDatePending = ref(false);
 
-const attemptFilterAndSubmitLeaveDateRangeForm = computed(() => {
+const modalForm = computed(() => {
     return {
         account_id: selectedAssociatedCompanyAccountId.value,
         company_id: selectedAssociatedCompanyId.value,
@@ -857,27 +922,39 @@ const attemptFilterAndSubmitLeaveDateRangeForm = computed(() => {
         date_to: leaveDateTo.value,
     }
 })
-const attemptFilterAndSubmitLeaveDateRange = async() => {
 
-    let dateRangeReadable = leaveDateFrom.value == leaveDateTo.value
-        ? `on ${leaveDateFrom.value}?`
-        : `from ${leaveDateFrom.value} to ${leaveDateTo.value}? automatically skips existing leaves and day offs.`;
+const modalInquireLeaveDates = async() => {
+    showClaimabilityPerDate.value = true;
+    modalInquireLeaveDatePending.value = true;
+    dateInquiries.value = [];
 
-    useNuxtApp().$promptStore.setPrompt({
-        resetable: true,
-        icon: null,
-        title: 'Confirm Action',
-        message: `Confirm create leave ${dateRangeReadable}`,
-        action: {
-            callback: async () => {
-                await filterAndSubmitLeaveDateRange();
-            },
-            label: 'Yes'
-        }
+    await laraFetch(`/api/leave-date-range-inquire`, {
+        method: `POST`,
+        body: modalForm.value,
+    }, {
+        onRequestError: () => {
+            modalInquireLeaveDatePending.value = false;
+        },
+        onResponse: () => {
+            modalInquireLeaveDatePending.value = false;
+        },
+        onNotAcceptableResponse: () => {
+            showClaimabilityPerDate.value = false;
+        },
+        onUnprocessableContentResponse: () => {
+            showClaimabilityPerDate.value = false;
+        },
+        onSuccessResponse: async (request, options, response) => {
+            showClaimabilityPerDate.value = true;
+            dateInquiries.value = _get(response, '_data.values.dates', []);
+        },
     });
 }
 
 const filterAndSubmitLeaveDateRange = async() => {
+    dateInquiries.value = [];
+    showClaimabilityPerDate.value = false;
+
     modalSubmitPending.value = true;
     createdAtLeastOne.value = false;
     filteredLeaveDates.value = [];
@@ -885,7 +962,7 @@ const filterAndSubmitLeaveDateRange = async() => {
 
     await laraFetch(`/api/leave-date-range-filter`, {
         method: `POST`,
-        body: attemptFilterAndSubmitLeaveDateRangeForm.value,
+        body: modalForm.value,
     }, {
         onRequestError: () => {
             modalSubmitPending.value = false;
@@ -927,7 +1004,6 @@ const submitForm = computed(()=>{
         dates: filteredLeaveDates.value
     }
 })
-const submitResults = ref<{date: string, result: {label: 'string', type: LabelTypeT}}[]>([]);
 
 const leaveModalSubmitSuccessful = ref(true);
 const leaveModalSubmitMessage = ref('');
