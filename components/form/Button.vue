@@ -284,11 +284,11 @@ watch(buttonFocused, (focused) => {
 <style scoped>
 
 .condensed_font {
-    font-family: 'National Park';
+    font-family: 'Reddit Sans Condensed';
 }
 
 .bold_font{
-    font-family: 'Bricolage Grotesque';
+    font-family: 'Reddit Sans Condensed';
 }
 
 .focus-ring-enable:focus{
