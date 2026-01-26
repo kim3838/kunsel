@@ -428,9 +428,13 @@ let filters = reactive<{
         keyword: '',
         callback: 1
     },
-    dateFrom: $moment().startOf('day').format('YYYY-MM-DD'),
-    dateTo: $moment('2050-12-31').endOf('day').format('YYYY-MM-DD'),
+    dateFrom: $moment().format('YYYY-MM-DD'),
+    dateTo: $moment().format('YYYY-MM-DD'),
 });
+
+if(process.env.NODE_ENV === 'development'){
+    filters.dateTo = $moment('2050-12-31').format('YYYY-MM-DD');
+}
 
 const viewMode = reactive<{
     selection: EnumSelection;
@@ -702,8 +706,14 @@ const put = (row: TableRowT | null = null) => {
 
         leaveEmployeeNumber.value = '';
         leaveEmployeeFullName.value = '';
-        leaveDateFrom.value = nuxtApp.$moment().format("YYYY-MM-DD");
-        leaveDateTo.value = nuxtApp.$moment().format("YYYY-MM-DD");
+
+        if(process.env.NODE_ENV === 'development'){
+            leaveDateFrom.value = nuxtApp.$moment('2027-12-01').format("YYYY-MM-DD");
+            leaveDateTo.value = nuxtApp.$moment('2027-12-10').format("YYYY-MM-DD");
+        } else {
+            leaveDateFrom.value = nuxtApp.$moment().format("YYYY-MM-DD");
+            leaveDateTo.value = nuxtApp.$moment().format("YYYY-MM-DD");
+        }
 
         showResultPerDate.value = false;
     }
