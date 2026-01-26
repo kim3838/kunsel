@@ -151,8 +151,8 @@
                                         <Label invert :size="'sm'" :type="'danger'" :label="$coreStore.servicePayloadMessage" />
                                     </div>
 
-                                    <div class="grid gap-2 grid-cols-1 md:grid-cols-3">
-                                        <div>
+                                    <div class="grid gap-2 grid-cols-4 lg:grid-cols-8">
+                                        <div class="col-span-4 md:col-span-2">
                                             <InputLabel :size="'sm'" value="Start"/>
                                             <InputWithIcon
                                                 :disabled="modalDisableActions || creatingOvertimeWithNonValidOvertimeFoundations"
@@ -164,7 +164,7 @@
                                                 :id="`overtime_start`"
                                                 :size="'md'" />
                                         </div>
-                                        <div>
+                                        <div class="col-span-4 md:col-span-2">
                                             <InputLabel :size="'sm'" value="End"/>
                                             <InputWithIcon
                                                 :disabled="modalDisableActions || creatingOvertimeWithNonValidOvertimeFoundations"
