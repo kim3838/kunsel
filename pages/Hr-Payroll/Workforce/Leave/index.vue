@@ -105,16 +105,16 @@
                                 </fieldset>
                                 <div v-else class="md:basis-4/12 flex justify-center items-center">
 
-                                    <div v-if="leaveModalSubmitSuccessful">
-                                        Employee, Leave Type and Date of leave
+                                    <div v-if="modalSubmitPending" class="inline-flex items-center">
+                                        <UnorderedList v-if="modalDisableActions" :icon="'eos-icons:loading'" :size="'md'" :label="'Please wait...'"/>
                                     </div>
-                                    <div v-else class="flex flex-row flex-wrap gap-2 items-center min-h-8">
-                                        <Label invert :size="'md'" :type="'danger'" :label="leaveModalSubmitMessage" />
+                                    <div v-else>
+                                        Employee, Leave Type and Date of leave
                                     </div>
                                 </div>
 
                                 <fieldset class="md:basis-8/12 neutral-border px-2 pb-2 space-y-2">
-                                    <legend class="text-lg font-header">{{creatingLeave ? 'Create leave' : 'Leave'}}</legend>
+                                    <legend class="text-lg font-header">Create leave</legend>
 
                                     <div class="grid gap-2 grid-cols-4">
                                         <div class="col-span-4 lg:col-span-2">
@@ -781,7 +781,6 @@ const resetEditable = () => {
     showResultPerDate.value = false;
     createdAtLeastOne.value = false;
 
-    leaveModalSubmitSuccessful.value = true;
     leaveModalSubmitMessage.value = '';
 
     dateInquiries.value = [];
@@ -855,11 +854,15 @@ const selectedLeaveTypeChanged = () => {
 }
 
 watch(leaveDateFrom, () => {
+
+    showResultPerDate.value = false;
     dateInquiries.value = [];
     showClaimabilityPerDate.value = false;
 });
 
 watch(leaveDateTo, () => {
+
+    showResultPerDate.value = false;
     dateInquiries.value = [];
     showClaimabilityPerDate.value = false;
 });
@@ -1005,7 +1008,6 @@ const submitForm = computed(()=>{
     }
 })
 
-const leaveModalSubmitSuccessful = ref(true);
 const leaveModalSubmitMessage = ref('');
 const submit = async() => {
     modalSubmitPending.value = true;
@@ -1021,7 +1023,6 @@ const submit = async() => {
         onResponse: (request, options, response) => {
             modalSubmitPending.value = false;
             showResultPerDate.value = _get(response, '_data.successful', false);
-            leaveModalSubmitSuccessful.value = _get(response, '_data.successful', false);
             leaveModalSubmitMessage.value = _get(response, '_data.message', '');
         },
         onSuccessResponse: async (request, options, response) => {
