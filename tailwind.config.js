@@ -5,6 +5,7 @@ module.exports = {
             fontFamily : {
                 sans : [
                     'Funnel Sans',
+                    'Momo Trust Sans',
                     'GG Sans',
                     'Finlandica',
                     'Google Sans Text',
@@ -12,7 +13,11 @@ module.exports = {
                     'Barlow Semi Condensed',
                     'Roboto Condensed',
                     'Inter',
+                    'National Park',
                     'Inclusive Sans',
+                    'Roboto',
+                    'Source Sans Pro',
+                    'IBM Plex Sans Condensed',
                     'sans-serif',
                 ],
                 appearance:[
@@ -21,8 +26,10 @@ module.exports = {
                 ],
                 hero: [
                     'Hedvig Letters Sans',
+                    'Amarna',
                 ],
                 business: [
+                    'Reddit Sans Condensed',
                     'Gentium Plus',
                     'GG Sans',
                     'Inclusive Sans',
@@ -32,6 +39,7 @@ module.exports = {
                     'Roboto Flex',
                 ],
                 techno:[
+                    'Stack Sans Notch',
                     'Oxanium',
                 ],
                 stiff:[
@@ -41,26 +49,23 @@ module.exports = {
                     'Bruno Ace SC',
                 ],
                 data: [
+                    'Reddit Sans Condensed',
+                    'Gentium Plus',
                     'Aptos Narrow',
-                    'Funnel Sans',
-                    'National Park',
                     'Sofia Sans Semi Condensed',
                 ],
                 header: [
+                    'Momo Trust Sans',
                     'GG Sans',
-                    'National Park',
-                    'Funnel Sans',
-                    'IBM Plex Sans Condensed',
                 ],
                 standard: [
+                    'Reddit Sans Condensed',
+                    'Gentium Plus',
                     'Aptos Narrow',
-                    'Funnel Sans',
-                    'National Park',
-                    'Roboto',
-                    'Hedvig Letters Sans',
-                    'Source Sans Pro',
+                    'Sofia Sans Semi Condensed',
                 ],
                 label: [
+                    'National Park',
                     'Aptos Narrow',
                 ],
                 serif : [

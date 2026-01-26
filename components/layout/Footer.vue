@@ -34,7 +34,7 @@
 
                 <div class="p-6">
                     <div class="flex flex-col md:flex-row justify-start items-center">
-                        <div class="w-full md:w-min font-business text-2xl font-medium">
+                        <div class="w-full md:w-min text-2xl font-techno">
                             Kunsel
                         </div>
                         <BreadCrumbs prefix-arrow :prefix-company="breadcrumbsPrefixCompany" />

@@ -29,6 +29,9 @@ export default defineNuxtConfig({
                 {rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=National+Park:wght@200..800&display=swap" rel="stylesheet'},
                 {rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=Funnel+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet'},
                 {rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=Finlandica:ital,wght@0,400..700;1,400..700&display=swap" rel" rel="stylesheet'},
+                {rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=Amarna:ital,wght@0,100..700;1,100..700&display=swap" rel" rel="stylesheet'},
+                {rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=Momo+Trust+Sans:wght@200..800&display=swap" rel" rel="stylesheet'},
+                {rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=Reddit+Sans+Condensed:wght@200..900&display=swap" rel" rel="stylesheet'},
                 //Serif
                 {rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&display=swap'},
                 {rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=Oranienbaum&display=swap'},
@@ -47,6 +50,7 @@ export default defineNuxtConfig({
                 {rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=Bruno+Ace+SC&display=swap'},
                 //Techno
                 {rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=Oxanium:wght@200..800&display=swap'},
+                {rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=Stack+Sans+Notch:wght@200..700&display=swap'},
                 //Appearance
                 {rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wght@8..144,100..1000&display=swap'},
                 {rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=Merienda:wght@300..900&display=swap'},
