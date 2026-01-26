@@ -4,7 +4,7 @@
         <div v-show="disableableLayer && disabled" class="absolute disabled-overlay opacity-25 z-30" :style="[disabledLayerStyle]"></div>
 
         <table ref="tableReference" class="font-data" :class="[landscape ? 'w-full' : 'w-auto']">
-            <thead class="table-header-background">
+            <thead class="table-header-background font-[Roboto]">
                 <tr v-if="supHeaders.length > 0">
                     <td v-if="selection"></td>
                     <td v-if="manualSortable"></td>
@@ -440,10 +440,10 @@ const currentRowIds = computed(() => {
 
 const headerFontClass = computed(() => {
     return {
-        'sm': 'font-semibold text-sm',
-        'md': 'font-semibold text-base',
-        'lg': 'font-semibold text-base',
-        'xl': 'font-semibold text-base',
+        'sm': 'font-medium text-xs',
+        'md': 'font-medium text-sm',
+        'lg': 'font-medium text-sm',
+        'xl': 'font-medium text-sm',
     }[props.size];
 });
 
