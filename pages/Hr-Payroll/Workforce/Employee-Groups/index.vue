@@ -142,8 +142,8 @@
                             <span><span class="font-semibold">{{selectedEmployeeGroups.length}}</span> Selected</span>
                         </div>
                         <Button v-if="employeeGroups.successful" :variant="'outline'" :size="'sm'" :icon="'tdesign:close'" :disabled="disableActions" :label="'Clear selection'" @click="selectedEmployeeGroups = []" />
-                        <Button v-if="employeeGroups.successful" @click="assignGroups" class="inline-block" :size="'sm'" :icon="'mdi:plus'" :disabled="disableActions" :variant="'outline'" :label="'Assign selected to employees'" />
-                        <Button v-if="employeeGroups.successful" @click="confirmGroupAssignmentBatchDetach" class="inline-block" :size="'sm'" :icon="'mdi:delete-outline'" :disabled="disableActions" :variant="'outline'" :label="'Remove selected from employees'" />
+                        <Button v-if="employeeGroups.successful" @click="assignGroups" class="inline-block" :size="'sm'" :icon="'mdi:plus'" :disabled="disableActions" :variant="'outline'" :label="'Bulk assign groups'" />
+                        <Button v-if="employeeGroups.successful" @click="confirmGroupAssignmentBatchDetach" class="inline-block" :size="'sm'" :icon="'mdi:delete-outline'" :disabled="disableActions" :variant="'outline'" :label="'Bulk remove assigned groups'" />
                         <Label v-if="!employeeGroups.successful" invert :size="'md'" :type="'danger'" :label="employeeGroups.message" />
                     </div>
 

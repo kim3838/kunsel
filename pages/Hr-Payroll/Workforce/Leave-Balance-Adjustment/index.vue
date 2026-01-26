@@ -318,15 +318,15 @@ const leaveBalanceAdjustmentsHeaders = reactive<TableHeaderT[]>([
     { text: '#', value: 'row_number'},
     { text: '', value: 'actions', minWidth: '33px'},
     { text: 'Employee #', value: 'employee_number', alignData: 'left'},
-    { text: 'Name', value: 'employee_full_name', alignData: 'left'},
+    { text: 'Name', value: 'employee_full_name', alignData: 'left', minWidth: '200px'},
 
-    { text: 'Code', value: 'code'},
-    { text: 'Name', value: 'name'},
+    { text: 'Code', value: 'code', minWidth: '143px'},
+    { text: 'Name', value: 'name', minWidth: '143px'},
     
-    { text: 'Type', value: 'type'},
-    { text: 'Effective Date', value: 'effective_date'},
-    { text: 'Balance', value: 'balance', alignData: 'right'},
-    { text: 'Remarks', value: 'remarks', alignData: 'left'},
+    { text: 'Type', value: 'type', minWidth: '143px'},
+    { text: 'Effective Date', value: 'effective_date', minWidth: '143px'},
+    { text: 'Balance', value: 'balance', alignData: 'right', minWidth: '143px'},
+    { text: 'Remarks', value: 'remarks', alignData: 'left', minWidth: '143px'},
 ]);
 
 const leaveBalanceAdjustments = reactive<DataTableT>({
