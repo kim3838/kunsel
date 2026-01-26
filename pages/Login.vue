@@ -14,7 +14,7 @@
                                             :disabled="authPending"
                                             :size="'lg'"
                                             id="identifier"
-                                            class="w-full font-sans"
+                                            class="w-full"
                                             ref="identifierInput"
                                             v-model="identifier" />
                                     </div>
