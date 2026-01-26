@@ -387,14 +387,14 @@ const leavesSupHeaders = reactive<TableSupHeaderT[]>([
 const leavesHeaders = reactive<TableHeaderT[]>([
     { text: '#', value: 'row_number'},
     { text: 'Employee #', value: 'employee_number', alignData: 'left'},
-    { text: 'Name', value: 'employee_full_name', alignData: 'left'},
+    { text: 'Name', value: 'employee_full_name', alignData: 'left', minWidth: '200px'},
 
-    { text: '', value: 'date'},
+    { text: '', value: 'date', minWidth: '200px'},
 
-    { text: 'Code', value: 'code'},
-    { text: 'Name', value: 'name'},
-    { text: 'Type', value: 'type'},
-    { text: 'Is Paid', value: 'is_paid'},
+    { text: 'Code', value: 'code', minWidth: '143px'},
+    { text: 'Name', value: 'name', minWidth: '143px'},
+    { text: 'Type', value: 'type', minWidth: '143px'},
+    { text: 'Is Paid', value: 'is_paid', minWidth: '143px'},
 
 ]);
 
@@ -429,7 +429,7 @@ let filters = reactive<{
         callback: 1
     },
     dateFrom: $moment().startOf('day').format('YYYY-MM-DD'),
-    dateTo: $moment().endOf('day').format('YYYY-MM-DD'),
+    dateTo: $moment('2050-12-31').endOf('day').format('YYYY-MM-DD'),
 });
 
 const viewMode = reactive<{
