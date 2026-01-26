@@ -153,7 +153,7 @@
                     v-model:child-component-employee-payload="payrollComponentEmployeePayload"
                 />-->
 
-                <div v-if="false">
+                <div v-if="true">
                     <Example
                         v-model:sample-object="sampleObject"
                         v-model:sample-boolean="sampleBoolean"
@@ -777,7 +777,7 @@
 <script setup lang="ts">
 //@ts-nocheck
 import dataPayload from '@/public/data/payload.js';
-// definePageMeta({middleware: 'guest'});
+definePageMeta({middleware: ['auth', 'super-admin']});
 useLayout().setNavigationMode('solid', 'Lab.vue');
 const {screenWidthBreakpoint, width: screenWidth, height: screenHeight} = useScreen();
 const {$formStore} = useNuxtApp();
