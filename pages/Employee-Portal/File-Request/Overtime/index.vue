@@ -100,7 +100,7 @@
                                     <legend class="text-lg font-header">{{creatingOvertime ? 'Create overtime' : 'Overtime'}}</legend>
 
                                     <div class="grid gap-2 grid-cols-4">
-                                        <div class="col-span-4 lg:col-span-2">
+                                        <div class="col-span-4 md:col-span-3 lg:col-span-2">
                                             <InputLabel :size="'sm'" value="Assigned Shift"/>
                                             <SingleSelectPaginated
                                                 :key="assignedShiftSelectionsOptionsKey"
