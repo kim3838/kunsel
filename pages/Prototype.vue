@@ -210,7 +210,7 @@
                     </div>
 
                     <!-- Datatables -->
-                    <div v-if="false" class="grid gap-2 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4">
+                    <div v-if="true" class="grid gap-2 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4">
                         <div class="block col-span-1 sm:col-span-3 md:col-span-2 lg:col-span-2 p-2 neutral-border">
                             <InputLabel class="mb-2" :size="'md'" value="MD Datatable" />
                             <DataTable
@@ -482,7 +482,7 @@
                     </div>
 
                     <!-- Button and Input Grid Spacing Alignments -->
-                    <div v-if="false">
+                    <div v-if="true">
                         <div class="block p-2 neutral-border">
                             <InputLabel class="mb-2" :size="'md'" value="Spacing Alignment Grid" />
                             <div class="grid gap-1 grid-cols-7">
@@ -973,7 +973,7 @@
                     </div>
 
                     <!-- Button and Input Horizontal Alignment -->
-                    <div v-if="false">
+                    <div v-if="true">
                         <div class="my-4 flex justify-center space-x-1.5">
                             <Button :size="tabGroup.size" :icon="tabGroup.icon" :label="'Default'" />
                             <Button :size="tabGroup.size" :icon="tabGroup.icon" :variant="'outline'" :label="'Outline'" />
@@ -984,7 +984,7 @@
                     </div>
 
                     <!-- Default Button -->
-                    <div v-if="false" class="grid gap-2 grid-cols-3 sm:grid-cols-4 lg:grid-cols-6 xl:grid-cols-12 2xl:grid-cols-12">
+                    <div v-if="true" class="grid gap-2 grid-cols-3 sm:grid-cols-4 lg:grid-cols-6 xl:grid-cols-12 2xl:grid-cols-12">
                         <div class="flex items-start justify-start block neutral-border">
                             <Button :size="'2xs'" :icon="'ic:sharp-send-to-mobile'" :label="'XXS Button'"></Button>
                         </div>
@@ -1009,7 +1009,7 @@
                     </div>
 
                     <!-- Outline Button -->
-                    <div v-if="false" class="grid gap-2 grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-9">
+                    <div v-if="true" class="grid gap-2 grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-9">
                         <div class="flex items-start justify-start block neutral-border">
                             <Button :variant="'outline'" :size="'2xs'" :icon="'ic:sharp-dashboard'" :label="'XXS Button'"></Button>
                         </div>
@@ -1034,7 +1034,7 @@
                     </div>
 
                     <!-- Flat Button -->
-                    <div v-if="false" class="grid gap-2 grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-9">
+                    <div v-if="true" class="grid gap-2 grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-9">
                         <div class="flex items-start justify-start block neutral-border">
                             <Button :variant="'flat'" :size="'2xs'" :icon="'ic:sharp-dashboard'" :label="'XXS Button'"></Button>
                         </div>
@@ -1095,7 +1095,7 @@
                     </div>
 
                     <!-- Hero Plate -->
-                    <div v-if="false" class=" p-2 neutral-border">
+                    <div v-if="true" class=" p-2 neutral-border">
                         <InputLabel class="mb-2" :size="'md'" value="Hero Plate" />
                         <div class="gap-2 flex items-start justify-start flex-wrap">
                             <div >
@@ -1177,7 +1177,7 @@
                     </div>
 
                     <!-- Checkbox -->
-                    <div v-if="false" class="grid gap-2 grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-8">
+                    <div v-if="true" class="grid gap-2 grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-8">
                         <div class="neutral-border">
                             <label>
                                 <Checkbox v-model="remember1" :label="' '" :size="'md'" name="remember" />
@@ -1201,7 +1201,7 @@
                     </div>
 
                     <!-- Checkbox Group -->
-                    <div v-if="false" class="grid gap-2 grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-8">
+                    <div v-if="true" class="grid gap-2 grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-8">
                         <div class="neutral-border">
                         </div>
                         <div class="neutral-border">
@@ -1222,7 +1222,7 @@
                     </div>
 
                     <!-- Radio Group -->
-                    <div v-if="false" class="grid gap-2 grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-8">
+                    <div v-if="true" class="grid gap-2 grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-8">
                         <div class="flex items-start justify-start block neutral-border">
                             <div>
                                 <InputLabel :size="'md'" value="SM : Gender Group" />
@@ -1274,7 +1274,7 @@
                     </div>
 
                     <!-- Default Input -->
-                    <div v-if="false" class="grid gap-2 grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-8">
+                    <div v-if="true" class="grid gap-2 grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-8">
                         <div class="block neutral-border">
                             <InputLabel :size="'2xs'" for="form_input_1" value="XXS Label" />
                             <Input :size="'2xs'" placeholder="Enter username" id="form_input_1" type="text" />
@@ -1306,7 +1306,7 @@
                     </div>
 
                     <!-- Input with Icon -->
-                    <div v-if="false" class="grid gap-2 grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-8">
+                    <div v-if="true" class="grid gap-2 grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-8">
                         <div class="block neutral-border">
                             <InputLabel :size="'2xs'" for="form_input_1" value="XXS Label" />
                             <InputWithIcon :size="'2xs'" :icon="'ic:sharp-qr-code'" placeholder="Enter username" id="form_input_1" />
@@ -1338,7 +1338,7 @@
                     </div>
 
                     <!-- Typography -->
-                    <div v-if="false" class="grid gap-2 grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-8">
+                    <div v-if="true" class="grid gap-2 grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-8">
                         <div class="block neutral-border col-span-2">
                             <p class="text-sm leading-4">0123456789 (){}[] +-*/= .,;:!? #&$%@|^#[ |||> |= ~@/\\/* Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
                         </div>
@@ -1354,7 +1354,7 @@
                     </div>
 
                     <!-- Font Weights -->
-                    <div v-if="false" class="grid gap-2 grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-8">
+                    <div v-if="true" class="grid gap-2 grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-8">
                         <div class="block neutral-border col-span-2">
                             <p class="text-sm font-thin leading-4">Thin: 0123456789 (){}[] +-*/= .,;:!? #&$%@|^#[ |||> |= ~@/\\/* Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
                             <br><p class="text-sm font-extralight leading-4">Extra Light: 0123456789 (){}[] +-*/= .,;:!? #&$%@|^#[ |||> |= ~@/\\/* Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec facilisis lacus. Phasellus convallis commodo lorem. Nam vitae dignissim elit.</p>
@@ -1411,7 +1411,7 @@ import type {
     DateTimePickerOptionsT,
     DateTimePickerPayloadT
 } from "@/public/js/datetimepicker/type";
-definePageMeta({middleware: 'auth'});
+definePageMeta({middleware: ['auth', 'super-admin']});
 useLayout().setNavigationMode('solid', 'Prototype.vue');
 
 const clientReadyState = useClientReadyState();
