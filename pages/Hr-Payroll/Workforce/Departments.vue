@@ -36,48 +36,41 @@
                         {{createEditModalTitle}}
                     </template>
                     <template #content>
-                        <div ref='contentContainer'>
-                            <div v-if="loadingOverlay" :style="loadingOverlayDimensionStyle" class="absolute tint-background  z-50">
+                        <div ref='contentContainer' class="py-4">
+                            <div v-if="loadingOverlay" :style="loadingOverlayDimensionStyle" class="absolute tint-background z-50">
                                 <div class="h-full flex items-center justify-center">
                                     <UnorderedList :size="'lg'" :icon="'eos-icons:loading'">Please wait...</UnorderedList>
                                 </div>
                             </div>
-                            <div v-if="false">
-                                <span class="font-semibold">Department options:</span> {{departmentOptions}}<br>
-                                <span class="font-semibold">departmentOptions.selected:</span> {{departmentOptions.selected + 1}}<br>
-                                <span class="font-semibold">Department Name:</span> {{departmentName}}<br>
-                                <span class="font-semibold">Parent Department Selection Option:</span> {{parentDepartmentSelectionOption}}<br>
-                                <span class="font-semibold">Create | Edit Form:</span> {{createEditModalForm}}<br>
-                            </div>
                             <div>
-                                <table class="w-full border-separate border-spacing-2">
+                                <table class="w-full border-separate border-spacing-y-2">
                                     <tbody>
-                                    <tr>
-                                        <td></td>
-                                        <td>
-                                            <RadioGroup
-                                                :selections="departmentOptions.selection"
-                                                :radio-key="`department_org_type`"
-                                                v-model="departmentOptions.selected" />
-                                        </td>
-                                    </tr>
-                                    <tr v-if="departmentOptions.selected == 1">
-                                        <td><InputLabel :size="'md'" value="Parent Department" /></td>
-                                        <td>
-                                            <SingleSelect
-                                                :searchable="false"
-                                                drop-shadow
-                                                :selection-max-viewable-line="6"
-                                                :size="'md'"
-                                                :label="'Select'"
-                                                :options="parentDepartmentSelectionOption"
-                                                @value-change=""/>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td><InputLabel :size="'md'" value="Department" /></td>
-                                        <td><Input v-model="departmentName" placeholder="Enter department name" type="text" /></td>
-                                    </tr>
+                                        <tr>
+                                            <td></td>
+                                            <td>
+                                                <RadioGroup
+                                                    :selections="departmentOptions.selection"
+                                                    :radio-key="`department_org_type`"
+                                                    v-model="departmentOptions.selected" />
+                                            </td>
+                                        </tr>
+                                        <tr v-if="departmentOptions.selected == 1">
+                                            <td><InputLabel :size="'md'" value="Parent Department" /></td>
+                                            <td class="my-2">
+                                                <SingleSelect
+                                                    :searchable="false"
+                                                    drop-shadow
+                                                    :selection-max-viewable-line="6"
+                                                    :size="'md'"
+                                                    :label="'Select'"
+                                                    :options="parentDepartmentSelectionOption"
+                                                    @value-change=""/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td><InputLabel :size="'md'" value="Department" /></td>
+                                            <td><Input v-model="departmentName" placeholder="Enter department name" type="text" /></td>
+                                        </tr>
                                     </tbody>
                                 </table>
                             </div>
@@ -85,6 +78,10 @@
                     </template>
                     <template #footer>
                         <div class="flex space-x-2 justify-between">
+                            <div class="space-x-2 inline-flex items-center">
+                                <Button :variant="'outline'" :disabled="createEditModalDisableActions" @click="closeModal" :label="'Cancel'" />
+                                <Button :disabled="createEditModalDisableActions" :icon="createEditModalActionIcon" @click="createEditModalSubmit" :label="createEditModalActionLabel" />
+                            </div>
                             <div class="space-x-2 inline-flex">
                                 <div class="space-x-2 inline-flex items-center">
                                     <UnorderedList
@@ -93,10 +90,6 @@
                                         :size="'md'"
                                         :label="'Please wait...'"/>
                                 </div>
-                            </div>
-                            <div class="space-x-2 inline-flex items-center">
-                                <Button :variant="'outline'" :disabled="createEditModalDisableActions" @click="closeModal" :label="'Cancel'" />
-                                <Button :disabled="createEditModalDisableActions" :icon="createEditModalActionIcon" @click="createEditModalSubmit" :label="createEditModalActionLabel" />
                             </div>
                         </div>
                     </template>

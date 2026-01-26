@@ -36,8 +36,8 @@
                         {{createEditModalTitle}}
                     </template>
                     <template #content>
-                        <div>
-                            <table class="w-full border-separate border-spacing-2">
+                        <div class="py-4">
+                            <table class="w-full border-separate">
                                 <tbody>
                                 <tr>
                                     <td><InputLabel :size="'md'" value="Designation" /></td>
