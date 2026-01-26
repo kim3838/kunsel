@@ -352,21 +352,22 @@ const rebuildSelections = (selection: string[] = []) => {
 const leavesSupHeaders = reactive<TableSupHeaderT[]>([
     {text: ''},
     {text: 'Employee', colspan: 2,  alignHeader: 'left'},
-    {text: 'Leave Type', colspan: 4,  alignHeader: 'left'},
     {text: 'Leave Date', colspan: 1,  alignHeader: 'left'},
+    {text: 'Leave Type', colspan: 4,  alignHeader: 'left'},
 ]);
 
 const leavesHeaders = reactive<TableHeaderT[]>([
     { text: '#', value: 'row_number'},
     { text: 'Employee #', value: 'employee_number', alignData: 'left'},
     { text: 'Name', value: 'employee_full_name', alignData: 'left'},
-    
+
+    { text: '', value: 'date'},
+
     { text: 'Code', value: 'code'},
     { text: 'Name', value: 'name'},
     { text: 'Type', value: 'type'},
     { text: 'Is Paid', value: 'is_paid'},
-    
-    { text: '', value: 'date'},
+
 ]);
 
 const leaves = reactive<DataTableT>({
