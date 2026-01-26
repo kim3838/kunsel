@@ -61,3 +61,9 @@ export type LeaveBalancePeriodSeriesT = {
     period: number,
     value: LeaveBalanceYearMonthSeriesT[],
 }
+
+export type LeaveInquiry = {
+    date: string,
+    message: string,
+    is_claimable: boolean,
+}
