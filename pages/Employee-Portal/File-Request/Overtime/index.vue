@@ -934,7 +934,7 @@ const creatingOvertimeInitializedAttendanceDate = async (value: string) => {
             coreStore.setServiceError({
                 prompt: false,
                 payload: {
-                    message: 'No attendance found for the selected employee, shift, and date.'
+                    message: 'No attendance found for the selected shift and date.'
                 }
             });
 
