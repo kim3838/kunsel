@@ -721,7 +721,7 @@ const confirmDeleteSelected = () => {
             resetable: false,
             icon: null,
             title: `Validation Error`,
-            message: `No selected attendance adjustment to delete.`,
+            message: `No selected overtime request to delete.`,
             action: {
                 callback: () => {},
                 label: 'Okay'
@@ -1154,7 +1154,7 @@ const loadEditable = () => {
         'ulid': _get(editPayload.value, 'ulid', null),
     };
 
-    attendanceDate.value = _get(editPayload.value, 'date', nuxtApp.$moment('2025-01-10').format("YYYY-MM-DD"));
+    attendanceDate.value = _get(editPayload.value, 'date', nuxtApp.$moment().format("YYYY-MM-DD"));
 
     renderDatePickers();
 }
