@@ -63,113 +63,119 @@
 
                     <div v-if="payFrequenciesSuccessful" class="space-y-2 flex flex-col gap-4">
 
-                        <form @submit.prevent="weeklyPayFrequencyFormSubmit">
-                            <fieldset class="neutral-border px-2 pb-2 grid grid-cols-2 md:grid-cols-4 gap-4">
-                                <legend class="text-lg font-header">{{PAY_FREQUENCY_NAME[weeklyPayFrequenciesData.type]}}</legend>
+                        <div class="lining-shadow rounded-sm flex-grow tint-background">
+                            <div class="lining-shadow rounded-t-sm text-lg font-medium font-business px-4 py-2">
+                                {{PAY_FREQUENCY_NAME[weeklyPayFrequenciesData.type]}}
+                            </div>
 
-                                <div>
-                                    <div class="text-base"><span class="font-semibold">Code: </span><span>{{weeklyPayFrequenciesData?.code}}</span></div>
-                                </div>
+                            <div class="px-4 py-4">
+                                <form @submit.prevent="weeklyPayFrequencyFormSubmit" class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                                    <div>
+                                        <div class="text-base"><span class="font-medium">Code: </span><span>{{weeklyPayFrequenciesData?.code}}</span></div>
+                                    </div>
+                                    <div class="md:col-span-3 space-y-2 ">
+                                        <div class="text-base flex flex-col justify-start">
+                                            <div class="">Cut-off type: </div>
+                                            <RadioGroup
+                                                :disabled="weeklyPayFrequencyDisableActions"
+                                                :selections="cutOffTypeSelection"
+                                                :size="'md'"
+                                                :orientation="'horizontal'"
+                                                :radio-key="weeklyPayFrequenciesData.id + `-cut-off-type`"
+                                                v-model="weeklyPayFrequenciesData.cutoff_type" />
+                                        </div>
+                                        <div class="text-base flex flex-col justify-start">
+                                            <div class="">Cut-off: </div>
+                                            <RadioGroup
+                                                :disabled="weeklyPayFrequencyDisableActions"
+                                                :selections="weekDaySelection"
+                                                :size="'md'"
+                                                :orientation="weekDayRadioGroupOrientation"
+                                                :radio-key="weeklyPayFrequenciesData.id + `-cut-off-value`"
+                                                v-model="weeklyPayFrequenciesData.cut_off_value" />
+                                        </div>
+                                        <div class="text-base flex flex-col justify-start">
+                                            <div class="">Days Span: </div>
+                                            <RadioGroup
+                                                :disabled="weeklyPayFrequencyDisableActions"
+                                                :selections="daysSpanSelection"
+                                                :size="'md'"
+                                                :orientation="'horizontal'"
+                                                :radio-key="weeklyPayFrequenciesData.id + `-days-span`"
+                                                v-model="weeklyPayFrequenciesData.days_span" />
+                                        </div>
 
-                                <div class="md:col-span-3 space-y-2 ">
-                                    <div class="text-base flex flex-col justify-start">
-                                        <div class="">Cut-off type: </div>
-                                        <RadioGroup
-                                            :disabled="weeklyPayFrequencyDisableActions"
-                                            :selections="cutOffTypeSelection"
-                                            :size="'md'"
-                                            :orientation="'horizontal'"
-                                            :radio-key="weeklyPayFrequenciesData.id + `-cut-off-type`"
-                                            v-model="weeklyPayFrequenciesData.cutoff_type" />
+                                        <div>
+                                            <Button
+                                                type="submit"
+                                                class="w-min"
+                                                :disabled="weeklyPayFrequencyDisableActions"
+                                                :icon="weeklyPayFrequencyDisableActions ? 'eos-icons:loading' : 'mdi:data'"
+                                                :label="weeklyPayFrequencyFormSubmitLabel" />
+                                        </div>
                                     </div>
-                                    <div class="text-base flex flex-col justify-start">
-                                        <div class="">Cut-off: </div>
+                                </form>
+                            </div>
+                        </div>
+
+                        <div class="lining-shadow rounded-sm flex-grow tint-background">
+                            <div class="lining-shadow rounded-t-sm text-lg font-medium font-business px-4 py-2">Monthly / Semimonthly</div>
+
+                            <div class="px-4 py-4">
+                                <form @submit.prevent="monthlySemimonthlyPayFrequencyFormSubmit" class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                                    <div></div>
+                                    <div class="md:col-span-3">
+                                        <div class="text-base"><span>Cut-off: </span></div>
+
                                         <RadioGroup
-                                            :disabled="weeklyPayFrequencyDisableActions"
-                                            :selections="weekDaySelection"
+                                            :disabled="monthlySemimonthlyPayFrequencyDisableActions"
+                                            :selections="timePeriodPresetSelection"
                                             :size="'md'"
-                                            :orientation="weekDayRadioGroupOrientation"
-                                            :radio-key="weeklyPayFrequenciesData.id + `-cut-off-value`"
-                                            v-model="weeklyPayFrequenciesData.cut_off_value" />
+                                            :orientation="monthlySemimonthlyCutoffRadioGroupOrientation"
+                                            :radio-key="monthlyPayFrequenciesData.id + `-period-preset`"
+                                            @change="monthlyTimePeriodChanged"
+                                            v-model="monthlyPayFrequenciesData.time_period_preset_id" />
                                     </div>
-                                    <div class="text-base flex flex-col justify-start">
-                                        <div class="">Days Span: </div>
-                                        <RadioGroup
-                                            :disabled="weeklyPayFrequencyDisableActions"
-                                            :selections="daysSpanSelection"
-                                            :size="'md'"
-                                            :orientation="'horizontal'"
-                                            :radio-key="weeklyPayFrequenciesData.id + `-days-span`"
-                                            v-model="weeklyPayFrequenciesData.days_span" />
+
+                                    <div class="space-y-4">
+                                        <div class="text-base"><span class="font-medium">Code: </span><span>{{monthlyPayFrequenciesData?.code}}</span></div>
+                                        <div class="text-base font-semibold"><span>Monthly Period: </span></div>
+
+                                        <table class="border-separate">
+                                            <tbody>
+                                            <tr v-for="(setting, key) in monthlyPayFrequenciesData?.period">
+                                                <td class="font-semibold">{{ setting.label }}</td><td class="pl-1">{{ setting.readable }}</td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+                                    <div class="md:col-span-3 space-y-4">
+                                        <div class="text-base"><span class="font-medium">Code: </span><span>{{semimonthlyPayFrequenciesData?.code}}</span></div>
+                                        <div class="text-base font-semibold"><span>Semimonthly Period: </span></div>
+
+                                        <table class="border-separate">
+                                            <tbody>
+                                            <tr v-for="(setting, key) in semimonthlyPayFrequenciesData?.period">
+                                                <td class="font-semibold">{{ setting.label }}</td><td class="pl-1">{{ setting.readable }}</td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
                                     </div>
 
                                     <div>
+                                    </div>
+                                    <div class="md:col-span-3">
                                         <Button
                                             type="submit"
                                             class="w-min"
-                                            :disabled="weeklyPayFrequencyDisableActions"
-                                            :icon="weeklyPayFrequencyDisableActions ? 'eos-icons:loading' : 'mdi:data'"
-                                            :label="weeklyPayFrequencyFormSubmitLabel" />
+                                            :disabled="monthlySemimonthlyPayFrequencyDisableActions"
+                                            :icon="monthlySemimonthlyPayFrequencyDisableActions ? 'eos-icons:loading' : 'mdi:data'"
+                                            :label="monthlySemimonthlyPayFrequencyFormSubmitLabel" />
                                     </div>
-                                </div>
-                            </fieldset>
-                        </form>
-
-                        <form @submit.prevent="monthlySemimonthlyPayFrequencyFormSubmit">
-                            <fieldset class="neutral-border px-2 pb-2 grid grid-cols-2 md:grid-cols-4 gap-4">
-                                <legend class="text-lg font-header">Monthly / Semimonthly</legend>
-                                <div></div>
-                                <div class="md:col-span-3">
-                                    <div class="text-base"><span>Cut-off: </span></div>
-
-                                    <RadioGroup
-                                        :disabled="monthlySemimonthlyPayFrequencyDisableActions"
-                                        :selections="timePeriodPresetSelection"
-                                        :size="'md'"
-                                        :orientation="monthlySemimonthlyCutoffRadioGroupOrientation"
-                                        :radio-key="monthlyPayFrequenciesData.id + `-period-preset`"
-                                        @change="monthlyTimePeriodChanged"
-                                        v-model="monthlyPayFrequenciesData.time_period_preset_id" />
-                                </div>
-
-                                <div>
-                                    <div class="text-base"><span class="font-semibold">Code: </span><span>{{monthlyPayFrequenciesData?.code}}</span></div>
-                                    <div class="text-base font-semibold"><span>Monthly Period: </span></div>
-
-                                    <table class="border-separate mt-4">
-                                        <tbody>
-                                        <tr v-for="(setting, key) in monthlyPayFrequenciesData?.period">
-                                            <td class="font-semibold">{{ setting.label }}</td><td class="pl-1">{{ setting.readable }}</td>
-                                        </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-
-                                <div class="md:col-span-3">
-                                    <div class="text-base"><span class="font-semibold">Code: </span><span>{{semimonthlyPayFrequenciesData?.code}}</span></div>
-                                    <div class="text-base font-semibold"><span>Semimonthly Period: </span></div>
-
-                                    <table class="border-separate mt-4">
-                                        <tbody>
-                                        <tr v-for="(setting, key) in semimonthlyPayFrequenciesData?.period">
-                                            <td class="font-semibold">{{ setting.label }}</td><td class="pl-1">{{ setting.readable }}</td>
-                                        </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-
-                                <div>
-                                </div>
-                                <div class="md:col-span-3">
-                                    <Button
-                                        type="submit"
-                                        class="w-min"
-                                        :disabled="monthlySemimonthlyPayFrequencyDisableActions"
-                                        :icon="monthlySemimonthlyPayFrequencyDisableActions ? 'eos-icons:loading' : 'mdi:data'"
-                                        :label="monthlySemimonthlyPayFrequencyFormSubmitLabel" />
-                                </div>
-                            </fieldset>
-                        </form>
+                                </form>
+                            </div>
+                        </div>
                     </div>
 
                     <div v-if="false">
