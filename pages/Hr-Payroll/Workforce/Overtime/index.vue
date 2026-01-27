@@ -97,11 +97,11 @@
                                         </div>
                                     </div>
                                 </fieldset>
-                                <div v-else class="basis-1/4 flex justify-center items-center">
-                                    Select Employee, Shift, and Attendance
+                                <div v-else class="basis-4/12 flex justify-center items-center">
+                                    Select Employee, Shift, and Attendance of overtime
                                 </div>
 
-                                <fieldset class="basis-3/4 neutral-border px-2 pb-2 space-y-2">
+                                <fieldset class="basis-8/12 neutral-border px-2 pb-2 space-y-2">
                                     <legend class="text-lg font-header">{{creatingOvertime ? 'Create overtime' : 'Overtime'}}</legend>
 
                                     <div class="grid gap-2 grid-cols-4">
