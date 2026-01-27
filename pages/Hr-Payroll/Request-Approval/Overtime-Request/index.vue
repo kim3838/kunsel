@@ -1078,7 +1078,7 @@ const creatingOvertimeInitializedAttendanceDate = async (value: string) => {
             coreStore.setServiceError({
                 prompt: false,
                 payload: {
-                    message: 'Attendance already has overtime'
+                    message: 'Attendance overtime already exists'
                 }
             });
 
