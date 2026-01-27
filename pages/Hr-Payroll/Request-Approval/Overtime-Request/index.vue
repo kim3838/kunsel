@@ -29,7 +29,7 @@
                             <Input :disabled="disableActions" :size="'md'" ref="searchInput" v-model="filters.search.keyword" class="w-full" placeholder="Search Number" type="text"/>
                         </div>
                         <div>
-                            <InputLabel :size="'sm'" value="Attendance Search" />
+                            <InputLabel :size="'sm'" value="Employee Attendance Search" />
                             <Input :disabled="disableActions" :size="'md'" ref="attendanceSearchInput" v-model="filters.attendanceSearch.keyword" class="w-full" placeholder="Search Attendance" type="text"/>
                         </div>
                         <div>
