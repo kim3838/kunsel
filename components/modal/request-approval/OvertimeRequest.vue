@@ -85,57 +85,47 @@ const props = defineProps({
     }
 });
 
-const scheduleWorkPeriod = ref('');
-const shiftWorkStartGrace = ref('');
-const scheduleTotalDuration = ref('');
-const attendanceWeekday = ref('');
-const scheduleIsFlexible = ref('');
-const overtimeMaxDuration = ref('');
-const attendanceDate = ref('');
+const requestNumber = ref('');
+const statusSummary = ref(REQUEST_APPROVAL_STATUS.NOT_SPECIFIED);
 
+const attendanceDate = ref('');
+const attendanceWeekday = ref('');
 const attendanceEmployeeNumber = ref('');
 const attendanceEmployeeFullName = ref('');
 
-const attendanceFirstIn = ref('');
+const scheduleWorkPeriod = ref('');
+const scheduleTotalDuration = ref('');
+const overtimeMaxDuration = ref('');
+const scheduleIsFlexible = ref('');
+
 const attendanceLastOut = ref('');
 
-const requestNumber = ref('');
-const adjustmentStatusSummary = ref(REQUEST_APPROVAL_STATUS.NOT_SPECIFIED);
-const adjustmentAttendanceFirstIn = ref('');
-const adjustmentAttendanceLastOut = ref('');
 const overtimeStart = ref('');
 const overtimeEnd = ref('');
 const overtimeDuration = ref('');
 const remarks = ref('');
 
 requestNumber.value = _get(props.overtimeRequestPayload, 'number', '');
+statusSummary.value = _get(props.overtimeRequestPayload, 'status_summary.value', REQUEST_APPROVAL_STATUS.NOT_SPECIFIED);
 
 attendanceDate.value = _get(props.overtimeRequestPayload, 'attendance.date', '');
+attendanceWeekday.value = _get(props.overtimeRequestPayload, 'attendance.shift_schedule.week_day_name', '');
 attendanceEmployeeNumber.value = _get(props.overtimeRequestPayload, 'attendance.employee.number', '');
 attendanceEmployeeFullName.value = _get(props.overtimeRequestPayload, 'attendance.employee.full_name', '');
 
 let shiftIsFlexible = _get(props.overtimeRequestPayload, 'attendance.shift_schedule.is_flexible', false) as boolean;
 
 scheduleWorkPeriod.value = _get(props.overtimeRequestPayload, 'attendance.shift_schedule.work_start', '') + ' - ' + _get(props.overtimeRequestPayload, 'attendance.shift_schedule.work_end', '') + '(' + _get(props.overtimeRequestPayload, 'attendance.shift_schedule.timezone', '')  + ')';
-shiftWorkStartGrace.value = _get(props.overtimeRequestPayload, 'attendance.shift.work_start_grace_time_readable', 'Not found');
-
 scheduleTotalDuration.value = _get(props.overtimeRequestPayload, 'attendance.shift_schedule.total_work_hours_with_breaks', '');
 overtimeMaxDuration.value = _get(props.overtimeRequestPayload, 'attendance.shift.max_overtime_readable', '');
 scheduleIsFlexible.value = shiftIsFlexible ? 'Yes' : 'No';
 
-attendanceWeekday.value = _get(props.overtimeRequestPayload, 'attendance.shift_schedule.week_day_name', '');
-
-attendanceFirstIn.value = _get(props.overtimeRequestPayload, 'attendance.first_in', '');
-
 attendanceLastOut.value = _get(props.overtimeRequestPayload, 'attendance.last_out', '');
 
-adjustmentStatusSummary.value = _get(props.overtimeRequestPayload, 'status_summary.value', REQUEST_APPROVAL_STATUS.NOT_SPECIFIED);
-adjustmentAttendanceFirstIn.value = _get(props.overtimeRequestPayload, 'first_in', '');
-
-adjustmentAttendanceLastOut.value = _get(props.overtimeRequestPayload, 'last_out', '');
 overtimeStart.value = _get(props.overtimeRequestPayload, 'start', '');
 overtimeEnd.value = _get(props.overtimeRequestPayload, 'end', '');
 overtimeDuration.value = _get(props.overtimeRequestPayload, 'duration_readable', '');
+
 remarks.value = _get(props.overtimeRequestPayload, 'remarks', '');
 </script>
 

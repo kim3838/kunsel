@@ -51,7 +51,7 @@
             </div>
         </fieldset>
 
-        <fieldset v-if="adjustmentStatusSummary !== REQUEST_APPROVAL_STATUS.APPROVED" class="neutral-border px-2 pb-2 space-y-2">
+        <fieldset v-if="statusSummary !== REQUEST_APPROVAL_STATUS.APPROVED" class="neutral-border px-2 pb-2 space-y-2">
             <legend class="text-lg font-header">Attendance</legend>
 
             <div class="grid gap-2 grid-cols-8 lg:grid-cols-8">
@@ -115,36 +115,40 @@ const props = defineProps({
     }
 });
 
+const requestNumber = ref('');
+const statusSummary = ref(REQUEST_APPROVAL_STATUS.NOT_SPECIFIED);
+
+const attendanceDate = ref('');
+const attendanceWeekday = ref('');
+const attendanceEmployeeNumber = ref('');
+const attendanceEmployeeFullName = ref('');
+
 const scheduleWorkPeriod = ref('');
 const shiftWorkStartGrace = ref('');
+const attendanceShiftRequiresLunchOutAndIn = ref(false);
 const scheduleLunchPeriod = ref('');
 const shiftLunchStartGrace = ref('');
 const scheduleTotalDuration = ref('');
-const attendanceWeekday = ref('');
-const scheduleIsFlexible = ref('');
 const overtimeMaxDuration = ref('');
-const attendanceShiftRequiresLunchOutAndIn = ref(false);
-const attendanceDate = ref('');
-
-const attendanceEmployeeNumber = ref('');
-const attendanceEmployeeFullName = ref('');
+const scheduleIsFlexible = ref('');
 
 const attendanceFirstIn = ref('');
 const attendanceLunchOut = ref('');
 const attendanceLunchIn = ref('');
 const attendanceLastOut = ref('');
 
-const requestNumber = ref('');
-const adjustmentStatusSummary = ref(REQUEST_APPROVAL_STATUS.NOT_SPECIFIED);
 const adjustmentAttendanceFirstIn = ref('');
 const adjustmentAttendanceLunchOut = ref('');
 const adjustmentAttendanceLunchIn = ref('');
 const adjustmentAttendanceLastOut = ref('');
+
 const remarks = ref('');
 
 requestNumber.value = _get(props.attendanceAdjustmentRequestPayload, 'number', '');
+statusSummary.value = _get(props.attendanceAdjustmentRequestPayload, 'status_summary.value', REQUEST_APPROVAL_STATUS.NOT_SPECIFIED);
 
 attendanceDate.value = _get(props.attendanceAdjustmentRequestPayload, 'attendance.date', '');
+attendanceWeekday.value = _get(props.attendanceAdjustmentRequestPayload, 'attendance.shift_schedule.week_day_name', '');
 attendanceEmployeeNumber.value = _get(props.attendanceAdjustmentRequestPayload, 'attendance.employee.number', '');
 attendanceEmployeeFullName.value = _get(props.attendanceAdjustmentRequestPayload, 'attendance.employee.full_name', '');
 
@@ -152,11 +156,9 @@ let shiftRequiresLunchOutAndIn = _get(props.attendanceAdjustmentRequestPayload, 
 let shiftIsFlexible = _get(props.attendanceAdjustmentRequestPayload, 'attendance.shift_schedule.is_flexible', false) as boolean;
 let shiftHasLunchBreak = _get(props.attendanceAdjustmentRequestPayload, 'attendance.shift_schedule.has_lunch_break', false) as boolean;
 
-attendanceShiftRequiresLunchOutAndIn.value = shiftRequiresLunchOutAndIn && !shiftIsFlexible && shiftHasLunchBreak;
-
 scheduleWorkPeriod.value = _get(props.attendanceAdjustmentRequestPayload, 'attendance.shift_schedule.work_start', '') + ' - ' + _get(props.attendanceAdjustmentRequestPayload, 'attendance.shift_schedule.work_end', '') + '(' + _get(props.attendanceAdjustmentRequestPayload, 'attendance.shift_schedule.timezone', '')  + ')';
 shiftWorkStartGrace.value = _get(props.attendanceAdjustmentRequestPayload, 'attendance.shift.work_start_grace_time_readable', 'Not found');
-
+attendanceShiftRequiresLunchOutAndIn.value = shiftRequiresLunchOutAndIn && !shiftIsFlexible && shiftHasLunchBreak;
 scheduleLunchPeriod.value = attendanceShiftRequiresLunchOutAndIn.value ? (_get(props.attendanceAdjustmentRequestPayload, 'attendance.shift_schedule.lunch_break_start', '') + ' - ' + _get(props.attendanceAdjustmentRequestPayload, 'attendance.shift_schedule.lunch_break_end', '')) : '';
 shiftLunchStartGrace.value = _get(props.attendanceAdjustmentRequestPayload, 'attendance.shift.lunch_start_grace_time_readable', 'Not found');
 
@@ -164,26 +166,21 @@ scheduleTotalDuration.value = _get(props.attendanceAdjustmentRequestPayload, 'at
 overtimeMaxDuration.value = _get(props.attendanceAdjustmentRequestPayload, 'attendance.shift.max_overtime_readable', '');
 scheduleIsFlexible.value = shiftIsFlexible ? 'Yes' : 'No';
 
-attendanceWeekday.value = _get(props.attendanceAdjustmentRequestPayload, 'attendance.shift_schedule.week_day_name', '');
-
 attendanceFirstIn.value = _get(props.attendanceAdjustmentRequestPayload, 'attendance.first_in', '');
-
 if(attendanceShiftRequiresLunchOutAndIn.value){
     attendanceLunchOut.value = _get(props.attendanceAdjustmentRequestPayload, 'attendance.lunch_out', '');
     attendanceLunchIn.value = _get(props.attendanceAdjustmentRequestPayload, 'attendance.lunch_in', '');
 }
-
 attendanceLastOut.value = _get(props.attendanceAdjustmentRequestPayload, 'attendance.last_out', '');
 
-adjustmentStatusSummary.value = _get(props.attendanceAdjustmentRequestPayload, 'status_summary.value', REQUEST_APPROVAL_STATUS.NOT_SPECIFIED);
-adjustmentAttendanceFirstIn.value = _get(props.attendanceAdjustmentRequestPayload, 'first_in', '');
 
+adjustmentAttendanceFirstIn.value = _get(props.attendanceAdjustmentRequestPayload, 'first_in', '');
 if(attendanceShiftRequiresLunchOutAndIn.value){
     adjustmentAttendanceLunchOut.value = _get(props.attendanceAdjustmentRequestPayload, 'lunch_out', '');
     adjustmentAttendanceLunchIn.value = _get(props.attendanceAdjustmentRequestPayload, 'lunch_in', '');
 }
-
 adjustmentAttendanceLastOut.value = _get(props.attendanceAdjustmentRequestPayload, 'last_out', '');
+
 remarks.value = _get(props.attendanceAdjustmentRequestPayload, 'remarks', '');
 </script>
 
