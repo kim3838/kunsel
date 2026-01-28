@@ -486,6 +486,13 @@ export const useLayout = () => {
                             to: `/${hrPayrollRouteSlug}/request-approval/overtime-request`,
                             route_active: `${hrPayrollRouteSlug}-request-approval-overtime-request`
                         },
+                        {
+                            key: `${hrPayrollRouteSlug}/request-approval/leave-request`,
+                            type: 'link',
+                            title: 'Leave Request',
+                            to: `/${hrPayrollRouteSlug}/request-approval/leave-request`,
+                            route_active: `${hrPayrollRouteSlug}-request-approval-leave-request`
+                        },
                     ],
                 },{
                     key: `${hrPayrollRouteSlug}-reports`,
