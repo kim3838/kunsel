@@ -4,8 +4,8 @@
         <div v-show="disableableLayer && disabled" class="absolute disabled-overlay opacity-25 z-30" :style="[disabledLayerStyle]"></div>
 
         <table ref="tableReference" class="font-data" :class="[landscape ? 'w-full' : 'w-auto']">
-            <thead class="table-header-background font-[Roboto]">
-                <tr v-if="supHeaders.length > 0">
+            <thead class="table-header-background">
+                <tr v-if="supHeaders.length > 0" class="font-[Roboto]">
                     <td v-if="selection"></td>
                     <td v-if="manualSortable"></td>
                     <td v-for="header in supHeaders"
@@ -41,7 +41,7 @@
                     </td>
                 </tr>
 
-                <tr>
+                <tr class="font-[Roboto]">
                     <td v-if="selection" style="padding:3px 0.5rem;" ref="checkboxCell">
                         <NonModelCheckBox v-if="!singleSelect" :disabled="disabled" :size="checkBoxSize" :checked="checkedAllCurrentSelection()" @click="toggleCheck()" />
                     </td>
