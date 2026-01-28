@@ -294,6 +294,13 @@ export const useLayout = () => {
                             to: `/${employeePortalRouteSlug}/file-request/overtime`,
                             route_active: `${employeePortalRouteSlug}-file-request-overtime`
                         },
+                        {
+                            key: `${employeePortalRouteSlug}-file-request-leave`,
+                            type: 'link',
+                            title: 'Leave',
+                            to: `/${employeePortalRouteSlug}/file-request/leave`,
+                            route_active: `${employeePortalRouteSlug}-file-request-leave`
+                        },
                     ]
                 }] : []) as NavigationLinkInterface[],
             ],

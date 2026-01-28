@@ -98,6 +98,7 @@ export const useAssociation = () => {
             `${employeePortalRouteSlug}-leave-leaves`,
             `${employeePortalRouteSlug}-leave-balance-adjustments`,
             `${employeePortalRouteSlug}-file-request-overtime`,
+            `${employeePortalRouteSlug}-file-request-leave`,
         ], _toLower(String(route.name)));
     });
     const employeeSelfServicesSubscriptions = computed(() => {
