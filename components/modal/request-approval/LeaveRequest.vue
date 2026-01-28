@@ -61,13 +61,12 @@ const props = defineProps({
 });
 
 const requestNumber = ref('');
+const statusSummary = ref(REQUEST_APPROVAL_STATUS.NOT_SPECIFIED);
 
 const employeeNumber = ref('');
 const employeeFullName = ref('');
 const leaveTypeCode = ref('');
 const leaveTypeName = ref('');
-
-const statusSummary = ref(REQUEST_APPROVAL_STATUS.NOT_SPECIFIED);
 
 const leaveStart = ref('');
 const leaveEnd = ref('');
@@ -83,13 +82,13 @@ const remarks = ref('');
 const results = ref([]);
 
 requestNumber.value = _get(props.leaveRequestPayload, 'number', '');
+statusSummary.value = _get(props.leaveRequestPayload, 'status_summary.value', REQUEST_APPROVAL_STATUS.NOT_SPECIFIED);
 
 employeeNumber.value = _get(props.leaveRequestPayload, 'employee.number', '');
 employeeFullName.value = _get(props.leaveRequestPayload, 'employee.full_name', '');
+
 leaveTypeCode.value = _get(props.leaveRequestPayload, 'leave_type.code', '');
 leaveTypeName.value = _get(props.leaveRequestPayload, 'leave_type.name', '');
-
-statusSummary.value = _get(props.leaveRequestPayload, 'status_summary.value', REQUEST_APPROVAL_STATUS.NOT_SPECIFIED);
 
 leaveStart.value = _get(props.leaveRequestPayload, 'date_from', '');
 leaveEnd.value = _get(props.leaveRequestPayload, 'date_to', '');
