@@ -314,7 +314,7 @@ import {storeToRefs} from "pinia";
 useHead({titleTemplate: (titleChunk) => {return `${titleChunk} - Overtime Requests`}});
 definePageMeta({middleware: ['auth', 'employee-of-selected-company']});
 useLayout().setNavigationMode('solid');
-const route = useRoute();
+
 const user = userState();
 const userCompanyEmployee = userCompanyEmployeeState();
 
@@ -520,9 +520,9 @@ const overtimeRequestsExecute = async() =>{
             overtimeRequests.message = _get(response, '_data.message', '');
         },
         onSuccessResponse: async (request, options, response) => {
-            overtimeRequests.data = _get(response, '_data.values.data', []).map((attendanceAdjustment: TableRowT) => {
+            overtimeRequests.data = _get(response, '_data.values.data', []).map((overtimeRequest: TableRowT) => {
 
-                let statusSummary = _get(attendanceAdjustment, 'status_summary.value', 0);
+                let statusSummary = _get(overtimeRequest, 'status_summary.value', 0);
 
                 let shade = 'default';
 
@@ -533,7 +533,7 @@ const overtimeRequestsExecute = async() =>{
                 }
 
                 return {
-                    ...attendanceAdjustment,
+                    ...overtimeRequest,
                     _payload: {
                         'label_shade': {
                             'cell': ['status_summary'],
