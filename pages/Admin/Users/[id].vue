@@ -424,12 +424,13 @@ const createUserFormSubmitLabel = computed(() => {
 });
 const createUserFormBody = computed(() => {
     return {
-        'name': username.value,
-        'email': email.value,
-        'password': password.value,
-        'password_confirmation': confirmPassword.value,
-        'status': userStatusOptions.selected,
-        'timezone': timezoneOptions.selected
+        name: username.value,
+        email: email.value,
+        password: password.value,
+        password_confirmation: confirmPassword.value,
+        status: userStatusOptions.selected,
+        timezone: timezoneOptions.selected,
+        role_ids: roleOptions.selected
     };
 });
 
