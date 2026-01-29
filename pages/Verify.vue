@@ -1,7 +1,7 @@
 <template>
     <div>
-        <DefaultWrapper>
-            <div class="mx-auto px-4 max-w-screen-2xl flex justify-center">
+        <LandingWrapper>
+            <div class="mx-auto pt-4 max-w-screen-2xl">
                 <div class="flex justify-center">
                     <AccentFrame class="my-4">
                         <template #content>
@@ -33,7 +33,7 @@
                     </AccentFrame>
                 </div>
             </div>
-        </DefaultWrapper>
+        </LandingWrapper>
     </div>
 </template>
 
@@ -42,6 +42,7 @@ const {$promptStore} = useNuxtApp();
 useHead({titleTemplate: (titleChunk) => {return `${titleChunk} - Verify Email`}});
 definePageMeta({middleware: ['auth', 'not-verified']});
 useLayout().setNavigationMode('solid');
+
 let pending = ref(false);
 
 const execute = async () => {
