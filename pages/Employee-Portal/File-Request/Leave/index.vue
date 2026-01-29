@@ -282,6 +282,18 @@
                         <template v-slot:cell.employee_full_name="{cell,slot}">
                             <div class="p-[3px]">{{cell.employee?.full_name}}</div>
                         </template>
+                        <template v-slot:cell.code="{cell,slot}">
+                            <div class="p-[3px]">{{cell.leave_type?.code}}</div>
+                        </template>
+                        <template v-slot:cell.name="{cell,slot}">
+                            <div class="p-[3px]">{{cell.leave_type?.name}}</div>
+                        </template>
+                        <template v-slot:cell.type="{cell,slot}">
+                            <div class="p-[3px]">{{cell.leave_type?.type?.text}}</div>
+                        </template>
+                        <template v-slot:cell.is_paid="{cell,slot}">
+                            <div class="p-[3px]">{{cell.leave_type?.is_paid ? 'Yes' : 'No'}}</div>
+                        </template>
                         <template v-slot:sub_row_slot="{rowIndex, cell, slot}">
                             <div class="inline-flex items-center scaffold-border pr-2">
                                 <Icon name="mdi:info-variant" :class="[slot.iconSizeClass]" /><div :class="[slot.titleSizeClass]">Approval Sequence</div>
@@ -380,7 +392,7 @@ const leaveRequestsSupHeaders = reactive<TableSupHeaderT[]>([
 
     {text: 'Employee', colspan: 2,  alignHeader: 'left'},
 
-    {text: 'Leave', colspan: 2,  alignHeader: 'left'},
+    {text: 'Leave', colspan: 6,  alignHeader: 'left'},
 ]);
 
 const leaveRequestsHeaders = reactive<TableHeaderT[]>([
@@ -397,6 +409,10 @@ const leaveRequestsHeaders = reactive<TableHeaderT[]>([
     { text: '', value: 'employee_number', minWidth: '33px'},
     { text: '', value: 'employee_full_name', minWidth: '33px'},
 
+    { text: 'Code', value: 'code', minWidth: '33px'},
+    { text: 'Name', value: 'name', minWidth: '33px'},
+    { text: 'Type', value: 'type', minWidth: '33px'},
+    { text: 'Is Paid', value: 'is_paid', minWidth: '33px'},
     { text: 'From', value: 'date_from', alignData: 'left'},
     { text: 'To', value: 'date_to', alignData: 'left'},
 ]);
