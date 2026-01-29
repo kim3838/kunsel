@@ -11,6 +11,7 @@
             <Button
                 v-if="userFiledRequests.successful && selectedUserFiledRequests.length"
                 :variant="'outline'"
+                :withBorder="false"
                 :size="'xs'"
                 :icon="'tdesign:close'"
                 :disabled="disableActions"
@@ -19,6 +20,7 @@
             <Button
                 v-if="userFiledRequests.successful && selectedUserFiledRequests.length"
                 :variant="'outline'"
+                :withBorder="false"
                 :size="'xs'"
                 :icon="'mdi:delete-outline'"
                 :disabled="disableActions"
@@ -26,6 +28,7 @@
                 @click="confirmDeleteSelected" />
             <Button
                 :variant="'outline'"
+                :withBorder="false"
                 :size="'xs'"
                 :icon="'ic:sharp-restart-alt'"
                 :disabled="disableActions"

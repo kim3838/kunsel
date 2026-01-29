@@ -20,6 +20,7 @@
             <Button
                 v-if="approvalStates.successful && selectedApprovalStates.length"
                 :variant="'outline'"
+                :withBorder="false"
                 :size="'xs'"
                 :icon="'tdesign:close'"
                 :disabled="disableActions"
@@ -39,6 +40,7 @@
                 @click="applyApprovalWorkFlow(APPROVAL_ACTION.DECLINE as number)" />
             <Button
                 :variant="'outline'"
+                :withBorder="false"
                 :size="'xs'"
                 :icon="'ic:sharp-restart-alt'"
                 :disabled="disableActions"
