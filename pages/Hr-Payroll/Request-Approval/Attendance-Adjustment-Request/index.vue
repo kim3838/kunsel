@@ -354,7 +354,7 @@
                             </div>
                         </template>
                         <template v-slot:cell.requested_by="{cell,slot}">
-                            <div class="p-[3px]">{{cell.requested_by?.name}}</div>
+                            <div class="p-[3px]">{{cell.requested_by?.username}}</div>
                         </template>
                         <template v-slot:cell.employee_number="{cell,slot}">
                             <div class="p-[3px]">{{cell.attendance?.employee?.number}}</div>
