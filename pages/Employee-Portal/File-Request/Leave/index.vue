@@ -145,6 +145,13 @@
                                                 :id="`leave_date_to`"
                                                 :size="'md'" />
                                         </div>
+                                        <div class="col-span-4 md:col-span-2">
+                                            <InputLabel :size="'sm'" value="Remarks"/>
+                                            <Input
+                                                :disabled="modalDisableActions"
+                                                :size="'md'"
+                                                v-model="remarks"/>
+                                        </div>
                                     </div>
 
                                     <div v-if="$coreStore.hasNonPromptableServicePayloadMessage" class="block">
