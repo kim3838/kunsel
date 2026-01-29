@@ -3,6 +3,9 @@
         <div class="text-lg font-header">
             {{requestNumber}}
         </div>
+        <div class="text-sm">
+            Requested by: {{requestByUsername}} {{requestByEmployeeNumber}} {{requestByEmployeeFullName}}
+        </div>
 
         <fieldset class="mt-4 neutral-border px-2 pb-2 space-y-2">
             <legend class="text-lg font-header">Leave</legend>
@@ -61,6 +64,9 @@ const props = defineProps({
 });
 
 const requestNumber = ref('');
+const requestByUsername = ref('');
+const requestByEmployeeNumber = ref('');
+const requestByEmployeeFullName = ref('');
 const statusSummary = ref(REQUEST_APPROVAL_STATUS.NOT_SPECIFIED);
 
 const employeeNumber = ref('');
@@ -82,6 +88,9 @@ const remarks = ref('');
 const results = ref([]);
 
 requestNumber.value = _get(props.leaveRequestPayload, 'number', '');
+requestByUsername.value = _get(props.leaveRequestPayload, 'requested_by.username', '');
+requestByEmployeeNumber.value = _get(props.leaveRequestPayload, 'requested_by.company_employee_number', '');
+requestByEmployeeFullName.value = _get(props.leaveRequestPayload, 'requested_by.company_employee_full_name', '');
 statusSummary.value = _get(props.leaveRequestPayload, 'status_summary.value', REQUEST_APPROVAL_STATUS.NOT_SPECIFIED);
 
 employeeNumber.value = _get(props.leaveRequestPayload, 'employee.number', '');

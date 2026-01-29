@@ -7,6 +7,9 @@
             {{attendanceDate}} {{attendanceWeekday}} Attendance Adjustment
         </div>
         <div class="text-sm">
+            Requested by: {{requestByUsername}} {{requestByEmployeeNumber}} {{requestByEmployeeFullName}}
+        </div>
+        <div class="text-sm">
             Attendance of: {{attendanceEmployeeNumber}} {{attendanceEmployeeFullName}}
         </div>
 
@@ -116,6 +119,9 @@ const props = defineProps({
 });
 
 const requestNumber = ref('');
+const requestByUsername = ref('');
+const requestByEmployeeNumber = ref('');
+const requestByEmployeeFullName = ref('');
 const statusSummary = ref(REQUEST_APPROVAL_STATUS.NOT_SPECIFIED);
 
 const attendanceDate = ref('');
@@ -145,6 +151,9 @@ const adjustmentAttendanceLastOut = ref('');
 const remarks = ref('');
 
 requestNumber.value = _get(props.attendanceAdjustmentRequestPayload, 'number', '');
+requestByUsername.value = _get(props.attendanceAdjustmentRequestPayload, 'requested_by.username', '');
+requestByEmployeeNumber.value = _get(props.attendanceAdjustmentRequestPayload, 'requested_by.company_employee_number', '');
+requestByEmployeeFullName.value = _get(props.attendanceAdjustmentRequestPayload, 'requested_by.company_employee_full_name', '');
 statusSummary.value = _get(props.attendanceAdjustmentRequestPayload, 'status_summary.value', REQUEST_APPROVAL_STATUS.NOT_SPECIFIED);
 
 attendanceDate.value = _get(props.attendanceAdjustmentRequestPayload, 'attendance.date', '');
