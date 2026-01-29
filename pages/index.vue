@@ -26,7 +26,7 @@
 import {storeToRefs} from "pinia";
 
 useHead({titleTemplate: (titleChunk) => {return `${titleChunk} - Home`}});
-definePageMeta({middleware: 'auth'});
+definePageMeta({middleware: ['auth', 'verified']});
 useLayout().setNavigationMode('solid');
 
 const {isAuthenticated, userIsSuperAdmin} = useAuth();
