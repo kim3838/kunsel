@@ -446,10 +446,10 @@ const headerFontFamily = computed(() => {
 })
 const headerFontClass = computed(() => {
     return {
-        'sm': 'font-medium text-xs',
-        'md': 'font-medium text-sm',
-        'lg': 'font-medium text-sm',
-        'xl': 'font-medium text-sm',
+        'sm': 'font-semibold text-xs',
+        'md': 'font-semibold text-sm',
+        'lg': 'font-semibold text-sm',
+        'xl': 'font-semibold text-sm',
     }[props.size];
 });
 
