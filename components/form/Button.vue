@@ -110,6 +110,10 @@ const props = defineProps({
         type: String,
         default: null,
     },
+    withBorder: {
+        type: Boolean,
+        default: true
+    },
     activeBorder: {
         type: String,
         default: ''
@@ -240,9 +244,11 @@ const colorClass = computed(() => {
 });
 
 const borderStyle = computed(() => {
+    const borderWidth = props.withBorder ? 1 : 0 ;
+
     return {
-        'default': '1px solid transparent',
-        'outline': '1px solid ' + threadColor.value,
+        'default': `${borderWidth}px solid transparent`,
+        'outline': `${borderWidth}px solid ` + threadColor.value,
         'flat': '1px solid ' + ((props.flatBorderColor !== null) ? props.flatBorderColor : threadColor.value),
     }[props.variant]
 });
