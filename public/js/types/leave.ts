@@ -67,3 +67,11 @@ export type LeaveDateInquiryT = {
     message: string,
     is_claimable: boolean,
 }
+
+export type LeaveRunningBalanceByTypeT = {
+    id: number,
+    uli: string,
+    code: string,
+    name: string,
+    running_balance: number,
+}
