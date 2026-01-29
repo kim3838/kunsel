@@ -5,13 +5,14 @@
 
         <table ref="tableReference" class="font-data" :class="[landscape ? 'w-full' : 'w-auto']">
             <thead class="table-header-background">
-                <tr v-if="supHeaders.length > 0" class="font-[Roboto]">
+                <tr v-if="supHeaders.length > 0">
                     <td v-if="selection"></td>
                     <td v-if="manualSortable"></td>
                     <td v-for="header in supHeaders"
                         :style="{'min-width': header.minWidth, 'width': header.width, 'max-width': header.maxWidth}"
                         style="padding:0.25rem;"
                         :class="[
+                            headerFontFamily,
                             headerFontClass,
                             cellAlignClass(header?.alignHeader),
                             cellJustifyClass(header?.justifyHeader)
@@ -41,7 +42,7 @@
                     </td>
                 </tr>
 
-                <tr class="font-[Roboto]">
+                <tr>
                     <td v-if="selection" style="padding:3px 0.5rem;" ref="checkboxCell">
                         <NonModelCheckBox v-if="!singleSelect" :disabled="disabled" :size="checkBoxSize" :checked="checkedAllCurrentSelection()" @click="toggleCheck()" />
                     </td>
@@ -56,6 +57,7 @@
                         :style="{'min-width': header.minWidth, 'width': header.width, 'max-width': header.maxWidth}"
                         style="padding:0.25rem;"
                         :class="[
+                            headerFontFamily,
                             headerFontClass,
                             cellAlignClass(header?.alignHeader),
                             cellJustifyClass(header?.justifyHeader),
@@ -438,6 +440,10 @@ const currentRowIds = computed(() => {
         .map(row => row.id);
 });
 
+const headerFontFamily = computed(() => {
+
+    return `font-[National_Park]`;
+})
 const headerFontClass = computed(() => {
     return {
         'sm': 'font-medium text-xs',
