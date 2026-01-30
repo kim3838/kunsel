@@ -118,6 +118,7 @@
                                 v-model:creating-or-editing="employeePayrollComponentCreatingOrEditing"
                                 v-model:payroll-components-pending="employeePayrollComponentsPending"
                                 v-model:child-component-employee-payload="stagedEmployee"
+                                v-model:pay-frequency-id="stagedEmployee.pay_frequency_id"
                                 v-model:employee-compensation-data="employeeCompensationData"
                                 v-model:employee-deduction-data="employeeDeductionData"
                                 v-model:employee-income-tax-data="employeeIncomeTaxData"
@@ -254,6 +255,9 @@
                         </template>
                         <template v-slot:cell.department="{cell,slot}">
                             <div class="p-[3px]">{{cell.department?.name}}</div>
+                        </template>
+                        <template v-slot:cell.payroll_group="{cell,slot}">
+                            <div class="p-[3px]">{{cell.payroll_group?.type?.text}}</div>
                         </template>
                         <template v-slot:cell.designation="{cell,slot}">
                             <div class="p-[3px]">{{cell.designation?.name}}</div>
@@ -414,7 +418,7 @@ const employeesSupHeaders = reactive<TableSupHeaderT[]>([
     {text: ''},
     {text: 'Employee', colspan: 2, alignHeader: 'left'},
     {text: 'Employment', colspan: 2, alignHeader: 'left'},
-    {text: '', colspan: 3},
+    {text: '', colspan: 4},
     {text: 'Contact', colspan: 2, alignHeader: 'left'},
     {text: 'User', colspan: 4, alignHeader: 'left'},
 ]);
@@ -426,6 +430,7 @@ const employeesHeaders = reactive<TableHeaderT[]>([
     { text: 'Name', value: 'full_name'},
     { text: 'Status', value: 'current_employment_profile'},
     { text: 'Type', value: 'current_employment_type'},
+    { text: 'Payroll Group', value: 'payroll_group'},
     { text: 'Department', value: 'department'},
     { text: 'Designation', value: 'designation'},
     { text: 'Manager', value: 'manager'},
@@ -596,9 +601,11 @@ watch(() => {return filters.perPage;}, () => {paginate(1);});
 const stagedEmployee = ref<{
     'id': string | number | null,
     'ulid': string | null,
+    'pay_frequency_id': number | null,
 }>({
     'id': null,
     'ulid': null,
+    'pay_frequency_id': null,
 });
 
 /**
@@ -634,6 +641,7 @@ const closePayrollComponentsModal = () => {
     stagedEmployee.value = {
         'id': null,
         'ulid': null,
+        'pay_frequency_id': null
     };
     employeePayrollComponentsPending.value = false;
 };
@@ -653,6 +661,7 @@ const showPayrollComponentsModal = async(cell: TableRowT)=> {
             stagedEmployee.value = {
                 'id': _get(cell, 'id', null),
                 'ulid': _get(cell, 'ulid', null),
+                'pay_frequency_id': _get(cell, 'pay_frequency_id', null) as number,
             };
 
             payrollComponentsModalTitle.value = `${cell.number} ${cell.full_name}`;
