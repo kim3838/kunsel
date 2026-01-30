@@ -234,7 +234,7 @@
                                     :drop-options="[
                                         {type: 'link', icon: 'ix:open-external', title: 'Details',to: `/hr-payroll/workforce/employees/${cell.ulid}`},
                                         {type: 'action', title: 'Employment Profiles',callback: () => {showEmploymentProfilesModal(cell);}},
-                                        {type: 'action', title: 'Payroll Components',callback: () => {showPayrollComponentsModal(cell);}},
+                                        {type: 'action', title: 'Pay Items',callback: () => {showPayrollComponentsModal(cell);}},
                                     ]">
                                 </NavDrop>
                             </div>

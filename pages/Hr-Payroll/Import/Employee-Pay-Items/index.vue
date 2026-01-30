@@ -17,7 +17,7 @@
                         </div>
 
                         <div class="flex flex-row flex-wrap gap-2 items-center min-h-8">
-                            <NuxtLink class="inline-flex" :to="`${baseURL}/api/employee-payroll-component-import-template`">
+                            <NuxtLink class="inline-flex" :to="`${baseURL}/api/employee-pay-items-import-template`">
                                 <Button class="inline-block" :icon="'tdesign:download'" :variant="'outline'" :size="'sm'" :disabled="disableActions" :label="'CSV Template'"/>
                             </NuxtLink>
                             <Button class="inline-block" :icon="readIcon" :size="'sm'" :disabled="disableActions" v-if="showRead" :label="readLabel"  @click="read"/>
@@ -267,7 +267,6 @@ const preImportSupHeaders = reactive<TableSupHeaderT[]>([
     {text: 'Required by Condition', colspan: 1, value: 'amount', alignHeader: 'left', justifyData: 'top', width: '190px', maxWidth: '190px'},
     {text: 'Required as Amount', colspan: 1, value: 'pay_period', alignHeader: 'left', justifyData: 'top'},
     {text: 'Required as Amount', colspan: 1, value: 'pay_type', alignHeader: 'left', justifyData: 'top'},
-    {text: 'Required as Amount', colspan: 1, value: 'pay_frequency', alignHeader: 'left', justifyData: 'top'},
     {text: ''},
 ]);
 
@@ -276,7 +275,6 @@ const preImportSupRows = reactive<TableSupRowT[]>([
         'amount': "Amount, Pay Period, Pay Type and Pay Frequency are only required when payroll component is Basic Salary or Regular Allowance.",
         'pay_period': "One of the following: \n" + Object.keys(PAY_PERIOD).join("\n"),
         'pay_type': "One of the following: \n" + Object.keys(PAY_TYPE).join("\n"),
-        'pay_frequency': "One of the following: \n" + PAY_FREQUENCY_CODES.join("\n"),
     }
 ]);
 
@@ -288,7 +286,6 @@ const preImportHeaders = reactive<TableHeaderT[]>([
     { text: 'Amount', value: 'amount', alignData: 'left'},
     { text: 'Pay Period', value: 'pay_period', alignData: 'left'},
     { text: 'Pay Type', value: 'pay_type', alignData: 'left'},
-    { text: 'Pay Frequency Code', value: 'pay_frequency', alignData: 'left'},
     { text: 'Validation Result', value: 'validation', alignData: 'left'}
 ]);
 
@@ -352,7 +349,7 @@ const read = async () => {
         formData.append('account_id', selectedAssociatedCompanyAccountId.value);
         formData.append('company_id', selectedAssociatedCompanyId.value);
 
-        await laraFetch("/api/employee-payroll-component-import-validate", {
+        await laraFetch("/api/employee-pay-items-import-validate", {
             method: 'POST',
             body: formData,
         },{
@@ -405,7 +402,7 @@ const reValidate = async () => {
 
     pending.value = true;
 
-    await laraFetch("/api/employee-payroll-component-import-re-validate", {
+    await laraFetch("/api/employee-pay-items-import-re-validate", {
         method: 'POST',
         body: {
             account_id: selectedAssociatedCompanyAccountId.value,
@@ -486,7 +483,7 @@ const save = async () => {
 
     pending.value = true;
 
-    await laraFetch("/api/employee-payroll-component-import-save", {
+    await laraFetch("/api/employee-pay-items-import-save", {
         method: 'POST',
         body: {
             account_id: selectedAssociatedCompanyAccountId.value,

@@ -536,11 +536,11 @@ export const useLayout = () => {
                             route_active: `${hrPayrollRouteSlug}-import-employment-profile`
                         },
                         {
-                            key: `${hrPayrollRouteSlug}/import/employee-payroll-component`,
+                            key: `${hrPayrollRouteSlug}/import/employee-pay-items`,
                             type: 'link',
-                            title: 'Employee Payroll Component',
-                            to: `/${hrPayrollRouteSlug}/import/employee-payroll-component`,
-                            route_active: `${hrPayrollRouteSlug}-import-employee-payroll-component`
+                            title: 'Employee Pay Items',
+                            to: `/${hrPayrollRouteSlug}/import/employee-pay-items`,
+                            route_active: `${hrPayrollRouteSlug}-import-employee-pay-items`
                         },
                         {
                             key: `${hrPayrollRouteSlug}/import/attendance`,
