@@ -33,6 +33,38 @@ export type EnumOption = {
 
 export type EnumSelection = EnumOption[]
 
+
+export type PayPeriodOptionT = {
+    text: string,
+    code: string,
+    value: number,
+    type_value: number
+}
+
+export type PayTypeOptionT = {
+    text: string,
+    code: string,
+    value: number,
+    type_value: number
+}
+
+export type PayFrequencyOptionT = {
+    text?: string,
+    code?: string,
+    value: number,
+    type_value: number
+}
+
+export type AssignablePayrollComponentOptionT = {
+    text: string,
+    value: number,
+    type: {
+        value: number,
+        text: string
+    }
+}
+
+
 export interface ErrorPayloadInterface {
     message: string | null,
     [key: string]: any;

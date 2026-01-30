@@ -6,15 +6,26 @@
             v-model:editPayloadIndex="editPayrollComponentPayloadIndex"
             v-model:editPayload="payrollComponentEditPayload"
             v-model:payrollComponentFormulable="creatingOrEditingPayrollComponentFormulable"
-            :pay-frequency-selection="payFrequencySelection"
+            v-model:payFrequency="payFrequency"
             @resolved="payrollComponentResolved"
         ></PayrollComponentAssignmentModal>
 
         <fieldset class="neutral-border px-2 pb-2 space-y-2">
             <legend class="text-lg font-header">Payroll Information</legend>
 
+            <div class="grid gap-2 grid-cols-2 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-5 xl:grid-cols-6">
+                <div>
+                    <InputLabel :size="'sm'" value="Payroll group"/>
+                    <SingleSelect :disabled="isolated" :none-selected-label="`No payroll group`" :searchable="false" :selection-max-viewable-line="10" drop-shadow value-persist :size="'md'" :key="payFrequencyOptionsKey" :options="payFrequencyOptions"/>
+                </div>
+            </div>
+
             <div v-if="false">
                 <span class="font-semibold">Employee Payload:</span> {{childComponentEmployeePayload}}<br>
+                <span class="font-semibold">Prop Frequency Id:</span> {{payFrequencyId}}<br>
+                <span class="font-semibold">Pay Frequency :</span> {{payFrequency}}<br>
+                <span class="font-semibold">Pay Frequency Options:</span> {{payFrequencyOptions}}<br>
+                <span class="font-semibold">Compensations:</span> {{employeeCompensationData}}<br>
                 <span class="font-semibold">Employee Ulid:</span> {{employeeUlid}}<br>
                 <span class="font-semibold">Edit Payload Index:</span> {{editPayrollComponentPayloadIndex}}<br>
                 <span class="font-semibold">Props Disable Actions:</span> {{props.disableActions}}<br>
@@ -101,9 +112,6 @@
                         </template>
                         <template v-slot:cell.pay_type="{cell, slot, scrollReference}">
                             <div class="p-[3px]">{{cell.pay_type?.text}}</div>
-                        </template>
-                        <template v-slot:cell.pay_frequency="{cell, slot, scrollReference}">
-                            <div class="p-[3px]">{{cell.pay_frequency?.type?.text}}</div>
                         </template>
                         <template v-slot:cell.amountable_start="{cell, slot, scrollReference}">
                             <div class="p-[3px]">
@@ -286,6 +294,7 @@
 import {storeToRefs} from "pinia";
 import type {TableHeaderT} from "@/public/js/types/data";
 import type {EmployeePayrollComponentT} from "@/public/js/types/payroll-component";
+import type {PayFrequencyOptionT} from "@/public/js/common/type";
 
 const {isAuthenticated} = useAuth();
 const nuxtApp = useNuxtApp();
@@ -313,6 +322,10 @@ const props = defineProps({
         default: () => {
             return {};
         }
+    },
+    payFrequencyId: {
+        type: Number as PropType<number | null>,
+        default: null,
     },
     employeeCompensationData: {
         type: Array,
@@ -351,6 +364,7 @@ const employeePayload = toRef(props, 'childComponentEmployeePayload');
 const emit = defineEmits([
     'update:creatingOrEditing',
     'update:payrollComponentsPending',
+    'update:payFrequencyId',
     'update:employeeCompensationData',
     'update:employeeDeductionData',
     'update:employeeIncomeTaxData',
@@ -365,7 +379,29 @@ const proxyCreatingOrEditing = computed({
     }
 });
 
-const payFrequencySelection = ref([]);
+const proxyPayFrequencyId = computed<null|number>({
+    get() {
+        return props.payFrequencyId;
+    },
+    set(newValue) {
+        emit("update:payFrequencyId", newValue);
+    }
+});
+
+const PAY_FREQUENCY_VALID_PERIODS = {
+    [PAY_FREQUENCY_TYPE.WEEKLY as number]: [PAY_PERIOD.HOURLY, PAY_PERIOD.DAILY],
+    [PAY_FREQUENCY_TYPE.SEMI_MONTHLY as number]: [PAY_PERIOD.HOURLY, PAY_PERIOD.DAILY, PAY_PERIOD.SEMI_MONTHLY, PAY_PERIOD.MONTHLY],
+    [PAY_FREQUENCY_TYPE.MONTHLY as number]: [PAY_PERIOD.HOURLY, PAY_PERIOD.DAILY, PAY_PERIOD.SEMI_MONTHLY, PAY_PERIOD.MONTHLY]
+};
+const validatePayFrequencyPeriodCombination = (frequencyType: number, payPeriodValue: number): boolean => {
+    const validPeriods = PAY_FREQUENCY_VALID_PERIODS[frequencyType];
+    return validPeriods ? validPeriods.includes(payPeriodValue) : false;
+};
+
+const payFrequency = ref<PayFrequencyOptionT | null>(null);
+const payFrequencyOptionsKey = shallowRef(0);
+const payFrequencyOptions = reactive<{search: string, selection: PayFrequencyOptionT[], selected: null|number}>({search: '', selection: [], selected: null})
+
 const fetchPayFrequencySelection = async () => {
 
     if(import.meta.server){return;}
@@ -379,11 +415,93 @@ const fetchPayFrequencySelection = async () => {
         }
     },{
         onSuccessResponse: async (request, options, response) => {
-            payFrequencySelection.value = _get(response, '_data.values.selection', []);
+            payFrequencyOptions.selection = _get(response, '_data.values.selection', []);
+            payFrequencyOptions.selected = proxyPayFrequencyId.value;
+
+            const selectedPayFrequencyItem = payFrequencyOptions.selection.find(item => item.value == proxyPayFrequencyId.value);
+
+            if(selectedPayFrequencyItem){
+                payFrequency.value = selectedPayFrequencyItem as PayFrequencyOptionT;
+            }
         }
     });
 }
-await fetchPayFrequencySelection();
+
+if(!props.isolated){
+    await fetchPayFrequencySelection();
+}
+
+watch(() => payFrequencyOptions.selected, (newValue, oldValue) => {
+
+    let selectedPayFrequencyItem = payFrequencyOptions.selection.find(item => item.value == newValue) as PayFrequencyOptionT;
+    let allValid = true;
+    let errorMessage = '';
+
+    if(employeeCompensationData.value.length > 0 && selectedPayFrequencyItem){
+
+        //If a payroll group is changed to weekly and there is at least one semimonthly or monthly amount pay period,
+        //revert changes and prompt unable to change
+        employeeCompensationData.value.forEach(compensation => {
+
+            const isAmountable = _includes([
+                COMPENSATION.BASIC_SALARY,
+                COMPENSATION.REGULAR_ALLOWANCE
+            ], compensation.payroll_componentable.type.value);
+
+            if(isAmountable && allValid){
+                const validPayPeriod = validatePayFrequencyPeriodCombination(selectedPayFrequencyItem.type_value, compensation.pay_period.value as number);
+
+                if(!validPayPeriod){
+                    allValid = false;
+
+                    const frequencyName = PAY_FREQUENCY_NAME[selectedPayFrequencyItem.type_value];
+
+                    let validPeriods:number[] = PAY_FREQUENCY_VALID_PERIODS[selectedPayFrequencyItem.type_value as number] as number[];
+
+                    const validPeriodNames = validPeriods.map((period: number) => {
+
+                        const periodName = PAY_PERIOD_NAME[period] as string;
+
+                        return periodName.toLowerCase();
+                    }).join(', ');
+
+                    errorMessage = `${frequencyName} payroll group only allow (${validPeriodNames}) amount pay periods.`;
+                }
+            }
+        })
+
+        if(!allValid){
+            payFrequencyOptions.selected = oldValue;
+
+            useNuxtApp().$promptStore.setPrompt({
+                resetable: false,
+                icon: null,
+                title: 'Unable to change payroll group.',
+                message: errorMessage,
+                action: {
+                    callback: () => {},
+                    label: 'Okay'
+                }
+            });
+        } else {
+            proxyPayFrequencyId.value = newValue;
+        }
+
+        payFrequencyOptionsKey.value++;
+
+    }
+
+    selectedPayFrequencyItem = payFrequencyOptions.selection.find(item => item.value == newValue) as PayFrequencyOptionT;
+
+    proxyPayFrequencyId.value = newValue;
+
+    if (!selectedPayFrequencyItem) {
+        return;
+    } else {
+        payFrequency.value = selectedPayFrequencyItem as PayFrequencyOptionT;
+    }
+
+})
 
 watch(() => props.childComponentEmployeePayload, async (employeePayload) => {
 
@@ -392,6 +510,7 @@ watch(() => props.childComponentEmployeePayload, async (employeePayload) => {
         await employeeCompensationExecute();
         await employeeDeductionExecute();
         await employeeIncomeTaxExecute();
+        await fetchPayFrequencySelection();
         emit('update:payrollComponentsPending', false);
     }
 });
@@ -411,6 +530,23 @@ const createOrEditPayrollComponent = (payrollComponent: number, payrollComponent
     if(creatingEmployee.value){
         editPayrollComponentPayloadIndex.value = rowIndex;
     }
+
+    if(FORMULABLE.EARNINGS == payrollComponent && !proxyPayFrequencyId.value){
+
+        useNuxtApp().$promptStore.setPrompt({
+            resetable: false,
+            icon: null,
+            title: 'Payroll group not found.',
+            message: 'Assign a payroll group before creating pay items.',
+            action: {
+                callback: () => {},
+                label: 'Okay'
+            }
+        });
+
+        return;
+    }
+
     creatingOrEditingPayrollComponentFormulable.value = payrollComponent;
 
     payrollComponentEditPayload.value = payrollComponentAttributes;
@@ -428,10 +564,9 @@ const employeeCompensationHeaders = reactive<TableHeaderT[]>([
     { text: 'Compensation', value: 'name'},
     { text: 'Type', value: 'type'},
     { text: 'Amount', value: 'amount', alignData: 'right'},
+    { text: 'Amount Pay Period', value: 'pay_period'},
     { text: 'Currency', value: 'currency'},
-    { text: 'Pay Period', value: 'pay_period'},
     { text: 'Pay Type', value: 'pay_type'},
-    { text: 'Pay Frequency', value: 'pay_frequency'},
     { text: 'From', value: 'amountable_start'},
     { text: 'To', value: 'amountable_end'},
 ]);

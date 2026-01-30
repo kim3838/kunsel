@@ -260,7 +260,7 @@
                                         <InputLabel :size="'sm'" value="Designation"/>
                                         <SingleSelect :icon="'ic:baseline-inbox'" :disabled="disableActions" drop-shadow :size="'md'" :options="designationOptions"/>
                                     </div>
-                                    <div class="col-span-2">
+                                    <div class="lg:col-span-2">
                                         <InputLabel :size="'sm'" value="Manager"/>
                                         <SingleSelectPaginated
                                             :disabled="disableActions"
@@ -308,6 +308,7 @@
                                 v-model:creating-or-editing="employeePayrollComponentCreatingOrEditing"
                                 v-model:payroll-components-pending="employeePayrollComponentsPending"
                                 v-model:child-component-employee-payload="childComponentEmployeePayload"
+                                v-model:pay-frequency-id="payFrequencyId"
                                 v-model:employee-compensation-data="employeeCompensationData"
                                 v-model:employee-deduction-data="employeeDeductionData"
                                 v-model:employee-income-tax-data="employeeIncomeTaxData"
@@ -378,6 +379,7 @@ const childComponentEmployeePayload = computed(() => {
    return {
        'id': _get(employee.value, 'id', null),
        'ulid': _get(employee.value, 'ulid', null),
+       'pay_frequency_id': _get(employee.value, 'pay_frequency_id', null),
    };
 });
 
@@ -557,6 +559,7 @@ const designationOptions = reactive({
 });
 
 const tempSelectedManager = ref(null);
+const payFrequencyId = ref<null | number>(null);
 
 //Fetch Employee Information, Contact Information
 const fetchEmployee = async (callback: (() => void) | null = null) => {
@@ -588,6 +591,7 @@ const fetchEmployee = async (callback: (() => void) | null = null) => {
             departmentAssignment.value = _get(response, '_data.values.employee.department.pivot.department_assignment_type', DEPARTMENT_EMPLOYEE_ASSIGNMENT.DEFAULT);
             designationOptions.selected = _get(response, '_data.values.employee.designation_id', null);
             tempSelectedManager.value = _get(response, '_data.values.employee.manager_id', null);
+            payFrequencyId.value = _get(response, '_data.values.employee.pay_frequency_id', null);
 
             employeeHasContact.value = Boolean(_get(response, '_data.values.employee.contact.id', null));
             employeeOfficeEmail.value = _get(response, '_data.values.employee.contact.office_email', '');
@@ -861,6 +865,7 @@ const employeeFormBody = computed(() => {
         department_assignment_type: departmentOptions.selected ? departmentAssignment.value : null,
         designation_id: designationOptions.selected,
         manager_id: managerOptions.selected,
+        pay_frequency_id: payFrequencyId.value,
         number: employeeNumber.value,
         family_name: employeeFamilyName.value,
         middle_name: employeeMiddleName.value,

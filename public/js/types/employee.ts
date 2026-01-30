@@ -9,6 +9,7 @@ export type EmployeeT = {
     department_id: string | number | null,
     designation_id: string | number | null,
     manager_id: string | number | null,
+    pay_frequency_id: string | number | null,
     number: string,
     given_name: string,
     middle_name: string | null,
