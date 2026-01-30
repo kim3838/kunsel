@@ -54,7 +54,13 @@
                             <div class="text-xl">Today: {{dateTimeNowFormatted}}</div>
                         </div>
 
-                        <div class="space-y-2 pt-4"></div>
+                        <div class="space-y-2 pt-4 scaffold-border-top">
+
+                            <div>
+                                <InputLabel :size="'xs'" value="Payroll group" />
+                                <div class="text-sm">{{ _get(employee, 'payroll_group.type.text', 'Not found') }}</div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
