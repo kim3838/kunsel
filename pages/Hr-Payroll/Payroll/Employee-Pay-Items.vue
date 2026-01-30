@@ -104,7 +104,8 @@
                                         :label="'Select Employee'"
                                         :size="'md'"
                                         :icon="'mdi:badge-account-outline'"
-                                        :payload="employeeOptions"/>
+                                        :payload="employeeOptions"
+                                        @valueChange="setSelectedEmployee"/>
                                 </div>
                             </div>
 
@@ -143,7 +144,7 @@
                     v-model:employeePayload="stagedEmployee"
                     v-model:editPayload="payrollComponentEditPayload"
                     v-model:payrollComponentFormulable="creatingOrEditingPayrollComponentFormulable"
-                    :pay-frequency-selection="payFrequencySelection"
+                    v-model:payFrequency="stagedEmployeePayFrequency"
                     @resolved="payrollComponentResolved"
                     @cancelled="payrollComponentCancelled"
                 ></PayrollComponentAssignmentModal>
@@ -200,6 +201,9 @@
                         <template v-slot:cell.employee_full_name="{cell,slot}">
                             <div class="p-[3px]">{{cell.employee.full_name}}</div>
                         </template>
+                        <template v-slot:cell.employee_payroll_group="{cell,slot}">
+                            <div class="p-[3px]">{{cell.employee.payroll_group?.type?.text}}</div>
+                        </template>
                         <template v-slot:cell.formulable="{cell, slot, scrollReference}">
                             <div class="p-[3px]">{{cell.formulable_type?.text}}</div>
                         </template>
@@ -240,7 +244,7 @@
 <script setup lang="ts">
 import {storeToRefs} from "pinia";
 import type {DataTableT, TableHeaderT, TableRowT, TableSupHeaderT} from "@/public/js/types/data";
-import type {EnumOption, EnumSelection, StringEnumInterface} from "@/public/js/common/type";
+import type {EnumOption, EnumSelection, PayFrequencyOptionT, StringEnumInterface} from "@/public/js/common/type";
 
 useHead({titleTemplate: (titleChunk) => {return `${titleChunk} - Employee Pay Items`}});
 definePageMeta({middleware: ['auth', 'admin-of-selected-company']});
@@ -319,6 +323,7 @@ const payrollComponentsSupHeaders = reactive<TableSupHeaderT[]>([
     {text: ''},
     {text: ''},
     {text: 'Employee', colspan: 2,  alignHeader: 'left'},
+    {text: ''},
     {text: 'Formulable', colspan: 1,  alignHeader: 'left'},
     {text: 'Payroll Component', colspan: 9,  alignHeader: 'left'},
 ]);
@@ -328,6 +333,8 @@ const payrollComponentsHeaders = reactive<TableHeaderT[]>([
     { text: '', value: 'actions', minWidth: '33px'},
     { text: 'Employee #', value: 'employee_number', alignData: 'left'},
     { text: 'Name', value: 'employee_full_name', alignData: 'left'},
+
+    { text: 'Payroll Group', value: 'employee_payroll_group', alignData: 'left'},
 
     { text: '', value: 'formulable'},
 
@@ -666,6 +673,7 @@ const selectEmployee = () => {
 
 const resetStaged = () => {
     employeeOptions.selected = null;
+    stagedEmployeePayFrequency.value = null;
     employeeOptionsKey.value++;
     selectingEmployee.value = false;
     stagedEmployee.value = {
@@ -677,29 +685,58 @@ const resetStaged = () => {
 const cancelSelectEmployee = () => {
     resetStaged();
 }
+
+const stagedEmployeePayFrequency = ref<PayFrequencyOptionT | null>(null);
+const setSelectedEmployee = (employee: {payroll_group:PayFrequencyOptionT}) => {
+    coreStore.resetServiceError();
+
+    stagedEmployeePayFrequency.value = employee.payroll_group ? {
+        value: employee.payroll_group?.value,
+        type_value: employee.payroll_group?.type_value,
+    } : null;
+}
 const resolveSelectEmployee = () => {
 
-    if(Boolean(employeeOptions.selected)){
-
-        put({employee_id: employeeOptions.selected});
-
-        selectingEmployee.value = false;
-
-    } else {
+    if(!Boolean(employeeOptions.selected)){
         coreStore.setServiceError({
             prompt: false,
             payload: {
                 message: 'No employee selected.'
             }
         });
+        return
     }
+
+    if(!Boolean(stagedEmployeePayFrequency.value?.value)){
+        coreStore.setServiceError({
+            prompt: false,
+            payload: {
+                message: 'Employee payroll group not found.'
+            }
+        });
+        return
+
+    }
+
+    put({employee_id: employeeOptions.selected}, true);
+
+    selectingEmployee.value = false;
 }
 
-const put = async (row: TableRowT | {} = {}) => {
+const put = async (row: TableRowT | {} = {}, createPayrollComponent = false) => {
     stagedEmployee.value = {
         'id': _get(row, 'employee_id', null),
         'ulid': _get(row, 'employee.ulid', null),
     };
+
+    if(!createPayrollComponent){
+
+        stagedEmployeePayFrequency.value = row.employee.payroll_group ? {
+            value: row.employee.payroll_group?.id,
+            type_value: row.employee.payroll_group?.type?.value,
+        } : null;
+    }
+
 
     //@ts-ignore
     payrollComponentEditPayload.value = row;

@@ -12,13 +12,13 @@
                 <span class="font-semibold">Employee Payload:</span> {{employeePayload}}<br>
                 <span class="font-semibold">Edit Payload Index:</span> {{editPayloadIndex}}<br>
                 <span class="font-semibold">Payroll Component Edit Payload:</span> {{editPayload}}<br>
+                <span class="font-semibold">Pay Frequency :</span> {{payFrequency}}<br>
                 <span class="font-semibold">New Employee & New Payroll Component:</span> {{newEmployeeAndNewPayrollComponent}}<br>
                 <span class="font-semibold">Existing Employee & New Payroll Component:</span> {{employeeExistAndNewPayrollComponent}}<br>
                 <span class="font-semibold">Existing Employee & Existing Payroll Component:</span> {{employeeExistAndPayrollComponentExist}}<br>
                 <span class="font-semibold">Edit mode :</span> {{editPayloadIndex >= 0 || employeePayrollComponentExists}}<br>
                 <span class="font-semibold">Selected Payroll Component :</span> {{selectedPayrollComponent}}<br>
                 <span class="font-semibold">Selected Pay Period :</span> {{selectedPayPeriod}}<br>
-                <span class="font-semibold">Selected Pay Frequency :</span> {{selectedPayFrequency}}<br>
                 <span class="font-semibold">Pay Frequency Type :</span> {{payFrequencyType}}<br>
                 <span class="font-semibold">Amountable Start Selection :</span> {{amountableStartSelection}}<br>
                 <span class="font-semibold">Amountable End Selection :</span> {{amountableEndSelection}}<br>
@@ -37,7 +37,7 @@
                     </div>
                 </div>
 
-                <div class="p-3 pt-4 mx-auto max-w-screen-lg grid gap-2 grid-cols-3 sm:grid-cols-4 md:grid-cols-5">
+                <div class="p-3 pt-4 mx-auto max-w-screen-lg grid gap-2 grid-cols-4 sm:grid-cols-5 md:grid-cols-6">
                     <div v-if="formulableTabSelectable && !singleFormulableMode" class="col-span-full">
                         <RadioGroup
                             :disabled="disableActions"
@@ -64,21 +64,16 @@
                         <Input v-model="amount" high-light-all-text-on-focus :size="'md'" :min="0" :type="'number'" type-strict />
                     </div>
                     <div v-if="selectedPayrollComponentIsAmountable">
+                        <InputLabel :size="'sm'" value="Amount Pay Period"/>
+                        <SingleSelect :searchable="false" :selection-max-viewable-line="10" drop-shadow value-persist :size="'md'" :options="payPeriodOptions" @valueChange="payPeriodSelectedChange"/>
+                    </div>
+                    <div v-if="selectedPayrollComponentIsAmountable">
                         <InputLabel :size="'sm'" value="Currency"/>
                         <Input v-model="currency" disabled :size="'md'" />
-                    </div>
-                    <div class="hidden md:block"></div>
-                    <div v-if="selectedPayrollComponentIsAmountable">
-                        <InputLabel :size="'sm'" value="Pay Period"/>
-                        <SingleSelect :searchable="false" :selection-max-viewable-line="10" drop-shadow value-persist :size="'md'" :options="payPeriodOptions" @valueChange="payPeriodSelectedChange"/>
                     </div>
                     <div v-if="selectedPayrollComponentIsAmountable">
                         <InputLabel :size="'sm'" value="Pay Type"/>
                         <SingleSelect :searchable="false" :selection-max-viewable-line="10" drop-shadow value-persist :size="'md'" :options="payTypeOptions"/>
-                    </div>
-                    <div v-if="selectedPayrollComponentIsAmountable">
-                        <InputLabel :size="'sm'" value="Pay Frequency"/>
-                        <SingleSelect :searchable="false" :selection-max-viewable-line="10" drop-shadow value-persist :size="'md'" :options="payFrequencyOptions" @valueChange="payFrequencySelectedChange"/>
                     </div>
                     <div v-if="selectedPayrollComponentIsAmountable" class="col-span-full flex flex-wrap gap-2">
                         <div>
@@ -162,7 +157,7 @@
 
 <script setup lang="ts">
 import {storeToRefs} from "pinia";
-import type {EnumSelection, StringEnumInterface} from "@/public/js/common/type";
+import type {AssignablePayrollComponentOptionT, EnumSelection, PayFrequencyOptionT, PayPeriodOptionT, PayTypeOptionT, StringEnumInterface} from "@/public/js/common/type";
 import type {EmployeePayrollComponentT} from "@/public/js/types/payroll-component";
 
 const coreStore = useCoreStore();
@@ -209,6 +204,10 @@ const props = defineProps({
     payrollComponentFormulable: {
         type: [String, Number],
         default: undefined
+    },
+    payFrequency: {
+        type: Object as PropType<PayFrequencyOptionT | null>,
+        default: null
     },
     payPeriodSelection: {
         type: Array,
@@ -274,14 +273,12 @@ watch(formulableTypeTab, async (formulableTypeTab) => {
     }
 });
 
-const payPeriodOptions = reactive({search: '', selection: payPeriodSelection, selected: null});
-const payTypeOptions = reactive({search: '', selection: payTypeSelection, selected: null});
-const payFrequencyOptions = reactive({search: '', selection: payFrequencySelection, selected: null});
+const payPeriodOptions = reactive<{search: string, selection: PayPeriodOptionT[], selected: string|null|number}>({search: '', selection: payPeriodSelection, selected: null});
+const payTypeOptions = reactive<{search: string, selection: PayTypeOptionT[], selected: string|null|number}>({search: '', selection: payTypeSelection, selected: null});
 
 const selectedPayrollComponentIsAmountable = ref(false);
 const selectedPayrollComponent = ref<{} | null>({});
 const selectedPayPeriod = ref<{} | null>({});
-const selectedPayFrequency = ref<{} | null>({});
 
 watch(selectedPayrollComponentIsAmountable, (selectedPayrollComponentIsAmountable) => {
     if(selectedPayrollComponentIsAmountable && amountableStart.value == AMOUNTABLE_PAYROLL_COMPONENT_START.CUSTOM_DATE){
@@ -292,7 +289,7 @@ watch(selectedPayrollComponentIsAmountable, (selectedPayrollComponentIsAmountabl
     }
 });
 const assignablePayrollComponentSelectedChange = (value: null | number) => {
-    const selectedPayrollComponentTemp = assignablePayrollComponentOptions.selection.find(item => item.value === value);
+    const selectedPayrollComponentTemp: undefined | AssignablePayrollComponentOptionT = assignablePayrollComponentOptions.selection.find(item => item.value === value);
 
     if (!selectedPayrollComponentTemp) {
         return;
@@ -312,7 +309,6 @@ const assignablePayrollComponentSelectedChange = (value: null | number) => {
             currency.value = defaultCurrency.value;
             payPeriodOptions.selected = null;
             payTypeOptions.selected = null;
-            payFrequencyOptions.selected = null;
             payFrequencyType.value = null;
             amountableStart.value = null;
             startDate.value = null;
@@ -345,31 +341,16 @@ const PAY_PERIOD_VALID_FREQUENCIES = {
     [PAY_PERIOD.MONTHLY as number]: [PAY_FREQUENCY_TYPE.SEMI_MONTHLY, PAY_FREQUENCY_TYPE.MONTHLY]
 };
 
-const PAY_FREQUENCY_VALID_PERIODS = {
-    [PAY_FREQUENCY_TYPE.WEEKLY as number]: [PAY_PERIOD.HOURLY, PAY_PERIOD.DAILY],
-    [PAY_FREQUENCY_TYPE.SEMI_MONTHLY as number]: [PAY_PERIOD.HOURLY, PAY_PERIOD.DAILY, PAY_PERIOD.SEMI_MONTHLY, PAY_PERIOD.MONTHLY],
-    [PAY_FREQUENCY_TYPE.MONTHLY as number]: [PAY_PERIOD.HOURLY, PAY_PERIOD.DAILY, PAY_PERIOD.SEMI_MONTHLY, PAY_PERIOD.MONTHLY]
-};
+
 
 const validatePayPeriodFrequencyCombination = (payPeriodValue: number, frequencyType: number): boolean => {
     const validFrequencies = PAY_PERIOD_VALID_FREQUENCIES[payPeriodValue];
     return validFrequencies ? validFrequencies.includes(frequencyType) : false;
 };
 
-const validatePayFrequencyPeriodCombination = (frequencyType: number, payPeriodValue: number): boolean => {
-    const validPeriods = PAY_FREQUENCY_VALID_PERIODS[frequencyType];
-    return validPeriods ? validPeriods.includes(payPeriodValue) : false;
-};
-
 const resetPayPeriodSelection = () => {
     payPeriodOptions.selected = null;
     selectedPayPeriod.value = null;
-};
-
-const resetPayFrequencySelection = () => {
-    payFrequencyOptions.selected = null;
-    selectedPayFrequency.value = null;
-    payFrequencyType.value = null;
 };
 
 const showValidationError = (message: string) => {
@@ -380,55 +361,33 @@ const showValidationError = (message: string) => {
 };
 
 const payPeriodSelectedChange = (value: null | number) => {
-    const selectedPayPeriodItem = payPeriodOptions.selection.find(item => item.value == value);
+    const selectedPayPeriodItem:undefined | PayPeriodOptionT = payPeriodOptions.selection.find(item => item.value == value);
+
     if (!selectedPayPeriodItem) {
         return;
     }
 
-    const selectedPayFrequencyItem = payFrequencyOptions.selection.find(item => item.value == payFrequencyOptions.selected);
-    let selectedFrequencyType = null;
+    let selectedFrequencyType = props.payFrequency?.type_value as number;
 
-    if(selectedPayFrequencyItem){
-        selectedFrequencyType = selectedPayFrequencyItem?.type_value;
-    }
-
-    selectedPayPeriod.value = selectedPayPeriodItem;
+    selectedPayPeriod.value = selectedPayPeriodItem as {value: number, type_value: number};
 
     if (payPeriodOptions.selected !== null && selectedFrequencyType !== null) {
-        const isValidCombination = validatePayPeriodFrequencyCombination(selectedPayPeriodItem.value, selectedFrequencyType);
+        const isValidCombination = validatePayPeriodFrequencyCombination(selectedPayPeriodItem.value as number, selectedFrequencyType);
 
         if (!isValidCombination) {
-            const periodName = PAY_PERIOD_NAME[selectedPayPeriodItem.value];
-            const validFrequencyNames = PAY_PERIOD_VALID_FREQUENCIES[selectedPayPeriodItem.value]
-                .map(freq => PAY_FREQUENCY_NAME[freq].toLowerCase())
-                .join(', ');
+            const periodName = PAY_PERIOD_NAME[selectedPayPeriodItem.value as number];
 
-            showValidationError(`${periodName} pay period only allow (${validFrequencyNames}) pay frequencies.`);
+            let validFrequencies:number[] = PAY_PERIOD_VALID_FREQUENCIES[selectedPayPeriodItem.value as number] as number[];
+
+            let joinedValidFrequencyNames = validFrequencies.map((freq: number) => {
+
+                const frequencyName = PAY_FREQUENCY_NAME[freq] as string;
+
+                return frequencyName.toLowerCase()
+            }).join(', ');
+
+            showValidationError(`${periodName} amount pay period is only allowed on (${joinedValidFrequencyNames}) payroll groups.`);
             resetPayPeriodSelection();
-        }
-    }
-};
-
-const payFrequencySelectedChange = (value: null | number) => {
-    const selectedPayFrequencyItem = payFrequencyOptions.selection.find(item => item.value == value);
-    if (!selectedPayFrequencyItem) {
-        return;
-    }
-
-    selectedPayFrequency.value = selectedPayFrequencyItem;
-    payFrequencyType.value = selectedPayFrequencyItem.type_value;
-
-    if (payFrequencyOptions.selected !== null && payPeriodOptions.selected !== null) {
-        const isValidCombination = validatePayFrequencyPeriodCombination(selectedPayFrequencyItem.type_value, payPeriodOptions.selected);
-
-        if (!isValidCombination) {
-            const frequencyName = PAY_FREQUENCY_NAME[selectedPayFrequencyItem.type_value];
-            const validPeriodNames = PAY_FREQUENCY_VALID_PERIODS[selectedPayFrequencyItem.type_value]
-                .map(period => PAY_PERIOD_NAME[period].toLowerCase())
-                .join(', ');
-
-            showValidationError(`${frequencyName} pay frequency only allow (${validPeriodNames}) pay periods.`);
-            resetPayFrequencySelection();
         }
     }
 };
@@ -455,7 +414,11 @@ const formulableModelMapKey = computed<string>(() => {
 
 //Assignable Employee Payroll Component Selections
 const assignablePayrollComponentOptionsKey = shallowRef(0);
-const assignablePayrollComponentOptions = reactive({
+const assignablePayrollComponentOptions = reactive<{
+    search: string,
+    selection: AssignablePayrollComponentOptionT[],
+    selected: string|null|number
+}>({
     search: '',
     selection: [],
     selected: null
@@ -537,14 +500,14 @@ const amountableEndSelectedChanged = () => {
     }
 };
 
-const startDateChanged = (value) => {
+const startDateChanged = (value: string) => {
     let dateValid = moment(value.trim(), "YYYY-MM-DD", true).isValid();
 
     if(!dateValid){
         startDate.value = moment().format("YYYY-MM-DD")
     }
 }
-const endDateChanged = (value) => {
+const endDateChanged = (value: string) => {
     let dateValid = moment(value.trim(), "YYYY-MM-DD", true).isValid();
 
     if(!dateValid){
@@ -563,20 +526,19 @@ const endDate = ref<string | null>(moment().format("YYYY-MM-DD"));
 const formulableTabSelectable = ref(false);
 
 const loadEditable = () => {
-    amount.value = _get(props.editPayload, 'amount', 0);
+    amount.value = _get(props.editPayload, 'amount', 0) as number;
     currency.value = _get(props.editPayload, 'currency', defaultCurrency.value);
     payPeriodOptions.selected = _get(props.editPayload, 'pay_period.value', null);
-    payTypeOptions.selected = _get(props.editPayload, 'pay_type.value', null);
-    payFrequencyOptions.selected = _get(props.editPayload, 'pay_frequency_id', null);
+    payTypeOptions.selected = _get(props.editPayload, 'pay_type.value', PAY_TYPE.BY_ATTENDANCE as number);
     payFrequencyType.value = _get(props.editPayload, 'pay_frequency.type.value', null);
     assignablePayrollComponentOptions.selected = _get(props.editPayload, 'payroll_componentable_id', null);
 
-    amountableStart.value = _get(props.editPayload, 'amountable_start.value', AMOUNTABLE_PAYROLL_COMPONENT_START.NOT_SPECIFIED);
+    amountableStart.value = _get(props.editPayload, 'amountable_start.value', AMOUNTABLE_PAYROLL_COMPONENT_START.NOT_SPECIFIED) as number;
 
     let startDateTemp = _get(props.editPayload, 'start_date', null);
     startDate.value = startDateTemp ? moment(startDateTemp).format("YYYY-MM-DD") : null;
 
-    amountableEnd.value = _get(props.editPayload, 'amountable_end.value', AMOUNTABLE_PAYROLL_COMPONENT_END.NOT_SPECIFIED);
+    amountableEnd.value = _get(props.editPayload, 'amountable_end.value', AMOUNTABLE_PAYROLL_COMPONENT_END.NOT_SPECIFIED) as number;
 
     let endDateTemp = _get(props.editPayload, 'end_date', null);
     endDate.value = endDateTemp ? moment(endDateTemp).format("YYYY-MM-DD") : null;
@@ -600,12 +562,10 @@ const reset = () => {
     assignablePayrollComponentOptions.selected = null;
     payPeriodOptions.selected = null;
     payTypeOptions.selected = null;
-    payFrequencyOptions.selected = null;
     payFrequencyType.value = null;
     selectedPayrollComponentIsAmountable.value = false;
     selectedPayrollComponent.value = null;
     selectedPayPeriod.value = null;
-    selectedPayFrequency.value = null;
     amountableStart.value = null;
     amountableEnd.value = null;
     startDate.value = null;
@@ -622,7 +582,7 @@ const employeeExists = computed(() => {
     return Boolean(props.employeePayload.id);
 });
 const employeePayrollComponentExists = computed(()=>{
-    return Boolean(props.editPayload.id);
+    return Boolean(_get(props.editPayload, 'id', 0));
 });
 const submitButtonIcon = computed(()=>{
     const ICON = {
@@ -655,7 +615,7 @@ const employeeExistAndPayrollComponentExist = computed(() => {
 });
 const submitPath = computed(() => {
     if(employeeExistAndPayrollComponentExist.value){
-        return `/api/employee-payroll-component/${props.editPayload.id}`;
+        return `/api/employee-payroll-component/${_get(props.editPayload, 'id', 0)}`;
     }
 
     if(employeeExistAndNewPayrollComponent.value){
@@ -689,7 +649,6 @@ const componentForm = computed(() => {
         currency: string | null,
         pay_period: number | null,
         pay_type: number | null,
-        pay_frequency_id: number | null,
         pay_frequency_type: number | null,
         amountable_start: number | null,
         amountable_end: number | null,
@@ -708,9 +667,8 @@ const componentForm = computed(() => {
                 ...componentFormTemp,
                 'amount': amount.value,
                 'currency': currency.value,
-                'pay_period': payPeriodOptions.selected,
-                'pay_type': payTypeOptions.selected,
-                'pay_frequency_id': payFrequencyOptions.selected,
+                'pay_period': payPeriodOptions.selected as number,
+                'pay_type': payTypeOptions.selected as number,
                 'pay_frequency_type': payFrequencyType.value,
                 'amountable_start': amountableStart.value,
                 'amountable_end': amountableEnd.value,
@@ -761,7 +719,7 @@ const submitPending = ref(false);
 const submit = async() => {
     submitPending.value = true;
 
-    await laraFetch(submitPath.value, {
+    await laraFetch(submitPath.value as string, {
         method: submitAction.value,
         body: form.value,
     }, {
