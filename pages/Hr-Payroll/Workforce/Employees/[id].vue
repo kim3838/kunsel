@@ -675,6 +675,8 @@ const userFormSubmitPath = computed(() => {
 const userFormBody = computed(() => {
 
     return {
+        account_id: selectedAssociatedCompanyAccountId.value,
+        company_id: selectedAssociatedCompanyId.value,
         name: employeeUsername.value,
         email: employeeUserEmail.value,
         password: employeeUserPassword.value,
@@ -1259,6 +1261,7 @@ const resetPageToInitialState = async () => {
 
     // Reset Organization fields
     departmentOptions.selected = null;
+    departmentAssignment.value = DEPARTMENT_EMPLOYEE_ASSIGNMENT.DEFAULT as number;
     designationOptions.selected = null;
     managerOptions.selected = null;
 
