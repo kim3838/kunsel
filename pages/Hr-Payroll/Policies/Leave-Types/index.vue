@@ -67,6 +67,7 @@
                         :sup-headers="leaveTypesSupHeaders"
                         :headers="leaveTypesHeaders"
                         :size="'lg'"
+                        :border-appearance="Boolean(leaveTypeSubRowSlug)"
                         :rows="leaveTypes.data"
                         :disabled="disableDataTable"
                         v-model="selectedLeaveTypes"

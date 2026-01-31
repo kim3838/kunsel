@@ -66,6 +66,7 @@
                         :key="shiftsKey"
                         :headers="shiftsHeaders"
                         :size="'lg'"
+                        :border-appearance="Boolean(shiftSubRowSlug)"
                         :rows="shifts.data"
                         :disabled="disableDataTable"
                         v-model="selectedShifts"
