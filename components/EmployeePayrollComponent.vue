@@ -10,281 +10,289 @@
             @resolved="payrollComponentResolved"
         ></PayrollComponentAssignmentModal>
 
-        <fieldset class="neutral-border px-2 pb-2 space-y-2">
-            <legend class="text-lg font-header">Payroll Information</legend>
+        <fieldset class="lining-shadow rounded-sm tint-background space-y-2">
 
-            <div class="grid gap-2 grid-cols-2 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-5 xl:grid-cols-6">
-                <div>
-                    <InputLabel :size="'sm'" value="Payroll group"/>
-                    <SingleSelect :disabled="isolated" :none-selected-label="`No payroll group`" :searchable="false" :selection-max-viewable-line="10" drop-shadow value-persist :size="'md'" :key="payFrequencyOptionsKey" :options="payFrequencyOptions"/>
+            <div class="lining-shadow rounded-t-sm text-lg px-4 py-2">Payroll Information</div>
+
+            <div class="p-4 space-y-4">
+
+                <div class="grid gap-2 grid-cols-2 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-5 xl:grid-cols-6">
+                    <div>
+                        <InputLabel :size="'sm'" value="Payroll group"/>
+                        <SingleSelect :disabled="isolated" :none-selected-label="`No payroll group`" :searchable="false" :selection-max-viewable-line="10" drop-shadow value-persist :size="'md'" :key="payFrequencyOptionsKey" :options="payFrequencyOptions"/>
+                    </div>
                 </div>
-            </div>
 
-            <div v-if="false">
-                <span class="font-semibold">Employee Payload:</span> {{childComponentEmployeePayload}}<br>
-                <span class="font-semibold">Prop Frequency Id:</span> {{payFrequencyId}}<br>
-                <span class="font-semibold">Pay Frequency :</span> {{payFrequency}}<br>
-                <span class="font-semibold">Pay Frequency Options:</span> {{payFrequencyOptions}}<br>
-                <span class="font-semibold">Compensations:</span> {{employeeCompensationData}}<br>
-                <span class="font-semibold">Employee Ulid:</span> {{employeeUlid}}<br>
-                <span class="font-semibold">Edit Payload Index:</span> {{editPayrollComponentPayloadIndex}}<br>
-                <span class="font-semibold">Props Disable Actions:</span> {{props.disableActions}}<br>
-            </div>
+                <div v-if="false">
+                    <span class="font-semibold">Employee Payload:</span> {{childComponentEmployeePayload}}<br>
+                    <span class="font-semibold">Prop Frequency Id:</span> {{payFrequencyId}}<br>
+                    <span class="font-semibold">Pay Frequency :</span> {{payFrequency}}<br>
+                    <span class="font-semibold">Pay Frequency Options:</span> {{payFrequencyOptions}}<br>
+                    <span class="font-semibold">Compensations:</span> {{employeeCompensationData}}<br>
+                    <span class="font-semibold">Employee Ulid:</span> {{employeeUlid}}<br>
+                    <span class="font-semibold">Edit Payload Index:</span> {{editPayrollComponentPayloadIndex}}<br>
+                    <span class="font-semibold">Props Disable Actions:</span> {{props.disableActions}}<br>
+                </div>
 
-            <div class="grid gap-2 grid-cols-1">
-                <fieldset class="neutral-border px-2 pb-2 space-y-2">
-                    <legend class="text-sm">Compensations</legend>
-                    <div v-if="false">
-                        <span class="font-semibold">Employee Compensations:</span> {{employeeCompensationData}}<br>
-                        <span class="font-semibold">Employee Compensations[1]:</span> {{employeeCompensationData[1]}}<br>
-                        <span class="font-semibold">Selected Employee Compensations:</span> {{selectedEmployeeCompensation}}<br>
+                <div class="grid gap-2 grid-cols-1">
+                    <div class="neutral-border p-2 space-y-2">
+
+                        <div v-if="false">
+                            <span class="font-semibold">Employee Compensations:</span> {{employeeCompensationData}}<br>
+                            <span class="font-semibold">Employee Compensations[1]:</span> {{employeeCompensationData[1]}}<br>
+                            <span class="font-semibold">Selected Employee Compensations:</span> {{selectedEmployeeCompensation}}<br>
+                        </div>
+
+                        <div v-if="employeeCompensationsSuccessful" class="inline-flex gap-2 items-center">
+                            <Button
+                                class="w-min"
+                                :variant=" 'outline'"
+                                :size="'sm'"
+                                :disabled="disableEmployeeCompensationActions"
+                                :icon="'mdi:plus'"
+                                @click="createOrEditPayrollComponent(FORMULABLE.EARNINGS as number)"/>
+                            <Button
+                                v-if="!creatingEmployee"
+                                class="w-min"
+                                :variant="'outline'"
+                                :size="'sm'"
+                                :icon="'mdi:delete-outline'"
+                                :disabled="disableEmployeeCompensationActions"
+                                @click="deleteSelectedPayrollComponent(FORMULABLE.EARNINGS as number)" />
+                            <Button
+                                v-if="!creatingEmployee"
+                                class="w-min"
+                                :variant="'outline'"
+                                :size="'sm'"
+                                :icon="'ic:sharp-restart-alt'"
+                                :disabled="disableEmployeeCompensationActions"
+                                @click="employeeCompensationExecute" />
+                            <UnorderedList
+                                v-if="disableEmployeeCompensationActions"
+                                :icon="'eos-icons:loading'"
+                                :size="'md'"
+                                :label="'Please wait...'"/>
+                        </div>
+
+                        <div v-if="!employeeCompensationsSuccessful" class="flex flex-row flex-wrap gap-2 items-center min-h-8">
+                            <Label invert :size="'md'" :type="'danger'" :label="employeeCompensationsMessage" />
+                        </div>
+
+                        <DataTable
+                            v-if="employeeCompensationsSuccessful"
+                            :headers="employeeCompensationHeaders"
+                            :size="'lg'"
+                            :rows="employeeCompensationData"
+                            :disabled="disableEmployeeCompensationDataTable"
+                            v-model="selectedEmployeeCompensation"
+                            selection>
+                            <template v-slot:cell.action="{cell,slot, headerIndex, rowIndex}">
+                                <div class="h-[32px] mx-0.5 space-x-0.5 w-full flex items-center">
+                                    <Button
+                                        v-if="creatingEmployee"
+                                        class="w-min"
+                                        :variant="'outline'"
+                                        :size="slot.buttonSize"
+                                        :disabled="disableEmployeeCompensationActions"
+                                        :icon="'mdi:delete-forever'"
+                                        @click="deletePayrollComponentRow(FORMULABLE.EARNINGS as number, rowIndex)"/>
+                                    <Button
+                                        class="w-min"
+                                        :variant="'outline'"
+                                        :size="slot.buttonSize"
+                                        :disabled="disableEmployeeCompensationActions"
+                                        :icon="'mdi:pen'"
+                                        @click="createOrEditPayrollComponent(FORMULABLE.EARNINGS as number, cell as EmployeePayrollComponentT, rowIndex)"/>
+                                </div>
+                            </template>
+                            <template v-slot:cell.name="{cell, slot, scrollReference}">
+                                <div class="p-[3px]">{{cell.payroll_componentable.name}}</div>
+                            </template>
+                            <template v-slot:cell.type="{cell, slot, scrollReference}">
+                                <div class="p-[3px]">{{cell.payroll_componentable.type?.text}}</div>
+                            </template>
+                            <template v-slot:cell.pay_period="{cell, slot, scrollReference}">
+                                <div class="p-[3px]">{{cell.pay_period?.text}}</div>
+                            </template>
+                            <template v-slot:cell.pay_type="{cell, slot, scrollReference}">
+                                <div class="p-[3px]">{{cell.pay_type?.text}}</div>
+                            </template>
+                            <template v-slot:cell.amountable_start="{cell, slot, scrollReference}">
+                                <div class="p-[3px]">
+                                    <span v-if="cell.amountable_start?.value == AMOUNTABLE_PAYROLL_COMPONENT_START.CUSTOM_DATE">{{cell.start_date}}</span>
+                                    <span v-else>{{cell.amountable_start?.text}}</span>
+                                </div>
+                            </template>
+                            <template v-slot:cell.amountable_end="{cell, slot, scrollReference}">
+                                <div class="p-[3px]">
+                                    <span v-if="cell.amountable_end?.value == AMOUNTABLE_PAYROLL_COMPONENT_END.CUSTOM_DATE">{{cell.end_date}}</span>
+                                    <span v-else>{{cell.amountable_end?.text}}</span>
+                                </div>
+                            </template>
+                        </DataTable>
                     </div>
-                    <div v-if="employeeCompensationsSuccessful" class="inline-flex gap-2 items-center">
-                        <Button
-                            class="w-min"
-                            :variant=" 'outline'"
-                            :size="'sm'"
-                            :disabled="disableEmployeeCompensationActions"
-                            :icon="'mdi:plus'"
-                            @click="createOrEditPayrollComponent(FORMULABLE.EARNINGS as number)"/>
-                        <Button
-                            v-if="!creatingEmployee"
-                            class="w-min"
-                            :variant="'outline'"
-                            :size="'sm'"
-                            :icon="'mdi:delete-outline'"
-                            :disabled="disableEmployeeCompensationActions"
-                            @click="deleteSelectedPayrollComponent(FORMULABLE.EARNINGS as number)" />
-                        <Button
-                            v-if="!creatingEmployee"
-                            class="w-min"
-                            :variant="'outline'"
-                            :size="'sm'"
-                            :icon="'ic:sharp-restart-alt'"
-                            :disabled="disableEmployeeCompensationActions"
-                            @click="employeeCompensationExecute" />
-                        <UnorderedList
-                            v-if="disableEmployeeCompensationActions"
-                            :icon="'eos-icons:loading'"
-                            :size="'md'"
-                            :label="'Please wait...'"/>
-                    </div>
+                </div>
 
-                    <div v-if="!employeeCompensationsSuccessful" class="flex flex-row flex-wrap gap-2 items-center min-h-8">
-                        <Label invert :size="'md'" :type="'danger'" :label="employeeCompensationsMessage" />
-                    </div>
+                <div class="grid grid-cols-1 gap-4 lg:grid-cols-2">
 
-                    <DataTable
-                        v-if="employeeCompensationsSuccessful"
-                        :headers="employeeCompensationHeaders"
-                        :size="'lg'"
-                        :rows="employeeCompensationData"
-                        :disabled="disableEmployeeCompensationDataTable"
-                        v-model="selectedEmployeeCompensation"
-                        selection>
-                        <template v-slot:cell.action="{cell,slot, headerIndex, rowIndex}">
-                            <div class="h-[32px] mx-0.5 space-x-0.5 w-full flex items-center">
-                                <Button
-                                    v-if="creatingEmployee"
-                                    class="w-min"
-                                    :variant="'outline'"
-                                    :size="slot.buttonSize"
-                                    :disabled="disableEmployeeCompensationActions"
-                                    :icon="'mdi:delete-forever'"
-                                    @click="deletePayrollComponentRow(FORMULABLE.EARNINGS as number, rowIndex)"/>
-                                <Button
-                                    class="w-min"
-                                    :variant="'outline'"
-                                    :size="slot.buttonSize"
-                                    :disabled="disableEmployeeCompensationActions"
-                                    :icon="'mdi:pen'"
-                                    @click="createOrEditPayrollComponent(FORMULABLE.EARNINGS as number, cell as EmployeePayrollComponentT, rowIndex)"/>
-                            </div>
-                        </template>
-                        <template v-slot:cell.name="{cell, slot, scrollReference}">
-                            <div class="p-[3px]">{{cell.payroll_componentable.name}}</div>
-                        </template>
-                        <template v-slot:cell.type="{cell, slot, scrollReference}">
-                            <div class="p-[3px]">{{cell.payroll_componentable.type?.text}}</div>
-                        </template>
-                        <template v-slot:cell.pay_period="{cell, slot, scrollReference}">
-                            <div class="p-[3px]">{{cell.pay_period?.text}}</div>
-                        </template>
-                        <template v-slot:cell.pay_type="{cell, slot, scrollReference}">
-                            <div class="p-[3px]">{{cell.pay_type?.text}}</div>
-                        </template>
-                        <template v-slot:cell.amountable_start="{cell, slot, scrollReference}">
-                            <div class="p-[3px]">
-                                <span v-if="cell.amountable_start?.value == AMOUNTABLE_PAYROLL_COMPONENT_START.CUSTOM_DATE">{{cell.start_date}}</span>
-                                <span v-else>{{cell.amountable_start?.text}}</span>
-                            </div>
-                        </template>
-                        <template v-slot:cell.amountable_end="{cell, slot, scrollReference}">
-                            <div class="p-[3px]">
-                                <span v-if="cell.amountable_end?.value == AMOUNTABLE_PAYROLL_COMPONENT_END.CUSTOM_DATE">{{cell.end_date}}</span>
-                                <span v-else>{{cell.amountable_end?.text}}</span>
-                            </div>
-                        </template>
-                    </DataTable>
-                </fieldset>
-            </div>
+                    <fieldset class="neutral-border p-2 space-y-2">
 
-            <div class="grid grid-cols-1 md:gap-2 lg:grid-cols-2">
-                <fieldset class="neutral-border px-2 pb-2 space-y-2">
-                    <legend class="text-sm">Deductions</legend>
-                    <div v-if="false">
-                        <span class="font-semibold">Employee Deductions:</span> {{employeeDeductionData}}<br>
-                        <span class="font-semibold">Employee Deductions[1]:</span> {{employeeDeductionData[1]}}<br>
-                        <span class="font-semibold">Selected Employee Deductions:</span> {{selectedEmployeeDeduction}}<br>
-                    </div>
-                    <div v-if="employeeDeductionsSuccessful" class="inline-flex gap-2 items-center">
-                        <Button
-                            class="w-min"
-                            :variant=" 'outline'"
-                            :size="'sm'"
-                            :disabled="disableEmployeeDeductionActions"
-                            :icon="'mdi:plus'"
-                            @click="createOrEditPayrollComponent(FORMULABLE.DEDUCTIONS as number)"/>
-                        <Button
-                            v-if="!creatingEmployee"
-                            class="w-min"
-                            :variant="'outline'"
-                            :size="'sm'"
-                            :icon="'mdi:delete-outline'"
-                            :disabled="disableEmployeeDeductionActions"
-                            @click="deleteSelectedPayrollComponent(FORMULABLE.DEDUCTIONS as number)" />
-                        <Button
-                            v-if="!creatingEmployee"
-                            class="w-min"
-                            :variant="'outline'"
-                            :size="'sm'"
-                            :icon="'ic:sharp-restart-alt'"
-                            :disabled="disableEmployeeDeductionActions"
-                            @click="employeeDeductionExecute" />
-                        <UnorderedList
-                            v-if="disableEmployeeDeductionActions"
-                            :icon="'eos-icons:loading'"
-                            :size="'md'"
-                            :label="'Please wait...'"/>
-                    </div>
+                        <div v-if="false">
+                            <span class="font-semibold">Employee Deductions:</span> {{employeeDeductionData}}<br>
+                            <span class="font-semibold">Employee Deductions[1]:</span> {{employeeDeductionData[1]}}<br>
+                            <span class="font-semibold">Selected Employee Deductions:</span> {{selectedEmployeeDeduction}}<br>
+                        </div>
 
-                    <div v-if="!employeeDeductionsSuccessful" class="flex flex-row flex-wrap gap-2 items-center min-h-8">
-                        <Label invert :size="'md'" :type="'danger'" :label="employeeDeductionsMessage" />
-                    </div>
+                        <div v-if="employeeDeductionsSuccessful" class="inline-flex gap-2 items-center">
+                            <Button
+                                class="w-min"
+                                :variant=" 'outline'"
+                                :size="'sm'"
+                                :disabled="disableEmployeeDeductionActions"
+                                :icon="'mdi:plus'"
+                                @click="createOrEditPayrollComponent(FORMULABLE.DEDUCTIONS as number)"/>
+                            <Button
+                                v-if="!creatingEmployee"
+                                class="w-min"
+                                :variant="'outline'"
+                                :size="'sm'"
+                                :icon="'mdi:delete-outline'"
+                                :disabled="disableEmployeeDeductionActions"
+                                @click="deleteSelectedPayrollComponent(FORMULABLE.DEDUCTIONS as number)" />
+                            <Button
+                                v-if="!creatingEmployee"
+                                class="w-min"
+                                :variant="'outline'"
+                                :size="'sm'"
+                                :icon="'ic:sharp-restart-alt'"
+                                :disabled="disableEmployeeDeductionActions"
+                                @click="employeeDeductionExecute" />
+                            <UnorderedList
+                                v-if="disableEmployeeDeductionActions"
+                                :icon="'eos-icons:loading'"
+                                :size="'md'"
+                                :label="'Please wait...'"/>
+                        </div>
 
-                    <DataTable
-                        v-if="employeeDeductionsSuccessful"
-                        :headers="employeeDeductionHeaders"
-                        :size="'lg'"
-                        :rows="employeeDeductionData"
-                        :disabled="disableEmployeeDeductionDataTable"
-                        v-model="selectedEmployeeDeduction"
-                        selection>
-                        <template v-slot:cell.action="{cell,slot, headerIndex, rowIndex}">
-                            <div class="h-[32px] mx-0.5 space-x-0.5 w-full flex items-center">
-                                <Button
-                                    v-if="creatingEmployee"
-                                    class="w-min"
-                                    :variant="'outline'"
-                                    :size="slot.buttonSize"
-                                    :disabled="disableEmployeeDeductionActions"
-                                    :icon="'mdi:delete-forever'"
-                                    @click="deletePayrollComponentRow(FORMULABLE.DEDUCTIONS as number, rowIndex)"/>
-                                <Button
-                                    class="w-min"
-                                    :variant="'outline'"
-                                    :size="slot.buttonSize"
-                                    :disabled="disableEmployeeDeductionActions"
-                                    :icon="'mdi:pen'"
-                                    @click="createOrEditPayrollComponent(FORMULABLE.DEDUCTIONS as number, cell as EmployeePayrollComponentT, rowIndex)"/>
-                            </div>
-                        </template>
-                        <template v-slot:cell.name="{cell, slot, scrollReference}">
-                            <div class="p-[3px]">{{cell.payroll_componentable.name}}</div>
-                        </template>
-                        <template v-slot:cell.type="{cell, slot, scrollReference}">
-                            <div class="p-[3px]">{{cell.payroll_componentable.type?.text}}</div>
-                        </template>
-                    </DataTable>
-                </fieldset>
+                        <div v-if="!employeeDeductionsSuccessful" class="flex flex-row flex-wrap gap-2 items-center min-h-8">
+                            <Label invert :size="'md'" :type="'danger'" :label="employeeDeductionsMessage" />
+                        </div>
 
-                <fieldset class="lg:col-span-1 neutral-border px-2 pb-2 space-y-2">
-                    <legend class="text-sm">Income Tax</legend>
-                    <div v-if="false">
-                        <span class="font-semibold">Employee Income Taxes:</span> {{employeeIncomeTaxData}}<br>
-                        <span class="font-semibold">Employee Income Taxes[1]:</span> {{employeeIncomeTaxData[1]}}<br>
-                        <span class="font-semibold">Selected Employee Income Taxes:</span> {{selectedEmployeeIncomeTax}}<br>
-                    </div>
-                    <div v-if="employeeIncomeTaxesSuccessful" class="inline-flex gap-2 items-center">
-                        <Button
-                            class="w-min"
-                            :variant=" 'outline'"
-                            :size="'sm'"
-                            :disabled="disableEmployeeIncomeTaxActions"
-                            :icon="'mdi:plus'"
-                            @click="createOrEditPayrollComponent(FORMULABLE.INCOME_TAX as number)"/>
-                        <Button
-                            v-if="!creatingEmployee"
-                            class="w-min"
-                            :variant="'outline'"
-                            :size="'sm'"
-                            :icon="'mdi:delete-outline'"
-                            :disabled="disableEmployeeIncomeTaxActions"
-                            @click="deleteSelectedPayrollComponent(FORMULABLE.INCOME_TAX as number)" />
-                        <Button
-                            v-if="!creatingEmployee"
-                            class="w-min"
-                            :variant="'outline'"
-                            :size="'sm'"
-                            :icon="'ic:sharp-restart-alt'"
-                            :disabled="disableEmployeeIncomeTaxActions"
-                            @click="employeeIncomeTaxExecute" />
-                        <UnorderedList
-                            v-if="disableEmployeeIncomeTaxActions"
-                            :icon="'eos-icons:loading'"
-                            :size="'md'"
-                            :label="'Please wait...'"/>
-                    </div>
+                        <DataTable
+                            v-if="employeeDeductionsSuccessful"
+                            :headers="employeeDeductionHeaders"
+                            :size="'lg'"
+                            :rows="employeeDeductionData"
+                            :disabled="disableEmployeeDeductionDataTable"
+                            v-model="selectedEmployeeDeduction"
+                            selection>
+                            <template v-slot:cell.action="{cell,slot, headerIndex, rowIndex}">
+                                <div class="h-[32px] mx-0.5 space-x-0.5 w-full flex items-center">
+                                    <Button
+                                        v-if="creatingEmployee"
+                                        class="w-min"
+                                        :variant="'outline'"
+                                        :size="slot.buttonSize"
+                                        :disabled="disableEmployeeDeductionActions"
+                                        :icon="'mdi:delete-forever'"
+                                        @click="deletePayrollComponentRow(FORMULABLE.DEDUCTIONS as number, rowIndex)"/>
+                                    <Button
+                                        class="w-min"
+                                        :variant="'outline'"
+                                        :size="slot.buttonSize"
+                                        :disabled="disableEmployeeDeductionActions"
+                                        :icon="'mdi:pen'"
+                                        @click="createOrEditPayrollComponent(FORMULABLE.DEDUCTIONS as number, cell as EmployeePayrollComponentT, rowIndex)"/>
+                                </div>
+                            </template>
+                            <template v-slot:cell.name="{cell, slot, scrollReference}">
+                                <div class="p-[3px]">{{cell.payroll_componentable.name}}</div>
+                            </template>
+                            <template v-slot:cell.type="{cell, slot, scrollReference}">
+                                <div class="p-[3px]">{{cell.payroll_componentable.type?.text}}</div>
+                            </template>
+                        </DataTable>
+                    </fieldset>
 
-                    <div v-if="!employeeIncomeTaxesSuccessful" class="flex flex-row flex-wrap gap-2 items-center min-h-8">
-                        <Label invert :size="'md'" :type="'danger'" :label="employeeIncomeTaxesMessage" />
-                    </div>
+                    <fieldset class="lg:col-span-1 neutral-border p-2 space-y-2">
 
-                    <DataTable
-                        v-if="employeeIncomeTaxesSuccessful"
-                        :headers="employeeIncomeTaxHeaders"
-                        :size="'lg'"
-                        :rows="employeeIncomeTaxData"
-                        :disabled="disableEmployeeIncomeTaxDataTable"
-                        v-model="selectedEmployeeIncomeTax"
-                        selection>
-                        <template v-slot:cell.action="{cell,slot, headerIndex, rowIndex}">
-                            <div class="h-[32px] mx-0.5 space-x-0.5 w-full flex items-center">
-                                <Button
-                                    v-if="creatingEmployee"
-                                    class="w-min"
-                                    :variant="'outline'"
-                                    :size="slot.buttonSize"
-                                    :disabled="disableEmployeeIncomeTaxActions"
-                                    :icon="'mdi:delete-forever'"
-                                    @click="deletePayrollComponentRow(FORMULABLE.INCOME_TAX as number, rowIndex)"/>
-                                <Button
-                                    class="w-min"
-                                    :variant="'outline'"
-                                    :size="slot.buttonSize"
-                                    :disabled="disableEmployeeIncomeTaxActions"
-                                    :icon="'mdi:pen'"
-                                    @click="createOrEditPayrollComponent(FORMULABLE.INCOME_TAX as number, cell as EmployeePayrollComponentT, rowIndex)"/>
-                            </div>
-                        </template>
-                        <template v-slot:cell.name="{cell, slot, scrollReference}">
-                            <div class="p-[3px]">{{cell.payroll_componentable.name}}</div>
-                        </template>
-                        <template v-slot:cell.type="{cell, slot, scrollReference}">
-                            <div class="p-[3px]">{{cell.payroll_componentable.type?.text}}</div>
-                        </template>
-                    </DataTable>
-                </fieldset>
+                        <div v-if="false">
+                            <span class="font-semibold">Employee Income Taxes:</span> {{employeeIncomeTaxData}}<br>
+                            <span class="font-semibold">Employee Income Taxes[1]:</span> {{employeeIncomeTaxData[1]}}<br>
+                            <span class="font-semibold">Selected Employee Income Taxes:</span> {{selectedEmployeeIncomeTax}}<br>
+                        </div>
+
+                        <div v-if="employeeIncomeTaxesSuccessful" class="inline-flex gap-2 items-center">
+                            <Button
+                                class="w-min"
+                                :variant=" 'outline'"
+                                :size="'sm'"
+                                :disabled="disableEmployeeIncomeTaxActions"
+                                :icon="'mdi:plus'"
+                                @click="createOrEditPayrollComponent(FORMULABLE.INCOME_TAX as number)"/>
+                            <Button
+                                v-if="!creatingEmployee"
+                                class="w-min"
+                                :variant="'outline'"
+                                :size="'sm'"
+                                :icon="'mdi:delete-outline'"
+                                :disabled="disableEmployeeIncomeTaxActions"
+                                @click="deleteSelectedPayrollComponent(FORMULABLE.INCOME_TAX as number)" />
+                            <Button
+                                v-if="!creatingEmployee"
+                                class="w-min"
+                                :variant="'outline'"
+                                :size="'sm'"
+                                :icon="'ic:sharp-restart-alt'"
+                                :disabled="disableEmployeeIncomeTaxActions"
+                                @click="employeeIncomeTaxExecute" />
+                            <UnorderedList
+                                v-if="disableEmployeeIncomeTaxActions"
+                                :icon="'eos-icons:loading'"
+                                :size="'md'"
+                                :label="'Please wait...'"/>
+                        </div>
+
+                        <div v-if="!employeeIncomeTaxesSuccessful" class="flex flex-row flex-wrap gap-2 items-center min-h-8">
+                            <Label invert :size="'md'" :type="'danger'" :label="employeeIncomeTaxesMessage" />
+                        </div>
+
+                        <DataTable
+                            v-if="employeeIncomeTaxesSuccessful"
+                            :headers="employeeIncomeTaxHeaders"
+                            :size="'lg'"
+                            :rows="employeeIncomeTaxData"
+                            :disabled="disableEmployeeIncomeTaxDataTable"
+                            v-model="selectedEmployeeIncomeTax"
+                            selection>
+                            <template v-slot:cell.action="{cell,slot, headerIndex, rowIndex}">
+                                <div class="h-[32px] mx-0.5 space-x-0.5 w-full flex items-center">
+                                    <Button
+                                        v-if="creatingEmployee"
+                                        class="w-min"
+                                        :variant="'outline'"
+                                        :size="slot.buttonSize"
+                                        :disabled="disableEmployeeIncomeTaxActions"
+                                        :icon="'mdi:delete-forever'"
+                                        @click="deletePayrollComponentRow(FORMULABLE.INCOME_TAX as number, rowIndex)"/>
+                                    <Button
+                                        class="w-min"
+                                        :variant="'outline'"
+                                        :size="slot.buttonSize"
+                                        :disabled="disableEmployeeIncomeTaxActions"
+                                        :icon="'mdi:pen'"
+                                        @click="createOrEditPayrollComponent(FORMULABLE.INCOME_TAX as number, cell as EmployeePayrollComponentT, rowIndex)"/>
+                                </div>
+                            </template>
+                            <template v-slot:cell.name="{cell, slot, scrollReference}">
+                                <div class="p-[3px]">{{cell.payroll_componentable.name}}</div>
+                            </template>
+                            <template v-slot:cell.type="{cell, slot, scrollReference}">
+                                <div class="p-[3px]">{{cell.payroll_componentable.type?.text}}</div>
+                            </template>
+                        </DataTable>
+                    </fieldset>
+                </div>
             </div>
         </fieldset>
     </div>

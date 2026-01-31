@@ -8,100 +8,104 @@
             @resolved="employmentProfileModalResolved"
         ></EmploymentProfileModal>
 
-        <fieldset class="neutral-border px-2 pb-2 space-y-2">
-            <legend class="text-lg font-header">Employment Profile</legend>
+        <div class="lining-shadow rounded-sm tint-background space-y-2">
 
-            <div v-if="false">
-                <span class="font-semibold">Employee Payload:</span> {{childComponentEmployeePayload}}<br>
-                <span class="font-semibold">Employee Ulid:</span> {{employeeUlid}}<br>
-                <span class="font-semibold">Edit Payload Index:</span> {{editIndex}}<br>
-                <span class="font-semibold">Props Disable Actions:</span> {{props.disableActions}}<br>
-                <span class="font-semibold">Employment Profiles:</span> {{employmentProfilesData}}<br>
-                <span class="font-semibold">Employment Profiles[1]:</span> {{employmentProfilesData[1]}}<br>
-                <span class="font-semibold">Selected Employment Profiles:</span> {{selectedEmploymentProfiles}}<br>
-            </div>
+            <div class="lining-shadow rounded-t-sm text-lg px-4 py-2">Employment Profile</div>
 
-            <div class="grid grid-cols-1 md:gap-2 lg:grid-cols-1">
-                <div class="space-y-2">
-                    <div v-if="employmentProfilesSuccessful" class="inline-flex gap-2 items-center">
-                        <Button
-                            class="w-min"
-                            :variant=" 'outline'"
-                            :size="'sm'"
-                            :disabled="disableActions"
-                            :icon="'mdi:plus'"
-                            @click="createOrEdit()"/>
-                        <Button
-                            v-if="!creatingEmployee"
-                            class="w-min"
-                            :variant="'outline'"
-                            :size="'sm'"
-                            :icon="'mdi:delete-outline'"
-                            :disabled="disableActions"
-                            @click="deleteSelected()" />
-                        <Button
-                            v-if="!creatingEmployee"
-                            class="w-min"
-                            :variant="'outline'"
-                            :size="'sm'"
-                            :icon="'ic:sharp-restart-alt'"
-                            :disabled="disableActions"
-                            @click="employmentProfileExecute" />
-                        <UnorderedList
-                            v-if="disableActions"
-                            :icon="'eos-icons:loading'"
-                            :size="'md'"
-                            :label="'Please wait...'"/>
-                    </div>
+            <div class="p-4">
 
-                    <div v-if="!employmentProfilesSuccessful" class="flex flex-row flex-wrap gap-2 items-center min-h-8">
-                        <Label invert :size="'md'" :type="'danger'" :label="employmentProfilesMessage" />
-                    </div>
-
-                    <DataTable
-                        v-if="employmentProfilesSuccessful"
-                        :headers="employmentProfileHeaders"
-                        :size="'lg'"
-                        :rows="employmentProfilesData"
-                        :disabled="disableDataTable"
-                        v-model="selectedEmploymentProfiles"
-                        selection>
-                        <template v-slot:cell.action="{cell,slot, headerIndex, rowIndex}">
-                            <div class="h-[32px] mx-0.5 space-x-0.5 w-full flex items-center">
-                                <Button
-                                    v-if="creatingEmployee"
-                                    class="w-min"
-                                    :variant="'outline'"
-                                    :size="slot.buttonSize"
-                                    :disabled="disableActions"
-                                    :icon="'mdi:delete-forever'"
-                                    @click="deleteRow(rowIndex)"/>
-                                <Button
-                                    class="w-min"
-                                    :variant="'outline'"
-                                    :size="slot.buttonSize"
-                                    :disabled="disableActions"
-                                    :icon="'mdi:pen'"
-                                    @click="createOrEdit(cell, rowIndex)"/>
-                            </div>
-                        </template>
-                        <template v-slot:cell.status="{cell, slot, scrollReference}">
-                            <div class="p-[3px]">{{cell.status.text}}</div>
-                        </template>
-                        <template v-slot:cell.employment_type="{cell, slot, scrollReference}">
-                            <div class="p-[3px]">{{cell.employment_type.text}}</div>
-                        </template>
-                        <template v-slot:cell.end_of_service_type="{cell, slot, scrollReference}">
-                            <div class="p-[3px]">{{cell.end_of_service_type?.text}}</div>
-                        </template>
-                    </DataTable>
+                <div v-if="false">
+                    <span class="font-semibold">Employee Payload:</span> {{childComponentEmployeePayload}}<br>
+                    <span class="font-semibold">Employee Ulid:</span> {{employeeUlid}}<br>
+                    <span class="font-semibold">Edit Payload Index:</span> {{editIndex}}<br>
+                    <span class="font-semibold">Props Disable Actions:</span> {{props.disableActions}}<br>
+                    <span class="font-semibold">Employment Profiles:</span> {{employmentProfilesData}}<br>
+                    <span class="font-semibold">Employment Profiles[1]:</span> {{employmentProfilesData[1]}}<br>
+                    <span class="font-semibold">Selected Employment Profiles:</span> {{selectedEmploymentProfiles}}<br>
                 </div>
 
-                <div class="lg:col-span-1 px-2 pb-2 space-y-2">
+                <div class="grid grid-cols-1 md:gap-2 lg:grid-cols-1">
+                    <div class="space-y-2">
+                        <div v-if="employmentProfilesSuccessful" class="inline-flex gap-2 items-center">
+                            <Button
+                                class="w-min"
+                                :variant=" 'outline'"
+                                :size="'sm'"
+                                :disabled="disableActions"
+                                :icon="'mdi:plus'"
+                                @click="createOrEdit()"/>
+                            <Button
+                                v-if="!creatingEmployee"
+                                class="w-min"
+                                :variant="'outline'"
+                                :size="'sm'"
+                                :icon="'mdi:delete-outline'"
+                                :disabled="disableActions"
+                                @click="deleteSelected()" />
+                            <Button
+                                v-if="!creatingEmployee"
+                                class="w-min"
+                                :variant="'outline'"
+                                :size="'sm'"
+                                :icon="'ic:sharp-restart-alt'"
+                                :disabled="disableActions"
+                                @click="employmentProfileExecute" />
+                            <UnorderedList
+                                v-if="disableActions"
+                                :icon="'eos-icons:loading'"
+                                :size="'md'"
+                                :label="'Please wait...'"/>
+                        </div>
 
+                        <div v-if="!employmentProfilesSuccessful" class="flex flex-row flex-wrap gap-2 items-center min-h-8">
+                            <Label invert :size="'md'" :type="'danger'" :label="employmentProfilesMessage" />
+                        </div>
+
+                        <DataTable
+                            v-if="employmentProfilesSuccessful"
+                            :headers="employmentProfileHeaders"
+                            :size="'lg'"
+                            :rows="employmentProfilesData"
+                            :disabled="disableDataTable"
+                            v-model="selectedEmploymentProfiles"
+                            selection>
+                            <template v-slot:cell.action="{cell,slot, headerIndex, rowIndex}">
+                                <div class="h-[32px] mx-0.5 space-x-0.5 w-full flex items-center">
+                                    <Button
+                                        v-if="creatingEmployee"
+                                        class="w-min"
+                                        :variant="'outline'"
+                                        :size="slot.buttonSize"
+                                        :disabled="disableActions"
+                                        :icon="'mdi:delete-forever'"
+                                        @click="deleteRow(rowIndex)"/>
+                                    <Button
+                                        class="w-min"
+                                        :variant="'outline'"
+                                        :size="slot.buttonSize"
+                                        :disabled="disableActions"
+                                        :icon="'mdi:pen'"
+                                        @click="createOrEdit(cell, rowIndex)"/>
+                                </div>
+                            </template>
+                            <template v-slot:cell.status="{cell, slot, scrollReference}">
+                                <div class="p-[3px]">{{cell.status.text}}</div>
+                            </template>
+                            <template v-slot:cell.employment_type="{cell, slot, scrollReference}">
+                                <div class="p-[3px]">{{cell.employment_type.text}}</div>
+                            </template>
+                            <template v-slot:cell.end_of_service_type="{cell, slot, scrollReference}">
+                                <div class="p-[3px]">{{cell.end_of_service_type?.text}}</div>
+                            </template>
+                        </DataTable>
+                    </div>
+
+                    <div class="lg:col-span-1 px-2 pb-2 space-y-2">
+
+                    </div>
                 </div>
             </div>
-        </fieldset>
+        </div>
     </div>
 </template>
 
