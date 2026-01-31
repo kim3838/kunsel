@@ -262,7 +262,7 @@ const preImportSupHeaders = reactive<TableSupHeaderT[]>([
     {text: 'Required', colspan: 1, value: 'number', alignHeader: 'left', justifyData: 'top', width: '140px', maxWidth: '140px'},
     {text: 'Required', colspan: 1, value: 'family_name', alignHeader: 'left'},
     {text: 'Required', colspan: 1, value: 'given_name'},
-    {text: 'Required', colspan: 1, value: 'payroll_group', alignHeader: 'left', justifyData: 'top'},
+    {text: 'Optional', colspan: 1, value: 'payroll_group', alignHeader: 'left', justifyData: 'top'},
     {text: 'Optional', colspan: 1, value: 'office_email', alignHeader: 'left', justifyData: 'top',width: '170px', maxWidth: '170px'},
     {text: ''},
 ]);
