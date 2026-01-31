@@ -1001,10 +1001,10 @@
                             <Button :disabled="true" :icon="'eos-icons:compass'" :label="'Disabled'"></Button>
                         </div>
                         <div class="col-span-2 flex items-start justify-start block w-full neutral-border">
-                            <Button @click="$themeStore.setTheme('blue')" :size="'lg'" :icon="'mdi:palette-swatch-variant'" :label="'Blue Theme'"></Button>
+                            <Button @click="$themeStore.setTheme('default-blue')" :size="'lg'" :icon="'mdi:palette-swatch-variant'" :label="'Blue Theme'"></Button>
                         </div>
                         <div class="col-span-3 flex items-start justify-start block w-full neutral-border">
-                            <Button @click="$themeStore.setTheme('tulip')" :size="'xl'" :icon="'eos-icons:atom-electron'" :label="'Tulip Theme'"></Button>
+                            <Button @click="$themeStore.setTheme('light-tulip')" :size="'xl'" :icon="'eos-icons:atom-electron'" :label="'Tulip Theme'"></Button>
                         </div>
                     </div>
 
@@ -1029,7 +1029,7 @@
                             <Button @click="$themeStore.setTheme('light')" :variant="'outline'" :size="'lg'" :icon="'mdi:palette-swatch-variant'" :label="'Light Theme'"></Button>
                         </div>
                         <div class="col-span-2 flex items-start justify-start block w-full">
-                            <Button @click="$themeStore.setTheme('dark')" :variant="'outline'" :size="'xl'" :icon="'eos-icons:atom-electron'" :label="'Dark Theme'"></Button>
+                            <Button @click="$themeStore.setTheme('dark-silver')" :variant="'outline'" :size="'xl'" :icon="'eos-icons:atom-electron'" :label="'Dark Theme'"></Button>
                         </div>
                     </div>
 
@@ -1051,7 +1051,7 @@
                             <Button :variant="'flat'" :flat-border-color="liningColor" :icon="'eos-icons:compass'" :label="'Disabled'"></Button>
                         </div>
                         <div class="col-span-2 flex items-start justify-start block w-full neutral-border">
-                            <Button @click="$themeStore.setTheme('emerald')" :variant="'flat'" :size="'lg'" :icon="'mdi:palette-swatch-variant'" :disabled="true" :label="'Emerald Theme'"></Button>
+                            <Button @click="$themeStore.setTheme('dark-emerald')" :variant="'flat'" :size="'lg'" :icon="'mdi:palette-swatch-variant'" :disabled="true" :label="'Emerald Theme'"></Button>
                         </div>
                         <div class="col-span-2 flex items-start justify-start block w-full neutral-border">
                             <Button :variant="'flat'" :size="'xl'" :icon="'eos-icons:atom-electron'" :label="'XL Authenticate'"></Button>
