@@ -56,11 +56,13 @@
                 </DialogModal>
 
                 <div class="p-[20px] space-y-2">
-                    <div class="flex">
+                    <div class="flex flex-row flex-wrap gap-2 items-center min-h-8">
                         <NuxtLink
                             :to="`/hr-payroll/workforce/employees`">
-                            <Button class="w-min" :variant="`outline`" :disabled="disableActions" :size="'sm'" :icon="disableActions ? 'eos-icons:loading' : 'ic:sharp-keyboard-arrow-left'" :label="disableActions ? 'Please wait' : ''"></Button>
+                            <Button class="w-min" :variant="`outline`" :disabled="disableActions" :size="'sm'" :icon="'ic:sharp-keyboard-arrow-left'" :label="''"></Button>
                         </NuxtLink>
+
+                        <Button class="w-min" :variant="`outline`" :disabled="disableActions" @click="coreFormSubmit(null, {})" :size="'sm'" :icon="disableActions ? 'eos-icons:loading' : 'ic:sharp-save'" :label="coreFormSubmitLabelBasic"></Button>
                     </div>
 
                     <div v-if="!employeeSuccessful">
@@ -69,7 +71,7 @@
                         </div>
                     </div>
 
-                    <div v-if="employeeSuccessful" class="space-y-2">
+                    <div v-if="employeeSuccessful" class="space-y-4">
                         <div v-if="false">
                             validateForms: {{validateForms}}<br>
                             creatingEmployee: {{creatingEmployee}}<br>
@@ -82,197 +84,205 @@
                         </div>
 
                         <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                            <fieldset class="neutral-border px-2 pb-2 space-y-2">
-                                <legend class="text-lg font-header">User Account</legend>
-                                <div v-if="employeeHasUser">
-                                    <div class="flex gap-3">
-                                        <div>
-                                            <UnorderedList
-                                                class="w-full font-data"
-                                                :size="'md'"
-                                                :label="'Username'"/>
-                                            <UnorderedList
-                                                class="w-full font-data"
-                                                :icon="'ic:sharp-person-pin'"
-                                                :size="'md'"
-                                                :label="employee.user.name"/>
+
+                            <div class="lining-shadow rounded-sm tint-background">
+
+                                <div class="lining-shadow rounded-t-sm text-lg px-4 py-2">User Account</div>
+
+                                <div class="p-4">
+                                    <div v-if="employeeHasUser">
+                                        <div class="flex gap-6">
+                                            <div>
+                                                <InputLabel :size="'xs'" value="Username" />
+                                                <div>{{ _get(employee, 'user.name', '--') }}</div>
+                                            </div>
+                                            <div>
+                                                <InputLabel :size="'xs'" value="Email" />
+                                                <div>{{ _get(employee, 'user.email', '--') }}</div>
+                                            </div>
+                                            <div>
+                                                <InputLabel :size="'xs'" value="Email verification" />
+                                                <div>{{ employee.user?.email_verified_at ? 'Email Verified' : 'Email Not Verified' }}</div>
+                                            </div>
                                         </div>
-                                        <div>
-                                            <UnorderedList
-                                                class="font-data"
-                                                :icon="employee.user?.email_verified_at ? 'ic:sharp-verified-user' : 'mdi:security-close'"
-                                                :size="'md'"
-                                                :label="employee.user?.email_verified_at ? 'Email Verified' : 'Email Not Verified'"/>
-                                            <UnorderedList
-                                                class="w-full font-data"
-                                                :icon="'ic:round-mail-outline'"
-                                                :size="'md'"
-                                                :label="employee.user.email"/>
+                                    </div>
+                                    <div v-else class="space-y-4">
+                                        <RadioGroup
+                                            :disabled="disableActions || employeeUserCreationOptionsDisabled"
+                                            :selections="employeeUserCreationOptions.selection"
+                                            :size="'md'"
+                                            :orientation="employeeUserCreationOrientation"
+                                            v-model="employeeUserCreationOptions.selected" />
+
+                                        <div v-if="employeeUserCreationOptions.selected == EMPLOYEE_USER_CREATION.AUTOGENERATED">
+                                            <div>Auto generate user account as follows:</div>
+                                            <br>
+                                            <p><span class="font-semibold">Username:</span> (Family name in lowercase without space)(dot)(First letter of Given name in lowercase)(dot)(Random 4 character)</p>
+                                            <p><span class="font-semibold">Password:</span> Random 8 character password</p>
+                                            <p><span class="font-semibold">Email:</span> Provided office email</p>
+                                            <p><span class="font-semibold">Timezone:</span> Company Timezone</p>
+                                        </div>
+
+                                        <div v-if="employeeUserCreationOptions.selected == EMPLOYEE_USER_CREATION.EXISTING_USER" class="grid gap-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-2 xl:grid-cols-3">
+                                            <div class="sm:col-span-2 lg:col-span-2">
+                                                <InputLabel :size="'sm'" value="User"/>
+                                                <SingleSelect :disabled="disableActions || employeeUserCreationOptionsDisabled || nonEmployeeUsersPending" drop-shadow :size="'md'" :options="nonEmployeeUserOptions"/>
+                                            </div>
+                                        </div>
+
+                                        <div v-if="employeeUserCreationOptions.selected == EMPLOYEE_USER_CREATION.MANUAL" class="grid gap-2 grid-cols-2 sm:grid-cols-3 md:grid-cols-5 lg:grid-cols-3 xl:grid-cols-6">
+                                            <div class="xl:col-span-2">
+                                                <InputLabel :size="'sm'" value="Username *"/>
+                                                <Input :disabled="disableActions" :size="'md'" v-model="employeeUsername" type="text"/>
+                                            </div>
+                                            <div class="xl:col-span-2">
+                                                <InputLabel :size="'sm'" value="User email *"/>
+                                                <Input :disabled="disableActions" :size="'md'" v-model="employeeUserEmail" type="email"/>
+                                            </div>
+                                            <div class="xl:col-span-2">
+                                                <InputLabel :size="'sm'" value="Timezone *"/>
+                                                <SingleSelect :icon="'stash:globe-timezone-solid'" :disabled="disableActions" value-persist drop-shadow :size="'md'" :options="employeeUserTimezoneOptions"/>
+                                            </div>
+                                            <div class="xl:col-span-2">
+                                                <InputLabel :size="'sm'" value="Status"/>
+                                                <SingleSelect :icon="'mdi:checkbook'" :disabled="disableActions" value-persist drop-shadow :size="'md'" :options="employeeUserStatusOptions"/>
+                                            </div>
+                                            <div class="xl:col-span-2">
+                                                <InputLabel :size="'sm'" value="Password *"/>
+                                                <Input :disabled="disableActions" :size="'md'" v-model="employeeUserPassword" type="password"/>
+                                            </div>
+                                            <div class="xl:col-span-2">
+                                                <InputLabel :size="'sm'" value="Re-type Password *"/>
+                                                <Input :disabled="disableActions" :size="'md'" v-model="employeeUserPasswordConfirmation" type="password"/>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div v-else class="space-y-4">
-                                    <RadioGroup
-                                        :disabled="disableActions || employeeUserCreationOptionsDisabled"
-                                        :selections="employeeUserCreationOptions.selection"
-                                        :size="'md'"
-                                        :orientation="employeeUserCreationOrientation"
-                                        v-model="employeeUserCreationOptions.selected" />
+                            </div>
 
-                                    <div v-if="employeeUserCreationOptions.selected == EMPLOYEE_USER_CREATION.AUTOGENERATED">
-                                        <div>Auto generate user account as follows:</div>
-                                        <br>
-                                        <p><span class="font-semibold">Username:</span> (Family name in lowercase without space)(dot)(First letter of Given name in lowercase)(dot)(Random 4 character)</p>
-                                        <p><span class="font-semibold">Password:</span> Random 8 character password</p>
-                                        <p><span class="font-semibold">Email:</span> Provided office email</p>
-                                        <p><span class="font-semibold">Timezone:</span> Company Timezone</p>
-                                    </div>
+                            <div class="lining-shadow rounded-sm tint-background">
 
-                                    <div v-if="employeeUserCreationOptions.selected == EMPLOYEE_USER_CREATION.EXISTING_USER" class="grid gap-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-2 xl:grid-cols-3">
-                                        <div class="sm:col-span-2 lg:col-span-2">
-                                            <InputLabel :size="'sm'" value="User"/>
-                                            <SingleSelect :disabled="disableActions || employeeUserCreationOptionsDisabled || nonEmployeeUsersPending" drop-shadow :size="'md'" :options="nonEmployeeUserOptions"/>
-                                        </div>
-                                    </div>
+                                <div class="lining-shadow rounded-t-sm text-lg px-4 py-2">Contact</div>
 
-                                    <div v-if="employeeUserCreationOptions.selected == EMPLOYEE_USER_CREATION.MANUAL" class="grid gap-2 grid-cols-2 sm:grid-cols-3 md:grid-cols-5 lg:grid-cols-3 xl:grid-cols-6">
-                                        <div class="xl:col-span-2">
-                                            <InputLabel :size="'sm'" value="Username *"/>
-                                            <Input :disabled="disableActions" :size="'md'" v-model="employeeUsername" type="text"/>
+                                <div class="p-4">
+                                    <div class="grid gap-2 grid-cols-2 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-5 xl:grid-cols-6">
+                                        <div class="lg:col-span-2">
+                                            <InputLabel :size="'sm'" :value="`Office email ${employeeUserCreationOptions.selected == EMPLOYEE_USER_CREATION.AUTOGENERATED ? '*' : ''}`"/>
+                                            <InputWithIcon :disabled="disableActions" :icon="'ic:baseline-mail-outline'" :size="'md'" v-model="employeeOfficeEmail" type="email"/>
                                         </div>
-                                        <div class="xl:col-span-2">
-                                            <InputLabel :size="'sm'" value="User email *"/>
-                                            <Input :disabled="disableActions" :size="'md'" v-model="employeeUserEmail" type="email"/>
+                                        <div class="lg:col-span-2">
+                                            <InputLabel :size="'sm'" value="Personal email"/>
+                                            <InputWithIcon :disabled="disableActions" :icon="'ic:baseline-mail-outline'" :size="'md'" v-model="employeePersonalEmail" type="email"/>
                                         </div>
-                                        <div class="xl:col-span-2">
-                                            <InputLabel :size="'sm'" value="Timezone *"/>
-                                            <SingleSelect :icon="'stash:globe-timezone-solid'" :disabled="disableActions" value-persist drop-shadow :size="'md'" :options="employeeUserTimezoneOptions"/>
+                                        <div class="hidden lg:block"></div>
+                                        <div class="lg:col-span-2">
+                                            <InputLabel :size="'sm'" value="Office phone number"/>
+                                            <InputWithIcon :disabled="disableActions" :icon="'ic:baseline-phone-android'" :size="'md'" v-model="employeeOfficePhone" type="text"/>
                                         </div>
-                                        <div class="xl:col-span-2">
-                                            <InputLabel :size="'sm'" value="Status"/>
-                                            <SingleSelect :icon="'mdi:checkbook'" :disabled="disableActions" value-persist drop-shadow :size="'md'" :options="employeeUserStatusOptions"/>
-                                        </div>
-                                        <div class="xl:col-span-2">
-                                            <InputLabel :size="'sm'" value="Password *"/>
-                                            <Input :disabled="disableActions" :size="'md'" v-model="employeeUserPassword" type="password"/>
-                                        </div>
-                                        <div class="xl:col-span-2">
-                                            <InputLabel :size="'sm'" value="Re-type Password *"/>
-                                            <Input :disabled="disableActions" :size="'md'" v-model="employeeUserPasswordConfirmation" type="password"/>
+                                        <div class="lg:col-span-2">
+                                            <InputLabel :size="'sm'" value="Personal phone number"/>
+                                            <InputWithIcon :disabled="disableActions" :icon="'ic:baseline-phone-android'" :size="'md'" v-model="employeePersonalPhone" type="text"/>
                                         </div>
                                     </div>
                                 </div>
-                            </fieldset>
-
-                            <fieldset class="neutral-border px-2 pb-2 space-y-2">
-                                <legend class="text-lg font-header">Contact</legend>
-
-                                <div class="grid gap-2 grid-cols-2 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-5 xl:grid-cols-6">
-                                    <div class="lg:col-span-2">
-                                        <InputLabel :size="'sm'" :value="`Office email ${employeeUserCreationOptions.selected == EMPLOYEE_USER_CREATION.AUTOGENERATED ? '*' : ''}`"/>
-                                        <InputWithIcon :disabled="disableActions" :icon="'ic:baseline-mail-outline'" :size="'md'" v-model="employeeOfficeEmail" type="email"/>
-                                    </div>
-                                    <div class="lg:col-span-2">
-                                        <InputLabel :size="'sm'" value="Personal email"/>
-                                        <InputWithIcon :disabled="disableActions" :icon="'ic:baseline-mail-outline'" :size="'md'" v-model="employeePersonalEmail" type="email"/>
-                                    </div>
-                                    <div class="hidden lg:block"></div>
-                                    <div class="lg:col-span-2">
-                                        <InputLabel :size="'sm'" value="Office phone number"/>
-                                        <InputWithIcon :disabled="disableActions" :icon="'ic:baseline-phone-android'" :size="'md'" v-model="employeeOfficePhone" type="text"/>
-                                    </div>
-                                    <div class="lg:col-span-2">
-                                        <InputLabel :size="'sm'" value="Personal phone number"/>
-                                        <InputWithIcon :disabled="disableActions" :icon="'ic:baseline-phone-android'" :size="'md'" v-model="employeePersonalPhone" type="text"/>
-                                    </div>
-                                </div>
-                            </fieldset>
+                            </div>
                         </div>
 
                         <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                            <fieldset class="neutral-border px-2 pb-2 space-y-2">
-                                <legend class="text-lg font-header">Employee Information</legend>
 
-                                <div v-if="false">
-                                    <span class="font-semibold">Employee:</span> {{employee}}<br>
-                                    <span class="font-semibold">Child Component Employee Payload:</span> {{childComponentEmployeePayload}}<br>
+                            <div class="lining-shadow rounded-sm tint-background">
+
+                                <div class="lining-shadow rounded-t-sm text-lg px-4 py-2">Employee Information</div>
+
+                                <div class="p-4 space-y-2">
+
+                                    <div v-if="false">
+                                        <span class="font-semibold">Employee:</span> {{employee}}<br>
+                                        <span class="font-semibold">Child Component Employee Payload:</span> {{childComponentEmployeePayload}}<br>
+                                    </div>
+
+                                    <div class="grid gap-2 grid-cols-2 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-4 xl:grid-cols-5">
+                                        <div>
+                                            <InputLabel :size="'sm'" value="Employee number *"/>
+                                            <Input :disabled="disableActions" :size="'md'" v-model="employeeNumber" type="text"/>
+                                        </div>
+                                    </div>
+
+                                    <div class="grid gap-2 grid-cols-2 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-4 xl:grid-cols-5">
+                                        <div>
+                                            <InputLabel :size="'sm'" value="Family name *"/>
+                                            <Input :disabled="disableActions" :size="'md'" v-model="employeeFamilyName" type="text"/>
+                                        </div>
+                                        <div>
+                                            <InputLabel :size="'sm'" value="Middle name"/>
+                                            <Input :disabled="disableActions" :size="'md'" v-model="employeeMiddleName" type="text"/>
+                                        </div>
+                                        <div>
+                                            <InputLabel :size="'sm'" value="Given name *"/>
+                                            <Input :disabled="disableActions" :size="'md'" v-model="employeeGivenName" type="text"/>
+                                        </div>
+                                        <div>
+                                            <InputLabel :size="'sm'" value="Gender"/>
+                                            <SingleSelect :disabled="disableActions" drop-shadow value-persist :size="'md'" :options="genderOptions"/>
+                                        </div>
+                                        <div class="hidden xl:block"></div>
+                                        <div>
+                                            <InputLabel :size="'sm'" value="Marital Status"/>
+                                            <SingleSelect :disabled="disableActions" drop-shadow value-persist :size="'md'" :options="maritalStatusOptions"/>
+                                        </div>
+                                        <div>
+                                            <InputLabel :size="'sm'" value="Birthdate *"/>
+                                            <InputWithIcon
+                                                :disabled="disableActions"
+                                                :override="{font_family_class: 'font-sans'}"
+                                                :icon="'mdi:calendar-cursor-outline'"
+                                                :id="`datetime-birthdate-${route.params.id}`" v-model="employeeBirthdate" :size="'md'" />
+                                        </div>
+                                    </div>
                                 </div>
 
-                                <div class="grid gap-2 grid-cols-2 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-4 xl:grid-cols-5">
-                                    <div>
-                                        <InputLabel :size="'sm'" value="Employee number *"/>
-                                        <Input :disabled="disableActions" :size="'md'" v-model="employeeNumber" type="text"/>
-                                    </div>
-                                </div>
+                            </div>
 
-                                <div class="grid gap-2 grid-cols-2 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-4 xl:grid-cols-5">
-                                    <div>
-                                        <InputLabel :size="'sm'" value="Family name *"/>
-                                        <Input :disabled="disableActions" :size="'md'" v-model="employeeFamilyName" type="text"/>
-                                    </div>
-                                    <div>
-                                        <InputLabel :size="'sm'" value="Middle name"/>
-                                        <Input :disabled="disableActions" :size="'md'" v-model="employeeMiddleName" type="text"/>
-                                    </div>
-                                    <div>
-                                        <InputLabel :size="'sm'" value="Given name *"/>
-                                        <Input :disabled="disableActions" :size="'md'" v-model="employeeGivenName" type="text"/>
-                                    </div>
-                                    <div>
-                                        <InputLabel :size="'sm'" value="Gender"/>
-                                        <SingleSelect :disabled="disableActions" drop-shadow value-persist :size="'md'" :options="genderOptions"/>
-                                    </div>
-                                    <div>
-                                        <InputLabel :size="'sm'" value="Marital Status"/>
-                                        <SingleSelect :disabled="disableActions" drop-shadow value-persist :size="'md'" :options="maritalStatusOptions"/>
-                                    </div>
-                                    <div>
-                                        <InputLabel :size="'sm'" value="Birthdate *"/>
-                                        <InputWithIcon
-                                            :disabled="disableActions"
-                                            :override="{font_family_class: 'font-sans'}"
-                                            :icon="'mdi:calendar-cursor-outline'"
-                                            :id="`datetime-birthdate-${route.params.id}`" v-model="employeeBirthdate" :size="'md'" />
-                                    </div>
-                                </div>
-                            </fieldset>
+                            <div class="lining-shadow rounded-sm tint-background">
 
-                            <fieldset class="neutral-border px-2 pb-2 space-y-2">
-                                <legend class="text-lg font-header">Organization</legend>
+                                <div class="lining-shadow rounded-t-sm text-lg px-4 py-2">Organization</div>
 
-                                <div class="grid gap-2 grid-cols-2 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-5 xl:grid-cols-6">
-                                    <div class="lg:col-span-2">
-                                        <InputLabel :size="'sm'" value="Department"/>
-                                        <SingleSelect :icon="'ic:baseline-all-inbox'" :disabled="disableActions" drop-shadow :size="'md'" :options="departmentOptions"/>
+                                <div class="p-4 space-y-2">
+                                    <div class="grid gap-2 grid-cols-2 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-5 xl:grid-cols-6">
+                                        <div class="lg:col-span-2">
+                                            <InputLabel :size="'sm'" value="Department"/>
+                                            <SingleSelect :icon="'ic:baseline-all-inbox'" :disabled="disableActions" drop-shadow :size="'md'" :options="departmentOptions"/>
+                                        </div>
+                                        <div v-if="departmentOptions.selected" class="col-span-2 sm:col-span-3">
+                                            <InputLabel :size="'sm'" value="Department Assignment"/>
+                                            <RadioGroup
+                                                :selections="departmentAssignmentSelections"
+                                                :size="'md'"
+                                                :orientation="'horizontal'"
+                                                :radio-key="'department-assignment'"
+                                                v-model="departmentAssignment" />
+                                        </div>
                                     </div>
-                                    <div v-if="departmentOptions.selected" class="col-span-2 sm:col-span-3">
-                                        <InputLabel :size="'sm'" value="Department Assignment"/>
-                                        <RadioGroup
-                                            :selections="departmentAssignmentSelections"
-                                            :size="'md'"
-                                            :orientation="'horizontal'"
-                                            :radio-key="'department-assignment'"
-                                            v-model="departmentAssignment" />
+
+                                    <div class="grid gap-2 grid-cols-2 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-5 xl:grid-cols-6">
+                                        <div class="lg:col-span-2">
+                                            <InputLabel :size="'sm'" value="Designation"/>
+                                            <SingleSelect :icon="'ic:baseline-inbox'" :disabled="disableActions" drop-shadow :size="'md'" :options="designationOptions"/>
+                                        </div>
+                                        <div class="col-span-3">
+                                            <InputLabel :size="'sm'" value="Manager"/>
+                                            <SingleSelectPaginated
+                                                :disabled="disableActions"
+                                                drop-shadow
+                                                :selection-max-viewable-line="10"
+                                                :label="'Select Manager'"
+                                                :size="'md'"
+                                                :icon="'mdi:badge-account-outline'"
+                                                :payload="managerOptions"/>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="grid gap-2 grid-cols-2 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-5 xl:grid-cols-6">
-                                    <div class="lg:col-span-2">
-                                        <InputLabel :size="'sm'" value="Designation"/>
-                                        <SingleSelect :icon="'ic:baseline-inbox'" :disabled="disableActions" drop-shadow :size="'md'" :options="designationOptions"/>
-                                    </div>
-                                    <div class="lg:col-span-2">
-                                        <InputLabel :size="'sm'" value="Manager"/>
-                                        <SingleSelectPaginated
-                                            :disabled="disableActions"
-                                            drop-shadow
-                                            :selection-max-viewable-line="10"
-                                            :label="'Select Manager'"
-                                            :size="'md'"
-                                            :icon="'mdi:badge-account-outline'"
-                                            :payload="managerOptions"/>
-                                    </div>
-                                </div>
-                            </fieldset>
+                            </div>
                         </div>
 
                         <Suspense>
@@ -325,7 +335,7 @@
                             </template>
                         </Suspense>
 
-                        <Button class="w-min" :disabled="disableActions" @click="coreFormSubmit(null, {})" :size="'md'" :icon="disableActions ? 'eos-icons:loading' : 'mdi:data'" :label="coreFormSubmitLabel"></Button>
+                        <Button class="w-min" :disabled="disableActions" @click="coreFormSubmit(null, {})" :size="'md'" :icon="disableActions ? 'eos-icons:loading' : 'ic:sharp-save'" :label="coreFormSubmitLabel"></Button>
                     </div>
                 </div>
             </div>
@@ -661,6 +671,9 @@ const disableActions = computed(() => {
 });
 const validateForms = ref(true);
 const coreFormPending = ref(false);
+const coreFormSubmitLabelBasic = computed(() => {
+    return (disableActions.value) ? '' : (!creatingEmployee.value ? 'Save' : 'Submit');
+});
 const coreFormSubmitLabel = computed(() => {
     return (disableActions.value) ? 'Please wait' : (!creatingEmployee.value ? 'Save' : 'Submit');
 });

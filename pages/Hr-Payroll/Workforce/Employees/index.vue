@@ -145,6 +145,17 @@
                             :to="`/hr-payroll/workforce/employees/create-employee`">
                             <Button class="w-min" :disabled="disableActions" :size="'sm'" :icon="disableActions ? 'eos-icons:loading' : 'mdi:plus'" :label="disableActions ? 'Please wait' : ''"></Button>
                         </NuxtLink>
+                        <div v-if="employees.successful" class="scaffold-border px-2 font-[National_Park]">
+                            <span><span class="font-semibold">{{selectedEmployees.length}}</span> Selected</span>
+                        </div>
+                        <Button
+                            v-if="employees.successful"
+                            :variant="'outline'"
+                            :size="'sm'"
+                            :icon="'tdesign:close'"
+                            :disabled="disableActions"
+                            :label="'Clear selection'"
+                            @click="selectedEmployees = []" />
                         <EmployeeBulkEdit ref="employeeBulkEdit" v-model:selected-employee-ids="selectedEmployees" @completed="bulkEditCompleted">
                             <Button
                                 :disabled="disableActions || selectedEmployees.length == 0"
