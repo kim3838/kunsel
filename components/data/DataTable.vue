@@ -165,6 +165,7 @@ const {$themeStore} = useNuxtApp();
 
 const {
     hexAlpha,
+    type: themeType,
     common: commonColor,
     secondary: secondaryColor,
     neutral: neutralColor,
@@ -185,8 +186,11 @@ const accentColor40 = computed(() => {
     return accentColor.value + hexAlpha.value['40'];
 });
 
+const lightTheme = computed(() => {
+    return themeType.value === 'light';
+})
 const cellBorder = computed(() => {
-    return props.borderAppearance ? liningColor40.value : '#f7f7f7';
+    return props.borderAppearance ? liningColor40.value : (lightTheme.value ? '#f7f7f7' : '#555756');
 });
 
 const cosmetic = useCosmetic();
@@ -558,7 +562,7 @@ const cellStyle = (row: TableRowT | TableSupRowT, header: TableSupHeaderT) => {
 
     let style: TableCellStyleT = {};
 
-    if(rowPayload){
+    if(rowPayload && lightTheme.value){
 
         let labelShade: (TableRowPayloadShadeT | boolean) = _get(rowPayload, 'label_shade', false);
         let shadeCell: (string | string[]) = _get(labelShade, 'cell', []);
