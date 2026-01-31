@@ -65,8 +65,8 @@
                                     <UnorderedList :size="'lg'" :icon="'eos-icons:loading'">Loading Employment Profiles...</UnorderedList>
                                 </div>
                             </div>
-                            <div v-else>
-                                Changes are autosaved.
+                            <div v-else class="font-semibold">
+                                Changes are auto-save.
                             </div>
 
                             <EmploymentProfiles
@@ -94,7 +94,7 @@
 
                 <!-- Payroll Components -->
                 <DialogModal
-                    :max-width="'1280px'"
+                    :max-width="'960px'"
                     :show="payrollComponentsModal"
                     :closeable="false">
                     <template #title>
@@ -107,8 +107,8 @@
                                     <UnorderedList :size="'lg'" :icon="'eos-icons:loading'">Loading Payroll Components...</UnorderedList>
                                 </div>
                             </div>
-                            <div v-else>
-                                Changes are autosaved.
+                            <div v-else class="font-semibold">
+                                Changes are auto-save.
                             </div>
 
                             <EmployeePayrollComponent
@@ -150,7 +150,7 @@
                                 :disabled="disableActions || selectedEmployees.length == 0"
                                 :variant="`outline`"
                                 :size="'sm'"
-                                :label="`Bulk Edit${selectedEmployees.length ? ' ' + selectedEmployees.length : ``}`"
+                                :label="`Bulk edit${selectedEmployees.length ? ' ' + selectedEmployees.length : ``}`"
                                 @click="bulkEdit" />
                         </EmployeeBulkEdit>
                     </div>
@@ -442,8 +442,8 @@ const employeesHeaders = reactive<TableHeaderT[]>([
     { text: 'Department', value: 'department'},
     { text: 'Designation', value: 'designation'},
     { text: 'Manager', value: 'manager'},
-    { text: '', value: 'office_email', minWidth: '33.5px'},
-    { text: '', value: 'office_phone', minWidth: '33.5px'},
+    { text: 'Office Email', value: 'office_email', minWidth: '33.5px'},
+    { text: 'Office Phone', value: 'office_phone', minWidth: '33.5px'},
     { text: 'Username', value: 'user_name'},
     { text: 'Email', value: 'user_email'},
     { text: 'Status', value: 'user_status'},
