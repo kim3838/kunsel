@@ -145,6 +145,14 @@
                             :to="`/hr-payroll/workforce/employees/create-employee`">
                             <Button class="w-min" :disabled="disableActions" :size="'sm'" :icon="disableActions ? 'eos-icons:loading' : 'mdi:plus'" :label="disableActions ? 'Please wait' : ''"></Button>
                         </NuxtLink>
+                        <EmployeeBulkEdit ref="employeeBulkEdit" v-model:selected-employee-ids="selectedEmployees" @completed="bulkEditCompleted">
+                            <Button
+                                :disabled="disableActions || selectedEmployees.length == 0"
+                                :variant="`outline`"
+                                :size="'sm'"
+                                :label="`Bulk Edit${selectedEmployees.length ? ' ' + selectedEmployees.length : ``}`"
+                                @click="bulkEdit" />
+                        </EmployeeBulkEdit>
                     </div>
 
                     <div v-if="!employees.successful" class="flex flex-row flex-wrap gap-2 items-center min-h-8">
@@ -593,6 +601,18 @@ function paginate(page = 1, clearSelection = false){
 
 watch(() => {return filters.page;}, () => {paginate(filters.page);});
 watch(() => {return filters.perPage;}, () => {paginate(1);});
+
+/**
+ * Bulk edit
+ *
+ **/
+const employeeBulkEditReference = useTemplateRef('employeeBulkEdit');
+const bulkEdit = () => {
+    employeeBulkEditReference.value?.bulkEdit();
+}
+const bulkEditCompleted = () => {
+    paginate();
+}
 
 /**
  * Staged employee for isolated components usage
