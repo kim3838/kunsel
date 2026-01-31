@@ -9,7 +9,7 @@
         @close="close"
     >
         <div :style=[modalBodySpacingStyle] :class="[bodyBorderBottom ? 'body-bottom-border' : '']">
-            <div class="text-lg font-header">
+            <div class="text-lg font-medium font-header">
                 <slot name="title" />
             </div>
 
