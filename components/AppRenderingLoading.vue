@@ -1,6 +1,6 @@
 <template>
     <transition name="fade">
-        <div v-show="!clientReadyState" class="bg-white fixed inset-0 overflow-y-auto px-0 z-50">
+        <div v-show="!clientReadyState" :class="[backgroundClass]" class="fixed inset-0 overflow-y-auto px-0 z-50">
             <div class="h-full flex items-center justify-center">
                 <UnorderedList :size="'lg'" :icon="'eos-icons:loading'">Please wait...</UnorderedList>
             </div>
@@ -9,7 +9,23 @@
 </template>
 
 <script setup>
+import {storeToRefs} from "pinia";
+
 const clientReadyState = useClientReadyState();
+
+const {$themeStore} = useNuxtApp();
+
+const {
+    type: themeType,
+} = storeToRefs($themeStore);
+
+const lightTheme = computed(() => {
+    return themeType.value === 'light';
+});
+
+const backgroundClass = computed(() => {
+    return lightTheme.value ? 'light-background' : 'dark-background';
+})
 </script>
 
 <style scoped>
@@ -21,5 +37,13 @@ const clientReadyState = useClientReadyState();
 .fade-enter-from,
 .fade-leave-to {
     opacity: 0;
+}
+
+.light-background{
+    background-color: #fdfdfd;
+}
+
+.dark-background{
+    background-color: #555756;
 }
 </style>
