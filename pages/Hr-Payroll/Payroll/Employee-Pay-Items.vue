@@ -268,7 +268,6 @@ const {
 
 watch(updatedAssociatedCompanyFlag, async (newValue) => {
     if(isAuthenticated.value && selectedAssociatedCompanyId.value){
-        await fetchPayFrequencySelection();
         await rebuildSelections();
         paginate();
     }
@@ -625,25 +624,6 @@ const deleteSelected = async () => {
     await payrollComponentsExecute();
 }
 
-const payFrequencySelection = ref([]);
-const fetchPayFrequencySelection = async () => {
-
-    if(import.meta.server){return;}
-
-    await laraFetch("/api/pay-frequency-selections", {
-        method: 'GET',
-        params: {
-            filters: {
-                'company_id': selectedAssociatedCompanyId.value,
-            }
-        }
-    },{
-        onSuccessResponse: async (request, options, response) => {
-            payFrequencySelection.value = _get(response, '_data.values.selection', []);
-        }
-    });
-}
-await fetchPayFrequencySelection();
 
 const stagedEmployee = ref<{
     'id': string | number | null,

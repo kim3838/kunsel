@@ -278,32 +278,13 @@ const payFrequencyKeepCurrent = ref(1);
 const payFrequencyKeepCurrentSelection = reactive([{text : 'Yes', value: 1}, {text : 'No', value: 0},]);
 const payFrequencyOptions = reactive({
     search: '',
-    selection: [],
+    selection: companyOrganizationSelections.value.pay_frequencies,
     selected: null
 });
 
 const disableActions = computed(() => {
     return pending.value;
 });
-
-const fetchPayFrequencySelection = async () => {
-
-    if(import.meta.server){return;}
-
-    await laraFetch("/api/pay-frequency-selections", {
-        method: 'GET',
-        params: {
-            filters: {
-                'company_id': selectedAssociatedCompanyId.value,
-            }
-        }
-    },{
-        onSuccessResponse: async (request, options, response) => {
-            payFrequencyOptions.selection = _get(response, '_data.values.selection', []);
-        }
-    });
-}
-await fetchPayFrequencySelection();
 
 const editing = ref(false);
 

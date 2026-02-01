@@ -304,6 +304,7 @@ import type {TableHeaderT} from "@/public/js/types/data";
 import type {EmployeePayrollComponentT} from "@/public/js/types/payroll-component";
 import type {PayFrequencyOptionT} from "@/public/js/common/type";
 
+const companyOrganizationSelections = companyOrganizationSelectionsState();
 const {isAuthenticated} = useAuth();
 const nuxtApp = useNuxtApp();
 const {
@@ -316,7 +317,7 @@ const {
 
 watch(updatedAssociatedCompanyFlag, async (newValue) => {
     if(isAuthenticated.value && selectedAssociatedCompanyId.value){
-        await fetchPayFrequencySelection();
+        await preSelectPayFrequency();
     }
 });
 
@@ -408,35 +409,29 @@ const validatePayFrequencyPeriodCombination = (frequencyType: number, payPeriodV
 
 const payFrequency = ref<PayFrequencyOptionT | null>(null);
 const payFrequencyOptionsKey = shallowRef(0);
-const payFrequencyOptions = reactive<{search: string, selection: PayFrequencyOptionT[], selected: null|number}>({search: '', selection: [], selected: null})
+const payFrequencyOptions = reactive<{
+    search: string,
+    selection: PayFrequencyOptionT[],
+    selected: null|number
+}>({
+    search: '',
+    selection: companyOrganizationSelections.value.pay_frequencies,
+    selected: null
+})
 
-const fetchPayFrequencySelection = async () => {
+const preSelectPayFrequency = async () => {
 
-    if(import.meta.server){return;}
+    payFrequencyOptions.selected = proxyPayFrequencyId.value;
 
-    await laraFetch("/api/pay-frequency-selections", {
-        method: 'GET',
-        params: {
-            filters: {
-                'company_id': selectedAssociatedCompanyId.value,
-            }
-        }
-    },{
-        onSuccessResponse: async (request, options, response) => {
-            payFrequencyOptions.selection = _get(response, '_data.values.selection', []);
-            payFrequencyOptions.selected = proxyPayFrequencyId.value;
+    const selectedPayFrequencyItem = payFrequencyOptions.selection.find(item => item.value == proxyPayFrequencyId.value);
 
-            const selectedPayFrequencyItem = payFrequencyOptions.selection.find(item => item.value == proxyPayFrequencyId.value);
-
-            if(selectedPayFrequencyItem){
-                payFrequency.value = selectedPayFrequencyItem as PayFrequencyOptionT;
-            }
-        }
-    });
+    if(selectedPayFrequencyItem){
+        payFrequency.value = selectedPayFrequencyItem as PayFrequencyOptionT;
+    }
 }
 
 if(!props.isolated){
-    await fetchPayFrequencySelection();
+    await preSelectPayFrequency();
 }
 
 watch(() => payFrequencyOptions.selected, (newValue, oldValue) => {
@@ -518,7 +513,7 @@ watch(() => props.childComponentEmployeePayload, async (employeePayload) => {
         await employeeCompensationExecute();
         await employeeDeductionExecute();
         await employeeIncomeTaxExecute();
-        await fetchPayFrequencySelection();
+        await preSelectPayFrequency();
         emit('update:payrollComponentsPending', false);
     }
 });
