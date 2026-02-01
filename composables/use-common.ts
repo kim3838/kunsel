@@ -18,6 +18,7 @@ export const companyOrganizationSelectionsState = () => {
             employee_groups: [],
             departments: [],
             designations: [],
+            pay_frequencies: [],
             payroll_component: {
                 names: [],
                 types: [],
@@ -43,8 +44,23 @@ export const useCommon = () => {
 
     const ssrFetchPayrollComponentPaySelections = async () => {
 
+        const storedCompanyId = useCookie<PaletteName>('pc',{
+            domain: sessionDomain,
+            sameSite: 'lax',
+        });
+
+        const params = {
+            filters: {}
+        };
+
+        if(storedCompanyId.value !== undefined){
+
+            params.filters.company_id = storedCompanyId.value;
+        }
+
         await laraSsrUseFetch('/api/payroll-component-pay-selections', {
             method: 'GET',
+            params: params
         }, {
             onSuccessResponse: async (request, options, response) => {
 
@@ -68,8 +84,23 @@ export const useCommon = () => {
 
     const fetchCommon = async () => {
 
+        const storedCompanyId = useCookie<PaletteName>('pc',{
+            domain: sessionDomain,
+            sameSite: 'lax',
+        });
+
+        const params = {
+            filters: {}
+        };
+
+        if(storedCompanyId.value !== undefined){
+
+            params.filters.company_id = storedCompanyId.value;
+        }
+
         await laraFetch('/api/payroll-component-pay-selections', {
             method: 'GET',
+            params: params
         }, {
             onSuccessResponse: async (request, options, response) => {
 
@@ -139,6 +170,23 @@ export const useCommon = () => {
         });
     }
 
+    const fetchPayFrequencySelections = async () => {
+        const {$authStore} = useNuxtApp();
+
+        await laraFetch("/api/pay-frequency-selections", {
+            method: 'GET',
+            params: {
+                filters: {
+                    'company_id': $authStore.selectedAssociatedCompanyId,
+                }
+            }
+        }, {
+            onSuccessResponse: async (request, options, response) => {
+                companyOrganizationSelections.value.pay_frequencies = _get(response, '_data.values.selection', []);
+            }
+        });
+    }
+
     const fetchPayrollComponentTypeSelections = async () => {
         const {$authStore} = useNuxtApp();
 
@@ -174,22 +222,37 @@ export const useCommon = () => {
     }
 
     const fetchOrganizationSelections = async () => {
+        const {$authStore} = useNuxtApp();
 
         if(useAuth().isAuthenticated.value){
             companyOrganizationSelections.value = {
                 employee_groups: [],
                 departments: [],
                 designations: [],
+                pay_frequencies: [],
                 payroll_component: {
                     names: [],
                     types: [],
                 }
             };
-            await fetchEmployeeGroupSelections();
-            await fetchDepartmentSelections();
-            await fetchDesignationSelections();
-            await fetchPayrollComponentTypeSelections();
-            await fetchPayrollComponentNameSelections();
+
+            await laraFetch("/api/organization-selections", {
+                method: 'GET',
+                params: {
+                    filters: {
+                        'company_id': $authStore.selectedAssociatedCompanyId,
+                    }
+                }
+            }, {
+                onSuccessResponse: async (request, options, response) => {
+                    companyOrganizationSelections.value.employee_groups = _get(response, '_data.values.employee_groups', []);
+                    companyOrganizationSelections.value.departments = _get(response, '_data.values.departments', []);
+                    companyOrganizationSelections.value.designations = _get(response, '_data.values.designations', []);
+                    companyOrganizationSelections.value.pay_frequencies = _get(response, '_data.values.pay_frequencies', []);
+                    companyOrganizationSelections.value.payroll_component.types = _get(response, '_data.values.payroll_component.type', []);
+                    companyOrganizationSelections.value.payroll_component.names = _get(response, '_data.values.payroll_component.names', []);
+                }
+            });
         }
     }
 
@@ -249,13 +312,13 @@ export const useCommon = () => {
         payrollComponentPaySelections.value = {
             pay_period: [],
             pay_type: [],
-            pay_frequency: [],
         };
         timezoneSelections.value = [];
         companyOrganizationSelections.value = {
             employee_groups: [],
             departments: [],
             designations: [],
+            pay_frequency: [],
             payroll_component: {
                 names: [],
                 types: [],
@@ -283,6 +346,7 @@ export const useCommon = () => {
         fetchEmployeeGroupSelections,
         fetchDepartmentSelections,
         fetchDesignationSelections,
+        fetchPayFrequencySelections,
         fetchPayrollComponentTypeSelections,
         fetchPayrollComponentNameSelections,
         fetchOrganizationSelections,
