@@ -13,6 +13,7 @@
                                             :icon="'ic:round-mail-outline'"
                                             :disabled="pending"
                                             :size="'lg'"
+                                            :placeholder="`Enter your email address`"
                                             id="email"
                                             :type="'email'"
                                             class="w-full"
@@ -48,7 +49,7 @@ const {$promptStore} = useNuxtApp();
 
 let emailInput = ref(null);
 let pending = ref(false);
-let email = ref("luxere20@gmail.com");
+let email = ref("");
 
 //On navigate, focus on email input
 if(clientReadyState.value){
