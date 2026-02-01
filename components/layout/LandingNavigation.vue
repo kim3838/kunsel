@@ -47,6 +47,7 @@
                     </div>
                 </div>
                 <div class="flex">
+                    <ThemeSelection :size="navigationHeaderSize" :selected-summary-prefix="''" />
                     <component
                         :is="navDrop"
                         v-if="isAuthenticated"

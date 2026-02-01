@@ -2,20 +2,20 @@
     <nav
         ref="navigation"
         class="primary-navigation-parent z-40 fixed">
-        <div class="relative z-[42] w-full flex justify-center font-[Inclusive_Sans]">
-            <div class="max-w-screen-2xl w-full flex gap-1 justify-end h-5">
+        <div class="relative z-[42] w-full flex justify-center font-label">
+            <div class="max-w-screen-2xl w-full flex gap-1 justify-end">
                 <NavLink
-                    class="h-full cursor-pointer hover:underline"
+                    class="h-full cursor-pointer"
                     :size="`xs`">
                     News
                 </NavLink>
                 <NavLink
-                    class="h-full cursor-pointer hover:underline"
+                    class="h-full cursor-pointer"
                     :size="`xs`">
                     FAQ
                 </NavLink>
                 <NavLink
-                    class="h-full cursor-pointer hover:underline"
+                    class="h-full cursor-pointer"
                     :size="`xs`">
                     Support
                 </NavLink>
@@ -23,11 +23,11 @@
                     <Icon size="0.75rem" :name="'file-icons:moment-timezone'"/>
                     <div>{{user?.timezone}}</div>
                 </div>
+                <ThemeSelection :size="`xs`" :font-family-class="'font-label'" />
                 <NavDrop
                     v-if="true"
                     :size="`xs`"
                     :title="'Language'"
-                    :icon="'material-symbols:language-chinese-array'"
                     :drop-options="[
                         {
                             type: 'action',
