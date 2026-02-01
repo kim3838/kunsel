@@ -246,6 +246,10 @@ const props = defineProps({
         type: String,
         default: 'Select'
     },
+    summaryPrefix: {
+        type: String,
+        default: null
+    },
     noneSelectedLabel: {
         type: String,
         default: 'None Selected'
@@ -376,7 +380,7 @@ const iconHolderClass = computed(() => {
 const iconClass = computed(() => {
     return {
         '2xs': 'h-4 w-4',
-        'xs': 'h-5 w-5',
+        'xs': 'h-4 w-4',
         'sm': 'h-5 w-5',
         'md': 'h-5 w-5',
         'lg': 'h-8 w-8'
@@ -498,7 +502,9 @@ const selectionSummary = computed(() => {
             return item.value == props.options.selected;
         })[0];
 
-        return _get(selected, 'text', '--');
+        return (props.summaryPrefix)
+            ? `${props.summaryPrefix} ` + _get(selected, 'text', '--')
+            : _get(selected, 'text', '--');
     }
 });
 
