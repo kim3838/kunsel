@@ -9,15 +9,8 @@
 </template>
 
 <script setup>
-import {storeToRefs} from "pinia";
-
 const clientReadyState = useClientReadyState();
-
-const {$themeStore} = useNuxtApp();
-
-const {
-    type: themeType,
-} = storeToRefs($themeStore);
+const themeType = themeTypeState();
 
 const lightTheme = computed(() => {
     return themeType.value === 'light';

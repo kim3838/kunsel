@@ -17,6 +17,8 @@
 import {storeToRefs} from 'pinia';
 import type {CommonColorsT} from "@/stores/theme";
 
+const clientReadyState = useClientReadyState();
+const themeType = themeTypeState();
 const {$themeStore, $layoutStore} = useNuxtApp();
 const route = useRoute();
 
@@ -58,6 +60,20 @@ const accentColor70 = computed(() => {
     return accentColor.value + hexAlpha.value['70'];
 });
 
+const lightTheme = computed(() => {
+    return themeType.value === 'light';
+});
+
+//Text color for full page rendering mask overlay
+const textColorComputed = computed(() => {
+
+    if(!clientReadyState.value){
+        return lightTheme.value ? '#555756' : '#fdfdfd';
+    } else {
+        return textColor.value;
+    }
+})
+
 watch(() => route.name,() => {
     $layoutStore.setSubNavigationOptions(_get(activeSubNavigationLink.value, 'options', []));
 });
@@ -94,7 +110,7 @@ watch(() => route.name,() => {
 }
 
 .nuxt-page {
-    color: v-bind(textColor);
+    color: v-bind(textColorComputed);
 }
 
 .vertical-divider{
