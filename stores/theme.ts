@@ -1,7 +1,6 @@
 
 import {defineStore} from 'pinia'
-
-type PaletteName = 'light' | 'dark-silver' | 'default-blue' | 'light-green'| 'light-tulip' | 'dark-emerald';
+import type {PaletteName} from "@/public/js/types/theme";
 
 type ThemeT = {
     type: string;
@@ -35,7 +34,7 @@ export type CommonColorsT = {
 
 export const useThemeStore = defineStore('theme', () => {
 
-    const SELECTED_THEME_STORAGE_KEY = 'st';
+    const SELECTED_THEME_STORAGE_KEY = 'pt';
 
     const appTheme = ref<PaletteName>('default-blue');
     const common = ref<CommonColorsT>({
@@ -59,12 +58,13 @@ export const useThemeStore = defineStore('theme', () => {
         '100': 'FF',
     });
     const palletes = ref({
-        'light': {
+        'light-slate': {
             'type': 'light',
-            'primary': '#3b3939',
-            'secondary': '#6c6a6a',
+            'primary': '#3b3b3b',
+            'secondary': '#777676',
             'accent': '#c9c9c9',
 
+            'cell': '#f7f7f7',
             'lining': '#b4b4b4',
             'thread': '#c7c7c7',
 
@@ -84,6 +84,7 @@ export const useThemeStore = defineStore('theme', () => {
             'secondary': '#464646',
             'accent': '#707070',
 
+            'cell': '#555756',
             'lining': '#ababab',
             'thread': '#6b6b6b',
 
@@ -103,6 +104,7 @@ export const useThemeStore = defineStore('theme', () => {
             'secondary': '#263b62',
             'accent': '#c3d8f6',
 
+            'cell': '#f7f7f7',
             'lining': '#90a5cc',
             'thread': '#c6c9cc',
 
@@ -122,6 +124,7 @@ export const useThemeStore = defineStore('theme', () => {
             'secondary': '#2d6026',
             'accent': '#b9f1b0',
 
+            'cell': '#f7f7f7',
             'lining': '#8bbd77',
             'thread': '#c6ccc6',
 
@@ -138,32 +141,34 @@ export const useThemeStore = defineStore('theme', () => {
         'light-tulip': {
             'type': 'light',
             'primary': '#D45E5E',
-            'secondary': '#d78c8c',
-            'accent': '#ffd3c8',
+            'secondary': '#dab4c3',
+            'accent': '#ffcad9',
 
+            'cell': '#ffffff',
             'lining': '#f18e8e',
-            'thread': '#fdc0b2',
+            'thread': '#d7bfcb',
 
-            'neutral': '#fff8e0',
+            'neutral': '#efd8e1',
 
-            'body': '#f4f4f4',
-            'shade': '#f8f8f8',
-            'tint': '#fdfdfd',
+            'body': '#f9f9f9',
+            'shade': '#fff0f4',
+            'tint': '#fffbfb',
 
-            'text': '#62334c',
+            'text': '#503d46',
             'text-invert': '#ffffff',
             'text-secondary': '#ab7676',
         },
         'dark-emerald': {
             'type': 'dark',
-            'primary': '#27abb0',
+            'primary': '#27b062',//27abb0
             'secondary': '#288a5d',
             'accent': '#678577',//b9f3d8
 
+            'cell': '#597a5b',
             'lining': '#75a979',
             'thread': '#678369',
 
-            'neutral': '#4d7779',
+            'neutral': '#4d7954',
 
             'body': '#175639',
             'shade': '#19593c',
@@ -179,6 +184,7 @@ export const useThemeStore = defineStore('theme', () => {
     const primary = computed(() => palletes.value[appTheme.value]['primary']);
     const secondary = computed(() => palletes.value[appTheme.value]['secondary']);
     const accent = computed(() => palletes.value[appTheme.value]['accent']);
+    const cell = computed(() => palletes.value[appTheme.value]['cell']);
     const lining = computed(() => palletes.value[appTheme.value]['lining']);
     const thread = computed(() => palletes.value[appTheme.value]['thread']);
     const neutral = computed(() => palletes.value[appTheme.value]['neutral']);
@@ -208,6 +214,7 @@ export const useThemeStore = defineStore('theme', () => {
         primary,
         secondary,
         accent,
+        cell,
         lining,
         thread,
         neutral,
