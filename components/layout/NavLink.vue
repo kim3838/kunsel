@@ -18,6 +18,7 @@ const {
 } = useLayout();
 
 const {
+    appTheme,
     hexAlpha,
     primary: primaryColor,
     accent: accentColor,
@@ -59,8 +60,11 @@ const navigationLinkColor = computed(()=>{
     return 'auto';
 });
 const navigationTextShadow = computed(()=>{
+
     if(navigationMode.value === 'clear-with-background'){
         return '1px 1px 2px #000000';
+    } else if(props.active && appTheme.value !== 'dark-silver' && navigationMode.value !== 'clear-with-background'){
+        return 'rgba(0, 0, 0, 0.5) 0 1px 2px';
     }
 
     return 'none';
