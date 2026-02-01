@@ -172,7 +172,7 @@
 
                     <div v-if="employees.successful && viewMode.selected == DATA_VIEW_MODE.FLEX" class="flex flex-row flex-wrap gap-4">
 
-                        <div v-for="employee in employees.data" :key="employee.id" class="flex-grow scaffold-border p-4 space-y-2 tint-background">
+                        <div v-for="employee in employees.data" :key="employee.id" class="lining-shadow rounded-sm flex-grow tint-background p-4 space-y-2">
                             <div>
                                 <div class="mb-2 flex justify-between min-h-8">
                                     <div>
@@ -594,7 +594,7 @@ const employeesExecute = async() =>{
         }
     }, false);
 }
-await employeesExecute();
+employeesExecute();
 
 function paginate(page = 1, clearSelection = false){
     clearTimeout(filters.search.callback);

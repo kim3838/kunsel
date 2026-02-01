@@ -342,7 +342,7 @@ const holidaysExecute = async() =>{
         }
     }, false);
 }
-await holidaysExecute();
+holidaysExecute();
 
 function paginate(page = 1, clearSelection = false){
     clearTimeout(filters.search.callback);

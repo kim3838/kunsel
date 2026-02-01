@@ -176,8 +176,9 @@
                         <Label v-if="!approvalSettingsSuccessful" invert :size="'md'" :type="'danger'" :label="approvalSettingsMessage" />
                     </div>
 
+                    <UnorderedList v-if="approvalSettingsPending" :icon="'eos-icons:loading'" :size="'md'" :label="'Please wait...'"/>
                     <DataTable
-                        v-if="approvalSettingsSuccessful"
+                        v-else-if="approvalSettingsSuccessful"
                         :key="approvalSettingKey"
                         :headers="approvalSettingsHeaders"
                         :size="'lg'"
@@ -291,7 +292,7 @@ const approvalSettingsExecute = async () => {
         }
     }, false);
 }
-await approvalSettingsExecute();
+approvalSettingsExecute();
 
 const disableActions = computed(() => {
     return approvalSettingsPending.value || companyAssociationPendingState().value;

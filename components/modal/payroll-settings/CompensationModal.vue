@@ -170,7 +170,7 @@ const compensationFormulaExecute = async () => {
         }
     });
 }
-await compensationFormulaExecute();
+compensationFormulaExecute();
 
 const compensationFormulaSettings = ref<CompanyFormulaT[]>([]);
 const compensationFormulaSettingsPending = ref(false)

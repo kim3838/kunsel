@@ -315,7 +315,7 @@ const departmentsExecute = async () => {
         }
     }, false);
 }
-await departmentsExecute();
+departmentsExecute();
 
 const disableActions = computed(() => {
     return departmentsPending.value || creatingOrEditing.value || deleting.value || companyAssociationPendingState().value;
@@ -470,7 +470,7 @@ const parentDepartmentSelectionExecute = async () => {
         }
     });
 }
-await parentDepartmentSelectionExecute();
+parentDepartmentSelectionExecute();
 
 const loadingOverlay = computed(()=>{
     return parentDepartmentSelectionPending.value;

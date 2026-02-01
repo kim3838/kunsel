@@ -316,7 +316,7 @@ const employeeGroupsExecute = async() =>{
         }
     }, false);
 }
-await employeeGroupsExecute();
+employeeGroupsExecute();
 
 function paginate(page = 1, clearSelection = false){
     clearTimeout(filters.search.callback);

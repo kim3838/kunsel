@@ -2,12 +2,44 @@
     <div>
         <DefaultWrapper>
             <div class="mx-auto max-w-screen-2xl">
-                <div class="px-[20px] pt-[20px]">
+                <div class="px-[20px] pt-[20px] space-y-6">
+
                     <BreadCrumbs prefix-company :size="`sm`" />
+
+                    <Suspense>
+                        <PayrollSettingsCompensation/>
+                        <template #fallback>
+                            <div class="px-[20px]">
+                                <UnorderedList
+                                    :icon="'eos-icons:loading'"
+                                    :size="'md'"
+                                    :label="'Loading compensations...'"/>
+                            </div>
+                        </template>
+                    </Suspense>
+                    <Suspense>
+                        <PayrollSettingsDeduction/>
+                        <template #fallback>
+                            <div class="px-[20px]">
+                                <UnorderedList
+                                    :icon="'eos-icons:loading'"
+                                    :size="'md'"
+                                    :label="'Loading deductions...'"/>
+                            </div>
+                        </template>
+                    </Suspense>
+                    <Suspense>
+                        <PayrollSettingsIncomeTax/>
+                        <template #fallback>
+                            <div class="px-[20px]">
+                                <UnorderedList
+                                    :icon="'eos-icons:loading'"
+                                    :size="'md'"
+                                    :label="'Loading income taxes...'"/>
+                            </div>
+                        </template>
+                    </Suspense>
                 </div>
-                <PayrollSettingsCompensation/>
-                <PayrollSettingsDeduction/>
-                <PayrollSettingsIncomeTax/>
             </div>
         </DefaultWrapper>
     </div>

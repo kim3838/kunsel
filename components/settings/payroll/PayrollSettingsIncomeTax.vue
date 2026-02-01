@@ -1,69 +1,69 @@
 <template>
-    <div class="space-y-2">
-        <div class="px-[20px] pt-2">
-            <div class="text-lg font-header">Tax</div>
+    <div class="lining-shadow rounded-sm tint-background space-y-2">
+
+        <div class="lining-shadow rounded-t-sm text-lg px-4 py-2">Tax</div>
+
+        <div class="p-4 space-y-2">
             <div class="flex flex-row flex-wrap gap-2 items-center min-h-8">
-                <Button class="inline-block" :icon="'mdi:plus'" :size="'sm'" :disabled="disableActions" @click="create"/>
+                <Button class="inline-block" :variant="'outline'" :icon="'mdi:plus'" :size="'sm'" :disabled="disableActions" @click="create"/>
                 <Button v-if="incomeTaxesSuccessful" :variant="'outline'" :icon="'mdi:delete-outline'" class="inline-block" :size="'sm'" :disabled="disableActions" @click="confirmDeleteSelected"/>
-            </div>
-        </div>
-
-        <IncomeTaxModal
-            v-model:creatingOrEditing="creatingOrEditing"
-            v-model:editPayload="editPayload"
-            @resolved="incomeTaxResolved"
-        ></IncomeTaxModal>
-
-        <div class="px-[20px]">
-
-            <UnorderedList v-if="disableActions" :icon="'eos-icons:loading'" :size="'md'" :label="'Please wait...'"/>
-
-            <div v-if="!incomeTaxesSuccessful" class="mb-2 flex flex-row flex-wrap gap-2 items-center min-h-8">
-                <Label invert :size="'md'" :type="'danger'" :label="incomeTaxesMessage" />
+                <UnorderedList v-if="disableActions" :icon="'eos-icons:loading'" :size="'md'" :label="'Please wait...'"/>
             </div>
 
-            <DataTable
-                v-if="incomeTaxesSuccessful"
-                :headers="incomeTaxesHeaders"
-                :size="'lg'"
-                :rows="incomeTaxesData"
-                :disabled="disableDataTable"
-                v-model="selectedIncomeTaxes"
-                manual-sortable
-                @manualSorted="manualSorted"
-                selection>
-                <template v-slot:cell.type="{cell,slot}">
-                    <div class="p-[3px]">{{cell.type.text}}</div>
-                </template>
-                <template v-slot:cell.assignable="{cell, slot, scrollReference}">
-                    <div class="flex justify-center">
-                        <NonModelCheckBox disabled :size="slot.checkBoxSize" :checked="cell.assignable" ></NonModelCheckBox>
-                    </div>
-                </template>
-                <template v-slot:cell.global="{cell, slot, scrollReference}">
-                    <div class="flex justify-center">
-                        <NonModelCheckBox disabled :size="slot.checkBoxSize" :checked="!cell.assignable" ></NonModelCheckBox>
-                    </div>
-                </template>
-                <template v-slot:cell.actions="{cell, slot, scrollReference}">
-                    <div class="flex items-center">
-                        <NavDrop
-                            class="z-10"
-                            :disabled="disableActions"
-                            :parent-icon="'ic:baseline-arrow-right'"
-                            in-horizontal-scrollable
-                            :size="`sm`"
-                            :drop-shadow-size="`lg`"
-                            :title="'Menu'"
-                            :drop-align="'top'"
-                            :drop-justify="'right'"
-                            :drop-options="[
+            <IncomeTaxModal
+                v-model:creatingOrEditing="creatingOrEditing"
+                v-model:editPayload="editPayload"
+                @resolved="incomeTaxResolved"
+            ></IncomeTaxModal>
+
+            <div>
+                <div v-if="!incomeTaxesSuccessful" class="mb-2 flex flex-row flex-wrap gap-2 items-center min-h-8">
+                    <Label invert :size="'md'" :type="'danger'" :label="incomeTaxesMessage" />
+                </div>
+
+                <DataTable
+                    v-if="incomeTaxesSuccessful"
+                    :headers="incomeTaxesHeaders"
+                    :size="'lg'"
+                    :rows="incomeTaxesData"
+                    :disabled="disableDataTable"
+                    v-model="selectedIncomeTaxes"
+                    manual-sortable
+                    @manualSorted="manualSorted"
+                    selection>
+                    <template v-slot:cell.type="{cell,slot}">
+                        <div class="p-[3px]">{{cell.type.text}}</div>
+                    </template>
+                    <template v-slot:cell.assignable="{cell, slot, scrollReference}">
+                        <div class="flex justify-center">
+                            <NonModelCheckBox disabled :size="slot.checkBoxSize" :checked="cell.assignable" ></NonModelCheckBox>
+                        </div>
+                    </template>
+                    <template v-slot:cell.global="{cell, slot, scrollReference}">
+                        <div class="flex justify-center">
+                            <NonModelCheckBox disabled :size="slot.checkBoxSize" :checked="!cell.assignable" ></NonModelCheckBox>
+                        </div>
+                    </template>
+                    <template v-slot:cell.actions="{cell, slot, scrollReference}">
+                        <div class="flex items-center">
+                            <NavDrop
+                                class="z-10"
+                                :disabled="disableActions"
+                                :parent-icon="'ic:baseline-arrow-right'"
+                                in-horizontal-scrollable
+                                :size="`sm`"
+                                :drop-shadow-size="`lg`"
+                                :title="'Menu'"
+                                :drop-align="'top'"
+                                :drop-justify="'right'"
+                                :drop-options="[
                                 {type: 'action',icon: 'mdi:pen',title: 'Edit',callback: () => edit(cell),},
                             ]">
-                        </NavDrop>
-                    </div>
-                </template>
-            </DataTable>
+                            </NavDrop>
+                        </div>
+                    </template>
+                </DataTable>
+            </div>
         </div>
     </div>
 </template>
@@ -87,11 +87,11 @@ const orderSequenceable = nuxtApp.$orderSequenceable as (data: Sequenceable[]) =
 const incomeTaxesHeaders = reactive<TableHeaderT[]>([
     { text: 'Order', value: 'order', alignData: 'center'},
     { text: '', alignData: 'left', value: 'actions'},
-    { text: 'Code', value: 'code'},
-    { text: 'Name', value: 'name'},
-    { text: 'Type', value: 'type'},
+    { text: 'Code', value: 'code', minWidth: '244px'},
+    { text: 'Name', value: 'name', minWidth: '244px'},
+    { text: 'Type', value: 'type', minWidth: '244px'},
     { text: 'Assignable', value: 'assignable'},
-    { text: 'Formula', value: 'formula'},
+    { text: 'Formula', value: 'formula', minWidth: '244px'},
 ]);
 
 watch(updatedAssociatedCompanyFlag, (newValue) => {
@@ -142,7 +142,7 @@ const incomeTaxesExecute = async () => {
         }
     }, false);
 }
-await incomeTaxesExecute();
+incomeTaxesExecute();
 
 const incomeTaxesReOrderPending = ref(false);
 const incomeTaxesReOrderExecute = async () => {

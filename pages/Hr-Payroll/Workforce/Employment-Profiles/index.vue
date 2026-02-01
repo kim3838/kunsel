@@ -392,7 +392,7 @@ const employmentProfilesExecute = async() =>{
         }
     }, false);
 }
-await employmentProfilesExecute();
+employmentProfilesExecute();
 
 function paginate(page = 1, clearSelection = false){
     clearTimeout(filters.search.callback);

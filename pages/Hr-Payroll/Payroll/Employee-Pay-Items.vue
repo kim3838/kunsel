@@ -527,7 +527,7 @@ const payrollComponentsExecute = async() =>{
         }
     }, false);
 }
-await payrollComponentsExecute();
+payrollComponentsExecute();
 
 function paginate(page = 1, clearSelection = false){
     clearTimeout(filters.search.callback);

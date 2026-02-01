@@ -7,8 +7,10 @@
 
                     <BreadCrumbs prefix-company :size="`sm`" />
 
-                    <div class="flex flex-row">
+                    <div class="flex flex-row gap-2 items-center min-h-8">
+                        <UnorderedList v-if="formulaSettingsPending" :icon="'eos-icons:loading'" :size="'md'" :label="'Please wait...'"/>
                         <RadioGroup
+                            v-else
                             :disabled="disableActions"
                             class="flex-none scaffold-border px-2"
                             :selections="formulableSelection"
@@ -19,7 +21,7 @@
                     </div>
                 </div>
 
-                <div v-if="formulableSelected == FORMULABLE.EARNINGS" class="space-y-4">
+                <div v-if="!formulaSettingsPending && formulableSelected == FORMULABLE.EARNINGS" class="space-y-4">
                     <div class="text-lg font-header">Earnings</div>
 
                     <DataTable
@@ -64,7 +66,7 @@
                     </DataTable>
                 </div>
 
-                <div v-if="formulableSelected == FORMULABLE.DEDUCTIONS" class="space-y-4">
+                <div v-if="!formulaSettingsPending && formulableSelected == FORMULABLE.DEDUCTIONS" class="space-y-4">
                     <div class="text-lg font-header">Deductions</div>
 
                     <DataTable
@@ -106,7 +108,7 @@
                     </DataTable>
                 </div>
 
-                <div v-if="formulableSelected == FORMULABLE.INCOME_TAX" class="space-y-4">
+                <div v-if="!formulaSettingsPending && formulableSelected == FORMULABLE.INCOME_TAX" class="space-y-4">
                     <div class="text-lg font-header">Income Tax</div>
 
                     <DataTable
@@ -285,7 +287,7 @@ const formulaSettingsExecute = async() =>{
         }
     });
 }
-await formulaSettingsExecute();
+formulaSettingsExecute();
 </script>
 
 <style scoped>

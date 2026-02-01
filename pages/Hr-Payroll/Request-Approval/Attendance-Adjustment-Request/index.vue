@@ -689,7 +689,7 @@ const attendanceAdjustmentsExecute = async() =>{
         }
     }, false);
 }
-await attendanceAdjustmentsExecute();
+attendanceAdjustmentsExecute();
 
 function paginate(page = 1, clearSelection = false){
     clearTimeout(filters.search.callback);

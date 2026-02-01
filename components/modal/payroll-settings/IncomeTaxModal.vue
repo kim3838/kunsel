@@ -171,7 +171,7 @@ const incomeTaxFormulaExecute = async () => {
         }
     });
 }
-await incomeTaxFormulaExecute();
+incomeTaxFormulaExecute();
 
 const incomeTaxFormulaSettings = ref<CompanyFormulaT[]>([]);
 const incomeTaxFormulaSettingsPending = ref(false)

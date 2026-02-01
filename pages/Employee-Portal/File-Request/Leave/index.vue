@@ -573,7 +573,7 @@ const leaveRequestsExecute = async() =>{
         }
     }, false);
 }
-await leaveRequestsExecute();
+leaveRequestsExecute();
 
 function paginate(page = 1, clearSelection = false){
     clearTimeout(filters.search.callback);

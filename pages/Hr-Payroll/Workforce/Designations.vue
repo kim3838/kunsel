@@ -221,7 +221,7 @@ const designationsExecute = async () => {
         }
     }, false);
 }
-await designationsExecute();
+designationsExecute();
 
 const disableActions = computed(() => {
     return designationsPending.value || creatingOrEditing.value || deleting.value || companyAssociationPendingState().value;

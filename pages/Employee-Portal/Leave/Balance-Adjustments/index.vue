@@ -215,7 +215,7 @@ const leaveBalanceAdjustmentsExecute = async() =>{
         }
     }, false);
 }
-await leaveBalanceAdjustmentsExecute();
+leaveBalanceAdjustmentsExecute();
 
 function paginate(page = 1, clearSelection = false){
     clearTimeout(filters.search.callback);

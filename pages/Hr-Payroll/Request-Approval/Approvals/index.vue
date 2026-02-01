@@ -486,7 +486,7 @@ const approvalStatesExecute = async() =>{
         }
     }, false);
 }
-await approvalStatesExecute();
+approvalStatesExecute();
 
 function paginate(page = 1, clearSelection = false){
     clearTimeout(filters.search.callback);

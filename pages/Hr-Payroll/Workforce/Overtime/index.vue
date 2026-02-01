@@ -524,7 +524,7 @@ const overtimesExecute = async() =>{
         }
     }, false);
 }
-await overtimesExecute();
+overtimesExecute();
 
 function paginate(page = 1, clearSelection = false){
     clearTimeout(filters.search.callback);

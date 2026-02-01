@@ -171,7 +171,7 @@ const deductionFormulaExecute = async () => {
         }
     });
 }
-await deductionFormulaExecute();
+deductionFormulaExecute();
 
 const deductionFormulaSettings = ref<CompanyFormulaT[]>([]);
 const deductionFormulaSettingsPending = ref(false)

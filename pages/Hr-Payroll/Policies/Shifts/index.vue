@@ -297,7 +297,7 @@ const shiftsExecute = async () => {
     }, false);
 }
 
-await shiftsExecute();
+shiftsExecute();
 
 const disableActions = computed(() => {
     return shiftsPending.value || deleting.value || companyAssociationPendingState().value;

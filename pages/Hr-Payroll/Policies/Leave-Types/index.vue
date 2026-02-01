@@ -317,7 +317,7 @@ const leaveTypesExecute = async () => {
     }, false);
 }
 
-await leaveTypesExecute();
+leaveTypesExecute();
 
 const disableActions = computed(() => {
     return leaveTypesPending.value || deleting.value || companyAssociationPendingState().value;
