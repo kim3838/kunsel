@@ -2,7 +2,7 @@
     <span
         :class="[
             fontClass, heightClass, invert ? 'px-0' : 'px-[0.3rem]',
-            (shade && !invert) ? '_label' : ''
+            (shade && !invert && lightTheme) ? '_label' : ''
         ]"
         :style=[style]
         class="relative font-label inline-flex items-center">
@@ -12,14 +12,20 @@
 
 <script setup lang="ts">
 import type {CommonColorsT} from "@/stores/theme";
-import {storeToRefs} from "pinia";
 import type {LabelTypeT} from "@/public/js/types/theme";
+import {storeToRefs} from "pinia";
+
 const {$themeStore} = useNuxtApp();
 
 const {
+    type: themeType,
     common: commonColor,
 } = storeToRefs($themeStore);
 const typedCommonColor = commonColor as Ref<CommonColorsT>;
+
+const lightTheme = computed(() => {
+    return themeType.value === 'light';
+})
 
 const props = defineProps({
     label: {
