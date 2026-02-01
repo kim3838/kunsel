@@ -1,8 +1,8 @@
 
 import type {Validatable} from "@/public/js/types/data";
 import type {LabelTypeT} from "@/public/js/types/theme";
+import type {CommonColorsT} from "@/stores/theme";
 import {storeToRefs} from "pinia";
-import type {CommonColorsT} from "~/stores/theme";
 
 export const useCosmetic = () => {
 
