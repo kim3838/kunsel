@@ -70,11 +70,11 @@ export const useThemeStore = defineStore('theme', () => {
 
             'neutral': '#dcd9d9',
 
-            'body': '#f4f4f4',
-            'shade': '#f8f8f8',
-            'tint': '#fdfdfd',
+            'body': '#f9f9f9',
+            'shade': '#fefefe',
+            'tint': '#ffffff',
 
-            'text': '#4b4949',
+            'text': '#343232',
             'text-invert': '#e0e8de',
             'text-secondary': '#b4b4b4',
         },
