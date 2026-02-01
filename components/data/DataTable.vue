@@ -168,6 +168,7 @@ const {
     type: themeType,
     common: commonColor,
     secondary: secondaryColor,
+    cell: cellColor,
     neutral: neutralColor,
     lining: liningColor,
     thread: threadColor,
@@ -190,7 +191,7 @@ const lightTheme = computed(() => {
     return themeType.value === 'light';
 })
 const cellBorder = computed(() => {
-    return props.borderAppearance ? liningColor40.value : (lightTheme.value ? '#f7f7f7' : '#555756');
+    return props.borderAppearance ? liningColor40.value : cellColor.value;
 });
 
 const cosmetic = useCosmetic();
