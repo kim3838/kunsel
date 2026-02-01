@@ -1,6 +1,7 @@
 //@ts-nocheck
 
 import type {EnumSelection} from "@/public/js/common/type";
+import type {PaletteName} from "@/public/js/types/theme";
 
 export const payrollComponentPaySelectionsState = () => {
     return useState('payroll_component_pay_selections', () => {
@@ -29,10 +30,16 @@ export const timezoneSelectionsState = () => {
     return useState('timezone_selections', () => []);
 }
 
+export const themeTypeState = () => {
+    return useState('theme_type', () => 'light');
+}
+
 export const useCommon = () => {
+    const {sessionDomain} = useRuntimeConfig().public;
     const payrollComponentPaySelections = payrollComponentPaySelectionsState();
     const timezoneSelections = timezoneSelectionsState();
     const companyOrganizationSelections = companyOrganizationSelectionsState();
+    const themeType = themeTypeState();
 
     const ssrFetchPayrollComponentPaySelections = async () => {
 
@@ -256,6 +263,19 @@ export const useCommon = () => {
         };
     }
 
+    const setStoredThemeType = async () => {
+
+        const storedTheme = useCookie<PaletteName>('pt',{
+            domain: sessionDomain,
+            sameSite: 'lax',
+        });
+
+        if(storedTheme.value !== undefined){
+
+            themeType.value = storedTheme.value.split('-')[0] == 'dark' ? 'dark' : 'light';
+        }
+    }
+
     return {
         ssrFetchPayrollComponentPaySelections,
         ssrFetchTimezoneSelections,
@@ -270,6 +290,7 @@ export const useCommon = () => {
         payrollComponentPaySelections,
         timezoneSelections,
         companyOrganizationSelections,
-        resetCommon
+        resetCommon,
+        setStoredThemeType,
     };
 }
