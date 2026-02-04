@@ -52,9 +52,9 @@
                     <template #content>
                         <div ref='modalContentContainer'>
 
-                            <div class="pt-2 mx-auto max-w-screen-xl flex flex-row gap-4">
+                            <div class="pt-2 flex flex-row gap-4">
 
-                                <fieldset class="neutral-border px-2 pb-2 space-y-2">
+                                <fieldset class="w-full neutral-border px-2 pb-2 space-y-2">
                                     <legend class="text-lg font-header">{{creatingLeaveBalanceAdjustment ? 'Create adjustment' : 'Edit Adjustment'}}</legend>
 
                                     <div class="grid gap-2 grid-cols-4">
