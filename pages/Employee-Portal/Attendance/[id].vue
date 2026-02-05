@@ -295,7 +295,7 @@ const attendanceData = computed<TableRowT[]>(() => {
 
 const attendanceBreakdownSupHeaders = reactive<TableSupHeaderT[]>([
     {text: 'Split', colspan: 5, value: 'split'},
-    {text: 'Work Hour', colspan: 3, value: 'work_hour'},
+    {text: 'Work Hour', colspan: 2, value: 'work_hour'},
     {text: 'Attendance', colspan: 2, value: 'attendance'},
     {text: 'Grace', colspan: 2, value: 'attendance'},
     {text: 'Present', colspan: 3, value: 'attendance'},
@@ -311,7 +311,6 @@ const attendanceBreakdownHeaders = reactive<TableHeaderT[]>([
 
     { text: 'Work Hour', value: 'work_hour', alignData: 'left'},
     { text: 'Hourly Rate Type', value: 'hourly_rate', alignData: 'left'},
-    { text: 'Multiplier', value: 'hourly_rate_multiplier', alignData: 'left'},
 
     { text: 'Actual Start', value: 'actual_start', alignData: 'left'},
     { text: 'Actual End', value: 'actual_end', alignData: 'left'},
