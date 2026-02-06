@@ -30,6 +30,8 @@ export const  COMPENSATION: NumericEnumInterface = {
     REGULAR_ALLOWANCE : 101,
     OVERTIME : 110,
     BENEFIT : 120,
+    LEAVE_PAY : 200,
+    HOLIDAY_PAY : 300,
 }
 
 export const  COMPENSATION_NAME: StringEnumInterface = {
@@ -37,6 +39,9 @@ export const  COMPENSATION_NAME: StringEnumInterface = {
     [COMPENSATION.OVERTIME as number] : 'Overtime',
     [COMPENSATION.BENEFIT as number] : 'Benefit',
     [COMPENSATION.REGULAR_ALLOWANCE as number] : 'Regular Allowance',
+    [COMPENSATION.LEAVE_PAY as number] : 'Leave Pay',
+    [COMPENSATION.HOLIDAY_PAY as number] : 'Holiday Pay',
+
 }
 
 export const  DEDUCTION: NumericEnumInterface = {

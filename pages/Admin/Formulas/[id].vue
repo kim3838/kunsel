@@ -197,6 +197,8 @@ const earningComponentOptions = reactive({
         $enumerableOption(COMPENSATION_NAME, COMPENSATION.OVERTIME as number),
         $enumerableOption(COMPENSATION_NAME, COMPENSATION.BENEFIT as number),
         $enumerableOption(COMPENSATION_NAME, COMPENSATION.REGULAR_ALLOWANCE as number),
+        $enumerableOption(COMPENSATION_NAME, COMPENSATION.LEAVE_PAY as number),
+        $enumerableOption(COMPENSATION_NAME, COMPENSATION.HOLIDAY_PAY as number),
     ],
     selected: null
 });

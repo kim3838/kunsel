@@ -23,6 +23,8 @@ export const useCosmetic = () => {
                 [COMPENSATION.OVERTIME as number]: 'success',
                 [COMPENSATION.BENEFIT as number]: 'success',
                 [COMPENSATION.REGULAR_ALLOWANCE as number]: 'success',
+                [COMPENSATION.LEAVE_PAY as number]: 'info',
+                [COMPENSATION.HOLIDAY_PAY as number]: 'info',
             }[componentType] as LabelTypeT || 'default';
 
         } else if(_includes([FORMULABLE.DEDUCTIONS], formulableType)) {
