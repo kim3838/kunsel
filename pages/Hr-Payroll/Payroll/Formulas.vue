@@ -60,7 +60,7 @@
                                 <Icon name="mdi:info-variant" :class="[slot.iconSizeClass]" /><div :class="[slot.titleSizeClass]">Settings Information</div>
                             </div>
                             <component v-if="cell.formula_name == 'Standard-Overtime'" :is="StandardOvertimeSettings" :settings="cell.sub_row.settings" />
-                            <component v-else-if="cell.formula_name == 'Standard-Salary'" :is="StandardSalarySettings" :settings="cell.sub_row.settings" />
+                            <component v-else-if="cell.formula_name == 'Standard-Basic-Pay'" :is="StandardBasicPaySettings" :settings="cell.sub_row.settings" />
                             <component v-else :is="FormulaSettingsCaster" :settings="cell.sub_row.settings" />
                         </template>
                     </DataTable>
@@ -166,7 +166,7 @@ definePageMeta({middleware: ['auth', 'admin-of-selected-company']});
 useLayout().setNavigationMode('solid');
 
 const StandardOvertimeSettings = resolveComponent('StandardOvertimeSettings');
-const StandardSalarySettings = resolveComponent('StandardSalarySettings');
+const StandardBasicPaySettings = resolveComponent('StandardBasicPaySettings');
 const FormulaSettingsCaster = resolveComponent('FormulaSettingsCaster');
 
 const {isAuthenticated} = useAuth();

@@ -4,7 +4,7 @@
         <table v-if="rateSettings.length > 0">
             <thead>
             <tr>
-                <td class="p-[3px] font-semibold">Salary Rates</td>
+                <td class="p-[3px] font-semibold">Basic Pay Rates</td>
                 <td class="p-[3px]" v-for="(rateSetting) in rateSettings[0].value">
                     {{ rateSetting.label }}
                 </td>

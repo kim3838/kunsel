@@ -19,7 +19,7 @@ export const useCosmetic = () => {
         if(_includes([FORMULABLE.EARNINGS], formulableType)){
 
             shadeValue = {
-                [COMPENSATION.BASIC_SALARY as number]: 'success',
+                [COMPENSATION.BASIC_PAY as number]: 'success',
                 [COMPENSATION.OVERTIME as number]: 'success',
                 [COMPENSATION.BENEFIT as number]: 'success',
                 [COMPENSATION.REGULAR_ALLOWANCE as number]: 'success',

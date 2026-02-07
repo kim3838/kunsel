@@ -26,7 +26,7 @@ export const FORMULABLE_MODEL_MAP_KEY: StringEnumInterface = {
 };
 
 export const  COMPENSATION: NumericEnumInterface = {
-    BASIC_SALARY : 100,
+    BASIC_PAY : 100,
     REGULAR_ALLOWANCE : 101,
     OVERTIME : 110,
     BENEFIT : 120,
@@ -35,7 +35,7 @@ export const  COMPENSATION: NumericEnumInterface = {
 }
 
 export const  COMPENSATION_NAME: StringEnumInterface = {
-    [COMPENSATION.BASIC_SALARY as number] : 'Basic Salary',
+    [COMPENSATION.BASIC_PAY as number] : 'Basic Pay',
     [COMPENSATION.OVERTIME as number] : 'Overtime',
     [COMPENSATION.BENEFIT as number] : 'Benefit',
     [COMPENSATION.REGULAR_ALLOWANCE as number] : 'Regular Allowance',

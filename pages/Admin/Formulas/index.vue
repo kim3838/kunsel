@@ -151,7 +151,7 @@ const formulableOptions = reactive({
 const earningComponentOptions = reactive({
     search: '',
     selection: [
-        $enumerableOption(COMPENSATION_NAME, COMPENSATION.BASIC_SALARY as number),
+        $enumerableOption(COMPENSATION_NAME, COMPENSATION.BASIC_PAY as number),
         $enumerableOption(COMPENSATION_NAME, COMPENSATION.OVERTIME as number),
         $enumerableOption(COMPENSATION_NAME, COMPENSATION.BENEFIT as number),
         $enumerableOption(COMPENSATION_NAME, COMPENSATION.REGULAR_ALLOWANCE as number),

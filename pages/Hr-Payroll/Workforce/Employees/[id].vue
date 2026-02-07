@@ -1100,7 +1100,7 @@ const employeeAdditionalForms = (employee = null) => {
 
         if(payrollFormulableType == FORMULABLE.EARNINGS){
 
-            if (payrollComponentType == COMPENSATION.BASIC_SALARY ||
+            if (payrollComponentType == COMPENSATION.BASIC_PAY ||
                 payrollComponentType == COMPENSATION.REGULAR_ALLOWANCE) {
 
                 let amountableStart = _get(payrollComponent, 'amountable_start.value', null);

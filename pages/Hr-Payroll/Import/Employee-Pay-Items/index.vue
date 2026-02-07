@@ -272,7 +272,7 @@ const preImportSupHeaders = reactive<TableSupHeaderT[]>([
 
 const preImportSupRows = reactive<TableSupRowT[]>([
     {
-        'amount': "Amount, Pay Period, Pay Type and Pay Frequency are only required when payroll component is Basic Salary or Regular Allowance.",
+        'amount': "Amount, Pay Period, Pay Type and Pay Frequency are only required when payroll component is Basic Pay or Regular Allowance.",
         'pay_period': "One of the following: \n" + Object.keys(PAY_PERIOD).join("\n"),
         'pay_type': "One of the following: \n" + Object.keys(PAY_TYPE).join("\n"),
     }

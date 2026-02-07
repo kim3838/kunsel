@@ -447,7 +447,7 @@ watch(() => payFrequencyOptions.selected, (newValue, oldValue) => {
         employeeCompensationData.value.forEach(compensation => {
 
             const isAmountable = _includes([
-                COMPENSATION.BASIC_SALARY,
+                COMPENSATION.BASIC_PAY,
                 COMPENSATION.REGULAR_ALLOWANCE
             ], compensation.payroll_componentable.type.value);
 
