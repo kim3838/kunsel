@@ -6,14 +6,10 @@ module.exports = {
                 sans : [
                     'Funnel Sans',
                     'Momo Trust Sans',
-                    'GG Sans',
                     'Overpass',
                     'Philosopher',
                     'Be Vietnam Pro',
                     'Finlandica',
-                    'Google Sans Text',
-                    'Spline Sans',
-                    'Barlow Semi Condensed',
                     'Roboto Condensed',
                     'Inter',
                     'National Park',
@@ -36,7 +32,6 @@ module.exports = {
                     'Be Vietnam Pro',
                     'Reddit Sans Condensed',
                     'Gentium Plus',
-                    'GG Sans',
                     'Inclusive Sans',
                     'Prociono',
                     'Bricolage Grotesque',
@@ -56,24 +51,20 @@ module.exports = {
                 data: [
                     'Reddit Sans Condensed',
                     'Gentium Plus',
-                    'Aptos Narrow',
                     'Sofia Sans Semi Condensed',
                 ],
                 header: [
                     'Geist',
                     'Be Vietnam Pro',
                     'Momo Trust Sans',
-                    'GG Sans',
                 ],
                 standard: [
                     'Reddit Sans Condensed',
                     'Gentium Plus',
-                    'Aptos Narrow',
                     'Sofia Sans Semi Condensed',
                 ],
                 label: [
                     'National Park',
-                    'Aptos Narrow',
                 ],
                 serif : [
                     'Quintessential',
@@ -93,7 +84,6 @@ module.exports = {
                 mono : [
                     `'M+ 2m'`,
                     'Roboto Mono',
-                    'Spline Sans Mono',
                     'monospace',
                 ],
             },
