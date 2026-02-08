@@ -169,8 +169,8 @@ export default defineNuxtConfig({
         ],
         server: {
             allowedHosts: [
-                '.server.local',
-                'client.server.local',
+                process.env.SESSION_DOMAIN || '.server.local',
+                process.env.FRONTEND_URL || 'http://client.server.local:3000',
             ]
         }
     },
