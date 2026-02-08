@@ -1,5 +1,5 @@
 
 export default defineAppConfig({
-    title: 'Kunsel',
+    title: 'Kunsel ERP',
     array: () => ['bonjour'],
 })
