@@ -6,6 +6,7 @@
             <div class="max-w-screen-2xl w-full flex justify-start lg:justify-around h-10 lg:h-16">
                 <div class="flex">
                     <NavDrop
+                        navigation-mode
                         class="lg:hidden"
                         :size="navigationHeaderSize"
                         :title="'Menu'"
@@ -37,6 +38,7 @@
                             </a>
 
                             <NavDrop
+                                navigation-mode
                                 v-if="navigation.type === 'drop'"
                                 :size="navigationHeaderSize"
                                 :title="navigation.title"
@@ -47,7 +49,7 @@
                     </div>
                 </div>
                 <div class="flex">
-                    <ThemeSelection :size="navigationHeaderSize" :selected-summary-prefix="''" />
+                    <ThemeSelection :size="navigationHeaderSize" :selected-summary-prefix="''" :font-family-class="'font-business'" />
                     <component
                         :is="navDrop"
                         v-if="isAuthenticated"
@@ -58,6 +60,7 @@
                     />
                     <NavDrop
                         v-else
+                        navigation-mode
                         :size="navigationHeaderSize"
                         :title="'Account'"
                         :drop-options="navigationAccountLinks"

@@ -68,6 +68,7 @@
                         :rows="users.data"
                         :disabled="disableDataTable"
                         v-model="selectedUsers"
+                        :border-appearance="Boolean($associationStore.associatedUserSubRowSlug)"
                         :sub-row-slug="$associationStore.associatedUserSubRowSlug"
                         :sub-row-settings="{
                             type: DATATABLE_SUBROW_TYPE.TITLED,

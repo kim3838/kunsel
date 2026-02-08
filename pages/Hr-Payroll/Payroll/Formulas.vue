@@ -22,7 +22,7 @@
                 </div>
 
                 <div v-if="!formulaSettingsPending && formulableSelected == FORMULABLE.EARNINGS" class="space-y-4">
-                    <div class="text-lg font-header">Earnings</div>
+                    <div class="text-lg font-medium font-header">Earnings</div>
 
                     <DataTable
                         :disabled="disableDataTable"
@@ -67,7 +67,7 @@
                 </div>
 
                 <div v-if="!formulaSettingsPending && formulableSelected == FORMULABLE.DEDUCTIONS" class="space-y-4">
-                    <div class="text-lg font-header">Deductions</div>
+                    <div class="text-lg font-medium font-header">Deductions</div>
 
                     <DataTable
                         :disabled="disableDataTable"
@@ -109,7 +109,7 @@
                 </div>
 
                 <div v-if="!formulaSettingsPending && formulableSelected == FORMULABLE.INCOME_TAX" class="space-y-4">
-                    <div class="text-lg font-header">Income Tax</div>
+                    <div class="text-lg font-medium font-header">Income Tax</div>
 
                     <DataTable
                         :disabled="disableDataTable"

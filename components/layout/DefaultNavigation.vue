@@ -2,7 +2,7 @@
     <nav
         ref="navigation"
         class="primary-navigation-parent z-40 fixed">
-        <div class="relative z-[42] w-full flex justify-center font-label">
+        <div class="relative z-[42] w-full flex justify-center font-business">
             <div class="max-w-screen-2xl w-full flex gap-1 justify-end">
                 <NavLink
                     class="h-full cursor-pointer"
@@ -23,9 +23,10 @@
                     <Icon size="0.75rem" :name="'file-icons:moment-timezone'"/>
                     <div>{{user?.timezone}}</div>
                 </div>
-                <ThemeSelection :size="`xs`" :font-family-class="'font-label'" />
+                <ThemeSelection :size="`xs`" :font-family-class="'font-business'" />
                 <NavDrop
                     v-if="true"
+                    navigation-mode
                     :size="`xs`"
                     :title="'Language'"
                     :drop-options="[
@@ -66,6 +67,7 @@
                     <div class="flex">
                         <NavDrop
                             v-if="screenWidth < screenWidthBreakpoint['md'] || (navigationLinks.length > 2 && !isMainNavigationLastItemVisible)"
+                            navigation-mode
                             :size="navigationHeaderSize"
                             :title="'Menu'"
                             :drop-options="navigationLinks" />
@@ -100,6 +102,7 @@
 
                             <NavDrop
                                 v-if="navigation.type === 'drop'"
+                                navigation-mode
                                 :size="navigationHeaderSize"
                                 :title="navigation.title"
                                 :icon="navigation.icon"
@@ -143,6 +146,7 @@
 
                         <NavDrop
                             v-if="navigation.type === 'drop'"
+                            navigation-mode
                             :size="navigationHeaderSize"
                             :title="navigation.title"
                             :icon="navigation.icon"
@@ -185,6 +189,7 @@
                     />
                     <NavDrop
                         v-else
+                        navigation-mode
                         :size="navigationHeaderSize"
                         :title="'Account'"
                         :drop-options="navigationAccountLinks"
@@ -232,6 +237,7 @@
                     <NavDrop
                         class="h-full"
                         v-if="navigation.type === 'drop'"
+                        navigation-mode
                         :size="subNavigationHeaderSize"
                         :title="navigation.title"
                         :icon="navigation.icon"

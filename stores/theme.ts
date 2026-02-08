@@ -114,7 +114,7 @@ export const useThemeStore = defineStore('theme', () => {
             'shade': '#f8f8f8',
             'tint': '#fdfdfd',
 
-            'text': '#3b4662',
+            'text': '#2d3656',
             'text-invert': '#dbe8ee',
             'text-secondary': '#99aed0',
         },

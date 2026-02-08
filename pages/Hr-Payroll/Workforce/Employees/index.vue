@@ -65,7 +65,7 @@
                                     <UnorderedList :size="'lg'" :icon="'eos-icons:loading'">Loading Employment Profiles...</UnorderedList>
                                 </div>
                             </div>
-                            <div v-else class="font-semibold">
+                            <div v-else class="text-sm font-header">
                                 Changes are auto-save.
                             </div>
 
@@ -107,7 +107,7 @@
                                     <UnorderedList :size="'lg'" :icon="'eos-icons:loading'">Loading Payroll Components...</UnorderedList>
                                 </div>
                             </div>
-                            <div v-else class="font-semibold">
+                            <div v-else class="text-sm font-header">
                                 Changes are auto-save.
                             </div>
 

@@ -87,7 +87,7 @@
 
                             <div class="lining-shadow rounded-sm tint-background">
 
-                                <div class="lining-shadow rounded-t-sm text-lg px-4 py-2">User Account</div>
+                                <div class="lining-shadow rounded-t-sm text-lg font-medium font-header px-4 py-2">User Account</div>
 
                                 <div class="p-4">
                                     <div v-if="employeeHasUser">
@@ -162,7 +162,7 @@
 
                             <div class="lining-shadow rounded-sm tint-background">
 
-                                <div class="lining-shadow rounded-t-sm text-lg px-4 py-2">Contact</div>
+                                <div class="lining-shadow rounded-t-sm text-lg font-medium font-header px-4 py-2">Contact</div>
 
                                 <div class="p-4">
                                     <div class="grid gap-2 grid-cols-2 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-5 xl:grid-cols-6">
@@ -192,7 +192,7 @@
 
                             <div class="lining-shadow rounded-sm tint-background">
 
-                                <div class="lining-shadow rounded-t-sm text-lg px-4 py-2">Employee Information</div>
+                                <div class="lining-shadow rounded-t-sm text-lg font-medium font-header px-4 py-2">Employee Information</div>
 
                                 <div class="p-4 space-y-2">
 
@@ -245,7 +245,7 @@
 
                             <div class="lining-shadow rounded-sm tint-background">
 
-                                <div class="lining-shadow rounded-t-sm text-lg px-4 py-2">Organization</div>
+                                <div class="lining-shadow rounded-t-sm text-lg font-medium font-header px-4 py-2">Organization</div>
 
                                 <div class="p-4 space-y-2">
                                     <div class="grid gap-2 grid-cols-2 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-5 xl:grid-cols-6">

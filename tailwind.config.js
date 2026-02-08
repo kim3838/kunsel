@@ -28,6 +28,7 @@ module.exports = {
                     'Amarna',
                 ],
                 business: [
+                    'Noto Sans Display',
                     'Geist',
                     'Be Vietnam Pro',
                     'Reddit Sans Condensed',
@@ -54,6 +55,7 @@ module.exports = {
                     'Sofia Sans Semi Condensed',
                 ],
                 header: [
+                    'Noto Sans Display',
                     'Geist',
                     'Be Vietnam Pro',
                     'Momo Trust Sans',

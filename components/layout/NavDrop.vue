@@ -64,6 +64,7 @@
                         class="w-full"
                         :data-path-active="dropOption.path_active"
                         v-if="_includes([ 'drop', 'sub-nav'], dropOption.type)"
+                        :navigation-mode="navigationMode"
                         :parent="false"
                         :size="childDropSize"
                         :drop-shadow-size="dropShadowSize"
@@ -88,7 +89,7 @@ const nuxtApp = useNuxtApp();
 const isRouteActive = nuxtApp.$isRouteActive as (name: string | undefined) => boolean;
 const isRoutePathActive = nuxtApp.$isRoutePathActive as (path: string | undefined) => boolean;
 const {
-    navigationMode,
+    navigationMode: layoutNavigationMode,
 } = useLayout();
 const {
     hexAlpha,
@@ -117,6 +118,10 @@ const props = defineProps({
     },
     size: {
         default: 'md'
+    },
+    navigationMode: {
+        type: Boolean,
+        default: false
     },
     dropShadowSize: {
         default: 'none'
@@ -208,7 +213,7 @@ onMounted(async () => {
     }
 });
 const navigationTextShadow = computed(()=>{
-    if(navigationMode.value == 'clear-with-background'){
+    if(layoutNavigationMode.value == 'clear-with-background'){
         return '1px 1px 2px #000000';
     }
 
@@ -226,7 +231,7 @@ const accentColor70 = computed(() => {
     return accentColor.value + hexAlpha.value['70'];
 });
 const navigationLinkColor = computed(()=>{
-    if(navigationMode.value == 'clear-with-background'){
+    if(layoutNavigationMode.value == 'clear-with-background'){
         return '#ffffff';
     }
 
@@ -234,7 +239,7 @@ const navigationLinkColor = computed(()=>{
 });
 const navDropOptionsParentBackgroundColor = computed(()=>{
     if(
-        navigationMode.value == 'clear-with-background'
+        layoutNavigationMode.value == 'clear-with-background'
     ){
         return accentColor70.value;
     }
@@ -243,7 +248,7 @@ const navDropOptionsParentBackgroundColor = computed(()=>{
 });
 const navDropOptionsParentBorderColor = computed(()=>{
     if(
-        navigationMode.value == 'clear-with-background'
+        layoutNavigationMode.value == 'clear-with-background'
     ){
         return accentColor70.value;
     }
@@ -372,20 +377,39 @@ const classes = computed(() => {
 });
 
 const headerFontClass = computed(() => {
-    return {
-        'xs': 'text-xs',
-        'sm': 'text-sm',
-        'md': 'text-base',
-        'lg': 'text-lg',
-    }[props.size]
+
+    if(props.navigationMode){
+        return {
+            'xs': 'text-xs',
+            'sm': 'text-sm',
+            'md': 'text-base',
+            'lg': 'text-lg',
+        }[props.size];
+    } else {
+        return {
+            'xs': 'text-sm',
+            'sm': 'text-base',
+            'md': 'text-lg',
+            'lg': 'text-lg',
+        }[props.size];
+    }
 });
 const childNonDropFontClass = computed(() => {
-    return {
-        'xs': 'text-xs',
-        'sm': 'text-sm',
-        'md': 'text-base',
-        'lg': 'text-lg',
-    }[props.size]
+    if(props.navigationMode){
+        return {
+            'xs': 'text-xs',
+            'sm': 'text-sm',
+            'md': 'text-base',
+            'lg': 'text-lg',
+        }[props.size];
+    } else {
+        return {
+            'xs': 'text-sm',
+            'sm': 'text-base',
+            'md': 'text-lg',
+            'lg': 'text-lg',
+        }[props.size];
+    }
 });
 const childDropSize = computed(() => {
     return {

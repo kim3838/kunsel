@@ -64,7 +64,7 @@
                     <div v-if="payFrequenciesSuccessful" class="space-y-2 flex flex-col gap-4">
 
                         <div class="lining-shadow rounded-sm flex-grow tint-background">
-                            <div class="lining-shadow rounded-t-sm text-lg font-medium font-business px-4 py-2">
+                            <div class="lining-shadow rounded-t-sm text-lg font-medium font-header px-4 py-2">
                                 {{PAY_FREQUENCY_NAME[weeklyPayFrequenciesData.type]}}
                             </div>
 
@@ -119,7 +119,7 @@
                         </div>
 
                         <div class="lining-shadow rounded-sm flex-grow tint-background">
-                            <div class="lining-shadow rounded-t-sm text-lg font-medium font-business px-4 py-2">Monthly / Semimonthly</div>
+                            <div class="lining-shadow rounded-t-sm text-lg font-medium font-header px-4 py-2">Monthly / Semimonthly</div>
 
                             <div class="px-4 py-4">
                                 <form @submit.prevent="monthlySemimonthlyPayFrequencyFormSubmit" class="grid grid-cols-2 md:grid-cols-4 gap-4">

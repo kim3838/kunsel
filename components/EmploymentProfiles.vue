@@ -10,7 +10,7 @@
 
         <div class="lining-shadow rounded-sm tint-background space-y-2">
 
-            <div class="lining-shadow rounded-t-sm text-lg px-4 py-2">Employment Profile</div>
+            <div class="lining-shadow rounded-t-sm text-lg font-medium font-header px-4 py-2">Employment Profile</div>
 
             <div class="p-4">
 

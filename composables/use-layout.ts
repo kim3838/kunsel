@@ -692,20 +692,20 @@ export const useLayout = () => {
         return (navigationHeight.value + 'px');
     });
     const navigationHeaderSize = computed(() => {
-        let size = 'md'
+        let size = 'sm'
 
         if (screenWidth.value >= screenWidthBreakpoint['2xl']) {//3xl
-            size = 'md';
+            size = 'sm';
         } else if (screenWidth.value >= screenWidthBreakpoint['xl'] && screenWidth.value < screenWidthBreakpoint['2xl']) {//2xl
-            size = 'md';
+            size = 'sm';
         } else if (screenWidth.value >= screenWidthBreakpoint['lg'] && screenWidth.value < screenWidthBreakpoint['xl']) {//xl
-            size = 'md';
+            size = 'sm';
         } else if (screenWidth.value >= screenWidthBreakpoint['md'] && screenWidth.value < screenWidthBreakpoint['lg']) {//lg
-            size = 'md';
+            size = 'sm';
         } else if (screenWidth.value >= screenWidthBreakpoint['sm'] && screenWidth.value < screenWidthBreakpoint['md']) {//md
-            size = 'md';
+            size = 'sm';
         } else if (screenWidth.value < screenWidthBreakpoint['sm']) {//sm
-            size = 'md';
+            size = 'sm';
         }
 
         return size;

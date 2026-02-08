@@ -434,8 +434,8 @@ const selectionClass = computed(() => {
 
     if(props.navigationMode){
         return {
-            '2xs': 'text-sm h-full leading-[0.875rem] left-[0.2rem] right-[1.45rem]',
-            'xs': 'text-sm h-full leading-[0.875rem] left-[0.2rem] right-[1.7rem]',
+            '2xs': 'text-xs h-full leading-[0.875rem] left-[0.2rem] right-[1.45rem]',
+            'xs': 'text-xs h-full leading-[0.875rem] left-[0.2rem] right-[1.7rem]',
             'sm': 'text-sm h-full leading-[0.875rem] left-[0.2rem] right-[1.85rem]',
             'md': 'text-base h-full leading-[0.875rem] left-[0.2rem] right-[2.2rem]',
             'lg': 'text-lg h-full leading-[0.875rem] left-[0.2rem] right-[2.95rem]',
