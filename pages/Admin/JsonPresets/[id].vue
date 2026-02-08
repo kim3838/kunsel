@@ -113,7 +113,7 @@
 
 <script setup lang="ts">
 
-useHead({titleTemplate: (titleChunk) => {return `${titleChunk} - Json Presets`}});
+useHead({titleTemplate: (titleChunk) => {return `Json Presets`}});
 definePageMeta({middleware: ['auth', 'super-admin']});
 useLayout().setNavigationMode('solid');
 

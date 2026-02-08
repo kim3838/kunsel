@@ -358,13 +358,24 @@ const navigationModeSpacingClass = computed(() => {
 });
 
 const selectionItemSize = computed(() => {
-    return {
-        '2xs': 'sm',
-        'xs': 'sm',
-        'sm': props.navigationMode ? 'md' : 'md',
-        'md': 'md',
-        'lg': 'lg'
-    }[props.size];
+
+    if(props.navigationMode){
+        return {
+            '2xs': 'sm',
+            'xs': 'sm',
+            'sm': 'sm',
+            'md': 'sm',
+            'lg': 'md'
+        }[props.size];
+    } else {
+        return {
+            '2xs': 'sm',
+            'xs': 'sm',
+            'sm': 'md',
+            'md': 'md',
+            'lg': 'lg'
+        }[props.size];
+    }
 });
 
 const iconHolderClass = computed(() => {
@@ -425,9 +436,9 @@ const selectionClass = computed(() => {
         return {
             '2xs': 'text-sm h-full leading-[0.875rem] left-[0.2rem] right-[1.45rem]',
             'xs': 'text-sm h-full leading-[0.875rem] left-[0.2rem] right-[1.7rem]',
-            'sm': 'text-base h-full leading-[0.875rem] left-[0.2rem] right-[1.85rem]',
-            'md': 'text-lg h-full leading-[0.875rem] left-[0.2rem] right-[2.2rem]',
-            'lg': 'text-xl h-full leading-[0.875rem] left-[0.2rem] right-[2.95rem]',
+            'sm': 'text-sm h-full leading-[0.875rem] left-[0.2rem] right-[1.85rem]',
+            'md': 'text-base h-full leading-[0.875rem] left-[0.2rem] right-[2.2rem]',
+            'lg': 'text-lg h-full leading-[0.875rem] left-[0.2rem] right-[2.95rem]',
         }[props.size];
     } else {
         return {
@@ -441,13 +452,24 @@ const selectionClass = computed(() => {
 });
 
 const optionsFontClass = computed(() => {
-    return {
-        '2xs': 'text-base',
-        'xs': 'text-base',
-        'sm': 'text-base',
-        'md': 'text-base',
-        'lg': 'text-lg'
-    }[props.size];
+
+    if(props.navigationMode){
+        return {
+            '2xs': 'text-2xs',
+            'xs': 'text-xs',
+            'sm': 'text-sm',
+            'md': 'text-sm',
+            'lg': 'text-base'
+        }[props.size];
+    } else {
+        return {
+            '2xs': 'text-base',
+            'xs': 'text-base',
+            'sm': 'text-base',
+            'md': 'text-base',
+            'lg': 'text-lg'
+        }[props.size];
+    }
 });
 
 const inputHolderClass = computed(() => {

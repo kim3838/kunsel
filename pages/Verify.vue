@@ -39,7 +39,7 @@
 
 <script setup>
 const {$promptStore} = useNuxtApp();
-useHead({titleTemplate: (titleChunk) => {return `${titleChunk} - Verify Email`}});
+useHead({titleTemplate: (titleChunk) => {return `Verify Email`}});
 definePageMeta({middleware: ['auth', 'not-verified']});
 useLayout().setNavigationMode('solid');
 

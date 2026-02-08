@@ -266,7 +266,7 @@ import type {EnumOption, EnumSelection} from "@/public/js/common/type";
 import type {DateTimePickerOptionsT} from "@/public/js/datetimepicker/type";
 import {storeToRefs} from "pinia";
 
-useHead({titleTemplate: (titleChunk) => {return `${titleChunk} - Attendance`}});
+useHead({titleTemplate: (titleChunk) => {return `Attendance`}});
 definePageMeta({middleware: ['auth', 'employee-of-selected-company']});
 useLayout().setNavigationMode('solid');
 

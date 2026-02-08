@@ -242,7 +242,7 @@ import type {DateTimePickerOptionsT} from "@/public/js/datetimepicker/type";
 import type {SingleSelectPaginatedInstance} from "@/public/js/types/component-instance";
 import {storeToRefs} from "pinia";
 
-useHead({titleTemplate: (titleChunk) => {return `${titleChunk} - Leave Balance Adjustments`}});
+useHead({titleTemplate: (titleChunk) => {return `Leave Balance Adjustments`}});
 definePageMeta({middleware: ['auth', 'admin-of-selected-company']});
 useLayout().setNavigationMode('solid');
 

@@ -141,7 +141,7 @@ import type {AccountSubscriptionFormT, AccountT} from "@/public/js/types/account
 import type {TableHeaderT} from "@/public/js/types/data";
 import type {StringEnumInterface} from "@/public/js/common/type";
 
-useHead({titleTemplate: (titleChunk) => {return `${titleChunk} - Accounts`}});
+useHead({titleTemplate: (titleChunk) => {return `Accounts`}});
 definePageMeta({middleware: ['auth', 'super-admin']});
 useLayout().setNavigationMode('solid');
 

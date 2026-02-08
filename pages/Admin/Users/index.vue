@@ -144,7 +144,7 @@ import type {DataTableT, TableHeaderT, TableRowT} from "@/public/js/types/data";
 import type {EnumSelection} from "@/public/js/common/type";
 import type {LabelTypeT} from "@/public/js/types/theme";
 
-useHead({titleTemplate: (titleChunk) => {return `${titleChunk} - Users`}});
+useHead({titleTemplate: (titleChunk) => {return `Users`}});
 definePageMeta({middleware: ['auth', 'super-admin']});
 useLayout().setNavigationMode('solid');
 const user = userState();

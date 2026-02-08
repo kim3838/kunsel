@@ -295,7 +295,7 @@ import type {DataTableT, TableHeaderT, TableRowT, TableSupHeaderT} from "@/publi
 import type {EnumOption, EnumSelection} from "@/public/js/common/type";
 import {storeToRefs} from "pinia";
 
-useHead({titleTemplate: (titleChunk) => {return `${titleChunk} - Attendance`}});
+useHead({titleTemplate: (titleChunk) => {return `Attendance`}});
 definePageMeta({middleware: ['auth', 'admin-of-selected-company']});
 useLayout().setNavigationMode('solid');
 

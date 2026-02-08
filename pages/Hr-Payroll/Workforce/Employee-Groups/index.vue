@@ -178,7 +178,7 @@ import type {EmployeeSelectionInstance} from "@/public/js/types/component-instan
 import type {EnumOption, EnumSelection} from "@/public/js/common/type";
 import {storeToRefs} from "pinia";
 
-useHead({titleTemplate: (titleChunk) => {return `${titleChunk} - Employee Groups`}});
+useHead({titleTemplate: (titleChunk) => {return `Employee Groups`}});
 definePageMeta({middleware: ['auth', 'admin-of-selected-company']});
 useLayout().setNavigationMode('solid');
 

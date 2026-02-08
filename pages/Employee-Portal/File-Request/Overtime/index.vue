@@ -311,7 +311,7 @@ import type {LabelTypeT} from "@/public/js/types/theme";
 import type {RequestablePayloadT} from "@/public/js/types/request-approval";
 import {storeToRefs} from "pinia";
 
-useHead({titleTemplate: (titleChunk) => {return `${titleChunk} - Overtime Requests`}});
+useHead({titleTemplate: (titleChunk) => {return `Overtime Requests`}});
 definePageMeta({middleware: ['auth', 'employee-of-selected-company']});
 useLayout().setNavigationMode('solid');
 

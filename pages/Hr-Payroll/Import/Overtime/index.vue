@@ -164,7 +164,7 @@ import type {TableHeaderT, TableRowPayloadT, TableRowT, TableSupHeaderT} from "@
 import type {OvertimePreImportT} from "@/public/js/types/import";
 import {storeToRefs} from "pinia";
 
-useHead({titleTemplate: (titleChunk) => {return `${titleChunk} - Import Overtime`}});
+useHead({titleTemplate: (titleChunk) => {return `Import Overtime`}});
 definePageMeta({middleware: ['auth', 'admin-of-selected-company']});
 useLayout().setNavigationMode('solid');
 

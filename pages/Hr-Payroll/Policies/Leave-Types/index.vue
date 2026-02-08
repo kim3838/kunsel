@@ -135,7 +135,7 @@ import type {DataTableT, TableHeaderT, TableSupHeaderT} from "@/public/js/types/
 import type {EnumOption, EnumSelection, StringEnumInterface} from "@/public/js/common/type";
 import {storeToRefs} from "pinia";
 
-useHead({titleTemplate: (titleChunk) => {return `${titleChunk} - Leave Types`}});
+useHead({titleTemplate: (titleChunk) => {return `Leave Types`}});
 definePageMeta({middleware: ['auth', 'admin-of-selected-company']});
 useLayout().setNavigationMode('solid');
 

@@ -190,7 +190,7 @@
 <script setup lang="ts">
 import type {BrowserSessionT} from "@/public/js/common/type";
 
-useHead({titleTemplate: (titleChunk) => {return `${titleChunk} - Account Settings`}});
+useHead({titleTemplate: (titleChunk) => {return `Account Settings`}});
 definePageMeta({middleware: ['auth', 'verified']});
 useLayout().setNavigationMode('solid');
 

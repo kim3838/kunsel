@@ -78,7 +78,7 @@ import type {DataTableT, TableHeaderT} from "@/public/js/types/data";
 import type {EnumSelection} from "@/public/js/common/type";
 import type {SelectDataType} from "@/public/js/types/form";
 
-useHead({titleTemplate: (titleChunk) => {return `${titleChunk} - Roles`}});
+useHead({titleTemplate: (titleChunk) => {return `Roles`}});
 definePageMeta({middleware: ['auth', 'admin-in-any-company']});
 useLayout().setNavigationMode('solid');
 

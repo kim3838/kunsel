@@ -352,7 +352,7 @@ import type {RequestablePayloadT} from "@/public/js/types/request-approval";
 import type {LeaveDateInquiryT} from "@/public/js/types/leave";
 import {storeToRefs} from "pinia";
 
-useHead({titleTemplate: (titleChunk) => {return `${titleChunk} - Leave Requests`}});
+useHead({titleTemplate: (titleChunk) => {return `Leave Requests`}});
 definePageMeta({middleware: ['auth', 'admin-of-selected-company']});
 useLayout().setNavigationMode('solid');
 
@@ -970,7 +970,7 @@ const loadEditable = () => {
         'ulid': _get(editPayload.value, 'ulid', null),
     };
 
-    const dateFrom = process.env.NODE_ENV === 'development' ? '2027-12-01' : '';
+    const dateFrom = process.env.NODE_ENV === 'development' ? '2026-01-01' : '';
     const dateTo = process.env.NODE_ENV === 'development' ? '2027-12-10' : '';
 
     leaveDateFrom.value = nuxtApp.$moment(dateFrom).format("YYYY-MM-DD");

@@ -32,7 +32,7 @@
                             </div>
 
                             <div class="flex flex-col">
-                                <div class="flex-none h-[1rem]"></div>
+                                <div class="flex-none h-[1.25rem]"></div>
                                 <Button class="w-min" ref="submitButton" type="submit" @click="formSubmit" :disabled="disableActions" :size="'md'" :icon="disableActions ? 'eos-icons:loading' : 'mdi:data'" :label="submitLabel"></Button>
                             </div>
                         </div>
@@ -67,7 +67,7 @@ import type {RolePermissionT, RoleT} from "@/public/js/types/role-permission";
 import type {SelectDataType} from "@/public/js/types/form";
 import type {EnumSelection} from "@/public/js/common/type";
 
-useHead({titleTemplate: (titleChunk) => {return `${titleChunk} - Roles`}});
+useHead({titleTemplate: (titleChunk) => {return `Roles`}});
 definePageMeta({middleware: ['auth', 'admin-in-any-company']});
 useLayout().setNavigationMode('solid');
 

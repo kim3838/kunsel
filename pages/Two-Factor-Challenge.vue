@@ -59,7 +59,7 @@
 </template>
 
 <script setup lang="ts">
-useHead({titleTemplate: (titleChunk) => {return `${titleChunk} - Two Factor Challenge`}});
+useHead({titleTemplate: (titleChunk) => {return `Two Factor Challenge`}});
 definePageMeta({middleware: 'guest'});
 useLayout().setNavigationMode('solid');
 const clientReadyState = useClientReadyState();

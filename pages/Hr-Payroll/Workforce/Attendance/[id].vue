@@ -126,7 +126,7 @@ import type {TableHeaderT, TableRowT, TableSupHeaderT} from "@/public/js/types/d
 import {storeToRefs} from "pinia";
 import type {AttendanceT} from "@/public/js/types/attendance";
 
-useHead({titleTemplate: (titleChunk) => {return `${titleChunk} - Attendance`}});
+useHead({titleTemplate: (titleChunk) => {return `Attendance`}});
 definePageMeta({middleware: ['auth', 'admin-of-selected-company']});
 useLayout().setNavigationMode('solid');
 const route = useRoute();

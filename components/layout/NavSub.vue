@@ -96,10 +96,10 @@ const classes = computed(() => {
 
 const headerFontClass = computed(() => {
     return {
-        'xs': 'text-sm',
-        'sm': 'text-base',
-        'md': 'text-lg',
-        'lg': 'text-xl',
+        'xs': 'text-xs',
+        'sm': 'text-sm',
+        'md': 'text-base',
+        'lg': 'text-lg',
     }[props.size]
 });
 

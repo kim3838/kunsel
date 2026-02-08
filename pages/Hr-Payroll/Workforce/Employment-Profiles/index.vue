@@ -170,7 +170,7 @@ import {storeToRefs} from "pinia";
 import type {DataTableT, TableHeaderT, TableRowT, TableSupHeaderT} from "@/public/js/types/data";
 import type {EnumOption, EnumSelection, StringEnumInterface} from "@/public/js/common/type";
 
-useHead({titleTemplate: (titleChunk) => {return `${titleChunk} - Employment Profiles`}});
+useHead({titleTemplate: (titleChunk) => {return `Employment Profiles`}});
 definePageMeta({middleware: ['auth', 'admin-of-selected-company']});
 useLayout().setNavigationMode('solid');
 

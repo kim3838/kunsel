@@ -246,7 +246,7 @@ import {storeToRefs} from "pinia";
 import type {DataTableT, TableHeaderT, TableRowT, TableSupHeaderT} from "@/public/js/types/data";
 import type {EnumOption, EnumSelection, PayFrequencyOptionT, StringEnumInterface} from "@/public/js/common/type";
 
-useHead({titleTemplate: (titleChunk) => {return `${titleChunk} - Employee Pay Items`}});
+useHead({titleTemplate: (titleChunk) => {return `Employee Pay Items`}});
 definePageMeta({middleware: ['auth', 'admin-of-selected-company']});
 useLayout().setNavigationMode('solid');
 

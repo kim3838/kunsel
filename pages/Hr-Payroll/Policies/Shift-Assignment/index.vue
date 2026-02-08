@@ -219,7 +219,7 @@ import {storeToRefs} from "pinia";
 import type {ShiftAssignmentsInstance, ShiftByEmployeeSelectionInstance, ShiftSelectionInstance} from "@/public/js/types/component-instance";
 import type {StringEnumInterface} from "@/public/js/common/type";
 
-useHead({titleTemplate: (titleChunk) => {return `${titleChunk} - Shift Assignment`}});
+useHead({titleTemplate: (titleChunk) => {return `Shift Assignment`}});
 definePageMeta({middleware: ['auth', 'admin-of-selected-company']});
 useLayout().setNavigationMode('solid');
 

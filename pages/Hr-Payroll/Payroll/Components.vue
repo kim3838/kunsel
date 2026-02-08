@@ -48,7 +48,7 @@
 <script setup lang="ts">
 import {storeToRefs} from "pinia";
 
-useHead({titleTemplate: (titleChunk) => {return `${titleChunk} - Payroll Components`}});
+useHead({titleTemplate: (titleChunk) => {return `Payroll Components`}});
 definePageMeta({middleware: ['auth', 'admin-of-selected-company',
     async () => {
 

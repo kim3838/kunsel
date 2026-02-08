@@ -7,6 +7,9 @@ module.exports = {
                     'Funnel Sans',
                     'Momo Trust Sans',
                     'GG Sans',
+                    'Overpass',
+                    'Philosopher',
+                    'Be Vietnam Pro',
                     'Finlandica',
                     'Google Sans Text',
                     'Spline Sans',
@@ -29,6 +32,8 @@ module.exports = {
                     'Amarna',
                 ],
                 business: [
+                    'Geist',
+                    'Be Vietnam Pro',
                     'Reddit Sans Condensed',
                     'Gentium Plus',
                     'GG Sans',
@@ -55,6 +60,8 @@ module.exports = {
                     'Sofia Sans Semi Condensed',
                 ],
                 header: [
+                    'Geist',
+                    'Be Vietnam Pro',
                     'Momo Trust Sans',
                     'GG Sans',
                 ],

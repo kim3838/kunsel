@@ -125,7 +125,7 @@ import type {DataTableT, TableHeaderT} from "@/public/js/types/data";
 import type {EnumOption, EnumSelection} from "@/public/js/common/type";
 import type {AccountT} from "@/public/js/types/account";
 
-useHead({titleTemplate: (titleChunk) => {return `${titleChunk} - Accounts`}});
+useHead({titleTemplate: (titleChunk) => {return `Accounts`}});
 definePageMeta({middleware: ['auth', 'super-admin']});
 useLayout().setNavigationMode('solid');
 

@@ -205,7 +205,7 @@ import {storeToRefs} from "pinia";
 import type {LeaveTypeAssignmentsInstance, LeaveTypeByEmployeeSelectionInstance, LeaveTypeSelectionInstance} from "@/public/js/types/component-instance";
 import type {StringEnumInterface} from "@/public/js/common/type";
 
-useHead({titleTemplate: (titleChunk) => {return `${titleChunk} - Leave Type Assignment`}});
+useHead({titleTemplate: (titleChunk) => {return `Leave Type Assignment`}});
 definePageMeta({middleware: ['auth', 'admin-of-selected-company']});
 useLayout().setNavigationMode('solid');
 

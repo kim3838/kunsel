@@ -161,7 +161,7 @@ import type {CompanyFormulaSetting} from "@/public/js/types/formula";
 import type {StringEnumInterface} from "@/public/js/common/type";
 import type {LabelTypeT} from "@/public/js/types/theme";
 
-useHead({titleTemplate: (titleChunk) => {return `${titleChunk} - Formula Settings`}});
+useHead({titleTemplate: (titleChunk) => {return `Formula Settings`}});
 definePageMeta({middleware: ['auth', 'admin-of-selected-company']});
 useLayout().setNavigationMode('solid');
 

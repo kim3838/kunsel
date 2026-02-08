@@ -302,7 +302,7 @@ import type {AttendanceT} from "@/public/js/types/attendance";
 import type {DateTimePickerOptionsT} from "@/public/js/datetimepicker/type";
 import {storeToRefs} from "pinia";
 
-useHead({titleTemplate: (titleChunk) => {return `${titleChunk} - Overtime`}});
+useHead({titleTemplate: (titleChunk) => {return `Overtime`}});
 definePageMeta({middleware: ['auth', 'admin-of-selected-company']});
 useLayout().setNavigationMode('solid');
 

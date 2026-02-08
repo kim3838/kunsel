@@ -27,7 +27,7 @@
                     <MultiSelect :key="designationOptionsKey" glint drop-shadow :selection-max-viewable-line="15" :size="'md'" :options="designationOptions" :disabled="disableActions" :icon="'ic:baseline-inbox'"/>
                 </div>
                 <div v-if="compact" class="flex flex-col">
-                    <div class="flex-none h-[1rem]"></div>
+                    <div class="flex-none h-[1.25rem]"></div>
                     <div class="grow">
                         <Button class="w-min" ref="submitButton" type="submit" :disabled="disableActions" :size="'md'" :icon="disableActions ? 'eos-icons:loading' : 'mdi:data'" :label="disableActions ? 'Loading' : 'Load'"></Button>
                     </div>

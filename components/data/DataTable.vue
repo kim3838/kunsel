@@ -447,13 +447,13 @@ const currentRowIds = computed(() => {
 
 const headerFontFamily = computed(() => {
 
-    return `font-[National_Park]`;
+    return `font-[Be_Vietnam_Pro]`;
 })
 const headerFontClass = computed(() => {
     return {
-        'sm': 'font-semibold text-xs',
-        'md': 'font-semibold text-sm',
-        'lg': 'font-semibold text-sm',
+        'sm': 'font-medium text-xs',
+        'md': 'font-semibold text-xs',
+        'lg': 'font-semibold text-xs',
         'xl': 'font-semibold text-sm',
     }[props.size];
 });

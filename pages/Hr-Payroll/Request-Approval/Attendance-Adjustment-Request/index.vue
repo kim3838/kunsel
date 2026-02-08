@@ -391,7 +391,7 @@ import type {LabelTypeT} from "@/public/js/types/theme";
 import type {RequestablePayloadT} from "@/public/js/types/request-approval";
 import {storeToRefs} from "pinia";
 
-useHead({titleTemplate: (titleChunk) => {return `${titleChunk} - Attendance Adjustment Requests`}});
+useHead({titleTemplate: (titleChunk) => {return `Attendance Adjustment Requests`}});
 definePageMeta({middleware: ['auth', 'admin-of-selected-company']});
 useLayout().setNavigationMode('solid');
 

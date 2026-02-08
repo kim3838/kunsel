@@ -161,7 +161,7 @@
                                     <SingleSelect :disabled="disableActions" value-persist drop-shadow :size="'md'" :options="leaveTypePeriodIntervalSpanTypeOptions"/>
                                 </div>
                                 <div v-if="leaveTypePeriodTypeOptions.selected == LEAVE_PERIOD_TYPE.CALENDAR_YEAR" class="flex flex-col">
-                                    <div class="flex-none h-[1rem]"></div>
+                                    <div class="flex-none h-[1.25rem]"></div>
                                     <SingleSelect :disabled="disableActions" value-persist drop-shadow :size="'md'" v-model="leaveTypePeriodCalendarSpanValue" :options="leaveTypePeriodCalendarSpanOptions"/>
                                 </div>
                             </div>
@@ -292,7 +292,7 @@ import type {EnumSelection, StringEnumInterface} from "@/public/js/common/type";
 import type {LeaveTypeT, LeaveTypeBalancePerPeriodT} from "@/public/js/types/leave";
 import {storeToRefs} from "pinia";
 
-useHead({titleTemplate: (titleChunk) => {return `${titleChunk} - Leave Types`}});
+useHead({titleTemplate: (titleChunk) => {return `Leave Types`}});
 definePageMeta({middleware: ['auth', 'admin-of-selected-company']});
 useLayout().setNavigationMode('solid');
 const route = useRoute();

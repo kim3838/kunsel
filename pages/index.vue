@@ -25,7 +25,7 @@
 <script setup lang="ts">
 import {storeToRefs} from "pinia";
 
-useHead({titleTemplate: (titleChunk) => {return `${titleChunk} - Home`}});
+useHead({titleTemplate: (titleChunk) => {return `Home`}});
 definePageMeta({middleware: ['auth', 'verified']});
 useLayout().setNavigationMode('solid');
 

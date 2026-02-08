@@ -120,7 +120,7 @@ import type {TableHeaderT, TableRowT, TableSupHeaderT} from "@/public/js/types/d
 import {storeToRefs} from "pinia";
 import type {AttendanceT} from "@/public/js/types/attendance";
 
-useHead({titleTemplate: (titleChunk) => {return `${titleChunk} - Attendance`}});
+useHead({titleTemplate: (titleChunk) => {return `Attendance`}});
 useLayout().setNavigationMode('solid');
 const route = useRoute();
 const {isAuthenticated} = useAuth();

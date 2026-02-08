@@ -69,7 +69,7 @@ import type {DataTableT, TableHeaderT, TableSupHeaderT} from "@/public/js/types/
 import type {EnumOption, EnumSelection} from "@/public/js/common/type";
 import {storeToRefs} from "pinia";
 
-useHead({titleTemplate: (titleChunk) => {return `${titleChunk} - Leave`}});
+useHead({titleTemplate: (titleChunk) => {return `Leave`}});
 definePageMeta({middleware: ['auth', 'employee-of-selected-company']});
 useLayout().setNavigationMode('solid');
 

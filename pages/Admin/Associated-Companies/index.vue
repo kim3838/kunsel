@@ -86,7 +86,7 @@ import type {DataTableT} from "@/public/js/types/data";
 import type {SelectDataType} from "@/public/js/types/form";
 import type {EnumSelection} from "@/public/js/common/type";
 
-useHead({titleTemplate: (titleChunk) => {return `${titleChunk} - Companies`}});
+useHead({titleTemplate: (titleChunk) => {return `Companies`}});
 definePageMeta({middleware: ['auth', 'admin-in-any-company']});
 useLayout().setNavigationMode('solid');
 

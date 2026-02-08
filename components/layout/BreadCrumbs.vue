@@ -2,7 +2,7 @@
     <ol class="min-h-8 flex flex-wrap items-center space-x-1">
 
         <li v-if="prefixArrow && breadcrumbs.length > 0" class="shrink-0 flex items-center">
-            <Icon class="h-5 w-5" name="ic:sharp-keyboard-arrow-right"/>
+            <Icon class="h-5 w-5" name="ic:outline-keyboard-arrow-right"/>
         </li>
 
         <li v-for="(breadcrumb, index) in breadcrumbs" :key="index" class="shrink-0 flex items-center" :class="[fontClass]">
@@ -10,7 +10,7 @@
                 {{ breadcrumb.name }}
             </span>
             <span v-if="index < breadcrumbs.length - 1" class="flex items-center">
-                <Icon class="h-5 w-5" name="ic:sharp-keyboard-arrow-right"/>
+                <Icon class="h-5 w-5" name="ic:outline-keyboard-arrow-right"/>
             </span>
         </li>
     </ol>

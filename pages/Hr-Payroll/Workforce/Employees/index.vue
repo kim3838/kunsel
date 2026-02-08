@@ -323,7 +323,7 @@ import type {EnumOption, EnumSelection, StringEnumInterface} from "@/public/js/c
 import type {LabelTypeT} from "@/public/js/types/theme";
 import {storeToRefs} from "pinia";
 
-useHead({titleTemplate: (titleChunk) => {return `${titleChunk} - Employees`}});
+useHead({titleTemplate: (titleChunk) => {return `Employees`}});
 definePageMeta({middleware: ['auth', 'admin-of-selected-company']});
 useLayout().setNavigationMode('solid');
 

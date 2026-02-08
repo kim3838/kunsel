@@ -26,7 +26,7 @@ import type {Sequenceable, TableHeaderT} from "@/public/js/types/data";
 import type {BasicSalaryStatementModuleT} from "@/public/js/types/company-component";
 import {storeToRefs} from "pinia";
 
-useHead({titleTemplate: (titleChunk) => {return `${titleChunk} - Salary Statement Modules`}});
+useHead({titleTemplate: (titleChunk) => {return `Salary Statement Modules`}});
 definePageMeta({middleware: ['auth', 'admin-of-selected-company']});
 useLayout().setNavigationMode('solid');
 const route = useRoute();

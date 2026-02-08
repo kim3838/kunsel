@@ -228,7 +228,7 @@ import type {UserSelectionInstance} from "@/public/js/types/component-instance";
 import type {CompanyUserSelectionT} from "@/public/js/types/user";
 import type {StringEnumInterface} from "@/public/js/common/type";
 
-useHead({titleTemplate: (titleChunk) => {return `${titleChunk} - Approval Setting`}});
+useHead({titleTemplate: (titleChunk) => {return `Approval Setting`}});
 definePageMeta({middleware: ['auth', 'admin-of-selected-company']});
 useLayout().setNavigationMode('solid');
 

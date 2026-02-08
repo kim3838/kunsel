@@ -180,7 +180,7 @@ import type {CompanyUserRolePermissionT} from "@/public/js/types/role-permission
 import type {ApprovalStateT, ApprovalStateWorkFlowPayloadT} from "@/public/js/types/request-approval";
 import {storeToRefs} from "pinia";
 
-useHead({titleTemplate: (titleChunk) => {return `${titleChunk} - Approval States`}});
+useHead({titleTemplate: (titleChunk) => {return `Approval States`}});
 definePageMeta({middleware: ['auth', 'admin-of-selected-company']});
 useLayout().setNavigationMode('solid');
 

@@ -37,7 +37,7 @@
                                 <Input v-model="attribute" type="text" />
                             </div>
                             <div class="flex flex-col">
-                                <div class="flex-none h-[1rem]"></div>
+                                <div class="flex-none h-[1.25rem]"></div>
                                 <div class="grow">
                                     <div class="h-full w-min scaffold-border flex items-center">
                                         <label>
@@ -144,7 +144,7 @@ import type {SalaryStatementModuleT} from "@/public/js/types/company-component";
 import type {StringEnumInterface} from "@/public/js/common/type";
 import type {CompanyT} from "@/public/js/types/company";
 
-useHead({titleTemplate: (titleChunk) => {return `${titleChunk} - Company Salary Statement Modules`}});
+useHead({titleTemplate: (titleChunk) => {return `Salary Statement Modules`}});
 definePageMeta({middleware: ['auth', 'super-admin']});
 useLayout().setNavigationMode('solid');
 const route = useRoute();

@@ -55,7 +55,7 @@
 <script setup lang="ts">
 import type {StringEnumInterface} from "@/public/js/common/type";
 
-useHead({titleTemplate: (titleChunk) => {return `${titleChunk} - Leave Balance`}});
+useHead({titleTemplate: (titleChunk) => {return `Leave Balance`}});
 definePageMeta({middleware: ['auth', 'admin-of-selected-company']});
 useLayout().setNavigationMode('solid');
 

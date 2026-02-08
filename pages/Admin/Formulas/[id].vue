@@ -85,7 +85,7 @@
                                 <SingleSelect drop-shadow :size="'md'" :disabled="disableActions" :options="incomeTaxComponentOptions"/>
                             </div>
                             <div class="flex flex-col">
-                                <div class="flex-none h-[1rem]"></div>
+                                <div class="flex-none h-[1.25rem]"></div>
                                 <div class="grow">
                                     <div class="h-full w-min scaffold-border flex items-center">
                                         <label>
@@ -149,7 +149,7 @@
 import type {SelectDataType} from "@/public/js/types/form";
 import type {StringEnumInterface} from "@/public/js/common/type";
 
-useHead({titleTemplate: (titleChunk) => {return `${titleChunk} - Formulas`}});
+useHead({titleTemplate: (titleChunk) => {return `Formulas`}});
 definePageMeta({middleware: ['auth', 'super-admin']});
 useLayout().setNavigationMode('solid');
 

@@ -77,7 +77,7 @@
 <script setup lang="ts">
 import type {DataTableT, TableHeaderT} from "@/public/js/types/data";
 
-useHead({titleTemplate: (titleChunk) => {return `${titleChunk} - Companies`}});
+useHead({titleTemplate: (titleChunk) => {return `Companies`}});
 definePageMeta({middleware: ['auth', 'super-admin']});
 useLayout().setNavigationMode('solid');
 

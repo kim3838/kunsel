@@ -104,7 +104,7 @@
 import type {DataTableT, TableHeaderT} from "@/public/js/types/data";
 import type {StringEnumInterface} from "@/public/js/common/type";
 
-useHead({titleTemplate: (titleChunk) => {return `${titleChunk} - Formulas`}});
+useHead({titleTemplate: (titleChunk) => {return `Formulas`}});
 definePageMeta({middleware: ['auth', 'super-admin']});
 useLayout().setNavigationMode('solid');
 

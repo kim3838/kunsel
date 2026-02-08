@@ -349,7 +349,7 @@ import type {SelectionOptionsT} from "@/public/js/types/form";
 import type {EmployeePayrollComponentFormT, EmploymentProfileFormT} from "@/public/js/types/employee";
 import type {StringEnumInterface} from "@/public/js/common/type";
 
-useHead({titleTemplate: (titleChunk) => {return `${titleChunk} - Employees`}});
+useHead({titleTemplate: (titleChunk) => {return `Employees`}});
 definePageMeta({middleware: ['auth', 'admin-of-selected-company']});
 useLayout().setNavigationMode('solid');
 

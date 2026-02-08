@@ -22,7 +22,7 @@
             @click="nextPageHandler()"
             :variant="'flat'"
             :size="buttonSize"
-            :icon="'ic:sharp-keyboard-arrow-right'"
+            :icon="'ic:baseline-arrow-right'"
             :label="nextPage.label" />
         <Button
             type="button"

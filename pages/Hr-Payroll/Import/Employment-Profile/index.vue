@@ -182,7 +182,7 @@ import type {DatePickerT, TableHeaderT, TableRowPayloadT, TableSupHeaderT, Table
 import type {EmploymentProfilePreImportT, ImportRow} from "@/public/js/types/import";
 import {storeToRefs} from "pinia";
 
-useHead({titleTemplate: (titleChunk) => {return `${titleChunk} - Import Employment Profile`}});
+useHead({titleTemplate: (titleChunk) => {return `Import Employment Profile`}});
 definePageMeta({middleware: ['auth', 'admin-of-selected-company']});
 useLayout().setNavigationMode('solid');
 

@@ -124,7 +124,7 @@ import type {MultiSelectPaginatedInstance} from "@/public/js/types/component-ins
 import type {LabelTypeT} from "@/public/js/types/theme";
 import type {CompanyT} from "@/public/js/types/company";
 
-useHead({titleTemplate: (titleChunk) => {return `${titleChunk} - Company Formula`}});
+useHead({titleTemplate: (titleChunk) => {return `Company Formula`}});
 definePageMeta({middleware: ['auth', 'super-admin']});
 useLayout().setNavigationMode('solid');
 

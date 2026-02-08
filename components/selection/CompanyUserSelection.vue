@@ -15,7 +15,7 @@
                     <Input :disabled="disableActions" :size="'md'" ref="searchInput" v-model="filters.employeeSearch.keyword" class="w-full" placeholder="Search" type="text"/>
                 </div>
                 <div v-if="compact" class="flex flex-col">
-                    <div class="flex-none h-[1rem]"></div>
+                    <div class="flex-none h-[1.25rem]"></div>
                     <div class="grow">
                         <Button class="w-min" ref="submitButton" type="submit" :disabled="disableActions" :size="'md'" :icon="disableActions ? 'eos-icons:loading' : 'mdi:data'" :label="disableActions ? 'Loading' : 'Load'"></Button>
                     </div>

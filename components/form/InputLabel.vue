@@ -20,9 +20,9 @@
         computed: {
             fontClass(){
                 return {
-                    '2xs': 'text-xs leading-3',
-                    'xs': 'text-xs leading-3',
-                    'sm': 'text-sm leading-4',
+                    '2xs': 'text-xs leading-4',
+                    'xs': 'text-xs leading-4',
+                    'sm': 'text-sm leading-5',
                     'md': 'text-base leading-5',
                     'lg': 'text-lg leading-5',
                     'xl': 'text-xl leading-5',

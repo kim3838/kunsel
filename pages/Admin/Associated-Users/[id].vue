@@ -143,7 +143,7 @@ import type {TableHeaderT, TableSupHeaderT} from "@/public/js/types/data";
 import type {UserCompanyAssignmentSyncT, UserCompanyAssignmentT, UserFormT, UserT} from "@/public/js/types/user";
 import type {EnumSelection} from "@/public/js/common/type";
 
-useHead({titleTemplate: (titleChunk) => {return `${titleChunk} - Users`}});
+useHead({titleTemplate: (titleChunk) => {return `Users`}});
 definePageMeta({middleware: ['auth', 'admin-in-any-company']});
 useLayout().setNavigationMode('solid');
 
