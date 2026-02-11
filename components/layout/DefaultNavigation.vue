@@ -182,6 +182,7 @@
                     <component
                         :is="navDrop"
                         v-if="isAuthenticated"
+                        navigation-mode
                         :size="navigationHeaderSize"
                         :drop-align="rightNavigationDropAlign"
                         :title="username"
