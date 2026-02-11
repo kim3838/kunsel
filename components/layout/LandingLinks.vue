@@ -2,20 +2,20 @@
     <div class="mx-auto max-w-screen-lg">
         <div class="flex flex-wrap gap-2">
             <div class="flex-grow p-6">
-                <p :class="headerClass">Contact Us</p>
+                <p class="text-lg font-medium font-business">Contact Us</p>
 
                 <div class="mt-2 space-y-2">
                     <UnorderedList
                         class="flex"
                         :size="listSize"
                         :icon="'ic:round-mail-outline'"
-                        :label="'info@host.com'"/>
+                        :label="'info@kunsel-erp.com'"/>
 
                     <UnorderedList
                         class="flex"
                         :size="listSize"
                         :icon="'ic:sharp-phone'"
-                        :label="'+63 99-1999-1991'"/>
+                        :label="'+63 99-1618-0206'"/>
 
                     <UnorderedList
                         class="flex"
@@ -26,20 +26,19 @@
             </div>
 
             <div class="flex-grow p-6">
-                <p :class="headerClass">Our Services</p>
+                <p class="text-lg font-medium font-business">Our Services</p>
 
                 <div class="mt-2 space-y-2">
 
                     <UnorderedList
                         class="flex"
                         :size="listSize"
-                        :icon="'icon-park-outline:coordinate-system'"
                         :label="'Cloud based ERP solution'"/>
                 </div>
             </div>
 
             <div class="flex-grow p-6">
-                <p :class="headerClass">Helpful Links</p>
+                <p  class="text-lg font-medium font-business">Helpful Links</p>
 
                 <div class="mt-2 space-y-2">
 
@@ -69,7 +68,7 @@
             </div>
 
             <div class="flex-grow p-6">
-                <p :class="headerClass">About Us</p>
+                <p class="text-lg font-medium font-business">About Us</p>
 
                 <div class="mt-2 space-y-2 text-sm">
 
@@ -104,7 +103,6 @@ const {
     accent: accentColor,
 } = storeToRefs($themeStore);
 
-const headerClass = ref('font-business text-lg font-medium"');
 const listSize = ref('md');
 </script>
 

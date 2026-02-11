@@ -9,7 +9,7 @@
             <div class="flex flex-wrap gap-2">
 
                 <div v-for="navigationLink in navigationLinks" :key="navigationLink.key" class="flex-grow p-6 text-center sm:text-left">
-                    <p class="font-business text-lg">
+                    <p class="text-lg font-medium font-business">
                         <NuxtLink
                             v-if="navigationLink.type == 'link'"
                             :to="navigationLink.to"
@@ -33,9 +33,9 @@
                 </div>
 
                 <div class="p-6">
-                    <div class="flex flex-col md:flex-row justify-start items-center">
-                        <div class="w-full md:w-min text-2xl font-techno">
-                            Kunsel
+                    <div class="flex flex-row flex-wrap justify-start items-center">
+                        <div class="w-max text-xl font-medium font-[Overpass]">
+                            Kunsel ERP
                         </div>
                         <BreadCrumbs prefix-arrow :prefix-company="breadcrumbsPrefixCompany" />
                     </div>
@@ -67,15 +67,15 @@
             <div class="mx-auto max-w-screen-lg flex justify-start ">
                 <div class="p-6 text-sm">
                     <div class="space-x-2">
-                        <a class="inline-block hover:underline" href="/">
-                            &#169;Kunsel 2021. All rights reserved.
+                        <a class="inline-block hover:underline">
+                            &#169;Kunsel ERP 2026. All rights reserved.
                         </a>
                         <span>|</span>
-                        <a class="inline-block hover:underline" href="/">
+                        <a class="inline-block hover:underline">
                             Terms & Conditions
                         </a>
                         <span>|</span>
-                        <a class="inline-block hover:underline" href="/">
+                        <a class="inline-block hover:underline">
                             Privacy Policy
                         </a>
                     </div>
