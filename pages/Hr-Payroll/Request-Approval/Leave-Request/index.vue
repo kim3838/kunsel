@@ -46,7 +46,7 @@
                         <label class="flex items-center">
                             <Checkbox
                                 :disabled="disableActions"
-                                name="remember"
+                                name="show-approval-sequence"
                                 v-model="showApprovalStates"
                                 :size="'md'"
                                 :label="'Show Approval Sequence'" />
