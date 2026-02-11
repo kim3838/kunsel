@@ -23,17 +23,20 @@
                             <InputLabel :size="'sm'" value="Designation" />
                             <MultiSelect :key="designationOptionsKey" glint drop-shadow :selection-max-viewable-line="15" :size="'md'" :options="designationOptions" :disabled="disableActions" :icon="'ic:baseline-inbox'"/>
                         </div>
-                    </div>
-
-                    <div class="flex flex-row flex-wrap gap-2 items-center min-h-8">
-                        <Button class="w-min" ref="submitButton" type="submit" :disabled="disableActions" :size="'md'" :icon="disableActions ? 'eos-icons:loading' : 'mdi:data'" :label="disableActions ? 'Loading' : 'Load'"></Button>
-                        <RadioGroup
-                            class="scaffold-border px-2"
-                            :disabled="disableActions"
-                            :selections="viewMode.selection"
-                            :size="'md'"
-                            :orientation="'horizontal'"
-                            v-model="viewMode.selected" />
+                        <div class="flex flex-col">
+                            <div class="flex-none h-[1.25rem]"></div>
+                            <RadioGroup
+                                class="scaffold-border px-2"
+                                :disabled="disableActions"
+                                :selections="viewMode.selection"
+                                :size="'md'"
+                                :orientation="'horizontal'"
+                                v-model="viewMode.selected" />
+                        </div>
+                        <div class="flex flex-col">
+                            <div class="flex-none h-[1.25rem]"></div>
+                            <Button class="w-min" ref="submitButton" type="submit" :disabled="disableActions" :size="'md'" :icon="disableActions ? 'eos-icons:loading' : 'mdi:data'" :label="disableActions ? 'Loading' : 'Load'"></Button>
+                        </div>
                     </div>
 
                     <div>

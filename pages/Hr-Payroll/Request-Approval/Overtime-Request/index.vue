@@ -55,14 +55,16 @@
                             :size="'md'"
                             :orientation="'horizontal'"
                             v-model="viewMode.selected" />
-                        <label class="flex items-center">
-                            <Checkbox
-                                :disabled="disableActions"
-                                name="show-approval-sequence"
-                                v-model="showApprovalStates"
-                                :size="'md'"
-                                :label="'Show Approval Sequence'" />
-                        </label>
+                        <div class="h-8 flex flex-row items-center scaffold-border px-2">
+                            <label class="flex items-center">
+                                <Checkbox
+                                    :disabled="disableActions"
+                                    name="show-approval-sequence"
+                                    v-model="showApprovalStates"
+                                    :size="'md'"
+                                    :label="'Show Approval Sequence'" />
+                            </label>
+                        </div>
                     </div>
 
                     <div>

@@ -15,25 +15,38 @@
                             <InputLabel :size="'sm'" value="Type" />
                             <MultiSelect :disabled="disableActions" glint drop-shadow :size="'md'" :options="shiftTypeOptions" :icon="'tdesign:component-checkbox'"/>
                         </div>
-                    </div>
 
-                    <div class="flex flex-row flex-wrap gap-2">
-                        <Button class="w-min" ref="submitButton" type="submit" :disabled="disableActions" :size="'md'" :icon="disableActions ? 'eos-icons:loading' : 'mdi:data'" :label="disableActions ? 'Loading' : 'Load'"></Button>
-                        <RadioGroup
-                            class="scaffold-border px-2"
-                            :disabled="disableActions"
-                            :selections="viewMode.selection"
-                            :size="'md'"
-                            :orientation="'horizontal'"
-                            v-model="viewMode.selected" />
-                        <label class="flex items-center">
-                            <Checkbox
+                        <div class="flex flex-col">
+                            <div class="flex-none h-[1.25rem]"></div>
+                            <RadioGroup
+                                class="scaffold-border px-2"
                                 :disabled="disableActions"
-                                name="remember"
-                                v-model="showSchedulesPerShift"
+                                :selections="viewMode.selection"
                                 :size="'md'"
-                                :label="'Show Schedules Per Shift'" />
-                        </label>
+                                :orientation="'horizontal'"
+                                v-model="viewMode.selected" />
+                        </div>
+
+                        <div class="flex flex-col">
+                            <div class="flex-none h-[1.25rem]"></div>
+                            <div class="grow">
+                                <div class="h-full px-2 scaffold-border flex items-center">
+                                    <label class="flex items-center">
+                                        <Checkbox
+                                            :disabled="disableActions"
+                                            name="remember"
+                                            v-model="showSchedulesPerShift"
+                                            :size="'md'"
+                                            :label="'Show Schedules'" />
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="flex flex-col">
+                            <div class="flex-none h-[1.25rem]"></div>
+                            <Button class="w-min" ref="submitButton" type="submit" :disabled="disableActions" :size="'md'" :icon="disableActions ? 'eos-icons:loading' : 'mdi:data'" :label="disableActions ? 'Loading' : 'Load'"></Button>
+                        </div>
                     </div>
 
                     <div>

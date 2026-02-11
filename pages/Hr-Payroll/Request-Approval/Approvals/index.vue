@@ -35,14 +35,16 @@
                             :size="'md'"
                             :orientation="'horizontal'"
                             v-model="viewMode.selected" />
-                        <label class="flex items-center">
-                            <Checkbox
-                                :disabled="disableActions"
-                                name="remember"
-                                v-model="showOnlyAwaitingApproval"
-                                :size="'md'"
-                                :label="'Show Only Awaiting Approval'" />
-                        </label>
+                        <div class="h-8 flex flex-row items-center scaffold-border px-2">
+                            <label class="flex items-center">
+                                <Checkbox
+                                    :disabled="disableActions"
+                                    name="remember"
+                                    v-model="showOnlyAwaitingApproval"
+                                    :size="'md'"
+                                    :label="'Show Only Awaiting Approval'" />
+                            </label>
+                        </div>
                     </div>
 
                     <div>

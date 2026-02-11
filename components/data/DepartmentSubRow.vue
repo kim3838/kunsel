@@ -69,9 +69,9 @@ const selectedDepartments = ref([]);
 const departmentsHeaders = reactive<TableHeaderT[]>([
     { text: '', value: 'actions'},
     { text: 'Name', value: 'name', alignData: 'left'},
-    { text: 'Department Head', value: 'department_head_number', alignData: 'left', minWidth: '30px'},
-    { text: '', value: 'department_head_full_name', alignData: 'left', minWidth: '30px'},
-    { text: '', value: 'department_head_designation', alignData: 'left',minWidth: '30px'},
+    { text: 'Department Head', value: 'department_head_number', alignData: 'left', minWidth: '75px'},
+    { text: '', value: 'department_head_full_name', alignData: 'left', minWidth: '144px'},
+    { text: '', value: 'department_head_designation', alignData: 'left', minWidth: '144px'},
 ]);
 
 const edit = (cell: TableRowT) => {

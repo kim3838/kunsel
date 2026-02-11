@@ -12,18 +12,22 @@
                             <InputLabel :size="'sm'" value="Search" />
                             <Input :disabled="disableActions" :size="'md'" ref="searchInput" v-model="filters.search.keyword" class="w-full" placeholder="Search" type="text"/>
                         </div>
-                    </div>
+                        <div class="flex flex-col">
+                            <div class="flex-none h-[1.25rem]"></div>
+                            <RadioGroup
+                                class="scaffold-border px-2"
+                                :disabled="disableActions"
+                                :selections="viewMode.selection"
+                                :radio-key="`view_mode`"
+                                :size="'md'"
+                                :orientation="'horizontal'"
+                                v-model="viewMode.selected" />
+                        </div>
 
-                    <div class="flex flex-row flex-wrap gap-2 items-center min-h-8">
-                        <Button class="w-min" ref="submitButton" type="submit" :disabled="disableActions" :size="'md'" :icon="disableActions ? 'eos-icons:loading' : 'mdi:data'" :label="disableActions ? 'Loading' : 'Load'"></Button>
-                        <RadioGroup
-                            class="scaffold-border px-2"
-                            :disabled="disableActions"
-                            :selections="viewMode.selection"
-                            :radio-key="`view_mode`"
-                            :size="'md'"
-                            :orientation="'horizontal'"
-                            v-model="viewMode.selected" />
+                        <div class="flex flex-col">
+                            <div class="flex-none h-[1.25rem]"></div>
+                            <Button class="w-min" ref="submitButton" type="submit" :disabled="disableActions" :size="'md'" :icon="disableActions ? 'eos-icons:loading' : 'mdi:data'" :label="disableActions ? 'Loading' : 'Load'"></Button>
+                        </div>
                     </div>
                 </form>
 
@@ -155,7 +159,7 @@ watch(updatedAssociatedCompanyFlag, (newValue) => {
 
 const designationsHeaders = reactive<TableHeaderT[]>([
     { text: '', value: 'actions', minWidth: '33px'},
-    { text: 'Designation', value: 'name', alignData: 'left'},
+    { text: 'Designation', value: 'name', alignData: 'left', minWidth: '244px'},
 ]);
 
 const designationsData = ref([]);

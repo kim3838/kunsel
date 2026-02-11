@@ -28,16 +28,18 @@
                         </div>
                     </div>
 
-                    <div class="flex flex-row flex-wrap gap-2">
+                    <div class="flex flex-row flex-wrap gap-2 items-center min-h-8">
                         <Button class="w-min" ref="submitButton" type="submit" :disabled="disableActions" :size="'md'" :icon="disableActions ? 'eos-icons:loading' : 'mdi:data'" :label="disableActions ? 'Loading' : 'Load'"></Button>
-                        <label class="flex items-center">
-                            <Checkbox
-                                :disabled="disableActions"
-                                name="remember"
-                                v-model="showAssociatedCompanies"
-                                :size="'md'"
-                                :label="'Show Associated Companies'" />
-                        </label>
+                        <div class="h-8 flex flex-row items-center scaffold-border px-2">
+                            <label class="flex items-center">
+                                <Checkbox
+                                    :disabled="disableActions"
+                                    name="remember"
+                                    v-model="showAssociatedCompanies"
+                                    :size="'md'"
+                                    :label="'Show Associated Companies'" />
+                            </label>
+                        </div>
                     </div>
 
                     <div>

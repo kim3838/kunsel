@@ -15,27 +15,39 @@
                             <InputLabel :size="'sm'" value="Type" />
                             <MultiSelect :disabled="disableActions" glint drop-shadow :size="'md'" :options="leaveTypeOptions" :icon="'tdesign:component-checkbox'"/>
                         </div>
-                    </div>
 
-                    <div class="flex flex-row flex-wrap gap-2">
-                        <Button class="w-min" ref="submitButton" type="submit" :disabled="disableActions" :size="'md'" :icon="disableActions ? 'eos-icons:loading' : 'mdi:data'" :label="disableActions ? 'Loading' : 'Load'"></Button>
-                        <RadioGroup
-                            class="scaffold-border px-2"
-                            :disabled="disableActions"
-                            :selections="viewMode.selection"
-                            :size="'md'"
-                            :orientation="'horizontal'"
-                            v-model="viewMode.selected" />
-                        <label class="flex items-center">
-                            <Checkbox
+                        <div class="flex flex-col">
+                            <div class="flex-none h-[1.25rem]"></div>
+                            <RadioGroup
+                                class="scaffold-border px-2"
                                 :disabled="disableActions"
-                                name="remember"
-                                v-model="showBalancePerPeriod"
+                                :selections="viewMode.selection"
                                 :size="'md'"
-                                :label="'Show Balance Per Period'" />
-                        </label>
-                    </div>
+                                :orientation="'horizontal'"
+                                v-model="viewMode.selected" />
+                        </div>
 
+                        <div class="xl:col-span-2 flex flex-col">
+                            <div class="flex-none h-[1.25rem]"></div>
+                            <div class="grow">
+                                <div class="h-full px-2 scaffold-border flex items-center">
+                                    <label class="flex items-center">
+                                        <Checkbox
+                                            :disabled="disableActions"
+                                            name="remember"
+                                            v-model="showBalancePerPeriod"
+                                            :size="'md'"
+                                            :label="'Show Balance Per Period'" />
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="flex flex-col">
+                            <div class="flex-none h-[1.25rem]"></div>
+                            <Button class="w-min" ref="submitButton" type="submit" :disabled="disableActions" :size="'md'" :icon="disableActions ? 'eos-icons:loading' : 'mdi:data'" :label="disableActions ? 'Loading' : 'Load'"></Button>
+                        </div>
+                    </div>
                     <div>
                         <PageInformation :pagination="leaveTypes.meta.pagination" :pending="disableDataTable" />
                         <Pagination :size="'lg'" :pagination="leaveTypes.meta.pagination" :pending="disableDataTable" v-model="pageComputed"/>
@@ -193,12 +205,12 @@ const leaveTypesHeaders = reactive<TableHeaderT[]>([
     { text: 'Employment Profiles', value: 'eligibility_employment_types_readable', alignData: 'left'},
     { text: 'Balance upon eligibility', value: 'initial_balance_upon_eligibility', alignData: 'right'},
 
-    { text: '', value: 'period_type', alignData: 'left', minWidth: '33px'},
-    { text: '', value: 'period_readable', alignData: 'left', minWidth: '33px'},
+    { text: '', value: 'period_type', alignData: 'left', minWidth: '144px'},
+    { text: '', value: 'period_readable', alignData: 'left', minWidth: '144px'},
 
-    { text: '', value: 'limit_usage_value_readable', alignData: 'left'},
+    { text: '', value: 'limit_usage_value_readable', alignData: 'left', minWidth: '144px'},
 
-    { text: '', value: 'carry_over_readable', alignData: 'left'},
+    { text: '', value: 'carry_over_readable', alignData: 'left', minWidth: '144px'},
 ]);
 
 const leaveTypesKey = ref(0);
