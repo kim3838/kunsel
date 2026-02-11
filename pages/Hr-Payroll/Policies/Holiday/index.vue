@@ -32,13 +32,14 @@
 
                 <DialogModal
                     :show="showModalAsCreatingOrEditing"
-                    :max-width="'768px'">
+                    :max-width="'568px'">
                     <template #title>
+                        {{creatingHoliday ? 'Create Holiday' : 'Holiday'}}
                     </template>
                     <template #content>
-                        <div class="p-3 pt-4 mx-auto max-w-screen-md grid gap-2 grid-cols-5">
+                        <div class="pt-4 mx-auto max-w-screen-md grid gap-2 grid-cols-5">
 
-                            <div class="col-span-full grid gap-2 grid-cols-2 sm:grid-cols-4 md:grid-cols-5">
+                            <div class="col-span-full grid gap-2 grid-cols-2 sm:grid-cols-3">
                                 <div>
                                     <InputLabel :size="'sm'" value="Date"/>
                                     <InputWithIcon
@@ -48,6 +49,16 @@
                                         :override="{font_family_class: 'font-sans'}"
                                         :icon="'mdi:calendar-cursor-outline'"
                                         :id="`holiday-date`" v-model="holidayEditable.date" :size="'md'" />
+                                </div>
+                                <div>
+                                    <InputLabel :size="'sm'" value="Effective Date"/>
+                                    <InputWithIcon
+                                        :disabled="disableModalActions"
+                                        high-light-all-text-on-focus
+                                        @valueChanged="effectiveDateChanged"
+                                        :override="{font_family_class: 'font-sans'}"
+                                        :icon="'mdi:calendar-cursor-outline'"
+                                        :id="`effective-date`" v-model="holidayEditable.effective_date" :size="'md'" />
                                 </div>
                                 <div>
                                     <InputLabel :size="'sm'" value="Active"/>
@@ -79,6 +90,20 @@
                                     v-model="holidayEditable.type" />
                             </div>
 
+                            <div v-if="holidayEditable.type == HOLIDAY.LEGAL || holidayEditable.type == HOLIDAY.DOUBLE" class="col-span-full">
+
+
+                                <InputLabel :size="'sm'" value="Forfeit holiday pay if not paid on a workday preceding a holiday"/>
+                                <label class="flex items-center">
+                                    <Checkbox
+                                        :disabled="disableActions"
+                                        name="holiday-pay-forfeiture"
+                                        v-model="holidayEditable.holiday_pay_forfeiture"
+                                        :size="'md'"
+                                        :label="'Holiday pay forfeiture'" />
+                                </label>
+                            </div>
+
                             <div class="col-span-full grid gap-2 grid-cols-2 sm:grid-cols-4 md:grid-cols-5">
                                 <div>
                                     <InputLabel :size="'sm'" value="Recurring"/>
@@ -89,19 +114,6 @@
                                         :orientation="radioGroupOrientation"
                                         :radio-key="'holiday-recurring'"
                                         v-model="holidayEditable.recurring" />
-                                </div>
-                            </div>
-
-                            <div class="col-span-full grid gap-2 grid-cols-2 sm:grid-cols-4 md:grid-cols-5">
-                                <div>
-                                    <InputLabel :size="'sm'" value="Effective Date"/>
-                                    <InputWithIcon
-                                        :disabled="disableModalActions"
-                                        high-light-all-text-on-focus
-                                        @valueChanged="effectiveDateChanged"
-                                        :override="{font_family_class: 'font-sans'}"
-                                        :icon="'mdi:calendar-cursor-outline'"
-                                        :id="`effective-date`" v-model="holidayEditable.effective_date" :size="'md'" />
                                 </div>
                             </div>
                         </div>
@@ -169,6 +181,12 @@
                         <template v-slot:cell.type="{cell,slot}">
                             <div class="p-[3px]">{{cell.type.text}}</div>
                         </template>
+                        <template v-slot:cell.holiday_pay_forfeiture="{cell, slot, scrollReference}">
+                            <div v-if="[HOLIDAY.LEGAL, HOLIDAY.DOUBLE].indexOf(parseInt(cell.type.value)) >= 0" class="flex justify-center">
+                                <NonModelCheckBox disabled :size="slot.checkBoxSize" :checked="Boolean(cell.holiday_pay_forfeiture)"></NonModelCheckBox>
+                            </div>
+                            <div v-else class="p-[3px]"></div>
+                        </template>
                         <template v-slot:cell.recurring="{cell, slot, scrollReference}">
                             <div class="flex justify-center">
                                 <NonModelCheckBox disabled :size="slot.checkBoxSize" :checked="Boolean(cell.recurring)"></NonModelCheckBox>
@@ -224,10 +242,11 @@ const holidaysHeaders = reactive<TableHeaderT[]>([
     { text: '', value: 'actions', minWidth: '33px'},
     { text: 'Name', value: 'name', alignData: 'left'},
     { text: 'Type', value: 'type', alignData: 'left'},
-    { text: 'Date', value: 'date', alignData: 'left'},
-    { text: 'Recurring', value: 'recurring', alignData: 'left'},
-    { text: 'Active', value: 'active', alignData: 'left'},
-    { text: 'Effective Date', value: 'effective_date', alignData: 'left'},
+    { text: 'Holiday Pay Forfeiture', value: 'holiday_pay_forfeiture', alignData: 'left'},
+    { text: 'Date', value: 'date', alignData: 'left', alignHeader: 'center', minWidth: '144px'},
+    { text: 'Recurring', value: 'recurring', alignData: 'left', alignHeader: 'center', minWidth: '144px'},
+    { text: 'Active', value: 'active', alignData: 'left', alignHeader: 'center', minWidth: '144px'},
+    { text: 'Effective Date', value: 'effective_date', alignData: 'left', minWidth: '144px'},
 ]);
 
 const holidays = reactive<DataTableT>({
@@ -446,6 +465,7 @@ const radioGroupOrientation = computed(() => {
 const holidayEditable = reactive<{
     name: string,
     type: number,
+    holiday_pay_forfeiture: boolean,
     date: string,
     recurring: number,
     active: number,
@@ -453,6 +473,7 @@ const holidayEditable = reactive<{
 }>({
     name: '',
     type: HOLIDAY.SPECIAL as number,
+    holiday_pay_forfeiture: true,
     date: moment().format('YYYY-MM-DD'),
     recurring: 1,
     active: 1,
@@ -529,6 +550,7 @@ const resetCreatingOrEditing = () => {
 
     holidayEditable.name = '';
     holidayEditable.type = HOLIDAY.SPECIAL as number;
+    holidayEditable.holiday_pay_forfeiture = true;
     holidayEditable.date = moment().format('YYYY-MM-DD');
     holidayEditable.recurring = 1;
     holidayEditable.active = 1;
@@ -551,6 +573,7 @@ const put = async(row: TableRowT | null = null) => {
 
         holidayEditable.name = row.name;
         holidayEditable.type = row.type.value;
+        holidayEditable.holiday_pay_forfeiture = row.holiday_pay_forfeiture;
         holidayEditable.date = row.date;
         holidayEditable.recurring = row.recurring;
         holidayEditable.active = row.active;
