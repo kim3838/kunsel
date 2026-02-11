@@ -12,10 +12,10 @@
                             <UnorderedList v-if="employeePending" :icon="'eos-icons:loading'" :size="'md'" :label="'Loading info...'"/>
                             <Label v-else-if="!employeeSuccessful" invert :size="'md'" :type="'danger'" :label="employeeMessage" />
                         </div>
-                        <div v-else class="flex items-center flex-wrap gap-4">
-                            <div class="text-xl">{{userCompanyEmployee?.full_name}}</div>
+                        <div v-else class="flex items-center flex-wrap gap-4 font-header">
+                            <div class="text-lg font-medium">{{userCompanyEmployee?.full_name}}</div>
                             <div class="flex items-center flex-wrap gap-2">
-                                <div class="p-1 pr-4 rounded-sm flex items-center gap-1" :style="cosmetic.shadedStyle(employee?._payload?.label_shade?.value as LabelTypeT)">
+                                <div class="p-1 pr-4 rounded-sm flex items-center gap-1">
                                     <Label :size="'md'" :type="employee?._payload?.label_shade?.value as LabelTypeT" shade :label="_get(employee, 'current_employment_profile.status.text', '')" />
                                     <div>{{employee.current_employment_profile?.employment_type?.text}}</div>
                                 </div>
@@ -51,7 +51,7 @@
 
                     <div class="space-y-4">
                         <div class="flex items-center flex-wrap gap-4 min-h-8">
-                            <div class="text-xl">Today: {{dateTimeNowFormatted}}</div>
+                            <div class="text-lg font-medium font-header">Today: {{dateTimeNowFormatted}}</div>
                         </div>
 
                         <div class="space-y-2 pt-4 scaffold-border-top">
@@ -219,6 +219,8 @@ const {
 watch(updatedAssociatedCompanyFlag, (newValue) => {
     if(isAuthenticated.value && userIsEmployeeOfSelectedCompany.value && selectedAssociatedCompanyId.value){
         fetchEmployee();
+        leaveBalanceByTypeExecute();
+
     }
 });
 
