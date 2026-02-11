@@ -8,7 +8,7 @@
         disable-header-border
         navigation-mode
         :summary-prefix="selectedSummaryPrefix"
-        :icon="`solar:palette-bold-duotone`"
+        :icon="`duo-icons:palette`"
         :size="size"
         :label="'Select Theme'"
         :options="themeOption"
