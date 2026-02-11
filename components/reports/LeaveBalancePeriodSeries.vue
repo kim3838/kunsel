@@ -1,8 +1,8 @@
 <template>
     <div class="px-[20px]">
         <form @submit.prevent="balancePeriodSeriesExecute()" class="space-y-2 pb-[20px]">
-            <div class="grid gap-2 grid-cols-3 sm:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-8">
-                <div class="col-span-4 md:col-span-3 lg:col-span-2">
+            <div class="grid gap-2 grid-cols-3 sm:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
+                <div class="col-span-2 md:col-span-1">
                     <InputLabel :size="'sm'" value="Employee"/>
                     <SingleSelectPaginated
                         :key="employeeOptionsKey"
@@ -16,7 +16,7 @@
                         :payload="employeeOptions"
                         @valueChange="selectedEmployeeChanged"/>
                 </div>
-                <div class="col-span-4 md:col-span-3 lg:col-span-2">
+                <div class="col-span-2 md:col-span-1">
                     <InputLabel :size="'sm'" value="Leave Type"/>
                     <SingleSelectPaginated
                         :key="assignedLeaveTypeSelectionsOptionsKey"
@@ -30,7 +30,7 @@
                         :payload="assignedLeaveTypeSelectionsOptions"
                         @valueChange="selectedLeaveTypeChanged"/>
                 </div>
-                <div class="col-span-2 sm:col-span-1">
+                <div class="col-span-1">
                     <InputLabel :size="'sm'" value="Up to date"/>
                     <InputWithIcon
                         :disabled="disableActions"
@@ -44,7 +44,7 @@
                 <div class="flex flex-col">
                     <div class="flex-none h-[1.25rem]"></div>
                     <div class="grow">
-                        <Button class="w-min" ref="submitButton" type="submit" :disabled="disableActions" :size="'md'" :icon="disableActions ? 'eos-icons:loading' : 'mdi:data'" :label="disableActions ? 'Loading' : 'Load'"></Button>
+                        <Button class="w-min" ref="submitButton" type="submit" :disabled="disableActions" :size="'md'" :icon="disableActions ? 'eos-icons:loading' : 'mdi:data'" :label="disableActions ? 'Loading' : 'Load period series'"></Button>
                     </div>
                 </div>
             </div>
@@ -69,27 +69,27 @@
 
                 <div v-for="periodSeries in balancePeriodSeries">
 
-                    <table class="period-series-table">
+                    <table class="period-series-table tint-background">
                         <tbody>
-                        <tr class="font-semibold">
+                        <tr class="font-medium font-header">
                             <td class="px-[2px]">Period</td>
                             <td class="px-[2px]" v-for="yearMonthSeries in periodSeries.value">{{yearMonthSeries.period}}</td>
                         </tr>
                         <tr class="">
-                            <td class="px-[2px] font-semibold">Year</td>
+                            <td class="px-[2px] font-medium font-header">Year</td>
                             <td class="px-[2px]" v-for="yearMonthSeries in periodSeries.value">{{yearMonthSeries.year}}</td>
                         </tr>
                         <tr class="">
-                            <td class="px-[2px] font-semibold">Month</td>
+                            <td class="px-[2px] font-medium font-header">Month</td>
                             <td class="px-[2px]" v-for="yearMonthSeries in periodSeries.value">{{yearMonthSeries.month_readable}}</td>
                         </tr>
                         <tr>
                             <td>
                                 <div class="employment-series-header flex flex-col">
-                                    <div class="px-[2px] font-semibold">Employment Type</div>
-                                    <div class="px-[2px] font-semibold">Eligible</div>
-                                    <div class="px-[2px] font-semibold">Calendar Day</div>
-                                    <div class="px-[2px] font-semibold">Running Balance</div>
+                                    <div class="px-[2px] font-medium font-header">Employment Type</div>
+                                    <div class="px-[2px] font-medium font-header">Eligible</div>
+                                    <div class="px-[2px] font-medium font-header">Calendar Day</div>
+                                    <div class="px-[2px] font-medium font-header">Running Balance</div>
                                 </div>
                             </td>
                             <td v-for="yearMonthSeries in periodSeries.value" class="">
