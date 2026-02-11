@@ -224,7 +224,7 @@ watch(updatedAssociatedCompanyFlag, (newValue) => {
     }
 });
 
-const dateTimeNowFormatted = useDateFormat(useNow(), 'dddd YYYY-MM-DD HH:mm:ss')
+const dateTimeNowFormatted = useDateFormat(useNow(), 'dddd MMM DD, YYYY HH:mm:ss')
 
 const employee = ref<Partial<EmployeeT & TableRowT>>({});
 const employeeSuccessful = ref(true);
