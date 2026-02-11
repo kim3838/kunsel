@@ -150,7 +150,7 @@ export const useThemeStore = defineStore('theme', () => {
 
             'neutral': '#efd8e1',
 
-            'body': '#f9f9f9',
+            'body': '#f4f4f4',
             'shade': '#fff0f4',
             'tint': '#fffbfb',
 
