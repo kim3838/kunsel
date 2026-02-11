@@ -236,7 +236,6 @@ const cutOffTypeSelection = ref([
 
 const daysSpanSelection = ref([
     {text : '7 Days', value: 7},
-    {text : '14 Days', value: 14},
 ]);
 
 const timePeriodPresetSelection = ref<TimePeriodPresetSelectionT[]>([]);

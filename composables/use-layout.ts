@@ -452,11 +452,11 @@ export const useLayout = () => {
                             route_active: `${hrPayrollRouteSlug}-payroll-employee-pay-items`
                         },
                         {
-                            key: `${hrPayrollRouteSlug}/payroll/frequencies`,
+                            key: `${hrPayrollRouteSlug}/payroll/frequency-settings`,
                             type: 'link',
-                            title: 'Frequency',
-                            to: `/${hrPayrollRouteSlug}/payroll/frequencies`,
-                            route_active: `${hrPayrollRouteSlug}-payroll-frequencies`
+                            title: 'Frequency Settings',
+                            to: `/${hrPayrollRouteSlug}/payroll/frequency-settings`,
+                            route_active: `${hrPayrollRouteSlug}-payroll-frequency-settings`
                         },
                     ]
                 }, {
