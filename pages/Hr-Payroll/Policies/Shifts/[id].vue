@@ -333,7 +333,7 @@ const shiftScheduleHeaders = reactive<TableHeaderT[]>([
     { text: 'Weekday', value: 'week_day_name', alignData: 'left'},
     { text: 'Rest Day', value: 'is_rest_day', alignData: 'left'},
     { text: 'Day Off', value: 'is_day_off', alignData: 'left'},
-    { text: 'Flexible', value: 'is_flexible', alignData: 'left'},
+    //{ text: 'Flexible', value: 'is_flexible', alignData: 'left'},
     { text: 'Timezone', value: 'timezone', alignData: 'left'},
     { text: 'Work Start', value: 'work_start', alignData: 'left'},
     { text: 'Work End', value: 'work_end', alignData: 'left'},

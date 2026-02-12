@@ -287,7 +287,7 @@ const shiftSchedulesHeaders = computed<TableHeaderT[]>(() => {
         { text: 'Weekday', value: 'week_day_name', alignData: 'left'},
         { text: 'Rest Day', value: 'is_rest_day', alignHeader: 'center', alignData: 'left'},
         { text: 'Day Off', value: 'is_day_off', alignHeader: 'center', alignData: 'left'},
-        { text: 'Flexible', value: 'is_flexible', alignHeader: 'center', alignData: 'left'},
+        //{ text: 'Flexible', value: 'is_flexible', alignHeader: 'center', alignData: 'left'},
         { text: 'Timezone', value: 'timezone', alignData: 'left'},
         { text: 'Work Start', value: 'work_start', alignHeader: 'right', alignData: 'right'},
         { text: 'Work End', value: 'work_end', alignHeader: 'right', alignData: 'right'},
