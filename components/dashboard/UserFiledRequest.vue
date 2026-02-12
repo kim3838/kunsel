@@ -40,8 +40,9 @@
                     :disabled="disableActions"
                     name="remember"
                     v-model="showOnlyPending"
+                    clamp-label
                     :size="'sm'"
-                    :label="'Show Only Pending'" />
+                    :label="'Show only pending'" />
             </label>
             <UnorderedList v-if="disableActions" :icon="'eos-icons:loading'" :size="'sm'" :label="'Please wait...'"/>
         </div>

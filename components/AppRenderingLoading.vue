@@ -2,7 +2,7 @@
     <transition name="fade">
         <div v-show="!clientReadyState" :class="[backgroundClass]" class="fixed inset-0 overflow-y-auto px-0 z-50">
             <div class="h-full flex items-center justify-center">
-                <UnorderedList :size="'lg'" :icon="'eos-icons:loading'">Please wait...</UnorderedList>
+                <UnorderedList class="font-[Geist]" :size="'md'" :icon="'eos-icons:loading'">Please wait...</UnorderedList>
             </div>
         </div>
     </transition>

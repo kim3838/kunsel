@@ -15,17 +15,20 @@
                             <InputLabel :size="'sm'" value="Date To"/>
                             <InputWithIcon :icon="'mdi:calendar-outline'" :id="'date_to'" readonly v-model="formStore.filters.attendanceDateTo" :size="'md'" class="w-full" :override="{font_family_class: 'font-sans'}" :disabled="disableActions" />
                         </div>
-                    </div>
-
-                    <div class="flex flex-row flex-wrap gap-2 items-center min-h-8">
-                        <Button class="w-min" ref="submitButton" type="submit" :disabled="disableActions" :size="'md'" :icon="disableActions ? 'eos-icons:loading' : 'mdi:data'" :label="disableActions ? 'Loading' : 'Load'"></Button>
-                        <RadioGroup
-                            class="scaffold-border px-2"
-                            :disabled="disableActions"
-                            :selections="viewMode.selection"
-                            :size="'md'"
-                            :orientation="'horizontal'"
-                            v-model="viewMode.selected" />
+                        <div v-if="false" class="flex flex-col">
+                            <div class="flex-none h-[1.25rem]"></div>
+                            <RadioGroup
+                                class="scaffold-border px-2"
+                                :disabled="disableActions"
+                                :selections="viewMode.selection"
+                                :size="'md'"
+                                :orientation="'horizontal'"
+                                v-model="viewMode.selected" />
+                        </div>
+                        <div class="flex flex-col">
+                            <div class="flex-none h-[1.25rem]"></div>
+                            <Button class="w-min" ref="submitButton" type="submit" :disabled="disableActions" :size="'md'" :icon="disableActions ? 'eos-icons:loading' : 'mdi:data'" :label="disableActions ? 'Loading' : 'Load'"></Button>
+                        </div>
                     </div>
 
                     <div>

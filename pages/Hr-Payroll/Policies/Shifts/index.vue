@@ -36,8 +36,9 @@
                                             :disabled="disableActions"
                                             name="remember"
                                             v-model="showSchedulesPerShift"
+                                            clamp-label
                                             :size="'md'"
-                                            :label="'Show Schedules'" />
+                                            :label="'Show shift schedules'" />
                                     </label>
                                 </div>
                             </div>

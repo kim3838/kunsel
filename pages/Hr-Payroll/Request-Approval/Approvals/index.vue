@@ -42,7 +42,7 @@
                                     name="remember"
                                     v-model="showOnlyAwaitingApproval"
                                     :size="'md'"
-                                    :label="'Show Only Awaiting Approval'" />
+                                    :label="'Show only waiting approval'" />
                             </label>
                         </div>
                     </div>

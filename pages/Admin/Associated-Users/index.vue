@@ -37,7 +37,7 @@
                                     name="remember"
                                     v-model="showAssociatedCompanies"
                                     :size="'md'"
-                                    :label="'Show Associated Companies'" />
+                                    :label="'Show associated companies'" />
                             </label>
                         </div>
                     </div>

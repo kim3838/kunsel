@@ -25,9 +25,6 @@
                             <div class="flex-none h-[1.25rem]"></div>
                             <Button class="w-min" ref="submitButton" type="submit" :disabled="disableActions" :size="'md'" :icon="disableActions ? 'eos-icons:loading' : 'mdi:data'" :label="disableActions ? 'Loading' : 'Load'"></Button>
                         </div>
-                        <div class="flex flex-col">
-                            <div class="flex-none h-[1.25rem]"></div>
-                        </div>
                     </div>
 
                     <div>

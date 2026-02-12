@@ -36,8 +36,9 @@
                                             :disabled="disableActions"
                                             name="remember"
                                             v-model="showBalancePerPeriod"
+                                            clamp-label
                                             :size="'md'"
-                                            :label="'Show Balance Per Period'" />
+                                            :label="'Show additional balance per period'" />
                                     </label>
                                 </div>
                             </div>

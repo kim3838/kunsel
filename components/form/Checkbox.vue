@@ -10,7 +10,7 @@
                 :class="[heightClass, inputClass]"
                 class="checkbox">
         </div>
-        <div v-if="label?.trim()" class="ml-1 whitespace-pre-line">{{label}}</div>
+        <div v-if="label?.trim()" class="ml-1 whitespace-pre-line" :title="label" :class="[clampLabel ? 'line-clamp-1' : '']">{{label}}</div>
     </span>
 </template>
 
@@ -49,7 +49,11 @@ const props = defineProps({
     tabable: {
         type: Boolean,
         default: true,
-    }
+    },
+    clampLabel: {
+        type: Boolean,
+        default: false,
+    },
 });
 
 const emit = defineEmits(["update:modelValue", 'valueChanged']);

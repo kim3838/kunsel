@@ -50,7 +50,7 @@
                                     name="show-approval-sequence"
                                     v-model="showApprovalStates"
                                     :size="'md'"
-                                    :label="'Show Approval Sequence'" />
+                                    :label="'Show approval sequence'" />
                             </label>
                         </div>
                     </div>

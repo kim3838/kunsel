@@ -97,8 +97,7 @@
 
                             <div v-if="holidayEditable.type == HOLIDAY.LEGAL || holidayEditable.type == HOLIDAY.DOUBLE" class="col-span-full">
 
-
-                                <InputLabel :size="'sm'" value="Forfeit holiday pay if not paid on a workday preceding a holiday"/>
+                                <InputLabel :size="'sm'" value="Forfeit holiday pay on non-attendance, if not paid on a workday preceding a holiday."/>
                                 <label class="flex items-center">
                                     <Checkbox
                                         :disabled="disableActions"

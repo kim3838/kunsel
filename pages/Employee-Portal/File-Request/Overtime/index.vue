@@ -6,7 +6,7 @@
 
                     <BreadCrumbs prefix-company :size="`sm`" />
 
-                    <div class="grid gap-2 grid-cols-3 sm:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-8">
+                    <div class="grid gap-2 grid-cols-3 sm:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
                         <div>
                             <InputLabel :size="'sm'" value="Status" />
                             <MultiSelect :disabled="disableActions" glint drop-shadow :size="'md'" :options="requestApprovalStatusOptions" :icon="'tdesign:component-checkbox'"/>
@@ -15,25 +15,36 @@
                             <InputLabel :size="'sm'" value="Request # Search" />
                             <Input :disabled="disableActions" :size="'md'" ref="searchInput" v-model="filters.search.keyword" class="w-full" placeholder="Search Number" type="text"/>
                         </div>
-                    </div>
-
-                    <div class="flex flex-row flex-wrap gap-2 items-center min-h-8">
-                        <Button class="w-min" ref="submitButton" type="submit" :disabled="disableActions" :size="'md'" :icon="disableActions ? 'eos-icons:loading' : 'mdi:data'" :label="disableActions ? 'Loading' : 'Load'"></Button>
-                        <RadioGroup
-                            class="scaffold-border px-2"
-                            :disabled="disableActions"
-                            :selections="viewMode.selection"
-                            :size="'md'"
-                            :orientation="'horizontal'"
-                            v-model="viewMode.selected" />
-                        <label class="flex items-center">
-                            <Checkbox
+                        <div v-if="false" class="flex flex-col">
+                            <div class="flex-none h-[1.25rem]"></div>
+                            <RadioGroup
+                                class="scaffold-border px-2"
                                 :disabled="disableActions"
-                                name="show-approval-sequence"
-                                v-model="showApprovalStates"
+                                :selections="viewMode.selection"
                                 :size="'md'"
-                                :label="'Show Approval Sequence'" />
-                        </label>
+                                :orientation="'horizontal'"
+                                v-model="viewMode.selected" />
+                        </div>
+                        <div class="flex flex-col">
+                            <div class="flex-none h-[1.25rem]"></div>
+                            <div class="grow">
+                                <div class="h-full px-2 scaffold-border flex items-center">
+                                    <label class="flex items-center">
+                                        <Checkbox
+                                            :disabled="disableActions"
+                                            name="show-approval-sequence"
+                                            v-model="showApprovalStates"
+                                            clamp-label
+                                            :size="'md'"
+                                            :label="'Show approval sequence'" />
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex flex-col">
+                            <div class="flex-none h-[1.25rem]"></div>
+                            <Button class="w-min" ref="submitButton" type="submit" :disabled="disableActions" :size="'md'" :icon="disableActions ? 'eos-icons:loading' : 'mdi:data'" :label="disableActions ? 'Loading' : 'Load'"></Button>
+                        </div>
                     </div>
 
                     <div>
