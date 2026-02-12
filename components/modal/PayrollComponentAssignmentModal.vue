@@ -73,7 +73,7 @@
                     </div>
                     <div v-if="selectedPayrollComponentIsAmountable">
                         <InputLabel :size="'sm'" value="Pay Type"/>
-                        <SingleSelect :searchable="false" :selection-max-viewable-line="10" drop-shadow value-persist :size="'md'" :options="payTypeOptions"/>
+                        <SingleSelect :searchable="false" disabled :selection-max-viewable-line="10" drop-shadow value-persist :size="'md'" :options="payTypeOptions"/>
                     </div>
                     <div v-if="selectedPayrollComponentIsAmountable" class="col-span-full flex flex-wrap gap-2">
                         <div>
@@ -315,6 +315,8 @@ const assignablePayrollComponentSelectedChange = (value: null | number) => {
             amountableEnd.value = null;
             endDate.value = null;
         } else {
+
+            payTypeOptions.selected = PAY_TYPE.BY_ATTENDANCE as number;
 
             if(amountableStart.value == null){
                 amountableStart.value = AMOUNTABLE_PAYROLL_COMPONENT_START.NOT_SPECIFIED as number;
