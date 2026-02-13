@@ -21,6 +21,10 @@
                     <template #content>
                         <div class="pt-4 mx-auto max-w-screen-xl grid gap-2 grid-cols-3 sm:grid-cols-4 md:grid-cols-5">
                             <div>
+                                <InputLabel :size="'sm'" value="Key"/>
+                                <Input v-model="moduleKey" type="text" />
+                            </div>
+                            <div>
                                 <InputLabel :size="'sm'" value="Name"/>
                                 <Input v-model="moduleName" type="text" />
                             </div>
@@ -176,6 +180,7 @@ await fetchCompany();
 const salaryStatementModulesHeaders = reactive<TableHeaderT[]>([
     { text: '', value: 'actions'},
     { text: 'Order', value: 'order'},
+    { text: 'Key', value: 'key'},
     { text: 'Name', value: 'name'},
     { text: 'Formulable Type', value: 'formulable_type', alignData: 'left'},
     { text: 'Aggregation', value: 'aggregation', alignData: 'left'},
@@ -274,6 +279,7 @@ const creatingOrEditing = ref(false);
 const deleting = ref(false);
 const editPayload = ref<Partial<SalaryStatementModuleT>>({});
 
+const moduleKey = ref('');
 const moduleName = ref('');
 const formulableOptions = reactive({
     search: '',
@@ -297,6 +303,7 @@ const edit = (cell: TableRowT) => {
     editPayload.value = cell as SalaryStatementModuleT;
 
     if(Boolean(cell.id)){
+        moduleKey.value = _get(cell, 'key', '');
         moduleName.value = _get(cell, 'name', '');
         formulableOptions.selected = _get(cell, 'formulable_type.value', null);
         aggregation.value = _get(cell, 'aggregation', false);
@@ -320,6 +327,7 @@ const closeModal = () => {
 };
 
 const createEditModalReset = () => {
+    moduleKey.value = '';
     moduleName.value = '';
     formulableOptions.selected = null;
     aggregation.value = false;
@@ -356,6 +364,7 @@ const createEditModalResolved = async () => {
 const createEditModalForm = computed(() => {
     return {
         'company_id': companyId.value,
+        'key': moduleKey.value,
         'name': moduleName.value,
         'formulable_type': formulableOptions.selected,
         'aggregation': aggregation.value,
