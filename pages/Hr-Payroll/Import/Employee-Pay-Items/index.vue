@@ -266,7 +266,7 @@ const preImportSupHeaders = reactive<TableSupHeaderT[]>([
     {text: 'Required', colspan: 1, value: 'payroll_component_code', alignHeader: 'left'},
     {text: 'Required by Condition', colspan: 1, value: 'amount', alignHeader: 'left', justifyData: 'top', width: '190px', maxWidth: '190px'},
     {text: 'Required as Amount', colspan: 1, value: 'pay_period', alignHeader: 'left', justifyData: 'top'},
-    {text: 'Required as Amount', colspan: 1, value: 'pay_type', alignHeader: 'left', justifyData: 'top'},
+    //{text: 'Required as Amount', colspan: 1, value: 'pay_type', alignHeader: 'left', justifyData: 'top'},
     {text: ''},
 ]);
 
@@ -274,7 +274,7 @@ const preImportSupRows = reactive<TableSupRowT[]>([
     {
         'amount': "Amount, Pay Period, Pay Type and Pay Frequency are only required when payroll component is Basic Pay or Regular Allowance.",
         'pay_period': "One of the following: \n" + Object.keys(PAY_PERIOD).join("\n"),
-        'pay_type': "One of the following: \n" + Object.keys(PAY_TYPE).join("\n"),
+        //'pay_type': "One of the following: \n" + Object.keys(PAY_TYPE).join("\n"),
     }
 ]);
 
@@ -285,7 +285,7 @@ const preImportHeaders = reactive<TableHeaderT[]>([
     { text: 'Payroll Component Code', value: 'payroll_component_code', alignData: 'left'},
     { text: 'Amount', value: 'amount', alignData: 'left'},
     { text: 'Pay Period', value: 'pay_period', alignData: 'left'},
-    { text: 'Pay Type', value: 'pay_type', alignData: 'left'},
+    //{ text: 'Pay Type', value: 'pay_type', alignData: 'left'},
     { text: 'Validation Result', value: 'validation', alignData: 'left'}
 ]);
 
