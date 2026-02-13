@@ -79,7 +79,7 @@
 <script setup lang="ts">
 import {storeToRefs} from "pinia";
 import type {CompanyFormulaT} from "@/public/js/types/company-component";
-const {isAuthenticated} = useAuth();
+const {isAuthenticated, userIsSuperAdmin} = useAuth();
 const nuxtApp = useNuxtApp();
 const {
     updatedAssociatedCompanyFlag
@@ -109,6 +109,11 @@ const compensationSelection = ref([]);
 await laraUseFetch("/api/enum-selections/compensation", {
     lazy: false,
     method: 'GET',
+    params: {
+        filters: {
+            assignable_only: !userIsSuperAdmin.value
+        }
+    }
 }, {
     onSuccessResponse: async (request, options, response) => {
         compensationSelection.value = _get(response, '_data.values.data', []);
@@ -130,6 +135,10 @@ const assignable = reactive({
     ],
     selected: 1
 });
+
+if(userIsSuperAdmin.value){
+    assignable.selection.push({text : 'Global', value: 0});
+}
 
 watch(updatedAssociatedCompanyFlag, (newValue) => {
     if(isAuthenticated.value && selectedAssociatedCompanyId.value){

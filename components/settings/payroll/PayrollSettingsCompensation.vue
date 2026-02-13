@@ -47,6 +47,7 @@
                     <template v-slot:cell.actions="{cell, slot, scrollReference}">
                         <div class="flex items-center">
                             <NavDrop
+                                v-if="cell.assignable || userIsSuperAdmin"
                                 class="z-10"
                                 :disabled="disableActions"
                                 :parent-icon="'ic:baseline-arrow-right'"
@@ -72,7 +73,7 @@
 import type {Sequenceable, TableHeaderT} from "@/public/js/types/data";
 import type {SequenceablePayrollComponent} from "@/public/js/types/payroll-component";
 import {storeToRefs} from "pinia";
-const {isAuthenticated} = useAuth();
+const {isAuthenticated, userIsSuperAdmin} = useAuth();
 const {fetchPayrollComponentNameSelections} = useCommon();
 const nuxtApp = useNuxtApp();
 const {
