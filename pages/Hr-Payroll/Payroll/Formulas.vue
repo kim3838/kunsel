@@ -75,6 +75,7 @@
                         :size="'lg'"
                         :rows="deductionsFormulaSettings"
                         selection
+                        :border-appearance="true"
                         :stripped="true"
                         :sub-row-slug="'sub_row'"
                         :sub-row-settings="{
@@ -117,6 +118,7 @@
                         :size="'lg'"
                         :rows="taxFormulaSettings"
                         selection
+                        :border-appearance="true"
                         :stripped="true"
                         :sub-row-slug="'sub_row'"
                         :sub-row-settings="{
