@@ -324,7 +324,7 @@ const payrollComponentsSupHeaders = reactive<TableSupHeaderT[]>([
     {text: 'Employee', colspan: 2,  alignHeader: 'left'},
     {text: ''},
     {text: 'Formulable', colspan: 1,  alignHeader: 'left'},
-    {text: 'Payroll Component', colspan: 9,  alignHeader: 'left'},
+    {text: 'Payroll Component', colspan: 8,  alignHeader: 'left'},
 ]);
 
 const payrollComponentsHeaders = reactive<TableHeaderT[]>([
@@ -343,7 +343,6 @@ const payrollComponentsHeaders = reactive<TableHeaderT[]>([
     { text: 'Currency', value: 'currency'},
     { text: 'Pay Period', value: 'pay_period'},
     { text: 'Pay Type', value: 'pay_type'},
-    { text: 'Pay Frequency', value: 'pay_frequency'},
     { text: 'From', value: 'amountable_start'},
     { text: 'To', value: 'amountable_end'},
 ]);
