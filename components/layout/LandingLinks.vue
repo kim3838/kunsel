@@ -1,7 +1,7 @@
 <template>
     <div class="mx-auto max-w-screen-lg">
         <div class="flex flex-wrap gap-2">
-            <div class="flex-grow p-6">
+            <div class="grow p-2 scaffold-border">
                 <p class="text-lg font-medium font-business">Contact Us</p>
 
                 <div class="mt-2 space-y-2">
@@ -15,7 +15,7 @@
                         class="flex"
                         :size="listSize"
                         :icon="'ic:sharp-phone'"
-                        :label="'+63 99-1618-0206'"/>
+                        :label="'880- 3892 18'"/>
 
                     <UnorderedList
                         class="flex"
@@ -25,7 +25,7 @@
                 </div>
             </div>
 
-            <div class="flex-grow p-6">
+            <div class="grow p-2 scaffold-border">
                 <p class="text-lg font-medium font-business">Our Services</p>
 
                 <div class="mt-2 space-y-2">
@@ -37,7 +37,7 @@
                 </div>
             </div>
 
-            <div class="flex-grow p-6">
+            <div class="grow p-2 scaffold-border">
                 <p  class="text-lg font-medium font-business">Helpful Links</p>
 
                 <div class="mt-2 space-y-2">
@@ -67,7 +67,7 @@
                 </div>
             </div>
 
-            <div class="flex-grow p-6">
+            <div class="grow p-2 scaffold-border">
                 <p class="text-lg font-medium font-business">About Us</p>
 
                 <div class="mt-2 space-y-2 text-sm">

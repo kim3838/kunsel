@@ -1,38 +1,45 @@
 <template>
-    <footer>
-        <div v-if="topRuleDivider" class="mt-18 scaffold-border-top"></div>
+    <footer class="pt-18">
 
-        <LandingLinks v-if="landingLinks" />
+        <div v-if="topRuleDivider" class="scaffold-border-top"></div>
 
-        <div class="mx-auto max-w-screen-lg">
+        <div class="space-y-16 pt-16">
 
-            <div class="flex flex-wrap gap-2">
+            <LandingLinks v-if="landingLinks" />
 
-                <div v-for="navigationLink in navigationLinks" :key="navigationLink.key" class="flex-grow p-6 text-center sm:text-left">
-                    <p class="text-lg font-medium font-business">
-                        <NuxtLink
-                            v-if="navigationLink.type == 'link'"
-                            :to="navigationLink.to"
-                            class="hover:underline">
-                            {{navigationLink.title}}
-                        </NuxtLink>
-                        <span v-else>{{navigationLink.title}}</span>
-                    </p>
+            <div v-if="navigationLinks.length" class="mx-auto max-w-screen-lg">
 
-                    <div v-if="navigationLink?.options && navigationLink.options.length > 0" class="mt-2 space-y-2 text-base">
-                        <div v-for="subLink in navigationLink.options" :key="subLink.key">
+                <div class="flex flex-wrap gap-2">
+
+                    <div v-for="navigationLink in navigationLinks" :key="navigationLink.key" class="flex-grow p-2 text-left scaffold-border">
+                        <p class="text-lg font-medium font-business">
                             <NuxtLink
-                                v-if="subLink.type == 'link'"
-                                :to="subLink.to"
+                                v-if="navigationLink.type == 'link'"
+                                :to="navigationLink.to"
                                 class="hover:underline">
-                                {{subLink.title}}
+                                {{navigationLink.title}}
                             </NuxtLink>
-                            <span v-else>{{subLink.title}}</span>
+                            <span v-else>{{navigationLink.title}}</span>
+                        </p>
+
+                        <div v-if="navigationLink?.options && navigationLink.options.length > 0" class="mt-2 space-y-2 text-base">
+                            <div v-for="subLink in navigationLink.options" :key="subLink.key">
+                                <NuxtLink
+                                    v-if="subLink.type == 'link'"
+                                    :to="subLink.to"
+                                    class="hover:underline">
+                                    {{subLink.title}}
+                                </NuxtLink>
+                                <span v-else>{{subLink.title}}</span>
+                            </div>
                         </div>
                     </div>
                 </div>
+            </div>
 
-                <div class="p-6">
+            <div class="mx-auto max-w-screen-lg scaffold-border">
+
+                <div class="p-2">
                     <div class="flex flex-row flex-wrap justify-start items-center">
                         <div class="w-max text-xl font-medium font-[Overpass]">
                             Kunsel ERP
@@ -62,22 +69,22 @@
                         </li>
                     </ul>
                 </div>
-            </div>
 
-            <div class="mx-auto max-w-screen-lg flex justify-start ">
-                <div class="p-6 text-sm">
-                    <div class="space-x-2">
-                        <a class="inline-block hover:underline">
-                            &#169;Kunsel ERP 2026. All rights reserved.
-                        </a>
-                        <span>|</span>
-                        <a class="inline-block hover:underline">
-                            Terms & Conditions
-                        </a>
-                        <span>|</span>
-                        <a class="inline-block hover:underline">
-                            Privacy Policy
-                        </a>
+                <div class="mx-auto max-w-screen-xl flex justify-start ">
+                    <div class="p-2 text-sm">
+                        <div class="space-x-2">
+                            <a class="inline-block hover:underline">
+                                &#169;Kunsel ERP 2026. All rights reserved.
+                            </a>
+                            <span>|</span>
+                            <a class="inline-block hover:underline">
+                                Terms & Conditions
+                            </a>
+                            <span>|</span>
+                            <a class="inline-block hover:underline">
+                                Privacy Policy
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
