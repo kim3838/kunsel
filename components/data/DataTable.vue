@@ -173,6 +173,7 @@ const {
     lining: liningColor,
     thread: threadColor,
     shade: shadeColor,
+    header: headerColor,
     accent: accentColor,
     tint: tintColor,
 } = storeToRefs($themeStore);
@@ -611,6 +612,10 @@ tbody tr td {
 table thead tr:last-child td{
     border-bottom-width: 0;
     border-bottom-color: $tableHeaderBottomBorder;
+}
+
+table thead tr td {
+    background-color: v-bind(headerColor);
 }
 
 tbody tr:hover {

@@ -62,19 +62,20 @@ export const useThemeStore = defineStore('theme', () => {
             'type': 'light',
             'primary': '#3b3b3b',
             'secondary': '#777676',
-            'accent': '#c9c9c9',
+            'accent': '#efefef',
 
-            'cell': '#f7f7f7',
+            'cell': '#ffffff',
             'lining': '#b4b4b4',
             'thread': '#c7c7c7',
 
-            'neutral': '#dcd9d9',
+            'neutral': '#efefef',
 
-            'body': '#f9f9f9',
-            'shade': '#fefefe',
+            'header': '#efefef',
+            'body': '#ffffff',
+            'shade': '#f6f6f6',
             'tint': '#ffffff',
 
-            'text': '#343232',
+            'text': '#282828',
             'text-invert': '#e0e8de',
             'text-secondary': '#b4b4b4',
         },
@@ -88,8 +89,9 @@ export const useThemeStore = defineStore('theme', () => {
             'lining': '#ababab',
             'thread': '#6b6b6b',
 
-            'neutral': '#656565',
+            'neutral': '#484646',
 
+            'header': '#484646',
             'body': '#323232',
             'shade': '#414141',
             'tint': '#3b3b3b',
@@ -104,12 +106,13 @@ export const useThemeStore = defineStore('theme', () => {
             'secondary': '#263b62',
             'accent': '#c3d8f6',
 
-            'cell': '#f7f7f7',
+            'cell': '#ffffff',
             'lining': '#90a5cc',
             'thread': '#c6c9cc',
 
             'neutral': '#e5e5e5',
 
+            'header': '#ececec',//ececec
             'body': '#f4f4f4',
             'shade': '#f8f8f8',
             'tint': '#fdfdfd',
@@ -130,6 +133,7 @@ export const useThemeStore = defineStore('theme', () => {
 
             'neutral': '#e5e5e5',
 
+            'header': '#e5e5e5',
             'body': '#f4f4f4',
             'shade': '#f8f8f8',
             'tint': '#fdfdfd',
@@ -150,6 +154,7 @@ export const useThemeStore = defineStore('theme', () => {
 
             'neutral': '#efd8e1',
 
+            'header': '#f6f6f6',
             'body': '#f4f4f4',
             'shade': '#fff0f4',
             'tint': '#fffbfb',
@@ -168,8 +173,9 @@ export const useThemeStore = defineStore('theme', () => {
             'lining': '#75a979',
             'thread': '#678369',
 
-            'neutral': '#4d7954',
+            'neutral': '#2b654b',
 
+            'header': '#2b654b',
             'body': '#175639',
             'shade': '#19593c',
             'tint': '#1e6444',
@@ -188,6 +194,7 @@ export const useThemeStore = defineStore('theme', () => {
     const lining = computed(() => palletes.value[appTheme.value]['lining']);
     const thread = computed(() => palletes.value[appTheme.value]['thread']);
     const neutral = computed(() => palletes.value[appTheme.value]['neutral']);
+    const header = computed(() => palletes.value[appTheme.value]['header']);
     const tint = computed(() => palletes.value[appTheme.value]['tint']);
     const body = computed(() => palletes.value[appTheme.value]['body']);
     const shade = computed(() => palletes.value[appTheme.value]['shade']);
@@ -218,6 +225,7 @@ export const useThemeStore = defineStore('theme', () => {
         lining,
         thread,
         neutral,
+        header,
         tint,
         body,
         shade,
