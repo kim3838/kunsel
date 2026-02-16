@@ -56,18 +56,34 @@
 
                         <div class="space-y-2 pt-4 scaffold-border-top">
 
-                            <div>
-                                <InputLabel :size="'xs'" value="Payroll group" />
-                                <div class="text-sm">{{ _get(employee, 'payroll_group.type.text', 'Not found') }}</div>
-                            </div>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <div class="grid grid-cols-12 gap-y-6 gap-x-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
 
-                <div class="col-span-full md:col-span-9 lg:col-span-10 lining-shadow rounded-sm flex-grow tint-background">
+                <div class="lining-shadow rounded-sm flex-grow tint-background">
+                    <div class="lining-shadow rounded-t-sm text-lg font-medium font-business px-4 py-2">My Requests</div>
+
+                    <div class="px-4 py-4 max-h-[408px] overflow-y-auto">
+
+                        <UserFiledRequest/>
+                    </div>
+                </div>
+
+                <div class="lining-shadow rounded-sm flex-grow tint-background">
+                    <div class="lining-shadow rounded-t-sm text-lg font-medium font-business px-4 py-2">Awaiting my approval</div>
+
+                    <div class="px-4 py-4 max-h-[408px] overflow-y-auto">
+                        <UserAwaitingApproval/>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-9 lg:grid-cols-12 gap-y-6 gap-x-4">
+
+                <div class="col-span-full md:col-span-6 lg:col-span-7 lining-shadow rounded-sm grow tint-background">
                     <div class="lining-shadow rounded-t-sm px-4 py-2">
                         <div class="text-lg font-medium font-business">My Shift</div>
                         <div v-if="!employeePending && employeeHasShiftAssigned" class="text-sm">{{ _get(employee, 'shift_assignment.readable_date_range', '') }}</div>
@@ -144,7 +160,7 @@
                     </div>
                 </div>
 
-                <div class="col-span-full md:col-span-3 lg:col-span-2 lining-shadow rounded-sm flex-grow tint-background">
+                <div class="col-span-full md:col-span-3 lg:col-span-2 lining-shadow rounded-sm grow tint-background">
                     <div class="lining-shadow rounded-t-sm px-4 py-2 flex justify-between items-center">
                         <div class="text-lg font-medium font-business">Leave Credits</div>
                         <div class="flex items-center">
@@ -164,24 +180,22 @@
                         </div>
                     </div>
                 </div>
-            </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-
-                <div class="lining-shadow rounded-sm flex-grow tint-background">
-                    <div class="lining-shadow rounded-t-sm text-lg font-medium font-business px-4 py-2">My Requests</div>
-
-                    <div class="px-4 py-4 max-h-[408px] overflow-y-auto">
-
-                        <UserFiledRequest/>
+                <div class="col-span-full lg:col-span-3 lining-shadow rounded-sm grow tint-background">
+                    <div class="lining-shadow rounded-t-sm px-4 py-2 flex justify-between items-center">
+                        <div class="text-lg font-medium font-business">Payroll</div>
                     </div>
-                </div>
 
-                <div class="lining-shadow rounded-sm flex-grow tint-background">
-                    <div class="lining-shadow rounded-t-sm text-lg font-medium font-business px-4 py-2">Awaiting my approval</div>
-
-                    <div class="px-4 py-4 max-h-[408px] overflow-y-auto">
-                        <UserAwaitingApproval/>
+                    <div class="px-4 py-4">
+                        <div v-if="true" class="grid grid-cols-1 gap-2">
+                            <div>
+                                <InputLabel :size="'xs'" value="Payroll group" />
+                                <div class="text-sm">{{ _get(employee, 'payroll_group.type.text', 'Not found') }}</div>
+                            </div>
+                        </div>
+                        <div v-else>
+                            <UnorderedList :icon="'eos-icons:loading'" :size="'md'" :label="'Loading leave balance...'"/>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -289,13 +303,13 @@ const shiftSchedulesHeaders = computed<TableHeaderT[]>(() => {
         { text: 'Day Off', value: 'is_day_off', alignHeader: 'center', alignData: 'left'},
         //{ text: 'Flexible', value: 'is_flexible', alignHeader: 'center', alignData: 'left'},
         { text: 'Timezone', value: 'timezone', alignData: 'left'},
-        { text: 'Work Start', value: 'work_start', alignHeader: 'right', alignData: 'right'},
-        { text: 'Work End', value: 'work_end', alignHeader: 'right', alignData: 'right'},
+        { text: 'Start', value: 'work_start', alignHeader: 'right', alignData: 'right'},
+        { text: 'End', value: 'work_end', alignHeader: 'right', alignData: 'right'},
 
-        { text: 'Total Work Hours w/ Breaks', value: 'total_work_hours_with_breaks', alignHeader: 'right', alignData: 'right'},
-        { text: 'Lunch Break Start', value: 'lunch_break_start', alignHeader: 'right', alignData: 'right'},
-        { text: 'Lunch Break End', value: 'lunch_break_end', alignHeader: 'right', alignData: 'right'},
-        { text: 'Total Lunch Break Hours', value: 'total_lunch_break_hours', alignHeader: 'right', alignData: 'right'},
+        { text: 'Total', value: 'total_work_hours_with_breaks', alignHeader: 'right', alignData: 'right'},
+        { text: 'Lunch Start', value: 'lunch_break_start', alignHeader: 'right', alignData: 'right'},
+        { text: 'Lunch End', value: 'lunch_break_end', alignHeader: 'right', alignData: 'right'},
+        { text: 'Total Lunch', value: 'total_lunch_break_hours', alignHeader: 'right', alignData: 'right'},
     ]
 });
 
