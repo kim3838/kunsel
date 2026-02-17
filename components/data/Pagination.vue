@@ -14,7 +14,7 @@
             @click="previousPageHandler()"
             :variant="'flat'"
             :size="buttonSize"
-            :icon="'ic:sharp-keyboard-arrow-left'"
+            :icon="'ic:baseline-arrow-left'"
             :label="previousPage.label" />
         <Button
             type="button"
