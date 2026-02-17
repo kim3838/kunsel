@@ -20,7 +20,7 @@
                                     class="font-data"
                                     :icon="user?.email_verified_at ? 'ic:sharp-verified-user' : 'mdi:security-close'"
                                     :size="'md'"
-                                    :label="user?.email_verified_at ? 'Email Verified' : 'Email Not Verified'"/>
+                                    :label="user?.email_verified_at ? 'Email verified' : 'Email not verified'"/>
                                 <UnorderedList
                                     class="w-full font-data"
                                     :icon="'ic:round-mail-outline'"
@@ -50,7 +50,7 @@
                         </div>
                         <div></div>
                         <div>
-                            <Button class="w-min" :disabled="updatePasswordPending" :label="'Update Password'" />
+                            <Button class="w-min" :disabled="updatePasswordPending" :label="'Update password'" />
                         </div>
                     </div>
                 </form>
@@ -92,7 +92,7 @@
                             <InputWithIcon :disabled="logoutOtherDevicePending" :icon="'mdi:key-chain'" :type="'password'" placeholder="Enter password" v-model="confirmPassword" required />
                         </div>
                         <div>
-                            <Button class="w-min" :disabled="logoutOtherDevicePending" :label="'Log Out Other Devices'" />
+                            <Button class="w-min" :disabled="logoutOtherDevicePending" :label="'Log-out other devices'" />
                         </div>
                     </div>
                 </form>
@@ -177,7 +177,7 @@
                         </div>
                         <div>
                             <ConfirmsPassword v-if="!twoFactorEnabled" @confirmed="executeEnableTwoFactor">
-                                <Button class="w-min" type="button" :disabled="enableTwoFactorPending" :label="'Enable 2 Factor Authentication'" />
+                                <Button class="w-min" type="button" :disabled="enableTwoFactorPending" :label="'Enable 2 factor authentication'" />
                             </ConfirmsPassword>
                         </div>
                     </div>

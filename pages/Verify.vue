@@ -25,7 +25,7 @@
                                             :size="'md'"
                                             :variant="'default'"
                                             :icon="pending ? 'eos-icons:installing' : 'ic:round-mail-outline'"
-                                            :label="pending ? 'Requesting...' : 'Send Email Verification'"></Button>
+                                            :label="pending ? 'Requesting...' : 'Send email verification'"></Button>
                                     </div>
                                 </form>
                             </div>

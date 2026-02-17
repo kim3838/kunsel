@@ -119,7 +119,7 @@
                                                 drop-shadow
                                                 value-persist
                                                 :selection-max-viewable-line="10"
-                                                :label="'Select Assigned Shift'"
+                                                :label="'Select assigned shift'"
                                                 :icon="'mdi:calendar-cursor-outline'"
                                                 :size="'md'"
                                                 :payload="assignedShiftSelectionsOptions"

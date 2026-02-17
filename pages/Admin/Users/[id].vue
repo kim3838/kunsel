@@ -109,7 +109,7 @@
                                         drop-shadow
                                         :scroll-reference="scrollReference"
                                         :none-selected-label="'Not Assigned'"
-                                        :label="'Select Company Assignment'"
+                                        :label="'Select company assignment'"
                                         :icon="companyAssignmentIcon(cell.company_assignment_type)"
                                         value-persist
                                         :size="slot.selectSize"

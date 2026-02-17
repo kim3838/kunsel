@@ -28,7 +28,7 @@
                                             :size="'md'"
                                             :variant="'default'"
                                             :icon="pending ? 'eos-icons:installing' : 'ic:round-mail-outline'"
-                                            :label="pending ? 'Requesting...' : 'Email Password Reset Link'"></Button>
+                                            :label="pending ? 'Requesting...' : 'Email password reset link'"></Button>
                                     </div>
                                 </form>
                             </div>
