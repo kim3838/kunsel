@@ -7,7 +7,7 @@
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
 
                 <div class="lining-shadow rounded-sm flex-grow tint-background">
-                    <div class="lining-shadow rounded-t-sm text-lg font-medium font-business px-4 py-2">My Requests</div>
+                    <div class="lining-shadow rounded-t-sm text-lg font-medium font-header px-4 py-2">My Requests</div>
 
                     <div class="px-4 py-4 max-h-[408px] overflow-y-auto">
 
@@ -16,7 +16,7 @@
                 </div>
 
                 <div class="lining-shadow rounded-sm flex-grow tint-background">
-                    <div class="lining-shadow rounded-t-sm text-lg font-medium font-business px-4 py-2">Awaiting my approval</div>
+                    <div class="lining-shadow rounded-t-sm text-lg font-medium font-header px-4 py-2">Awaiting my approval</div>
 
                     <div class="px-4 py-4 max-h-[408px] overflow-y-auto">
                         <UserAwaitingApproval/>

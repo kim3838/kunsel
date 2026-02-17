@@ -64,7 +64,7 @@
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
 
                 <div class="lining-shadow rounded-sm flex-grow tint-background">
-                    <div class="lining-shadow rounded-t-sm text-lg font-medium font-business px-4 py-2">My Requests</div>
+                    <div class="lining-shadow rounded-t-sm text-lg font-medium font-header px-4 py-2">My Requests</div>
 
                     <div class="px-4 py-4 max-h-[408px] overflow-y-auto">
 
@@ -73,7 +73,7 @@
                 </div>
 
                 <div class="lining-shadow rounded-sm flex-grow tint-background">
-                    <div class="lining-shadow rounded-t-sm text-lg font-medium font-business px-4 py-2">Awaiting my approval</div>
+                    <div class="lining-shadow rounded-t-sm text-lg font-medium font-header px-4 py-2">Awaiting my approval</div>
 
                     <div class="px-4 py-4 max-h-[408px] overflow-y-auto">
                         <UserAwaitingApproval/>
@@ -85,7 +85,7 @@
 
                 <div class="col-span-full md:col-span-6 lg:col-span-7 lining-shadow rounded-sm grow tint-background">
                     <div class="lining-shadow rounded-t-sm px-4 py-2">
-                        <div class="text-lg font-medium font-business">My Shift</div>
+                        <div class="text-lg font-medium font-header">My Shift</div>
                         <div v-if="!employeePending && employeeHasShiftAssigned" class="text-sm">{{ _get(employee, 'shift_assignment.readable_date_range', '') }}</div>
                     </div>
 
@@ -162,7 +162,7 @@
 
                 <div class="col-span-full md:col-span-3 lg:col-span-2 lining-shadow rounded-sm grow tint-background">
                     <div class="lining-shadow rounded-t-sm px-4 py-2 flex justify-between items-center">
-                        <div class="text-lg font-medium font-business">Leave Credits</div>
+                        <div class="text-lg font-medium font-header">Leave Credits</div>
                         <div class="flex items-center">
                             <Button :variant="'outline'" :withBorder="false" :size="'xs'" :icon="'ic:sharp-restart-alt'" :disabled="leaveBalanceByTypePending" :label="'Reload'" @click="leaveBalanceByTypeExecute()" />
                         </div>
@@ -183,7 +183,7 @@
 
                 <div class="col-span-full lg:col-span-3 lining-shadow rounded-sm grow tint-background">
                     <div class="lining-shadow rounded-t-sm px-4 py-2 flex justify-between items-center">
-                        <div class="text-lg font-medium font-business">Payroll</div>
+                        <div class="text-lg font-medium font-header">Payroll</div>
                     </div>
 
                     <div class="px-4 py-4">
