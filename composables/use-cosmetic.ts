@@ -31,7 +31,7 @@ export const useCosmetic = () => {
 
             shadeValue = {
                 [DEDUCTION.DEDUCTION as number]: 'danger',
-                [DEDUCTION.CONTRIBUTION as number]: 'warning',
+                [DEDUCTION.STATUTORY_CONTRIBUTION as number]: 'warning',
             }[componentType] as LabelTypeT || 'default';
 
         } else if(_includes([FORMULABLE.INCOME_TAX], formulableType)) {

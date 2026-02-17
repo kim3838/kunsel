@@ -206,7 +206,7 @@ const deductionComponentOptions = reactive({
     search: '',
     selection: [
         $enumerableOption(DEDUCTION_NAME, DEDUCTION.DEDUCTION as number),
-        $enumerableOption(DEDUCTION_NAME, DEDUCTION.CONTRIBUTION as number),
+        $enumerableOption(DEDUCTION_NAME, DEDUCTION.STATUTORY_CONTRIBUTION as number),
     ],
     selected: null
 });
