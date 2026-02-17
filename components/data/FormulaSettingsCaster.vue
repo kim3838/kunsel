@@ -7,7 +7,7 @@
                 <div class="font-semibold">{{setting.label}}</div>
 
                 <div>
-                    <table>
+                    <table class="tint-background">
                         <thead>
                             <tr>
                                 <td class="p-[3px]" v-for="(setting, index) in setting.value" :key="setting.key">

@@ -1,7 +1,7 @@
 <template>
     <div class="space-y-4">
         <FormulaSettingsCaster :settings="descriptions"/>
-        <table v-if="rateSettings.length > 0">
+        <table v-if="rateSettings.length > 0" class="tint-background">
             <thead>
             <tr>
                 <td class="p-[3px] font-semibold">Overtime Rates</td>
