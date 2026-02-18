@@ -57,7 +57,7 @@
                         </template>
                         <template v-slot:sub_row_slot="{rowIndex, cell, slot}">
                             <div class="inline-flex items-center scaffold-border pr-2">
-                                <Icon name="mdi:info-variant" :class="[slot.iconSizeClass]" /><div :class="[slot.titleSizeClass]">Settings Information</div>
+                                <Icon name="mdi:info-variant" :class="[slot.iconSizeClass]" /><div :class="[slot.titleSizeClass]">Information / Ratings</div>
                             </div>
                             <component v-if="cell.formula_name == 'Standard-Overtime'" :is="StandardOvertimeSettings" :settings="cell.sub_row.settings" />
                             <component v-else-if="cell.formula_name == 'Standard-Basic-Pay'" :is="StandardBasicPaySettings" :settings="cell.sub_row.settings" />
@@ -102,7 +102,7 @@
                         </template>
                         <template v-slot:sub_row_slot="{rowIndex, cell, slot}">
                             <div class="inline-flex items-center scaffold-border pr-2">
-                                <Icon name="mdi:info-variant" :class="[slot.iconSizeClass]" /><div :class="[slot.titleSizeClass]">Settings Information</div>
+                                <Icon name="mdi:info-variant" :class="[slot.iconSizeClass]" /><div :class="[slot.titleSizeClass]">Information / Ratings</div>
                             </div>
                             <component :is="FormulaSettingsCaster" :settings="cell.sub_row.settings" />
                         </template>
@@ -145,7 +145,7 @@
                         </template>
                         <template v-slot:sub_row_slot="{rowIndex, cell, slot}">
                             <div class="inline-flex items-center scaffold-border pr-2">
-                                <Icon name="mdi:info-variant" :class="[slot.iconSizeClass]" /><div :class="[slot.titleSizeClass]">Settings Information</div>
+                                <Icon name="mdi:info-variant" :class="[slot.iconSizeClass]" /><div :class="[slot.titleSizeClass]">Information / Ratings</div>
                             </div>
                             <component :is="FormulaSettingsCaster" :settings="cell.sub_row.settings" />
                         </template>
