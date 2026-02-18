@@ -458,6 +458,13 @@ export const useLayout = () => {
                             to: `/${hrPayrollRouteSlug}/payroll/frequency-settings`,
                             route_active: `${hrPayrollRouteSlug}-payroll-frequency-settings`
                         },
+                        {
+                            key: `${hrPayrollRouteSlug}/payroll/generate`,
+                            type: 'link',
+                            title: 'Generate',
+                            to: `/${hrPayrollRouteSlug}/payroll/generate`,
+                            route_active: `${hrPayrollRouteSlug}-payroll-generate`
+                        },
                     ]
                 }, {
                     key: `${hrPayrollRouteSlug}-request-approval`,
