@@ -12,6 +12,19 @@
                 <table class="w-full border-separate border-spacing-2">
                     <tbody>
                     <tr>
+                        <td><InputLabel :size="'md'" value="Formula" /></td>
+                        <td>
+                            <SingleSelect
+                                :searchable="false"
+                                drop-shadow
+                                :selection-max-viewable-line="6"
+                                :size="'md'"
+                                :label="'Select Income Tax Formula'"
+                                :options="incomeTaxFormulaOptions"
+                                @value-change=""/>
+                        </td>
+                    </tr>
+                    <tr>
                         <td><InputLabel :size="'md'" value="Type" /></td>
                         <td>
                             <SingleSelect
@@ -37,19 +50,6 @@
                             <RadioGroup
                                 :selections="assignable.selection"
                                 v-model="assignable.selected" />
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><InputLabel :size="'md'" value="Formula" /></td>
-                        <td>
-                            <SingleSelect
-                                :searchable="false"
-                                drop-shadow
-                                :selection-max-viewable-line="6"
-                                :size="'md'"
-                                :label="'Select Income Tax Formula'"
-                                :options="incomeTaxFormulaOptions"
-                                @value-change=""/>
                         </td>
                     </tr>
                     </tbody>
