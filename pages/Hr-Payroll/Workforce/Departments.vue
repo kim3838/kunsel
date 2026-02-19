@@ -138,7 +138,7 @@
                         :rows="departmentsData"
                         :disabled="disableDataTable"
                         v-model="selectedDepartments"
-                        :sub-row-slug="'details'"
+                        :sub-row-slug="'sub_departments'"
                         :sub-row-settings="{
                             type: DATATABLE_SUBROW_TYPE.TITLED,
                             containerPaddingTop: 0.75,
@@ -187,7 +187,7 @@
                                 <Icon name="mdi:info-variant" :class="[slot.iconSizeClass]" /><div :class="[slot.titleSizeClass]">Sub-Departments</div>
                             </div>
                             <DepartmentSubRow
-                                :rows="cell[slot.slug].sub_departments"
+                                :rows="cell[slot.slug]"
                                 @proxy-edit="edit"
                                 @sync-selected="syncSelectedSubDepartments"
                                 :disabled="disableDataTable"
