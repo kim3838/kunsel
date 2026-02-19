@@ -23,6 +23,7 @@ export interface TableSupHeaderT {
     width?: string;
     maxWidth?: string;
     colspan?: number;
+    rowspan?: number;
     alignHeader?: 'left' | 'center' | 'right';
     justifyHeader?: 'top' | 'middle' | 'bottom';
     alignData?: 'left' | 'center' | 'right';

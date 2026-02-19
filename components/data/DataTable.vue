@@ -17,7 +17,8 @@
                             cellAlignClass(header?.alignHeader),
                             cellJustifyClass(header?.justifyHeader)
                         ]"
-                        :colspan="header?.colspan ?? 1">
+                        :colspan="header?.colspan ?? 1"
+                        :rowspan="header?.rowspan ?? 1">
                         {{header?.text}}
                     </td>
                 </tr>
@@ -32,7 +33,8 @@
                             cellAlignClass(header?.alignData),
                             cellJustifyClass(header?.justifyData)
                         ]"
-                        :colspan="header?.colspan ?? 1">
+                        :colspan="header?.colspan ?? 1"
+                        :rowspan="header?.rowspan ?? 1">
                         <slot
                             :name="`sup.header.cell.${header.value}`"
                             :cell="row"
