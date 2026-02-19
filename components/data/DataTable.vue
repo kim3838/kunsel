@@ -111,8 +111,9 @@
                     </tr>
 
                     <DataTableSubRow
-                        v-if="subRowSlug && row[subRowSlug]"
+                        v-if="subRowSlug && row[subRowSlug].length"
                         :slug="subRowSlug"
+                        :extensionSlug="subRowExtensionSlug"
                         :row-index="rowIndex"
                         :row="row"
                         :rows="rows"
@@ -123,9 +124,17 @@
                         :row-vertical-line="subRowSettings.rowVerticalLine"
                         :vertical-border-type="subRowSettings.verticalBorderType"
                         :horizontal-border-type="subRowSettings.horizontalBorderType">
-                        <template v-slot="{rowIndex, cell, slot}">
+                        <template v-slot:sub-row="{rowIndex, cell, slot}">
                             <slot
                                 :name="'sub_row_slot'"
+                                :slot="slot"
+                                :cell="row"
+                                :rowIndex="rowIndex"
+                            ></slot>
+                        </template>
+                        <template v-slot:sub-row-extension="{rowIndex, cell, slot}">
+                            <slot
+                                :name="'sub_row_extension_slot'"
                                 :slot="slot"
                                 :cell="row"
                                 :rowIndex="rowIndex"
@@ -268,6 +277,10 @@ const props = defineProps({
         default: false,
     },
     subRowSlug: {
+        type: String,
+        default: null,
+    },
+    subRowExtensionSlug: {
         type: String,
         default: null,
     },

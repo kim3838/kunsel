@@ -1,6 +1,8 @@
 <template>
     <div class="relative" :style="[subRowTemplateStyle]">
-        <div class="absolute w-full h-full">
+
+        <div>
+            <div v-if="hasSubRowExtension" :style="[extensionLineStyle]"></div>
             <div v-if="typeIsBordered" :style="[borderedBranchLineStyle]"/>
             <div v-if="typeIsTitled" :style="[titledBranchLineStyle]"/>
             <div v-if="rowVerticalLine && (rowIndex + 1) < rows.length" :style="[rowVerticalLineStyle]"/>
@@ -8,10 +10,23 @@
 
         <div :ref="`sub-row-container-${rowIndex}`" :style="[subRowContainerStyle]">
             <slot
-                :slot="{titleSizeClass:titleSizeClass,iconSizeClass:iconSizeClass,slug:slug}"
+                :name="'sub-row'"
+                :slot="{titleSizeClass:titleSizeClass,iconSizeClass:iconSizeClass,iconHolderClass:iconHolderClass,slug:slug}"
                 :rowIndex="rowIndex"
                 :cell="row"
             ></slot>
+        </div>
+
+        <div v-if="hasSubRowExtension" :style="[subRowExtensionContainerStyle]">
+            <div :style="[subRowContainerStyle]">
+                <slot
+                    :name="'sub-row-extension'"
+                    :slot="{titleSizeClass:titleSizeClass,iconSizeClass:iconSizeClass,iconHolderClass:iconHolderClass,slug:slug,extensionSlug:extensionSlug}"
+                    :rowIndex="rowIndex"
+                    :cell="row"
+                ></slot>
+
+            </div>
         </div>
     </div>
 </template>
@@ -49,6 +64,10 @@ const props = defineProps({
         default: true
     },
     slug: {
+        type: String,
+        default: null
+    },
+    extensionSlug: {
         type: String,
         default: null
     },
@@ -90,6 +109,7 @@ const typeIsBordered = computed(() => {
 });
 
 const subRowContainerReference = useTemplateRef(`sub-row-container-${props.rowIndex}`);
+const { width: subRowContainerReferenceWidth} = useElementSize(subRowContainerReference);
 
 const subRowTemplateStyle = computed(() => {
 
@@ -151,6 +171,34 @@ const borderedBranchLineStyle = computed(() => {
     }
 });
 
+const hasSubRowExtension = computed(() => {
+    return props.extensionSlug && props.row[props.extensionSlug];
+})
+
+const subRowTitleElementWidth = computed(() => {
+    const subRowContainerFirstChildAsSubRowTitleElement = subRowContainerReference.value?.firstElementChild;
+
+    return subRowContainerFirstChildAsSubRowTitleElement?.offsetWidth || 0;
+});
+
+const extensionLineStyle = computed(() => {
+
+    let branchLineBreakpoint = '0'
+
+    if(typeIsTitled.value){
+        branchLineBreakpoint = titledBranchLineBreakpoint.value;
+    }
+    if(typeIsBordered.value){
+        branchLineBreakpoint = borderedBranchLineBreakpoint.value;
+    }
+
+    return {
+        'position': 'absolute',
+        'inset': `${branchLineBreakpoint} calc(-${subRowContainerReferenceWidth.value}px - 100%) 0 calc(100% + ${subRowTitleElementWidth.value}px)`,
+        'border-top': `1px ${props.horizontalBorderType} ${liningColor70.value}`,
+    }
+});
+
 const titleLineHeightInPixelComputed = computed(() => {
     return {
         'sm': 20,
@@ -175,6 +223,14 @@ const iconSizeClass = computed(() => {
     }[props.titleSize];
 });
 
+const iconHolderClass = computed(() => {
+    return {
+        'sm': 'w-[20px]',
+        'md': 'w-[20px]',
+        'lg': 'w-[24px]',
+    }[props.titleSize];
+});
+
 const subRowContainerStyle = computed(() => {
 
     return {
@@ -182,6 +238,15 @@ const subRowContainerStyle = computed(() => {
         'left': `100%`,
         'padding-top': `${props.containerPaddingTop}${props.containerPaddingUnit}`,
         'padding-bottom': `${props.containerPaddingBottom}${props.containerPaddingUnit}`,
+    }
+});
+
+const subRowExtensionContainerStyle = computed(() => {
+
+    return {
+        'position': 'absolute',
+        'width': '200%',
+        'left': `${subRowContainerReferenceWidth.value}px`,
     }
 });
 </script>
