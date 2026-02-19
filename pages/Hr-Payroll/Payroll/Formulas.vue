@@ -32,7 +32,7 @@
                         selection
                         :border-appearance="true"
                         :stripped="true"
-                        :sub-row-slug="'sub_row'"
+                        :sub-row-slug="'settings'"
                         :sub-row-settings="{
                             type: DATATABLE_SUBROW_TYPE.TITLED,
                             containerPaddingTop: 1.00,
@@ -59,9 +59,9 @@
                             <div class="inline-flex items-center scaffold-border pr-2">
                                 <Icon name="mdi:info-variant" :class="[slot.iconSizeClass]" /><div :class="[slot.titleSizeClass]">Information / Ratings</div>
                             </div>
-                            <component v-if="cell.formula_name == 'Standard-Overtime'" :is="StandardOvertimeSettings" :settings="cell.sub_row.settings" />
-                            <component v-else-if="cell.formula_name == 'Standard-Basic-Pay'" :is="StandardBasicPaySettings" :settings="cell.sub_row.settings" />
-                            <component v-else :is="FormulaSettingsCaster" :settings="cell.sub_row.settings" />
+                            <component v-if="cell.formula_name == 'Standard-Overtime'" :is="StandardOvertimeSettings" :settings="cell.settings" />
+                            <component v-else-if="cell.formula_name == 'Standard-Basic-Pay'" :is="StandardBasicPaySettings" :settings="cell.settings" />
+                            <component v-else :is="FormulaSettingsCaster" :settings="cell.settings" />
                         </template>
                     </DataTable>
                 </div>
@@ -77,7 +77,7 @@
                         selection
                         :border-appearance="true"
                         :stripped="true"
-                        :sub-row-slug="'sub_row'"
+                        :sub-row-slug="'settings'"
                         :sub-row-settings="{
                             type: DATATABLE_SUBROW_TYPE.TITLED,
                             containerPaddingTop: 1.00,
@@ -104,7 +104,7 @@
                             <div class="inline-flex items-center scaffold-border pr-2">
                                 <Icon name="mdi:info-variant" :class="[slot.iconSizeClass]" /><div :class="[slot.titleSizeClass]">Information / Ratings</div>
                             </div>
-                            <component :is="FormulaSettingsCaster" :settings="cell.sub_row.settings" />
+                            <component :is="FormulaSettingsCaster" :settings="cell.settings" />
                         </template>
                     </DataTable>
                 </div>
@@ -120,7 +120,7 @@
                         selection
                         :border-appearance="true"
                         :stripped="true"
-                        :sub-row-slug="'sub_row'"
+                        :sub-row-slug="'settings'"
                         :sub-row-settings="{
                             type: DATATABLE_SUBROW_TYPE.TITLED,
                             containerPaddingTop: 1.00,
@@ -147,7 +147,7 @@
                             <div class="inline-flex items-center scaffold-border pr-2">
                                 <Icon name="mdi:info-variant" :class="[slot.iconSizeClass]" /><div :class="[slot.titleSizeClass]">Information / Ratings</div>
                             </div>
-                            <component :is="FormulaSettingsCaster" :settings="cell.sub_row.settings" />
+                            <component :is="FormulaSettingsCaster" :settings="cell.settings" />
                         </template>
                     </DataTable>
                 </div>
