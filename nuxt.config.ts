@@ -136,6 +136,7 @@ export default defineNuxtConfig({
         {path: '@/components/modal/payroll-settings'},
         {path: '@/components/modal/request-approval'},
         {path: '@/components/data'},
+        {path: '@/components/core'},
         {path: '@/components/deco'},
         {path: '@/components/accordion'},
         {path: '@/components/logo'},
