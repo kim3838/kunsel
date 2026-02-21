@@ -394,7 +394,7 @@ const shiftAssignmentsExecute = async() =>{
             shiftAssignments.data = _get(response, '_data.values.data', []).map((shiftAssignment: TableRowT) => {
 
                 let shade = _get(shiftAssignment, 'employee_current_employment_profile.is_active', false)
-                    ? 'success'
+                    ? 'clear'
                     : 'default';
 
                 return {

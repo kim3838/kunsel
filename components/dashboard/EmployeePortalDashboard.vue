@@ -278,7 +278,7 @@ const fetchEmployee = async (callback: (() => void) | null = null) => {
             employeeHasShiftAssigned.value = _get(_employee, 'has_shift', false);
 
             let employmentProfileShade = _get(_employee, 'current_employment_profile.is_active', false)
-                ? 'success'
+                ? 'clear'
                 : 'default';
 
             employee.value = {

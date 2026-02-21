@@ -407,7 +407,7 @@ const leaveTypeAssignmentsExecute = async() =>{
             leaveTypeAssignments.data = _get(response, '_data.values.data', []).map((leaveTypeAssignment: TableRowT) => {
 
                 let shade = _get(leaveTypeAssignment, 'employee_current_employment_profile.is_active', false)
-                    ? 'success'
+                    ? 'clear'
                     : 'default';
 
                 return {

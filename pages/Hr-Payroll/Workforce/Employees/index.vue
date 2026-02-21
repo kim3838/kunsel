@@ -569,7 +569,7 @@ const employeesExecute = async() =>{
             employees.data = _get(response, '_data.values.data', []).map((employee: TableRowT) => {
 
                 let shade = _get(employee, 'current_employment_profile.is_active', false)
-                    ? 'success'
+                    ? 'clear'
                     : 'default';
 
                 return {

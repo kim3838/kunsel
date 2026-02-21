@@ -1,5 +1,5 @@
 
-export type LabelTypeT = 'default' | 'success' | 'caution' | 'danger' | 'warning' | 'info';
+export type LabelTypeT = 'clear' | 'default' | 'success' | 'caution' | 'danger' | 'warning' | 'info';
 
 export type PaletteName = 'light-slate' |
     'dark-silver' |

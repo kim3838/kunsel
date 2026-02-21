@@ -24,6 +24,7 @@ export type ColorsT = {
 }
 
 export type CommonColorsT = {
+    clear: ColorsT;
     default: ColorsT;
     success: ColorsT;
     danger: ColorsT;
@@ -38,6 +39,7 @@ export const useThemeStore = defineStore('theme', () => {
 
     const appTheme = ref<PaletteName>('default-blue');
     const common = ref<CommonColorsT>({
+        'clear': {primary: 'transparent', secondary: 'transparent'},
         'default': {primary: '#777', secondary: '#e5e5e5'},
         'success': {primary: '#4cb74c', secondary: '#ccffcc'},
         'danger': {primary: '#d9534f', secondary: '#ffd1d2'},

@@ -2,7 +2,7 @@
     <span
         :class="[
             fontClass, heightClass, invert ? 'px-0' : 'px-[0.3rem]',
-            (shade && !invert && lightTheme) ? '_label' : ''
+            (shade && !invert && lightTheme && !isClearColorType) ? '_label' : ''
         ]"
         :style=[style]
         class="relative font-label inline-flex items-center">
@@ -19,6 +19,7 @@ const {$themeStore} = useNuxtApp();
 
 const {
     type: themeType,
+    text: textColor,
     common: commonColor,
 } = storeToRefs($themeStore);
 const typedCommonColor = commonColor as Ref<CommonColorsT>;
@@ -81,16 +82,27 @@ const heightClass = computed(() => {
 
 const backgroundColor = computed(() => {
 
-    return typedCommonColor.value[props.type].primary;
+    return isClearColorType.value ? `transparent` : typedCommonColor.value[props.type].primary;
 });
 
+const isClearColorType = computed(() => {
+    return props.type == 'clear';
+})
+
 const style = computed(() => {
+
+    let color = isClearColorType.value
+        ? textColor.value
+        : (props.invert ? backgroundColor.value : '#fff');
 
     return {
         ...(props.invert ? {} : {
             'background-color': backgroundColor.value
         }),
-        'color': props.invert ? backgroundColor.value : '#fff',
+        ...(isClearColorType.value ? {
+            'box-shadow': `0 0 2px ${commonColor.value.default.primary}`,
+        } : {}),
+        'color': color,
         'border-radius': '.25em'
     };
 });
