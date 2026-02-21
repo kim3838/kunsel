@@ -8,7 +8,7 @@
             <div v-if="rowVerticalLine && (rowIndex + 1) < rows.length" :style="[rowVerticalLineStyle]"/>
         </div>
 
-        <div :ref="`sub-row-container-${rowIndex}`" :style="[subRowContainerStyle]">
+        <div :data-payload='`sub-row-container-${rowIndex}`' :ref="`sub-row-container-${rowIndex}`" :style="[subRowContainerStyle]">
             <slot
                 :name="'sub-row'"
                 :slot="{titleSizeClass:titleSizeClass,iconSizeClass:iconSizeClass,iconHolderClass:iconHolderClass,slug:slug}"
@@ -21,11 +21,17 @@
             <div :style="[subRowContainerStyle]">
                 <slot
                     :name="'sub-row-extension'"
-                    :slot="{titleSizeClass:titleSizeClass,iconSizeClass:iconSizeClass,iconHolderClass:iconHolderClass,slug:slug,extensionSlug:extensionSlug}"
+                    :slot="{
+                        titleSizeClass:titleSizeClass,
+                        iconSizeClass:iconSizeClass,
+                        iconHolderClass:iconHolderClass,
+                        slug:slug,
+                        extensionSlug:extensionSlug,
+                        extensionSlugContentMaxHeight:subRowContentElementHeightComputed,
+                    }"
                     :rowIndex="rowIndex"
                     :cell="row"
                 ></slot>
-
             </div>
         </div>
     </div>
@@ -179,6 +185,16 @@ const subRowTitleElementWidth = computed(() => {
     const subRowContainerFirstChildAsSubRowTitleElement = subRowContainerReference.value?.firstElementChild;
 
     return subRowContainerFirstChildAsSubRowTitleElement?.offsetWidth || 0;
+});
+
+const subRowContentElementHeight = computed(() => {
+    const subRowContainerSecondChildAsSubRowContentElement = subRowContainerReference.value?.children[1];
+
+    return subRowContainerSecondChildAsSubRowContentElement?.offsetHeight || 0;
+});
+
+const subRowContentElementHeightComputed = computed(() => {
+    return `${subRowContentElementHeight.value}px`;
 });
 
 const extensionLineStyle = computed(() => {
