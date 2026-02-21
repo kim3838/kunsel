@@ -91,6 +91,7 @@ export default defineNuxtConfig({
                     { name: 'cloneDeep', as: '_cloneDeep'},
                     { name: 'get', as: '_get'},
                     { name: 'isEmpty', as: '_isEmpty'},
+                    { name: 'isObject', as: '_isObject'},
                     { name: 'difference', as: '_difference'},
                     { name: 'uniq', as: '_uniq'},
                     { name: 'castArray', as: '_castArray'},
