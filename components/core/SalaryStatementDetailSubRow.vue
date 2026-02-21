@@ -13,18 +13,12 @@
             <template v-slot:cell.component_type="{cell,slot}">
                 <div class="p-[3px]">{{cell.component_type?.text}}</div>
             </template>
-            <template v-slot:sub_row_slot="{rowIndex, cell, slot}">
-                <div class="inline-flex items-center scaffold-border pr-2">
-                    <Icon name="ic:outline-keyboard-arrow-right" :class="[slot.iconSizeClass, slot.iconHolderClass]" /><div :class="[slot.titleSizeClass]">Component values</div>
-                </div>
-            </template>
         </DataTable>
     </div>
 </template>
 
 <script setup lang="ts">
 import type {TableHeaderT, TableRowT} from "@/public/js/types/data";
-import type {LabelTypeT} from "@/public/js/types/theme";
 
 const nuxtApp = useNuxtApp();
 
@@ -44,8 +38,9 @@ const emit = defineEmits(['proxyEdit', 'syncSelected']);
 const rowsIsEmpty = computed(() => props.rows.length === 0);
 
 const detailHeaders = reactive<TableHeaderT[]>([
-    { text: 'Formulable', value: 'formulable_type'},
-    { text: 'Component', value: 'component_type'},
+    { text: '#', value: 'row_number'},
+    { text: '', value: 'formulable_type'},
+    { text: 'Payroll component', value: 'component_type'},
     { text: 'Payroll item', value: 'component_name'},
     { text: 'Taxable', value: 'taxable', isNumeric: true, alignData: 'right', alignHeader: 'right'},
     { text: 'Nontaxable', value: 'nontaxable', isNumeric: true, alignData: 'right', alignHeader: 'right'},

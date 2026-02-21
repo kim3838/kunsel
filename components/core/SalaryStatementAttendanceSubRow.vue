@@ -72,6 +72,7 @@ const emit = defineEmits(['proxyEdit', 'syncSelected']);
 const rowsIsEmpty = computed(() => props.rows.length === 0);
 
 const attendancesHeaders = reactive<TableHeaderT[]>([
+    { text: '#', value: 'row_number'},
     { text: 'Date', value: 'date'},
     { text: '', value: 'week_day_name'},
     { text: 'Status', value: 'status'},
