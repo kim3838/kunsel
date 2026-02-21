@@ -111,10 +111,12 @@
                     <div class="inline-flex items-center scaffold-border pr-2">
                         <Icon name="ic:outline-keyboard-arrow-right" :class="[slot.iconSizeClass, slot.iconHolderClass]" /><div :class="[slot.titleSizeClass]">Statement details</div>
                     </div>
-                    <SalaryStatementDetailSubRow
-                        v-if="cell[slot.slug].length"
-                        :rows="cell[slot.extensionSlug]"
-                    ></SalaryStatementDetailSubRow>
+                    <div :style="{'max-height': slot.extensionSlugContentMaxHeight, 'overflow-y': 'scroll'}">
+                        <SalaryStatementDetailSubRow
+                            v-if="cell[slot.slug].length"
+                            :rows="cell[slot.extensionSlug]"
+                        ></SalaryStatementDetailSubRow>
+                    </div>
                 </template>
             </DataTable>
         </div>
