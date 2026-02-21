@@ -129,9 +129,10 @@
                                         <Button
                                             class="w-min"
                                             :variant="'default'"
+                                            :icon="modalSubmitPending ? 'eos-icons:loading' : ''"
                                             :size="'md'"
                                             :disabled="modalDisableActions"
-                                            :label="'Submit'"
+                                            :label="modalSubmitPending ? 'Generating...' : 'Submit'"
                                             @click="generatePayroll"/>
                                     </div>
                                 </div>
@@ -158,7 +159,12 @@
                             </template>
                             <template v-slot:cell.actions="{cell,slot}">
                                 <div class="mx-0.5 space-x-0.5 flex items-center">
-                                    <Button :size="slot.buttonSize" :variant="'outline'"  :label="cell.payroll ? 'Regenerate' : 'Generate'" />
+                                    <Button @click="stagePayrollPayload(cell)" :size="slot.buttonSize" :variant="'outline'"  :label="cell.payroll ? 'Regenerate' : 'Generate'" />
+                                </div>
+                            </template>
+                            <template v-slot:cell.payroll_status="{cell,slot}">
+                                <div class="p-[3px]">
+                                    {{cell.payroll?.status?.text}}
                                 </div>
                             </template>
                         </DataTable>
@@ -166,14 +172,19 @@
                         <div class="scaffold-border-top"></div>
 
                         <DataTable
-                            :sup-headers="latestPayrollsSupHeaders"
+                            :sup-headers="currentPayrollsSupHeaders"
                             :headers="payrollInquiriesHeaders"
                             :size="'lg'"
-                            :rows="latestPayrollsData"
+                            :rows="currentPayrollsData"
                             v-model="selectedLatestPayrolls"
                             selection>
                             <template v-slot:cell.remarks="{cell,slot}">
-                                <div class="mx-0.5 flex items-center">
+                                <div v-if="cell.payroll">
+                                    <div class="p-[3px]">
+                                        {{cell.remarks}}
+                                    </div>
+                                </div>
+                                <div v-else class="mx-0.5 flex items-center">
                                     <Input
                                         v-model="cell.remarks"
                                         in-cell
@@ -192,6 +203,12 @@
                                 </div>
                             </template>
                         </DataTable>
+
+                        <div class="scaffold-border-top"></div>
+                    </div>
+
+                    <div v-if="generatedPayroll.id">
+                        <PayrollSalaryStatements :key="generatedPayroll.id" :payroll="generatedPayroll" />
                     </div>
                 </div>
             </div>
@@ -201,7 +218,7 @@
 
 <script setup lang="ts">
 import type {TableHeaderT, TableSupHeaderT} from "@/public/js/types/data";
-import type {PayrollInquiryT} from "@/public/js/types/payroll";
+import type {PayrollInquiryT, PayrollT} from "@/public/js/types/payroll";
 import type {StringEnumInterface} from "@/public/js/common/type";
 import {storeToRefs} from "pinia";
 
@@ -215,6 +232,7 @@ const $enumerableOption = nuxtApp.$enumerableOption as (enumerable: StringEnumIn
     text: string,
     value: number
 };
+const wordClamp = nuxtApp.$wordClamp as (text: string, length: number) => string;
 const common = useCommon();
 const {
     updatedAssociatedCompanyFlag
@@ -247,8 +265,8 @@ const recentPayrollsSupHeaders = reactive<TableSupHeaderT[]>([
     {text: 'Payroll', colspan: 1, alignHeader: 'left'},
 ]);
 
-const latestPayrollsSupHeaders = reactive<TableSupHeaderT[]>([
-    {text: 'Latest payrolls', colspan: 5, alignHeader: 'center'},
+const currentPayrollsSupHeaders = reactive<TableSupHeaderT[]>([
+    {text: 'Current payroll', colspan: 5, alignHeader: 'center'},
     {text: '', colspan: 1, alignHeader: 'center'},
     {text: 'Actions', colspan: 1, alignHeader: 'left'},
     {text: 'Payroll', colspan: 1, alignHeader: 'left'},
@@ -285,7 +303,7 @@ const employeeGroupOptions = reactive({
 
 const recentCount = ref(1);
 const recentPayrollsData = ref<PayrollInquiryT[]>([]);
-const latestPayrollsData = ref<PayrollInquiryT[]>([]);
+const currentPayrollsData = ref<PayrollInquiryT[]>([]);
 const payrollInquiriesPending = ref(false)
 const selectedRecentPayrolls = ref([]);
 const selectedLatestPayrolls = ref([]);
@@ -319,7 +337,7 @@ const payrollInquiriesExecute = async() =>{
         },
         onSuccessResponse: async (request, options, response) => {
             recentPayrollsData.value = _get(response, '_data.values.recent', []);
-            latestPayrollsData.value = _get(response, '_data.values.latest', []);
+            currentPayrollsData.value = _get(response, '_data.values.current', []);
         }
     }, false);
 }
@@ -331,9 +349,7 @@ const stagedPayrollPayload = ref<Partial<PayrollInquiryT>>({});
 
 const stagePayrollPayload = async (payrollInquiry: PayrollInquiryT) => {
     stagedPayrollPayload.value = {...payrollInquiry};
-    console.log({
-        'stagedPayrollPayload': stagedPayrollPayload.value
-    });
+
     generatingPayroll.value = true;
 
     await nextTick();
@@ -369,6 +385,9 @@ const generatePayrollFormBody = computed(()=>{
         remarks: stagedPayrollPayload.value.remarks,
     };
 });
+
+const generatedPayroll = ref<PayrollT>({} as PayrollT);
+
 const generatePayroll = async() =>{
 
     if(import.meta.server || !selectedAssociatedCompanyId.value){
@@ -388,13 +407,13 @@ const generatePayroll = async() =>{
             modalSubmitPending.value = false;
         },
         onSuccessResponse: async (request, options, response) => {
-            let payroll = _get(response, '_data.values.payroll', {});
+            generatedPayroll.value = _get(response, '_data.values.payroll', {}) as PayrollT;
 
             useNuxtApp().$promptStore.setPrompt({
                 resetable: false,
                 icon: null,
-                title: `Payroll generated`,
-                message: `Payroll#: ${_get(payroll, 'number', 'Not found')}.`,
+                title: `Payroll draft generated`,
+                message: `Payroll#: ${_get(generatedPayroll.value, 'number', 'Not found')}.`,
                 action: {
                     callback: () => {},
                     label: 'Okay'

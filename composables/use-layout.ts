@@ -465,6 +465,20 @@ export const useLayout = () => {
                             to: `/${hrPayrollRouteSlug}/payroll/generate`,
                             route_active: `${hrPayrollRouteSlug}-payroll-generate`
                         },
+                        {
+                            key: `${hrPayrollRouteSlug}/payroll/history`,
+                            type: 'link',
+                            title: 'History',
+                            to: `/${hrPayrollRouteSlug}/payroll/history`,
+                            route_active: `${hrPayrollRouteSlug}-payroll-history`
+                        },
+                        {
+                            key: `${hrPayrollRouteSlug}/payroll/salary-statement`,
+                            type: 'link',
+                            title: 'Salary Statements',
+                            to: `/${hrPayrollRouteSlug}/payroll/salary-statement`,
+                            route_active: `${hrPayrollRouteSlug}-payroll-salary-statement`
+                        },
                     ]
                 }, {
                     key: `${hrPayrollRouteSlug}-request-approval`,

@@ -1,0 +1,52 @@
+
+import type {NumericEnumInterface, StringEnumInterface} from "@/public/js/common/type";
+
+export const  SALARY_STATEMENT_ATTENDANCE_STATUS: NumericEnumInterface = {
+    TO_BE_DETERMINED : 0,
+    FULL_PRESENT : 100,
+    PRESENT_WITH_IRREGULARITIES : 103,
+    DAY_OFF : 200,
+    LEAVE_WITHOUT_PAY : 300,
+    LEAVE_WITH_PAY : 301,
+    ABSENT : 401,
+    PAYROLL_ALREADY_GENERATED : 500,
+}
+
+export const SALARY_STATEMENT_ATTENDANCE_STATUS_NAME: StringEnumInterface = {
+    [SALARY_STATEMENT_ATTENDANCE_STATUS.TO_BE_DETERMINED as number]: 'To be determined',
+    [SALARY_STATEMENT_ATTENDANCE_STATUS.FULL_PRESENT as number]: 'Full present',
+    [SALARY_STATEMENT_ATTENDANCE_STATUS.PRESENT_WITH_IRREGULARITIES as number]: 'Present with irregularities',
+    [SALARY_STATEMENT_ATTENDANCE_STATUS.DAY_OFF as number]: 'Day off',
+    [SALARY_STATEMENT_ATTENDANCE_STATUS.LEAVE_WITHOUT_PAY as number]: 'Leave without pay',
+    [SALARY_STATEMENT_ATTENDANCE_STATUS.LEAVE_WITH_PAY as number]: 'Leave with pay',
+    [SALARY_STATEMENT_ATTENDANCE_STATUS.ABSENT as number]: 'Absent',
+    [SALARY_STATEMENT_ATTENDANCE_STATUS.PAYROLL_ALREADY_GENERATED as number]: 'Payroll already generated',
+};
+
+export const  SALARY_STATEMENT_ATTENDANCE_DAY_TYPE: NumericEnumInterface = {
+    WORKING_DAY : 100,
+    DAY_OFF : 200,
+    SPECIAL_HOLIDAY : 700,
+    LEGAL_HOLIDAY : 800,
+    DOUBLE_HOLIDAY : 900,
+}
+
+export const SALARY_STATEMENT_ATTENDANCE_DAY_TYPE_NAME: StringEnumInterface = {
+    [SALARY_STATEMENT_ATTENDANCE_DAY_TYPE.WORKING_DAY as number]: 'Working day',
+    [SALARY_STATEMENT_ATTENDANCE_DAY_TYPE.DAY_OFF as number]: 'Day off',
+    [SALARY_STATEMENT_ATTENDANCE_DAY_TYPE.SPECIAL_HOLIDAY as number]: 'Special holiday',
+    [SALARY_STATEMENT_ATTENDANCE_DAY_TYPE.LEGAL_HOLIDAY as number]: 'Legal holiday',
+    [SALARY_STATEMENT_ATTENDANCE_DAY_TYPE.DOUBLE_HOLIDAY as number]: 'Double holiday',
+};
+
+export const SALARY_STATEMENT_DETAIL_COMPONENT_VALUE_TYPE: NumericEnumInterface = {
+    PH_BASIC_PAY : 100,
+    PH_REGULAR_ALLOWANCE : 200,
+    PH_OVERTIME : 300,
+    PH_LEAVE : 400,
+    PH_HOLIDAY : 500,
+    PH_SSS : 600,
+    PH_PHILHEALTH : 700,
+    PH_PAG_IBIG : 800,
+    PH_WITHHOLDING_TAX : 900
+}
