@@ -103,7 +103,7 @@ const style = computed(() => {
             'box-shadow': `0 0 2px ${commonColor.value.default.primary}`,
         } : {}),
         'color': color,
-        'border-radius': '.25em'
+        'border-radius': '.20em'
     };
 });
 </script>
