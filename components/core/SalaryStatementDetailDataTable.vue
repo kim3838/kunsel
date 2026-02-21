@@ -61,7 +61,7 @@ const emit = defineEmits(['proxyEdit', 'syncSelected']);
 const rowsIsEmpty = computed(() => props.rows.length === 0);
 
 const detailHeaders = reactive<TableHeaderT[]>([
-    { text: '#', value: 'row_number'},
+    { text: '#', value: 'row_number', alignHeader: 'center', alignData: 'center', minWidth: '30px'},
     { text: 'Formulable', value: 'formulable_type'},
     { text: 'Component', value: 'component_type'},
     { text: 'Payroll item', value: 'component_name'},
