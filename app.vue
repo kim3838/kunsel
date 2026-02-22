@@ -315,15 +315,11 @@ watch(() => route.name,() => {
     background-color: v-bind(tintColor);
 }
 
-.daterangepicker .calendar-table th{
-    font-family: 'Aptos Narrow', sans-serif;
-}
-
 .daterangepicker .drp-buttons .btn {
     margin-left: 8px;
     font-size: 1rem;
     font-weight: 400;
-    font-family: 'National Park', sans-serif;
+    font-family: 'Reddit Sans Condensed', sans-serif;
     padding-left: 0.6rem;
     padding-right: 0.6rem;
     letter-spacing: 0.025rem;
