@@ -1,9 +1,39 @@
 <template>
     <div class="space-y-2">
         <div>
-            <div class="font-medium text-lg font-header">{{title}}</div>
-            <div>{{status}}</div>
-            <div>{{subTitle}}</div>
+            <div class="font-medium text-lg font-header">{{payroll.number}}</div>
+
+            <div class="flex flex-row flex-wrap gap-x-6 gap-y-2 items-center">
+                <div>
+                    <InputLabel :size="'xs'" value="Status"/>
+                    <div class="text-base">{{payroll.status?.text}}</div>
+                </div>
+                <div>
+                    <InputLabel :size="'xs'" value="Remarks"/>
+                    <div class="text-base">{{payroll.remarks || '--'}}</div>
+                </div>
+                <div>
+                    <InputLabel :size="'xs'" value="Payroll month"/>
+                    <div class="text-base">{{`${payroll.year} ${payroll.month_readable}`}}</div>
+                </div>
+                <div>
+                    <InputLabel :size="'xs'" value="Payroll sequence"/>
+                    <div class="text-base">{{`${payroll.pay_frequency?.text} ${payroll.frequency_sequence?.text || ''}`}}</div>
+                </div>
+                <div>
+                    <InputLabel :size="'xs'" value="Coverage"/>
+                    <div class="text-base">{{payroll.date_range_readable}}</div>
+                </div>
+                <div>
+                    <InputLabel :size="'xs'" value="Total salary statement net due"/>
+                    <div class="text-base text-right font-sans">{{payroll.total_salary_statement_net}}</div>
+                </div>
+                <div>
+                    <InputLabel :size="'xs'" value="Total employer contribution share"/>
+                    <div class="text-base text-right font-sans">{{payroll.total_employer_contribution_share}}</div>
+                </div>
+            </div>
+
         </div>
 
         <div v-if="salaryStatementsPending || !salaryStatements.successful" class="flex flex-row flex-wrap gap-2 items-center min-h-8">
@@ -85,16 +115,10 @@
                             :drop-align="'top'"
                             :drop-justify="'right'"
                             :drop-options="[
-                                {type: 'link', icon: 'ix:open-external', title: 'Statement breakdown', to: `/hr-payroll/payroll/salary-statement/${cell.ulid}`},
+                                {type: 'link', icon: 'ix:open-external', title: 'Statement breakdown', to: `/hr-payroll/payroll/salary-statements/${cell.ulid}`},
                             ]">
                         </NavDrop>
                     </div>
-                </template>
-                <template v-slot:cell.payroll_number="{cell,slot}">
-                    <div class="px-[3px]" :title="cell.payroll?.number">{{wordClamp(cell.payroll?.number, 4)}}</div>
-                </template>
-                <template v-slot:cell.payroll_status="{cell,slot}">
-                    <div class="p-[3px]">{{cell.payroll.status?.text}}</div>
                 </template>
                 <template v-slot:cell.employee_full_name="{cell,slot}">
                     <div class="px-[3px]" :title="cell.employee_full_name">{{wordClamp(cell.employee_full_name, 16)}}</div>
@@ -146,16 +170,6 @@ const props = defineProps({
         default: () => [],
     },
 });
-
-const title = computed(() => {
-    return `${props.payroll.number}`;
-});
-const subTitle = computed(() => {
-    return `${props.payroll.date_range_readable}`;
-});
-const status = computed(() => {
-    return props.payroll.status?.text;
-})
 
 const salaryStatementsSupHeaders = reactive<TableSupHeaderT[]>([
     {text: ''},

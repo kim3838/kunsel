@@ -11,26 +11,29 @@
                             <InputLabel :size="'sm'" value="Search" />
                             <Input :disabled="disableActions" :size="'md'" ref="searchInput" v-model="filters.search.keyword" class="w-full" placeholder="Search Number" type="text"/>
                         </div>
-                    </div>
-
-                    <div class="flex flex-row flex-wrap gap-2 items-center min-h-8">
-                        <Button class="w-min" ref="submitButton" type="submit" :disabled="disableActions" :size="'md'" :icon="disableActions ? 'eos-icons:loading' : 'mdi:data'" :label="disableActions ? 'Loading' : 'Load'"></Button>
-                        <RadioGroup
-                            class="scaffold-border px-2"
-                            :disabled="disableActions"
-                            :selections="viewMode.selection"
-                            :size="'md'"
-                            :orientation="'horizontal'"
-                            v-model="viewMode.selected" />
-                        <div v-if="false" class="h-8 flex flex-row items-center scaffold-border px-2">
-                            <label class="flex items-center">
-                                <Checkbox
-                                    :disabled="disableActions"
-                                    name="remember"
-                                    v-model="showStatements"
-                                    :size="'md'"
-                                    :label="'Show statements'" />
-                            </label>
+                        <div>
+                            <InputLabel :size="'sm'" for="month" value="From month" />
+                            <InputWithIcon
+                                glint
+                                :icon="'mdi:calendar-cursor-outline'"
+                                :size="'md'"
+                                :id="'from_month'"
+                                v-model="filters.fromMonth.label"
+                                readonly />
+                        </div>
+                        <div>
+                            <InputLabel :size="'sm'" for="month" value="To month" />
+                            <InputWithIcon
+                                glint
+                                :icon="'mdi:calendar-cursor-outline'"
+                                :size="'md'"
+                                :id="'to_month'"
+                                v-model="filters.toMonth.label"
+                                readonly />
+                        </div>
+                        <div class="flex flex-col">
+                            <div class="flex-none h-[1.25rem]"></div>
+                            <Button class="w-min" ref="submitButton" type="submit" :disabled="disableActions" :size="'md'" :icon="disableActions ? 'eos-icons:loading' : 'mdi:data'" :label="disableActions ? 'Loading' : 'Load'"></Button>
                         </div>
                     </div>
 
@@ -55,12 +58,21 @@
                             :icon="'tdesign:close'"
                             :disabled="disableActions"
                             :label="'Clear selection'"
-                            @click="selectedPayrolls = []; selectedPayrolls = []" />
+                            @click="selectedPayrolls = []" />
+                        <Button
+                            v-if="payrolls.successful"
+                            :variant="'outline'"
+                            :size="'sm'"
+                            :icon="'mdi:delete-outline'"
+                            :disabled="disableActions"
+                            :label="'Bulk delete'"
+                            @click="confirmDeleteSelected()"/>
                         <Label v-if="!payrolls.successful" invert :size="'md'" :type="'danger'" :label="payrolls.message" />
                     </div>
 
                     <DataTable
                         v-if="payrolls.successful"
+                        :sup-headers="payrollsSupHeaders"
                         :headers="payrollsHeaders"
                         :size="'lg'"
                         :rows="payrolls.data"
@@ -88,7 +100,14 @@
                             </div>
                         </template>
                         <template v-slot:cell.number="{cell,slot}">
-                            <div class="p-[3px] hover:underline cursor-pointer" @click="">{{cell.number}}</div>
+                            <div class="p-[3px] hover:underline cursor-pointer" :title="cell.number" @click="copy(cell.number);">{{wordClamp(cell.number, 12)}}</div>
+                        </template>
+                        <template v-slot:cell.copy_payroll_number_to_clipboard="{cell,slot}">
+                            <div v-if="clipBoardSupported" class="text-base h-[32px]" :title="'Copy payroll number'" @click="copy(cell.number);">
+                                <div class="h-full flex items-center justify-center px-2 cursor-pointer accent-hover">
+                                    <Icon size="1.5rem" :name="'ph:copy-light'"/>
+                                </div>
+                            </div>
                         </template>
                         <template v-slot:cell.status="{cell,slot}">
                             <div class="flex space-x-1 px-[0.3rem] items-center">
@@ -111,19 +130,24 @@
 <script setup lang="ts">
 import type {DataTableT, TableHeaderT, TableRowT, TableSupHeaderT} from "@/public/js/types/data";
 import type {EnumOption, EnumSelection, StringEnumInterface} from "@/public/js/common/type";
+import type {DateTimePickerPayloadT} from "@/public/js/datetimepicker/type";
+import type {LabelTypeT} from "@/public/js/types/theme";
 import {storeToRefs} from "pinia";
-import type {LabelTypeT} from "~/public/js/types/theme";
+import {useClipboard } from '@vueuse/core'
 
 useHead({titleTemplate: (titleChunk) => {return `Payrolls`}});
 definePageMeta({middleware: ['auth', 'admin-of-selected-company']});
 useLayout().setNavigationMode('solid');
 
+const { copy, isSupported: clipBoardSupported } = useClipboard({ legacy: true })
 const {isAuthenticated} = useAuth();
 const nuxtApp = useNuxtApp();
 const $enumerableOption = nuxtApp.$enumerableOption as (enumerable: StringEnumInterface, value: number) => {
     text: string,
     value: number
 };
+const wordClamp = nuxtApp.$wordClamp as (text: string, length: number) => string;
+const moment = useNuxtApp().$moment;
 const {render} = dateTimePicker();
 const clientReadyState = useClientReadyState();
 const common = useCommon();
@@ -147,13 +171,9 @@ const payrollsSupHeaders = reactive<TableSupHeaderT[]>([
     {text: ''},
     {text: ''},
 
-    {text: '', colspan: 2,  alignHeader: 'left'},
+    {text: '', colspan: 9,  alignHeader: 'left'},
 
-    {text: 'Approval', colspan: 4,  alignHeader: 'left'},
-
-    {text: 'Approver', colspan: 5,  alignHeader: 'left'},
-
-    {text: 'Approved by', colspan: 3,  alignHeader: 'left'},
+    {text: 'Totals', colspan: 2,  alignHeader: 'left'},
 ]);
 
 const payrollsHeaders = reactive<TableHeaderT[]>([
@@ -161,6 +181,7 @@ const payrollsHeaders = reactive<TableHeaderT[]>([
     { text: '', value: 'actions', minWidth: '33px'},
 
     { text: 'Payroll #', value: 'number', isNumeric: true},
+    { text: 'Copy #', value: 'copy_payroll_number_to_clipboard'},
     { text: 'Status', value: 'status'},
 
     { text: 'Year', value: 'year'},
@@ -169,9 +190,12 @@ const payrollsHeaders = reactive<TableHeaderT[]>([
     { text: 'Frequency', value: 'pay_frequency'},
     { text: 'Sequence', value: 'frequency_sequence'},
 
-    { text: 'Date', value: 'date_range_readable'},
+    { text: 'Coverage', value: 'date_range_readable'},
 
     { text: 'Remarks', value: 'remarks'},
+
+    { text: 'Salary Statement Net', value: 'total_salary_statement_net', isNumeric: true, alignData: 'right'},
+    { text: 'Employer Contribution Share', value: 'total_employer_contribution_share', isNumeric: true, alignData: 'right'},
 ]);
 
 const payrolls = reactive<DataTableT>({
@@ -194,6 +218,14 @@ let filters = reactive<{
     search: {
         keyword: string,
         callback: ReturnType<typeof setTimeout> | number
+    },
+    fromMonth: {
+        value: string,
+        label: string
+    },
+    toMonth: {
+        value: string,
+        label: string
     }
 }>({
     page: 1,
@@ -201,7 +233,15 @@ let filters = reactive<{
     search: {
         keyword: '',
         callback: 1
-    }
+    },
+    fromMonth: {
+        value: moment().format('YYYY-MM'),
+        label: moment().format('YYYY MMMM')
+    },
+    toMonth: {
+        value: moment().format('YYYY-MM'),
+        label: moment().format('YYYY MMMM')
+    },
 });
 
 const viewMode = reactive<{
@@ -255,14 +295,17 @@ let paramsComputed = computed(() => {
             account_id: selectedAssociatedCompanyAccountId.value,
             company_ids: [selectedAssociatedCompanyId.value],
             search: filters.search.keyword,
+            from_month: filters.fromMonth.value,
+            to_month: filters.toMonth.value,
         }
     };
 });
 const payrollsPending = ref(false)
+const deleting = ref(false);
 const selectedPayrolls = ref([]);
 
 const disableActions = computed(() => {
-    return payrollsPending.value || companyAssociationPendingState().value;
+    return payrollsPending.value || deleting.value || companyAssociationPendingState().value;
 });
 const disableDataTable = computed(() => {
     return payrollsPending.value || companyAssociationPendingState().value;
@@ -339,6 +382,125 @@ function paginate(page = 1, clearSelection = false){
 
 watch(() => {return filters.page;}, () => {paginate(filters.page);});
 watch(() => {return filters.perPage;}, () => {paginate(1);});
+
+let datePickers = ref([
+    {
+        id: 'from_month',
+        type: 'month',
+        selectedCallback: (payload: DateTimePickerPayloadT) => {
+            filters.fromMonth.value = payload.value;
+            filters.fromMonth.label = payload.label as string;
+        }
+    },
+    {
+        id: 'to_month',
+        type: 'month',
+        selectedCallback: (payload: DateTimePickerPayloadT) => {
+            filters.toMonth.value = payload.value;
+            filters.toMonth.label = payload.label as string;
+        }
+    },
+]);
+
+const renderDatePickers = () => {
+    render(datePickers.value);
+}
+
+//Render date time pickers on navigate
+if(clientReadyState.value){
+    onMounted(async () => {
+        await nextTick(() => {
+            renderDatePickers();
+        });
+    });
+}
+
+//Render date time pickers on load
+watch(clientReadyState, async (clientReady) => {
+    if(clientReady){
+        await nextTick(() => {
+            renderDatePickers();
+        });
+    }
+})
+
+const confirmDeleteSelected = () => {
+
+    const selectedIds = selectedPayrolls.value;
+
+    if(selectedIds.length == 0){
+
+        useNuxtApp().$promptStore.setPrompt({
+            resetable: false,
+            icon: null,
+            title: `Validation Error`,
+            message: `No selected payroll to delete.`,
+            action: {
+                callback: () => {},
+                label: 'Okay'
+            }
+        });
+
+        return false;
+    }
+
+    useNuxtApp().$promptStore.setPrompt({
+        resetable: true,
+        icon: null,
+        title: 'Confirm Action',
+        message: `Confirm delete payroll${selectedIds.length > 1 ? 's' : ''}?`,
+        action: {
+            callback: async () => {
+                await deleteSelected();
+            },
+            label: 'Yes'
+        }
+    });
+}
+const deleteSelected = async () => {
+
+    let selectedIds: number[] = [];
+
+    selectedIds = selectedPayrolls.value;
+
+    if(_isEmpty(selectedIds)){
+        return;
+    }
+
+    deleting.value = true;
+
+    await laraFetch("/api/payrolls", {
+        method: 'DELETE',
+        body: {
+            account_id: selectedAssociatedCompanyAccountId.value,
+            company_id: selectedAssociatedCompanyId.value,
+            payroll_ids: selectedIds,
+        },
+    },{
+        onRequestError: (request, options, error) => {
+            deleting.value = false;
+        },
+        onResponse: () => {
+            deleting.value = false;
+        },
+        onSuccessResponse: async (request, options, response) => {
+
+            useNuxtApp().$promptStore.setPrompt({
+                resetable: false,
+                icon: null,
+                title: `Request successful`,
+                message: `Payroll${selectedIds.length > 1 ? 's' : ''} deleted successfully.`,
+                action: {
+                    callback: () => {},
+                    label: 'Okay'
+                }
+            });
+        }
+    });
+
+    selectedPayrolls.value = [];
+    await payrollsExecute();
+}
 </script>
 
 <style scoped>

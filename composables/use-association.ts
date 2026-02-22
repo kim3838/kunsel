@@ -77,7 +77,7 @@ export const useAssociation = () => {
             `${hrPayrollRouteSlug}-payroll-payroll-frequency-settings`,
             `${hrPayrollRouteSlug}-payroll-payroll-generate`,
             `${hrPayrollRouteSlug}-payroll-payroll-history`,
-            `${hrPayrollRouteSlug}-payroll-payroll-salary-statement`,
+            `${hrPayrollRouteSlug}-payroll-payroll-salary-statements`,
             `${hrPayrollRouteSlug}-request-approval-setting`,
             `${hrPayrollRouteSlug}-request-approval-approvals`,
             `${hrPayrollRouteSlug}-request-approval-attendance-adjustment-request`,

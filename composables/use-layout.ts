@@ -473,11 +473,11 @@ export const useLayout = () => {
                             route_active: `${hrPayrollRouteSlug}-payroll-history`
                         },
                         {
-                            key: `${hrPayrollRouteSlug}/payroll/salary-statement`,
+                            key: `${hrPayrollRouteSlug}/payroll/salary-statements`,
                             type: 'link',
                             title: 'Salary Statements',
-                            to: `/${hrPayrollRouteSlug}/payroll/salary-statement`,
-                            route_active: `${hrPayrollRouteSlug}-payroll-salary-statement`
+                            to: `/${hrPayrollRouteSlug}/payroll/salary-statements`,
+                            route_active: `${hrPayrollRouteSlug}-payroll-salary-statements`
                         },
                     ]
                 }, {

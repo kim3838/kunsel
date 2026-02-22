@@ -14,6 +14,8 @@ export type PayrollT = {
     end_date: string,
     remarks: string,
     status: EnumOption,
+    total_salary_statement_net?: string,
+    total_employer_contribution_share?: string,
     date_range_readable: string,
 }
 
