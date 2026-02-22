@@ -15,17 +15,39 @@
                     <div v-else class="space-y-6">
                         <div>
                             <div class="font-medium text-lg font-header">{{payroll.number}}</div>
-                            <div>{{payroll.status?.text}}</div>
-                            <div>{{payroll.date_range_readable}}</div>
-                            <div>{{salaryStatement?.employee_number}} {{salaryStatement?.employee_full_name}}</div>
+                            <div class="flex flex-row flex-wrap gap-x-6 gap-y-2 items-center">
+                                <div>
+                                    <InputLabel :size="'xs'" value="Status"/>
+                                    <div class="text-base">{{payroll.status?.text}}</div>
+                                </div>
+                                <div>
+                                    <InputLabel :size="'xs'" value="Remarks"/>
+                                    <div class="text-base">{{payroll.remarks || '--'}}</div>
+                                </div>
+                                <div>
+                                    <InputLabel :size="'xs'" value="Payroll month"/>
+                                    <div class="text-base">{{`${payroll.year} ${payroll.month_readable}`}}</div>
+                                </div>
+                                <div>
+                                    <InputLabel :size="'xs'" value="Payroll sequence"/>
+                                    <div class="text-base">{{`${payroll.pay_frequency?.text} ${payroll.frequency_sequence?.text || ''}`}}</div>
+                                </div>
+                                <div>
+                                    <InputLabel :size="'xs'" value="Coverage"/>
+                                    <div class="text-base">{{payroll.date_range_readable}}</div>
+                                </div>
+                                <div>
+                                    <InputLabel :size="'xs'" value="Employee"/>
+                                    <div class="text-base">{{salaryStatement?.employee_number}} {{salaryStatement?.employee_full_name}}</div>
+                                </div>
+                            </div>
                         </div>
 
                         <div class="space-y-2">
 
                             <div class="font-medium text-lg font-header">Per Day Breakdown</div>
 
-                            <div class="text-sm">
-
+                            <div class="flex flex-col gap-2 text-sm">
                                 <div class="flex flex-row flex-wrap items-center gap-2">
                                     <div class="font-medium text-lg font-serif">Legend:</div>
                                     <div><span class="font-semibold">Dur.</span> = Duration in hours</div>
@@ -34,6 +56,8 @@
                                     <div><span class="font-semibold">HR</span> = Hourly rate</div>
                                     <div><span class="font-semibold">AP</span> = Actual present in minutes</div>
                                     <div><span class="font-semibold">RP</span> = Regular pay</div>
+                                </div>
+                                <div class="flex flex-row flex-wrap items-center gap-2">
                                     <div><span class="font-semibold">ALL</span> = Allowance</div>
                                     <div><span class="font-semibold">NSDP</span> = Night diff. pay</div>
                                     <div><span class="font-semibold">RDP</span> = Rest day pay</div>
@@ -88,7 +112,7 @@ const {
 
 watch(updatedAssociatedCompanyFlag, (newValue) => {
     if(isAuthenticated.value && selectedAssociatedCompanyId.value){
-        navigateTo("/hr-payroll/payroll/salary-statement", {replace: true});
+        navigateTo("/hr-payroll/payroll/salary-statements", {replace: true});
     }
 });
 
