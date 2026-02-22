@@ -235,12 +235,12 @@ let filters = reactive<{
         callback: 1
     },
     fromMonth: {
-        value: moment().format('YYYY-MM'),
-        label: moment().format('YYYY MMMM')
+        value: moment().startOf('year').format('YYYY-MM'),
+        label: moment().startOf('year').format('YYYY MMMM')
     },
     toMonth: {
-        value: moment().format('YYYY-MM'),
-        label: moment().format('YYYY MMMM')
+        value: moment().endOf('year').format('YYYY-MM'),
+        label: moment().endOf('year').format('YYYY MMMM')
     },
 });
 
