@@ -95,6 +95,8 @@ const style = computed(() => {
         ? textColor.value
         : (props.invert ? backgroundColor.value : '#fff');
 
+    let radius = isClearColorType.value ? '0.20em' : '0.25em';
+
     return {
         ...(props.invert ? {} : {
             'background-color': backgroundColor.value
@@ -103,7 +105,7 @@ const style = computed(() => {
             'box-shadow': `0 0 2px ${commonColor.value.default.primary}`,
         } : {}),
         'color': color,
-        'border-radius': '.20em'
+        'border-radius': radius
     };
 });
 </script>
