@@ -211,6 +211,16 @@
 
                 <div class="px-[20px]">
                     <div class="mb-2 flex flex-row flex-wrap gap-2 items-center min-h-8">
+                        <AttendanceBulkCreate ref="attendanceBulkCreate" @cancelled="bulkCreateCancelled" @completed="bulkCreateCompleted">
+                            <Button
+                                :disabled="disableActions"
+                                :variant="`outline`"
+                                :size="'sm'"
+                                :icon="'mdi:plus'"
+                                :label="`Bulk create`"
+                                @click="bulkCreate" />
+                        </AttendanceBulkCreate>
+
                         <div v-if="attendances.successful" class="scaffold-border px-2 font-[National_Park]">
                             <span><span class="font-semibold">{{selectedAttendances.length}}</span> Selected</span>
                         </div>
@@ -910,6 +920,18 @@ const modalSubmit = async() => {
             await attendancesExecute();
         },
     });
+}
+
+const attendanceBulkCreateReference = useTemplateRef('attendanceBulkCreate');
+const bulkCreate = () => {
+    attendanceBulkCreateReference.value?.bulkCreate();
+}
+const bulkCreateCompleted = () => {
+    attendancesExecute();
+    render(filtersDateTimePickers.value);
+}
+const bulkCreateCancelled = () => {
+    render(filtersDateTimePickers.value);
 }
 </script>
 
