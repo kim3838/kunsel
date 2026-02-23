@@ -60,7 +60,6 @@
         <!--Results Dialog-->
         <DialogModal
             :show="showResult"
-            :max-width="'780px'"
             :closeable="false">
             <template #title>
             </template>
@@ -70,20 +69,27 @@
                         <legend class="text-lg font-header">Results</legend>
 
                         <div class="max-h-[270px] overflow-y-auto">
-                            <table class="border-separate font-sans">
-                                <tbody>
-                                <tr v-for="result in resultsData">
-                                    <td>{{result.number}}</td>
-                                    <td class="pl-2">
+                            <DataTable
+                                :headers="resultsHeaders"
+                                :size="'md'"
+                                :rows="resultsData"
+                                selection>
+                                <template v-slot:cell.resolved="{cell,slot}">
+                                    <div class="p-[3px]">{{cell.resolved ? `Yes` : `No`}}</div>
+                                </template>
+                                <template v-slot:cell.results="{cell,slot}">
+                                    <div class="p-[3px]">{{cell.resolved ? APPROVAL_ACTION_NAME_PAST_TENSE[requestableWorkFlowAction] : cell.error as string}}</div>
+                                </template>
+                                <template v-slot:cell.result="{cell,slot}">
+                                    <div class="px-[3px]">
                                         <Label
-                                            :size="'md'"
+                                            :size="'sm'"
                                             invert
-                                            :type="result.resolved ? `default` : `danger`"
-                                            :label="result.resolved ? APPROVAL_ACTION_NAME_PAST_TENSE[requestableWorkFlowAction] : result.error as string" />
-                                    </td>
-                                </tr>
-                                </tbody>
-                            </table>
+                                            :type="cell.resolved ? `success` : `danger`"
+                                            :label="cell.resolved ? APPROVAL_ACTION_NAME_PAST_TENSE[requestableWorkFlowAction] : cell.error as string" />
+                                    </div>
+                                </template>
+                            </DataTable>
                         </div>
                     </fieldset>
                 </div>
@@ -113,6 +119,7 @@
 
 <script setup lang="ts">
 import type {ApprovalStateWorkFlowPayloadT} from "@/public/js/types/request-approval";
+import type {TableHeaderT} from "@/public/js/types/data";
 import {storeToRefs} from "pinia";
 
 const nuxtApp = useNuxtApp();
@@ -193,6 +200,11 @@ const applyRequestableWorkflow = async () => {
 
 
 const showResult = ref(false);
+const resultsHeaders = reactive<TableHeaderT[]>([
+    { text: '#', value: 'number', alignData: 'left'},
+    { text: 'Successful', value: 'resolved', alignData: 'left'},
+    { text: 'Result', value: 'result', alignData: 'left'},
+]);
 const resultsData = ref<{number: string, resolved: boolean, error: string | null}[]>([]);
 
 const emit = defineEmits(['update:createRequestableWorkFlow', 'update:requestableWorkFlowAction', 'resolved']);
