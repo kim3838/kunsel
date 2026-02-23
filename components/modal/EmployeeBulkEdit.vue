@@ -3,7 +3,6 @@
         <slot />
 
         <DialogModal
-            :max-width="'1280px'"
             :show="showBulkUpdateErrors"
             :closeable="false"
             @close="closeModal">
