@@ -50,6 +50,7 @@ module.exports = {
                     'Bruno Ace SC',
                 ],
                 data: [
+                    `'Source Sans 3'`,
                     'Ruluko',
                     'Reddit Sans Condensed',
                     'Gentium Plus',
@@ -62,6 +63,7 @@ module.exports = {
                     'Momo Trust Sans',
                 ],
                 standard: [
+                    `'Source Sans 3'`,
                     'Ruluko',
                     'Reddit Sans Condensed',
                     'Gentium Plus',
@@ -78,11 +80,11 @@ module.exports = {
                     `'Source Sans 3'`,
                     'Source Sans Pro',
                     'Prociono',
-                    'Playfair Display',
                     'Oranienbaum',
                     'Instrument Serif',
                     'STIX Two Text',
                     'Almendra',
+                    'Playfair Display',
                     'serif',
                 ],
                 mono : [
