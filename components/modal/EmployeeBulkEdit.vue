@@ -217,10 +217,6 @@ const {
 const emit = defineEmits(['completed']);
 
 const props = defineProps({
-    title: {
-        type: String,
-        default: 'Confirm Password',
-    },
     selectedEmployeeIds:{
         type: Array as PropType<number[]>,
         default: () => {
