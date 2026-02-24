@@ -51,7 +51,7 @@
 
                     <div class="space-y-4">
                         <div class="flex items-center flex-wrap gap-4 min-h-8">
-                            <div class="text-lg font-medium font-header">Today: {{dateTimeNowFormatted}}</div>
+                            <div class="text-lg font-header">{{dateTimeNowFormatted}}</div>
                         </div>
 
                         <div class="space-y-2 pt-4 scaffold-border-top">

@@ -36,7 +36,7 @@
                         <Button
                             :variant="`outline`"
                             :disabled="disableActions"
-                            @click="closeModal" :label="'Close'" />
+                            @click="closeErrorsModal" :label="'Close'" />
                     </div>
                 </div>
             </template>
@@ -278,7 +278,9 @@ const bulkCreateSubmit = async () => {
             }
 
             closeModal(resetModalOnClose);
-            emit('completed');
+            if(resetModalOnClose){
+                emit('completed');
+            }
         }
     });
 }
@@ -311,6 +313,11 @@ const closeModal = (resetModal = true) => {
         reset();
     }
     creating.value = false;
+};
+const closeErrorsModal = (resetModal = true) => {
+    reset();
+    creating.value = false;
+    emit('completed');
 };
 
 const cancel = () => {

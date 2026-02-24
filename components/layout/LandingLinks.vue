@@ -1,7 +1,7 @@
 <template>
     <div class="mx-auto max-w-screen-lg">
         <div class="flex flex-wrap gap-2">
-            <div class="lining-shadow rounded-sm grow p-2">
+            <div class="grow p-2">
                 <p class="text-lg font-medium font-business">Contact Us</p>
 
                 <div class="mt-2 space-y-2">
@@ -25,7 +25,7 @@
                 </div>
             </div>
 
-            <div class="lining-shadow rounded-sm grow p-2">
+            <div class="grow p-2">
                 <p class="text-lg font-medium font-business">Our Services</p>
 
                 <div class="mt-2 space-y-2">
@@ -37,7 +37,7 @@
                 </div>
             </div>
 
-            <div class="lining-shadow rounded-sm  p-2">
+            <div class=" p-2">
                 <p  class="text-lg font-medium font-business">Helpful Links</p>
 
                 <div class="mt-2 space-y-2">
@@ -67,7 +67,7 @@
                 </div>
             </div>
 
-            <div class="lining-shadow rounded-sm grow p-2">
+            <div class="grow p-2">
                 <p class="text-lg font-medium font-business">About Us</p>
 
                 <div class="mt-2 space-y-2 text-sm">

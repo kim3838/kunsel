@@ -144,7 +144,7 @@
                         <DataTable
                             :sup-headers="recentPayrollsSupHeaders"
                             :headers="payrollInquiriesHeaders"
-                            :size="'lg'"
+                            :size="'md'"
                             :rows="recentPayrollsData"
                             v-model="selectedRecentPayrolls"
                             selection>
@@ -174,7 +174,7 @@
                         <DataTable
                             :sup-headers="currentPayrollsSupHeaders"
                             :headers="payrollInquiriesHeaders"
-                            :size="'lg'"
+                            :size="'md'"
                             :rows="currentPayrollsData"
                             v-model="selectedLatestPayrolls"
                             selection>

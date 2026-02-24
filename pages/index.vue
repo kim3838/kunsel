@@ -46,8 +46,7 @@ const {
 
 watch(updatedAssociatedAccountSubscriptionFlag, (newValue) => {
     if(isAuthenticated.value && !userIsSuperAdmin.value){
-
-        console.log({'UPDATED SELECTED SUBSCRIPTION': selectedAccountSubscription.value});
+        //Updated selected subscription
     }
 });
 </script>

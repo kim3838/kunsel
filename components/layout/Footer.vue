@@ -11,7 +11,7 @@
 
                 <div class="flex flex-wrap gap-4">
 
-                    <div v-for="navigationLink in navigationLinks" :key="navigationLink.key" class="lining-shadow rounded-sm flex-grow p-2 text-left">
+                    <div v-for="navigationLink in navigationLinks" :key="navigationLink.key" class="flex-grow p-2 text-left">
                         <p class="text-lg font-medium font-business">
                             <NuxtLink
                                 v-if="navigationLink.type == 'link'"
@@ -37,7 +37,7 @@
                 </div>
             </div>
 
-            <div class="lining-shadow rounded-sm mx-auto max-w-screen-lg mb-4">
+            <div class="mx-auto max-w-screen-lg mb-4">
 
                 <div class="p-2">
                     <div class="flex flex-row flex-wrap justify-start items-center">
