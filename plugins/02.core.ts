@@ -136,6 +136,10 @@ export default defineNuxtPlugin(nuxtApp => {
 
     nuxtApp.provide('wordClamp', function (text: string, length: number): string {
 
+        if(!text){
+            return text;
+        }
+
         return text.length > length
             ? text.slice(0, length) + '…'
             : text;

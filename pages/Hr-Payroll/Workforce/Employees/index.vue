@@ -42,6 +42,26 @@
                             :size="'md'"
                             :orientation="'horizontal'"
                             v-model="viewMode.selected" />
+                        <div class="h-8 flex flex-row items-center scaffold-border px-2">
+                            <label class="flex items-center">
+                                <Checkbox
+                                    :disabled="disableActions"
+                                    name="show-contact-info"
+                                    v-model="showContactInfo"
+                                    :size="'md'"
+                                    :label="'Show contact info.'" />
+                            </label>
+                        </div>
+                        <div class="h-8 flex flex-row items-center scaffold-border px-2">
+                            <label class="flex items-center">
+                                <Checkbox
+                                    :disabled="disableActions"
+                                    name="show-user-info"
+                                    v-model="showUserInfo"
+                                    :size="'md'"
+                                    :label="'Show user info.'" />
+                            </label>
+                        </div>
                     </div>
 
                     <div>
@@ -258,6 +278,9 @@
                                 </NavDrop>
                             </div>
                         </template>
+                        <template v-slot:cell.full_name="{cell,slot}">
+                            <div class="p-[3px]" :title="cell.full_name">{{wordClamp(cell.full_name, 24)}}</div>
+                        </template>
                         <template v-slot:cell.current_employment_profile="{cell,slot}">
                             <div class="flex space-x-1 px-[0.3rem] items-center">
                                 <Label :size="slot.labelSize" :type="cell?._payload?.label_shade?.value as LabelTypeT" shade :label="cell.current_employment_profile.status.text" />
@@ -273,25 +296,35 @@
                             <div class="p-[3px]">{{cell.marital_status.text}}</div>
                         </template>
                         <template v-slot:cell.department="{cell,slot}">
-                            <div class="p-[3px]">{{cell.department?.name}}</div>
+                            <div class="p-[3px]" :title="cell.department?.name">{{wordClamp(cell.department?.name, 12)}}</div>
                         </template>
                         <template v-slot:cell.payroll_group="{cell,slot}">
                             <div class="p-[3px]">{{cell.payroll_group?.type?.text}}</div>
                         </template>
                         <template v-slot:cell.designation="{cell,slot}">
-                            <div class="p-[3px]">{{cell.designation?.name}}</div>
+                            <div class="p-[3px]" :title="cell.designation?.name">{{wordClamp(cell.designation?.name, 12)}}</div>
                         </template>
                         <template v-slot:cell.manager="{cell,slot}">
-                            <div class="p-[3px]">{{cell.manager?.full_name}}</div>
+                            <div class="p-[3px]" :title="cell.manager?.full_name">{{wordClamp(cell.manager?.full_name, 24)}}</div>
                         </template>
                         <template v-slot:cell.office_email="{cell,slot}">
                             <div class="p-[3px]">
                                 {{cell.contact?.office_email}}
                             </div>
                         </template>
+                        <template v-slot:cell.personal_email="{cell,slot}">
+                            <div class="p-[3px]">
+                                {{cell.contact?.personal_email}}
+                            </div>
+                        </template>
                         <template v-slot:cell.office_phone="{cell,slot}">
                             <div class="p-[3px]">
                                 {{cell.contact?.office_phone}}
+                            </div>
+                        </template>
+                        <template v-slot:cell.personal_phone="{cell,slot}">
+                            <div class="p-[3px]">
+                                {{cell.contact?.personal_phone}}
                             </div>
                         </template>
                         <template v-slot:cell.user_name="{cell,slot}">
@@ -333,6 +366,7 @@ const $enumerableOption = nuxtApp.$enumerableOption as (enumerable: StringEnumIn
     text: string,
     value: number
 };
+const wordClamp = nuxtApp.$wordClamp as (text: string, length: number) => string;
 const cosmetic = useCosmetic();
 const common = useCommon();
 const {
@@ -432,34 +466,55 @@ const designationOptions = reactive({
     selected: []
 });
 
-const employeesSupHeaders = reactive<TableSupHeaderT[]>([
-    {text: ''},
-    {text: ''},
-    {text: 'Employee', colspan: 2, alignHeader: 'left'},
-    {text: 'Employment', colspan: 2, alignHeader: 'left'},
-    {text: '', colspan: 4},
-    {text: 'Contact', colspan: 2, alignHeader: 'left'},
-    {text: 'User', colspan: 4, alignHeader: 'left'},
-]);
+const employeesSupHeaders = computed<TableSupHeaderT[]>(() => {
+    return [
+        {text: ''},
+        {text: ''},
+        {text: 'Employee', colspan: 2, alignHeader: 'left'},
+        {text: 'Employment', colspan: 2, alignHeader: 'left'},
+        {text: '', colspan: 4},
 
-const employeesHeaders = reactive<TableHeaderT[]>([
-    { text: '#', value: 'row_number'},
-    { text: '', value: 'actions'},
-    { text: 'Employee #', value: 'number', alignData: 'left'},
-    { text: 'Name', value: 'full_name'},
-    { text: 'Status', value: 'current_employment_profile'},
-    { text: 'Type', value: 'current_employment_type'},
-    { text: 'Payroll Group', value: 'payroll_group'},
-    { text: 'Department', value: 'department'},
-    { text: 'Designation', value: 'designation'},
-    { text: 'Manager', value: 'manager'},
-    { text: 'Office Email', value: 'office_email', minWidth: '33.5px'},
-    { text: 'Office Phone', value: 'office_phone', minWidth: '33.5px'},
-    { text: 'Username', value: 'user_name'},
-    { text: 'Email', value: 'user_email'},
-    { text: 'Status', value: 'user_status'},
-    { text: 'Email Verification', value: 'email_verification'},
-]);
+        ...(showContactInfo.value ? [
+            {text: 'Contact', colspan: 4, alignHeader: 'left'},
+        ] : []),
+
+        ...(showUserInfo.value ? [
+            {text: 'User', colspan: 4, alignHeader: 'left'},
+        ] : []),
+    ]
+});
+
+const showContactInfo = ref(false);
+const showUserInfo = ref(false);
+
+const employeesHeaders = computed<TableHeaderT[]>(() => {
+    return [
+        { text: '#', value: 'row_number'},
+        { text: '', value: 'actions'},
+        { text: 'Employee #', value: 'number', alignData: 'left'},
+        { text: 'Name', value: 'full_name'},
+        { text: 'Status', value: 'current_employment_profile'},
+        { text: 'Type', value: 'current_employment_type'},
+        { text: 'Payroll Group', value: 'payroll_group'},
+        { text: 'Department', value: 'department'},
+        { text: 'Designation', value: 'designation'},
+        { text: 'Manager', value: 'manager'},
+
+        ...(showContactInfo.value ? [
+            { text: 'Office Email', value: 'office_email', minWidth: '33.5px'},
+            { text: 'Personal Email', value: 'personal_email', minWidth: '33.5px'},
+            { text: 'Office Phone', value: 'office_phone', minWidth: '33.5px'},
+            { text: 'Personal Phone', value: 'personal_phone', minWidth: '33.5px'},
+        ] : []),
+
+        ...(showUserInfo.value ? [
+            { text: 'Username', value: 'user_name'},
+            { text: 'Email', value: 'user_email'},
+            { text: 'Status', value: 'user_status'},
+            { text: 'Email Verification', value: 'email_verification'},
+        ] : []),
+    ]
+});
 
 const employees = reactive<DataTableT>({
     'data': [],

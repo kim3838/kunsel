@@ -65,7 +65,7 @@
                             <label class="flex items-center">
                                 <Checkbox
                                     :disabled="disableActions"
-                                    name="show-statement-dates"
+                                    name="show-days-total"
                                     v-model="showDaysTotal"
                                     :size="'md'"
                                     :label="'Show days total'" />
