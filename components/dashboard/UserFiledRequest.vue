@@ -57,7 +57,7 @@
         <DataTable
             v-if="userFiledRequests.successful"
             :headers="userFiledRequestsHeaders"
-            :size="'lg'"
+            :size="'md'"
             :stripped="true"
             :landscape="true"
             :rows="userFiledRequests.data"
