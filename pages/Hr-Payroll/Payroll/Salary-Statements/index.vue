@@ -84,10 +84,11 @@
                 <div class="px-[20px]">
                     <div class="mb-2 flex flex-row flex-wrap gap-2 items-center min-h-8">
                         <UnorderedList v-if="disableActions" :icon="'eos-icons:loading'" :size="'md'" :label="'Please wait...'"/>
-                        <div class="scaffold-border px-2 font-[National_Park]">
+                        <div v-if="salaryStatements.successful" class="scaffold-border px-2 font-[National_Park]">
                             <span><span class="font-semibold">{{selectedSalaryStatements.length}}</span> Selected</span>
                         </div>
                         <Button
+                            v-if="salaryStatements.successful"
                             :variant="'outline'"
                             :size="'sm'"
                             :icon="'tdesign:close'"
@@ -95,15 +96,18 @@
                             :label="'Clear selection'"
                             @click="selectedSalaryStatements = []" />
                         <Button
+                            v-if="salaryStatements.successful"
                             :variant="'outline'"
                             :size="'sm'"
                             :icon="'mdi:delete-outline'"
                             :disabled="disableActions"
                             :label="'Bulk delete'"
                             @click="confirmDeleteSelected()"/>
+                        <Label v-if="!salaryStatements.successful" invert :size="'md'" :type="'danger'" :label="salaryStatements.message" />
                     </div>
 
                     <DataTable
+                        v-if="salaryStatements.successful"
                         :sup-headers="salaryStatementsSupHeaders"
                         :headers="salaryStatementsHeaders"
                         :size="'lg'"
@@ -168,16 +172,8 @@ useLayout().setNavigationMode('solid');
 
 const {isAuthenticated} = useAuth();
 const nuxtApp = useNuxtApp();
-const $enumerableOption = nuxtApp.$enumerableOption as (enumerable: StringEnumInterface, value: number) => {
-    text: string,
-    value: number
-};
 const wordClamp = nuxtApp.$wordClamp as (text: string, length: number) => string;
-const {render} = dateTimePicker();
-const clientReadyState = useClientReadyState();
 const common = useCommon();
-const coreStore = useCoreStore();
-const formStore = nuxtApp.$formStore;
 const {
     updatedAssociatedCompanyFlag
 } = storeToRefs(nuxtApp.$associationStore);
@@ -362,17 +358,6 @@ let filters = reactive<{
         keyword: '',
         callback: 1
     },
-});
-
-const viewMode = reactive<{
-    selection: EnumSelection;
-    selected: number | null;
-}>({
-    selection: [
-        {text : 'Flex', value: DATA_VIEW_MODE.FLEX} as EnumOption,
-        {text : 'List', value: DATA_VIEW_MODE.LIST} as EnumOption,
-    ],
-    selected: DATA_VIEW_MODE.LIST as number
 });
 
 let pageComputed = computed({
