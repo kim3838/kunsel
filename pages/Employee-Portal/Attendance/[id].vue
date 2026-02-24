@@ -10,103 +10,108 @@
                     </NuxtLink>
                 </div>
 
-                <div class="px-[20px] space-y-2">
+                <div class="px-[20px] space-y-6">
 
                     <div>
-                        <div class="text-lg font-header">{{title}}</div>
-                        <div>{{subTitle}}</div>
+                        <div class="font-medium text-lg font-header">{{title}}</div>
+                        <div class="text-sm">{{subTitle}}</div>
                     </div>
 
-                    <div class="text-lg font-header">Schedule</div>
+                    <div class="space-y-2">
+                        <div class="text-lg font-medium font-header">Schedule</div>
 
-                    <DataTable
-                        :headers="scheduleHeaders"
-                        :disabled="disableActions"
-                        :size="'lg'"
-                        :stripped="true"
-                        :rows="scheduleData"></DataTable>
-
-                    <div class="text-lg font-header">Attendance</div>
-
-                    <DataTable
-                        :headers="attendanceHeaders"
-                        :disabled="disableActions"
-                        :size="'lg'"
-                        :stripped="true"
-                        :rows="attendanceData"></DataTable>
-
-                    <div class="mt-8">
-                        <div class="text-lg font-header">Attendance Breakdown</div>
+                        <DataTable
+                            :headers="scheduleHeaders"
+                            :disabled="disableActions"
+                            :size="'md'"
+                            :stripped="true"
+                            :rows="scheduleData"></DataTable>
                     </div>
 
-                    <DataTable
-                        :sup-headers="attendanceBreakdownSupHeaders"
-                        :headers="attendanceBreakdownHeaders"
-                        :disabled="disableActions"
-                        :size="'lg'"
-                        :stripped="true"
-                        :rows="attendanceBreakdown">
-                        <template v-slot:cell.split_type="{cell,slot}">
-                            <div class="p-[3px]">{{cell.split_type.text}}</div>
-                        </template>
-                        <template v-slot:cell.date="{cell, slot, scrollReference}">
-                            <div class="p-[3px] font-sans">
-                                {{cell.date}}
-                            </div>
-                        </template>
-                        <template v-slot:cell.split_start="{cell, slot, scrollReference}">
-                            <div class="p-[3px] font-sans">
-                                {{cell.split_start}}
-                            </div>
-                        </template>
-                        <template v-slot:cell.split_end="{cell, slot, scrollReference}">
-                            <div class="p-[3px] font-sans">
-                                {{cell.split_end}}
-                            </div>
-                        </template>
-                        <template v-slot:cell.split_duration="{cell, slot, scrollReference}">
-                            <div class="p-[3px] font-sans">
-                                {{cell.split_duration}}
-                            </div>
-                        </template>
-                        <template v-slot:cell.work_hour="{cell,slot}">
-                            <div class="p-[3px]">{{cell.work_hour_type?.text}}</div>
-                        </template>
-                        <template v-slot:cell.hourly_rate="{cell,slot}">
-                            <div class="p-[3px]">{{cell.hourly_rate_type?.text}}</div>
-                        </template>
-                        <template v-slot:cell.hourly_rate_multiplier="{cell,slot}">
-                            <div class="p-[3px] font-sans">{{cell.hourly_rate_multiplier}}</div>
-                        </template>
-                        <template v-slot:cell.actual_start="{cell,slot}">
-                            <div class="p-[3px] font-sans">{{cell.actual_start}}</div>
-                        </template>
-                        <template v-slot:cell.actual_end="{cell,slot}">
-                            <div class="p-[3px] font-sans">{{cell.actual_end}}</div>
-                        </template>
-                        <template v-slot:cell.grace_before_start_applied="{cell,slot}">
-                            <div class="p-[3px] font-sans">{{cell.grace_before_start_applied}}</div>
-                        </template>
-                        <template v-slot:cell.grace_after_start_applied="{cell,slot}">
-                            <div class="p-[3px] font-sans">{{cell.grace_after_start_applied}}</div>
-                        </template>
-                        <template v-slot:cell.actual_present_start="{cell,slot}">
-                            <div class="p-[3px] font-sans">{{cell.actual_present_start}}</div>
-                        </template>
-                        <template v-slot:cell.actual_present_end="{cell,slot}">
-                            <div class="p-[3px] font-sans">{{cell.actual_present_end}}</div>
-                        </template>
-                        <template v-slot:cell.actual_present="{cell,slot}">
-                            <div class="p-[3px] font-sans">{{cell.actual_present}}</div>
-                        </template>
-                        <template v-slot:cell.late="{cell,slot}">
-                            <div v-if="!shiftIsFlexible" class="p-[3px] font-sans">{{cell.late}}</div>
-                        </template>
-                        <template v-slot:cell.undertime="{cell,slot}">
-                            <div v-if="shiftIsFlexible" class="p-[3px] font-sans">{{cell.flexible_undertime}}</div>
-                            <div v-else class="p-[3px] font-sans">{{cell.undertime}}</div>
-                        </template>
-                    </DataTable>
+                    <div class="space-y-2">
+                        <div class="text-lg font-medium font-header">Attendance</div>
+
+                        <DataTable
+                            :headers="attendanceHeaders"
+                            :disabled="disableActions"
+                            :size="'md'"
+                            :stripped="true"
+                            :rows="attendanceData"></DataTable>
+                    </div>
+
+                    <div class="space-y-2">
+                        <div class="text-lg font-medium font-header">Attendance Breakdown</div>
+
+                        <DataTable
+                            :sup-headers="attendanceBreakdownSupHeaders"
+                            :headers="attendanceBreakdownHeaders"
+                            :disabled="disableActions"
+                            :size="'md'"
+                            :stripped="true"
+                            :rows="attendanceBreakdown">
+                            <template v-slot:cell.split_type="{cell,slot}">
+                                <div class="p-[3px]">{{cell.split_type.text}}</div>
+                            </template>
+                            <template v-slot:cell.date="{cell, slot, scrollReference}">
+                                <div class="p-[3px] font-sans">
+                                    {{cell.date}}
+                                </div>
+                            </template>
+                            <template v-slot:cell.split_start="{cell, slot, scrollReference}">
+                                <div class="p-[3px] font-sans">
+                                    {{cell.split_start}}
+                                </div>
+                            </template>
+                            <template v-slot:cell.split_end="{cell, slot, scrollReference}">
+                                <div class="p-[3px] font-sans">
+                                    {{cell.split_end}}
+                                </div>
+                            </template>
+                            <template v-slot:cell.split_duration="{cell, slot, scrollReference}">
+                                <div class="p-[3px] font-sans">
+                                    {{cell.split_duration}}
+                                </div>
+                            </template>
+                            <template v-slot:cell.work_hour="{cell,slot}">
+                                <div class="p-[3px]">{{cell.work_hour_type?.text}}</div>
+                            </template>
+                            <template v-slot:cell.hourly_rate="{cell,slot}">
+                                <div class="p-[3px]">{{cell.hourly_rate_type?.text}}</div>
+                            </template>
+                            <template v-slot:cell.hourly_rate_multiplier="{cell,slot}">
+                                <div class="p-[3px] font-sans">{{cell.hourly_rate_multiplier}}</div>
+                            </template>
+                            <template v-slot:cell.actual_start="{cell,slot}">
+                                <div class="p-[3px] font-sans">{{cell.actual_start}}</div>
+                            </template>
+                            <template v-slot:cell.actual_end="{cell,slot}">
+                                <div class="p-[3px] font-sans">{{cell.actual_end}}</div>
+                            </template>
+                            <template v-slot:cell.grace_before_start_applied="{cell,slot}">
+                                <div class="p-[3px] font-sans">{{cell.grace_before_start_applied}}</div>
+                            </template>
+                            <template v-slot:cell.grace_after_start_applied="{cell,slot}">
+                                <div class="p-[3px] font-sans">{{cell.grace_after_start_applied}}</div>
+                            </template>
+                            <template v-slot:cell.actual_present_start="{cell,slot}">
+                                <div class="p-[3px] font-sans">{{cell.actual_present_start}}</div>
+                            </template>
+                            <template v-slot:cell.actual_present_end="{cell,slot}">
+                                <div class="p-[3px] font-sans">{{cell.actual_present_end}}</div>
+                            </template>
+                            <template v-slot:cell.actual_present="{cell,slot}">
+                                <div class="p-[3px] font-sans">{{cell.actual_present}}</div>
+                            </template>
+                            <template v-slot:cell.late="{cell,slot}">
+                                <div v-if="!shiftIsFlexible" class="p-[3px] font-sans">{{cell.late}}</div>
+                            </template>
+                            <template v-slot:cell.undertime="{cell,slot}">
+                                <div v-if="shiftIsFlexible" class="p-[3px] font-sans">{{cell.flexible_undertime}}</div>
+                                <div v-else class="p-[3px] font-sans">{{cell.undertime}}</div>
+                            </template>
+                        </DataTable>
+                    </div>
+
                 </div>
 
             </div>
