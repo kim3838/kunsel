@@ -9,18 +9,19 @@
 
                     <form @submit.prevent="payrollInquiriesExecute">
 
-                        <div class="grid gap-2 grid-cols-3 sm:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-8">
-                            <div>
-                                <InputLabel :size="'sm'" value="Payroll frequency" />
-                                <MultiSelect
-                                    :disabled="disableActions"
-                                    :searchable="false"
-                                    :selection-max-viewable-line="3"
-                                    drop-shadow
-                                    :size="'md'"
-                                    :key="payFrequencyOptionsKey"
-                                    :options="payFrequencyOptions"
-                                    :icon="'tdesign:component-checkbox'"/>
+                        <div class="flex flex-row flex-wrap items-center gap-2">
+                            <div class="flex flex-col">
+                                <InputLabel :size="'sm'" value="Pay frequency" />
+                                <div class="grow">
+                                    <RadioGroup
+                                        :disabled="disableActions"
+                                        class="scaffold-border px-2"
+                                        :selections="payFrequencyOptions"
+                                        :size="'md'"
+                                        :orientation="'horizontal'"
+                                        :radio-key="`pay_frequency_options`"
+                                        v-model="payFrequency" />
+                                </div>
                             </div>
                             <div>
                                 <InputLabel :size="'sm'" value="Recent payroll dates count" />
@@ -217,6 +218,7 @@
 </template>
 
 <script setup lang="ts">
+import {useLocalStorage} from '@vueuse/core';
 import type {TableHeaderT, TableSupHeaderT} from "@/public/js/types/data";
 import type {PayrollInquiryT, PayrollT} from "@/public/js/types/payroll";
 import type {StringEnumInterface} from "@/public/js/common/type";
@@ -283,16 +285,17 @@ const payrollInquiriesHeaders = reactive<TableHeaderT[]>([
     { text: 'Status', value: 'payroll_status', minWidth: '85px'},
 ]);
 
-const payFrequencyOptionsKey = shallowRef(0);
-const payFrequencyOptions = reactive({
-    search: '',
-    selection: [
-        $enumerableOption(PAY_FREQUENCY_NAME, PAY_FREQUENCY_TYPE.WEEKLY as number),
-        $enumerableOption(PAY_FREQUENCY_NAME, PAY_FREQUENCY_TYPE.SEMI_MONTHLY as number),
-        $enumerableOption(PAY_FREQUENCY_NAME, PAY_FREQUENCY_TYPE.MONTHLY as number),
-    ],
-    selected: [PAY_FREQUENCY_TYPE.MONTHLY]
-});
+const generateFrequency = useLocalStorage('generate-frequency', PAY_FREQUENCY_TYPE.MONTHLY)
+const payFrequency = ref(generateFrequency.value);
+const payFrequencyOptions = reactive([
+    $enumerableOption(PAY_FREQUENCY_NAME, PAY_FREQUENCY_TYPE.WEEKLY as number),
+    $enumerableOption(PAY_FREQUENCY_NAME, PAY_FREQUENCY_TYPE.SEMI_MONTHLY as number),
+    $enumerableOption(PAY_FREQUENCY_NAME, PAY_FREQUENCY_TYPE.MONTHLY as number),
+]);
+watch(payFrequency, (value) => {
+    generateFrequency.value = value;
+})
+
 const companyOrganizationSelections = companyOrganizationSelectionsState();
 const employeeGroupOptionsKey = shallowRef(0);
 const employeeGroupOptions = reactive({
@@ -325,7 +328,7 @@ const payrollInquiriesExecute = async() =>{
             company_id: selectedAssociatedCompanyId.value,
             recent_count: recentCount.value,
             filters: {
-                pay_frequency_types: payFrequencyOptions.selected
+                pay_frequency_types: [payFrequency.value]
             }
         }
     }, {
@@ -339,7 +342,7 @@ const payrollInquiriesExecute = async() =>{
             recentPayrollsData.value = _get(response, '_data.values.recent', []);
             currentPayrollsData.value = _get(response, '_data.values.current', []);
         }
-    }, false);
+    }, true);
 }
 await payrollInquiriesExecute();
 
