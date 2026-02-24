@@ -71,6 +71,16 @@
                                     :label="'Show days total'" />
                             </label>
                         </div>
+                        <div class="h-8 flex flex-row items-center scaffold-border px-2">
+                            <label class="flex items-center">
+                                <Checkbox
+                                    :disabled="disableActions"
+                                    name="show-statement-dates"
+                                    v-model="showSalaryStatementDetails"
+                                    :size="'md'"
+                                    :label="'Show statement details'" />
+                            </label>
+                        </div>
                     </div>
 
                     <div>
@@ -108,12 +118,24 @@
 
                     <DataTable
                         v-if="salaryStatements.successful"
+                        :key="salaryStatementsKey"
                         :sup-headers="salaryStatementsSupHeaders"
                         :headers="salaryStatementsHeaders"
                         :size="'lg'"
                         :rows="salaryStatements.data"
                         v-model="selectedSalaryStatements"
-                        selection>
+                        selection
+                        :border-appearance="Boolean(salaryStatementSubRowExtensionSlug)"
+                        :sub-row-slug="salaryStatementSubRowSlug"
+                        :sub-row-extension-slug="salaryStatementSubRowExtensionSlug"
+                        :sub-row-settings="{
+                            type: DATATABLE_SUBROW_TYPE.TITLED,
+                            containerPaddingTop: 0.75,
+                            containerPaddingBottom: 1.75,
+                            titleSize: 'md',
+                            rowVerticalLine: true,
+                            verticalBorderType: 'dashed'
+                        }">
                         <template v-slot:cell.actions="{cell,slot: cellSlot}">
                             <div class="flex items-center">
                                 <NavDrop
@@ -154,6 +176,25 @@
                         <template v-slot:cell.employee_full_name="{cell,slot}">
                             <div class="px-[3px]" :title="cell.employee_full_name">{{wordClamp(cell.employee_full_name, 16)}}</div>
                         </template>
+                        <template v-slot:sub_row_slot="{rowIndex, cell, slot}">
+                            <div class="inline-flex items-center scaffold-border pr-2">
+                                <Icon name="ic:outline-keyboard-arrow-right" :class="[slot.iconSizeClass, slot.iconHolderClass]" /><div :class="[slot.titleSizeClass]">Statement dates</div>
+                            </div>
+                            <SalaryStatementAttendanceSubRow
+                                :rows="cell[slot.slug]"
+                            ></SalaryStatementAttendanceSubRow>
+                        </template>
+                        <template v-slot:sub_row_extension_slot="{rowIndex, cell, slot}">
+                            <div class="inline-flex items-center scaffold-border pr-2">
+                                <Icon name="ic:outline-keyboard-arrow-right" :class="[slot.iconSizeClass, slot.iconHolderClass]" /><div :class="[slot.titleSizeClass]">Statement details</div>
+                            </div>
+                            <div :style="{'max-height': slot.extensionSlugContentMaxHeight, 'overflow-y': 'scroll'}">
+                                <SalaryStatementDetailSubRow
+                                    v-if="cell[slot.slug].length"
+                                    :rows="cell[slot.extensionSlug]"
+                                ></SalaryStatementDetailSubRow>
+                            </div>
+                        </template>
                     </DataTable>
                 </div>
             </div>
@@ -162,8 +203,7 @@
 </template>
 
 <script setup lang="ts">
-import type {DataTableT, TableHeaderT, TableRowT, TableSupHeaderT} from "@/public/js/types/data";
-import type {EnumOption, EnumSelection, StringEnumInterface} from "@/public/js/common/type";
+import type {DataTableT, TableHeaderT, TableSupHeaderT} from "@/public/js/types/data";
 import {storeToRefs} from "pinia";
 
 useHead({titleTemplate: (titleChunk) => {return `Salary Statements`}});
@@ -372,6 +412,21 @@ let pageComputed = computed({
     }
 });
 
+const showSalaryStatementDetails = ref(false);
+const salaryStatementSubRowSlug = ref('');
+const salaryStatementSubRowExtensionSlug = ref('');
+
+watch(() => {return showSalaryStatementDetails.value;}, (show) => {
+    if(show){
+        salaryStatementSubRowSlug.value = 'statement_attendances';
+        salaryStatementSubRowExtensionSlug.value = 'statement_details';
+        salaryStatementsExecute()
+    } else {
+        salaryStatementSubRowSlug.value = '';
+        salaryStatementSubRowExtensionSlug.value = '';
+        salaryStatementsExecute()
+    }
+})
 
 let paramsComputed = computed(() => {
     return {
@@ -390,6 +445,8 @@ let paramsComputed = computed(() => {
         }
     };
 });
+
+const salaryStatementsKey = shallowRef(0);
 const salaryStatementsPending = ref(false)
 const deleting = ref(false);
 const selectedSalaryStatements = ref([]);
@@ -432,6 +489,7 @@ const salaryStatementsExecute = async() =>{
                     total_pages: 0
                 }
             });
+            salaryStatementsKey.value += 1;
         }
     }, false);
 }
