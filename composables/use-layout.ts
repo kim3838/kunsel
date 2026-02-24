@@ -302,7 +302,13 @@ export const useLayout = () => {
                             route_active: `${employeePortalRouteSlug}-file-request-leave`
                         },
                     ]
-                }] : []) as NavigationLinkInterface[],
+                }, {
+                    key: `${employeePortalRouteSlug}/salary-statements`,
+                    type: 'link',
+                    title: 'Salary Statements',
+                    to: `/${employeePortalRouteSlug}/salary-statements`,
+                    route_active: `${employeePortalRouteSlug}-salary-statements`
+                },] : []) as NavigationLinkInterface[],
             ],
             [SUBSCRIPTION_MODULE.HR_PAYROLL as number]: [
                 ...((isAuthenticated.value && (userIsSuperAdmin.value || userIsAdminOfSelectedCompany.value)) ? [{
