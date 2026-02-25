@@ -14,15 +14,10 @@
                     <div class="grid gap-2 grid-cols-1 sm:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-8">
                         <Button class="w-min" ref="submitButton" type="submit" :disabled="disableActions" :size="'md'" :icon="disableActions ? 'eos-icons:loading' : 'mdi:data'" :label="disableActions ? 'Loading' : 'Load'"></Button>
                     </div>
-
-                    <div>
-                        <PageInformation :pagination="jsonPresets.meta.pagination" :pending="disableDataTable"/>
-                        <Pagination :size="'lg'" :pagination="jsonPresets.meta.pagination" :pending="disableDataTable" v-model="pageComputed"/>
-                    </div>
                 </form>
 
-                <div class="px-[20px]">
-                    <div class="mb-2 flex flex-row flex-wrap gap-2 items-center min-h-8">
+                <div class="px-[20px] space-y-2">
+                    <div class="flex flex-row flex-wrap gap-2 items-center min-h-8">
                         <UnorderedList v-if="disableActions" :icon="'eos-icons:loading'" :size="'md'" :label="'Please wait...'"/>
                         <NuxtLink
                             v-else
@@ -32,7 +27,7 @@
                         <Button v-if="!disableActions" :variant="'outline'" :icon="'mdi:delete-outline'" class="inline-block" :size="'sm'" :disabled="disableActions" @click="deleteSelected"/>
                     </div>
 
-                    <div v-if="!jsonPresets.successful" class="mb-2 flex flex-row flex-wrap gap-2 items-center min-h-8">
+                    <div v-if="!jsonPresets.successful" class="flex flex-row flex-wrap gap-2 items-center min-h-8">
                         <Label invert :size="'md'" :type="'danger'" :label="jsonPresets.message" />
                     </div>
 
@@ -63,6 +58,11 @@
                             </div>
                         </template>
                     </DataTable>
+
+                    <div>
+                        <PageInformation :pagination="jsonPresets.meta.pagination" :pending="disableDataTable"/>
+                        <Pagination :size="'lg'" :pagination="jsonPresets.meta.pagination" :pending="disableDataTable" v-model="pageComputed"/>
+                    </div>
                 </div>
             </div>
         </AdminWrapper>

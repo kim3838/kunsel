@@ -21,15 +21,10 @@
                             :orientation="'horizontal'"
                             v-model="viewMode.selected" />
                     </div>
-
-                    <div>
-                        <PageInformation :pagination="accounts.meta.pagination" :pending="disableDataTable"/>
-                        <Pagination :size="'lg'" :pagination="accounts.meta.pagination" :pending="disableDataTable" v-model="pageComputed"/>
-                    </div>
                 </form>
 
-                <div class="px-[20px]">
-                    <div class="mb-2 flex flex-row flex-wrap gap-2 items-center min-h-8">
+                <div class="px-[20px] space-y-2">
+                    <div class="flex flex-row flex-wrap gap-2 items-center min-h-8">
                         <UnorderedList v-if="disableActions" :icon="'eos-icons:loading'" :size="'md'" :label="'Please wait...'"/>
                         <NuxtLink
                             v-else
@@ -38,7 +33,7 @@
                         </NuxtLink>
                     </div>
 
-                    <div v-if="!accounts.successful" class="mb-2 flex flex-row flex-wrap gap-2 items-center min-h-8">
+                    <div v-if="!accounts.successful" class="flex flex-row flex-wrap gap-2 items-center min-h-8">
                         <Label invert :size="'md'" :type="'danger'" :label="accounts.message" />
                     </div>
 
@@ -113,6 +108,11 @@
                             </div>
                         </template>
                     </DataTable>
+
+                    <div>
+                        <PageInformation :pagination="accounts.meta.pagination" :pending="disableDataTable"/>
+                        <Pagination :size="'lg'" :pagination="accounts.meta.pagination" :pending="disableDataTable" v-model="pageComputed"/>
+                    </div>
                 </div>
 
             </div>

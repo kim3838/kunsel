@@ -18,15 +18,10 @@
                     <div class="grid gap-2 grid-cols-3 sm:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-8">
                         <Button class="w-min" ref="submitButton" type="submit" :disabled="disableActions" :size="'md'" :icon="disableActions ? 'eos-icons:loading' : 'mdi:data'" :label="disableActions ? 'Loading' : 'Load'"></Button>
                     </div>
-
-                    <div>
-                        <PageInformation :pagination="companies.meta.pagination" :pending="companiesPending"/>
-                        <Pagination :size="'lg'" :pagination="companies.meta.pagination" :pending="companiesPending" v-model="pageComputed"/>
-                    </div>
                 </form>
 
-                <div class="px-[20px]">
-                    <div class="mb-2 flex flex-row flex-wrap gap-2 items-center min-h-8">
+                <div class="px-[20px] space-y-2">
+                    <div class="flex flex-row flex-wrap gap-2 items-center min-h-8">
                         <UnorderedList v-if="disableActions" :icon="'eos-icons:loading'" :size="'md'" :label="'Please wait...'"/>
                         <NuxtLink
                             v-else
@@ -74,6 +69,11 @@
                                 </div>
                             </div>
                         </div>
+                    </div>
+
+                    <div>
+                        <PageInformation :pagination="companies.meta.pagination" :pending="companiesPending"/>
+                        <Pagination :size="'lg'" :pagination="companies.meta.pagination" :pending="companiesPending" v-model="pageComputed"/>
                     </div>
                 </div>
             </div>

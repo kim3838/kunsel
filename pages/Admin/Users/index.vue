@@ -41,15 +41,10 @@
                             </label>
                         </div>
                     </div>
-
-                    <div>
-                        <PageInformation :pagination="users.meta.pagination" :pending="disableDataTable"/>
-                        <Pagination :size="'lg'" :pagination="users.meta.pagination" :pending="disableDataTable" v-model="pageComputed"/>
-                    </div>
                 </form>
 
-                <div class="px-[20px]">
-                    <div class="mb-2 flex items-center min-h-8">
+                <div class="px-[20px] space-y-2">
+                    <div class="flex items-center min-h-8">
                         <UnorderedList
                             v-if="disableActions"
                             :icon="'eos-icons:loading'"
@@ -62,7 +57,7 @@
                         </NuxtLink>
                     </div>
 
-                    <div v-if="!users.successful" class="mb-2 flex flex-row flex-wrap gap-2 items-center min-h-8">
+                    <div v-if="!users.successful" class="flex flex-row flex-wrap gap-2 items-center min-h-8">
                         <Label invert :size="'md'" :type="'danger'" :label="users.message" />
                     </div>
 
@@ -136,6 +131,11 @@
                             ></AssociatedUserSubRow>
                         </template>
                     </DataTable>
+
+                    <div>
+                        <PageInformation :pagination="users.meta.pagination" :pending="disableDataTable"/>
+                        <Pagination :size="'lg'" :pagination="users.meta.pagination" :pending="disableDataTable" v-model="pageComputed"/>
+                    </div>
                 </div>
             </div>
         </AdminWrapper>
