@@ -47,14 +47,8 @@
             <UnorderedList v-if="disableActions" :icon="'eos-icons:loading'" :size="'sm'" :label="'Please wait...'"/>
         </div>
 
-        <div class="mb-2">
-            <PageInformation :pagination="userFiledRequests.meta.pagination" :pending="disableDataTable"/>
-            <div class="flex items-center gap-2">
-                <Pagination :size="'md'" :pagination="userFiledRequests.meta.pagination" :pending="disableDataTable" v-model="pageComputed"/>
-            </div>
-        </div>
-
         <DataTable
+            class="mb-2 "
             v-if="userFiledRequests.successful"
             :headers="userFiledRequestsHeaders"
             :size="'md'"
@@ -74,6 +68,14 @@
                 </div>
             </template>
         </DataTable>
+
+        <div v-if="userFiledRequests?.meta?.pagination?.total">
+            <PageInformation :pagination="userFiledRequests.meta.pagination" :pending="disableDataTable"/>
+            <div class="flex items-center gap-2">
+                <Pagination :size="'md'" :pagination="userFiledRequests.meta.pagination" :pending="disableDataTable" v-model="pageComputed"/>
+            </div>
+        </div>
+
     </div>
 </template>
 
