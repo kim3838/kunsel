@@ -44,21 +44,13 @@
                 </form>
 
                 <div class="px-[20px] space-y-2">
-                    <div class="flex items-center min-h-8">
-                        <UnorderedList
-                            v-if="disableActions"
-                            :icon="'eos-icons:loading'"
-                            :size="'md'"
-                            :label="'Please wait...'"/>
+                    <div class="flex flex-row flex-wrap gap-2 items-center min-h-8" :class="[disableActions ? 'pointer-events-none' : '']">
                         <NuxtLink
-                            v-else
+                            v-if="users.successful"
                             :to="`/admin/users/create-user`">
-                            <Button class="w-min" :disabled="disableActions" :size="'sm'" :icon="disableActions ? 'eos-icons:loading' : 'mdi:plus'" :label="''"></Button>
+                            <Button class="w-min" :disabled="disableActions" :size="'sm'" :icon="'mdi:plus'"></Button>
                         </NuxtLink>
-                    </div>
-
-                    <div v-if="!users.successful" class="flex flex-row flex-wrap gap-2 items-center min-h-8">
-                        <Label invert :size="'md'" :type="'danger'" :label="users.message" />
+                        <Label v-if="!users.successful" invert :size="'md'" :type="'danger'" :label="users.message" />
                     </div>
 
                     <DataTable
@@ -189,7 +181,7 @@ const users = reactive<DataTableT>({
             total_pages: 0
         }
     },
-    'successful': true,
+    'successful': false,
     'message': ''
 });
 

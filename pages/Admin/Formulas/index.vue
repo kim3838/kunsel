@@ -37,18 +37,14 @@
                 </form>
 
                 <div class="px-[20px] space-y-2">
-                    <div class="flex flex-row flex-wrap gap-2 items-center min-h-8">
-                        <UnorderedList v-if="disableActions" :icon="'eos-icons:loading'" :size="'md'" :label="'Please wait...'"/>
+                    <div class="flex flex-row flex-wrap gap-2 items-center min-h-8" :class="[disableActions ? 'pointer-events-none' : '']">
                         <NuxtLink
-                            v-else
+                            v-if="formulas.successful"
                             :to="`/admin/formulas/create-formula`">
-                            <Button class="w-min" :disabled="disableActions" :size="'sm'" :icon="disableActions ? 'eos-icons:loading' : 'mdi:plus'" :label="disableActions ? 'Please wait' : ''"></Button>
+                            <Button class="w-min" :disabled="disableActions" :size="'sm'" :icon="'mdi:plus'"></Button>
                         </NuxtLink>
-                        <Button v-if="!disableActions" :variant="'outline'" :icon="'mdi:delete-outline'" class="inline-block" :size="'sm'" :disabled="disableActions" :label="'Bulk delete'" @click="confirmDeleteSelected"/>
-                    </div>
-
-                    <div v-if="!formulas.successful" class="flex flex-row flex-wrap gap-2 items-center min-h-8">
-                        <Label invert :size="'md'" :type="'danger'" :label="formulas.message" />
+                        <Button v-if="formulas.successful" :variant="'outline'" :icon="'mdi:delete-outline'" class="inline-block" :size="'sm'" :disabled="disableActions" :label="'Bulk delete'" @click="confirmDeleteSelected"/>
+                        <Label v-if="!formulas.successful" invert :size="'md'" :type="'danger'" :label="formulas.message" />
                     </div>
 
                     <DataTable
@@ -133,7 +129,7 @@ const formulas = reactive<DataTableT>({
             total_pages: 0
         }
     },
-    'successful': true,
+    'successful': false,
     'message': ''
 });
 const formulableOptions = reactive({

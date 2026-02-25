@@ -21,18 +21,14 @@
                 </form>
 
                 <div class="px-[20px] space-y-2">
-                    <div class="flex flex-row flex-wrap gap-2 items-center min-h-8">
-                        <UnorderedList v-if="disableActions" :icon="'eos-icons:loading'" :size="'md'" :label="'Please wait...'"/>
+                    <div class="flex flex-row flex-wrap gap-2 items-center min-h-8" :class="[disableActions ? 'pointer-events-none' : '']">
                         <NuxtLink
-                            v-else
+                            v-if="roles.successful"
                             :to="`/admin/roles/create-role`">
-                            <Button class="w-min" :disabled="disableActions" :size="'sm'" :icon="disableActions ? 'eos-icons:loading' : 'mdi:plus'" :label="disableActions ? 'Please wait' : ''"></Button>
+                            <Button class="w-min" :disabled="disableActions" :size="'sm'" :icon="'mdi:plus'"></Button>
                         </NuxtLink>
-                        <Button v-if="!disableActions" :variant="'outline'" :icon="'mdi:delete-outline'" class="inline-block" :size="'sm'" :disabled="disableActions" :label="'Bulk delete'" @click="confirmDeleteSelected"/>
-                    </div>
-
-                    <div v-if="!roles.successful" class="flex flex-row flex-wrap gap-2 items-center min-h-8">
-                        <Label invert :size="'md'" :type="'danger'" :label="roles.message" />
+                        <Button v-if="roles.successful" :variant="'outline'" :icon="'mdi:delete-outline'" class="inline-block" :size="'sm'" :disabled="disableActions" :label="'Bulk delete'" @click="confirmDeleteSelected"/>
+                        <Label v-if="!roles.successful" invert :size="'md'" :type="'danger'" :label="roles.message" />
                     </div>
 
                     <DataTable
@@ -101,7 +97,7 @@ const roles = reactive<DataTableT>({
             total_pages: 0
         }
     },
-    'successful': true,
+    'successful': false,
     'message': ''
 });
 const accountOptions = reactive<{

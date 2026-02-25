@@ -212,7 +212,7 @@ const users = reactive<DataTableT>({
             total_pages: 0
         }
     },
-    'successful': true,
+    'successful': false,
     'message': ''
 });
 const clearData = () => {

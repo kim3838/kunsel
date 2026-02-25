@@ -21,17 +21,13 @@
                 </form>
 
                 <div class="px-[20px] space-y-2">
-                    <div class="flex flex-row flex-wrap gap-2 items-center min-h-8">
-                        <UnorderedList v-if="disableActions" :icon="'eos-icons:loading'" :size="'md'" :label="'Please wait...'"/>
+                    <div class="flex flex-row flex-wrap gap-2 items-center min-h-8" :class="[disableActions ? 'pointer-events-none' : '']">
                         <NuxtLink
-                            v-else
+                            v-if="companies.successful"
                             :to="`/admin/companies/create-company`">
-                            <Button class="w-min" :disabled="disableActions" :size="'sm'" :icon="disableActions ? 'eos-icons:loading' : 'mdi:plus'" :label="disableActions ? 'Please wait' : ''"></Button>
+                            <Button class="w-min" :disabled="disableActions" :size="'sm'" :icon="'mdi:plus'"></Button>
                         </NuxtLink>
-                    </div>
-
-                    <div v-if="!companies.successful" class="flex flex-row flex-wrap gap-2 items-center min-h-8">
-                        <Label invert :size="'md'" :type="'danger'" :label="companies.message" />
+                        <Label v-if="!companies.successful" invert :size="'md'" :type="'danger'" :label="companies.message" />
                     </div>
 
                     <DataTable
@@ -103,7 +99,7 @@ const companies = reactive<DataTableT>({
             total_pages: 0
         }
     },
-    'successful': true,
+    'successful': false,
     'message': ''
 });
 const accountOptions = reactive({

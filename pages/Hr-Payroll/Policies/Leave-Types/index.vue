@@ -43,6 +43,7 @@
                 <div class="px-[20px] space-y-2">
                     <div class="flex flex-row flex-wrap gap-2 items-center min-h-8" :class="[disableActions ? 'pointer-events-none' : '']">
                         <NuxtLink
+                            v-if="leaveTypes.successful"
                             :to="`/hr-payroll/policies/leave-types/create-leave-type`">
                             <Button class="w-min" :disabled="disableActions" :size="'sm'" :icon="'mdi:plus'"></Button>
                         </NuxtLink>
@@ -211,7 +212,7 @@ const leaveTypes = reactive<DataTableT>({
             total_pages: 0
         }
     },
-    'successful': true,
+    'successful': false,
     'message': ''
 });
 

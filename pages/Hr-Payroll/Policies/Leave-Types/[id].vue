@@ -233,7 +233,7 @@
                         </div>
 
                         <div class="mb-2 flex items-center min-h-8">
-                            <Button class="w-min" :disabled="disableActions" :size="'sm'" :icon="disableActions ? 'eos-icons:loading' : 'mdi:plus'" :label="''" @click="addBalancePerPeriod"></Button>
+                            <Button class="w-min" :disabled="disableActions" :size="'sm'" :icon="'mdi:plus'" @click="addBalancePerPeriod"></Button>
                         </div>
 
                         <DataTable

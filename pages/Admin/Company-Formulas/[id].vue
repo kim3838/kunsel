@@ -78,7 +78,7 @@
 
                     <div class="mb-2 flex flex-row flex-wrap gap-2 items-center min-h-8">
                         <UnorderedList v-if="disableActions" :icon="'eos-icons:loading'" :size="'md'" :label="'Please wait...'"/>
-                        <Button v-else :variant="'outline'" class="w-min" :disabled="disableActions" :size="'sm'" :icon="disableActions ? 'eos-icons:loading' : 'mdi:plus'" :label="disableActions ? 'Please wait' : 'Add Formula(s)'" @click="addFormula"></Button>
+                        <Button v-else :variant="'outline'" class="w-min" :disabled="disableActions" :size="'sm'" :icon="'mdi:plus'" :label="'Add Formula(s)'" @click="addFormula"></Button>
                         <Button :variant="'outline'" class="w-min" ref="submitButton" type="submit" :disabled="disableActions" :size="'sm'" :icon="disableActions ? 'eos-icons:loading' : 'ic:baseline-cloud-sync'" :label="submitLabel" @click="confirmFormSubmit"></Button>
                     </div>
 

@@ -28,13 +28,6 @@
 
                     <div class="flex flex-row flex-wrap gap-2 items-center min-h-8">
                         <Button class="w-min" ref="submitButton" type="submit" :disabled="disableActions" :size="'md'" :icon="disableActions ? 'eos-icons:loading' : 'mdi:data'" :label="disableActions ? 'Loading' : 'Load'"></Button>
-                        <RadioGroup
-                            class="scaffold-border px-2"
-                            :disabled="disableActions"
-                            :selections="viewMode.selection"
-                            :size="'md'"
-                            :orientation="'horizontal'"
-                            v-model="viewMode.selected" />
                         <div class="h-8 flex flex-row items-center scaffold-border px-2">
                             <label class="flex items-center">
                                 <Checkbox
@@ -44,13 +37,6 @@
                                     :size="'md'"
                                     :label="'Show only waiting approval'" />
                             </label>
-                        </div>
-                    </div>
-
-                    <div>
-                        <PageInformation :pagination="approvalStates.meta.pagination" :pending="disableDataTable"/>
-                        <div class="flex items-center gap-2">
-                            <Pagination :size="'lg'" :pagination="approvalStates.meta.pagination" :pending="disableDataTable" v-model="pageComputed"/>
                         </div>
                     </div>
                 </form>
@@ -67,9 +53,8 @@
                     v-model:requestable-is-approvable="requestableIsApprovable"
                     @applyApprovalWorkFlowFromViewable="applyApprovalWorkFlowFromViewable"/>
 
-                <div class="px-[20px]">
-                    <div class="mb-2 flex flex-row flex-wrap gap-2 items-center min-h-8">
-                        <UnorderedList v-if="disableActions" :icon="'eos-icons:loading'" :size="'md'" :label="'Please wait...'"/>
+                <div class="px-[20px] space-y-2">
+                    <div class="flex flex-row flex-wrap gap-2 items-center min-h-8" :class="[disableActions ? 'pointer-events-none' : '']">
                         <div v-if="approvalStates.successful" class="scaffold-border px-2 font-[National_Park]">
                             <span><span class="font-semibold">{{selectedApprovalStates.length}}</span> Selected</span>
                         </div>
@@ -168,6 +153,11 @@
                             <div class="p-[3px]">{{cell.approved_by.approved_at_diff}}</div>
                         </template>
                     </DataTable>
+
+                    <div>
+                        <PageInformation :pagination="approvalStates.meta.pagination" :pending="disableDataTable"/>
+                        <Pagination :size="'lg'" :pagination="approvalStates.meta.pagination" :pending="disableDataTable" v-model="pageComputed"/>
+                    </div>
                 </div>
             </div>
         </DefaultWrapper>
@@ -176,7 +166,7 @@
 
 <script setup lang="ts">
 import type {DataTableSelectionActionT, DataTableT, TableHeaderT, TableRowT, TableSupHeaderT} from "@/public/js/types/data";
-import type {EnumOption, EnumSelection, StringEnumInterface} from "@/public/js/common/type";
+import type {StringEnumInterface} from "@/public/js/common/type";
 import type {LabelTypeT} from "@/public/js/types/theme";
 import type {CompanyUserRolePermissionT} from "@/public/js/types/role-permission";
 import type {ApprovalStateT, ApprovalStateWorkFlowPayloadT} from "@/public/js/types/request-approval";
@@ -282,7 +272,7 @@ const approvalStates = reactive<DataTableT>({
             total_pages: 0
         }
     },
-    'successful': true,
+    'successful': false,
     'message': ''
 });
 let filters = reactive<{
@@ -294,22 +284,11 @@ let filters = reactive<{
     }
 }>({
     page: 1,
-    perPage: 25,
+    perPage: 15,
     search: {
         keyword: '',
         callback: 1
     }
-});
-
-const viewMode = reactive<{
-    selection: EnumSelection;
-    selected: number | null;
-}>({
-    selection: [
-        {text : 'Flex', value: DATA_VIEW_MODE.FLEX} as EnumOption,
-        {text : 'List', value: DATA_VIEW_MODE.LIST} as EnumOption,
-    ],
-    selected: DATA_VIEW_MODE.LIST as number
 });
 
 const requestApprovalStatusOptions = reactive({

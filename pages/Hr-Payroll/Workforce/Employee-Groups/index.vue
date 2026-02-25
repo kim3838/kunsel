@@ -120,14 +120,11 @@
                 <div class="px-[20px] space-y-2">
 
                     <div class="flex flex-row flex-wrap gap-2 items-center min-h-8" :class="[disableActions ? 'pointer-events-none' : '']">
-                        <Button @click="put(null)" class="w-min" :disabled="disableActions" :size="'sm'" :icon="'mdi:plus'"></Button>
-                        <Button :variant="'outline'" :size="'sm'" :icon="'mdi:delete-outline'" :disabled="disableActions" :label="'Bulk delete'" @click="confirmDeleteSelected()" />
-                    </div>
-
-                    <div class="flex flex-row flex-wrap gap-2 items-center min-h-8">
+                        <Button v-if="employeeGroups.successful" @click="put(null)" class="w-min" :disabled="disableActions" :size="'sm'" :icon="'mdi:plus'"></Button>
                         <div v-if="employeeGroups.successful" class="scaffold-border px-2 font-[National_Park]">
                             <span><span class="font-semibold">{{selectedEmployeeGroups.length}}</span> Selected</span>
                         </div>
+                        <Button v-if="employeeGroups.successful" :variant="'outline'" :size="'sm'" :icon="'mdi:delete-outline'" :disabled="disableActions" :label="'Bulk delete'" @click="confirmDeleteSelected()" />
                         <Button v-if="employeeGroups.successful" :variant="'outline'" :size="'sm'" :icon="'tdesign:close'" :disabled="disableActions" :label="'Clear selection'" @click="selectedEmployeeGroups = []" />
                         <Button v-if="employeeGroups.successful" @click="assignGroups" class="inline-block" :size="'sm'" :icon="'mdi:plus'" :disabled="disableActions" :variant="'outline'" :label="'Bulk assign'" />
                         <Button v-if="employeeGroups.successful" @click="confirmGroupAssignmentBatchDetach" class="inline-block" :size="'sm'" :icon="'mdi:delete-outline'" :disabled="disableActions" :variant="'outline'" :label="'Bulk remove'" />
@@ -208,7 +205,7 @@ const employeeGroups = reactive<DataTableT>({
             total_pages: 0
         }
     },
-    'successful': true,
+    'successful': false,
     'message': ''
 });
 let filters = reactive<{

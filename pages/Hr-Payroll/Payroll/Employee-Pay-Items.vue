@@ -145,9 +145,8 @@
                 ></PayrollComponentAssignmentModal>
 
                 <div class="px-[20px] space-y-2">
-
                     <div class="flex flex-row flex-wrap gap-2 items-center min-h-8" :class="[disableActions ? 'pointer-events-none' : '']">
-                        <Button  @click="selectEmployee" class="w-min" :disabled="disableActions" :size="'sm'" :icon="'mdi:plus'"></Button>
+                        <Button v-if="payrollComponents.successful" @click="selectEmployee" class="w-min" :disabled="disableActions" :size="'sm'" :icon="'mdi:plus'"></Button>
                         <div v-if="payrollComponents.successful" class="scaffold-border px-2 font-[National_Park]">
                             <span><span class="font-semibold">{{selectedPayrollComponents.length}}</span> Selected</span>
                         </div>
@@ -354,7 +353,7 @@ const payrollComponents = reactive<DataTableT>({
             total_pages: 0
         }
     },
-    'successful': true,
+    'successful': false,
     'message': ''
 });
 let filters = reactive<{

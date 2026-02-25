@@ -208,16 +208,12 @@
                 </DialogModal>
 
                 <div class="px-[20px] space-y-2">
-                    <div class="flex flex-row flex-wrap gap-2 items-center min-h-8">
-                        <UnorderedList v-if="disableActions" :icon="'eos-icons:loading'" :size="'md'" :label="'Please wait...'"/>
-                        <Button v-if="!disableActions" @click="create()" class="w-min" :disabled="disableActions" :size="'sm'" :icon="disableActions ? 'eos-icons:loading' : 'mdi:plus'" :label="disableActions ? 'Please wait' : ''"></Button>
-                        <Button v-if="overtimeRequests.successful && !disableActions" :variant="'outline'" :size="'sm'" :icon="'mdi:delete-outline'" :disabled="disableActions" :label="'Bulk delete'" @click="confirmDeleteSelected()" />
-                    </div>
-
-                    <div class="flex flex-row flex-wrap gap-2 items-center min-h-8">
+                    <div class="flex flex-row flex-wrap gap-2 items-center min-h-8" :class="[disableActions ? 'pointer-events-none' : '']">
+                        <Button v-if="overtimeRequests.successful" @click="create()" class="w-min" :disabled="disableActions" :size="'sm'" :icon="'mdi:plus'"></Button>
                         <div v-if="overtimeRequests.successful" class="scaffold-border px-2 font-[National_Park]">
                             <span><span class="font-semibold">{{selectedOvertimeRequests.length}}</span> Selected</span>
                         </div>
+                        <Button v-if="overtimeRequests.successful" :variant="'outline'" :size="'sm'" :icon="'mdi:delete-outline'" :disabled="disableActions" :label="'Bulk delete'" @click="confirmDeleteSelected()" />
                         <Button
                             v-if="overtimeRequests.successful"
                             :variant="'outline'"
@@ -423,7 +419,7 @@ const overtimeRequests = reactive<DataTableT>({
             total_pages: 0
         }
     },
-    'successful': true,
+    'successful': false,
     'message': ''
 });
 let filters = reactive<{

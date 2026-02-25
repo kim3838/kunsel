@@ -210,7 +210,7 @@
                         <div v-if="overtimes.successful" class="scaffold-border px-2 font-[National_Park]">
                             <span><span class="font-semibold">{{selectedOvertimes.length}}</span> Selected</span>
                         </div>
-                        <Button :variant="'outline'" :size="'sm'" :icon="'mdi:delete-outline'" :disabled="disableActions" :label="'Bulk delete'" @click="confirmDeleteSelected()" />
+                        <Button v-if="overtimes.successful" :variant="'outline'" :size="'sm'" :icon="'mdi:delete-outline'" :disabled="disableActions" :label="'Bulk delete'" @click="confirmDeleteSelected()" />
                         <Button
                             v-if="overtimes.successful"
                             :variant="'outline'"
@@ -390,7 +390,7 @@ const overtimes = reactive<DataTableT>({
             total_pages: 0
         }
     },
-    'successful': true,
+    'successful': false,
     'message': ''
 });
 let filters = reactive<{

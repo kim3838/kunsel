@@ -330,7 +330,7 @@ const leaveBalanceAdjustments = reactive<DataTableT>({
             total_pages: 0
         }
     },
-    'successful': true,
+    'successful': false,
     'message': ''
 });
 let filters = reactive<{

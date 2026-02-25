@@ -89,19 +89,17 @@
                 </DialogModal>
 
                 <div class="px-[20px] space-y-2">
-
-                    <div class="flex flex-row flex-wrap gap-2 items-center min-h-8">
+                    <div class="flex flex-row flex-wrap gap-2 items-center min-h-8" :class="[disableActions ? 'pointer-events-none' : '']">
                         <Button
+                            v-if="departmentsSuccessful"
                             class="inline-block"
                             :icon="'mdi:plus'"
                             :size="'sm'"
                             :disabled="disableActions"
                             @click="create"/>
-
                         <div v-if="departmentsSuccessful" class="scaffold-border px-2 font-[National_Park]">
                             <span><span class="font-semibold">{{allSelectedComputed.length}}</span> Selected</span>
                         </div>
-
                         <Button
                             v-if="departmentsSuccessful"
                             :variant="'outline'"
@@ -110,10 +108,9 @@
                             :disabled="disableActions"
                             :label="'Bulk delete'"
                             @click="confirmDeleteSelected()" />
-                    </div>
-
-                    <div v-if="!departmentsSuccessful" class="flex flex-row flex-wrap gap-2 items-center min-h-8">
-                        <Label invert :size="'md'" :type="'danger'" :label="departmentsMessage" />
+                        <div v-if="!departmentsSuccessful" class="flex flex-row flex-wrap gap-2 items-center min-h-8">
+                            <Label invert :size="'md'" :type="'danger'" :label="departmentsMessage" />
+                        </div>
                     </div>
 
                     <DataTable

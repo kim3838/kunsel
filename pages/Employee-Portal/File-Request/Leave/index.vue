@@ -6,7 +6,7 @@
 
                     <BreadCrumbs prefix-company :size="`sm`" />
 
-                    <div class="grid gap-2 grid-cols-3 sm:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-8">
+                    <div class="grid gap-2 grid-cols-3 sm:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
                         <div>
                             <InputLabel :size="'sm'" value="Status" />
                             <MultiSelect :disabled="disableActions" glint drop-shadow :size="'md'" :options="requestApprovalStatusOptions" :icon="'tdesign:component-checkbox'"/>
@@ -25,7 +25,7 @@
                                 :orientation="'horizontal'"
                                 v-model="viewMode.selected" />
                         </div>
-                        <div class="xl:col-span-2 flex flex-col">
+                        <div class="flex flex-col">
                             <div class="flex-none h-[1.25rem]"></div>
                             <div class="grow">
                                 <div class="h-full px-2 scaffold-border flex items-center">
@@ -208,16 +208,12 @@
                 </DialogModal>
 
                 <div class="px-[20px] space-y-2">
-                    <div class="flex flex-row flex-wrap gap-2 items-center min-h-8">
-                        <UnorderedList v-if="disableActions" :icon="'eos-icons:loading'" :size="'md'" :label="'Please wait...'"/>
-                        <Button v-if="!disableActions" @click="create()" class="w-min" :disabled="disableActions" :size="'sm'" :icon="disableActions ? 'eos-icons:loading' : 'mdi:plus'" :label="disableActions ? 'Please wait' : ''"></Button>
-                        <Button v-if="leaveRequests.successful && !disableActions" :variant="'outline'" :size="'sm'" :icon="'mdi:delete-outline'" :disabled="disableActions" :label="'Bulk delete'" @click="confirmDeleteSelected()" />
-                    </div>
-
-                    <div class="flex flex-row flex-wrap gap-2 items-center min-h-8">
+                    <div class="flex flex-row flex-wrap gap-2 items-center min-h-8" :class="[disableActions ? 'pointer-events-none' : '']">
+                        <Button v-if="leaveRequests.successful" @click="create()" class="w-min" :disabled="disableActions" :size="'sm'" :icon="'mdi:plus'"></Button>
                         <div v-if="leaveRequests.successful" class="scaffold-border px-2 font-[National_Park]">
                             <span><span class="font-semibold">{{selectedLeaveRequests.length}}</span> Selected</span>
                         </div>
+                        <Button v-if="leaveRequests.successful" :variant="'outline'" :size="'sm'" :icon="'mdi:delete-outline'" :disabled="disableActions" :label="'Bulk delete'" @click="confirmDeleteSelected()" />
                         <Button
                             v-if="leaveRequests.successful"
                             :variant="'outline'"
@@ -440,7 +436,7 @@ const leaveRequests = reactive<DataTableT>({
             total_pages: 0
         }
     },
-    'successful': true,
+    'successful': false,
     'message': ''
 });
 let filters = reactive<{

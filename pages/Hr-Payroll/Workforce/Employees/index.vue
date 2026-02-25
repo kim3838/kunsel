@@ -155,6 +155,7 @@
 
                     <div class="flex flex-row flex-wrap gap-2 items-center min-h-8" :class="[disableActions ? 'pointer-events-none' : '']">
                         <NuxtLink
+                            v-if="employees.successful"
                             :to="`/hr-payroll/workforce/employees/create-employee`">
                             <Button class="w-min" :disabled="disableActions" :size="'sm'" :icon="'mdi:plus'"></Button>
                         </NuxtLink>
@@ -177,11 +178,12 @@
                                 :label="`Bulk edit${selectedEmployees.length ? ' ' + selectedEmployees.length : ``}`"
                                 @click="bulkEdit" />
                         </EmployeeBulkEdit>
+                        <div v-if="!employees.successful" class="flex flex-row flex-wrap gap-2 items-center min-h-8">
+                            <Label invert :size="'md'" :type="'danger'" :label="employees.message" />
+                        </div>
                     </div>
 
-                    <div v-if="!employees.successful" class="flex flex-row flex-wrap gap-2 items-center min-h-8">
-                        <Label invert :size="'md'" :type="'danger'" :label="employees.message" />
-                    </div>
+
 
                     <div v-if="employees.successful && viewMode.selected == DATA_VIEW_MODE.FLEX" class="flex flex-row flex-wrap gap-4">
 
@@ -525,7 +527,7 @@ const employees = reactive<DataTableT>({
             total_pages: 0
         }
     },
-    'successful': true,
+    'successful': false,
     'message': ''
 });
 let filters = reactive<{

@@ -57,8 +57,9 @@ const showing = computed(() => {
 });
 
 const pageInformation = computed(() => {
-    let info = pageInfo.value + ", Showing " + showing.value + " Result" + (totalRow.value > 1 ? 's' : '');
 
-    return props.pending ? '...' : info;
+    let info = totalRow.value > 0 ? pageInfo.value + ", Showing " + showing.value + " Result" + (totalRow.value > 1 ? 's' : '') : 'No result';
+
+    return props.pending ? 'Loading...' : info;
 });
 </script>
