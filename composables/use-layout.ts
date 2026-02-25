@@ -302,12 +302,18 @@ export const useLayout = () => {
                             route_active: `${employeePortalRouteSlug}-file-request-leave`
                         },
                     ]
-                }, {
+                },{
                     key: `${employeePortalRouteSlug}/salary-statements`,
                     type: 'link',
                     title: 'Salary Statements',
                     to: `/${employeePortalRouteSlug}/salary-statements`,
                     route_active: `${employeePortalRouteSlug}-salary-statements`
+                },{
+                    key: `${employeePortalRouteSlug}/payroll-dtr`,
+                    type: 'link',
+                    title: 'Payroll DTR',
+                    to: `/${employeePortalRouteSlug}/payroll-dtr`,
+                    route_active: `${employeePortalRouteSlug}-payroll-dtr`
                 },] : []) as NavigationLinkInterface[],
             ],
             [SUBSCRIPTION_MODULE.HR_PAYROLL as number]: [

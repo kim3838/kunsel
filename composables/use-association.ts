@@ -103,6 +103,7 @@ export const useAssociation = () => {
             `${employeePortalRouteSlug}-file-request-overtime`,
             `${employeePortalRouteSlug}-file-request-leave`,
             `${employeePortalRouteSlug}-salary-statements`,
+            `${employeePortalRouteSlug}-payroll-dtr`,
         ], _toLower(String(route.name)));
     });
     const employeeSelfServicesSubscriptions = computed(() => {
