@@ -109,17 +109,18 @@ const userFiledRequestsSupHeaders = reactive<TableSupHeaderT[]>([
     {text: ''},
 
     {text: ''},
-    {text: ''},
     {text: 'Status'},
+
+    {text: ''},
 ]);
 
 const userFiledRequestsHeaders = reactive<TableHeaderT[]>([
     { text: '#', value: 'row_number'},
 
     { text: 'Request #', value: 'number', isNumeric: true},
+    { text: 'Status', value: 'status_summary'},
 
     { text: '', value: 'date_requested_diff'},
-    { text: 'Status', value: 'status_summary'},
 ]);
 
 const userFiledRequests = reactive<DataTableT>({
@@ -257,7 +258,7 @@ const userFiledRequestsExecute = async() =>{
                     ...userFiledRequest,
                     _payload: {
                         'label_shade': {
-                            'cell': ['status_summary'],
+                            'cell': ['number', 'status_summary'],
                             'value': shade
                         }
                     }

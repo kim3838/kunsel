@@ -107,20 +107,23 @@ watch(updatedAssociatedCompanyFlag, (newValue) => {
 const approvalStatesSupHeaders = reactive<TableSupHeaderT[]>([
     {text: ''},
 
-    {text: '', colspan: 2,  alignHeader: 'left'},
+    {text: '', colspan: 1,  alignHeader: 'left'},
 
     {text: 'Approval', colspan: 3,  alignHeader: 'left'},
+
+    {text: '', colspan: 1,  alignHeader: 'left'},
 ]);
 
 const approvalStatesHeaders = reactive<TableHeaderT[]>([
     { text: '#', value: 'row_number'},
 
     { text: 'Request #', value: 'request_number', isNumeric: true},
-    { text: '', value: 'date_requested_diff'},
 
-    { text: 'Order', value: 'order'},
     { text: 'Status', value: 'status'},
     { text: '', value: 'current_state_message', minWidth: '33.5px'},
+    { text: 'Order', value: 'order'},
+
+    { text: '', value: 'date_requested_diff'},
 ]);
 
 const approvalStates = reactive<DataTableT>({
@@ -206,7 +209,7 @@ const approvalStatesExecute = async() =>{
                     ...approvalState,
                     _payload: {
                         'label_shade': {
-                            'cell': ['status'],
+                            'cell': ['request_number', 'status'],
                             'value': shade
                         }
                     }
