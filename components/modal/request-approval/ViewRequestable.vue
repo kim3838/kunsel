@@ -113,7 +113,7 @@ const requestable = reactive<{
     message: string
 }>({
     'data': {},
-    'successful': false,
+    'successful': true,
     'message': ''
 })
 

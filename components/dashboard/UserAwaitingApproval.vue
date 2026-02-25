@@ -62,6 +62,9 @@
             v-model="selectedApprovalStates"
             @selectionChanged="syncSelectedApprovalStatesProxy"
             selection>
+            <template v-slot:cell.requestable_type_readable="{cell,slot}">
+                <div class="p-[3px]" :title="cell.requestable.type_readable">{{wordClamp(cell.requestable.type_readable, 20)}}</div>
+            </template>
             <template v-slot:cell.request_number="{cell,slot}">
                 <div class="p-[3px] hover:underline cursor-pointer" @click="viewRequestable(cell)">{{cell.requestable.number}}</div>
             </template>
@@ -89,6 +92,7 @@ import {storeToRefs} from "pinia";
 const {isAuthenticated, userIsSuperAdmin} = useAuth();
 const user = userState();
 const nuxtApp = useNuxtApp();
+const wordClamp = nuxtApp.$wordClamp as (text: string, length: number) => string;
 const ordinal = nuxtApp.$ordinal as (num: number | string) => string;
 const {
     updatedAssociatedCompanyFlag,
@@ -108,6 +112,7 @@ const approvalStatesSupHeaders = reactive<TableSupHeaderT[]>([
     {text: ''},
 
     {text: '', colspan: 1,  alignHeader: 'left'},
+    {text: '', colspan: 1,  alignHeader: 'left'},
 
     {text: 'Approval', colspan: 3,  alignHeader: 'left'},
 
@@ -117,6 +122,7 @@ const approvalStatesSupHeaders = reactive<TableSupHeaderT[]>([
 const approvalStatesHeaders = reactive<TableHeaderT[]>([
     { text: '#', value: 'row_number'},
 
+    { text: '', value: 'requestable_type_readable', isNumeric: true},
     { text: 'Request #', value: 'request_number', isNumeric: true},
 
     { text: 'Status', value: 'status'},

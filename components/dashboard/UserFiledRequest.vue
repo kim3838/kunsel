@@ -59,6 +59,9 @@
             v-model="selectedUserFiledRequests"
             @selectionChanged="syncSelectedUserFiledRequestsProxy"
             selection>
+            <template v-slot:cell.requestable_type_readable="{cell,slot}">
+                <div class="p-[3px]" :title="cell.requestable_type_readable">{{wordClamp(cell.requestable_type_readable, 20)}}</div>
+            </template>
             <template v-slot:cell.number="{cell,slot}">
                 <div class="p-[3px] hover:underline cursor-pointer" @click="viewRequestable(cell)">{{cell.number}}</div>
             </template>
@@ -89,6 +92,7 @@ import {storeToRefs} from "pinia";
 const {isAuthenticated} = useAuth();
 const user = userState();
 const nuxtApp = useNuxtApp();
+const wordClamp = nuxtApp.$wordClamp as (text: string, length: number) => string;
 const $enumerableOption = nuxtApp.$enumerableOption as (enumerable: StringEnumInterface, value: number) => {
     text: string,
     value: number
@@ -111,6 +115,7 @@ const userFiledRequestsSupHeaders = reactive<TableSupHeaderT[]>([
     {text: ''},
 
     {text: ''},
+    {text: ''},
     {text: 'Status'},
 
     {text: ''},
@@ -119,6 +124,7 @@ const userFiledRequestsSupHeaders = reactive<TableSupHeaderT[]>([
 const userFiledRequestsHeaders = reactive<TableHeaderT[]>([
     { text: '#', value: 'row_number'},
 
+    { text: '', value: 'requestable_type_readable', isNumeric: true},
     { text: 'Request #', value: 'number', isNumeric: true},
     { text: 'Status', value: 'status_summary'},
 

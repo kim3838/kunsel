@@ -50,9 +50,9 @@ module.exports = {
                     'Bruno Ace SC',
                 ],
                 data: [
+                    'Reddit Sans Condensed',
                     `'Source Sans 3'`,
                     'Ruluko',
-                    'Reddit Sans Condensed',
                     'Gentium Plus',
                     'Sofia Sans Semi Condensed',
                 ],
@@ -63,9 +63,9 @@ module.exports = {
                     'Momo Trust Sans',
                 ],
                 standard: [
+                    'Reddit Sans Condensed',
                     `'Source Sans 3'`,
                     'Ruluko',
-                    'Reddit Sans Condensed',
                     'Gentium Plus',
                     'Sofia Sans Semi Condensed',
                 ],
