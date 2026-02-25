@@ -17,16 +17,11 @@
                             :orientation="'horizontal'"
                             v-model="viewMode.selected" />
                     </div>
-
-                    <div>
-                        <PageInformation :pagination="leaves.meta.pagination" :pending="disableDataTable"/>
-                        <Pagination :size="'lg'" :pagination="leaves.meta.pagination" :pending="disableDataTable" v-model="pageComputed"/>
-                    </div>
                 </form>
 
                 <div class="px-[20px] space-y-2">
 
-                    <div class="flex flex-row flex-wrap gap-2 items-center min-h-8">
+                    <div v-if="disableActions || !leaves.successful" class="flex flex-row flex-wrap gap-2 items-center min-h-8">
                         <UnorderedList v-if="disableActions" :icon="'eos-icons:loading'" :size="'md'" :label="'Please wait...'"/>
                         <Label v-if="!leaves.successful" invert :size="'md'" :type="'danger'" :label="leaves.message" />
                     </div>
@@ -59,6 +54,11 @@
                             <div class="p-[3px]">{{cell.leave_type?.is_paid ? 'Yes' : 'No'}}</div>
                         </template>
                     </DataTable>
+
+                    <div>
+                        <PageInformation :pagination="leaves.meta.pagination" :pending="disableDataTable"/>
+                        <Pagination :size="'lg'" :pagination="leaves.meta.pagination" :pending="disableDataTable" v-model="pageComputed"/>
+                    </div>
                 </div>
             </div>
         </DefaultWrapper>

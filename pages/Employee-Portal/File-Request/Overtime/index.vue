@@ -46,13 +46,6 @@
                             <Button class="w-min" ref="submitButton" type="submit" :disabled="disableActions" :size="'md'" :icon="disableActions ? 'eos-icons:loading' : 'mdi:data'" :label="disableActions ? 'Loading' : 'Load'"></Button>
                         </div>
                     </div>
-
-                    <div>
-                        <PageInformation :pagination="overtimeRequests.meta.pagination" :pending="disableDataTable"/>
-                        <div class="flex items-center gap-2">
-                            <Pagination :size="'lg'" :pagination="overtimeRequests.meta.pagination" :pending="disableDataTable" v-model="pageComputed"/>
-                        </div>
-                    </div>
                 </form>
 
                 <ViewRequestable
@@ -214,14 +207,14 @@
                     </template>
                 </DialogModal>
 
-                <div class="px-[20px]">
-                    <div class="mb-2 flex flex-row flex-wrap gap-2 items-center min-h-8">
+                <div class="px-[20px] space-y-2">
+                    <div class="flex flex-row flex-wrap gap-2 items-center min-h-8">
                         <UnorderedList v-if="disableActions" :icon="'eos-icons:loading'" :size="'md'" :label="'Please wait...'"/>
                         <Button v-if="!disableActions" @click="create()" class="w-min" :disabled="disableActions" :size="'sm'" :icon="disableActions ? 'eos-icons:loading' : 'mdi:plus'" :label="disableActions ? 'Please wait' : ''"></Button>
                         <Button v-if="overtimeRequests.successful && !disableActions" :variant="'outline'" :size="'sm'" :icon="'mdi:delete-outline'" :disabled="disableActions" :label="'Bulk delete'" @click="confirmDeleteSelected()" />
                     </div>
 
-                    <div class="mb-2 flex flex-row flex-wrap gap-2 items-center min-h-8">
+                    <div class="flex flex-row flex-wrap gap-2 items-center min-h-8">
                         <div v-if="overtimeRequests.successful" class="scaffold-border px-2 font-[National_Park]">
                             <span><span class="font-semibold">{{selectedOvertimeRequests.length}}</span> Selected</span>
                         </div>
@@ -306,6 +299,13 @@
                             ></ApprovalStateSubRow>
                         </template>
                     </DataTable>
+
+                    <div>
+                        <PageInformation :pagination="overtimeRequests.meta.pagination" :pending="disableDataTable"/>
+                        <div class="flex items-center gap-2">
+                            <Pagination :size="'lg'" :pagination="overtimeRequests.meta.pagination" :pending="disableDataTable" v-model="pageComputed"/>
+                        </div>
+                    </div>
                 </div>
             </div>
         </DefaultWrapper>

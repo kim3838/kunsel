@@ -30,11 +30,6 @@
                             <Button class="w-min" ref="submitButton" type="submit" :disabled="disableActions" :size="'md'" :icon="disableActions ? 'eos-icons:loading' : 'mdi:data'" :label="disableActions ? 'Loading' : 'Load'"></Button>
                         </div>
                     </div>
-
-                    <div>
-                        <PageInformation :pagination="attendances.meta.pagination" :pending="disableDataTable"/>
-                        <Pagination :size="'lg'" :pagination="attendances.meta.pagination" :pending="disableDataTable" v-model="pageComputed"/>
-                    </div>
                 </form>
 
                 <DialogModal
@@ -201,7 +196,7 @@
 
                 <div class="px-[20px] space-y-2">
 
-                    <div class="flex flex-row flex-wrap gap-2 items-center min-h-8">
+                    <div v-if="disableActions || !attendances.successful" class="flex flex-row flex-wrap gap-2 items-center min-h-8">
                         <UnorderedList v-if="disableActions" :icon="'eos-icons:loading'" :size="'md'" :label="'Please wait...'"/>
                         <Label v-if="!attendances.successful" invert :size="'md'" :type="'danger'" :label="attendances.message" />
                     </div>
@@ -253,10 +248,18 @@
                         <template v-slot:cell.shift_schedule_work_end="{cell,slot}">
                             <div class="p-[3px]">{{cell.shift_schedule.work_end}}</div>
                         </template>
+                        <template v-slot:cell.date_readable="{cell,slot}">
+                            <div class="p-[3px]">{{cell.date_readable}}</div>
+                        </template>
                         <template v-slot:cell.status="{cell,slot}">
                             <div class="p-[3px]">{{cell.status.text}}</div>
                         </template>
                     </DataTable>
+
+                    <div>
+                        <PageInformation :pagination="attendances.meta.pagination" :pending="disableDataTable"/>
+                        <Pagination :size="'lg'" :pagination="attendances.meta.pagination" :pending="disableDataTable" v-model="pageComputed"/>
+                    </div>
                 </div>
             </div>
         </DefaultWrapper>
@@ -317,7 +320,7 @@ const attendancesHeaders = reactive<TableHeaderT[]>([
     { text: 'Start', value: 'shift_schedule_work_start', alignData: 'left'},
     { text: 'End', value: 'shift_schedule_work_end', alignData: 'left'},
 
-    { text: 'Date', value: 'date', alignData: 'left'},
+    { text: 'Date', value: 'date_readable', alignData: 'left'},
     { text: 'First In', value: 'first_in', alignData: 'left'},
     { text: 'Lunch Out', value: 'lunch_out', alignData: 'left'},
     { text: 'Lunch In', value: 'lunch_in', alignData: 'left'},

@@ -290,6 +290,9 @@
                         <template v-slot:cell.shift_schedule_work_end="{cell,slot}">
                             <div class="p-[3px]">{{cell.shift_schedule.work_end}}</div>
                         </template>
+                        <template v-slot:cell.date_readable="{cell,slot}">
+                            <div class="p-[3px]">{{cell.date_readable}}</div>
+                        </template>
                         <template v-slot:cell.status="{cell,slot}">
                             <div class="p-[3px]">{{cell.status.text}}</div>
                         </template>
@@ -372,7 +375,7 @@ const attendancesHeaders = reactive<TableHeaderT[]>([
     { text: 'Start', value: 'shift_schedule_work_start', alignData: 'left'},
     { text: 'End', value: 'shift_schedule_work_end', alignData: 'left'},
 
-    { text: 'Date', value: 'date', alignData: 'left'},
+    { text: 'Date', value: 'date_readable', alignData: 'left'},
     { text: 'First In', value: 'first_in', alignData: 'left'},
     { text: 'Lunch Out', value: 'lunch_out', alignData: 'left'},
     { text: 'Lunch In', value: 'lunch_in', alignData: 'left'},

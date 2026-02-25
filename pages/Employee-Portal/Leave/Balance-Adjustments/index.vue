@@ -17,16 +17,11 @@
                             :orientation="'horizontal'"
                             v-model="viewMode.selected" />
                     </div>
-
-                    <div>
-                        <PageInformation :pagination="leaveBalanceAdjustments.meta.pagination" :pending="disableDataTable"/>
-                        <Pagination :size="'lg'" :pagination="leaveBalanceAdjustments.meta.pagination" :pending="disableDataTable" v-model="pageComputed"/>
-                    </div>
                 </form>
 
                 <div class="px-[20px] space-y-2">
 
-                    <div class="flex flex-row flex-wrap gap-2 items-center min-h-8">
+                    <div v-if="disableActions || !leaveBalanceAdjustments.successful" class="flex flex-row flex-wrap gap-2 items-center min-h-8">
                         <UnorderedList v-if="disableActions" :icon="'eos-icons:loading'" :size="'md'" :label="'Please wait...'"/>
                         <Label v-if="!leaveBalanceAdjustments.successful" invert :size="'md'" :type="'danger'" :label="leaveBalanceAdjustments.message" />
                     </div>
@@ -56,6 +51,11 @@
                             <div class="p-[3px]">{{cell.type?.text}}</div>
                         </template>
                     </DataTable>
+
+                    <div>
+                        <PageInformation :pagination="leaveBalanceAdjustments.meta.pagination" :pending="disableDataTable"/>
+                        <Pagination :size="'lg'" :pagination="leaveBalanceAdjustments.meta.pagination" :pending="disableDataTable" v-model="pageComputed"/>
+                    </div>
                 </div>
             </div>
         </DefaultWrapper>

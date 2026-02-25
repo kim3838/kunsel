@@ -18,6 +18,7 @@
                             <InputLabel :size="'sm'" value="Filter payrolls" />
                             <MultiSelectPaginated
                                 :key="payrollSelectionsOptionsKey"
+                                :selection-max-viewable-line="20"
                                 :icon="'tdesign:component-checkbox'"
                                 :disabled="disableActions"
                                 glint
@@ -173,6 +174,9 @@
                         <template v-slot:cell.frequency_sequence="{cell,slot}">
                             <div class="p-[3px]">{{cell.payroll.frequency_sequence?.text}}</div>
                         </template>
+                        <template v-slot:cell.date_range_readable="{cell,slot}">
+                            <div class="p-[3px]">{{cell.payroll.date_range_readable}}</div>
+                        </template>
                         <template v-slot:cell.employee_full_name="{cell,slot}">
                             <div class="px-[3px]" :title="cell.employee_full_name">{{wordClamp(cell.employee_full_name, 16)}}</div>
                         </template>
@@ -297,7 +301,7 @@ const salaryStatementsSupHeaders = computed<TableSupHeaderT[]>(() => {
         {text: ''},
 
         ...(showPayrollInfo.value ? [
-            {text: 'Payroll', colspan: 6, alignHeader: 'center'},
+            {text: 'Payroll', colspan: 7, alignHeader: 'center'},
         ] : [
             {text: 'Payroll', colspan: 1, alignHeader: 'center'},
         ]),
@@ -328,6 +332,7 @@ const salaryStatementsHeaders = computed<TableHeaderT[]>(() => {
             { text: 'Month', value: 'month_readable'},
             { text: 'Frequency', value: 'pay_frequency'},
             { text: 'Sequence', value: 'frequency_sequence'},
+            { text: 'Payroll date', value: 'date_range_readable'},
         ] : [
             { text: '#', value: 'payroll_number', alignData: 'left'},
         ]),

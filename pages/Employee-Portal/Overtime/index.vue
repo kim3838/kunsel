@@ -17,16 +17,11 @@
                             :orientation="'horizontal'"
                             v-model="viewMode.selected" />
                     </div>
-
-                    <div>
-                        <PageInformation :pagination="overtimes.meta.pagination" :pending="disableDataTable"/>
-                        <Pagination :size="'lg'" :pagination="overtimes.meta.pagination" :pending="disableDataTable" v-model="pageComputed"/>
-                    </div>
                 </form>
 
                 <div class="px-[20px] space-y-2">
 
-                    <div class="flex flex-row flex-wrap gap-2 items-center min-h-8">
+                    <div v-if="disableActions || !overtimes.successful" class="flex flex-row flex-wrap gap-2 items-center min-h-8">
                         <UnorderedList v-if="disableActions" :icon="'eos-icons:loading'" :size="'md'" :label="'Please wait...'"/>
                         <Label v-if="!overtimes.successful" invert :size="'md'" :type="'danger'" :label="overtimes.message" />
                     </div>
@@ -62,6 +57,11 @@
                             <div class="p-[3px]">{{cell.attendance.last_out}}</div>
                         </template>
                     </DataTable>
+
+                    <div>
+                        <PageInformation :pagination="overtimes.meta.pagination" :pending="disableDataTable"/>
+                        <Pagination :size="'lg'" :pagination="overtimes.meta.pagination" :pending="disableDataTable" v-model="pageComputed"/>
+                    </div>
                 </div>
             </div>
         </DefaultWrapper>

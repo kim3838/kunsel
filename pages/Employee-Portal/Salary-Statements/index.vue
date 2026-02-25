@@ -64,17 +64,10 @@
                             </label>
                         </div>
                     </div>
-
-                    <div>
-                        <PageInformation :pagination="salaryStatements.meta.pagination" :pending="disableDataTable"/>
-                        <div class="flex items-center gap-2">
-                            <Pagination :size="'lg'" :pagination="salaryStatements.meta.pagination" :pending="disableDataTable" v-model="pageComputed"/>
-                        </div>
-                    </div>
                 </form>
 
-                <div class="px-[20px]">
-                    <div class="mb-2 flex flex-row flex-wrap gap-2 items-center min-h-8">
+                <div class="px-[20px] space-y-2">
+                    <div v-if="disableActions || !salaryStatements.successful" class="flex flex-row flex-wrap gap-2 items-center min-h-8">
                         <UnorderedList v-if="disableActions" :icon="'eos-icons:loading'" :size="'md'" :label="'Please wait...'"/>
                         <Label v-if="!salaryStatements.successful" invert :size="'md'" :type="'danger'" :label="salaryStatements.message" />
                     </div>
@@ -136,6 +129,9 @@
                         <template v-slot:cell.frequency_sequence="{cell,slot}">
                             <div class="p-[3px]">{{cell.payroll.frequency_sequence?.text}}</div>
                         </template>
+                        <template v-slot:cell.date_range_readable="{cell,slot}">
+                            <div class="p-[3px]">{{cell.payroll.date_range_readable}}</div>
+                        </template>
                         <template v-slot:cell.employee_full_name="{cell,slot}">
                             <div class="px-[3px]" :title="cell.employee_full_name">{{wordClamp(cell.employee_full_name, 16)}}</div>
                         </template>
@@ -159,6 +155,13 @@
                             </div>
                         </template>
                     </DataTable>
+
+                    <div>
+                        <PageInformation :pagination="salaryStatements.meta.pagination" :pending="disableDataTable"/>
+                        <div class="flex items-center gap-2">
+                            <Pagination :size="'lg'" :pagination="salaryStatements.meta.pagination" :pending="disableDataTable" v-model="pageComputed"/>
+                        </div>
+                    </div>
                 </div>
             </div>
         </DefaultWrapper>
@@ -205,7 +208,7 @@ const salaryStatementsSupHeaders = computed<TableSupHeaderT[]>(() => {
         {text: ''},
 
         ...(showPayrollInfo.value ? [
-            {text: 'Payroll', colspan: 6, alignHeader: 'center'},
+            {text: 'Payroll', colspan: 7, alignHeader: 'center'},
         ] : [
             {text: 'Payroll', colspan: 1, alignHeader: 'center'},
         ]),
@@ -236,6 +239,7 @@ const salaryStatementsHeaders = computed<TableHeaderT[]>(() => {
             { text: 'Month', value: 'month_readable'},
             { text: 'Frequency', value: 'pay_frequency'},
             { text: 'Sequence', value: 'frequency_sequence'},
+            { text: 'Payroll date', value: 'date_range_readable'},
         ] : [
             { text: '#', value: 'payroll_number', alignData: 'left'},
         ]),
