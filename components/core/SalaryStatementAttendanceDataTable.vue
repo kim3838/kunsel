@@ -79,6 +79,7 @@ const rowsProxy = computed({
     get() {
         return props.rows.map((salaryStatementAttendance: TableRowT) => {
 
+            let dayStatus = _get(salaryStatementAttendance, 'status.value', 0);
             let dayType = _get(salaryStatementAttendance, 'day_type.value', 0);
 
             let shade = 'clear';
