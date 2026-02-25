@@ -371,7 +371,7 @@ const salaryStatementsExecute = async() =>{
 
     salaryStatementsPending.value = true;
 
-    await laraFetch(`/api/employee-salary-statements`, {
+    await laraFetch(`/api/employee-portal-salary-statements`, {
         method: 'GET',
         params: paramsComputed.value
     }, {
