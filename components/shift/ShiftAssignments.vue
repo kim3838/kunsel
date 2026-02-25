@@ -1,5 +1,5 @@
 <template>
-    <div class="px-[20px]">
+    <div class="px-[20px] space-y-2">
         <form @submit.prevent="paginate(1, true)" class="space-y-2 pb-[20px]">
             <div class="grid gap-2 grid-cols-3 sm:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 ">
                 <div>
@@ -41,30 +41,14 @@
                             :payload="assignedShiftSelectionsOptions"
                         />
                 </div>
-            </div>
-
-            <div class="flex flex-row flex-wrap gap-2 items-center min-h-8">
-                <Button class="w-min" ref="submitButton" type="submit" :disabled="disableActions" :size="'md'" :icon="disableActions ? 'eos-icons:loading' : 'mdi:data'" :label="disableActions ? 'Loading' : 'Load'"></Button>
-            </div>
-
-            <div>
-                <PageInformation :pagination="shiftAssignments.meta.pagination" :pending="disableDataTable"/>
-                <div class="flex items-center gap-2">
-                    <Pagination
-                        :size="'lg'"
-                        :pagination="shiftAssignments.meta.pagination"
-                        :pending="disableDataTable"
-                        v-model="pageComputed"/>
-                    <UnorderedList
-                        v-if="disableActions"
-                        :icon="'eos-icons:loading'"
-                        :size="'md'"
-                        :label="'Please wait...'"/>
+                <div class="flex flex-col">
+                    <div class="flex-none h-[1.25rem]"></div>
+                    <Button class="w-min" ref="submitButton" type="submit" :disabled="disableActions" :size="'md'" :icon="disableActions ? 'eos-icons:loading' : 'mdi:data'" :label="disableActions ? 'Loading' : 'Load'"></Button>
                 </div>
             </div>
         </form>
 
-        <div class="flex flex-row flex-wrap gap-2 items-center min-h-8">
+        <div class="flex flex-row flex-wrap gap-2 items-center min-h-8" :class="[disableActions ? 'pointer-events-none' : '']">
             <div v-if="shiftAssignments.successful" class="scaffold-border px-2 font-[National_Park]">
                 <span><span class="font-semibold">{{selectedShiftAssignments.length}}</span> Selected</span>
             </div>
@@ -135,6 +119,11 @@
                 <div class="p-[3px]">{{cell.shift_code}}</div>
             </template>
         </DataTable>
+
+        <div>
+            <PageInformation :pagination="shiftAssignments.meta.pagination" :pending="disableDataTable"/>
+            <Pagination :size="'lg'" :pagination="shiftAssignments.meta.pagination" :pending="disableDataTable" v-model="pageComputed"/>
+        </div>
     </div>
 </template>
 
@@ -221,7 +210,7 @@ const employmentStatusOptions = reactive({
         {text : 'Active', value: USER_STATUS.ACTIVE} as EnumOption,
         {text : 'Inactive', value: USER_STATUS.INACTIVE} as EnumOption,
     ],
-    selected: [USER_STATUS.ACTIVE]
+    selected: []
 });
 const employmentTypeOptionsKey = shallowRef(0);
 const employmentTypeOptions = reactive<{
@@ -324,7 +313,7 @@ let filters = reactive<{
     }
 }>({
     page: 1,
-    perPage: 10,
+    perPage: 15,
     search: {
         keyword: '',
         callback: 1

@@ -77,11 +77,6 @@
                             :orientation="'horizontal'"
                             v-model="viewMode.selected" />
                     </div>
-
-                    <div>
-                        <PageInformation :pagination="payrollComponents.meta.pagination" :pending="disableDataTable"/>
-                        <Pagination :size="'lg'" :pagination="payrollComponents.meta.pagination" :pending="disableDataTable" v-model="pageComputed"/>
-                    </div>
                 </form>
 
                 <DialogModal
@@ -149,14 +144,10 @@
                     @cancelled="payrollComponentCancelled"
                 ></PayrollComponentAssignmentModal>
 
-                <div class="px-[20px]">
+                <div class="px-[20px] space-y-2">
 
-                    <div class="mb-2 flex flex-row flex-wrap gap-2 items-center min-h-8">
-                        <UnorderedList v-if="disableActions" :icon="'eos-icons:loading'" :size="'md'" :label="'Please wait...'"/>
-                        <Button v-else @click="selectEmployee" class="w-min" :disabled="disableActions" :size="'sm'" :icon="disableActions ? 'eos-icons:loading' : 'mdi:plus'" :label="disableActions ? 'Please wait' : ''"></Button>
-                    </div>
-
-                    <div class="mb-2 flex flex-row flex-wrap gap-2 items-center min-h-8">
+                    <div class="flex flex-row flex-wrap gap-2 items-center min-h-8" :class="[disableActions ? 'pointer-events-none' : '']">
+                        <Button  @click="selectEmployee" class="w-min" :disabled="disableActions" :size="'sm'" :icon="'mdi:plus'"></Button>
                         <div v-if="payrollComponents.successful" class="scaffold-border px-2 font-[National_Park]">
                             <span><span class="font-semibold">{{selectedPayrollComponents.length}}</span> Selected</span>
                         </div>
@@ -235,6 +226,11 @@
                             </div>
                         </template>
                     </DataTable>
+
+                    <div>
+                        <PageInformation :pagination="payrollComponents.meta.pagination" :pending="disableDataTable"/>
+                        <Pagination :size="'lg'" :pagination="payrollComponents.meta.pagination" :pending="disableDataTable" v-model="pageComputed"/>
+                    </div>
                 </div>
             </div>
         </DefaultWrapper>
@@ -370,7 +366,7 @@ let filters = reactive<{
     }
 }>({
     page: 1,
-    perPage: 25,
+    perPage: 15,
     search: {
         keyword: '',
         callback: 1

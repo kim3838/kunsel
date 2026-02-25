@@ -138,9 +138,9 @@ const selectSize = computed(() => {
 const perPageSelectWidth = computed(() => {
     return {
         'sm': '120px',
-        'md': '130px',
-        'lg': '160px',
-        'xl': '180px',
+        'md': '120px',
+        'lg': '140px',
+        'xl': '160px',
     }[props.size]
 });
 
@@ -149,10 +149,12 @@ const emit = defineEmits(["update:modelValue"]);
 let perPage = reactive({
     search: '',
     selection: [
-        {text : '5 per page', value: 5},
-        {text : '10 per page', value: 10},
-        {text : '25 per page', value: 25},
-        {text : '100 per page', value: 100},
+        {text : '5 / page', value: 5},
+        {text : '10 / page', value: 10},
+        {text : '15 / page', value: 15},
+        {text : '25 / page', value: 25},
+        {text : '50 / page', value: 50},
+        {text : '100 / page', value: 100},
     ],
     selected: props.modelValue?.perPage
 });

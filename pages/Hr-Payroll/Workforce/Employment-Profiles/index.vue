@@ -25,23 +25,8 @@
                         </div>
                         <div class="flex flex-col">
                             <div class="flex-none h-[1.25rem]"></div>
-                            <RadioGroup
-                                class="scaffold-border px-2"
-                                :disabled="disableActions"
-                                :selections="viewMode.selection"
-                                :size="'md'"
-                                :orientation="'horizontal'"
-                                v-model="viewMode.selected" />
-                        </div>
-                        <div class="flex flex-col">
-                            <div class="flex-none h-[1.25rem]"></div>
                             <Button class="w-min" ref="submitButton" type="submit" :disabled="disableActions" :size="'md'" :icon="disableActions ? 'eos-icons:loading' : 'mdi:data'" :label="disableActions ? 'Loading' : 'Load'"></Button>
                         </div>
-                    </div>
-
-                    <div>
-                        <PageInformation :pagination="employmentProfiles.meta.pagination" :pending="disableDataTable"/>
-                        <Pagination :size="'lg'" :pagination="employmentProfiles.meta.pagination" :pending="disableDataTable" v-model="pageComputed"/>
                     </div>
                 </form>
 
@@ -106,15 +91,14 @@
                     @cancelled="employmentProfileCancelled"
                 ></EmploymentProfileModal>
 
-                <div class="px-[20px]">
+                <div class="px-[20px] space-y-2">
 
-                    <div class="mb-2 flex flex-row flex-wrap gap-2 items-center min-h-8">
-                        <UnorderedList v-if="disableActions" :icon="'eos-icons:loading'" :size="'md'" :label="'Please wait...'"/>
-                        <Button v-if="!disableActions" @click="selectEmployee" class="w-min" :disabled="disableActions" :size="'sm'" :icon="disableActions ? 'eos-icons:loading' : 'mdi:plus'" :label="disableActions ? 'Please wait' : ''"></Button>
-                        <Button v-if="employmentProfiles.successful && !disableActions" :variant="'outline'" :size="'sm'" :icon="'mdi:delete-outline'" :disabled="disableActions" :label="'Bulk delete'" @click="confirmDeleteSelected()"/>
+                    <div class="flex flex-row flex-wrap gap-2 items-center min-h-8" :class="[disableActions ? 'pointer-events-none' : '']">
+                        <Button @click="selectEmployee" class="w-min" :disabled="disableActions" :size="'sm'" :icon="'mdi:plus'"></Button>
+                        <Button :variant="'outline'" :size="'sm'" :icon="'mdi:delete-outline'" :disabled="disableActions" :label="'Bulk delete'" @click="confirmDeleteSelected()"/>
                     </div>
 
-                    <div class="mb-2 flex flex-row flex-wrap gap-2 items-center min-h-8">
+                    <div class="flex flex-row flex-wrap gap-2 items-center min-h-8">
                         <div v-if="employmentProfiles.successful" class="scaffold-border px-2 font-[National_Park]">
                             <span><span class="font-semibold">{{selectedEmploymentProfiles.length}}</span> Selected</span>
                         </div>
@@ -162,6 +146,11 @@
                             <div class="p-[3px]">{{cell.end_of_service_type?.text}}</div>
                         </template>
                     </DataTable>
+
+                    <div>
+                        <PageInformation :pagination="employmentProfiles.meta.pagination" :pending="disableDataTable"/>
+                        <Pagination :size="'lg'" :pagination="employmentProfiles.meta.pagination" :pending="disableDataTable" v-model="pageComputed"/>
+                    </div>
                 </div>
             </div>
         </DefaultWrapper>
@@ -275,17 +264,6 @@ let filters = reactive<{
         keyword: '',
         callback: 1
     }
-});
-
-const viewMode = reactive<{
-    selection: EnumSelection;
-    selected: number | null;
-}>({
-    selection: [
-        {text : 'Flex', value: DATA_VIEW_MODE.FLEX} as EnumOption,
-        {text : 'List', value: DATA_VIEW_MODE.LIST} as EnumOption,
-    ],
-    selected: DATA_VIEW_MODE.LIST as number
 });
 
 let pageComputed = computed({

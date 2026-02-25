@@ -458,7 +458,7 @@ let filters = reactive<{
     dateTo: string,
 }>({
     page: 1,
-    perPage: 25,
+    perPage: 15,
     search: {
         keyword: '',
         callback: 1

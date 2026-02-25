@@ -14,18 +14,6 @@
                         </div>
                         <div class="flex flex-col">
                             <div class="flex-none h-[1.25rem]"></div>
-                            <RadioGroup
-                                class="scaffold-border px-2"
-                                :disabled="disableActions"
-                                :selections="viewMode.selection"
-                                :radio-key="`view_mode`"
-                                :size="'md'"
-                                :orientation="'horizontal'"
-                                v-model="viewMode.selected" />
-                        </div>
-
-                        <div class="flex flex-col">
-                            <div class="flex-none h-[1.25rem]"></div>
                             <Button class="w-min" ref="submitButton" type="submit" :disabled="disableActions" :size="'md'" :icon="disableActions ? 'eos-icons:loading' : 'mdi:data'" :label="disableActions ? 'Loading' : 'Load'"></Button>
                         </div>
                     </div>
@@ -70,9 +58,9 @@
                     </template>
                 </DialogModal>
 
-                <div class="px-[20px]">
+                <div class="px-[20px] space-y-2">
 
-                    <div class="mb-2 flex flex-row flex-wrap gap-2 items-center min-h-8">
+                    <div class="flex flex-row flex-wrap gap-2 items-center min-h-8">
                         <Button
                             class="inline-block"
                             :icon="'mdi:plus'"
@@ -182,17 +170,6 @@ let filters = reactive<{
         keyword: '',
         callback: 1
     }
-});
-
-const viewMode = reactive<{
-    selection: EnumSelection;
-    selected: number | null;
-}>({
-    selection: [
-        {text : 'Flex', value: DATA_VIEW_MODE.FLEX} as EnumOption,
-        {text : 'List', value: DATA_VIEW_MODE.LIST} as EnumOption,
-    ],
-    selected: DATA_VIEW_MODE.LIST as number
 });
 
 const designationsExecute = async () => {

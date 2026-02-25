@@ -43,18 +43,6 @@
                             :orientation="'horizontal'"
                             v-model="viewMode.selected" />
                     </div>
-
-                    <div>
-                        <PageInformation :pagination="attendances.meta.pagination" :pending="disableDataTable"/>
-                        <div class="flex items-center gap-2">
-                            <Pagination :size="'lg'" :pagination="attendances.meta.pagination" :pending="disableDataTable" v-model="pageComputed"/>
-                            <UnorderedList
-                                v-if="disableActions"
-                                :icon="'eos-icons:loading'"
-                                :size="'md'"
-                                :label="'Please wait...'"/>
-                        </div>
-                    </div>
                 </form>
 
                 <DialogModal
@@ -209,9 +197,9 @@
                     </template>
                 </DialogModal>
 
-                <div class="px-[20px]">
-                    <div class="mb-2 flex flex-row flex-wrap gap-2 items-center min-h-8">
-                        <AttendanceBulkCreate ref="attendanceBulkCreate" @cancelled="bulkCreateCancelled" @completed="bulkCreateCompleted">
+                <div class="px-[20px] space-y-2">
+                    <div class="flex flex-row flex-wrap gap-2 items-center min-h-8" :class="[disableActions ? 'pointer-events-none' : '']">
+                        <AttendanceBulkCreate v-if="attendances.successful" ref="attendanceBulkCreate" @cancelled="bulkCreateCancelled" @completed="bulkCreateCompleted">
                             <Button
                                 :disabled="disableActions"
                                 :variant="`outline`"
@@ -220,7 +208,6 @@
                                 :label="`Bulk create`"
                                 @click="bulkCreate" />
                         </AttendanceBulkCreate>
-
                         <div v-if="attendances.successful" class="scaffold-border px-2 font-[National_Park]">
                             <span><span class="font-semibold">{{selectedAttendances.length}}</span> Selected</span>
                         </div>
@@ -297,6 +284,11 @@
                             <div class="p-[3px]">{{cell.status.text}}</div>
                         </template>
                     </DataTable>
+
+                    <div>
+                        <PageInformation :pagination="attendances.meta.pagination" :pending="disableDataTable"/>
+                        <Pagination :size="'lg'" :pagination="attendances.meta.pagination" :pending="disableDataTable" v-model="pageComputed"/>
+                    </div>
                 </div>
             </div>
         </DefaultWrapper>
@@ -406,7 +398,7 @@ let filters = reactive<{
     }
 }>({
     page: 1,
-    perPage: 25,
+    perPage: 15,
     search: {
         keyword: '',
         callback: 1

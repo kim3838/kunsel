@@ -63,11 +63,6 @@
                             </label>
                         </div>
                     </div>
-
-                    <div>
-                        <PageInformation :pagination="employees.meta.pagination" :pending="disableDataTable"/>
-                        <Pagination :size="'lg'" :pagination="employees.meta.pagination" :pending="disableDataTable" v-model="pageComputed"/>
-                    </div>
                 </form>
 
                 <!-- Employment Profiles -->
@@ -156,14 +151,12 @@
                     </template>
                 </DialogModal>
 
-                <div class="px-[20px]">
+                <div class="px-[20px] space-y-2">
 
-                    <div class="mb-2 flex flex-row flex-wrap gap-2 items-center min-h-8">
-                        <UnorderedList v-if="disableActions" :icon="'eos-icons:loading'" :size="'md'" :label="'Please wait...'"/>
+                    <div class="flex flex-row flex-wrap gap-2 items-center min-h-8" :class="[disableActions ? 'pointer-events-none' : '']">
                         <NuxtLink
-                            v-else
                             :to="`/hr-payroll/workforce/employees/create-employee`">
-                            <Button class="w-min" :disabled="disableActions" :size="'sm'" :icon="disableActions ? 'eos-icons:loading' : 'mdi:plus'" :label="disableActions ? 'Please wait' : ''"></Button>
+                            <Button class="w-min" :disabled="disableActions" :size="'sm'" :icon="'mdi:plus'"></Button>
                         </NuxtLink>
                         <div v-if="employees.successful" class="scaffold-border px-2 font-[National_Park]">
                             <span><span class="font-semibold">{{selectedEmployees.length}}</span> Selected</span>
@@ -176,7 +169,7 @@
                             :disabled="disableActions"
                             :label="'Clear selection'"
                             @click="selectedEmployees = []" />
-                        <EmployeeBulkEdit ref="employeeBulkEdit" v-model:selected-employee-ids="selectedEmployees" @completed="bulkEditCompleted">
+                        <EmployeeBulkEdit v-if="employees.successful" ref="employeeBulkEdit" v-model:selected-employee-ids="selectedEmployees" @completed="bulkEditCompleted">
                             <Button
                                 :disabled="disableActions || selectedEmployees.length == 0"
                                 :variant="`outline`"
@@ -344,6 +337,11 @@
                             <div class="p-[3px]">{{cell.user?.email_verified_readable}}</div>
                         </template>
                     </DataTable>
+
+                    <div>
+                        <PageInformation :pagination="employees.meta.pagination" :pending="disableDataTable"/>
+                        <Pagination :size="'lg'" :pagination="employees.meta.pagination" :pending="disableDataTable" v-model="pageComputed"/>
+                    </div>
                 </div>
             </div>
         </DefaultWrapper>
@@ -539,7 +537,7 @@ let filters = reactive<{
     }
 }>({
     page: 1,
-    perPage: 25,
+    perPage: 15,
     search: {
         keyword: '',
         callback: 1

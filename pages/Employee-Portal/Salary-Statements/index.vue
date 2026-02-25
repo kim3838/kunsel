@@ -67,8 +67,7 @@
                 </form>
 
                 <div class="px-[20px] space-y-2">
-                    <div v-if="disableActions || !salaryStatements.successful" class="flex flex-row flex-wrap gap-2 items-center min-h-8">
-                        <UnorderedList v-if="disableActions" :icon="'eos-icons:loading'" :size="'md'" :label="'Please wait...'"/>
+                    <div v-if="!salaryStatements.successful" class="flex flex-row flex-wrap gap-2 items-center min-h-8">
                         <Label v-if="!salaryStatements.successful" invert :size="'md'" :type="'danger'" :label="salaryStatements.message" />
                     </div>
 
@@ -300,7 +299,7 @@ let filters = reactive<{
     }
 }>({
     page: 1,
-    perPage: 25,
+    perPage: 15,
     fromMonth: {
         value: moment().startOf('month').format('YYYY-MM'),
         label: moment().startOf('month').format('YYYY MMMM')

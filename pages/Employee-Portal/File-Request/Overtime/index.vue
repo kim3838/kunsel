@@ -439,7 +439,7 @@ let filters = reactive<{
     }
 }>({
     page: 1,
-    perPage: 25,
+    perPage: 15,
     attendanceSearch: {
         keyword: '',
         callback: 1

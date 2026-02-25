@@ -1,5 +1,5 @@
 <template>
-    <div :class="[compact ? '' : 'px-[20px]']">
+    <div :class="[compact ? '' : 'px-[20px] space-y-2']">
         <form @submit.prevent="paginate(1, clearSelectionOnFormSubmit)" class="space-y-2" :class="[compact ? '' : 'pb-[20px]']">
             <div class="grid gap-2 grid-cols-3 sm:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
                 <div>
@@ -55,36 +55,16 @@
                         :payload="notAssignedLeaveTypeSelectionsOptions"
                     />
                 </div>
-                <div v-if="compact" class="flex flex-col">
+                <div class="flex flex-col">
                     <div class="flex-none h-[1.25rem]"></div>
                     <div class="grow">
                         <Button class="w-min" ref="submitButton" type="submit" :disabled="disableActions" :size="'md'" :icon="disableActions ? 'eos-icons:loading' : 'mdi:data'" :label="disableActions ? 'Loading' : 'Load'"></Button>
                     </div>
                 </div>
             </div>
-
-            <div v-if="!compact" class="flex flex-row flex-wrap gap-2 items-center min-h-8">
-                <Button class="w-min" ref="submitButton" type="submit" :disabled="disableActions" :size="'md'" :icon="disableActions ? 'eos-icons:loading' : 'mdi:data'" :label="disableActions ? 'Loading' : 'Load'"></Button>
-            </div>
-
-            <div>
-                <PageInformation :pagination="employees.meta.pagination" :pending="disableDataTable"/>
-                <div class="flex items-center gap-2">
-                    <Pagination
-                        :size="'lg'"
-                        :pagination="employees.meta.pagination"
-                        :pending="disableDataTable"
-                        v-model="pageComputed"/>
-                    <UnorderedList
-                        v-if="disableActions"
-                        :icon="'eos-icons:loading'"
-                        :size="'md'"
-                        :label="'Please wait...'"/>
-                </div>
-            </div>
         </form>
 
-        <div class="flex flex-row flex-wrap gap-2 items-center min-h-8" :class="[compact ? 'mt-2' : '']">
+        <div class="flex flex-row flex-wrap gap-2 items-center min-h-8" :class="[compact ? 'mt-2' : '', disableActions ? 'pointer-events-none' : '']">
             <div v-if="employees.successful" class="scaffold-border px-2 font-[National_Park]">
                 <span><span class="font-semibold">{{proxySelectedEmployees.length}}</span> {{selectedLabel}}</span>
             </div>
@@ -137,6 +117,11 @@
                 <div class="p-[3px]">{{cell.employee_designation?.name}}</div>
             </template>
         </DataTable>
+
+        <div>
+            <PageInformation :pagination="employees.meta.pagination" :pending="disableDataTable"/>
+            <Pagination :size="'lg'" :pagination="employees.meta.pagination" :pending="disableDataTable" v-model="pageComputed"/>
+        </div>
     </div>
 </template>
 
@@ -280,7 +265,7 @@ const employmentStatusOptions = reactive({
         {text : 'Active', value: USER_STATUS.ACTIVE} as EnumOption,
         {text : 'Inactive', value: USER_STATUS.INACTIVE} as EnumOption,
     ],
-    selected: [USER_STATUS.ACTIVE]
+    selected: []
 });
 const employmentTypeOptionsKey = shallowRef(0);
 const employmentTypeOptions = reactive<{
@@ -407,7 +392,7 @@ let filters = reactive<{
     }
 }>({
     page: 1,
-    perPage: 10,
+    perPage: 15,
     search: {
         keyword: '',
         callback: 1

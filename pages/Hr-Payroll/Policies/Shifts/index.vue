@@ -18,17 +18,6 @@
 
                         <div class="flex flex-col">
                             <div class="flex-none h-[1.25rem]"></div>
-                            <RadioGroup
-                                class="scaffold-border px-2"
-                                :disabled="disableActions"
-                                :selections="viewMode.selection"
-                                :size="'md'"
-                                :orientation="'horizontal'"
-                                v-model="viewMode.selected" />
-                        </div>
-
-                        <div class="flex flex-col">
-                            <div class="flex-none h-[1.25rem]"></div>
                             <div class="grow">
                                 <div class="h-full px-2 scaffold-border flex items-center">
                                     <label class="flex items-center">
@@ -49,28 +38,18 @@
                             <Button class="w-min" ref="submitButton" type="submit" :disabled="disableActions" :size="'md'" :icon="disableActions ? 'eos-icons:loading' : 'mdi:data'" :label="disableActions ? 'Loading' : 'Load'"></Button>
                         </div>
                     </div>
-
-                    <div>
-                        <PageInformation :pagination="shifts.meta.pagination" :pending="disableDataTable" />
-                        <Pagination :size="'lg'" :pagination="shifts.meta.pagination" :pending="disableDataTable" v-model="pageComputed"/>
-                    </div>
                 </form>
 
-                <div class="px-[20px]">
-                    <div class="mb-2 flex flex-row flex-wrap gap-2 items-center min-h-8">
-                        <UnorderedList v-if="disableActions" :icon="'eos-icons:loading'" :size="'md'" :label="'Please wait...'"/>
+                <div class="px-[20px] space-y-2">
+                    <div class="flex flex-row flex-wrap gap-2 items-center min-h-8" :class="[disableActions ? 'pointer-events-none' : '']">
                         <NuxtLink
-                            v-if="!disableActions"
                             :to="`/hr-payroll/policies/shifts/create-shift`">
-                            <Button class="w-min" :disabled="disableActions" :size="'sm'" :icon="disableActions ? 'eos-icons:loading' : 'mdi:plus'" :label="disableActions ? 'Please wait' : ''"></Button>
+                            <Button class="w-min" :disabled="disableActions" :size="'sm'" :icon="'mdi:plus'"></Button>
                         </NuxtLink>
-                        <Button v-if="shifts.successful && !disableActions" :variant="'outline'" :icon="'mdi:delete-outline'" class="inline-block" :size="'sm'" :disabled="disableActions" :label="'Bulk delete'" @click="confirmDeleteSelected"/>
-                    </div>
-
-                    <div class="mb-2 flex flex-row flex-wrap gap-2 items-center min-h-8">
                         <div v-if="shifts.successful" class="scaffold-border px-2 font-[National_Park]">
                             <span><span class="font-semibold">{{selectedShifts.length}}</span> Selected</span>
                         </div>
+                        <Button v-if="shifts.successful" :variant="'outline'" :icon="'mdi:delete-outline'" class="inline-block" :size="'sm'" :disabled="disableActions" :label="'Bulk delete'" @click="confirmDeleteSelected"/>
                         <Button v-if="shifts.successful" :variant="'outline'" :size="'sm'" :icon="'tdesign:close'" :disabled="disableActions" :label="'Clear selection'" @click="selectedShifts = []" />
                         <Label v-if="!shifts.successful" invert :size="'md'" :type="'danger'" :label="shifts.message" />
                     </div>
@@ -136,6 +115,11 @@
                             ></ShiftSubRow>
                         </template>
                     </DataTable>
+
+                    <div>
+                        <PageInformation :pagination="shifts.meta.pagination" :pending="disableDataTable" />
+                        <Pagination :size="'lg'" :pagination="shifts.meta.pagination" :pending="disableDataTable" v-model="pageComputed"/>
+                    </div>
                 </div>
             </div>
         </DefaultWrapper>
@@ -218,7 +202,7 @@ let filters = reactive<{
     }
 }>({
     page: 1,
-    perPage: 25,
+    perPage: 15,
     search: {
         keyword: '',
         callback: 1
@@ -228,17 +212,6 @@ let filters = reactive<{
 const noShiftRecords = computed(() => {
     return shifts.meta.pagination.total === 0;
 })
-
-const viewMode = reactive<{
-    selection: EnumSelection;
-    selected: number | null;
-}>({
-    selection: [
-        {text : 'Flex', value: DATA_VIEW_MODE.FLEX} as EnumOption,
-        {text : 'List', value: DATA_VIEW_MODE.LIST} as EnumOption,
-    ],
-    selected: DATA_VIEW_MODE.LIST as number
-});
 
 const shiftTypeOptions = reactive({
     search: '',

@@ -21,8 +21,7 @@
 
                 <div class="px-[20px] space-y-2">
 
-                    <div v-if="disableActions || !overtimes.successful" class="flex flex-row flex-wrap gap-2 items-center min-h-8">
-                        <UnorderedList v-if="disableActions" :icon="'eos-icons:loading'" :size="'md'" :label="'Please wait...'"/>
+                    <div v-if="!overtimes.successful" class="flex flex-row flex-wrap gap-2 items-center min-h-8">
                         <Label v-if="!overtimes.successful" invert :size="'md'" :type="'danger'" :label="overtimes.message" />
                     </div>
 
@@ -144,7 +143,7 @@ let filters = reactive<{
     }
 }>({
     page: 1,
-    perPage: 25,
+    perPage: 15,
     search: {
         keyword: '',
         callback: 1
