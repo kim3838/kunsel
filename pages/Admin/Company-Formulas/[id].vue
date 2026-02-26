@@ -59,7 +59,7 @@
                             <fieldset class="neutral-border px-2 pb-2 space-y-2">
                                 <legend class="text-lg font-header">Formula Settings</legend>
 
-                                <FormulaSettingsCaster :description-whitespace="'pre-line'" :settings="_get(viewFormulaSettingsModalValue, 'sub_row.settings', null)" />
+                                <FormulaSettingsCaster :description-whitespace="'pre-line'" :settings="_get(viewFormulaSettingsModalValue, 'settings', null)" />
                             </fieldset>
                         </div>
                     </template>
@@ -218,7 +218,7 @@ const formBody = computed(() => {
 
     formulaSettingsData.value.forEach((formulaSetting: CompanyFormulaSetting) => {
         formulaAssignments[formulaSetting.formula_id] = {
-            'settings': formulaSetting.sub_row.settings
+            'settings': formulaSetting.settings
         };
     });
 
@@ -236,7 +236,7 @@ const confirmSyncWithDefaultSetting = async (cell: TableRowT) => {
         message: `Confirm sync default formula settings for ${cell.formula_name}?`,
         action: {
             callback: async () => {
-                cell.sub_row.settings = cell.default_settings
+                cell.settings = cell.default_settings
             },
             label: 'Yes'
         }

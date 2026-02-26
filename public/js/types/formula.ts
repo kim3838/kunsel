@@ -24,9 +24,7 @@ export type CompanyFormulaSetting = {
     formulable_component_type : EnumOption,
     default_settings : unknown[],
     formula_settings : unknown[],
-    sub_row: {
-        settings: FormulaSettingT[]
-    },
+    settings: FormulaSettingT[]
     _payload?: TableRowPayloadT;
 }
 

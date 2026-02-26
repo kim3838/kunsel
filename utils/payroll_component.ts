@@ -7,7 +7,7 @@ export const  FORMULABLE: NumericEnumInterface = {
     TAXABLE_INCOME : 300,
     NON_TAXABLE_INCOME : 400,
     INCOME_TAX : 500,
-    NET_INCOME : 600
+    NET_INCOME : 900
 }
 
 export const  FORMULABLE_NAME: StringEnumInterface = {
