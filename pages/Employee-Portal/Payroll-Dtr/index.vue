@@ -110,7 +110,7 @@ import type {LabelTypeT} from "@/public/js/types/theme";
 import {storeToRefs} from "pinia";
 
 useHead({titleTemplate: (titleChunk) => {return `Payroll DTR`}});
-definePageMeta({middleware: ['auth', 'employee-of-selected-company']});
+definePageMeta({middleware: ['auth', 'verified', 'employee-of-selected-company']});
 useLayout().setNavigationMode('solid');
 
 const userCompanyEmployee = userCompanyEmployeeState();

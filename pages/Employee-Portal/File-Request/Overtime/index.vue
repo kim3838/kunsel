@@ -319,7 +319,7 @@ import type {RequestablePayloadT} from "@/public/js/types/request-approval";
 import {storeToRefs} from "pinia";
 
 useHead({titleTemplate: (titleChunk) => {return `Overtime Requests`}});
-definePageMeta({middleware: ['auth', 'employee-of-selected-company']});
+definePageMeta({middleware: ['auth', 'verified', 'employee-of-selected-company']});
 useLayout().setNavigationMode('solid');
 
 const user = userState();

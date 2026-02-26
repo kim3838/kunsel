@@ -233,7 +233,7 @@ import type {SingleSelectPaginatedInstance} from "@/public/js/types/component-in
 import {storeToRefs} from "pinia";
 
 useHead({titleTemplate: (titleChunk) => {return `Leave Balance Adjustments`}});
-definePageMeta({middleware: ['auth', 'admin-of-selected-company']});
+definePageMeta({middleware: ['auth', 'verified', 'admin-of-selected-company']});
 useLayout().setNavigationMode('solid');
 
 const {isAuthenticated} = useAuth();

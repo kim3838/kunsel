@@ -201,7 +201,7 @@ const scheduleIsFlexible = computed(() => {
 })
 
 definePageMeta({
-    middleware: ['auth', 'employee-of-selected-company',
+    middleware: ['auth', 'verified', 'employee-of-selected-company',
         async (to) => {
 
             if(import.meta.server){return true;}

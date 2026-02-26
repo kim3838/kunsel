@@ -146,7 +146,7 @@ import {storeToRefs} from "pinia";
 import type {PayrollT, SalaryStatementT} from "~/public/js/types/payroll";
 
 useHead({titleTemplate: (titleChunk) => {return `Salary Statement`}});
-definePageMeta({middleware: ['auth', 'admin-of-selected-company']});
+definePageMeta({middleware: ['auth', 'verified', 'admin-of-selected-company']});
 useLayout().setNavigationMode('solid');
 const route = useRoute();
 const {isAuthenticated} = useAuth();

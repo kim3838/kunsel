@@ -381,7 +381,7 @@ import type {RequestablePayloadT} from "@/public/js/types/request-approval";
 import {storeToRefs} from "pinia";
 
 useHead({titleTemplate: (titleChunk) => {return `Attendance Adjustment Requests`}});
-definePageMeta({middleware: ['auth', 'admin-of-selected-company']});
+definePageMeta({middleware: ['auth', 'verified', 'admin-of-selected-company']});
 useLayout().setNavigationMode('solid');
 
 const {isAuthenticated} = useAuth();

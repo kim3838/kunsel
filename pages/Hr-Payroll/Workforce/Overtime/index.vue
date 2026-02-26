@@ -292,7 +292,7 @@ import type {DateTimePickerOptionsT} from "@/public/js/datetimepicker/type";
 import {storeToRefs} from "pinia";
 
 useHead({titleTemplate: (titleChunk) => {return `Overtime`}});
-definePageMeta({middleware: ['auth', 'admin-of-selected-company']});
+definePageMeta({middleware: ['auth', 'verified', 'admin-of-selected-company']});
 useLayout().setNavigationMode('solid');
 
 const {isAuthenticated} = useAuth();

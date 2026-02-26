@@ -301,7 +301,7 @@ import type {EnumOption, EnumSelection} from "@/public/js/common/type";
 import {storeToRefs} from "pinia";
 
 useHead({titleTemplate: (titleChunk) => {return `Attendance`}});
-definePageMeta({middleware: ['auth', 'admin-of-selected-company']});
+definePageMeta({middleware: ['auth', 'verified', 'admin-of-selected-company']});
 useLayout().setNavigationMode('solid');
 
 const {isAuthenticated} = useAuth();

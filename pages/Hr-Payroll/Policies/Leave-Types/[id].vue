@@ -293,7 +293,7 @@ import type {LeaveTypeT, LeaveTypeBalancePerPeriodT} from "@/public/js/types/lea
 import {storeToRefs} from "pinia";
 
 useHead({titleTemplate: (titleChunk) => {return `Leave Types`}});
-definePageMeta({middleware: ['auth', 'admin-of-selected-company']});
+definePageMeta({middleware: ['auth', 'verified', 'admin-of-selected-company']});
 useLayout().setNavigationMode('solid');
 const route = useRoute();
 const {isAuthenticated} = useAuth();

@@ -328,7 +328,7 @@ import type {LeaveDateInquiryT} from "@/public/js/types/leave";
 import {storeToRefs} from "pinia";
 
 useHead({titleTemplate: (titleChunk) => {return `Leave Requests`}});
-definePageMeta({middleware: ['auth', 'employee-of-selected-company']});
+definePageMeta({middleware: ['auth', 'verified', 'employee-of-selected-company']});
 useLayout().setNavigationMode('solid');
 
 const user = userState();

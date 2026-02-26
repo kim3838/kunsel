@@ -70,7 +70,7 @@ import type {EnumOption, EnumSelection} from "@/public/js/common/type";
 import {storeToRefs} from "pinia";
 
 useHead({titleTemplate: (titleChunk) => {return `Leave`}});
-definePageMeta({middleware: ['auth', 'employee-of-selected-company']});
+definePageMeta({middleware: ['auth', 'verified', 'employee-of-selected-company']});
 useLayout().setNavigationMode('solid');
 
 const userCompanyEmployee = userCompanyEmployeeState();

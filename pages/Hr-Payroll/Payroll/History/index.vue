@@ -133,7 +133,7 @@ import {storeToRefs} from "pinia";
 import {useClipboard } from '@vueuse/core'
 
 useHead({titleTemplate: (titleChunk) => {return `Payrolls`}});
-definePageMeta({middleware: ['auth', 'admin-of-selected-company']});
+definePageMeta({middleware: ['auth', 'verified', 'admin-of-selected-company']});
 useLayout().setNavigationMode('solid');
 
 const { copy, isSupported: clipBoardSupported } = useClipboard({ legacy: true })

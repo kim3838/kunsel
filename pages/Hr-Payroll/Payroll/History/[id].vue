@@ -30,7 +30,7 @@ import {storeToRefs} from "pinia";
 import type {PayrollT} from "@/public/js/types/payroll";
 
 useHead({titleTemplate: (titleChunk) => {return `Payroll`}});
-definePageMeta({middleware: ['auth', 'admin-of-selected-company']});
+definePageMeta({middleware: ['auth', 'verified', 'admin-of-selected-company']});
 useLayout().setNavigationMode('solid');
 const route = useRoute();
 const {isAuthenticated} = useAuth();

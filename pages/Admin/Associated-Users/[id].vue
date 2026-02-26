@@ -144,7 +144,7 @@ import type {UserCompanyAssignmentSyncT, UserCompanyAssignmentT, UserFormT, User
 import type {EnumSelection} from "@/public/js/common/type";
 
 useHead({titleTemplate: (titleChunk) => {return `Users`}});
-definePageMeta({middleware: ['auth', 'admin-in-any-company']});
+definePageMeta({middleware: ['auth', 'verified', 'admin-in-any-company']});
 useLayout().setNavigationMode('solid');
 
 const route = useRoute();

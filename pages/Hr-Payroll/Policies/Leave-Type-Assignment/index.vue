@@ -206,7 +206,7 @@ import type {LeaveTypeAssignmentsInstance, LeaveTypeByEmployeeSelectionInstance,
 import type {StringEnumInterface} from "@/public/js/common/type";
 
 useHead({titleTemplate: (titleChunk) => {return `Leave Type Assignment`}});
-definePageMeta({middleware: ['auth', 'admin-of-selected-company']});
+definePageMeta({middleware: ['auth', 'verified', 'admin-of-selected-company']});
 useLayout().setNavigationMode('solid');
 
 const nuxtApp = useNuxtApp();

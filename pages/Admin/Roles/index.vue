@@ -75,7 +75,7 @@ import type {EnumSelection} from "@/public/js/common/type";
 import type {SelectDataType} from "@/public/js/types/form";
 
 useHead({titleTemplate: (titleChunk) => {return `Roles`}});
-definePageMeta({middleware: ['auth', 'admin-in-any-company']});
+definePageMeta({middleware: ['auth', 'verified', 'admin-in-any-company']});
 useLayout().setNavigationMode('solid');
 
 const user = userState();

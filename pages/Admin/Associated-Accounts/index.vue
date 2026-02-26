@@ -50,7 +50,7 @@
 import type {AccountT} from "@/public/js/types/account";
 
 useHead({titleTemplate: (titleChunk) => {return `Accounts`}});
-definePageMeta({middleware: ['auth', 'admin-in-any-company']});
+definePageMeta({middleware: ['auth', 'verified', 'admin-in-any-company']});
 useLayout().setNavigationMode('solid');
 const user = userState();
 

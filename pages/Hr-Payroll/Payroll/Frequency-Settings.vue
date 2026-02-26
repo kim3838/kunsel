@@ -197,7 +197,7 @@ import type {EnumSelection, StringEnumInterface} from "@/public/js/common/type";
 import type {PayFrequencyT} from "@/public/js/types/pay-frequency";
 
 useHead({titleTemplate: (titleChunk) => {return `Payroll Frequencies`}});
-definePageMeta({middleware: ['auth', 'admin-of-selected-company']});
+definePageMeta({middleware: ['auth', 'verified', 'admin-of-selected-company']});
 useLayout().setNavigationMode('solid');
 
 const {screenWidthBreakpoint, width: screenWidth} = useScreen();

@@ -173,7 +173,7 @@ import type {ApprovalStateT, ApprovalStateWorkFlowPayloadT} from "@/public/js/ty
 import {storeToRefs} from "pinia";
 
 useHead({titleTemplate: (titleChunk) => {return `Approval States`}});
-definePageMeta({middleware: ['auth', 'admin-of-selected-company']});
+definePageMeta({middleware: ['auth', 'verified', 'admin-of-selected-company']});
 useLayout().setNavigationMode('solid');
 
 const user = userState();

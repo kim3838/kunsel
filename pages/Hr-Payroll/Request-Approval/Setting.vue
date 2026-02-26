@@ -229,7 +229,7 @@ import type {CompanyUserSelectionT} from "@/public/js/types/user";
 import type {StringEnumInterface} from "@/public/js/common/type";
 
 useHead({titleTemplate: (titleChunk) => {return `Approval Setting`}});
-definePageMeta({middleware: ['auth', 'admin-of-selected-company']});
+definePageMeta({middleware: ['auth', 'verified', 'admin-of-selected-company']});
 useLayout().setNavigationMode('solid');
 
 const {screenWidthBreakpoint, width: screenWidth} = useScreen();

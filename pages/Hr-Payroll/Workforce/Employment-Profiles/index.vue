@@ -160,7 +160,7 @@ import type {DataTableT, TableHeaderT, TableRowT, TableSupHeaderT} from "@/publi
 import type {EnumOption, EnumSelection, StringEnumInterface} from "@/public/js/common/type";
 
 useHead({titleTemplate: (titleChunk) => {return `Employment Profiles`}});
-definePageMeta({middleware: ['auth', 'admin-of-selected-company']});
+definePageMeta({middleware: ['auth', 'verified', 'admin-of-selected-company']});
 useLayout().setNavigationMode('solid');
 
 const {isAuthenticated} = useAuth();

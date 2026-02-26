@@ -141,7 +141,7 @@ import type {SelectDataType} from "@/public/js/types/form";
 import type {LabelTypeT} from "@/public/js/types/theme";
 
 useHead({titleTemplate: (titleChunk) => {return `Users`}});
-definePageMeta({middleware: ['auth', 'admin-in-any-company']});
+definePageMeta({middleware: ['auth', 'verified', 'admin-in-any-company']});
 useLayout().setNavigationMode('solid');
 
 const user = userState();

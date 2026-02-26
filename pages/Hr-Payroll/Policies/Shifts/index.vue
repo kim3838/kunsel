@@ -97,6 +97,9 @@
                         <template v-slot:cell.type="{cell,slot}">
                             <div class="p-[3px]">{{cell.type.text}}</div>
                         </template>
+                        <template v-slot:cell.name="{cell,slot}">
+                            <div class="p-[3px]" :title="cell.name">{{wordClamp(cell.name, 24)}}</div>
+                        </template>
                         <template v-slot:cell.holiday_policy="{cell,slot}">
                             <div class="p-[3px]">{{cell.holiday_policy.text}}</div>
                         </template>
@@ -133,11 +136,12 @@ import type {EnumOption, EnumSelection} from "@/public/js/common/type";
 import {storeToRefs} from "pinia";
 
 useHead({titleTemplate: (titleChunk) => {return `Shifts`}});
-definePageMeta({middleware: ['auth', 'admin-of-selected-company']});
+definePageMeta({middleware: ['auth', 'verified', 'admin-of-selected-company']});
 useLayout().setNavigationMode('solid');
 
 const {isAuthenticated} = useAuth();
 const nuxtApp = useNuxtApp();
+const wordClamp = nuxtApp.$wordClamp as (text: string, length: number) => string;
 const {
     updatedAssociatedCompanyFlag
 } = storeToRefs(nuxtApp.$associationStore);

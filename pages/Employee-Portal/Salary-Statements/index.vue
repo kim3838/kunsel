@@ -173,7 +173,7 @@ import type {DateTimePickerPayloadT} from "@/public/js/datetimepicker/type";
 import {storeToRefs} from "pinia";
 
 useHead({titleTemplate: (titleChunk) => {return `Salary Statements`}});
-definePageMeta({middleware: ['auth', 'employee-of-selected-company']});
+definePageMeta({middleware: ['auth', 'verified', 'employee-of-selected-company']});
 useLayout().setNavigationMode('solid');
 
 const userCompanyEmployee = userCompanyEmployeeState();

@@ -179,7 +179,7 @@ import type {EmployeePayrollComponentPreImportT} from "@/public/js/types/import"
 import {storeToRefs} from "pinia";
 
 useHead({titleTemplate: (titleChunk) => {return `Import Payroll Component`}});
-definePageMeta({middleware: ['auth', 'admin-of-selected-company']});
+definePageMeta({middleware: ['auth', 'verified', 'admin-of-selected-company']});
 useLayout().setNavigationMode('solid');
 
 const {baseURL} = useRuntimeConfig().public;

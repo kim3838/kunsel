@@ -183,7 +183,7 @@ import type {EmploymentProfilePreImportT, ImportRow} from "@/public/js/types/imp
 import {storeToRefs} from "pinia";
 
 useHead({titleTemplate: (titleChunk) => {return `Import Employment Profile`}});
-definePageMeta({middleware: ['auth', 'admin-of-selected-company']});
+definePageMeta({middleware: ['auth', 'verified', 'admin-of-selected-company']});
 useLayout().setNavigationMode('solid');
 
 const {baseURL} = useRuntimeConfig().public;
