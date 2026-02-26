@@ -38,15 +38,15 @@
                     <div class="mt-4 grid gap-2 grid-cols-1 sm:grid-cols-2">
                         <div class="col-span-1 sm:col-span-2">
                             <InputLabel :size="'sm'" value="Current Password" />
-                            <InputWithIcon :size="'md'" class="w-full" :disabled="updatePasswordPending" :icon="'mdi:key-chain'" :type="'password'" placeholder="Enter current password" v-model="updatePassword.currentPassword" required />
+                            <InputWithIcon :size="'md'" class="w-full" :disabled="updatePasswordPending" :type="'password'" v-model="updatePassword.currentPassword" required />
                         </div>
                         <div>
                             <InputLabel :size="'sm'" value="New Password" />
-                            <InputWithIcon :size="'md'" class="w-full" :disabled="updatePasswordPending" :icon="'ph:password-fill'" :type="'password'" placeholder="Enter new password" v-model="updatePassword.newPassword" required />
+                            <InputWithIcon :size="'md'" class="w-full" :disabled="updatePasswordPending" :type="'password'" v-model="updatePassword.newPassword" required />
                         </div>
                         <div>
                             <InputLabel :size="'sm'" value="Confirm New Password" />
-                            <InputWithIcon :size="'md'" class="w-full" :disabled="updatePasswordPending" :icon="'ph:password-fill'" :type="'password'" placeholder="Re-enter new password" v-model="updatePassword.confirmNewPassword" required />
+                            <InputWithIcon :size="'md'" class="w-full" :disabled="updatePasswordPending" :type="'password'" v-model="updatePassword.confirmNewPassword" required />
                         </div>
                         <div></div>
                         <div>

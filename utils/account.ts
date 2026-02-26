@@ -3,11 +3,17 @@ import type {NumericEnumInterface, StringEnumInterface} from "@/public/js/common
 
 export const  SUBSCRIPTION_PLAN: NumericEnumInterface = {
     STANDARD : 100,
+    STANDARD_PLUS : 101,
+    STANDARD_PLUS_2 : 102,
+    CORPORATE : 200,
     BUSINESS : 500,
 }
 
 export const  SUBSCRIPTION_PLAN_NAME: StringEnumInterface = {
     [SUBSCRIPTION_PLAN.STANDARD as number] : 'Standard',
+    [SUBSCRIPTION_PLAN.STANDARD_PLUS as number] : 'Standard +1',
+    [SUBSCRIPTION_PLAN.STANDARD_PLUS_2 as number] : 'Standard +2',
+    [SUBSCRIPTION_PLAN.CORPORATE as number] : 'Corporate',
     [SUBSCRIPTION_PLAN.BUSINESS as number] : 'Business',
 }
 

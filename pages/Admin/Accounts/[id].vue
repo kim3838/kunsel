@@ -179,6 +179,9 @@ const subscriptionPlanOptions = reactive({
     search: '',
     selection: [
         $enumerableOption(SUBSCRIPTION_PLAN_NAME, SUBSCRIPTION_PLAN.STANDARD as number),
+        $enumerableOption(SUBSCRIPTION_PLAN_NAME, SUBSCRIPTION_PLAN.STANDARD_PLUS as number),
+        $enumerableOption(SUBSCRIPTION_PLAN_NAME, SUBSCRIPTION_PLAN.STANDARD_PLUS_2 as number),
+        $enumerableOption(SUBSCRIPTION_PLAN_NAME, SUBSCRIPTION_PLAN.CORPORATE as number),
         $enumerableOption(SUBSCRIPTION_PLAN_NAME, SUBSCRIPTION_PLAN.BUSINESS as number),
     ]
 });
