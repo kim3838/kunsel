@@ -52,6 +52,14 @@
                                     <div>{{ _get(company, 'account_number', null) }}</div>
                                 </div>
                                 <div>
+                                    <InputLabel :size="'sm'" value="Address" />
+                                    <div>{{ _get(company, 'address_line_1', null) }}</div>
+                                </div>
+                                <div>
+                                    <InputLabel :size="'sm'" value="" />
+                                    <div>{{ _get(company, 'address_line_2', null) }}</div>
+                                </div>
+                                <div>
                                     <InputLabel :size="'sm'" value="Country" />
                                     <div>{{ _get(company, 'country', null) }}</div>
                                 </div>
@@ -83,7 +91,7 @@ import type {SelectDataType} from "@/public/js/types/form";
 import type {EnumSelection} from "@/public/js/common/type";
 
 useHead({titleTemplate: (titleChunk) => {return `Companies`}});
-definePageMeta({middleware: ['auth', 'admin-in-any-company']});
+definePageMeta({middleware: ['auth', 'verified', 'admin-in-any-company']});
 useLayout().setNavigationMode('solid');
 
 const user = userState();

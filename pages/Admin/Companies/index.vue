@@ -83,6 +83,8 @@ const companiesHeaders = reactive<TableHeaderT[]>([
     { text: 'Short Name', value: 'short_name', alignData: 'left'},
     { text: 'Name', value: 'name', alignData: 'left'},
     { text: 'Code', value: 'code', alignData: 'left'},
+    { text: 'Address line 1', value: 'address_line_1', alignData: 'left'},
+    { text: 'Address line 2', value: 'address_line_2', alignData: 'left'},
     { text: 'Country', value: 'country', alignData: 'left'},
     { text: 'Currency', value: 'currency', alignData: 'left'},
     { text: 'Timezone', value: 'timezone', alignData: 'left'},

@@ -39,6 +39,16 @@
                     </div>
                     <div class="grid gap-2 grid-cols-1 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
                         <div>
+                            <InputLabel :size="'sm'" value="Address line 1"/>
+                            <Input :size="'md'" v-model="companyAddressLine1" type="text"/>
+                        </div>
+                        <div>
+                            <InputLabel :size="'sm'" value="Address line 2"/>
+                            <Input :size="'md'" v-model="companyAddressLine2" type="text"/>
+                        </div>
+                    </div>
+                    <div class="grid gap-2 grid-cols-1 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+                        <div>
                             <InputLabel :size="'sm'" value="Country"/>
                             <SingleSelect value-persist drop-shadow :size="'md'" :options="countryOptions"/>
                         </div>
@@ -69,7 +79,7 @@ const {fetchAssociatedCompanies, storeAssociatedCompanies} = useAssociation();
 const {timezoneSelections} = useCommon();
 
 useHead({titleTemplate: (titleChunk) => {return `Companies`}});
-definePageMeta({middleware: ['auth', 'admin-in-any-company']});
+definePageMeta({middleware: ['auth', 'verified', 'admin-in-any-company']});
 useLayout().setNavigationMode('solid');
 
 const user = userState();
@@ -84,6 +94,8 @@ const creatingCompany = computed(() => {
 const companyCode = ref('');
 const companyShortName = ref('');
 const companyName = ref('');
+const companyAddressLine1 = ref('');
+const companyAddressLine2 = ref('');
 
 const accountOptions = reactive<{
     search: string,
@@ -178,6 +190,8 @@ const fetchCompany = async () => {
             companyCode.value = _get(response, '_data.values.company.code', '');
             companyShortName.value = _get(response, '_data.values.company.short_name', '');
             companyName.value = _get(response, '_data.values.company.name', '');
+            companyAddressLine1.value = _get(response, '_data.values.company.address_line_1', '');
+            companyAddressLine2.value = _get(response, '_data.values.company.address_line_2', '');
             countryOptions.selected = _get(response, '_data.values.company.country_id', null);
             currencyOptions.selected = _get(response, '_data.values.company.currency', null);
             timezoneOptions.selected = _get(response, '_data.values.company.timezone', null);
@@ -208,6 +222,8 @@ const formBody = computed(() => {
         code: companyCode.value,
         short_name: companyShortName.value,
         name: companyName.value,
+        address_line_1: companyAddressLine1.value,
+        address_line_2: companyAddressLine2.value,
         country_id: countryOptions.selected,
         currency: currencyOptions.selected,
         timezone: timezoneOptions.selected,
