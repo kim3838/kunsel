@@ -26,6 +26,8 @@
                 </div>
             </div>
 
+            <div v-else-if="setting.type == 'spacer'" class="h-8"></div>
+
             <div v-else-if="setting.key == 'description' && setting.type == 'text'">
                 <div class="font-semibold">{{setting.label}}</div>
                 <p class="text-base" :class="'whitespace-' + descriptionWhitespace">{{setting.readable}}</p>

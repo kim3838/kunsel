@@ -29,6 +29,16 @@
             <template v-slot:cell.employer_share_total="{cell,slot}">
                 <div  class="p-[3px]">{{cell.employer_share?.total}}</div>
             </template>
+
+            <template v-slot:cell.gross="{cell,slot}">
+                <div  class="p-[3px]">{{cell.gross}}</div>
+            </template>
+            <template v-slot:cell.deduction="{cell,slot}">
+                <div  class="p-[3px]">{{cell.deduction}}</div>
+            </template>
+            <template v-slot:cell.net="{cell,slot}">
+                <div  class="p-[3px]">{{cell.net}}</div>
+            </template>
         </DataTable>
     </div>
 </template>
@@ -110,6 +120,14 @@ const getSupHeaders = (componentValueType: number) => {
         ])
     }
 
+    if([
+        TYPE.NET
+    ].indexOf(componentValueType) >= 0){
+        supHeaders = supHeaders.concat([
+            {text: 'Net summary', colspan: 3, alignHeader: 'center'},
+        ])
+    }
+
     return supHeaders;
 };
 
@@ -178,6 +196,16 @@ const getHeaders = (componentValueType: number) => {
     ].indexOf(componentValueType) >= 0){
         headers = headers.concat([
             { text: 'Total', value: 'total', isNumeric: true, alignData: 'right', alignHeader: 'center'}
+        ])
+    }
+
+    if([
+        TYPE.NET
+    ].indexOf(componentValueType) >= 0){
+        headers = headers.concat([
+            { text: 'Gross', value: 'gross', isNumeric: true, alignData: 'right', alignHeader: 'center'},
+            { text: 'Deduction', value: 'deduction', isNumeric: true, alignData: 'right', alignHeader: 'center'},
+            { text: 'Net', value: 'net', isNumeric: true, alignData: 'right', alignHeader: 'center'}
         ])
     }
 
