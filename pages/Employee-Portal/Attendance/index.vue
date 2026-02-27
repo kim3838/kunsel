@@ -1,12 +1,12 @@
 <template>
     <div>
         <DefaultWrapper>
-            <div class="mx-auto max-w-screen-2xl">
+            <div class="mx-auto max-w-screen-lg">
                 <form @submit.prevent="paginate(1, true)" class="space-y-2 p-[20px]">
 
                     <BreadCrumbs prefix-company :size="`sm`" />
 
-                    <div class="grid gap-2 grid-cols-3 sm:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-8">
+                    <div class="grid gap-2 grid-cols-3 sm:grid-cols-4 lg:grid-cols-5">
                         <div>
                             <InputLabel :size="'sm'" value="Date From"/>
                             <InputWithIcon :icon="'mdi:calendar-today-outline'" :id="'date_from'" readonly v-model="formStore.filters.attendanceDateFrom" :size="'md'" class="w-full" :override="{font_family_class: 'font-sans'}" :disabled="disableActions" />
@@ -34,7 +34,6 @@
 
                 <DialogModal
                     :show="creatingAdjustment"
-                    :max-width="'1280px'"
                     :closeable="false">
                     <template #title>
 
@@ -48,7 +47,7 @@
                                 </div>
                             </div>
 
-                            <div class="pt-2 mx-auto max-w-screen-xl flex flex-row gap-4">
+                            <div class="pt-2 mx-auto max-w-screen-lg flex flex-row gap-4">
 
                                 <fieldset v-if="creatingAdjustment" class="basis-1/3 neutral-border px-2 pb-2 space-y-2">
                                     <legend class="text-lg font-header">Schedule</legend>
@@ -229,12 +228,6 @@
                                 </NavDrop>
                             </div>
                         </template>
-                        <template v-slot:cell.employee_number="{cell,slot}">
-                            <div class="p-[3px]">{{cell.employee.number}}</div>
-                        </template>
-                        <template v-slot:cell.employee_full_name="{cell,slot}">
-                            <div class="p-[3px]">{{cell.employee.full_name}}</div>
-                        </template>
                         <template v-slot:cell.shift_code="{cell,slot}">
                             <div class="p-[3px]">{{cell.shift.code}}</div>
                         </template>
@@ -301,7 +294,6 @@ watch(updatedAssociatedCompanyFlag, (newValue) => {
 const attendancesSupHeaders = reactive<TableSupHeaderT[]>([
     {text: ''},
     {text: ''},
-    {text: 'Employee', colspan: 2,  alignHeader: 'left'},
     {text: 'Shift', colspan: 1,  alignHeader: 'left'},
     {text: 'Schedule', colspan: 3,  alignHeader: 'left'},
     {text: 'Attendance', colspan: 6,  alignHeader: 'left'},
@@ -310,8 +302,6 @@ const attendancesSupHeaders = reactive<TableSupHeaderT[]>([
 const attendancesHeaders = reactive<TableHeaderT[]>([
     { text: '#', value: 'row_number'},
     { text: '', value: 'actions'},
-    { text: 'Employee #', value: 'employee_number', alignData: 'left'},
-    { text: 'Name', value: 'employee_full_name', alignData: 'left'},
 
     { text: 'Code', value: 'shift_code', alignData: 'left'},
 
@@ -350,7 +340,7 @@ let filters = reactive<{
     }
 }>({
     page: 1,
-    perPage: 15,
+    perPage: 10,
     search: {
         keyword: '',
         callback: 1

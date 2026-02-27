@@ -122,7 +122,7 @@ const approvalStatesSupHeaders = reactive<TableSupHeaderT[]>([
 const approvalStatesHeaders = reactive<TableHeaderT[]>([
     { text: '#', value: 'row_number'},
 
-    { text: '', value: 'requestable_type_readable', isNumeric: true},
+    { text: '', value: 'requestable_type_readable'},
     { text: 'Request #', value: 'request_number', isNumeric: true},
 
     { text: 'Status', value: 'status'},

@@ -56,6 +56,28 @@ const props = defineProps({
     },
 });
 
+const rowsProxy = computed({
+    get() {
+        return props.rows.map((statementDetail: TableRowT) => {
+
+            let shade = useCosmetic().formulableComponentShade(statementDetail.formulable_type.value, statementDetail.component_type?.value);
+
+            return {
+                ...statementDetail,
+                _payload: {
+                    'label_shade': {
+                        'cell': ['component_type', 'component_name'],
+                        'value': shade
+                    }
+                }
+            };
+        });
+    },
+    set(newValue) {
+
+    }
+});
+
 const emit = defineEmits(['proxyEdit', 'syncSelected']);
 
 const rowsIsEmpty = computed(() => props.rows.length === 0);

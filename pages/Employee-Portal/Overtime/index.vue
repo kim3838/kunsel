@@ -1,7 +1,7 @@
 <template>
     <div>
         <DefaultWrapper>
-            <div class="mx-auto max-w-screen-2xl">
+            <div class="mx-auto max-w-screen-lg">
                 <form @submit.prevent="paginate(1, true)" class="space-y-2 p-[20px]">
 
                     <BreadCrumbs prefix-company :size="`sm`" />
@@ -34,12 +34,6 @@
                         :disabled="disableDataTable"
                         v-model="selectedOvertimes"
                         selection>
-                        <template v-slot:cell.employee_number="{cell,slot}">
-                            <div class="p-[3px]">{{cell.employee.number}}</div>
-                        </template>
-                        <template v-slot:cell.employee_full_name="{cell,slot}">
-                            <div class="p-[3px]">{{cell.employee.full_name}}</div>
-                        </template>
                         <template v-slot:cell.shift_max_overtime="{cell,slot}">
                             <div class="p-[3px]">{{cell.shift.max_overtime_readable}}</div>
                         </template>
@@ -95,7 +89,6 @@ watch(updatedAssociatedCompanyFlag, (newValue) => {
 
 const overtimesSupHeaders = reactive<TableSupHeaderT[]>([
     {text: ''},
-    {text: 'Employee', colspan: 2,  alignHeader: 'left'},
     {text: 'Shift', colspan: 1,  alignHeader: 'left'},
     {text: 'Schedule', colspan: 2,  alignHeader: 'left'},
     {text: 'Attendance', colspan: 2,  alignHeader: 'left'},
@@ -104,8 +97,6 @@ const overtimesSupHeaders = reactive<TableSupHeaderT[]>([
 
 const overtimesHeaders = reactive<TableHeaderT[]>([
     { text: '#', value: 'row_number'},
-    { text: 'Employee #', value: 'employee_number', alignData: 'left'},
-    { text: 'Name', value: 'employee_full_name', alignData: 'left'},
 
     { text: 'Max Overtime', value: 'shift_max_overtime', alignData: 'right'},
 
@@ -143,7 +134,7 @@ let filters = reactive<{
     }
 }>({
     page: 1,
-    perPage: 15,
+    perPage: 10,
     search: {
         keyword: '',
         callback: 1

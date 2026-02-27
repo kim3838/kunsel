@@ -1,7 +1,7 @@
 <template>
     <div>
         <DefaultWrapper>
-            <div class="mx-auto max-w-screen-2xl">
+            <div class="mx-auto max-w-screen-sm">
                 <form @submit.prevent="paginate(1, true)" class="space-y-2 p-[20px]">
 
                     <BreadCrumbs prefix-company :size="`sm`" />
@@ -34,12 +34,6 @@
                         :disabled="disableDataTable"
                         v-model="selectedLeaves"
                         selection>
-                        <template v-slot:cell.employee_number="{cell,slot}">
-                            <div class="p-[3px]">{{cell.employee.number}}</div>
-                        </template>
-                        <template v-slot:cell.employee_full_name="{cell,slot}">
-                            <div class="p-[3px]">{{cell.employee.full_name}}</div>
-                        </template>
                         <template v-slot:cell.code="{cell,slot}">
                             <div class="p-[3px]">{{cell.leave_type?.code}}</div>
                         </template>
@@ -92,22 +86,19 @@ watch(updatedAssociatedCompanyFlag, (newValue) => {
 
 const leavesSupHeaders = reactive<TableSupHeaderT[]>([
     {text: ''},
-    {text: 'Employee', colspan: 2,  alignHeader: 'left'},
     {text: 'Leave Date', colspan: 1,  alignHeader: 'left'},
     {text: 'Leave Type', colspan: 4,  alignHeader: 'left'},
 ]);
 
 const leavesHeaders = reactive<TableHeaderT[]>([
     { text: '#', value: 'row_number'},
-    { text: 'Employee #', value: 'employee_number', alignData: 'left'},
-    { text: 'Name', value: 'employee_full_name', alignData: 'left', minWidth: '200px'},
 
-    { text: '', value: 'date', minWidth: '200px'},
+    { text: '', value: 'date'},
 
-    { text: 'Code', value: 'code', minWidth: '143px'},
-    { text: 'Name', value: 'name', minWidth: '143px'},
-    { text: 'Type', value: 'type', minWidth: '143px'},
-    { text: 'Is Paid', value: 'is_paid', minWidth: '143px'},
+    { text: 'Code', value: 'code'},
+    { text: 'Name', value: 'name'},
+    { text: 'Type', value: 'type'},
+    { text: 'Is Paid', value: 'is_paid'},
 
 ]);
 
@@ -134,7 +125,7 @@ let filters = reactive<{
     },
 }>({
     page: 1,
-    perPage: 15,
+    perPage: 10,
     search: {
         keyword: '',
         callback: 1

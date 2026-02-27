@@ -1,13 +1,13 @@
 <template>
     <div>
         <DefaultWrapper>
-            <div class="mx-auto max-w-screen-2xl">
+            <div class="mx-auto max-w-screen-lg">
                 <form @submit.prevent="paginate(1, true)" class="space-y-2 p-[20px]">
 
                     <BreadCrumbs prefix-company :size="`sm`" />
 
-                    <div class="grid gap-2 grid-cols-3 sm:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-8">
-                        <div class="col-span-2">
+                    <div class="grid gap-2 grid-cols-3 sm:grid-cols-4 lg:grid-cols-5">
+                        <div class="col-span-3">
                             <InputLabel :size="'sm'" value="Payroll" />
                             <SingleSelectPaginated
                                 :key="payrollSelectionsOptionsKey"
@@ -38,7 +38,7 @@
                         v-if="attendances.successful"
                         :sup-headers="attendancesSupHeaders"
                         :headers="attendancesHeaders"
-                        :size="'lg'"
+                        :size="'md'"
                         :rows="attendances.data"
                         :disabled="disableDataTable"
                         v-model="selectedAttendances"
@@ -178,8 +178,6 @@ const attendancesSupHeaders = reactive<TableSupHeaderT[]>([
     {text: 'Attendance', colspan: 4,  alignHeader: 'left'},
 
     {text: '', colspan: 2,  alignHeader: 'left'},
-
-    {text: 'Payroll', colspan: 2,  alignHeader: 'left'},
 ]);
 
 const attendancesHeaders = reactive<TableHeaderT[]>([
@@ -200,9 +198,6 @@ const attendancesHeaders = reactive<TableHeaderT[]>([
 
     { text: 'Status', value: 'day_status', alignData: 'left'},
     { text: 'Type', value: 'day_type', alignData: 'left'},
-
-    { text: '#', value: 'payroll_number', alignData: 'left'},
-    { text: 'Status', value: 'payroll_status', alignData: 'left'},
 ]);
 
 const attendances = reactive<DataTableT>({
@@ -309,7 +304,20 @@ const attendancesExecute = async() =>{
                     isSelectable: Boolean(attendance.ulid),
                     _payload: {
                         'label_shade': {
-                            'cell': ['date_readable', 'day_status', 'day_type'],
+                            'cell': [
+                                'row_number',
+                                'shift_code',
+                                'week_day_name',
+                                'shift_schedule_work_start',
+                                'shift_schedule_work_end',
+                                'date_readable',
+                                'first_in',
+                                'lunch_out',
+                                'lunch_in',
+                                'last_out',
+                                'day_status',
+                                'day_type'
+                            ],
                             'value': shade
                         }
                     }

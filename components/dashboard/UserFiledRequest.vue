@@ -74,9 +74,7 @@
 
         <div v-if="userFiledRequests?.meta?.pagination?.total">
             <PageInformation :pagination="userFiledRequests.meta.pagination" :pending="disableDataTable"/>
-            <div class="flex items-center gap-2">
-                <Pagination :size="'md'" :pagination="userFiledRequests.meta.pagination" :pending="disableDataTable" v-model="pageComputed"/>
-            </div>
+            <Pagination :size="'md'" :pagination="userFiledRequests.meta.pagination" :pending="disableDataTable" v-model="pageComputed"/>
         </div>
 
     </div>
@@ -124,7 +122,7 @@ const userFiledRequestsSupHeaders = reactive<TableSupHeaderT[]>([
 const userFiledRequestsHeaders = reactive<TableHeaderT[]>([
     { text: '#', value: 'row_number'},
 
-    { text: '', value: 'requestable_type_readable', isNumeric: true},
+    { text: '', value: 'requestable_type_readable'},
     { text: 'Request #', value: 'number', isNumeric: true},
     { text: 'Status', value: 'status_summary'},
 

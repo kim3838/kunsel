@@ -1,7 +1,7 @@
 <template>
     <div>
         <DefaultWrapper>
-            <div class="mx-auto max-w-screen-2xl">
+            <div class="mx-auto max-w-screen-xl">
                 <form @submit.prevent="paginate(1, true)" class="space-y-2 p-[20px]">
 
                     <BreadCrumbs prefix-company :size="`sm`" />
@@ -54,7 +54,6 @@
 
                 <DialogModal
                     :show="creatingOrEditing"
-                    :max-width="'1280px'"
                     :closeable="false">
                     <template #title>
                     </template>

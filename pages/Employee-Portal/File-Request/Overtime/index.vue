@@ -1,12 +1,12 @@
 <template>
     <div>
         <DefaultWrapper>
-            <div class="mx-auto max-w-screen-2xl">
+            <div class="mx-auto max-w-screen-xl">
                 <form @submit.prevent="paginate(1, true)" class="space-y-2 p-[20px]">
 
                     <BreadCrumbs prefix-company :size="`sm`" />
 
-                    <div class="grid gap-2 grid-cols-3 sm:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
+                    <div class="grid gap-2 grid-cols-3 sm:grid-cols-4 lg:grid-cols-5">
                         <div>
                             <InputLabel :size="'sm'" value="Status" />
                             <MultiSelect :disabled="disableActions" glint drop-shadow :size="'md'" :options="requestApprovalStatusOptions" :icon="'tdesign:component-checkbox'"/>
@@ -15,17 +15,7 @@
                             <InputLabel :size="'sm'" value="Request # Search" />
                             <Input :disabled="disableActions" :size="'md'" ref="searchInput" v-model="filters.search.keyword" class="w-full" placeholder="Search Number" type="text"/>
                         </div>
-                        <div v-if="false" class="flex flex-col">
-                            <div class="flex-none h-[1.25rem]"></div>
-                            <RadioGroup
-                                class="scaffold-border px-2"
-                                :disabled="disableActions"
-                                :selections="viewMode.selection"
-                                :size="'md'"
-                                :orientation="'horizontal'"
-                                v-model="viewMode.selected" />
-                        </div>
-                        <div class="flex flex-col">
+                        <div class="flex flex-col col-span-2">
                             <div class="flex-none h-[1.25rem]"></div>
                             <div class="grow">
                                 <div class="h-full px-2 scaffold-border flex items-center">
@@ -54,7 +44,6 @@
 
                 <DialogModal
                     :show="creatingOrEditing"
-                    :max-width="'1280px'"
                     :closeable="false">
                     <template #title>
 

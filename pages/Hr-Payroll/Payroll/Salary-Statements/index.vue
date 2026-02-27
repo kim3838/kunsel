@@ -14,7 +14,7 @@
                             <InputLabel :size="'sm'" value="Search employee" />
                             <Input :disabled="disableActions" :size="'md'" ref="searchInput" v-model="filters.employee_search.keyword" class="w-full" placeholder="Search employee" type="text"/>
                         </div>
-                        <div>
+                        <div class="col-span-2">
                             <InputLabel :size="'sm'" value="Filter payrolls" />
                             <MultiSelectPaginated
                                 :key="payrollSelectionsOptionsKey"
@@ -310,7 +310,7 @@ const salaryStatementsSupHeaders = computed<TableSupHeaderT[]>(() => {
             {text: '', colspan: 1, alignHeader: 'center'},
             {text: 'Work days split', colspan: 3, alignHeader: 'center'},
 
-            {text: 'Employee record', colspan: 4, alignHeader: 'center'},
+            {text: 'Employee reported', colspan: 4, alignHeader: 'center'},
         ] : []),
 
         {text: 'Totals', colspan: 6, alignHeader: 'center'},

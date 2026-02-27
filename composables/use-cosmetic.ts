@@ -7,7 +7,7 @@ import {storeToRefs} from "pinia";
 export const useCosmetic = () => {
 
     const formulableComponentShade = (formulableType: number|null, componentType: number|null): LabelTypeT => {
-        let shadeValue: LabelTypeT = 'default';
+        let shadeValue: LabelTypeT = 'clear';
 
         if(formulableType == null || componentType == null){
             return shadeValue;

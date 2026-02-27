@@ -223,7 +223,7 @@ const salaryStatementsSupHeaders = computed<TableSupHeaderT[]>(() => {
             {text: '', colspan: 1, alignHeader: 'center'},
             {text: 'Work days split', colspan: 3, alignHeader: 'center'},
 
-            {text: 'Employee record', colspan: 4, alignHeader: 'center'},
+            {text: 'Employee reported', colspan: 4, alignHeader: 'center'},
         ] : []),
 
         {text: 'Totals', colspan: 6, alignHeader: 'center'},
