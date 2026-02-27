@@ -491,6 +491,13 @@ export const useLayout = () => {
                             to: `/${hrPayrollRouteSlug}/payroll/salary-statements`,
                             route_active: `${hrPayrollRouteSlug}-payroll-salary-statements`
                         },
+                        {
+                            key: `${hrPayrollRouteSlug}/payroll/per-day-statements`,
+                            type: 'link',
+                            title: 'Per-Day Statements',
+                            to: `/${hrPayrollRouteSlug}/payroll/per-day-statements`,
+                            route_active: `${hrPayrollRouteSlug}-payroll-per-day-statements`
+                        },
                     ]
                 }, {
                     key: `${hrPayrollRouteSlug}-request-approval`,
