@@ -15,7 +15,7 @@
                         <div v-else class="flex items-center flex-wrap gap-4 font-header">
                             <div class="text-lg font-medium">{{userCompanyEmployee?.full_name}}</div>
                             <div class="flex items-center flex-wrap gap-2">
-                                <div class="p-1 pr-4 rounded-sm flex items-center gap-1">
+                                <div class="p-1 pr-4 rounded-sm flex items-center gap-2">
                                     <Label :size="'md'" :type="employee?._payload?.label_shade?.value as LabelTypeT" shade :label="_get(employee, 'current_employment_profile.status.text', '')" />
                                     <div>{{employee.current_employment_profile?.employment_type?.text}}</div>
                                 </div>
@@ -31,20 +31,20 @@
                             </div>
                             <div>
                                 <InputLabel :size="'xs'" value="Department" />
-                                <div class="text-sm">{{ _get(employee, 'department.name', '--') }}</div>
+                                <div class="text-sm font-sans">{{ _get(employee, 'department.name', '--') }}</div>
                             </div>
                             <div>
                                 <InputLabel :size="'xs'" value="Designation" />
-                                <div class="text-sm">{{ _get(employee, 'designation.name', '--') }}</div>
+                                <div class="text-sm font-sans">{{ _get(employee, 'designation.name', '--') }}</div>
                             </div>
                             <div>
                                 <InputLabel :size="'xs'" value="Contact" />
                                 <span v-if="_isEmpty(_compact([employee.contact?.office_email, employee.contact?.personal_email, employee.contact?.office_phone, employee.contact?.personal_phone]))">--</span>
-                                <div class="text-sm" v-else :class="index == 0 ? 'inline-block' : 'block'" v-for="(contact, index) in _compact([employee.contact?.office_email, employee.contact?.personal_email, employee.contact?.office_phone, employee.contact?.personal_phone])">{{contact}}</div>
+                                <div class="text-sm font-sans" v-else :class="index == 0 ? 'inline-block' : 'block'" v-for="(contact, index) in _compact([employee.contact?.office_email, employee.contact?.personal_email, employee.contact?.office_phone, employee.contact?.personal_phone])">{{contact}}</div>
                             </div>
                             <div>
                                 <InputLabel :size="'xs'" value="Manager" />
-                                <div class="text-sm">{{ _get(employee, 'manager.full_name', '--') }}</div>
+                                <div class="text-sm font-sans">{{ _get(employee, 'manager.full_name', '--') }}</div>
                             </div>
                         </div>
                     </div>
