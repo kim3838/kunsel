@@ -18,7 +18,7 @@
                                 :icon="'mdi:calendar-cursor-outline'"
                                 :size="'md'"
                                 :id="'from_month'"
-                                v-model="filters.fromMonth.label"
+                                v-model="formStore.filters.fromMonthLabel"
                                 readonly />
                         </div>
                         <div>
@@ -28,7 +28,7 @@
                                 :icon="'mdi:calendar-cursor-outline'"
                                 :size="'md'"
                                 :id="'to_month'"
-                                v-model="filters.toMonth.label"
+                                v-model="formStore.filters.toMonthLabel"
                                 readonly />
                         </div>
                         <div class="flex flex-col">
@@ -144,12 +144,13 @@ const $enumerableOption = nuxtApp.$enumerableOption as (enumerable: StringEnumIn
     value: number
 };
 const wordClamp = nuxtApp.$wordClamp as (text: string, length: number) => string;
-const moment = useNuxtApp().$moment;
 const {render} = dateTimePicker();
 const clientReadyState = useClientReadyState();
-const common = useCommon();
-const coreStore = useCoreStore();
 const formStore = nuxtApp.$formStore;
+const {
+    fromMonthValueComputed,
+    toMonthValueComputed,
+} = storeToRefs(nuxtApp.$formStore);
 const {
     updatedAssociatedCompanyFlag
 } = storeToRefs(nuxtApp.$associationStore);
@@ -215,14 +216,6 @@ let filters = reactive<{
     search: {
         keyword: string,
         callback: ReturnType<typeof setTimeout> | number
-    },
-    fromMonth: {
-        value: string,
-        label: string
-    },
-    toMonth: {
-        value: string,
-        label: string
     }
 }>({
     page: 1,
@@ -230,26 +223,7 @@ let filters = reactive<{
     search: {
         keyword: '',
         callback: 1
-    },
-    fromMonth: {
-        value: moment().startOf('year').format('YYYY-MM'),
-        label: moment().startOf('year').format('YYYY MMMM')
-    },
-    toMonth: {
-        value: moment().endOf('year').format('YYYY-MM'),
-        label: moment().endOf('year').format('YYYY MMMM')
-    },
-});
-
-const viewMode = reactive<{
-    selection: EnumSelection;
-    selected: number | null;
-}>({
-    selection: [
-        {text : 'Flex', value: DATA_VIEW_MODE.FLEX} as EnumOption,
-        {text : 'List', value: DATA_VIEW_MODE.LIST} as EnumOption,
-    ],
-    selected: DATA_VIEW_MODE.LIST as number
+    }
 });
 
 const payrollStatusOptions = reactive({
@@ -272,6 +246,14 @@ let pageComputed = computed({
     }
 });
 
+watch(fromMonthValueComputed, (newValue) => {
+    paginate(1);
+})
+
+watch(toMonthValueComputed, (newValue) => {
+    paginate(1);
+})
+
 const showStatements = ref(true);
 
 watch(() => {return showStatements.value;}, (show) => {
@@ -292,8 +274,8 @@ let paramsComputed = computed(() => {
             account_id: selectedAssociatedCompanyAccountId.value,
             company_ids: [selectedAssociatedCompanyId.value],
             search: filters.search.keyword,
-            from_month: filters.fromMonth.value,
-            to_month: filters.toMonth.value,
+            from_month: formStore.filters.fromMonthValue,
+            to_month: formStore.filters.toMonthValue,
         }
     };
 });
@@ -385,16 +367,30 @@ let datePickers = ref([
         id: 'from_month',
         type: 'month',
         selectedCallback: (payload: DateTimePickerPayloadT) => {
-            filters.fromMonth.value = payload.value;
-            filters.fromMonth.label = payload.label as string;
+
+            formStore.setFormFilterValue({
+                key: 'fromMonthValue',
+                value: payload.value
+            });
+            formStore.setFormFilterValue({
+                key: 'fromMonthLabel',
+                value: payload.label as string
+            });
         }
     },
     {
         id: 'to_month',
         type: 'month',
         selectedCallback: (payload: DateTimePickerPayloadT) => {
-            filters.toMonth.value = payload.value;
-            filters.toMonth.label = payload.label as string;
+
+            formStore.setFormFilterValue({
+                key: 'toMonthValue',
+                value: payload.value
+            });
+            formStore.setFormFilterValue({
+                key: 'toMonthLabel',
+                value: payload.label as string
+            });
         }
     },
 ]);

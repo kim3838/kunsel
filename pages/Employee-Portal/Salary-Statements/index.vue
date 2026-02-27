@@ -13,7 +13,7 @@
                                 :icon="'mdi:calendar-cursor-outline'"
                                 :size="'md'"
                                 :id="'from_month'"
-                                v-model="filters.fromMonth.label"
+                                v-model="formStore.filters.fromMonthLabel"
                                 readonly />
                         </div>
                         <div>
@@ -23,7 +23,7 @@
                                 :icon="'mdi:calendar-cursor-outline'"
                                 :size="'md'"
                                 :id="'to_month'"
-                                v-model="filters.toMonth.label"
+                                v-model="formStore.filters.toMonthLabel"
                                 readonly />
                         </div>
                         <div class="flex flex-col">
@@ -181,9 +181,13 @@ const userCompanyEmployee = userCompanyEmployeeState();
 const {isAuthenticated} = useAuth();
 const nuxtApp = useNuxtApp();
 const wordClamp = nuxtApp.$wordClamp as (text: string, length: number) => string;
-const moment = useNuxtApp().$moment;
 const {render} = dateTimePicker();
 const clientReadyState = useClientReadyState();
+const formStore = nuxtApp.$formStore;
+const {
+    fromMonthValueComputed,
+    toMonthValueComputed,
+} = storeToRefs(nuxtApp.$formStore);
 const {
     updatedAssociatedCompanyFlag
 } = storeToRefs(nuxtApp.$associationStore);
@@ -288,26 +292,10 @@ const salaryStatements = reactive<DataTableT>({
 });
 let filters = reactive<{
     page: number,
-    perPage: number,
-    fromMonth: {
-        value: string,
-        label: string
-    },
-    toMonth: {
-        value: string,
-        label: string
-    }
+    perPage: number
 }>({
     page: 1,
-    perPage: 15,
-    fromMonth: {
-        value: moment().startOf('month').format('YYYY-MM'),
-        label: moment().startOf('month').format('YYYY MMMM')
-    },
-    toMonth: {
-        value: moment().endOf('month').format('YYYY-MM'),
-        label: moment().endOf('month').format('YYYY MMMM')
-    },
+    perPage: 15
 });
 
 let pageComputed = computed({
@@ -321,6 +309,14 @@ let pageComputed = computed({
         filters[payload.key] = payload.value;
     }
 });
+
+watch(fromMonthValueComputed, (newValue) => {
+    paginate(1);
+})
+
+watch(toMonthValueComputed, (newValue) => {
+    paginate(1);
+})
 
 const showSalaryStatementDetails = ref(false);
 const salaryStatementSubRowSlug = ref('');
@@ -348,8 +344,8 @@ let paramsComputed = computed(() => {
             account_id: selectedAssociatedCompanyAccountId.value,
             company_ids: [selectedAssociatedCompanyId.value],
             employee_ids: [userCompanyEmployee.value?.id],
-            payroll_from_month: filters.fromMonth.value,
-            payroll_to_month: filters.toMonth.value,
+            payroll_from_month: formStore.filters.fromMonthValue,
+            payroll_to_month: formStore.filters.toMonthValue,
         }
     };
 });
@@ -424,16 +420,30 @@ let datePickers = ref([
         id: 'from_month',
         type: 'month',
         selectedCallback: (payload: DateTimePickerPayloadT) => {
-            filters.fromMonth.value = payload.value;
-            filters.fromMonth.label = payload.label as string;
+
+            formStore.setFormFilterValue({
+                key: 'fromMonthValue',
+                value: payload.value
+            });
+            formStore.setFormFilterValue({
+                key: 'fromMonthLabel',
+                value: payload.label as string
+            });
         }
     },
     {
         id: 'to_month',
         type: 'month',
         selectedCallback: (payload: DateTimePickerPayloadT) => {
-            filters.toMonth.value = payload.value;
-            filters.toMonth.label = payload.label as string;
+
+            formStore.setFormFilterValue({
+                key: 'toMonthValue',
+                value: payload.value
+            });
+            formStore.setFormFilterValue({
+                key: 'toMonthLabel',
+                value: payload.label as string
+            });
         }
     },
 ]);

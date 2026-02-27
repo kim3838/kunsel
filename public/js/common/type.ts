@@ -90,17 +90,6 @@ export type BrowserSessionT = {
     last_active: string
 }
 
-export type StoreFormT = {
-    filters: {
-        date: string,
-        attendanceDateFrom: string,
-        attendanceDateTo: string,
-        dateTime: string,
-        monthValue: string,
-        monthLabel: string,
-    }
-}
-
 export type PromptT = {
     icon: string | null;
     title: string | null;

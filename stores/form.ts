@@ -1,29 +1,45 @@
 
 import {defineStore} from 'pinia';
 import moment from "moment";
-import type {StoreFormT} from "@/public/js/common/type";
 
-export const useFormStore = defineStore('form', {
-    state: (): StoreFormT => {
-        return {
-            filters: {
-                date: moment().format('YYYY-MM-DD'),
-                attendanceDateFrom: moment().startOf('month').startOf('day').format('YYYY-MM-DD'),
-                attendanceDateTo: moment().endOf('month').endOf('day').format('YYYY-MM-DD'),
-                dateTime: moment().startOf('day').format('YYYY-MM-DD HH:mm:ss'),
-                monthValue: moment().format('YYYY-MM'),
-                monthLabel: moment().format('YYYY MMMM'),
-            }
-        }
-    },
+export const useFormStore = defineStore('form',() => {
 
-    getters: {
+    const filters = reactive({
+        date: moment().format('YYYY-MM-DD'),
+        dateTime: moment().startOf('day').format('YYYY-MM-DD HH:mm:ss'),
+        monthValue: moment().format('YYYY-MM'),
+        monthLabel: moment().format('YYYY MMMM'),
 
-    },
+        attendanceDateFrom: moment('2025-01-01').startOf('month').startOf('day').format('YYYY-MM-DD'),
+        attendanceDateTo: moment('2026-02-28').endOf('month').endOf('day').format('YYYY-MM-DD'),
 
-    actions: {
-        setFormFilterValue(payload: {key: 'date' | 'attendanceDateFrom' | 'attendanceDateTo' | 'dateTime' | 'monthValue' | 'monthLabel', value: any}){
-            this.filters[payload.key] = payload.value;
-        },
-    },
-})
+        fromMonthValue: moment().startOf('year').format('YYYY-MM'),
+        fromMonthLabel: moment().startOf('year').format('YYYY MMMM'),
+        toMonthValue: moment().endOf('year').format('YYYY-MM'),
+        toMonthLabel: moment().endOf('year').format('YYYY MMMM'),
+    });
+
+    filters.fromMonthValue = moment('2025-01').format('YYYY-MM');
+    filters.fromMonthLabel = moment('2025-01').format('YYYY MMMM');
+    filters.toMonthValue = moment('2026-12').format('YYYY-MM');
+    filters.toMonthLabel = moment('2026-12').format('YYYY MMMM');
+
+    const fromMonthValueComputed = computed(() => {
+        return filters.fromMonthValue;
+    });
+    const toMonthValueComputed = computed(() => {
+        return filters.toMonthValue;
+    })
+
+    const setFormFilterValue = (payload: {key: string, value: string}) => {
+        //@ts-ignore
+        filters[payload.key] = payload.value;
+    }
+
+    return {
+        filters,
+        fromMonthValueComputed,
+        toMonthValueComputed,
+        setFormFilterValue,
+    }
+});
