@@ -1,39 +1,9 @@
 <template>
-    <div class="space-y-2">
-        <div>
-            <div class="font-medium text-lg font-header">{{payroll.number}}</div>
+    <div class="space-y-6">
+        <div class="space-y-6">
+            <div class="font-medium text-xl font-header">{{payroll.number}}</div>
 
-            <div class="flex flex-row flex-wrap gap-x-6 gap-y-2 items-center">
-                <div>
-                    <InputLabel :size="'xs'" value="Status"/>
-                    <div class="text-base">{{payroll.status?.text}}</div>
-                </div>
-                <div>
-                    <InputLabel :size="'xs'" value="Remarks"/>
-                    <div class="text-base">{{payroll.remarks || '--'}}</div>
-                </div>
-                <div>
-                    <InputLabel :size="'xs'" value="Payroll month"/>
-                    <div class="text-base">{{`${payroll.year} ${payroll.month_readable}`}}</div>
-                </div>
-                <div>
-                    <InputLabel :size="'xs'" value="Payroll sequence"/>
-                    <div class="text-base">{{`${payroll.pay_frequency?.text} ${payroll.frequency_sequence?.text || ''}`}}</div>
-                </div>
-                <div>
-                    <InputLabel :size="'xs'" value="Coverage"/>
-                    <div class="text-base">{{payroll.date_range_readable}}</div>
-                </div>
-                <div>
-                    <InputLabel :size="'xs'" value="Total salary statement net due"/>
-                    <div class="text-base text-right font-sans">{{payroll.total_salary_statement_net}}</div>
-                </div>
-                <div>
-                    <InputLabel :size="'xs'" value="Total employer contribution share"/>
-                    <div class="text-base text-right font-sans">{{payroll.total_employer_contribution_share}}</div>
-                </div>
-            </div>
-
+            <PayrollSubInfo :type="PAYROLL_SUB_INFO_TYPE.ADMIN_OVERVIEW" :payroll="payroll"/>
         </div>
 
         <div v-if="salaryStatementsPending || !salaryStatements.successful" class="flex flex-row flex-wrap gap-2 items-center min-h-8">
@@ -46,18 +16,21 @@
                     <label class="flex items-center">
                         <Checkbox
                             :disabled="disableActions"
+                            name="show-days-total"
+                            v-model="showDaysTotal"
+                            :size="'md'"
+                            :label="'Show days total'" />
+                    </label>
+                </div>
+                <div class="h-8 flex flex-row items-center scaffold-border px-2">
+                    <label class="flex items-center">
+                        <Checkbox
+                            :disabled="disableActions"
                             name="show-statement-dates"
                             v-model="showSalaryStatementDetails"
                             :size="'md'"
                             :label="'Show statement details'" />
                     </label>
-                </div>
-            </div>
-
-            <div>
-                <PageInformation :pagination="salaryStatements.meta.pagination" :pending="disableDataTable"/>
-                <div class="flex items-center gap-2">
-                    <Pagination :size="'lg'" :pagination="salaryStatements.meta.pagination" :pending="disableDataTable" v-model="pageComputed"/>
                 </div>
             </div>
 
@@ -143,6 +116,11 @@
                     </div>
                 </template>
             </DataTable>
+
+            <div>
+                <PageInformation :pagination="salaryStatements.meta.pagination" :pending="disableDataTable"/>
+                <Pagination :size="'lg'" :pagination="salaryStatements.meta.pagination" :pending="disableDataTable" v-model="pageComputed"/>
+            </div>
         </div>
     </div>
 </template>
@@ -171,49 +149,61 @@ const props = defineProps({
     },
 });
 
-const salaryStatementsSupHeaders = reactive<TableSupHeaderT[]>([
-    {text: ''},
-    {text: ''},
-    {text: 'Employee', colspan: 2, alignHeader: 'center'},
+const showDaysTotal = ref(false);
 
-    {text: 'Calendar days', colspan: 3, alignHeader: 'center'},
-    {text: '', colspan: 1, alignHeader: 'center'},
-    {text: 'Work days split', colspan: 3, alignHeader: 'center'},
+const salaryStatementsSupHeaders = computed<TableSupHeaderT[]>(() => {
+    return [
+        {text: ''},
+        {text: ''},
+        {text: 'Employee', colspan: 2, alignHeader: 'center'},
 
-    {text: 'Employee record', colspan: 4, alignHeader: 'center'},
+        ...(showDaysTotal.value ? [
+            {text: 'Calendar days', colspan: 3, alignHeader: 'center'},
+            {text: '', colspan: 1, alignHeader: 'center'},
+            {text: 'Work days split', colspan: 3, alignHeader: 'center'},
 
-    {text: 'Totals', colspan: 6, alignHeader: 'center'},
-]);
+            {text: 'Employee reported', colspan: 4, alignHeader: 'center'},
+        ] : []),
 
-const salaryStatementsHeaders = reactive<TableHeaderT[]>([
-    { text: '#', value: 'row_number'},
-    { text: '', value: 'actions'},
+        {text: 'Totals', colspan: 8, alignHeader: 'center'},
+    ] as TableSupHeaderT[];
+});
 
-    { text: '#', value: 'employee_number', alignData: 'left'},
-    { text: 'Name', value: 'employee_full_name'},
+const salaryStatementsHeaders = computed<TableHeaderT[]>(() => {
+    return [
+        { text: '#', value: 'row_number'},
+        { text: '', value: 'actions'},
 
-    { text: 'Days', value: 'total_days', isNumeric: true, alignData: 'right', alignHeader: 'right'},
-    { text: 'Day offs', value: 'total_day_offs', isNumeric: true, alignData: 'right', alignHeader: 'right'},
-    { text: 'Work days', value: 'total_working_days', isNumeric: true, alignData: 'right', alignHeader: 'right'},
+        { text: '#', value: 'employee_number', alignData: 'left'},
+        { text: 'Name', value: 'employee_full_name'},
 
-    { text: 'WRD', value: 'total_working_rest_days', isNumeric: true, alignData: 'right', alignHeader: 'right'},
+        ...(showDaysTotal.value ? [
+            { text: 'Days', value: 'total_days', isNumeric: true, alignData: 'right', alignHeader: 'right'},
+            { text: 'Day offs', value: 'total_day_offs', isNumeric: true, alignData: 'right', alignHeader: 'right'},
+            { text: 'Work days', value: 'total_working_days', isNumeric: true, alignData: 'right', alignHeader: 'right'},
 
-    { text: 'Regular', value: 'total_regular_work_days', isNumeric: true, alignData: 'right', alignHeader: 'right'},
-    { text: 'Legal', value: 'total_legal_holidays', isNumeric: true, alignData: 'right', alignHeader: 'right'},
-    { text: 'Special', value: 'total_special_holidays', isNumeric: true, alignData: 'right', alignHeader: 'right'},
+            { text: 'WRD', value: 'total_working_rest_days', isNumeric: true, alignData: 'right', alignHeader: 'right'},
 
-    { text: 'Present', value: 'total_present', isNumeric: true, alignData: 'right', alignHeader: 'right'},
-    { text: 'LWP', value: 'total_leave_with_pay', isNumeric: true, alignData: 'right', alignHeader: 'right'},
-    { text: 'LWOP', value: 'total_leave_without_pay', isNumeric: true, alignData: 'right', alignHeader: 'right'},
-    { text: 'Absent', value: 'total_absent', isNumeric: true, alignData: 'right', alignHeader: 'right'},
+            { text: 'Regular', value: 'total_regular_work_days', isNumeric: true, alignData: 'right', alignHeader: 'right'},
+            { text: 'Legal', value: 'total_legal_holidays', isNumeric: true, alignData: 'right', alignHeader: 'right'},
+            { text: 'Special', value: 'total_special_holidays', isNumeric: true, alignData: 'right', alignHeader: 'right'},
 
-    { text: 'Taxable', value: 'taxable', isNumeric: true, minWidth: '75px', alignData: 'right', alignHeader: 'right'},
-    { text: 'Nontaxable', value: 'nontaxable', isNumeric: true, minWidth: '75px', alignData: 'right', alignHeader: 'right'},
-    { text: 'Contribution', value: 'contribution', isNumeric: true, minWidth: '75px', alignData: 'right', alignHeader: 'right'},
-    { text: 'Withholding Tax', value: 'withholding_tax', isNumeric: true, minWidth: '75px', alignData: 'right', alignHeader: 'right'},
-    { text: 'Deduction', value: 'deduction', isNumeric: true, minWidth: '75px', alignData: 'right', alignHeader: 'right'},
-    { text: 'Net', value: 'net', isNumeric: true, minWidth: '75px', alignData: 'right', alignHeader: 'right'}
-]);
+            { text: 'Present', value: 'total_present', isNumeric: true, alignData: 'right', alignHeader: 'right'},
+            { text: 'LWP', value: 'total_leave_with_pay', isNumeric: true, alignData: 'right', alignHeader: 'right'},
+            { text: 'LWOP', value: 'total_leave_without_pay', isNumeric: true, alignData: 'right', alignHeader: 'right'},
+            { text: 'Absent', value: 'total_absent', isNumeric: true, alignData: 'right', alignHeader: 'right'},
+        ] : []),
+
+        { text: 'Basic Gross', value: 'basic_gross', isNumeric: true, minWidth: '75px', alignData: 'right', alignHeader: 'right'},
+        { text: 'Other Gross', value: 'other_gross', isNumeric: true, minWidth: '75px', alignData: 'right', alignHeader: 'right'},
+        { text: 'Taxable', value: 'taxable', isNumeric: true, minWidth: '75px', alignData: 'right', alignHeader: 'right'},
+        { text: 'Nontaxable', value: 'nontaxable', isNumeric: true, minWidth: '75px', alignData: 'right', alignHeader: 'right'},
+        { text: 'Contribution', value: 'contribution', isNumeric: true, minWidth: '75px', alignData: 'right', alignHeader: 'right'},
+        { text: 'Withholding Tax', value: 'withholding_tax', isNumeric: true, minWidth: '75px', alignData: 'right', alignHeader: 'right'},
+        { text: 'Deduction', value: 'deduction', isNumeric: true, minWidth: '75px', alignData: 'right', alignHeader: 'right'},
+        { text: 'Net', value: 'net', isNumeric: true, minWidth: '75px', alignData: 'right', alignHeader: 'right'}
+    ] as TableHeaderT[];
+});
 
 const salaryStatementsKey = shallowRef(0);
 const salaryStatementsPending = ref(false)

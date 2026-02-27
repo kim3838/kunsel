@@ -13,89 +13,15 @@
                         <Label v-else-if="!salaryStatementSuccessful" invert :size="'md'" :type="'danger'" :label="salaryStatementMessage" />
                     </div>
                     <div v-else class="space-y-6">
-                        <div>
-                            <div class="font-medium text-lg font-header">{{payroll.number}}</div>
-                            <div class="flex flex-row flex-wrap gap-x-6 gap-y-2 items-center">
-                                <div>
-                                    <InputLabel :size="'xs'" value="Status"/>
-                                    <div class="text-base">{{payroll.status?.text}}</div>
-                                </div>
-                                <div>
-                                    <InputLabel :size="'xs'" value="Remarks"/>
-                                    <div class="text-base">{{payroll.remarks || '--'}}</div>
-                                </div>
-                                <div>
-                                    <InputLabel :size="'xs'" value="Payroll month"/>
-                                    <div class="text-base">{{`${payroll.year} ${payroll.month_readable}`}}</div>
-                                </div>
-                                <div>
-                                    <InputLabel :size="'xs'" value="Payroll sequence"/>
-                                    <div class="text-base">{{`${payroll.pay_frequency?.text} ${payroll.frequency_sequence?.text || ''}`}}</div>
-                                </div>
-                                <div>
-                                    <InputLabel :size="'xs'" value="Coverage"/>
-                                    <div class="text-base">{{payroll.date_range_readable}}</div>
-                                </div>
-                                <div>
-                                    <InputLabel :size="'xs'" value="Employee"/>
-                                    <div class="text-base">{{salaryStatement?.employee_number}} {{salaryStatement?.employee_full_name}}</div>
-                                </div>
-                            </div>
-                            <div class="mt-2 flex flex-row flex-wrap gap-x-6 gap-y-2 items-center">
-                                <div>
-                                    <InputLabel :size="'xs'" value="Days"/>
-                                    <div class="text-base">{{salaryStatement.total_days}}</div>
-                                </div>
-                                <div>
-                                    <InputLabel :size="'xs'" value="Day offs"/>
-                                    <div class="text-base">{{salaryStatement.total_day_offs}}</div>
-                                </div>
-                                <div>
-                                    <InputLabel :size="'xs'" value="Work days"/>
-                                    <div class="text-base">{{salaryStatement.total_working_days}}</div>
-                                </div>
-                                <div>
-                                    <InputLabel :size="'xs'" value="Working rest days"/>
-                                    <div class="text-base">{{salaryStatement.total_working_rest_days}}</div>
-                                </div>
-                                <div>
-                                    <InputLabel :size="'xs'" value="Regular work days"/>
-                                    <div class="text-base">{{salaryStatement.total_regular_work_days}}</div>
-                                </div>
-                                <div>
-                                    <InputLabel :size="'xs'" value="Legal holidays"/>
-                                    <div class="text-base">{{salaryStatement.total_legal_holidays}}</div>
-                                </div>
-                                <div>
-                                    <InputLabel :size="'xs'" value="Special holidays"/>
-                                    <div class="text-base">{{salaryStatement.total_special_holidays}}</div>
-                                </div>
-                                <div>
-                                    <InputLabel :size="'xs'" value="Full presents"/>
-                                    <div class="text-base">{{salaryStatement.total_full_present}}</div>
-                                </div>
-                                <div>
-                                    <InputLabel :size="'xs'" value="Presents with irregulartities"/>
-                                    <div class="text-base">{{salaryStatement.total_present_with_irregularity}}</div>
-                                </div>
-                                <div>
-                                    <InputLabel :size="'xs'" value="Leave with pay"/>
-                                    <div class="text-base">{{salaryStatement.total_leave_with_pay}}</div>
-                                </div>
-                                <div>
-                                    <InputLabel :size="'xs'" value="Leave without pay"/>
-                                    <div class="text-base">{{salaryStatement.total_leave_without_pay}}</div>
-                                </div>
-                                <div>
-                                    <InputLabel :size="'xs'" value="Absent"/>
-                                    <div class="text-base">{{salaryStatement.total_absent}}</div>
-                                </div>
-                            </div>
+                        <div class="space-y-6">
+                            <div class="font-medium text-xl font-header">{{payroll.number}}</div>
+
+                            <PayrollSubInfo :payroll="payroll" :salaryStatement="salaryStatement"/>
                         </div>
 
                         <div class="space-y-2">
 
-                            <div class="font-medium text-lg font-header">Statement Totals Breakdown</div>
+                            <div class="font-medium text-lg font-header">Statement totals breakdown</div>
 
                             <SalaryStatementDetailDataTable
                                 :sub-row-slug="'component_values'"
@@ -105,7 +31,7 @@
 
                         <div class="space-y-2">
 
-                            <div class="font-medium text-lg font-header">Per Day Breakdown</div>
+                            <div class="font-medium text-lg font-header">Per-day breakdown</div>
 
                             <div class="flex flex-col gap-2 text-sm">
                                 <div class="flex flex-row flex-wrap items-center gap-2">
