@@ -17,9 +17,9 @@
                         <Checkbox
                             :disabled="disableActions"
                             name="show-days-total"
-                            v-model="showDaysTotal"
+                            v-model="showDaysTotalColumns"
                             :size="'md'"
-                            :label="'Show days total'" />
+                            :label="'Show days total columns'" />
                     </label>
                 </div>
                 <div class="h-8 flex flex-row items-center scaffold-border px-2">
@@ -29,7 +29,7 @@
                             name="show-statement-dates"
                             v-model="showSalaryStatementDetails"
                             :size="'md'"
-                            :label="'Show statement details'" />
+                            :label="'Show statement sub-details'" />
                     </label>
                 </div>
             </div>
@@ -149,7 +149,9 @@ const props = defineProps({
     },
 });
 
-const showDaysTotal = ref(false);
+const showDaysTotalColumns = ref(false);
+
+const {headerSupFields, headerFields, daysTotalHeaderSupFields, daysTotalHeaderFields} = useSalaryStatement();
 
 const salaryStatementsSupHeaders = computed<TableSupHeaderT[]>(() => {
     return [
@@ -157,15 +159,9 @@ const salaryStatementsSupHeaders = computed<TableSupHeaderT[]>(() => {
         {text: ''},
         {text: 'Employee', colspan: 2, alignHeader: 'center'},
 
-        ...(showDaysTotal.value ? [
-            {text: 'Calendar days', colspan: 3, alignHeader: 'center'},
-            {text: '', colspan: 1, alignHeader: 'center'},
-            {text: 'Work days split', colspan: 3, alignHeader: 'center'},
+        ...(showDaysTotalColumns.value ? daysTotalHeaderSupFields.value : []),
 
-            {text: 'Employee reported', colspan: 4, alignHeader: 'center'},
-        ] : []),
-
-        {text: 'Totals', colspan: 8, alignHeader: 'center'},
+        ...headerSupFields.value,
     ] as TableSupHeaderT[];
 });
 
@@ -177,31 +173,9 @@ const salaryStatementsHeaders = computed<TableHeaderT[]>(() => {
         { text: '#', value: 'employee_number', alignData: 'left'},
         { text: 'Name', value: 'employee_full_name'},
 
-        ...(showDaysTotal.value ? [
-            { text: 'Days', value: 'total_days', isNumeric: true, alignData: 'right', alignHeader: 'right'},
-            { text: 'Day offs', value: 'total_day_offs', isNumeric: true, alignData: 'right', alignHeader: 'right'},
-            { text: 'Work days', value: 'total_working_days', isNumeric: true, alignData: 'right', alignHeader: 'right'},
+        ...(showDaysTotalColumns.value ? daysTotalHeaderFields.value : []),
 
-            { text: 'WRD', value: 'total_working_rest_days', isNumeric: true, alignData: 'right', alignHeader: 'right'},
-
-            { text: 'Regular', value: 'total_regular_work_days', isNumeric: true, alignData: 'right', alignHeader: 'right'},
-            { text: 'Legal', value: 'total_legal_holidays', isNumeric: true, alignData: 'right', alignHeader: 'right'},
-            { text: 'Special', value: 'total_special_holidays', isNumeric: true, alignData: 'right', alignHeader: 'right'},
-
-            { text: 'Present', value: 'total_present', isNumeric: true, alignData: 'right', alignHeader: 'right'},
-            { text: 'LWP', value: 'total_leave_with_pay', isNumeric: true, alignData: 'right', alignHeader: 'right'},
-            { text: 'LWOP', value: 'total_leave_without_pay', isNumeric: true, alignData: 'right', alignHeader: 'right'},
-            { text: 'Absent', value: 'total_absent', isNumeric: true, alignData: 'right', alignHeader: 'right'},
-        ] : []),
-
-        { text: 'Basic Gross', value: 'basic_gross', isNumeric: true, minWidth: '75px', alignData: 'right', alignHeader: 'right'},
-        { text: 'Other Gross', value: 'other_gross', isNumeric: true, minWidth: '75px', alignData: 'right', alignHeader: 'right'},
-        { text: 'Taxable', value: 'taxable', isNumeric: true, minWidth: '75px', alignData: 'right', alignHeader: 'right'},
-        { text: 'Nontaxable', value: 'nontaxable', isNumeric: true, minWidth: '75px', alignData: 'right', alignHeader: 'right'},
-        { text: 'Contribution', value: 'contribution', isNumeric: true, minWidth: '75px', alignData: 'right', alignHeader: 'right'},
-        { text: 'Withholding Tax', value: 'withholding_tax', isNumeric: true, minWidth: '75px', alignData: 'right', alignHeader: 'right'},
-        { text: 'Deduction', value: 'deduction', isNumeric: true, minWidth: '75px', alignData: 'right', alignHeader: 'right'},
-        { text: 'Net', value: 'net', isNumeric: true, minWidth: '75px', alignData: 'right', alignHeader: 'right'}
+        ...headerFields.value,
     ] as TableHeaderT[];
 });
 

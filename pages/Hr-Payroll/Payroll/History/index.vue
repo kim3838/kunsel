@@ -36,6 +36,19 @@
                             <Button class="w-min" ref="submitButton" type="submit" :disabled="disableActions" :size="'md'" :icon="disableActions ? 'eos-icons:loading' : 'mdi:data'" :label="disableActions ? 'Loading' : 'Load'"></Button>
                         </div>
                     </div>
+
+                    <div class="flex flex-row flex-wrap gap-2 items-center min-h-8">
+                        <div class="h-8 flex flex-row items-center scaffold-border px-2">
+                            <label class="flex items-center">
+                                <Checkbox
+                                    :disabled="disableActions"
+                                    name="show-statement-dates"
+                                    v-model="showPayrollColumns"
+                                    :size="'md'"
+                                    :label="'Show payroll columns'" />
+                            </label>
+                        </div>
+                    </div>
                 </form>
 
                 <div class="px-[20px] space-y-2">
@@ -92,7 +105,7 @@
                             </div>
                         </template>
                         <template v-slot:cell.number="{cell,slot}">
-                            <div class="p-[3px] hover:underline cursor-pointer" :title="cell.number" @click="copy(cell.number);">{{wordClamp(cell.number, 12)}}</div>
+                            <div class="p-[3px] hover:underline cursor-pointer" :title="cell.number" @click="copy(cell.number);">{{wordClamp(cell.number, showPayrollColumns ? 20 : 10)}}</div>
                         </template>
                         <template v-slot:cell.copy_payroll_number_to_clipboard="{cell,slot}">
                             <div v-if="clipBoardSupported" class="text-base h-[32px]" :title="'Copy payroll number'" @click="copy(cell.number);">
@@ -165,36 +178,51 @@ watch(updatedAssociatedCompanyFlag, (newValue) => {
     }
 });
 
-const payrollsSupHeaders = reactive<TableSupHeaderT[]>([
-    {text: ''},
-    {text: ''},
+const showPayrollColumns = ref(true);
 
-    {text: '', colspan: 9,  alignHeader: 'left'},
+const {asDetailTotalsHeaderSupFields, asDetailTotalsHeaderFields} = useSalaryStatement();
 
-    {text: 'Totals', colspan: 2,  alignHeader: 'left'},
-]);
+const payrollsSupHeaders = computed<TableSupHeaderT[]>(() => {
+    return [
+        {text: ''},
+        {text: ''},
 
-const payrollsHeaders = reactive<TableHeaderT[]>([
-    { text: '#', value: 'row_number'},
-    { text: '', value: 'actions', minWidth: '33px'},
+        ...(showPayrollColumns.value ? [
+            {text: 'Payroll', colspan: 9,  alignHeader: 'center'},
+        ] : [
+            {text: '', colspan: 1,  alignHeader: 'center'},
+        ]),
 
-    { text: 'Payroll #', value: 'number', isNumeric: true},
-    { text: 'Copy #', value: 'copy_payroll_number_to_clipboard'},
-    { text: 'Status', value: 'status'},
+        ...asDetailTotalsHeaderSupFields.value
+    ] as TableSupHeaderT[];
+});
 
-    { text: 'Year', value: 'year'},
-    { text: 'Month', value: 'month_readable'},
+const payrollsHeaders = computed<TableHeaderT[]>(() => {
+    return [
+        { text: '#', value: 'row_number'},
+        { text: '', value: 'actions', minWidth: '33px'},
 
-    { text: 'Frequency', value: 'pay_frequency'},
-    { text: 'Sequence', value: 'frequency_sequence'},
+        ...(showPayrollColumns.value ? [
+            { text: '#', value: 'number', isNumeric: true},
+            { text: 'Copy #', value: 'copy_payroll_number_to_clipboard'},
+            { text: 'Status', value: 'status'},
+            { text: 'Remarks', value: 'remarks'},
 
-    { text: 'Coverage', value: 'date_range_readable'},
+            { text: 'Year', value: 'year'},
+            { text: 'Month', value: 'month_readable'},
 
-    { text: 'Remarks', value: 'remarks'},
+            { text: 'Frequency', value: 'pay_frequency'},
+            { text: 'Sequence', value: 'frequency_sequence'},
 
-    { text: 'Salary Statement Net', value: 'total_salary_statement_net', isNumeric: true, alignData: 'right'},
-    { text: 'Employer Contribution Share', value: 'total_employer_contribution_share', isNumeric: true, alignData: 'right'},
-]);
+            { text: 'Coverage', value: 'date_range_readable'},
+        ] : [
+            { text: 'Payroll #', value: 'number', isNumeric: true},
+        ]),
+
+        ...asDetailTotalsHeaderFields.value
+
+    ] as TableHeaderT[];
+});
 
 const payrolls = reactive<DataTableT>({
     'data': [],
