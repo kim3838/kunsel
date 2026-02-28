@@ -86,7 +86,7 @@ export default defineNuxtConfig({
         ],
         presets: [
             {
-                from: 'lodash',
+                from: 'lodash-es',
                 imports: [
                     { name: 'cloneDeep', as: '_cloneDeep'},
                     { name: 'get', as: '_get'},
