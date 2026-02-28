@@ -48,6 +48,10 @@
                 <div class="label-value text-base font-sans">{{salaryStatement.total_legal_holidays}}</div>
             </div>
             <div>
+                <InputLabel :size="'sm'" value="Double holidays"/>
+                <div class="label-value text-base font-sans">{{salaryStatement.total_double_holidays}}</div>
+            </div>
+            <div>
                 <InputLabel :size="'sm'" value="Special holidays"/>
                 <div class="label-value text-base font-sans">{{salaryStatement.total_special_holidays}}</div>
             </div>
