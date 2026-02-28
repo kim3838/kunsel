@@ -94,12 +94,16 @@
                 <div class="label-value text-base font-sans">{{payroll.date_range_readable}}</div>
             </div>
             <div>
-                <InputLabel :size="'sm'" value="Total salary statement net due"/>
-                <div class="label-value text-base text-right font-medium font-sans">{{payroll.total_salary_statement_net}}</div>
-            </div>
-            <div>
                 <InputLabel :size="'sm'" value="Total employer contribution share"/>
                 <div class="label-value text-base text-right font-medium font-sans">{{payroll.total_employer_contribution_share}}</div>
+            </div>
+            <div>
+                <InputLabel :size="'sm'" value="Total tax withheld"/>
+                <div class="label-value text-base text-right font-medium font-sans">{{payroll.total_tax_withheld}}</div>
+            </div>
+            <div>
+                <InputLabel :size="'sm'" value="Total net due"/>
+                <div class="label-value text-base text-right font-medium font-sans">{{payroll.total_net}}</div>
             </div>
         </div>
     </div>
