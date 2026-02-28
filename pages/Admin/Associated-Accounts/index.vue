@@ -1,29 +1,28 @@
 <template>
     <div>
         <AdminWrapper>
-            <div class="mx-auto max-w-screen-2xl p-[20px] flex flex-row flex-wrap gap-4">
+            <div class="mx-auto max-w-screen-sm p-[20px] flex flex-row flex-wrap gap-4">
 
-                <div v-for="account in accountsData" :key="account.id" class="scaffold-border p-4 space-y-2">
+                <div v-for="account in accountsData" :key="account.id" class="scaffold-border p-4 space-y-4">
                     <div>
                         <InputLabel :size="'sm'" value="Account #" />
-                        <div class="text-lg font-sans">
+                        <div class="text-lg font-medium font-header">
                             <span>{{account.number}}</span>
                         </div>
                     </div>
 
-                    <div class="space-y-2">
+                    <div class="space-y-4">
 
                         <div class="grid grid-cols-2 gap-6">
                             <div>
                                 <InputLabel :size="'sm'" value="Email" />
-                                <div>{{account.email}}</div>
+                                <div class="label-value text-sm font-sans">{{account.email}}</div>
                             </div>
                             <div>
                                 <InputLabel :size="'sm'" value="Date registered" />
-                                <div>{{account.date_registered}}</div>
+                                <div class="label-value text-sm font-sans">{{account.date_registered}}</div>
                             </div>
                         </div>
-
 
                         <table class="border-separate">
                             <tbody>

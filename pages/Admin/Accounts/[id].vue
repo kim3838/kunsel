@@ -1,10 +1,9 @@
 <template>
     <div>
         <AdminWrapper>
-            <div class="mx-auto max-w-screen-2xl">
+            <div class="mx-auto max-w-screen-sm">
 
                 <DialogModal
-                    :max-width="'840px'"
                     :show="resolvedAccountModal"
                     :closeable="false">
                     <template #title>
@@ -60,7 +59,7 @@
 
                     <div class="text-lg font-header">Account</div>
 
-                    <div class="grid gap-2 grid-cols-4 sm:grid-cols-5 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-8">
+                    <div class="grid gap-2 grid-cols-4 sm:grid-cols-5">
                         <div  class="col-span-2" v-show="!creatingAccount">
                             <InputLabel :size="'sm'" value="Account number"/>
                             <Input :disabled="!creatingAccount" :size="'md'" v-model="accountNumber" type="text"/>

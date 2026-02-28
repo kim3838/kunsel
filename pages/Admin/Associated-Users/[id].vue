@@ -1,10 +1,9 @@
 <template>
     <div>
         <AdminWrapper>
-            <div class="mx-auto max-w-screen-2xl">
+            <div class="mx-auto max-w-screen-xl">
 
                 <DialogModal
-                    :max-width="'440px'"
                     :show="resolvedUserModal"
                     :closeable="false">
                     <template #title>

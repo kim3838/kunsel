@@ -1,17 +1,17 @@
 <template>
     <div>
         <AdminWrapper>
-            <div class="mx-auto max-w-screen-2xl">
+            <div class="mx-auto max-w-screen-lg">
 
                 <form @submit.prevent="paginate(1, true)" class="space-y-2 p-[20px]">
-                    <div class="grid gap-2 grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-8">
+                    <div class="grid gap-2 grid-cols-1 sm:grid-cols-2 lg:grid-cols-5">
                         <div>
                             <InputLabel :size="'sm'" value="Search" />
                             <Input :disabled="disableActions" :size="'md'" ref="searchInput" v-model="filters.search.keyword" class="w-full" placeholder="Search" type="text"/>
                         </div>
                     </div>
 
-                    <div class="grid gap-2 grid-cols-1 sm:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-8">
+                    <div class="grid gap-2 grid-cols-1 sm:grid-cols-4 lg:grid-cols-5">
                         <Button class="w-min" ref="submitButton" type="submit" :disabled="disableActions" :size="'md'" :icon="disableActions ? 'eos-icons:loading' : 'mdi:data'" :label="disableActions ? 'Loading' : 'Load'"></Button>
                     </div>
                 </form>

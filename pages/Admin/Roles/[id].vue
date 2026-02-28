@@ -4,7 +4,7 @@
             <div>
                 <div ref="nav-extender" class="z-30 fixed nav-extender-container scaffold-border-bottom">
 
-                    <div class="mx-auto max-w-screen-2xl space-y-2 p-[20px]">
+                    <div class="mx-auto max-w-screen-lg space-y-2 p-[20px]">
                         <div class="flex">
                             <NuxtLink
                                 :to="`/admin/roles`">
@@ -20,14 +20,14 @@
 
                         <div class="text-lg font-header">Role</div>
 
-                        <div class="grid gap-2 grid-cols-1 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
-                            <div>
+                        <div class="grid gap-2 grid-cols-1 sm:grid-cols-3 lg:grid-cols-4">
+                            <div class="col-span-2">
                                 <InputLabel :size="'sm'" value="Account"/>
                                 <SingleSelect :disabled="!creatingRole" :icon="'mdi:checkbook'" value-persist drop-shadow :size="'md'" :options="accountOptions" @valueChange="selectedAccountChanged"/>
                             </div>
 
-                            <div class="col-span-2">
-                                <InputLabel :size="'sm'" value="Name"/>
+                            <div>
+                                <InputLabel :size="'sm'" value="Role"/>
                                 <Input :size="'md'" v-model="roleName" type="text"/>
                             </div>
 
@@ -39,7 +39,7 @@
                     </div>
                 </div>
 
-                <div class="mx-auto max-w-screen-2xl">
+                <div class="mx-auto max-w-screen-lg">
                     <div class="px-[20px] space-y-2 nav-extender-allocate">
 
                         <div class="text-lg font-header">Permissions</div>

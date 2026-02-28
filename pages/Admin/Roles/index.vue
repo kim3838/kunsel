@@ -1,7 +1,7 @@
 <template>
     <div>
         <AdminWrapper>
-            <div class="mx-auto max-w-screen-2xl">
+            <div class="mx-auto max-w-screen-lg">
 
                 <form @submit.prevent="paginate(1, true)" class="space-y-2 p-[20px]">
                     <div class="grid gap-2 grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-8">
@@ -83,7 +83,7 @@ const {userIsSuperAdmin} = useAuth();
 const {persistAccount, storePersistAccount} = useAccount();
 const rolesHeaders = reactive<TableHeaderT[]>([
     { text: '', value: 'actions'},
-    { text: 'Role name', value: 'name', alignData: 'left'},
+    { text: 'Role', value: 'name', alignData: 'left'},
 ]);
 
 const roles = reactive<DataTableT>({
