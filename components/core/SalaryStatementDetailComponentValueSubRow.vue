@@ -77,7 +77,6 @@ const getSupHeaders = (componentValueType: number) => {
         TYPE.PH_SSS, TYPE.PH_PHILHEALTH, TYPE.PH_PAG_IBIG, TYPE.PH_WITHHOLDING_TAX
     ].indexOf(componentValueType) >= 0){
         supHeaders = supHeaders.concat([
-            {text: '', colspan: 1, alignHeader: 'left'},
             {text: 'Coverage', colspan: 2, alignHeader: 'center'},
         ])
     }
@@ -86,7 +85,7 @@ const getSupHeaders = (componentValueType: number) => {
         TYPE.PH_BASIC_PAY, TYPE.PH_REGULAR_ALLOWANCE, TYPE.PH_OVERTIME, TYPE.PH_LEAVE, TYPE.PH_HOLIDAY
     ].indexOf(componentValueType) >= 0){
         supHeaders = supHeaders.concat([
-            {text: 'Pay partitions', colspan: 3, alignHeader: 'center'},
+            {text: 'Pay splits', colspan: 3, alignHeader: 'center'},
         ])
     }
 
@@ -139,7 +138,6 @@ const getHeaders = (componentValueType: number) => {
         TYPE.PH_SSS, TYPE.PH_PHILHEALTH, TYPE.PH_PAG_IBIG, TYPE.PH_WITHHOLDING_TAX
     ].indexOf(componentValueType) >= 0){
         headers = headers.concat([
-            { text: 'Pay frequency', value: 'pay_frequency', isNumeric: true, alignData: 'left', alignHeader: 'left'},
             { text: 'Start', value: 'coverage_start', isNumeric: true, alignData: 'left', alignHeader: 'left'},
             { text: 'End', value: 'coverage_end', isNumeric: true, alignData: 'left', alignHeader: 'left'},
         ])
