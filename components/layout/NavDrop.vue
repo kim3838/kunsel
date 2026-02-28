@@ -332,14 +332,14 @@ const navDropOptionsStyleComputed = computed(() => {
     return styleTemp
 });
 
-const { focused: navigationFocused } = useFocus(navDrop);
+const { focused: navigationFocused } = useFocus(navDropReference);
 
 const handleClickOutside = (event) => {
     if(props.alwaysActive){
         return;
     }
 
-    if (navDrop.value && !navDrop.value.contains(event.target)) {
+    if (navDropReference.value && !navDropReference.value.contains(event.target)) {
         activeComputed.value = false;
     }
 };
