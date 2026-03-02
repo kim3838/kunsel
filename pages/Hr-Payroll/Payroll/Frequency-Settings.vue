@@ -63,7 +63,7 @@
 
                     <div v-if="payFrequenciesSuccessful" class="space-y-2 flex flex-col gap-4">
 
-                        <div class="lining-shadow rounded-sm flex-grow tint-background">
+                        <div v-if="false" class="lining-shadow rounded-sm flex-grow tint-background">
                             <div class="lining-shadow rounded-t-sm text-lg font-medium font-header px-4 py-2">
                                 {{PAY_FREQUENCY_NAME[weeklyPayFrequenciesData.type]}}
                             </div>

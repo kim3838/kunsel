@@ -288,7 +288,6 @@ const payrollInquiriesHeaders = reactive<TableHeaderT[]>([
 const generateFrequency = useLocalStorage('generate-frequency', PAY_FREQUENCY_TYPE.MONTHLY)
 const payFrequency = ref(generateFrequency.value);
 const payFrequencyOptions = reactive([
-    $enumerableOption(PAY_FREQUENCY_NAME, PAY_FREQUENCY_TYPE.WEEKLY as number),
     $enumerableOption(PAY_FREQUENCY_NAME, PAY_FREQUENCY_TYPE.SEMI_MONTHLY as number),
     $enumerableOption(PAY_FREQUENCY_NAME, PAY_FREQUENCY_TYPE.MONTHLY as number),
 ]);

@@ -85,32 +85,6 @@ export const PAY_TYPE_NAME: StringEnumInterface = {
     [PAY_TYPE.FIXED as number]: 'Fixed',
 };
 
-export const PAY_FREQUENCY_CODES: string[] = [
-    'WEEKLY',
-    'SEMI_MONTHLY',
-    'MONTHLY',
-]
-
-export const CUT_OFF_TYPE: NumericEnumInterface ={
-    WEEKLY : 100,
-}
-
-export const CUT_OFF_NAME: StringEnumInterface = {
-    [CUT_OFF_TYPE.WEEKLY as number]: 'Weekly',
-};
-
-export const PAY_FREQUENCY_TYPE: NumericEnumInterface ={
-    WEEKLY : 200,
-    SEMI_MONTHLY : 300,
-    MONTHLY : 400
-}
-
-export const PAY_FREQUENCY_NAME: StringEnumInterface = {
-    [PAY_FREQUENCY_TYPE.WEEKLY as number]: 'Weekly',
-    [PAY_FREQUENCY_TYPE.SEMI_MONTHLY as number]: 'Semimonthly',
-    [PAY_FREQUENCY_TYPE.MONTHLY as number]: 'Monthly'
-};
-
 export const AMOUNTABLE_PAYROLL_COMPONENT_START: NumericEnumInterface ={
     NOT_SPECIFIED : 0,
     EMPLOYMENT_START_DATE : 100,
