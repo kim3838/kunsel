@@ -31,6 +31,32 @@
                                 v-model="formStore.filters.toMonthLabel"
                                 readonly />
                         </div>
+                        <div>
+                            <InputLabel :size="'sm'" value="Pay Frequency" />
+                            <MultiSelect
+                                :key="payFrequencyOptionsKey"
+                                :icon="'tdesign:component-checkbox'"
+                                :disabled="disableActions"
+                                glint
+                                drop-shadow
+                                :selection-max-viewable-line="15"
+                                :size="'md'"
+                                :options="payFrequencyOptions"
+                            />
+                        </div>
+                        <div>
+                            <InputLabel :size="'sm'" value="Frequency Sequence" />
+                            <MultiSelect
+                                :key="payFrequencySequenceOptionsKey"
+                                :icon="'tdesign:component-checkbox'"
+                                :disabled="disableActions"
+                                glint
+                                drop-shadow
+                                :selection-max-viewable-line="15"
+                                :size="'md'"
+                                :options="payFrequencySequenceOptions"
+                            />
+                        </div>
                         <div class="flex flex-col">
                             <div class="flex-none h-[1.25rem]"></div>
                             <Button class="w-min" ref="submitButton" type="submit" :disabled="disableActions" :size="'md'" :icon="disableActions ? 'eos-icons:loading' : 'mdi:data'" :label="disableActions ? 'Loading' : 'Load'"></Button>
@@ -178,6 +204,30 @@ watch(updatedAssociatedCompanyFlag, (newValue) => {
     }
 });
 
+const payFrequencySelections = [
+    $enumerableOption(PAY_FREQUENCY_NAME, PAY_FREQUENCY_TYPE.SEMI_MONTHLY as number),
+    $enumerableOption(PAY_FREQUENCY_NAME, PAY_FREQUENCY_TYPE.MONTHLY as number),
+];
+
+const payFrequencyOptionsKey = shallowRef(0);
+const payFrequencyOptions = reactive({
+    search: '',
+    selection: payFrequencySelections,
+    selected: []
+});
+
+const payFrequencySequenceSelections = [
+    $enumerableOption(PAY_FREQUENCY_SEQUENCE_NAME, PAY_FREQUENCY_SEQUENCE_TYPE.FIRST_HALF as number),
+    $enumerableOption(PAY_FREQUENCY_SEQUENCE_NAME, PAY_FREQUENCY_SEQUENCE_TYPE.SECOND_HALF as number),
+];
+
+const payFrequencySequenceOptionsKey = shallowRef(0);
+const payFrequencySequenceOptions = reactive({
+    search: '',
+    selection: payFrequencySequenceSelections,
+    selected: []
+});
+
 const showPayrollColumns = ref(true);
 
 const {asDetailTotalsHeaderSupFields, asDetailTotalsHeaderFields} = useSalaryStatement();
@@ -304,6 +354,8 @@ let paramsComputed = computed(() => {
             search: filters.search.keyword,
             from_month: formStore.filters.fromMonthValue,
             to_month: formStore.filters.toMonthValue,
+            pay_frequencies: payFrequencyOptions.selected,
+            frequency_sequences: payFrequencySequenceOptions.selected,
         }
     };
 });

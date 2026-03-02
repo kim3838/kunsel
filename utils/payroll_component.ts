@@ -106,11 +106,3 @@ export const AMOUNTABLE_PAYROLL_COMPONENT_END_NAME: StringEnumInterface = {
     [AMOUNTABLE_PAYROLL_COMPONENT_END.NOT_SPECIFIED as number]: 'Not specified',
     [AMOUNTABLE_PAYROLL_COMPONENT_END.CUSTOM_DATE as number]: 'Custom date',
 };
-
-export const PAYROLL_STATUS: NumericEnumInterface ={
-    DRAFT : 100,
-}
-
-export const PAYROLL_STATUS_NAME: StringEnumInterface = {
-    [PAYROLL_STATUS.DRAFT as number]: 'Draft',
-};

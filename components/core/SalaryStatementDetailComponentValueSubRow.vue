@@ -9,35 +9,43 @@
             :stripped="true"
             :rows="rows">
             <template v-slot:cell.employee_share_regular="{cell,slot}">
-                <div  class="p-[3px]">{{cell.employee_share?.regular}}</div>
+                <div class="p-[3px]">{{cell.employee_share?.regular}}</div>
             </template>
             <template v-slot:cell.employee_share_mpf="{cell,slot}">
-                <div  class="p-[3px]">{{cell.employee_share?.mpf}}</div>
+                <div class="p-[3px]">{{cell.employee_share?.mpf}}</div>
             </template>
             <template v-slot:cell.employee_share_total="{cell,slot}">
-                <div  class="p-[3px]">{{cell.employee_share?.total}}</div>
+                <div class="p-[3px]">{{cell.employee_share?.total}}</div>
             </template>
             <template v-slot:cell.employer_share_regular="{cell,slot}">
-                <div  class="p-[3px]">{{cell.employer_share?.regular}}</div>
+                <div class="p-[3px]">{{cell.employer_share?.regular}}</div>
             </template>
             <template v-slot:cell.employer_share_mpf="{cell,slot}">
-                <div  class="p-[3px]">{{cell.employer_share?.mpf}}</div>
+                <div class="p-[3px]">{{cell.employer_share?.mpf}}</div>
             </template>
             <template v-slot:cell.employer_share_ec="{cell,slot}">
-                <div  class="p-[3px]">{{cell.employer_share?.ec}}</div>
+                <div class="p-[3px]">{{cell.employer_share?.ec}}</div>
             </template>
             <template v-slot:cell.employer_share_total="{cell,slot}">
-                <div  class="p-[3px]">{{cell.employer_share?.total}}</div>
+                <div class="p-[3px]">{{cell.employer_share?.total}}</div>
             </template>
 
             <template v-slot:cell.gross="{cell,slot}">
-                <div  class="p-[3px]">{{cell.gross}}</div>
+                <div class="p-[3px]">{{cell.gross}}</div>
             </template>
             <template v-slot:cell.deduction="{cell,slot}">
-                <div  class="p-[3px]">{{cell.deduction}}</div>
+                <div class="p-[3px]">{{cell.deduction}}</div>
             </template>
+
+            <template v-slot:cell.13th_month_prorated="{cell,slot}">
+                <div class="p-[3px]">{{cell['13th_month_prorated'] ? 'Yes' : 'No'}}</div>
+            </template>
+            <template v-slot:cell.13th_month_projected="{cell,slot}">
+                <div class="p-[3px]">{{cell['13th_month_projected'] ? 'Yes' : 'No'}}</div>
+            </template>
+
             <template v-slot:cell.net="{cell,slot}">
-                <div  class="p-[3px]">{{cell.net}}</div>
+                <div class="p-[3px]">{{cell.net}}</div>
             </template>
         </DataTable>
     </div>
@@ -123,6 +131,7 @@ const getSupHeaders = (componentValueType: number) => {
         TYPE.PH_BONUS_13TH_MONTH
     ].indexOf(componentValueType) >= 0){
         supHeaders = supHeaders.concat([
+            {text: '', colspan: 2, alignHeader: 'center'},
             {text: 'Basic gross', colspan: 3, alignHeader: 'center'},
             {text: '13th month', colspan: 1, alignHeader: 'center'},
         ])
@@ -210,10 +219,12 @@ const getHeaders = (componentValueType: number) => {
         TYPE.PH_BONUS_13TH_MONTH
     ].indexOf(componentValueType) >= 0){
         headers = headers.concat([
-            { text: 'Actual', value: 'actual_basic_gross', isNumeric: true, alignData: 'right', alignHeader: 'center'},
-            { text: 'Projected', value: 'projected_basic_gross', isNumeric: true, alignData: 'right', alignHeader: 'center'},
-            { text: 'Total', value: 'total_basic_gross', isNumeric: true, alignData: 'right', alignHeader: 'center'},
-            { text: 'Total / 12', value: '13th_month', isNumeric: true, alignData: 'right', alignHeader: 'center'}
+            { text: 'Prorated', value: '13th_month_prorated', alignData: 'left'},
+            { text: 'Projected', value: '13th_month_projected', alignData: 'left'},
+            { text: 'Actual', value: '13th_month_actual_basic_gross', isNumeric: true, alignData: 'right', alignHeader: 'center'},
+            { text: 'Projected', value: '13th_month_projected_basic_gross', isNumeric: true, alignData: 'right', alignHeader: 'center'},
+            { text: 'Total', value: '13th_month_total_basic_gross', isNumeric: true, alignData: 'right', alignHeader: 'center'},
+            { text: 'Total / 12', value: '13th_month_amount', isNumeric: true, alignData: 'right', alignHeader: 'center'}
         ])
     }
 
