@@ -140,12 +140,10 @@ const props = defineProps({
 
 const emit = defineEmits(['focusStateChanged']);
 
-const { play: clickSound } = useSound(props.sound)
-
 const pointerDownEvent = () => {
 
     if(!props.disabled){
-        clickSound();
+
     }
 }
 
