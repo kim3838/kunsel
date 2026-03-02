@@ -21,7 +21,7 @@ export const useCosmetic = () => {
             shadeValue = {
                 [COMPENSATION.BASIC_PAY as number]: 'success',
                 [COMPENSATION.OVERTIME as number]: 'success',
-                [COMPENSATION.BENEFIT as number]: 'success',
+                [COMPENSATION.STATUTORY_BENEFIT as number]: 'success',
                 [COMPENSATION.REGULAR_ALLOWANCE as number]: 'success',
                 [COMPENSATION.LEAVE_PAY as number]: 'info',
                 [COMPENSATION.HOLIDAY_PAY as number]: 'info',
