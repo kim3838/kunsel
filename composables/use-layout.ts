@@ -110,7 +110,7 @@ export const useLayout = () => {
             });
         }
 
-        if(process.env.NODE_ENV === 'development'){
+        if(true || process.env.NODE_ENV === 'development'){
 
             links = links.concat([
                 ...(debugRequests as NavigationLinkInterface[])
