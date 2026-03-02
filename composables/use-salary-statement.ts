@@ -64,7 +64,7 @@ export const useSalaryStatement = () => {
         { text: 'Taxable', value: 'total_taxable', isNumeric: true, alignData: 'right'},
         { text: 'Nontaxable', value: 'total_nontaxable', isNumeric: true, alignData: 'right'},
 
-        { text: 'Withholding Tax', value: 'total_withholding_tax', isNumeric: true, alignData: 'right'},
+        { text: 'Withholding Tax', value: 'total_tax_withheld', isNumeric: true, alignData: 'right'},
         { text: 'Deduction', value: 'total_deduction', isNumeric: true, alignData: 'right'},
         { text: 'Net', value: 'total_net', isNumeric: true, alignData: 'right'}
     ]);
