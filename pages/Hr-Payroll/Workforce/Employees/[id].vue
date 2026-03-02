@@ -62,7 +62,7 @@
                             <Button class="w-min" :variant="`outline`" :disabled="disableActions" :size="'sm'" :icon="'ic:sharp-keyboard-arrow-left'" :label="''"></Button>
                         </NuxtLink>
 
-                        <Button class="w-min" :variant="`outline`" :disabled="disableActions" @click="coreFormSubmit(null, {})" :size="'sm'" :icon="disableActions ? 'eos-icons:loading' : 'ic:sharp-save'" :label="coreFormSubmitLabelBasic"></Button>
+                        <Button v-if="employeeSuccessful" class="w-min" :variant="`outline`" :disabled="disableActions" @click="coreFormSubmit(null, {})" :size="'sm'" :icon="disableActions ? 'eos-icons:loading' : 'ic:sharp-save'" :label="coreFormSubmitLabelBasic"></Button>
                     </div>
 
                     <div v-if="!employeeSuccessful">
