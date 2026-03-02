@@ -120,6 +120,15 @@ const getSupHeaders = (componentValueType: number) => {
     }
 
     if([
+        TYPE.PH_BONUS_13TH_MONTH
+    ].indexOf(componentValueType) >= 0){
+        supHeaders = supHeaders.concat([
+            {text: 'Basic gross', colspan: 3, alignHeader: 'center'},
+            {text: '13th month', colspan: 1, alignHeader: 'center'},
+        ])
+    }
+
+    if([
         TYPE.NET
     ].indexOf(componentValueType) >= 0){
         supHeaders = supHeaders.concat([
@@ -194,6 +203,17 @@ const getHeaders = (componentValueType: number) => {
     ].indexOf(componentValueType) >= 0){
         headers = headers.concat([
             { text: 'Total', value: 'total', isNumeric: true, alignData: 'right', alignHeader: 'center'}
+        ])
+    }
+
+    if([
+        TYPE.PH_BONUS_13TH_MONTH
+    ].indexOf(componentValueType) >= 0){
+        headers = headers.concat([
+            { text: 'Actual', value: 'actual_basic_gross', isNumeric: true, alignData: 'right', alignHeader: 'center'},
+            { text: 'Projected', value: 'projected_basic_gross', isNumeric: true, alignData: 'right', alignHeader: 'center'},
+            { text: 'Total', value: 'total_basic_gross', isNumeric: true, alignData: 'right', alignHeader: 'center'},
+            { text: 'Total / 12', value: '13th_month', isNumeric: true, alignData: 'right', alignHeader: 'center'}
         ])
     }
 
