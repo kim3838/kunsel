@@ -45,7 +45,7 @@ export type SalaryStatementT = {
     employee_number: string,
     employee_full_name: string,
     type: EnumOption,
-    paid: boolean,
+    is_paid: boolean,
 
     total_days: number,
     total_day_offs: number,

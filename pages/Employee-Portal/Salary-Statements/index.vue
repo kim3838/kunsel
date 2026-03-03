@@ -137,8 +137,8 @@
                         <template v-slot:cell.type="{cell,slot}">
                             <div class="p-[3px]">{{cell.type?.text}}</div>
                         </template>
-                        <template v-slot:cell.paid="{cell,slot}">
-                            <div class="p-[3px]">{{cell.paid ? 'Yes' : 'No'}}</div>
+                        <template v-slot:cell.is_paid="{cell,slot}">
+                            <div class="p-[3px]">{{cell.is_paid ? 'Yes' : 'No'}}</div>
                         </template>
                         <template v-slot:sub_row_slot="{rowIndex, cell, slot}">
                             <div class="inline-flex items-center scaffold-border pr-2">
@@ -252,7 +252,7 @@ const salaryStatementsHeaders = computed<TableHeaderT[]>(() => {
 
         { text: '#', value: 'employee_number', alignData: 'left'},
         { text: 'Type', value: 'type', alignData: 'left'},
-        { text: 'Is Paid', value: 'paid', alignData: 'left'},
+        { text: 'Is Paid', value: 'is_paid', alignData: 'left'},
 
         ...(showDaysTotalColumns.value ? daysTotalHeaderFields.value : []),
 

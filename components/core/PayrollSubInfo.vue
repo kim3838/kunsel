@@ -27,7 +27,7 @@
             </div>
             <div>
                 <InputLabel :size="'sm'" value="Paid"/>
-                <div class="label-value text-base font-sans">{{salaryStatement?.paid ? 'Yes' : 'No'}}</div>
+                <div class="label-value text-base font-sans">{{salaryStatement?.is_paid ? 'Yes' : 'No'}}</div>
             </div>
         </div>
         <div v-if="isDefault" class="flex flex-row flex-wrap gap-6 items-center">
