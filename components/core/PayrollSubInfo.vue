@@ -21,6 +21,14 @@
                 <InputLabel :size="'sm'" value="Employee"/>
                 <div class="label-value text-base font-sans">{{salaryStatement?.employee_number}} {{salaryStatement?.employee_full_name}}</div>
             </div>
+            <div>
+                <InputLabel :size="'sm'" value="Type"/>
+                <div class="label-value text-base font-sans">{{salaryStatement?.type?.text}}</div>
+            </div>
+            <div>
+                <InputLabel :size="'sm'" value="Paid"/>
+                <div class="label-value text-base font-sans">{{salaryStatement?.paid ? 'Yes' : 'No'}}</div>
+            </div>
         </div>
         <div v-if="isDefault" class="flex flex-row flex-wrap gap-6 items-center">
             <div>

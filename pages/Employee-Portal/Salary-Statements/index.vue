@@ -134,6 +134,12 @@
                         <template v-slot:cell.employee_full_name="{cell,slot}">
                             <div class="px-[3px]" :title="cell.employee_full_name">{{wordClamp(cell.employee_full_name, 16)}}</div>
                         </template>
+                        <template v-slot:cell.type="{cell,slot}">
+                            <div class="p-[3px]">{{cell.type?.text}}</div>
+                        </template>
+                        <template v-slot:cell.paid="{cell,slot}">
+                            <div class="p-[3px]">{{cell.paid ? 'Yes' : 'No'}}</div>
+                        </template>
                         <template v-slot:sub_row_slot="{rowIndex, cell, slot}">
                             <div class="inline-flex items-center scaffold-border pr-2">
                                 <Icon name="ic:outline-keyboard-arrow-right" :class="[slot.iconSizeClass, slot.iconHolderClass]" /><div :class="[slot.titleSizeClass]">Statement dates</div>
@@ -219,6 +225,7 @@ const salaryStatementsSupHeaders = computed<TableSupHeaderT[]>(() => {
         ]),
 
         {text: 'Employee', colspan: 1},
+        {text: 'Statement', colspan: 2},
 
         ...(showDaysTotalColumns.value ? daysTotalHeaderSupFields.value : []),
 
@@ -244,6 +251,8 @@ const salaryStatementsHeaders = computed<TableHeaderT[]>(() => {
         ]),
 
         { text: '#', value: 'employee_number', alignData: 'left'},
+        { text: 'Type', value: 'type', alignData: 'left'},
+        { text: 'Is Paid', value: 'paid', alignData: 'left'},
 
         ...(showDaysTotalColumns.value ? daysTotalHeaderFields.value : []),
 
