@@ -37,11 +37,11 @@
                 <div class="p-[3px]">{{cell.deduction}}</div>
             </template>
 
-            <template v-slot:cell.13th_month_prorated="{cell,slot}">
-                <div class="p-[3px]">{{cell['13th_month_prorated'] ? 'Yes' : 'No'}}</div>
+            <template v-slot:cell.13th_month_is_prorated="{cell,slot}">
+                <div class="p-[3px]">{{cell['13th_month_is_prorated'] ? 'Yes' : 'No'}}</div>
             </template>
-            <template v-slot:cell.13th_month_projected="{cell,slot}">
-                <div class="p-[3px]">{{cell['13th_month_projected'] ? 'Yes' : 'No'}}</div>
+            <template v-slot:cell.13th_month_is_projected="{cell,slot}">
+                <div class="p-[3px]">{{cell['13th_month_is_projected'] ? 'Yes' : 'No'}}</div>
             </template>
 
             <template v-slot:cell.net="{cell,slot}">
@@ -138,6 +138,16 @@ const getSupHeaders = (componentValueType: number) => {
     }
 
     if([
+        TYPE.PH_BONUS_13TH_MONTH_POSITIVE_ADJUSTMENT,
+        TYPE.PH_BONUS_13TH_MONTH_NEGATIVE_ADJUSTMENT,
+    ].indexOf(componentValueType) >= 0){
+        supHeaders = supHeaders.concat([
+            {text: '', colspan: 2, alignHeader: 'center'},
+            {text: 'Adjustment', colspan: 1, alignHeader: 'center'},
+        ])
+    }
+
+    if([
         TYPE.NET
     ].indexOf(componentValueType) >= 0){
         supHeaders = supHeaders.concat([
@@ -219,12 +229,23 @@ const getHeaders = (componentValueType: number) => {
         TYPE.PH_BONUS_13TH_MONTH
     ].indexOf(componentValueType) >= 0){
         headers = headers.concat([
-            { text: 'Prorated', value: '13th_month_prorated', alignData: 'left'},
-            { text: 'Projected', value: '13th_month_projected', alignData: 'left'},
+            { text: 'Prorated', value: '13th_month_is_prorated', alignData: 'left'},
+            { text: 'Projected', value: '13th_month_is_projected', alignData: 'left'},
             { text: 'Actual', value: '13th_month_actual_basic_gross', isNumeric: true, alignData: 'right', alignHeader: 'center'},
             { text: 'Projected', value: '13th_month_projected_basic_gross', isNumeric: true, alignData: 'right', alignHeader: 'center'},
             { text: 'Total', value: '13th_month_total_basic_gross', isNumeric: true, alignData: 'right', alignHeader: 'center'},
             { text: 'Total / 12', value: '13th_month_amount', isNumeric: true, alignData: 'right', alignHeader: 'center'}
+        ])
+    }
+
+    if([
+        TYPE.PH_BONUS_13TH_MONTH_POSITIVE_ADJUSTMENT,
+        TYPE.PH_BONUS_13TH_MONTH_NEGATIVE_ADJUSTMENT,
+    ].indexOf(componentValueType) >= 0){
+        headers = headers.concat([
+            { text: 'Actual', value: '13th_month_actual', isNumeric: true, alignData: 'right', alignHeader: 'center'},
+            { text: 'Projected', value: '13th_month_projected', isNumeric: true, alignData: 'right', alignHeader: 'center'},
+            { text: '', value: '13th_month_adjustment', isNumeric: true, alignData: 'right', alignHeader: 'center'},
         ])
     }
 

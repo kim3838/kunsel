@@ -51,25 +51,20 @@ const storedTheme = useCookie<PaletteName>($themeStore.SELECTED_THEME_STORAGE_KE
 
 const themeOption = reactive({
     search: '',
-    selection: [{
-        text: 'Light Slate',
-        value: 'light-slate',
-    },{
-        text: 'Default Blue',
-        value: 'default-blue',
-    },{
-        text: 'Light Green',
-        value: 'light-green',
-    },{
-        text: 'Light Tulip',
-        value: 'light-tulip',
-    },{
-        text: 'Dark Silver',
-        value: 'dark-silver',
-    },{
-        text: 'Dark Emerald',
-        value: 'dark-emerald',
-    },],
+    selection: [
+        {
+            text: 'Default Blue',
+            value: 'default-blue',
+        },
+        {
+            text: 'Dark Silver',
+            value: 'dark-silver',
+        },
+        {
+            text: 'Dark Emerald',
+            value: 'dark-emerald',
+        },
+    ],
     selected: appTheme.value
 });
 

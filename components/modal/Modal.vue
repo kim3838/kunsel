@@ -89,6 +89,6 @@ const modalContainerClass = computed(() => {
 }
 
 .modal-body{
-    background-color: v-bind(tintColor);
+    background-color: v-bind(bodyColor);
 }
 </style>

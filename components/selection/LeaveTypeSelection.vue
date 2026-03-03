@@ -179,7 +179,7 @@ let filters = reactive<{
     }
 }>({
     page: 1,
-    perPage: 15,
+    perPage: 5,
     search: {
         keyword: '',
         callback: 1
