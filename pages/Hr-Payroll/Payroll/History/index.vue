@@ -264,7 +264,7 @@ const payrollsHeaders = computed<TableHeaderT[]>(() => {
             { text: 'Frequency', value: 'pay_frequency'},
             { text: 'Sequence', value: 'frequency_sequence'},
 
-            { text: 'Coverage', value: 'date_range_readable'},
+            { text: 'Period', value: 'date_range_readable'},
         ] : [
             { text: 'Payroll #', value: 'number', isNumeric: true},
         ]),

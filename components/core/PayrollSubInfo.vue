@@ -10,11 +10,11 @@
                 <div class="label-value text-base font-sans">{{`${payroll.year} ${payroll.month_readable}`}}</div>
             </div>
             <div>
-                <InputLabel :size="'sm'" value="Payroll sequence"/>
+                <InputLabel :size="'sm'" value="Sequence"/>
                 <div class="label-value text-base font-sans">{{`${payroll.pay_frequency?.text} ${payroll.frequency_sequence?.text || ''}`}}</div>
             </div>
             <div>
-                <InputLabel :size="'sm'" value="Coverage"/>
+                <InputLabel :size="'sm'" value="Period"/>
                 <div class="label-value text-base font-sans">{{payroll.date_range_readable}}</div>
             </div>
             <div>
@@ -98,11 +98,11 @@
                 <div class="label-value text-base font-sans">{{`${payroll.year} ${payroll.month_readable}`}}</div>
             </div>
             <div>
-                <InputLabel :size="'sm'" value="Payroll sequence"/>
+                <InputLabel :size="'sm'" value="Sequence"/>
                 <div class="label-value text-base font-sans">{{`${payroll.pay_frequency?.text} ${payroll.frequency_sequence?.text || ''}`}}</div>
             </div>
             <div>
-                <InputLabel :size="'sm'" value="Coverage"/>
+                <InputLabel :size="'sm'" value="Period"/>
                 <div class="label-value text-base font-sans">{{payroll.date_range_readable}}</div>
             </div>
             <div>
