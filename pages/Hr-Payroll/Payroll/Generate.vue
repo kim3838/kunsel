@@ -73,7 +73,6 @@
 
                     <DialogModal
                         :show="generatingPayroll"
-                        :max-width="'780px'"
                         :closeable="false">
                         <template #title>
 
@@ -81,13 +80,15 @@
                         <template #content>
                             <div class="pt-2 flex flex-row gap-4">
 
-                                <form @submit.prevent="generatePayroll()">
-                                    <fieldset class="w-full neutral-border px-2 pb-2 space-y-2">
-                                        <legend class="text-base">{{stagedPayrollPayload.summary}}</legend>
+                                <div class="lining-shadow rounded-sm tint-background space-y-2">
+
+                                    <div class="lining-shadow rounded-t-sm text-lg font-medium font-header px-4 py-2">{{stagedPayrollPayload.summary}}</div>
+
+                                    <div class="p-4">
 
                                         <div class="grid gap-2 grid-cols-4">
                                             <div class="col-span-2">
-                                                <InputLabel :size="'sm'" value="Payroll of"/>
+                                                <InputLabel :size="'sm'" value="Payroll period"/>
                                                 <Input
                                                     :disabled="true"
                                                     :size="'md'"
@@ -102,9 +103,8 @@
                                                     v-model="stagedPayrollPayload.remarks"/>
                                             </div>
                                         </div>
-                                    </fieldset>
-                                </form>
-
+                                    </div>
+                                </div>
                             </div>
                         </template>
                         <template #footer>
@@ -134,7 +134,167 @@
                                             :size="'md'"
                                             :disabled="modalDisableActions"
                                             :label="modalSubmitPending ? 'Generating...' : 'Submit'"
-                                            @click="generatePayroll"/>
+                                            @click="getGeneratingFinalPay"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </template>
+                    </DialogModal>
+
+                    <DialogModal
+                        :show="showConfirmHasAtLeastOneFinalPay"
+                        :closeable="false">
+                        <template #title>
+
+                        </template>
+                        <template #content>
+                            <div class="pt-4 space-y-4">
+
+                                <div class="flex flex-row gap-6 flex-wrap">
+                                    <div>
+                                        <InputLabel :size="'sm'" value="Pay frequency"/>
+                                        <div class="text-sm font-header">
+                                            {{stagedPayrollPayload.summary}}
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <InputLabel :size="'sm'" value="Payroll period"/>
+                                        <div class="text-sm font-header">
+                                            {{stagedPayrollPayload.date_range_readable}}
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="lining-shadow rounded-sm tint-background space-y-2">
+
+                                    <div class="lining-shadow rounded-t-sm text-lg font-header px-4 py-2 label-danger">Confirm Final Pay</div>
+
+                                    <div class="p-4">
+
+                                        <div class="grid grid-cols-1 md:gap-2 lg:grid-cols-1">
+                                            <div class="space-y-2">
+
+                                                <DataTable
+                                                    :landscape="true"
+                                                    :headers="employmentProfilesFinalPaySalaryStatementsHeaders"
+                                                    :size="'md'"
+                                                    :rows="employmentProfilesFinalPaySalaryStatementsData">
+                                                    <template v-slot:cell.employee_number="{cell,slot}">
+                                                        <div class="p-[3px]">{{cell.employee.number}}</div>
+                                                    </template>
+                                                    <template v-slot:cell.employee_full_name="{cell,slot}">
+                                                        <div class="p-[3px]">{{cell.employee.full_name}}</div>
+                                                    </template>
+                                                    <template v-slot:cell.status="{cell, slot, scrollReference}">
+                                                        <div class="p-[3px]">{{cell.status.text}}</div>
+                                                    </template>
+                                                    <template v-slot:cell.employment_type="{cell, slot, scrollReference}">
+                                                        <div class="p-[3px]">{{cell.employment_type.text}}</div>
+                                                    </template>
+                                                    <template v-slot:cell.end_of_service_type="{cell, slot, scrollReference}">
+                                                        <div class="p-[3px]">{{cell.end_of_service_type?.text}}</div>
+                                                    </template>
+                                                    <template v-slot:cell.start_date="{cell, slot, scrollReference}">
+                                                        <div class="p-[3px]">{{cell.start_date_readable}}</div>
+                                                    </template>
+                                                    <template v-slot:cell.end_date="{cell, slot, scrollReference}">
+                                                        <div class="p-[3px]">{{cell.end_date_readable}}</div>
+                                                    </template>
+                                                </DataTable>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </template>
+                        <template #footer>
+                            <div class="mx-auto max-w-screen-xl">
+                                <div class="flex space-x-2 justify-between">
+                                    <div class="space-x-2 inline-flex items-center">
+
+                                    </div>
+                                    <div class="space-x-2 inline-flex items-center">
+                                        <Button
+                                            class="w-min"
+                                            :variant=" 'outline'"
+                                            :size="'md'"
+                                            :label="'Cancel'"
+                                            @click="closeConfirmHasAtLeastOneFinalPay"/>
+                                        <Button
+                                            class="w-min"
+                                            :variant=" 'outline'"
+                                            :size="'md'"
+                                            :label="'Confirm & Proceed payroll generation'"
+                                            @click="confirmHasAtLeastOneFinalPay"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </template>
+                    </DialogModal>
+
+                    <DialogModal
+                        :show="showNoSalaryStatementToBeGenerated"
+                        :closeable="false">
+                        <template #title>
+
+                        </template>
+                        <template #content>
+                            <div class="pt-4 space-y-4">
+
+                                <div class="flex flex-row gap-6 flex-wrap">
+                                    <div>
+                                        <InputLabel :size="'sm'" value="Pay frequency"/>
+                                        <div class="text-sm font-header">
+                                            {{stagedPayrollPayload.summary}}
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <InputLabel :size="'sm'" value="Payroll period"/>
+                                        <div class="text-sm font-header">
+                                            {{stagedPayrollPayload.date_range_readable}}
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="lining-shadow rounded-sm tint-background space-y-2">
+
+                                    <div class="lining-shadow rounded-t-sm text-lg font-header px-4 py-2 label-danger">No Salary Statement to Generate</div>
+
+                                    <div class="p-4">
+
+                                        <div class="grid grid-cols-1 md:gap-2 lg:grid-cols-1">
+                                            <div class="space-y-2">
+
+                                                <DataTable
+                                                    :landscape="true"
+                                                    :headers="noSalaryStatementToBeGeneratedCausesHeaders"
+                                                    :size="'md'"
+                                                    :rows="noSalaryStatementToBeGeneratedCausesData"
+                                                    v-model="selectedNoSalaryStatementToBeGeneratedCauses"
+                                                    selection>
+                                                    <template v-slot:cell.cause="{cell,slot}">
+                                                        <div class="p-[3px] label-danger">{{cell.cause}}</div>
+                                                    </template>
+                                                </DataTable>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </template>
+                        <template #footer>
+                            <div class="mx-auto max-w-screen-xl">
+                                <div class="flex space-x-2 justify-between">
+                                    <div class="space-x-2 inline-flex items-center">
+
+                                    </div>
+                                    <div class="space-x-2 inline-flex items-center">
+                                        <Button
+                                            class="w-min"
+                                            :variant=" 'outline'"
+                                            :size="'md'"
+                                            :label="'Okay'"
+                                            @click="closeNoSalaryStatementToBeGenerated"/>
                                     </div>
                                 </div>
                             </div>
@@ -374,6 +534,7 @@ const closeModal = () => {
     resetStage();
 };
 
+const generatePayrollOfEmployeeIds = ref([]);
 const generatePayrollFormBody = computed(()=>{
     return {
         account_id: selectedAssociatedCompanyAccountId.value,
@@ -388,6 +549,70 @@ const generatePayrollFormBody = computed(()=>{
     };
 });
 
+const showNoSalaryStatementToBeGenerated = ref(false);
+
+const noSalaryStatementToBeGeneratedCausesHeaders = reactive<TableHeaderT[]>([
+    { text: 'Causes might be...', value: 'cause'},
+]);
+const noSalaryStatementToBeGeneratedCausesData = ref([
+    {
+        id: 1,
+        cause: 'Your employees payroll group does not belong to the pay frequency you want to generate.'
+    },{
+        id: 2,
+        cause: 'Your employees are final paid.'
+    },{
+        id: 3,
+        cause: 'Your employees dont have any active employment profile.'
+    },{
+        id: 4,
+        cause: 'Your employees active employment profile is not within the payroll period date range.'
+    },
+]);
+const selectedNoSalaryStatementToBeGeneratedCauses = ref([]);
+
+const closeNoSalaryStatementToBeGenerated = () => {
+    showNoSalaryStatementToBeGenerated.value = false;
+}
+
+const getGeneratingFinalPay = async() =>{
+
+    if(import.meta.server || !selectedAssociatedCompanyId.value){
+        return;
+    }
+
+    modalSubmitPending.value = true;
+
+    await laraFetch(`/api/pre-generate-payroll`, {
+        method: 'POST',
+        body: generatePayrollFormBody.value
+    }, {
+        onRequestError: () => {
+            modalSubmitPending.value = false;
+        },
+        onResponse: () => {
+            modalSubmitPending.value = false;
+        },
+        onSuccessResponse: async (request, options, response) => {
+
+            employmentProfilesFinalPaySalaryStatementsData.value = _get(response, '_data.values.employment_profiles_final_pay', []);
+            generatePayrollOfEmployeeIds.value = _get(response, '_data.values.generate_payroll_employee_ids', []);
+
+            showConfirmHasAtLeastOneFinalPay.value = employmentProfilesFinalPaySalaryStatementsData.value.length > 0;
+
+            if(generatePayrollOfEmployeeIds.value.length <= 0){
+
+                showNoSalaryStatementToBeGenerated.value = true;
+                return;
+            }
+
+            if(generatePayrollOfEmployeeIds.value.length > 0 && !showConfirmHasAtLeastOneFinalPay.value){
+                await generatePayroll();
+            }
+        }
+    }, true);
+}
+
 const generatedPayroll = ref<PayrollT>({} as PayrollT);
 
 const generatePayroll = async() =>{
@@ -400,7 +625,10 @@ const generatePayroll = async() =>{
 
     await laraFetch(`/api/payroll`, {
         method: 'POST',
-        body: generatePayrollFormBody.value
+        body: {
+            ...generatePayrollFormBody.value,
+            employee_ids: generatePayrollOfEmployeeIds.value
+        }
     }, {
         onRequestError: () => {
             modalSubmitPending.value = false;
@@ -426,6 +654,29 @@ const generatePayroll = async() =>{
             await payrollInquiriesExecute();
         }
     }, true);
+}
+
+const showConfirmHasAtLeastOneFinalPay = ref(false);
+
+const employmentProfilesFinalPaySalaryStatementsHeaders = reactive<TableHeaderT[]>([
+    { text: 'Employee #', value: 'employee_number'},
+    { text: 'Name', value: 'employee_full_name'},
+    { text: 'Employment Type', value: 'employment_type'},
+    { text: 'Start Date', value: 'start_date'},
+    { text: 'End Of Service Type', value: 'end_of_service_type'},
+    { text: 'End Date', value: 'end_date'},
+]);
+const employmentProfilesFinalPaySalaryStatementsData = ref([]);
+const selectedEmploymentProfilesFinalPaySalaryStatements = ref([]);
+
+const closeConfirmHasAtLeastOneFinalPay = () => {
+    showConfirmHasAtLeastOneFinalPay.value = false;
+    employmentProfilesFinalPaySalaryStatementsData.value = [];
+}
+const confirmHasAtLeastOneFinalPay = async() => {
+    closeConfirmHasAtLeastOneFinalPay();
+    await generatePayroll();
+
 }
 </script>
 
