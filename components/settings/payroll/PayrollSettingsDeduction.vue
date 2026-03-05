@@ -4,7 +4,7 @@
         <div class="lining-shadow rounded-t-sm text-lg font-medium font-header px-4 py-2">Deductions</div>
 
         <div class="p-4 space-y-2">
-            <div class="flex flex-row flex-wrap gap-2 items-center min-h-8">
+            <div v-if="userIsSuperAdmin" class="flex flex-row flex-wrap gap-2 items-center min-h-8">
                 <Button class="inline-block" :variant="'outline'" :icon="'mdi:plus'" :size="'sm'" :disabled="disableActions" @click="create"/>
                 <Button v-if="deductionsSuccessful" :variant="'outline'" :icon="'mdi:delete-outline'" class="inline-block" :size="'sm'" :disabled="disableActions" @click="confirmDeleteSelected"/>
                 <UnorderedList v-if="disableActions" :icon="'eos-icons:loading'" :size="'md'" :label="'Please wait...'"/>
@@ -31,9 +31,9 @@
                     :rows="deductionsData"
                     :disabled="disableDataTable"
                     v-model="selectedDeductions"
-                    manual-sortable
+                    :manual-sortable="userIsSuperAdmin"
                     @manualSorted="manualSorted"
-                    selection>
+                    :selection="userIsSuperAdmin">
                     <template v-slot:cell.type="{cell,slot}">
                         <div class="p-[3px]">{{cell.type.text}}</div>
                     </template>
@@ -75,7 +75,7 @@
 import type {Sequenceable, TableHeaderT} from "@/public/js/types/data";
 import type {SequenceablePayrollComponent} from "@/public/js/types/payroll-component";
 import {storeToRefs} from "pinia";
-const {isAuthenticated} = useAuth();
+const {isAuthenticated, userIsSuperAdmin} = useAuth();
 const {fetchPayrollComponentNameSelections} = useCommon();
 const nuxtApp = useNuxtApp();
 const {
@@ -87,15 +87,19 @@ const {
 } = storeToRefs(nuxtApp.$authStore);
 const orderSequenceable = nuxtApp.$orderSequenceable as (data: Sequenceable[]) => void;
 
-const deductionsHeaders = reactive<TableHeaderT[]>([
-    { text: 'Order', value: 'order', alignData: 'center'},
-    { text: '', alignData: 'left', value: 'actions'},
-    { text: 'Code', value: 'code', minWidth: '244px'},
-    { text: 'Name', value: 'name', minWidth: '244px'},
-    { text: 'Type', value: 'type', minWidth: '244px'},
-    { text: 'Assignable', value: 'assignable'},
-    { text: 'Formula', value: 'formula', minWidth: '244px'},
-]);
+const deductionsHeaders = computed<TableHeaderT[]>(() => {
+    return [
+        ...(userIsSuperAdmin.value ? [
+            { text: 'Order', value: 'order', alignData: 'center'},
+            { text: '', alignData: 'left', value: 'actions'},
+        ] : []),
+        { text: 'Code', value: 'code', minWidth: '244px'},
+        { text: 'Name', value: 'name', minWidth: '244px'},
+        { text: 'Type', value: 'type', minWidth: '244px'},
+        { text: 'Assignable', value: 'assignable'},
+        { text: 'Formula', value: 'formula', minWidth: '244px'},
+    ] as TableHeaderT[];
+});
 
 watch(updatedAssociatedCompanyFlag, (newValue) => {
     if(isAuthenticated.value && selectedAssociatedCompanyId.value){

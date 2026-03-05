@@ -35,7 +35,6 @@
 
                             <div class="flex flex-col gap-2 text-sm">
                                 <div class="flex flex-row flex-wrap items-center gap-2">
-                                    <div class="font-medium text-lg font-serif">Legend:</div>
                                     <div><span class="font-semibold">Dur.</span> = Duration in hours</div>
                                     <div><span class="font-semibold">WH</span> = Work hour</div>
                                     <div><span class="font-semibold">HRT</span> = Hourly rate type</div>

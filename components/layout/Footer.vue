@@ -74,14 +74,14 @@
                     <div class="p-2 text-sm">
                         <div class="space-x-2">
                             <a class="inline-block hover:underline">
-                                &#169;Kunsel ERP 2026. All rights reserved.
+                                Kunsel ERP 2026
                             </a>
-                            <span>|</span>
-                            <a class="inline-block hover:underline">
+                            <span v-if="false">|</span>
+                            <a v-if="false" class="inline-block hover:underline">
                                 Terms & Conditions
                             </a>
-                            <span>|</span>
-                            <a class="inline-block hover:underline">
+                            <span v-if="false">|</span>
+                            <a v-if="false" class="inline-block hover:underline">
                                 Privacy Policy
                             </a>
                         </div>

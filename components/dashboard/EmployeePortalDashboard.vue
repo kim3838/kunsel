@@ -153,7 +153,7 @@
                                 </DataTable>
                             </div>
                         </div>
-                        <div v-else-if="!employeeHasShiftAssigned">
+                        <div v-else-if="!employeeHasShiftAssigned && !employeePending">
                             No shift assigned
                         </div>
                         <UnorderedList v-if="employeePending" :icon="'eos-icons:loading'" :size="'md'" :label="'Loading shift details...'"/>
