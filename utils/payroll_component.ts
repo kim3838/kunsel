@@ -55,11 +55,11 @@ export const  DEDUCTION_NAME: StringEnumInterface = {
 }
 
 export const  INCOME_TAX: NumericEnumInterface = {
-    COMPENSATION_TAX : 300
+    WITHHOLDING_TAX : 300
 }
 
 export const  INCOME_TAX_NAME: StringEnumInterface = {
-    [INCOME_TAX.COMPENSATION_TAX as number] : 'Compensation Tax',
+    [INCOME_TAX.WITHHOLDING_TAX as number] : 'Withholding tax',
 }
 export const PAY_PERIOD: NumericEnumInterface ={
     HOURLY : 50,

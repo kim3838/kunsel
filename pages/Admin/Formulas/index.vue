@@ -167,7 +167,7 @@ const deductionComponentOptions = reactive({
 const incomeTaxComponentOptions = reactive({
     search: '',
     selection: [
-        $enumerableOption(INCOME_TAX_NAME, INCOME_TAX.COMPENSATION_TAX as number),
+        $enumerableOption(INCOME_TAX_NAME, INCOME_TAX.WITHHOLDING_TAX as number),
     ],
     selected: []
 });

@@ -213,7 +213,7 @@ const deductionComponentOptions = reactive({
 const incomeTaxComponentOptions = reactive({
     search: '',
     selection: [
-        $enumerableOption(INCOME_TAX_NAME, INCOME_TAX.COMPENSATION_TAX as number),
+        $enumerableOption(INCOME_TAX_NAME, INCOME_TAX.WITHHOLDING_TAX as number),
     ],
     selected: null
 });
@@ -277,9 +277,9 @@ const fetchFormula = async () => {
 
             if(selectedFormulableOptionsIsEarnings.value){
                 earningComponentOptions.selected = _get(response, '_data.values.formula.component_type', null);
-            } else if (selectedFormulableOptionsIsDeductions){
+            } else if (selectedFormulableOptionsIsDeductions.value){
                 deductionComponentOptions.selected = _get(response, '_data.values.formula.component_type', null);
-            } else if (selectedFormulableOptionsIsIncomeTax){
+            } else if (selectedFormulableOptionsIsIncomeTax.value){
                 incomeTaxComponentOptions.selected = _get(response, '_data.values.formula.component_type', null);
             }
         },
