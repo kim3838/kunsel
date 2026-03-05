@@ -97,6 +97,12 @@
                             <template v-slot:cell.end_of_service_type="{cell, slot, scrollReference}">
                                 <div class="p-[3px]">{{cell.end_of_service_type?.text}}</div>
                             </template>
+                            <template v-slot:cell.start_date="{cell, slot, scrollReference}">
+                                <div class="p-[3px]">{{cell.start_date_readable}}</div>
+                            </template>
+                            <template v-slot:cell.end_date="{cell, slot, scrollReference}">
+                                <div class="p-[3px]">{{cell.end_date_readable}}</div>
+                            </template>
                         </DataTable>
                     </div>
 
