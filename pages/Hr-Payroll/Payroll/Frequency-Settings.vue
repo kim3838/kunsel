@@ -27,7 +27,7 @@
                                         </tbody>
                                     </table>
 
-                                    <div v-if="_some([PAY_FREQUENCY_TYPE.SEMI_MONTHLY, PAY_FREQUENCY_TYPE.MONTHLY],value => value == resolved.type.value)">
+                                    <div v-if="_some([PAY_FREQUENCY_TYPE.SEMIMONTHLY, PAY_FREQUENCY_TYPE.MONTHLY],value => value == resolved.type.value)">
                                         <table class="border-separate font-data">
                                             <tbody>
                                                 <tr><td class="font-semibold">Code</td><td class="pl-2">{{ _get(resolved, 'code', null) }}</td></tr>
@@ -341,7 +341,7 @@ const payFrequenciesExecute = async () => {
             payFrequenciesData.value = _get(response, '_data.values.pay_frequencies', []);
 
             weeklyPayFrequenciesData.value = _find(payFrequenciesData.value, (item: PayFrequencyT) => item.type == PAY_FREQUENCY_TYPE.WEEKLY) as PayFrequencyT;
-            semimonthlyPayFrequenciesData.value = _find(payFrequenciesData.value, (item: PayFrequencyT) => item.type == PAY_FREQUENCY_TYPE.SEMI_MONTHLY) as PayFrequencyT;
+            semimonthlyPayFrequenciesData.value = _find(payFrequenciesData.value, (item: PayFrequencyT) => item.type == PAY_FREQUENCY_TYPE.SEMIMONTHLY) as PayFrequencyT;
             monthlyPayFrequenciesData.value = _find(payFrequenciesData.value, (item: PayFrequencyT) => item.type == PAY_FREQUENCY_TYPE.MONTHLY) as PayFrequencyT;
         }
     }, false);

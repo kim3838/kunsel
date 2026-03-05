@@ -37,7 +37,7 @@ export const useCosmetic = () => {
         } else if(_includes([FORMULABLE.INCOME_TAX], formulableType)) {
 
             shadeValue = {
-                [INCOME_TAX.COMPENSATION_TAX as number]: 'caution',
+                [INCOME_TAX.WITHHOLDING_TAX as number]: 'caution',
             }[componentType] as LabelTypeT || 'default';
         }
 

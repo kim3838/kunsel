@@ -205,7 +205,7 @@ watch(updatedAssociatedCompanyFlag, (newValue) => {
 });
 
 const payFrequencySelections = [
-    $enumerableOption(PAY_FREQUENCY_NAME, PAY_FREQUENCY_TYPE.SEMI_MONTHLY as number),
+    $enumerableOption(PAY_FREQUENCY_NAME, PAY_FREQUENCY_TYPE.SEMIMONTHLY as number),
     $enumerableOption(PAY_FREQUENCY_NAME, PAY_FREQUENCY_TYPE.MONTHLY as number),
 ];
 

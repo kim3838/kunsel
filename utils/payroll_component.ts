@@ -64,14 +64,14 @@ export const  INCOME_TAX_NAME: StringEnumInterface = {
 export const PAY_PERIOD: NumericEnumInterface ={
     HOURLY : 50,
     DAILY : 100,
-    SEMI_MONTHLY : 300,
+    SEMIMONTHLY : 300,
     MONTHLY : 400
 }
 
 export const PAY_PERIOD_NAME: StringEnumInterface = {
     [PAY_PERIOD.HOURLY as number]: 'Hourly',
     [PAY_PERIOD.DAILY as number]: 'Daily',
-    [PAY_PERIOD.SEMI_MONTHLY as number]: 'Semimonthly',
+    [PAY_PERIOD.SEMIMONTHLY as number]: 'Semimonthly',
     [PAY_PERIOD.MONTHLY as number]: 'Monthly'
 };
 
