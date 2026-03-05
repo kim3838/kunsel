@@ -144,9 +144,11 @@
                             <div class="inline-flex items-center scaffold-border pr-2">
                                 <Icon name="ic:outline-keyboard-arrow-right" :class="[slot.iconSizeClass, slot.iconHolderClass]" /><div :class="[slot.titleSizeClass]">Statement dates</div>
                             </div>
-                            <SalaryStatementAttendanceSubRow
-                                :rows="cell[slot.slug]"
-                            ></SalaryStatementAttendanceSubRow>
+                            <div :style="{'max-height': `351px`, 'overflow-y': 'scroll'}">
+                                <SalaryStatementAttendanceSubRow
+                                    :rows="cell[slot.slug]"
+                                ></SalaryStatementAttendanceSubRow>
+                            </div>
                         </template>
                         <template v-slot:sub_row_extension_slot="{rowIndex, cell, slot}">
                             <div class="inline-flex items-center scaffold-border pr-2">
@@ -245,7 +247,7 @@ const salaryStatementsHeaders = computed<TableHeaderT[]>(() => {
             { text: 'Month', value: 'month_readable'},
             { text: 'Frequency', value: 'pay_frequency'},
             { text: 'Sequence', value: 'frequency_sequence'},
-            { text: 'Payroll date', value: 'date_range_readable'},
+            { text: 'Period', value: 'date_range_readable'},
         ] : [
             { text: 'Payroll #', value: 'payroll_number', alignData: 'left'},
         ]),

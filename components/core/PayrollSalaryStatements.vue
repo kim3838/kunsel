@@ -106,9 +106,11 @@
                     <div class="inline-flex items-center scaffold-border pr-2">
                         <Icon name="ic:outline-keyboard-arrow-right" :class="[slot.iconSizeClass, slot.iconHolderClass]" /><div :class="[slot.titleSizeClass]">Statement dates</div>
                     </div>
-                    <SalaryStatementAttendanceSubRow
-                        :rows="cell[slot.slug]"
-                    ></SalaryStatementAttendanceSubRow>
+                    <div :style="{'max-height': `351px`, 'overflow-y': 'scroll'}">
+                        <SalaryStatementAttendanceSubRow
+                            :rows="cell[slot.slug]"
+                        ></SalaryStatementAttendanceSubRow>
+                    </div>
                 </template>
                 <template v-slot:sub_row_extension_slot="{rowIndex, cell, slot}">
                     <div class="inline-flex items-center scaffold-border pr-2">
@@ -163,7 +165,7 @@ const salaryStatementsSupHeaders = computed<TableSupHeaderT[]>(() => {
     return [
         {text: ''},
         {text: ''},
-        {text: 'Employee', colspan: 1, alignHeader: 'center'},
+        {text: 'Employee', colspan: 2, alignHeader: 'left'},
         {text: 'Statement', colspan: 2, alignHeader: 'left'},
 
         ...(showDaysTotalColumns.value ? daysTotalHeaderSupFields.value : []),
@@ -178,6 +180,7 @@ const salaryStatementsHeaders = computed<TableHeaderT[]>(() => {
         { text: '', value: 'actions'},
 
         { text: '#', value: 'employee_number', alignData: 'left'},
+        { text: 'Name', value: 'employee_full_name', alignData: 'left'},
         { text: 'Type', value: 'type', alignData: 'left'},
         { text: 'Is Paid', value: 'is_paid', alignData: 'left'},
 

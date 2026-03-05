@@ -38,7 +38,7 @@
                                         :disabled="disableActions"
                                         :size="'md'"
                                         :icon="disableActions ? 'eos-icons:loading' : ''"
-                                        :label="disableActions ? 'Loading' : 'Load payroll dates'"/>
+                                        :label="disableActions ? 'Loading' : 'Load periods'"/>
                                 </div>
                             </div>
                         </div>
@@ -178,7 +178,8 @@
                                                     :landscape="true"
                                                     :headers="employmentProfilesFinalPaySalaryStatementsHeaders"
                                                     :size="'md'"
-                                                    :rows="employmentProfilesFinalPaySalaryStatementsData">
+                                                    :rows="employmentProfilesFinalPaySalaryStatementsData"
+                                                    v-model="selectedEmploymentProfilesFinalPaySalaryStatements">
                                                     <template v-slot:cell.employee_number="{cell,slot}">
                                                         <div class="p-[3px]">{{cell.employee.number}}</div>
                                                     </template>
@@ -270,8 +271,7 @@
                                                     :headers="noSalaryStatementToBeGeneratedCausesHeaders"
                                                     :size="'md'"
                                                     :rows="noSalaryStatementToBeGeneratedCausesData"
-                                                    v-model="selectedNoSalaryStatementToBeGeneratedCauses"
-                                                    selection>
+                                                    v-model="selectedNoSalaryStatementToBeGeneratedCauses">
                                                     <template v-slot:cell.cause="{cell,slot}">
                                                         <div class="p-[3px] label-danger">{{cell.cause}}</div>
                                                     </template>
@@ -439,7 +439,7 @@ const payrollInquiriesHeaders = reactive<TableHeaderT[]>([
     { text: 'Month Sequence', value: 'frequency_sequence_readable', minWidth: '85px'},
     { text: 'Year', value: 'year', alignData: 'left', minWidth: '85px'},
     { text: 'Month', value: 'month_readable', minWidth: '85px'},
-    { text: 'Date', value: 'date_range_readable', minWidth: '275px'},
+    { text: 'Period', value: 'date_range_readable', minWidth: '275px'},
     { text: 'Remarks', value: 'remarks',},
     { text: '', value: 'actions',},
     { text: 'Status', value: 'payroll_status', minWidth: '85px'},
@@ -448,11 +448,12 @@ const payrollInquiriesHeaders = reactive<TableHeaderT[]>([
 const generateFrequency = useLocalStorage('generate-frequency', PAY_FREQUENCY_TYPE.MONTHLY)
 const payFrequency = ref(generateFrequency.value);
 const payFrequencyOptions = reactive([
-    $enumerableOption(PAY_FREQUENCY_NAME, PAY_FREQUENCY_TYPE.SEMI_MONTHLY as number),
+    $enumerableOption(PAY_FREQUENCY_NAME, PAY_FREQUENCY_TYPE.SEMIMONTHLY as number),
     $enumerableOption(PAY_FREQUENCY_NAME, PAY_FREQUENCY_TYPE.MONTHLY as number),
 ]);
 watch(payFrequency, (value) => {
     generateFrequency.value = value;
+    payrollInquiriesExecute();
 })
 
 const companyOrganizationSelections = companyOrganizationSelectionsState();
@@ -642,8 +643,8 @@ const generatePayroll = async() =>{
             useNuxtApp().$promptStore.setPrompt({
                 resetable: false,
                 icon: null,
-                title: `Payroll draft generated`,
-                message: `Payroll#: ${_get(generatedPayroll.value, 'number', 'Not found')}.`,
+                title: `Payroll Draft Generated`,
+                message: `Payroll#: ${_get(generatedPayroll.value, 'number', 'Not found')} see preview below.`,
                 action: {
                     callback: () => {},
                     label: 'Okay'

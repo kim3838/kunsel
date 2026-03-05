@@ -14,6 +14,52 @@
                             <InputLabel :size="'sm'" value="Search employee" />
                             <Input :disabled="disableActions" :size="'md'" ref="searchInput" v-model="filters.employee_search.keyword" class="w-full" placeholder="Search employee" type="text"/>
                         </div>
+                        <div>
+                            <InputLabel :size="'sm'" for="month" value="From month" />
+                            <InputWithIcon
+                                glint
+                                :icon="'mdi:calendar-cursor-outline'"
+                                :size="'md'"
+                                :id="'from_month'"
+                                v-model="formStore.filters.fromMonthLabel"
+                                readonly />
+                        </div>
+                        <div>
+                            <InputLabel :size="'sm'" for="month" value="To month" />
+                            <InputWithIcon
+                                glint
+                                :icon="'mdi:calendar-cursor-outline'"
+                                :size="'md'"
+                                :id="'to_month'"
+                                v-model="formStore.filters.toMonthLabel"
+                                readonly />
+                        </div>
+                        <div>
+                            <InputLabel :size="'sm'" value="Pay Frequency" />
+                            <MultiSelect
+                                :key="payFrequencyOptionsKey"
+                                :icon="'tdesign:component-checkbox'"
+                                :disabled="disableActions"
+                                glint
+                                drop-shadow
+                                :selection-max-viewable-line="15"
+                                :size="'md'"
+                                :options="payFrequencyOptions"
+                            />
+                        </div>
+                        <div>
+                            <InputLabel :size="'sm'" value="Frequency Sequence" />
+                            <MultiSelect
+                                :key="payFrequencySequenceOptionsKey"
+                                :icon="'tdesign:component-checkbox'"
+                                :disabled="disableActions"
+                                glint
+                                drop-shadow
+                                :selection-max-viewable-line="15"
+                                :size="'md'"
+                                :options="payFrequencySequenceOptions"
+                            />
+                        </div>
                         <div class="col-span-2">
                             <InputLabel :size="'sm'" value="Filter payrolls" />
                             <MultiSelectPaginated
@@ -182,9 +228,11 @@
                             <div class="inline-flex items-center scaffold-border pr-2">
                                 <Icon name="ic:outline-keyboard-arrow-right" :class="[slot.iconSizeClass, slot.iconHolderClass]" /><div :class="[slot.titleSizeClass]">Statement dates</div>
                             </div>
-                            <SalaryStatementAttendanceSubRow
-                                :rows="cell[slot.slug]"
-                            ></SalaryStatementAttendanceSubRow>
+                            <div :style="{'max-height': `351px`, 'overflow-y': 'scroll'}">
+                                <SalaryStatementAttendanceSubRow
+                                    :rows="cell[slot.slug]"
+                                ></SalaryStatementAttendanceSubRow>
+                            </div>
                         </template>
                         <template v-slot:sub_row_extension_slot="{rowIndex, cell, slot}">
                             <div class="inline-flex items-center scaffold-border pr-2">
@@ -211,6 +259,8 @@
 
 <script setup lang="ts">
 import type {DataTableT, TableHeaderT, TableSupHeaderT} from "@/public/js/types/data";
+import type {DateTimePickerPayloadT} from "@/public/js/datetimepicker/type";
+import type {StringEnumInterface} from "@/public/js/common/type";
 import {storeToRefs} from "pinia";
 
 useHead({titleTemplate: (titleChunk) => {return `Salary Statements`}});
@@ -219,7 +269,14 @@ useLayout().setNavigationMode('solid');
 
 const {isAuthenticated} = useAuth();
 const nuxtApp = useNuxtApp();
+const $enumerableOption = nuxtApp.$enumerableOption as (enumerable: StringEnumInterface, value: number) => {
+    text: string,
+    value: number
+};
 const wordClamp = nuxtApp.$wordClamp as (text: string, length: number) => string;
+const {render} = dateTimePicker();
+const clientReadyState = useClientReadyState();
+const formStore = nuxtApp.$formStore;
 const common = useCommon();
 const {
     updatedAssociatedCompanyFlag
@@ -256,6 +313,30 @@ const rebuildSelections = (selection: string[] = []) => {
         );
     }
 }
+
+const payFrequencySelections = [
+    $enumerableOption(PAY_FREQUENCY_NAME, PAY_FREQUENCY_TYPE.SEMIMONTHLY as number),
+    $enumerableOption(PAY_FREQUENCY_NAME, PAY_FREQUENCY_TYPE.MONTHLY as number),
+];
+
+const payFrequencyOptionsKey = shallowRef(0);
+const payFrequencyOptions = reactive({
+    search: '',
+    selection: payFrequencySelections,
+    selected: []
+});
+
+const payFrequencySequenceSelections = [
+    $enumerableOption(PAY_FREQUENCY_SEQUENCE_NAME, PAY_FREQUENCY_SEQUENCE_TYPE.FIRST_HALF as number),
+    $enumerableOption(PAY_FREQUENCY_SEQUENCE_NAME, PAY_FREQUENCY_SEQUENCE_TYPE.SECOND_HALF as number),
+];
+
+const payFrequencySequenceOptionsKey = shallowRef(0);
+const payFrequencySequenceOptions = reactive({
+    search: '',
+    selection: payFrequencySequenceSelections,
+    selected: []
+});
 
 const payrollSelectionsOptionsKey = shallowRef(0);
 const payrollSelectionsOptions = reactive({
@@ -337,7 +418,7 @@ const salaryStatementsHeaders = computed<TableHeaderT[]>(() => {
             { text: 'Frequency', value: 'pay_frequency'},
             { text: 'Sequence', value: 'frequency_sequence'},
 
-            { text: 'Coverage', value: 'date_range_readable'},
+            { text: 'Period', value: 'date_range_readable'},
         ] : [
             { text: 'Payroll #', value: 'payroll_number', alignData: 'left'},
         ]),
@@ -434,6 +515,11 @@ let paramsComputed = computed(() => {
             assigned_employee_group_ids: employeeGroupOptions.selected,
             payroll_search: filters.payroll_search.keyword,
             employee_search: filters.employee_search.keyword,
+
+            payroll_from_month: formStore.filters.fromMonthValue,
+            payroll_to_month: formStore.filters.toMonthValue,
+            payroll_pay_frequencies: payFrequencyOptions.selected,
+            payroll_frequency_sequences: payFrequencySequenceOptions.selected,
         }
     };
 });
@@ -504,6 +590,61 @@ function paginate(page = 1, clearSelection = false){
 
 watch(() => {return filters.page;}, () => {paginate(filters.page);});
 watch(() => {return filters.perPage;}, () => {paginate(1);});
+
+let datePickers = ref([
+    {
+        id: 'from_month',
+        type: 'month',
+        selectedCallback: (payload: DateTimePickerPayloadT) => {
+
+            formStore.setFormFilterValue({
+                key: 'fromMonthValue',
+                value: payload.value
+            });
+            formStore.setFormFilterValue({
+                key: 'fromMonthLabel',
+                value: payload.label as string
+            });
+        }
+    },
+    {
+        id: 'to_month',
+        type: 'month',
+        selectedCallback: (payload: DateTimePickerPayloadT) => {
+
+            formStore.setFormFilterValue({
+                key: 'toMonthValue',
+                value: payload.value
+            });
+            formStore.setFormFilterValue({
+                key: 'toMonthLabel',
+                value: payload.label as string
+            });
+        }
+    },
+]);
+
+const renderDatePickers = () => {
+    render(datePickers.value);
+}
+
+//Render date time pickers on navigate
+if(clientReadyState.value){
+    onMounted(async () => {
+        await nextTick(() => {
+            renderDatePickers();
+        });
+    });
+}
+
+//Render date time pickers on load
+watch(clientReadyState, async (clientReady) => {
+    if(clientReady){
+        await nextTick(() => {
+            renderDatePickers();
+        });
+    }
+})
 
 const confirmDeleteSelected = () => {
 
