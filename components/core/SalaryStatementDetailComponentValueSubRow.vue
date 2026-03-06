@@ -44,6 +44,16 @@
                 <div class="p-[3px]">{{cell['13th_month_is_projected'] ? 'Yes' : 'No'}}</div>
             </template>
 
+            <template v-slot:cell.withholding_tax_withheld="{cell,slot}">
+                <div class="p-[3px]">{{cell.withholding_tax_withheld}}</div>
+            </template>
+            <template v-slot:cell.withholding_tax_actual_annual_tax="{cell,slot}">
+                <div class="p-[3px]">{{cell.withholding_tax_actual_annual_tax}}</div>
+            </template>
+            <template v-slot:cell.withholding_tax_adjustment="{cell,slot}">
+                <div class="p-[3px]">{{cell.withholding_tax_adjustment}}</div>
+            </template>
+
             <template v-slot:cell.net="{cell,slot}">
                 <div class="p-[3px]">{{cell.net}}</div>
             </template>
@@ -148,6 +158,16 @@ const getSupHeaders = (componentValueType: number) => {
     }
 
     if([
+        TYPE.PH_WITHHOLDING_TAX_REFUND,
+        TYPE.PH_WITHHOLDING_TAX_DEFICIT,
+    ].indexOf(componentValueType) >= 0){
+        supHeaders = supHeaders.concat([
+            {text: 'Annual Tax', colspan: 2, alignHeader: 'center'},
+            {text: 'Adjustment', colspan: 1, alignHeader: 'center'},
+        ])
+    }
+
+    if([
         TYPE.NET
     ].indexOf(componentValueType) >= 0){
         supHeaders = supHeaders.concat([
@@ -246,6 +266,17 @@ const getHeaders = (componentValueType: number) => {
             { text: 'Actual', value: '13th_month_actual', isNumeric: true, alignData: 'right', alignHeader: 'center'},
             { text: 'Projected', value: '13th_month_projected', isNumeric: true, alignData: 'right', alignHeader: 'center'},
             { text: '', value: '13th_month_adjustment', isNumeric: true, alignData: 'right', alignHeader: 'center'},
+        ])
+    }
+
+    if([
+        TYPE.PH_WITHHOLDING_TAX_REFUND,
+        TYPE.PH_WITHHOLDING_TAX_DEFICIT,
+    ].indexOf(componentValueType) >= 0){
+        headers = headers.concat([
+            { text: 'Withheld', value: 'withholding_tax_withheld', isNumeric: true, alignData: 'right', alignHeader: 'center'},
+            { text: 'Actual', value: 'withholding_tax_actual_annual_tax', isNumeric: true, alignData: 'right', alignHeader: 'center'},
+            { text: '', value: 'withholding_tax_adjustment', isNumeric: true, alignData: 'right', alignHeader: 'center'},
         ])
     }
 
