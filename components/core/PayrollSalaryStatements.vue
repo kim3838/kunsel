@@ -106,7 +106,7 @@
                     <div class="inline-flex items-center scaffold-border pr-2">
                         <Icon name="ic:outline-keyboard-arrow-right" :class="[slot.iconSizeClass, slot.iconHolderClass]" /><div :class="[slot.titleSizeClass]">Statement dates</div>
                     </div>
-                    <div :style="{'max-height': `351px`, 'overflow-y': 'scroll'}">
+                    <div :style="{'max-height': `270px`, 'overflow-y': 'scroll'}">
                         <SalaryStatementAttendanceSubRow
                             :rows="cell[slot.slug]"
                         ></SalaryStatementAttendanceSubRow>

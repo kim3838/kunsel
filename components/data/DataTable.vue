@@ -88,6 +88,7 @@
                         <td
                             v-for="(header, headerIndex) in headers" :key="row.id"
                             class="whitespace-pre"
+                            :title="header.text"
                             :style="cellStyle(row, header)"
                             :class="[bodyFontClass, cellFontClass(header), cellAlignClass(header?.alignData), cellJustifyClass(header?.justifyData)]">
                             <slot

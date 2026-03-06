@@ -52,7 +52,7 @@
                             />
                         </div>
                         <div>
-                            <InputLabel :size="'sm'" value="Payroll Component Name" />
+                            <InputLabel :size="'sm'" value="Payroll Item" />
                             <MultiSelect
                                 :key="payrollComponentNameOptionsKey"
                                 :icon="'tdesign:component-checkbox'"
@@ -61,7 +61,7 @@
                                 drop-shadow
                                 :selection-max-viewable-line="20"
                                 :size="'md'"
-                                :label="'Filter Payroll Component Name'"
+                                :label="'Filter Payroll Item'"
                                 :options="payrollComponentNameOptions"
                             />
                         </div>
@@ -442,7 +442,7 @@ let paramsComputed = computed(() => {
             department_ids: departmentOptions.selected,
             designation_ids: designationOptions.selected,
             payroll_componentable_morph_to_type: payrollComponentTypeOptions.selected,
-            payroll_componentable_morph: payrollComponentNameOptions.selected,
+            payroll_componentable_component_sub_types: payrollComponentNameOptions.selected,
             formulable_types: formulableTypeOptions.selected,
         }
     };

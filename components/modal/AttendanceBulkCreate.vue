@@ -3,46 +3,6 @@
         <slot />
 
         <DialogModal
-            :show="showBulkCreateErrors"
-            :closeable="false"
-            @close="closeModal">
-            <template #title>
-            </template>
-
-            <template #content>
-                <div>
-                    <fieldset class="neutral-border px-2 pb-2 space-y-2">
-                        <legend class="text-lg font-header">Errors</legend>
-
-                        <DataTable
-                            :headers="bulkCreateErrorsHeaders"
-                            :size="'md'"
-                            :rows="bulkCreateErrors"
-                            selection>
-                            <template v-slot:cell.error="{cell, slot}">
-                                <Label invert :size="slot.labelSize" :type="'default'" :label="cell.error" />
-                            </template>
-                        </DataTable>
-                    </fieldset>
-                </div>
-            </template>
-
-            <template #footer>
-                <div class="flex space-x-2 justify-between">
-                    <div class="space-x-2 inline-flex">
-
-                    </div>
-                    <div class="space-x-2 inline-flex items-center">
-                        <Button
-                            :variant="`outline`"
-                            :disabled="disableActions"
-                            @click="closeErrorsModal" :label="'Close'" />
-                    </div>
-                </div>
-            </template>
-        </DialogModal>
-
-        <DialogModal
             :max-width="'660px'"
             :show="creating"
             :closeable="false"
@@ -127,6 +87,46 @@
                             @click="bulkCreateSubmit"
                             :icon="pending ? 'eos-icons:loading' : 'mdi-plus'"
                             :label="pending ? 'Generating...' : `Auto-create attendances`"/>
+                    </div>
+                </div>
+            </template>
+        </DialogModal>
+
+        <DialogModal
+            :show="showBulkCreateErrors"
+            :closeable="false"
+            @close="closeModal">
+            <template #title>
+            </template>
+
+            <template #content>
+                <div>
+                    <fieldset class="neutral-border px-2 pb-2 space-y-2">
+                        <legend class="text-lg font-header">Errors</legend>
+
+                        <DataTable
+                            :headers="bulkCreateErrorsHeaders"
+                            :size="'md'"
+                            :rows="bulkCreateErrors"
+                            selection>
+                            <template v-slot:cell.error="{cell, slot}">
+                                <Label invert :size="slot.labelSize" :type="'default'" :label="cell.error" />
+                            </template>
+                        </DataTable>
+                    </fieldset>
+                </div>
+            </template>
+
+            <template #footer>
+                <div class="flex space-x-2 justify-between">
+                    <div class="space-x-2 inline-flex">
+
+                    </div>
+                    <div class="space-x-2 inline-flex items-center">
+                        <Button
+                            :variant="`outline`"
+                            :disabled="disableActions"
+                            @click="closeErrorsModal" :label="'Close'" />
                     </div>
                 </div>
             </template>
@@ -275,11 +275,12 @@ const bulkCreateSubmit = async () => {
 
             if(hasErrors){
                 showBulkCreateErrors.value = true;
-            }
+            } else {
 
-            closeModal(resetModalOnClose);
-            if(resetModalOnClose){
-                emit('completed');
+                closeModal(resetModalOnClose);
+                if(resetModalOnClose){
+                    emit('completed');
+                }
             }
         }
     });
@@ -315,9 +316,8 @@ const closeModal = (resetModal = true) => {
     creating.value = false;
 };
 const closeErrorsModal = (resetModal = true) => {
-    reset();
-    creating.value = false;
-    emit('completed');
+    showBulkCreateErrors.value = false;
+    bulkCreateErrors.value = [];
 };
 
 const cancel = () => {

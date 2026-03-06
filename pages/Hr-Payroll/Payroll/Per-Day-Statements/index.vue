@@ -91,7 +91,7 @@
                             />
                         </div>
                         <div>
-                            <InputLabel :size="'sm'" value="Payroll Component Name" />
+                            <InputLabel :size="'sm'" value="Payroll Item" />
                             <MultiSelect
                                 :key="payrollComponentNameOptionsKey"
                                 :icon="'tdesign:component-checkbox'"
@@ -406,7 +406,7 @@ let paramsComputed = computed(() => {
             statement_date_statuses: dayStatusOptions.selected,
             statement_date_day_types: dayTypeOptions.selected,
             payroll_componentable_morph_to_type: payrollComponentTypeOptions.selected,
-            payroll_componentable_morph: payrollComponentNameOptions.selected,
+            payroll_componentable_component_sub_types: payrollComponentNameOptions.selected,
             formulable_types: formulableTypeOptions.selected,
         }
     };

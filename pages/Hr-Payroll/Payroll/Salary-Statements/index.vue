@@ -91,9 +91,12 @@
                             <InputLabel :size="'sm'" value="Employee Group" />
                             <MultiSelect :key="employeeGroupOptionsKey" glint drop-shadow :selection-max-viewable-line="15" :size="'md'" :options="employeeGroupOptions" :disabled="disableActions" :icon="'tdesign:component-checkbox'"/>
                         </div>
-                        <div class="flex flex-col">
+                        <div class="col-span-2 flex flex-col">
                             <div class="flex-none h-[1.25rem]"></div>
-                            <Button class="w-min" ref="submitButton" type="submit" :disabled="disableActions" :size="'md'" :icon="disableActions ? 'eos-icons:loading' : 'mdi:data'" :label="disableActions ? 'Loading' : 'Load'"></Button>
+                            <div class="flex flex-row gap-2">
+                                <Button class="w-min" ref="submitButton" type="submit" :disabled="disableActions" :size="'md'" :icon="disableActions ? 'eos-icons:loading' : 'mdi:data'" :label="disableActions ? 'Loading' : 'Load'"></Button>
+                                <Button class="w-min" type="button" :disabled="disableActions" :size="'md'" :variant="'outline'" :icon="'bi:filetype-csv'" @click="exportResults('csv')" :label="'Export .csv'"></Button>
+                            </div>
                         </div>
                     </div>
 
@@ -160,7 +163,7 @@
                         :key="salaryStatementsKey"
                         :sup-headers="salaryStatementsSupHeaders"
                         :headers="salaryStatementsHeaders"
-                        :size="'lg'"
+                        :size="'md'"
                         :rows="salaryStatements.data"
                         v-model="selectedSalaryStatements"
                         selection
@@ -183,7 +186,7 @@
                                     :parent-icon="'ic:baseline-arrow-right'"
                                     in-horizontal-scrollable
                                     divider
-                                    :size="`sm`"
+                                    :size="`xs`"
                                     :drop-shadow-size="`xl`"
                                     :title="'Menu'"
                                     :drop-align="'top'"
@@ -216,7 +219,7 @@
                             <div class="p-[3px]">{{cell.payroll.date_range_readable}}</div>
                         </template>
                         <template v-slot:cell.employee_full_name="{cell,slot}">
-                            <div class="px-[3px]" :title="cell.employee_full_name">{{wordClamp(cell.employee_full_name, 16)}}</div>
+                            <div class="px-[3px]" :title="cell.employee_full_name">{{wordClamp(cell.employee_full_name, 12)}}</div>
                         </template>
                         <template v-slot:cell.type="{cell,slot}">
                             <div class="p-[3px]">{{cell.type?.text}}</div>
@@ -228,7 +231,7 @@
                             <div class="inline-flex items-center scaffold-border pr-2">
                                 <Icon name="ic:outline-keyboard-arrow-right" :class="[slot.iconSizeClass, slot.iconHolderClass]" /><div :class="[slot.titleSizeClass]">Statement dates</div>
                             </div>
-                            <div :style="{'max-height': `351px`, 'overflow-y': 'scroll'}">
+                            <div :style="{'max-height': `270px`, 'overflow-y': 'scroll'}">
                                 <SalaryStatementAttendanceSubRow
                                     :rows="cell[slot.slug]"
                                 ></SalaryStatementAttendanceSubRow>
@@ -261,6 +264,7 @@
 import type {DataTableT, TableHeaderT, TableSupHeaderT} from "@/public/js/types/data";
 import type {DateTimePickerPayloadT} from "@/public/js/datetimepicker/type";
 import type {StringEnumInterface} from "@/public/js/common/type";
+import { withQuery } from 'ufo';
 import {storeToRefs} from "pinia";
 
 useHead({titleTemplate: (titleChunk) => {return `Salary Statements`}});
@@ -572,6 +576,43 @@ const salaryStatementsExecute = async() =>{
     }, false);
 }
 salaryStatementsExecute();
+
+const exportResults = async (format = 'csv') => {
+
+    if(import.meta.server || !selectedAssociatedCompanyAccountId.value|| !selectedAssociatedCompanyId.value){
+        return;
+    }
+
+    let params = {
+        filters: {
+            account_id: selectedAssociatedCompanyAccountId.value,
+            company_ids: [selectedAssociatedCompanyId.value],
+            payroll_ids: payrollSelectionsOptions.selected,
+            employee_ids: employeeOptions.selected,
+            assigned_employee_group_ids: employeeGroupOptions.selected,
+            payroll_search: filters.payroll_search.keyword,
+            employee_search: filters.employee_search.keyword,
+
+            payroll_from_month: formStore.filters.fromMonthValue,
+            payroll_to_month: formStore.filters.toMonthValue,
+            payroll_pay_frequencies: payFrequencyOptions.selected,
+            payroll_frequency_sequences: payFrequencySequenceOptions.selected,
+        },
+        account_id: selectedAssociatedCompanyAccountId.value,
+        company_id: selectedAssociatedCompanyId.value,
+    }
+
+    const urlWithParams = withQuery('/api/salary-statements-export', params)
+
+    await laraBlobFetch({
+        path: urlWithParams,
+        filename: 'download.csv',
+        action: 'download'
+    }, {
+        onResponse: () => {},
+        onSuccessResponse: () => {}
+    });
+}
 
 function paginate(page = 1, clearSelection = false){
     clearTimeout(filters.payroll_search.callback);
