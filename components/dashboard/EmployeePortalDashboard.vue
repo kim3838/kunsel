@@ -19,12 +19,12 @@
                                     <Label :size="'md'" :type="employee?._payload?.label_shade?.value as LabelTypeT" shade :label="_get(employee, 'current_employment_profile.status.text', '')" />
                                     <div>{{employee.current_employment_profile?.employment_type?.text}}</div>
                                 </div>
-                                <div class="text-sm">{{ _get(employee, 'current_employment_profile.readable_date_range', '') }}</div>
+                                <div v-if="employee.current_employment_profile?.is_active" class="text-sm">{{ _get(employee, 'current_employment_profile.readable_date_range', '') }}</div>
                             </div>
                             <Button :variant="'outline'" :size="'xs'" :icon="'ic:sharp-restart-alt'" :disabled="employeePending" :label="'Reload'" @click="fetchEmployee()" />
                         </div>
 
-                        <div class="flex flex-wrap gap-6 pt-4 scaffold-border-top">
+                        <div class="flex flex-wrap gap-6">
                             <div>
                                 <InputLabel :size="'xs'" value="Number" />
                                 <div class="text-sm font-sans">{{ _get(employee, 'number', '--') }}</div>
@@ -54,7 +54,7 @@
                             <div class="text-lg font-header">{{dateTimeNowFormatted}}</div>
                         </div>
 
-                        <div class="space-y-2 pt-4 scaffold-border-top">
+                        <div class="space-y-2">
 
                         </div>
                     </div>
@@ -94,27 +94,27 @@
                             <div class="grid grid-cols-4 gap-2">
                                 <div>
                                     <div class="text-xs">Code</div>
-                                    <div class="text-sm">{{ _get(employee, 'shift.code', '') }}</div>
+                                    <div class="text-sm font-sans">{{ _get(employee, 'shift.code', '') }}</div>
                                 </div>
                                 <div>
                                     <div class="text-xs">Type</div>
-                                    <div class="text-sm">{{ _get(employee, 'shift.type.text', '') }}</div>
+                                    <div class="text-sm font-sans">{{ _get(employee, 'shift.type.text', '') }}</div>
                                 </div>
                                 <div class="col-span-2">
                                     <div class="text-xs">Name</div>
-                                    <div class="text-sm">{{ _get(employee, 'shift.name', '') }}</div>
+                                    <div class="text-sm font-sans">{{ _get(employee, 'shift.name', '') }}</div>
                                 </div>
                                 <div>
                                     <div class="text-xs">Work Start Grace</div>
-                                    <div class="text-sm">{{ _get(employee, 'shift.work_start_grace_time_readable', '') }}</div>
+                                    <div class="text-sm font-sans">{{ _get(employee, 'shift.work_start_grace_time_readable', '') }}</div>
                                 </div>
                                 <div v-if="employeeShiftRequiresLunchOutAndIn">
                                     <div class="text-xs">Lunch Start Grace</div>
-                                    <div class="text-sm">{{ _get(employee, 'shift.lunch_start_grace_time_readable', '') }}</div>
+                                    <div class="text-sm font-sans">{{ _get(employee, 'shift.lunch_start_grace_time_readable', '') }}</div>
                                 </div>
                                 <div>
                                     <div class="text-xs">Overtime Max Duration</div>
-                                    <div class="text-sm">{{ _get(employee, 'shift.max_overtime_readable', '') }}</div>
+                                    <div class="text-sm font-sans">{{ _get(employee, 'shift.max_overtime_readable', '') }}</div>
                                 </div>
                             </div>
 
@@ -189,12 +189,14 @@
                     <div class="px-4 py-4">
                         <div v-if="true" class="grid grid-cols-1 gap-2">
                             <div>
-                                <InputLabel :size="'xs'" value="Payroll group" />
-                                <div class="text-sm">{{ _get(employee, 'payroll_group.type.text', 'Not found') }}</div>
+                                <InputLabel :size="'sm'" value="Payroll group" />
+                                <div class="text-base font-sans">{{ _get(employee, 'payroll_group.type.text', 'Not found') }}</div>
                             </div>
+
+                            <span class="text-sm font-serif">work in progress...</span>
                         </div>
                         <div v-else>
-                            <UnorderedList :icon="'eos-icons:loading'" :size="'md'" :label="'Loading leave balance...'"/>
+                            <UnorderedList :icon="'eos-icons:loading'" :size="'md'" :label="'Loading payroll info...'"/>
                         </div>
                     </div>
                 </div>

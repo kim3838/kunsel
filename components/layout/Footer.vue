@@ -42,7 +42,7 @@
                 <div class="p-2">
                     <div class="flex flex-row flex-wrap justify-start items-center">
                         <div class="w-max text-xl font-medium font-[Overpass] flex flex-row items-center gap-2">
-                            Kunsel ERP<span class="text-sm font-serif">work in progress...</span>
+                            Kunsel ERP
                         </div>
                         <BreadCrumbs prefix-arrow :prefix-company="breadcrumbsPrefixCompany" />
                     </div>

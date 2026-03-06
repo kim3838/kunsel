@@ -23,6 +23,40 @@
                     </div>
                 </div>
             </div>
+
+            <div class="grid grid-cols-9 lg:grid-cols-12 gap-y-6 gap-x-4">
+
+                <div class="col-span-full md:col-span-3 lg:col-span-2 lining-shadow rounded-sm grow tint-background">
+                    <div class="lining-shadow rounded-t-sm px-4 py-2 flex justify-between items-center">
+                        <div class="text-lg font-medium font-header">Leave Today</div>
+                    </div>
+
+                    <div class="px-4 py-4">
+                        <span class="text-sm font-serif">work in progress...</span>
+                    </div>
+                </div>
+
+                <div class="col-span-full md:col-span-6 lg:col-span-3 lining-shadow rounded-sm grow tint-background">
+                    <div class="lining-shadow rounded-t-sm px-4 py-2 flex justify-between items-center">
+                        <div class="text-lg font-medium font-header">Upcoming Leaves</div>
+                    </div>
+
+                    <div class="px-4 py-4">
+                        <span class="text-sm font-serif">work in progress...</span>
+                    </div>
+                </div>
+
+                <div class="col-span-full md:col-span-7 lining-shadow rounded-sm grow tint-background">
+                    <div class="lining-shadow rounded-t-sm px-4 py-2 flex justify-between items-center">
+                        <div class="text-lg font-medium font-header">Payroll Run</div>
+                    </div>
+
+                    <div class="px-4 py-4">
+                        <span class="text-sm font-serif">work in progress...</span>
+                    </div>
+                </div>
+
+            </div>
         </div>
     </div>
 </template>
