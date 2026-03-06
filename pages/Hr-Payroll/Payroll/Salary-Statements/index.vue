@@ -91,16 +91,11 @@
                             <InputLabel :size="'sm'" value="Employee Group" />
                             <MultiSelect :key="employeeGroupOptionsKey" glint drop-shadow :selection-max-viewable-line="15" :size="'md'" :options="employeeGroupOptions" :disabled="disableActions" :icon="'tdesign:component-checkbox'"/>
                         </div>
-                        <div class="col-span-2 flex flex-col">
-                            <div class="flex-none h-[1.25rem]"></div>
-                            <div class="flex flex-row gap-2">
-                                <Button class="w-min" ref="submitButton" type="submit" :disabled="disableActions" :size="'md'" :icon="disableActions ? 'eos-icons:loading' : 'mdi:data'" :label="disableActions ? 'Loading' : 'Load'"></Button>
-                                <Button class="w-min" type="button" :disabled="disableActions" :size="'md'" :variant="'outline'" :icon="'bi:filetype-csv'" @click="exportResults('csv')" :label="'Export .csv'"></Button>
-                            </div>
-                        </div>
                     </div>
 
                     <div class="flex flex-row flex-wrap gap-2 items-center min-h-8">
+                        <Button class="w-min" ref="submitButton" type="submit" :disabled="disableActions" :size="'md'" :icon="disableActions ? 'eos-icons:loading' : 'mdi:data'" :label="disableActions ? 'Loading' : 'Load'"></Button>
+                        <Button class="w-min" type="button" :disabled="disableActions" :size="'md'" :variant="'outline'" :icon="'bi:filetype-csv'" @click="exportCsv" :label="'Export .csv'"></Button>
                         <div class="h-8 flex flex-row items-center scaffold-border px-2">
                             <label class="flex items-center">
                                 <Checkbox
@@ -577,7 +572,7 @@ const salaryStatementsExecute = async() =>{
 }
 salaryStatementsExecute();
 
-const exportResults = async (format = 'csv') => {
+const exportCsv = async () => {
 
     if(import.meta.server || !selectedAssociatedCompanyAccountId.value|| !selectedAssociatedCompanyId.value){
         return;

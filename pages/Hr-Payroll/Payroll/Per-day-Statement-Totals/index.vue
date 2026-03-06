@@ -104,9 +104,12 @@
                                 :options="payrollComponentNameOptions"
                             />
                         </div>
-                        <div class="flex flex-col">
+                        <div class="col-span-2 flex flex-col">
                             <div class="flex-none h-[1.25rem]"></div>
-                            <Button class="w-min" ref="submitButton" type="submit" :disabled="disableActions" :size="'md'" :icon="disableActions ? 'eos-icons:loading' : 'mdi:data'" :label="disableActions ? 'Loading' : 'Load'"></Button>
+                            <div class="flex flex-row gap-2">
+                                <Button class="w-min" ref="submitButton" type="submit" :disabled="disableActions" :size="'md'" :icon="disableActions ? 'eos-icons:loading' : 'mdi:data'" :label="disableActions ? 'Loading' : 'Load'"></Button>
+                                <Button class="w-min" type="button" :disabled="disableActions" :size="'md'" :variant="'outline'" :icon="'bi:filetype-csv'" @click="exportCsv" :label="'Export .csv'"></Button>
+                            </div>
                         </div>
                     </div>
                 </form>
@@ -158,6 +161,7 @@
 import type {DataTableT, TableHeaderT, TableRowT, TableSupHeaderT} from "@/public/js/types/data";
 import type {LabelTypeT} from "@/public/js/types/theme";
 import type {StringEnumInterface} from "@/public/js/common/type";
+import { withQuery } from 'ufo';
 import {storeToRefs} from "pinia";
 
 useHead({titleTemplate: (titleChunk) => {return `Per day Statements`}});
@@ -432,7 +436,7 @@ const perDayStatementsExecute = async() =>{
 
     perDayStatementsPending.value = true;
 
-    await laraFetch(`/api/per-day-salary-statements`, {
+    await laraFetch(`/api/per-day-salary-statement-totals`, {
         method: 'GET',
         params: paramsComputed.value
     }, {
@@ -494,6 +498,42 @@ const perDayStatementsExecute = async() =>{
     }, false);
 }
 perDayStatementsExecute();
+
+const exportCsv = async () => {
+
+    if(import.meta.server || !selectedAssociatedCompanyAccountId.value|| !selectedAssociatedCompanyId.value){
+        return;
+    }
+
+    let params = {
+        filters: {
+            account_id: selectedAssociatedCompanyAccountId.value,
+            company_ids: [selectedAssociatedCompanyId.value],
+            employee_ids: employeeOptions.selected,
+            assigned_employee_group_ids: employeeGroupOptions.selected,
+            date_from: formStore.filters.attendanceDateFrom,
+            date_to: formStore.filters.attendanceDateTo,
+            statement_date_statuses: dayStatusOptions.selected,
+            statement_date_day_types: dayTypeOptions.selected,
+            payroll_componentable_morph_to_type: payrollComponentTypeOptions.selected,
+            payroll_componentable_component_sub_types: payrollComponentNameOptions.selected,
+            formulable_types: formulableTypeOptions.selected,
+        },
+        account_id: selectedAssociatedCompanyAccountId.value,
+        company_id: selectedAssociatedCompanyId.value,
+    }
+
+    const urlWithParams = withQuery('/api/per-day-salary-statement-totals-export', params)
+
+    await laraBlobFetch({
+        path: urlWithParams,
+        filename: 'download.csv',
+        action: 'download'
+    }, {
+        onResponse: () => {},
+        onSuccessResponse: () => {}
+    });
+}
 
 function paginate(page = 1, clearSelection = false){
 
