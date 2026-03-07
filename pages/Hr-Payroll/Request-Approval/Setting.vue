@@ -1,10 +1,9 @@
 <template>
     <div>
         <DefaultWrapper>
-            <div class="mx-auto max-w-screen-2xl">
+            <div class="mx-auto max-w-screen-lg">
 
                 <DialogModal
-                    :max-width="'1100px'"
                     :show="editing"
                     :closeable="false">
                     <template #title>
@@ -15,8 +14,6 @@
 
                             <fieldset class="neutral-border px-2 pb-2 space-y-4">
                                 <legend class="text-lg font-header">Approval Sequence</legend>
-
-                                <div>{{_get(editPayload, 'request_title', null)}}</div>
 
                                 <div class="mb-2 flex items-center min-h-8">
                                     <Button class="w-min" :disabled="disableActions" :variant="'outline'" :size="'sm'" :icon="'mdi:plus'" :label="'Add Approver'" @click="addApprover"></Button>
@@ -42,6 +39,7 @@
                                     <template v-slot:cell.type="{cell, slot, scrollReference, rowIndex}">
                                         <div class="mx-0.5 flex items-center h-[32px]">
                                             <SingleSelectWrapper
+                                                :key="approverTypeOptionsKey"
                                                 in-horizontal-scrollable
                                                 drop-shadow
                                                 :custom-identifier="rowIndex"
@@ -325,13 +323,22 @@ const approverSequenceHeaders = reactive<TableHeaderT[]>([
 
 const approverSequence = ref<ApprovalSettingApproverT[]>([]);
 
+const approverTypeSelection = computed(() => {
+
+    return [
+        $enumerableOption(APPROVER_TYPE_NAME, APPROVER_TYPE.SELECTED as number),
+        ...(_get(editPayload.value, 'employable', false) ? [
+            $enumerableOption(APPROVER_TYPE_NAME, APPROVER_TYPE.DEPARTMENT_HEAD as number),
+            $enumerableOption(APPROVER_TYPE_NAME, APPROVER_TYPE.MANAGER as number),
+        ] : [])
+
+    ];
+})
+
+const approverTypeOptionsKey = shallowRef(0);
 const approverTypeOptions = reactive({
     search: '',
-    selection: [
-        $enumerableOption(APPROVER_TYPE_NAME, APPROVER_TYPE.SELECTED as number),
-        $enumerableOption(APPROVER_TYPE_NAME, APPROVER_TYPE.DEPARTMENT_HEAD as number),
-        $enumerableOption(APPROVER_TYPE_NAME, APPROVER_TYPE.MANAGER as number),
-    ]
+    selection: []
 });
 
 const approverTypeChange = (value: number, indexIdentifier: number) => {
@@ -434,6 +441,10 @@ const edit = (row: TableRowT) => {
 
         editPayload.value = _cloneDeep(row);
 
+        //@ts-ignore
+        approverTypeOptions.selection = approverTypeSelection.value;
+        approverTypeOptionsKey.value++;
+
         approverSequence.value = _get(editPayload.value, 'approvers', []) as ApprovalSettingApproverT[];
     }
 };
@@ -441,6 +452,7 @@ const edit = (row: TableRowT) => {
 const resetEditable = () => {
     editPayload.value = {};
     splicedApproverSequence.value = [];
+    approverTypeOptionsKey.value++;
 }
 
 const closeEdit = () => {
