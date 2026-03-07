@@ -77,6 +77,69 @@
                     </div>
                 </form>
 
+                <DialogModal
+                    :show="showConfirmSubmitForApproval"
+                    :closeable="false">
+                    <template #title>
+
+                    </template>
+                    <template #content>
+                        <div class="pt-4 space-y-4">
+
+                            <div class="text-sm">Confirm submission</div>
+
+                            <div class="lining-shadow rounded-sm tint-background space-y-2">
+
+                                <div class="lining-shadow rounded-t-sm text-lg font-medium font-header px-4 py-2">{{stagedPayroll.number}}</div>
+
+                                <div class="p-4 space-y-6">
+
+                                    <PayrollSubInfo
+                                        v-if="stagedPayroll.id"
+                                        :payroll="stagedPayroll"
+                                        :type="PAYROLL_SUB_INFO_TYPE.ADMIN_OVERVIEW" />
+
+                                    <div class="grid grid-cols-1 md:gap-2 lg:grid-cols-3">
+                                        <div>
+                                            <InputLabel :size="'sm'" value="Remarks"/>
+                                            <Input
+                                                ref="remarksReference"
+                                                :disabled="submitForApprovalPending"
+                                                :size="'md'"
+                                                v-model="submitForApprovalRemarks"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </template>
+                    <template #footer>
+                        <div class="mx-auto max-w-screen-xl">
+                            <div class="flex space-x-2 justify-between">
+                                <div class="space-x-2 inline-flex items-center">
+
+                                </div>
+                                <div class="space-x-2 inline-flex items-center">
+                                    <Button
+                                        class="w-min"
+                                        :disabled="submitForApprovalPending"
+                                        :variant=" 'outline'"
+                                        :size="'md'"
+                                        :label="'Cancel'"
+                                        @click="cancelSubmitForApproval"/>
+                                    <Button
+                                        class="w-min"
+                                        :disabled="submitForApprovalPending"
+                                        :variant=" 'outline'"
+                                        :size="'md'"
+                                        :label="submitForApprovalPending ? 'Please wait...' : 'Confirm & Proceed payroll request'"
+                                        @click="submitForApproval"/>
+                                </div>
+                            </div>
+                        </div>
+                    </template>
+                </DialogModal>
+
                 <div class="px-[20px] space-y-2">
                     <div class="flex flex-row flex-wrap gap-2 items-center min-h-8" :class="[disableActions ? 'pointer-events-none' : '']">
                         <div v-if="payrolls.successful" class="scaffold-border px-2 font-[National_Park]">
@@ -125,7 +188,7 @@
                                     :drop-justify="'right'"
                                     :drop-options="[
                                         {type: 'link', icon: 'ix:open-external', title: 'Salary statements', to: `/hr-payroll/payroll/history/${cell.ulid}`},
-                                        {type: 'action', title: 'Submit for approval',callback: () => {}},
+                                        {type: 'action', icon: 'ic:round-send', title: 'Submit for approval',callback: () => {confirmSubmitForApproval(cell)}},
                                     ]">
                                 </NavDrop>
                             </div>
@@ -165,9 +228,10 @@
 
 <script setup lang="ts">
 import type {DataTableT, TableHeaderT, TableRowT, TableSupHeaderT} from "@/public/js/types/data";
-import type {EnumOption, EnumSelection, StringEnumInterface} from "@/public/js/common/type";
+import type {StringEnumInterface} from "@/public/js/common/type";
 import type {DateTimePickerPayloadT} from "@/public/js/datetimepicker/type";
 import type {LabelTypeT} from "@/public/js/types/theme";
+import type {PayrollT} from "~/public/js/types/payroll";
 import {storeToRefs} from "pinia";
 import {useClipboard } from '@vueuse/core'
 
@@ -573,6 +637,73 @@ const deleteSelected = async () => {
 
     selectedPayrolls.value = [];
     await payrollsExecute();
+}
+
+const stagedPayroll = ref<PayrollT>({} as PayrollT);
+
+const showConfirmSubmitForApproval = ref(false);
+const confirmSubmitForApproval = (cell: TableRowT) => {
+
+    stagedPayroll.value = cell as PayrollT;
+
+    showConfirmSubmitForApproval.value = true;
+}
+
+const cancelSubmitForApproval = () => {
+    showConfirmSubmitForApproval.value = false;
+}
+
+const submitForApprovalRemarks = ref('');
+const submitForApprovalPending = ref(false);
+
+const resetSubmitApproval = () => {
+    stagedPayroll.value = {} as PayrollT;
+    submitForApprovalRemarks.value = '';
+    showConfirmSubmitForApproval.value = false;
+    submitForApprovalPending.value = false;
+}
+
+const submitForApproval = async() =>{
+
+    if(import.meta.server || !selectedAssociatedCompanyAccountId.value|| !selectedAssociatedCompanyId.value || !stagedPayroll.value.id){
+        return;
+    }
+
+    submitForApprovalPending.value = true;
+
+    await laraFetch(`/api/payroll-request`, {
+        method: 'POST',
+        body: {
+            account_id: selectedAssociatedCompanyAccountId.value,
+            company_id: selectedAssociatedCompanyId.value,
+            payroll_id: stagedPayroll.value.id,
+            remarks: submitForApprovalRemarks.value,
+        }
+    }, {
+        onRequestError: () => {
+            submitForApprovalPending.value = false;
+        },
+        onResponse: (request, options, response) => {
+            submitForApprovalPending.value = false;
+        },
+        onSuccessResponse: async (request, options, response) => {
+
+            let payrollRequest = _get(response, '_data.values.payroll_request', {});
+
+            useNuxtApp().$promptStore.setPrompt({
+                resetable: false,
+                icon: null,
+                title: `Payroll request submitted`,
+                message: `Request#: ${_get(payrollRequest, 'number', 'Not found')}.`,
+                action: {
+                    callback: () => {},
+                    label: 'Okay'
+                }
+            });
+
+            resetSubmitApproval();
+        }
+    }, true);
 }
 </script>
 

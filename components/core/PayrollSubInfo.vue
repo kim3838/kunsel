@@ -1,5 +1,5 @@
 <template>
-    <div class="mt-6 space-y-6">
+    <div class="space-y-6">
         <div v-if="isDefault" class="flex flex-row flex-wrap gap-6 items-center">
             <div>
                 <InputLabel :size="'sm'" value="Status"/>
@@ -106,7 +106,7 @@
                 <div class="label-value text-base font-sans">{{payroll.date_range_readable}}</div>
             </div>
             <div>
-                <InputLabel :size="'sm'" value="Total employer contribution share"/>
+                <InputLabel :size="'sm'" value="Total employer contr. share"/>
                 <div class="label-value text-base text-right font-medium font-sans">{{payroll.total_employer_contribution_share}}</div>
             </div>
             <div>
