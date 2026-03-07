@@ -470,6 +470,7 @@ const payrollsExecute = async() =>{
                 }
 
                 return {
+                    isSelectable: statusSummary == PAYROLL_STATUS.DRAFT,
                     ...payroll,
                     _payload: {
                         'label_shade': {

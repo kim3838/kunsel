@@ -528,7 +528,34 @@ const payrollInquiriesExecute = async() =>{
                     }
                 };
             });
-            currentPayrollsData.value = _get(response, '_data.values.current', []);
+            //@ts-ignore
+            currentPayrollsData.value = _get(response, '_data.values.current', []).map((payrollPayload: TableRowT) => {
+
+                let statusSummary = _get(payrollPayload, 'payroll.status.value', 0);
+
+                let shade = 'clear';
+
+                if(statusSummary == PAYROLL_STATUS.DRAFT){
+                    shade = 'clear';
+                } else if(statusSummary == PAYROLL_STATUS.WORKFLOW_IN_PROGRESS){
+                    shade = 'info';
+                } else if(statusSummary == PAYROLL_STATUS.COMPLETED){
+                    shade = 'success';
+                }
+
+                let isSelectable = [PAYROLL_STATUS.DRAFT].indexOf(statusSummary) >= 0;
+
+                return {
+                    isSelectable: isSelectable || payrollPayload.payroll == null,
+                    ...payrollPayload,
+                    _payload: {
+                        'label_shade': {
+                            'cell': ['payroll_status'],
+                            'value': shade
+                        }
+                    }
+                };
+            });
         }
     }, true);
 }

@@ -8,7 +8,7 @@
 
                     <div class="grid gap-2 grid-cols-3 sm:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-8">
                         <div>
-                            <InputLabel :size="'sm'" value="Requested by" />
+                            <InputLabel :size="'sm'" value="Submitted by" />
                             <MultiSelectPaginated
                                 :key="companyUserSelectionsOptionsKey"
                                 :icon="'tdesign:component-checkbox'"
@@ -16,7 +16,7 @@
                                 glint
                                 drop-shadow
                                 :size="'md'"
-                                :label="'Filter requested by'"
+                                :label="'Filter submitted by'"
                                 :payload="companyUserSelectionsOptions"
                             />
                         </div>
@@ -232,7 +232,7 @@ const payrollRequestsSupHeaders = reactive<TableSupHeaderT[]>([
     {text: ''},
     {text: ''},
 
-    {text: 'Requested by', colspan: 3,  alignHeader: 'left'},
+    {text: 'Submitted by', colspan: 3,  alignHeader: 'left'},
 
     {text: 'Payroll / Totals', colspan: 5,  alignHeader: 'left'},
 ]);
@@ -320,7 +320,7 @@ let pageComputed = computed({
     }
 });
 
-//Multi select options of Requested by
+//Multi select options of Submitted by
 const companyUserSelectionsOptionsKey = shallowRef(0);
 const companyUserSelectionsOptions = reactive({
     fetch: {
