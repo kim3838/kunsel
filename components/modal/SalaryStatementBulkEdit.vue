@@ -144,7 +144,7 @@ const isPaidKeepCurrent = ref(1);
 const isPaidKeepCurrentSelection = reactive([{text : 'Yes', value: 1}, {text : 'No', value: 0},]);
 
 const isPaidComputed = computed(() => {return isPaid.value == 1;})
-const isPaid = ref(1);
+const isPaid = ref(0);
 const isPaidSelection = reactive([{text : 'Yes', value: 1}, {text : 'No', value: 0},]);
 
 const disableActions = computed(() => {

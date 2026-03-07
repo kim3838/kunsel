@@ -53,6 +53,14 @@
                     :disabled="disableActions"
                     :label="'Bulk delete'"
                     @click="confirmDeleteSelected()"/>
+                <SalaryStatementBulkEdit v-if="salaryStatements.successful" ref="salaryStatementBulkEdit" v-model:selected-salary-statement-ids="selectedSalaryStatements" @completed="bulkEditCompleted">
+                    <Button
+                        :disabled="disableActions || selectedSalaryStatements.length == 0"
+                        :variant="`outline`"
+                        :size="'sm'"
+                        :label="`Bulk edit${selectedSalaryStatements.length ? ' ' + selectedSalaryStatements.length : ``}`"
+                        @click="bulkEdit" />
+                </SalaryStatementBulkEdit>
             </div>
 
             <DataTable
@@ -333,6 +341,18 @@ function paginate(page = 1, clearSelection = false){
 
 watch(() => {return filters.page;}, () => {paginate(filters.page);});
 watch(() => {return filters.perPage;}, () => {paginate(1);});
+
+/**
+ * Bulk edit
+ *
+ **/
+const salaryStatementBulkEditReference = useTemplateRef('salaryStatementBulkEdit');
+const bulkEdit = () => {
+    salaryStatementBulkEditReference.value?.bulkEdit();
+}
+const bulkEditCompleted = () => {
+    paginate();
+}
 
 const confirmDeleteSelected = () => {
 
