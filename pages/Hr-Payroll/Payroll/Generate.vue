@@ -134,7 +134,7 @@
                                             :size="'md'"
                                             :disabled="modalDisableActions"
                                             :label="modalSubmitPending ? 'Generating...' : 'Submit'"
-                                            @click="getGeneratingFinalPay"/>
+                                            @click="preGeneratePayroll"/>
                                     </div>
                                 </div>
                             </div>
@@ -631,7 +631,7 @@ const closeNoSalaryStatementToBeGenerated = () => {
     showNoSalaryStatementToBeGenerated.value = false;
 }
 
-const getGeneratingFinalPay = async() =>{
+const preGeneratePayroll = async() =>{
 
     if(import.meta.server || !selectedAssociatedCompanyId.value){
         return;
