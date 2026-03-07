@@ -231,7 +231,7 @@ import type {DataTableT, TableHeaderT, TableRowT, TableSupHeaderT} from "@/publi
 import type {StringEnumInterface} from "@/public/js/common/type";
 import type {DateTimePickerPayloadT} from "@/public/js/datetimepicker/type";
 import type {LabelTypeT} from "@/public/js/types/theme";
-import type {PayrollT} from "~/public/js/types/payroll";
+import type {PayrollT} from "@/public/js/types/payroll";
 import {storeToRefs} from "pinia";
 import {useClipboard } from '@vueuse/core'
 
@@ -361,7 +361,7 @@ let filters = reactive<{
     }
 }>({
     page: 1,
-    perPage: 25,
+    perPage: 10,
     search: {
         keyword: '',
         callback: 1
@@ -459,17 +459,21 @@ const payrollsExecute = async() =>{
 
                 let statusSummary = _get(payroll, 'status.value', 0);
 
-                let shade = 'info';
+                let shade = 'clear';
 
                 if(statusSummary == PAYROLL_STATUS.DRAFT){
                     shade = 'clear';
+                } else if(statusSummary == PAYROLL_STATUS.WORKFLOW_IN_PROGRESS){
+                    shade = 'info';
+                } else if(statusSummary == PAYROLL_STATUS.COMPLETED){
+                    shade = 'success';
                 }
 
                 return {
                     ...payroll,
                     _payload: {
                         'label_shade': {
-                            'cell': ['number','status'],
+                            'cell': ['number', 'copy_payroll_number_to_clipboard', 'status', 'remarks', 'year', 'month_readable'],
                             'value': shade
                         }
                     }
@@ -702,6 +706,7 @@ const submitForApproval = async() =>{
             });
 
             resetSubmitApproval();
+            await payrollsExecute();
         }
     }, true);
 }

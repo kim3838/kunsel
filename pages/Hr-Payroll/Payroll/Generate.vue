@@ -320,12 +320,12 @@
                             </template>
                             <template v-slot:cell.actions="{cell,slot}">
                                 <div class="mx-0.5 space-x-0.5 flex items-center">
-                                    <Button @click="stagePayrollPayload(cell)" :size="slot.buttonSize" :variant="'outline'"  :label="cell.payroll ? 'Regenerate' : 'Generate'" />
+                                    <Button v-if="cell.isSelectable" @click="stagePayrollPayload(cell)" :size="slot.buttonSize" :variant="'outline'"  :label="cell.payroll ? 'Regenerate' : 'Generate'" />
                                 </div>
                             </template>
                             <template v-slot:cell.payroll_status="{cell,slot}">
-                                <div class="p-[3px]">
-                                    {{cell.payroll?.status?.text}}
+                                <div v-if="cell.payroll" class="flex space-x-1 px-[0.3rem] items-center">
+                                    <Label :size="slot.labelSize" :type="cell?._payload?.label_shade?.value as LabelTypeT" shade :label="cell.payroll?.status?.text" />
                                 </div>
                             </template>
                         </DataTable>
@@ -379,9 +379,10 @@
 
 <script setup lang="ts">
 import {useLocalStorage} from '@vueuse/core';
-import type {TableHeaderT, TableSupHeaderT} from "@/public/js/types/data";
+import type {TableHeaderT, TableRowT, TableSupHeaderT} from "@/public/js/types/data";
 import type {PayrollInquiryT, PayrollT} from "@/public/js/types/payroll";
 import type {StringEnumInterface} from "@/public/js/common/type";
+import type {LabelTypeT} from "@/public/js/types/theme";
 import {storeToRefs} from "pinia";
 
 useHead({titleTemplate: (titleChunk) => {return `Generate Payroll`}});
@@ -499,7 +500,34 @@ const payrollInquiriesExecute = async() =>{
             payrollInquiriesPending.value = false;
         },
         onSuccessResponse: async (request, options, response) => {
-            recentPayrollsData.value = _get(response, '_data.values.recent', []);
+            //@ts-ignore
+            recentPayrollsData.value = _get(response, '_data.values.recent', []).map((payrollPayload: TableRowT) => {
+
+                let statusSummary = _get(payrollPayload, 'payroll.status.value', 0);
+
+                let shade = 'clear';
+
+                if(statusSummary == PAYROLL_STATUS.DRAFT){
+                    shade = 'clear';
+                } else if(statusSummary == PAYROLL_STATUS.WORKFLOW_IN_PROGRESS){
+                    shade = 'info';
+                } else if(statusSummary == PAYROLL_STATUS.COMPLETED){
+                    shade = 'success';
+                }
+
+                let isSelectable = [PAYROLL_STATUS.DRAFT].indexOf(statusSummary) >= 0;
+
+                return {
+                    isSelectable: isSelectable || payrollPayload.payroll == null,
+                    ...payrollPayload,
+                    _payload: {
+                        'label_shade': {
+                            'cell': ['payroll_status'],
+                            'value': shade
+                        }
+                    }
+                };
+            });
             currentPayrollsData.value = _get(response, '_data.values.current', []);
         }
     }, true);

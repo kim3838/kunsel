@@ -46,7 +46,8 @@ export const APPROVAL_ACTION_NAME_PAST_TENSE: StringEnumInterface = {
 export const REQUESTABLE_TYPE: NumericEnumInterface = {
     ATTENDANCE_ADJUSTMENT_REQUEST : 100,
     OVERTIME_REQUEST: 200,
-    LEAVE_REQUEST: 300
+    LEAVE_REQUEST: 300,
+    PAYROLL_REQUEST: 400,
 }
 
 export const REQUESTABLE_TYPE_NAME: StringEnumInterface = {

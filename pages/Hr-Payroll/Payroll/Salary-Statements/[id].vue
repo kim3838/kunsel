@@ -68,7 +68,7 @@
 <script setup lang="ts">
 
 import {storeToRefs} from "pinia";
-import type {PayrollT, SalaryStatementT} from "~/public/js/types/payroll";
+import type {PayrollT, SalaryStatementT} from "@/public/js/types/payroll";
 
 useHead({titleTemplate: (titleChunk) => {return `Salary Statement`}});
 definePageMeta({middleware: ['auth', 'verified', 'admin-of-selected-company']});

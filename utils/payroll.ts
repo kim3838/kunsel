@@ -38,6 +38,8 @@ export const PAY_FREQUENCY_SEQUENCE_NAME: StringEnumInterface = {
 
 export const PAYROLL_STATUS: NumericEnumInterface ={
     DRAFT : 100,
+    WORKFLOW_IN_PROGRESS : 200,
+    COMPLETED : 300,
 }
 
 export const PAYROLL_STATUS_NAME: StringEnumInterface = {

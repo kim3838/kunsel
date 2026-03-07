@@ -28,6 +28,9 @@
                             <LeaveRequest
                                 v-if="requestableType == REQUESTABLE_TYPE.LEAVE_REQUEST"
                                 v-model:leave-request-payload="requestable.data"/>
+                            <PayrollRequest
+                                v-if="requestableType == REQUESTABLE_TYPE.PAYROLL_REQUEST"
+                                v-model:payroll-request-payload="requestable.data"/>
                         </div>
 
                         <Label v-if="!requestable.successful" invert :size="'md'" :type="'danger'" :label="requestable.message" />
@@ -132,6 +135,7 @@ const requestableType = computed(() => {
         attendance_adjustment_request: REQUESTABLE_TYPE.ATTENDANCE_ADJUSTMENT_REQUEST,
         overtime_request: REQUESTABLE_TYPE.OVERTIME_REQUEST,
         leave_request: REQUESTABLE_TYPE.LEAVE_REQUEST,
+        payroll_request: REQUESTABLE_TYPE.PAYROLL_REQUEST,
     }[type];
 });
 
@@ -146,6 +150,7 @@ const fetchRequestable = async () => {
         attendance_adjustment_request: 'attendance-adjustment-request',
         overtime_request: 'overtime-request',
         leave_request: 'leave-request',
+        payroll_request: 'payroll-request',
     }[requestablePayload.type];
 
     pending.value = true;

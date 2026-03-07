@@ -540,6 +540,13 @@ export const useLayout = () => {
                             to: `/${hrPayrollRouteSlug}/request-approval/leave-request`,
                             route_active: `${hrPayrollRouteSlug}-request-approval-leave-request`
                         },
+                        {
+                            key: `${hrPayrollRouteSlug}/request-approval/payroll-request`,
+                            type: 'link',
+                            title: 'Payroll Request',
+                            to: `/${hrPayrollRouteSlug}/request-approval/payroll-request`,
+                            route_active: `${hrPayrollRouteSlug}-request-approval-payroll-request`
+                        },
                     ],
                 },{
                     key: `${hrPayrollRouteSlug}-reports`,

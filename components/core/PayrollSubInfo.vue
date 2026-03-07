@@ -122,7 +122,7 @@
 </template>
 
 <script setup lang="ts">
-import type {PayrollT, SalaryStatementT} from "~/public/js/types/payroll";
+import type {PayrollT, SalaryStatementT} from "@/public/js/types/payroll";
 
 const props = defineProps({
     type: {

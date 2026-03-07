@@ -84,6 +84,7 @@ export const useAssociation = () => {
             `${hrPayrollRouteSlug}-request-approval-attendance-adjustment-request`,
             `${hrPayrollRouteSlug}-request-approval-overtime-request`,
             `${hrPayrollRouteSlug}-request-approval-leave-request`,
+            `${hrPayrollRouteSlug}-request-approval-payroll-request`,
             `${hrPayrollRouteSlug}-reports-leave-balance-map`,
             `${hrPayrollRouteSlug}-import-employees`,
             `${hrPayrollRouteSlug}-import-employment-profile`,

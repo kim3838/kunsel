@@ -27,7 +27,7 @@
 
 <script setup lang="ts">
 import type {TableHeaderT, TableRowT} from "@/public/js/types/data";
-import type {LabelTypeT} from "~/public/js/types/theme";
+import type {LabelTypeT} from "@/public/js/types/theme";
 
 const nuxtApp = useNuxtApp();
 
