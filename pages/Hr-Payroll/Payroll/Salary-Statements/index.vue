@@ -95,7 +95,7 @@
 
                     <div class="flex flex-row flex-wrap gap-2 items-center min-h-8">
                         <Button class="w-min" ref="submitButton" type="submit" :disabled="disableActions" :size="'md'" :icon="disableActions ? 'eos-icons:loading' : 'mdi:data'" :label="disableActions ? 'Loading' : 'Load'"></Button>
-                        <Button class="w-min" type="button" :disabled="disableActions" :size="'md'" :variant="'outline'" :icon="'bi:filetype-csv'" @click="exportCsv" :label="'Export .csv'"></Button>
+                        <Button v-if="salaryStatements.successful" class="w-min" type="button" :disabled="disableActions" :size="'md'" :variant="'outline'" :icon="'bi:filetype-csv'" @click="exportCsv" :label="'Export .csv'"></Button>
                         <div class="h-8 flex flex-row items-center scaffold-border px-2">
                             <label class="flex items-center">
                                 <Checkbox
@@ -150,6 +150,14 @@
                             :disabled="disableActions"
                             :label="'Bulk delete'"
                             @click="confirmDeleteSelected()"/>
+                        <SalaryStatementBulkEdit v-if="salaryStatements.successful" ref="salaryStatementBulkEdit" v-model:selected-salary-statement-ids="selectedSalaryStatements" @completed="bulkEditCompleted">
+                            <Button
+                                :disabled="disableActions || selectedSalaryStatements.length == 0"
+                                :variant="`outline`"
+                                :size="'sm'"
+                                :label="`Bulk edit${selectedSalaryStatements.length ? ' ' + selectedSalaryStatements.length : ``}`"
+                                @click="bulkEdit" />
+                        </SalaryStatementBulkEdit>
                         <Label v-if="!salaryStatements.successful" invert :size="'md'" :type="'danger'" :label="salaryStatements.message" />
                     </div>
 
@@ -626,6 +634,18 @@ function paginate(page = 1, clearSelection = false){
 
 watch(() => {return filters.page;}, () => {paginate(filters.page);});
 watch(() => {return filters.perPage;}, () => {paginate(1);});
+
+/**
+ * Bulk edit
+ *
+ **/
+const salaryStatementBulkEditReference = useTemplateRef('salaryStatementBulkEdit');
+const bulkEdit = () => {
+    salaryStatementBulkEditReference.value?.bulkEdit();
+}
+const bulkEditCompleted = () => {
+    paginate();
+}
 
 let datePickers = ref([
     {
