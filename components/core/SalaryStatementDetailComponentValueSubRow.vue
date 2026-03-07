@@ -152,7 +152,8 @@ const getSupHeaders = (componentValueType: number) => {
         TYPE.PH_BONUS_13TH_MONTH_NEGATIVE_ADJUSTMENT,
     ].indexOf(componentValueType) >= 0){
         supHeaders = supHeaders.concat([
-            {text: '', colspan: 2, alignHeader: 'center'},
+            {text: 'Actual 13th month', colspan: 2, alignHeader: 'center'},
+            {text: 'Projected', colspan: 1, alignHeader: 'center'},
             {text: 'Adjustment', colspan: 1, alignHeader: 'center'},
         ])
     }
@@ -264,8 +265,9 @@ const getHeaders = (componentValueType: number) => {
         TYPE.PH_BONUS_13TH_MONTH_NEGATIVE_ADJUSTMENT,
     ].indexOf(componentValueType) >= 0){
         headers = headers.concat([
-            { text: 'Actual', value: '13th_month_actual', isNumeric: true, alignData: 'right', alignHeader: 'center'},
-            { text: 'Projected', value: '13th_month_projected', isNumeric: true, alignData: 'right', alignHeader: 'center'},
+            { text: 'Total basic gross', value: '13th_month_actual_total_basic_gross', isNumeric: true, alignData: 'right', alignHeader: 'center'},
+            { text: 'Total / 12', value: '13th_month_actual', isNumeric: true, alignData: 'right', alignHeader: 'center'},
+            { text: '', value: '13th_month_projected', isNumeric: true, alignData: 'right', alignHeader: 'center'},
             { text: '', value: '13th_month_adjustment', isNumeric: true, alignData: 'right', alignHeader: 'center'},
         ])
     }
