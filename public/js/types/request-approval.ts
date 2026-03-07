@@ -27,6 +27,7 @@ export type ApprovalSettingT = {
     id: string | number,
     company_id: string | number,
     request_title: string,
+    employable: boolean,
     approvers: ApprovalSettingApproverT[],
 }
 

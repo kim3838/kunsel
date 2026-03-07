@@ -10,6 +10,9 @@
             <template v-slot:cell.type="{cell,slot}">
                 <div class="px-[3px]">{{cell.type?.text}}</div>
             </template>
+            <template v-slot:cell.company_employee_full_name="{cell,slot}">
+                <div class="px-[3px]" :title="cell.company_employee_full_name">{{wordClamp(cell.company_employee_full_name, 18)}}</div>
+            </template>
             <template v-slot:cell.company_assignment_type="{cell,slot}">
                 <div class="px-[3px]">
                     <span v-if="cell.company_assignment_type?.value">{{cell.company_assignment_type?.text}}</span>
@@ -28,6 +31,8 @@
 <script setup lang="ts">
 import type {TableHeaderT, TableRowT} from "@/public/js/types/data";
 
+const nuxtApp = useNuxtApp();
+const wordClamp = nuxtApp.$wordClamp as (text: string, length: number) => string;
 const props = defineProps({
     rows: {
         type: Array as PropType<TableRowT[]>,
