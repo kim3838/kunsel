@@ -162,7 +162,8 @@ const getSupHeaders = (componentValueType: number) => {
         TYPE.PH_WITHHOLDING_TAX_DEFICIT,
     ].indexOf(componentValueType) >= 0){
         supHeaders = supHeaders.concat([
-            {text: 'Annual Tax', colspan: 2, alignHeader: 'center'},
+            {text: '', colspan: 1, alignHeader: 'center'},
+            {text: 'Tax', colspan: 2, alignHeader: 'center'},
             {text: 'Adjustment', colspan: 1, alignHeader: 'center'},
         ])
     }
@@ -274,6 +275,7 @@ const getHeaders = (componentValueType: number) => {
         TYPE.PH_WITHHOLDING_TAX_DEFICIT,
     ].indexOf(componentValueType) >= 0){
         headers = headers.concat([
+            { text: 'Annual Taxable', value: 'withholding_tax_total_annual_taxable', isNumeric: true, alignData: 'right', alignHeader: 'center'},
             { text: 'Withheld', value: 'withholding_tax_withheld', isNumeric: true, alignData: 'right', alignHeader: 'center'},
             { text: 'Actual', value: 'withholding_tax_actual_annual_tax', isNumeric: true, alignData: 'right', alignHeader: 'center'},
             { text: '', value: 'withholding_tax_adjustment', isNumeric: true, alignData: 'right', alignHeader: 'center'},
