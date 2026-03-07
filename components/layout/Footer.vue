@@ -37,7 +37,7 @@
                 </div>
             </div>
 
-            <div class="mx-auto max-w-screen-lg mb-4">
+            <div class="mx-auto max-w-screen-lg mb-4" :class="footerClass">
 
                 <div class="p-2">
                     <div class="flex flex-row flex-wrap justify-start items-center">
@@ -47,7 +47,7 @@
                         <BreadCrumbs prefix-arrow :prefix-company="breadcrumbsPrefixCompany" />
                     </div>
 
-                    <p class="mt-2 max-w-md text-base leading-relaxed sm:max-w-xs sm:text-left">
+                    <p class="mt-2 max-w-md text-sm sm:max-w-xs sm:text-left">
                         Flexible ERP designed for modern, cloud-powered businesses.
                     </p>
 
@@ -97,6 +97,7 @@
 import {storeToRefs} from "pinia";
 
 const {$themeStore} = useNuxtApp();
+const {isAuthenticated} = useAuth();
 
 const {
     neutral: neutralColor
@@ -120,6 +121,12 @@ defineProps({
         default: false,
     },
 });
+
+const footerClass = computed(()=>{
+    return [
+        ...(isAuthenticated.value ? [] : ['font-sans'])
+    ]
+})
 </script>
 
 <style scoped>
