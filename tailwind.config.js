@@ -70,6 +70,8 @@ module.exports = {
                     'Sofia Sans Semi Condensed',
                 ],
                 label: [
+                    `'Source Sans 3'`,
+                    'Geist',
                     'National Park',
                 ],
                 serif : [
