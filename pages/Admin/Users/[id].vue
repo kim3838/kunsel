@@ -283,7 +283,7 @@ const userCompanyAssignmentHeaders = reactive<TableHeaderT[]>([
     { text: 'Code', value: 'company_code', alignData: 'left'},
     { text: 'Company Assignment', value: 'company_assignment_type', alignData: 'left'},
     { text: 'Is Employee', value: 'is_employee', alignData: 'left'},
-    { text: 'Employee #', value: 'employee_number', alignData: 'left'},
+    { text: '#', value: 'employee_number', alignData: 'left'},
     { text: 'Name', value: 'employee_full_name', alignData: 'left'},
 ]);
 const userCompanyAssignmentData  = ref<UserCompanyAssignmentT[]>([]);

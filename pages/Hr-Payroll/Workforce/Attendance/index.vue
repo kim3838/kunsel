@@ -358,7 +358,7 @@ const attendancesSupHeaders = reactive<TableSupHeaderT[]>([
 const attendancesHeaders = reactive<TableHeaderT[]>([
     { text: '#', value: 'row_number'},
     { text: '', value: 'actions', minWidth: '33px'},
-    { text: 'Employee #', value: 'employee_number', alignData: 'left'},
+    { text: '#', value: 'employee_number', alignData: 'left'},
     { text: 'Name', value: 'employee_full_name', alignData: 'left'},
 
     { text: 'Code', value: 'shift_code', alignData: 'left'},

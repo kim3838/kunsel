@@ -290,7 +290,7 @@ const employeeSupHeaders = reactive<TableSupHeaderT[]>([
 
 const employeeHeaders = reactive<TableHeaderT[]>([
     { text: '#', value: 'row_number'},
-    { text: 'Employee #', value: 'number', alignData: 'left'},
+    { text: '#', value: 'number', alignData: 'left'},
     { text: 'Name', value: 'full_name'},
     { text: 'Status', value: 'current_employment_profile'},
     { text: 'Type', value: 'current_employment_type'},

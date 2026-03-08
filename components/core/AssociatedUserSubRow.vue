@@ -47,7 +47,7 @@ const associationsSupHeaders = reactive<TableSupHeaderT[]>([
 const associationsHeaders = reactive<TableHeaderT[]>([
     { text: 'Company', value: 'name', alignData: 'left'},
     { text: 'Assignment', value: 'assignment', alignData: 'left'},
-    { text: 'Employee #', value: 'employee_number', alignData: 'left'},
+    { text: '#', value: 'employee_number', alignData: 'left'},
     { text: 'Name', value: 'employee_full_name', alignData: 'left'},
 ]);
 

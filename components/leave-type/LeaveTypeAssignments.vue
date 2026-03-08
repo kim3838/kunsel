@@ -291,7 +291,7 @@ const leaveTypeAssignmentSupHeaders = reactive<TableSupHeaderT[]>([
 const leaveTypeAssignmentHeaders = reactive<TableHeaderT[]>([
     { text: '#', value: 'row_number'},
     { text: '', value: 'actions', minWidth: '33px'},
-    { text: 'Employee #', value: 'employee_number', alignData: 'left'},
+    { text: '#', value: 'employee_number', alignData: 'left'},
     { text: 'Name', value: 'employee_full_name'},
     { text: 'Status', value: 'employee_current_employment_profile'},
     { text: 'Type', value: 'employee_current_employment_type'},

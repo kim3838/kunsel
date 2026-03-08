@@ -375,7 +375,7 @@ const leavesSupHeaders = reactive<TableSupHeaderT[]>([
 
 const leavesHeaders = reactive<TableHeaderT[]>([
     { text: '#', value: 'row_number'},
-    { text: 'Employee #', value: 'employee_number', alignData: 'left'},
+    { text: '#', value: 'employee_number', alignData: 'left'},
     { text: 'Name', value: 'employee_full_name', alignData: 'left', minWidth: '200px'},
 
     { text: '', value: 'date', minWidth: '200px'},

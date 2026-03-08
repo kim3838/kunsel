@@ -307,7 +307,7 @@ const leaveBalanceAdjustmentsSupHeaders = reactive<TableSupHeaderT[]>([
 const leaveBalanceAdjustmentsHeaders = reactive<TableHeaderT[]>([
     { text: '#', value: 'row_number'},
     { text: '', value: 'actions', minWidth: '33px'},
-    { text: 'Employee #', value: 'employee_number', alignData: 'left'},
+    { text: '#', value: 'employee_number', alignData: 'left'},
     { text: 'Name', value: 'employee_full_name', alignData: 'left', minWidth: '200px'},
 
     { text: 'Code', value: 'code', minWidth: '143px'},
