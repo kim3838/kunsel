@@ -61,7 +61,7 @@ const fontClass = computed(() => {
         '2xs': `text-sm font-normal`,
         'xs': `text-sm font-normal`,
         'sm': `text-sm font-normal`,
-        'md': `text-base font-normal`,
+        'md': `text-sm font-normal`,
         'lg': `text-base font-normal`,
         'xl': `text-base font-normal`,
         '2xl': `text-base font-normal`,
