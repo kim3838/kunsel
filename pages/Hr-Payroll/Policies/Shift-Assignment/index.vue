@@ -38,101 +38,111 @@
 
                 <DialogModal
                     :show="assignShiftModalShow || editShiftSettingsModalShow"
-                    :landscape="true"
                     :content-padding="'0'">
                     <template #title>
                     </template>
                     <template #content>
                         <div class="px-3 pt-4 pb-2.5">
-                            <div class="mx-auto max-w-screen-xl space-y-4">
-                                <fieldset class="neutral-border px-2 pb-2 space-y-2">
-                                    <legend class="text-lg font-header">Shift Settings</legend>
+                            <div class="mx-auto max-w-screen-md space-y-4">
 
-                                    <div class="grid gap-2 grid-cols-2 sm:grid-cols-3 md:grid-cols-5">
-                                        <div>
-                                            <InputLabel :size="'sm'" value="Shift Start Date"/>
-                                            <InputWithIcon
-                                                readonly
-                                                :disabled="disableShiftAssignmentActions"
-                                                :override="{font_family_class: 'font-sans'}"
-                                                :icon="'mdi:calendar-cursor-outline'"
-                                                :id="`shift-start-date`"
-                                                v-model="shiftAssignmentStartDate"
-                                                :size="'md'" />
-                                        </div>
-                                        <div class="col-span-full flex flex-wrap gap-2">
-                                            <RadioGroup
-                                                :disabled="disableShiftAssignmentActions"
-                                                :selections="stateEndOfShiftSelection"
-                                                :size="'md'"
-                                                :orientation="stateEndOfShiftRadioGroupOrientation"
-                                                :radio-key="'state-end-of-employment'"
-                                                @change="stateEndOfShiftSelectedChange"
-                                                v-model="stateEndOfShift" />
-                                        </div>
-                                        <div v-if="stateEndOfShift == 1">
-                                            <InputLabel :size="'sm'" value="Shift End Date"/>
-                                            <InputWithIcon
-                                                readonly
-                                                :disabled="disableShiftAssignmentActions"
-                                                :override="{font_family_class: 'font-sans'}"
-                                                :icon="'mdi:calendar-cursor-outline'"
-                                                :id="`shift-end-date`"
-                                                v-model="shiftAssignmentEndDate"
-                                                :size="'md'" />
+                                <div class="lining-shadow rounded-sm tint-background space-y-2">
+
+                                    <div class="lining-shadow rounded-t-sm text-lg font-medium font-header px-4 py-2">Shift settings</div>
+
+                                    <div class="p-4">
+
+                                        <div class="grid gap-2 grid-cols-2 sm:grid-cols-3 md:grid-cols-4">
+                                            <div>
+                                                <InputLabel :size="'sm'" value="Shift start date"/>
+                                                <InputWithIcon
+                                                    readonly
+                                                    :disabled="disableShiftAssignmentActions"
+                                                    :override="{font_family_class: 'font-sans'}"
+                                                    :icon="'mdi:calendar-cursor-outline'"
+                                                    :id="`shift-start-date`"
+                                                    v-model="shiftAssignmentStartDate"
+                                                    :size="'md'" />
+                                            </div>
+                                            <div class="col-span-full flex flex-wrap gap-2">
+                                                <RadioGroup
+                                                    :disabled="disableShiftAssignmentActions"
+                                                    :selections="stateEndOfShiftSelection"
+                                                    :size="'md'"
+                                                    :orientation="stateEndOfShiftRadioGroupOrientation"
+                                                    :radio-key="'state-end-of-employment'"
+                                                    @change="stateEndOfShiftSelectedChange"
+                                                    v-model="stateEndOfShift" />
+                                            </div>
+                                            <div v-if="stateEndOfShift == 1">
+                                                <InputLabel :size="'sm'" value="Shift end date"/>
+                                                <InputWithIcon
+                                                    readonly
+                                                    :disabled="disableShiftAssignmentActions"
+                                                    :override="{font_family_class: 'font-sans'}"
+                                                    :icon="'mdi:calendar-cursor-outline'"
+                                                    :id="`shift-end-date`"
+                                                    v-model="shiftAssignmentEndDate"
+                                                    :size="'md'" />
+                                            </div>
                                         </div>
                                     </div>
-                                </fieldset>
+                                </div>
 
-                                <fieldset v-if="shiftAssignmentTab == SHIFT_ASSIGNMENT_TAB.CREATE_SHIFT_ASSIGNMENTS" class="neutral-border px-2 pb-2 space-y-2">
-                                    <legend class="text-lg font-header">Select Shift</legend>
+                                <div v-if="shiftAssignmentTab == SHIFT_ASSIGNMENT_TAB.CREATE_SHIFT_ASSIGNMENTS" class="lining-shadow rounded-sm tint-background space-y-2">
 
-                                    <Suspense>
-                                        <ShiftSelection
-                                            compact
-                                            :single-select="true"
-                                            :clear-selection-on-form-submit="false"
-                                            :disable-actions="disableShiftAssignmentActions"
-                                            v-model:selected="selectedModalShifts"/>
+                                    <div class="lining-shadow rounded-t-sm text-lg font-medium font-header px-4 py-2">Select shift</div>
 
-                                        <template #fallback>
-                                            <div>
-                                                <UnorderedList
-                                                    :icon="'eos-icons:loading'"
-                                                    :size="'md'"
-                                                    :label="'Loading shift selections...'"/>
-                                            </div>
-                                        </template>
-                                    </Suspense>
-                                </fieldset>
+                                    <div class="p-4">
+                                        <Suspense>
+                                            <ShiftSelection
+                                                compact
+                                                :single-select="true"
+                                                :clear-selection-on-form-submit="false"
+                                                :disable-actions="disableShiftAssignmentActions"
+                                                v-model:selected="selectedModalShifts"/>
 
-                                <fieldset v-if="shiftAssignmentTab == SHIFT_ASSIGNMENT_TAB.MANAGE_ASSIGNED_SHIFTS" class="neutral-border px-2 pb-2 space-y-2">
-                                    <legend class="text-lg font-header">Select Employees</legend>
+                                            <template #fallback>
+                                                <div>
+                                                    <UnorderedList
+                                                        :icon="'eos-icons:loading'"
+                                                        :size="'md'"
+                                                        :label="'Loading shift selections...'"/>
+                                                </div>
+                                            </template>
+                                        </Suspense>
+                                    </div>
+                                </div>
 
-                                    <Suspense>
-                                        <ShiftsByEmployeesSelection
-                                            compact
-                                            :clear-selection-on-form-submit="false"
-                                            ref="modalEmployeeSelectionReference"
-                                            :disable-actions="disableShiftAssignmentActions"
-                                            v-model:pending="modalEmployeeSelectionPending"
-                                            v-model:selected="selectedModalEmployees"/>
+                                <div v-if="shiftAssignmentTab == SHIFT_ASSIGNMENT_TAB.MANAGE_ASSIGNED_SHIFTS" class="lining-shadow rounded-sm tint-background space-y-2">
 
-                                        <template #fallback>
-                                            <div>
-                                                <UnorderedList
-                                                    :icon="'eos-icons:loading'"
-                                                    :size="'md'"
-                                                    :label="'Loading employee selections...'"/>
-                                            </div>
-                                        </template>
-                                    </Suspense>
-                                </fieldset>
+                                    <div class="lining-shadow rounded-t-sm text-lg font-medium font-header px-4 py-2">Select Employees</div>
+
+                                    <div class="p-4">
+                                        <Suspense>
+                                            <ShiftsByEmployeesSelection
+                                                compact
+                                                :clear-selection-on-form-submit="false"
+                                                ref="modalEmployeeSelectionReference"
+                                                :disable-actions="disableShiftAssignmentActions"
+                                                v-model:pending="modalEmployeeSelectionPending"
+                                                v-model:selected="selectedModalEmployees"/>
+
+                                            <template #fallback>
+                                                <div>
+                                                    <UnorderedList
+                                                        :icon="'eos-icons:loading'"
+                                                        :size="'md'"
+                                                        :label="'Loading employee selections...'"/>
+                                                </div>
+                                            </template>
+                                        </Suspense>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </template>
                     <template #footer>
-                        <div class="mx-auto max-w-screen-xl">
+                        <div class="mx-auto max-w-screen-md">
                             <div class="flex space-x-2 justify-between">
                                 <div class="space-x-2 inline-flex">
                                     <div class="space-x-2 inline-flex items-center">
@@ -155,6 +165,62 @@
                                         :label="submitStagedLabel"
                                         @click="submitStaged"/>
                                 </div>
+                            </div>
+                        </div>
+                    </template>
+                </DialogModal>
+
+                <DialogModal
+                    :show="showSyncErrors"
+                    :closeable="false"
+                    @close="closeSyncErrorsModal">
+                    <template #title>
+                    </template>
+
+                    <template #content>
+                        <div>
+                            <fieldset v-if="false" class="neutral-border px-2 pb-2 space-y-2">
+                                <legend class="text-lg font-header">{{stagedShiftAssignmentId ? 'Shift settings update errors' : 'Shift assignment errors' }}</legend>
+
+                                <DataTable
+                                    :headers="syncErrorsHeaders"
+                                    :size="'md'"
+                                    :rows="syncErrors"
+                                    selection>
+                                    <template v-slot:cell.error="{cell, slot}">
+                                        <Label invert :size="slot.labelSize" :type="'danger'" :label="cell.error" />
+                                    </template>
+                                </DataTable>
+                            </fieldset>
+
+                            <div class="lining-shadow rounded-sm tint-background space-y-2">
+
+                                <div class="lining-shadow rounded-t-sm text-lg font-medium font-header px-4 py-2">{{stagedShiftAssignmentId ? 'Shift settings update errors' : 'Shift assignment errors' }}</div>
+
+                                <div class="p-4">
+                                    <DataTable
+                                        :headers="syncErrorsHeaders"
+                                        :size="'md'"
+                                        :rows="syncErrors"
+                                        selection>
+                                        <template v-slot:cell.error="{cell, slot}">
+                                            <Label invert :size="slot.labelSize" :type="'danger'" :label="cell.error" />
+                                        </template>
+                                    </DataTable>
+                                </div>
+                            </div>
+                        </div>
+                    </template>
+
+                    <template #footer>
+                        <div class="flex space-x-2 justify-between">
+                            <div class="space-x-2 inline-flex">
+
+                            </div>
+                            <div class="space-x-2 inline-flex items-center">
+                                <Button
+                                    :variant="`outline`"
+                                    @click="closeSyncErrorsModal" :label="'Close'" />
                             </div>
                         </div>
                     </template>
@@ -218,6 +284,7 @@
 import {storeToRefs} from "pinia";
 import type {ShiftAssignmentsInstance, ShiftByEmployeeSelectionInstance, ShiftSelectionInstance} from "@/public/js/types/component-instance";
 import type {StringEnumInterface} from "@/public/js/common/type";
+import type {TableHeaderT} from "@/public/js/types/data";
 
 useHead({titleTemplate: (titleChunk) => {return `Shift Assignment`}});
 definePageMeta({middleware: ['auth', 'verified', 'admin-of-selected-company']});
@@ -393,8 +460,8 @@ const stateEndOfShiftRadioGroupOrientation = computed(() => {
     return screenWidth.value >= screenWidthBreakpoint['sm'] ? 'horizontal' : 'vertical';
 })
 const stateEndOfShiftSelection = reactive([
-    {text : 'Shift End Not Specified', value: 0},
-    {text : 'State Shift End Date', value: 1},
+    {text : 'Shift end not specified', value: 0},
+    {text : 'State shift end date', value: 1},
 ]);
 const stateEndOfShift = ref<number>(0);
 const shiftAssignmentEndDate = ref<null | string>(null);
@@ -491,7 +558,7 @@ const submitShiftAssignment = () => {
 
     shiftAssignmentPending.value = true;
 
-    laraFetch("/api/shift-assignment-sync", {
+    laraFetch("/api/shift-assignment-sync-without-detaching", {
         method: 'POST',
         body: shiftAssignmentForm.value,
     },{
@@ -503,22 +570,53 @@ const submitShiftAssignment = () => {
         },
         onSuccessResponse: async (request, options, response) => {
 
-            useNuxtApp().$promptStore.setPrompt({
-                resetable: false,
-                icon: null,
-                title: `Request successful`,
-                message: 'Shifts assigned successfully.',
-                action: {
-                    callback: () => {},
-                    label: 'Okay'
-                }
-            });
+            syncErrors.value = _get(response, '_data.values.errors', []);
+            const hasErrors = syncErrors.value.length > 0;
+
+            if(hasErrors){
+                useNuxtApp().$promptStore.setPrompt({
+                    resetable: false,
+                    icon: null,
+                    title: `Request successful`,
+                    message: `Shift assignment complete with errors.`,
+                    action: {
+                        callback: () => {},
+                        label: 'Okay'
+                    }
+                });
+
+                showSyncErrors.value = true;
+
+            } else {
+                useNuxtApp().$promptStore.setPrompt({
+                    resetable: false,
+                    icon: null,
+                    title: `Request successful`,
+                    message: 'Shifts assigned successfully.',
+                    action: {
+                        callback: () => {},
+                        label: 'Okay'
+                    }
+                });
+            }
 
             resetShiftAssignment();
+
             await employeeSelectionReference.value?.paginate(1, true);
         }
     });
 }
+const showSyncErrors = ref(false);
+const syncErrorsHeaders = reactive<TableHeaderT[]>([
+    { text: 'Employee #', value: 'employee_number', alignData: 'left'},
+    { text: '', value: 'employee_full_name', alignData: 'left'},
+    { text: 'Error', value: 'error', alignData: 'left'},
+]);
+const syncErrors = ref([]);
+const closeSyncErrorsModal = (resetModal = true) => {
+    showSyncErrors.value = false;
+    syncErrors.value = [];
+};
 
 const confirmShiftAssignmentBatchDetach = () => {
 
@@ -689,22 +787,41 @@ const submitUpdateShiftAssignment = async () => {
         },
         onSuccessResponse: async (request, options, response) => {
 
-            useNuxtApp().$promptStore.setPrompt({
-                resetable: false,
-                icon: null,
-                title: `Request successful`,
-                message: 'Shift settings updated successfully.',
-                action: {
-                    callback: () => {},
-                    label: 'Okay'
-                }
-            });
+            syncErrors.value = _get(response, '_data.values.errors', []);
+            const hasErrors = syncErrors.value.length > 0;
 
-            resetShiftAssignment();
+            if(hasErrors){
+                useNuxtApp().$promptStore.setPrompt({
+                    resetable: false,
+                    icon: null,
+                    title: `Request failed`,
+                    message: `Shift settings update complete with errors.`,
+                    action: {
+                        callback: () => {},
+                        label: 'Okay'
+                    }
+                });
 
-            await nextTick();
+                showSyncErrors.value = true;
 
-            shiftAssignmentsReference.value?.paginate(1, true);
+            } else {
+                useNuxtApp().$promptStore.setPrompt({
+                    resetable: false,
+                    icon: null,
+                    title: `Request successful`,
+                    message: 'Shift settings updated successfully.',
+                    action: {
+                        callback: () => {},
+                        label: 'Okay'
+                    }
+                });
+
+                resetShiftAssignment();
+
+                await nextTick();
+
+                shiftAssignmentsReference.value?.paginate(1, true);
+            }
         }
     });
 }

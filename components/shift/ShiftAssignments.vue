@@ -82,7 +82,7 @@
             v-model="selectedShiftAssignments"
             selection>
             <template v-slot:cell.actions="{cell,slot: cellSlot}">
-                <div class="flex items-center">
+                <div v-if="cell.shift_is_latest" class="flex items-center">
                     <NavDrop
                         class="z-10"
                         :disabled="disableActions"
@@ -95,7 +95,9 @@
                         :drop-align="'top'"
                         :drop-justify="'right'"
                         :drop-options="[
-                            {type: 'action', title: 'Edit shift settings',callback: () => {$emit('editShiftSettings', cell)}}
+                            ...(cell.shift_is_latest ? [
+                                {type: 'action', icon: 'mdi:pen', title: 'Edit shift settings',callback: () => {$emit('editShiftSettings', cell)}}
+                            ] : [])
                         ]">
                     </NavDrop>
                 </div>
@@ -115,8 +117,16 @@
             <template v-slot:cell.employee_designation="{cell,slot}">
                 <div class="p-[3px]">{{cell.employee_designation?.name}}</div>
             </template>
+            <template v-slot:cell.shift_is_latest="{cell,slot}">
+                <div v-if="cell.shift_is_latest" class="flex items-center gap-1 px-[0.3rem] ">
+                    <Label :size="slot.labelSize" :type="'clear'" shade :label="'Latest'" />
+                </div>
+                <div v-else></div>
+            </template>
             <template v-slot:cell.shift_code="{cell,slot}">
-                <div class="p-[3px]">{{cell.shift_code}}</div>
+                <div v-if="cell.shift_code" class="flex items-center gap-1 px-[0.3rem]">
+                    <Label :size="slot.labelSize" :type="'clear'" shade :label="cell.shift_code" />
+                </div>
             </template>
         </DataTable>
 
@@ -272,8 +282,7 @@ const shiftAssignmentSupHeaders = reactive<TableSupHeaderT[]>([
     {text: ''},
     {text: 'Employee', colspan: 2, alignHeader: 'left'},
     {text: 'Employment', colspan: 2, alignHeader: 'left'},
-    {text: '', colspan: 2},
-    {text: 'Shift', colspan: 3},
+    {text: 'Shift', colspan: 4},
 ]);
 
 const shiftAssignmentHeaders = reactive<TableHeaderT[]>([
@@ -283,11 +292,10 @@ const shiftAssignmentHeaders = reactive<TableHeaderT[]>([
     { text: 'Name', value: 'employee_full_name'},
     { text: 'Status', value: 'employee_current_employment_profile'},
     { text: 'Type', value: 'employee_current_employment_type'},
-    { text: 'Department', value: 'employee_department'},
-    { text: 'Designation', value: 'employee_designation'},
+    { text: '', value: 'shift_is_latest', minWidth: '55.67px'},
     { text: 'Code', value: 'shift_code'},
-    { text: 'Start Date', value: 'shift_start_date'},
-    { text: 'End Date', value: 'shift_end_date'},
+    { text: 'Start Date', value: 'shift_start_date_readable'},
+    { text: 'End Date', value: 'shift_end_date_readable'},
 ]);
 
 const shiftAssignments = reactive<DataTableT>({

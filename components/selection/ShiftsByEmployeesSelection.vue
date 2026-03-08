@@ -116,6 +116,19 @@
             <template v-slot:cell.employee_designation="{cell,slot}">
                 <div class="p-[3px]">{{cell.employee_designation?.name}}</div>
             </template>
+            <template v-slot:cell.assigned_shift_codes="{cell,slot}">
+                <div v-if="cell.assigned_shift_codes" class="flex items-center gap-1 px-[0.3rem]">
+                    <Label
+                        v-for="shiftCode in cell.assigned_shift_codes"
+                        :size="slot.labelSize"
+                        :type="'clear'"
+                        shade
+                        :label="shiftCode" />
+                </div>
+                <div v-else class="flex items-center gap-1 px-[0.3rem]">
+                    <Label :size="slot.labelSize" :type="'default'" shade :label="'No shift'" />
+                </div>
+            </template>
         </DataTable>
 
         <div>
@@ -341,7 +354,6 @@ const employeeSupHeaders = reactive<TableSupHeaderT[]>([
     {text: ''},
     {text: 'Employee', colspan: 2, alignHeader: 'left'},
     {text: 'Employment', colspan: 2, alignHeader: 'left'},
-    {text: '', colspan: 2},
     {text: 'Shift', colspan: 4},
 ]);
 
@@ -351,8 +363,6 @@ const employeeHeaders = reactive<TableHeaderT[]>([
     { text: 'Name', value: 'employee_full_name'},
     { text: 'Status', value: 'employee_current_employment_profile'},
     { text: 'Type', value: 'employee_current_employment_type'},
-    { text: 'Department', value: 'employee_department'},
-    { text: 'Designation', value: 'employee_designation'},
     { text: 'Code', value: 'assigned_shift_codes'},
 ]);
 
