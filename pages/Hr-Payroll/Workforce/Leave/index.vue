@@ -424,10 +424,6 @@ let filters = reactive<{
     dateTo: $moment().format('YYYY-MM-DD'),
 });
 
-if(process.env.NODE_ENV === 'development'){
-    filters.dateTo = $moment('2050-12-31').format('YYYY-MM-DD');
-}
-
 let pageComputed = computed({
     get() {
         return {
