@@ -420,7 +420,6 @@ const salaryStatementsHeaders = computed<TableHeaderT[]>(() => {
         ...(showPayrollColumns.value ? [
             { text: '#', value: 'payroll_number', alignData: 'left'},
             { text: 'Status', value: 'payroll_status'},
-            { text: 'Remarks', value: 'remarks'},
 
             { text: 'Year', value: 'year'},
             { text: 'Month', value: 'month_readable'},
@@ -429,6 +428,7 @@ const salaryStatementsHeaders = computed<TableHeaderT[]>(() => {
             { text: 'Sequence', value: 'frequency_sequence'},
 
             { text: 'Period', value: 'date_range_readable'},
+            { text: 'Remarks', value: 'remarks'},
         ] : [
             { text: 'Payroll #', value: 'payroll_number', alignData: 'left'},
         ]),
@@ -585,7 +585,7 @@ const salaryStatementsExecute = async() =>{
                     ...salaryStatement,
                     _payload: {
                         'label_shade': {
-                            'cell': ['payroll_number', 'payroll_status', 'remarks', 'year', 'month_readable'],
+                            'cell': ['payroll_number', 'payroll_status', 'year', 'month_readable'],
                             'value': shade
                         }
                     }

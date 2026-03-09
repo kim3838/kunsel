@@ -321,7 +321,6 @@ const payrollsHeaders = computed<TableHeaderT[]>(() => {
             { text: '#', value: 'number', isNumeric: true},
             { text: 'Copy #', value: 'copy_payroll_number_to_clipboard'},
             { text: 'Status', value: 'status'},
-            { text: 'Remarks', value: 'remarks'},
 
             { text: 'Year', value: 'year'},
             { text: 'Month', value: 'month_readable'},
@@ -330,6 +329,7 @@ const payrollsHeaders = computed<TableHeaderT[]>(() => {
             { text: 'Sequence', value: 'frequency_sequence'},
 
             { text: 'Period', value: 'date_range_readable'},
+            { text: 'Remarks', value: 'remarks'},
         ] : [
             { text: 'Payroll #', value: 'number', isNumeric: true},
         ]),

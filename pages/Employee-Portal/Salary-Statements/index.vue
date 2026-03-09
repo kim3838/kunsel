@@ -99,7 +99,7 @@
                                     :parent-icon="'ic:baseline-arrow-right'"
                                     in-horizontal-scrollable
                                     divider
-                                    :size="`sm`"
+                                    :size="`xs`"
                                     :drop-shadow-size="`xl`"
                                     :title="'Menu'"
                                     :drop-align="'top'"

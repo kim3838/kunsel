@@ -24,7 +24,7 @@
                                 </div>
                             </div>
                             <div>
-                                <InputLabel :size="'sm'" value="Recent payroll dates count" />
+                                <InputLabel :size="'sm'" value="Recent payrolls" />
                                 <Input :type="'number'" high-light-all-text-on-focus type-strict v-model="recentCount" :size="'md'" />
                             </div>
                             <div class="flex flex-col">
@@ -305,7 +305,7 @@
                         <DataTable
                             :sup-headers="recentPayrollsSupHeaders"
                             :headers="payrollInquiriesHeaders"
-                            :size="'md'"
+                            :size="'lg'"
                             :rows="recentPayrollsData"
                             v-model="selectedRecentPayrolls"
                             selection>
@@ -335,7 +335,7 @@
                         <DataTable
                             :sup-headers="currentPayrollsSupHeaders"
                             :headers="payrollInquiriesHeaders"
-                            :size="'md'"
+                            :size="'lg'"
                             :rows="currentPayrollsData"
                             v-model="selectedLatestPayrolls"
                             selection>
@@ -422,17 +422,17 @@ const rebuildSelections = async (selection: string[] = []) => {
 }
 
 const recentPayrollsSupHeaders = reactive<TableSupHeaderT[]>([
-    {text: 'Recent payrolls', colspan: 5, alignHeader: 'center'},
-    {text: '', colspan: 1, alignHeader: 'center'},
-    {text: 'Actions', colspan: 1, alignHeader: 'left'},
-    {text: 'Payroll', colspan: 1, alignHeader: 'left'},
+    {text: 'Recent payrolls', colspan: 4, alignHeader: 'center'},
+    {text: 'Period', colspan: 2, alignHeader: 'center'},
+    {text: '', colspan: 1, alignHeader: 'left'},
+    {text: '', colspan: 1, alignHeader: 'left'},
 ]);
 
 const currentPayrollsSupHeaders = reactive<TableSupHeaderT[]>([
-    {text: 'Current payroll', colspan: 5, alignHeader: 'center'},
-    {text: '', colspan: 1, alignHeader: 'center'},
-    {text: 'Actions', colspan: 1, alignHeader: 'left'},
-    {text: 'Payroll', colspan: 1, alignHeader: 'left'},
+    {text: 'Current payroll', colspan: 4, alignHeader: 'center'},
+    {text: 'Period', colspan: 2, alignHeader: 'center'},
+    {text: '', colspan: 1, alignHeader: 'left'},
+    {text: '', colspan: 1, alignHeader: 'left'},
 ]);
 
 const payrollInquiriesHeaders = reactive<TableHeaderT[]>([
@@ -440,8 +440,8 @@ const payrollInquiriesHeaders = reactive<TableHeaderT[]>([
     { text: 'Month Sequence', value: 'frequency_sequence_readable', minWidth: '85px'},
     { text: 'Year', value: 'year', alignData: 'left', minWidth: '85px'},
     { text: 'Month', value: 'month_readable', minWidth: '85px'},
-    { text: 'Period', value: 'date_range_readable', minWidth: '275px'},
-    { text: 'Remarks', value: 'remarks',},
+    { text: 'Start', value: 'start_readable', minWidth: '100px'},
+    { text: 'End', value: 'end_readable', minWidth: '100px'},
     { text: '', value: 'actions',},
     { text: 'Status', value: 'payroll_status', minWidth: '85px'},
 ]);

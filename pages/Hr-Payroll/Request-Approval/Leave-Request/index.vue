@@ -69,7 +69,7 @@
                                         <UnorderedList v-if="modalDisableActions" :icon="'eos-icons:loading'" :size="'md'" :label="'Please wait...'"/>
                                     </div>
                                     <div v-else class="max-h-[135px] md:max-h-[270px] overflow-y-auto space-y-2">
-                                        <div>Claimability does not include claim limit and leave balance.</div>
+                                        <div>Claimability does not include eligibility, claim limit and leave balance.</div>
 
                                         <div>Total claimable: {{dateInquiryClaimableCount}}</div>
 

@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="text-sm">{{pageInformation}}</div>
+        <div class="text-xs font-sans">{{pageInformation}}</div>
     </div>
 </template>
 

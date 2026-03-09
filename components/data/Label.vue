@@ -58,9 +58,9 @@ const props = defineProps({
 const fontClass = computed(() => {
 
     return {
-        '2xs': `text-sm font-normal`,
-        'xs': `text-sm font-normal`,
-        'sm': `text-sm font-normal`,
+        '2xs': `text-xs font-normal`,
+        'xs': `text-xs font-normal`,
+        'sm': `text-xs font-normal`,
         'md': `text-sm font-normal`,
         'lg': `text-base font-normal`,
         'xl': `text-base font-normal`,
