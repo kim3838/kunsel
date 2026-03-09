@@ -310,6 +310,12 @@
                         <template v-slot:cell.is_paid="{cell,slot}">
                             <div class="p-[3px]">{{cell.leave_type?.is_paid ? 'Yes' : 'No'}}</div>
                         </template>
+                        <template v-slot:cell.date_from="{cell,slot}">
+                            <div class="p-[3px]">{{cell.date_from_readable}}</div>
+                        </template>
+                        <template v-slot:cell.date_to="{cell,slot}">
+                            <div class="p-[3px]">{{cell.date_to_readable}}</div>
+                        </template>
                         <template v-slot:sub_row_slot="{rowIndex, cell, slot}">
                             <div class="inline-flex items-center scaffold-border pr-2">
                                 <Icon name="mdi:info-variant" :class="[slot.iconSizeClass]" /><div :class="[slot.titleSizeClass]">Approval Sequence</div>

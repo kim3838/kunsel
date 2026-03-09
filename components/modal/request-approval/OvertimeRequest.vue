@@ -117,7 +117,7 @@ requestByEmployeeNumber.value = _get(props.overtimeRequestPayload, 'requested_by
 requestByEmployeeFullName.value = _get(props.overtimeRequestPayload, 'requested_by.company_employee_full_name', '');
 statusSummary.value = _get(props.overtimeRequestPayload, 'status_summary.value', REQUEST_APPROVAL_STATUS.NOT_SPECIFIED);
 
-attendanceDate.value = _get(props.overtimeRequestPayload, 'attendance.date', '');
+attendanceDate.value = _get(props.overtimeRequestPayload, 'attendance.date_readable', '');
 attendanceWeekday.value = _get(props.overtimeRequestPayload, 'attendance.shift_schedule.week_day_name', '');
 attendanceEmployeeNumber.value = _get(props.overtimeRequestPayload, 'attendance.employee.number', '');
 attendanceEmployeeFullName.value = _get(props.overtimeRequestPayload, 'attendance.employee.full_name', '');

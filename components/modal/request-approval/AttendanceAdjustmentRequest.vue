@@ -156,7 +156,7 @@ requestByEmployeeNumber.value = _get(props.attendanceAdjustmentRequestPayload, '
 requestByEmployeeFullName.value = _get(props.attendanceAdjustmentRequestPayload, 'requested_by.company_employee_full_name', '');
 statusSummary.value = _get(props.attendanceAdjustmentRequestPayload, 'status_summary.value', REQUEST_APPROVAL_STATUS.NOT_SPECIFIED);
 
-attendanceDate.value = _get(props.attendanceAdjustmentRequestPayload, 'attendance.date', '');
+attendanceDate.value = _get(props.attendanceAdjustmentRequestPayload, 'attendance.date_readable', '');
 attendanceWeekday.value = _get(props.attendanceAdjustmentRequestPayload, 'attendance.shift_schedule.week_day_name', '');
 attendanceEmployeeNumber.value = _get(props.attendanceAdjustmentRequestPayload, 'attendance.employee.number', '');
 attendanceEmployeeFullName.value = _get(props.attendanceAdjustmentRequestPayload, 'attendance.employee.full_name', '');

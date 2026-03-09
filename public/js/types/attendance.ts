@@ -46,6 +46,7 @@ export type AttendanceT = {
     ulid: string,
     employee_id: string | number,
     date: string,
+    date_readable: string,
     first_in: string,
     lunch_out?: string | null,
     lunch_in?: string | null,

@@ -266,7 +266,7 @@
                             <div class="p-[3px]">{{cell.shift_schedule.work_end}}</div>
                         </template>
                         <template v-slot:cell.date="{cell,slot}">
-                            <div class="p-[3px]">{{cell.attendance.date}}</div>
+                            <div class="p-[3px]">{{cell.attendance.date_readable}}</div>
                         </template>
                         <template v-slot:cell.last_out="{cell,slot}">
                             <div class="p-[3px]">{{cell.attendance.last_out}}</div>

@@ -272,7 +272,7 @@
                             <div class="p-[3px]">{{cell.attendance?.employee?.full_name}}</div>
                         </template>
                         <template v-slot:cell.attendance_date="{cell,slot}">
-                            <div class="p-[3px]">{{cell.attendance?.date}}</div>
+                            <div class="p-[3px]">{{cell.attendance?.date_readable}}</div>
                         </template>
                         <template v-slot:sub_row_slot="{rowIndex, cell, slot}">
                             <div class="inline-flex items-center scaffold-border pr-2">

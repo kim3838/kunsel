@@ -144,7 +144,7 @@ watch(updatedAssociatedCompanyFlag, (newValue) => {
 });
 
 const title = computed(() => {
-    return `${attendance.value.date} ${attendance.value.shift_schedule.week_day_name}`;
+    return `${attendance.value.date_readable} ${attendance.value.shift_schedule.week_day_name}`;
 });
 const subTitle = computed(() => {
     return `${attendance.value.employee.number} ${attendance.value.employee.full_name}`;
