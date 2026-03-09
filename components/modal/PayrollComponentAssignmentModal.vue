@@ -2,7 +2,6 @@
     <DialogModal
         :show="creatingOrEditing"
         :closeable="false"
-        :landscape="true"
         :content-padding="'0'">
         <template #title>
 
@@ -30,91 +29,95 @@
                 <span class="font-semibold">Component Form :</span> {{componentForm}}<br>
                 <span class="font-semibold">Form :</span> {{form}}<br>
             </div>
-            <div ref='contentContainer'>
+            <div ref='contentContainer' class="px-3 pt-4 pb-2.5">
                 <div v-if="loadingOverlay" :style="loadingOverlayDimensionStyle" class="absolute tint-background  z-50">
                     <div class="h-full flex items-center justify-center">
                         <UnorderedList :size="'lg'" :icon="'eos-icons:loading'">Please wait...</UnorderedList>
                     </div>
                 </div>
 
-                <div class="p-3 pt-4 mx-auto max-w-screen-lg grid gap-2 grid-cols-4 sm:grid-cols-5 md:grid-cols-6">
-                    <div v-if="formulableTabSelectable && !singleFormulableMode" class="col-span-full">
-                        <RadioGroup
-                            :disabled="disableActions"
-                            :selections="formulableTypeTabs"
-                            :size="'md'"
-                            :orientation="'horizontal'"
-                            :radio-key="`formulable_type`"
-                            v-model="formulableTypeTab" />
-                    </div>
-                    <div class="col-span-2">
-                        <InputLabel :size="'sm'" value="Select Payroll Component"/>
-                        <SingleSelect
-                            :key="assignablePayrollComponentOptionsKey"
-                            :disabled="assignablePayrollComponentPending"
-                            :searchable="false"
-                            drop-shadow
-                            value-persist
-                            :size="'md'"
-                            :options="assignablePayrollComponentOptions"
-                            @valueChange="assignablePayrollComponentSelectedChange"/>
-                    </div>
-                    <div v-if="selectedPayrollComponentIsAmountable">
-                        <InputLabel :size="'sm'" value="Amount"/>
-                        <Input v-model="amount" high-light-all-text-on-focus :size="'md'" :min="0" :type="'number'" type-strict />
-                    </div>
-                    <div v-if="selectedPayrollComponentIsAmountable">
-                        <InputLabel :size="'sm'" value="Amount Pay Period"/>
-                        <SingleSelect :searchable="false" :selection-max-viewable-line="10" drop-shadow value-persist :size="'md'" :options="payPeriodOptions" @valueChange="payPeriodSelectedChange"/>
-                    </div>
-                    <div v-if="selectedPayrollComponentIsAmountable">
-                        <InputLabel :size="'sm'" value="Currency"/>
-                        <Input v-model="currency" disabled :size="'md'" />
-                    </div>
-                    <div v-if="selectedPayrollComponentIsAmountable">
-                        <InputLabel :size="'sm'" value="Pay Type"/>
-                        <SingleSelect :searchable="false" disabled :selection-max-viewable-line="10" drop-shadow value-persist :size="'md'" :options="payTypeOptions"/>
-                    </div>
-                    <div v-if="selectedPayrollComponentIsAmountable" class="col-span-full flex flex-wrap gap-2">
-                        <div>
-                            <InputLabel :size="'sm'" value="Date start"/>
+                <div class="lining-shadow rounded-sm tint-background">
+
+                    <div class="p-3 pt-4 mx-auto max-w-screen-lg grid gap-2 grid-cols-4 sm:grid-cols-5 md:grid-cols-6">
+                        <div v-if="formulableTabSelectable && !singleFormulableMode" class="col-span-full">
                             <RadioGroup
-                                :selections="amountableStartSelection"
+                                :disabled="disableActions"
+                                :selections="formulableTypeTabs"
                                 :size="'md'"
                                 :orientation="'horizontal'"
-                                :radio-key="'amountable-start'"
-                                @change="amountableStartSelectedChanged"
-                                v-model="amountableStart" />
+                                :radio-key="`formulable_type`"
+                                v-model="formulableTypeTab" />
                         </div>
-                        <div v-if="amountableStart == AMOUNTABLE_PAYROLL_COMPONENT_START.CUSTOM_DATE">
-                            <InputLabel :size="'sm'" value="Start date"/>
-                            <InputWithIcon
-                                high-light-all-text-on-focus
-                                @valueChanged="startDateChanged"
-                                :override="{font_family_class: 'font-sans'}"
-                                :icon="'mdi:calendar-cursor-outline'"
-                                :id="`amountable-start-date`" v-model="startDate" :size="'md'" />
-                        </div>
-                    </div>
-                    <div v-if="selectedPayrollComponentIsAmountable" class="col-span-full flex flex-wrap gap-2">
-                        <div>
-                            <InputLabel :size="'sm'" value="Date end"/>
-                            <RadioGroup
-                                :selections="amountableEndSelection"
+                        <div :class="[selectedPayrollComponentIsAmountable ? 'col-span-2' : 'col-span-4']">
+                            <InputLabel :size="'sm'" value="Select Payroll Component"/>
+                            <SingleSelect
+                                :key="assignablePayrollComponentOptionsKey"
+                                :disabled="assignablePayrollComponentPending"
+                                :searchable="false"
+                                drop-shadow
+                                value-persist
                                 :size="'md'"
-                                :orientation="'horizontal'"
-                                :radio-key="'amountable-end'"
-                                @change="amountableEndSelectedChanged"
-                                v-model="amountableEnd" />
+                                :options="assignablePayrollComponentOptions"
+                                @valueChange="assignablePayrollComponentSelectedChange"/>
                         </div>
-                        <div v-if="amountableEnd == AMOUNTABLE_PAYROLL_COMPONENT_END.CUSTOM_DATE">
-                            <InputLabel :size="'sm'" value="End Date"/>
-                            <InputWithIcon
-                                high-light-all-text-on-focus
-                                @valueChanged="endDateChanged"
-                                :override="{font_family_class: 'font-sans'}"
-                                :icon="'mdi:calendar-cursor-outline'"
-                                :id="`amountable-end-date`" v-model="endDate" :size="'md'" />
+                        <div class="block col-span-2 min-w-[150px]" v-if="!selectedPayrollComponentIsAmountable"></div>
+                        <div v-if="selectedPayrollComponentIsAmountable">
+                            <InputLabel :size="'sm'" value="Amount"/>
+                            <Input v-model="amount" high-light-all-text-on-focus :size="'md'" :min="0" :type="'number'" type-strict />
+                        </div>
+                        <div v-if="selectedPayrollComponentIsAmountable">
+                            <InputLabel :size="'sm'" value="Amount Pay Period"/>
+                            <SingleSelect :searchable="false" :selection-max-viewable-line="10" drop-shadow value-persist :size="'md'" :options="payPeriodOptions" @valueChange="payPeriodSelectedChange"/>
+                        </div>
+                        <div v-if="selectedPayrollComponentIsAmountable">
+                            <InputLabel :size="'sm'" value="Currency"/>
+                            <Input v-model="currency" disabled :size="'md'" />
+                        </div>
+                        <div v-if="selectedPayrollComponentIsAmountable">
+                            <InputLabel :size="'sm'" value="Pay Type"/>
+                            <SingleSelect :searchable="false" disabled :selection-max-viewable-line="10" drop-shadow value-persist :size="'md'" :options="payTypeOptions"/>
+                        </div>
+                        <div v-if="selectedPayrollComponentIsAmountable" class="col-span-full flex flex-wrap gap-2">
+                            <div>
+                                <InputLabel :size="'sm'" value="Date start"/>
+                                <RadioGroup
+                                    :selections="amountableStartSelection"
+                                    :size="'md'"
+                                    :orientation="'horizontal'"
+                                    :radio-key="'amountable-start'"
+                                    @change="amountableStartSelectedChanged"
+                                    v-model="amountableStart" />
+                            </div>
+                            <div v-if="amountableStart == AMOUNTABLE_PAYROLL_COMPONENT_START.CUSTOM_DATE">
+                                <InputLabel :size="'sm'" value="Start date"/>
+                                <InputWithIcon
+                                    high-light-all-text-on-focus
+                                    @valueChanged="startDateChanged"
+                                    :override="{font_family_class: 'font-sans'}"
+                                    :icon="'mdi:calendar-cursor-outline'"
+                                    :id="`amountable-start-date`" v-model="startDate" :size="'md'" />
+                            </div>
+                        </div>
+                        <div v-if="selectedPayrollComponentIsAmountable" class="col-span-full flex flex-wrap gap-2">
+                            <div>
+                                <InputLabel :size="'sm'" value="Date end"/>
+                                <RadioGroup
+                                    :selections="amountableEndSelection"
+                                    :size="'md'"
+                                    :orientation="'horizontal'"
+                                    :radio-key="'amountable-end'"
+                                    @change="amountableEndSelectedChanged"
+                                    v-model="amountableEnd" />
+                            </div>
+                            <div v-if="amountableEnd == AMOUNTABLE_PAYROLL_COMPONENT_END.CUSTOM_DATE">
+                                <InputLabel :size="'sm'" value="End Date"/>
+                                <InputWithIcon
+                                    high-light-all-text-on-focus
+                                    @valueChanged="endDateChanged"
+                                    :override="{font_family_class: 'font-sans'}"
+                                    :icon="'mdi:calendar-cursor-outline'"
+                                    :id="`amountable-end-date`" v-model="endDate" :size="'md'" />
+                            </div>
                         </div>
                     </div>
                 </div>

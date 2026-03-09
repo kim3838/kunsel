@@ -1,7 +1,7 @@
 <template>
-    <div :class="[compact ? '' : 'px-[20px] space-y-2']">
+    <div :class="[compact ? '' : 'px-[20px]']">
         <form @submit.prevent="paginate(1, clearSelectionOnFormSubmit)" class="space-y-2" :class="[compact ? '' : 'pb-[20px]']">
-            <div class="grid gap-2 grid-cols-3 sm:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
+            <div class="grid gap-2 grid-cols-3 sm:grid-cols-4">
                 <div>
                     <InputLabel :size="'sm'" value="Search" />
                     <Input :size="'md'" ref="searchInput" v-model="filters.search.keyword" class="w-full" placeholder="Search" :disabled="disableActions" type="text"/>
@@ -33,25 +33,29 @@
             <Label v-if="!shifts.successful" invert :size="'md'" :type="'danger'" :label="shifts.message" />
         </div>
 
-        <DataTable
-            v-if="shifts.successful"
-            class="mt-2"
-            :headers="shiftsHeaders"
-            :size="'lg'"
-            :rows="shifts.data"
-            :disabled="disableDataTable"
-            :pending="proxyPending"
-            v-model="proxySelectedShifts"
-            selection
-            :single-select="singleSelect">
-            <template v-slot:cell.type="{cell,slot}">
-                <div class="p-[3px]">{{cell.type.text}}</div>
-            </template>
-        </DataTable>
+        <div class="space-y-2">
 
-        <div>
-            <PageInformation :pagination="shifts.meta.pagination" :pending="disableDataTable"/>
-            <Pagination :size="'lg'" :pagination="shifts.meta.pagination" :pending="disableDataTable" v-model="pageComputed"/>
+            <DataTable
+                v-if="shifts.successful"
+                landscape
+                class="mt-2"
+                :headers="shiftsHeaders"
+                :size="'lg'"
+                :rows="shifts.data"
+                :disabled="disableDataTable"
+                :pending="proxyPending"
+                v-model="proxySelectedShifts"
+                selection
+                :single-select="singleSelect">
+                <template v-slot:cell.type="{cell,slot}">
+                    <div class="p-[3px]">{{cell.type.text}}</div>
+                </template>
+            </DataTable>
+
+            <div>
+                <PageInformation :pagination="shifts.meta.pagination" :pending="disableDataTable"/>
+                <Pagination :size="'lg'" :pagination="shifts.meta.pagination" :pending="disableDataTable" v-model="pageComputed"/>
+            </div>
         </div>
     </div>
 </template>

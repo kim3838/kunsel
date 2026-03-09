@@ -38,82 +38,92 @@
 
                 <DialogModal
                     :show="assignLeaveTypeModalShow || editLeaveTypeSettingsModalShow"
-                    :landscape="true"
                     :content-padding="'0'">
                     <template #title>
                     </template>
                     <template #content>
                         <div class="px-3 pt-4 pb-2.5">
                             <div class="mx-auto max-w-screen-xl space-y-4">
-                                <fieldset class="neutral-border px-2 pb-2 space-y-2">
-                                    <legend class="text-lg font-header">Leave Type Settings</legend>
 
-                                    <div class="grid gap-2 grid-cols-2 sm:grid-cols-3 md:grid-cols-5">
-                                        <div class="col-span-full gap-2">
-                                            <InputLabel :size="'sm'" value="Override leave type initial balance"/>
-                                            <RadioGroup
-                                                :disabled="disableLeaveTypeAssignmentActions"
-                                                :selections="stateOverrideLeaveTypeInitialBalanceUponEligibilitySelection"
-                                                :size="'md'"
-                                                :orientation="overrideLeaveTypeInitialBalanceUponEligibilityRadioGroupOrientation"
-                                                :radio-key="'override-leave-type-initial-balance-upon-eligibility'"
-                                                v-model="overrideBalanceUponEligibility" />
-                                        </div>
-                                        <div v-if="overrideBalanceUponEligibility == 1">
-                                            <InputLabel :size="'sm'" value="Custom balance upon eligibility"/>
-                                            <Input
-                                                type-strict
-                                                :type="'number'"
-                                                :disabled="disableLeaveTypeAssignmentActions"
-                                                v-model="balanceUponEligibility"
-                                                :size="'md'" />
+                                <div class="lining-shadow rounded-sm tint-background">
+
+                                    <div class="lining-shadow rounded-t-sm text-lg font-medium font-header px-4 py-2">Leave Type Settings</div>
+
+                                    <div class="p-4">
+
+                                        <div class="grid gap-2 grid-cols-1">
+                                            <div class="col-span-full gap-2">
+                                                <InputLabel :size="'sm'" value="Override leave type initial balance"/>
+                                                <RadioGroup
+                                                    :disabled="disableLeaveTypeAssignmentActions"
+                                                    :selections="stateOverrideLeaveTypeInitialBalanceUponEligibilitySelection"
+                                                    :size="'md'"
+                                                    :orientation="overrideLeaveTypeInitialBalanceUponEligibilityRadioGroupOrientation"
+                                                    :radio-key="'override-leave-type-initial-balance-upon-eligibility'"
+                                                    v-model="overrideBalanceUponEligibility" />
+                                            </div>
+                                            <div v-if="overrideBalanceUponEligibility == 1">
+                                                <InputLabel :size="'sm'" value="Custom balance upon eligibility"/>
+                                                <Input
+                                                    type-strict
+                                                    :type="'number'"
+                                                    :disabled="disableLeaveTypeAssignmentActions"
+                                                    v-model="balanceUponEligibility"
+                                                    :size="'md'" />
+                                            </div>
                                         </div>
                                     </div>
-                                </fieldset>
+                                </div>
 
-                                <fieldset v-if="leaveTypeAssignmentTab == LEAVE_TYPE_ASSIGNMENT_TAB.CREATE_LEAVE_TYPE_ASSIGNMENTS" class="neutral-border px-2 pb-2 space-y-2">
-                                    <legend class="text-lg font-header">Select Leave Types</legend>
+                                <div v-if="leaveTypeAssignmentTab == LEAVE_TYPE_ASSIGNMENT_TAB.CREATE_LEAVE_TYPE_ASSIGNMENTS" class="lining-shadow rounded-sm tint-background">
 
-                                    <Suspense>
-                                        <LeaveTypeSelection
-                                            compact
-                                            :clear-selection-on-form-submit="false"
-                                            :disable-actions="disableLeaveTypeAssignmentActions"
-                                            v-model:selected="selectedModalLeaveTypes"/>
+                                    <div class="lining-shadow rounded-t-sm text-lg font-medium font-header px-4 py-2">Select Leave Types</div>
 
-                                        <template #fallback>
-                                            <div>
-                                                <UnorderedList
-                                                    :icon="'eos-icons:loading'"
-                                                    :size="'md'"
-                                                    :label="'Loading leave type selections...'"/>
-                                            </div>
-                                        </template>
-                                    </Suspense>
-                                </fieldset>
+                                    <div class="p-4">
+                                        <Suspense>
+                                            <LeaveTypeSelection
+                                                compact
+                                                :clear-selection-on-form-submit="false"
+                                                :disable-actions="disableLeaveTypeAssignmentActions"
+                                                v-model:selected="selectedModalLeaveTypes"/>
 
-                                <fieldset v-if="leaveTypeAssignmentTab == LEAVE_TYPE_ASSIGNMENT_TAB.MANAGE_ASSIGNED_LEAVE_TYPES" class="neutral-border px-2 pb-2 space-y-2">
-                                    <legend class="text-lg font-header">Select Employees</legend>
+                                            <template #fallback>
+                                                <div>
+                                                    <UnorderedList
+                                                        :icon="'eos-icons:loading'"
+                                                        :size="'md'"
+                                                        :label="'Loading leave type selections...'"/>
+                                                </div>
+                                            </template>
+                                        </Suspense>
+                                    </div>
+                                </div>
 
-                                    <Suspense>
-                                        <LeaveTypesByEmployeesSelection
-                                            compact
-                                            :clear-selection-on-form-submit="false"
-                                            ref="modalEmployeeSelectionReference"
-                                            :disable-actions="disableLeaveTypeAssignmentActions"
-                                            v-model:pending="modalEmployeeSelectionPending"
-                                            v-model:selected="selectedModalEmployees"/>
+                                <div v-if="leaveTypeAssignmentTab == LEAVE_TYPE_ASSIGNMENT_TAB.MANAGE_ASSIGNED_LEAVE_TYPES" class="lining-shadow rounded-sm tint-background">
 
-                                        <template #fallback>
-                                            <div>
-                                                <UnorderedList
-                                                    :icon="'eos-icons:loading'"
-                                                    :size="'md'"
-                                                    :label="'Loading employee selections...'"/>
-                                            </div>
-                                        </template>
-                                    </Suspense>
-                                </fieldset>
+                                    <div class="lining-shadow rounded-t-sm text-lg font-medium font-header px-4 py-2">Select Employees</div>
+
+                                    <div class="p-4 max-h-[400px] overflow-y-scroll">
+                                        <Suspense>
+                                            <LeaveTypesByEmployeesSelection
+                                                compact
+                                                :clear-selection-on-form-submit="false"
+                                                ref="modalEmployeeSelectionReference"
+                                                :disable-actions="disableLeaveTypeAssignmentActions"
+                                                v-model:pending="modalEmployeeSelectionPending"
+                                                v-model:selected="selectedModalEmployees"/>
+
+                                            <template #fallback>
+                                                <div>
+                                                    <UnorderedList
+                                                        :icon="'eos-icons:loading'"
+                                                        :size="'md'"
+                                                        :label="'Loading employee selections...'"/>
+                                                </div>
+                                            </template>
+                                        </Suspense>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </template>

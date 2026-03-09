@@ -268,6 +268,9 @@
                         <template v-slot:cell.employee_full_name="{cell,slot}">
                             <div class="p-[3px]">{{cell.employee.full_name}}</div>
                         </template>
+                        <template v-slot:cell.date="{cell,slot}">
+                            <div class="p-[3px]">{{cell.date_readable}}</div>
+                        </template>
                         <template v-slot:cell.code="{cell,slot}">
                             <div class="p-[3px]">{{cell.leave_type?.code}}</div>
                         </template>
@@ -376,14 +379,14 @@ const leavesSupHeaders = reactive<TableSupHeaderT[]>([
 const leavesHeaders = reactive<TableHeaderT[]>([
     { text: '#', value: 'row_number'},
     { text: '#', value: 'employee_number', alignData: 'left'},
-    { text: 'Name', value: 'employee_full_name', alignData: 'left', minWidth: '200px'},
+    { text: 'Name', value: 'employee_full_name', alignData: 'left', minWidth: '140px'},
 
-    { text: '', value: 'date', minWidth: '200px'},
+    { text: '', value: 'date', minWidth: '140px'},
 
-    { text: 'Code', value: 'code', minWidth: '143px'},
+    { text: 'Code', value: 'code', minWidth: '80px'},
     { text: 'Name', value: 'name', minWidth: '143px'},
     { text: 'Type', value: 'type', minWidth: '143px'},
-    { text: 'Is Paid', value: 'is_paid', minWidth: '143px'},
+    { text: 'Is Paid', value: 'is_paid', minWidth: '80px'},
 
 ]);
 

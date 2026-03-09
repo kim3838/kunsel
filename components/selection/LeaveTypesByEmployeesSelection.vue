@@ -1,5 +1,5 @@
 <template>
-    <div :class="[compact ? '' : 'px-[20px] space-y-2']">
+    <div :class="[compact ? '' : 'px-[20px]']">
         <form @submit.prevent="paginate(1, clearSelectionOnFormSubmit)" class="space-y-2" :class="[compact ? '' : 'pb-[20px]']">
             <div class="grid gap-2 grid-cols-3 sm:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
                 <div>
@@ -89,38 +89,52 @@
             <Label v-if="!employees.successful" invert :size="'md'" :type="'danger'" :label="employees.message" />
         </div>
 
-        <DataTable
-            v-if="employees.successful"
-            class="mt-2"
-            :sup-headers="employeeSupHeaders"
-            :headers="employeeHeaders"
-            :size="'lg'"
-            :rows="employees.data"
-            :disabled="disableDataTable"
-            :show-no-data="false"
-            :pending="proxyPending"
-            v-model="proxySelectedEmployees"
-            selection>
-            <template v-slot:cell.employee_current_employment_profile="{cell,slot}">
-                <div class="flex space-x-1 px-[0.3rem] items-center">
-                    <Label :size="slot.labelSize" :type="cell?._payload?.label_shade?.value as LabelTypeT" shade :label="cell.employee_current_employment_profile?.status?.text" />
-                </div>
-            </template>
-            <template v-slot:cell.employee_current_employment_type="{cell,slot}">
-                <div class="px-[3px]">{{cell.employee_current_employment_profile?.employment_type?.text}}</div>
-            </template>
+        <div class="space-y-2">
 
-            <template v-slot:cell.employee_department="{cell,slot}">
-                <div class="p-[3px]">{{cell.employee_department?.name}}</div>
-            </template>
-            <template v-slot:cell.employee_designation="{cell,slot}">
-                <div class="p-[3px]">{{cell.employee_designation?.name}}</div>
-            </template>
-        </DataTable>
+            <DataTable
+                v-if="employees.successful"
+                class="mt-2"
+                :sup-headers="employeeSupHeaders"
+                :headers="employeeHeaders"
+                :size="'lg'"
+                :rows="employees.data"
+                :disabled="disableDataTable"
+                :show-no-data="false"
+                :pending="proxyPending"
+                v-model="proxySelectedEmployees"
+                selection>
+                <template v-slot:cell.employee_current_employment_profile="{cell,slot}">
+                    <div class="flex space-x-1 px-[0.3rem] items-center">
+                        <Label :size="slot.labelSize" :type="cell?._payload?.label_shade?.value as LabelTypeT" shade :label="cell.employee_current_employment_profile?.status?.text" />
+                    </div>
+                </template>
+                <template v-slot:cell.employee_current_employment_type="{cell,slot}">
+                    <div class="px-[3px]">{{cell.employee_current_employment_profile?.employment_type?.text}}</div>
+                </template>
 
-        <div>
-            <PageInformation :pagination="employees.meta.pagination" :pending="disableDataTable"/>
-            <Pagination :size="'lg'" :pagination="employees.meta.pagination" :pending="disableDataTable" v-model="pageComputed"/>
+                <template v-slot:cell.employee_department="{cell,slot}">
+                    <div class="p-[3px]">{{cell.employee_department?.name}}</div>
+                </template>
+                <template v-slot:cell.employee_designation="{cell,slot}">
+                    <div class="p-[3px]">{{cell.employee_designation?.name}}</div>
+                </template>
+                <template v-slot:cell.assigned_leave_type_codes="{cell,slot}">
+                    <div v-if="cell.assigned_leave_type_codes" class="flex items-center gap-1 px-[0.3rem]">
+                        <Label
+                            v-for="leaveTypeCode in cell.assigned_leave_type_codes"
+                            :size="slot.labelSize"
+                            :type="'clear'"
+                            shade
+                            :label="leaveTypeCode" />
+                    </div>
+                    <div v-else class="flex items-center gap-1 px-[0.3rem]"></div>
+                </template>
+            </DataTable>
+
+            <div>
+                <PageInformation :pagination="employees.meta.pagination" :pending="disableDataTable"/>
+                <Pagination :size="'lg'" :pagination="employees.meta.pagination" :pending="disableDataTable" v-model="pageComputed"/>
+            </div>
         </div>
     </div>
 </template>
@@ -341,7 +355,6 @@ const employeeSupHeaders = reactive<TableSupHeaderT[]>([
     {text: ''},
     {text: 'Employee', colspan: 2, alignHeader: 'left'},
     {text: 'Employment', colspan: 2, alignHeader: 'left'},
-    {text: '', colspan: 2},
     {text: 'Leave Types', colspan: 4},
 ]);
 
@@ -351,8 +364,6 @@ const employeeHeaders = reactive<TableHeaderT[]>([
     { text: 'Name', value: 'employee_full_name'},
     { text: 'Status', value: 'employee_current_employment_profile'},
     { text: 'Type', value: 'employee_current_employment_type'},
-    { text: 'Department', value: 'employee_department'},
-    { text: 'Designation', value: 'employee_designation'},
     { text: 'Assigned Leave Types', value: 'assigned_leave_type_codes'},
 ]);
 

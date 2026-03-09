@@ -212,6 +212,9 @@
                         <template v-slot:cell.type="{cell,slot}">
                             <div class="p-[3px]">{{cell.type?.text}}</div>
                         </template>
+                        <template v-slot:cell.effective_date="{cell,slot}">
+                            <div class="p-[3px]">{{cell.effective_date_readable}}</div>
+                        </template>
                     </DataTable>
 
                     <div>
@@ -308,15 +311,15 @@ const leaveBalanceAdjustmentsHeaders = reactive<TableHeaderT[]>([
     { text: '#', value: 'row_number'},
     { text: '', value: 'actions', minWidth: '33px'},
     { text: '#', value: 'employee_number', alignData: 'left'},
-    { text: 'Name', value: 'employee_full_name', alignData: 'left', minWidth: '200px'},
+    { text: 'Name', value: 'employee_full_name', alignData: 'left', minWidth: '140px'},
 
-    { text: 'Code', value: 'code', minWidth: '143px'},
+    { text: 'Code', value: 'code', minWidth: '40px'},
     { text: 'Name', value: 'name', minWidth: '143px'},
     
-    { text: 'Type', value: 'type', minWidth: '143px'},
+    { text: 'Type', value: 'type', minWidth: '80px'},
     { text: 'Effective Date', value: 'effective_date', minWidth: '143px'},
-    { text: 'Balance', value: 'balance', alignData: 'right', minWidth: '143px'},
-    { text: 'Remarks', value: 'remarks', alignData: 'left', minWidth: '143px'},
+    { text: 'Balance', value: 'balance', alignData: 'right', minWidth: '80px'},
+    { text: 'Remarks', value: 'remarks', alignData: 'left', minWidth: '80px'},
 ]);
 
 const leaveBalanceAdjustments = reactive<DataTableT>({

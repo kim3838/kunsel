@@ -76,7 +76,7 @@
                         :key="salaryStatementsKey"
                         :sup-headers="salaryStatementsSupHeaders"
                         :headers="salaryStatementsHeaders"
-                        :size="'lg'"
+                        :size="'md'"
                         :rows="salaryStatements.data"
                         v-model="selectedSalaryStatements"
                         selection
@@ -114,7 +114,9 @@
                             <div class="px-[3px]" :title="cell.payroll?.number">{{wordClamp(cell.payroll?.number, showPayrollColumns ? 20 : 8)}}</div>
                         </template>
                         <template v-slot:cell.payroll_status="{cell,slot}">
-                            <div class="p-[3px]">{{cell.payroll.status?.text}}</div>
+                            <div class="flex space-x-1 px-[0.3rem] items-center">
+                                <Label :size="slot.labelSize" :type="cell?._payload?.label_shade?.value as LabelTypeT" shade :label="cell?.payroll.status?.text" />
+                            </div>
                         </template>
                         <template v-slot:cell.year="{cell,slot}">
                             <div class="p-[3px]">{{cell.payroll.year}}</div>
@@ -178,6 +180,7 @@
 <script setup lang="ts">
 import type {DataTableT, TableHeaderT, TableRowT, TableSupHeaderT} from "@/public/js/types/data";
 import type {DateTimePickerPayloadT} from "@/public/js/datetimepicker/type";
+import type {LabelTypeT} from "@/public/js/types/theme";
 import {storeToRefs} from "pinia";
 
 useHead({titleTemplate: (titleChunk) => {return `Salary Statements`}});
@@ -369,7 +372,30 @@ const salaryStatementsExecute = async() =>{
             salaryStatements.message = _get(response, '_data.message', '');
         },
         onSuccessResponse: async (request, options, response) => {
-            salaryStatements.data = _get(response, '_data.values.data', []);
+            salaryStatements.data = _get(response, '_data.values.data', []).map((salaryStatement: TableRowT) => {
+
+                let statusSummary = _get(salaryStatement, 'payroll.status.value', 0);
+
+                let shade = 'clear';
+
+                if(statusSummary == PAYROLL_STATUS.DRAFT){
+                    shade = 'clear';
+                } else if(statusSummary == PAYROLL_STATUS.WORKFLOW_IN_PROGRESS){
+                    shade = 'info';
+                } else if(statusSummary == PAYROLL_STATUS.COMPLETED){
+                    shade = 'success';
+                }
+
+                return {
+                    ...salaryStatement,
+                    _payload: {
+                        'label_shade': {
+                            'cell': ['payroll_number', 'payroll_status', 'remarks', 'year', 'month_readable'],
+                            'value': shade
+                        }
+                    }
+                };
+            });
             salaryStatements.meta = _get(response, '_data.values.meta', {
                 pagination: {
                     total: 0,

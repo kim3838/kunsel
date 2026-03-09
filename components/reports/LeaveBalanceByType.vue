@@ -50,33 +50,38 @@
             </div>
         </form>
 
-        <div v-if="!leaveBalanceByTypes.successful" class="flex flex-row flex-wrap gap-2 items-center min-h-8">
-            <Label invert :size="'md'" :type="'danger'" :label="leaveBalanceByTypes.message" />
-        </div>
+        <div class="space-y-2">
+            <div v-if="!leaveBalanceByTypes.successful" class="flex flex-row flex-wrap gap-2 items-center min-h-8">
+                <Label invert :size="'md'" :type="'danger'" :label="leaveBalanceByTypes.message" />
+            </div>
 
-        <DataTable
-            v-if="leaveBalanceByTypes.successful"
-            :sup-headers="leaveBalanceByTypeSupHeaders"
-            :headers="leaveBalanceByTypeHeaders"
-            :size="'lg'"
-            :rows="leaveBalanceByTypes.data"
-            :disabled="disableDataTable">
-            <template v-slot:cell.employee_number="{cell,slot}">
-                <div class="p-[3px]">{{cell.employee.number}}</div>
-            </template>
-            <template v-slot:cell.employee_full_name="{cell,slot}">
-                <div class="p-[3px]">{{cell.employee.full_name}}</div>
-            </template>
-            <template v-slot:cell.current_employment_profile="{cell,slot}">
-                <div class="flex space-x-1 px-[0.3rem] items-center">
-                    <Label :size="slot.labelSize" :type="cell?._payload?.label_shade?.value as LabelTypeT" shade :label="cell.current_employment_profile.status.text" />
-                </div>
-            </template>
-        </DataTable>
+            <DataTable
+                v-if="leaveBalanceByTypes.successful"
+                :sup-headers="leaveBalanceByTypeSupHeaders"
+                :headers="leaveBalanceByTypeHeaders"
+                :size="'lg'"
+                :rows="leaveBalanceByTypes.data"
+                :disabled="disableDataTable">
+                <template v-slot:cell.employee_number="{cell,slot}">
+                    <div class="p-[3px]">{{cell.employee.number}}</div>
+                </template>
+                <template v-slot:cell.employee_full_name="{cell,slot}">
+                    <div class="p-[3px]">{{cell.employee.full_name}}</div>
+                </template>
+                <template v-slot:cell.employee_current_employment_profile="{cell,slot}">
+                    <div class="flex space-x-1 px-[0.3rem] items-center">
+                        <Label :size="slot.labelSize" :type="cell?._payload?.label_shade?.value as LabelTypeT" shade :label="cell.current_employment_profile.status.text" />
+                    </div>
+                </template>
+                <template v-slot:cell.employee_current_employment_type="{cell,slot}">
+                    <div class="px-[3px]">{{cell.current_employment_profile?.employment_type?.text}}</div>
+                </template>
+            </DataTable>
 
-        <div>
-            <PageInformation :pagination="leaveBalanceByTypes.meta.pagination" :pending="disableDataTable"/>
-            <Pagination :size="'lg'" :pagination="leaveBalanceByTypes.meta.pagination" :pending="disableDataTable" v-model="pageComputed"/>
+            <div>
+                <PageInformation :pagination="leaveBalanceByTypes.meta.pagination" :pending="disableDataTable"/>
+                <Pagination :size="'lg'" :pagination="leaveBalanceByTypes.meta.pagination" :pending="disableDataTable" v-model="pageComputed"/>
+            </div>
         </div>
     </div>
 </template>
@@ -168,7 +173,7 @@ const leaveBalanceByTypeSupHeaders = computed<TableSupHeaderT[]>(()=>{
 
     return [
         {text: 'Employee', colspan: 2, alignHeader: 'left'},
-        {text: 'Employment', colspan: 1, alignHeader: 'left'},
+        {text: 'Employment', colspan: 2, alignHeader: 'left'},
         {text: 'Running Balance', colspan: leaveTypeHeaders.value.length},
     ];
 })
@@ -178,7 +183,8 @@ const leaveBalanceByTypeHeaders = computed<TableHeaderT[]>(() => {
     let headers:TableHeaderT[] = [
         { text: 'Employee #', value: 'employee_number', alignData: 'left'},
         { text: 'Name', value: 'employee_full_name'},
-        { text: 'Status', value: 'current_employment_profile'},
+        { text: 'Status', value: 'employee_current_employment_profile'},
+        { text: 'Type', value: 'employee_current_employment_type'},
     ];
 
     let leaveTypes:TableHeaderT[] = leaveTypeHeaders.value.length > 0 ? leaveTypeHeaders.value.map((item: {code: string, ulid: string}) => {
@@ -296,7 +302,7 @@ const leaveBalanceByTypeExecute = async() =>{
                     ...employee,
                     _payload: {
                         'label_shade': {
-                            'cell': ['current_employment_profile', 'current_employment_type'],
+                            'cell': ['employee_full_name', 'employee_current_employment_profile', 'employee_current_employment_type'],
                             'value': shade
                         }
                     }

@@ -78,6 +78,7 @@ export const useThemeStore = defineStore('theme', () => {
             'tint': '#ffffff',
 
             'text': '#282828',
+            'subtitle': '#797e8a',
             'text-invert': '#e0e8de',
             'text-secondary': '#b4b4b4',
         },
@@ -99,6 +100,7 @@ export const useThemeStore = defineStore('theme', () => {
             'tint': '#3b3b3b',
 
             'text': '#c7c7c7',
+            'subtitle': '#c7c7c7',
             'text-invert': '#464646',
             'text-secondary': '#7a7a7a',
         },
@@ -120,6 +122,7 @@ export const useThemeStore = defineStore('theme', () => {
             'tint': '#fdfdfd',
 
             'text': '#2d3656',
+            'subtitle': '#797e8a',
             'text-invert': '#dbe8ee',
             'text-secondary': '#99aed0',
         },
@@ -141,6 +144,7 @@ export const useThemeStore = defineStore('theme', () => {
             'tint': '#fdfdfd',
 
             'text': '#173416',
+            'subtitle': '#173416',
             'text-invert': '#ddeedb',
             'text-secondary': '#a9d099',
         },
@@ -162,6 +166,7 @@ export const useThemeStore = defineStore('theme', () => {
             'tint': '#fffbfb',
 
             'text': '#503d46',
+            'subtitle': '#503d46',
             'text-invert': '#ffffff',
             'text-secondary': '#ab7676',
         },
@@ -183,6 +188,7 @@ export const useThemeStore = defineStore('theme', () => {
             'tint': '#1e6444',
 
             'text': '#bcd0bd',
+            'subtitle': '#bcd0bd',
             'text-invert': '#b3e5e8',
             'text-secondary': '#678369',
         }
@@ -201,6 +207,7 @@ export const useThemeStore = defineStore('theme', () => {
     const body = computed(() => palletes.value[appTheme.value]['body']);
     const shade = computed(() => palletes.value[appTheme.value]['shade']);
     const text = computed(() => palletes.value[appTheme.value]['text']);
+    const subtitle = computed(() => palletes.value[appTheme.value]['subtitle']);
     const textInvert = computed(() => palletes.value[appTheme.value]['text-invert']);
     const textSecondary = computed(() => palletes.value[appTheme.value]['text-secondary']);
 
@@ -232,6 +239,7 @@ export const useThemeStore = defineStore('theme', () => {
         body,
         shade,
         text,
+        subtitle,
         textInvert,
         textSecondary,
 

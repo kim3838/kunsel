@@ -36,6 +36,7 @@ const {
     thread: threadColor,
     tint: tintColor,
     text: textColor,
+    subtitle: subtitleColor,
     neutral: neutralColor,
     textInvert: textInvertColor,
     textSecondary: textSecondaryColor,
@@ -71,6 +72,15 @@ const textColorComputed = computed(() => {
         return lightTheme.value ? '#555756' : '#fdfdfd';
     } else {
         return textColor.value;
+    }
+})
+
+const subtitleColorComputed = computed(() => {
+
+    if(!clientReadyState.value){
+        return lightTheme.value ? '#555756' : '#fdfdfd';
+    } else {
+        return subtitleColor.value;
     }
 })
 
@@ -111,6 +121,10 @@ watch(() => route.name,() => {
 
 .nuxt-page {
     color: v-bind(textColorComputed);
+}
+
+.subtitle-color {
+    color: v-bind(subtitleColorComputed);
 }
 
 .vertical-divider{

@@ -45,7 +45,7 @@
                         <div class="px-3 pt-4 pb-2.5">
                             <div class="mx-auto max-w-screen-md space-y-4">
 
-                                <div class="lining-shadow rounded-sm tint-background space-y-2">
+                                <div class="lining-shadow rounded-sm tint-background">
 
                                     <div class="lining-shadow rounded-t-sm text-lg font-medium font-header px-4 py-2">Shift settings</div>
 
@@ -88,7 +88,7 @@
                                     </div>
                                 </div>
 
-                                <div v-if="shiftAssignmentTab == SHIFT_ASSIGNMENT_TAB.CREATE_SHIFT_ASSIGNMENTS" class="lining-shadow rounded-sm tint-background space-y-2">
+                                <div v-if="shiftAssignmentTab == SHIFT_ASSIGNMENT_TAB.CREATE_SHIFT_ASSIGNMENTS" class="lining-shadow rounded-sm tint-background">
 
                                     <div class="lining-shadow rounded-t-sm text-lg font-medium font-header px-4 py-2">Select shift</div>
 
@@ -113,7 +113,7 @@
                                     </div>
                                 </div>
 
-                                <div v-if="shiftAssignmentTab == SHIFT_ASSIGNMENT_TAB.MANAGE_ASSIGNED_SHIFTS" class="lining-shadow rounded-sm tint-background space-y-2">
+                                <div v-if="shiftAssignmentTab == SHIFT_ASSIGNMENT_TAB.MANAGE_ASSIGNED_SHIFTS" class="lining-shadow rounded-sm tint-background">
 
                                     <div class="lining-shadow rounded-t-sm text-lg font-medium font-header px-4 py-2">Select Employees</div>
 
@@ -193,7 +193,7 @@
                                 </DataTable>
                             </fieldset>
 
-                            <div class="lining-shadow rounded-sm tint-background space-y-2">
+                            <div class="lining-shadow rounded-sm tint-background">
 
                                 <div class="lining-shadow rounded-t-sm text-lg font-medium font-header px-4 py-2">{{stagedShiftAssignmentId ? 'Shift settings update errors' : 'Shift assignment errors' }}</div>
 

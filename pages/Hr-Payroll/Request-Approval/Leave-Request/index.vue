@@ -449,8 +449,8 @@ const leaveRequestsHeaders = reactive<TableHeaderT[]>([
     { text: '', value: 'date_requested_diff', minWidth: '33px'},
     { text: 'Remarks', value: 'remarks', minWidth: '33px'},
 
-    { text: '', value: 'employee_number', minWidth: '33px'},
-    { text: '', value: 'employee_full_name', minWidth: '33px'},
+    { text: '#', value: 'employee_number', minWidth: '33px'},
+    { text: 'Name', value: 'employee_full_name', minWidth: '33px'},
 
     { text: 'Code', value: 'code', minWidth: '33px'},
     { text: 'Name', value: 'name', minWidth: '33px'},

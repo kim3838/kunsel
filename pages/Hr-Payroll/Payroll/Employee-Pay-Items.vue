@@ -81,7 +81,7 @@
 
                 <DialogModal
                     :show="selectingEmployee"
-                    :max-width="'680px'"
+                    :max-width="'480px'"
                     :closeable="false">
                     <template #title>
 
@@ -214,14 +214,14 @@
                         </template>
                         <template v-slot:cell.amountable_start="{cell, slot, scrollReference}">
                             <div class="p-[3px]">
-                                <span v-if="cell.amountable_start?.value == AMOUNTABLE_PAYROLL_COMPONENT_START.CUSTOM_DATE">{{cell.start_date}}</span>
-                                <span v-else>{{cell.amountable_start?.text}}</span>
+                                <span v-if="cell.amountable_start?.value == AMOUNTABLE_PAYROLL_COMPONENT_START.CUSTOM_DATE">{{cell.start_date_readable}}</span>
+                                <span v-else :title="cell.amountable_start?.text">--</span>
                             </div>
                         </template>
                         <template v-slot:cell.amountable_end="{cell, slot, scrollReference}">
                             <div class="p-[3px]">
-                                <span v-if="cell.amountable_end?.value == AMOUNTABLE_PAYROLL_COMPONENT_END.CUSTOM_DATE">{{cell.end_date}}</span>
-                                <span v-else>{{cell.amountable_end?.text}}</span>
+                                <span v-if="cell.amountable_end?.value == AMOUNTABLE_PAYROLL_COMPONENT_END.CUSTOM_DATE">{{cell.end_date_readable}}</span>
+                                <span v-else :title="cell.amountable_end?.text">--</span>
                             </div>
                         </template>
                     </DataTable>
@@ -338,8 +338,8 @@ const payrollComponentsHeaders = reactive<TableHeaderT[]>([
     { text: 'Currency', value: 'currency'},
     { text: 'Pay Period', value: 'pay_period'},
     { text: 'Pay Type', value: 'pay_type'},
-    { text: 'From', value: 'amountable_start'},
-    { text: 'To', value: 'amountable_end'},
+    { text: 'From', value: 'amountable_start', minWidth: '76px'},
+    { text: 'To', value: 'amountable_end', minWidth: '76px'},
 ]);
 
 const payrollComponents = reactive<DataTableT>({

@@ -20,52 +20,59 @@
 
                 <DialogModal
                     :show="showModalAsGroupAssignment || showModalAsCreatingOrEditing"
-                    :landscape="true"
                     :content-padding="'0'">
                     <template #title>
                     </template>
                     <template #content>
                         <div class="px-3 pt-4 pb-2.5">
-                            <div class="mx-auto max-w-screen-xl space-y-4">
+                            <div class="mx-auto max-w-screen-lg space-y-4">
 
-                                <fieldset v-if="creatingOrEditingGroup" class="neutral-border px-2 pb-2 space-y-2">
-                                    <legend class="text-lg font-header">Group</legend>
+                                <div class="lining-shadow rounded-sm tint-background">
 
-                                    <div class="grid gap-2 grid-cols-2 sm:grid-cols-3 md:grid-cols-5">
-                                        <div>
-                                            <InputLabel :size="'sm'" value="Name"/>
-                                            <Input
-                                                :disabled="disableActions"
-                                                v-model="groupName"
-                                                :size="'md'" />
+                                    <div class="lining-shadow rounded-t-sm text-lg font-medium font-header px-4 py-2">Group</div>
+
+                                    <div class="p-4">
+
+                                        <div class="grid gap-2 grid-cols-2 sm:grid-cols-3 md:grid-cols-5">
+                                            <div>
+                                                <InputLabel :size="'sm'" value="Name"/>
+                                                <Input
+                                                    :disabled="disableActions"
+                                                    v-model="groupName"
+                                                    :size="'md'" />
+                                            </div>
                                         </div>
                                     </div>
-                                </fieldset>
+                                </div>
 
-                                <fieldset class="neutral-border px-2 pb-2 space-y-2">
-                                    <legend class="text-lg font-header">{{employeeListTitle}}</legend>
+                                <div class="lining-shadow rounded-sm tint-background">
 
-                                    <Suspense>
-                                        <EmployeeSelection
-                                            ref="employeeSelectionReference"
-                                            compact
-                                            :clear-selection-on-form-submit="false"
-                                            :selected-label="'Employees Selected'"
-                                            :show-only-selected-label="'Show only assigned employees'"
-                                            :disable-actions="disableActions"
-                                            v-model:pending="employeeSelectionPending"
-                                            v-model:selected="selectedModalEmployees"/>
+                                    <div class="lining-shadow rounded-t-sm text-lg font-medium font-header px-4 py-2">{{employeeListTitle}}</div>
 
-                                        <template #fallback>
-                                            <div>
-                                                <UnorderedList
-                                                    :icon="'eos-icons:loading'"
-                                                    :size="'md'"
-                                                    :label="'Loading employee selections...'"/>
-                                            </div>
-                                        </template>
-                                    </Suspense>
-                                </fieldset>
+                                    <div class="p-4 max-h-[400px] overflow-y-scroll">
+
+                                        <Suspense>
+                                            <EmployeeSelection
+                                                ref="employeeSelectionReference"
+                                                compact
+                                                :clear-selection-on-form-submit="false"
+                                                :selected-label="'Employees Selected'"
+                                                :show-only-selected-label="'Show only assigned employees'"
+                                                :disable-actions="disableActions"
+                                                v-model:pending="employeeSelectionPending"
+                                                v-model:selected="selectedModalEmployees"/>
+
+                                            <template #fallback>
+                                                <div>
+                                                    <UnorderedList
+                                                        :icon="'eos-icons:loading'"
+                                                        :size="'md'"
+                                                        :label="'Loading employee selections...'"/>
+                                                </div>
+                                            </template>
+                                        </Suspense>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </template>

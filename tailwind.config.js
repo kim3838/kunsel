@@ -50,6 +50,7 @@ module.exports = {
                     'Bruno Ace SC',
                 ],
                 data: [
+                    `'Source Sans 3'`,
                     'Reddit Sans Condensed',
                     `'Source Sans 3'`,
                     'Ruluko',
@@ -63,6 +64,7 @@ module.exports = {
                     'Momo Trust Sans',
                 ],
                 standard: [
+                    `'Source Sans 3'`,
                     'Reddit Sans Condensed',
                     `'Source Sans 3'`,
                     'Ruluko',
@@ -70,8 +72,7 @@ module.exports = {
                     'Sofia Sans Semi Condensed',
                 ],
                 label: [
-                    `'Source Sans 3'`,
-                    'Geist',
+                    'Momo Trust Sans',
                     'National Park',
                 ],
                 serif : [

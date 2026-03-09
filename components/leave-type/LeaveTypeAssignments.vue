@@ -72,68 +72,72 @@
             <Label v-if="!leaveTypeAssignments.successful" invert :size="'md'" :type="'danger'" :label="leaveTypeAssignments.message" />
         </div>
 
-        <DataTable
-            v-if="leaveTypeAssignments.successful"
-            class="mt-2"
-            :sup-headers="leaveTypeAssignmentSupHeaders"
-            :headers="leaveTypeAssignmentHeaders"
-            :size="'lg'"
-            :rows="leaveTypeAssignments.data"
-            :disabled="disableDataTable"
-            v-model="selectedLeaveTypeAssignments"
-            selection>
-            <template v-slot:cell.actions="{cell,slot: cellSlot}">
-                <div class="flex items-center">
-                    <NavDrop
-                        class="z-10"
-                        :disabled="disableActions"
-                        :parent-icon="'ic:baseline-arrow-right'"
-                        in-horizontal-scrollable
-                        divider
-                        :size="`sm`"
-                        :drop-shadow-size="`xl`"
-                        :title="'Menu'"
-                        :drop-align="'top'"
-                        :drop-justify="'right'"
-                        :drop-options="[
+        <div class="space-y-2">
+            <DataTable
+                v-if="leaveTypeAssignments.successful"
+                class="mt-2"
+                :sup-headers="leaveTypeAssignmentSupHeaders"
+                :headers="leaveTypeAssignmentHeaders"
+                :size="'lg'"
+                :rows="leaveTypeAssignments.data"
+                :disabled="disableDataTable"
+                v-model="selectedLeaveTypeAssignments"
+                selection>
+                <template v-slot:cell.actions="{cell,slot: cellSlot}">
+                    <div class="flex items-center">
+                        <NavDrop
+                            class="z-10"
+                            :disabled="disableActions"
+                            :parent-icon="'ic:baseline-arrow-right'"
+                            in-horizontal-scrollable
+                            divider
+                            :size="`sm`"
+                            :drop-shadow-size="`xl`"
+                            :title="'Menu'"
+                            :drop-align="'top'"
+                            :drop-justify="'right'"
+                            :drop-options="[
                             {type: 'action', title: 'Edit assignment settings',callback: () => {$emit('editLeaveTypeSettings', cell)}}
                         ]">
-                    </NavDrop>
-                </div>
-            </template>
-            <template v-slot:cell.employee_current_employment_profile="{cell,slot}">
-                <div class="flex space-x-1 px-[0.3rem] items-center">
-                    <Label :size="slot.labelSize" :type="cell?._payload?.label_shade?.value as LabelTypeT" shade :label="cell.employee_current_employment_profile?.status?.text" />
-                </div>
-            </template>
-            <template v-slot:cell.employee_current_employment_type="{cell,slot}">
-                <div class="px-[3px]">{{cell.employee_current_employment_profile?.employment_type?.text}}</div>
-            </template>
+                        </NavDrop>
+                    </div>
+                </template>
+                <template v-slot:cell.employee_current_employment_profile="{cell,slot}">
+                    <div class="flex space-x-1 px-[0.3rem] items-center">
+                        <Label :size="slot.labelSize" :type="cell?._payload?.label_shade?.value as LabelTypeT" shade :label="cell.employee_current_employment_profile?.status?.text" />
+                    </div>
+                </template>
+                <template v-slot:cell.employee_current_employment_type="{cell,slot}">
+                    <div class="px-[3px]">{{cell.employee_current_employment_profile?.employment_type?.text}}</div>
+                </template>
 
-            <template v-slot:cell.employee_department="{cell,slot}">
-                <div class="p-[3px]">{{cell.employee_department?.name}}</div>
-            </template>
-            <template v-slot:cell.employee_designation="{cell,slot}">
-                <div class="p-[3px]">{{cell.employee_designation?.name}}</div>
-            </template>
-            <template v-slot:cell.leave_type_code="{cell,slot}">
-                <div class="p-[3px]">{{cell.leave_type_code}}</div>
-            </template>
-            <template v-slot:cell.leave_type_assignment_override_balance_upon_eligibility="{cell,slot}">
-                <div class="p-[3px]">{{cell.leave_type_assignment_override_balance_upon_eligibility ? 'Yes' : 'No'}}</div>
-            </template>
-            <template v-slot:cell.leave_type_assignment_balance_upon_eligibility="{cell,slot}">
-                <div class="p-[3px]">
+                <template v-slot:cell.employee_department="{cell,slot}">
+                    <div class="p-[3px]">{{cell.employee_department?.name}}</div>
+                </template>
+                <template v-slot:cell.employee_designation="{cell,slot}">
+                    <div class="p-[3px]">{{cell.employee_designation?.name}}</div>
+                </template>
+                <template v-slot:cell.leave_type_code="{cell,slot}">
+                    <div v-if="cell.leave_type_code" class="flex items-center gap-1 px-[0.3rem]">
+                        <Label :size="slot.labelSize" :type="'clear'" shade :label="cell.leave_type_code" />
+                    </div>
+                </template>
+                <template v-slot:cell.leave_type_assignment_override_balance_upon_eligibility="{cell,slot}">
+                    <div class="p-[3px]">{{cell.leave_type_assignment_override_balance_upon_eligibility ? 'Yes' : 'No'}}</div>
+                </template>
+                <template v-slot:cell.leave_type_assignment_balance_upon_eligibility="{cell,slot}">
+                    <div class="p-[3px]">
                     <span v-if="Boolean(cell.leave_type_assignment_override_balance_upon_eligibility)">
                         {{cell.leave_type_assignment_balance_upon_eligibility}}
                     </span>
-                </div>
-            </template>
-        </DataTable>
+                    </div>
+                </template>
+            </DataTable>
 
-        <div>
-            <PageInformation :pagination="leaveTypeAssignments.meta.pagination" :pending="disableDataTable"/>
-            <Pagination :size="'lg'" :pagination="leaveTypeAssignments.meta.pagination" :pending="disableDataTable" v-model="pageComputed"/>
+            <div>
+                <PageInformation :pagination="leaveTypeAssignments.meta.pagination" :pending="disableDataTable"/>
+                <Pagination :size="'lg'" :pagination="leaveTypeAssignments.meta.pagination" :pending="disableDataTable" v-model="pageComputed"/>
+            </div>
         </div>
     </div>
 </template>
@@ -283,7 +287,6 @@ const leaveTypeAssignmentSupHeaders = reactive<TableSupHeaderT[]>([
     {text: ''},
     {text: 'Employee', colspan: 2, alignHeader: 'left'},
     {text: 'Employment', colspan: 2, alignHeader: 'left'},
-    {text: '', colspan: 2},
     {text: 'Leave Type', colspan: 2},
     {text: 'Override initial balance', colspan: 2},
 ]);
@@ -295,8 +298,6 @@ const leaveTypeAssignmentHeaders = reactive<TableHeaderT[]>([
     { text: 'Name', value: 'employee_full_name'},
     { text: 'Status', value: 'employee_current_employment_profile'},
     { text: 'Type', value: 'employee_current_employment_type'},
-    { text: 'Department', value: 'employee_department'},
-    { text: 'Designation', value: 'employee_designation'},
     { text: 'Code', value: 'leave_type_code'},
     { text: 'Balance upon eligibility', value: 'leave_type_initial_balance_upon_eligibility'},
     { text: '', value: 'leave_type_assignment_override_balance_upon_eligibility'},

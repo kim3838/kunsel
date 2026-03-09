@@ -3,7 +3,9 @@
         <div v-if="isDefault" class="flex flex-row flex-wrap gap-6 items-center">
             <div>
                 <InputLabel :size="'sm'" value="Status"/>
-                <div class="label-value text-base font-sans">{{payroll.status?.text}}</div>
+                <div class="flex items-center">
+                    <Label :size="'md'" :type="payrollStatusShade" shade :label="payroll.status?.text" />
+                </div>
             </div>
             <div>
                 <InputLabel :size="'sm'" value="Payroll month"/>
@@ -87,7 +89,9 @@
         <div v-if="isAdminOverview" class="flex flex-row flex-wrap gap-x-6 gap-y-2 items-center">
             <div>
                 <InputLabel :size="'sm'" value="Status"/>
-                <div class="label-value text-base font-sans">{{payroll.status?.text}}</div>
+                <div class="flex items-center">
+                    <Label :size="'md'" :type="payrollStatusShade" shade :label="payroll.status?.text" />
+                </div>
             </div>
             <div>
                 <InputLabel :size="'sm'" value="Remarks"/>
@@ -123,6 +127,7 @@
 
 <script setup lang="ts">
 import type {PayrollT, SalaryStatementT} from "@/public/js/types/payroll";
+import type {LabelTypeT} from "@/public/js/types/theme";
 
 const props = defineProps({
     type: {
@@ -145,6 +150,14 @@ const props = defineProps({
 
 const isDefault = computed(() => props.type === PAYROLL_SUB_INFO_TYPE.DEFAULT);
 const isAdminOverview = computed(() => props.type === PAYROLL_SUB_INFO_TYPE.ADMIN_OVERVIEW);
+
+const payrollStatusShade = computed<LabelTypeT>(() => {
+    return {
+        [PAYROLL_STATUS.DRAFT as number]: 'clear',
+        [PAYROLL_STATUS.WORKFLOW_IN_PROGRESS as number]: 'info',
+        [PAYROLL_STATUS.COMPLETED as number]: 'success',
+    }[props.payroll.status?.value] as LabelTypeT;
+})
 </script>
 
 <style scoped>

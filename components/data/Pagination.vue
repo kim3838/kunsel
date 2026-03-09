@@ -39,6 +39,7 @@
                 :size="selectSize"
                 :searchable="false"
                 :value-persist="true"
+                :selection-float="false"
                 :width="perPageSelectWidth"
                 :icon="'gis:layer'"
                 :label="'Per Page'"

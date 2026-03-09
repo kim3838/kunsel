@@ -80,7 +80,7 @@
                         <template #content>
                             <div class="pt-2 flex flex-row gap-4">
 
-                                <div class="lining-shadow rounded-sm tint-background space-y-2">
+                                <div class="lining-shadow rounded-sm tint-background">
 
                                     <div class="lining-shadow rounded-t-sm text-lg font-medium font-header px-4 py-2">{{stagedPayrollPayload.summary}}</div>
 
@@ -165,7 +165,7 @@
                                     </div>
                                 </div>
 
-                                <div class="lining-shadow rounded-sm tint-background space-y-2">
+                                <div class="lining-shadow rounded-sm tint-background">
 
                                     <div class="lining-shadow rounded-t-sm text-lg font-header px-4 py-2 label-danger">Confirm Final Pay</div>
 
@@ -257,7 +257,7 @@
                                     </div>
                                 </div>
 
-                                <div class="lining-shadow rounded-sm tint-background space-y-2">
+                                <div class="lining-shadow rounded-sm tint-background">
 
                                     <div class="lining-shadow rounded-t-sm text-lg font-header px-4 py-2 label-danger">No Salary Statement to Generate</div>
 

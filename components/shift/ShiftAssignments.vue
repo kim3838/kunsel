@@ -1,5 +1,5 @@
 <template>
-    <div class="px-[20px] space-y-2">
+    <div class="px-[20px]">
         <form @submit.prevent="paginate(1, true)" class="space-y-2 pb-[20px]">
             <div class="grid gap-2 grid-cols-3 sm:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 ">
                 <div>
@@ -71,68 +71,71 @@
             <Label v-if="!shiftAssignments.successful" invert :size="'md'" :type="'danger'" :label="shiftAssignments.message" />
         </div>
 
-        <DataTable
-            v-if="shiftAssignments.successful"
-            class="mt-2"
-            :sup-headers="shiftAssignmentSupHeaders"
-            :headers="shiftAssignmentHeaders"
-            :size="'lg'"
-            :rows="shiftAssignments.data"
-            :disabled="disableDataTable"
-            v-model="selectedShiftAssignments"
-            selection>
-            <template v-slot:cell.actions="{cell,slot: cellSlot}">
-                <div v-if="cell.shift_is_latest" class="flex items-center">
-                    <NavDrop
-                        class="z-10"
-                        :disabled="disableActions"
-                        :parent-icon="'ic:baseline-arrow-right'"
-                        in-horizontal-scrollable
-                        divider
-                        :size="`sm`"
-                        :drop-shadow-size="`xl`"
-                        :title="'Menu'"
-                        :drop-align="'top'"
-                        :drop-justify="'right'"
-                        :drop-options="[
+        <div class="space-y-2">
+
+            <DataTable
+                v-if="shiftAssignments.successful"
+                class="mt-2"
+                :sup-headers="shiftAssignmentSupHeaders"
+                :headers="shiftAssignmentHeaders"
+                :size="'lg'"
+                :rows="shiftAssignments.data"
+                :disabled="disableDataTable"
+                v-model="selectedShiftAssignments"
+                selection>
+                <template v-slot:cell.actions="{cell,slot: cellSlot}">
+                    <div v-if="cell.shift_is_latest" class="flex items-center">
+                        <NavDrop
+                            class="z-10"
+                            :disabled="disableActions"
+                            :parent-icon="'ic:baseline-arrow-right'"
+                            in-horizontal-scrollable
+                            divider
+                            :size="`sm`"
+                            :drop-shadow-size="`xl`"
+                            :title="'Menu'"
+                            :drop-align="'top'"
+                            :drop-justify="'right'"
+                            :drop-options="[
                             ...(cell.shift_is_latest ? [
                                 {type: 'action', icon: 'mdi:pen', title: 'Edit shift settings',callback: () => {$emit('editShiftSettings', cell)}}
                             ] : [])
                         ]">
-                    </NavDrop>
-                </div>
-            </template>
-            <template v-slot:cell.employee_current_employment_profile="{cell,slot}">
-                <div class="flex space-x-1 px-[0.3rem] items-center">
-                    <Label :size="slot.labelSize" :type="cell?._payload?.label_shade?.value as LabelTypeT" shade :label="cell.employee_current_employment_profile?.status?.text" />
-                </div>
-            </template>
-            <template v-slot:cell.employee_current_employment_type="{cell,slot}">
-                <div class="px-[3px]">{{cell.employee_current_employment_profile?.employment_type?.text}}</div>
-            </template>
+                        </NavDrop>
+                    </div>
+                </template>
+                <template v-slot:cell.employee_current_employment_profile="{cell,slot}">
+                    <div class="flex space-x-1 px-[0.3rem] items-center">
+                        <Label :size="slot.labelSize" :type="cell?._payload?.label_shade?.value as LabelTypeT" shade :label="cell.employee_current_employment_profile?.status?.text" />
+                    </div>
+                </template>
+                <template v-slot:cell.employee_current_employment_type="{cell,slot}">
+                    <div class="px-[3px]">{{cell.employee_current_employment_profile?.employment_type?.text}}</div>
+                </template>
 
-            <template v-slot:cell.employee_department="{cell,slot}">
-                <div class="p-[3px]">{{cell.employee_department?.name}}</div>
-            </template>
-            <template v-slot:cell.employee_designation="{cell,slot}">
-                <div class="p-[3px]">{{cell.employee_designation?.name}}</div>
-            </template>
-            <template v-slot:cell.shift_is_latest="{cell,slot}">
-                <div v-if="cell.shift_is_latest" class="flex items-center gap-1 px-[0.3rem] ">
-                    <Label :size="slot.labelSize" :type="'clear'" shade :label="'Latest'" />
-                </div>
-                <div v-else></div>
-            </template>
-            <template v-slot:cell.shift_code="{cell,slot}">
-                <div v-if="cell.shift_code" class="flex items-center gap-1 px-[0.3rem]">
-                    <Label :size="slot.labelSize" :type="'clear'" shade :label="cell.shift_code" />
-                </div>
-            </template>
-        </DataTable>
+                <template v-slot:cell.employee_department="{cell,slot}">
+                    <div class="p-[3px]">{{cell.employee_department?.name}}</div>
+                </template>
+                <template v-slot:cell.employee_designation="{cell,slot}">
+                    <div class="p-[3px]">{{cell.employee_designation?.name}}</div>
+                </template>
+                <template v-slot:cell.shift_is_latest="{cell,slot}">
+                    <div v-if="cell.shift_is_latest" class="flex items-center gap-1 px-[0.3rem] ">
+                        <Label :size="slot.labelSize" :type="'clear'" shade :label="'Latest'" />
+                    </div>
+                    <div v-else></div>
+                </template>
+                <template v-slot:cell.shift_code="{cell,slot}">
+                    <div v-if="cell.shift_code" class="flex items-center gap-1 px-[0.3rem]">
+                        <Label :size="slot.labelSize" :type="'clear'" shade :label="cell.shift_code" />
+                    </div>
+                </template>
+            </DataTable>
 
-        <div>
-            <PageInformation :pagination="shiftAssignments.meta.pagination" :pending="disableDataTable"/>
-            <Pagination :size="'lg'" :pagination="shiftAssignments.meta.pagination" :pending="disableDataTable" v-model="pageComputed"/>
+            <div>
+                <PageInformation :pagination="shiftAssignments.meta.pagination" :pending="disableDataTable"/>
+                <Pagination :size="'lg'" :pagination="shiftAssignments.meta.pagination" :pending="disableDataTable" v-model="pageComputed"/>
+            </div>
         </div>
     </div>
 </template>

@@ -112,37 +112,41 @@
 
                 <DialogModal
                     :show="showSelectUserAsApprover"
-                    :landscape="true"
                     :content-padding="'0'">
                     <template #title>
                     </template>
                     <template #content>
                         <div class="px-3 pt-4 pb-2.5">
-                            <div class="mx-auto max-w-screen-xl space-y-4">
-                                <fieldset class="neutral-border px-2 pb-2 space-y-2">
-                                    <legend class="text-lg font-header">Select Approver</legend>
+                            <div class="mx-auto max-w-screen-lg space-y-4">
 
-                                    <Suspense>
-                                        <CompanyUserSelection
-                                            ref="userSelectionReference"
-                                            compact
-                                            :single-select="true"
-                                            :clear-selection-on-form-submit="false"
-                                            :selected-label="'User Selected'"
-                                            :disable-actions="disableActions"
-                                            v-model:pending="userSelectionPending"
-                                            v-model:selected="selectedModalUsers"/>
+                                <div class="lining-shadow rounded-sm tint-background">
 
-                                        <template #fallback>
-                                            <div>
-                                                <UnorderedList
-                                                    :icon="'eos-icons:loading'"
-                                                    :size="'md'"
-                                                    :label="'Loading user selections...'"/>
-                                            </div>
-                                        </template>
-                                    </Suspense>
-                                </fieldset>
+                                    <div class="lining-shadow rounded-t-sm text-lg font-medium font-header px-4 py-2">Select Approver</div>
+
+                                    <div class="p-4 max-h-[400px] overflow-y-scroll">
+
+                                        <Suspense>
+                                            <CompanyUserSelection
+                                                ref="userSelectionReference"
+                                                compact
+                                                :single-select="true"
+                                                :clear-selection-on-form-submit="false"
+                                                :selected-label="'User Selected'"
+                                                :disable-actions="disableActions"
+                                                v-model:pending="userSelectionPending"
+                                                v-model:selected="selectedModalUsers"/>
+
+                                            <template #fallback>
+                                                <div>
+                                                    <UnorderedList
+                                                        :icon="'eos-icons:loading'"
+                                                        :size="'md'"
+                                                        :label="'Loading user selections...'"/>
+                                                </div>
+                                            </template>
+                                        </Suspense>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </template>

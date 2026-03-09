@@ -1,5 +1,5 @@
 <template>
-    <div :class="[compact ? '' : 'px-[20px] space-y-2']">
+    <div :class="[compact ? '' : 'px-[20px]']">
         <form @submit.prevent="paginate(1, clearSelectionOnFormSubmit)" class="space-y-2" :class="[compact ? '' : 'pb-[20px]']">
             <div class="grid gap-2 grid-cols-3 sm:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
                 <div>
@@ -33,34 +33,37 @@
             <Label v-if="!leaveTypes.successful" invert :size="'md'" :type="'danger'" :label="leaveTypes.message" />
         </div>
 
-        <DataTable
-            v-if="leaveTypes.successful"
-            class="mt-2"
-            :sup-headers="leaveTypesSupHeaders"
-            :headers="leaveTypesHeaders"
-            :size="'lg'"
-            :rows="leaveTypes.data"
-            :disabled="disableDataTable"
-            :pending="proxyPending"
-            v-model="proxySelectedLeaveTypes"
-            selection>
-            <template v-slot:cell.type="{cell,slot}">
-                <div class="p-[3px]">{{cell.type.text}}</div>
-            </template>
-            <template v-slot:cell.is_paid="{cell,slot}">
-                <div class="p-[3px]">{{cell.is_paid ? 'Yes' : 'No'}}</div>
-            </template>
-            <template v-slot:cell.monetizable="{cell,slot}">
-                <div class="p-[3px]">{{cell.monetizable ? 'Yes' : 'No'}}</div>
-            </template>
-            <template v-slot:cell.period_type="{cell,slot}">
-                <div class="p-[3px]">{{cell.period_type?.text}}</div>
-            </template>
-        </DataTable>
+        <div class="space-y-2">
 
-        <div>
-            <PageInformation :pagination="leaveTypes.meta.pagination" :pending="disableDataTable"/>
-            <Pagination :size="'lg'" :pagination="leaveTypes.meta.pagination" :pending="disableDataTable" v-model="pageComputed"/>
+            <DataTable
+                v-if="leaveTypes.successful"
+                class="mt-2"
+                :sup-headers="leaveTypesSupHeaders"
+                :headers="leaveTypesHeaders"
+                :size="'lg'"
+                :rows="leaveTypes.data"
+                :disabled="disableDataTable"
+                :pending="proxyPending"
+                v-model="proxySelectedLeaveTypes"
+                selection>
+                <template v-slot:cell.type="{cell,slot}">
+                    <div class="p-[3px]">{{cell.type.text}}</div>
+                </template>
+                <template v-slot:cell.is_paid="{cell,slot}">
+                    <div class="p-[3px]">{{cell.is_paid ? 'Yes' : 'No'}}</div>
+                </template>
+                <template v-slot:cell.monetizable="{cell,slot}">
+                    <div class="p-[3px]">{{cell.monetizable ? 'Yes' : 'No'}}</div>
+                </template>
+                <template v-slot:cell.period_type="{cell,slot}">
+                    <div class="p-[3px]">{{cell.period_type?.text}}</div>
+                </template>
+            </DataTable>
+
+            <div>
+                <PageInformation :pagination="leaveTypes.meta.pagination" :pending="disableDataTable"/>
+                <Pagination :size="'lg'" :pagination="leaveTypes.meta.pagination" :pending="disableDataTable" v-model="pageComputed"/>
+            </div>
         </div>
     </div>
 </template>
@@ -130,7 +133,7 @@ watch(updatedAssociatedCompanyFlag, (newValue) => {
 
 const leaveTypesSupHeaders = reactive<TableSupHeaderT[]>([
     {text: ''},
-    {text: 'Leave Type', colspan: 5,  alignHeader: 'left'},
+    {text: 'Leave Type', colspan: 4,  alignHeader: 'left'},
     {text: 'Eligibility', colspan: 2,  alignHeader: 'left'},
     {text: 'Period', colspan: 2,  alignHeader: 'left'},
     {text: 'Limit', colspan: 1,  alignHeader: 'left'},
@@ -143,7 +146,6 @@ const leaveTypesHeaders = reactive<TableHeaderT[]>([
     { text: 'Name', value: 'name'},
     { text: 'Type', value: 'type'},
     { text: 'Is Paid', value: 'is_paid'},
-    { text: 'Monetizable', value: 'monetizable', alignData: 'left'},
 
     { text: 'Employment Profiles', value: 'eligibility_employment_types_readable', alignData: 'left'},
     { text: 'Balance upon eligibility', value: 'initial_balance_upon_eligibility', alignData: 'right'},

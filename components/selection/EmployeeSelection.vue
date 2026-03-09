@@ -1,7 +1,7 @@
 <template>
     <div :class="[compact ? '' : 'px-[20px]']">
         <form @submit.prevent="paginate(1, clearSelectionOnFormSubmit)" class="space-y-2" :class="[compact ? '' : 'pb-[20px]']">
-            <div class="grid gap-2 grid-cols-3 sm:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
+            <div class="grid gap-2 grid-cols-3 sm:grid-cols-4 lg:grid-cols-5">
                 <div>
                     <InputLabel :size="'sm'" value="Search" />
                     <Input :size="'md'" ref="searchInput" v-model="filters.search.keyword" class="w-full" placeholder="Search" :disabled="disableActions" type="text"/>
@@ -26,36 +26,16 @@
                     <InputLabel :size="'sm'" value="Designation" />
                     <MultiSelect :key="designationOptionsKey" glint drop-shadow :selection-max-viewable-line="15" :size="'md'" :options="designationOptions" :disabled="disableActions" :icon="'ic:baseline-inbox'"/>
                 </div>
-                <div v-if="compact" class="flex flex-col">
+                <div class="flex flex-col">
                     <div class="flex-none h-[1.25rem]"></div>
                     <div class="grow">
                         <Button class="w-min" ref="submitButton" type="submit" :disabled="disableActions" :size="'md'" :icon="disableActions ? 'eos-icons:loading' : 'mdi:data'" :label="disableActions ? 'Loading' : 'Load'"></Button>
                     </div>
                 </div>
             </div>
-
-            <div v-if="!compact" class="flex flex-row flex-wrap gap-2 items-center min-h-8">
-                <Button class="w-min" ref="submitButton" type="submit" :disabled="disableActions" :size="'md'" :icon="disableActions ? 'eos-icons:loading' : 'mdi:data'" :label="disableActions ? 'Loading' : 'Load'"></Button>
-            </div>
-
-            <div>
-                <PageInformation :pagination="employees.meta.pagination" :pending="disableDataTable"/>
-                <div class="flex items-center gap-2">
-                    <Pagination
-                        :size="'lg'"
-                        :pagination="employees.meta.pagination"
-                        :pending="disableDataTable"
-                        v-model="pageComputed"/>
-                    <UnorderedList
-                        v-if="disableActions"
-                        :icon="'eos-icons:loading'"
-                        :size="'md'"
-                        :label="'Please wait...'"/>
-                </div>
-            </div>
         </form>
 
-        <div class="flex flex-row flex-wrap gap-2 items-center min-h-8" :class="[compact ? 'mt-2' : '']">
+        <div class="flex flex-row flex-wrap gap-2 items-center min-h-8" :class="[compact ? 'mt-2' : '', disableActions ? 'pointer-events-none' : '']">
             <div v-if="employees.successful" class="scaffold-border px-2 font-[National_Park]">
                 <span><span class="font-semibold">{{proxySelectedEmployees.length}}</span> {{selectedLabel}}</span>
             </div>
@@ -80,34 +60,42 @@
             <Label v-if="!employees.successful" invert :size="'md'" :type="'danger'" :label="employees.message" />
         </div>
 
-        <DataTable
-            v-if="employees.successful"
-            class="mt-2"
-            :sup-headers="employeeSupHeaders"
-            :headers="employeeHeaders"
-            :size="'lg'"
-            :rows="employees.data"
-            :disabled="disableDataTable"
-            :show-no-data="false"
-            :pending="proxyPending"
-            v-model="proxySelectedEmployees"
-            selection>
-            <template v-slot:cell.current_employment_profile="{cell,slot}">
-                <div class="flex space-x-1 px-[0.3rem] items-center">
-                    <Label :size="slot.labelSize" :type="cell?._payload?.label_shade?.value as LabelTypeT" shade :label="cell.current_employment_profile.status.text" />
-                </div>
-            </template>
-            <template v-slot:cell.current_employment_type="{cell,slot}">
-                <div class="px-[3px]">{{cell.current_employment_profile?.employment_type?.text}}</div>
-            </template>
+        <div class="space-y-2">
 
-            <template v-slot:cell.department="{cell,slot}">
-                <div class="p-[3px]">{{cell.department?.name}}</div>
-            </template>
-            <template v-slot:cell.designation="{cell,slot}">
-                <div class="p-[3px]">{{cell.designation?.name}}</div>
-            </template>
-        </DataTable>
+            <DataTable
+                v-if="employees.successful"
+                class="mt-2"
+                :sup-headers="employeeSupHeaders"
+                :headers="employeeHeaders"
+                :size="'lg'"
+                :rows="employees.data"
+                :disabled="disableDataTable"
+                :show-no-data="false"
+                :pending="proxyPending"
+                v-model="proxySelectedEmployees"
+                selection>
+                <template v-slot:cell.current_employment_profile="{cell,slot}">
+                    <div class="flex space-x-1 px-[0.3rem] items-center">
+                        <Label :size="slot.labelSize" :type="cell?._payload?.label_shade?.value as LabelTypeT" shade :label="cell.current_employment_profile.status.text" />
+                    </div>
+                </template>
+                <template v-slot:cell.current_employment_type="{cell,slot}">
+                    <div class="px-[3px]">{{cell.current_employment_profile?.employment_type?.text}}</div>
+                </template>
+
+                <template v-slot:cell.department="{cell,slot}">
+                    <div class="p-[3px]">{{cell.department?.name}}</div>
+                </template>
+                <template v-slot:cell.designation="{cell,slot}">
+                    <div class="p-[3px]">{{cell.designation?.name}}</div>
+                </template>
+            </DataTable>
+
+            <div>
+                <PageInformation :pagination="employees.meta.pagination" :pending="disableDataTable"/>
+                <Pagination :size="'lg'" :pagination="employees.meta.pagination" :pending="disableDataTable" v-model="pageComputed"/>
+            </div>
+        </div>
     </div>
 </template>
 

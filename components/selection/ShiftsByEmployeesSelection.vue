@@ -1,5 +1,5 @@
 <template>
-    <div :class="[compact ? '' : 'px-[20px] space-y-2']">
+    <div :class="[compact ? '' : 'px-[20px]']">
         <form @submit.prevent="paginate(1, clearSelectionOnFormSubmit)" class="space-y-2" :class="[compact ? '' : 'pb-[20px]']">
             <div class="grid gap-2 grid-cols-3 sm:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
                 <div>
@@ -89,51 +89,54 @@
             <Label v-if="!employees.successful" invert :size="'md'" :type="'danger'" :label="employees.message" />
         </div>
 
-        <DataTable
-            v-if="employees.successful"
-            class="mt-2"
-            :sup-headers="employeeSupHeaders"
-            :headers="employeeHeaders"
-            :size="'lg'"
-            :rows="employees.data"
-            :disabled="disableDataTable"
-            :show-no-data="false"
-            :pending="proxyPending"
-            v-model="proxySelectedEmployees"
-            selection>
-            <template v-slot:cell.employee_current_employment_profile="{cell,slot}">
-                <div class="flex space-x-1 px-[0.3rem] items-center">
-                    <Label :size="slot.labelSize" :type="cell?._payload?.label_shade?.value as LabelTypeT" shade :label="cell.employee_current_employment_profile?.status?.text" />
-                </div>
-            </template>
-            <template v-slot:cell.employee_current_employment_type="{cell,slot}">
-                <div class="px-[3px]">{{cell.employee_current_employment_profile?.employment_type?.text}}</div>
-            </template>
+        <div class="space-y-2">
 
-            <template v-slot:cell.employee_department="{cell,slot}">
-                <div class="p-[3px]">{{cell.employee_department?.name}}</div>
-            </template>
-            <template v-slot:cell.employee_designation="{cell,slot}">
-                <div class="p-[3px]">{{cell.employee_designation?.name}}</div>
-            </template>
-            <template v-slot:cell.assigned_shift_codes="{cell,slot}">
-                <div v-if="cell.assigned_shift_codes" class="flex items-center gap-1 px-[0.3rem]">
-                    <Label
-                        v-for="shiftCode in cell.assigned_shift_codes"
-                        :size="slot.labelSize"
-                        :type="'clear'"
-                        shade
-                        :label="shiftCode" />
-                </div>
-                <div v-else class="flex items-center gap-1 px-[0.3rem]">
-                    <Label :size="slot.labelSize" :type="'default'" shade :label="'No shift'" />
-                </div>
-            </template>
-        </DataTable>
+            <DataTable
+                v-if="employees.successful"
+                class="mt-2"
+                :sup-headers="employeeSupHeaders"
+                :headers="employeeHeaders"
+                :size="'lg'"
+                :rows="employees.data"
+                :disabled="disableDataTable"
+                :show-no-data="false"
+                :pending="proxyPending"
+                v-model="proxySelectedEmployees"
+                selection>
+                <template v-slot:cell.employee_current_employment_profile="{cell,slot}">
+                    <div class="flex space-x-1 px-[0.3rem] items-center">
+                        <Label :size="slot.labelSize" :type="cell?._payload?.label_shade?.value as LabelTypeT" shade :label="cell.employee_current_employment_profile?.status?.text" />
+                    </div>
+                </template>
+                <template v-slot:cell.employee_current_employment_type="{cell,slot}">
+                    <div class="px-[3px]">{{cell.employee_current_employment_profile?.employment_type?.text}}</div>
+                </template>
 
-        <div>
-            <PageInformation :pagination="employees.meta.pagination" :pending="disableDataTable"/>
-            <Pagination :size="'lg'" :pagination="employees.meta.pagination" :pending="disableDataTable" v-model="pageComputed"/>
+                <template v-slot:cell.employee_department="{cell,slot}">
+                    <div class="p-[3px]">{{cell.employee_department?.name}}</div>
+                </template>
+                <template v-slot:cell.employee_designation="{cell,slot}">
+                    <div class="p-[3px]">{{cell.employee_designation?.name}}</div>
+                </template>
+                <template v-slot:cell.assigned_shift_codes="{cell,slot}">
+                    <div v-if="cell.assigned_shift_codes" class="flex items-center gap-1 px-[0.3rem]">
+                        <Label
+                            v-for="shiftCode in cell.assigned_shift_codes"
+                            :size="slot.labelSize"
+                            :type="'clear'"
+                            shade
+                            :label="shiftCode" />
+                    </div>
+                    <div v-else class="flex items-center gap-1 px-[0.3rem]">
+                        <Label :size="slot.labelSize" :type="'default'" shade :label="'No shift'" />
+                    </div>
+                </template>
+            </DataTable>
+
+            <div>
+                <PageInformation :pagination="employees.meta.pagination" :pending="disableDataTable"/>
+                <Pagination :size="'lg'" :pagination="employees.meta.pagination" :pending="disableDataTable" v-model="pageComputed"/>
+            </div>
         </div>
     </div>
 </template>

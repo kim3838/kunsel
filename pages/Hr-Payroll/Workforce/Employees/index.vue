@@ -291,52 +291,55 @@
                             <div class="p-[3px]">{{cell.marital_status.text}}</div>
                         </template>
                         <template v-slot:cell.department="{cell,slot}">
-                            <div class="p-[3px]" :title="cell.department?.name">{{wordClamp(cell.department?.name, 12)}}</div>
+                            <div class="p-[3px]" :title="cell.department?.name">{{wordClamp(cell.department?.name || '--', 12)}}</div>
                         </template>
                         <template v-slot:cell.payroll_group="{cell,slot}">
-                            <div class="p-[3px]">{{cell.payroll_group?.type?.text}}</div>
+                            <div class="p-[3px]">{{cell.payroll_group?.type?.text || '--'}}</div>
+                        </template>
+                        <template v-slot:cell.current_shift="{cell,slot}">
+                            <div class="p-[3px]">{{cell.current_shift?.shift?.code || '--'}}</div>
                         </template>
                         <template v-slot:cell.designation="{cell,slot}">
-                            <div class="p-[3px]" :title="cell.designation?.name">{{wordClamp(cell.designation?.name, 12)}}</div>
+                            <div class="p-[3px]" :title="cell.designation?.name">{{wordClamp(cell.designation?.name || '--', 12)}}</div>
                         </template>
                         <template v-slot:cell.manager="{cell,slot}">
-                            <div class="p-[3px]" :title="cell.manager?.full_name">{{wordClamp(cell.manager?.full_name, 24)}}</div>
+                            <div class="p-[3px]" :title="cell.manager?.full_name">{{wordClamp(cell.manager?.full_name_attribute || '--', 24)}}</div>
                         </template>
                         <template v-slot:cell.office_email="{cell,slot}">
                             <div class="p-[3px]">
-                                {{cell.contact?.office_email}}
+                                {{cell.contact?.office_email || '--'}}
                             </div>
                         </template>
                         <template v-slot:cell.personal_email="{cell,slot}">
                             <div class="p-[3px]">
-                                {{cell.contact?.personal_email}}
+                                {{cell.contact?.personal_email || '--'}}
                             </div>
                         </template>
                         <template v-slot:cell.office_phone="{cell,slot}">
                             <div class="p-[3px]">
-                                {{cell.contact?.office_phone}}
+                                {{cell.contact?.office_phone || '--'}}
                             </div>
                         </template>
                         <template v-slot:cell.personal_phone="{cell,slot}">
                             <div class="p-[3px]">
-                                {{cell.contact?.personal_phone}}
+                                {{cell.contact?.personal_phone || '--'}}
                             </div>
                         </template>
                         <template v-slot:cell.user_name="{cell,slot}">
                             <div class="p-[3px]">
-                                {{cell.user?.username}}
+                                {{cell.user?.username || '--'}}
                             </div>
                         </template>
                         <template v-slot:cell.user_email="{cell,slot}">
                             <div class="p-[3px]">
-                                {{cell.user?.email}}
+                                {{cell.user?.email || '--'}}
                             </div>
                         </template>
                         <template v-slot:cell.user_status="{cell,slot}">
-                            <div class="p-[3px]">{{cell.user?.status?.text}}</div>
+                            <div class="p-[3px]">{{cell.user?.status?.text || '--'}}</div>
                         </template>
                         <template v-slot:cell.email_verification="{cell,slot}">
-                            <div class="p-[3px]">{{cell.user?.email_verified_readable}}</div>
+                            <div class="p-[3px]">{{cell.user?.email_verified_readable || '--'}}</div>
                         </template>
                     </DataTable>
 
@@ -637,7 +640,7 @@ const employeesExecute = async() =>{
                     ...employee,
                     _payload: {
                         'label_shade': {
-                            'cell': ['current_employment_profile', 'current_employment_type'],
+                            'cell': ['full_name', 'current_employment_profile', 'current_employment_type'],
                             'value': shade
                         }
                     }

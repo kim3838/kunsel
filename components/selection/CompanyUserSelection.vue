@@ -1,7 +1,7 @@
 <template>
     <div :class="[compact ? '' : 'px-[20px]']">
         <form @submit.prevent="paginate(1, clearSelectionOnFormSubmit)" class="space-y-2" :class="[compact ? '' : 'pb-[20px]']">
-            <div class="grid gap-2 grid-cols-3 sm:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
+            <div class="grid gap-2 grid-cols-3 sm:grid-cols-4 lg:grid-cols-5">
                 <div>
                     <InputLabel :size="'sm'" value="User Status" />
                     <MultiSelect :disabled="disableActions" glint drop-shadow :selection-max-viewable-line="5" :size="'md'" :options="userStatusOptions" :icon="'tdesign:component-checkbox'"/>
@@ -21,29 +21,9 @@
                     </div>
                 </div>
             </div>
-
-            <div v-if="!compact" class="flex flex-row flex-wrap gap-2 items-center min-h-8">
-                <Button class="w-min" ref="submitButton" type="submit" :disabled="disableActions" :size="'md'" :icon="disableActions ? 'eos-icons:loading' : 'mdi:data'" :label="disableActions ? 'Loading' : 'Load'"></Button>
-            </div>
-
-            <div>
-                <PageInformation :pagination="users.meta.pagination" :pending="disableDataTable"/>
-                <div class="flex items-center gap-2">
-                    <Pagination
-                        :size="'lg'"
-                        :pagination="users.meta.pagination"
-                        :pending="disableDataTable"
-                        v-model="pageComputed"/>
-                    <UnorderedList
-                        v-if="disableActions"
-                        :icon="'eos-icons:loading'"
-                        :size="'md'"
-                        :label="'Please wait...'"/>
-                </div>
-            </div>
         </form>
 
-        <div class="flex flex-row flex-wrap gap-2 items-center min-h-8" :class="[compact ? 'mt-2' : '']">
+        <div class="flex flex-row flex-wrap gap-2 items-center min-h-8" :class="[compact ? 'mt-2' : '', disableActions ? 'pointer-events-none' : '']">
             <div v-if="users.successful" class="scaffold-border px-2 font-[National_Park]">
                 <span><span class="font-semibold">{{proxySelectedUsers.length}}</span> {{selectedLabel}}</span>
             </div>
@@ -68,33 +48,41 @@
             <Label v-if="!users.successful" invert :size="'md'" :type="'danger'" :label="users.message" />
         </div>
 
-        <DataTable
-            v-if="users.successful"
-            class="mt-2"
-            :headers="usersHeaders"
-            :size="'lg'"
-            :rows="users.data"
-            :disabled="disableDataTable"
-            :show-no-data="false"
-            :pending="proxyPending"
-            v-model="proxySelectedUsers"
-            selection
-            :single-select="singleSelect">
-            <template v-slot:cell.status="{cell,slot}">
-                <div class="p-[3px]">{{cell.status?.text}}</div>
-            </template>
-            <template v-slot:cell.company_assignment_type="{cell,slot}">
-                <div class="px-[3px]">
-                    <span v-if="cell.company_assignment_type?.value">{{cell.company_assignment_type?.text}}</span>
-                </div>
-            </template>
-            <template v-slot:cell.account_roles_summary="{cell,slot}">
-                <div class="p-[3px] flex items-center gap-1">
-                    <div>{{cell.account_roles_summary?.value}}</div>
-                    <div v-if="cell.account_roles_summary?.extender" class="text-xs font-sans">{{cell.account_roles_summary?.extender}}</div>
-                </div>
-            </template>
-        </DataTable>
+        <div class="space-y-2">
+
+            <DataTable
+                v-if="users.successful"
+                class="mt-2"
+                :headers="usersHeaders"
+                :size="'lg'"
+                :rows="users.data"
+                :disabled="disableDataTable"
+                :show-no-data="false"
+                :pending="proxyPending"
+                v-model="proxySelectedUsers"
+                selection
+                :single-select="singleSelect">
+                <template v-slot:cell.status="{cell,slot}">
+                    <div class="p-[3px]">{{cell.status?.text}}</div>
+                </template>
+                <template v-slot:cell.company_assignment_type="{cell,slot}">
+                    <div class="px-[3px]">
+                        <span v-if="cell.company_assignment_type?.value">{{cell.company_assignment_type?.text}}</span>
+                    </div>
+                </template>
+                <template v-slot:cell.account_roles_summary="{cell,slot}">
+                    <div class="p-[3px] flex items-center gap-1">
+                        <div>{{cell.account_roles_summary?.value}}</div>
+                        <div v-if="cell.account_roles_summary?.extender" class="text-xs font-sans">{{cell.account_roles_summary?.extender}}</div>
+                    </div>
+                </template>
+            </DataTable>
+
+            <div>
+                <PageInformation :pagination="users.meta.pagination" :pending="disableDataTable"/>
+                <Pagination :size="'lg'" :pagination="users.meta.pagination" :pending="disableDataTable" v-model="pageComputed"/>
+            </div>
+        </div>
     </div>
 </template>
 

@@ -32,7 +32,7 @@
 
                 <DialogModal
                     :show="selectingEmployee"
-                    :max-width="'680px'"
+                    :max-width="'480px'"
                     :closeable="false">
                     <template #title>
 

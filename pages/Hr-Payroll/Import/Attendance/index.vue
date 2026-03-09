@@ -283,7 +283,7 @@ const preImportSupHeaders = reactive<TableSupHeaderT[]>([
 
 const preImportSupRows = reactive<TableSupRowT[]>([
     {
-        'lunch_out_and_in': "Leave blank if shift does not require (lunch out and lunch in) or is flexible",
+        'lunch_out_and_in': "Leave blank if shift does not require (lunch out and lunch in)",
     }
 ]);
 
