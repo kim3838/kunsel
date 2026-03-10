@@ -295,7 +295,19 @@ const rebuildSelections = (selection: string[] = []) => {
 
     if(_isEmpty(selection) || selection.indexOf('assigned_leave_type') >= 0){
         common.rebuildSelectionsOnSelectedCompanyChanged(
-            assignedLeaveTypeSelectionsOptions, assignedLeaveTypeSelectionsOptionsKey, SELECT.SINGLE_PAGINATED
+            assignedLeaveTypeSelectionsOptions, assignedLeaveTypeSelectionsOptionsKey, SELECT.SINGLE_PAGINATED, [], {
+                query_params: {
+                    company_id: selectedAssociatedCompanyId.value,
+                },
+                filters: {
+                    employee_id: employeeOptions.selected as number | null,
+                    company_id: selectedAssociatedCompanyId.value,
+                    search: {
+                        keyword: '',
+                        callback: 1
+                    }
+                }
+            }
         );
     }
 }
