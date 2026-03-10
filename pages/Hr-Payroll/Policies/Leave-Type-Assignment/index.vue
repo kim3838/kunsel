@@ -51,7 +51,7 @@
 
                                     <div class="p-4">
 
-                                        <div class="grid gap-2 grid-cols-1">
+                                        <div class="flex flex-row gap-6">
                                             <div class="col-span-full gap-2">
                                                 <InputLabel :size="'sm'" value="Override leave type initial balance"/>
                                                 <RadioGroup
@@ -62,7 +62,7 @@
                                                     :radio-key="'override-leave-type-initial-balance-upon-eligibility'"
                                                     v-model="overrideBalanceUponEligibility" />
                                             </div>
-                                            <div v-if="overrideBalanceUponEligibility == 1">
+                                            <div v-if="overrideBalanceUponEligibility == 1" class="max-w-max">
                                                 <InputLabel :size="'sm'" value="Custom balance upon eligibility"/>
                                                 <Input
                                                     type-strict
