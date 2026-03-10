@@ -630,7 +630,7 @@ const managerOptions = reactive({
         url: '/api/employee-selections',
         filters: {
             'company_id': selectedAssociatedCompanyId.value,
-            'except_id': _without([employeeId.value], null),
+            'except_ids': _without([employeeId.value], null),
             search: {
                 keyword: '',
                 callback: 1

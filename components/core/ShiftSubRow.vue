@@ -62,12 +62,12 @@ const headers = reactive<TableHeaderT[]>([
     { text: 'Day Off', value: 'is_day_off', alignData: 'left'},
     //{ text: 'Flexible', value: 'is_flexible', alignData: 'left'},
     { text: 'Timezone', value: 'timezone', alignData: 'left'},
-    { text: 'Work Start', value: 'work_start', alignData: 'right'},
-    { text: 'Work End', value: 'work_end', alignData: 'right'},
-    { text: 'Total Work Hours w/ Breaks', value: 'total_work_hours_with_breaks', alignData: 'right'},
-    { text: 'Lunch Break Start', value: 'lunch_break_start', alignData: 'right'},
-    { text: 'Lunch Break End', value: 'lunch_break_end', alignData: 'right'},
-    { text: 'Total Lunch Break Hours', value: 'total_lunch_break_hours', alignData: 'right'},
+    { text: 'Start', value: 'work_start', alignData: 'right'},
+    { text: 'End', value: 'work_end', alignData: 'right'},
+    { text: 'Total', value: 'total_work_hours_with_breaks', alignData: 'right'},
+    { text: 'Lunch Start', value: 'lunch_break_start', alignData: 'right'},
+    { text: 'Lunch End', value: 'lunch_break_end', alignData: 'right'},
+    { text: 'Total Lunch', value: 'total_lunch_break_hours', alignData: 'right'},
 ]);
 
 </script>

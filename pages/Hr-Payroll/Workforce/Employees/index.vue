@@ -183,57 +183,67 @@
                         </div>
                     </div>
 
-
-
                     <div v-if="employees.successful && viewMode.selected == DATA_VIEW_MODE.FLEX" class="flex flex-row flex-wrap gap-4">
 
                         <div v-for="employee in employees.data" :key="employee.id" class="lining-shadow rounded-sm flex-grow tint-background p-4 space-y-2">
-                            <div>
-                                <div class="mb-2 flex justify-between min-h-8">
+                            <div class="space-y-2">
+                                <div class="flex justify-between">
                                     <div>
-                                        <InputLabel :size="'sm'" value="Family name,(Middle), Given" />
+                                        <div class="text-sm font-sans">{{ _get(employee, 'number', '--') }}</div>
                                         <NuxtLink
                                             :to="`/hr-payroll/workforce/employees/${employee.ulid}`">
-                                            <span class="text-lg font-sans cursor-pointer hover:underline">{{employee.full_name}}</span>
+                                            <span class="text-lg font-medium font-header cursor-pointer hover:underline">{{employee.full_name}}</span>
                                         </NuxtLink>
+                                        <div class="text-sm subtitle-color">
+                                            {{ _get(employee, 'designation.name', '--') }}&nbsp;~&nbsp;{{ _get(employee, 'department.name', '--') }}
+                                        </div>
+                                    </div>
+                                    <div class="w-[68px] h-[68px] bg-gray-100">
+
                                     </div>
                                 </div>
 
-                                <div class="grid grid-cols-2 gap-x-6 gap-y-3">
+                                <div class="flex flex-row items-center justify-between gap-3">
                                     <div>
-                                        <InputLabel :size="'sm'" value="Number" />
-                                        <div class="font-sans">{{ _get(employee, 'number', '--') }}</div>
+                                        <InputLabel :size="'xs'" value="Payroll group" />
+                                        <div>{{ _get(employee, 'payroll_group.type.text', '--') }}</div>
                                     </div>
                                     <div class="flex items-center">
-                                        <div class="p-1 pr-4 rounded-sm flex items-center gap-1" :style="cosmetic.shadedStyle(employee?._payload?.label_shade?.value as LabelTypeT)">
+                                        <div class="p-1 pr-4 rounded-sm flex items-center gap-2" :style="cosmetic.shadedStyle(employee?._payload?.label_shade?.value as LabelTypeT)">
                                             <Label :size="'md'" :type="employee?._payload?.label_shade?.value as LabelTypeT" shade :label="employee.current_employment_profile.status.text" />
                                             <div>{{employee.current_employment_profile?.employment_type?.text}}</div>
                                         </div>
                                     </div>
+                                </div>
+
+                                <div class="scaffold-border-top"></div>
+
+                                <div class="grid grid-cols-2 gap-x-6 gap-y-3">
+
                                     <div>
-                                        <InputLabel :size="'sm'" value="Department" />
-                                        <div>{{ _get(employee, 'department.name', '--') }}</div>
+                                        <InputLabel :size="'xs'" value="Current shift" />
+                                        <div>{{ _get(employee, 'current_shift.shift.code', '--') }}</div>
                                     </div>
                                     <div>
-                                        <InputLabel :size="'sm'" value="Designation" />
-                                        <div>{{ _get(employee, 'designation.name', '--') }}</div>
+                                        <InputLabel :size="'xs'" value="Manager" />
+                                        <div class="cursor-pointer hover:underline">{{ _get(employee, 'manager.full_name', '--') }}</div>
                                     </div>
                                     <div>
-                                        <InputLabel :size="'sm'" value="Contact" />
+                                        <InputLabel :size="'xs'" value="Contact" />
                                         <span v-if="_isEmpty(_compact([employee.contact?.office_email, employee.contact?.personal_email, employee.contact?.office_phone, employee.contact?.personal_phone]))">--</span>
                                         <div v-else :class="index == 0 ? 'inline-block' : 'block'" v-for="(contact, index) in _compact([employee.contact?.office_email, employee.contact?.personal_email, employee.contact?.office_phone, employee.contact?.personal_phone])">{{contact}}</div>
                                     </div>
                                     <div>
-                                        <InputLabel :size="'sm'" value="Manager" />
-                                        <div class="cursor-pointer hover:underline">{{ _get(employee, 'manager.full_name', '--') }}</div>
-                                    </div>
-                                    <div>
-                                        <InputLabel :size="'sm'" value="Gender" />
+                                        <InputLabel :size="'xs'" value="Gender" />
                                         <div>{{ _get(employee, 'gender.text', '--') }}</div>
                                     </div>
                                     <div>
-                                        <InputLabel :size="'sm'" value="Marital Status" />
+                                        <InputLabel :size="'xs'" value="Marital status" />
                                         <div>{{ _get(employee, 'marital_status.text', '--') }}</div>
+                                    </div>
+                                    <div>
+                                        <InputLabel :size="'xs'" value="Birth date" />
+                                        <div>{{ _get(employee, 'birth_date_readable', '--') }}</div>
                                     </div>
                                 </div>
                             </div>
@@ -383,7 +393,7 @@ const {
 watch(updatedAssociatedCompanyFlag, (newValue) => {
     if(isAuthenticated.value && selectedAssociatedCompanyId.value){
         rebuildSelections();
-        paginate();
+        paginate(1, true);
     }
 });
 
