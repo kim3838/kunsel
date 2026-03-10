@@ -171,6 +171,9 @@
                             </div>
                             <div v-else class="p-[3px]"></div>
                         </template>
+                        <template v-slot:cell.date="{cell,slot}">
+                            <div class="p-[3px]">{{cell.date_readable}}</div>
+                        </template>
                         <template v-slot:cell.recurring="{cell, slot, scrollReference}">
                             <div class="flex justify-center">
                                 <NonModelCheckBox disabled :size="slot.checkBoxSize" :checked="Boolean(cell.recurring)"></NonModelCheckBox>
@@ -180,6 +183,9 @@
                             <div class="flex justify-center">
                                 <NonModelCheckBox disabled :size="slot.checkBoxSize" :checked="Boolean(cell.active)"></NonModelCheckBox>
                             </div>
+                        </template>
+                        <template v-slot:cell.effective_date="{cell,slot}">
+                            <div class="p-[3px]">{{cell.effective_date_readable}}</div>
                         </template>
                     </DataTable>
 

@@ -57,13 +57,10 @@
                                 :options="payFrequencySequenceOptions"
                             />
                         </div>
-                        <div class="flex flex-col">
-                            <div class="flex-none h-[1.25rem]"></div>
-                            <Button class="w-min" ref="submitButton" type="submit" :disabled="disableActions" :size="'md'" :icon="disableActions ? 'eos-icons:loading' : 'mdi:data'" :label="disableActions ? 'Loading' : 'Load'"></Button>
-                        </div>
                     </div>
 
                     <div class="flex flex-row flex-wrap gap-2 items-center min-h-8">
+                        <Button class="w-min" ref="submitButton" type="submit" :disabled="disableActions" :size="'md'" :icon="disableActions ? 'eos-icons:loading' : 'mdi:data'" :label="disableActions ? 'Loading' : 'Load'"></Button>
                         <div class="h-8 flex flex-row items-center scaffold-border px-2">
                             <label class="flex items-center">
                                 <Checkbox

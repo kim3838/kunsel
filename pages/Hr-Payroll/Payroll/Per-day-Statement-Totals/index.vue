@@ -104,13 +104,11 @@
                                 :options="payrollComponentNameOptions"
                             />
                         </div>
-                        <div class="col-span-2 flex flex-col">
-                            <div class="flex-none h-[1.25rem]"></div>
-                            <div class="flex flex-row gap-2">
-                                <Button class="w-min" ref="submitButton" type="submit" :disabled="disableActions" :size="'md'" :icon="disableActions ? 'eos-icons:loading' : 'mdi:data'" :label="disableActions ? 'Loading' : 'Load'"></Button>
-                                <Button v-if="perDayStatements.successful" class="w-min" type="button" :disabled="disableActions" :size="'md'" :variant="'outline'" :icon="'bi:filetype-csv'" @click="exportCsv" :label="'Export .csv'"></Button>
-                            </div>
-                        </div>
+                    </div>
+
+                    <div class="flex flex-row flex-wrap gap-2 items-center min-h-8">
+                        <Button class="w-min" ref="submitButton" type="submit" :disabled="disableActions" :size="'md'" :icon="disableActions ? 'eos-icons:loading' : 'mdi:data'" :label="disableActions ? 'Loading' : 'Load'"></Button>
+                        <Button v-if="perDayStatements.successful" class="w-min" type="button" :disabled="disableActions" :size="'md'" :variant="'outline'" :icon="'bi:filetype-csv'" @click="exportCsv" :label="'Export .csv'"></Button>
                     </div>
                 </form>
 
