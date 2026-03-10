@@ -17,37 +17,37 @@
                             <Label v-else-if="!employeeSuccessful" invert :size="'md'" :type="'danger'" :label="employeeMessage" />
                         </div>
 
-                        <div v-if="!employeePendingOrNotSuccessful" class="flex items-center flex-wrap gap-4 font-header">
-                            <div class="text-lg font-medium">{{userCompanyEmployee?.full_name}}</div>
-                        </div>
-
-                        <div v-if="!employeePendingOrNotSuccessful" class="flex items-center flex-wrap gap-4 font-header">
-                            <div class="flex items-center flex-wrap gap-2">
-                                <div class="p-1 pr-4 rounded-sm flex items-center gap-2">
-                                    <Label :size="'md'" :type="employee?._payload?.label_shade?.value as LabelTypeT" shade :label="_get(employee, 'current_employment_profile.status.text', '')" />
-                                    <div>{{employee.current_employment_profile?.employment_type?.text}}</div>
+                        <div v-if="!employeePendingOrNotSuccessful" class="flex flex-col lg:flex-row lg:items-center gap-2">
+                            <div>
+                                <div class="text-sm font-sans">{{ _get(employee, 'number', '--') }}</div>
+                                <span class="text-lg font-medium font-header cursor-pointer hover:underline">{{userCompanyEmployee?.full_name}}</span>
+                                <div class="text-sm subtitle-color">
+                                    {{ _get(employee, 'designation.name', '--') }}&nbsp;~&nbsp;{{ _get(employee, 'department.name', '--') }}
                                 </div>
-                                <div v-if="employee.current_employment_profile?.is_active" class="text-sm">{{ _get(employee, 'current_employment_profile.readable_date_range', '') }}</div>
                             </div>
-                            <Button :variant="'outline'" :size="'xs'" :icon="'ic:sharp-restart-alt'" :disabled="employeePending" :label="'Reload'" @click="fetchEmployee()" />
+                            <div class="flex flex-row items-center gap-1">
+                                <div class="flex-none w-[68px] h-[68px] bg-gray-200">
+
+                                </div>
+                                <div class="flex flex-col">
+                                    <div class="p-1 pr-4 rounded-sm flex items-center gap-2">
+                                        <Label :size="'md'" :type="employee?._payload?.label_shade?.value as LabelTypeT" shade :label="_get(employee, 'current_employment_profile.status.text', '')" />
+                                        <div>{{employee.current_employment_profile?.employment_type?.text}}</div>
+                                    </div>
+                                    <div class="pl-1 text-xs subtitle-color" v-if="employee.current_employment_profile?.is_active">{{ _get(employee, 'current_employment_profile.readable_date_range', '') }}</div>
+                                </div>
+                                <Button :variant="'outline'" :size="'xs'" :icon="'ic:sharp-restart-alt'" :disabled="employeePending" :label="'Refresh'" @click="fetchEmployee()" />
+                            </div>
                         </div>
 
                         <div v-if="!employeePendingOrNotSuccessful" class="flex flex-wrap gap-6">
                             <div>
-                                <InputLabel :size="'xs'" value="Number" />
-                                <div class="text-sm font-sans">{{ _get(employee, 'number', '--') }}</div>
-                            </div>
-                            <div>
-                                <InputLabel :size="'xs'" value="Department" />
-                                <div class="text-sm font-sans">{{ _get(employee, 'department.name', '--') }}</div>
-                            </div>
-                            <div>
-                                <InputLabel :size="'xs'" value="Designation" />
-                                <div class="text-sm font-sans">{{ _get(employee, 'designation.name', '--') }}</div>
+                                <InputLabel :size="'xs'" value="Payroll group" />
+                                <div class="text-sm font-sans">{{ _get(employee, 'payroll_group.type.text', '--') }}</div>
                             </div>
                             <div>
                                 <InputLabel :size="'xs'" value="Contact" />
-                                <span v-if="_isEmpty(_compact([employee.contact?.office_email, employee.contact?.personal_email, employee.contact?.office_phone, employee.contact?.personal_phone]))">--</span>
+                                <span class="text-sm font-sans" v-if="_isEmpty(_compact([employee.contact?.office_email, employee.contact?.personal_email, employee.contact?.office_phone, employee.contact?.personal_phone]))">--</span>
                                 <div class="text-sm font-sans" v-else :class="index == 0 ? 'inline-block' : 'block'" v-for="(contact, index) in _compact([employee.contact?.office_email, employee.contact?.personal_email, employee.contact?.office_phone, employee.contact?.personal_phone])">{{contact}}</div>
                             </div>
                             <div>
@@ -302,11 +302,6 @@
 
                             <div class="px-4 py-4">
                                 <div v-if="true" class="grid grid-cols-1 gap-2">
-                                    <div>
-                                        <InputLabel :size="'sm'" value="Payroll group" />
-                                        <div class="text-base font-sans">{{ _get(employee, 'payroll_group.type.text', 'Not found') }}</div>
-                                    </div>
-
                                     <span class="text-sm font-serif">work in progress...</span>
                                 </div>
                                 <div v-else>
