@@ -72,6 +72,7 @@
                                     <div v-show="!departmentKeepCurrentComputed">
                                         <InputLabel :size="'sm'" value="Department"/>
                                         <SingleSelect
+                                            :key="departmentOptionsKey"
                                             :icon="'ic:baseline-all-inbox'"
                                             :disabled="disableActions || departmentKeepCurrentComputed"
                                             drop-shadow
@@ -112,6 +113,7 @@
                                 <div class="w-full" v-show="!managerKeepCurrentComputed">
                                     <InputLabel :size="'sm'" value="Manager"/>
                                     <SingleSelectPaginated
+                                        :key="managerOptionsKey"
                                         :disabled="disableActions"
                                         drop-shadow
                                         :selection-max-viewable-line="10"
@@ -139,7 +141,7 @@
                                 </div>
                                 <div class="w-full" v-show="!designationKeepCurrentComputed">
                                     <InputLabel :size="'sm'" value="Designation"/>
-                                    <SingleSelect :icon="'ic:baseline-inbox'" :disabled="disableActions" drop-shadow :size="'md'" :options="designationOptions"/>
+                                    <SingleSelect :key="designationOptionsKey" :icon="'ic:baseline-inbox'" :disabled="disableActions" drop-shadow :size="'md'" :options="designationOptions"/>
                                 </div>
                             </div>
                         </fieldset>
@@ -203,15 +205,46 @@ import type {StringEnumInterface} from "@/public/js/common/type";
 import type {TableHeaderT} from "@/public/js/types/data";
 
 const {$authStore} = useNuxtApp();
+const {isAuthenticated} = useAuth();
 const nuxtApp = useNuxtApp();
 const $enumerableOption = nuxtApp.$enumerableOption as (enumerable: StringEnumInterface, value: number) => {
     text: string,
     value: number
 };
+const common = useCommon();
+const {
+    updatedAssociatedCompanyFlag
+} = storeToRefs(nuxtApp.$associationStore);
 const {
     selectedAssociatedCompanyAccountId,
     selectedAssociatedCompanyId,
 } = storeToRefs($authStore);
+
+watch(updatedAssociatedCompanyFlag, (newValue) => {
+    if(isAuthenticated.value && selectedAssociatedCompanyId.value){
+        rebuildSelections();
+    }
+});
+
+const rebuildSelections = (selection: string[] = []) => {
+    if(_isEmpty(selection) || selection.indexOf('department') >= 0){
+        common.rebuildSelectionsOnSelectedCompanyChanged(
+            departmentOptions, departmentOptionsKey, SELECT.SINGLE_STATIC, companyOrganizationSelections.value.departments
+        );
+    }
+
+    if(_isEmpty(selection) || selection.indexOf('designation') >= 0){
+        common.rebuildSelectionsOnSelectedCompanyChanged(
+            designationOptions, designationOptionsKey, SELECT.SINGLE_STATIC, companyOrganizationSelections.value.designations
+        );
+    }
+
+    if(_isEmpty(selection) || selection.indexOf('employee') >= 0){
+        common.rebuildSelectionsOnSelectedCompanyChanged(
+            managerOptions, managerOptionsKey, SELECT.SINGLE_PAGINATED
+        );
+    }
+}
 
 const emit = defineEmits(['completed']);
 
@@ -230,6 +263,7 @@ const companyOrganizationSelections = companyOrganizationSelectionsState();
 const departmentKeepCurrentComputed = computed(() => {return departmentKeepCurrent.value == 1;})
 const departmentKeepCurrent = ref(1);
 const departmentKeepCurrentSelection = reactive([{text : 'Yes', value: 1}, {text : 'No', value: 0},]);
+const departmentOptionsKey = shallowRef(0);
 const departmentOptions = reactive({
     search: '',
     selection: companyOrganizationSelections.value.departments,
@@ -245,6 +279,7 @@ const departmentAssignment = ref(DEPARTMENT_EMPLOYEE_ASSIGNMENT.DEFAULT);
 const managerKeepCurrentComputed = computed(() => {return managerKeepCurrent.value == 1;})
 const managerKeepCurrent = ref(1);
 const managerKeepCurrentSelection = reactive([{text : 'Yes', value: 1}, {text : 'No', value: 0},]);
+const managerOptionsKey = shallowRef(0);
 const managerOptions = reactive({
     fetch: {
         url: '/api/employee-selections',
@@ -262,6 +297,7 @@ const managerOptions = reactive({
 const designationKeepCurrentComputed = computed(() => {return designationKeepCurrent.value == 1;})
 const designationKeepCurrent = ref(1);
 const designationKeepCurrentSelection = reactive([{text : 'Yes', value: 1}, {text : 'No', value: 0},]);
+const designationOptionsKey = shallowRef(0);
 const designationOptions = reactive({
     search: '',
     selection: companyOrganizationSelections.value.designations,
