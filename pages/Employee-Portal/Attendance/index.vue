@@ -41,9 +41,9 @@
                     <template #content>
                         <div ref='modalContentContainer'>
 
-                            <div class="mx-auto max-w-screen-xl">
-                                <div class="text-lg font-header">
-                                    {{attendanceDate}}&nbsp;{{attendanceWeekday}}&nbsp;Create adjustment
+                            <div class="mx-auto max-w-screen-lg">
+                                <div class="text-lg">
+                                    {{attendanceDateReadable}}&nbsp;{{attendanceWeekday}}&nbsp;File attendance adjustment request
                                 </div>
                             </div>
 
@@ -82,8 +82,8 @@
                                             <div class="text-base">{{overtimeMaxDuration}}</div>
                                         </div>
                                         <div>
-                                            <InputLabel :size="'sm'" value="Is Flexible"/>
-                                            <div class="text-base">{{scheduleIsFlexible}}</div>
+                                            <InputLabel :size="'sm'" value="Holiday policy"/>
+                                            <div class="text-base">{{holidayPolicy}}</div>
                                         </div>
                                     </div>
                                 </fieldset>
@@ -160,7 +160,7 @@
                         </div>
                     </template>
                     <template #footer>
-                        <div class="mx-auto max-w-screen-xl">
+                        <div class="mx-auto max-w-screen-lg">
                             <div class="flex space-x-2 justify-between">
                                 <div class="space-x-2 inline-flex items-center">
                                     <Button
@@ -517,8 +517,10 @@ const scheduleTotalDuration = ref('');
 const attendanceWeekday = ref('');
 const scheduleIsFlexible = ref('');
 const overtimeMaxDuration = ref('');
+const holidayPolicy = ref('');
 const attendanceShiftRequiresLunchOutAndIn = ref(false);
 const attendanceDate = ref<string | null>('');
+const attendanceDateReadable = ref('');
 
 const attendanceFirstIn = ref('');
 const attendanceLunchOut = ref('');
@@ -541,8 +543,10 @@ const resetEditable = () => {
     attendanceWeekday.value = '';
     scheduleIsFlexible.value = '';
     overtimeMaxDuration.value = '';
+    holidayPolicy.value = '';
     attendanceShiftRequiresLunchOutAndIn.value = false;
     attendanceDate.value = '';
+    attendanceDateReadable.value = '';
 
     attendanceFirstIn.value = '';
     attendanceLunchOut.value = '';
@@ -597,6 +601,7 @@ const renderDatePickers = () => {
 const loadEditable = () => {
 
     attendanceDate.value = _get(adjustPayload.value, 'date', null);
+    attendanceDateReadable.value = _get(adjustPayload.value, 'date_readable', '');
 
     let shiftRequiresLunchOutAndIn = _get(adjustPayload.value, 'shift.require_lunch_time_in_and_out', false) as boolean;
     let shiftIsFlexible = _get(adjustPayload.value, 'shift_schedule.is_flexible', false) as boolean;
@@ -612,9 +617,10 @@ const loadEditable = () => {
 
     scheduleTotalDuration.value = _get(adjustPayload.value, 'shift_schedule.total_work_hours_with_breaks', '');
     overtimeMaxDuration.value = _get(adjustPayload.value, 'shift.max_overtime_readable', '');
-    scheduleIsFlexible.value = shiftIsFlexible ? 'Yes' : 'No';
+    holidayPolicy.value = _get(adjustPayload.value, 'shift.holiday_policy.text', '');
 
     attendanceWeekday.value = _get(adjustPayload.value, 'shift_schedule.week_day_name', '');
+    scheduleIsFlexible.value = shiftIsFlexible ? 'Yes' : 'No';
 
     attendanceFirstIn.value = _get(adjustPayload.value, 'first_in', '');
 

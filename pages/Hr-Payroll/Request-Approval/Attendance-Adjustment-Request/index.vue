@@ -67,7 +67,6 @@
 
                 <DialogModal
                     :show="creatingOrEditing"
-                    :max-width="'1280px'"
                     :closeable="false">
                     <template #title>
 
@@ -75,13 +74,13 @@
                     <template #content>
                         <div ref='modalContentContainer'>
 
-                            <div v-if="!creatingAttendanceAdjustment || validAttendanceAdjustmentFoundations" class="mx-auto max-w-screen-xl">
-                                <div class="text-lg font-header">
-                                    {{attendanceDate}}&nbsp;{{attendanceWeekday}}&nbsp;{{creatingAttendanceAdjustment ? 'Create adjustment' : 'Adjustment'}}
+                            <div v-if="!creatingAttendanceAdjustment || validAttendanceAdjustmentFoundations" class="mx-auto max-w-screen-lg">
+                                <div class="text-lg">
+                                    {{attendanceDateReadable}}&nbsp;{{attendanceWeekday}}&nbsp;{{creatingAttendanceAdjustment ? 'File attendance adjustment request' : 'Adjustment'}}
                                 </div>
                             </div>
 
-                            <div class="pt-2 mx-auto max-w-screen-xl flex flex-row gap-4">
+                            <div class="pt-2 mx-auto max-w-screen-lg flex flex-row gap-4">
 
                                 <fieldset v-if="!creatingAttendanceAdjustment || validAttendanceAdjustmentFoundations" class="basis-1/3 neutral-border px-2 pb-2 space-y-2">
                                     <legend class="text-lg font-header">Schedule</legend>
@@ -116,13 +115,13 @@
                                             <div class="text-base">{{overtimeMaxDuration}}</div>
                                         </div>
                                         <div>
-                                            <InputLabel :size="'sm'" value="Is Flexible"/>
-                                            <div class="text-base">{{scheduleIsFlexible}}</div>
+                                            <InputLabel :size="'sm'" value="Holiday policy"/>
+                                            <div class="text-base">{{holidayPolicy}}</div>
                                         </div>
                                     </div>
                                 </fieldset>
-                                <div v-else class="basis-1/4 flex justify-center items-center">
-                                    Select Employee, Shift, and Attendance
+                                <div v-else class="basis-1/4 flex justify-center items-center text-center font-header px-4">
+                                    Select employee, assigned shift, and attendance
                                 </div>
 
                                 <fieldset class="basis-3/4 neutral-border px-2 pb-2 space-y-2">
@@ -237,7 +236,7 @@
                         </div>
                     </template>
                     <template #footer>
-                        <div class="mx-auto max-w-screen-xl">
+                        <div class="mx-auto max-w-screen-lg">
                             <div class="flex space-x-2 justify-between">
                                 <div class="space-x-2 inline-flex items-center">
                                     <Button
@@ -889,8 +888,10 @@ const scheduleTotalDuration = ref('');
 const attendanceWeekday = ref('');
 const scheduleIsFlexible = ref('');
 const overtimeMaxDuration = ref('');
+const holidayPolicy = ref('');
 const attendanceShiftRequiresLunchOutAndIn = ref(false);
 const attendanceDate = ref('');
+const attendanceDateReadable = ref('');
 const validAttendanceAdjustmentFoundations = ref(false);
 const attendanceFirstIn = ref('');
 const attendanceLunchOut = ref('');
@@ -920,8 +921,10 @@ const resetEditable = () => {
     attendanceWeekday.value = '';
     scheduleIsFlexible.value = '';
     overtimeMaxDuration.value = '';
+    holidayPolicy.value = '';
     attendanceShiftRequiresLunchOutAndIn.value = false;
     attendanceDate.value = '';
+    attendanceDateReadable.value = '';
     validAttendanceAdjustmentFoundations.value = false;
     attendanceFirstIn.value = '';
     attendanceLunchOut.value = '';
@@ -1128,6 +1131,8 @@ const creatingAttendanceAdjustmentInitializedAttendanceDate = async (value: stri
 
                 validAttendanceAdjustmentFoundations.value = true;
 
+                attendanceDateReadable.value = _get(_attendance, 'date_readable', '');
+
                 attendanceId.value = _get(_attendance, 'id', null);
                 let shiftRequiresLunchOutAndIn = _get(_attendance, 'shift.require_lunch_time_in_and_out', false) as boolean;
                 let shiftIsFlexible = _get(_attendance, 'shift_schedule.is_flexible', false) as boolean;
@@ -1143,9 +1148,10 @@ const creatingAttendanceAdjustmentInitializedAttendanceDate = async (value: stri
 
                 scheduleTotalDuration.value = _get(_attendance, 'shift_schedule.total_work_hours_with_breaks', '');
                 overtimeMaxDuration.value = _get(_attendance, 'shift.max_overtime_readable', '');
-                scheduleIsFlexible.value = shiftIsFlexible ? 'Yes' : 'No';
+                holidayPolicy.value = _get(_attendance  , 'shift.holiday_policy.text', '');
 
                 attendanceWeekday.value = _get(_attendance, 'shift_schedule.week_day_name', '');
+                scheduleIsFlexible.value = shiftIsFlexible ? 'Yes' : 'No';
 
                 attendanceFirstIn.value = _get(_attendance, 'first_in', '');
 

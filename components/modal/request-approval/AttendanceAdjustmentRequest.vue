@@ -1,16 +1,16 @@
 <template>
     <div class="font-data">
-        <div class="text-lg font-header">
+        <div class="text-lg font-medium font-sans">
             {{requestNumber}}
         </div>
-        <div>
-            {{attendanceDate}} {{attendanceWeekday}} Attendance Adjustment
+        <div class="text-lg">
+            {{attendanceDateReadable}} {{attendanceWeekday}} attendance adjustment
         </div>
-        <div class="text-sm">
-            Requested by: {{requestByUsername}} {{requestByEmployeeNumber}} {{requestByEmployeeFullName}}
+        <div class="text-sm subtitle-color">
+            Requested by: {{requestByUsername}} ({{requestByEmployeeNumber}}) {{requestByEmployeeFullName}}
         </div>
-        <div class="text-sm">
-            Attendance of: {{attendanceEmployeeNumber}} {{attendanceEmployeeFullName}}
+        <div class="text-sm subtitle-color">
+            Attendance of: ({{attendanceEmployeeNumber}}) {{attendanceEmployeeFullName}}
         </div>
 
         <fieldset class="mt-4 neutral-border px-2 pb-2 space-y-2">
@@ -47,8 +47,8 @@
                         <div class="text-base">{{overtimeMaxDuration}}</div>
                     </div>
                     <div>
-                        <InputLabel :size="'sm'" value="Is Flexible"/>
-                        <div class="text-base">{{scheduleIsFlexible}}</div>
+                        <InputLabel :size="'sm'" value="Holiday policy"/>
+                        <div class="text-base">{{holidayPolicy}}</div>
                     </div>
                 </div>
             </div>
@@ -125,6 +125,7 @@ const requestByEmployeeFullName = ref('');
 const statusSummary = ref(REQUEST_APPROVAL_STATUS.NOT_SPECIFIED);
 
 const attendanceDate = ref('');
+const attendanceDateReadable = ref('');
 const attendanceWeekday = ref('');
 const attendanceEmployeeNumber = ref('');
 const attendanceEmployeeFullName = ref('');
@@ -136,6 +137,7 @@ const scheduleLunchPeriod = ref('');
 const shiftLunchStartGrace = ref('');
 const scheduleTotalDuration = ref('');
 const overtimeMaxDuration = ref('');
+const holidayPolicy = ref('');
 const scheduleIsFlexible = ref('');
 
 const attendanceFirstIn = ref('');
@@ -156,7 +158,8 @@ requestByEmployeeNumber.value = _get(props.attendanceAdjustmentRequestPayload, '
 requestByEmployeeFullName.value = _get(props.attendanceAdjustmentRequestPayload, 'requested_by.company_employee_full_name', '');
 statusSummary.value = _get(props.attendanceAdjustmentRequestPayload, 'status_summary.value', REQUEST_APPROVAL_STATUS.NOT_SPECIFIED);
 
-attendanceDate.value = _get(props.attendanceAdjustmentRequestPayload, 'attendance.date_readable', '');
+attendanceDate.value = _get(props.attendanceAdjustmentRequestPayload, 'attendance.date', '');
+attendanceDateReadable.value = _get(props.attendanceAdjustmentRequestPayload, 'attendance.date_readable', '');
 attendanceWeekday.value = _get(props.attendanceAdjustmentRequestPayload, 'attendance.shift_schedule.week_day_name', '');
 attendanceEmployeeNumber.value = _get(props.attendanceAdjustmentRequestPayload, 'attendance.employee.number', '');
 attendanceEmployeeFullName.value = _get(props.attendanceAdjustmentRequestPayload, 'attendance.employee.full_name', '');
@@ -170,6 +173,7 @@ shiftWorkStartGrace.value = _get(props.attendanceAdjustmentRequestPayload, 'atte
 attendanceShiftRequiresLunchOutAndIn.value = shiftRequiresLunchOutAndIn && !shiftIsFlexible && shiftHasLunchBreak;
 scheduleLunchPeriod.value = attendanceShiftRequiresLunchOutAndIn.value ? (_get(props.attendanceAdjustmentRequestPayload, 'attendance.shift_schedule.lunch_break_start', '') + ' - ' + _get(props.attendanceAdjustmentRequestPayload, 'attendance.shift_schedule.lunch_break_end', '')) : '';
 shiftLunchStartGrace.value = _get(props.attendanceAdjustmentRequestPayload, 'attendance.shift.lunch_start_grace_time_readable', 'Not found');
+holidayPolicy.value = _get(props.attendanceAdjustmentRequestPayload, 'attendance.shift.holiday_policy.text', 'Not found');
 
 scheduleTotalDuration.value = _get(props.attendanceAdjustmentRequestPayload, 'attendance.shift_schedule.total_work_hours_with_breaks', '');
 overtimeMaxDuration.value = _get(props.attendanceAdjustmentRequestPayload, 'attendance.shift.max_overtime_readable', '');

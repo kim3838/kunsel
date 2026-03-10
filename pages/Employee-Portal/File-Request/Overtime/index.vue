@@ -15,25 +15,20 @@
                             <InputLabel :size="'sm'" value="Request # Search" />
                             <Input :disabled="disableActions" :size="'md'" ref="searchInput" v-model="filters.search.keyword" class="w-full" placeholder="Search Number" type="text"/>
                         </div>
-                        <div class="flex flex-col col-span-2">
-                            <div class="flex-none h-[1.25rem]"></div>
-                            <div class="grow">
-                                <div class="h-full px-2 scaffold-border flex items-center">
-                                    <label class="flex items-center">
-                                        <Checkbox
-                                            :disabled="disableActions"
-                                            name="show-approval-sequence"
-                                            v-model="showApprovalStates"
-                                            clamp-label
-                                            :size="'md'"
-                                            :label="'Show approval sequence'" />
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="flex flex-col">
-                            <div class="flex-none h-[1.25rem]"></div>
-                            <Button class="w-min" ref="submitButton" type="submit" :disabled="disableActions" :size="'md'" :icon="disableActions ? 'eos-icons:loading' : 'mdi:data'" :label="disableActions ? 'Loading' : 'Load'"></Button>
+                    </div>
+
+                    <div class="flex flex-row flex-wrap gap-2 items-center min-h-8">
+                        <Button class="w-min" ref="submitButton" type="submit" :disabled="disableActions" :size="'md'" :icon="disableActions ? 'eos-icons:loading' : 'mdi:data'" :label="disableActions ? 'Loading' : 'Load'"></Button>
+                        <div class="h-8 flex flex-row items-center scaffold-border px-2">
+                            <label class="flex items-center">
+                                <Checkbox
+                                    :disabled="disableActions"
+                                    name="show-approval-sequence"
+                                    v-model="showApprovalStates"
+                                    clamp-label
+                                    :size="'md'"
+                                    :label="'Show approval sequence'" />
+                            </label>
                         </div>
                     </div>
                 </form>
@@ -51,13 +46,13 @@
                     <template #content>
                         <div ref='modalContentContainer'>
 
-                            <div v-if="!creatingOvertime || validOvertimeFoundations" class="mx-auto max-w-screen-xl">
-                                <div class="text-lg font-header">
-                                    {{attendanceDate}}&nbsp;{{attendanceWeekday}}&nbsp;{{creatingOvertime ? 'Create overtime' : 'Overtime'}}
+                            <div v-if="!creatingOvertime || validOvertimeFoundations" class="mx-auto max-w-screen-lg">
+                                <div class="text-lg">
+                                    {{attendanceDateReadable}}&nbsp;{{attendanceWeekday}}&nbsp;{{creatingOvertime ? 'File overtime request' : 'Overtime'}}
                                 </div>
                             </div>
 
-                            <div class="pt-2 mx-auto max-w-screen-xl flex flex-row gap-4">
+                            <div class="pt-2 mx-auto max-w-screen-lg flex flex-row gap-4">
 
                                 <fieldset v-if="!creatingOvertime || validOvertimeFoundations" class="basis-1/3 neutral-border px-2 pb-2 space-y-2">
                                     <legend class="text-lg font-header">Schedule</legend>
@@ -80,13 +75,13 @@
                                             <div class="text-base">{{overtimeMaxDuration}}</div>
                                         </div>
                                         <div>
-                                            <InputLabel :size="'sm'" value="Is Flexible"/>
-                                            <div class="text-base">{{scheduleIsFlexible}}</div>
+                                            <InputLabel :size="'sm'" value="Holiday policy"/>
+                                            <div class="text-base">{{holidayPolicy}}</div>
                                         </div>
                                     </div>
                                 </fieldset>
-                                <div v-else class="basis-1/4 flex justify-center items-center">
-                                    Select your Shift and Attendance of overtime
+                                <div v-else class="basis-1/4 flex justify-center items-center text-center font-header px-4">
+                                    Select your shift and attendance of overtime
                                 </div>
 
                                 <fieldset class="basis-3/4 neutral-border px-2 pb-2 space-y-2">
@@ -162,7 +157,7 @@
                         </div>
                     </template>
                     <template #footer>
-                        <div class="mx-auto max-w-screen-xl">
+                        <div class="mx-auto max-w-screen-lg">
                             <div class="flex space-x-2 justify-between">
                                 <div class="space-x-2 inline-flex items-center">
                                     <Button
@@ -751,10 +746,12 @@ const scheduleWorkPeriod = ref('');
 const scheduleTotalDuration = ref('');
 const scheduleIsFlexible = ref('');
 const overtimeMaxDuration = ref('');
+const holidayPolicy = ref('');
 const attendanceId = ref<string | number | null>(null);
 
-
 const attendanceDate = ref('');
+const attendanceDateReadable = ref('');
+
 const attendanceWeekday = ref('');
 const attendanceLastOut = ref('');
 const validOvertimeFoundations = ref(false);
@@ -778,8 +775,10 @@ const resetEditable = () => {
     scheduleTotalDuration.value = '';
     scheduleIsFlexible.value = '';
     overtimeMaxDuration.value = '';
+    holidayPolicy.value = '';
 
     attendanceDate.value = '';
+    attendanceDateReadable.value = '';
     attendanceWeekday.value = '';
     attendanceLastOut.value = '';
 
@@ -989,6 +988,8 @@ const creatingOvertimeInitializedAttendanceDate = async (value: string) => {
 
                 validOvertimeFoundations.value = true;
 
+                attendanceDateReadable.value = _get(_attendance, 'date_readable', '');
+
                 attendanceId.value = _get(_attendance, 'id', null);
                 let shiftIsFlexible = _get(_attendance, 'shift_schedule.is_flexible', false) as boolean;
 
@@ -996,6 +997,7 @@ const creatingOvertimeInitializedAttendanceDate = async (value: string) => {
                 scheduleTotalDuration.value = _get(_attendance, 'shift_schedule.total_work_hours_with_breaks', '');
                 scheduleIsFlexible.value = shiftIsFlexible ? 'Yes' : 'No';
                 overtimeMaxDuration.value = _get(_attendance, 'shift.max_overtime_readable', '');
+                holidayPolicy.value = _get(_attendance  , 'shift.holiday_policy.text', '');
 
                 attendanceWeekday.value = _get(_attendance, 'shift_schedule.week_day_name', '');
                 attendanceLastOut.value = _get(_attendance, 'last_out', '');

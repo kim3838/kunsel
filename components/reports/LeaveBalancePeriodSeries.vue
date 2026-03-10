@@ -71,25 +71,25 @@
 
                     <table class="period-series-table tint-background">
                         <tbody>
-                        <tr class="font-medium font-header">
+                        <tr class="font-medium">
                             <td class="px-[2px]">Period</td>
                             <td class="px-[2px]" v-for="yearMonthSeries in periodSeries.value">{{yearMonthSeries.period}}</td>
                         </tr>
                         <tr class="">
-                            <td class="px-[2px] font-medium font-header">Year</td>
+                            <td class="px-[2px] font-medium">Year</td>
                             <td class="px-[2px]" v-for="yearMonthSeries in periodSeries.value">{{yearMonthSeries.year}}</td>
                         </tr>
                         <tr class="">
-                            <td class="px-[2px] font-medium font-header">Month</td>
+                            <td class="px-[2px] font-medium">Month</td>
                             <td class="px-[2px]" v-for="yearMonthSeries in periodSeries.value">{{yearMonthSeries.month_readable}}</td>
                         </tr>
                         <tr>
                             <td>
                                 <div class="employment-series-header flex flex-col">
-                                    <div class="px-[2px] font-medium font-header">Employment Type</div>
-                                    <div class="px-[2px] font-medium font-header">Eligible</div>
-                                    <div class="px-[2px] font-medium font-header">Calendar Day</div>
-                                    <div class="px-[2px] font-medium font-header">Running Balance</div>
+                                    <div class="px-[2px] font-medium">Employment Type</div>
+                                    <div class="px-[2px] font-medium">Eligible</div>
+                                    <div class="px-[2px] font-medium">Calendar Day</div>
+                                    <div class="px-[2px] font-medium">Running Balance</div>
                                 </div>
                             </td>
                             <td v-for="yearMonthSeries in periodSeries.value" class="">

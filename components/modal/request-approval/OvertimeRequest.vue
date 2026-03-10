@@ -1,16 +1,16 @@
 <template>
     <div class="font-data">
-        <div class="text-lg font-header">
+        <div class="text-lg font-medium font-sans">
             {{requestNumber}}
         </div>
-        <div>
-            {{attendanceDate}} {{attendanceWeekday}} Overtime
+        <div class="text-lg">
+            {{attendanceDate}} {{attendanceWeekday}} Overtime request
         </div>
-        <div class="text-sm">
-            Requested by: {{requestByUsername}} {{requestByEmployeeNumber}} {{requestByEmployeeFullName}}
+        <div class="text-sm subtitle-color">
+            Requested by: {{requestByUsername}} ({{requestByEmployeeNumber}}) {{requestByEmployeeFullName}}
         </div>
-        <div class="text-sm">
-            Attendance of: {{attendanceEmployeeNumber}} {{attendanceEmployeeFullName}}
+        <div class="text-sm subtitle-color">
+            Attendance of: ({{attendanceEmployeeNumber}}) {{attendanceEmployeeFullName}}
         </div>
 
         <fieldset class="mt-4 neutral-border px-2 pb-2 space-y-2">
@@ -33,8 +33,8 @@
                         <div class="text-base">{{overtimeMaxDuration}}</div>
                     </div>
                     <div>
-                        <InputLabel :size="'sm'" value="Is Flexible"/>
-                        <div class="text-base">{{scheduleIsFlexible}}</div>
+                        <InputLabel :size="'sm'" value="Holiday policy"/>
+                        <div class="text-base">{{holidayPolicy}}</div>
                     </div>
                 </div>
             </div>
@@ -102,6 +102,7 @@ const attendanceEmployeeFullName = ref('');
 const scheduleWorkPeriod = ref('');
 const scheduleTotalDuration = ref('');
 const overtimeMaxDuration = ref('');
+const holidayPolicy = ref('');
 const scheduleIsFlexible = ref('');
 
 const attendanceLastOut = ref('');
@@ -127,6 +128,7 @@ let shiftIsFlexible = _get(props.overtimeRequestPayload, 'attendance.shift_sched
 scheduleWorkPeriod.value = _get(props.overtimeRequestPayload, 'attendance.shift_schedule.work_start', '') + ' - ' + _get(props.overtimeRequestPayload, 'attendance.shift_schedule.work_end', '') + '(' + _get(props.overtimeRequestPayload, 'attendance.shift_schedule.timezone', '')  + ')';
 scheduleTotalDuration.value = _get(props.overtimeRequestPayload, 'attendance.shift_schedule.total_work_hours_with_breaks', '');
 overtimeMaxDuration.value = _get(props.overtimeRequestPayload, 'attendance.shift.max_overtime_readable', '');
+holidayPolicy.value = _get(props.overtimeRequestPayload, 'attendance.shift.holiday_policy.text', 'Not found');
 scheduleIsFlexible.value = shiftIsFlexible ? 'Yes' : 'No';
 
 attendanceLastOut.value = _get(props.overtimeRequestPayload, 'attendance.last_out', '');

@@ -40,14 +40,13 @@
 
                 <DialogModal
                     :show="creatingOrEditing"
-                    :max-width="'1280px'"
                     :closeable="false">
                     <template #title>
 
                     </template>
                     <template #content>
                         <div ref='modalContentContainer'>
-                            <div class="pt-2 mx-auto max-w-screen-xl flex flex-col-reverse md:flex-row gap-4">
+                            <div class="pt-2 mx-auto max-w-screen-lg flex flex-col-reverse md:flex-row gap-4">
 
                                 <fieldset v-if="showClaimabilityPerDate" class="md:basis-4/12 neutral-border px-2 pb-2 space-y-2">
                                     <legend class="text-lg font-header">Leave Date Inquiries</legend>
@@ -56,9 +55,9 @@
                                         <UnorderedList v-if="modalDisableActions" :icon="'eos-icons:loading'" :size="'md'" :label="'Please wait...'"/>
                                     </div>
                                     <div v-else class="max-h-[135px] md:max-h-[270px] overflow-y-auto space-y-2">
-                                        <div>Claimability does not include eligibility, claim limit and leave balance.</div>
+                                        <div class="text-base font-medium font-header">Claimability does not include ineligibility, claim limit and leave balance.</div>
 
-                                        <div>Total claimable: {{dateInquiryClaimableCount}}</div>
+                                        <div class="subtitle-color">Total claimable: {{dateInquiryClaimableCount}}</div>
 
                                         <table class="border-separate font-sans">
                                             <tbody>
@@ -91,13 +90,13 @@
                                         </table>
                                     </div>
                                 </fieldset>
-                                <div v-else class="md:basis-4/12 flex justify-center items-center">
+                                <div v-else class="md:basis-4/12 flex justify-center items-center text-center font-header px-4">
 
                                     <div v-if="modalSubmitPending" class="inline-flex items-center">
                                         <UnorderedList v-if="modalDisableActions" :icon="'eos-icons:loading'" :size="'md'" :label="'Please wait...'"/>
                                     </div>
                                     <div v-else>
-                                        Employee, Leave Type and Date of leave
+                                        Select employee, assigned shift, leave type and date of leave
                                     </div>
                                 </div>
 
@@ -150,9 +149,8 @@
                                         </div>
                                     </div>
 
-                                    <div class="grid gap-2 grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-                                        <div class="col-span-full">Date range automatically skips existing leaves and day offs</div>
-                                        <div class="col-span-2 sm:col-span-1">
+                                    <div class="grid gap-2 grid-cols-3">
+                                        <div>
                                             <InputLabel :size="'sm'" value="Leave Date From"/>
                                             <InputWithIcon
                                                 :disabled="modalDisableActions || !creatingLeave || !assignedLeaveTypeSelectionsOptions.selected || modalCreatingAndCreatedAtLeaseOne"
@@ -163,7 +161,7 @@
                                                 :id="`leave_date_from`"
                                                 :size="'md'" />
                                         </div>
-                                        <div class="col-span-2 sm:col-span-1">
+                                        <div>
                                             <InputLabel :size="'sm'" value="Leave Date To"/>
                                             <InputWithIcon
                                                 :disabled="modalDisableActions || !creatingLeave || !assignedLeaveTypeSelectionsOptions.selected || modalCreatingAndCreatedAtLeaseOne"
@@ -176,6 +174,10 @@
                                         </div>
                                     </div>
 
+                                    <div class="grid gap-2 grid-cols-4">
+                                        <div class="col-span-full subtitle-color">Leave claim automatically skips attendance, existing leaves, out of shift sched. and day offs</div>
+                                    </div>
+
                                     <div v-if="$coreStore.hasNonPromptableServicePayloadMessage" class="block">
                                         <Label invert :size="'sm'" :type="'danger'" :label="$coreStore.servicePayloadMessage" />
                                     </div>
@@ -184,7 +186,7 @@
                         </div>
                     </template>
                     <template #footer>
-                        <div class="mx-auto max-w-screen-xl">
+                        <div class="mx-auto max-w-screen-lg">
                             <div class="flex space-x-2 justify-between">
                                 <div class="space-x-2 inline-flex items-center">
                                     <Button
@@ -297,7 +299,6 @@
 
 <script setup lang="ts">
 import type {DataTableT, TableHeaderT, TableRowT, TableSupHeaderT} from "@/public/js/types/data";
-import type {EnumOption, EnumSelection} from "@/public/js/common/type";
 import type {LabelTypeT} from "@/public/js/types/theme";
 import type {SelectDataType} from "@/public/js/types/form";
 import type {DateTimePickerOptionsT} from "@/public/js/datetimepicker/type";

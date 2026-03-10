@@ -39,24 +39,28 @@
                     </template>
                     <template #content>
                         <div>
-                            <div class="grid gap-2 grid-cols-3">
-                                <div class="col-span-3 md:col-span-2">
-                                    <InputLabel :size="'sm'" value="Select Employee"/>
-                                    <SingleSelectPaginated
-                                        :key="employeeOptionsKey"
-                                        drop-shadow
-                                        value-persist
-                                        :selection-max-viewable-line="10"
-                                        :label="'Select Employee'"
-                                        :size="'md'"
-                                        :icon="'mdi:badge-account-outline'"
-                                        :payload="employeeOptions"/>
-                                </div>
-                            </div>
+                            <fieldset class="neutral-border px-2 pb-2 space-y-2">
+                                <legend class="text-base font-header">Create Employment Profile</legend>
 
-                            <div v-if="$coreStore.hasNonPromptableServicePayloadMessage" class="block">
-                                <Label invert :size="'sm'" :type="'danger'" :label="$coreStore.servicePayloadMessage" />
-                            </div>
+                                <div class="grid gap-2 grid-cols-3">
+                                    <div class="col-span-3 md:col-span-2">
+                                        <InputLabel :size="'sm'" value="Select Employee"/>
+                                        <SingleSelectPaginated
+                                            :key="employeeOptionsKey"
+                                            drop-shadow
+                                            value-persist
+                                            :selection-max-viewable-line="10"
+                                            :label="'Select Employee'"
+                                            :size="'md'"
+                                            :icon="'mdi:badge-account-outline'"
+                                            :payload="employeeOptions"/>
+                                    </div>
+                                    <div v-if="$coreStore.hasNonPromptableServicePayloadMessage" class="col-span-full block">
+                                        <Label invert :size="'sm'" :type="'danger'" :label="$coreStore.servicePayloadMessage" />
+                                    </div>
+                                </div>
+                            </fieldset>
+
                         </div>
                     </template>
                     <template #footer>

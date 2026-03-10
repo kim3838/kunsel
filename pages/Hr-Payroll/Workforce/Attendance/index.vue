@@ -47,7 +47,6 @@
 
                 <DialogModal
                     :show="creatingOrEditing"
-                    :max-width="'1280px'"
                     :closeable="false">
                     <template #title>
 
@@ -55,17 +54,17 @@
                     <template #content>
                         <div ref='modalContentContainer'>
 
-                            <div class="mx-auto max-w-screen-xl">
-                                <div class="text-lg font-header">
-                                    {{attendanceDate}}&nbsp;{{attendanceWeekday}}&nbsp;Attendance
+                            <div class="mx-auto max-w-screen-lg">
+                                <div class="text-lg">
+                                    {{attendanceDateReadable}}&nbsp;{{attendanceWeekday}}&nbsp;Attendance
                                 </div>
-                                <div>
+                                <div class="text-sm subtitle-color">
                                     {{_get(editPayload, 'employee.number', '')}}&nbsp;{{_get(editPayload, 'employee.full_name', '')}}
                                 </div>
 
                             </div>
 
-                            <div class="pt-2 mx-auto max-w-screen-xl flex flex-row gap-4">
+                            <div class="pt-2 mx-auto max-w-screen-lg flex flex-row gap-4">
 
                                 <fieldset class="basis-1/3 neutral-border px-2 pb-2 space-y-2">
                                     <legend class="text-lg font-header">Schedule</legend>
@@ -100,8 +99,8 @@
                                             <div class="text-base">{{overtimeMaxDuration}}</div>
                                         </div>
                                         <div>
-                                            <InputLabel :size="'sm'" value="Is Flexible"/>
-                                            <div class="text-base">{{scheduleIsFlexible}}</div>
+                                            <InputLabel :size="'sm'" value="Holiday policy"/>
+                                            <div class="text-base">{{holidayPolicy}}</div>
                                         </div>
                                     </div>
                                 </fieldset>
@@ -164,7 +163,7 @@
                         </div>
                     </template>
                     <template #footer>
-                        <div class="mx-auto max-w-screen-xl">
+                        <div class="mx-auto max-w-screen-lg">
                             <div class="flex space-x-2 justify-between">
                                 <div class="space-x-2 inline-flex items-center">
                                     <Button
@@ -724,8 +723,10 @@ const scheduleTotalDuration = ref('');
 const attendanceWeekday = ref('');
 const scheduleIsFlexible = ref('');
 const overtimeMaxDuration = ref('');
+const holidayPolicy = ref('');
 const attendanceShiftRequiresLunchOutAndIn = ref(false);
 const attendanceDate = ref('');
+const attendanceDateReadable = ref('');
 const attendanceFirstIn = ref('');
 const attendanceLunchOut = ref('');
 const attendanceLunchIn = ref('');
@@ -745,8 +746,10 @@ const resetEditable = () => {
     attendanceWeekday.value = '';
     scheduleIsFlexible.value = '';
     overtimeMaxDuration.value = '';
+    holidayPolicy.value = '';
     attendanceShiftRequiresLunchOutAndIn.value = false;
     attendanceDate.value = '';
+    attendanceDateReadable.value = '';
     attendanceFirstIn.value = '';
     attendanceLunchOut.value = '';
     attendanceLunchIn.value = '';
@@ -806,11 +809,13 @@ const loadEditable = () => {
 
     scheduleTotalDuration.value = _get(editPayload.value, 'shift_schedule.total_work_hours_with_breaks', '');
     overtimeMaxDuration.value = _get(editPayload.value, 'shift.max_overtime_readable', '');
+    holidayPolicy.value = _get(editPayload.value, 'shift.holiday_policy.text', '');
 
     attendanceWeekday.value = _get(editPayload.value, 'shift_schedule.week_day_name', '');
     scheduleIsFlexible.value = shiftIsFlexible ? 'Yes' : 'No';
 
     attendanceDate.value = _get(editPayload.value, 'date', '');
+    attendanceDateReadable.value = _get(editPayload.value, 'date_readable', '');
     attendanceFirstIn.value = _get(editPayload.value, 'first_in', '');
 
     if(attendanceShiftRequiresLunchOutAndIn.value){

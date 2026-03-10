@@ -1,10 +1,13 @@
 <template>
     <div class="font-data">
-        <div class="text-lg font-header">
+        <div class="text-lg font-medium font-sans">
             {{requestNumber}}
         </div>
-        <div class="text-sm">
-            Requested by: {{requestByUsername}} {{requestByEmployeeNumber}} {{requestByEmployeeFullName}}
+        <div class="text-lg">
+            Leave request
+        </div>
+        <div class="text-sm subtitle-color">
+            Requested by: {{requestByUsername}} ({{requestByEmployeeNumber}}) {{requestByEmployeeFullName}}
         </div>
 
         <fieldset class="mt-4 neutral-border px-2 pb-2 space-y-2">
@@ -14,7 +17,7 @@
                 <div class="grid grid-cols-2 gap-y-2 lg:gap-y-0 lg:grid-cols-3 gap-x-2">
                     <div>
                         <InputLabel :size="'sm'" value="Employee"/>
-                        <div class="text-base">{{employeeNumber}} {{employeeFullName}}</div>
+                        <div class="text-base">({{employeeNumber}}) {{employeeFullName}}</div>
                     </div>
                     <div>
                         <InputLabel :size="'sm'" value="Leave"/>

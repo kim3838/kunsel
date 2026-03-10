@@ -1,10 +1,13 @@
 <template>
     <div class="font-data">
-        <div class="text-lg font-header">
+        <div class="text-lg font-medium font-sans">
             {{requestNumber}}
         </div>
-        <div class="text-sm">
-            Submitted by: {{requestByUsername}} {{requestByEmployeeNumber}} {{requestByEmployeeFullName}}
+        <div class="text-lg">
+            Payroll request
+        </div>
+        <div class="text-sm subtitle-color">
+            Submitted by: {{requestByUsername}} ({{requestByEmployeeNumber}}) {{requestByEmployeeFullName}}
         </div>
 
         <fieldset class="mt-4 neutral-border px-2 pb-2 space-y-2">

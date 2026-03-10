@@ -40,7 +40,6 @@
 
                 <DialogModal
                     :show="creatingOrEditing"
-                    :max-width="'1280px'"
                     :closeable="false">
                     <template #title>
 
@@ -48,16 +47,16 @@
                     <template #content>
                         <div ref='modalContentContainer'>
 
-                            <div v-if="!creatingOvertime || validOvertimeFoundations" class="mx-auto max-w-screen-xl">
-                                <div class="text-lg font-header">
-                                    {{attendanceDate}}&nbsp;{{attendanceWeekday}}&nbsp;{{creatingOvertime ? 'Create overtime' : 'Overtime'}}
+                            <div v-if="!creatingOvertime || validOvertimeFoundations" class="mx-auto max-w-screen-lg">
+                                <div class="text-lg">
+                                    {{attendanceDateReadable}}&nbsp;{{attendanceWeekday}}&nbsp;{{creatingOvertime ? 'Create overtime' : 'Overtime'}}
                                 </div>
-                                <div>
+                                <div class="text-sm subtitle-color">
                                     {{attendanceEmployeeNumber}}&nbsp;{{attendanceEmployeeFullName}}
                                 </div>
                             </div>
 
-                            <div class="pt-2 mx-auto max-w-screen-xl flex flex-row gap-4">
+                            <div class="pt-2 mx-auto max-w-screen-lg flex flex-row gap-4">
 
                                 <fieldset v-if="!creatingOvertime || validOvertimeFoundations" class="basis-1/4 neutral-border px-2 pb-2 space-y-2">
                                     <legend class="text-lg font-header">Schedule</legend>
@@ -80,16 +79,16 @@
                                             <div class="text-base">{{overtimeMaxDuration}}</div>
                                         </div>
                                         <div>
-                                            <InputLabel :size="'sm'" value="Is Flexible"/>
-                                            <div class="text-base">{{scheduleIsFlexible}}</div>
+                                            <InputLabel :size="'sm'" value="Holiday policy"/>
+                                            <div class="text-base">{{holidayPolicy}}</div>
                                         </div>
                                     </div>
                                 </fieldset>
-                                <div v-else class="basis-4/12 flex justify-center items-center">
-                                    Select Employee, Shift, and Attendance of overtime
+                                <div v-else class="basis-1/4 flex justify-center items-center text-center font-header px-4">
+                                    Select employee, assigned shift, and attendance of overtime
                                 </div>
 
-                                <fieldset class="basis-8/12 neutral-border px-2 pb-2 space-y-2">
+                                <fieldset class="basis-3/4 neutral-border px-2 pb-2 space-y-2">
                                     <legend class="text-lg font-header">{{creatingOvertime ? 'Create overtime' : 'Overtime'}}</legend>
 
                                     <div class="grid gap-2 grid-cols-4">
@@ -170,7 +169,7 @@
                         </div>
                     </template>
                     <template #footer>
-                        <div class="mx-auto max-w-screen-xl">
+                        <div class="mx-auto max-w-screen-lg">
                             <div class="flex space-x-2 justify-between">
                                 <div class="space-x-2 inline-flex items-center">
                                     <Button
@@ -667,6 +666,7 @@ const put = (row: TableRowT | null = null) => {
         scheduleTotalDuration.value = _get(editPayload.value, 'shift_schedule.total_work_hours_with_breaks', '');
         scheduleIsFlexible.value = _get(editPayload.value, 'shift_schedule.is_flexible', false) ? 'Yes' : 'No';
         overtimeMaxDuration.value = _get(editPayload.value, 'shift.max_overtime_readable', '');
+        holidayPolicy.value = _get(editPayload.value, 'shift.holiday_policy.text', '');
         employeeOptions.selected = _get(editPayload.value, 'employee.id', null);
         employeeOptionsKey.value++;
         assignedShiftSelectionsOptions.selected = _get(editPayload.value, 'shift.id', null);
@@ -675,6 +675,7 @@ const put = (row: TableRowT | null = null) => {
         attendanceEmployeeNumber.value = _get(editPayload.value, 'employee.number', '');
         attendanceEmployeeFullName.value = _get(editPayload.value, 'employee.full_name', '');
         attendanceDate.value = _get(editPayload.value, 'attendance.date', '');
+        attendanceDateReadable.value = _get(editPayload.value, 'attendance.date_readable', '');
         attendanceWeekday.value = _get(editPayload.value, 'shift_schedule.week_day_name', '');
         attendanceLastOut.value = _get(editPayload.value, 'attendance.last_out', '');
         overtimeStart.value = _get(editPayload.value, 'start', '');
@@ -683,12 +684,14 @@ const put = (row: TableRowT | null = null) => {
 
         scheduleWorkPeriod.value = '';
         overtimeMaxDuration.value = '';
+        holidayPolicy.value = '';
         scheduleTotalDuration.value = '';
         scheduleIsFlexible.value = '';
         attendanceId.value = '';
         attendanceEmployeeNumber.value = '';
         attendanceEmployeeFullName.value = '';
         attendanceDate.value = nuxtApp.$moment().format("YYYY-MM-DD");
+        attendanceDateReadable.value = '';
         attendanceWeekday.value = '';
         attendanceLastOut.value = '';
         validOvertimeFoundations.value = false;
@@ -741,10 +744,12 @@ const scheduleWorkPeriod = ref('');
 const scheduleTotalDuration = ref('');
 const scheduleIsFlexible = ref('');
 const overtimeMaxDuration = ref('');
+const holidayPolicy = ref('');
 const attendanceId = ref<string | number>('');
 const attendanceEmployeeNumber = ref('');
 const attendanceEmployeeFullName = ref('');
 const attendanceDate = ref('');
+const attendanceDateReadable = ref('');
 const attendanceWeekday = ref('');
 const attendanceLastOut = ref('');
 const validOvertimeFoundations = ref(false);
@@ -765,10 +770,12 @@ const resetEditable = () => {
     scheduleTotalDuration.value = '';
     scheduleIsFlexible.value = '';
     overtimeMaxDuration.value = '';
+    holidayPolicy.value = '';
     attendanceId.value = '';
     attendanceEmployeeNumber.value = '';
     attendanceEmployeeFullName.value = '';
     attendanceDate.value = '';
+    attendanceDateReadable.value = '';
     attendanceWeekday.value = '';
     attendanceLastOut.value = '';
     validOvertimeFoundations.value = false;
@@ -1022,6 +1029,9 @@ const creatingAttendanceInitializedAttendanceDate = async (value: string) => {
             } else {
 
                 validOvertimeFoundations.value = true;
+
+                attendanceDateReadable.value = _get(_attendance, 'date_readable', '');
+
                 attendanceId.value = _get(_attendance, 'id', '');
                 let shiftIsFlexible = _get(_attendance, 'shift_schedule.is_flexible', false) as boolean;
 
@@ -1029,6 +1039,7 @@ const creatingAttendanceInitializedAttendanceDate = async (value: string) => {
                 scheduleTotalDuration.value = _get(_attendance, 'shift_schedule.total_work_hours_with_breaks', '');
                 scheduleIsFlexible.value = shiftIsFlexible ? 'Yes' : 'No';
                 overtimeMaxDuration.value = _get(_attendance, 'shift.max_overtime_readable', '');
+                holidayPolicy.value = _get(_attendance  , 'shift.holiday_policy.text', '');
 
                 attendanceEmployeeNumber.value = _get(_attendance, 'employee.number', '');
                 attendanceEmployeeFullName.value = _get(_attendance, 'employee.full_name', '');

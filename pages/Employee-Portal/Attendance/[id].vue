@@ -13,12 +13,12 @@
                 <div class="px-[20px] space-y-6">
 
                     <div>
-                        <div class="font-medium text-lg font-header">{{title}}</div>
-                        <div class="text-sm">{{subTitle}}</div>
+                        <div class="text-lg font-medium">{{title}}</div>
+                        <div class="text-sm subtitle-color">{{subTitle}}</div>
                     </div>
 
                     <div class="space-y-2">
-                        <div class="text-lg font-medium font-header">Schedule</div>
+                        <div class="text-lg font-medium">Schedule</div>
 
                         <DataTable
                             :headers="scheduleHeaders"
@@ -29,7 +29,7 @@
                     </div>
 
                     <div class="space-y-2">
-                        <div class="text-lg font-medium font-header">Attendance</div>
+                        <div class="text-lg font-medium">Attendance</div>
 
                         <DataTable
                             :headers="attendanceHeaders"
@@ -40,7 +40,7 @@
                     </div>
 
                     <div class="space-y-2">
-                        <div class="text-lg font-medium font-header">Attendance Breakdown</div>
+                        <div class="text-lg font-medium">Attendance Breakdown</div>
 
                         <DataTable
                             :sup-headers="attendanceBreakdownSupHeaders"
