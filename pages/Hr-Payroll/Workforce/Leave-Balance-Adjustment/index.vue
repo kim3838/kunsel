@@ -68,6 +68,7 @@
                                                 ref="leaveTypeSingleSelectPaginated"
                                                 :key="assignedLeaveTypeSelectionsOptionsKey"
                                                 :disabled="modalDisableActions || !employeeOptions.selected"
+                                                :pre-selected-identifier-filter="'leave_type_id'"
                                                 drop-shadow
                                                 value-persist
                                                 :selection-max-viewable-line="10"
@@ -586,6 +587,7 @@ const put = async (row: TableRowT | null = null) => {
         }
 
         assignedLeaveTypeSelectionsOptions.selected = _get(editPayload.value, 'leave_type.id', null);
+        assignedLeaveTypeSelectionsOptions.fetch.filters.employee_id = employeeOptions.selected;
         assignedLeaveTypeSelectionsOptionsKey.value++;
 
         effectiveDate.value = _get(editPayload.value, 'effective_date', '');
@@ -692,6 +694,9 @@ const assignedLeaveTypeSelectionsOptionsKey = shallowRef(0);
 const assignedLeaveTypeSelectionsOptions = reactive({
     fetch: {
         url: '/api/leave-type-assignment-selections',
+        query_params: {
+            company_id: selectedAssociatedCompanyId.value,
+        },
         filters: {
             employee_id: employeeOptions.selected as number | null,
             company_id: selectedAssociatedCompanyId.value,
