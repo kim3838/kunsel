@@ -202,6 +202,10 @@ const props = defineProps({
     size: {
         default: 'md'
     },
+    preSelectedIdentifierFilter: {
+        type: String,
+        default: 'id'
+    }
 });
 
 let active = ref(!!props.alwaysActive);
@@ -446,7 +450,7 @@ let selectedParamsComputed = computed(() => {
         perPage: 1,
         ...props.payload.fetch.query_params,
         filters: {
-            id: selected ? Array.of(selected) : []
+            [props.preSelectedIdentifierFilter]: selected ? selected : null
         }
     };
 });
