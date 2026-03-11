@@ -320,7 +320,7 @@
                             </template>
                             <template v-slot:cell.actions="{cell,slot}">
                                 <div class="mx-0.5 space-x-0.5 flex items-center">
-                                    <Button v-if="cell.isSelectable" @click="stagePayrollPayload(cell)" :size="slot.buttonSize" :variant="'outline'"  :label="cell.payroll ? 'Regenerate' : 'Generate'" />
+                                    <Button v-if="cell.isSelectable" @click="stagePayrollPayload(cell)" :size="slot.buttonSize" :variant="'outline'" :label="cell.payroll ? 'Regenerate payroll' : 'Run payroll'" />
                                 </div>
                             </template>
                             <template v-slot:cell.payroll_status="{cell,slot}">
@@ -355,7 +355,7 @@
                             </template>
                             <template v-slot:cell.actions="{cell,slot}">
                                 <div class="mx-0.5 space-x-0.5 flex items-center">
-                                    <Button @click="stagePayrollPayload(cell)" :size="slot.buttonSize" :variant="'outline'" :label="cell.payroll ? 'Regenerate' : 'Generate'" />
+                                    <Button @click="stagePayrollPayload(cell)" :size="slot.buttonSize" :variant="'outline'" :label="cell.payroll ? 'Regenerate payroll' : 'Run payroll'" />
                                 </div>
                             </template>
                             <template v-slot:cell.payroll_status="{cell,slot}">
