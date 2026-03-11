@@ -7,12 +7,14 @@ export type UserT = {
     username: string,
     email: string,
     timezone: string,
+    employable: boolean,
 }
 
 export type UserFormT = {
-    account_id: string | number,
+    account_id?: string | number,
     status: string | number,
     timezone: string | null,
+    employable: boolean,
     name?: string,
     email?: string,
     password?: string,

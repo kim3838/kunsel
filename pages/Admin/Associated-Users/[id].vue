@@ -86,6 +86,19 @@
                         </div>
                     </div>
 
+                    <div class="flex flex-row flex-wrap gap-2 items-center min-h-8">
+                        <div class="h-8 flex flex-row items-center scaffold-border px-2">
+                            <label class="flex items-center">
+                                <Checkbox
+                                    :disabled="disableActions"
+                                    name="employable"
+                                    v-model="employable"
+                                    :size="'md'"
+                                    :label="'Employable'" />
+                            </label>
+                        </div>
+                    </div>
+
                     <div v-if="creatingAssociatedUser" class="grid gap-2 grid-cols-4 sm:grid-cols-5 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-8">
                         <Button class="w-min" :disabled="disableActions" @click="createUserFormSubmit" :size="'md'" :icon="disableActions ? 'eos-icons:loading' : 'mdi:data'" :label="createUserFormSubmitLabel"></Button>
                     </div>
@@ -196,6 +209,9 @@ const roleOptions = reactive<{
     selection: [],
     selected: []
 });
+
+const employable = ref(false);
+
 const fetchAssociatedRoles = async() => {
 
     await laraFetch('/api/role-selections', {
@@ -273,6 +289,7 @@ const fetchAssociatedUser = async () => {
             emailVerifiedAt.value = _get(response, '_data.values.user.email_verified_at', '');
             userStatusOptions.selected = _get(response, '_data.values.user.status.value', userStatusOptions.selected);
             timezoneOptions.selected = _get(response, '_data.values.user.timezone', null);
+            employable.value = _get(response, '_data.values.user.employable', false);
             roleOptions.selected = _get(response, '_data.values.user.roles', []);
         },
     }, false);
@@ -377,6 +394,7 @@ const userFormBody = computed(() => {
         account_id: persistAccount.value,
         status: userStatusOptions.selected as number,
         timezone: timezoneOptions.selected,
+        employable: employable.value,
         role_ids: roleOptions.selected
     };
 
@@ -481,6 +499,7 @@ const createUserFormBody = computed(() => {
         password_confirmation: confirmPassword.value,
         status: userStatusOptions.selected,
         timezone: timezoneOptions.selected,
+        employable: employable.value,
         role_ids: roleOptions.selected
     };
 });
