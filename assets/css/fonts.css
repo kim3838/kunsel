@@ -106,6 +106,35 @@
 /**********************************************************************************************************************/
 
 @font-face {
+    font-family: "Aptos Narrow";
+    src: url('/fonts/aptos-narrow/ttf/Aptos-Narrow.ttf') format('truetype');
+    font-style: normal;
+    font-stretch: normal;
+    font-display: swap;
+    font-weight: 400;
+}
+
+@font-face {
+    font-family: "Aptos Narrow";
+    src: url('/fonts/aptos-narrow/ttf/Aptos-SemiBold.ttf') format('truetype');
+    font-style: normal;
+    font-stretch: normal;
+    font-display: swap;
+    font-weight: 500;
+}
+
+@font-face {
+    font-family: "Aptos Narrow";
+    src: url('/fonts/aptos-narrow/ttf/Aptos-Narrow-Bold.ttf') format('truetype');
+    font-style: normal;
+    font-stretch: normal;
+    font-display: swap;
+    font-weight: 600;
+}
+
+/**********************************************************************************************************************/
+
+@font-face {
     font-family: "'M+ 2m'";
     src: url('/fonts/m-2m/m2m-regular.woff2') format('woff2'),
     url('/fonts/m-2m/m2m-regular.woff') format('woff');

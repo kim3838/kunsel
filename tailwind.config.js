@@ -50,6 +50,7 @@ module.exports = {
                     'Bruno Ace SC',
                 ],
                 data: [
+                    'Aptos Narrow',
                     'Gentium Plus',
                     'Tinos',
                     'Reddit Sans Condensed',
@@ -63,6 +64,7 @@ module.exports = {
                     'Momo Trust Sans',
                 ],
                 standard: [
+                    'Aptos Narrow',
                     'Gentium Plus',
                     'Tinos',
                     'Reddit Sans Condensed',
