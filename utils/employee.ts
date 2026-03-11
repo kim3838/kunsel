@@ -23,6 +23,13 @@ export const  EMPLOYEE_USER_CREATION: NumericEnumInterface = {
     MANUAL : 3,
 }
 
+export const PH_IDENTIFICATION_TYPE_HEADERS: StringEnumInterface = {
+    PH_SSS : 'PH.2: SSS',
+    PH_PHILHEALTH : 'PH.3: Philhealth',
+    PH_PAG_IBIG : 'PH.4: Pag-IBIG',
+    PH_TIN : 'PH.5: TIN',
+}
+
 export const PH_IDENTIFICATION_TYPE: StringEnumInterface = {
     PH_SSS : 'PH.2',
     PH_PHILHEALTH : 'PH.3',

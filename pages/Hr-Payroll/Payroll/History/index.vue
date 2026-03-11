@@ -472,7 +472,7 @@ const payrollsExecute = async() =>{
                     ...payroll,
                     _payload: {
                         'label_shade': {
-                            'cell': ['number', 'copy_payroll_number_to_clipboard', 'status', 'remarks', 'year', 'month_readable'],
+                            'cell': ['number', 'copy_payroll_number_to_clipboard', 'status', 'year', 'month_readable'],
                             'value': shade
                         }
                     }

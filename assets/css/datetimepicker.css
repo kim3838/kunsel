@@ -150,13 +150,13 @@
     height: 1.75rem;
     line-height: 2rem;
     font-size: 0.875rem;
-    font-weight: 600;
+    font-weight: 500;
     border-radius: 4px;
     cursor: pointer;
 }
 
 .daterangepicker .calendar-table th option{
-    font-weight: 600;
+    font-weight: 500;
 }
 
 .daterangepicker .calendar-table td {

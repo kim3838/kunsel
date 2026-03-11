@@ -2,9 +2,9 @@
     <div class="mx-auto max-w-screen-lg">
         <div class="flex flex-wrap gap-2">
             <div class="grow p-2">
-                <p class="text-lg font-medium font-business">Contact Us</p>
+                <p class="text-lg font-medium">Contact Us</p>
 
-                <div class="mt-2 space-y-2 font-sans">
+                <div class="mt-2 space-y-2">
                     <UnorderedList
                         class="flex"
                         :size="listSize"
@@ -15,7 +15,7 @@
                         class="flex"
                         :size="listSize"
                         :icon="'ic:sharp-phone'"
-                        :label="'880- 3892 18'"/>
+                        :label="'+63 99161 80206'"/>
 
                     <UnorderedList
                         class="flex"
@@ -38,7 +38,7 @@ const {
     accent: accentColor,
 } = storeToRefs($themeStore);
 
-const listSize = ref('sm');
+const listSize = ref('md');
 </script>
 
 <style scoped>

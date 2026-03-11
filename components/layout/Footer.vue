@@ -124,7 +124,7 @@ defineProps({
 
 const footerClass = computed(()=>{
     return [
-        ...(isAuthenticated.value ? [] : ['font-sans'])
+        ...(isAuthenticated.value ? [] : ['font-standard'])
     ]
 })
 </script>
