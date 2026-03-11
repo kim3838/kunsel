@@ -50,10 +50,10 @@ module.exports = {
                     'Bruno Ace SC',
                 ],
                 data: [
-                    `'Source Serif 4'`,
+                    'Gentium Plus',
+                    'Tinos',
                     'Reddit Sans Condensed',
                     'Ruluko',
-                    'Gentium Plus',
                     'Sofia Sans Semi Condensed',
                 ],
                 header: [
@@ -63,10 +63,10 @@ module.exports = {
                     'Momo Trust Sans',
                 ],
                 standard: [
-                    `'Source Serif 4'`,
+                    'Gentium Plus',
+                    'Tinos',
                     'Reddit Sans Condensed',
                     'Ruluko',
-                    'Gentium Plus',
                     'Sofia Sans Semi Condensed',
                 ],
                 label: [
