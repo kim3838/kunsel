@@ -3,11 +3,14 @@
         <div class="text-lg font-medium font-sans">
             {{requestNumber}}
         </div>
-        <div class="text-lg">
+        <div class="text-base">
             Payroll request
         </div>
         <div class="text-sm subtitle-color">
             Submitted by: {{requestByUsername}} {{requestByEmployeeNumberComputed}} {{requestByEmployeeFullName}}
+        </div>
+        <div class="text-sm subtitle-color">
+            Payroll number: {{payrollNumber}}
         </div>
 
         <fieldset class="mt-4 neutral-border px-2 pb-2 space-y-2">
@@ -48,6 +51,8 @@ const statusSummary = ref(REQUEST_APPROVAL_STATUS.NOT_SPECIFIED);
 
 const remarks = ref('');
 
+const payrollNumber = ref('');
+
 requestNumber.value = _get(props.payrollRequestPayload, 'number', '');
 requestByUsername.value = _get(props.payrollRequestPayload, 'requested_by.username', '');
 requestByEmployeeNumber.value = _get(props.payrollRequestPayload, 'requested_by.company_employee_number', null);
@@ -58,6 +63,8 @@ requestByEmployeeFullName.value = _get(props.payrollRequestPayload, 'requested_b
 statusSummary.value = _get(props.payrollRequestPayload, 'status_summary.value', REQUEST_APPROVAL_STATUS.NOT_SPECIFIED);
 
 remarks.value = _get(props.payrollRequestPayload, 'remarks', '');
+
+payrollNumber.value = _get(props.payrollRequestPayload, 'payroll.number', 'Payroll # not found');
 </script>
 
 <style scoped>

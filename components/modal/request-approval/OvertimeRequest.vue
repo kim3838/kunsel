@@ -3,7 +3,7 @@
         <div class="text-lg font-medium font-sans">
             {{requestNumber}}
         </div>
-        <div class="text-lg">
+        <div class="text-base">
             {{attendanceDate}} {{attendanceWeekday}} Overtime request
         </div>
         <div class="text-sm subtitle-color">

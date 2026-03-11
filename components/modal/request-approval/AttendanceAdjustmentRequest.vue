@@ -3,7 +3,7 @@
         <div class="text-lg font-medium font-sans">
             {{requestNumber}}
         </div>
-        <div class="text-lg">
+        <div class="text-base">
             {{attendanceDateReadable}} {{attendanceWeekday}} attendance adjustment
         </div>
         <div class="text-sm subtitle-color">
