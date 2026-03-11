@@ -345,6 +345,13 @@ export const useLayout = () => {
                             route_active: `${hrPayrollRouteSlug}-workforce-employment-profiles`
                         },
                         {
+                            key: `${hrPayrollRouteSlug}/workforce/identifications`,
+                            type: 'link',
+                            title: 'Identifications',
+                            to: `/${hrPayrollRouteSlug}/workforce/identifications`,
+                            route_active: `${hrPayrollRouteSlug}-workforce-identifications`
+                        },
+                        {
                             key: `${hrPayrollRouteSlug}/workforce/departments`,
                             type: 'link',
                             title: 'Departments',

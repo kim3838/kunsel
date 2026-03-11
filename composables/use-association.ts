@@ -59,6 +59,7 @@ export const useAssociation = () => {
             `${hrPayrollRouteSlug}-workforce-employees`,
             `${hrPayrollRouteSlug}-workforce-employee-groups`,
             `${hrPayrollRouteSlug}-workforce-employment-profiles`,
+            `${hrPayrollRouteSlug}-workforce-identifications`,
             `${hrPayrollRouteSlug}-workforce-departments`,
             `${hrPayrollRouteSlug}-workforce-designations`,
             `${hrPayrollRouteSlug}-workforce-attendance`,
