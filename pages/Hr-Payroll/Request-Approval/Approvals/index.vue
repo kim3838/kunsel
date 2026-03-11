@@ -114,6 +114,9 @@
                         <template v-slot:cell.request_number="{cell,slot}">
                             <div class="p-[3px] hover:underline cursor-pointer" @click="viewRequestable(cell)">{{cell.requestable.number}}</div>
                         </template>
+                        <template v-slot:cell.requestable_type_readable="{cell,slot}">
+                            <div class="p-[3px]" :title="cell.requestable.type_readable">{{wordClamp(cell.requestable.type_readable, 20)}}</div>
+                        </template>
                         <template v-slot:cell.date_requested_diff="{cell,slot}">
                             <div class="p-[3px]">{{cell.requestable.date_requested_diff}}</div>
                         </template>
@@ -184,6 +187,7 @@ const $enumerableOption = nuxtApp.$enumerableOption as (enumerable: StringEnumIn
     text: string,
     value: number
 };
+const wordClamp = nuxtApp.$wordClamp as (text: string, length: number) => string;
 const {render} = dateTimePicker();
 const clientReadyState = useClientReadyState();
 const common = useCommon();
@@ -230,7 +234,7 @@ const approvalStatesSupHeaders = reactive<TableSupHeaderT[]>([
     {text: ''},
     {text: ''},
 
-    {text: '', colspan: 2,  alignHeader: 'left'},
+    {text: 'Request', colspan: 3,  alignHeader: 'left'},
 
     {text: 'Approval', colspan: 4,  alignHeader: 'left'},
 
@@ -243,7 +247,8 @@ const approvalStatesHeaders = reactive<TableHeaderT[]>([
     { text: '#', value: 'row_number'},
     { text: '', value: 'actions', minWidth: '33px'},
 
-    { text: 'Request #', value: 'request_number', isNumeric: true},
+    { text: '#', value: 'request_number', isNumeric: true},
+    { text: '', value: 'requestable_type_readable'},
     { text: '', value: 'date_requested_diff'},
 
     { text: 'Order', value: 'order'},
