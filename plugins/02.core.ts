@@ -122,10 +122,10 @@ export default defineNuxtPlugin(nuxtApp => {
 
     nuxtApp.provide('enumerableOption', function (
         enumerable: StringEnumInterface,
-        value: number,
+        value: number|string,
     ): {
         text: string,
-        value: number
+        value: number|string
     } {
 
         return {

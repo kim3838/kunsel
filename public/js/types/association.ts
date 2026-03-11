@@ -9,6 +9,9 @@ export interface AssignedCompanyPayloadT {
     employee: EmployeeT | null,
     currency: string,
     timezone: string,
+    country: {
+        iso2: string,
+    }
     account: {
         id: number,
         ulid: string,

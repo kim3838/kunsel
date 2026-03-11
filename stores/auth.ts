@@ -29,10 +29,10 @@ export const useAuthStore = defineStore('auth', () => {
         return associatedCompanies.value.singleSelectPayload.selected;
     });
 
-    const selectedAssociatedCompany = computed<AssignedCompanyT | undefined>(() => {
+    const selectedAssociatedCompany = computed<AssignedCompanyT>(() => {
         return associatedCompanies.value.singleSelectPayload.selection.find(
             company => company.value == selectedAssociatedCompanyId.value
-        );
+        ) as AssignedCompanyT;
     });
 
     const selectedAssociatedCompanyAccountId = computed<number | undefined>(() => {
