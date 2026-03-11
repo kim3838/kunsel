@@ -55,7 +55,7 @@
                     <div class="grid gap-2 grid-cols-1 sm:grid-cols-2 md:grid-cols-2">
 
                         <fieldset class="neutral-border px-2 pb-2 space-y-2">
-                            <legend class="text-lbase">Department</legend>
+                            <legend class="text-base">Department</legend>
 
                             <div class="flex flex-row gap-2">
                                 <div>
@@ -97,7 +97,7 @@
                         </fieldset>
 
                         <fieldset class="neutral-border px-2 pb-2 space-y-2">
-                            <legend class="text-lbase">Manager</legend>
+                            <legend class="text-base">Manager</legend>
 
                             <div class="flex flex-row gap-2">
                                 <div>
@@ -126,7 +126,7 @@
                         </fieldset>
 
                         <fieldset class="neutral-border px-2 pb-2 space-y-2">
-                            <legend class="text-lbase">Designation</legend>
+                            <legend class="text-base">Designation</legend>
 
                             <div class="flex flex-row gap-2">
                                 <div>
@@ -147,7 +147,7 @@
                         </fieldset>
 
                         <fieldset class="neutral-border px-2 pb-2 space-y-2">
-                            <legend class="text-lbase">Payroll group</legend>
+                            <legend class="text-base">Payroll group</legend>
 
                             <div class="flex flex-row gap-2">
                                 <div>
@@ -163,6 +163,24 @@
                                 <div class="w-full" v-show="!payFrequencyKeepCurrentComputed">
                                     <InputLabel :size="'sm'" value="Payroll group"/>
                                     <SingleSelect :disabled="disableActions" :searchable="false" :selection-max-viewable-line="10" drop-shadow :size="'md'" :options="payFrequencyOptions"/>
+                                </div>
+                            </div>
+                        </fieldset>
+
+                        <fieldset class="neutral-border px-2 pb-2 space-y-2">
+                            <legend class="text-base">User account</legend>
+
+                            <div class="flex flex-col">
+                                <div class="flex-none h-[1.25rem]"></div>
+                                <div class="h-8 flex flex-row items-center px-2">
+                                    <label class="flex items-center">
+                                        <Checkbox
+                                            :disabled="disableActions"
+                                            name="unlink-user"
+                                            v-model="userAccountUnlink"
+                                            :size="'md'"
+                                            :label="'Unlink'" />
+                                    </label>
                                 </div>
                             </div>
                         </fieldset>
@@ -313,6 +331,8 @@ const payFrequencyOptions = reactive({
     selected: null
 });
 
+const userAccountUnlink = ref(false);
+
 const disableActions = computed(() => {
     return pending.value;
 });
@@ -343,6 +363,8 @@ const formBody = computed(() => {
 
         keep_pay_frequency: payFrequencyKeepCurrentComputed.value,
         pay_frequency_id: payFrequencyOptions.selected,
+
+        unlink_user_account: userAccountUnlink.value,
 
         employee_identifiers: props.selectedEmployeeIds
     };
@@ -410,6 +432,8 @@ const reset = () => {
 
     payFrequencyKeepCurrent.value = 1;
     payFrequencyOptions.selected = null;
+
+    userAccountUnlink.value = false;
 
     showBulkUpdateErrors.value = false;
     bulkUpdateErrors.value = [];

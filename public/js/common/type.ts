@@ -18,7 +18,7 @@ export interface NumericEnumInterface {
 }
 
 export interface StringEnumInterface {
-    [key: number]: string;
+    [key: number|string]: string;
 }
 
 export type Enum = {

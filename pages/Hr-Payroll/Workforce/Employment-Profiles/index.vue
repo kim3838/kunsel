@@ -99,10 +99,10 @@
 
                     <div class="flex flex-row flex-wrap gap-2 items-center min-h-8" :class="[disableActions ? 'pointer-events-none' : '']">
                         <Button v-if="employmentProfiles.successful" @click="selectEmployee" class="w-min" :disabled="disableActions" :size="'sm'" :icon="'mdi:plus'"></Button>
-                        <Button v-if="employmentProfiles.successful" :variant="'outline'" :size="'sm'" :icon="'mdi:delete-outline'" :disabled="disableActions" :label="'Bulk delete'" @click="confirmDeleteSelected()"/>
                         <div v-if="employmentProfiles.successful" class="scaffold-border px-2 font-[National_Park]">
                             <span><span class="font-semibold">{{selectedEmploymentProfiles.length}}</span> Selected</span>
                         </div>
+                        <Button v-if="employmentProfiles.successful" :variant="'outline'" :size="'sm'" :icon="'mdi:delete-outline'" :disabled="disableActions" :label="'Bulk delete'" @click="confirmDeleteSelected()"/>
                         <Button
                             v-if="employmentProfiles.successful"
                             :variant="'outline'"

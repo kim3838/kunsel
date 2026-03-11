@@ -7,7 +7,7 @@
             Payroll request
         </div>
         <div class="text-sm subtitle-color">
-            Submitted by: {{requestByUsername}} ({{requestByEmployeeNumber}}) {{requestByEmployeeFullName}}
+            Submitted by: {{requestByUsername}} {{requestByEmployeeNumberComputed}} {{requestByEmployeeFullName}}
         </div>
 
         <fieldset class="mt-4 neutral-border px-2 pb-2 space-y-2">
@@ -50,7 +50,10 @@ const remarks = ref('');
 
 requestNumber.value = _get(props.payrollRequestPayload, 'number', '');
 requestByUsername.value = _get(props.payrollRequestPayload, 'requested_by.username', '');
-requestByEmployeeNumber.value = _get(props.payrollRequestPayload, 'requested_by.company_employee_number', '');
+requestByEmployeeNumber.value = _get(props.payrollRequestPayload, 'requested_by.company_employee_number', null);
+const requestByEmployeeNumberComputed = computed(() => {
+    return requestByEmployeeNumber.value ? `(${requestByEmployeeNumber.value})` : '';
+})
 requestByEmployeeFullName.value = _get(props.payrollRequestPayload, 'requested_by.company_employee_full_name', '');
 statusSummary.value = _get(props.payrollRequestPayload, 'status_summary.value', REQUEST_APPROVAL_STATUS.NOT_SPECIFIED);
 

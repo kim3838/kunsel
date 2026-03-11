@@ -169,6 +169,7 @@ export default defineNuxtConfig({
             },
         },
         plugins: [
+            // @ts-ignore
             tailwindcss(),
         ],
         server: {
