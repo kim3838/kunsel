@@ -21,6 +21,13 @@ export type EmploymentProfilePreImportT = {
     end_date: string,
 } & ImportRow;
 
+export type EmployeeIdentificationPreImportT = {
+    employee_number: string,
+    identification_type: string,
+    number: string,
+    readable_number: string,
+} & ImportRow;
+
 export type EmployeePayrollComponentPreImportT = {
     employee_number: string,
     payroll_component_code: string,
@@ -32,8 +39,8 @@ export type EmployeePayrollComponentPreImportT = {
 } & ImportRow;
 
 export type AttendancePreImportT = {
-    employee_id: int,
-    shift_id: int,
+    employee_id: number,
+    shift_id: number,
     employee_number: string,
     shift_code: string,
     date: string,
@@ -46,8 +53,8 @@ export type AttendancePreImportT = {
 } & ImportRow;
 
 export type OvertimePreImportT = {
-    employee_id: int,
-    shift_id: int,
+    employee_id: number,
+    shift_id: number,
     employee_number: string,
     shift_code: string,
     attendance_date: string,

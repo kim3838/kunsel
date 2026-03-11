@@ -590,6 +590,13 @@ export const useLayout = () => {
                             route_active: `${hrPayrollRouteSlug}-import-employment-profile`
                         },
                         {
+                            key: `${hrPayrollRouteSlug}/import/identification`,
+                            type: 'link',
+                            title: 'Identification',
+                            to: `/${hrPayrollRouteSlug}/import/identification`,
+                            route_active: `${hrPayrollRouteSlug}-import-identification`
+                        },
+                        {
                             key: `${hrPayrollRouteSlug}/import/employee-pay-items`,
                             type: 'link',
                             title: 'Employee Pay Items',
