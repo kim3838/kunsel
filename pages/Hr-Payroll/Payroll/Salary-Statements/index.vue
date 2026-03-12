@@ -166,7 +166,7 @@
                         :key="salaryStatementsKey"
                         :sup-headers="salaryStatementsSupHeaders"
                         :headers="salaryStatementsHeaders"
-                        :size="'md'"
+                        :size="'lg'"
                         :rows="salaryStatements.data"
                         v-model="selectedSalaryStatements"
                         selection
@@ -189,7 +189,7 @@
                                     :parent-icon="'ic:baseline-arrow-right'"
                                     in-horizontal-scrollable
                                     divider
-                                    :size="`xs`"
+                                    :size="`sm`"
                                     :drop-shadow-size="`xl`"
                                     :title="'Menu'"
                                     :drop-align="'top'"
@@ -201,7 +201,7 @@
                             </div>
                         </template>
                         <template v-slot:cell.payroll_number="{cell,slot}">
-                            <div class="px-[3px]" :title="cell.payroll?.number">{{wordClamp(cell.payroll?.number, showPayrollColumns ? 20 : 8)}}</div>
+                            <div class="px-[3px] font-medium" :title="cell.payroll?.number">{{wordClamp(cell.payroll?.number, showPayrollColumns ? 20 : 8)}}</div>
                         </template>
                         <template v-slot:cell.payroll_status="{cell,slot}">
                             <div class="flex space-x-1 px-[0.3rem] items-center">
@@ -397,7 +397,7 @@ const salaryStatementsSupHeaders = computed<TableSupHeaderT[]>(() => {
         {text: ''},
 
         ...(showPayrollColumns.value ? [
-            {text: 'Payroll', colspan: 8, alignHeader: 'center'},
+            {text: 'Payroll', colspan: 7, alignHeader: 'center'},
         ] : [
             {text: '', colspan: 1, alignHeader: 'center'},
         ]),
@@ -428,7 +428,6 @@ const salaryStatementsHeaders = computed<TableHeaderT[]>(() => {
             { text: 'Sequence', value: 'frequency_sequence'},
 
             { text: 'Period', value: 'date_range_readable'},
-            { text: 'Remarks', value: 'remarks'},
         ] : [
             { text: 'Payroll #', value: 'payroll_number', alignData: 'left'},
         ]),

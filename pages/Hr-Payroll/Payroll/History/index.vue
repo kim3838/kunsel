@@ -192,7 +192,7 @@
                             </div>
                         </template>
                         <template v-slot:cell.number="{cell,slot}">
-                            <div class="p-[3px] hover:underline cursor-pointer" :title="cell.number" @click="copy(cell.number);">{{wordClamp(cell.number, showPayrollColumns ? 20 : 10)}}</div>
+                            <div class="p-[3px] font-medium hover:underline cursor-pointer" :title="cell.number" @click="copy(cell.number);">{{wordClamp(cell.number, showPayrollColumns ? 20 : 10)}}</div>
                         </template>
                         <template v-slot:cell.copy_payroll_number_to_clipboard="{cell,slot}">
                             <div v-if="clipBoardSupported" class="text-base h-[32px]" :title="'Copy payroll number'" @click="copy(cell.number);">
