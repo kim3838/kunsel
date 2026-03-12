@@ -17,7 +17,7 @@
                             <SingleSelect
                                 :searchable="false"
                                 drop-shadow
-                                :selection-max-viewable-line="6"
+                                :selection-max-viewable-line="10"
                                 :size="'md'"
                                 :label="'Select Compensation Formula'"
                                 :options="compensationFormulaOptions"
@@ -30,10 +30,22 @@
                             <SingleSelect
                                 :searchable="false"
                                 drop-shadow
-                                :selection-max-viewable-line="4"
+                                :selection-max-viewable-line="10"
                                 :size="'md'"
                                 :label="'Select Compensation Type'"
                                 :options="compensationTypeSingleSelect"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><InputLabel :size="'md'" value="Sub-type" /></td>
+                        <td>
+                            <SingleSelect
+                                :searchable="false"
+                                drop-shadow
+                                :selection-max-viewable-line="10"
+                                :size="'md'"
+                                :label="'Select Compensation Sub-type'"
+                                :options="formulableComponentSubTypeOptions"/>
                         </td>
                     </tr>
                     <tr>
@@ -77,10 +89,16 @@
 </template>
 
 <script setup lang="ts">
-import {storeToRefs} from "pinia";
 import type {CompanyFormulaT} from "@/public/js/types/company-component";
+import type {StringEnumInterface} from "@/public/js/common/type";
+import {storeToRefs} from "pinia";
+
 const {isAuthenticated, userIsSuperAdmin} = useAuth();
 const nuxtApp = useNuxtApp();
+const $enumerableOption = nuxtApp.$enumerableOption as (enumerable: StringEnumInterface, value: number|string) => {
+    text: string,
+    value: number|string
+};
 const {
     updatedAssociatedCompanyFlag
 } = storeToRefs(nuxtApp.$associationStore);
@@ -126,8 +144,74 @@ const compensationTypeSingleSelect = reactive({
     selected: null
 });
 
+const formulableComponentSubTypeOptions = reactive({
+    search: '',
+    selection: [
+        $enumerableOption(FORMULABLE_COMPONENT_SUB_TYPE_NAME, FORMULABLE_COMPONENT_SUB_TYPE.BASIC_PAY as string),
+        $enumerableOption(FORMULABLE_COMPONENT_SUB_TYPE_NAME, FORMULABLE_COMPONENT_SUB_TYPE.REGULAR_ALLOWANCE as string),
+        $enumerableOption(FORMULABLE_COMPONENT_SUB_TYPE_NAME, FORMULABLE_COMPONENT_SUB_TYPE.MEAL_ALLOWANCE as string),
+        $enumerableOption(FORMULABLE_COMPONENT_SUB_TYPE_NAME, FORMULABLE_COMPONENT_SUB_TYPE.TRANSPORTATION_ALLOWANCE as string),
+        $enumerableOption(FORMULABLE_COMPONENT_SUB_TYPE_NAME, FORMULABLE_COMPONENT_SUB_TYPE.OVERTIME as string),
+        $enumerableOption(FORMULABLE_COMPONENT_SUB_TYPE_NAME, FORMULABLE_COMPONENT_SUB_TYPE.STATUTORY_BENEFIT_13TH_MONTH as string),
+        $enumerableOption(FORMULABLE_COMPONENT_SUB_TYPE_NAME, FORMULABLE_COMPONENT_SUB_TYPE.NONSTATUTORY_BENEFIT_BONUS as string),
+        $enumerableOption(FORMULABLE_COMPONENT_SUB_TYPE_NAME, FORMULABLE_COMPONENT_SUB_TYPE.LEAVE_PAY as string),
+        $enumerableOption(FORMULABLE_COMPONENT_SUB_TYPE_NAME, FORMULABLE_COMPONENT_SUB_TYPE.HOLIDAY_PAY as string),
+    ],
+    selected: null
+});
+
 const compensationCode = ref('');
 const compensationName = ref('');
+
+watch(() => formulableComponentSubTypeOptions.selected, (newValue) => {
+    if(!Boolean(props.editPayload.id)){
+        if(newValue == FORMULABLE_COMPONENT_SUB_TYPE.BASIC_PAY){
+            compensationCode.value = 'BASICPAY';
+            compensationName.value = 'Basic pay';
+            assignable.selected = 1;
+        }
+        if(newValue == FORMULABLE_COMPONENT_SUB_TYPE.REGULAR_ALLOWANCE){
+            compensationCode.value = 'REGULAR-ALLOWANCE';
+            compensationName.value = 'Regular allowance';
+            assignable.selected = 1;
+        }
+        if(newValue == FORMULABLE_COMPONENT_SUB_TYPE.MEAL_ALLOWANCE){
+            compensationCode.value = 'MEAL';
+            compensationName.value = 'Meal allowance';
+            assignable.selected = 1;
+        }
+        if(newValue == FORMULABLE_COMPONENT_SUB_TYPE.TRANSPORTATION_ALLOWANCE){
+            compensationCode.value = 'TRANSPORTATION';
+            compensationName.value = 'Transportation allowance';
+            assignable.selected = 1;
+        }
+        if(newValue == FORMULABLE_COMPONENT_SUB_TYPE.OVERTIME){
+            compensationCode.value = 'OVERTIME';
+            compensationName.value = 'Overtime';
+            assignable.selected = 1;
+        }
+        if(newValue == FORMULABLE_COMPONENT_SUB_TYPE.LEAVE_PAY){
+            compensationCode.value = 'LEAVE-PAY';
+            compensationName.value = 'Leave pay';
+            assignable.selected = 0;
+        }
+        if(newValue == FORMULABLE_COMPONENT_SUB_TYPE.HOLIDAY_PAY){
+            compensationCode.value = 'HOLIDAY-PAY';
+            compensationName.value = 'Holiday pay';
+            assignable.selected = 0;
+        }
+        if(newValue == FORMULABLE_COMPONENT_SUB_TYPE.NONSTATUTORY_BENEFIT_BONUS){
+            compensationCode.value = 'BONUS';
+            compensationName.value = 'Bonus';
+            assignable.selected = 1;
+        }
+        if(newValue == FORMULABLE_COMPONENT_SUB_TYPE.STATUTORY_BENEFIT_13TH_MONTH){
+            compensationCode.value = '13THMONTH';
+            compensationName.value = '13th month pay';
+            assignable.selected = 1;
+        }
+    }
+})
 
 const assignable = reactive({
     selection: [
@@ -211,6 +295,7 @@ const form = computed(() => {
         'name': compensationName.value,
         'assignable': assignable.selected,
         'type': compensationTypeSingleSelect.selected,
+        'component_sub_type': formulableComponentSubTypeOptions.selected,
         'company_formula_id': compensationFormulaOptions.selected,
     }
 });
@@ -223,6 +308,7 @@ watch(() => props.editPayload, (editPayload) => {
         compensationName.value = _get(editPayload, 'name', '');
         assignable.selected = Number(_get(editPayload, 'assignable', true));
         compensationTypeSingleSelect.selected = _get(editPayload, 'type.value', null);
+        formulableComponentSubTypeOptions.selected = _get(editPayload, 'component_sub_type.value', null);
         compensationFormulaOptions.selected = _get(editPayload, 'company_formula_id', null);
     }
 
@@ -259,6 +345,7 @@ const reset = () => {
     compensationName.value = '';
     assignable.selected = 1;
     compensationTypeSingleSelect.selected = null;
+    formulableComponentSubTypeOptions.selected = null;
     compensationFormulaOptions.selected = null;
 
     compensationFormulaSettings.value = [];

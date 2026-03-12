@@ -17,7 +17,7 @@
                             <SingleSelect
                                 :searchable="false"
                                 drop-shadow
-                                :selection-max-viewable-line="6"
+                                :selection-max-viewable-line="10"
                                 :size="'md'"
                                 :label="'Select Income Tax Formula'"
                                 :options="incomeTaxFormulaOptions"
@@ -30,10 +30,22 @@
                             <SingleSelect
                                 :searchable="false"
                                 drop-shadow
-                                :selection-max-viewable-line="4"
+                                :selection-max-viewable-line="10"
                                 :size="'md'"
                                 :label="'Select Income Tax Type'"
                                 :options="incomeTaxTypeSingleSelect"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><InputLabel :size="'md'" value="Sub-type" /></td>
+                        <td>
+                            <SingleSelect
+                                :searchable="false"
+                                drop-shadow
+                                :selection-max-viewable-line="10"
+                                :size="'md'"
+                                :label="'Select Income Tax Sub-type'"
+                                :options="formulableComponentSubTypeOptions"/>
                         </td>
                     </tr>
                     <tr>
@@ -77,10 +89,16 @@
 </template>
 
 <script setup lang="ts">
-import {storeToRefs} from "pinia";
 import type {CompanyFormulaT} from "@/public/js/types/company-component";
+import type {StringEnumInterface} from "@/public/js/common/type";
+import {storeToRefs} from "pinia";
+
 const {isAuthenticated} = useAuth();
 const nuxtApp = useNuxtApp();
+const $enumerableOption = nuxtApp.$enumerableOption as (enumerable: StringEnumInterface, value: number|string) => {
+    text: string,
+    value: number|string
+};
 const {
     updatedAssociatedCompanyFlag
 } = storeToRefs(nuxtApp.$associationStore);
@@ -122,8 +140,26 @@ const incomeTaxTypeSingleSelect = reactive({
     selected: null
 });
 
+const formulableComponentSubTypeOptions = reactive({
+    search: '',
+    selection: [
+        $enumerableOption(FORMULABLE_COMPONENT_SUB_TYPE_NAME, FORMULABLE_COMPONENT_SUB_TYPE.PH_WITHHOLDING_TAX_COMPENSATION as string),
+    ],
+    selected: null
+});
+
 const incomeTaxCode = ref('');
 const incomeTaxName = ref('');
+
+watch(() => formulableComponentSubTypeOptions.selected, (newValue) => {
+    if(!Boolean(props.editPayload.id)){
+        if(newValue == FORMULABLE_COMPONENT_SUB_TYPE.PH_WITHHOLDING_TAX_COMPENSATION){
+            incomeTaxCode.value = 'WTC ';
+            incomeTaxName.value = 'Compensation tax (WTC)';
+            assignable.selected = 1;
+        }
+    }
+})
 
 const assignable = reactive({
     selection: [
@@ -203,6 +239,7 @@ const form = computed(() => {
         'name': incomeTaxName.value,
         'assignable': assignable.selected,
         'type': incomeTaxTypeSingleSelect.selected,
+        'component_sub_type': formulableComponentSubTypeOptions.selected,
         'company_formula_id': incomeTaxFormulaOptions.selected,
     }
 });
@@ -215,6 +252,7 @@ watch(() => props.editPayload, (editPayload) => {
         incomeTaxName.value = _get(editPayload, 'name', '');
         assignable.selected = Number(_get(editPayload, 'assignable', true));
         incomeTaxTypeSingleSelect.selected = _get(editPayload, 'type.value', null);
+        formulableComponentSubTypeOptions.selected = _get(editPayload, 'component_sub_type.value', null);
         incomeTaxFormulaOptions.selected = _get(editPayload, 'company_formula_id', null);
     }
 
@@ -251,6 +289,7 @@ const reset = () => {
     incomeTaxName.value = '';
     assignable.selected = 1;
     incomeTaxTypeSingleSelect.selected = null;
+    formulableComponentSubTypeOptions.selected = null;
     incomeTaxFormulaOptions.selected = null;
 
     incomeTaxFormulaSettings.value = [];

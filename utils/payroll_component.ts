@@ -19,6 +19,44 @@ export const  FORMULABLE_NAME: StringEnumInterface = {
     [FORMULABLE.NET_INCOME as number] : 'Net Income'
 }
 
+export const  FORMULABLE_COMPONENT_SUB_TYPE: StringEnumInterface = {
+    BASIC_PAY : '100.100.1',
+    REGULAR_ALLOWANCE : '100.101.1',
+    MEAL_ALLOWANCE : '100.101.2',
+    TRANSPORTATION_ALLOWANCE : '100.101.4',
+    OVERTIME : '100.110.1',
+    STATUTORY_BENEFIT_13TH_MONTH : '100.120.1',
+    NONSTATUTORY_BENEFIT_BONUS : '100.130.1',
+    LEAVE_PAY : '100.200.1',
+    HOLIDAY_PAY : '100.300.1',
+
+    PH_SSS : '200.200.2',
+    PH_PHILHEALTH : '200.200.3',
+    PH_PAG_IBIG : '200.200.4',
+    DEDUCTION : '200.210.1',
+
+    PH_WITHHOLDING_TAX_COMPENSATION : '500.300.2',
+}
+
+export const  FORMULABLE_COMPONENT_SUB_TYPE_NAME: StringEnumInterface = {
+    [FORMULABLE_COMPONENT_SUB_TYPE.BASIC_PAY as string] : 'Basic pay',
+    [FORMULABLE_COMPONENT_SUB_TYPE.REGULAR_ALLOWANCE as string] : 'Regular allowance',
+    [FORMULABLE_COMPONENT_SUB_TYPE.MEAL_ALLOWANCE as string] : 'Meal allowance',
+    [FORMULABLE_COMPONENT_SUB_TYPE.TRANSPORTATION_ALLOWANCE as string] : 'Transportation allowance',
+    [FORMULABLE_COMPONENT_SUB_TYPE.OVERTIME as string] : 'Overtime',
+    [FORMULABLE_COMPONENT_SUB_TYPE.STATUTORY_BENEFIT_13TH_MONTH as string] : '13th month pay',
+    [FORMULABLE_COMPONENT_SUB_TYPE.NONSTATUTORY_BENEFIT_BONUS as string] : 'Bonus',
+    [FORMULABLE_COMPONENT_SUB_TYPE.LEAVE_PAY as string] : 'Leave pay',
+    [FORMULABLE_COMPONENT_SUB_TYPE.HOLIDAY_PAY as string] : 'Holiday pay',
+
+    [FORMULABLE_COMPONENT_SUB_TYPE.PH_SSS as string] : 'SSS contribution',
+    [FORMULABLE_COMPONENT_SUB_TYPE.PH_PHILHEALTH as string] : 'Philhealth (PHIC)',
+    [FORMULABLE_COMPONENT_SUB_TYPE.PH_PAG_IBIG as string] : 'Pag-IBIG (HDMF)',
+    [FORMULABLE_COMPONENT_SUB_TYPE.DEDUCTION as string] : 'Deduction',
+
+    [FORMULABLE_COMPONENT_SUB_TYPE.PH_WITHHOLDING_TAX_COMPENSATION as string] : 'Compensation tax (WTC)',
+}
+
 export const FORMULABLE_MODEL_MAP_KEY: StringEnumInterface = {
     [FORMULABLE.EARNINGS as number]: 'compensation',
     [FORMULABLE.DEDUCTIONS as number]: 'deduction',

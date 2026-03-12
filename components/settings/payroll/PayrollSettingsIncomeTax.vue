@@ -34,6 +34,9 @@
                     <template v-slot:cell.type="{cell,slot}">
                         <div class="p-[3px]">{{cell.type.text}}</div>
                     </template>
+                    <template v-slot:cell.component_sub_type="{cell, slot, scrollReference}">
+                        <div class="p-[3px]">{{cell.component_sub_type?.text}}</div>
+                    </template>
                     <template v-slot:cell.assignable="{cell, slot, scrollReference}">
                         <div class="flex justify-center">
                             <NonModelCheckBox disabled :size="slot.checkBoxSize" :checked="cell.assignable" ></NonModelCheckBox>
@@ -91,10 +94,10 @@ const incomeTaxesHeaders = computed<TableHeaderT[]>(() => {
             { text: '', alignData: 'left', value: 'actions'},
         ] : []),
         { text: 'Code', value: 'code', minWidth: '244px'},
-        { text: 'Name', value: 'name', minWidth: '244px'},
-        { text: 'Type', value: 'type', minWidth: '244px'},
+        { text: 'Name', value: 'name', minWidth: '144px'},
+        { text: 'Type', value: 'type', minWidth: '144px'},
         { text: 'Assignable', value: 'assignable'},
-        { text: 'Formula', value: 'formula', minWidth: '244px'},
+        { text: 'Formula', value: 'formula', minWidth: '144px'},
     ] as TableHeaderT[];
 });
 
