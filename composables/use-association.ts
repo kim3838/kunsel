@@ -412,6 +412,14 @@ export const useAssociation = () => {
         }
     }
 
+    const isCompanyAccountSubscribedTo = (
+        accountSubscriptionsSelection: AssignedAccountSubscriptionT[],
+        subscriptions: number[]
+    ) => {
+
+        return _isEmpty(_difference(subscriptions, _map(accountSubscriptionsSelection, 'value')));
+    }
+
     return {
         ssrFetchAssociatedCompanies,
         fetchAssociatedCompanies,
@@ -422,6 +430,7 @@ export const useAssociation = () => {
         selectedAssociatedCompanyChanged,
         selectedAssociatedAccountSubscriptionChanged,
         updateCompanyAssignmentType,
-        resetUserAssociationStates
+        resetUserAssociationStates,
+        isCompanyAccountSubscribedTo
     };
 }
