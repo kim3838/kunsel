@@ -31,7 +31,7 @@
                                 </div>
                             </template>
                             <template v-slot:body="{frameBorderColor}">
-                                <div class="w-[80%] h-full relative py-4 px-2 overflow-hidden flex flex-col">
+                                <div class="w-[80%] h-full relative pt-10 px-2 overflow-hidden flex flex-col">
                                     <div class="text-lg font-medium font-header">Compensation tax (WTC) calculator</div>
 
                                     <form @submit.prevent="calculateTax" class="mt-4">
@@ -81,7 +81,7 @@
                                         <InputLabel :size="'md'" for="identifier" value="Username or Email" />
                                         <Input
                                             :disabled="authPending"
-                                            :size="'lg'"
+                                            :size="'md'"
                                             id="identifier"
                                             class="w-full"
                                             ref="identifierInput"
@@ -92,7 +92,7 @@
                                         <InputLabel :size="'md'" for="password" value="Password" />
                                         <Input
                                             :disabled="authPending"
-                                            :size="'lg'"
+                                            :size="'md'"
                                             id="password"
                                             :type="'password'"
                                             class="w-full tracking-widest"

@@ -6,9 +6,8 @@
             <PayrollSubInfo :type="PAYROLL_SUB_INFO_TYPE.ADMIN_OVERVIEW" :payroll="payroll"/>
         </div>
 
-        <div v-if="salaryStatementsPending || !salaryStatements.successful" class="flex flex-row flex-wrap gap-2 items-center min-h-8">
-            <UnorderedList v-if="salaryStatementsPending" :icon="'eos-icons:loading'" :size="'md'" :label="'Loading payroll statements...'"/>
-            <Label v-else-if="!salaryStatements.successful" invert :size="'md'" :type="'danger'" :label="salaryStatements.message" />
+        <div v-if="!salaryStatements.successful" class="flex flex-row flex-wrap gap-2 items-center min-h-8">
+            <Label invert :size="'md'" :type="'danger'" :label="salaryStatements.message" />
         </div>
         <div v-else class="space-y-2">
             <div class="flex flex-row flex-wrap gap-2 items-center min-h-8">
@@ -34,25 +33,16 @@
                 </div>
             </div>
 
-            <div class="mb-2 flex flex-row flex-wrap gap-2 items-center min-h-8">
+            <div v-if="salaryStatementsPending" class="mb-2 flex flex-row flex-wrap gap-2 items-center min-h-8">
+                <UnorderedList :icon="'eos-icons:loading'" :size="'md'" :label="'Loading payroll statements...'"/>
+            </div>
+            <div v-else class="mb-2 flex flex-row flex-wrap gap-2 items-center min-h-8">
                 <UnorderedList v-if="disableActions" :icon="'eos-icons:loading'" :size="'md'" :label="'Please wait...'"/>
                 <div class="scaffold-border px-2 font-[National_Park]">
                     <span><span class="font-semibold">{{selectedSalaryStatements.length}}</span> Selected</span>
                 </div>
-                <Button
-                    :variant="'outline'"
-                    :size="'sm'"
-                    :icon="'tdesign:close'"
-                    :disabled="disableActions"
-                    :label="'Clear selection'"
-                    @click="selectedSalaryStatements = []" />
-                <Button
-                    :variant="'outline'"
-                    :size="'sm'"
-                    :icon="'mdi:delete-outline'"
-                    :disabled="disableActions"
-                    :label="'Bulk delete'"
-                    @click="confirmDeleteSelected()"/>
+                <Button :variant="'outline'" :size="'sm'" :icon="'tdesign:close'" :disabled="disableActions" :label="'Clear selection'" @click="selectedSalaryStatements = []" />
+                <Button :variant="'outline'" :size="'sm'" :icon="'mdi:delete-outline'" :disabled="disableActions" :label="'Bulk delete'" @click="confirmDeleteSelected()"/>
                 <SalaryStatementBulkEdit v-if="salaryStatements.successful" ref="salaryStatementBulkEdit" v-model:selected-salary-statement-ids="selectedSalaryStatements" @completed="bulkEditCompleted">
                     <Button
                         :disabled="disableActions || selectedSalaryStatements.length == 0"

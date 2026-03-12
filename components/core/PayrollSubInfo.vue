@@ -21,7 +21,7 @@
             </div>
             <div>
                 <InputLabel :size="'sm'" value="Employee"/>
-                <div class="label-value text-base font-sans">{{salaryStatement?.employee_number}} {{salaryStatement?.employee_full_name}}</div>
+                <div class="label-value text-base font-sans">({{salaryStatement?.employee_number}}) {{salaryStatement?.employee_full_name}}</div>
             </div>
             <div>
                 <InputLabel :size="'sm'" value="Type"/>
