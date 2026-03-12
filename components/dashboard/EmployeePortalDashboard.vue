@@ -283,9 +283,12 @@
 
                             <div class="px-4 py-4">
                                 <div v-if="!leaveBalanceByTypePending" class="flex flex-row flex-wrap gap-6">
-                                    <div v-for="(leaveBalanceByType, index) in leaveBalanceByTypes" :key="index">
+                                    <div v-if="leaveBalanceByTypes.length > 0" v-for="(leaveBalanceByType, index) in leaveBalanceByTypes" :key="index">
                                         <div class="text-sm">{{leaveBalanceByType.name}}</div>
                                         <div class="text-base font-sans">{{leaveBalanceByType.running_balance}}</div>
+                                    </div>
+                                    <div v-else>
+                                        No leave type assigned
                                     </div>
                                 </div>
                                 <div v-else>
