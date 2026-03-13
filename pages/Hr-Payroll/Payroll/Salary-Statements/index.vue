@@ -425,7 +425,7 @@ const salaryStatementsHeaders = computed<TableHeaderT[]>(() => {
             { text: 'Month', value: 'month_readable'},
 
             { text: 'Frequency', value: 'pay_frequency'},
-            { text: 'Sequence', value: 'frequency_sequence'},
+            { text: 'Seq.', value: 'frequency_sequence'},
 
             { text: 'Period', value: 'date_range_readable'},
         ] : [

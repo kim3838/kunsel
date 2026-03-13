@@ -9,7 +9,7 @@
                     <div class="grid gap-2 grid-cols-3 sm:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-8">
                         <div>
                             <InputLabel :size="'sm'" value="Search" />
-                            <Input :disabled="disableActions" :size="'md'" ref="searchInput" v-model="filters.search.keyword" class="w-full" placeholder="Search Number" type="text"/>
+                            <Input :disabled="disableActions" :size="'md'" ref="searchInput" v-model="filters.search.keyword" class="w-full" placeholder="Search Payroll" type="text"/>
                         </div>
                         <div>
                             <InputLabel :size="'sm'" for="month" value="From month" />
@@ -174,7 +174,7 @@
                         <template v-slot:cell.actions="{cell,slot: cellSlot}">
                             <div class="flex items-center">
                                 <NavDrop
-                                    class="z-10"
+                                    class="z-20"
                                     :disabled="disableActions"
                                     :parent-icon="'ic:baseline-arrow-right'"
                                     in-horizontal-scrollable
@@ -194,11 +194,26 @@
                         <template v-slot:cell.number="{cell,slot}">
                             <div class="p-[3px] font-medium hover:underline cursor-pointer" :title="cell.number" @click="copy(cell.number);">{{wordClamp(cell.number, showPayrollColumns ? 20 : 10)}}</div>
                         </template>
-                        <template v-slot:cell.copy_payroll_number_to_clipboard="{cell,slot}">
-                            <div v-if="clipBoardSupported" class="text-base h-[32px]" :title="'Copy payroll number'" @click="copy(cell.number);">
-                                <div class="h-full flex items-center justify-center px-2 cursor-pointer accent-hover">
-                                    <Icon size="1.5rem" :name="'ph:copy-light'"/>
-                                </div>
+                        <template v-slot:cell.remarks="{cell,slot}">
+                            <div v-if="cell.remarks" class="flex items-center" :title="'Show remarks'">
+                                <NavDrop
+                                    class="z-10 w-full"
+                                    :disabled="disableActions"
+                                    :parent-icon="'ic:baseline-arrow-right'"
+                                    in-horizontal-scrollable
+                                    divider
+                                    :size="`sm`"
+                                    :drop-shadow-size="`xl`"
+                                    :title="'Remarks'"
+                                    :drop-align="'top'"
+                                    :drop-justify="'right'"
+                                    :drop-options="[
+                                        {type: 'action', icon: 'gg:comment', title: cell.remarks},
+                                    ]">
+                                    <div class="text-base h-[32px] w-full flex items-center justify-center">
+                                        <Icon class="h-5 w-5" :name="'gg:loadbar-alt'"/>
+                                    </div>
+                                </NavDrop>
                             </div>
                         </template>
                         <template v-slot:cell.status="{cell,slot}">
@@ -300,7 +315,7 @@ const payrollsSupHeaders = computed<TableSupHeaderT[]>(() => {
         {text: ''},
 
         ...(showPayrollColumns.value ? [
-            {text: 'Payroll', colspan: 9,  alignHeader: 'center'},
+            {text: 'Payroll', colspan: 8,  alignHeader: 'center'},
         ] : [
             {text: '', colspan: 1,  alignHeader: 'center'},
         ]),
@@ -316,17 +331,16 @@ const payrollsHeaders = computed<TableHeaderT[]>(() => {
 
         ...(showPayrollColumns.value ? [
             { text: '#', value: 'number', isNumeric: true},
-            { text: 'Copy #', value: 'copy_payroll_number_to_clipboard'},
+            { text: 'Rmrks', value: 'remarks'},
             { text: 'Status', value: 'status'},
 
             { text: 'Year', value: 'year'},
             { text: 'Month', value: 'month_readable'},
 
             { text: 'Frequency', value: 'pay_frequency'},
-            { text: 'Sequence', value: 'frequency_sequence'},
+            { text: 'Seq.', value: 'frequency_sequence'},
 
             { text: 'Period', value: 'date_range_readable'},
-            { text: 'Remarks', value: 'remarks'},
         ] : [
             { text: 'Payroll #', value: 'number', isNumeric: true},
         ]),
@@ -472,7 +486,7 @@ const payrollsExecute = async() =>{
                     ...payroll,
                     _payload: {
                         'label_shade': {
-                            'cell': ['number', 'copy_payroll_number_to_clipboard', 'status', 'year', 'month_readable'],
+                            'cell': ['number', 'remarks', 'status', 'year', 'month_readable'],
                             'value': shade
                         }
                     }
