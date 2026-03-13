@@ -31,6 +31,7 @@ export const useCosmetic = () => {
 
             shadeValue = {
                 [DEDUCTION.DEDUCTION as number]: 'danger',
+                [DEDUCTION.MANUAL_DEDUCTION as number]: 'danger',
                 [DEDUCTION.STATUTORY_CONTRIBUTION as number]: 'warning',
             }[componentType] as LabelTypeT || 'default';
 

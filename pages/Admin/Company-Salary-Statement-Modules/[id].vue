@@ -19,43 +19,54 @@
                         </div>
                     </template>
                     <template #content>
-                        <div class="pt-4 mx-auto max-w-screen-xl grid gap-2 grid-cols-3 sm:grid-cols-4 md:grid-cols-5">
-                            <div>
-                                <InputLabel :size="'sm'" value="Key"/>
-                                <Input v-model="moduleKey" type="text" />
-                            </div>
-                            <div>
-                                <InputLabel :size="'sm'" value="Name"/>
-                                <Input v-model="moduleName" type="text" />
-                            </div>
-                            <div>
-                                <InputLabel :size="'sm'" value="Formulable Type" />
-                                <SingleSelect drop-shadow :selection-max-viewable-line="10" :size="'md'" :options="formulableOptions"/>
-                            </div>
-                            <div>
-                                <InputLabel :size="'sm'" value="Property"/>
-                                <Input v-model="property" type="text" />
-                            </div>
-                            <div>
-                                <InputLabel :size="'sm'" value="Attribute"/>
-                                <Input v-model="attribute" type="text" />
-                            </div>
-                            <div class="flex flex-col">
-                                <div class="flex-none h-[1.25rem]"></div>
-                                <div class="grow">
-                                    <div class="h-full w-min scaffold-border flex items-center">
-                                        <label>
-                                            <Checkbox
-                                                class="px-[0.3rem]"
-                                                name="remember"
-                                                v-model="aggregation"
-                                                :size="'md'"
-                                                :label="'Aggregation'" />
-                                        </label>
-                                    </div>
+                        <div class="pt-4 mx-auto max-w-screen-xl space-y-4">
+                            <div class="grid gap-2 grid-cols-3 sm:grid-cols-4 md:grid-cols-5">
+                                <div>
+                                    <InputLabel :size="'sm'" value="Key"/>
+                                    <Input v-model="moduleKey" type="text" />
+                                </div>
+                                <div>
+                                    <InputLabel :size="'sm'" value="Name"/>
+                                    <Input v-model="moduleName" type="text" />
+                                </div>
+                                <div>
+                                    <InputLabel :size="'sm'" value="Formulable Type" />
+                                    <SingleSelect drop-shadow :selection-max-viewable-line="10" :size="'md'" :options="formulableOptions"/>
+                                </div>
+                                <div>
+                                    <InputLabel :size="'sm'" value="Property"/>
+                                    <Input v-model="property" type="text" />
+                                </div>
+                                <div>
+                                    <InputLabel :size="'sm'" value="Attribute"/>
+                                    <Input v-model="attribute" type="text" />
                                 </div>
                             </div>
-                            <div class="col-span-full">
+
+                            <div class="flex flex-row flex-wrap gap-2 items-center min-h-8">
+                                <div class="h-8 flex flex-row items-center scaffold-border px-2">
+                                    <label>
+                                        <Checkbox
+                                            class="px-[0.3rem]"
+                                            name="aggregation"
+                                            v-model="aggregation"
+                                            :size="'md'"
+                                            :label="'Aggregation'" />
+                                    </label>
+                                </div>
+                                <div class="h-8 flex flex-row items-center scaffold-border px-2">
+                                    <label>
+                                        <Checkbox
+                                            class="px-[0.3rem]"
+                                            name="statement_level"
+                                            v-model="statementLevel"
+                                            :size="'md'"
+                                            :label="'Statement Level'" />
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div>
                                 <InputLabel :size="'sm'" value="Conditions"/>
                                 <TextArea v-model="conditions" class="font-mono" min-height="'16rem'" :size="'md'" type="text" />
                             </div>
@@ -131,6 +142,11 @@
                                 <NonModelCheckBox disabled :size="slot.checkBoxSize" :checked="cell.aggregation" ></NonModelCheckBox>
                             </div>
                         </template>
+                        <template v-slot:cell.statement_level="{cell, slot, scrollReference}">
+                            <div class="flex justify-center">
+                                <NonModelCheckBox disabled :size="slot.checkBoxSize" :checked="cell.statement_level" ></NonModelCheckBox>
+                            </div>
+                        </template>
                         <template v-slot:cell.conditions="{cell,slot}">
                             <div class="p-[3px] font-mono">{{cell.conditions ? JSON.stringify(cell.conditions): cell.conditions}}</div>
                         </template>
@@ -184,6 +200,7 @@ const salaryStatementModulesHeaders = reactive<TableHeaderT[]>([
     { text: 'Name', value: 'name'},
     { text: 'Formulable Type', value: 'formulable_type', alignData: 'left'},
     { text: 'Aggregation', value: 'aggregation', alignData: 'left'},
+    { text: 'Statement level', value: 'statement_level', alignData: 'left'},
     { text: 'Property', value: 'property'},
     { text: 'Attribute', value: 'attribute'},
     { text: 'Conditions', value: 'conditions'},
@@ -225,7 +242,7 @@ const salaryStatementModulesExecute = async() =>{
                     ...module,
                     _payload: {
                         'label_shade': {
-                            'cell': ['formulable_type'],
+                            'cell': ['name', 'formulable_type'],
                             'value': useCosmetic().formulableShade(formulableType)
                         }
                     }
@@ -294,6 +311,7 @@ const formulableOptions = reactive({
     selected: null
 });
 const aggregation = ref(false);
+const statementLevel = ref(false);
 const property = ref('');
 const attribute = ref('');
 const conditions = ref<string | null>('');
@@ -307,6 +325,7 @@ const edit = (cell: TableRowT) => {
         moduleName.value = _get(cell, 'name', '');
         formulableOptions.selected = _get(cell, 'formulable_type.value', null);
         aggregation.value = _get(cell, 'aggregation', false);
+        statementLevel.value = _get(cell, 'statement_level', false);
         property.value = _get(cell, 'property', '');
         attribute.value = _get(cell, 'attribute', '');
         conditions.value = cell.conditions == null ? null : JSON.stringify(cell.conditions);
@@ -331,6 +350,7 @@ const createEditModalReset = () => {
     moduleName.value = '';
     formulableOptions.selected = null;
     aggregation.value = false;
+    statementLevel.value = false;
     property.value = '';
     attribute.value = '';
     conditions.value = '';
@@ -368,6 +388,7 @@ const createEditModalForm = computed(() => {
         'name': moduleName.value,
         'formulable_type': formulableOptions.selected,
         'aggregation': aggregation.value,
+        'statement_level': statementLevel.value,
         'property': property.value,
         'attribute': attribute.value,
         'conditions': conditions.value,

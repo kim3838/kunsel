@@ -84,12 +84,14 @@ export const  COMPENSATION_NAME: StringEnumInterface = {
 
 export const  DEDUCTION: NumericEnumInterface = {
     STATUTORY_CONTRIBUTION : 200,
-    DEDUCTION : 210
+    DEDUCTION : 210,
+    MANUAL_DEDUCTION : 211,
 }
 
 export const  DEDUCTION_NAME: StringEnumInterface = {
     [DEDUCTION.STATUTORY_CONTRIBUTION as number] : 'Statutory contribution',
     [DEDUCTION.DEDUCTION as number] : 'Deduction',
+    [DEDUCTION.MANUAL_DEDUCTION as number] : 'Manual deduction',
 }
 
 export const  INCOME_TAX: NumericEnumInterface = {
