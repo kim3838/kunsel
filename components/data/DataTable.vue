@@ -114,7 +114,7 @@
                     </tr>
 
                     <DataTableSubRow
-                        v-if="subRowSlug && row[subRowSlug].length"
+                        v-if="subRowSlug && row[subRowSlug]?.length"
                         :slug="subRowSlug"
                         :extensionSlug="subRowExtensionSlug"
                         :row-index="rowIndex"
