@@ -76,7 +76,7 @@
                         :key="salaryStatementsKey"
                         :sup-headers="salaryStatementsSupHeaders"
                         :headers="salaryStatementsHeaders"
-                        :size="'md'"
+                        :size="'lg'"
                         :rows="salaryStatements.data"
                         v-model="selectedSalaryStatements"
                         selection
@@ -99,13 +99,13 @@
                                     :parent-icon="'ic:baseline-arrow-right'"
                                     in-horizontal-scrollable
                                     divider
-                                    :size="`xs`"
+                                    :size="`sm`"
                                     :drop-shadow-size="`xl`"
                                     :title="'Menu'"
                                     :drop-align="'top'"
                                     :drop-justify="'right'"
                                     :drop-options="[
-                                {type: 'link', icon: 'ix:open-external', title: 'Statement breakdown', to: `/employee-portal/salary-statements/${cell.ulid}`},
+                                {type: 'link', icon: 'gg:row-first', title: 'Statement breakdown', to: `/employee-portal/salary-statements/${cell.ulid}`},
                             ]">
                                 </NavDrop>
                             </div>
