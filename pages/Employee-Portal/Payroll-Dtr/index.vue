@@ -171,7 +171,6 @@ const payrollSelectionsOptions = reactive({
 
 const attendancesSupHeaders = reactive<TableSupHeaderT[]>([
     {text: ''},
-    {text: 'Shift', colspan: 1,  alignHeader: 'left'},
     {text: 'Schedule', colspan: 3,  alignHeader: 'left'},
     {text: '', colspan: 1,  alignHeader: 'left'},
 
@@ -182,8 +181,6 @@ const attendancesSupHeaders = reactive<TableSupHeaderT[]>([
 
 const attendancesHeaders = reactive<TableHeaderT[]>([
     { text: '#', value: 'row_number'},
-
-    { text: 'Code', value: 'shift_code', alignData: 'left'},
 
     { text: 'Week Day', value: 'week_day_name', alignData: 'left'},
     { text: 'Start', value: 'shift_schedule_work_start', alignData: 'left'},
