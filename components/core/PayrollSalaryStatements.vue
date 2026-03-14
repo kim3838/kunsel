@@ -53,6 +53,12 @@
                 </SalaryStatementBulkEdit>
             </div>
 
+            <SalaryStatementManualAddDetails
+                v-model:show-manual-add-details="showManualAddDetails"
+                v-model:salary-statement-payload="stagedSalaryStatement"
+                @resolved="manualAddDetailsResolved"
+            />
+
             <DataTable
                 :key="salaryStatementsKey"
                 :sup-headers="salaryStatementsSupHeaders"
@@ -86,7 +92,10 @@
                             :drop-align="'top'"
                             :drop-justify="'right'"
                             :drop-options="[
-                                {type: 'link', icon: 'ix:open-external', title: 'Statement breakdown', to: `/hr-payroll/payroll/salary-statements/${cell.ulid}`},
+                                {type: 'link', icon: 'gg:row-first', title: 'Statement breakdown', to: `/hr-payroll/payroll/salary-statements/${cell.ulid}`},
+                                ...(cell.payroll.status.value == PAYROLL_STATUS.DRAFT ? [
+                                    {type: 'action', icon: 'mdi:plus', title: 'Manual add payroll items', callback: () => {manualAddPayrollItems(cell);}}
+                                ] : [])
                             ]">
                         </NavDrop>
                     </div>
@@ -132,9 +141,8 @@
 </template>
 
 <script setup lang="ts">
-
 import type {DataTableT, TableHeaderT, TableRowT, TableSupHeaderT} from "@/public/js/types/data";
-import type {PayrollT} from "@/public/js/types/payroll";
+import type {PayrollT, SalaryStatementT} from "@/public/js/types/payroll";
 import {storeToRefs} from "pinia";
 
 const {isAuthenticated} = useAuth();
@@ -420,6 +428,17 @@ const deleteSelected = async () => {
 
     selectedSalaryStatements.value = [];
     await paginatePayrollSalaryStatements();
+}
+
+const stagedSalaryStatement = ref<SalaryStatementT>({} as SalaryStatementT);
+
+const showManualAddDetails = ref(false);
+const manualAddPayrollItems = (salaryStatement: TableRowT) => {
+    stagedSalaryStatement.value = salaryStatement as SalaryStatementT;
+    showManualAddDetails.value = true;
+}
+const manualAddDetailsResolved = () => {
+    paginatePayrollSalaryStatements();
 }
 </script>
 

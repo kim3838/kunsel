@@ -70,3 +70,9 @@ export type SalaryStatementT = {
     deduction: string,
     net: string,
 }
+
+export type SalaryStatementManualAddDetailT = {
+    component_sub_type: string,
+    component_name: string,
+    amount: number
+}

@@ -23,6 +23,7 @@ export const useCosmetic = () => {
                 [COMPENSATION.OVERTIME as number]: 'success',
                 [COMPENSATION.STATUTORY_BENEFIT as number]: 'success',
                 [COMPENSATION.REGULAR_ALLOWANCE as number]: 'success',
+                [COMPENSATION.MANUAL_EARNING as number]: 'success',
                 [COMPENSATION.LEAVE_PAY as number]: 'info',
                 [COMPENSATION.HOLIDAY_PAY as number]: 'info',
             }[componentType] as LabelTypeT || 'default';

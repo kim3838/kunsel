@@ -129,6 +129,12 @@
                     </div>
                 </form>
 
+                <SalaryStatementManualAddDetails
+                    v-model:show-manual-add-details="showManualAddDetails"
+                    v-model:salary-statement-payload="stagedSalaryStatement"
+                    @resolved="manualAddDetailsResolved"
+                />
+
                 <div class="px-[20px] space-y-2">
                     <div class="flex flex-row flex-wrap gap-2 items-center min-h-8" :class="[disableActions ? 'pointer-events-none' : '']">
                         <div v-if="salaryStatements.successful" class="scaffold-border px-2 font-[National_Park]">
@@ -195,8 +201,11 @@
                                     :drop-align="'top'"
                                     :drop-justify="'right'"
                                     :drop-options="[
-                                {type: 'link', icon: 'ix:open-external', title: 'Statement breakdown', to: `/hr-payroll/payroll/salary-statements/${cell.ulid}`},
-                            ]">
+                                        {type: 'link', icon: 'gg:row-first', title: 'Statement breakdown', to: `/hr-payroll/payroll/salary-statements/${cell.ulid}`},
+                                        ...(cell.payroll.status.value == PAYROLL_STATUS.DRAFT ? [
+                                            {type: 'action', icon: 'mdi:plus', title: 'Manual add payroll items', callback: () => {manualAddPayrollItems(cell);}}
+                                        ] : [])
+                                    ]">
                                 </NavDrop>
                             </div>
                         </template>
@@ -270,6 +279,7 @@ import type {DataTableT, TableHeaderT, TableRowT, TableSupHeaderT} from "@/publi
 import type {DateTimePickerPayloadT} from "@/public/js/datetimepicker/type";
 import type {StringEnumInterface} from "@/public/js/common/type";
 import type {LabelTypeT} from "@/public/js/types/theme";
+import type {SalaryStatementT} from "@/public/js/types/payroll";
 import { withQuery } from 'ufo';
 import {storeToRefs} from "pinia";
 
@@ -804,6 +814,18 @@ const deleteSelected = async () => {
     selectedSalaryStatements.value = [];
     await salaryStatementsExecute();
 }
+
+const stagedSalaryStatement = ref<SalaryStatementT>({} as SalaryStatementT);
+
+const showManualAddDetails = ref(false);
+const manualAddPayrollItems = (salaryStatement: TableRowT) => {
+    stagedSalaryStatement.value = salaryStatement as SalaryStatementT;
+    showManualAddDetails.value = true;
+}
+const manualAddDetailsResolved = () => {
+    salaryStatementsExecute();
+}
+
 </script>
 
 <style scoped>
