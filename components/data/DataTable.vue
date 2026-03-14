@@ -493,7 +493,7 @@ const cellFontClass = (header: TableHeaderT) => {
     let fontClass = '';
 
     if(header.value == 'row_number' || header.isNumeric){
-        fontClass = 'font-sans';
+        fontClass = 'font-numeric';
     }
 
     return fontClass;

@@ -49,6 +49,9 @@ module.exports = {
                 'stiff-wide':[
                     'Bruno Ace SC',
                 ],
+                numeric: [
+                    `'Source Sans 3'`,
+                ],
                 data: [
                     'Aptos Narrow',
                     'Gentium Plus',
