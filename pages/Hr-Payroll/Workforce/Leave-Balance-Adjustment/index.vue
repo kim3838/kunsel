@@ -214,7 +214,7 @@
                             <div class="p-[3px]">{{cell.type?.text}}</div>
                         </template>
                         <template v-slot:cell.effective_date="{cell,slot}">
-                            <div class="p-[3px]">{{cell.effective_date_readable}}</div>
+                            <div class="p-[3px] font-medium">{{cell.effective_date_readable}}</div>
                         </template>
                     </DataTable>
 

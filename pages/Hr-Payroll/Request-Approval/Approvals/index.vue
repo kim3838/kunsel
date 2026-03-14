@@ -91,28 +91,8 @@
                         v-model="selectedApprovalStates"
                         @selectionChanged="syncSelectedApprovalStatesProxy"
                         selection>
-                        <template v-slot:cell.actions="{cell,slot: cellSlot}">
-                            <div class="flex items-center">
-                                <NavDrop
-                                    class="z-10"
-                                    :disabled="disableActions"
-                                    :parent-icon="'ic:baseline-arrow-right'"
-                                    in-horizontal-scrollable
-                                    divider
-                                    :size="`sm`"
-                                    :drop-shadow-size="`xl`"
-                                    :title="'Menu'"
-                                    :drop-align="'top'"
-                                    :drop-justify="'right'"
-                                    :drop-options="[
-                                        {type: 'action', title: 'No action',callback: () => {}},
-                                    ]">
-                                </NavDrop>
-                            </div>
-                        </template>
-
                         <template v-slot:cell.request_number="{cell,slot}">
-                            <div class="p-[3px] hover:underline cursor-pointer" @click="viewRequestable(cell)">{{cell.requestable.number}}</div>
+                            <div class="p-[3px] font-medium hover:underline cursor-pointer" @click="viewRequestable(cell)">{{cell.requestable.number}}</div>
                         </template>
                         <template v-slot:cell.requestable_type_readable="{cell,slot}">
                             <div class="p-[3px]" :title="cell.requestable.type_readable">{{wordClamp(cell.requestable.type_readable, 20)}}</div>
@@ -232,7 +212,6 @@ const rebuildSelections = (selection: string[] = []) => {
 
 const approvalStatesSupHeaders = reactive<TableSupHeaderT[]>([
     {text: ''},
-    {text: ''},
 
     {text: 'Request', colspan: 3,  alignHeader: 'left'},
 
@@ -245,7 +224,6 @@ const approvalStatesSupHeaders = reactive<TableSupHeaderT[]>([
 
 const approvalStatesHeaders = reactive<TableHeaderT[]>([
     { text: '#', value: 'row_number'},
-    { text: '', value: 'actions', minWidth: '33px'},
 
     { text: '#', value: 'request_number', isNumeric: true},
     { text: '', value: 'requestable_type_readable'},

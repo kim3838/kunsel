@@ -277,27 +277,8 @@
                             rowVerticalLine: true,
                             verticalBorderType: 'dashed'
                         }">
-                        <template v-slot:cell.actions="{cell,slot: cellSlot}">
-                            <div class="flex items-center">
-                                <NavDrop
-                                    class="z-10"
-                                    :disabled="disableActions"
-                                    :parent-icon="'ic:baseline-arrow-right'"
-                                    in-horizontal-scrollable
-                                    divider
-                                    :size="`sm`"
-                                    :drop-shadow-size="`xl`"
-                                    :title="'Menu'"
-                                    :drop-align="'top'"
-                                    :drop-justify="'right'"
-                                    :drop-options="[
-                                        {type: 'action', title: 'No action',callback: () => {}},
-                                    ]">
-                                </NavDrop>
-                            </div>
-                        </template>
                         <template v-slot:cell.number="{cell,slot}">
-                            <div class="p-[3px] hover:underline cursor-pointer" @click="viewRequestable(cell)">{{cell.number}}</div>
+                            <div class="p-[3px] font-medium hover:underline cursor-pointer" @click="viewRequestable(cell)">{{cell.number}}</div>
                         </template>
                         <template v-slot:cell.status_summary="{cell,slot}">
                             <div class="flex space-x-1 px-[0.3rem] items-center">
@@ -314,7 +295,7 @@
                             <div class="p-[3px]">{{cell.attendance?.employee?.full_name}}</div>
                         </template>
                         <template v-slot:cell.attendance_date="{cell,slot}">
-                            <div class="p-[3px]">{{cell.attendance?.date_readable}}</div>
+                            <div class="p-[3px] font-medium">{{cell.attendance?.date_readable}}</div>
                         </template>
                         <template v-slot:sub_row_slot="{rowIndex, cell, slot}">
                             <div class="inline-flex items-center scaffold-border pr-2">
@@ -426,7 +407,6 @@ watch(() => {return showApprovalStates.value;}, (show) => {
 
 const overtimeRequestsSupHeaders = reactive<TableSupHeaderT[]>([
     {text: ''},
-    {text: ''},
 
     {text: ''},
     {text: ''},
@@ -440,7 +420,6 @@ const overtimeRequestsSupHeaders = reactive<TableSupHeaderT[]>([
 
 const overtimeRequestsHeaders = reactive<TableHeaderT[]>([
     { text: '#', value: 'row_number'},
-    { text: '', value: 'actions', minWidth: '33px'},
 
     { text: 'Request #', value: 'number', isNumeric: true},
     { text: 'Status', value: 'status_summary'},

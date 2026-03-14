@@ -87,27 +87,8 @@
                             rowVerticalLine: true,
                             verticalBorderType: 'dashed'
                         }">
-                        <template v-slot:cell.actions="{cell,slot: cellSlot}">
-                            <div class="flex items-center">
-                                <NavDrop
-                                    class="z-10"
-                                    :disabled="disableActions"
-                                    :parent-icon="'ic:baseline-arrow-right'"
-                                    in-horizontal-scrollable
-                                    divider
-                                    :size="`sm`"
-                                    :drop-shadow-size="`xl`"
-                                    :title="'Menu'"
-                                    :drop-align="'top'"
-                                    :drop-justify="'right'"
-                                    :drop-options="[
-                                        {type: 'action', title: 'No action',callback: () => {}},
-                                    ]">
-                                </NavDrop>
-                            </div>
-                        </template>
                         <template v-slot:cell.number="{cell,slot}">
-                            <div class="p-[3px] hover:underline cursor-pointer" @click="viewRequestable(cell)">{{cell.number}}</div>
+                            <div class="p-[3px] font-medium hover:underline cursor-pointer" @click="viewRequestable(cell)">{{cell.number}}</div>
                         </template>
                         <template v-slot:cell.status_summary="{cell,slot}">
                             <div class="flex space-x-1 px-[0.3rem] items-center">
@@ -118,7 +99,7 @@
                             <div class="p-[3px]">{{cell.requested_by?.username}}</div>
                         </template>
                         <template v-slot:cell.payroll_number="{cell,slot}">
-                            <div class="p-[3px]">{{cell.payroll?.number}}</div>
+                            <div class="p-[3px] font-medium">{{cell.payroll?.number}}</div>
                         </template>
                         <template v-slot:cell.payroll_period="{cell,slot}">
                             <div class="p-[3px]">{{cell.payroll?.date_range_readable}}</div>
@@ -227,7 +208,6 @@ watch(() => {return showApprovalStates.value;}, (show) => {
 
 const payrollRequestsSupHeaders = reactive<TableSupHeaderT[]>([
     {text: ''},
-    {text: ''},
 
     {text: ''},
     {text: ''},
@@ -239,7 +219,6 @@ const payrollRequestsSupHeaders = reactive<TableSupHeaderT[]>([
 
 const payrollRequestsHeaders = reactive<TableHeaderT[]>([
     { text: '#', value: 'row_number'},
-    { text: '', value: 'actions', minWidth: '33px'},
 
     { text: 'Request #', value: 'number', isNumeric: true},
     { text: 'Status', value: 'status_summary'},

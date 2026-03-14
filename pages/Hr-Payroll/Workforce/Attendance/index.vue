@@ -271,7 +271,7 @@
                             <div class="p-[3px]">{{cell.shift_schedule.work_end}}</div>
                         </template>
                         <template v-slot:cell.date_readable="{cell,slot}">
-                            <div class="p-[3px]">{{cell.date_readable}}</div>
+                            <div class="p-[3px] font-medium">{{cell.date_readable}}</div>
                         </template>
                         <template v-slot:cell.status="{cell,slot}">
                             <div class="p-[3px]">{{cell.status.text}}</div>

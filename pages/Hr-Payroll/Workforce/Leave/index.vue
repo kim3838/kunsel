@@ -272,7 +272,7 @@
                             <div class="p-[3px]">{{cell.employee.full_name}}</div>
                         </template>
                         <template v-slot:cell.date="{cell,slot}">
-                            <div class="p-[3px]">{{cell.date_readable}}</div>
+                            <div class="p-[3px] font-medium">{{cell.date_readable}}</div>
                         </template>
                         <template v-slot:cell.code="{cell,slot}">
                             <div class="p-[3px]">{{cell.leave_type?.code}}</div>

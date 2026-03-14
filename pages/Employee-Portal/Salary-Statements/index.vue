@@ -111,7 +111,7 @@
                             </div>
                         </template>
                         <template v-slot:cell.payroll_number="{cell,slot}">
-                            <div class="px-[3px]" :title="cell.payroll?.number">{{wordClamp(cell.payroll?.number, showPayrollColumns ? 20 : 8)}}</div>
+                            <div class="px-[3px] font-medium" :title="cell.payroll?.number">{{wordClamp(cell.payroll?.number, showPayrollColumns ? 20 : 8)}}</div>
                         </template>
                         <template v-slot:cell.payroll_status="{cell,slot}">
                             <div class="flex space-x-1 px-[0.3rem] items-center">
