@@ -7,7 +7,7 @@
             :size="'lg'"
             :stripped="true"
             :rows="rows"
-            :border-appearance="false"
+            :border-appearance="borderAppearance"
             :sub-row-slug="subRowSlug"
             :sub-row-settings="{
                 type: DATATABLE_SUBROW_TYPE.TITLED,

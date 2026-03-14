@@ -7,7 +7,7 @@
             :size="'lg'"
             :stripped="true"
             :rows="rowsProxy"
-            :border-appearance="false"
+            :border-appearance="borderAppearance"
             :sub-row-slug="subRowSlug"
             :sub-row-extension-slug="subRowExtensionSlug"
             :sub-row-settings="{
