@@ -1,6 +1,6 @@
 <template>
     <div class="font-data">
-        <div class="text-lg font-medium font-sans">
+        <div class="text-lg font-medium font-header">
             {{requestNumber}}
         </div>
         <div class="text-base">

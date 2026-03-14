@@ -10,31 +10,29 @@
             <template #content>
                 <div ref='modalContentContainer'>
 
-                    <div class="pt-2 mx-auto max-w-screen-xl">
-                        <div v-if="pending">
-                            <UnorderedList
-                                v-if="pending"
-                                :icon="'eos-icons:loading'"
-                                :size="'md'"
-                                :label="'Please wait...'"/>
-                        </div>
-                        <div v-else-if="!pending && requestable.successful">
-                            <AttendanceAdjustmentRequest
-                                v-if="requestableType == REQUESTABLE_TYPE.ATTENDANCE_ADJUSTMENT_REQUEST"
-                                v-model:attendance-adjustment-request-payload="requestable.data"/>
-                            <OvertimeRequest
-                                v-if="requestableType == REQUESTABLE_TYPE.OVERTIME_REQUEST"
-                                v-model:overtime-request-payload="requestable.data"/>
-                            <LeaveRequest
-                                v-if="requestableType == REQUESTABLE_TYPE.LEAVE_REQUEST"
-                                v-model:leave-request-payload="requestable.data"/>
-                            <PayrollRequest
-                                v-if="requestableType == REQUESTABLE_TYPE.PAYROLL_REQUEST"
-                                v-model:payroll-request-payload="requestable.data"/>
-                        </div>
-
-                        <Label v-if="!requestable.successful" invert :size="'md'" :type="'danger'" :label="requestable.message" />
+                    <div v-if="pending">
+                        <UnorderedList
+                            v-if="pending"
+                            :icon="'eos-icons:loading'"
+                            :size="'md'"
+                            :label="'Please wait...'"/>
                     </div>
+                    <div v-else-if="!pending && requestable.successful">
+                        <AttendanceAdjustmentRequest
+                            v-if="requestableType == REQUESTABLE_TYPE.ATTENDANCE_ADJUSTMENT_REQUEST"
+                            v-model:attendance-adjustment-request-payload="requestable.data"/>
+                        <OvertimeRequest
+                            v-if="requestableType == REQUESTABLE_TYPE.OVERTIME_REQUEST"
+                            v-model:overtime-request-payload="requestable.data"/>
+                        <LeaveRequest
+                            v-if="requestableType == REQUESTABLE_TYPE.LEAVE_REQUEST"
+                            v-model:leave-request-payload="requestable.data"/>
+                        <PayrollRequest
+                            v-if="requestableType == REQUESTABLE_TYPE.PAYROLL_REQUEST"
+                            v-model:payroll-request-payload="requestable.data"/>
+                    </div>
+
+                    <Label v-if="!requestable.successful" invert :size="'md'" :type="'danger'" :label="requestable.message" />
                 </div>
             </template>
             <template #footer>
