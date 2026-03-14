@@ -67,7 +67,7 @@
 
                 <!-- Employment Profiles -->
                 <DialogModal
-                    :max-width="'960px'"
+                    :max-width="'740px'"
                     :show="employmentProfilesModal"
                     :closeable="false">
                     <template #title>
