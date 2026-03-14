@@ -71,7 +71,11 @@
             <tbody ref="tableBody">
                 <!-- Table cell height: sm = 23px, md = 27px(29px w/ xs menu), lg = 31px(33px w/ sm menu), xl = 35px(37px w/ md menu) -->
                 <template v-for="(row, rowIndex) in rows" :key="row.id">
-                    <tr :class="[rowBackgroundClass(rowIndex), disabled ? 'pointer-events-none' : '']" >
+                    <tr :class="[
+                        rowBackgroundClass(rowIndex),
+                        disabled ? 'pointer-events-none' : '',
+                        Boolean(subRowSlug) && Boolean(row[subRowSlug]?.length) ? 'tr-shadow' : ''
+                    ]">
                         <td v-if="selection" style="padding:0 0.5rem;" :class="[row.isSelectable == false ? 'pointer-events-none' : '']">
                             <NonModelCheckBox
                                 v-if="row.isSelectable !== false"
@@ -114,7 +118,7 @@
                     </tr>
 
                     <DataTableSubRow
-                        v-if="subRowSlug && row[subRowSlug]?.length"
+                        v-if="Boolean(subRowSlug) && Boolean(row[subRowSlug]?.length)"
                         :slug="subRowSlug"
                         :extensionSlug="subRowExtensionSlug"
                         :row-index="rowIndex"
@@ -632,6 +636,10 @@ table thead tr:last-child td{
 
 table thead tr td {
     background-color: v-bind(headerColor);
+}
+
+.tr-shadow{
+    box-shadow: 1px 1px 5px rgba(0,0,0,0.1);
 }
 
 tbody tr:hover {
