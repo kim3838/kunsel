@@ -4,7 +4,7 @@
         :show="creatingOrEditing"
         :closeable="false">
         <template #title>
-
+            Employment profile
         </template>
         <template #content>
             <div v-if="false">
@@ -21,60 +21,69 @@
                 <span class="font-semibold">State of Employment :</span> {{stateEndOfEmployment}}<br>
                 <span class="font-semibold">Form :</span> {{form}}<br>
             </div>
-            <div ref='contentContainer'>
+            <div ref='contentContainer' class="space-y-4">
                 <div v-if="loadingOverlay" :style="loadingOverlayDimensionStyle" class="absolute tint-background  z-50">
                     <div class="h-full flex items-center justify-center">
                         <UnorderedList :size="'lg'" :icon="'eos-icons:loading'">Please wait...</UnorderedList>
                     </div>
                 </div>
-                <div class="p-3 pt-4 mx-auto max-w-screen-lg grid gap-2 grid-cols-3">
-                    <div class="col-span-2 sm:col-span-1">
-                        <InputLabel :size="'sm'" value="Employment Status"/>
-                        <RadioGroup
-                            :selections="employmentStatusSelection"
-                            :size="'md'"
-                            :orientation="'horizontal'"
-                            :radio-key="'employment-status'"
-                            @change="employmentStatusSelectedChange"
-                            v-model="employmentStatus" />
+                <div v-else>
+                    <div v-if="isolated" class="text-base">
+                        ({{employeePayload.number}}) {{employeePayload.full_name}}
                     </div>
-                    <div class="col-span-full grid gap-2 grid-cols-2 sm:grid-cols-3">
-                        <div>
-                            <InputLabel :size="'sm'" value="Employment Type"/>
-                            <SingleSelect :searchable="false" drop-shadow value-persist :size="'md'" v-model="employmentType" :options="employmentTypeOptions"/>
+                </div>
+
+                <div class="lining-shadow rounded-sm tint-background">
+
+                    <div class="p-4 grid gap-2 grid-cols-3">
+                        <div class="col-span-2 sm:col-span-1">
+                            <InputLabel :size="'sm'" value="Employment Status"/>
+                            <RadioGroup
+                                :selections="employmentStatusSelection"
+                                :size="'md'"
+                                :orientation="'horizontal'"
+                                :radio-key="'employment-status'"
+                                @change="employmentStatusSelectedChange"
+                                v-model="employmentStatus" />
                         </div>
-                        <div>
-                            <InputLabel :size="'sm'" value="Start Date"/>
-                            <InputWithIcon
-                                high-light-all-text-on-focus
-                                @valueChanged="startDateChanged"
-                                :override="{font_family_class: 'font-sans'}"
-                                :icon="'mdi:calendar-cursor-outline'"
-                                :id="`start-date`" v-model="startDate" :size="'md'" />
+                        <div class="col-span-full grid gap-2 grid-cols-2 sm:grid-cols-3">
+                            <div>
+                                <InputLabel :size="'sm'" value="Employment Type"/>
+                                <SingleSelect :searchable="false" drop-shadow value-persist :size="'md'" v-model="employmentType" :options="employmentTypeOptions"/>
+                            </div>
+                            <div>
+                                <InputLabel :size="'sm'" value="Start Date"/>
+                                <InputWithIcon
+                                    high-light-all-text-on-focus
+                                    @valueChanged="startDateChanged"
+                                    :override="{font_family_class: 'font-sans'}"
+                                    :icon="'mdi:calendar-cursor-outline'"
+                                    :id="`start-date`" v-model="startDate" :size="'md'" />
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-span-full flex flex-wrap gap-2">
-                        <RadioGroup
-                            :selections="stateEndOfEmploymentSelection"
-                            :size="'md'"
-                            :orientation="stateEndOfEmploymentRadioGroupOrientation"
-                            :radio-key="'state-end-of-employment'"
-                            @change="stateEndOfEmploymentSelectedChange"
-                            v-model="stateEndOfEmployment" />
-                    </div>
-                    <div v-if="stateEndOfEmployment == 1" class="col-span-full grid gap-2 grid-cols-2 sm:grid-cols-3">
-                        <div>
-                            <InputLabel :size="'sm'" value="End of Service Type"/>
-                            <SingleSelect :searchable="false" drop-shadow :size="'md'" v-model="endOfServiceType" :options="endOfServiceTypeOptions"/>
+                        <div class="col-span-full flex flex-wrap gap-2">
+                            <RadioGroup
+                                :selections="stateEndOfEmploymentSelection"
+                                :size="'md'"
+                                :orientation="stateEndOfEmploymentRadioGroupOrientation"
+                                :radio-key="'state-end-of-employment'"
+                                @change="stateEndOfEmploymentSelectedChange"
+                                v-model="stateEndOfEmployment" />
                         </div>
-                        <div>
-                            <InputLabel :size="'sm'" value="End Date"/>
-                            <InputWithIcon
-                                high-light-all-text-on-focus
-                                @valueChanged="endDateChanged"
-                                :override="{font_family_class: 'font-sans'}"
-                                :icon="'mdi:calendar-cursor-outline'"
-                                :id="`end-date`" v-model="endDate" :size="'md'" />
+                        <div v-if="stateEndOfEmployment == 1" class="col-span-full grid gap-2 grid-cols-2 sm:grid-cols-3">
+                            <div>
+                                <InputLabel :size="'sm'" value="End of Service Type"/>
+                                <SingleSelect :searchable="false" drop-shadow :size="'md'" v-model="endOfServiceType" :options="endOfServiceTypeOptions"/>
+                            </div>
+                            <div>
+                                <InputLabel :size="'sm'" value="End Date"/>
+                                <InputWithIcon
+                                    high-light-all-text-on-focus
+                                    @valueChanged="endDateChanged"
+                                    :override="{font_family_class: 'font-sans'}"
+                                    :icon="'mdi:calendar-cursor-outline'"
+                                    :id="`end-date`" v-model="endDate" :size="'md'" />
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -153,6 +162,10 @@ const props = defineProps({
     editPayloadIndex:{
         type: Number,
         default: -1,
+    },
+    isolated: {
+        type: Boolean,
+        default: false,
     },
 });
 

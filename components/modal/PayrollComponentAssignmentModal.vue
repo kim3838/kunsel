@@ -1,10 +1,9 @@
 <template>
     <DialogModal
         :show="creatingOrEditing"
-        :closeable="false"
-        :content-padding="'0'">
+        :closeable="false">
         <template #title>
-
+            Employee payroll item
         </template>
         <template #content>
             <div v-if="false">
@@ -29,16 +28,21 @@
                 <span class="font-semibold">Component Form :</span> {{componentForm}}<br>
                 <span class="font-semibold">Form :</span> {{form}}<br>
             </div>
-            <div ref='contentContainer' class="px-3 pt-4 pb-2.5">
+            <div ref='contentContainer' class="space-y-4">
                 <div v-if="loadingOverlay" :style="loadingOverlayDimensionStyle" class="absolute tint-background  z-50">
                     <div class="h-full flex items-center justify-center">
                         <UnorderedList :size="'lg'" :icon="'eos-icons:loading'">Please wait...</UnorderedList>
                     </div>
                 </div>
+                <div v-else>
+                    <div v-if="isolated" class="text-base">
+                        ({{employeePayload.number}}) {{employeePayload.full_name}}
+                    </div>
+                </div>
 
                 <div class="lining-shadow rounded-sm tint-background">
 
-                    <div class="p-3 pt-4 mx-auto max-w-screen-lg grid gap-2 grid-cols-4 sm:grid-cols-5 md:grid-cols-6">
+                    <div class="p-4 grid gap-2 grid-cols-4 sm:grid-cols-5">
                         <div v-if="formulableTabSelectable && !singleFormulableMode" class="col-span-full">
                             <RadioGroup
                                 :disabled="disableActions"
@@ -48,7 +52,7 @@
                                 :radio-key="`formulable_type`"
                                 v-model="formulableTypeTab" />
                         </div>
-                        <div :class="[selectedPayrollComponentIsAmountable ? 'col-span-2' : 'col-span-4']">
+                        <div :class="[selectedPayrollComponentIsAmountable ? 'col-span-1' : 'col-span-2']">
                             <InputLabel :size="'sm'" value="Select Payroll Component"/>
                             <SingleSelect
                                 :key="assignablePayrollComponentOptionsKey"
@@ -77,9 +81,9 @@
                             <InputLabel :size="'sm'" value="Pay Type"/>
                             <SingleSelect :searchable="false" disabled :selection-max-viewable-line="10" drop-shadow value-persist :size="'md'" :options="payTypeOptions"/>
                         </div>
-                        <div v-if="selectedPayrollComponentIsAmountable" class="col-span-full flex flex-wrap gap-2">
+                        <div v-if="selectedPayrollComponentIsAmountable" class="col-span-full flex flex-wrap gap-1">
                             <div>
-                                <InputLabel :size="'sm'" value="Date start"/>
+                                <InputLabel :size="'sm'" value="Start date"/>
                                 <RadioGroup
                                     :selections="amountableStartSelection"
                                     :size="'md'"
@@ -89,7 +93,7 @@
                                     v-model="amountableStart" />
                             </div>
                             <div v-if="amountableStart == AMOUNTABLE_PAYROLL_COMPONENT_START.CUSTOM_DATE">
-                                <InputLabel :size="'sm'" value="Start date"/>
+                                <InputLabel :size="'sm'" value="End date"/>
                                 <InputWithIcon
                                     high-light-all-text-on-focus
                                     @valueChanged="startDateChanged"
@@ -98,7 +102,7 @@
                                     :id="`amountable-start-date`" v-model="startDate" :size="'md'" />
                             </div>
                         </div>
-                        <div v-if="selectedPayrollComponentIsAmountable" class="col-span-full flex flex-wrap gap-2">
+                        <div v-if="selectedPayrollComponentIsAmountable" class="col-span-full flex flex-wrap gap-1">
                             <div>
                                 <InputLabel :size="'sm'" value="Date end"/>
                                 <RadioGroup
@@ -229,6 +233,10 @@ const props = defineProps({
         default: () => {
             return [];
         }
+    },
+    isolated: {
+        type: Boolean,
+        default: false,
     },
 });
 

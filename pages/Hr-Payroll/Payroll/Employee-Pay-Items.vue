@@ -144,6 +144,7 @@
                     v-model:editPayload="payrollComponentEditPayload"
                     v-model:payrollComponentFormulable="creatingOrEditingPayrollComponentFormulable"
                     v-model:payFrequency="stagedEmployeePayFrequency"
+                    isolated
                     @resolved="payrollComponentResolved"
                     @cancelled="payrollComponentCancelled"
                 ></PayrollComponentAssignmentModal>
@@ -244,6 +245,7 @@
 import {storeToRefs} from "pinia";
 import type {DataTableT, TableHeaderT, TableRowT, TableSupHeaderT} from "@/public/js/types/data";
 import type {EnumOption, EnumSelection, PayFrequencyOptionT, StringEnumInterface} from "@/public/js/common/type";
+import type {EmployeeSelectionItemT} from "@/public/js/types/employee";
 
 useHead({titleTemplate: (titleChunk) => {return `Employee Pay Items`}});
 definePageMeta({middleware: ['auth', 'verified', 'admin-of-selected-company']});
@@ -626,9 +628,13 @@ const deleteSelected = async () => {
 const stagedEmployee = ref<{
     'id': string | number | null,
     'ulid': string | null,
+    'number': string
+    'full_name': string
 }>({
     'id': null,
     'ulid': null,
+    'number': '',
+    'full_name': '',
 });
 
 const creatingOrEditing = ref(false);
@@ -644,6 +650,8 @@ const selectEmployee = () => {
     stagedEmployee.value = {
         'id': null,
         'ulid': null,
+        'number': '',
+        'full_name': '',
     };
 
     selectingEmployee.value = true;
@@ -657,6 +665,8 @@ const resetStaged = () => {
     stagedEmployee.value = {
         'id': null,
         'ulid': null,
+        'number': '',
+        'full_name': '',
     };
 }
 
@@ -665,8 +675,15 @@ const cancelSelectEmployee = () => {
 }
 
 const stagedEmployeePayFrequency = ref<PayFrequencyOptionT | null>(null);
-const setSelectedEmployee = (employee: {payroll_group:PayFrequencyOptionT}) => {
+const setSelectedEmployee = (employee: EmployeeSelectionItemT) => {
     coreStore.resetServiceError();
+
+    stagedEmployee.value = {
+        'id': _get(employee.payload, 'id', null),
+        'ulid': _get(employee.payload, 'ulid', null),
+        'number': _get(employee.payload, 'number', ''),
+        'full_name': _get(employee.payload, 'full_name', ''),
+    }
 
     stagedEmployeePayFrequency.value = employee.payroll_group ? {
         value: employee.payroll_group?.value,
@@ -696,15 +713,24 @@ const resolveSelectEmployee = () => {
 
     }
 
-    put({employee_id: employeeOptions.selected}, true);
+    put({
+        employee_id: employeeOptions.selected,
+        employee: {
+            number: _get(stagedEmployee.value, 'number', ''),
+            full_name: _get(stagedEmployee.value, 'full_name', ''),
+        }
+    }, true);
 
     selectingEmployee.value = false;
 }
 
 const put = async (row: TableRowT | {} = {}, createPayrollComponent = false) => {
+
     stagedEmployee.value = {
         'id': _get(row, 'employee_id', null),
         'ulid': _get(row, 'employee.ulid', null),
+        'number': _get(row, 'employee.number', ''),
+        'full_name': _get(row, 'employee.full_name', ''),
     };
 
     if(!createPayrollComponent){

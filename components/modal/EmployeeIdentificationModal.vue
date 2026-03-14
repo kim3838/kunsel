@@ -22,34 +22,45 @@
                 <span class="font-semibold">Readable number :</span> {{identificationReadableNumber}}<br>
                 <span class="font-semibold">Form :</span> {{form}}<br>
             </div>
-            <div ref='contentContainer' class="space-y-2">
+            <div ref='contentContainer' class="space-y-4">
                 <div v-if="loadingOverlay" :style="loadingOverlayDimensionStyle" class="absolute tint-background  z-50">
                     <div class="h-full flex items-center justify-center">
                         <UnorderedList :size="'lg'" :icon="'eos-icons:loading'">Please wait...</UnorderedList>
                     </div>
                 </div>
-                <div class="pt-4 grid gap-2 grid-cols-1 sm:grid-cols-4">
-                    <div class="col-span-1 sm:col-span-2">
-                        <InputLabel :size="'sm'" value="Type"/>
-                        <SingleSelect
-                            :key="identificationTypeOptionsKey"
-                            :searchable="false"
-                            value-persist
-                            drop-shadow
-                            :selection-max-viewable-line="10"
-                            :size="'md'"
-                            :label="'Select identification type'"
-                            :options="identificationTypeOptions"/>
+                <div v-else>
+                    <div v-if="isolated" class="text-base">
+                        ({{employeePayload.number}}) {{employeePayload.full_name}}
                     </div>
                 </div>
-                <div class="grid gap-2 grid-cols-1 sm:grid-cols-2">
-                    <div>
-                        <InputLabel :size="'sm'" value="Number"/>
-                        <Input v-model="identificationNumber" :size="'md'" />
-                    </div>
-                    <div>
-                        <InputLabel :size="'sm'" value="Readable number (optional)"/>
-                        <Input v-model="identificationReadableNumber" :size="'md'" />
+
+                <div class="lining-shadow rounded-sm tint-background">
+
+                    <div class="p-4 space-y-2">
+                        <div class="grid gap-2 grid-cols-1 sm:grid-cols-4">
+                            <div class="col-span-1 sm:col-span-2">
+                                <InputLabel :size="'sm'" value="Type"/>
+                                <SingleSelect
+                                    :key="identificationTypeOptionsKey"
+                                    :searchable="false"
+                                    value-persist
+                                    drop-shadow
+                                    :selection-max-viewable-line="10"
+                                    :size="'md'"
+                                    :label="'Select identification type'"
+                                    :options="identificationTypeOptions"/>
+                            </div>
+                        </div>
+                        <div class="grid gap-2 grid-cols-1 sm:grid-cols-2">
+                            <div>
+                                <InputLabel :size="'sm'" value="Number"/>
+                                <Input v-model="identificationNumber" :size="'md'" />
+                            </div>
+                            <div>
+                                <InputLabel :size="'sm'" value="Readable number (optional)"/>
+                                <Input v-model="identificationReadableNumber" :size="'md'" />
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -125,6 +136,10 @@ const props = defineProps({
     editPayloadIndex:{
         type: Number,
         default: -1,
+    },
+    isolated: {
+        type: Boolean,
+        default: false,
     },
 });
 

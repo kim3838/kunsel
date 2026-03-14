@@ -10,7 +10,7 @@
 
         <div class="lining-shadow rounded-sm tint-background">
 
-            <div class="lining-shadow rounded-t-sm text-lg font-medium font-header px-4 py-2">Employment Profile</div>
+            <div v-if="!isolated" class="lining-shadow rounded-t-sm text-lg font-medium font-header px-4 py-2">Employment Profiles</div>
 
             <div class="p-4">
 
@@ -150,7 +150,6 @@ const props = defineProps({
         type: Boolean,
         default: false,
     },
-
     isolated: {
         type: Boolean,
         default: false,

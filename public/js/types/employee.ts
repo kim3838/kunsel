@@ -1,5 +1,5 @@
 
-import type {EnumOption} from "@/public/js/common/type";
+import type {EnumOption, PayFrequencyOptionT} from "@/public/js/common/type";
 import type {UserT} from "@/public/js/types/user";
 
 export type EmployeeT = {
@@ -22,6 +22,14 @@ export type EmployeeT = {
     current_employment_profile?: EmploymentProfileT,
     employment_profiles?: EmploymentProfileT[],
     user: UserT
+}
+
+export type EmployeeSelectionItemT = {
+    payload: {
+        number: string,
+        full_name: string,
+    },
+    payroll_group: PayFrequencyOptionT
 }
 
 export type EmployeeContactT = {

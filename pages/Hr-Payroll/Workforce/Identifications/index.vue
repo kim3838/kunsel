@@ -53,6 +53,7 @@
                                             :label="'Select Employee'"
                                             :size="'md'"
                                             :icon="'mdi:badge-account-outline'"
+                                            @valueChange="setSelectedEmployee"
                                             :payload="employeeOptions"/>
                                     </div>
                                     <div v-if="$coreStore.hasNonPromptableServicePayloadMessage" class="col-span-full block">
@@ -91,6 +92,7 @@
                     v-model:creatingOrEditing="creatingOrEditing"
                     v-model:employeePayload="stagedEmployee"
                     v-model:editPayload="employeeIdentificationEditPayload"
+                    isolated
                     @resolved="employeeIdentificationResolved"
                     @cancelled="employeeIdentificationCancelled"
                 ></EmployeeIdentificationModal>
@@ -155,6 +157,7 @@
 <script setup lang="ts">
 import {storeToRefs} from "pinia";
 import type {DataTableT, TableHeaderT, TableRowT, TableSupHeaderT} from "@/public/js/types/data";
+import type {EmployeeSelectionItemT, EmployeeT} from "~/public/js/types/employee";
 
 useHead({titleTemplate: (titleChunk) => {return `Employee Identifications`}});
 definePageMeta({middleware: ['auth', 'verified', 'admin-of-selected-company']});
@@ -461,9 +464,13 @@ const deleteSelected = async () => {
 const stagedEmployee = ref<{
     'id': string | number | null,
     'ulid': string | null,
+    'number': string
+    'full_name': string
 }>({
     'id': null,
     'ulid': null,
+    'number': '',
+    'full_name': '',
 });
 
 const creatingOrEditing = ref(false);
@@ -478,9 +485,21 @@ const selectEmployee = () => {
     stagedEmployee.value = {
         'id': null,
         'ulid': null,
+        'number': '',
+        'full_name': '',
     };
 
     selectingEmployee.value = true;
+}
+
+const setSelectedEmployee = (employee: EmployeeSelectionItemT) => {
+
+    stagedEmployee.value = {
+        'id': _get(employee.payload, 'id', null),
+        'ulid': _get(employee.payload, 'ulid', null),
+        'number': _get(employee.payload, 'number', ''),
+        'full_name': _get(employee.payload, 'full_name', ''),
+    }
 }
 
 const resetStaged = () => {
@@ -490,6 +509,8 @@ const resetStaged = () => {
     stagedEmployee.value = {
         'id': null,
         'ulid': null,
+        'number': '',
+        'full_name': '',
     };
 }
 
@@ -500,7 +521,13 @@ const resolveSelectEmployee = () => {
 
     if(Boolean(employeeOptions.selected)){
 
-        put({employee_id: employeeOptions.selected});
+        put({
+            employee_id: employeeOptions.selected,
+            employee: {
+                number: _get(stagedEmployee.value, 'number', ''),
+                full_name: _get(stagedEmployee.value, 'full_name', ''),
+            }
+        });
 
         selectingEmployee.value = false;
 
@@ -515,9 +542,12 @@ const resolveSelectEmployee = () => {
 }
 
 const put = async (row: TableRowT | {} = {}) => {
+
     stagedEmployee.value = {
         'id': _get(row, 'employee_id', null),
         'ulid': _get(row, 'employee.ulid', null),
+        'number': _get(row, 'employee.number', ''),
+        'full_name': _get(row, 'employee.full_name', ''),
     };
 
     //@ts-ignore

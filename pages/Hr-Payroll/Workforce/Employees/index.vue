@@ -71,17 +71,22 @@
                     :show="employmentProfilesModal"
                     :closeable="false">
                     <template #title>
-                        {{employmentProfilesModalTitle}}
+                        Employment Profiles
                     </template>
                     <template #content>
-                        <div ref='employmentProfilesContentContainer' :class="[employmentProfilesLoadingOverlay ? '' : 'pt-4 space-y-4 ']" class="min-h-[100px]">
-                            <div v-if="employmentProfilesLoadingOverlay" :style="employmentProfilesLoadingOverlayDimensionStyle" class="absolute tint-background  z-50">
+                        <div ref='employmentProfilesContentContainer' :class="[employmentProfilesLoadingOverlay ? '' : 'space-y-4 ']" class="min-h-[100px]">
+                            <div v-if="employmentProfilesLoadingOverlay" :style="employmentProfilesLoadingOverlayDimensionStyle" class="absolute tint-background z-50">
                                 <div class="h-full flex items-center justify-center">
                                     <UnorderedList :size="'lg'" :icon="'eos-icons:loading'">Loading Employment Profiles...</UnorderedList>
                                 </div>
                             </div>
-                            <div v-else class="text-sm font-header">
-                                Changes are auto-save.
+                            <div v-else>
+                                <div class="text-base">
+                                    {{employmentProfilesModalTitle}}
+                                </div>
+                                <div class="text-sm subtitle-color">
+                                    Changes are autosave
+                                </div>
                             </div>
 
                             <EmploymentProfiles
@@ -113,17 +118,22 @@
                     :show="payrollComponentsModal"
                     :closeable="false">
                     <template #title>
-                        {{payrollComponentsModalTitle}}
+                        Employee payroll items
                     </template>
                     <template #content>
-                        <div ref='payrollComponentsContentContainer' :class="[payrollComponentsLoadingOverlay ? '' : 'pt-4 space-y-4 ']" class="min-h-[100px]">
-                            <div v-if="payrollComponentsLoadingOverlay" :style="payrollComponentsLoadingOverlayDimensionStyle" class="absolute tint-background  z-50">
+                        <div ref='payrollComponentsContentContainer' :class="[payrollComponentsLoadingOverlay ? '' : 'space-y-4']" class="min-h-[100px]">
+                            <div v-if="payrollComponentsLoadingOverlay" :style="payrollComponentsLoadingOverlayDimensionStyle" class="absolute tint-background z-50">
                                 <div class="h-full flex items-center justify-center">
                                     <UnorderedList :size="'lg'" :icon="'eos-icons:loading'">Loading Payroll Components...</UnorderedList>
                                 </div>
                             </div>
-                            <div v-else class="text-sm font-header">
-                                Changes are auto-save.
+                            <div v-else>
+                                <div class="text-base">
+                                    {{payrollComponentsModalTitle}}
+                                </div>
+                                <div class="text-sm subtitle-color">
+                                    Changes are autosave
+                                </div>
                             </div>
 
                             <EmployeePayrollComponent
@@ -265,7 +275,7 @@
                         <template v-slot:cell.actions="{cell,slot: cellSlot}">
                             <div class="flex items-center">
                                 <NavDrop
-                                    class="z-10"
+                                    class="z-20"
                                     :disabled="disableActions"
                                     :parent-icon="'ic:baseline-arrow-right'"
                                     in-horizontal-scrollable
@@ -277,8 +287,8 @@
                                     :drop-justify="'right'"
                                     :drop-options="[
                                         {type: 'link', icon: 'ix:open-external', title: 'Details',to: `/hr-payroll/workforce/employees/${cell.ulid}`},
-                                        {type: 'action', title: 'Employment Profiles',callback: () => {showEmploymentProfilesModal(cell);}},
-                                        {type: 'action', title: 'Pay Items',callback: () => {showPayrollComponentsModal(cell);}},
+                                        {type: 'action', icon: 'gg:reorder', title: 'Employment Profiles',callback: () => {showEmploymentProfilesModal(cell);}},
+                                        {type: 'action', icon: 'gg:feed', title: 'Payroll Items',callback: () => {showPayrollComponentsModal(cell);}},
                                     ]">
                                 </NavDrop>
                             </div>
@@ -769,7 +779,7 @@ const showPayrollComponentsModal = async(cell: TableRowT)=> {
                 'pay_frequency_id': _get(cell, 'pay_frequency_id', null) as number,
             };
 
-            payrollComponentsModalTitle.value = `${cell.number} ${cell.full_name}`;
+            payrollComponentsModalTitle.value = `(${cell.number}) ${cell.full_name}`;
             payrollComponentsModal.value = true;
         }
     }, true);
@@ -831,7 +841,7 @@ const showEmploymentProfilesModal = async (cell: TableRowT)=> {
                 'ulid': _get(cell, 'ulid', null),
             };
 
-            employmentProfilesModalTitle.value = `${cell.number} ${cell.full_name}`;
+            employmentProfilesModalTitle.value = `(${cell.number}) ${cell.full_name}`;
             employmentProfilesModal.value = true;
         }
     }, true);
