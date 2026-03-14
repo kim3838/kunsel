@@ -37,7 +37,6 @@
 
             <DataTable
                 v-if="shifts.successful"
-                landscape
                 class="mt-2"
                 :headers="shiftsHeaders"
                 :size="'lg'"
