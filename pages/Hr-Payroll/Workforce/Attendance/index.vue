@@ -49,22 +49,16 @@
                     :show="creatingOrEditing"
                     :closeable="false">
                     <template #title>
-
+                        {{attendanceDateReadable}} {{attendanceWeekday}}
                     </template>
                     <template #content>
-                        <div ref='modalContentContainer'>
+                        <div ref='modalContentContainer' class="space-y-4">
 
-                            <div class="mx-auto max-w-screen-lg">
-                                <div class="text-lg">
-                                    {{attendanceDateReadable}}&nbsp;{{attendanceWeekday}}&nbsp;Attendance
-                                </div>
-                                <div class="text-sm subtitle-color">
-                                    {{_get(editPayload, 'employee.number', '')}}&nbsp;{{_get(editPayload, 'employee.full_name', '')}}
-                                </div>
-
+                            <div class="text-base">
+                                {{_get(editPayload, 'employee.number', '')}} {{_get(editPayload, 'employee.full_name', '')}}
                             </div>
 
-                            <div class="pt-2 mx-auto max-w-screen-lg flex flex-row gap-4">
+                            <div class="mx-auto max-w-screen-lg flex flex-row gap-4">
 
                                 <fieldset class="basis-1/3 neutral-border px-2 pb-2 space-y-2">
                                     <legend class="text-lg font-header">Schedule</legend>

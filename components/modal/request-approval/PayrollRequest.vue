@@ -6,11 +6,11 @@
         <div class="text-base">
             Payroll request
         </div>
-        <div class="text-sm subtitle-color">
+        <div class="text-base">
             Submitted by: {{requestByUsername}} {{requestByEmployeeNumberComputed}} {{requestByEmployeeFullName}}
         </div>
-        <div class="text-sm subtitle-color">
-            Payroll number: {{payrollNumber}}
+        <div class="text-base">
+            Payroll #: {{payrollNumber}}
         </div>
 
         <fieldset class="mt-4 neutral-border px-2 pb-2 space-y-2">

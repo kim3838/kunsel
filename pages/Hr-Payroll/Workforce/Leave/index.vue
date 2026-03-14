@@ -42,11 +42,16 @@
                     :show="creatingOrEditing"
                     :closeable="false">
                     <template #title>
-
+                        Create leave
                     </template>
                     <template #content>
-                        <div ref='modalContentContainer'>
-                            <div class="pt-2 mx-auto max-w-screen-lg flex flex-col-reverse md:flex-row gap-4">
+                        <div ref='modalContentContainer' class="space-y-4">
+
+                            <div class="text-base">
+                                Inquire leave date(s) and submit if claimable dates are detected.
+                            </div>
+
+                            <div class="mx-auto max-w-screen-lg flex flex-col-reverse md:flex-row gap-4">
 
                                 <fieldset v-if="showClaimabilityPerDate" class="md:basis-4/12 neutral-border px-2 pb-2 space-y-2">
                                     <legend class="text-lg font-header">Leave Date Inquiries</legend>
@@ -55,15 +60,15 @@
                                         <UnorderedList v-if="modalDisableActions" :icon="'eos-icons:loading'" :size="'md'" :label="'Please wait...'"/>
                                     </div>
                                     <div v-else class="max-h-[135px] md:max-h-[270px] overflow-y-auto space-y-2">
-                                        <div class="text-base font-medium font-header">Claimability does not include ineligibility, claim limit and leave balance.</div>
+                                        <div class="text-base font-medium">Claimability does not include ineligibility, claim limit and leave balance.</div>
 
                                         <div class="subtitle-color">Total claimable: {{dateInquiryClaimableCount}}</div>
 
-                                        <table class="border-separate font-sans">
+                                        <table class="border-separate w-full">
                                             <tbody>
                                             <tr v-for="dateInquiry in dateInquiries">
-                                                <td>{{dateInquiry.date}}</td>
-                                                <td class="pl-2">
+                                                <td class="font-sans">{{dateInquiry.date}}</td>
+                                                <td>
                                                     <Label :size="'md'" invert :type="dateInquiry.is_claimable ? `default` : `danger`" :label="dateInquiry.message" />
                                                 </td>
                                             </tr>
@@ -78,11 +83,11 @@
                                         <UnorderedList v-if="modalDisableActions" :icon="'eos-icons:loading'" :size="'md'" :label="'Please wait...'"/>
                                     </div>
                                     <div v-else class="max-h-[135px] md:max-h-[270px] overflow-y-auto">
-                                        <table class="border-separate font-sans">
+                                        <table class="border-separate w-full">
                                             <tbody>
                                             <tr v-for="submitResult in submitResults">
-                                                <td>{{submitResult.date}}</td>
-                                                <td class="pl-2">
+                                                <td class="font-sans">{{submitResult.date}}</td>
+                                                <td>
                                                     <Label :size="'md'" invert :type="submitResult.result.type" :label="submitResult.result.label" />
                                                 </td>
                                             </tr>
@@ -90,18 +95,18 @@
                                         </table>
                                     </div>
                                 </fieldset>
-                                <div v-else class="md:basis-4/12 flex justify-center items-center text-center font-header px-4">
+                                <div v-else class="md:basis-4/12 flex justify-center items-center text-center px-4">
 
                                     <div v-if="modalSubmitPending" class="inline-flex items-center">
                                         <UnorderedList v-if="modalDisableActions" :icon="'eos-icons:loading'" :size="'md'" :label="'Please wait...'"/>
                                     </div>
-                                    <div v-else>
-                                        Select employee, assigned shift, leave type and date of leave
+                                    <div v-else class="text-base">
+                                        Inquire leave dates
                                     </div>
                                 </div>
 
                                 <fieldset class="md:basis-8/12 neutral-border px-2 pb-2 space-y-2">
-                                    <legend class="text-lg font-header">Create leave</legend>
+                                    <legend class="text-lg font-header">Inquire leave dates</legend>
 
                                     <div class="grid gap-2 grid-cols-4">
                                         <div class="col-span-4 lg:col-span-2">
@@ -172,10 +177,6 @@
                                                 :id="`leave_date_to`"
                                                 :size="'md'" />
                                         </div>
-                                    </div>
-
-                                    <div class="grid gap-2 grid-cols-4">
-                                        <div class="col-span-full subtitle-color">Leave claim automatically skips attendance, existing leaves, out of shift sched. and day offs</div>
                                     </div>
 
                                     <div v-if="$coreStore.hasNonPromptableServicePayloadMessage" class="block">

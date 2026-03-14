@@ -6,7 +6,7 @@
         <div class="text-base">
             Leave request
         </div>
-        <div class="text-sm subtitle-color">
+        <div class="text-base">
             Requested by: {{requestByUsername}} {{requestByEmployeeNumberComputed}} {{requestByEmployeeFullName}}
         </div>
 

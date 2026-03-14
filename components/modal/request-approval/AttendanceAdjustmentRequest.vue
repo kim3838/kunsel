@@ -6,10 +6,10 @@
         <div class="text-base">
             {{attendanceDateReadable}} {{attendanceWeekday}} attendance adjustment
         </div>
-        <div class="text-sm subtitle-color">
+        <div class="text-base">
             Requested by: {{requestByUsername}} {{requestByEmployeeNumberComputed}} {{requestByEmployeeFullName}}
         </div>
-        <div class="text-sm subtitle-color">
+        <div class="text-base">
             Attendance of: ({{attendanceEmployeeNumber}}) {{attendanceEmployeeFullName}}
         </div>
 

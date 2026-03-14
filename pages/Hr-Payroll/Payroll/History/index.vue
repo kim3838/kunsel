@@ -711,7 +711,7 @@ const submitForApproval = async() =>{
                 resetable: false,
                 icon: null,
                 title: `Payroll request submitted`,
-                message: `Request number: ${_get(payrollRequest, 'number', 'Not found')}.`,
+                message: `Request #: ${_get(payrollRequest, 'number', 'Not found')}.`,
                 action: {
                     callback: () => {},
                     label: 'Okay'

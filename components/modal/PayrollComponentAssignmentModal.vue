@@ -52,7 +52,7 @@
                                 :radio-key="`formulable_type`"
                                 v-model="formulableTypeTab" />
                         </div>
-                        <div :class="[selectedPayrollComponentIsAmountable ? 'col-span-1' : 'col-span-2']">
+                        <div :class="[selectedPayrollComponentIsAmountable ? 'col-span-1' : 'col-span-3']">
                             <InputLabel :size="'sm'" value="Select Payroll Component"/>
                             <SingleSelect
                                 :key="assignablePayrollComponentOptionsKey"

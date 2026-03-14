@@ -1,6 +1,6 @@
 <template>
     <div class="space-y-6">
-        <div class="space-y-6">
+        <div class="space-y-4">
             <div class="font-medium text-xl font-header">{{_get(proxyPayroll, 'number', 'Payroll number not found')}}</div>
 
             <PayrollSubInfo :type="PAYROLL_SUB_INFO_TYPE.ADMIN_OVERVIEW" :payroll="proxyPayroll"/>

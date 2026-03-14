@@ -8,13 +8,14 @@
             :closeable="false"
             @close="closeModal">
             <template #title>
+                Auto-create attendance
             </template>
 
             <template #content>
                 <div class="space-y-4">
 
-                    <div class="font-medium text-lg font-header">
-                        Auto-create attendance
+                    <div class="text-base subtitle-color">
+                        Select employee or employee group to auto-create attendances from.
                     </div>
 
                     <div class="grid gap-2 grid-cols-1 sm:grid-cols-5">
@@ -38,11 +39,6 @@
                     </div>
 
                     <div class="grid gap-2 grid-cols-1 sm:grid-cols-5">
-                        <div class="col-span-3 text-sm">
-                            Select employee or employee group to auto-create attendances from.
-                        </div>
-                    </div>
-                    <div class="grid gap-2 grid-cols-1 sm:grid-cols-6">
                         <div class="col-span-2">
                             <InputLabel :size="'sm'" value="Date From"/>
                             <InputWithIcon :icon="'mdi:calendar-today-outline'" :id="'auto_create_date_from'" readonly v-model="attendanceDateFrom" :size="'md'" class="w-full" :override="{font_family_class: 'font-sans'}" :disabled="disableActions" />
@@ -53,7 +49,7 @@
                         </div>
                     </div>
                     <div>
-                        <InputLabel :size="'sm'" value="Replace existing attendance/s"/>
+                        <InputLabel :size="'sm'" value="Replace existing attendance"/>
                         <RadioGroup
                             :disabled="disableActions"
                             :selections="replaceExistingAttendanceSelection"

@@ -36,18 +36,16 @@
                     :show="creatingAdjustment"
                     :closeable="false">
                     <template #title>
-
+                        {{attendanceDateReadable}} {{attendanceWeekday}}
                     </template>
                     <template #content>
-                        <div ref='modalContentContainer'>
+                        <div ref='modalContentContainer' class="space-y-4">
 
-                            <div class="mx-auto max-w-screen-lg">
-                                <div class="text-lg">
-                                    {{attendanceDateReadable}}&nbsp;{{attendanceWeekday}}&nbsp;File attendance adjustment request
-                                </div>
+                            <div class="text-base">
+                                File attendance adjustment request
                             </div>
 
-                            <div class="pt-2 mx-auto max-w-screen-lg flex flex-row gap-4">
+                            <div class="mx-auto max-w-screen-lg flex flex-row gap-4">
 
                                 <fieldset v-if="creatingAdjustment" class="basis-1/3 neutral-border px-2 pb-2 space-y-2">
                                     <legend class="text-lg font-header">Schedule</legend>
@@ -87,7 +85,7 @@
                                         </div>
                                     </div>
                                 </fieldset>
-                                <div v-else class="basis-1/4 flex justify-center items-center">
+                                <div v-else class="basis-1/4 flex justify-center items-center px-4">
                                     Select Employee, Shift, and Attendance
                                 </div>
 

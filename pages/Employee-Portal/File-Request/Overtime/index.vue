@@ -41,18 +41,22 @@
                     :show="creatingOrEditing"
                     :closeable="false">
                     <template #title>
-
+                        <div v-if="creatingOvertime">
+                            <div v-if="validOvertimeFoundations">File overtime request of {{attendanceDateReadable}}</div>
+                            <div v-else>File overtime request</div>
+                        </div>
                     </template>
                     <template #content>
-                        <div ref='modalContentContainer'>
+                        <div ref='modalContentContainer' class="space-y-4">
 
-                            <div v-if="!creatingOvertime || validOvertimeFoundations" class="mx-auto max-w-screen-lg">
-                                <div class="text-lg">
-                                    {{attendanceDateReadable}}&nbsp;{{attendanceWeekday}}&nbsp;{{creatingOvertime ? 'File overtime request' : 'Overtime'}}
+                            <div v-if="creatingOvertime">
+                                <div v-if="validOvertimeFoundations">
+                                    {{attendanceWeekday}}
                                 </div>
+                                <div v-else>Select attendance of overtime</div>
                             </div>
 
-                            <div class="pt-2 mx-auto max-w-screen-lg flex flex-row gap-4">
+                            <div class="mx-auto max-w-screen-lg flex flex-row gap-4">
 
                                 <fieldset v-if="!creatingOvertime || validOvertimeFoundations" class="basis-1/3 neutral-border px-2 pb-2 space-y-2">
                                     <legend class="text-lg font-header">Schedule</legend>
@@ -80,12 +84,12 @@
                                         </div>
                                     </div>
                                 </fieldset>
-                                <div v-else class="basis-1/4 flex justify-center items-center text-center font-header px-4">
-                                    Select your shift and attendance of overtime
+                                <div v-else class="basis-1/4 flex justify-center items-center text-center px-4">
+                                    Overtime is autofill upon selecting shift and attendance date
                                 </div>
 
                                 <fieldset class="basis-3/4 neutral-border px-2 pb-2 space-y-2">
-                                    <legend class="text-lg font-header">{{creatingOvertime ? 'Create overtime' : 'Overtime'}}</legend>
+                                    <legend class="text-lg font-header">Overtime</legend>
 
                                     <div class="grid gap-2 grid-cols-4">
                                         <div class="col-span-4 md:col-span-3 lg:col-span-2">
