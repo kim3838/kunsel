@@ -9,81 +9,81 @@
             </div>
             <div>
                 <InputLabel :size="'sm'" value="Payroll month"/>
-                <div class="label-value text-base font-sans">{{`${payroll.year} ${payroll.month_readable}`}}</div>
+                <div class="label-value text-base font-data">{{`${payroll.year} ${payroll.month_readable}`}}</div>
             </div>
             <div>
                 <InputLabel :size="'sm'" value="Sequence"/>
-                <div class="label-value text-base font-sans">{{`${payroll.pay_frequency?.text} ${payroll.frequency_sequence?.text || ''}`}}</div>
+                <div class="label-value text-base font-data">{{`${payroll.pay_frequency?.text} ${payroll.frequency_sequence?.text || ''}`}}</div>
             </div>
             <div>
                 <InputLabel :size="'sm'" value="Period"/>
-                <div class="label-value text-base font-sans">{{payroll.date_range_readable}}</div>
+                <div class="label-value text-base font-data">{{payroll.date_range_readable}}</div>
             </div>
             <div>
                 <InputLabel :size="'sm'" value="Employee"/>
-                <div class="label-value text-base font-sans">({{salaryStatement?.employee_number}}) {{salaryStatement?.employee_full_name}}</div>
+                <div class="label-value text-base font-data">({{salaryStatement?.employee_number}}) {{salaryStatement?.employee_full_name}}</div>
             </div>
             <div>
                 <InputLabel :size="'sm'" value="Type"/>
-                <div class="label-value text-base font-sans">{{salaryStatement?.type?.text}}</div>
+                <div class="label-value text-base font-data">{{salaryStatement?.type?.text}}</div>
             </div>
             <div>
                 <InputLabel :size="'sm'" value="Paid"/>
-                <div class="label-value text-base font-sans">{{salaryStatement?.is_paid ? 'Yes' : 'No'}}</div>
+                <div class="label-value text-base font-data">{{salaryStatement?.is_paid ? 'Yes' : 'No'}}</div>
             </div>
         </div>
         <div v-if="isDefault" class="flex flex-row flex-wrap gap-6 items-center">
             <div>
                 <InputLabel :size="'sm'" value="Days"/>
-                <div class="label-value text-base font-sans">{{salaryStatement.total_days}}</div>
+                <div class="label-value text-base font-data">{{salaryStatement.total_days}}</div>
             </div>
             <div>
                 <InputLabel :size="'sm'" value="Day offs"/>
-                <div class="label-value text-base font-sans">{{salaryStatement.total_day_offs}}</div>
+                <div class="label-value text-base font-data">{{salaryStatement.total_day_offs}}</div>
             </div>
             <div>
                 <InputLabel :size="'sm'" value="Work days"/>
-                <div class="label-value text-base font-sans">{{salaryStatement.total_working_days}}</div>
+                <div class="label-value text-base font-data">{{salaryStatement.total_working_days}}</div>
             </div>
             <div>
                 <InputLabel :size="'sm'" value="Working rest days"/>
-                <div class="label-value text-base font-sans">{{salaryStatement.total_working_rest_days}}</div>
+                <div class="label-value text-base font-data">{{salaryStatement.total_working_rest_days}}</div>
             </div>
             <div>
                 <InputLabel :size="'sm'" value="Regular work days"/>
-                <div class="label-value text-base font-sans">{{salaryStatement.total_regular_work_days}}</div>
+                <div class="label-value text-base font-data">{{salaryStatement.total_regular_work_days}}</div>
             </div>
             <div>
                 <InputLabel :size="'sm'" value="Legal holidays"/>
-                <div class="label-value text-base font-sans">{{salaryStatement.total_legal_holidays}}</div>
+                <div class="label-value text-base font-data">{{salaryStatement.total_legal_holidays}}</div>
             </div>
             <div>
                 <InputLabel :size="'sm'" value="Double holidays"/>
-                <div class="label-value text-base font-sans">{{salaryStatement.total_double_holidays}}</div>
+                <div class="label-value text-base font-data">{{salaryStatement.total_double_holidays}}</div>
             </div>
             <div>
                 <InputLabel :size="'sm'" value="Special holidays"/>
-                <div class="label-value text-base font-sans">{{salaryStatement.total_special_holidays}}</div>
+                <div class="label-value text-base font-data">{{salaryStatement.total_special_holidays}}</div>
             </div>
             <div>
                 <InputLabel :size="'sm'" value="Full presents"/>
-                <div class="label-value text-base font-sans">{{salaryStatement.total_full_present}}</div>
+                <div class="label-value text-base font-data">{{salaryStatement.total_full_present}}</div>
             </div>
             <div>
                 <InputLabel :size="'sm'" value="Presents with irregulartities"/>
-                <div class="label-value text-base font-sans">{{salaryStatement.total_present_with_irregularity}}</div>
+                <div class="label-value text-base font-data">{{salaryStatement.total_present_with_irregularity}}</div>
             </div>
             <div>
                 <InputLabel :size="'sm'" value="Leave with pay"/>
-                <div class="label-value text-base font-sans">{{salaryStatement.total_leave_with_pay}}</div>
+                <div class="label-value text-base font-data">{{salaryStatement.total_leave_with_pay}}</div>
             </div>
             <div>
                 <InputLabel :size="'sm'" value="Leave without pay"/>
-                <div class="label-value text-base font-sans">{{salaryStatement.total_leave_without_pay}}</div>
+                <div class="label-value text-base font-data">{{salaryStatement.total_leave_without_pay}}</div>
             </div>
             <div>
                 <InputLabel :size="'sm'" value="Absent"/>
-                <div class="label-value text-base font-sans">{{salaryStatement.total_absent}}</div>
+                <div class="label-value text-base font-data">{{salaryStatement.total_absent}}</div>
             </div>
         </div>
         <div v-if="isAdminOverview" class="flex flex-row flex-wrap gap-x-6 gap-y-2 items-center">
@@ -95,19 +95,19 @@
             </div>
             <div>
                 <InputLabel :size="'sm'" value="Remarks"/>
-                <div class="label-value text-base font-sans">{{payroll.remarks || '--'}}</div>
+                <div class="label-value text-base font-data">{{payroll.remarks || '--'}}</div>
             </div>
             <div>
                 <InputLabel :size="'sm'" value="Payroll month"/>
-                <div class="label-value text-base font-sans">{{`${payroll.year} ${payroll.month_readable}`}}</div>
+                <div class="label-value text-base font-data">{{`${payroll.year} ${payroll.month_readable}`}}</div>
             </div>
             <div>
                 <InputLabel :size="'sm'" value="Sequence"/>
-                <div class="label-value text-base font-sans">{{`${payroll.pay_frequency?.text} ${payroll.frequency_sequence?.text || ''}`}}</div>
+                <div class="label-value text-base font-data">{{`${payroll.pay_frequency?.text} ${payroll.frequency_sequence?.text || ''}`}}</div>
             </div>
             <div>
                 <InputLabel :size="'sm'" value="Period"/>
-                <div class="label-value text-base font-sans">{{payroll.date_range_readable}}</div>
+                <div class="label-value text-base font-data">{{payroll.date_range_readable}}</div>
             </div>
             <div>
                 <InputLabel :size="'sm'" value="Total employer contr. share"/>
@@ -135,10 +135,8 @@ const props = defineProps({
         default: PAYROLL_SUB_INFO_TYPE.DEFAULT,
     },
     payroll: {
-        type: Object as PropType<PayrollT>,
-        default: () => {
-            return {};
-        }
+        type: Object as PropType<Partial<PayrollT>>,
+        default: () => ({}),
     },
     salaryStatement: {
         type: Object as PropType<SalaryStatementT>,

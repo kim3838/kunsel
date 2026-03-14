@@ -1,9 +1,9 @@
 <template>
     <div class="space-y-6">
         <div class="space-y-6">
-            <div class="font-medium text-xl font-header">{{payroll.number}}</div>
+            <div class="font-medium text-xl font-header">{{_get(proxyPayroll, 'number', 'Payroll number not found')}}</div>
 
-            <PayrollSubInfo :type="PAYROLL_SUB_INFO_TYPE.ADMIN_OVERVIEW" :payroll="payroll"/>
+            <PayrollSubInfo :type="PAYROLL_SUB_INFO_TYPE.ADMIN_OVERVIEW" :payroll="proxyPayroll"/>
         </div>
 
         <div v-if="!salaryStatements.successful" class="flex flex-row flex-wrap gap-2 items-center min-h-8">
@@ -56,6 +56,7 @@
             <SalaryStatementManualAddDetails
                 v-model:show-manual-add-details="showManualAddDetails"
                 v-model:salary-statement-payload="stagedSalaryStatement"
+                :refetch-payroll-on-resolve="proxyPayroll"
                 @resolved="manualAddDetailsResolved"
             />
 
@@ -156,12 +157,7 @@ const {
     selectedAssociatedCompanyId
 } = storeToRefs(nuxtApp.$authStore);
 
-const props = defineProps({
-    payroll: {
-        type: Object as PropType<PayrollT>,
-        default: () => [],
-    },
-});
+const proxyPayroll = defineModel('payroll', {type: Object as PropType<PayrollT>, default: () => {return {};}});
 
 const showDaysTotalColumns = ref(false);
 
@@ -268,8 +264,8 @@ watch(() => {return showSalaryStatementDetails.value;}, (show) => {
 
 let paramsComputed = computed(() => {
 
-    let payrollId = _get(props.payroll, 'id', null)
-    let payrollCompanyId = _get(props.payroll, 'company_id', null)
+    let payrollId = _get(proxyPayroll.value, 'id', null)
+    let payrollCompanyId = _get(proxyPayroll.value, 'company_id', null)
 
     return {
         page: filters.page,
@@ -284,8 +280,8 @@ let paramsComputed = computed(() => {
 });
 const paginatePayrollSalaryStatements = async() =>{
 
-    let payrollId = _get(props.payroll, 'id', null)
-    let payrollCompanyId = _get(props.payroll, 'company_id', null)
+    let payrollId = _get(proxyPayroll.value, 'id', null)
+    let payrollCompanyId = _get(proxyPayroll.value, 'company_id', null)
 
     if(!payrollId || !payrollCompanyId){
         return;
@@ -437,7 +433,8 @@ const manualAddPayrollItems = (salaryStatement: TableRowT) => {
     stagedSalaryStatement.value = salaryStatement as SalaryStatementT;
     showManualAddDetails.value = true;
 }
-const manualAddDetailsResolved = () => {
+const manualAddDetailsResolved = (resolvePayload: {payroll: PayrollT}) => {
+    proxyPayroll.value = resolvePayload.payroll;
     paginatePayrollSalaryStatements();
 }
 </script>

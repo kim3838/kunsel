@@ -108,7 +108,7 @@
 <script setup lang="ts">
 import type {TableHeaderT} from "@/public/js/types/data";
 import type {StringEnumInterface} from "@/public/js/common/type";
-import type {SalaryStatementManualAddDetailT} from "@/public/js/types/payroll";
+import type {PayrollT, SalaryStatementManualAddDetailT} from "@/public/js/types/payroll";
 import {storeToRefs} from "pinia";
 
 const {$authStore} = useNuxtApp();
@@ -126,6 +126,10 @@ const props = defineProps({
     showManualAddDetails: {
         type: Boolean,
         default: false,
+    },
+    refetchPayrollOnResolve: {
+        type: Object as PropType<Partial<PayrollT>>,
+        default: () => ({}),
     },
     salaryStatementPayload: {
         type: Object,
@@ -195,6 +199,9 @@ const form = computed(()=>{
     return {
         account_id: selectedAssociatedCompanyAccountId.value,
         company_id: selectedAssociatedCompanyId.value,
+        ...(props.refetchPayrollOnResolve.ulid
+            ? { refetch_payroll_ulid: props.refetchPayrollOnResolve.ulid }
+            : {}),
         manual_add_details: manualDetails.value.map((detail: SalaryStatementManualAddDetailT) => {return{
             component_sub_type: detail.component_sub_type,
             component_name: detail.component_name,
@@ -219,6 +226,8 @@ const submit = async() => {
         },
         onSuccessResponse: async (request, options, response) => {
 
+            let payroll = _get(response, '_data.values.payroll', {}) as PayrollT;
+
             useNuxtApp().$promptStore.setPrompt({
                 resetable: false,
                 icon: null,
@@ -232,7 +241,7 @@ const submit = async() => {
 
             emit('update:showManualAddDetails', false);
             emit('update:salaryStatementPayload', {});
-            emit('resolved');
+            emit('resolved', {payroll: payroll});
             reset();
         },
     });
