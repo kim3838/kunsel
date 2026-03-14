@@ -16,29 +16,22 @@
                                 :disabled="disableActions"
                                 glint
                                 drop-shadow
+                                value-persist
                                 :size="'md'"
                                 :label="'Select payroll'"
                                 :payload="payrollSelectionsOptions"
                             />
-                        </div>
-                        <div class="flex flex-col">
-                            <div class="flex-none h-[1.25rem]"></div>
-                            <Button class="w-min" ref="submitButton" type="submit" :disabled="disableActions" :size="'md'" :icon="disableActions ? 'eos-icons:loading' : 'mdi:data'" :label="disableActions ? 'Loading' : 'Load'"></Button>
                         </div>
                     </div>
                 </form>
 
                 <div class="px-[20px] space-y-2">
 
-                    <div v-if="!attendances.successful" class="flex flex-row flex-wrap gap-2 items-center min-h-8">
-                        <Label v-if="!attendances.successful" invert :size="'md'" :type="'danger'" :label="attendances.message" />
-                    </div>
-
                     <DataTable
                         v-if="attendances.successful"
                         :sup-headers="attendancesSupHeaders"
                         :headers="attendancesHeaders"
-                        :size="'md'"
+                        :size="'lg'"
                         :rows="attendances.data"
                         :disabled="disableDataTable"
                         v-model="selectedAttendances"
@@ -333,6 +326,10 @@ const attendancesExecute = async() =>{
     }, false);
 }
 attendancesExecute();
+
+watch(() => payrollSelectionsOptions.selected, (newValue) => {
+    attendancesExecute();
+})
 
 function paginate(page = 1, clearSelection = false){
     clearTimeout(filters.search.callback);
