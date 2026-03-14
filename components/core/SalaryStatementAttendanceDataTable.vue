@@ -7,7 +7,7 @@
             :size="'lg'"
             :stripped="true"
             :rows="rowsProxy"
-            :border-appearance="Boolean(subRowSlug)"
+            :border-appearance="false"
             :sub-row-slug="subRowSlug"
             :sub-row-extension-slug="subRowExtensionSlug"
             :sub-row-settings="{
@@ -74,6 +74,8 @@ const props = defineProps({
         default: false,
     },
 });
+
+const borderAppearance = ref(Boolean(props.subRowSlug));
 
 const rowsProxy = computed({
     get() {

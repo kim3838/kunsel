@@ -7,7 +7,7 @@
             :size="'lg'"
             :stripped="true"
             :rows="rows"
-            :border-appearance="Boolean(subRowSlug)"
+            :border-appearance="false"
             :sub-row-slug="subRowSlug"
             :sub-row-settings="{
                 type: DATATABLE_SUBROW_TYPE.TITLED,
@@ -55,6 +55,8 @@ const props = defineProps({
         default: false,
     },
 });
+
+const borderAppearance = ref(Boolean(props.subRowSlug));
 
 const rowsProxy = computed({
     get() {
