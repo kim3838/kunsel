@@ -122,12 +122,15 @@
                         :key="perDayStatementsKey"
                         :sup-headers="perDayStatementsSupHeaders"
                         :headers="perDayStatementsHeaders"
-                        :size="'md'"
+                        :size="'lg'"
                         :rows="perDayStatements.data"
                         v-model="selectedPerDayStatements"
                         selection>
                         <template v-slot:cell.employee_full_name="{cell,slot}">
                             <div class="px-[3px]" :title="cell.employee_full_name">{{wordClamp(cell.employee_full_name, 16)}}</div>
+                        </template>
+                        <template v-slot:cell.date_readable="{cell,slot}">
+                            <div class="p-[3px] font-medium">{{cell.date_readable}}</div>
                         </template>
                         <template v-slot:cell.status="{cell,slot}">
                             <div class="flex space-x-1 px-[0.3rem] items-center">
@@ -341,7 +344,7 @@ const perDayStatementsHeaders = computed<TableHeaderT[]>(() => {
         { text: '#', value: 'employee_number', alignData: 'left'},
         { text: 'Name', value: 'employee_full_name'},
 
-        { text: 'Date', value: 'date'},
+        { text: 'Date', value: 'date_readable'},
         { text: '', value: 'week_day_name'},
         { text: 'Status', value: 'status'},
         { text: 'Day Type', value: 'day_type'},
