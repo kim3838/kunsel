@@ -43,11 +43,8 @@ module.exports = {
                     'Stack Sans Notch',
                     'Oxanium',
                 ],
-                stiff:[
-                    'Iceberg',
-                ],
-                'stiff-wide':[
-                    'Bruno Ace SC',
+                'narrow-thin':[
+                    `'Source Sans 3'`,
                 ],
                 numeric: [
                     `'Source Sans 3'`,
