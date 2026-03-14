@@ -3,6 +3,7 @@ import type {EnumOption} from "@/public/js/common/type";
 
 export type PayrollT = {
     id: number,
+    ulid: string,
     company_id: number,
     number: string,
     year: number,
