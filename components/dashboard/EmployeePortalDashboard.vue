@@ -298,7 +298,7 @@
                         </div>
 
                         <!-- PR -->
-                        <div class="lining-shadow rounded-sm grow tint-background">
+                        <div v-if="false" class="lining-shadow rounded-sm grow tint-background">
                             <div class="lining-shadow rounded-t-sm px-4 py-2 flex justify-between items-center">
                                 <div class="text-lg font-medium font-header">Payroll</div>
                             </div>
