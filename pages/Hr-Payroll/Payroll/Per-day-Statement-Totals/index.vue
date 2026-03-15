@@ -108,7 +108,7 @@
 
                     <div class="flex flex-row flex-wrap gap-2 items-center min-h-8">
                         <Button class="w-min" ref="submitButton" type="submit" :disabled="disableActions" :size="'md'" :icon="disableActions ? 'eos-icons:loading' : 'mdi:data'" :label="disableActions ? 'Loading' : 'Load'"></Button>
-                        <Button v-if="perDayStatements.successful" class="w-min" type="button" :disabled="disableActions" :size="'md'" :variant="'outline'" :icon="'bi:filetype-csv'" @click="exportCsv" :label="'Export .csv'"></Button>
+                        <Button v-if="perDayStatements.successful" class="w-min" type="button" :disabled="disableActions" :size="'md'" :variant="'outline'" :icon="'bi:filetype-csv'" @click="exportCsv"  :override="{font_family_class: 'font-[Prociono]'}" :label="'Export .csv'"></Button>
                     </div>
                 </form>
 
