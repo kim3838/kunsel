@@ -324,74 +324,67 @@ export const useLayout = () => {
                     path_active: `/${hrPayrollRouteSlug}/workforce`,
                     options:[
                         {
-                            key: `${hrPayrollRouteSlug}/workforce/employees`,
+                            key: `${hrPayrollRouteSlug}-workforce-employees`,
                             type: 'link',
                             title: 'Employees',
                             to: `/${hrPayrollRouteSlug}/workforce/employees`,
                             route_active: `${hrPayrollRouteSlug}-workforce-employees`
                         },
                         {
-                            key: `${hrPayrollRouteSlug}/workforce/employee-groups`,
+                            key: `${hrPayrollRouteSlug}-workforce-employee-groups`,
                             type: 'link',
                             title: 'Employee Groups',
                             to: `/${hrPayrollRouteSlug}/workforce/employee-groups`,
                             route_active: `${hrPayrollRouteSlug}-workforce-employee-groups`
                         },
                         {
-                            key: `${hrPayrollRouteSlug}/workforce/employment-profiles`,
+                            key: `${hrPayrollRouteSlug}-workforce-employment-profiles`,
                             type: 'link',
                             title: 'Employment Profiles',
                             to: `/${hrPayrollRouteSlug}/workforce/employment-profiles`,
                             route_active: `${hrPayrollRouteSlug}-workforce-employment-profiles`
                         },
                         {
-                            key: `${hrPayrollRouteSlug}/workforce/identifications`,
+                            key: `${hrPayrollRouteSlug}-workforce-identifications`,
                             type: 'link',
                             title: 'Identifications',
                             to: `/${hrPayrollRouteSlug}/workforce/identifications`,
                             route_active: `${hrPayrollRouteSlug}-workforce-identifications`
                         },
                         {
-                            key: `${hrPayrollRouteSlug}/workforce/departments`,
+                            key: `${hrPayrollRouteSlug}-workforce-departments`,
                             type: 'link',
                             title: 'Departments',
                             to: `/${hrPayrollRouteSlug}/workforce/departments`,
                             route_active: `${hrPayrollRouteSlug}-workforce-departments`
                         },
                         {
-                            key: `${hrPayrollRouteSlug}/workforce/designations`,
+                            key: `${hrPayrollRouteSlug}-workforce-designations`,
                             type: 'link',
                             title: 'Designations',
                             to: `/${hrPayrollRouteSlug}/workforce/designations`,
                             route_active: `${hrPayrollRouteSlug}-workforce-designations`
                         },
                         {
-                            key: `${hrPayrollRouteSlug}/workforce/attendance`,
+                            key: `${hrPayrollRouteSlug}-workforce-attendance`,
                             type: 'link',
                             title: 'Attendance',
                             to: `/${hrPayrollRouteSlug}/workforce/attendance`,
                             route_active: `${hrPayrollRouteSlug}-workforce-attendance`
                         },
                         {
-                            key: `${hrPayrollRouteSlug}/workforce/overtime`,
+                            key: `${hrPayrollRouteSlug}-workforce-overtime`,
                             type: 'link',
                             title: 'Overtime',
                             to: `/${hrPayrollRouteSlug}/workforce/overtime`,
                             route_active: `${hrPayrollRouteSlug}-workforce-overtime`
                         },
                         {
-                            key: `${hrPayrollRouteSlug}/workforce/leave`,
+                            key: `${hrPayrollRouteSlug}-workforce-leave`,
                             type: 'link',
                             title: 'Leave',
                             to: `/${hrPayrollRouteSlug}/workforce/leave`,
                             route_active: `${hrPayrollRouteSlug}-workforce-leave`
-                        },
-                        {
-                            key: `${hrPayrollRouteSlug}/workforce/leave-balance-adjustment`,
-                            type: 'link',
-                            title: 'Leave Balance Adjustment',
-                            to: `/${hrPayrollRouteSlug}/workforce/leave-balance-adjustment`,
-                            route_active: `${hrPayrollRouteSlug}-workforce-leave-balance-adjustment`
                         },
                     ]
                 },{
@@ -401,35 +394,42 @@ export const useLayout = () => {
                     path_active: `/${hrPayrollRouteSlug}/policies`,
                     options:[
                         {
-                            key: `${hrPayrollRouteSlug}/policies/shifts`,
+                            key: `${hrPayrollRouteSlug}-policies-shifts`,
                             type: 'link',
                             title: 'Shifts',
                             to: `/${hrPayrollRouteSlug}/policies/shifts`,
                             route_active: `${hrPayrollRouteSlug}-policies-shifts`
                         },
                         {
-                            key: `${hrPayrollRouteSlug}/policies/shift-assignment`,
+                            key: `${hrPayrollRouteSlug}-policies-shift-assignment`,
                             type: 'link',
                             title: 'Shift Assignment',
                             to: `/${hrPayrollRouteSlug}/policies/shift-assignment`,
                             route_active: `${hrPayrollRouteSlug}-policies-shift-assignment`
                         },
                         {
-                            key: `${hrPayrollRouteSlug}/policies/leave-types`,
+                            key: `${hrPayrollRouteSlug}-policies-leave-types`,
                             type: 'link',
                             title: 'Leave Types',
                             to: `/${hrPayrollRouteSlug}/policies/leave-types`,
                             route_active: `${hrPayrollRouteSlug}-policies-leave-types`
                         },
                         {
-                            key: `${hrPayrollRouteSlug}/policies/leave-type-assignment`,
+                            key: `${hrPayrollRouteSlug}-policies-leave-type-assignment`,
                             type: 'link',
                             title: 'Leave Type Assignment',
                             to: `/${hrPayrollRouteSlug}/policies/leave-type-assignment`,
                             route_active: `${hrPayrollRouteSlug}-policies-leave-type-assignment`
                         },
                         {
-                            key: `${hrPayrollRouteSlug}/policies/holiday`,
+                            key: `${hrPayrollRouteSlug}-policies-leave-balance-adjustment`,
+                            type: 'link',
+                            title: 'Leave Balance Adjustment',
+                            to: `/${hrPayrollRouteSlug}/policies/leave-balance-adjustment`,
+                            route_active: `${hrPayrollRouteSlug}-policies-leave-balance-adjustment`
+                        },
+                        {
+                            key: `${hrPayrollRouteSlug}-policies-holiday`,
                             type: 'link',
                             title: 'Holidays',
                             to: `/${hrPayrollRouteSlug}/policies/holiday`,
@@ -443,63 +443,63 @@ export const useLayout = () => {
                     path_active: `/${hrPayrollRouteSlug}/payroll`,
                     options: [
                         {
-                            key: `${hrPayrollRouteSlug}/payroll/formulas`,
+                            key: `${hrPayrollRouteSlug}-payroll-formulas`,
                             type: 'link',
                             title: 'Formulas',
                             to: `/${hrPayrollRouteSlug}/payroll/formulas`,
                             route_active: `${hrPayrollRouteSlug}-payroll-formulas`
                         },
                         {
-                            key: `${hrPayrollRouteSlug}/payroll/salary-statement-modules`,
+                            key: `${hrPayrollRouteSlug}-payroll-salary-statement-modules`,
                             type: 'link',
                             title: 'Salary Statement Modules',
                             to: `/${hrPayrollRouteSlug}/payroll/salary-statement-modules`,
                             route_active: `${hrPayrollRouteSlug}-payroll-salary-statement-modules`
                         },
                         {
-                            key: `${hrPayrollRouteSlug}/payroll/components`,
+                            key: `${hrPayrollRouteSlug}-payroll-components`,
                             type: 'link',
                             title: 'Components',
                             to: `/${hrPayrollRouteSlug}/payroll/components`,
                             route_active: `${hrPayrollRouteSlug}-payroll-components`
                         },
                         {
-                            key: `${hrPayrollRouteSlug}/payroll/employee-pay-items`,
+                            key: `${hrPayrollRouteSlug}-payroll-employee-pay-items`,
                             type: 'link',
                             title: 'Employee Pay Items',
                             to: `/${hrPayrollRouteSlug}/payroll/employee-pay-items`,
                             route_active: `${hrPayrollRouteSlug}-payroll-employee-pay-items`
                         },
                         {
-                            key: `${hrPayrollRouteSlug}/payroll/frequency-settings`,
+                            key: `${hrPayrollRouteSlug}-payroll-frequency-settings`,
                             type: 'link',
                             title: 'Frequency Settings',
                             to: `/${hrPayrollRouteSlug}/payroll/frequency-settings`,
                             route_active: `${hrPayrollRouteSlug}-payroll-frequency-settings`
                         },
                         {
-                            key: `${hrPayrollRouteSlug}/payroll/generate`,
+                            key: `${hrPayrollRouteSlug}-payroll-generate`,
                             type: 'link',
                             title: 'Generate',
                             to: `/${hrPayrollRouteSlug}/payroll/generate`,
                             route_active: `${hrPayrollRouteSlug}-payroll-generate`
                         },
                         {
-                            key: `${hrPayrollRouteSlug}/payroll/history`,
+                            key: `${hrPayrollRouteSlug}-payroll-history`,
                             type: 'link',
                             title: 'History',
                             to: `/${hrPayrollRouteSlug}/payroll/history`,
                             route_active: `${hrPayrollRouteSlug}-payroll-history`
                         },
                         {
-                            key: `${hrPayrollRouteSlug}/payroll/salary-statements`,
+                            key: `${hrPayrollRouteSlug}-payroll-salary-statements`,
                             type: 'link',
                             title: 'Salary Statements',
                             to: `/${hrPayrollRouteSlug}/payroll/salary-statements`,
                             route_active: `${hrPayrollRouteSlug}-payroll-salary-statements`
                         },
                         {
-                            key: `${hrPayrollRouteSlug}/payroll/per-day-statement-totals`,
+                            key: `${hrPayrollRouteSlug}-payroll-per-day-statement-totals`,
                             type: 'link',
                             title: 'Per day Statement Totals',
                             to: `/${hrPayrollRouteSlug}/payroll/per-day-statement-totals`,
@@ -513,42 +513,42 @@ export const useLayout = () => {
                     path_active: `/${hrPayrollRouteSlug}/request-approval`,
                     options: [
                         {
-                            key: `${hrPayrollRouteSlug}/request-approval/setting`,
+                            key: `${hrPayrollRouteSlug}-request-approval-setting`,
                             type: 'link',
                             title: 'Approval Setting',
                             to: `/${hrPayrollRouteSlug}/request-approval/setting`,
                             route_active: `${hrPayrollRouteSlug}-request-approval-setting`
                         },
                         {
-                            key: `${hrPayrollRouteSlug}/request-approval/approvals`,
+                            key: `${hrPayrollRouteSlug}-request-approval-approvals`,
                             type: 'link',
                             title: 'Approvals',
                             to: `/${hrPayrollRouteSlug}/request-approval/approvals`,
                             route_active: `${hrPayrollRouteSlug}-request-approval-approvals`
                         },
                         {
-                            key: `${hrPayrollRouteSlug}/request-approval/attendance-adjustment-request`,
+                            key: `${hrPayrollRouteSlug}-request-approval-attendance-adjustment-request`,
                             type: 'link',
                             title: 'Attendance Adjustment Request',
                             to: `/${hrPayrollRouteSlug}/request-approval/attendance-adjustment-request`,
                             route_active: `${hrPayrollRouteSlug}-request-approval-attendance-adjustment-request`
                         },
                         {
-                            key: `${hrPayrollRouteSlug}/request-approval/overtime-request`,
+                            key: `${hrPayrollRouteSlug}-request-approval-overtime-request`,
                             type: 'link',
                             title: 'Overtime Request',
                             to: `/${hrPayrollRouteSlug}/request-approval/overtime-request`,
                             route_active: `${hrPayrollRouteSlug}-request-approval-overtime-request`
                         },
                         {
-                            key: `${hrPayrollRouteSlug}/request-approval/leave-request`,
+                            key: `${hrPayrollRouteSlug}-request-approval-leave-request`,
                             type: 'link',
                             title: 'Leave Request',
                             to: `/${hrPayrollRouteSlug}/request-approval/leave-request`,
                             route_active: `${hrPayrollRouteSlug}-request-approval-leave-request`
                         },
                         {
-                            key: `${hrPayrollRouteSlug}/request-approval/payroll-request`,
+                            key: `${hrPayrollRouteSlug}-request-approval-payroll-request`,
                             type: 'link',
                             title: 'Payroll Request',
                             to: `/${hrPayrollRouteSlug}/request-approval/payroll-request`,
@@ -562,7 +562,7 @@ export const useLayout = () => {
                     path_active: `/${hrPayrollRouteSlug}/reports`,
                     options: [
                         {
-                            key: `${hrPayrollRouteSlug}/reports/leave-balance`,
+                            key: `${hrPayrollRouteSlug}-reports-leave-balance`,
                             type: 'link',
                             title: 'Leave Balance',
                             to: `/${hrPayrollRouteSlug}/reports/leave-balance`,
@@ -576,42 +576,42 @@ export const useLayout = () => {
                     path_active: `/${hrPayrollRouteSlug}/import`,
                     options: [
                         {
-                            key: `${hrPayrollRouteSlug}/import/employees`,
+                            key: `${hrPayrollRouteSlug}-import-employees`,
                             type: 'link',
                             title: 'Employees',
                             to: `/${hrPayrollRouteSlug}/import/employees`,
                             route_active: `${hrPayrollRouteSlug}-import-employees`
                         },
                         {
-                            key: `${hrPayrollRouteSlug}/import/employment-profile`,
+                            key: `${hrPayrollRouteSlug}-import-employment-profile`,
                             type: 'link',
                             title: 'Employment Profile',
                             to: `/${hrPayrollRouteSlug}/import/employment-profile`,
                             route_active: `${hrPayrollRouteSlug}-import-employment-profile`
                         },
                         {
-                            key: `${hrPayrollRouteSlug}/import/identification`,
+                            key: `${hrPayrollRouteSlug}-import-identification`,
                             type: 'link',
                             title: 'Identification',
                             to: `/${hrPayrollRouteSlug}/import/identification`,
                             route_active: `${hrPayrollRouteSlug}-import-identification`
                         },
                         {
-                            key: `${hrPayrollRouteSlug}/import/employee-pay-items`,
+                            key: `${hrPayrollRouteSlug}-import-employee-pay-items`,
                             type: 'link',
                             title: 'Employee Pay Items',
                             to: `/${hrPayrollRouteSlug}/import/employee-pay-items`,
                             route_active: `${hrPayrollRouteSlug}-import-employee-pay-items`
                         },
                         {
-                            key: `${hrPayrollRouteSlug}/import/attendance`,
+                            key: `${hrPayrollRouteSlug}-import-attendance`,
                             type: 'link',
                             title: 'Attendance',
                             to: `/${hrPayrollRouteSlug}/import/attendance`,
                             route_active: `${hrPayrollRouteSlug}-import-attendance`
                         },
                         {
-                            key: `${hrPayrollRouteSlug}/import/overtime`,
+                            key: `${hrPayrollRouteSlug}-import-overtime`,
                             type: 'link',
                             title: 'Overtime',
                             to: `/${hrPayrollRouteSlug}/import/overtime`,
