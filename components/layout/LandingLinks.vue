@@ -2,7 +2,7 @@
     <div class="mx-auto max-w-screen-lg">
         <div class="flex flex-wrap gap-2">
             <div class="grow p-2">
-                <p class="text-lg font-medium">Contact Us</p>
+                <p class="text-lg font-medium font-header">Contact Us</p>
 
                 <div class="mt-2 space-y-2">
                     <UnorderedList

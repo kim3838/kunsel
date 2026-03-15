@@ -28,6 +28,7 @@ module.exports = {
                     'Amarna',
                 ],
                 business: [
+                    'Prociono',
                     'Noto Sans Display',
                     'Geist',
                     'Be Vietnam Pro',
@@ -58,6 +59,7 @@ module.exports = {
                     'Sofia Sans Semi Condensed',
                 ],
                 header: [
+                    'Prociono',
                     'Noto Sans Display',
                     'Geist',
                     'Be Vietnam Pro',

@@ -940,8 +940,8 @@ const loadEditable = () => {
     const dateFrom = process.env.NODE_ENV === 'development' ? '2026-01-01' : '';
     const dateTo = process.env.NODE_ENV === 'development' ? '2027-12-10' : '';
 
-    leaveDateFrom.value = nuxtApp.$moment(dateFrom).format("YYYY-MM-DD");
-    leaveDateTo.value = nuxtApp.$moment(dateTo).format("YYYY-MM-DD");
+    leaveDateFrom.value = nuxtApp.$moment().format("YYYY-MM-DD");
+    leaveDateTo.value = nuxtApp.$moment().format("YYYY-MM-DD");
 
     renderDatePickers();
 }

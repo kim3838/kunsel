@@ -690,8 +690,8 @@ const put = (row: TableRowT | null = null) => {
         leaveEmployeeFullName.value = '';
 
         if(process.env.NODE_ENV === 'development'){
-            leaveDateFrom.value = nuxtApp.$moment('2026-01-01').format("YYYY-MM-DD");
-            leaveDateTo.value = nuxtApp.$moment('2027-12-10').format("YYYY-MM-DD");
+            leaveDateFrom.value = nuxtApp.$moment().format("YYYY-MM-DD");
+            leaveDateTo.value = nuxtApp.$moment().format("YYYY-MM-DD");
         } else {
             leaveDateFrom.value = nuxtApp.$moment().format("YYYY-MM-DD");
             leaveDateTo.value = nuxtApp.$moment().format("YYYY-MM-DD");
