@@ -23,6 +23,9 @@
                     <Label :size="slot.labelSize" :type="cell?._payload?.label_shade?.value as LabelTypeT" shade :label="cell.status?.text" />
                 </div>
             </template>
+            <template v-slot:cell.date_readable="{cell,slot}">
+                <div class="p-[3px] font-medium">{{cell.date_readable}}</div>
+            </template>
             <template v-slot:cell.day_type="{cell,slot}">
                 <div class="p-[3px]">{{cell.day_type?.text}}</div>
             </template>
@@ -114,7 +117,7 @@ const rowsIsEmpty = computed(() => props.rows.length === 0);
 
 const attendancesHeaders = reactive<TableHeaderT[]>([
     { text: '#', value: 'row_number', alignHeader: 'center', alignData: 'center', minWidth: '30px'},
-    { text: 'Date', value: 'date'},
+    { text: 'Date', value: 'date_readable'},
     { text: '', value: 'week_day_name'},
     { text: 'Status', value: 'status'},
     { text: 'Day Type', value: 'day_type'},

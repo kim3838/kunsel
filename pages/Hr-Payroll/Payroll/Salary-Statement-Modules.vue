@@ -9,7 +9,7 @@
 
                     <ol v-if="salaryStatementModulesData.length" class="list-inside list-decimal">
                         <li v-for="(item, index) in salaryStatementModulesData" :key="index">
-                            <span class="text-lg font-medium">{{item.name}}</span>
+                            <span class="text-lg font-medium font-header">{{item.name}}</span>
                         </li>
                     </ol>
                     <div v-else class="flex flex-row flex-wrap gap-2 items-center min-h-8">
