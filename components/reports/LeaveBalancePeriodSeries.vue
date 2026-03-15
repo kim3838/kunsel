@@ -71,38 +71,38 @@
 
                     <table class="period-series-table tint-background">
                         <tbody>
-                        <tr class="font-medium">
-                            <td class="px-[2px]">Period</td>
-                            <td class="px-[2px]" v-for="yearMonthSeries in periodSeries.value">{{yearMonthSeries.period}}</td>
+                        <tr class="font-semibold">
+                            <td class="px-[2px] font-narrow-thin">Period</td>
+                            <td class="px-[2px] font-numeric" v-for="yearMonthSeries in periodSeries.value">{{yearMonthSeries.period}}</td>
                         </tr>
                         <tr class="">
-                            <td class="px-[2px] font-medium">Year</td>
-                            <td class="px-[2px]" v-for="yearMonthSeries in periodSeries.value">{{yearMonthSeries.year}}</td>
+                            <td class="px-[2px] font-narrow-thin">Year</td>
+                            <td class="px-[2px] font-numeric" v-for="yearMonthSeries in periodSeries.value">{{yearMonthSeries.year}}</td>
                         </tr>
                         <tr class="">
-                            <td class="px-[2px] font-medium">Month</td>
-                            <td class="px-[2px]" v-for="yearMonthSeries in periodSeries.value">{{yearMonthSeries.month_readable}}</td>
+                            <td class="px-[2px] font-narrow-thin">Month</td>
+                            <td class="px-[2px] font-numeric" v-for="yearMonthSeries in periodSeries.value">{{yearMonthSeries.month_readable}}</td>
                         </tr>
                         <tr>
                             <td>
                                 <div class="employment-series-header flex flex-col">
-                                    <div class="px-[2px] font-medium">Employment Type</div>
-                                    <div class="px-[2px] font-medium">Eligible</div>
-                                    <div class="px-[2px] font-medium">Calendar Day</div>
-                                    <div class="px-[2px] font-medium">Running Balance</div>
+                                    <div class="px-[2px] font-narrow-thin">Employment Type</div>
+                                    <div class="px-[2px] font-narrow-thin">Eligible</div>
+                                    <div class="px-[2px] font-narrow-thin">Calendar Day</div>
+                                    <div class="px-[2px] font-narrow-thin font-semibold">Running Balance</div>
                                 </div>
                             </td>
                             <td v-for="yearMonthSeries in periodSeries.value" class="">
                                 <div class="employment-series-grid flex">
                                     <div class="w-full" v-for="employmentSeries in yearMonthSeries.value">
                                         <div class="px-[2px]">{{employmentSeries.type.text}}</div>
-                                        <div class="px-[2px]">
+                                        <div class="flex items-center justify-center" style="min-height: 24px;" :style="cosmetic.shadedStyle(employmentSeries.eligible ? 'success' : 'default' as LabelTypeT)">
                                             <Label shade :size="'sm'" :type="employmentSeries.eligible ? 'success' : 'default'" :label="employmentSeries.eligible ? 'Eligible' : 'Ineligible'" />
                                         </div>
                                         <div class="date-series-grid flex font-sans">
-                                            <div class="w-full" v-for="dateSeries in employmentSeries.value">
+                                            <div class="w-full font-numeric" v-for="dateSeries in employmentSeries.value">
                                                 <div>{{ordinal(dateSeries.day)}}</div>
-                                                <div>{{dateSeries.running_balance}}</div>
+                                                <div class="font-semibold">{{dateSeries.running_balance}}</div>
                                             </div>
                                         </div>
                                     </div>
@@ -121,9 +121,11 @@
 import type {SelectDataType} from "@/public/js/types/form";
 import type {LeaveBalancePeriodSeriesT} from "@/public/js/types/leave";
 import {storeToRefs} from "pinia";
+import type {LabelTypeT} from "~/public/js/types/theme";
 
 const {isAuthenticated} = useAuth();
 const nuxtApp = useNuxtApp();
+const cosmetic = useCosmetic();
 const ordinal = nuxtApp.$ordinal as (num: number | string) => string;
 const {$themeStore} = useNuxtApp();
 const $moment = nuxtApp.$moment;

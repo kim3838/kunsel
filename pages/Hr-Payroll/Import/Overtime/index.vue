@@ -94,10 +94,8 @@
                                 </div>
                             </template>
                             <template v-slot:cell.actions="{cell, slot, scrollReference}">
-                                <div class="text-base h-[32px]">
-                                    <div class="h-full flex items-center px-2 cursor-pointer accent-hover" @click="editRow(cell)">
-                                        <span class="text-base font-sans">Edit</span>
-                                    </div>
+                                <div class="text-base h-[32px] px-2 gap-1 flex items-center justify-center cursor-pointer accent-hover" @click="editRow(cell)">
+                                    <span class="font-narrow-thin">Edit</span>
                                 </div>
                             </template>
                             <template v-slot:cell.validation_summary="{cell, slot, scrollReference}">

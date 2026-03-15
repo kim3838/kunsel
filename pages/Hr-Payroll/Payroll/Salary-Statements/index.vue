@@ -167,6 +167,10 @@
                         <Label v-if="!salaryStatements.successful" invert :size="'md'" :type="'danger'" :label="salaryStatements.message" />
                     </div>
 
+                    <div v-if="false" class="text-base h-[32px] w-full flex items-center justify-center">
+                        <Icon class="h-5 w-5" :name="'gg:loadbar-alt'"/>
+                    </div>
+
                     <DataTable
                         v-if="salaryStatements.successful"
                         :key="salaryStatementsKey"
@@ -206,6 +210,13 @@
                                             {type: 'action', icon: 'mdi:plus', title: 'Manual add payroll items', callback: () => {manualAddPayrollItems(cell);}}
                                         ] : [])
                                     ]">
+                                    <template v-slot="{slot}">
+                                        <div
+                                            class="flex items-center pl-1 py-1 focus:outline-none">
+                                            <span :class="[slot.headerFontClass, 'font-narrow-thin']">Menu</span>
+                                            <Icon :class="[slot.dropDownIconClass]" :name="'ic:baseline-arrow-right'"/>
+                                        </div>
+                                    </template>
                                 </NavDrop>
                             </div>
                         </template>
@@ -233,7 +244,7 @@
                             <div class="p-[3px]">{{cell.payroll.date_range_readable}}</div>
                         </template>
                         <template v-slot:cell.employee_full_name="{cell,slot}">
-                            <div class="px-[3px]" :title="cell.employee_full_name">{{wordClamp(cell.employee_full_name, 12)}}</div>
+                            <div class="px-[3px]" :title="cell.employee_full_name">{{wordClamp(cell.employee_full_name, 9)}}</div>
                         </template>
                         <template v-slot:cell.type="{cell,slot}">
                             <div class="p-[3px]">{{cell.type?.text}}</div>
@@ -434,7 +445,7 @@ const salaryStatementsHeaders = computed<TableHeaderT[]>(() => {
             { text: 'Year', value: 'year'},
             { text: 'Month', value: 'month_readable'},
 
-            { text: 'Frequency', value: 'pay_frequency'},
+            { text: 'Freq.', value: 'pay_frequency'},
             { text: 'Seq.', value: 'frequency_sequence'},
 
             { text: 'Period', value: 'date_range_readable'},

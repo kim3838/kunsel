@@ -184,10 +184,9 @@
                         v-model="selectedPayrollComponents"
                         selection>
                         <template v-slot:cell.actions="{cell,slot: cellSlot}">
-                            <div class="text-base h-[32px]">
-                                <div class="h-full flex items-center px-2 cursor-pointer accent-hover" @click="put(cell)">
-                                    <span class="text-base font-sans">Edit</span>
-                                </div>
+                            <div class="text-base h-[32px] px-2 gap-0.5 flex items-center justify-center cursor-pointer accent-hover" @click="put(cell)">
+                                <span class="font-narrow-thin">Edit</span>
+                                <Icon class="h-5 w-5" :name="'gg:external'"/>
                             </div>
                         </template>
                         <template v-slot:cell.employee_number="{cell,slot}">

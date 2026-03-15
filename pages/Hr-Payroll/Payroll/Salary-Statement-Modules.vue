@@ -1,7 +1,7 @@
 <template>
     <div>
         <DefaultWrapper>
-            <div class="mx-auto max-w-screen-2xl">
+            <div class="mx-auto max-w-screen-sm">
 
                 <div class="space-y-2 p-[20px]">
 
@@ -9,7 +9,7 @@
 
                     <ol v-if="salaryStatementModulesData.length" class="list-inside list-decimal">
                         <li v-for="(item, index) in salaryStatementModulesData" :key="index">
-                            <span>{{item.name}}</span>
+                            <span class="text-lg font-medium">{{item.name}}</span>
                         </li>
                     </ol>
                     <div v-else class="flex flex-row flex-wrap gap-2 items-center min-h-8">

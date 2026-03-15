@@ -71,7 +71,7 @@
                     :show="employmentProfilesModal"
                     :closeable="false">
                     <template #title>
-                        Employment Profiles
+                        {{!employmentProfilesLoadingOverlay ? 'Employment profiles' : ''}}
                     </template>
                     <template #content>
                         <div ref='employmentProfilesContentContainer' :class="[employmentProfilesLoadingOverlay ? '' : 'space-y-4 ']" class="min-h-[100px]">
@@ -118,7 +118,7 @@
                     :show="payrollComponentsModal"
                     :closeable="false">
                     <template #title>
-                        Employee payroll items
+                        {{!payrollComponentsLoadingOverlay ? 'Employee payroll items' : ''}}
                     </template>
                     <template #content>
                         <div ref='payrollComponentsContentContainer' :class="[payrollComponentsLoadingOverlay ? '' : 'space-y-4']" class="min-h-[100px]">
@@ -287,9 +287,16 @@
                                     :drop-justify="'right'"
                                     :drop-options="[
                                         {type: 'link', icon: 'ix:open-external', title: 'Details',to: `/hr-payroll/workforce/employees/${cell.ulid}`},
-                                        {type: 'action', icon: 'gg:reorder', title: 'Employment Profiles',callback: () => {showEmploymentProfilesModal(cell);}},
-                                        {type: 'action', icon: 'gg:feed', title: 'Payroll Items',callback: () => {showPayrollComponentsModal(cell);}},
+                                        {type: 'action', icon: 'gg:notifications', title: 'Employment Profiles',callback: () => {showEmploymentProfilesModal(cell);}},
+                                        {type: 'action', icon: 'gg:notifications', title: 'Payroll Items',callback: () => {showPayrollComponentsModal(cell);}},
                                     ]">
+                                    <template v-slot="{slot}">
+                                        <div
+                                            class="flex items-center pl-1 py-1 focus:outline-none">
+                                            <span :class="[slot.headerFontClass, 'font-narrow-thin']">Menu</span>
+                                            <Icon :class="[slot.dropDownIconClass]" :name="'ic:baseline-arrow-right'"/>
+                                        </div>
+                                    </template>
                                 </NavDrop>
                             </div>
                         </template>

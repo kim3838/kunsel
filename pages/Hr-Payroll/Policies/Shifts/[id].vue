@@ -205,11 +205,9 @@
                             </div>
                         </template>
                         <template v-slot:cell.actions="{cell,slot}">
-                            <div v-if="!cell.is_day_off" class="text-base h-[34px]">
-                                <div class="h-full flex items-center px-2 cursor-pointer accent-hover" @click="copyToAll(cell)">
-                                    <Icon size="1.5rem" :name="'ph:copy-light'"/>
-                                    <span class="text-base">Copy to all</span>
-                                </div>
+                            <div v-if="!cell.is_day_off" class="text-base h-[34px] px-2 gap-0.5 flex items-center justify-center cursor-pointer accent-hover" @click="copyToAll(cell)">
+                                <Icon class="h-6 w-6" :name="'ph:copy-light'"/>
+                                <span class="font-narrow-thin">Copy to all</span>
                             </div>
                         </template>
                     </DataTable>

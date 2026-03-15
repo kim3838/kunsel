@@ -238,22 +238,9 @@
                         v-model="selectedOvertimes"
                         selection>
                         <template v-slot:cell.actions="{cell,slot: cellSlot}">
-                            <div class="flex items-center">
-                                <NavDrop
-                                    class="z-10"
-                                    :disabled="disableActions"
-                                    :parent-icon="'ic:baseline-arrow-right'"
-                                    in-horizontal-scrollable
-                                    divider
-                                    :size="`sm`"
-                                    :drop-shadow-size="`xl`"
-                                    :title="'Menu'"
-                                    :drop-align="'top'"
-                                    :drop-justify="'right'"
-                                    :drop-options="[
-                                        {type: 'action', icon: 'mdi:edit', title: 'Edit Overtime',callback: () => {put(cell);}},
-                                    ]">
-                                </NavDrop>
+                            <div class="text-base h-[32px] px-2 gap-0.5 flex items-center justify-center cursor-pointer accent-hover" @click="put(cell)">
+                                <span class="font-narrow-thin">Edit</span>
+                                <Icon class="h-5 w-5" :name="'gg:external'"/>
                             </div>
                         </template>
                         <template v-slot:cell.employee_number="{cell,slot}">

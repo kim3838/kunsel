@@ -188,6 +188,13 @@
                                         {type: 'link', icon: 'ix:open-external', title: 'Salary statements', to: `/hr-payroll/payroll/history/${cell.ulid}`},
                                         {type: 'action', icon: 'ic:round-send', title: 'Submit for approval',callback: () => {confirmSubmitForApproval(cell)}},
                                     ]">
+                                    <template v-slot="{slot}">
+                                        <div
+                                            class="flex items-center pl-1 py-1 focus:outline-none">
+                                            <span :class="[slot.headerFontClass, 'font-narrow-thin']">Menu</span>
+                                            <Icon :class="[slot.dropDownIconClass]" :name="'ic:baseline-arrow-right'"/>
+                                        </div>
+                                    </template>
                                 </NavDrop>
                             </div>
                         </template>
@@ -210,9 +217,13 @@
                                     :drop-options="[
                                         {type: 'action', icon: 'gg:comment', title: cell.remarks},
                                     ]">
-                                    <div class="text-base h-[32px] w-full flex items-center justify-center">
-                                        <Icon class="h-5 w-5" :name="'gg:loadbar-alt'"/>
-                                    </div>
+                                    <template v-slot="{slot}">
+                                        <div
+                                            :class="[slot.headerFontClass]"
+                                            class="h-[32px] flex items-center justify-center focus:outline-none">
+                                            <Icon :class="[slot.dropDownIconClass]" :name="'gg:loadbar-alt'"/>
+                                        </div>
+                                    </template>
                                 </NavDrop>
                             </div>
                         </template>

@@ -319,8 +319,9 @@
                                 </div>
                             </template>
                             <template v-slot:cell.actions="{cell,slot}">
-                                <div class="mx-0.5 space-x-0.5 flex items-center">
-                                    <Button v-if="cell.isSelectable" @click="stagePayrollPayload(cell)" :size="slot.buttonSize" :variant="'outline'" :label="cell.payroll ? 'Regenerate payroll' : 'Run payroll'" />
+                                <div v-if="cell.isSelectable" class="text-base h-[32px] px-2 gap-0.5 flex items-center justify-start cursor-pointer accent-hover hover:underline" @click="stagePayrollPayload(cell)">
+                                    <Icon class="h-5 w-5" :name="cell.payroll ? 'mdi:repeat' : ''"/>
+                                    <span class="font-data font-medium">{{cell.payroll ? 'Regenerate payroll' : 'Run payroll'}}</span>
                                 </div>
                             </template>
                             <template v-slot:cell.payroll_status="{cell,slot}">
@@ -354,8 +355,9 @@
                                 </div>
                             </template>
                             <template v-slot:cell.actions="{cell,slot}">
-                                <div class="mx-0.5 space-x-0.5 flex items-center">
-                                    <Button @click="stagePayrollPayload(cell)" :size="slot.buttonSize" :variant="'outline'" :label="cell.payroll ? 'Regenerate payroll' : 'Run payroll'" />
+                                <div class="text-base h-[32px] px-2 gap-0.5 flex items-center justify-start cursor-pointer accent-hover hover:underline" @click="stagePayrollPayload(cell)">
+                                    <Icon class="h-5 w-5" :name="cell.payroll ? 'mdi:repeat' : ''"/>
+                                    <span class="font-data font-medium">{{cell.payroll ? 'Regenerate payroll' : 'Run payroll'}}</span>
                                 </div>
                             </template>
                             <template v-slot:cell.payroll_status="{cell,slot}">

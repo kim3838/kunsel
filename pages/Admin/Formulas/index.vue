@@ -56,22 +56,12 @@
                         v-model="selectedFormulas"
                         selection>
                         <template v-slot:cell.actions="{cell,slot}">
-                            <div class="flex items-center">
-                                <NavDrop
-                                    class="z-10"
-                                    :disabled="disableActions"
-                                    :parent-icon="'ic:baseline-arrow-right'"
-                                    in-horizontal-scrollable
-                                    :size="`sm`"
-                                    :drop-shadow-size="`lg`"
-                                    :title="'Menu'"
-                                    :drop-align="'top'"
-                                    :drop-justify="'right'"
-                                    :drop-options="[
-                                        {type: 'link',icon: 'mdi:pen',title: 'Edit',to: `/admin/formulas/${cell.ulid}`},
-                                    ]">
-                                </NavDrop>
-                            </div>
+                            <NuxtLink :to="`/admin/formulas/${cell.ulid}`">
+                                <div class="text-base h-[32px] px-2 gap-0.5 flex items-center justify-center cursor-pointer accent-hover">
+                                    <span class="font-narrow-thin">Edit</span>
+                                    <Icon class="h-5 w-5" :name="'gg:external'"/>
+                                </div>
+                            </NuxtLink>
                         </template>
                         <template v-slot:cell.formulable_type="{cell,slot}">
                             <div class="p-[3px]">{{cell.formulable_type?.text}}</div>

@@ -223,6 +223,13 @@
                                         {type: 'link', icon: 'ix:open-external', title: 'Details',to: `/employee-portal/attendance/${cell.ulid}`},
                                         {type: 'action', icon: 'mdi:edit', title: 'Adjust Attendance',callback: () => {adjust(cell);}},
                                     ]">
+                                    <template v-slot="{slot}">
+                                        <div
+                                            class="flex items-center pl-1 py-1 focus:outline-none">
+                                            <span :class="[slot.headerFontClass, 'font-narrow-thin']">Menu</span>
+                                            <Icon :class="[slot.dropDownIconClass]" :name="'ic:baseline-arrow-right'"/>
+                                        </div>
+                                    </template>
                                 </NavDrop>
                             </div>
                         </template>

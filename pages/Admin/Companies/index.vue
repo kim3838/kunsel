@@ -41,7 +41,7 @@
                         <template v-slot:cell.actions="{cell,slot}">
                             <div class="flex items-center">
                                 <NavDrop
-                                    class="z-10"
+                                    class="z-20"
                                     :disabled="disableActions"
                                     :parent-icon="'ic:baseline-arrow-right'"
                                     in-horizontal-scrollable
@@ -55,6 +55,13 @@
                                         {type: 'link',icon: 'ri:formula',title: 'Formulas',to: `/admin/company-formulas/${cell.ulid}`},
                                         {type: 'link',icon: 'tdesign:component-checkbox', title: 'Salary Statement Modules',to: `/admin/company-salary-statement-modules/${cell.ulid}`},
                                     ]">
+                                    <template v-slot="{slot}">
+                                        <div
+                                            class="flex items-center pl-1 py-1 focus:outline-none">
+                                            <span :class="[slot.headerFontClass, 'font-narrow-thin']">Menu</span>
+                                            <Icon :class="[slot.dropDownIconClass]" :name="'ic:baseline-arrow-right'"/>
+                                        </div>
+                                    </template>
                                 </NavDrop>
                             </div>
                         </template>

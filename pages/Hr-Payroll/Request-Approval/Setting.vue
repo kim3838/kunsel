@@ -199,10 +199,9 @@
                             horizontalBorderType: 'dashed',
                         }">
                         <template v-slot:cell.actions="{cell, slot, scrollReference}">
-                            <div class="text-base h-[32px]">
-                                <div class="h-full flex items-center px-2 cursor-pointer accent-hover" @click="edit(cell)">
-                                    <span class="text-base font-sans">Edit</span>
-                                </div>
+                            <div class="text-base h-[32px] px-2 gap-0.5 flex items-center justify-center cursor-pointer accent-hover" @click="edit(cell)">
+                                <span class="font-narrow-thin">Edit</span>
+                                <Icon class="h-5 w-5" :name="'gg:external'"/>
                             </div>
                         </template>
                         <template v-slot:sub_row_slot="{rowIndex, cell, slot}">

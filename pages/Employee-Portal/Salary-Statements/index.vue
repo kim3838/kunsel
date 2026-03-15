@@ -105,8 +105,15 @@
                                     :drop-align="'top'"
                                     :drop-justify="'right'"
                                     :drop-options="[
-                                {type: 'link', icon: 'gg:row-first', title: 'Statement breakdown', to: `/employee-portal/salary-statements/${cell.ulid}`},
-                            ]">
+                                        {type: 'link', icon: 'gg:row-first', title: 'Statement breakdown', to: `/employee-portal/salary-statements/${cell.ulid}`},
+                                    ]">
+                                    <template v-slot="{slot}">
+                                        <div
+                                            class="flex items-center pl-1 py-1 focus:outline-none">
+                                            <span :class="[slot.headerFontClass, 'font-narrow-thin']">Menu</span>
+                                            <Icon :class="[slot.dropDownIconClass]" :name="'ic:baseline-arrow-right'"/>
+                                        </div>
+                                    </template>
                                 </NavDrop>
                             </div>
                         </template>

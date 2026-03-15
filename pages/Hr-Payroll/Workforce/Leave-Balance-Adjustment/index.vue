@@ -36,16 +36,25 @@
                     :max-width="'780px'"
                     :closeable="false">
                     <template #title>
-
+                        {{creatingLeaveBalanceAdjustment ? 'Create leave balance adjustment' : 'Edit leave balance adjustment'}}
                     </template>
                     <template #content>
-                        <div ref='modalContentContainer'>
+                        <div ref='modalContentContainer' class="space-y-4">
 
-                            <div class="pt-2 flex flex-row gap-4">
+                            <div class="text-base">
+                                Adjust employee's leave balance
+                            </div>
 
-                                <fieldset class="w-full neutral-border px-2 pb-2 space-y-2">
-                                    <legend class="text-lg font-header">{{creatingLeaveBalanceAdjustment ? 'Create adjustment' : 'Edit Adjustment'}}</legend>
+                            <div>
+                                <div class="flex items-center flex-wrap text-sm">
+                                    <Icon class="h-5 w-5" :name="'mdi:info-variant'"/>
+                                    Balance deduction behaves as leave claim, while balance addition is a moving forward balance
+                                </div>
+                            </div>
 
+                            <div class="lining-shadow rounded-sm tint-background">
+
+                                <div class="p-4 space-y-2">
                                     <div class="grid gap-2 grid-cols-4">
                                         <div class="col-span-2">
                                             <InputLabel :size="'sm'" value="Employee (Number, Full Name)"/>
@@ -113,7 +122,7 @@
                                                 v-model="remarks"/>
                                         </div>
                                     </div>
-                                </fieldset>
+                                </div>
                             </div>
                         </div>
                     </template>
@@ -180,22 +189,9 @@
                         v-model="selectedLeaveBalanceAdjustments"
                         selection>
                         <template v-slot:cell.actions="{cell,slot: cellSlot}">
-                            <div class="flex items-center">
-                                <NavDrop
-                                    class="z-10"
-                                    :disabled="disableActions"
-                                    :parent-icon="'ic:baseline-arrow-right'"
-                                    in-horizontal-scrollable
-                                    divider
-                                    :size="`sm`"
-                                    :drop-shadow-size="`xl`"
-                                    :title="'Menu'"
-                                    :drop-align="'top'"
-                                    :drop-justify="'right'"
-                                    :drop-options="[
-                                        {type: 'action', icon: 'mdi:edit', title: 'Edit Adjustment',callback: () => {put(cell);}},
-                                    ]">
-                                </NavDrop>
+                            <div class="text-base h-[32px] px-2 gap-0.5 flex items-center justify-center cursor-pointer accent-hover" @click="put(cell)">
+                                <span class="font-narrow-thin">Edit</span>
+                                <Icon class="h-5 w-5" :name="'gg:external'"/>
                             </div>
                         </template>
                         <template v-slot:cell.employee_number="{cell,slot}">

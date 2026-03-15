@@ -48,22 +48,9 @@
                         </div>
                     </template>
                     <template v-slot:cell.actions="{cell, slot, scrollReference}">
-                        <div class="flex items-center">
-                            <NavDrop
-                                v-if="cell.assignable || userIsSuperAdmin"
-                                class="z-10"
-                                :disabled="disableActions"
-                                :parent-icon="'ic:baseline-arrow-right'"
-                                in-horizontal-scrollable
-                                :size="`sm`"
-                                :drop-shadow-size="`lg`"
-                                :title="'Menu'"
-                                :drop-align="'top'"
-                                :drop-justify="'right'"
-                                :drop-options="[
-                                {type: 'action',icon: 'mdi:pen',title: 'Edit',callback: () => edit(cell),},
-                            ]">
-                            </NavDrop>
+                        <div class="text-base h-[32px] px-2 gap-0.5 flex items-center justify-center cursor-pointer accent-hover" @click="edit(cell)">
+                            <span class="font-narrow-thin">Edit</span>
+                            <Icon class="h-5 w-5" :name="'gg:external'"/>
                         </div>
                     </template>
                 </DataTable>
