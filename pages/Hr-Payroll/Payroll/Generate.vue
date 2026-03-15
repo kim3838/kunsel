@@ -153,13 +153,13 @@
                                 <div class="flex flex-row gap-6 flex-wrap">
                                     <div>
                                         <InputLabel :size="'sm'" value="Pay frequency"/>
-                                        <div class="text-sm font-header">
+                                        <div class="text-base font-data">
                                             {{stagedPayrollPayload.summary}}
                                         </div>
                                     </div>
                                     <div>
                                         <InputLabel :size="'sm'" value="Payroll period"/>
-                                        <div class="text-sm font-header">
+                                        <div class="text-base font-data">
                                             {{stagedPayrollPayload.date_range_readable}}
                                         </div>
                                     </div>
@@ -245,13 +245,13 @@
                                 <div class="flex flex-row gap-6 flex-wrap">
                                     <div>
                                         <InputLabel :size="'sm'" value="Pay frequency"/>
-                                        <div class="text-sm font-header">
+                                        <div class="text-base font-data">
                                             {{stagedPayrollPayload.summary}}
                                         </div>
                                     </div>
                                     <div>
                                         <InputLabel :size="'sm'" value="Payroll period"/>
-                                        <div class="text-sm font-header">
+                                        <div class="text-base font-data">
                                             {{stagedPayrollPayload.date_range_readable}}
                                         </div>
                                     </div>
@@ -442,7 +442,7 @@ const currentPayrollsSupHeaders = reactive<TableSupHeaderT[]>([
 
 const payrollInquiriesHeaders = reactive<TableHeaderT[]>([
     { text: 'Frequency', value: 'pay_frequency_readable', minWidth: '85px'},
-    { text: 'Month Sequence', value: 'frequency_sequence_readable', minWidth: '85px'},
+    { text: 'Sequence', value: 'frequency_sequence_readable', minWidth: '85px'},
     { text: 'Year', value: 'year', alignData: 'left', minWidth: '85px'},
     { text: 'Month', value: 'month_readable', minWidth: '85px'},
     { text: 'Start', value: 'start_readable', minWidth: '100px'},

@@ -10,44 +10,47 @@
                     </NuxtLink>
                 </div>
 
-                <div class="px-[20px] space-y-6">
+                <div class="px-[20px] space-y-6 text-center">
 
                     <div>
-                        <div class="text-lg font-medium">{{title}}</div>
-                        <div class="text-sm subtitle-color">{{subTitle}}</div>
+                        <div class="text-lg font-medium font-header">{{title}}</div>
+                        <div class="text-base">{{subTitle}}</div>
                     </div>
 
                     <div class="space-y-2">
-                        <div class="text-lg font-medium">Schedule</div>
+                        <div class="text-lg font-header">Schedule</div>
 
                         <DataTable
                             :headers="scheduleHeaders"
                             :disabled="disableActions"
-                            :size="'md'"
+                            :size="'lg'"
                             :stripped="true"
+                            center
                             :rows="scheduleData"></DataTable>
                     </div>
 
                     <div class="space-y-2">
-                        <div class="text-lg font-medium">Attendance</div>
+                        <div class="text-lg font-header">Attendance</div>
 
                         <DataTable
                             :headers="attendanceHeaders"
                             :disabled="disableActions"
-                            :size="'md'"
+                            :size="'lg'"
                             :stripped="true"
+                            center
                             :rows="attendanceData"></DataTable>
                     </div>
 
                     <div class="space-y-2">
-                        <div class="text-lg font-medium">Attendance Breakdown</div>
+                        <div class="text-lg font-header">Attendance Breakdown</div>
 
                         <DataTable
                             :sup-headers="attendanceBreakdownSupHeaders"
                             :headers="attendanceBreakdownHeaders"
                             :disabled="disableActions"
-                            :size="'md'"
+                            :size="'lg'"
                             :stripped="true"
+                            center
                             :rows="attendanceBreakdown">
                             <template v-slot:cell.split_type="{cell,slot}">
                                 <div class="p-[3px]">{{cell.split_type.text}}</div>

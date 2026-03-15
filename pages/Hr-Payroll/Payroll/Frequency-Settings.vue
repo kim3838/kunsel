@@ -8,13 +8,14 @@
                     :show="resolvedModal"
                     :closeable="false">
                     <template #title>
+                        Payroll Frequency Update
                     </template>
                     <template #content>
 
                         <div class="mt-4 space-y-2">
 
                             <fieldset class="neutral-border px-2 pb-2 space-y-4">
-                                <legend class="font-header">Payroll Frequency Updated</legend>
+                                <legend class="text-lg font-header">Frequency Periods</legend>
 
                                 <div v-for="resolved in resolvedFrequencies">
                                     <table v-if="resolved.type.value == PAY_FREQUENCY_TYPE.WEEKLY" class="border-separate font-data">
