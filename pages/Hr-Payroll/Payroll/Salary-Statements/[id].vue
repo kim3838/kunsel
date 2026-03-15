@@ -14,7 +14,7 @@
                     </div>
                     <div v-else class="space-y-6">
                         <div class="space-y-4">
-                            <div class="font-medium text-lg font-header">{{payroll.number}}</div>
+                            <div class="font-medium text-lg font-header">Payroll #: {{_get(payroll, 'number', 'Payroll number not found')}}</div>
 
                             <PayrollSubInfo :payroll="payroll" :salaryStatement="salaryStatement"/>
                         </div>
