@@ -370,8 +370,11 @@
                         <div class="scaffold-border-top"></div>
                     </div>
 
-                    <div v-if="generatedPayroll.id">
-                        <PayrollSalaryStatements :key="generatedPayroll.id" :payroll="generatedPayroll" />
+                    <div v-if="generatedPayroll.id" class="lining-shadow rounded-sm tint-background">
+
+                        <div class="p-4">
+                            <PayrollSalaryStatements :key="generatedPayroll.id" :payroll="generatedPayroll" />
+                        </div>
                     </div>
                 </div>
             </div>
