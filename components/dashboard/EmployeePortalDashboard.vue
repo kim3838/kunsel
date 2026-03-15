@@ -81,197 +81,202 @@
                 </div>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="flex flex-col md:flex-row gap-4">
 
-                <div class="flex flex-col gap-4">
+                <div class="basis-full md:basis-1/3 lg:basis-5/12">
 
-                    <!-- CS -->
-                    <div class="lining-shadow rounded-sm grow tint-background">
-                        <div class="lining-shadow rounded-t-sm px-4 py-2 flex flex-row items-center justify-between">
-                            <div>
-                                <div class="text-lg font-medium font-header">Current Shift</div>
-                                <div v-if="!employeePending && employeeHasCurrentShiftAssigned" class="text-sm subtitle-color">{{ _get(employee, 'current_shift.shift_assignment.readable_date_range', '') }}</div>
+                    <div class="flex flex-col gap-4">
+
+                        <!-- CS -->
+                        <div class="lining-shadow rounded-sm grow tint-background">
+                            <div class="lining-shadow rounded-t-sm px-4 py-2 flex flex-row items-center justify-between">
+                                <div>
+                                    <div class="text-lg font-medium font-header">Current Shift</div>
+                                    <div v-if="!employeePending && employeeHasCurrentShiftAssigned" class="text-sm subtitle-color">{{ _get(employee, 'current_shift.shift_assignment.readable_date_range', '') }}</div>
+                                </div>
+
+                                <UnorderedList
+                                    v-if="!employeePending && employeeHasCurrentShiftAssigned"
+                                    class="cursor-pointer subtitle-color"
+                                    @click="toggleShowEmployeeHasCurrentShiftAssigned"
+                                    :icon="showEmployeeHasCurrentShiftAssigned ? 'ic:outline-keyboard-arrow-left' : 'ic:outline-keyboard-arrow-down'"
+                                    :label="'Show schedule'"
+                                    :size="'sm'"/>
                             </div>
 
-                            <UnorderedList
-                                v-if="!employeePending && employeeHasCurrentShiftAssigned"
-                                class="cursor-pointer subtitle-color"
-                                @click="toggleShowEmployeeHasCurrentShiftAssigned"
-                                :icon="showEmployeeHasCurrentShiftAssigned ? 'ic:outline-keyboard-arrow-left' : 'ic:outline-keyboard-arrow-down'"
-                                :label="'Show schedule'"
-                                :size="'sm'"/>
+                            <div class="p-4">
+                                <div v-if="!employeePending && employeeHasCurrentShiftAssigned" class="space-y-2">
+                                    <div class="flex flex-row gap-6 flex-wrap">
+                                        <div>
+                                            <div class="text-xs">Code</div>
+                                            <div class="text-sm font-data">{{ _get(employee, 'current_shift.shift.code', '') }}</div>
+                                        </div>
+                                        <div>
+                                            <div class="text-xs">Type</div>
+                                            <div class="text-sm font-data">{{ _get(employee, 'current_shift.shift.type.text', '') }}</div>
+                                        </div>
+                                        <div class="col-span-2">
+                                            <div class="text-xs">Name</div>
+                                            <div class="text-sm font-data">{{ _get(employee, 'current_shift.shift.name', '') }}</div>
+                                        </div>
+                                        <div>
+                                            <div class="text-xs">Work Start Grace</div>
+                                            <div class="text-sm font-data">{{ _get(employee, 'current_shift.shift.work_start_grace_time_readable', '') }}</div>
+                                        </div>
+                                        <div v-if="employeeCurrentShiftRequiresLunchOutAndIn">
+                                            <div class="text-xs">Lunch Start Grace</div>
+                                            <div class="text-sm font-data">{{ _get(employee, 'current_shift.shift.lunch_start_grace_time_readable', '') }}</div>
+                                        </div>
+                                        <div>
+                                            <div class="text-xs">Overtime Max Duration</div>
+                                            <div class="text-sm font-data">{{ _get(employee, 'current_shift.shift.max_overtime_readable', '') }}</div>
+                                        </div>
+                                        <div>
+                                            <div class="text-xs">Holiday policy</div>
+                                            <div class="text-sm font-data">{{ _get(employee, 'current_shift.shift.holiday_policy.text', '') }}</div>
+                                        </div>
+                                    </div>
+
+                                    <div v-if="showEmployeeHasCurrentShiftAssigned" class="grid">
+                                        <DataTable
+                                            :headers="shiftSchedulesHeaders"
+                                            :size="'md'"
+                                            :stripped="true"
+                                            landscape
+                                            :rows="employee.current_shift.shift_schedules">
+                                            <template v-slot:cell.is_rest_day="{cell, slot, scrollReference}">
+                                                <div class="flex justify-center">
+                                                    <NonModelCheckBox disabled :size="slot.checkBoxSize" :checked="cell.is_rest_day"></NonModelCheckBox>
+                                                </div>
+                                            </template>
+                                            <template v-slot:cell.is_day_off="{cell, slot, scrollReference}">
+                                                <div class="flex justify-center">
+                                                    <NonModelCheckBox disabled :size="slot.checkBoxSize" :checked="cell.is_day_off"></NonModelCheckBox>
+                                                </div>
+                                            </template>
+                                            <template v-slot:cell.is_flexible="{cell, slot, scrollReference}">
+                                                <div class="flex justify-center">
+                                                    <NonModelCheckBox disabled :size="slot.checkBoxSize" :checked="cell.is_flexible"></NonModelCheckBox>
+                                                </div>
+                                            </template>
+                                            <template v-slot:cell.total_work_hours_with_breaks="{cell, slot, scrollReference}">
+                                                <div class="p-[3px]" v-if="cell.is_flexible">
+                                                    {{cell.total_work_hours_with_breaks}}
+                                                </div>
+                                            </template>
+                                            <template v-slot:cell.total_lunch_break_hours="{cell, slot, scrollReference}">
+                                                <div class="p-[3px]" v-if="cell.is_flexible">
+                                                    {{cell.total_lunch_break_hours}}
+                                                </div>
+                                            </template>
+                                        </DataTable>
+                                    </div>
+                                </div>
+                                <div v-else-if="!employeeHasCurrentShiftAssigned && !employeePending">
+                                    No current shift assigned
+                                </div>
+                                <UnorderedList v-if="employeePending" :icon="'eos-icons:loading'" :size="'md'" :label="'Loading shift details...'"/>
+                            </div>
                         </div>
 
-                        <div class="px-4 py-4">
-                            <div v-if="!employeePending && employeeHasCurrentShiftAssigned" class="flex flex-col gap-2">
-                                <div class="flex flex-row gap-6 flex-wrap">
-                                    <div>
-                                        <div class="text-xs">Code</div>
-                                        <div class="text-sm font-data">{{ _get(employee, 'current_shift.shift.code', '') }}</div>
-                                    </div>
-                                    <div>
-                                        <div class="text-xs">Type</div>
-                                        <div class="text-sm font-data">{{ _get(employee, 'current_shift.shift.type.text', '') }}</div>
-                                    </div>
-                                    <div class="col-span-2">
-                                        <div class="text-xs">Name</div>
-                                        <div class="text-sm font-data">{{ _get(employee, 'current_shift.shift.name', '') }}</div>
-                                    </div>
-                                    <div>
-                                        <div class="text-xs">Work Start Grace</div>
-                                        <div class="text-sm font-data">{{ _get(employee, 'current_shift.shift.work_start_grace_time_readable', '') }}</div>
-                                    </div>
-                                    <div v-if="employeeCurrentShiftRequiresLunchOutAndIn">
-                                        <div class="text-xs">Lunch Start Grace</div>
-                                        <div class="text-sm font-data">{{ _get(employee, 'current_shift.shift.lunch_start_grace_time_readable', '') }}</div>
-                                    </div>
-                                    <div>
-                                        <div class="text-xs">Overtime Max Duration</div>
-                                        <div class="text-sm font-data">{{ _get(employee, 'current_shift.shift.max_overtime_readable', '') }}</div>
-                                    </div>
-                                    <div>
-                                        <div class="text-xs">Holiday policy</div>
-                                        <div class="text-sm font-data">{{ _get(employee, 'current_shift.shift.holiday_policy.text', '') }}</div>
-                                    </div>
+                        <!-- US -->
+                        <div class="lining-shadow rounded-sm grow tint-background">
+                            <div class="lining-shadow rounded-t-sm px-4 py-2 flex flex-row items-center justify-between">
+                                <div>
+                                    <div class="text-lg font-medium font-header">Upcoming Shift</div>
+                                    <div v-if="!employeePending && employeeHasUpcomingShiftAssigned" class="text-sm subtitle-color">{{ _get(employee, 'upcoming_shift.shift_assignment.readable_date_range', '') }}</div>
                                 </div>
 
-                                <div v-if="showEmployeeHasCurrentShiftAssigned">
-                                    <DataTable
-                                        :headers="shiftSchedulesHeaders"
-                                        :size="'md'"
-                                        :stripped="true"
-                                        :landscape="true"
-                                        :rows="employee.current_shift.shift_schedules">
-                                        <template v-slot:cell.is_rest_day="{cell, slot, scrollReference}">
-                                            <div class="flex justify-center">
-                                                <NonModelCheckBox disabled :size="slot.checkBoxSize" :checked="cell.is_rest_day"></NonModelCheckBox>
-                                            </div>
-                                        </template>
-                                        <template v-slot:cell.is_day_off="{cell, slot, scrollReference}">
-                                            <div class="flex justify-center">
-                                                <NonModelCheckBox disabled :size="slot.checkBoxSize" :checked="cell.is_day_off"></NonModelCheckBox>
-                                            </div>
-                                        </template>
-                                        <template v-slot:cell.is_flexible="{cell, slot, scrollReference}">
-                                            <div class="flex justify-center">
-                                                <NonModelCheckBox disabled :size="slot.checkBoxSize" :checked="cell.is_flexible"></NonModelCheckBox>
-                                            </div>
-                                        </template>
-                                        <template v-slot:cell.total_work_hours_with_breaks="{cell, slot, scrollReference}">
-                                            <div class="p-[3px]" v-if="cell.is_flexible">
-                                                {{cell.total_work_hours_with_breaks}}
-                                            </div>
-                                        </template>
-                                        <template v-slot:cell.total_lunch_break_hours="{cell, slot, scrollReference}">
-                                            <div class="p-[3px]" v-if="cell.is_flexible">
-                                                {{cell.total_lunch_break_hours}}
-                                            </div>
-                                        </template>
-                                    </DataTable>
-                                </div>
-                            </div>
-                            <div v-else-if="!employeeHasCurrentShiftAssigned && !employeePending">
-                                No current shift assigned
-                            </div>
-                            <UnorderedList v-if="employeePending" :icon="'eos-icons:loading'" :size="'md'" :label="'Loading shift details...'"/>
-                        </div>
-                    </div>
-
-                    <!-- US -->
-                    <div class="lining-shadow rounded-sm grow tint-background">
-                        <div class="lining-shadow rounded-t-sm px-4 py-2 flex flex-row items-center justify-between">
-                            <div>
-                                <div class="text-lg font-medium font-header">Upcoming Shift</div>
-                                <div v-if="!employeePending && employeeHasUpcomingShiftAssigned" class="text-sm subtitle-color">{{ _get(employee, 'upcoming_shift.shift_assignment.readable_date_range', '') }}</div>
+                                <UnorderedList
+                                    v-if="!employeePending && employeeHasUpcomingShiftAssigned"
+                                    class="cursor-pointer subtitle-color"
+                                    @click="toggleShowEmployeeHasUpcomingShiftAssigned"
+                                    :icon="showEmployeeHasUpcomingShiftAssigned ? 'ic:outline-keyboard-arrow-left' : 'ic:outline-keyboard-arrow-down'"
+                                    :label="'Show schedule'"
+                                    :size="'sm'"/>
                             </div>
 
-                            <UnorderedList
-                                v-if="!employeePending && employeeHasUpcomingShiftAssigned"
-                                class="cursor-pointer subtitle-color"
-                                @click="toggleShowEmployeeHasUpcomingShiftAssigned"
-                                :icon="showEmployeeHasUpcomingShiftAssigned ? 'ic:outline-keyboard-arrow-left' : 'ic:outline-keyboard-arrow-down'"
-                                :label="'Show schedule'"
-                                :size="'sm'"/>
-                        </div>
+                            <div class="p-4">
+                                <div v-if="!employeePending && employeeHasUpcomingShiftAssigned" class="space-y-2">
+                                    <div class="flex flex-row flex-wrap gap-6">
+                                        <div>
+                                            <div class="text-xs">Code</div>
+                                            <div class="text-sm font-data">{{ _get(employee, 'upcoming_shift.shift.code', '') }}</div>
+                                        </div>
+                                        <div>
+                                            <div class="text-xs">Type</div>
+                                            <div class="text-sm font-data">{{ _get(employee, 'upcoming_shift.shift.type.text', '') }}</div>
+                                        </div>
+                                        <div class="col-span-2">
+                                            <div class="text-xs">Name</div>
+                                            <div class="text-sm font-data">{{ _get(employee, 'upcoming_shift.shift.name', '') }}</div>
+                                        </div>
+                                        <div>
+                                            <div class="text-xs">Work Start Grace</div>
+                                            <div class="text-sm font-data">{{ _get(employee, 'upcoming_shift.shift.work_start_grace_time_readable', '') }}</div>
+                                        </div>
+                                        <div v-if="employeeUpcomingShiftRequiresLunchOutAndIn">
+                                            <div class="text-xs">Lunch Start Grace</div>
+                                            <div class="text-sm font-data">{{ _get(employee, 'upcoming_shift.shift.lunch_start_grace_time_readable', '') }}</div>
+                                        </div>
+                                        <div>
+                                            <div class="text-xs">Overtime Max Duration</div>
+                                            <div class="text-sm font-data">{{ _get(employee, 'upcoming_shift.shift.max_overtime_readable', '') }}</div>
+                                        </div>
+                                        <div>
+                                            <div class="text-xs">Holiday policy</div>
+                                            <div class="text-sm font-data">{{ _get(employee, 'upcoming_shift.shift.holiday_policy.text', '') }}</div>
+                                        </div>
+                                    </div>
 
-                        <div class="px-4 py-4">
-                            <div v-if="!employeePending && employeeHasUpcomingShiftAssigned" class="flex flex-col gap-2">
-                                <div class="flex flex-row flex-wrap gap-6">
-                                    <div>
-                                        <div class="text-xs">Code</div>
-                                        <div class="text-sm font-data">{{ _get(employee, 'upcoming_shift.shift.code', '') }}</div>
-                                    </div>
-                                    <div>
-                                        <div class="text-xs">Type</div>
-                                        <div class="text-sm font-data">{{ _get(employee, 'upcoming_shift.shift.type.text', '') }}</div>
-                                    </div>
-                                    <div class="col-span-2">
-                                        <div class="text-xs">Name</div>
-                                        <div class="text-sm font-data">{{ _get(employee, 'upcoming_shift.shift.name', '') }}</div>
-                                    </div>
-                                    <div>
-                                        <div class="text-xs">Work Start Grace</div>
-                                        <div class="text-sm font-data">{{ _get(employee, 'upcoming_shift.shift.work_start_grace_time_readable', '') }}</div>
-                                    </div>
-                                    <div v-if="employeeUpcomingShiftRequiresLunchOutAndIn">
-                                        <div class="text-xs">Lunch Start Grace</div>
-                                        <div class="text-sm font-data">{{ _get(employee, 'upcoming_shift.shift.lunch_start_grace_time_readable', '') }}</div>
-                                    </div>
-                                    <div>
-                                        <div class="text-xs">Overtime Max Duration</div>
-                                        <div class="text-sm font-data">{{ _get(employee, 'upcoming_shift.shift.max_overtime_readable', '') }}</div>
-                                    </div>
-                                    <div>
-                                        <div class="text-xs">Holiday policy</div>
-                                        <div class="text-sm font-data">{{ _get(employee, 'upcoming_shift.shift.holiday_policy.text', '') }}</div>
+                                    <div v-if="showEmployeeHasUpcomingShiftAssigned" class="grid">
+                                        <DataTable
+                                            :headers="shiftSchedulesHeaders"
+                                            :size="'md'"
+                                            :stripped="true"
+                                            landscape
+                                            :rows="employee.upcoming_shift.shift_schedules">
+                                            <template v-slot:cell.is_rest_day="{cell, slot, scrollReference}">
+                                                <div class="flex justify-center">
+                                                    <NonModelCheckBox disabled :size="slot.checkBoxSize" :checked="cell.is_rest_day"></NonModelCheckBox>
+                                                </div>
+                                            </template>
+                                            <template v-slot:cell.is_day_off="{cell, slot, scrollReference}">
+                                                <div class="flex justify-center">
+                                                    <NonModelCheckBox disabled :size="slot.checkBoxSize" :checked="cell.is_day_off"></NonModelCheckBox>
+                                                </div>
+                                            </template>
+                                            <template v-slot:cell.is_flexible="{cell, slot, scrollReference}">
+                                                <div class="flex justify-center">
+                                                    <NonModelCheckBox disabled :size="slot.checkBoxSize" :checked="cell.is_flexible"></NonModelCheckBox>
+                                                </div>
+                                            </template>
+                                            <template v-slot:cell.total_work_hours_with_breaks="{cell, slot, scrollReference}">
+                                                <div class="p-[3px]" v-if="cell.is_flexible">
+                                                    {{cell.total_work_hours_with_breaks}}
+                                                </div>
+                                            </template>
+                                            <template v-slot:cell.total_lunch_break_hours="{cell, slot, scrollReference}">
+                                                <div class="p-[3px]" v-if="cell.is_flexible">
+                                                    {{cell.total_lunch_break_hours}}
+                                                </div>
+                                            </template>
+                                        </DataTable>
                                     </div>
                                 </div>
-
-                                <div v-if="showEmployeeHasUpcomingShiftAssigned">
-                                    <DataTable
-                                        :headers="shiftSchedulesHeaders"
-                                        :size="'md'"
-                                        :stripped="true"
-                                        :landscape="true"
-                                        :rows="employee.upcoming_shift.shift_schedules">
-                                        <template v-slot:cell.is_rest_day="{cell, slot, scrollReference}">
-                                            <div class="flex justify-center">
-                                                <NonModelCheckBox disabled :size="slot.checkBoxSize" :checked="cell.is_rest_day"></NonModelCheckBox>
-                                            </div>
-                                        </template>
-                                        <template v-slot:cell.is_day_off="{cell, slot, scrollReference}">
-                                            <div class="flex justify-center">
-                                                <NonModelCheckBox disabled :size="slot.checkBoxSize" :checked="cell.is_day_off"></NonModelCheckBox>
-                                            </div>
-                                        </template>
-                                        <template v-slot:cell.is_flexible="{cell, slot, scrollReference}">
-                                            <div class="flex justify-center">
-                                                <NonModelCheckBox disabled :size="slot.checkBoxSize" :checked="cell.is_flexible"></NonModelCheckBox>
-                                            </div>
-                                        </template>
-                                        <template v-slot:cell.total_work_hours_with_breaks="{cell, slot, scrollReference}">
-                                            <div class="p-[3px]" v-if="cell.is_flexible">
-                                                {{cell.total_work_hours_with_breaks}}
-                                            </div>
-                                        </template>
-                                        <template v-slot:cell.total_lunch_break_hours="{cell, slot, scrollReference}">
-                                            <div class="p-[3px]" v-if="cell.is_flexible">
-                                                {{cell.total_lunch_break_hours}}
-                                            </div>
-                                        </template>
-                                    </DataTable>
+                                <div v-else-if="!employeeHasUpcomingShiftAssigned && !employeePending">
+                                    No upcoming shift assigned
                                 </div>
+                                <UnorderedList v-if="employeePending" :icon="'eos-icons:loading'" :size="'md'" :label="'Loading shift details...'"/>
                             </div>
-                            <div v-else-if="!employeeHasUpcomingShiftAssigned && !employeePending">
-                                No upcoming shift assigned
-                            </div>
-                            <UnorderedList v-if="employeePending" :icon="'eos-icons:loading'" :size="'md'" :label="'Loading shift details...'"/>
                         </div>
                     </div>
                 </div>
 
-                <div class="flex-none">
+                <div class="basis-full md:basis-1/3 lg:basis-4/12">
+
                     <div class="flex flex-col gap-4">
+
                         <!-- LC -->
                         <div class="lining-shadow rounded-sm grow tint-background">
                             <div class="lining-shadow rounded-t-sm px-4 py-2 flex justify-between items-center">
@@ -281,7 +286,7 @@
                                 </div>
                             </div>
 
-                            <div class="px-4 py-4">
+                            <div class="p-4">
                                 <div v-if="!leaveBalanceByTypePending" class="flex flex-row flex-wrap gap-6">
                                     <div v-if="leaveBalanceByTypes.length > 0" v-for="(leaveBalanceByType, index) in leaveBalanceByTypes" :key="index">
                                         <div class="text-sm">{{leaveBalanceByType.name}}</div>
@@ -297,8 +302,15 @@
                             </div>
                         </div>
 
+                    </div>
+                </div>
+
+                <div v-if="false" class="basis-full md:basis-1/3 lg:basis-3/12">
+
+                    <div class="flex flex-col gap-4">
+
                         <!-- PR -->
-                        <div v-if="false" class="lining-shadow rounded-sm grow tint-background">
+                        <div class="lining-shadow rounded-sm grow tint-background">
                             <div class="lining-shadow rounded-t-sm px-4 py-2 flex justify-between items-center">
                                 <div class="text-lg font-medium font-header">Payroll</div>
                             </div>
@@ -312,7 +324,6 @@
                                 </div>
                             </div>
                         </div>
-
                     </div>
                 </div>
             </div>
@@ -436,8 +447,8 @@ fetchEmployee();
 const shiftSchedulesHeaders = computed<TableHeaderT[]>(() => {
     return [
         { text: 'Weekday', value: 'week_day_name', alignData: 'left'},
-        { text: 'Rest Day', value: 'is_rest_day', alignHeader: 'center', alignData: 'left'},
-        { text: 'Day Off', value: 'is_day_off', alignHeader: 'center', alignData: 'left'},
+        { text: 'Rest', value: 'is_rest_day', alignHeader: 'center', alignData: 'left'},
+        { text: 'Off', value: 'is_day_off', alignHeader: 'center', alignData: 'left'},
         //{ text: 'Flexible', value: 'is_flexible', alignHeader: 'center', alignData: 'left'},
         { text: 'Timezone', value: 'timezone', alignData: 'left'},
         { text: 'Start', value: 'work_start', alignHeader: 'right', alignData: 'right'},

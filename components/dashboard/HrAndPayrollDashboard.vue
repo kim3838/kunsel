@@ -10,7 +10,7 @@
                 <div class="lining-shadow rounded-sm grow tint-background">
                     <div class="lining-shadow rounded-t-sm text-lg font-medium font-header px-4 py-2">My Requests</div>
 
-                    <div class="px-4 py-4 max-h-[408px] overflow-y-auto">
+                    <div class="p-4 max-h-[408px] overflow-y-auto">
 
                         <UserFiledRequest/>
                     </div>
@@ -20,55 +20,41 @@
                 <div class="lining-shadow rounded-sm grow tint-background">
                     <div class="lining-shadow rounded-t-sm text-lg font-medium font-header px-4 py-2">Awaiting my approval</div>
 
-                    <div class="px-4 py-4 max-h-[408px] overflow-y-auto">
+                    <div class="p-4 max-h-[408px] overflow-y-auto">
                         <UserAwaitingApproval/>
                     </div>
                 </div>
             </div>
 
-            <div class="grid grid-cols-9 lg:grid-cols-12 gap-4">
+            <div class="flex flex-col md:flex-row gap-4">
 
-                <!-- LT -->
-                <div class="col-span-full md:col-span-3 lg:col-span-2 lining-shadow rounded-sm grow tint-background">
-                    <div class="lining-shadow rounded-t-sm px-4 py-2 flex justify-between items-center">
-                        <div class="text-lg font-medium font-header">Leave Today</div>
-                    </div>
+                <div class="basis-full md:basis-1/2 lg:basis-4/11">
 
-                    <div class="px-4 py-4">
-                        <span class="text-sm font-serif">work in progress...</span>
-                    </div>
+                    <!-- LT UL -->
+                    <LeaveTodayAndUpcoming class="flex flex-col gap-4"/>
                 </div>
 
-                <!-- UL -->
-                <div class="col-span-full md:col-span-6 lg:col-span-3 lining-shadow rounded-sm grow tint-background">
-                    <div class="lining-shadow rounded-t-sm px-4 py-2 flex justify-between items-center">
-                        <div class="text-lg font-medium font-header">Upcoming Leaves</div>
-                    </div>
+                <div v-if="false" class="basis-full md:basis-1/2 lg:basis-7/11">
 
-                    <div class="px-4 py-4">
-                        <span class="text-sm font-serif">work in progress...</span>
-                    </div>
-                </div>
+                    <!-- PR -->
+                    <div class="lining-shadow rounded-sm grow tint-background">
+                        <div class="lining-shadow rounded-t-sm px-4 py-2 flex justify-between items-center">
+                            <div class="text-lg font-medium font-header">Payroll Run</div>
+                        </div>
 
-                <!-- PR -->
-                <div class="col-span-full md:col-span-7 lining-shadow rounded-sm grow tint-background">
-                    <div class="lining-shadow rounded-t-sm px-4 py-2 flex justify-between items-center">
-                        <div class="text-lg font-medium font-header">Payroll Run</div>
-                    </div>
-
-                    <div class="px-4 py-4">
-                        <span class="text-sm font-serif">work in progress...</span>
+                        <div class="p-4">
+                            <span class="text-sm font-serif">work in progress...</span>
+                        </div>
                     </div>
                 </div>
-
             </div>
+
         </div>
     </div>
 </template>
 
 <script setup lang="ts">
 import {storeToRefs} from "pinia";
-import type {DataTableT, TableHeaderT, TableRowT, TableSupHeaderT} from "@/public/js/types/data";
 
 const {isAuthenticated, userIsSuperAdmin} = useAuth();
 const user = userState();
