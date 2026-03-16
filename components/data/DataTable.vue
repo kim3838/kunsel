@@ -346,6 +346,7 @@ const disabledLayerStyle = computed(() => {
 if(props.manualSortable){
 
     const tableBody = useTemplateRef('tableBody');
+    //@ts-ignore
     const {option} = useSortable(tableBody, props.rows, {
         handle: '.handleOrder',
         animation: 200,
@@ -360,17 +361,6 @@ if(props.manualSortable){
                 emit('manualSorted', event.oldIndex, event.newIndex, event)
             })
         }
-    });
-
-    useMutationObserver(dataTableScroll, () => {
-        const elements = Array.from(
-            dataTableScroll.value?.querySelectorAll('[draggable="false"]') ?? []
-        );
-
-        elements.forEach(el => el.remove());
-    }, {
-        childList: true,
-        subtree: true,
     });
 }
 
