@@ -105,6 +105,7 @@
                     </div>
 
                     <DataTable
+                        :key="salaryStatementModulesKey"
                         :headers="salaryStatementModulesHeaders"
                         :size="'lg'"
                         :rows="salaryStatementModulesData"
@@ -194,6 +195,7 @@ const salaryStatementModulesHeaders = reactive<TableHeaderT[]>([
     { text: 'Conditions', value: 'conditions'},
 ]);
 const salaryStatementModulesPending = ref(false)
+const salaryStatementModulesKey = shallowRef(0);
 const salaryStatementModulesData = ref<SalaryStatementModuleT[]>([]);
 const selectedSalaryStatementModules = ref([]);
 
@@ -236,6 +238,7 @@ const salaryStatementModulesExecute = async() =>{
                     }
                 };
             });
+            salaryStatementModulesKey.value++;
         }
     }, false);
 }
