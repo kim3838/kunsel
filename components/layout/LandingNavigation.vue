@@ -3,7 +3,7 @@
         ref="landingNavigation"
         class="primary-navigation-parent z-40 fixed">
         <div class="w-full font-business flex justify-center">
-            <div class="max-w-screen-2xl w-full flex justify-start lg:justify-around h-10 lg:h-16">
+            <div class="max-w-screen-2xl w-full flex justify-start lg:justify-around h-10">
                 <div class="flex">
                     <NavDrop
                         navigation-mode
@@ -22,6 +22,7 @@
                                 :size="navigationHeaderSize"
                                 :to="navigation.to"
                                 :icon="navigation.icon"
+                                :active-style="`ripple`"
                                 :active="isRouteActive(navigation.route_active)">
                                 {{navigation.title}}
                             </NavLink>

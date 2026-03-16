@@ -1,7 +1,7 @@
 <template>
-    <footer class="pt-18">
+    <footer class="pt-4">
 
-        <div v-if="topRuleDivider" class="scaffold-border-top"></div>
+        <div v-if="topRuleDivider"></div>
 
         <div class="space-y-16 pt-16">
 

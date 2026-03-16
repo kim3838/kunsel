@@ -37,7 +37,7 @@
                         <div class="p-[3px]" :title="cell.employee.full_name">{{wordClamp(cell.employee.full_name, 20)}}</div>
                     </template>
                     <template v-slot:cell.date="{cell,slot}">
-                        <div class="p-[3px] font-medium">{{cell.date_readable}}</div>
+                        <div class="p-[3px]">{{cell.date_readable}}</div>
                     </template>
                     <template v-slot:cell.type="{cell,slot}">
                         <div class="p-[3px]">{{cell.leave_type?.type?.text}}</div>
@@ -82,7 +82,7 @@
                         <div class="p-[3px]" :title="cell.employee.full_name">{{wordClamp(cell.employee.full_name, 20)}}</div>
                     </template>
                     <template v-slot:cell.date="{cell,slot}">
-                        <div class="p-[3px] font-medium">{{cell.date_readable}}</div>
+                        <div class="p-[3px]">{{cell.date_readable}}</div>
                     </template>
                     <template v-slot:cell.type="{cell,slot}">
                         <div class="p-[3px]">{{cell.leave_type?.type?.text}}</div>

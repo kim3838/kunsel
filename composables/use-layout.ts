@@ -110,7 +110,7 @@ export const useLayout = () => {
             });
         }
 
-        if(true || process.env.NODE_ENV === 'development'){
+        if(false && process.env.NODE_ENV === 'development'){
 
             links = links.concat([
                 ...(debugRequests as NavigationLinkInterface[])
@@ -131,7 +131,24 @@ export const useLayout = () => {
                 title: 'Home',
                 to: '/',
                 route_active: 'index'
-            }] : []) as NavigationLinkInterface[],
+            }] : [
+                {
+                    key: 'wtc-calculator',
+                    type: 'link',
+                    title: 'Compensation tax (WTC) Calculator',
+                    to: '/compensation-tax-calculator',
+                    route_active: 'compensation-tax-calculator',
+                    path_active: '/compensation-tax-calculator',
+                },
+                {
+                    key: 'forgot-password',
+                    type: 'link',
+                    title: 'Forgot password',
+                    to: '/forgot-password',
+                    route_active: 'forgot-password',
+                    path_active: '/forgot-password',
+                },
+            ]) as NavigationLinkInterface[],
             ...(false ? [
                     {
                         key: 'prototype',

@@ -8,11 +8,11 @@
                             <div class="relative py-4">
                                 <form @submit.prevent="handleForgotPassword" class="w-80">
                                     <div class="block mt-4">
-                                        <InputLabel :size="'md'" for="identifier" value="Enter account email" />
+                                        <InputLabel :size="'sm'" for="identifier" value="Enter account email" />
                                         <InputWithIcon
                                             :icon="'ic:round-mail-outline'"
                                             :disabled="pending"
-                                            :size="'lg'"
+                                            :size="'md'"
                                             :placeholder="`Enter your email address`"
                                             id="email"
                                             :type="'email'"
