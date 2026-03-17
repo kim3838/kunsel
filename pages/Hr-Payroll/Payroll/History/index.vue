@@ -79,12 +79,10 @@
                     :max-width="'680px'"
                     :closeable="false">
                     <template #title>
-
+                        Confirm Payroll Request
                     </template>
                     <template #content>
                         <div class="pt-4 space-y-4">
-
-                            <div class="text-sm">Confirm submission</div>
 
                             <div class="lining-shadow rounded-sm tint-background">
 
@@ -139,28 +137,38 @@
                 </DialogModal>
 
                 <div class="px-[20px] space-y-2">
-                    <div class="flex flex-row flex-wrap gap-2 items-center min-h-8" :class="[disableActions ? 'pointer-events-none' : '']">
-                        <div v-if="payrolls.successful" class="scaffold-border px-2 font-[National_Park]">
-                            <span><span class="font-semibold">{{selectedPayrolls.length}}</span> Selected</span>
+                    <div class="flex flex-row flex-wrap gap-2 items-center min-h-8">
+                        <div class="flex flex-row flex-wrap gap-2 items-center min-h-8" :class="[disableActions ? 'pointer-events-none' : '']">
+                            <div v-if="payrolls.successful" class="scaffold-border px-2 font-[National_Park]">
+                                <span><span class="font-semibold">{{selectedPayrolls.length}}</span> Selected</span>
+                            </div>
+                            <Button
+                                v-if="payrolls.successful"
+                                :variant="'outline'"
+                                :size="'sm'"
+                                :icon="'tdesign:close'"
+                                :disabled="disableActions"
+                                :label="'Clear selection'"
+                                @click="selectedPayrolls = []" />
+                            <Button
+                                v-if="payrolls.successful"
+                                :variant="'outline'"
+                                :size="'sm'"
+                                :icon="'mdi:delete-outline'"
+                                :disabled="disableActions"
+                                :label="'Bulk delete'"
+                                @click="confirmDeleteSelected()"/>
+                            <Label v-if="!payrolls.successful" invert :size="'md'" :type="'danger'" :label="payrolls.message" />
                         </div>
-                        <Button
-                            v-if="payrolls.successful"
-                            :variant="'outline'"
-                            :size="'sm'"
-                            :icon="'tdesign:close'"
-                            :disabled="disableActions"
-                            :label="'Clear selection'"
-                            @click="selectedPayrolls = []" />
-                        <Button
-                            v-if="payrolls.successful"
-                            :variant="'outline'"
-                            :size="'sm'"
-                            :icon="'mdi:delete-outline'"
-                            :disabled="disableActions"
-                            :label="'Bulk delete'"
-                            @click="confirmDeleteSelected()"/>
-                        <Label v-if="!payrolls.successful" invert :size="'md'" :type="'danger'" :label="payrolls.message" />
+
+                        <div v-if="!payrollsPending" class="flex flex-row flex-wrap gap-2 items-center min-h-8">
+                            <Label :size="'md'" :type="'clear'" shade :label="`Employer Contr. Share: ${totalEmployerContributionShare}`" />
+                            <Label :size="'md'" :type="'clear'" shade :label="`Taxable: ${totalTaxable}`" />
+                            <Label :size="'md'" :type="'clear'" shade :label="`Tax Withheld: ${totalTaxWithheld}`" />
+                            <Label :size="'md'" :type="'clear'" shade :label="`Net: ${totalNet}`" />
+                        </div>
                     </div>
+
 
                     <DataTable
                         v-if="payrolls.successful"
@@ -375,6 +383,11 @@ const payrolls = reactive<DataTableT>({
     'successful': false,
     'message': ''
 });
+const totalEmployerContributionShare = ref(0);
+const totalTaxable = ref(0);
+const totalTaxWithheld = ref(0);
+const totalNet = ref(0);
+
 let filters = reactive<{
     page: number,
     perPage: number,
@@ -463,6 +476,10 @@ const payrollsExecute = async() =>{
         return;
     }
 
+    totalEmployerContributionShare.value = 0;
+    totalTaxable.value = 0;
+    totalTaxWithheld.value = 0;
+    totalNet.value = 0;
     payrollsPending.value = true;
 
     await laraFetch(`/api/payrolls`, {
@@ -478,7 +495,17 @@ const payrollsExecute = async() =>{
             payrolls.message = _get(response, '_data.message', '');
         },
         onSuccessResponse: async (request, options, response) => {
-            payrolls.data = _get(response, '_data.values.data', []).map((payroll: TableRowT) => {
+
+            let payrollTotalsResponse = _get(response, '_data.values.payroll_totals', {});
+
+            totalEmployerContributionShare.value = _get(payrollTotalsResponse, 'employer_contribution_share', 0);
+            totalTaxable.value = _get(payrollTotalsResponse, 'taxable', 0);
+            totalTaxWithheld.value = _get(payrollTotalsResponse, 'withholding_tax', 0);
+            totalNet.value = _get(payrollTotalsResponse, 'net', 0);
+
+            let payrollsResponse = _get(response, '_data.values.payrolls', {});
+
+            payrolls.data = _get(payrollsResponse, 'data', []).map((payroll: TableRowT) => {
 
                 let statusSummary = _get(payroll, 'status.value', 0);
 
@@ -503,7 +530,7 @@ const payrollsExecute = async() =>{
                     }
                 };
             });
-            payrolls.meta = _get(response, '_data.values.meta', {
+            payrolls.meta = _get(payrollsResponse, 'meta', {
                 pagination: {
                     total: 0,
                     count: 0,
