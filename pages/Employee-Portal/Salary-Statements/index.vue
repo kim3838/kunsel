@@ -144,7 +144,9 @@
                             <div class="px-[3px]" :title="cell.employee_full_name">{{wordClamp(cell.employee_full_name, 16)}}</div>
                         </template>
                         <template v-slot:cell.type="{cell,slot}">
-                            <div class="p-[3px]">{{cell.type?.text}}</div>
+                            <div class="flex space-x-1 px-[0.3rem] items-center">
+                                <Label :size="slot.labelSize" :type="'clear'" shade :label="cell.type?.text" />
+                            </div>
                         </template>
                         <template v-slot:cell.is_paid="{cell,slot}">
                             <div class="p-[3px]">{{cell.is_paid ? 'Yes' : 'No'}}</div>

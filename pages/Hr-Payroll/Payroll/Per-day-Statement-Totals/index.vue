@@ -113,8 +113,18 @@
                 </form>
 
                 <div class="px-[20px] space-y-2">
-                    <div class="flex flex-row flex-wrap gap-2 items-center min-h-8" :class="[disableActions ? 'pointer-events-none' : '']">
-                        <Label v-if="!perDayStatements.successful" invert :size="'md'" :type="'danger'" :label="perDayStatements.message" />
+                    <div class="flex flex-row flex-wrap gap-2 items-center min-h-8">
+
+                        <div v-if="!perDayStatements.successful" class="flex flex-row flex-wrap gap-2 items-center min-h-8" :class="[disableActions ? 'pointer-events-none' : '']">
+                            <Label invert :size="'md'" :type="'danger'" :label="perDayStatements.message" />
+                        </div>
+
+                        <div v-if="!perDayStatementsPending" class="flex flex-row flex-wrap gap-2 items-center min-h-8">
+                            <Label :size="'md'" :type="'clear'" shade :label="`Regular pay: ${totalRegularPay}`" />
+                            <Label :size="'md'" :type="'clear'" shade :label="`Night diff. pay: ${totalNightDiffPay}`" />
+                            <Label :size="'md'" :type="'clear'" shade :label="`Rest day pay: ${totalRestDayPay}`" />
+                            <Label :size="'md'" :type="'clear'" shade :label="`Total: ${grandTotal}`" />
+                        </div>
                     </div>
 
                     <DataTable
@@ -382,6 +392,10 @@ let filters = reactive<{
     page: 1,
     perPage: 25,
 });
+const totalRegularPay = ref(0);
+const totalNightDiffPay = ref(0);
+const totalRestDayPay = ref(0);
+const grandTotal = ref(0);
 
 let pageComputed = computed({
     get() {
@@ -435,6 +449,10 @@ const perDayStatementsExecute = async() =>{
         return;
     }
 
+    totalRegularPay.value = 0;
+    totalNightDiffPay.value = 0;
+    totalRestDayPay.value = 0;
+    grandTotal.value = 0;
     perDayStatementsPending.value = true;
 
     await laraFetch(`/api/per-day-salary-statement-totals`, {
@@ -450,7 +468,17 @@ const perDayStatementsExecute = async() =>{
             perDayStatements.message = _get(response, '_data.message', '');
         },
         onSuccessResponse: async (request, options, response) => {
-            perDayStatements.data = _get(response, '_data.values.data', []).map((perDayStatement: TableRowT) => {
+
+            let perDayStatementTotalsResponse = _get(response, '_data.values.per_day_statement_totals', {});
+
+            totalRegularPay.value = _get(perDayStatementTotalsResponse, 'regular_pay', 0);
+            totalNightDiffPay.value = _get(perDayStatementTotalsResponse, 'night_differential_pay', 0);
+            totalRestDayPay.value = _get(perDayStatementTotalsResponse, 'rest_day_pay', 0);
+            grandTotal.value = _get(perDayStatementTotalsResponse, 'total', 0);
+
+            let perDayStatementsResponse = _get(response, '_data.values.per_day_statements', {});
+
+            perDayStatements.data = _get(perDayStatementsResponse, 'data', []).map((perDayStatement: TableRowT) => {
 
                 let dayStatus = _get(perDayStatement, 'status.value', 0);
                 let dayType = _get(perDayStatement, 'day_type.value', 0);
@@ -485,7 +513,7 @@ const perDayStatementsExecute = async() =>{
                     }
                 };
             });
-            perDayStatements.meta = _get(response, '_data.values.meta', {
+            perDayStatements.meta = _get(perDayStatementsResponse, 'meta', {
                 pagination: {
                     total: 0,
                     count: 0,

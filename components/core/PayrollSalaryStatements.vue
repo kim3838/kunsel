@@ -36,21 +36,30 @@
             <div v-if="salaryStatementsPending" class="mb-2 flex flex-row flex-wrap gap-2 items-center min-h-8">
                 <UnorderedList :icon="'eos-icons:loading'" :size="'md'" :label="'Loading payroll statements...'"/>
             </div>
-            <div v-else class="mb-2 flex flex-row flex-wrap gap-2 items-center min-h-8">
-                <UnorderedList v-if="disableActions" :icon="'eos-icons:loading'" :size="'md'" :label="'Please wait...'"/>
-                <div class="scaffold-border px-2 font-[National_Park]">
-                    <span><span class="font-semibold">{{selectedSalaryStatements.length}}</span> Selected</span>
+            <div v-else class="flex flex-row flex-wrap gap-2 items-center min-h-8">
+                <div class="flex flex-row flex-wrap gap-2 items-center min-h-8">
+                    <UnorderedList v-if="disableActions" :icon="'eos-icons:loading'" :size="'md'" :label="'Please wait...'"/>
+                    <div class="scaffold-border px-2 font-[National_Park]">
+                        <span><span class="font-semibold">{{selectedSalaryStatements.length}}</span> Selected</span>
+                    </div>
+                    <Button :variant="'outline'" :size="'sm'" :icon="'tdesign:close'" :disabled="disableActions" :label="'Clear selection'" @click="selectedSalaryStatements = []" />
+                    <Button :variant="'outline'" :size="'sm'" :icon="'mdi:delete-outline'" :disabled="disableActions" :label="'Bulk delete'" @click="confirmDeleteSelected()"/>
+                    <SalaryStatementBulkEdit v-if="salaryStatements.successful" ref="salaryStatementBulkEdit" v-model:selected-salary-statement-ids="selectedSalaryStatements" @completed="bulkEditCompleted">
+                        <Button
+                            :disabled="disableActions || selectedSalaryStatements.length == 0"
+                            :variant="`outline`"
+                            :size="'sm'"
+                            :label="`Bulk edit${selectedSalaryStatements.length ? ' ' + selectedSalaryStatements.length : ``}`"
+                            @click="bulkEdit" />
+                    </SalaryStatementBulkEdit>
                 </div>
-                <Button :variant="'outline'" :size="'sm'" :icon="'tdesign:close'" :disabled="disableActions" :label="'Clear selection'" @click="selectedSalaryStatements = []" />
-                <Button :variant="'outline'" :size="'sm'" :icon="'mdi:delete-outline'" :disabled="disableActions" :label="'Bulk delete'" @click="confirmDeleteSelected()"/>
-                <SalaryStatementBulkEdit v-if="salaryStatements.successful" ref="salaryStatementBulkEdit" v-model:selected-salary-statement-ids="selectedSalaryStatements" @completed="bulkEditCompleted">
-                    <Button
-                        :disabled="disableActions || selectedSalaryStatements.length == 0"
-                        :variant="`outline`"
-                        :size="'sm'"
-                        :label="`Bulk edit${selectedSalaryStatements.length ? ' ' + selectedSalaryStatements.length : ``}`"
-                        @click="bulkEdit" />
-                </SalaryStatementBulkEdit>
+
+                <div v-if="!salaryStatementsPending" class="flex flex-row flex-wrap gap-2 items-center min-h-8">
+                    <Label :size="'md'" :type="'clear'" shade :label="`Basic: ${totalBasicGross}`" />
+                    <Label :size="'md'" :type="'clear'" shade :label="`Taxable: ${totalTaxable}`" />
+                    <Label :size="'md'" :type="'clear'" shade :label="`Tax Withheld: ${totalTaxWithheld}`" />
+                    <Label :size="'md'" :type="'clear'" shade :label="`Net: ${totalNet}`" />
+                </div>
             </div>
 
             <SalaryStatementManualAddDetails
@@ -112,7 +121,9 @@
                     <div class="px-[3px]" :title="cell.employee_full_name">{{wordClamp(cell.employee_full_name, 16)}}</div>
                 </template>
                 <template v-slot:cell.type="{cell,slot}">
-                    <div class="p-[3px]">{{cell.type?.text}}</div>
+                    <div class="flex space-x-1 px-[0.3rem] items-center">
+                        <Label :size="slot.labelSize" :type="'clear'" shade :label="cell.type?.text" />
+                    </div>
                 </template>
                 <template v-slot:cell.is_paid="{cell,slot}">
                     <div class="p-[3px]">{{cell.is_paid ? 'Yes' : 'No'}}</div>
@@ -218,6 +229,11 @@ const salaryStatements = reactive<DataTableT>({
     'successful': false,
     'message': ''
 });
+const totalBasicGross = ref(0);
+const totalTaxable = ref(0);
+const totalTaxWithheld = ref(0);
+const totalNet = ref(0);
+
 let filters = reactive<{
     page: number,
     perPage: number,
@@ -293,7 +309,10 @@ const paginatePayrollSalaryStatements = async() =>{
     if(!payrollId || !payrollCompanyId){
         return;
     }
-
+    totalBasicGross.value = 0;
+    totalTaxable.value = 0;
+    totalTaxWithheld.value = 0;
+    totalNet.value = 0;
     salaryStatementsPending.value = true;
 
     await laraFetch(`/api/salary-statements`, {
@@ -309,8 +328,18 @@ const paginatePayrollSalaryStatements = async() =>{
             salaryStatements.message = _get(response, '_data.message', '');
         },
         onSuccessResponse: async (request, options, response) => {
-            salaryStatements.data = _get(response, '_data.values.data', []);
-            salaryStatements.meta = _get(response, '_data.values.meta', {
+
+            let salaryStatementTotalsResponse = _get(response, '_data.values.salary_statement_totals', {});
+
+            totalBasicGross.value = _get(salaryStatementTotalsResponse, 'basic_gross', 0);
+            totalTaxable.value = _get(salaryStatementTotalsResponse, 'taxable', 0);
+            totalTaxWithheld.value = _get(salaryStatementTotalsResponse, 'withholding_tax', 0);
+            totalNet.value = _get(salaryStatementTotalsResponse, 'net', 0);
+
+            let salaryStatementsResponse = _get(response, '_data.values.salary_statements', {});
+
+            salaryStatements.data = _get(salaryStatementsResponse, 'data', []);
+            salaryStatements.meta = _get(salaryStatementsResponse, 'meta', {
                 pagination: {
                     total: 0,
                     count: 0,

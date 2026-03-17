@@ -16,7 +16,7 @@ export type PayrollT = {
     remarks: string,
     status: EnumOption,
     total_net?: string,
-    total_tax_withheld?: string,
+    total_withholding_tax?: string,
     total_employer_contribution_share?: string,
     date_range_readable: string,
 }

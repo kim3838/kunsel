@@ -24,8 +24,10 @@
                 <div class="label-value text-base font-data">({{salaryStatement?.employee_number}}) {{salaryStatement?.employee_full_name}}</div>
             </div>
             <div>
-                <InputLabel :size="'sm'" value="Type"/>
-                <div class="label-value text-base font-data">{{salaryStatement?.type?.text}}</div>
+                <InputLabel :size="'sm'" value="Statement Type"/>
+                <div class="flex items-center">
+                    <Label :size="'md'" :type="'clear'" shade :label="salaryStatement?.type?.text" />
+                </div>
             </div>
             <div>
                 <InputLabel :size="'sm'" value="Paid"/>
@@ -111,15 +113,21 @@
             </div>
             <div>
                 <InputLabel :size="'sm'" value="Total employer contr. share"/>
-                <div class="label-value text-base text-right font-medium font-sans">{{payroll.total_employer_contribution_share}}</div>
+                <div class="flex items-center">
+                    <Label :size="'md'" :type="'clear'" shade :label="payroll.total_employer_contribution_share" />
+                </div>
             </div>
             <div>
                 <InputLabel :size="'sm'" value="Total tax withheld"/>
-                <div class="label-value text-base text-right font-medium font-sans">{{payroll.total_tax_withheld}}</div>
+                <div class="flex items-center">
+                    <Label :size="'md'" :type="'clear'" shade :label="payroll.total_withholding_tax" />
+                </div>
             </div>
             <div>
                 <InputLabel :size="'sm'" value="Total net due"/>
-                <div class="label-value text-base text-right font-medium font-sans">{{payroll.total_net}}</div>
+                <div class="flex items-center">
+                    <Label :size="'md'" :type="'clear'" shade :label="payroll.total_net" />
+                </div>
             </div>
         </div>
     </div>

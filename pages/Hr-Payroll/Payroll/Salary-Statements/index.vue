@@ -136,39 +136,44 @@
                 />
 
                 <div class="px-[20px] space-y-2">
-                    <div class="flex flex-row flex-wrap gap-2 items-center min-h-8" :class="[disableActions ? 'pointer-events-none' : '']">
-                        <div v-if="salaryStatements.successful" class="scaffold-border px-2 font-[National_Park]">
-                            <span><span class="font-semibold">{{selectedSalaryStatements.length}}</span> Selected</span>
-                        </div>
-                        <Button
-                            v-if="salaryStatements.successful"
-                            :variant="'outline'"
-                            :size="'sm'"
-                            :icon="'tdesign:close'"
-                            :disabled="disableActions"
-                            :label="'Clear selection'"
-                            @click="selectedSalaryStatements = []" />
-                        <Button
-                            v-if="salaryStatements.successful"
-                            :variant="'outline'"
-                            :size="'sm'"
-                            :icon="'mdi:delete-outline'"
-                            :disabled="disableActions"
-                            :label="'Bulk delete'"
-                            @click="confirmDeleteSelected()"/>
-                        <SalaryStatementBulkEdit v-if="salaryStatements.successful" ref="salaryStatementBulkEdit" v-model:selected-salary-statement-ids="selectedSalaryStatements" @completed="bulkEditCompleted">
+                    <div class="flex flex-row flex-wrap gap-2 items-center min-h-8">
+                        <div class="flex flex-row flex-wrap gap-2 items-center min-h-8" :class="[disableActions ? 'pointer-events-none' : '']">
+                            <div v-if="salaryStatements.successful" class="scaffold-border px-2 font-[National_Park]">
+                                <span><span class="font-semibold">{{selectedSalaryStatements.length}}</span> Selected</span>
+                            </div>
                             <Button
-                                :disabled="disableActions || selectedSalaryStatements.length == 0"
-                                :variant="`outline`"
+                                v-if="salaryStatements.successful"
+                                :variant="'outline'"
                                 :size="'sm'"
-                                :label="`Bulk edit${selectedSalaryStatements.length ? ' ' + selectedSalaryStatements.length : ``}`"
-                                @click="bulkEdit" />
-                        </SalaryStatementBulkEdit>
-                        <Label v-if="!salaryStatements.successful" invert :size="'md'" :type="'danger'" :label="salaryStatements.message" />
-                    </div>
+                                :icon="'tdesign:close'"
+                                :disabled="disableActions"
+                                :label="'Clear selection'"
+                                @click="selectedSalaryStatements = []" />
+                            <Button
+                                v-if="salaryStatements.successful"
+                                :variant="'outline'"
+                                :size="'sm'"
+                                :icon="'mdi:delete-outline'"
+                                :disabled="disableActions"
+                                :label="'Bulk delete'"
+                                @click="confirmDeleteSelected()"/>
+                            <SalaryStatementBulkEdit v-if="salaryStatements.successful" ref="salaryStatementBulkEdit" v-model:selected-salary-statement-ids="selectedSalaryStatements" @completed="bulkEditCompleted">
+                                <Button
+                                    :disabled="disableActions || selectedSalaryStatements.length == 0"
+                                    :variant="`outline`"
+                                    :size="'sm'"
+                                    :label="`Bulk edit${selectedSalaryStatements.length ? ' ' + selectedSalaryStatements.length : ``}`"
+                                    @click="bulkEdit" />
+                            </SalaryStatementBulkEdit>
+                            <Label v-if="!salaryStatements.successful" invert :size="'md'" :type="'danger'" :label="salaryStatements.message" />
+                        </div>
 
-                    <div v-if="false" class="text-base h-[32px] w-full flex items-center justify-center">
-                        <Icon class="h-5 w-5" :name="'gg:loadbar-alt'"/>
+                        <div v-if="!salaryStatementsPending" class="flex flex-row flex-wrap gap-2 items-center min-h-8">
+                            <Label :size="'md'" :type="'clear'" shade :label="`Basic: ${totalBasicGross}`" />
+                            <Label :size="'md'" :type="'clear'" shade :label="`Taxable: ${totalTaxable}`" />
+                            <Label :size="'md'" :type="'clear'" shade :label="`Tax Withheld: ${totalTaxWithheld}`" />
+                            <Label :size="'md'" :type="'clear'" shade :label="`Net: ${totalNet}`" />
+                        </div>
                     </div>
 
                     <DataTable
@@ -247,7 +252,9 @@
                             <div class="px-[3px]" :title="cell.employee_full_name">{{wordClamp(cell.employee_full_name, 9)}}</div>
                         </template>
                         <template v-slot:cell.type="{cell,slot}">
-                            <div class="p-[3px]">{{cell.type?.text}}</div>
+                            <div class="flex space-x-1 px-[0.3rem] items-center">
+                                <Label :size="slot.labelSize" :type="'clear'" shade :label="cell.type?.text" />
+                            </div>
                         </template>
                         <template v-slot:cell.is_paid="{cell,slot}">
                             <div class="p-[3px]">{{cell.is_paid ? 'Yes' : 'No'}}</div>
@@ -309,6 +316,10 @@ const {render} = dateTimePicker();
 const clientReadyState = useClientReadyState();
 const formStore = nuxtApp.$formStore;
 const common = useCommon();
+const {
+    fromMonthValueComputed,
+    toMonthValueComputed,
+} = storeToRefs(nuxtApp.$formStore);
 const {
     updatedAssociatedCompanyFlag
 } = storeToRefs(nuxtApp.$associationStore);
@@ -479,6 +490,11 @@ const salaryStatements = reactive<DataTableT>({
     'successful': false,
     'message': ''
 });
+const totalBasicGross = ref(0);
+const totalTaxable = ref(0);
+const totalTaxWithheld = ref(0);
+const totalNet = ref(0);
+
 let filters = reactive<{
     page: number,
     perPage: number,
@@ -514,6 +530,14 @@ let pageComputed = computed({
         filters[payload.key] = payload.value;
     }
 });
+
+watch(fromMonthValueComputed, (newValue) => {
+    paginate(1);
+})
+
+watch(toMonthValueComputed, (newValue) => {
+    paginate(1);
+})
 
 const showSalaryStatementDetails = ref(false);
 const salaryStatementSubRowSlug = ref('');
@@ -572,6 +596,10 @@ const salaryStatementsExecute = async() =>{
         return;
     }
 
+    totalBasicGross.value = 0;
+    totalTaxable.value = 0;
+    totalTaxWithheld.value = 0;
+    totalNet.value = 0;
     salaryStatementsPending.value = true;
 
     await laraFetch(`/api/salary-statements`, {
@@ -587,7 +615,17 @@ const salaryStatementsExecute = async() =>{
             salaryStatements.message = _get(response, '_data.message', '');
         },
         onSuccessResponse: async (request, options, response) => {
-            salaryStatements.data = _get(response, '_data.values.data', []).map((salaryStatement: TableRowT) => {
+
+            let salaryStatementTotalsResponse = _get(response, '_data.values.salary_statement_totals', {});
+
+            totalBasicGross.value = _get(salaryStatementTotalsResponse, 'basic_gross', 0);
+            totalTaxable.value = _get(salaryStatementTotalsResponse, 'taxable', 0);
+            totalTaxWithheld.value = _get(salaryStatementTotalsResponse, 'withholding_tax', 0);
+            totalNet.value = _get(salaryStatementTotalsResponse, 'net', 0);
+
+            let salaryStatementsResponse = _get(response, '_data.values.salary_statements', {});
+
+            salaryStatements.data = _get(salaryStatementsResponse, 'data', []).map((salaryStatement: TableRowT) => {
 
                 let statusSummary = _get(salaryStatement, 'payroll.status.value', 0);
 
@@ -611,7 +649,7 @@ const salaryStatementsExecute = async() =>{
                     }
                 };
             });
-            salaryStatements.meta = _get(response, '_data.values.meta', {
+            salaryStatements.meta = _get(salaryStatementsResponse, 'meta', {
                 pagination: {
                     total: 0,
                     count: 0,
