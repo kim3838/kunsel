@@ -87,22 +87,22 @@
                             v-model="selectedEmployeeCompensation"
                             selection>
                             <template v-slot:cell.action="{cell,slot, headerIndex, rowIndex}">
-                                <div class="h-[32px] mx-0.5 space-x-0.5 w-full flex items-center">
-                                    <Button
+                                <div class="h-[32px] w-full flex items-center gap-2" :class="disableEmployeeCompensationActions ? 'pointer-events-none' : ''">
+
+                                    <div
                                         v-if="creatingEmployee"
-                                        class="w-min"
-                                        :variant="'outline'"
-                                        :size="slot.buttonSize"
-                                        :disabled="disableEmployeeCompensationActions"
-                                        :icon="'mdi:delete-forever'"
-                                        @click="deletePayrollComponentRow(FORMULABLE.EARNINGS as number, rowIndex)"/>
-                                    <Button
-                                        class="w-min"
-                                        :variant="'outline'"
-                                        :size="slot.buttonSize"
-                                        :disabled="disableEmployeeCompensationActions"
-                                        :icon="'mdi:pen'"
-                                        @click="createOrEditPayrollComponent(FORMULABLE.EARNINGS as number, cell as EmployeePayrollComponentT, rowIndex)"/>
+                                        class="text-base h-full px-1 gap-0.5 flex items-center justify-center cursor-pointer accent-hover"
+                                        @click="deletePayrollComponentRow(FORMULABLE.EARNINGS as number, rowIndex)">
+                                        <span class="font-narrow-thin">Delete</span>
+                                        <Icon class="h-5 w-5" :name="'mdi:delete-forever'"/>
+                                    </div>
+
+                                    <div
+                                        class="text-base h-full px-1 gap-0.5 flex items-center justify-center cursor-pointer accent-hover"
+                                        @click="createOrEditPayrollComponent(FORMULABLE.EARNINGS as number, cell as EmployeePayrollComponentT, rowIndex)">
+                                        <span class="font-narrow-thin">Edit</span>
+                                        <Icon class="h-5 w-5" :name="'gg:external'"/>
+                                    </div>
                                 </div>
                             </template>
                             <template v-slot:cell.name="{cell, slot, scrollReference}">
@@ -187,22 +187,22 @@
                             v-model="selectedEmployeeDeduction"
                             selection>
                             <template v-slot:cell.action="{cell,slot, headerIndex, rowIndex}">
-                                <div class="h-[32px] mx-0.5 space-x-0.5 w-full flex items-center">
-                                    <Button
+                                <div class="h-[32px] w-full flex items-center gap-2" :class="disableEmployeeDeductionActions ? 'pointer-events-none' : ''">
+
+                                    <div
                                         v-if="creatingEmployee"
-                                        class="w-min"
-                                        :variant="'outline'"
-                                        :size="slot.buttonSize"
-                                        :disabled="disableEmployeeDeductionActions"
-                                        :icon="'mdi:delete-forever'"
-                                        @click="deletePayrollComponentRow(FORMULABLE.DEDUCTIONS as number, rowIndex)"/>
-                                    <Button
-                                        class="w-min"
-                                        :variant="'outline'"
-                                        :size="slot.buttonSize"
-                                        :disabled="disableEmployeeDeductionActions"
-                                        :icon="'mdi:pen'"
-                                        @click="createOrEditPayrollComponent(FORMULABLE.DEDUCTIONS as number, cell as EmployeePayrollComponentT, rowIndex)"/>
+                                        class="text-base h-full px-1 gap-0.5 flex items-center justify-center cursor-pointer accent-hover"
+                                        @click="deletePayrollComponentRow(FORMULABLE.DEDUCTIONS as number, rowIndex)">
+                                        <span class="font-narrow-thin">Delete</span>
+                                        <Icon class="h-5 w-5" :name="'mdi:delete-forever'"/>
+                                    </div>
+
+                                    <div
+                                        class="text-base h-full px-1 gap-0.5 flex items-center justify-center cursor-pointer accent-hover"
+                                        @click="createOrEditPayrollComponent(FORMULABLE.DEDUCTIONS as number, cell as EmployeePayrollComponentT, rowIndex)">
+                                        <span class="font-narrow-thin">Edit</span>
+                                        <Icon class="h-5 w-5" :name="'gg:external'"/>
+                                    </div>
                                 </div>
                             </template>
                             <template v-slot:cell.name="{cell, slot, scrollReference}">
@@ -266,22 +266,22 @@
                             v-model="selectedEmployeeIncomeTax"
                             selection>
                             <template v-slot:cell.action="{cell,slot, headerIndex, rowIndex}">
-                                <div class="h-[32px] mx-0.5 space-x-0.5 w-full flex items-center">
-                                    <Button
+                                <div class="h-[32px] w-full flex items-center gap-2" :class="disableEmployeeIncomeTaxActions ? 'pointer-events-none' : ''">
+
+                                    <div
                                         v-if="creatingEmployee"
-                                        class="w-min"
-                                        :variant="'outline'"
-                                        :size="slot.buttonSize"
-                                        :disabled="disableEmployeeIncomeTaxActions"
-                                        :icon="'mdi:delete-forever'"
-                                        @click="deletePayrollComponentRow(FORMULABLE.INCOME_TAX as number, rowIndex)"/>
-                                    <Button
-                                        class="w-min"
-                                        :variant="'outline'"
-                                        :size="slot.buttonSize"
-                                        :disabled="disableEmployeeIncomeTaxActions"
-                                        :icon="'mdi:pen'"
-                                        @click="createOrEditPayrollComponent(FORMULABLE.INCOME_TAX as number, cell as EmployeePayrollComponentT, rowIndex)"/>
+                                        class="text-base h-full px-1 gap-0.5 flex items-center justify-center cursor-pointer accent-hover"
+                                        @click="deletePayrollComponentRow(FORMULABLE.INCOME_TAX as number, rowIndex)">
+                                        <span class="font-narrow-thin">Delete</span>
+                                        <Icon class="h-5 w-5" :name="'mdi:delete-forever'"/>
+                                    </div>
+
+                                    <div
+                                        class="text-base h-full px-1 gap-0.5 flex items-center justify-center cursor-pointer accent-hover"
+                                        @click="createOrEditPayrollComponent(FORMULABLE.INCOME_TAX as number, cell as EmployeePayrollComponentT, rowIndex)">
+                                        <span class="font-narrow-thin">Edit</span>
+                                        <Icon class="h-5 w-5" :name="'gg:external'"/>
+                                    </div>
                                 </div>
                             </template>
                             <template v-slot:cell.name="{cell, slot, scrollReference}">

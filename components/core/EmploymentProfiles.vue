@@ -70,22 +70,21 @@
                             v-model="selectedEmploymentProfiles"
                             selection>
                             <template v-slot:cell.action="{cell,slot, headerIndex, rowIndex}">
-                                <div class="h-[32px] mx-0.5 space-x-0.5 w-full flex items-center">
-                                    <Button
+                                <div class="h-[32px] w-full flex items-center gap-2" :class="disableActions ? 'pointer-events-none' : ''">
+                                    <div
                                         v-if="creatingEmployee"
-                                        class="w-min"
-                                        :variant="'outline'"
-                                        :size="slot.buttonSize"
-                                        :disabled="disableActions"
-                                        :icon="'mdi:delete-forever'"
-                                        @click="deleteRow(rowIndex)"/>
-                                    <Button
-                                        class="w-min"
-                                        :variant="'outline'"
-                                        :size="slot.buttonSize"
-                                        :disabled="disableActions"
-                                        :icon="'mdi:pen'"
-                                        @click="createOrEdit(cell, rowIndex)"/>
+                                        class="text-base h-full px-1 gap-0.5 flex items-center justify-center cursor-pointer accent-hover"
+                                        @click="deleteRow(rowIndex)">
+                                        <span class="font-narrow-thin">Delete</span>
+                                        <Icon class="h-5 w-5" :name="'mdi:delete-forever'"/>
+                                    </div>
+
+                                    <div
+                                        class="text-base h-full px-1 gap-0.5 flex items-center justify-center cursor-pointer accent-hover"
+                                        @click="createOrEdit(cell, rowIndex)">
+                                        <span class="font-narrow-thin">Edit</span>
+                                        <Icon class="h-5 w-5" :name="'gg:external'"/>
+                                    </div>
                                 </div>
                             </template>
                             <template v-slot:cell.status="{cell, slot, scrollReference}">
