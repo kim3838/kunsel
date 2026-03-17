@@ -9,7 +9,7 @@
 
                         <div class="grid gap-2 grid-cols-3 sm:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-8">
                             <div class="col-span-3">
-                                <InputWithIcon v-show="!disableInputFile" ref="fileToImport" :size="'md'" :icon="'ic:baseline-file-open'" type="file" />
+                                <InputWithIcon v-show="!disableInputFile" ref="fileToImport" :size="'md'" :icon="'ri:file-upload-line'" type="file" />
                                 <div v-if="$coreStore.hasNonPromptableServicePayloadMessage" class="block">
                                     <Label invert :size="'sm'" :type="'danger'" :label="$coreStore.servicePayloadMessage" />
                                 </div>
@@ -18,7 +18,7 @@
 
                         <div class="flex flex-row flex-wrap gap-2 items-center min-h-8">
                             <NuxtLink class="inline-flex" :to="`${baseURL}/api/employee-import-template`">
-                                <Button class="inline-block" :icon="'tdesign:download'" :variant="'outline'" :size="'sm'" :disabled="disableActions" :label="'CSV Template'"/>
+                                <Button class="inline-block" :icon="'ri:file-download-line'" :variant="'outline'" :size="'sm'" :disabled="disableActions" :label="'.csv template'"/>
                             </NuxtLink>
                             <Button class="inline-block" :icon="readIcon" :size="'sm'" :disabled="disableActions" v-if="showRead" :label="readLabel"  @click="read"/>
                             <Button class="inline-block" :icon="uploadNewFileIcon" :size="'sm'" :variant="'outline'" :disabled="disableActions" v-if="showUploadNewFile" :label="uploadNewFileLabel"  @click="reset"/>

@@ -6,7 +6,7 @@
         <div class="p-4 space-y-2">
             <div v-if="userIsSuperAdmin" class="flex flex-row flex-wrap gap-2 items-center min-h-8">
                 <Button class="inline-block" :variant="'outline'" :icon="'mdi:plus'" :size="'sm'" :disabled="disableActions" @click="create"/>
-                <Button v-if="deductionsSuccessful" :variant="'outline'" :icon="'mdi:delete-outline'" class="inline-block" :size="'sm'" :disabled="disableActions" @click="confirmDeleteSelected"/>
+                <Button v-if="deductionsSuccessful" :variant="'outline'" :icon="'ph:trash-simple'" class="inline-block" :size="'sm'" :disabled="disableActions" @click="confirmDeleteSelected"/>
                 <UnorderedList v-if="disableActions" :icon="'eos-icons:loading'" :size="'md'" :label="'Please wait...'"/>
             </div>
 

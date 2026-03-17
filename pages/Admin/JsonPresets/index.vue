@@ -23,7 +23,7 @@
                             :to="`/admin/jsonpresets/create-jsonpreset`">
                             <Button class="w-min" :disabled="disableActions" :size="'sm'" :icon="'mdi:plus'"></Button>
                         </NuxtLink>
-                        <Button v-if="jsonPresets.successful" :variant="'outline'" :icon="'mdi:delete-outline'" class="inline-block" :size="'sm'" :disabled="disableActions" @click="deleteSelected"/>
+                        <Button v-if="jsonPresets.successful" :variant="'outline'" :icon="'ph:trash-simple'" class="inline-block" :size="'sm'" :disabled="disableActions" @click="deleteSelected"/>
                         <Label v-if="!jsonPresets.successful" invert :size="'md'" :type="'danger'" :label="jsonPresets.message" />
                     </div>
 

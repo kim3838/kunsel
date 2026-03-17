@@ -208,7 +208,7 @@
                             v-if="attendances.successful"
                             :variant="'outline'"
                             :size="'sm'"
-                            :icon="'tdesign:close'"
+                            :icon="'ph:backspace'"
                             :disabled="disableActions"
                             :label="'Clear selection'"
                             @click="selectedAttendances = []" />
@@ -216,7 +216,7 @@
                             v-if="attendances.successful"
                             :variant="'outline'"
                             :size="'sm'"
-                            :icon="'mdi:delete-outline'"
+                            :icon="'ph:trash-simple'"
                             :disabled="disableActions"
                             :label="'Bulk delete'"
                             @click="confirmDeleteSelected()" />

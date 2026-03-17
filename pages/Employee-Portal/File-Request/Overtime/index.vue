@@ -201,15 +201,15 @@
                         <div v-if="overtimeRequests.successful" class="scaffold-border px-2 font-[National_Park]">
                             <span><span class="font-semibold">{{selectedOvertimeRequests.length}}</span> Selected</span>
                         </div>
-                        <Button v-if="overtimeRequests.successful" :variant="'outline'" :size="'sm'" :icon="'mdi:delete-outline'" :disabled="disableActions" :label="'Bulk delete'" @click="confirmDeleteSelected()" />
                         <Button
                             v-if="overtimeRequests.successful"
                             :variant="'outline'"
                             :size="'sm'"
-                            :icon="'tdesign:close'"
+                            :icon="'ph:backspace'"
                             :disabled="disableActions"
                             :label="'Clear selection'"
                             @click="selectedOvertimeRequests = []" />
+                        <Button v-if="overtimeRequests.successful" :variant="'outline'" :size="'sm'" :icon="'ph:trash-simple'" :disabled="disableActions" :label="'Bulk delete'" @click="confirmDeleteSelected()" />
                         <Label v-if="!overtimeRequests.successful" invert :size="'md'" :type="'danger'" :label="overtimeRequests.message" />
                     </div>
 

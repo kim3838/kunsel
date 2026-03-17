@@ -276,15 +276,15 @@
                         <div v-if="attendanceAdjustments.successful" class="scaffold-border px-2 font-[National_Park]">
                             <span><span class="font-semibold">{{selectedAttendanceAdjustments.length}}</span> Selected</span>
                         </div>
-                        <Button v-if="attendanceAdjustments.successful" :variant="'outline'" :size="'sm'" :icon="'mdi:delete-outline'" :disabled="disableActions" :label="'Bulk delete'" @click="confirmDeleteSelected()" />
                         <Button
                             v-if="attendanceAdjustments.successful"
                             :variant="'outline'"
                             :size="'sm'"
-                            :icon="'tdesign:close'"
+                            :icon="'ph:backspace'"
                             :disabled="disableActions"
                             :label="'Clear selection'"
                             @click="selectedAttendanceAdjustments = []" />
+                        <Button v-if="attendanceAdjustments.successful" :variant="'outline'" :size="'sm'" :icon="'ph:trash-simple'" :disabled="disableActions" :label="'Bulk delete'" @click="confirmDeleteSelected()" />
                         <Label v-if="!attendanceAdjustments.successful" invert :size="'md'" :type="'danger'" :label="attendanceAdjustments.message" />
                     </div>
 

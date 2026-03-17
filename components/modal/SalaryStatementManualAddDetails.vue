@@ -49,7 +49,7 @@
                                     :custom-identifier="rowIndex"
                                     :scroll-reference="scrollReference"
                                     :label="'Select component sub type'"
-                                    :icon="'tdesign:component-checkbox'"
+                                    :icon="'streamline-sharp:drop-down-menu'"
                                     value-persist
                                     :size="slot.selectSize"
                                     v-model="cell.component_sub_type"

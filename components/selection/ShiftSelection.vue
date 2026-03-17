@@ -24,7 +24,7 @@
                 v-if="shifts.successful"
                 :variant="'outline'"
                 :size="'sm'"
-                :icon="'tdesign:close'"
+                :icon="'ph:backspace'"
                 :disabled="disableActions"
                 :label="'Clear selection'"
                 @click="proxySelectedShifts = []" />

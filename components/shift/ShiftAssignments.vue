@@ -56,7 +56,7 @@
                 v-if="shiftAssignments.successful"
                 :variant="'outline'"
                 :size="'sm'"
-                :icon="'tdesign:close'"
+                :icon="'ph:backspace'"
                 :disabled="disableActions"
                 :label="'Clear selection'"
                 @click="selectedShiftAssignments = []" />
@@ -64,7 +64,7 @@
                 v-if="shiftAssignments.successful"
                 :variant="'outline'"
                 :size="'sm'"
-                :icon="'mdi:delete-outline'"
+                :icon="'ph:trash-simple'"
                 :disabled="disableActions"
                 :label="'Bulk delete shift assignments'"
                 @click="confirmDeleteSelected()" />

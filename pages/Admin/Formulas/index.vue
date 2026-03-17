@@ -43,7 +43,7 @@
                             :to="`/admin/formulas/create-formula`">
                             <Button class="w-min" :disabled="disableActions" :size="'sm'" :icon="'mdi:plus'"></Button>
                         </NuxtLink>
-                        <Button v-if="formulas.successful" :variant="'outline'" :icon="'mdi:delete-outline'" class="inline-block" :size="'sm'" :disabled="disableActions" :label="'Bulk delete'" @click="confirmDeleteSelected"/>
+                        <Button v-if="formulas.successful" :variant="'outline'" :icon="'ph:trash-simple'" class="inline-block" :size="'sm'" :disabled="disableActions" :label="'Bulk delete'" @click="confirmDeleteSelected"/>
                         <Label v-if="!formulas.successful" invert :size="'md'" :type="'danger'" :label="formulas.message" />
                     </div>
 

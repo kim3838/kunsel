@@ -50,8 +50,8 @@
                         <div v-if="shifts.successful" class="scaffold-border px-2 font-[National_Park]">
                             <span><span class="font-semibold">{{selectedShifts.length}}</span> Selected</span>
                         </div>
-                        <Button v-if="shifts.successful" :variant="'outline'" :icon="'mdi:delete-outline'" class="inline-block" :size="'sm'" :disabled="disableActions" :label="'Bulk delete'" @click="confirmDeleteSelected"/>
-                        <Button v-if="shifts.successful" :variant="'outline'" :size="'sm'" :icon="'tdesign:close'" :disabled="disableActions" :label="'Clear selection'" @click="selectedShifts = []" />
+                        <Button v-if="shifts.successful" :variant="'outline'" :size="'sm'" :icon="'ph:backspace'" :disabled="disableActions" :label="'Clear selection'" @click="selectedShifts = []" />
+                        <Button v-if="shifts.successful" :variant="'outline'" :icon="'ph:trash-simple'" class="inline-block" :size="'sm'" :disabled="disableActions" :label="'Bulk delete'" @click="confirmDeleteSelected"/>
                         <Label v-if="!shifts.successful" invert :size="'md'" :type="'danger'" :label="shifts.message" />
                     </div>
 

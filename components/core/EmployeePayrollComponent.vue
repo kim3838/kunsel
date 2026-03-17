@@ -56,7 +56,7 @@
                                 class="w-min"
                                 :variant="'outline'"
                                 :size="'sm'"
-                                :icon="'mdi:delete-outline'"
+                                :icon="'ph:trash-simple'"
                                 :disabled="disableEmployeeCompensationActions"
                                 @click="deleteSelectedPayrollComponent(FORMULABLE.EARNINGS as number)" />
                             <Button
@@ -156,7 +156,7 @@
                                 class="w-min"
                                 :variant="'outline'"
                                 :size="'sm'"
-                                :icon="'mdi:delete-outline'"
+                                :icon="'ph:trash-simple'"
                                 :disabled="disableEmployeeDeductionActions"
                                 @click="deleteSelectedPayrollComponent(FORMULABLE.DEDUCTIONS as number)" />
                             <Button
@@ -235,7 +235,7 @@
                                 class="w-min"
                                 :variant="'outline'"
                                 :size="'sm'"
-                                :icon="'mdi:delete-outline'"
+                                :icon="'ph:trash-simple'"
                                 :disabled="disableEmployeeIncomeTaxActions"
                                 @click="deleteSelectedPayrollComponent(FORMULABLE.INCOME_TAX as number)" />
                             <Button

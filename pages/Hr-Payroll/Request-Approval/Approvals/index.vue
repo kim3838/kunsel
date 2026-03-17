@@ -62,7 +62,7 @@
                             v-if="approvalStates.successful"
                             :variant="'outline'"
                             :size="'sm'"
-                            :icon="'tdesign:close'"
+                            :icon="'ph:backspace'"
                             :disabled="disableActions"
                             :label="'Clear selection'"
                             @click="selectedApprovalStates = []; selectedApprovalStatesProxy = []" />

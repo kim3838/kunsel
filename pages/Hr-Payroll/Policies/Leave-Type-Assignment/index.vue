@@ -166,7 +166,7 @@
                             v-model:selected="selectedEmployees">
                             <template #selection-actions>
                                 <Button :disabled="disableLeaveTypeAssignmentActions || employeeSelectionPending" @click="assignLeaveTypes" class="inline-block" :size="'sm'" :icon="'mdi:plus'" :variant="'outline'" :label="'Assign leave type from selected employees'" />
-                                <Button :disabled="disableLeaveTypeAssignmentActions || employeeSelectionPending" @click="confirmLeaveTypeAssignmentBatchDetach" class="inline-block" :size="'sm'" :icon="'mdi:delete-outline'" :variant="'outline'" :label="'Clear leave type from selected employees'" />
+                                <Button :disabled="disableLeaveTypeAssignmentActions || employeeSelectionPending" @click="confirmLeaveTypeAssignmentBatchDetach" class="inline-block" :size="'sm'" :icon="'ph:trash-simple'" :variant="'outline'" :label="'Clear leave type from selected employees'" />
                             </template>
                         </LeaveTypesByEmployeesSelection>
 
@@ -191,7 +191,7 @@
                             v-model:selected="selectedLeaveTypes">
                             <template #selection-actions>
                                 <Button :disabled="disableLeaveTypeAssignmentActions || leaveTypeSelectionPending" @click="assignLeaveTypes" class="inline-block" :size="'sm'" :icon="'mdi:plus'" :variant="'outline'" :label="'Assign selected leave types to employees'" />
-                                <Button :disabled="disableLeaveTypeAssignmentActions || leaveTypeSelectionPending" @click="confirmLeaveTypeAssignmentBatchDetach" class="inline-block" :size="'sm'" :icon="'mdi:delete-outline'" :variant="'outline'" :label="'Remove selected leave types from employees'" />
+                                <Button :disabled="disableLeaveTypeAssignmentActions || leaveTypeSelectionPending" @click="confirmLeaveTypeAssignmentBatchDetach" class="inline-block" :size="'sm'" :icon="'ph:trash-simple'" :variant="'outline'" :label="'Remove selected leave types from employees'" />
                             </template>
                         </LeaveTypeSelection>
 

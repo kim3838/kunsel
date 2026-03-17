@@ -104,15 +104,15 @@
                         <div v-if="employmentProfiles.successful" class="scaffold-border px-2 font-[National_Park]">
                             <span><span class="font-semibold">{{selectedEmploymentProfiles.length}}</span> Selected</span>
                         </div>
-                        <Button v-if="employmentProfiles.successful" :variant="'outline'" :size="'sm'" :icon="'mdi:delete-outline'" :disabled="disableActions" :label="'Bulk delete'" @click="confirmDeleteSelected()"/>
                         <Button
                             v-if="employmentProfiles.successful"
                             :variant="'outline'"
                             :size="'sm'"
-                            :icon="'tdesign:close'"
+                            :icon="'ph:backspace'"
                             :disabled="disableActions"
                             :label="'Clear selection'"
                             @click="selectedEmploymentProfiles = []" />
+                        <Button v-if="employmentProfiles.successful" :variant="'outline'" :size="'sm'" :icon="'ph:trash-simple'" :disabled="disableActions" :label="'Bulk delete'" @click="confirmDeleteSelected()"/>
                         <Label v-if="!employmentProfiles.successful" invert :size="'md'" :type="'danger'" :label="employmentProfiles.message" />
                     </div>
 

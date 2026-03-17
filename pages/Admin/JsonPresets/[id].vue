@@ -97,7 +97,7 @@
                         <legend class="text-lg font-header">Json</legend>
 
                         <div class="mb-2 flex gap-2 items-center min-h-8">
-                            <Button :type="'button'" class="w-min" :disabled="disableActions" :size="'sm'" :icon="'tdesign:download'" :label="'Download'" @click="download"></Button>
+                            <Button :type="'button'" class="w-min" :disabled="disableActions" :size="'sm'" :icon="'ri:file-download-line'" :label="'Download'" @click="download"></Button>
                             <Button :type="'button'" class="w-min" :disabled="disableActions" :size="'sm'" :icon="'tdesign:file-import-filled'" :label="'View'" @click="view"></Button>
                         </div>
 

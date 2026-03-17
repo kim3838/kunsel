@@ -206,7 +206,7 @@
                         </template>
                         <template v-slot:cell.actions="{cell,slot}">
                             <div v-if="!cell.is_day_off" class="text-base h-[34px] px-2 gap-0.5 flex items-center justify-center cursor-pointer accent-hover" @click="copyToAll(cell)">
-                                <Icon class="h-6 w-6" :name="'ph:copy-light'"/>
+                                <Icon class="h-6 w-6" :name="'streamline-sharp:align-back-2'"/>
                                 <span class="font-narrow-thin">Copy to all</span>
                             </div>
                         </template>

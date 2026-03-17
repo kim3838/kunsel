@@ -54,15 +54,15 @@
                         <div v-if="payrollRequests.successful" class="scaffold-border px-2 font-[National_Park]">
                             <span><span class="font-semibold">{{selectedPayrollRequests.length}}</span> Selected</span>
                         </div>
-                        <Button v-if="payrollRequests.successful" :variant="'outline'" :size="'sm'" :icon="'mdi:delete-outline'" :disabled="disableActions" :label="'Bulk delete'" @click="confirmDeleteSelected()" />
                         <Button
                             v-if="payrollRequests.successful"
                             :variant="'outline'"
                             :size="'sm'"
-                            :icon="'tdesign:close'"
+                            :icon="'ph:backspace'"
                             :disabled="disableActions"
                             :label="'Clear selection'"
                             @click="selectedPayrollRequests = []" />
+                        <Button v-if="payrollRequests.successful" :variant="'outline'" :size="'sm'" :icon="'ph:trash-simple'" :disabled="disableActions" :label="'Bulk delete'" @click="confirmDeleteSelected()" />
                         <Label v-if="!payrollRequests.successful" invert :size="'md'" :type="'danger'" :label="payrollRequests.message" />
                     </div>
 

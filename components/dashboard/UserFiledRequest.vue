@@ -13,7 +13,7 @@
                 :variant="'outline'"
                 :withBorder="false"
                 :size="'xs'"
-                :icon="'tdesign:close'"
+                :icon="'ph:backspace'"
                 :disabled="disableActions"
                 :label="'Clear selection'"
                 @click="selectedUserFiledRequests = []; selectedUserFiledRequestsProxy = []" />
@@ -22,7 +22,7 @@
                 :variant="'outline'"
                 :withBorder="false"
                 :size="'xs'"
-                :icon="'mdi:delete-outline'"
+                :icon="'ph:trash-simple'"
                 :disabled="disableActions"
                 :label="`Delete ${selectedUserFiledRequests.length}`"
                 @click="confirmDeleteSelected" />

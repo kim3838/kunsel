@@ -104,7 +104,7 @@
                             v-if="departmentsSuccessful"
                             :variant="'outline'"
                             :size="'sm'"
-                            :icon="'mdi:delete-outline'"
+                            :icon="'ph:trash-simple'"
                             :disabled="disableActions"
                             :label="'Bulk delete'"
                             @click="confirmDeleteSelected()" />

@@ -244,15 +244,15 @@
                         <div v-if="leaves.successful" class="scaffold-border px-2 font-[National_Park]">
                             <span><span class="font-semibold">{{selectedLeaves.length}}</span> Selected</span>
                         </div>
-                        <Button v-if="leaves.successful" :variant="'outline'" :size="'sm'" :icon="'mdi:delete-outline'" :disabled="disableActions" :label="'Bulk delete'" @click="confirmDeleteSelected()" />
                         <Button
                             v-if="leaves.successful"
                             :variant="'outline'"
                             :size="'sm'"
-                            :icon="'tdesign:close'"
+                            :icon="'ph:backspace'"
                             :disabled="disableActions"
                             :label="'Clear selection'"
                             @click="selectedLeaves = []" />
+                        <Button v-if="leaves.successful" :variant="'outline'" :size="'sm'" :icon="'ph:trash-simple'" :disabled="disableActions" :label="'Bulk delete'" @click="confirmDeleteSelected()" />
                         <Label v-if="!leaves.successful" invert :size="'md'" :type="'danger'" :label="leaves.message" />
                     </div>
 

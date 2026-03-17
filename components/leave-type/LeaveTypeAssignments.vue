@@ -57,7 +57,7 @@
                 v-if="leaveTypeAssignments.successful"
                 :variant="'outline'"
                 :size="'sm'"
-                :icon="'tdesign:close'"
+                :icon="'ph:backspace'"
                 :disabled="disableActions"
                 :label="'Clear selection'"
                 @click="selectedLeaveTypeAssignments = []" />
@@ -65,7 +65,7 @@
                 v-if="leaveTypeAssignments.successful"
                 :variant="'outline'"
                 :size="'sm'"
-                :icon="'mdi:delete-outline'"
+                :icon="'ph:trash-simple'"
                 :disabled="disableActions"
                 :label="'Bulk delete leave type assignments'"
                 @click="confirmDeleteSelected()" />

@@ -96,7 +96,7 @@
 
                     <div class="mb-2 flex gap-2 items-center min-h-8">
                         <Button :variant="'outline'" class="w-min" :disabled="disableActions" :size="'sm'" :icon="'mdi:plus'" @click="create"></Button>
-                        <Button :variant="'outline'" class="w-min" :disabled="disableActions" :size="'sm'" :icon="'mdi:delete-outline'" @click="deleteSelected"></Button>
+                        <Button :variant="'outline'" class="w-min" :disabled="disableActions" :size="'sm'" :icon="'ph:trash-simple'" @click="deleteSelected"></Button>
                         <UnorderedList
                             v-if="disableActions"
                             :icon="'eos-icons:loading'"

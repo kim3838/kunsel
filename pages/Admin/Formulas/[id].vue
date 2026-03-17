@@ -106,7 +106,7 @@
                     <fieldset class="neutral-border px-2 pb-2 space-y-2">
                         <legend class="text-lg font-header">Formula Settings</legend>
 
-                        <Button :type="'button'" class="w-min" :disabled="disableActions" :size="'sm'" :icon="'mdi:delete-outline'" :label="'Clear settings'" @click="formulaSettings = null"></Button>
+                        <Button :type="'button'" class="w-min" :disabled="disableActions" :size="'sm'" :icon="'ph:trash-simple'" :label="'Clear settings'" @click="formulaSettings = null"></Button>
 
                         <FormulaSettingsCaster :description-whitespace="'pre-line'" :settings="formulaSettings" />
                     </fieldset>

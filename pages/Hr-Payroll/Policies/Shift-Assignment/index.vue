@@ -236,7 +236,7 @@
                             v-model:selected="selectedEmployees">
                             <template #selection-actions>
                                 <Button :disabled="disableShiftAssignmentActions || employeeSelectionPending" @click="assignShifts" class="inline-block" :size="'sm'" :icon="'mdi:plus'" :variant="'outline'" :label="'Assign shift from selected employees'" />
-                                <Button :disabled="disableShiftAssignmentActions || employeeSelectionPending" @click="confirmShiftAssignmentBatchDetach" class="inline-block" :size="'sm'" :icon="'mdi:delete-outline'" :variant="'outline'" :label="'Clear shift from selected employees'" />
+                                <Button :disabled="disableShiftAssignmentActions || employeeSelectionPending" @click="confirmShiftAssignmentBatchDetach" class="inline-block" :size="'sm'" :icon="'ph:trash-simple'" :variant="'outline'" :label="'Clear shift from selected employees'" />
                             </template>
                         </ShiftsByEmployeesSelection>
 
@@ -261,7 +261,7 @@
                             v-model:selected="selectedShifts">
                             <template #selection-actions>
                                 <Button v-if="false" :disabled="disableShiftAssignmentActions || shiftSelectionPending" @click="assignShifts" class="inline-block" :size="'sm'" :icon="'mdi:plus'" :variant="'outline'" :label="'Assign selected shifts to employees'" />
-                                <Button :disabled="disableShiftAssignmentActions || shiftSelectionPending" @click="confirmShiftAssignmentBatchDetach" class="inline-block" :size="'sm'" :icon="'mdi:delete-outline'" :variant="'outline'" :label="'Remove selected shifts from employees'" />
+                                <Button :disabled="disableShiftAssignmentActions || shiftSelectionPending" @click="confirmShiftAssignmentBatchDetach" class="inline-block" :size="'sm'" :icon="'ph:trash-simple'" :variant="'outline'" :label="'Remove selected shifts from employees'" />
                             </template>
                         </ShiftSelection>
 

@@ -42,13 +42,14 @@
                     <div class="scaffold-border px-2 font-[National_Park]">
                         <span><span class="font-semibold">{{selectedSalaryStatements.length}}</span> Selected</span>
                     </div>
-                    <Button :variant="'outline'" :size="'sm'" :icon="'tdesign:close'" :disabled="disableActions" :label="'Clear selection'" @click="selectedSalaryStatements = []" />
-                    <Button :variant="'outline'" :size="'sm'" :icon="'mdi:delete-outline'" :disabled="disableActions" :label="'Bulk delete'" @click="confirmDeleteSelected()"/>
+                    <Button :variant="'outline'" :size="'sm'" :icon="'ph:backspace'" :disabled="disableActions" :label="'Clear selection'" @click="selectedSalaryStatements = []" />
+                    <Button :variant="'outline'" :size="'sm'" :icon="'ph:trash-simple'" :disabled="disableActions" :label="'Bulk delete'" @click="confirmDeleteSelected()"/>
                     <SalaryStatementBulkEdit v-if="salaryStatements.successful" ref="salaryStatementBulkEdit" v-model:selected-salary-statement-ids="selectedSalaryStatements" @completed="bulkEditCompleted">
                         <Button
                             :disabled="disableActions || selectedSalaryStatements.length == 0"
                             :variant="`outline`"
                             :size="'sm'"
+                            :icon="'ph:terminal-window'"
                             :label="`Bulk edit${selectedSalaryStatements.length ? ' ' + selectedSalaryStatements.length : ``}`"
                             @click="bulkEdit" />
                     </SalaryStatementBulkEdit>

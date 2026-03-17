@@ -176,7 +176,7 @@
                             v-if="employees.successful"
                             :variant="'outline'"
                             :size="'sm'"
-                            :icon="'tdesign:close'"
+                            :icon="'ph:backspace'"
                             :disabled="disableActions"
                             :label="'Clear selection'"
                             @click="selectedEmployees = []" />
@@ -185,6 +185,7 @@
                                 :disabled="disableActions || selectedEmployees.length == 0"
                                 :variant="`outline`"
                                 :size="'sm'"
+                                :icon="'ph:terminal-window'"
                                 :label="`Bulk edit${selectedEmployees.length ? ' ' + selectedEmployees.length : ``}`"
                                 @click="bulkEdit" />
                         </EmployeeBulkEdit>
@@ -287,8 +288,8 @@
                                     :drop-justify="'right'"
                                     :drop-options="[
                                         {type: 'link', icon: 'ix:open-external', title: 'Details',to: `/hr-payroll/workforce/employees/${cell.ulid}`},
-                                        {type: 'action', icon: 'gg:notifications', title: 'Employment Profiles',callback: () => {showEmploymentProfilesModal(cell);}},
-                                        {type: 'action', icon: 'gg:notifications', title: 'Payroll Items',callback: () => {showPayrollComponentsModal(cell);}},
+                                        {type: 'action', icon: 'ix:open-external', title: 'Employment Profiles',callback: () => {showEmploymentProfilesModal(cell);}},
+                                        {type: 'action', icon: 'ix:open-external', title: 'Payroll Items',callback: () => {showPayrollComponentsModal(cell);}},
                                     ]">
                                     <template v-slot="{slot}">
                                         <div
