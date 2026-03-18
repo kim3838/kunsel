@@ -56,6 +56,7 @@ export type SalaryStatementT = {
     total_special_holidays: number,
     total_legal_holidays: number,
     total_double_holidays: number,
+    total_legal_and_double_holidays: number,
     total_present: number,
     total_full_present: number,
     total_present_with_irregularity: number,

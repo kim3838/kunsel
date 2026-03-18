@@ -57,11 +57,7 @@
             </div>
             <div>
                 <InputLabel :size="'sm'" value="Legal holidays"/>
-                <div class="label-value text-base font-data">{{salaryStatement.total_legal_holidays}}</div>
-            </div>
-            <div>
-                <InputLabel :size="'sm'" value="Double holidays"/>
-                <div class="label-value text-base font-data">{{salaryStatement.total_double_holidays}}</div>
+                <div class="label-value text-base font-data">{{salaryStatement.total_legal_and_double_holidays}}</div>
             </div>
             <div>
                 <InputLabel :size="'sm'" value="Special holidays"/>
@@ -72,7 +68,7 @@
                 <div class="label-value text-base font-data">{{salaryStatement.total_full_present}}</div>
             </div>
             <div>
-                <InputLabel :size="'sm'" value="Presents with irregulartities"/>
+                <InputLabel :size="'sm'" value="Presents with irregularities"/>
                 <div class="label-value text-base font-data">{{salaryStatement.total_present_with_irregularity}}</div>
             </div>
             <div>
