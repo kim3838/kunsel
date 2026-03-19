@@ -135,6 +135,11 @@
                     @resolved="manualAddDetailsResolved"
                 />
 
+                <AttemptPayslipPreview
+                    v-model:show="attemptPayslipPreviewShow"
+                    v-model:salary-statement-ulid="attemptPayslipPreviewSalaryStatementUlid"
+                />
+
                 <div class="px-[20px] space-y-2">
                     <div class="flex flex-row flex-wrap gap-2 items-center min-h-8">
                         <div class="flex flex-row flex-wrap gap-2 items-center min-h-8" :class="[disableActions ? 'pointer-events-none' : '']">
@@ -200,7 +205,7 @@
                         <template v-slot:cell.actions="{cell,slot: cellSlot}">
                             <div class="flex items-center">
                                 <NavDrop
-                                    class="z-10"
+                                    class="z-20"
                                     :disabled="disableActions"
                                     :parent-icon="'ic:baseline-arrow-right'"
                                     in-horizontal-scrollable
@@ -214,7 +219,8 @@
                                         {type: 'link', icon: 'gg:row-first', title: 'Statement breakdown', to: `/hr-payroll/payroll/salary-statements/${cell.ulid}`},
                                         ...(cell.payroll.status.value == PAYROLL_STATUS.DRAFT ? [
                                             {type: 'action', icon: 'mdi:plus', title: 'Manual add payroll items', callback: () => {manualAddPayrollItems(cell);}}
-                                        ] : [])
+                                        ] : []),
+                                        {type: 'action', icon: 'ic:outline-insert-drive-file', title: 'Preview payslip', callback: () => {attemptPayslipPreview(cell.ulid);}}
                                     ]">
                                     <template v-slot="{slot}">
                                         <div
@@ -719,6 +725,13 @@ function paginate(page = 1, clearSelection = false){
 
 watch(() => {return filters.page;}, () => {paginate(filters.page);});
 watch(() => {return filters.perPage;}, () => {paginate(1);});
+
+const attemptPayslipPreviewShow = ref(false);
+const attemptPayslipPreviewSalaryStatementUlid = ref('');
+const attemptPayslipPreview = (ulid: string) => {
+    attemptPayslipPreviewSalaryStatementUlid.value = ulid;
+    attemptPayslipPreviewShow.value = true;
+}
 
 /**
  * Bulk edit
