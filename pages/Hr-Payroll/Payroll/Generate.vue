@@ -373,7 +373,7 @@
                     <div v-if="generatedPayroll.id" class="lining-shadow rounded-sm tint-background">
 
                         <div class="p-4">
-                            <PayrollSalaryStatements :key="generatedPayroll.id" :payroll="generatedPayroll" />
+                            <PayrollSalaryStatements :key="generatedPayroll.id" v-model:payroll="generatedPayroll" />
                         </div>
                     </div>
                 </div>
