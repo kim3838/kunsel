@@ -153,7 +153,7 @@
                     v-model:child-component-employee-payload="payrollComponentEmployeePayload"
                 />-->
 
-                <div v-if="true">
+                <div v-if="false">
                     <Example
                         v-model:sample-object="sampleObject"
                         v-model:sample-boolean="sampleBoolean"
@@ -721,7 +721,7 @@
                 </div>
 
                 <!-- Keyed Paginated Single and MultiSelect -->
-                <div v-if="true" class="mt-6 grid gap-2 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
+                <div v-if="false" class="mt-6 grid gap-2 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
                     <div class="block gap-2 grid grid-cols-2">
                         <div class="col-span-2">
                             exceptHolidayOptions.selected: {{exceptHolidayOptions.selected}}<br>
