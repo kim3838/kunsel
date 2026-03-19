@@ -2,16 +2,19 @@
     <div>
         <LandingWrapper>
             <div class="mx-auto pt-4 max-w-screen-2xl">
-                <div class="flex justify-center">
-                    <AccentFrame class="my-4">
+                <div class="min-h-120 flex flex-row items-center justify-center lg:px-10 gap-20">
+
+                    <AccentFrame class="h-[360px] max-w-min mx-auto lg:mx-0 ">
                         <template #content>
                             <div class="relative py-4">
-                                <form @submit.prevent="handleResetPassword" class="w-80">
-                                    <div class="block mt-4">
+                                <div class="text-lg font-medium font-header">Reset password</div>
+                                <form @submit.prevent="handleResetPassword" class="mt-4 w-80">
+                                    <div class="block">
                                         <InputWithIcon
                                             :icon="'ic:round-mail-outline'"
                                             readonly
-                                            :size="'lg'"
+                                            disabled
+                                            :size="'md'"
                                             id="email"
                                             :type="'email'"
                                             class="w-full"
@@ -24,7 +27,7 @@
                                         <Input
                                             ref="password"
                                             :disabled="pending"
-                                            :size="'lg'"
+                                            :size="'md'"
                                             id="password"
                                             :type="'password'"
                                             class="w-full"
@@ -35,7 +38,7 @@
                                         <InputLabel :size="'md'" for="password_confirmation" value="Confirm Password" />
                                         <Input
                                             :disabled="pending"
-                                            :size="'lg'"
+                                            :size="'md'"
                                             id="password_confirmation"
                                             :type="'password'"
                                             class="w-full"
@@ -47,7 +50,7 @@
                                             :disabled="pending"
                                             :size="'md'"
                                             :variant="'default'"
-                                            :icon="pending ? 'eos-icons:installing' : 'mdi:key-chain'"
+                                            :icon="pending ? 'eos-icons:installing' : ''"
                                             :label="pending ? 'Please wait...' : 'Reset Password'"></Button>
                                     </div>
                                 </form>

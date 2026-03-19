@@ -2,12 +2,14 @@
     <div>
         <LandingWrapper>
             <div class="mx-auto pt-4 max-w-screen-2xl">
-                <div class="flex justify-center">
-                    <AccentFrame class="my-4">
+                <div class="min-h-120 flex flex-row items-center justify-center lg:px-10 gap-20">
+
+                    <AccentFrame class="max-w-min mx-auto lg:mx-0 ">
                         <template #content>
                             <div class="relative py-4">
-                                <form @submit.prevent="handleForgotPassword" class="w-80">
-                                    <div class="block mt-4">
+                                <div class="text-lg font-medium font-header">Forgot password</div>
+                                <form @submit.prevent="handleForgotPassword" class="mt-4 w-80">
+                                    <div class="block">
                                         <InputLabel :size="'sm'" for="identifier" value="Enter account email" />
                                         <InputWithIcon
                                             :icon="'ic:round-mail-outline'"
@@ -22,13 +24,15 @@
                                             autofocus />
                                     </div>
 
-                                    <div class="flex mt-4 items-center justify-end">
-                                        <Button
-                                            :disabled="pending"
-                                            :size="'md'"
-                                            :variant="'default'"
-                                            :icon="pending ? 'eos-icons:installing' : 'ic:round-mail-outline'"
-                                            :label="pending ? 'Requesting...' : 'Email password reset link'"></Button>
+                                    <div class="block mt-4">
+                                        <div class="flex mt-4 items-center justify-end">
+                                            <Button
+                                                :disabled="pending"
+                                                :size="'md'"
+                                                :variant="'default'"
+                                                :icon="pending ? 'eos-icons:installing' : 'ic:round-mail-outline'"
+                                                :label="pending ? 'Requesting...' : 'Email password reset link'"></Button>
+                                        </div>
                                     </div>
                                 </form>
                             </div>

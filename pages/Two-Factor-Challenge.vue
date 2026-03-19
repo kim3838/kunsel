@@ -2,14 +2,14 @@
     <div>
         <LandingWrapper>
             <div class="mx-auto pt-4 max-w-screen-2xl">
-                <div class="flex justify-center">
-                    <AccentFrame class="my-4">
+                <div class="min-h-120 flex flex-row items-center justify-center lg:px-10 gap-20">
+
+                    <AccentFrame class="max-w-min mx-auto lg:mx-0 ">
                         <template #content>
                             <div class="relative py-4">
-                                <form @submit.prevent="handleLogin" class="w-80">
-                                    <div class="block text-lg font-header mb-4">
-                                        Enter your code
-                                    </div>
+                                <div class="text-lg font-medium font-header">Two Factor Auth Challenge</div>
+
+                                <form @submit.prevent="handleLogin" class="mt-4 w-80">
                                     <template v-if="! recovery">
                                         Please confirm access to your account by entering the authentication code provided by your authenticator application.
                                     </template>
@@ -22,7 +22,7 @@
                                         <InputLabel :size="'md'" for="code" :value="recovery ? 'Enter Recovery Code' : 'Enter Authentication Code'" />
                                         <Input
                                             :disabled="authPending"
-                                            :size="'lg'"
+                                            :size="'md'"
                                             id="code"
                                             type="text"
                                             v-model="code"
@@ -45,7 +45,8 @@
                                         <Button
                                             :disabled="authPending"
                                             :size="'md'"
-                                            :icon="authPending ? 'eos-icons:installing' : 'mdi:key-chain'"
+                                            :override="{font_family_class: `font-serif`}"
+                                            :icon="authPending ? 'eos-icons:loading' : 'ph:sign-in-bold'"
                                             :label="authPending ? 'Logging in...' : 'Login'"></Button>
                                     </div>
                                 </form>

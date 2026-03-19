@@ -32,7 +32,7 @@
                                             required />
                                     </div>
 
-                                    <div class="block mt-4">
+                                    <div v-if="false" class="block mt-4">
                                         <label class="flex items-center">
                                             <Checkbox
                                                 :disabled="authPending"
