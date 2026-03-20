@@ -194,7 +194,9 @@
                                     :drop-justify="'right'"
                                     :drop-options="[
                                         {type: 'link', icon: 'ix:open-external', title: 'Salary statements', to: `/hr-payroll/payroll/history/${cell.ulid}`},
-                                        {type: 'action', icon: 'ic:round-send', title: 'Submit for approval',callback: () => {confirmSubmitForApproval(cell)}},
+                                        ...(cell.status.value == PAYROLL_STATUS.DRAFT ? [
+                                            {type: 'action', icon: 'ic:round-send', title: 'Submit for approval',callback: () => {confirmSubmitForApproval(cell)}},
+                                        ] : []),
                                     ]">
                                     <template v-slot="{slot}">
                                         <div

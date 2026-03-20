@@ -503,7 +503,7 @@ const employeesSupHeaders = computed<TableSupHeaderT[]>(() => {
         {text: ''},
         {text: 'Employee', colspan: 2, alignHeader: 'left'},
         {text: 'Employment', colspan: 2, alignHeader: 'left'},
-        {text: '', colspan: 2},
+        {text: '', colspan: 3},
         {text: 'Org.', colspan: 3},
 
         ...(showContactInfo.value ? [
@@ -532,6 +532,7 @@ const employeesHeaders = computed<TableHeaderT[]>(() => {
         { text: 'Payroll group', value: 'payroll_group'},
 
         { text: 'Current shift', value: 'current_shift'},
+        { text: 'Dob', value: 'birth_date'},
 
         { text: 'Department', value: 'department'},
         { text: 'Designation', value: 'designation'},
