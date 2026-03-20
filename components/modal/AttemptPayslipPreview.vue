@@ -28,13 +28,13 @@
                         </NuxtLink>
                     </div>
 
-                    <div v-if="!attemptPayslipPreviewPending && attemptPayslipPreviewSuccessful" class="text-sm">
+                    <div v-if="!attemptPayslipPreviewPending && attemptPayslipPreviewSuccessful">
                         Password is:
-                        <ul style="line-height: 1.6;">
+                        <ol class="list-inside list-decimal">
                             <li>last name in lower case without space</li>
                             <li>followed by employee number in lower case</li>
                             <li>followed by date of birth in this format: YYYYMMDD</li>
-                        </ul>
+                        </ol>
                     </div>
 
                     <div v-if="!attemptPayslipPreviewPending && !attemptPayslipPreviewSuccessful">
