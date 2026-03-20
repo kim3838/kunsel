@@ -95,6 +95,8 @@ const presetUsername = process.env.NODE_ENV === 'development' ? runtimeConfig.pu
 const presetPassword = process.env.NODE_ENV === 'development' ? runtimeConfig.public.devUserPassword : '';
 let identifierInput = ref(null);
 
+$coreStore.resetServiceError();
+
 //On navigate, focus on identifier input
 if(clientReadyState.value){
     onMounted(async () => {
