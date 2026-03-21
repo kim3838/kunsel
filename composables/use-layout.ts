@@ -92,7 +92,7 @@ export const useLayout = () => {
                     to: '/account-settings',
                 },
                 {
-                    key: 'login',
+                    key: 'logout',
                     type: 'action',
                     title: 'Logout',
                     callback: () => {
@@ -105,7 +105,7 @@ export const useLayout = () => {
             links.unshift({
                 key: 'login',
                 type: 'link',
-                title: 'Login',
+                title: 'Password login',
                 to: '/login',
             });
         }

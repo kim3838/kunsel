@@ -20,32 +20,16 @@ const {
     textInvert: textInvertColor
 } = storeToRefs($themeStore);
 
+const {activeClearFluidBackground: activeClearFluidBackgroundComputed} = useCosmetic();
+
 const primaryColor90 = computed(() => {
     return primaryColor.value + hexAlpha.value['90'];
 });
 const primaryColor80 = computed(() => {
     return primaryColor.value + hexAlpha.value['80'];
 });
-const primaryColor70 = computed(() => {
-    return primaryColor.value + hexAlpha.value['70'];
-});
-const primaryColor60 = computed(() => {
-    return primaryColor.value + hexAlpha.value['60'];
-});
-const primaryColor50 = computed(() => {
-    return primaryColor.value + hexAlpha.value['50'];
-});
-const primaryColor40 = computed(() => {
-    return primaryColor.value + hexAlpha.value['40'];
-});
 const accentColor70 = computed(() => {
     return accentColor.value + hexAlpha.value['70'];
-});
-const accentColor60 = computed(() => {
-    return accentColor.value + hexAlpha.value['60'];
-});
-const accentColor40 = computed(() => {
-    return accentColor.value + hexAlpha.value['40'];
 });
 
 const props = defineProps({
@@ -123,7 +107,7 @@ const classes = computed(() => {
     z-index: 1;
     color: v-bind(textInvertColor) !important;
     text-shadow: rgba(0, 0, 0, 1) 0 1px 2px;
-    background: linear-gradient(to right, v-bind(primaryColor70) 20%, v-bind(accentColor) 60%, v-bind(accentColor) 75%, v-bind(primaryColor60) 100%);
+    background: v-bind(activeClearFluidBackgroundComputed);
     overflow: hidden;
 }
 .nav-active-clear-fluid::before{
@@ -176,7 +160,7 @@ const classes = computed(() => {
     z-index: 1;
     color: v-bind(textInvertColor) !important;
     text-shadow: rgba(0, 0, 0, 1) 0 1px 2px;
-    background: linear-gradient(to right, v-bind(primaryColor70) 20%, v-bind(accentColor) 60%, v-bind(accentColor) 75%, v-bind(primaryColor60) 100%);
+    background: v-bind(activeClearFluidBackgroundComputed);
     overflow: hidden;
 }
 .nav-link-clear-fluid:hover::before{

@@ -19,6 +19,7 @@ const {
     navigationMode,
 } = useLayout();
 const {
+    appTheme,
     hexAlpha,
     primary: primaryColor,
     accent: accentColor,
@@ -26,12 +27,7 @@ const {
     textInvert: textInvertColor
 } = storeToRefs($themeStore);
 
-const primaryColor70 = computed(() => {
-    return primaryColor.value + hexAlpha.value['70'];
-});
-const primaryColor60 = computed(() => {
-    return primaryColor.value + hexAlpha.value['60'];
-});
+const {activeClearFluidBackground: activeClearFluidBackgroundComputed} = useCosmetic();
 
 const props = defineProps({
     dropAlign: {
@@ -160,7 +156,7 @@ const dropDownIconClass = computed(() => {
     z-index: 1;
     color: v-bind(textInvertColor) !important;
     text-shadow: rgba(0, 0, 0, 1) 0 1px 2px;
-    background: linear-gradient(to right, v-bind(primaryColor70) 20%, v-bind(accentColor) 60%, v-bind(accentColor) 75%, v-bind(primaryColor60) 100%);
+    background: v-bind(activeClearFluidBackgroundComputed);
     overflow: hidden;
 }
 .nav-sub:hover::before{
@@ -176,7 +172,7 @@ const dropDownIconClass = computed(() => {
     z-index: 1;
     color: v-bind(textInvertColor) !important;
     text-shadow: rgba(0, 0, 0, 1) 0 1px 2px;
-    background: linear-gradient(to right, v-bind(primaryColor70) 20%, v-bind(accentColor) 60%, v-bind(accentColor) 75%, v-bind(primaryColor60) 100%);
+    background: v-bind(activeClearFluidBackgroundComputed);
     overflow: hidden;
 }
 .nav-sub-active-clear-fluid::before{

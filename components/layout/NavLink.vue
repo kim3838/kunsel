@@ -26,6 +26,8 @@ const {
     textInvert: textInvertColor
 } = storeToRefs($themeStore);
 
+const {activeClearFluidBackground: activeClearFluidBackgroundComputed} = useCosmetic();
+
 const props = defineProps({
     to: {
         type: String,
@@ -152,7 +154,7 @@ const iconClass = computed(() => {
     z-index: 1;
     color: v-bind(textInvertColor) !important;
     text-shadow: rgba(0, 0, 0, 1) 0 1px 2px;
-    background: linear-gradient(to right, v-bind(primaryColor70) 20%, v-bind(accentColor) 60%, v-bind(accentColor) 75%, v-bind(primaryColor60) 100%);
+    background: v-bind(activeClearFluidBackgroundComputed);
     overflow: hidden;
 }
 .nav-link:hover::before{
@@ -191,7 +193,7 @@ const iconClass = computed(() => {
     z-index: 1;
     color: v-bind(textInvertColor) !important;
     text-shadow: rgba(0, 0, 0, 1) 0 1px 2px;
-    background: linear-gradient(to right, v-bind(primaryColor70) 20%, v-bind(accentColor) 60%, v-bind(accentColor) 75%, v-bind(primaryColor60) 100%);
+    background: v-bind(activeClearFluidBackgroundComputed);
     overflow: hidden;
 }
 .nav-active-clear-fluid::before{

@@ -101,27 +101,7 @@ const {
     tint: tintColor
 } = storeToRefs($themeStore);
 
-const primaryColor70 = computed(() => {
-    return primaryColor.value + hexAlpha.value['70'];
-});
-const primaryColor50 = computed(() => {
-    return primaryColor.value + hexAlpha.value['50'];
-});
-const primaryColor40 = computed(() => {
-    return primaryColor.value + hexAlpha.value['40'];
-});
-const accentColor70 = computed(() => {
-    return accentColor.value + hexAlpha.value['70'];
-});
-const primaryColor60 = computed(() => {
-    return primaryColor.value + hexAlpha.value['60'];
-});
-const accentColor60 = computed(() => {
-    return accentColor.value + hexAlpha.value['60'];
-});
-const accentColor40 = computed(() => {
-    return accentColor.value + hexAlpha.value['40'];
-});
+const {activeClearFluidBackground: activeClearFluidBackgroundComputed} = useCosmetic();
 
 const props = defineProps({
     dropOptions: {
@@ -612,7 +592,7 @@ const dropDownIconClass = computed(() => {
     z-index: 1;
     color: v-bind(textInvertColor) !important;
     text-shadow: rgba(10, 10, 10, 0.9) 0 1px 2px;
-    background: linear-gradient(to right, v-bind(primaryColor70) 20%, v-bind(accentColor) 60%, v-bind(accentColor) 75%, v-bind(primaryColor60) 100%);
+    background: v-bind(activeClearFluidBackgroundComputed);
     overflow: hidden;
 }
 .nav-drop-active-clear-fluid::before{
@@ -630,8 +610,6 @@ const dropDownIconClass = computed(() => {
     opacity: 0.2;
     transition: all 200ms cubic-bezier(0.645, 0.045, 0.355, 1);
 }
-
-
 
 .navigation-mode-nav-drop{
     position: relative;
@@ -659,7 +637,7 @@ const dropDownIconClass = computed(() => {
     z-index: 1;
     color: v-bind(textInvertColor) !important;
     text-shadow: rgba(10, 10, 10, 0.9) 0 1px 2px;
-    background: linear-gradient(to right, v-bind(primaryColor70) 20%, v-bind(accentColor) 60%, v-bind(accentColor) 75%, v-bind(primaryColor60) 100%);
+    background: v-bind(activeClearFluidBackgroundComputed);
     overflow: hidden;
 }
 .navigation-mode-nav-drop:hover::before{
@@ -672,7 +650,7 @@ const dropDownIconClass = computed(() => {
     z-index: 1;
     color: v-bind(textInvertColor) !important;
     text-shadow: rgba(10, 10, 10, 0.9) 0 1px 2px;
-    background: linear-gradient(to right, v-bind(primaryColor70) 20%, v-bind(accentColor) 60%, v-bind(accentColor) 75%, v-bind(primaryColor60) 100%);
+    background: v-bind(activeClearFluidBackgroundComputed);
     overflow: hidden;
 }
 .navigation-mode-nav-drop-active-clear-fluid::before{
@@ -703,7 +681,7 @@ const dropDownIconClass = computed(() => {
     z-index: 1;
     color: v-bind(textInvertColor) !important;
     text-shadow: rgba(0, 0, 0, 1) 0 1px 2px;
-    background: linear-gradient(to right, v-bind(primaryColor70) 20%, v-bind(accentColor) 60%, v-bind(accentColor) 75%, v-bind(primaryColor60) 100%);
+    background: v-bind(activeClearFluidBackgroundComputed);
     overflow: hidden;
 }
 .nav-drop-active-clear-fluid::before{
@@ -759,7 +737,7 @@ const dropDownIconClass = computed(() => {
     z-index: 1;
     color: v-bind(textInvertColor) !important;
     text-shadow: rgba(0, 0, 0, 1) 0 1px 2px;
-    background: linear-gradient(to right, v-bind(primaryColor70) 20%, v-bind(accentColor) 60%, v-bind(accentColor) 75%, v-bind(primaryColor60) 100%);
+    background: v-bind(activeClearFluidBackgroundComputed);
     overflow: hidden;
 }
 .child-non-drop-clear-fluid:hover::before{

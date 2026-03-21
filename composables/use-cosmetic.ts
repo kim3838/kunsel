@@ -6,6 +6,46 @@ import {storeToRefs} from "pinia";
 
 export const useCosmetic = () => {
 
+    const {$themeStore} = useNuxtApp();
+    const {
+        appTheme,
+        hexAlpha,
+        primary: primaryColor,
+        accent: accentColor,
+        lining: liningColor,
+        textInvert: textInvertColor
+    } = storeToRefs($themeStore);
+
+    const primaryColor90 = computed(() => {
+        return primaryColor.value + hexAlpha.value['90'];
+    });
+    const primaryColor80 = computed(() => {
+        return primaryColor.value + hexAlpha.value['80'];
+    });
+    const primaryColor70 = computed(() => {
+        return primaryColor.value + hexAlpha.value['70'];
+    });
+    const primaryColor60 = computed(() => {
+        return primaryColor.value + hexAlpha.value['60'];
+    });
+    const accentColor80 = computed(() => {
+        return accentColor.value + hexAlpha.value['80'];
+    });
+    const accentColor70 = computed(() => {
+        return accentColor.value + hexAlpha.value['70'];
+    });
+
+    const activeClearFluidBackground = computed(() => {
+
+        let isDefaultBlue = ['default-blue'].indexOf(appTheme.value) >= 0;
+
+        if(isDefaultBlue){
+            return `linear-gradient(to right, ${primaryColor90.value} 20%, ${accentColor.value} 80%, ${primaryColor80.value} 100%)`;
+        } else {
+            return `linear-gradient(to right, ${primaryColor70.value} 20%, ${accentColor.value} 60%, ${accentColor.value} 75%, ${primaryColor60.value} 100%)`;
+        }
+    })
+
     const formulableComponentShade = (formulableType: number|null, componentType: number|null): LabelTypeT => {
         let shadeValue: LabelTypeT = 'clear';
 
@@ -92,6 +132,7 @@ export const useCosmetic = () => {
     }
 
     return {
+        activeClearFluidBackground,
         formulableComponentShade,
         formulableShade,
         validationShade,
