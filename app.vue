@@ -27,6 +27,7 @@ const {
 } = useLayout();
 
 const {
+    appTheme,
     hexAlpha,
     common: commonColor,
     primary: primaryColor,
@@ -48,6 +49,18 @@ const successPrimaryColor = computed(() => {return typedCommonColor.value.succes
 const dangerPrimaryColor = computed(() => {return typedCommonColor.value.danger.primary;});
 const warningPrimaryColor = computed(() => {return typedCommonColor.value.warning.primary;});
 const infoPrimaryColor = computed(() => {return typedCommonColor.value.info.primary;});
+const textInvertColor90 = computed(() => {
+    return textInvertColor.value + hexAlpha.value['90'];
+});
+const primaryColor90 = computed(() => {
+    return primaryColor.value + hexAlpha.value['90'];
+});
+const primaryColor80 = computed(() => {
+    return primaryColor.value + hexAlpha.value['80'];
+});
+const accentColor80 = computed(() => {
+    return accentColor.value + hexAlpha.value['80'];
+});
 const threadColor10 = computed(() => {
     return threadColor.value + hexAlpha.value['10'];
 });
@@ -60,6 +73,27 @@ const liningColor70 = computed(() => {
 const accentColor70 = computed(() => {
     return accentColor.value + hexAlpha.value['70'];
 });
+
+const dateTimePickerColorComputed = computed(() => {
+
+    if(
+        ['default-blue'].indexOf(appTheme.value) >= 0
+    ){
+        return textInvertColor90.value;
+    } else {
+        return textColor.value;
+    }
+})
+const dateTimePickerBackgroundComputed = computed(() => {
+
+    if(
+        ['dark-silver'].indexOf(appTheme.value) >= 0
+    ){
+        return `linear-gradient(to right, ${accentColor70.value} 20%, ${accentColor70.value} 60%, ${accentColor.value} 75%, ${accentColor80.value} 100%);`
+    } else {
+        return `linear-gradient(to right, ${primaryColor.value} 20%, ${primaryColor.value} 40%, ${primaryColor80.value} 75%, ${primaryColor90.value} 100%)`
+    }
+})
 
 const lightTheme = computed(() => {
     return themeType.value === 'light';
@@ -270,12 +304,15 @@ watch(() => route.name,() => {
 .daterangepicker td.active,
 .daterangepicker td.active:hover,
 .daterangepicker td:not(.active):hover {
-    background-color: v-bind(primaryColor);
     border-color: transparent;
-    color: v-bind(textInvertColor);
     position: relative;
     overflow: hidden;
     font-size: 1.5rem;
+
+
+    color: v-bind(dateTimePickerColorComputed) !important;
+    text-shadow: rgba(0, 0, 0, 1) 0 1px 2px;
+    background: v-bind(dateTimePickerBackgroundComputed);
 }
 
 .daterangepicker td.active:before,
@@ -288,9 +325,10 @@ watch(() => route.name,() => {
     left: -65%;
     right: 0;
     width: 165%;
-    background-image: url('/images/deco/ripple_texture.png');
+    background-image: url('/images/deco/fluid-gold-top.webp');
+    filter: grayscale(100%);
     background-size: cover;
-    opacity: 0.6;
+    opacity: 0.3;
 }
 
 .daterangepicker th.available:hover {
@@ -340,23 +378,48 @@ watch(() => route.name,() => {
     height: calc(0.25rem * 7);
     border-radius: 2px;
     cursor: pointer;
+
     position: relative;
-    color: v-bind(textInvertColor) !important;
-    text-shadow: rgba(0, 0, 0, 0.5) 0 1px 2px;
-    background: v-bind(primaryColor);
+    z-index: 1;
+    color: v-bind(dateTimePickerColorComputed) !important;
+    text-shadow: rgba(0, 0, 0, 1) 0 1px 2px;
+    background: v-bind(dateTimePickerBackgroundComputed);
     overflow: hidden;
 }
-
-.daterangepicker .drp-buttons .btn:before {
+.daterangepicker .drp-buttons .btn::before {
+    z-index: -1;
+    content: '';
+    position: absolute;
+    top:0;
+    bottom: 0;
+    left:-35%;
+    right:0;
+    width: 230%;
+    background-image: url('/images/deco/fluid-gold-top.webp');
+    filter: grayscale(100%);
+    background-size: cover;
+    opacity: 0.3;
+    transition: all 200ms cubic-bezier(0.645, 0.045, 0.355, 1);
+}
+.daterangepicker .drp-buttons .btn::after{
     content: '';
     position: absolute;
     top: -25%;
     bottom: -25%;
-    left: -100%;
-    right: 0;
-    width: 200%;
-    background-image: url('/images/deco/ripple_texture.png');
+    left:0;
+    right:0;
+    width: 140%;
+    background-image: url('/images/deco/ripple_texture.png'), linear-gradient(to right, transparent, v-bind(primaryColor));
     background-size: cover;
-    opacity: 0.4;
+    opacity: 0;
+    transition: all 200ms linear;
+}
+.daterangepicker .drp-buttons .btn:hover::before{
+    left: -20%;
+    opacity: 0.2;
+}
+.daterangepicker .drp-buttons .btn:hover::after{
+    animation: slideTransition 6s linear infinite;
+    opacity: 0.3;
 }
 </style>

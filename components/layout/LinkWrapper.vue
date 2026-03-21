@@ -151,9 +151,26 @@ const classes = computed(() => {
 }
 
 .nav-link-clear-fluid{
+    position: relative;
+    z-index: 1;
     color: v-bind(navigationLinkColor);
+    overflow: hidden;
 }
-
+.nav-link-clear-fluid::before{
+    z-index: -1;
+    content: '';
+    position: absolute;
+    top:0;
+    bottom: 0;
+    left:0;
+    right:0;
+    width: 230%;
+    background-image: url('/images/deco/fluid-gold-top.webp');
+    filter: grayscale(100%);
+    background-size: cover;
+    opacity: 0;
+    transition: all 200ms cubic-bezier(0.645, 0.045, 0.355, 1);
+}
 .nav-link-clear-fluid:hover{
     position: relative;
     z-index: 1;
@@ -163,18 +180,7 @@ const classes = computed(() => {
     overflow: hidden;
 }
 .nav-link-clear-fluid:hover::before{
-    z-index: -1;
-    content: '';
-    position: absolute;
-    top:0;
-    bottom: 0;
     left:-35%;
-    right:0;
-    width: 230%;
-    background-image: url('/images/deco/fluid-gold-top.webp');
-    filter: grayscale(100%);
-    background-size: cover;
     opacity: 0.2;
-    transition: all 200ms cubic-bezier(0.645, 0.045, 0.355, 1);
 }
 </style>
