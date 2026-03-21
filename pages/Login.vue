@@ -57,7 +57,7 @@
                                                 :disabled="authPending || isAuthenticated"
                                                 :size="'md'"
                                                 :override="{font_family_class: `font-serif`}"
-                                                :icon="authPending ? 'eos-icons:loading' : 'ph:sign-in-bold'"
+                                                :icon="authPending ? 'eos-icons:loading' : ''"
                                                 :label="authPending ? 'Logging in...' : 'Login'"></Button>
                                         </div>
                                     </div>

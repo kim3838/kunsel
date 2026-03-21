@@ -9,7 +9,7 @@
                 :class="[
                     focusRing ? 'focus-ring-enable' : 'focus-ring-disable',
                     heightClass,
-                    colorClass]"
+                    backgroundClass]"
                 :type="type"
                 class="
                     w-full
@@ -43,6 +43,7 @@ const {$themeStore} = useNuxtApp();
 const button = ref(null);
 const {focused: buttonFocused} = useFocus(button);
 const {
+    appTheme,
     hexAlpha,
     primary: primaryColor,
     accent: accentColor,
@@ -53,29 +54,23 @@ const {
     textInvert: textInvertColor
 } = storeToRefs($themeStore);
 
+const textInvertColor90 = computed(() => {
+    return textInvertColor.value + hexAlpha.value['90'];
+});
+const textInvertComputed = computed(() => {
+    return textInvertColor90.value;
+})
 const primaryColor90 = computed(() => {
     return primaryColor.value + hexAlpha.value['90'];
 });
 const primaryColor80 = computed(() => {
     return primaryColor.value + hexAlpha.value['80'];
 });
-const primaryColor70 = computed(() => {
-    return primaryColor.value + hexAlpha.value['70'];
-});
-const primaryColor50 = computed(() => {
-    return primaryColor.value + hexAlpha.value['50'];
-});
 const accentColor80 = computed(() => {
     return accentColor.value + hexAlpha.value['80'];
 });
 const accentColor70 = computed(() => {
     return accentColor.value + hexAlpha.value['70'];
-});
-const threadColor50 = computed(() => {
-    return threadColor.value + hexAlpha.value['50'];
-});
-const threadColor90 = computed(() => {
-    return threadColor.value + hexAlpha.value['90'];
 });
 
 const props = defineProps({
@@ -233,16 +228,26 @@ const fontClass = computed(() => {
     }[props.size]
 });
 
-const colorClass = computed(() => {
-    return {
+const backgroundClass = computed(() => {
+
+    let className = {
         'default': 'default-background',
         'outline': 'outlined',
         'flat': 'flat',
-    }[props.variant]
+    }[props.variant];
+
+    if(
+        ['dark-silver'].indexOf(appTheme.value) >= 0 &&
+        className === 'default-background'
+    ){
+        return `dark-clear-fluid-background`;
+    }
+
+    return className;
 });
 
 const borderStyle = computed(() => {
-    const borderWidth = props.withBorder ? 1 : 0 ;
+    const borderWidth = (props.withBorder && props.variant !== 'default') ? 1 : 0 ;
 
     return {
         'default': `${borderWidth}px solid transparent`,
@@ -316,23 +321,26 @@ watch(buttonFocused, (focused) => {
 }
 
 .default-background{
-    color: v-bind(textInvertColor) !important;
-    text-shadow: rgba(0, 0, 0, 0.5) 0 1px 2px;
-    background: linear-gradient(to right, v-bind(primaryColor80) 20%, v-bind(primaryColor) 50%, v-bind(primaryColor90) 100%);
+    position: relative;
+    z-index: 1;
+    color: v-bind(textInvertComputed) !important;
+    text-shadow: rgba(0, 0, 0, 1) 0 1px 2px;
+    background: linear-gradient(to right, v-bind(primaryColor) 20%, v-bind(primaryColor) 40%, v-bind(primaryColor80) 75%, v-bind(primaryColor90) 100%);
     overflow: hidden;
 }
-
 .default-background::before{
+    z-index: -1;
     content: '';
     position: absolute;
     top:0;
     bottom: 0;
-    left:0;
+    left:-10%;
     right:0;
-    width: 120%;
-    background-image: url('/images/deco/ripple_texture.png'), linear-gradient(to right, transparent, v-bind(primaryColor));
+    width: 230%;
+    background-image: url('/images/deco/fluid-gold-top.webp');
+    filter: grayscale(100%);
     background-size: cover;
-    opacity: 0.2;
+    opacity: 0.3;
     transition: all 200ms cubic-bezier(0.645, 0.045, 0.355, 1);
 }
 .default-background::after{
@@ -349,13 +357,35 @@ watch(buttonFocused, (focused) => {
     transition: all 200ms linear;
 }
 .default-background:hover::before, .default-background:active::before{
-    left: -20%;
-    opacity: 0.1;
-
+    left: -45%;
 }
 .default-background:hover::after, .default-background:active::after{
     animation: slideTransition 6s linear infinite;
     opacity: 0.2;
+}
+
+.dark-clear-fluid-background{
+    position: relative;
+    z-index: 1;
+    color: v-bind(textColor) !important;
+    text-shadow: rgba(0, 0, 0, 1) 0 1px 2px;
+    background: linear-gradient(to right, v-bind(accentColor70) 20%, v-bind(accentColor70) 60%, v-bind(accentColor) 75%, v-bind(accentColor80) 100%);
+    overflow: hidden;
+}
+.dark-clear-fluid-background::before{
+    z-index: -1;
+    content: '';
+    position: absolute;
+    top:0;
+    bottom: 0;
+    left:-35%;
+    right:0;
+    width: 230%;
+    background-image: url('/images/deco/fluid-gold-top.webp');
+    filter: grayscale(100%);
+    background-size: cover;
+    opacity: 0.2;
+    transition: all 200ms cubic-bezier(0.645, 0.045, 0.355, 1);
 }
 
 @keyframes slideTransition {
@@ -370,41 +400,89 @@ watch(buttonFocused, (focused) => {
     overflow: hidden;
 }
 .outlined:hover{
-    color: v-bind(textInvertColor) !important;
-    text-shadow: rgba(0, 0, 0, 0.5) 0 1px 2px;
+    position: relative;
+    z-index: 1;
+    color: v-bind(textColor) !important;
+    overflow: hidden;
 }
 .outlined::before{
+    z-index: -1;
     content: '';
     position: absolute;
     top:0;
     bottom: 0;
     left:0;
     right:0;
-    background: linear-gradient(to right, v-bind(primaryColor80) 20%, v-bind(primaryColor) 50%, v-bind(primaryColor90) 100%);
-    opacity: 0;
-    transition: all 100ms cubic-bezier(0.645, 0.045, 0.355, 1);
+    width: 230%;
+    background-image: url('/images/deco/fluid-gold-top.webp');
+    filter: grayscale(100%);
+    background-size: cover;
+    opacity: 0.1;
+    transition: all 200ms cubic-bezier(0.645, 0.045, 0.355, 1);
+}
+.outlined:hover::before{
+    left:-45%;
+    opacity: 0.4;
 }
 .outlined::after{
     content: '';
     position: absolute;
-    top:0;
-    bottom: 0;
+    top: -25%;
+    bottom: -25%;
     left:0;
     right:0;
+    width: 140%;
     background-image: url('/images/deco/ripple_texture.png'), linear-gradient(to right, transparent, v-bind(primaryColor));
     background-size: cover;
     opacity: 0;
-    transition: all 100ms cubic-bezier(0.645, 0.045, 0.355, 1);
-}
-.outlined:hover::before{
-    opacity: 1;
+    transition: all 200ms linear;
 }
 .outlined:hover::after{
-    opacity: 0.2;
+    animation: slideTransition 6s linear infinite;
+    opacity: 0.3;
 }
 .flat{
+    position: relative;
+    z-index: 1;
     background-color: v-bind(tintColor) !important;
     color: v-bind(textColor) !important;
+    overflow: hidden;
 }
-
+.flat::before{
+    z-index: -1;
+    content: '';
+    position: absolute;
+    top:0;
+    bottom: 0;
+    left:-10%;
+    right:0;
+    width: 230%;
+    background-image: url('/images/deco/fluid-gold-top.webp');
+    filter: grayscale(100%);
+    background-size: cover;
+    opacity: 0.2;
+    transition: all 200ms cubic-bezier(0.645, 0.045, 0.355, 1);
+}
+.flat::after{
+    z-index: -1;
+    content: '';
+    position: absolute;
+    top: -25%;
+    bottom: -25%;
+    left:0;
+    right:0;
+    width: 140%;
+    background-image: url('/images/deco/ripple_texture.png'), linear-gradient(to right, transparent, v-bind(primaryColor));
+    background-size: cover;
+    opacity: 0.2;
+    transition: all 200ms linear;
+}
+.flat:hover::before{
+    left:-45%;
+    opacity: 0.4;
+}
+.flat:hover::after{
+    animation: slideTransition 6s linear infinite;
+    opacity: 0.4;
+}
 </style>
