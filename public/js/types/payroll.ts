@@ -1,5 +1,6 @@
 
 import type {EnumOption} from "@/public/js/common/type";
+import type {TableRowPayloadT} from "~/public/js/types/data";
 
 export type PayrollT = {
     id: number,
@@ -22,6 +23,7 @@ export type PayrollT = {
 }
 
 export type PayrollInquiryT = {
+    payroll?: PayrollT,
     summary: string,
     year: number,
     month: number,
@@ -34,6 +36,7 @@ export type PayrollInquiryT = {
     end: string,
     date_range_readable: string,
     remarks: string,
+    _payload?: TableRowPayloadT;
 }
 
 export type SalaryStatementT = {
