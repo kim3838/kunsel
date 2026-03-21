@@ -2,7 +2,7 @@
     <nav
         ref="navigation"
         class="primary-navigation-parent z-40 fixed">
-        <div class="relative z-[42] w-full flex justify-center font-business">
+        <div class="px-[20px] relative z-[42] w-full flex justify-center font-business">
             <div class="max-w-screen-2xl w-full flex gap-1 justify-end">
                 <NavLink
                     class="h-full cursor-pointer"
@@ -38,9 +38,9 @@
                     ]" />
             </div>
         </div>
-        <div class="relative z-[41] w-full flex justify-center" :class="mainNavigationFontClass">
+        <div class="px-[20px] relative z-[41] w-full flex justify-center" :class="mainNavigationFontClass">
             <div class="max-w-screen-2xl w-full flex justify-start md:justify-between" :class="mainNavigationHeightClass">
-                <div class="flex">
+                <div class="flex gap-1">
                     <!-- Navigation Links -->
                     <div class="flex">
                         <!-- Subscribed module selection -->
@@ -70,9 +70,11 @@
                             navigation-mode
                             :size="navigationHeaderSize"
                             :title="'Menu'"
+                            :active-style="`clear-fluid`"
+                            :drop-active-style="`clear-fluid`"
                             :drop-options="navigationLinks" />
                     </div>
-                    <div class="hidden sm:flex flex-wrap overflow-hidden" ref="mainNavigation">
+                    <div class="hidden sm:flex flex-wrap gap-1 overflow-hidden" ref="mainNavigation">
                         <div
                             class="flex"
                             :class="[mainNavigationHeightClass]"
@@ -84,7 +86,7 @@
                                 :size="navigationHeaderSize"
                                 :to="navigation.to"
                                 :icon="navigation.icon"
-                                :active-style="`ripple`"
+                                :active-style="`clear-fluid`"
                                 :active="isRouteActive(navigation.route_active)">
                                 {{navigation.title}}
                             </NavLink>
@@ -95,6 +97,8 @@
                                 class="w-full h-full flex">
                                 <NavLink
                                     :icon="navigation.icon"
+                                    :active-style="`clear-fluid`"
+                                    :drop-active-style="`clear-fluid`"
                                     :size="navigationHeaderSize">
                                     {{navigation.title}}
                                 </NavLink>
@@ -106,6 +110,8 @@
                                 :size="navigationHeaderSize"
                                 :title="navigation.title"
                                 :icon="navigation.icon"
+                                :active-style="`clear-fluid`"
+                                :drop-active-style="`clear-fluid`"
                                 :drop-options="navigation.options"
                             />
                             <NavSub
@@ -113,6 +119,7 @@
                                 :size="navigationHeaderSize"
                                 :title="navigation.title"
                                 :icon="navigation.icon"
+                                :active-style="`clear-fluid`"
                                 :drop-options="navigation.options"
                                 :drop-align="navigation.drop_align"
                                 :active="isRoutePathActive(navigation.path_active)"
@@ -121,14 +128,14 @@
                         </div>
                     </div>
                 </div>
-                <div class="flex">
+                <div class="flex gap-1">
                     <div class="flex" v-for="navigation in adminNavigationLinks" :key="navigation.key">
                         <NavLink
                             v-if="navigation.type == 'link'"
                             :size="navigationHeaderSize"
                             :to="navigation.to"
                             :icon="navigation.icon"
-                            :active-style="`ripple`"
+                            :active-style="`clear-fluid`"
                             :active="isRouteActive(navigation.route_active)">
                             {{navigation.title}}
                         </NavLink>
@@ -139,6 +146,7 @@
                             class="w-full h-full flex">
                             <NavLink
                                 :icon="navigation.icon"
+                                :active-style="`clear-fluid`"
                                 :size="navigationHeaderSize">
                                 {{navigation.title}}
                             </NavLink>
@@ -150,6 +158,8 @@
                             :size="navigationHeaderSize"
                             :title="navigation.title"
                             :icon="navigation.icon"
+                            :active-style="`clear-fluid`"
+                            :drop-active-style="`clear-fluid`"
                             :drop-options="navigation.options"
                         />
                         <NavSub
@@ -157,6 +167,7 @@
                             :size="navigationHeaderSize"
                             :title="navigation.title"
                             :icon="navigation.icon"
+                            :active-style="`clear-fluid`"
                             :drop-options="navigation.options"
                             :drop-align="navigation.drop_align"
                             :active="isRoutePathActive(navigation.path_active)"
@@ -170,6 +181,8 @@
                         :size="navigationHeaderSize"
                         :drop-align="rightNavigationDropAlign"
                         :title="username"
+                        :active-style="`clear-fluid`"
+                        :drop-active-style="`clear-fluid`"
                         :drop-options="navigationAccountLinks"
                     />
                     <NavDrop
@@ -177,6 +190,8 @@
                         navigation-mode
                         :size="navigationHeaderSize"
                         :title="'Account'"
+                        :active-style="`clear-fluid`"
+                        :drop-active-style="`clear-fluid`"
                         :drop-options="navigationAccountLinks"
                     />
                 </div>
@@ -185,12 +200,12 @@
         <!-- Sub Navigation -->
         <div
             v-show="subNavigationOptions.length"
-            class="py-2 relative w-full flex justify-center"
+            class="px-[20px] py-2 relative w-full flex justify-center"
             :class="subNavigationFontClass">
             <div
                 ref="subNavigationRef"
                 tabindex="0"
-                class="max-w-screen-2xl w-full flex flex-wrap gap-y-2 justify-start focus:outline-none"
+                class="max-w-screen-2xl w-full flex flex-wrap gap-1 justify-start focus:outline-none"
                 :class="[subNavigationOptions.length ? '' : '', subNavigationDropAlignComputed]">
                 <span
                     class="flex"
@@ -203,7 +218,7 @@
                         :size="subNavigationHeaderSize"
                         :to="navigation.to"
                         :icon="navigation.icon"
-                        :active-style="`ripple`"
+                        :active-style="`clear-fluid`"
                         :active="isRouteActive(navigation.route_active) || isRoutePathActive(navigation.path_active)">
                         {{navigation.title}}
                     </NavLink>
@@ -227,7 +242,8 @@
                         :title="navigation.title"
                         :icon="navigation.icon"
                         :drop-options="navigation.options"
-                        :drop-active-style="`ripple`"
+                        :active-style="`clear-fluid`"
+                        :drop-active-style="`clear-fluid`"
                     />
                 </span>
             </div>
@@ -337,7 +353,7 @@ const navigationHeaderSize = computed(() => {
     return 'md';
 });
 const subNavigationHeaderSize = computed(() => {
-    return 'sm';
+    return 'md';
 });
 
 const mainNavigationHeightClass = computed(() => {
@@ -357,7 +373,7 @@ const subNavigationHeightClass = computed(() => {
         'sm': 'h-7',
         'md': 'h-8',
         'lg': 'h-11'
-    }['xs'];
+    }['sm'];
 });
 
 const mainNavigationFontClass = computed(() => {

@@ -101,7 +101,7 @@ export const useThemeStore = defineStore('theme', () => {
 
             'text': '#c7c7c7',
             'subtitle': '#c7c7c7',
-            'text-invert': '#464646',
+            'text-invert': '#c7c7c7',
             'text-secondary': '#7a7a7a',
         },
         'default-blue': {
@@ -123,7 +123,7 @@ export const useThemeStore = defineStore('theme', () => {
 
             'text': '#2d3656',
             'subtitle': '#797e8a',
-            'text-invert': '#dbe8ee',
+            'text-invert': '#ffffff',
             'text-secondary': '#99aed0',
         },
         'light-green': {

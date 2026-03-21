@@ -3,26 +3,28 @@
         ref="landingNavigation"
         class="primary-navigation-parent z-40 fixed">
         <div class="w-full font-business flex justify-center">
-            <div class="max-w-screen-2xl w-full flex justify-start lg:justify-around h-10">
+            <div class="max-w-screen-2xl w-full flex gap-1 justify-start lg:justify-around h-11">
                 <div class="flex">
                     <NavDrop
                         navigation-mode
                         class="lg:hidden"
                         :size="navigationHeaderSize"
                         :title="'Menu'"
+                        :active-style="`clear-fluid`"
+                        :drop-active-style="`clear-fluid`"
                         :drop-options="navigationLinks" />
                 </div>
 
                 <div class="flex">
                     <!-- Navigation Links -->
-                    <div class="hidden lg:flex">
-                        <span class="flex"  v-for="navigation in navigationLinks" :key="navigation.key">
+                    <div class="hidden lg:flex gap-1">
+                        <span class="flex" v-for="navigation in navigationLinks" :key="navigation.key">
                             <NavLink
                                 v-if="navigation.type == 'link'"
                                 :size="navigationHeaderSize"
                                 :to="navigation.to"
                                 :icon="navigation.icon"
-                                :active-style="`ripple`"
+                                :active-style="`clear-fluid`"
                                 :active="isRouteActive(navigation.route_active)">
                                 {{navigation.title}}
                             </NavLink>
@@ -33,6 +35,8 @@
                                 class="w-full h-full flex">
                                 <NavLink
                                     :icon="navigation.icon"
+                                    :active-style="`clear-fluid`"
+                                    :drop-active-style="`clear-fluid`"
                                     :size="navigationHeaderSize">
                                     {{navigation.title}}
                                 </NavLink>
@@ -44,12 +48,14 @@
                                 :size="navigationHeaderSize"
                                 :title="navigation.title"
                                 :icon="navigation.icon"
+                                :active-style="`clear-fluid`"
+                                :drop-active-style="`clear-fluid`"
                                 :drop-options="navigation.options"
                             />
                         </span>
                     </div>
                 </div>
-                <div class="flex">
+                <div class="flex gap-1">
                     <ThemeSelection :size="navigationHeaderSize" :selected-summary-prefix="''" :font-family-class="'font-business'" />
                     <component
                         :is="navDrop"
@@ -64,6 +70,8 @@
                         navigation-mode
                         :size="navigationHeaderSize"
                         :title="'Account'"
+                        :active-style="`clear-fluid`"
+                        :drop-active-style="`clear-fluid`"
                         :drop-options="navigationAccountLinks"
                     />
                 </div>

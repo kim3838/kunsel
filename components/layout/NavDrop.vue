@@ -6,9 +6,9 @@
         class="cursor-pointer focus:outline-none">
         <slot :slot="{headerFontClass: headerFontClass, dropDownIconClass: dropDownIconClass, title: title, parentIcon: parentIcon}">
             <div
-                :style="{'text-shadow': navigationTextShadow, 'font-family': fontFamily}"
-                :class="[classes, parent ? 'rounded-[2px]' : '']"
-                class="nav-drop flex items-center h-full px-2 py-1 focus:outline-none">
+                :style="{'font-family': fontFamily}"
+                :class="[classes, activeClass, parent ? 'rounded-[2px]' : '']"
+                class="flex items-center h-full px-2 py-1 focus:outline-none">
                 <Icon v-if="icon" :class="[iconClass]" :name="icon" class="mr-1" />
                 <span :class="[headerFontClass]">{{title}}</span>
                 <Icon :class="[dropDownIconClass]" :name="navDropIcon"/>
@@ -25,12 +25,11 @@
                 <div v-if="true" class="absolute border-solid" :style="[optionsArrowStyle]"></div>
                 <div
                     v-for="(dropOption, dropOptionIndex) in dropOptions" :key="dropOption.title"
-                    :style="{'text-shadow': navigationTextShadow,}"
                     :class="[
                         dropOptionIndex == (dropOptions.length - 1) ? 'no-border-bottom' : `${divider ? 'scaffold' : 'transparent'}-border-bottom`,
-                        _includes(['anchor-link', 'action'], dropOption.type) ? 'nav-drop-link' : ''
+
                     ]"
-                    class="cursor-pointer flex items-center">
+                    class="cursor-pointer flex items-center"><!-- _includes(['anchor-link', 'action'], dropOption.type) ? 'nav-drop-link' : '' -->
 
                     <LinkWrapper
                         v-if="dropOption.type === 'link'"
@@ -48,15 +47,15 @@
                         class="w-full h-full flex">
                         <NuxtLink
                             class="px-2 py-1 w-full inline-flex items-center focus:outline-none"
-                            :class="[childNonDropFontClass]">
+                            :class="[childNonDropClasses, childNonDropFontClass]">
                             <Icon v-if="dropOption.icon" :class="[dropDownIconClass]" :name="dropOption.icon" class="mr-1" /><span>{{dropOption.title}}</span>
                         </NuxtLink>
                     </a>
 
                     <div v-if="dropOption.type === 'action'"
                          @click="typeof dropOption.callback == 'function' ? dropOption.callback() : false;"
-                         class="px-2 py-1 w-full inline-flex items-center focus:outline-none"
-                         :class="[childNonDropFontClass]">
+                         class="relative px-2 py-1 w-full inline-flex items-center focus:outline-none"
+                         :class="[childNonDropClasses, childNonDropFontClass]">
                         <Icon v-if="dropOption.icon" :name="dropOption.icon" :class="[dropDownIconClass]" class="mr-1" /><span>{{dropOption.title}}</span>
                     </div>
 
@@ -74,6 +73,7 @@
                         :icon="dropOption.icon"
                         :drop-options="dropOption.options"
                         :proxy-active="isRoutePathActive(dropOption.path_active)"
+                        :active-style="activeStyle"
                         :drop-active-style="dropActiveStyle"
                     />
                 </div>
@@ -93,11 +93,35 @@ const {
 } = useLayout();
 const {
     hexAlpha,
+    primary: primaryColor,
     accent: accentColor,
     lining: liningColor,
     neutral: neutralColor,
+    textInvert: textInvertColor,
     tint: tintColor
 } = storeToRefs($themeStore);
+
+const primaryColor70 = computed(() => {
+    return primaryColor.value + hexAlpha.value['70'];
+});
+const primaryColor50 = computed(() => {
+    return primaryColor.value + hexAlpha.value['50'];
+});
+const primaryColor40 = computed(() => {
+    return primaryColor.value + hexAlpha.value['40'];
+});
+const accentColor70 = computed(() => {
+    return accentColor.value + hexAlpha.value['70'];
+});
+const primaryColor60 = computed(() => {
+    return primaryColor.value + hexAlpha.value['60'];
+});
+const accentColor60 = computed(() => {
+    return accentColor.value + hexAlpha.value['60'];
+});
+const accentColor40 = computed(() => {
+    return accentColor.value + hexAlpha.value['40'];
+});
 
 const props = defineProps({
     dropOptions: {
@@ -227,9 +251,7 @@ const navDropIcon = computed(()=>{
         return props.parent ? 'ic:baseline-arrow-drop-down' : 'ic:baseline-arrow-right';
     }
 });
-const accentColor70 = computed(() => {
-    return accentColor.value + hexAlpha.value['70'];
-});
+
 const navigationLinkColor = computed(()=>{
     if(layoutNavigationMode.value == 'clear-with-background'){
         return '#ffffff';
@@ -365,15 +387,35 @@ watch(navigationFocused, value => {
 
 const classes = computed(() => {
 
-    if(props.proxyActive){
-        return `nav-drop-active-dashed`;
+    return props.navigationMode ? `navigation-mode-nav-drop` : `nav-drop`;
+});
+
+const activeClass = computed(() => {
+
+    let classes = ``;
+
+    if(props.navigationMode){
+
+        if(props.proxyActive){
+            return `navigation-mode-nav-drop-active-${props.activeStyle}`;
+        }
+
+        if(activeComputed.value){
+            return `navigation-mode-nav-drop-active-${props.activeStyle}`;
+        }
+
+    } else {
+
+        if(props.proxyActive){
+            return `nav-drop-active-dashed`;
+        }
+
+        if(activeComputed.value){
+            return `nav-drop-active-${props.activeStyle}`;
+        }
     }
 
-    if(activeComputed.value){
-        return `nav-drop-active-${props.activeStyle}`;
-    }
-
-    return ``;
+    return classes;
 });
 
 const headerFontClass = computed(() => {
@@ -394,6 +436,17 @@ const headerFontClass = computed(() => {
         }[props.size];
     }
 });
+
+const childNonDropClasses = computed(() => {
+    let classes = '';
+
+    classes = classes + {
+        'bg': 'child-non-drop-bg',
+        'clear-fluid': 'child-non-drop-clear-fluid',
+    }[props.activeStyle];
+
+    return classes
+})
 const childNonDropFontClass = computed(() => {
     if(props.navigationMode){
         return {
@@ -524,6 +577,10 @@ const dropDownIconClass = computed(() => {
 });
 </script>
 <style scoped>
+.nav-drop{
+    color: v-bind(navigationLinkColor);
+}
+
 .nav-drop-active-bg{
     background-color: v-bind(accentColor70);
 }
@@ -537,11 +594,9 @@ const dropDownIconClass = computed(() => {
     right:0;
     border-top: 1px dashed v-bind(liningColor);
 }
-
 .nav-drop-active-dashed{
     position: relative;
 }
-
 .nav-drop-active-dashed::after{
     content: '';
     position: absolute;
@@ -552,27 +607,151 @@ const dropDownIconClass = computed(() => {
     border-bottom: 1px dashed v-bind(liningColor);
 }
 
-.nav-drop{
+.nav-drop-active-clear-fluid{
+    position: relative;
+    z-index: 1;
+    color: v-bind(textInvertColor) !important;
+    text-shadow: rgba(10, 10, 10, 0.9) 0 1px 2px;
+    background: linear-gradient(to right, v-bind(primaryColor70) 20%, v-bind(accentColor) 60%, v-bind(accentColor) 75%, v-bind(primaryColor60) 100%);
+    overflow: hidden;
+}
+.nav-drop-active-clear-fluid::before{
+    z-index: -1;
+    content: '';
+    position: absolute;
+    top:0;
+    bottom: 0;
+    left:-35%;
+    right:0;
+    width: 230%;
+    background-image: url('/images/deco/fluid-gold-top.webp');
+    filter: grayscale(100%);
+    background-size: cover;
+    opacity: 0.2;
+    transition: all 200ms cubic-bezier(0.645, 0.045, 0.355, 1);
+}
+
+
+
+.navigation-mode-nav-drop{
     color: v-bind(navigationLinkColor);
 }
-.nav-drop:hover{
-    background-color: v-bind(accentColor70);
+
+.navigation-mode-nav-drop:hover{
+    position: relative;
+    z-index: 1;
+    color: v-bind(textInvertColor) !important;
+    text-shadow: rgba(10, 10, 10, 0.9) 0 1px 2px;
+    background: linear-gradient(to right, v-bind(primaryColor70) 20%, v-bind(accentColor) 60%, v-bind(accentColor) 75%, v-bind(primaryColor60) 100%);
+    overflow: hidden;
+}
+.navigation-mode-nav-drop:hover::before{
+    z-index: -1;
+    content: '';
+    position: absolute;
+    top:0;
+    bottom: 0;
+    left:-35%;
+    right:0;
+    width: 230%;
+    background-image: url('/images/deco/fluid-gold-top.webp');
+    filter: grayscale(100%);
+    background-size: cover;
+    opacity: 0.2;
+    transition: all 200ms cubic-bezier(0.645, 0.045, 0.355, 1);
+}
+
+.navigation-mode-nav-drop-active-clear-fluid{
+    position: relative;
+    z-index: 1;
+    color: v-bind(textInvertColor) !important;
+    text-shadow: rgba(10, 10, 10, 0.9) 0 1px 2px;
+    background: linear-gradient(to right, v-bind(primaryColor70) 20%, v-bind(accentColor) 60%, v-bind(accentColor) 75%, v-bind(primaryColor60) 100%);
+    overflow: hidden;
+}
+.navigation-mode-nav-drop-active-clear-fluid::before{
+    z-index: -1;
+    content: '';
+    position: absolute;
+    top:0;
+    bottom: 0;
+    left:-35%;
+    right:0;
+    width: 230%;
+    background-image: url('/images/deco/fluid-gold-top.webp');
+    filter: grayscale(100%);
+    background-size: cover;
+    opacity: 0.2;
+    transition: all 200ms cubic-bezier(0.645, 0.045, 0.355, 1);
 }
 
 .nav-drop-options-parent{
     position: absolute;
     border: 1px solid v-bind(navDropOptionsParentBorderColor);
 
-
     background-color: v-bind(navDropOptionsParentBackgroundColor);
+}
+
+.nav-drop-active-clear-fluid{
+    position: relative;
+    z-index: 1;
+    color: v-bind(textInvertColor) !important;
+    text-shadow: rgba(0, 0, 0, 1) 0 1px 2px;
+    background: linear-gradient(to right, v-bind(primaryColor70) 20%, v-bind(accentColor) 60%, v-bind(accentColor) 75%, v-bind(primaryColor60) 100%);
+    overflow: hidden;
+}
+.nav-drop-active-clear-fluid::before{
+    z-index: -1;
+    content: '';
+    position: absolute;
+    top:0;
+    bottom: 0;
+    left:-35%;
+    right:0;
+    width: 230%;
+    background-image: url('/images/deco/fluid-gold-top.webp');
+    filter: grayscale(100%);
+    background-size: cover;
+    opacity: 0.2;
+    transition: all 200ms cubic-bezier(0.645, 0.045, 0.355, 1);
 }
 
 .nav-drop-link{
     color: v-bind(navigationLinkColor);
 }
 
-.nav-drop-link:hover{
+.child-non-drop-bg{
+    color: v-bind(navigationLinkColor);
+}
+.child-non-drop-bg:hover{
     background-color: v-bind(accentColor70);
+}
+
+.child-non-drop-clear-fluid{
+    color: v-bind(navigationLinkColor);
+}
+.child-non-drop-clear-fluid:hover{
+    position: relative;
+    z-index: 1;
+    color: v-bind(textInvertColor) !important;
+    text-shadow: rgba(0, 0, 0, 1) 0 1px 2px;
+    background: linear-gradient(to right, v-bind(primaryColor70) 20%, v-bind(accentColor) 60%, v-bind(accentColor) 75%, v-bind(primaryColor60) 100%);
+    overflow: hidden;
+}
+.child-non-drop-clear-fluid:hover::before{
+    z-index: -1;
+    content: '';
+    position: absolute;
+    top:0;
+    bottom: 0;
+    left:-35%;
+    right:0;
+    width: 230%;
+    background-image: url('/images/deco/fluid-gold-top.webp');
+    filter: grayscale(100%);
+    background-size: cover;
+    opacity: 0.2;
+    transition: all 200ms cubic-bezier(0.645, 0.045, 0.355, 1);
 }
 
 .transparent-border-bottom{

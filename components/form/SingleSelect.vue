@@ -138,6 +138,10 @@ import type {
 const {$themeStore} = useNuxtApp();
 
 const {
+    navigationBackground,
+} = useLayout();
+
+const {
     hexAlpha,
     type: themeType,
     primary: primaryColor,
@@ -156,10 +160,24 @@ const disabledBackgroundColor = computed(() => {
         : (textInvertColor.value + hexAlpha.value['40']);
 });
 
+const primaryColor70 = computed(() => {
+    return primaryColor.value + hexAlpha.value['70'];
+});
+const primaryColor60 = computed(() => {
+    return primaryColor.value + hexAlpha.value['60'];
+});
+const primaryColor50 = computed(() => {
+    return primaryColor.value + hexAlpha.value['50'];
+});
+const primaryColor40 = computed(() => {
+    return primaryColor.value + hexAlpha.value['40'];
+});
 const accentColor70 = computed(() => {
     return accentColor.value + hexAlpha.value['70'];
 });
-
+const accentColor60 = computed(() => {
+    return accentColor.value + hexAlpha.value['60'];
+});
 const accentColor40 = computed(() => {
     return accentColor.value + hexAlpha.value['40'];
 });
@@ -569,7 +587,16 @@ const selectionWidthComputed = computed(()=>{
 });
 
 const backgroundClass = computed(() => {
-    return props.disabled && !props.navigationMode ? 'disabled-background' : 'background';
+
+    let background = 'background';
+
+    if(props.navigationMode){
+        return navigationBackground.value;
+    }
+
+    background = props.disabled && !props.navigationMode ? 'disabled-background' : 'background';
+
+    return background;
 });
 
 function keepFocusAlive(){
@@ -747,7 +774,27 @@ watch(() => props.options.selected, newValue => {
 </script>
 <style scoped>
 .navigation-mode:hover{
-    background-color: v-bind(accentColor70);
+    position: relative;
+    z-index: 1;
+    color: v-bind(textInvertColor) !important;
+    text-shadow: rgba(0, 0, 0, 1) 0 1px 2px;
+    background: linear-gradient(to right, v-bind(primaryColor70) 20%, v-bind(accentColor) 60%, v-bind(accentColor) 75%, v-bind(primaryColor60) 100%);
+    overflow: hidden;
+}
+.navigation-mode:hover::before{
+    z-index: -1;
+    content: '';
+    position: absolute;
+    top:0;
+    bottom: 0;
+    left:-35%;
+    right:0;
+    width: 230%;
+    background-image: url('/images/deco/fluid-gold-top.webp');
+    filter: grayscale(100%);
+    background-size: cover;
+    opacity: 0.2;
+    transition: all 200ms cubic-bezier(0.645, 0.045, 0.355, 1);
 }
 
 .background {

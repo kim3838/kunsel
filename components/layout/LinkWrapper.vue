@@ -1,7 +1,7 @@
 <template>
     <NuxtLink
-        :style="{'text-shadow': navigationTextShadow, 'font-family': fontFamily}"
-        class="relative" :class="[classes, 'nav-link']">
+        :style="{'font-family': fontFamily}"
+        class="relative" :class="[classes]">
         <slot></slot>
     </NuxtLink>
 </template>
@@ -26,8 +26,26 @@ const primaryColor90 = computed(() => {
 const primaryColor80 = computed(() => {
     return primaryColor.value + hexAlpha.value['80'];
 });
+const primaryColor70 = computed(() => {
+    return primaryColor.value + hexAlpha.value['70'];
+});
+const primaryColor60 = computed(() => {
+    return primaryColor.value + hexAlpha.value['60'];
+});
+const primaryColor50 = computed(() => {
+    return primaryColor.value + hexAlpha.value['50'];
+});
+const primaryColor40 = computed(() => {
+    return primaryColor.value + hexAlpha.value['40'];
+});
 const accentColor70 = computed(() => {
     return accentColor.value + hexAlpha.value['70'];
+});
+const accentColor60 = computed(() => {
+    return accentColor.value + hexAlpha.value['60'];
+});
+const accentColor40 = computed(() => {
+    return accentColor.value + hexAlpha.value['40'];
 });
 
 const props = defineProps({
@@ -60,9 +78,18 @@ const navigationTextShadow = computed(()=>{
     return 'none';
 });
 const classes = computed(() => {
-    return props.active
-        ? `nav-active-${props.activeStyle}`
-        : ''
+    let classes = '';
+
+    classes = classes + {
+        'bg': 'nav-link-bg',
+        'clear-fluid': 'nav-link-clear-fluid',
+    }[props.activeStyle];
+
+    if(props.active){
+        classes = classes + ` nav-active-${props.activeStyle}`;
+    }
+
+    return classes
 });
 
 </script>
@@ -91,11 +118,63 @@ const classes = computed(() => {
     transition: all 200ms cubic-bezier(0.645, 0.045, 0.355, 1);
 }
 
-.nav-link{
+.nav-active-clear-fluid{
+    position: relative;
+    z-index: 1;
+    color: v-bind(textInvertColor) !important;
+    text-shadow: rgba(0, 0, 0, 1) 0 1px 2px;
+    background: linear-gradient(to right, v-bind(primaryColor70) 20%, v-bind(accentColor) 60%, v-bind(accentColor) 75%, v-bind(primaryColor60) 100%);
+    overflow: hidden;
+}
+.nav-active-clear-fluid::before{
+    z-index: -1;
+    content: '';
+    position: absolute;
+    top:0;
+    bottom: 0;
+    left:-35%;
+    right:0;
+    width: 230%;
+    background-image: url('/images/deco/fluid-gold-top.webp');
+    filter: grayscale(100%);
+    background-size: cover;
+    opacity: 0.2;
+    transition: all 200ms cubic-bezier(0.645, 0.045, 0.355, 1);
+}
+
+.nav-link-bg{
     color: v-bind(navigationLinkColor);
 }
 
-.nav-link:hover{
+.nav-link-bg:hover{
     background-color: v-bind(accentColor70);
+}
+
+.nav-link-clear-fluid{
+    color: v-bind(navigationLinkColor);
+}
+
+.nav-link-clear-fluid:hover{
+    position: relative;
+    z-index: 1;
+    color: v-bind(textInvertColor) !important;
+    text-shadow: rgba(0, 0, 0, 1) 0 1px 2px;
+    background: linear-gradient(to right, v-bind(primaryColor70) 20%, v-bind(accentColor) 60%, v-bind(accentColor) 75%, v-bind(primaryColor60) 100%);
+    overflow: hidden;
+}
+.nav-link-clear-fluid:hover::before{
+    z-index: -1;
+    content: '';
+    position: absolute;
+    top:0;
+    bottom: 0;
+    left:-35%;
+    right:0;
+    width: 230%;
+    background-image: url('/images/deco/fluid-gold-top.webp');
+    filter: grayscale(100%);
+    background-size: cover;
+    opacity: 0.2;
+    transition: all 200ms cubic-bezier(0.645, 0.045, 0.355, 1);
 }
 </style>
