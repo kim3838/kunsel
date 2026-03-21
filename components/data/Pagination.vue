@@ -4,7 +4,7 @@
             type="button"
             :disabled="pagination.current_page === 1 || pending || pagination.total === 0"
             @click="firstPageHandler()"
-            :variant="'flat'"
+            :variant="'outline'"
             :size="buttonSize"
             :icon="'ic:sharp-first-page'"
             :label="firstPage.label" />
@@ -12,7 +12,7 @@
             type="button"
             :disabled="pagination.current_page === 1 || pending || pagination.total === 0"
             @click="previousPageHandler()"
-            :variant="'flat'"
+            :variant="'outline'"
             :size="buttonSize"
             :icon="'ic:baseline-arrow-left'"
             :label="previousPage.label" />
@@ -20,7 +20,7 @@
             type="button"
             :disabled="pagination.current_page === pagination.total_pages || pending || pagination.total === 0"
             @click="nextPageHandler()"
-            :variant="'flat'"
+            :variant="'outline'"
             :size="buttonSize"
             :icon="'ic:baseline-arrow-right'"
             :label="nextPage.label" />
@@ -28,7 +28,7 @@
             type="button"
             :disabled="pagination.current_page === pagination.total_pages || pending || pagination.total === 0"
             @click="lastPageHandler()"
-            :variant="'flat'"
+            :variant="'outline'"
             :size="buttonSize"
             :icon="'ic:sharp-last-page'"
             :label="lastPage.label" />
