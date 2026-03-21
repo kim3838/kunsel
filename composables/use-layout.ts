@@ -773,17 +773,17 @@ export const useLayout = () => {
         let size = 'sm'
 
         if (screenWidth.value >= screenWidthBreakpoint['2xl']) {//3xl
-            size = 'sm';
+            size = 'md';
         } else if (screenWidth.value >= screenWidthBreakpoint['xl'] && screenWidth.value < screenWidthBreakpoint['2xl']) {//2xl
-            size = 'sm';
+            size = 'md';
         } else if (screenWidth.value >= screenWidthBreakpoint['lg'] && screenWidth.value < screenWidthBreakpoint['xl']) {//xl
-            size = 'sm';
+            size = 'md';
         } else if (screenWidth.value >= screenWidthBreakpoint['md'] && screenWidth.value < screenWidthBreakpoint['lg']) {//lg
-            size = 'sm';
+            size = 'md';
         } else if (screenWidth.value >= screenWidthBreakpoint['sm'] && screenWidth.value < screenWidthBreakpoint['md']) {//md
-            size = 'sm';
+            size = 'md';
         } else if (screenWidth.value < screenWidthBreakpoint['sm']) {//sm
-            size = 'sm';
+            size = 'md';
         }
 
         return size;

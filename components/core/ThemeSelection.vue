@@ -8,7 +8,7 @@
         disable-header-border
         navigation-mode
         :summary-prefix="selectedSummaryPrefix"
-        :icon="`duo-icons:palette`"
+        :icon="``"
         :size="size"
         :label="'Select Theme'"
         :options="themeOption"
