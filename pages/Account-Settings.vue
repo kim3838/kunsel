@@ -43,8 +43,8 @@
                         <form @submit.prevent="executeUpdatePassword">
                             <p class="text-base">Ensure your account is using a long, random password to stay secure.</p>
 
-                            <div class="mt-4 grid gap-2 grid-cols-1 sm:grid-cols-2">
-                                <div class="col-span-1 sm:col-span-2">
+                            <div class="mt-4 grid gap-2 grid-cols-1 sm:grid-cols-3">
+                                <div>
                                     <InputLabel :size="'sm'" value="Current Password" />
                                     <InputWithIcon :size="'md'" class="w-full" :disabled="updatePasswordPending" :type="'password'" v-model="updatePassword.currentPassword" required />
                                 </div>
