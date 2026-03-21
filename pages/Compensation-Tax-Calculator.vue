@@ -20,13 +20,13 @@
                                 <div class="h-full w-[20%]">
                                     <div
                                         class="h-full w-full bg-cover bg-center bg-no-repeat grayscale opacity-50"
-                                        :style="{'background':'url(/images/deco/fluid-gold-top.jpg)'}"
+                                        :style="{'background':'url(/images/deco/fluid-gold-top.webp)'}"
                                     />
                                 </div>
                                 <div class="h-full w-[80%]">
                                     <div
                                         class="h-full w-full bg-cover bg-center bg-no-repeat grayscale opacity-15"
-                                        :style="{'background':'url(/images/deco/fluid-gold-top.jpg)'}"
+                                        :style="{'background':'url(/images/deco/fluid-gold-top.webp)'}"
                                     />
                                 </div>
                             </template>
