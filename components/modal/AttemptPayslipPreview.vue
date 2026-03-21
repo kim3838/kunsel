@@ -11,7 +11,7 @@
                 <div class="space-y-2">
 
                     <div v-if="!attemptPayslipPreviewPending && attemptPayslipPreviewSuccessful" class="text-base">
-                        Link is only available for 10 seconds.
+                        Link is only available for 30 seconds.
                     </div>
 
                     <div class="flex justify-center">
