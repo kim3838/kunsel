@@ -319,9 +319,14 @@
                                 </div>
                             </template>
                             <template v-slot:cell.actions="{cell,slot}">
-                                <div v-if="cell.isSelectable" class="text-base h-[32px] px-2 gap-0.5 flex items-center justify-start cursor-pointer accent-hover hover:underline" @click="stagePayrollPayload(cell)">
-                                    <Icon class="h-5 w-5" :name="cell.payroll ? 'mdi:repeat' : ''"/>
-                                    <span class="font-data font-medium">{{cell.payroll ? 'Regenerate payroll' : 'Run payroll'}}</span>
+                                <div class="mx-0.5 space-x-0.5 flex items-center">
+                                    <Button
+                                        v-if="cell.isSelectable"
+                                        @click="stagePayrollPayload(cell)"
+                                        :size="slot.buttonSize"
+                                        :variant="'flat'"
+                                        :icon="cell.payroll ? 'mdi:repeat' : ''"
+                                        :label="cell.payroll ? 'Regenerate payroll' : 'Run payroll'" />
                                 </div>
                             </template>
                             <template v-slot:cell.payroll_status="{cell,slot}">
@@ -355,9 +360,14 @@
                                 </div>
                             </template>
                             <template v-slot:cell.actions="{cell,slot}">
-                                <div class="text-base h-[32px] px-2 gap-0.5 flex items-center justify-start cursor-pointer accent-hover hover:underline" @click="stagePayrollPayload(cell)">
-                                    <Icon class="h-5 w-5" :name="cell.payroll ? 'mdi:repeat' : ''"/>
-                                    <span class="font-data font-medium">{{cell.payroll ? 'Regenerate payroll' : 'Run payroll'}}</span>
+                                <div class="mx-0.5 space-x-0.5 flex items-center">
+                                    <Button
+                                        v-if="cell.isSelectable"
+                                        @click="stagePayrollPayload(cell)"
+                                        :size="slot.buttonSize"
+                                        :variant="'flat'"
+                                        :icon="cell.payroll ? 'mdi:repeat' : ''"
+                                        :label="cell.payroll ? 'Regenerate payroll' : 'Run payroll'" />
                                 </div>
                             </template>
                             <template v-slot:cell.payroll_status="{cell,slot}">
@@ -570,7 +580,10 @@ const generatingPayroll = ref(false);
 const remarksReference = useTemplateRef('remarksReference');
 const stagedPayrollPayload = ref<Partial<PayrollInquiryT>>({});
 
-const stagePayrollPayload = async (payrollInquiry: PayrollInquiryT) => {
+const stagePayrollPayload = async (tableRow: TableRowT) => {
+
+    let payrollInquiry = tableRow as PayrollInquiryT;
+
     stagedPayrollPayload.value = {...payrollInquiry};
 
     generatingPayroll.value = true;
