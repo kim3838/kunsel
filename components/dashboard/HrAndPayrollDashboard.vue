@@ -149,7 +149,7 @@ const totalPendingRequestsMap = computed(() => {
             count: totalPendingLeave.value,
         },
         {
-            label: 'Payroll workflow',
+            label: 'Payroll workflow in progress',
             count: totalPendingPayroll.value,
         }
     ];
