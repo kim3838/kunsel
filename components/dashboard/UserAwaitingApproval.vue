@@ -108,6 +108,8 @@ watch(updatedAssociatedCompanyFlag, (newValue) => {
     }
 });
 
+const emit = defineEmits(['workflowUpdated']);
+
 const approvalStatesSupHeaders = reactive<TableSupHeaderT[]>([
     {text: ''},
 
@@ -301,6 +303,7 @@ const applyApprovalWorkFlowFromViewable = (action: number, preSelectedApprovalSt
 const requestableWorkFlowResolved = () => {
 
     listApprovalStates();
+    emit('workflowUpdated');
 }
 </script>
 
