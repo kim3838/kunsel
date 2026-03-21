@@ -286,6 +286,8 @@
                                     :title="'Menu'"
                                     :drop-align="'top'"
                                     :drop-justify="'right'"
+                                    :active-style="`clear-fluid`"
+                                    :drop-active-style="`clear-fluid`"
                                     :drop-options="[
                                         {type: 'link', icon: 'ix:open-external', title: 'Details',to: `/hr-payroll/workforce/employees/${cell.ulid}`},
                                         {type: 'action', icon: 'ix:open-external', title: 'Employment Profiles',callback: () => {showEmploymentProfilesModal(cell);}},

@@ -245,6 +245,8 @@
                                     :title="'Menu'"
                                     :drop-align="'top'"
                                     :drop-justify="'right'"
+                                    :active-style="`clear-fluid`"
+                                    :drop-active-style="`clear-fluid`"
                                     :drop-options="[
                                         {type: 'link', icon: 'ix:open-external', title: 'Details',to: `/hr-payroll/workforce/attendance/${cell.ulid}`},
                                         {type: 'action', icon: 'mdi:edit', title: 'Edit Attendance',callback: () => {edit(cell);}},

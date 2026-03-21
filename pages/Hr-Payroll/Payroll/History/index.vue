@@ -192,6 +192,8 @@
                                     :title="'Menu'"
                                     :drop-align="'top'"
                                     :drop-justify="'right'"
+                                    :active-style="`clear-fluid`"
+                                    :drop-active-style="`clear-fluid`"
                                     :drop-options="[
                                         {type: 'link', icon: 'ix:open-external', title: 'Salary statements', to: `/hr-payroll/payroll/history/${cell.ulid}`},
                                         ...(cell.status.value == PAYROLL_STATUS.DRAFT ? [
