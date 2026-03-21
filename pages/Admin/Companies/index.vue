@@ -50,6 +50,8 @@
                                     :title="'Menu'"
                                     :drop-align="'top'"
                                     :drop-justify="'right'"
+                                    :active-style="`clear-fluid`"
+                                    :drop-active-style="`clear-fluid`"
                                     :drop-options="[
                                         {type: 'link',icon: 'mdi:pen',title: 'Edit',to: `/admin/companies/${cell.ulid}`},
                                         {type: 'link',icon: 'ri:formula',title: 'Formulas',to: `/admin/company-formulas/${cell.ulid}`},
