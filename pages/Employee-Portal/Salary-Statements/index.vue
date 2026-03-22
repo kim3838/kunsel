@@ -104,6 +104,8 @@
                                     :title="'Menu'"
                                     :drop-align="'top'"
                                     :drop-justify="'right'"
+                                    :active-style="`clear-fluid`"
+                                    :drop-active-style="`clear-fluid`"
                                     :drop-options="[
                                         {type: 'link', icon: 'gg:row-first', title: 'Statement breakdown', to: `/employee-portal/salary-statements/${cell.ulid}`},
                                     ]">
