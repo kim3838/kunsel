@@ -95,7 +95,7 @@
 
                     <div class="flex flex-row flex-wrap gap-2 items-center min-h-8">
                         <Button class="w-min" ref="submitButton" type="submit" :disabled="disableActions" :size="'md'" :icon="disableActions ? 'eos-icons:loading' : 'mdi:data'" :label="disableActions ? 'Loading' : 'Load'"></Button>
-                        <Button v-if="salaryStatements.successful" class="w-min" type="button" :disabled="disableActions" :size="'md'" :variant="'outline'" :icon="'ri:file-download-line'" @click="exportCsv" :override="{font_family_class: 'font-[Prociono]'}" :label="'Export .csv'"></Button>
+                        <Button v-if="salaryStatements.successful" class="w-min" type="button" :disabled="disableActions" :size="'md'" :variant="'flat'" :icon="'ri:file-download-line'" @click="exportCsv" :override="{font_family_class: 'font-[Prociono]'}" :label="'Export .csv'"></Button>
                         <div class="h-8 flex flex-row items-center scaffold-border px-2">
                             <label class="flex items-center">
                                 <Checkbox

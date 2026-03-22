@@ -32,7 +32,7 @@
                                 <div class="grow">
                                     <Button
                                         class="w-min"
-                                        :variant="'outline'"
+                                        :variant="'flat'"
                                         ref="submitButton"
                                         type="submit"
                                         :disabled="disableActions"

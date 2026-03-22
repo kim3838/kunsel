@@ -135,7 +135,7 @@ const dropDownIconClass = computed(() => {
     position: relative;
     z-index: 1;
     color: v-bind(textInvertColor) !important;
-    text-shadow: rgba(0, 0, 0, 1) 0 1px 2px;
+    @extend .text-shadow;
     background: v-bind(activeClearFluidBackground);
     overflow: hidden;
 }
@@ -147,7 +147,7 @@ const dropDownIconClass = computed(() => {
     position: relative;
     z-index: 1;
     color: v-bind(textInvertColor) !important;
-    text-shadow: rgba(0, 0, 0, 1) 0 1px 2px;
+    @extend .text-shadow;
     background: v-bind(activeClearFluidBackground);
     overflow: hidden;;
     @include fluid-gold-before();

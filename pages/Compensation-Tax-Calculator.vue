@@ -61,7 +61,7 @@
                                                 <Button
                                                     :justify-content="'center'"
                                                     :disabled="calculateTaxPending"
-                                                    :variant="'outline'"
+                                                    :variant="'flat'"
                                                     :size="'md'"
                                                     :label="calculateTaxPending ? 'Please wait...' : 'Calculate Tax'"></Button>
                                             </div>

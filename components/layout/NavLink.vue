@@ -103,7 +103,7 @@ const iconClass = computed(() => {
     position: relative;
     z-index: 1;
     color: v-bind(textInvertColor) !important;
-    text-shadow: rgba(0, 0, 0, 1) 0 1px 2px;
+    @extend .text-shadow;
     background: v-bind(activeClearFluidBackground);
     overflow: hidden;
 }
@@ -115,7 +115,7 @@ const iconClass = computed(() => {
 .nav-active-ripple{
     z-index: 1;
     color: v-bind(textInvertColor) !important;
-    text-shadow: rgba(0, 0, 0, 0.5) 0 1px 2px;
+    @extend .text-shadow;
     background: linear-gradient(to right, v-bind(primaryColor80) 20%, v-bind(primaryColor) 50%, v-bind(primaryColor) 60%, v-bind(primaryColor90) 100%);
     overflow: hidden;
 }
@@ -138,7 +138,7 @@ const iconClass = computed(() => {
     position: relative;
     z-index: 1;
     color: v-bind(textInvertColor) !important;
-    text-shadow: rgba(0, 0, 0, 1) 0 1px 2px;
+    @extend .text-shadow;
     background: v-bind(activeClearFluidBackground);
     overflow: hidden;
     @include fluid-gold-before();

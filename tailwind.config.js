@@ -28,8 +28,8 @@ module.exports = {
                     'Amarna',
                 ],
                 business: [
-                    'Geist',
                     'Prociono',
+                    'Geist',
                     'Noto Sans Display',
                     'Be Vietnam Pro',
                     'Reddit Sans Condensed',

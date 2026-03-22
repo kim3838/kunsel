@@ -41,7 +41,6 @@
 <script setup>
 const button = ref(null);
 const {focused: buttonFocused} = useFocus(button);
-
 const {
     appTheme,
 
@@ -57,6 +56,7 @@ const {
 
     buttonDefaultBackground,
     buttonDarkBackground,
+    activeClearFluidBackground
 } = useCosmetic();
 
 const textInvertComputed = computed(() => {
@@ -217,13 +217,21 @@ const fontClass = computed(() => {
         '2xl': `text-4xl font-medium`,
     }[props.size]
 });
+
 const variantClass = computed(() => {
-    return {
+    let variant = {
         'default': 'default-background',
         'outline': 'outlined',
         'flat': 'flat',
     }[props.variant];
+
+    if(['dark-silver', 'dark-emerald'].indexOf(appTheme.value) >= 0){
+        return 'dark-flat';
+    }
+
+    return variant;
 })
+
 const backgroundClass = computed(() => {
 
     let className = variantClass.value;
@@ -357,7 +365,7 @@ watch(buttonFocused, (focused) => {
     @include fluid-gold-hover-before-effect($left: -45%, $opacity: 0.4, $fluidGoldBeforeLeft: -10%, $fluidGoldBeforeOpacity: 0.2)
 }
 
-.flat{
+.dark-flat{
     position: relative;
     z-index: 1;
     background-color: v-bind(tintColor) !important;
@@ -365,22 +373,20 @@ watch(buttonFocused, (focused) => {
     overflow: hidden;
     @include fluid-gold-hover-before-effect($left: -45%, $opacity: 0.4, $fluidGoldBeforeLeft: -10%, $fluidGoldBeforeOpacity: 0.2)
 }
-.flat::after{
-    z-index: -1;
-    content: '';
-    position: absolute;
-    top: -25%;
-    bottom: -25%;
-    left:0;
-    right:0;
-    width: 140%;
-    background-image: url('/images/deco/ripple_texture.png'), linear-gradient(to right, transparent, v-bind(primaryColor));
-    background-size: cover;
-    opacity: 0.2;
-    transition: all 200ms linear;
+
+.flat{
+    position: relative;
+    z-index: 1;
+    background-color: v-bind(tintColor) !important;
+    color: v-bind(textColor) !important;
+    overflow: hidden;
+    @include fluid-gold-hover-before-effect($left: -45%, $opacity: 0.2, $fluidGoldBeforeLeft: -10%, $fluidGoldBeforeOpacity: 0.2)
 }
-.flat:hover::after{
-    animation: slideTransition 6s linear infinite;
-    opacity: 0.2;
+
+.flat:hover{
+    @extend .text-shadow;
+    color: v-bind(textInvertComputed) !important;
+    background: v-bind(buttonDefaultBackground);
+    @include ripple-hover-after-effect();
 }
 </style>
