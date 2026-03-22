@@ -82,26 +82,20 @@
     </div>
 </template>
 <script setup lang="ts">
-import {storeToRefs} from 'pinia';
-
-const {$themeStore} = useNuxtApp();
 const nuxtApp = useNuxtApp();
 const isRouteActive = nuxtApp.$isRouteActive as (name: string | undefined) => boolean;
 const isRoutePathActive = nuxtApp.$isRoutePathActive as (path: string | undefined) => boolean;
 const {
     navigationMode: layoutNavigationMode,
 } = useLayout();
-const {
-    hexAlpha,
-    primary: primaryColor,
-    accent: accentColor,
-    lining: liningColor,
-    neutral: neutralColor,
-    textInvert: textInvertColor,
-    tint: tintColor
-} = storeToRefs($themeStore);
 
-const {activeClearFluidBackground: activeClearFluidBackgroundComputed} = useCosmetic();
+const {
+    liningColor,
+    tintColor,
+    accentColor70,
+    textInvertColor,
+    activeClearFluidBackground
+} = useCosmetic();
 
 const props = defineProps({
     dropOptions: {
@@ -556,7 +550,7 @@ const dropDownIconClass = computed(() => {
     }[props.size];
 });
 </script>
-<style scoped>
+<style lang="scss" scoped>
 .nav-drop{
     color: v-bind(navigationLinkColor);
 }
@@ -592,52 +586,25 @@ const dropDownIconClass = computed(() => {
     z-index: 1;
     color: v-bind(textInvertColor) !important;
     text-shadow: rgba(10, 10, 10, 0.9) 0 1px 2px;
-    background: v-bind(activeClearFluidBackgroundComputed);
+    background: v-bind(activeClearFluidBackground);
     overflow: hidden;
+    @include fluid-gold-before();
+    @include ripple($opacity: 0.2, $animate: true);
 }
-.nav-drop-active-clear-fluid::before{
-    z-index: -1;
-    content: '';
-    position: absolute;
-    top:0;
-    bottom: 0;
-    left:-35%;
-    right:0;
-    width: 230%;
-    background-image: url('/images/deco/fluid-gold-top.webp');
-    filter: grayscale(100%);
-    background-size: cover;
-    opacity: 0.2;
-    transition: all 200ms cubic-bezier(0.645, 0.045, 0.355, 1);
-}
-
 .navigation-mode-nav-drop{
     position: relative;
     z-index: 1;
     color: v-bind(navigationLinkColor);
     overflow: hidden;
-}
-.navigation-mode-nav-drop::before{
-    z-index: -1;
-    content: '';
-    position: absolute;
-    top:0;
-    bottom: 0;
-    left:0;
-    right:0;
-    width: 230%;
-    background-image: url('/images/deco/fluid-gold-top.webp');
-    filter: grayscale(100%);
-    background-size: cover;
-    opacity: 0;
-    transition: all 200ms cubic-bezier(0.645, 0.045, 0.355, 1);
+    @include fluid-gold-hover-before-effect();
+    @include ripple-hover-after-effect();
 }
 .navigation-mode-nav-drop:hover{
     position: relative;
     z-index: 1;
     color: v-bind(textInvertColor) !important;
     text-shadow: rgba(10, 10, 10, 0.9) 0 1px 2px;
-    background: v-bind(activeClearFluidBackgroundComputed);
+    background: v-bind(activeClearFluidBackground);
     overflow: hidden;
 }
 .navigation-mode-nav-drop:hover::before{
@@ -650,23 +617,10 @@ const dropDownIconClass = computed(() => {
     z-index: 1;
     color: v-bind(textInvertColor) !important;
     text-shadow: rgba(10, 10, 10, 0.9) 0 1px 2px;
-    background: v-bind(activeClearFluidBackgroundComputed);
+    background: v-bind(activeClearFluidBackground);
     overflow: hidden;
-}
-.navigation-mode-nav-drop-active-clear-fluid::before{
-    z-index: -1;
-    content: '';
-    position: absolute;
-    top:0;
-    bottom: 0;
-    left:-35%;
-    right:0;
-    width: 230%;
-    background-image: url('/images/deco/fluid-gold-top.webp');
-    filter: grayscale(100%);
-    background-size: cover;
-    opacity: 0.2;
-    transition: all 200ms cubic-bezier(0.645, 0.045, 0.355, 1);
+    @include fluid-gold-before();
+    @include ripple($opacity: 0.2, $animate: true);
 }
 
 .nav-drop-options-parent{
@@ -681,23 +635,10 @@ const dropDownIconClass = computed(() => {
     z-index: 1;
     color: v-bind(textInvertColor) !important;
     text-shadow: rgba(0, 0, 0, 1) 0 1px 2px;
-    background: v-bind(activeClearFluidBackgroundComputed);
+    background: v-bind(activeClearFluidBackground);
     overflow: hidden;
-}
-.nav-drop-active-clear-fluid::before{
-    z-index: -1;
-    content: '';
-    position: absolute;
-    top:0;
-    bottom: 0;
-    left:-35%;
-    right:0;
-    width: 230%;
-    background-image: url('/images/deco/fluid-gold-top.webp');
-    filter: grayscale(100%);
-    background-size: cover;
-    opacity: 0.2;
-    transition: all 200ms cubic-bezier(0.645, 0.045, 0.355, 1);
+    @include fluid-gold-before();
+    @include ripple($opacity: 0.2, $animate: true);
 }
 
 .nav-drop-link{
@@ -716,33 +657,17 @@ const dropDownIconClass = computed(() => {
     z-index: 1;
     color: v-bind(navigationLinkColor);
     overflow: hidden;
+    @include ripple-hover-after-effect();
+    @include fluid-gold-hover-before-effect();
 }
-.child-non-drop-clear-fluid::before{
-    z-index: -1;
-    content: '';
-    position: absolute;
-    top:0;
-    bottom: 0;
-    left:0;
-    right:0;
-    width: 230%;
-    background-image: url('/images/deco/fluid-gold-top.webp');
-    filter: grayscale(100%);
-    background-size: cover;
-    opacity: 0;
-    transition: all 200ms cubic-bezier(0.645, 0.045, 0.355, 1);
-}
+
 .child-non-drop-clear-fluid:hover{
     position: relative;
     z-index: 1;
     color: v-bind(textInvertColor) !important;
     text-shadow: rgba(0, 0, 0, 1) 0 1px 2px;
-    background: v-bind(activeClearFluidBackgroundComputed);
+    background: v-bind(activeClearFluidBackground);
     overflow: hidden;
-}
-.child-non-drop-clear-fluid:hover::before{
-    left:-35%;
-    opacity: 0.2;
 }
 
 .transparent-border-bottom{

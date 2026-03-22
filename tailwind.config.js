@@ -28,10 +28,9 @@ module.exports = {
                     'Amarna',
                 ],
                 business: [
+                    'Geist',
                     'Prociono',
-                    'Geist',
                     'Noto Sans Display',
-                    'Geist',
                     'Be Vietnam Pro',
                     'Reddit Sans Condensed',
                     'Gentium Plus',

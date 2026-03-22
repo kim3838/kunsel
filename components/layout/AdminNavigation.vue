@@ -200,7 +200,7 @@
         <!-- Sub Navigation -->
         <div
             v-show="subNavigationOptions.length"
-            class="px-[20px] py-2 relative w-full flex justify-center"
+            class="px-[20px] py-1 relative w-full flex justify-center"
             :class="subNavigationFontClass">
             <div
                 ref="subNavigationRef"
@@ -353,7 +353,7 @@ const navigationHeaderSize = computed(() => {
     return 'md';
 });
 const subNavigationHeaderSize = computed(() => {
-    return 'md';
+    return 'sm';
 });
 
 const mainNavigationHeightClass = computed(() => {

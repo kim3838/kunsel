@@ -10,23 +10,16 @@
 </template>
 
 <script setup>
-import {storeToRefs} from 'pinia';
-
-const {$themeStore} = useNuxtApp();
 const {
     navigationMode,
 } = useLayout();
 
 const {
     appTheme,
-    hexAlpha,
-    primary: primaryColor,
-    accent: accentColor,
-    neutral: neutralColor,
-    textInvert: textInvertColor
-} = storeToRefs($themeStore);
-
-const {activeClearFluidBackground: activeClearFluidBackgroundComputed} = useCosmetic();
+    primaryColor, primaryColor90, primaryColor80,
+    textInvertColor,
+    activeClearFluidBackground
+} = useCosmetic();
 
 const props = defineProps({
     to: {
@@ -71,36 +64,6 @@ const navigationTextShadow = computed(()=>{
 
     return 'none';
 });
-const primaryColor90 = computed(() => {
-    return primaryColor.value + hexAlpha.value['90'];
-});
-const primaryColor80 = computed(() => {
-    return primaryColor.value + hexAlpha.value['80'];
-});
-const primaryColor70 = computed(() => {
-    return primaryColor.value + hexAlpha.value['70'];
-});
-const primaryColor60 = computed(() => {
-    return primaryColor.value + hexAlpha.value['60'];
-});
-const primaryColor50 = computed(() => {
-    return primaryColor.value + hexAlpha.value['50'];
-});
-const primaryColor40 = computed(() => {
-    return primaryColor.value + hexAlpha.value['40'];
-});
-const accentColor90 = computed(() => {
-    return accentColor.value + hexAlpha.value['90'];
-});
-const accentColor70 = computed(() => {
-    return accentColor.value + hexAlpha.value['70'];
-});
-const accentColor60 = computed(() => {
-    return accentColor.value + hexAlpha.value['60'];
-});
-const accentColor40 = computed(() => {
-    return accentColor.value + hexAlpha.value['40'];
-});
 
 const classes = computed(() => {
     return props.active
@@ -127,39 +90,22 @@ const iconClass = computed(() => {
     }[props.size];
 });
 </script>
-<style scoped>
+<style lang="scss" scoped>
 .nav-link{
     position: relative;
     z-index: 1;
     color: v-bind(navigationLinkColor);
     overflow: hidden;
-}
-.nav-link::before{
-    z-index: -1;
-    content: '';
-    position: absolute;
-    top:0;
-    bottom: 0;
-    left:0;
-    right:0;
-    width: 230%;
-    background-image: url('/images/deco/fluid-gold-top.webp');
-    filter: grayscale(100%);
-    background-size: cover;
-    opacity: 0;
-    transition: all 200ms cubic-bezier(0.645, 0.045, 0.355, 1);
+    @include fluid-gold-hover-before-effect();
+    @include ripple-hover-after-effect();
 }
 .nav-link:hover{
     position: relative;
     z-index: 1;
     color: v-bind(textInvertColor) !important;
     text-shadow: rgba(0, 0, 0, 1) 0 1px 2px;
-    background: v-bind(activeClearFluidBackgroundComputed);
+    background: v-bind(activeClearFluidBackground);
     overflow: hidden;
-}
-.nav-link:hover::before{
-    left:-35%;
-    opacity: 0.2;
 }
 
 .nav-active-bg{
@@ -193,22 +139,9 @@ const iconClass = computed(() => {
     z-index: 1;
     color: v-bind(textInvertColor) !important;
     text-shadow: rgba(0, 0, 0, 1) 0 1px 2px;
-    background: v-bind(activeClearFluidBackgroundComputed);
+    background: v-bind(activeClearFluidBackground);
     overflow: hidden;
-}
-.nav-active-clear-fluid::before{
-    z-index: -1;
-    content: '';
-    position: absolute;
-    top:0;
-    bottom: 0;
-    left:-35%;
-    right:0;
-    width: 230%;
-    background-image: url('/images/deco/fluid-gold-top.webp');
-    filter: grayscale(100%);
-    background-size: cover;
-    opacity: 0.2;
-    transition: all 200ms cubic-bezier(0.645, 0.045, 0.355, 1);
+    @include fluid-gold-before();
+    @include ripple($opacity: 0.2, $animate: true);
 }
 </style>

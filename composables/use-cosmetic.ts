@@ -10,10 +10,27 @@ export const useCosmetic = () => {
     const {
         appTheme,
         hexAlpha,
+        common: commonColor,
+
+        type,
         primary: primaryColor,
+        secondary: secondaryColor,
         accent: accentColor,
+
+        cell: cellColor,
         lining: liningColor,
-        textInvert: textInvertColor
+        thread: threadColor,
+        neutral: neutralColor,
+
+        header: headerColor,
+        tint: tintColor,
+        body: bodyColor,
+        shade: shadeColor,
+
+        text: textColor,
+        subtitle: subtitleColor,
+        textInvert: textInvertColor,
+        textSecondary: textSecondaryColor
     } = storeToRefs($themeStore);
 
     const primaryColor90 = computed(() => {
@@ -28,21 +45,79 @@ export const useCosmetic = () => {
     const primaryColor60 = computed(() => {
         return primaryColor.value + hexAlpha.value['60'];
     });
+    const primaryColor50 = computed(() => {
+        return primaryColor.value + hexAlpha.value['50'];
+    });
+    const primaryColor40 = computed(() => {
+        return primaryColor.value + hexAlpha.value['40'];
+    });
     const accentColor80 = computed(() => {
         return accentColor.value + hexAlpha.value['80'];
     });
     const accentColor70 = computed(() => {
         return accentColor.value + hexAlpha.value['70'];
     });
+    const accentColor40 = computed(() => {
+        return accentColor.value + hexAlpha.value['40'];
+    });
+    const liningColor10 = computed(() => {
+        return liningColor.value + hexAlpha.value['10'];
+    });
+    const liningColor70 = computed(() => {
+        return liningColor.value + hexAlpha.value['70'];
+    });
+    const threadColor10 = computed(() => {
+        return threadColor.value + hexAlpha.value['10'];
+    });
+    const textInvertColor90 = computed(() => {
+        return textInvertColor.value + hexAlpha.value['90'];
+    });
 
     const activeClearFluidBackground = computed(() => {
 
         let isDefaultBlue = ['default-blue'].indexOf(appTheme.value) >= 0;
+        let isDarkSilver = ['dark-silver'].indexOf(appTheme.value) >= 0;
 
         if(isDefaultBlue){
-            return `linear-gradient(to right, ${primaryColor90.value} 20%, ${accentColor.value} 80%, ${primaryColor80.value} 100%)`;
+            return `linear-gradient(to right, ${primaryColor90.value} 20%, ${primaryColor50.value} 80%, ${primaryColor80.value} 100%)`;
+        }
+
+        if(isDarkSilver){
+            return `linear-gradient(to right, ${secondaryColor.value} 20%, ${secondaryColor.value} 60%, ${accentColor.value} 75%, ${accentColor70.value} 100%)`;
+        }
+
+        return `linear-gradient(to right, ${primaryColor70.value} 20%, ${accentColor.value} 60%, ${accentColor.value} 75%, ${primaryColor60.value} 100%)`;
+    })
+
+    const buttonDefaultBackground = computed(() => {
+
+        return `linear-gradient(to right, ${primaryColor.value} 20%, ${primaryColor.value} 40%, ${primaryColor80.value} 75%, ${primaryColor90.value} 100%)`;
+    })
+
+    const buttonDarkBackground = computed(() => {
+
+        return `linear-gradient(to right, ${accentColor70.value} 20%, ${accentColor70.value} 60%, ${accentColor.value} 75%, ${accentColor80.value} 100%)`;
+    })
+
+    const dateTimePickerColor = computed(() => {
+
+        if(
+            ['default-blue'].indexOf(appTheme.value) >= 0
+        ){
+            return textInvertColor90.value;
         } else {
-            return `linear-gradient(to right, ${primaryColor70.value} 20%, ${accentColor.value} 60%, ${accentColor.value} 75%, ${primaryColor60.value} 100%)`;
+            return textColor.value;
+        }
+    })
+
+    const dateTimePickerButtonBackground = computed(() => {
+
+        if(
+            ['dark-silver'].indexOf(appTheme.value) >= 0
+        ){
+            return buttonDarkBackground.value;
+        } else {
+            return buttonDefaultBackground.value
         }
     })
 
@@ -132,7 +207,36 @@ export const useCosmetic = () => {
     }
 
     return {
+        appTheme,
+        hexAlpha,
+        commonColor,
+        type,
+
+        primaryColor, primaryColor90, primaryColor80, primaryColor40,
+        secondaryColor,
+        accentColor, accentColor80, accentColor70, accentColor40,
+
+        cellColor,
+        liningColor, liningColor70, liningColor10,
+        threadColor, threadColor10,
+        neutralColor,
+
+        headerColor,
+        tintColor,
+        bodyColor,
+        shadeColor,
+
+        textColor,
+        subtitleColor,
+        textInvertColor, textInvertColor90,
+        textSecondaryColor,
+
+        buttonDefaultBackground,
+        buttonDarkBackground,
         activeClearFluidBackground,
+        dateTimePickerColor,
+        dateTimePickerButtonBackground,
+
         formulableComponentShade,
         formulableShade,
         validationShade,

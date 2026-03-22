@@ -1,0 +1,78 @@
+
+.text-shadow{
+  text-shadow: rgba(0, 0, 0, 1) 0 1px 2px;
+}
+
+
+@keyframes rippleSlideTransition {
+  0% {left: 0;}
+  10% {left: -30%;}
+  50% {left: -60%;}
+  100% {left: 0;}
+}
+
+@mixin ripple($opacity: 0.2, $animate: false) {
+
+  position: relative;
+
+  &::after {
+    z-index: -1;
+    content: '';
+    position: absolute;
+    top: -25%;
+    bottom: -25%;
+    left:0;
+    right:0;
+    width: 160%;
+    background-image: url('/images/deco/ripple_texture.png');
+    background-size: cover;
+    opacity: $opacity;
+    transition: all 200ms linear;
+
+    @if $animate {
+      animation: rippleSlideTransition 16s linear infinite;
+    }
+  }
+}
+
+@mixin ripple-hover-after-effect() {
+  position: relative;
+
+  @include ripple($opacity: 0);
+
+  &:hover::after {
+    animation: rippleSlideTransition 16s linear infinite;
+    opacity: 0.2;
+  }
+}
+
+@mixin fluid-gold-before($left: -35%, $opacity: 0.2) {
+  position: relative;
+
+  &::before {
+    z-index: -1;
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: $left;
+    right: 0;
+    width: 230%;
+    background-image: url('/images/deco/fluid-gold-top.webp');
+    filter: grayscale(100%);
+    background-size: cover;
+    opacity: $opacity;
+    transition: all 200ms cubic-bezier(0.645, 0.045, 0.355, 1);
+  }
+}
+
+@mixin fluid-gold-hover-before-effect($left: -35%, $opacity: 0.2, $fluidGoldBeforeLeft: 0, $fluidGoldBeforeOpacity: 0) {
+  position: relative;
+
+  @include fluid-gold-before($left: $fluidGoldBeforeLeft, $opacity: $fluidGoldBeforeOpacity);
+
+  &:hover::before {
+    left: $left;
+    opacity: $opacity;
+  }
+}

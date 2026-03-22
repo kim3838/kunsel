@@ -128,14 +128,12 @@
 </template>
 
 <script setup lang="ts">
-import {storeToRefs} from 'pinia';
 import type {
     SelectValueInterface,
     SelectDataType,
     SingleSelectSelectionOffsetT,
     SelectSearchPoolT,
 } from "@/public/js/types/form";
-const {$themeStore} = useNuxtApp();
 
 const {
     navigationBackground,
@@ -144,26 +142,20 @@ const {
 const {
     hexAlpha,
     type: themeType,
-    primary: primaryColor,
-    accent: accentColor,
-    lining: liningColor,
-    thread: threadColor,
-    neutral: neutralColor,
-    tint: tintColor,
-    text: textColor,
-    textInvert: textInvertColor,
-} = storeToRefs($themeStore);
-
-const {activeClearFluidBackground: activeClearFluidBackgroundComputed} = useCosmetic();
+    primaryColor,
+    accentColor40,
+    liningColor,
+    threadColor,
+    tintColor,
+    textColor,
+    textInvertColor,
+    activeClearFluidBackground
+} = useCosmetic();
 
 const disabledBackgroundColor = computed(() => {
     return themeType.value == 'light'
         ? (primaryColor.value + hexAlpha.value['10'])
         : (textInvertColor.value + hexAlpha.value['40']);
-});
-
-const accentColor40 = computed(() => {
-    return accentColor.value + hexAlpha.value['40'];
 });
 
 const props = defineProps({
@@ -756,33 +748,20 @@ watch(() => props.options.selected, newValue => {
     emit('valueChange', newValue);
 })
 </script>
-<style scoped>
+<style lang="scss" scoped>
 .navigation-mode{
     position: relative;
     z-index: 1;
     overflow: hidden;
-}
-.navigation-mode::before{
-    z-index: -1;
-    content: '';
-    position: absolute;
-    top:0;
-    bottom: 0;
-    left:0;
-    right:0;
-    width: 230%;
-    background-image: url('/images/deco/fluid-gold-top.webp');
-    filter: grayscale(100%);
-    background-size: cover;
-    opacity: 0;
-    transition: all 200ms cubic-bezier(0.645, 0.045, 0.355, 1);
+    @include fluid-gold-hover-before-effect();
+    @include ripple-hover-after-effect();
 }
 .navigation-mode:hover{
     position: relative;
     z-index: 1;
     color: v-bind(textInvertColor) !important;
     text-shadow: rgba(0, 0, 0, 1) 0 1px 2px;
-    background: v-bind(activeClearFluidBackgroundComputed);
+    background: v-bind(activeClearFluidBackground);
     overflow: hidden;
 }
 .navigation-mode:hover::before{

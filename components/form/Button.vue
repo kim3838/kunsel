@@ -9,6 +9,7 @@
                 :class="[
                     focusRing ? 'focus-ring-enable' : 'focus-ring-disable',
                     heightClass,
+                    textClass,
                     backgroundClass]"
                 :type="type"
                 class="
@@ -38,40 +39,29 @@
 </template>
 
 <script setup>
-import {storeToRefs} from 'pinia';
-const {$themeStore} = useNuxtApp();
 const button = ref(null);
 const {focused: buttonFocused} = useFocus(button);
+
 const {
     appTheme,
-    hexAlpha,
-    primary: primaryColor,
-    accent: accentColor,
-    lining: liningColor,
-    thread: threadColor,
-    tint: tintColor,
-    text: textColor,
-    textInvert: textInvertColor
-} = storeToRefs($themeStore);
 
-const textInvertColor90 = computed(() => {
-    return textInvertColor.value + hexAlpha.value['90'];
-});
+    primaryColor,
+
+    liningColor,
+    threadColor,
+
+    tintColor,
+
+    textColor,
+    textInvertColor90,
+
+    buttonDefaultBackground,
+    buttonDarkBackground,
+} = useCosmetic();
+
 const textInvertComputed = computed(() => {
     return textInvertColor90.value;
 })
-const primaryColor90 = computed(() => {
-    return primaryColor.value + hexAlpha.value['90'];
-});
-const primaryColor80 = computed(() => {
-    return primaryColor.value + hexAlpha.value['80'];
-});
-const accentColor80 = computed(() => {
-    return accentColor.value + hexAlpha.value['80'];
-});
-const accentColor70 = computed(() => {
-    return accentColor.value + hexAlpha.value['70'];
-});
 
 const props = defineProps({
     type: {
@@ -227,20 +217,34 @@ const fontClass = computed(() => {
         '2xl': `text-4xl font-medium`,
     }[props.size]
 });
-
-const backgroundClass = computed(() => {
-
-    let className = {
+const variantClass = computed(() => {
+    return {
         'default': 'default-background',
         'outline': 'outlined',
         'flat': 'flat',
     }[props.variant];
+})
+const backgroundClass = computed(() => {
 
-    if(
-        ['dark-silver'].indexOf(appTheme.value) >= 0 &&
-        className === 'default-background'
-    ){
+    let className = variantClass.value;
+
+    if(['dark-silver'].indexOf(appTheme.value) >= 0 && className === 'default-background'){
         return `dark-clear-fluid-background`;
+    }
+
+    return className;
+});
+
+const textClass = computed(() => {
+
+    let className = variantClass.value;
+
+    if(['dark-silver', 'dark-emerald'].indexOf(appTheme.value) >= 0){
+        return `text-shadow`;
+    }
+
+    if(['default-blue'].indexOf(appTheme.value) >= 0 && className === 'default-background'){
+        return `text-shadow`;
     }
 
     return className;
@@ -290,7 +294,12 @@ watch(buttonFocused, (focused) => {
 
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+@keyframes slideTransition {
+    0% {left: 0;}
+    50% {left: -40%;}
+    100% {left: 0;}
+}
 
 .condensed_font {
     font-family: 'Reddit Sans Condensed';
@@ -324,144 +333,37 @@ watch(buttonFocused, (focused) => {
     position: relative;
     z-index: 1;
     color: v-bind(textInvertComputed) !important;
-    text-shadow: rgba(0, 0, 0, 1) 0 1px 2px;
-    background: linear-gradient(to right, v-bind(primaryColor) 20%, v-bind(primaryColor) 40%, v-bind(primaryColor80) 75%, v-bind(primaryColor90) 100%);
+    background: v-bind(buttonDefaultBackground);
     overflow: hidden;
-}
-.default-background::before{
-    z-index: -1;
-    content: '';
-    position: absolute;
-    top:0;
-    bottom: 0;
-    left:-10%;
-    right:0;
-    width: 230%;
-    background-image: url('/images/deco/fluid-gold-top.webp');
-    filter: grayscale(100%);
-    background-size: cover;
-    opacity: 0.3;
-    transition: all 200ms cubic-bezier(0.645, 0.045, 0.355, 1);
-}
-.default-background::after{
-    content: '';
-    position: absolute;
-    top: -25%;
-    bottom: -25%;
-    left:0;
-    right:0;
-    width: 140%;
-    background-image: url('/images/deco/ripple_texture.png'), linear-gradient(to right, transparent, v-bind(primaryColor));
-    background-size: cover;
-    opacity: 0;
-    transition: all 200ms linear;
-}
-.default-background:hover::before, .default-background:active::before{
-    left: -45%;
-}
-.default-background:hover::after, .default-background:active::after{
-    animation: slideTransition 6s linear infinite;
-    opacity: 0.2;
+    @include fluid-gold-hover-before-effect($left: -45%, $opacity: 0.3, $fluidGoldBeforeLeft: -10%, $fluidGoldBeforeOpacity: 0.3);
+    @include ripple-hover-after-effect();
 }
 
 .dark-clear-fluid-background{
     position: relative;
     z-index: 1;
     color: v-bind(textColor) !important;
-    text-shadow: rgba(0, 0, 0, 1) 0 1px 2px;
-    background: linear-gradient(to right, v-bind(accentColor70) 20%, v-bind(accentColor70) 60%, v-bind(accentColor) 75%, v-bind(accentColor80) 100%);
+    background: v-bind(buttonDarkBackground);
     overflow: hidden;
-}
-.dark-clear-fluid-background::before{
-    z-index: -1;
-    content: '';
-    position: absolute;
-    top:0;
-    bottom: 0;
-    left:-35%;
-    right:0;
-    width: 230%;
-    background-image: url('/images/deco/fluid-gold-top.webp');
-    filter: grayscale(100%);
-    background-size: cover;
-    opacity: 0.2;
-    transition: all 200ms cubic-bezier(0.645, 0.045, 0.355, 1);
-}
-
-@keyframes slideTransition {
-    0% {left: 0;}
-    50% {left: -40%;}
-    100% {left: 0;}
+    @include fluid-gold-before();
 }
 
 .outlined{
+    position: relative;
+    z-index: 1;
     background-color: v-bind(tintColor) !important;
     color: v-bind(textColor) !important;
     overflow: hidden;
+    @include fluid-gold-hover-before-effect($left: -45%, $opacity: 0.4, $fluidGoldBeforeLeft: -10%, $fluidGoldBeforeOpacity: 0.2)
 }
-.outlined:hover{
-    position: relative;
-    z-index: 1;
-    color: v-bind(textColor) !important;
-    overflow: hidden;
-}
-.outlined::before{
-    z-index: -1;
-    content: '';
-    position: absolute;
-    top:0;
-    bottom: 0;
-    left:0;
-    right:0;
-    width: 230%;
-    background-image: url('/images/deco/fluid-gold-top.webp');
-    filter: grayscale(100%);
-    background-size: cover;
-    opacity: 0.1;
-    transition: all 200ms cubic-bezier(0.645, 0.045, 0.355, 1);
-}
-.outlined:hover::before{
-    left:-45%;
-    opacity: 0.4;
-}
-.outlined::after{
-    content: '';
-    position: absolute;
-    top: -25%;
-    bottom: -25%;
-    left:0;
-    right:0;
-    width: 140%;
-    background-image: url('/images/deco/ripple_texture.png'), linear-gradient(to right, transparent, v-bind(primaryColor));
-    background-size: cover;
-    opacity: 0;
-    transition: all 200ms linear;
-}
-.outlined:hover::after{
-    animation: slideTransition 6s linear infinite;
-    opacity: 0.3;
-}
+
 .flat{
     position: relative;
     z-index: 1;
     background-color: v-bind(tintColor) !important;
     color: v-bind(textColor) !important;
     overflow: hidden;
-}
-.flat::before{
-    z-index: -1;
-    content: '';
-    position: absolute;
-    top:0;
-    bottom: 0;
-    left:-10%;
-    right:0;
-    width: 230%;
-    background-image: url('/images/deco/fluid-gold-top.webp');
-    filter: grayscale(100%);
-    background-size: cover;
-    opacity: 0.2;
-    transition: all 200ms cubic-bezier(0.645, 0.045, 0.355, 1);
+    @include fluid-gold-hover-before-effect($left: -45%, $opacity: 0.4, $fluidGoldBeforeLeft: -10%, $fluidGoldBeforeOpacity: 0.2)
 }
 .flat::after{
     z-index: -1;
@@ -477,12 +379,8 @@ watch(buttonFocused, (focused) => {
     opacity: 0.2;
     transition: all 200ms linear;
 }
-.flat:hover::before{
-    left:-45%;
-    opacity: 0.4;
-}
 .flat:hover::after{
     animation: slideTransition 6s linear infinite;
-    opacity: 0.4;
+    opacity: 0.2;
 }
 </style>

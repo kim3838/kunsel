@@ -12,22 +12,15 @@
 </template>
 
 <script setup lang="ts">
-import {storeToRefs} from 'pinia';
-
-const {$themeStore} = useNuxtApp();
 const {
     navigationMode,
 } = useLayout();
-const {
-    appTheme,
-    hexAlpha,
-    primary: primaryColor,
-    accent: accentColor,
-    lining: liningColor,
-    textInvert: textInvertColor
-} = storeToRefs($themeStore);
 
-const {activeClearFluidBackground: activeClearFluidBackgroundComputed} = useCosmetic();
+const {
+    liningColor,
+    textInvertColor,
+    activeClearFluidBackground
+} = useCosmetic();
 
 const props = defineProps({
     dropAlign: {
@@ -129,39 +122,22 @@ const dropDownIconClass = computed(() => {
     }[props.size];
 });
 </script>
-<style scoped>
+<style lang="scss" scoped>
 .nav-sub{
     position: relative;
     z-index: 1;
     color: v-bind(navigationLinkColor);
     overflow: hidden;
-}
-.nav-sub::before{
-    z-index: -1;
-    content: '';
-    position: absolute;
-    top:0;
-    bottom: 0;
-    left:0;
-    right:0;
-    width: 230%;
-    background-image: url('/images/deco/fluid-gold-top.webp');
-    filter: grayscale(100%);
-    background-size: cover;
-    opacity: 0;
-    transition: all 200ms cubic-bezier(0.645, 0.045, 0.355, 1);
+    @include fluid-gold-hover-before-effect();
+    @include ripple-hover-after-effect();
 }
 .nav-sub:hover{
     position: relative;
     z-index: 1;
     color: v-bind(textInvertColor) !important;
     text-shadow: rgba(0, 0, 0, 1) 0 1px 2px;
-    background: v-bind(activeClearFluidBackgroundComputed);
+    background: v-bind(activeClearFluidBackground);
     overflow: hidden;
-}
-.nav-sub:hover::before{
-    left:-35%;
-    opacity: 0.2;
 }
 
 .nav-sub-active-dashed{
@@ -172,22 +148,9 @@ const dropDownIconClass = computed(() => {
     z-index: 1;
     color: v-bind(textInvertColor) !important;
     text-shadow: rgba(0, 0, 0, 1) 0 1px 2px;
-    background: v-bind(activeClearFluidBackgroundComputed);
-    overflow: hidden;
-}
-.nav-sub-active-clear-fluid::before{
-    z-index: -1;
-    content: '';
-    position: absolute;
-    top:0;
-    bottom: 0;
-    left:-35%;
-    right:0;
-    width: 230%;
-    background-image: url('/images/deco/fluid-gold-top.webp');
-    filter: grayscale(100%);
-    background-size: cover;
-    opacity: 0.2;
-    transition: all 200ms cubic-bezier(0.645, 0.045, 0.355, 1);
+    background: v-bind(activeClearFluidBackground);
+    overflow: hidden;;
+    @include fluid-gold-before();
+    @include ripple($opacity: 0.2, $animate: true);
 }
 </style>
