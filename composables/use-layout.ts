@@ -110,7 +110,7 @@ export const useLayout = () => {
             });
         }
 
-        if(true && process.env.NODE_ENV === 'development'){
+        if(false && process.env.NODE_ENV === 'development'){
 
             links = links.concat([
                 ...(debugRequests as NavigationLinkInterface[])
@@ -178,7 +178,7 @@ export const useLayout = () => {
                     },
                 ]:[]
             ) as NavigationLinkInterface[],
-            ...(true ? [
+            ...(false ? [
                     {
                         key: 'about',
                         type: 'drop',
