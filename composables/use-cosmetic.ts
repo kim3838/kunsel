@@ -51,11 +51,17 @@ export const useCosmetic = () => {
     const primaryColor40 = computed(() => {
         return primaryColor.value + hexAlpha.value['40'];
     });
+    const secondaryColor70 = computed(() => {
+        return secondaryColor.value + hexAlpha.value['70'];
+    });
     const accentColor80 = computed(() => {
         return accentColor.value + hexAlpha.value['80'];
     });
     const accentColor70 = computed(() => {
         return accentColor.value + hexAlpha.value['70'];
+    });
+    const accentColor60 = computed(() => {
+        return accentColor.value + hexAlpha.value['60'];
     });
     const accentColor40 = computed(() => {
         return accentColor.value + hexAlpha.value['40'];
@@ -72,21 +78,30 @@ export const useCosmetic = () => {
     const textInvertColor90 = computed(() => {
         return textInvertColor.value + hexAlpha.value['90'];
     });
+    const textInvertColor40 = computed(() => {
+        return textInvertColor.value + hexAlpha.value['40'];
+    });
+    const textInvertColor20 = computed(() => {
+        return textInvertColor.value + hexAlpha.value['20'];
+    });
 
     const activeClearFluidBackground = computed(() => {
 
         let isDefaultBlue = ['default-blue'].indexOf(appTheme.value) >= 0;
         let isDarkSilver = ['dark-silver'].indexOf(appTheme.value) >= 0;
+        let isDarkEmerald = ['dark-emerald'].indexOf(appTheme.value) >= 0;
 
         if(isDefaultBlue){
             return `linear-gradient(to right, ${primaryColor90.value} 20%, ${primaryColor50.value} 80%, ${primaryColor80.value} 100%)`;
         }
 
         if(isDarkSilver){
-            return `linear-gradient(to right, ${secondaryColor.value} 20%, ${secondaryColor.value} 60%, ${accentColor.value} 75%, ${accentColor70.value} 100%)`;
+            return `linear-gradient(to right, ${secondaryColor.value} 20%, ${secondaryColor.value} 60%, ${accentColor70.value} 75%, ${secondaryColor.value} 100%)`;
         }
 
-        return `linear-gradient(to right, ${primaryColor70.value} 20%, ${accentColor.value} 60%, ${accentColor.value} 75%, ${primaryColor60.value} 100%)`;
+        if(isDarkEmerald){
+            return `linear-gradient(to right, ${secondaryColor.value} 20%, ${secondaryColor70.value} 60%, ${textInvertColor20.value} 75%, ${primaryColor80.value} 100%)`;
+        }
     })
 
     const buttonDefaultBackground = computed(() => {

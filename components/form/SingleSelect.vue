@@ -11,6 +11,7 @@
                 :style="{'border-radius': '2px'}"
                 class="w-full flex justify-start"
                 :class="[backgroundClass, heightClass, headerBorderClass, navigationMode ? 'navigation-mode' : defaultModeSpacingClass]">
+                <div class="bg-film"></div>
                 <div v-if="icon" :class="[iconHolderClass]" class="flex-none flex justify-end items-center">
                     <Icon :class="[iconClass]" :name="icon"/>
                 </div>
@@ -749,6 +750,8 @@ watch(() => props.options.selected, newValue => {
 })
 </script>
 <style lang="scss" scoped>
+.bg-film{@extend .bg-film;}
+
 .navigation-mode{
     position: relative;
     z-index: 1;
@@ -757,18 +760,13 @@ watch(() => props.options.selected, newValue => {
     @include ripple-hover-after-effect();
 }
 .navigation-mode:hover{
-    position: relative;
-    z-index: 1;
     color: v-bind(textInvertColor) !important;
     @extend .text-shadow;
+}
+.navigation-mode:hover .bg-film{
     background: v-bind(activeClearFluidBackground);
-    overflow: hidden;
+    animation: initialBackgroundKeyFrames 400ms linear 1 forwards;
 }
-.navigation-mode:hover::before{
-    left:-35%;
-    opacity: 0.2;
-}
-
 .background {
     background-color: v-bind(tintColor);
 }

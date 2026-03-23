@@ -9,6 +9,7 @@
                 :style="{'font-family': fontFamily}"
                 :class="[classes, activeClass, parent ? 'rounded-[2px]' : '']"
                 class="flex items-center h-full px-2 py-1 focus:outline-none">
+                <div class="bg-film"></div>
                 <Icon v-if="icon" :class="[iconClass]" :name="icon" class="mr-1" />
                 <span :class="[headerFontClass]">{{title}}</span>
                 <Icon :class="[dropDownIconClass]" :name="navDropIcon"/>
@@ -551,6 +552,8 @@ const dropDownIconClass = computed(() => {
 });
 </script>
 <style lang="scss" scoped>
+.bg-film{@extend .bg-film;}
+
 .nav-drop{
     color: v-bind(navigationLinkColor);
 }
@@ -600,16 +603,12 @@ const dropDownIconClass = computed(() => {
     @include ripple-hover-after-effect();
 }
 .navigation-mode-nav-drop:hover{
-    position: relative;
-    z-index: 1;
     color: v-bind(textInvertColor) !important;
     @extend .text-shadow;
-    background: v-bind(activeClearFluidBackground);
-    overflow: hidden;
 }
-.navigation-mode-nav-drop:hover::before{
-    left:-35%;
-    opacity: 0.2;
+.navigation-mode-nav-drop:hover .bg-film{
+    background: v-bind(activeClearFluidBackground);
+    animation: initialBackgroundKeyFrames 400ms linear 1 forwards;
 }
 
 .navigation-mode-nav-drop-active-clear-fluid{
@@ -662,12 +661,10 @@ const dropDownIconClass = computed(() => {
 }
 
 .child-non-drop-clear-fluid:hover{
-    position: relative;
     z-index: 1;
     color: v-bind(textInvertColor) !important;
     @extend .text-shadow;
     background: v-bind(activeClearFluidBackground);
-    overflow: hidden;
 }
 
 .transparent-border-bottom{

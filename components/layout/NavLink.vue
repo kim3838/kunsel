@@ -4,6 +4,7 @@
         :style="{'font-family': fontFamily}"
         class="relative box-border inline-flex items-center px-2 focus:outline-none rounded-[2px]"
         :class="[classes, headerFontClass, 'nav-link']">
+        <div class="bg-film"></div>
         <Icon class="flex-none mr-1" :class="[iconClass]" v-if="icon" :name="icon" />
         <slot></slot>
     </NuxtLink>
@@ -91,6 +92,8 @@ const iconClass = computed(() => {
 });
 </script>
 <style lang="scss" scoped>
+.bg-film{@extend .bg-film;}
+
 .nav-link{
     position: relative;
     z-index: 1;
@@ -99,13 +102,14 @@ const iconClass = computed(() => {
     @include fluid-gold-hover-before-effect();
     @include ripple-hover-after-effect();
 }
+
 .nav-link:hover{
-    position: relative;
-    z-index: 1;
     color: v-bind(textInvertColor) !important;
     @extend .text-shadow;
+}
+.nav-link:hover .bg-film{
     background: v-bind(activeClearFluidBackground);
-    overflow: hidden;
+    animation: initialBackgroundKeyFrames 400ms linear 1 forwards;
 }
 
 .nav-active-bg{

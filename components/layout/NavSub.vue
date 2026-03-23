@@ -5,6 +5,7 @@
         :style="{'font-family': fontFamily}"
         :class="[classes]"
         class="nav-sub relative inline-flex items-center h-full px-2 py-1 cursor-pointer focus:outline-none rounded-[2px]">
+        <div class="bg-film"></div>
         <Icon v-if="icon" :name="icon" :class="[iconClass]" class="mr-1" />
         <span :class="[headerFontClass]">{{title}}</span>
         <Icon class="flex-none" :class="[dropDownIconClass]" :name="navHeaderIcon"/>
@@ -123,6 +124,8 @@ const dropDownIconClass = computed(() => {
 });
 </script>
 <style lang="scss" scoped>
+.bg-film{@extend .bg-film;}
+
 .nav-sub{
     position: relative;
     z-index: 1;
@@ -132,12 +135,12 @@ const dropDownIconClass = computed(() => {
     @include ripple-hover-after-effect();
 }
 .nav-sub:hover{
-    position: relative;
-    z-index: 1;
     color: v-bind(textInvertColor) !important;
     @extend .text-shadow;
+}
+.nav-sub:hover .bg-film{
     background: v-bind(activeClearFluidBackground);
-    overflow: hidden;
+    animation: initialBackgroundKeyFrames 400ms linear 1 forwards;
 }
 
 .nav-sub-active-dashed{
