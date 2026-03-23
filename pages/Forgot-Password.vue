@@ -7,7 +7,8 @@
                     <AccentFrame class="max-w-min mx-auto lg:mx-0 ">
                         <template #content>
                             <div class="relative py-4">
-                                <div class="text-lg font-medium font-header">Forgot password</div>
+                                <ThemeHeader class="text-xl">Forgot password</ThemeHeader>
+
                                 <form @submit.prevent="handleForgotPassword" class="mt-4 w-80">
                                     <div class="block">
                                         <InputLabel :size="'sm'" for="identifier" value="Enter account email" />

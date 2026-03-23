@@ -5,7 +5,9 @@
 
             <div class="lining-shadow rounded-t-sm px-4 py-2 flex flex-row items-center justify-between">
                 <div class="flex flex-row items-center gap-2">
-                    <div class="text-lg font-medium font-header line-clamp-1">Leave Today</div>
+
+                    <ThemeHeader class="text-lg line-clamp-1">Leave Today</ThemeHeader>
+
                     <div class="text-base font-narrow-thin">
                         ({{todayLeaves.length}})
                     </div>
@@ -50,7 +52,9 @@
 
             <div class="lining-shadow rounded-t-sm px-4 py-2 flex flex-row items-center justify-between">
                 <div class="flex flex-row items-center gap-2">
-                    <div class="text-lg font-medium font-header line-clamp-1">Upcoming leaves</div>
+
+                    <ThemeHeader class="text-lg line-clamp-1">Upcoming leaves</ThemeHeader>
+
                     <div class="text-base font-narrow-thin">
                         ({{upcomingLeaves.length}})
                     </div>

@@ -19,7 +19,7 @@
                             <template #header>
                                 <div class="h-full w-[20%]">
                                     <div
-                                        class="h-full w-full bg-cover bg-center bg-no-repeat grayscale opacity-50"
+                                        class="h-full w-full bg-cover bg-center bg-no-repeat grayscale opacity-20"
                                         :style="{'background':'url(/images/deco/fluid-gold-top.webp)'}"
                                     />
                                 </div>
@@ -32,7 +32,8 @@
                             </template>
                             <template v-slot:body="{frameBorderColor}">
                                 <div class="w-[80%] h-full relative pt-10 px-2 overflow-hidden flex flex-col">
-                                    <div class="text-lg font-medium font-header">Compensation tax (WTC) calculator</div>
+
+                                    <ThemeHeader :type="'gray'" class="text-lg">Compensation tax (WTC) calculator</ThemeHeader>
 
                                     <form @submit.prevent="calculateTax" class="mt-4">
                                         <div class="block">

@@ -8,7 +8,7 @@
 
                 <div class="flex-auto lining-shadow rounded-sm tint-background p-4 min-w-max flex flex-col items-start gap-2">
                     <div class="flex flex-col items-start justify-start gap-2">
-                        <div class="text-lg font-medium font-header">Recent payroll</div>
+                        <ThemeHeader class="text-lg">Recent payroll</ThemeHeader>
 
                         <div class="flex flex-row gap-1 items-start">
                             <Label v-if="recentPayroll.payroll" :size="'md'" :type="recentPayroll?._payload?.label_shade?.value as LabelTypeT" shade :label="recentPayroll.payroll?.status?.text" />
@@ -24,7 +24,7 @@
 
                 <div class="flex-auto lining-shadow rounded-sm tint-background p-4 min-w-max flex flex-col items-start gap-2">
                     <div class="flex flex-col items-start justify-start gap-2">
-                        <div class="text-lg font-medium font-header">Current payroll</div>
+                        <ThemeHeader class="text-lg">Current payroll</ThemeHeader>
 
                         <div class="flex flex-row gap-1 items-start">
                             <Label v-if="currentPayroll.payroll" :size="'md'" :type="currentPayroll?._payload?.label_shade?.value as LabelTypeT" shade :label="currentPayroll.payroll?.status?.text" />
@@ -40,7 +40,7 @@
 
                 <div v-for="request in totalPendingRequestsMap" class="flex-auto lining-shadow rounded-sm tint-background p-4 min-w-12 min-h-20 flex flex-col items-start justify-start">
                     <div>
-                        <div class="text-lg font-medium font-header">Pending</div>
+                        <ThemeHeader class="text-lg">Pending</ThemeHeader>
                         <div class="text-sm subtitle-color">{{request.label}}</div>
                     </div>
                     <UnorderedList
@@ -56,7 +56,9 @@
 
                 <!-- UR -->
                 <div class="lining-shadow rounded-sm grow tint-background">
-                    <div class="lining-shadow rounded-t-sm text-lg font-medium font-header px-4 py-2">My Requests</div>
+                    <div class="lining-shadow rounded-t-sm px-4 py-2">
+                        <ThemeHeader class="text-lg">My Requests</ThemeHeader>
+                    </div>
 
                     <div class="p-4 max-h-[408px] overflow-y-auto">
 
@@ -66,7 +68,9 @@
 
                 <!-- AP -->
                 <div class="lining-shadow rounded-sm grow tint-background">
-                    <div class="lining-shadow rounded-t-sm text-lg font-medium font-header px-4 py-2">Awaiting my approval</div>
+                    <div class="lining-shadow rounded-t-sm px-4 py-2">
+                        <ThemeHeader class="text-lg">Awaiting my approval</ThemeHeader>
+                    </div>
 
                     <div class="p-4 max-h-[408px] overflow-y-auto">
                         <UserAwaitingApproval @workflowUpdated="pendingApprovalStateTotalsExecute"/>
@@ -80,20 +84,6 @@
 
                     <!-- LT UL -->
                     <LeaveTodayAndUpcoming class="flex flex-col gap-4"/>
-                </div>
-
-                <div v-if="false" class="basis-full md:basis-1/2 lg:basis-7/11">
-
-                    <!-- PR -->
-                    <div class="lining-shadow rounded-sm grow tint-background">
-                        <div class="lining-shadow rounded-t-sm px-4 py-2 flex justify-between items-center">
-                            <div class="text-lg font-medium font-header">Payroll Run</div>
-                        </div>
-
-                        <div class="p-4">
-                            <span class="text-sm font-serif">work in progress...</span>
-                        </div>
-                    </div>
                 </div>
             </div>
 

@@ -5,7 +5,10 @@
 
                 <div class="lining-shadow rounded-sm tint-background">
 
-                    <div class="lining-shadow rounded-t-sm text-lg font-medium font-header px-4 py-2">Profile Information</div>
+                    <div class="lining-shadow rounded-t-sm px-4 py-2">
+
+                        <ThemeHeader class="text-lg">Profile Information</ThemeHeader>
+                    </div>
 
                     <div class="p-4">
 
@@ -36,7 +39,10 @@
 
                 <div class="lining-shadow rounded-sm tint-background">
 
-                    <div class="lining-shadow rounded-t-sm text-lg font-medium font-header px-4 py-2">Update Password</div>
+                    <div class="lining-shadow rounded-t-sm px-4 py-2">
+
+                        <ThemeHeader class="text-lg">Update Password</ThemeHeader>
+                    </div>
 
                     <div class="p-4">
 
@@ -67,7 +73,10 @@
 
                 <div class="lining-shadow rounded-sm tint-background">
 
-                    <div class="lining-shadow rounded-t-sm text-lg font-medium font-header px-4 py-2">Browser Sessions</div>
+                    <div class="lining-shadow rounded-t-sm px-4 py-2">
+
+                        <ThemeHeader class="text-lg">Browser Sessions</ThemeHeader>
+                    </div>
 
                     <div class="p-4">
 
@@ -116,7 +125,10 @@
 
                 <div class="lining-shadow rounded-sm tint-background">
 
-                    <div class="lining-shadow rounded-t-sm text-lg font-medium font-header px-4 py-2">Two Factor Authentication</div>
+                    <div class="lining-shadow rounded-t-sm px-4 py-2">
+
+                        <ThemeHeader class="text-lg">Two Factor Authentication</ThemeHeader>
+                    </div>
 
                     <div class="p-4">
 

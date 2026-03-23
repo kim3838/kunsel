@@ -13,13 +13,15 @@
 
                     <div v-for="navigationLink in navigationLinks" :key="navigationLink.key" class="flex-grow p-2 text-left">
                         <p class="text-lg font-medium font-business">
-                            <NuxtLink
-                                v-if="navigationLink.type == 'link'"
-                                :to="navigationLink.to"
-                                class="hover:underline">
-                                {{navigationLink.title}}
-                            </NuxtLink>
-                            <span v-else>{{navigationLink.title}}</span>
+                            <ThemeHeader :type="'gray'">
+                                <NuxtLink
+                                    v-if="navigationLink.type == 'link'"
+                                    :to="navigationLink.to"
+                                    class="hover:underline">
+                                    {{navigationLink.title}}
+                                </NuxtLink>
+                                <span v-else>{{navigationLink.title}}</span>
+                            </ThemeHeader>
                         </p>
 
                         <div v-if="navigationLink?.options && navigationLink.options.length > 0" class="mt-2 space-y-2 text-base">

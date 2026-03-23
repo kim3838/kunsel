@@ -6,14 +6,14 @@
         </div>
         <div v-else class="space-y-6">
             <div class="space-y-4">
-                <div class="font-medium text-lg font-header">Payroll #: {{_get(payroll, 'number', 'Payroll number not found')}}</div>
+                <ThemeHeader>Payroll #: {{_get(payroll, 'number', 'Payroll number not found')}}</ThemeHeader>
 
                 <PayrollSubInfo :payroll="payroll" :salaryStatement="salaryStatement"/>
             </div>
 
             <div class="space-y-2">
 
-                <div class="font-medium text-lg font-header">Statement totals breakdown</div>
+                <ThemeHeader>Statement totals breakdown</ThemeHeader>
 
                 <SalaryStatementDetailDataTable
                     :sub-row-slug="'component_values'"
@@ -23,7 +23,7 @@
 
             <div class="space-y-2">
 
-                <div class="font-medium text-lg font-header">Per-day breakdown</div>
+                <ThemeHeader>Per-day breakdown</ThemeHeader>
 
                 <div class="flex flex-col gap-2 text-sm">
                     <div class="flex flex-row flex-wrap items-center gap-2">

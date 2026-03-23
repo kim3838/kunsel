@@ -63,7 +63,10 @@
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
                 <!-- UR -->
                 <div class="lining-shadow rounded-sm grow tint-background">
-                    <div class="lining-shadow rounded-t-sm text-lg font-medium font-header px-4 py-2">My Requests</div>
+                    <div class="lining-shadow rounded-t-sm px-4 py-2">
+
+                        <ThemeHeader class="text-lg">My Requests</ThemeHeader>
+                    </div>
 
                     <div class="px-4 py-4 max-h-[408px] overflow-y-auto">
 
@@ -73,7 +76,10 @@
 
                 <!-- AP -->
                 <div class="lining-shadow rounded-sm grow tint-background">
-                    <div class="lining-shadow rounded-t-sm text-lg font-medium font-header px-4 py-2">Awaiting my approval</div>
+                    <div class="lining-shadow rounded-t-sm px-4 py-2">
+
+                        <ThemeHeader class="text-lg">Awaiting my approval</ThemeHeader>
+                    </div>
 
                     <div class="px-4 py-4 max-h-[408px] overflow-y-auto">
                         <UserAwaitingApproval/>
@@ -91,7 +97,7 @@
                         <div class="lining-shadow rounded-sm grow tint-background">
                             <div class="lining-shadow rounded-t-sm px-4 py-2 flex flex-row items-center justify-between">
                                 <div>
-                                    <div class="text-lg font-medium font-header">Current Shift</div>
+                                    <ThemeHeader class="text-lg">Current Shift</ThemeHeader>
                                     <div v-if="!employeePending && employeeHasCurrentShiftAssigned" class="text-sm subtitle-color">{{ _get(employee, 'current_shift.shift_assignment.readable_date_range', '') }}</div>
                                 </div>
 
@@ -183,7 +189,7 @@
                         <div class="lining-shadow rounded-sm grow tint-background">
                             <div class="lining-shadow rounded-t-sm px-4 py-2 flex flex-row items-center justify-between">
                                 <div>
-                                    <div class="text-lg font-medium font-header">Upcoming Shift</div>
+                                    <ThemeHeader class="text-lg">Upcoming Shift</ThemeHeader>
                                     <div v-if="!employeePending && employeeHasUpcomingShiftAssigned" class="text-sm subtitle-color">{{ _get(employee, 'upcoming_shift.shift_assignment.readable_date_range', '') }}</div>
                                 </div>
 
@@ -280,7 +286,9 @@
                         <!-- LC -->
                         <div class="lining-shadow rounded-sm grow tint-background">
                             <div class="lining-shadow rounded-t-sm px-4 py-2 flex justify-between items-center">
-                                <div class="text-lg font-medium font-header">Leave Credits</div>
+
+                                <ThemeHeader class="text-lg">Leave Credits</ThemeHeader>
+
                                 <div class="flex items-center">
                                     <Button :variant="'outline'" :withBorder="false" :size="'xs'" :icon="'ic:sharp-restart-alt'" :disabled="leaveBalanceByTypePending" :label="'Reload'" @click="leaveBalanceByTypeExecute()" />
                                 </div>
@@ -312,7 +320,9 @@
                         <!-- PR -->
                         <div class="lining-shadow rounded-sm grow tint-background">
                             <div class="lining-shadow rounded-t-sm px-4 py-2 flex justify-between items-center">
+
                                 <div class="text-lg font-medium font-header">Payroll</div>
+
                             </div>
 
                             <div class="px-4 py-4">

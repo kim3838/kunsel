@@ -7,7 +7,9 @@
                     <AccentFrame class="h-[360px] max-w-min mx-auto lg:mx-0 ">
                         <template #content>
                             <div class="relative py-4">
-                                <div class="text-lg font-medium font-header">Password login</div>
+
+                                <ThemeHeader class="text-xl">Password login</ThemeHeader>
+
                                 <form @submit.prevent="handleLogin" class="mt-4 w-80">
                                     <div class="block">
                                         <InputLabel :size="'md'" for="identifier" value="Username or Email" />

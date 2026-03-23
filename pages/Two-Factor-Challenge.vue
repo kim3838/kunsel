@@ -7,7 +7,7 @@
                     <AccentFrame class="max-w-min mx-auto lg:mx-0 ">
                         <template #content>
                             <div class="relative py-4">
-                                <div class="text-lg font-medium font-header">Two Factor Auth Challenge</div>
+                                <ThemeHeader class="text-xl">Two Factor Auth Challenge</ThemeHeader>
 
                                 <form @submit.prevent="handleLogin" class="mt-4 w-80">
                                     <template v-if="! recovery">
