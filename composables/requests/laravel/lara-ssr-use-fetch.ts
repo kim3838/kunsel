@@ -14,7 +14,7 @@ export function laraSsrUseFetch<T>(
         watch: false,
         server: true,
         async onRequest({ request, options }){
-            //console.log({'LARA SSR USEFETCH' : 'START: ' + baseURL + path})
+            console.log({'LARA SSR USEFETCH' : 'START: ' + baseURL + path})
 
             //Perform on request callback
             if(callbacks.onRequest && typeof callbacks.onRequest == 'function'){
@@ -22,7 +22,7 @@ export function laraSsrUseFetch<T>(
             }
         },
         async onRequestError({ request, options, error }) {
-            //console.log({'LARA SSR USEFETCH ERROR' : error.message});
+            console.log({'LARA SSR USEFETCH ERROR' : error.message});
 
             //Perform on request error callback
             if(callbacks.onRequestError && typeof callbacks.onRequestError == 'function'){
@@ -30,7 +30,7 @@ export function laraSsrUseFetch<T>(
             }
         },
         async onResponse({request, options, response}) {
-            //console.log({'LARA SSR USEFETCH ON-RESPONSE CODE' : response?._data?.code});
+            console.log({'LARA SSR USEFETCH ON-RESPONSE CODE' : response?._data?.code});
             let responseCode = response._data.code;
 
             //Perform on response callback
