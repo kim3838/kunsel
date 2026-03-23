@@ -36,7 +36,7 @@ export const useAuth = () => {
             method: 'GET',
         }, {
             onSuccessResponse: async (request: RequestInfo, options: ResolvedFetchOptions, response: FetchResponse<any> | undefined) => {
-                debug('SSR FETCH USER RESPONSE', response);
+                console.log({'SSR FETCH USER RESPONSE DATA': _get(response, '_data', undefined)})
                 const userData = _get(response, '_data.values', undefined);
                 user.value = userData as User | undefined;
             }
