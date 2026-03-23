@@ -30,6 +30,7 @@ export function laraSsrUseFetch<T>(
             }
         },
         async onResponse({request, options, response}) {
+            console.log({'LARA SSR USEFETCH ON-RESPONSE' : response});
             console.log({'LARA SSR USEFETCH ON-RESPONSE CODE' : response?._data?.code});
             let responseCode = response._data.code;
 
