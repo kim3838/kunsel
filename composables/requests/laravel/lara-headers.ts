@@ -2,10 +2,13 @@ export const laraHeaders = () => {
     const {frontendURL} = useRuntimeConfig().public;
     const CSRF_COOKIE = "XSRF-TOKEN";
     const CSRF_HEADER = "X-XSRF-TOKEN";
+    const logEnabled = false;
 
-    console.log({
-        'Lara headers': 'start'
-    });
+    if(logEnabled){
+        console.log({
+            'LARA HEADERS': 'START'
+        });
+    }
 
     let headers: any = {
         referer: frontendURL,
@@ -14,9 +17,11 @@ export const laraHeaders = () => {
 
     let token = useCookie(CSRF_COOKIE);
 
-    console.log({
-        'Lara headers token': token.value
-    });
+    if(logEnabled){
+        console.log({
+            'LARA HEADERS TOKEN': token.value
+        });
+    }
 
     if(token.value){
         headers[CSRF_HEADER] = token.value;
@@ -29,9 +34,11 @@ export const laraHeaders = () => {
         }
     }
 
-    console.log({
-        'Lara headers return': headers
-    });
+    if(logEnabled){
+        console.log({
+            'LARA HEADERS RETURN': headers
+        });
+    }
 
     return headers;
 }

@@ -1,4 +1,4 @@
-
+//@ts-nocheck
 import type {UseFetchOptions} from "nuxt/app";
 import type {CallbackResponseT} from "@/public/js/types/request";
 
@@ -9,12 +9,17 @@ export function laraSsrUseFetch<T>(
 ){
     const {baseURL} = useRuntimeConfig().public;
 
+    const logEnabled = false;
+
     return useFetch(baseURL + path, {
         credentials: 'include',
         watch: false,
         server: true,
         async onRequest({ request, options }){
-            console.log({'LARA SSR USEFETCH' : 'START: ' + baseURL + path})
+
+            if(logEnabled){
+                console.log({'LARA SSR USEFETCH' : 'START: ' + baseURL + path})
+            }
 
             //Perform on request callback
             if(callbacks.onRequest && typeof callbacks.onRequest == 'function'){
@@ -22,7 +27,10 @@ export function laraSsrUseFetch<T>(
             }
         },
         async onRequestError({ request, options, error }) {
-            console.log({'LARA SSR USEFETCH ERROR' : error.message});
+
+            if(logEnabled){
+                console.log({'LARA SSR USEFETCH ERROR' : error.message});
+            }
 
             //Perform on request error callback
             if(callbacks.onRequestError && typeof callbacks.onRequestError == 'function'){
@@ -30,8 +38,11 @@ export function laraSsrUseFetch<T>(
             }
         },
         async onResponse({request, options, response}) {
-            console.log({'LARA SSR USEFETCH ON-RESPONSE' : response});
-            console.log({'LARA SSR USEFETCH ON-RESPONSE CODE' : response?._data?.code});
+
+            if(logEnabled){
+                console.log({'LARA SSR USEFETCH ON-RESPONSE' : response});
+            }
+
             let responseCode = response._data.code;
 
             //Perform on response callback

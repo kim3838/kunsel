@@ -11,7 +11,7 @@ export async function laraFetch<DataT, ErrorT>(
     if(import.meta.server)return;
 
     const debug = useNuxtApp().$debug as (key: string, payload: any) => void;
-    const log = false;
+    const logEnabled = false;
 
     const {
         onRequest: laraInterceptorOnRequest,
@@ -33,7 +33,8 @@ export async function laraFetch<DataT, ErrorT>(
     await $fetch(baseURL + path, {
         credentials: 'include',
         async onRequest({request, options}){
-            if(log){
+
+            if(logEnabled){
                 debug('LARA 0FETCH START', baseURL + path);
             }
 
@@ -44,7 +45,8 @@ export async function laraFetch<DataT, ErrorT>(
             );
         },
         async onRequestError({ request, options, error }) {
-            if(log){
+
+            if(logEnabled){
                 debug('LARA 0FETCH ERROR', error.message);
             }
 
@@ -55,7 +57,8 @@ export async function laraFetch<DataT, ErrorT>(
             );
         },
         async onResponse({request, options, response}) {
-            if(log){
+
+            if(logEnabled){
                 debug('LARA 0FETCH RESPONSE CODE', response?._data?.code);
             }
 
@@ -72,7 +75,7 @@ export async function laraFetch<DataT, ErrorT>(
         },
     }).catch((error) => {
 
-        if(log){
+        if(logEnabled){
             debug('LARA 0FETCH ERROR', error);
         }
     });

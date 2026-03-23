@@ -3,24 +3,35 @@ export default defineNuxtPlugin({
 
     async setup(nuxtApp){
         const {user, ssrFetchUser} = useAuth();
+        const logEnabled = false;
 
-        console.log('AUTH PLUGIN SETUP');
+        if(logEnabled){
+            console.log({
+                '04.AUTH PLUGIN': 'START'
+            });
+        }
 
-        console.log({
-            'Check user': user.value
-        });
+        if(logEnabled){
+            console.log({
+                'CHECK USER': user.value
+            });
+        }
 
         const userAuthenticatedOrDuringClientSideRendering: Boolean = (user.value !== undefined || import.meta.client);
 
-        console.log({
-            'Is client side': userAuthenticatedOrDuringClientSideRendering
-        });
+        if(logEnabled){
+            console.log({
+                'IS CLIENT SIDE': userAuthenticatedOrDuringClientSideRendering
+            });
+        }
 
         if (userAuthenticatedOrDuringClientSideRendering) return;
 
-        console.log({
-            'Ssr fetch user': 'start'
-        });
+        if(logEnabled){
+            console.log({
+                'SSR FETCH USER': 'PRE-START'
+            });
+        }
 
         //Fetch user on undefined user and server side rendering
         await ssrFetchUser();
