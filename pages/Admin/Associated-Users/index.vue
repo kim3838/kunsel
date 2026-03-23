@@ -347,7 +347,7 @@ const usersExecute = async () => {
             users.data = _get(response, '_data.values.data', []).map((user: TableRowT) => {
 
                 let emailVerified = _get(user, 'email_verified', false);
-                let emailVerificationShade = emailVerified ? 'info' : 'caution';
+                let emailVerificationShade = emailVerified ? 'info' : 'default';
 
                 return {
                     ...user,

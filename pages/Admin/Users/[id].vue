@@ -1,7 +1,7 @@
 <template>
     <div>
         <AdminWrapper>
-            <div class="mx-auto max-w-screen-xl">
+            <div class="mx-auto max-w-screen-md">
 
                 <DialogModal
                     :show="resolvedUserModal"
@@ -52,22 +52,22 @@
 
                     <div class="text-lg font-header">User</div>
 
-                    <div class="grid gap-2 grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 xl:grid-cols-6">
+                    <div class="grid gap-2 grid-cols-2 md:grid-cols-5">
                         <div>
                             <InputLabel :size="'sm'" value="Username"/>
                             <Input :disabled="!creatingAssociatedUser || disableActions" :size="'md'" v-model="username" type="text"/>
                         </div>
-                        <div class="lg:col-span-2">
+                        <div class="md:col-span-2">
                             <InputLabel :size="'sm'" :value="emailLabelComputed.label" :class="emailLabelComputed.class"/>
                             <Input :disabled="!creatingAssociatedUser || disableActions" :size="'md'" v-model="email" type="email"/>
                         </div>
-                        <div>
+                        <div class="md:col-span-2">
                             <InputLabel :size="'sm'" value="Role"/>
                             <MultiSelect :disabled="disableActions" :selection-max-viewable-line="10" :max-viewable-summary-count="1" drop-shadow :size="'md'" :options="roleOptions"/>
                         </div>
                     </div>
 
-                    <div class="grid gap-2 grid-cols-2 lg:grid-cols-5 xl:grid-cols-6">
+                    <div class="grid gap-2 grid-cols-2 md:grid-cols-4">
                         <div v-if="creatingAssociatedUser">
                             <InputLabel :size="'sm'" :value="'Password'"/>
                             <Input :disabled="disableActions" :size="'md'" v-model="password" type="password"/>

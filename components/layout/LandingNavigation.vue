@@ -60,9 +60,12 @@
                     <component
                         :is="navDrop"
                         v-if="isAuthenticated"
+                        navigation-mode
                         :size="navigationHeaderSize"
                         :drop-align="rightNavigationDropAlign"
                         :title="user?.name"
+                        :active-style="`clear-fluid`"
+                        :drop-active-style="`clear-fluid`"
                         :drop-options="navigationAccountLinks"
                     />
                     <NavDrop
