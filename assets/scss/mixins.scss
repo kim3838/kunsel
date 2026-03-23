@@ -3,6 +3,23 @@
   text-shadow: rgba(0, 0, 0, 1) 0 1px 2px;
 }
 
+.bg-film{
+  z-index: -1;
+  content: '';
+  position: absolute;
+  top:0;
+  bottom: 0;
+  left:0;
+  right:0;
+  background: none;
+  opacity: 0;
+}
+
+@keyframes initialBackgroundKeyFrames {
+  0% {opacity: 0;}
+  20% {opacity: 0.4;}
+  100% {opacity: 0.9;}
+}
 
 @keyframes rippleSlideTransition {
   0% {left: 0;}
