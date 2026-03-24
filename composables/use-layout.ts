@@ -495,6 +495,13 @@ export const useLayout = () => {
                             route_active: `${hrPayrollRouteSlug}-payroll-frequency-settings`
                         },
                         {
+                            key: `${hrPayrollRouteSlug}-external-tax-history`,
+                            type: 'link',
+                            title: 'External Tax History',
+                            to: `/${hrPayrollRouteSlug}/payroll/external-tax-history`,
+                            route_active: `${hrPayrollRouteSlug}-payroll-external-tax-history`
+                        },
+                        {
                             key: `${hrPayrollRouteSlug}-payroll-generate`,
                             type: 'link',
                             title: 'Generate',
