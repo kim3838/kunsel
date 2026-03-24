@@ -47,7 +47,7 @@
 
                             <div>
                                 <div class="flex items-center flex-wrap text-sm">
-                                    <Icon class="h-5 w-5" :name="'mdi:info-variant'"/>
+                                    <Icon class="h-6 w-6" :name="'mdi:info-variant'"/>
                                     Balance deduction behaves as leave claim, while balance addition is a moving forward balance
                                 </div>
                             </div>
