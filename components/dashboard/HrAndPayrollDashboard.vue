@@ -38,17 +38,17 @@
                     </div>
                 </div>
 
-                <div v-for="request in totalPendingRequestsMap" class="flex-auto lining-shadow rounded-sm tint-background p-4 min-w-12 min-h-20 flex flex-col items-start justify-start">
+                <div v-for="request in totalPendingRequestsMap" class="flex-auto lining-shadow rounded-sm tint-background p-4 min-w-12 min-h-20 flex flex-col items-center justify-center">
                     <div>
-                        <ThemeHeader class="text-lg">Pending</ThemeHeader>
-                        <div class="text-sm subtitle-color">{{request.label}}</div>
+                        <ThemeHeader class="text-lg">{{request.title}}</ThemeHeader>
+                        <div class="text-sm subtitle-color text-center">{{request.subtitle}}</div>
                     </div>
                     <UnorderedList
                         v-if="pendingApprovalStateTotalsPending"
                         :icon="'eos-icons:loading'"
                         :size="'lg'"
                         :label="''"/>
-                    <div v-else class="text-lg font-medium font-numeric">{{request.count}}</div>
+                    <div v-else class="text-2xl font-medium font-numeric">{{request.count}}</div>
                 </div>
             </div>
 
@@ -127,20 +127,24 @@ const totalPendingRequestsMap = computed(() => {
 
     return [
         {
-            label: 'Attendance adjust request',
+            title: 'Payroll workflow in progress',
+            subtitle: 'Pending payroll approval',
+            count: totalPendingPayroll.value,
+        },
+        {
+            title: 'Attendance adjust request',
+            subtitle: 'Pending attendance adjust request',
             count: totalPendingAttendanceAdjustment.value,
         },
         {
-            label: 'Overtime request',
+            title: 'Overtime request',
+            subtitle: 'Pending overtime',
             count: totalPendingOvertime.value,
         },
         {
-            label: 'Leave request',
+            title: 'Leave request',
+            subtitle: 'Pending leave',
             count: totalPendingLeave.value,
-        },
-        {
-            label: 'Payroll workflow in progress',
-            count: totalPendingPayroll.value,
         }
     ];
 })

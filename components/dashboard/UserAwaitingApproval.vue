@@ -54,7 +54,7 @@
             v-if="approvalStates.successful"
             :sup-headers="approvalStatesSupHeaders"
             :headers="approvalStatesHeaders"
-            :size="'md'"
+            :size="'lg'"
             :stripped="true"
             :landscape="true"
             :rows="approvalStates.data"

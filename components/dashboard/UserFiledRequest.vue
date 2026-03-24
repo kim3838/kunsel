@@ -51,7 +51,7 @@
             class="mb-2 "
             v-if="userFiledRequests.successful"
             :headers="userFiledRequestsHeaders"
-            :size="'md'"
+            :size="'lg'"
             :stripped="true"
             :landscape="true"
             :rows="userFiledRequests.data"
