@@ -227,7 +227,7 @@ export const useCosmetic = () => {
         commonColor,
         type,
 
-        primaryColor, primaryColor90, primaryColor80, primaryColor40,
+        primaryColor, primaryColor90, primaryColor80, primaryColor50, primaryColor40,
         secondaryColor,
         accentColor, accentColor80, accentColor70, accentColor40,
 

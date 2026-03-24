@@ -10,7 +10,7 @@
 <script setup lang="ts">
 const {
     appTheme,
-    primaryColor, primaryColor90, primaryColor80,
+    primaryColor, primaryColor90, primaryColor80, primaryColor50,
     accentColor80, accentColor70, accentColor40,
     neutralColor,
     textColor,
@@ -37,6 +37,7 @@ const headerClass = computed(() => {
         return {
             'default': 'header-dark',
             'gray': 'header-gray-dark',
+            'opaque': 'header-dark',
         }[props.type];
     }
 
@@ -44,12 +45,22 @@ const headerClass = computed(() => {
         return {
             'default': 'header-light',
             'gray': 'header-gray-light',
+            'opaque': 'fluid-appearance'
         }[props.type];
     }
 })
 </script>
 
 <style lang="scss" scoped>
+.fluid-appearance{
+    position: relative;
+    z-index: 1;
+    color: v-bind(textInvertColor) !important;
+    @extend .text-shadow;
+    overflow: hidden;
+    background: linear-gradient(to right, v-bind(primaryColor90) 20%, v-bind(primaryColor50) 60%, v-bind(primaryColor80) 85%, v-bind(primaryColor80) 100%);
+    @include fluid-gold-before($left: -35%, $opacity: 0.4);
+}
 .header-light{
     position: relative;
     z-index: 1;
