@@ -30,13 +30,18 @@ export const useAuth = () => {
     const {fetchAssociatedCompanies, storeAssociatedCompanies, fetchUserIsAdminInAnyCompany, resetUserAssociationStates} = useAssociation();
     const {fetchCommon, fetchOrganizationSelections, resetCommon} = useCommon();
     const debug = useNuxtApp().$debug as (key: string, payload: any) => void;
+    const debugEnabled = false;
 
     const ssrFetchUser = async () => {
         await laraSsrUseFetch("/api/user", {
             method: 'GET',
         }, {
             onSuccessResponse: async (request: RequestInfo, options: ResolvedFetchOptions, response: FetchResponse<any> | undefined) => {
-                console.log({'SSR FETCH USER RESPONSE DATA': _get(response, '_data', undefined)})
+
+                if(debugEnabled){
+                    console.log({'SSR FETCH USER RESPONSE DATA': _get(response, '_data', undefined)})
+                }
+
                 const userData = _get(response, '_data.values', undefined);
                 user.value = userData as User | undefined;
             }
