@@ -175,10 +175,11 @@ const fetchRequestable = async () => {
         onSuccessResponse: async (request, options, response) => {
             requestable.data = _get(response, '_data.values', {}) as RequestableT;
 
-            const fetchedRequestableCurrentApprovalState = _chain(requestable.data.approval_states)
-                .filter(approvalState => approvalState.current_state_flag == 1 && approvalState.id == props.approvalStatePayload?.id)
-                .first()
-                .value() as ApprovalStateT;
+            const fetchedRequestableCurrentApprovalState = requestable.data.approval_states?.find(
+                (approvalState) =>
+                    approvalState.current_state_flag == 1 &&
+                    approvalState.id == props.approvalStatePayload?.id
+            ) as ApprovalStateT;
 
             if(!_isEmpty(fetchedRequestableCurrentApprovalState)){
 
