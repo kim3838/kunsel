@@ -37,6 +37,9 @@
                 <div class="p-[3px]">{{cell.deduction}}</div>
             </template>
 
+            <template v-slot:cell.13th_month_previous_employer_total_nontaxable_bonus="{cell,slot}">
+                <div class="p-[3px]">{{cell['13th_month_previous_employer_total_nontaxable_bonus']}}</div>
+            </template>
             <template v-slot:cell.13th_month_is_prorated="{cell,slot}">
                 <div class="p-[3px]">{{cell['13th_month_is_prorated'] ? 'Yes' : 'No'}}</div>
             </template>
@@ -44,6 +47,15 @@
                 <div class="p-[3px]">{{cell['13th_month_is_projected'] ? 'Yes' : 'No'}}</div>
             </template>
 
+            <template v-slot:cell.withholding_tax_previous_employer_total_taxable="{cell,slot}">
+                <div class="p-[3px]">{{cell.withholding_tax_previous_employer_total_taxable}}</div>
+            </template>
+            <template v-slot:cell.withholding_tax_previous_employer_total_tax_withheld="{cell,slot}">
+                <div class="p-[3px]">{{cell.withholding_tax_previous_employer_total_tax_withheld}}</div>
+            </template>
+            <template v-slot:cell.withholding_tax_total_annual_taxable="{cell,slot}">
+                <div class="p-[3px]">{{cell.withholding_tax_total_annual_taxable}}</div>
+            </template>
             <template v-slot:cell.withholding_tax_withheld="{cell,slot}">
                 <div class="p-[3px]">{{cell.withholding_tax_withheld}}</div>
             </template>
@@ -141,6 +153,7 @@ const getSupHeaders = (componentValueType: number) => {
         TYPE.PH_BONUS_13TH_MONTH
     ].indexOf(componentValueType) >= 0){
         supHeaders = supHeaders.concat([
+            {text: 'External', colspan: 1, alignHeader: 'center'},
             {text: '', colspan: 2, alignHeader: 'center'},
             {text: 'Basic gross', colspan: 3, alignHeader: 'center'},
             {text: '13th month', colspan: 1, alignHeader: 'center'},
@@ -152,6 +165,7 @@ const getSupHeaders = (componentValueType: number) => {
         TYPE.PH_BONUS_13TH_MONTH_NEGATIVE_ADJUSTMENT,
     ].indexOf(componentValueType) >= 0){
         supHeaders = supHeaders.concat([
+            {text: 'External', colspan: 1, alignHeader: 'center'},
             {text: 'Actual 13th month', colspan: 2, alignHeader: 'center'},
             {text: 'Projected', colspan: 1, alignHeader: 'center'},
             {text: 'Adjustment', colspan: 1, alignHeader: 'center'},
@@ -163,6 +177,7 @@ const getSupHeaders = (componentValueType: number) => {
         TYPE.PH_WITHHOLDING_TAX_DEFICIT,
     ].indexOf(componentValueType) >= 0){
         supHeaders = supHeaders.concat([
+            {text: 'External', colspan: 2, alignHeader: 'center'},
             {text: '', colspan: 1, alignHeader: 'center'},
             {text: 'Tax', colspan: 2, alignHeader: 'center'},
             {text: 'Adjustment', colspan: 1, alignHeader: 'center'},
@@ -251,6 +266,7 @@ const getHeaders = (componentValueType: number) => {
         TYPE.PH_BONUS_13TH_MONTH
     ].indexOf(componentValueType) >= 0){
         headers = headers.concat([
+            { text: 'Nontaxable bonus', value: '13th_month_previous_employer_total_nontaxable_bonus', isNumeric: true, alignData: 'right', alignHeader: 'center'},
             { text: 'Prorated', value: '13th_month_is_prorated', alignData: 'left'},
             { text: 'Projected', value: '13th_month_is_projected', alignData: 'left'},
             { text: 'Actual', value: '13th_month_actual_basic_gross', isNumeric: true, alignData: 'right', alignHeader: 'center'},
@@ -265,6 +281,7 @@ const getHeaders = (componentValueType: number) => {
         TYPE.PH_BONUS_13TH_MONTH_NEGATIVE_ADJUSTMENT,
     ].indexOf(componentValueType) >= 0){
         headers = headers.concat([
+            { text: 'Nontaxable bonus', value: '13th_month_previous_employer_total_nontaxable_bonus', isNumeric: true, alignData: 'right', alignHeader: 'center'},
             { text: 'Total basic gross', value: '13th_month_actual_total_basic_gross', isNumeric: true, alignData: 'right', alignHeader: 'center'},
             { text: 'Total / 12', value: '13th_month_actual', isNumeric: true, alignData: 'right', alignHeader: 'center'},
             { text: '', value: '13th_month_projected', isNumeric: true, alignData: 'right', alignHeader: 'center'},
@@ -277,6 +294,9 @@ const getHeaders = (componentValueType: number) => {
         TYPE.PH_WITHHOLDING_TAX_DEFICIT,
     ].indexOf(componentValueType) >= 0){
         headers = headers.concat([
+            { text: 'Taxable', value: 'withholding_tax_previous_employer_total_taxable', isNumeric: true, alignData: 'right', alignHeader: 'center'},
+            { text: 'Withheld', value: 'withholding_tax_previous_employer_total_tax_withheld', isNumeric: true, alignData: 'right', alignHeader: 'center'},
+
             { text: 'Annual Taxable', value: 'withholding_tax_total_annual_taxable', isNumeric: true, alignData: 'right', alignHeader: 'center'},
             { text: 'Withheld', value: 'withholding_tax_withheld', isNumeric: true, alignData: 'right', alignHeader: 'center'},
             { text: 'Actual', value: 'withholding_tax_actual_annual_tax', isNumeric: true, alignData: 'right', alignHeader: 'center'},
