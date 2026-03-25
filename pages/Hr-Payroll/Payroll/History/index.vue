@@ -165,6 +165,7 @@
                             <Label :size="'md'" :type="'clear'" shade :label="`Employer Contr. Share: ${totalEmployerContributionShare}`" />
                             <Label :size="'md'" :type="'clear'" shade :label="`Taxable: ${totalTaxable}`" />
                             <Label :size="'md'" :type="'clear'" shade :label="`Tax Withheld: ${totalTaxWithheld}`" />
+                            <Label :size="'md'" :type="'clear'" shade :label="`Tax Refund: ${totalTaxRefund}`" />
                             <Label :size="'md'" :type="'clear'" shade :label="`Net: ${totalNet}`" />
                         </div>
                     </div>
@@ -390,6 +391,7 @@ const payrolls = reactive<DataTableT>({
 const totalEmployerContributionShare = ref(0);
 const totalTaxable = ref(0);
 const totalTaxWithheld = ref(0);
+const totalTaxRefund = ref(0);
 const totalNet = ref(0);
 
 let filters = reactive<{
@@ -483,6 +485,7 @@ const payrollsExecute = async() =>{
     totalEmployerContributionShare.value = 0;
     totalTaxable.value = 0;
     totalTaxWithheld.value = 0;
+    totalTaxRefund.value = 0;
     totalNet.value = 0;
     payrollsPending.value = true;
 
@@ -505,6 +508,7 @@ const payrollsExecute = async() =>{
             totalEmployerContributionShare.value = _get(payrollTotalsResponse, 'employer_contribution_share', 0);
             totalTaxable.value = _get(payrollTotalsResponse, 'taxable', 0);
             totalTaxWithheld.value = _get(payrollTotalsResponse, 'withholding_tax', 0);
+            totalTaxRefund.value = _get(payrollTotalsResponse, 'tax_refund', 0);
             totalNet.value = _get(payrollTotalsResponse, 'net', 0);
 
             let payrollsResponse = _get(response, '_data.values.payrolls', {});

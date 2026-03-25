@@ -59,6 +59,7 @@
                     <Label :size="'md'" :type="'clear'" shade :label="`Basic: ${totalBasicGross}`" />
                     <Label :size="'md'" :type="'clear'" shade :label="`Taxable: ${totalTaxable}`" />
                     <Label :size="'md'" :type="'clear'" shade :label="`Tax Withheld: ${totalTaxWithheld}`" />
+                    <Label :size="'md'" :type="'clear'" shade :label="`Tax Refund: ${totalTaxRefund}`" />
                     <Label :size="'md'" :type="'clear'" shade :label="`Net: ${totalNet}`" />
                 </div>
             </div>
@@ -241,6 +242,7 @@ const salaryStatements = reactive<DataTableT>({
 const totalBasicGross = ref(0);
 const totalTaxable = ref(0);
 const totalTaxWithheld = ref(0);
+const totalTaxRefund = ref(0);
 const totalNet = ref(0);
 
 let filters = reactive<{
@@ -321,6 +323,7 @@ const paginatePayrollSalaryStatements = async() =>{
     totalBasicGross.value = 0;
     totalTaxable.value = 0;
     totalTaxWithheld.value = 0;
+    totalTaxRefund.value = 0;
     totalNet.value = 0;
     salaryStatementsPending.value = true;
 
@@ -343,6 +346,7 @@ const paginatePayrollSalaryStatements = async() =>{
             totalBasicGross.value = _get(salaryStatementTotalsResponse, 'basic_gross', 0);
             totalTaxable.value = _get(salaryStatementTotalsResponse, 'taxable', 0);
             totalTaxWithheld.value = _get(salaryStatementTotalsResponse, 'withholding_tax', 0);
+            totalTaxRefund.value = _get(salaryStatementTotalsResponse, 'tax_refund', 0);
             totalNet.value = _get(salaryStatementTotalsResponse, 'net', 0);
 
             let salaryStatementsResponse = _get(response, '_data.values.salary_statements', {});

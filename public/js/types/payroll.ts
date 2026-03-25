@@ -16,9 +16,10 @@ export type PayrollT = {
     end_date: string,
     remarks: string,
     status: EnumOption,
-    total_net?: string,
-    total_withholding_tax?: string,
-    total_employer_contribution_share?: string,
+    total_net_formatted?: string,
+    total_withholding_tax_formatted?: string,
+    total_tax_refund_formatted?: string,
+    total_employer_contribution_share_formatted?: string,
     date_range_readable: string,
 }
 
@@ -48,6 +49,8 @@ export type SalaryStatementT = {
 
     employee_number: string,
     employee_full_name: string,
+    employee_department?: {name: string}
+    employee_designation?: {name: string}
     type: EnumOption,
     is_paid: boolean,
 

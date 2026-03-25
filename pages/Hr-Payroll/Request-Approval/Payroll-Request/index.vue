@@ -110,6 +110,9 @@
                         <template v-slot:cell.total_withholding_tax="{cell,slot}">
                             <div class="p-[3px]">{{cell.payroll?.total_withholding_tax}}</div>
                         </template>
+                        <template v-slot:cell.total_tax_refund="{cell,slot}">
+                            <div class="p-[3px]">{{cell.payroll?.total_tax_refund}}</div>
+                        </template>
                         <template v-slot:cell.total_net="{cell,slot}">
                             <div class="p-[3px]">{{cell.payroll?.total_net}}</div>
                         </template>
@@ -214,7 +217,7 @@ const payrollRequestsSupHeaders = reactive<TableSupHeaderT[]>([
 
     {text: 'Submitted by', colspan: 3,  alignHeader: 'left'},
 
-    {text: 'Payroll / Totals', colspan: 5,  alignHeader: 'left'},
+    {text: 'Payroll / Totals', colspan: 6,  alignHeader: 'left'},
 ]);
 
 const payrollRequestsHeaders = reactive<TableHeaderT[]>([
@@ -231,6 +234,7 @@ const payrollRequestsHeaders = reactive<TableHeaderT[]>([
     { text: 'Period', value: 'payroll_period', minWidth: '33px'},
     { text: 'Employer contr. share', value: 'total_employer_contribution_share', isNumeric: true, alignData: 'right', alignHeader: 'right'},
     { text: 'Tax Withheld', value: 'total_withholding_tax', isNumeric: true, alignData: 'right', alignHeader: 'right'},
+    { text: 'Tax Refund', value: 'total_tax_refund', isNumeric: true, alignData: 'right', alignHeader: 'right'},
     { text: 'Net Due', value: 'total_net', isNumeric: true, alignData: 'right', alignHeader: 'right'},
 ]);
 
