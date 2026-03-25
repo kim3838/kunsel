@@ -3,7 +3,7 @@ export const useSalaryStatement = () => {
     const headerSupFields = ref([
         {text: 'Gross', colspan: 2,  alignHeader: 'center'},
         {text: 'Contribution', colspan: 1,  alignHeader: 'center'},
-        {text: '', colspan: 2,  alignHeader: 'left'},
+        {text: 'Gross', colspan: 2,  alignHeader: 'center'},
         {text: '', colspan: 3,  alignHeader: 'left'},
     ]);
 
@@ -50,8 +50,8 @@ export const useSalaryStatement = () => {
     const asDetailTotalsHeaderSupFields = ref([
         {text: 'Gross', colspan: 2,  alignHeader: 'center'},
         {text: 'Contribution', colspan: 2,  alignHeader: 'center'},
-        {text: '', colspan: 2,  alignHeader: 'left'},
-        {text: '', colspan: 3,  alignHeader: 'left'},
+        {text: 'Gross', colspan: 2,  alignHeader: 'center'},
+        {text: '', colspan: 4,  alignHeader: 'left'},
     ]);
 
     const asDetailTotalsHeaderFields = ref([
@@ -65,6 +65,7 @@ export const useSalaryStatement = () => {
         { text: 'Nontaxable', value: 'total_nontaxable', isNumeric: true, alignData: 'right'},
 
         { text: 'Withholding Tax', value: 'total_withholding_tax', isNumeric: true, alignData: 'right'},
+        { text: 'Tax Refund', value: 'total_tax_refund', isNumeric: true, alignData: 'right'},
         { text: 'Deduction', value: 'total_deduction', isNumeric: true, alignData: 'right'},
         { text: 'Net', value: 'total_net', isNumeric: true, alignData: 'right'}
     ]);
