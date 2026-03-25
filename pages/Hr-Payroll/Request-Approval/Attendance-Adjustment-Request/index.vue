@@ -1149,6 +1149,8 @@ const creatingAttendanceAdjustmentInitializedAttendanceDate = async (value: stri
 
 const loadEditable = () => {
 
+    let debugEnabled = false;
+
     coreStore.resetServiceError();
 
     stagedAttendanceAdjustment.value = {
@@ -1156,7 +1158,7 @@ const loadEditable = () => {
         'ulid': _get(editPayload.value, 'ulid', null),
     };
 
-    if(process.env.NODE_ENV === 'development'){
+    if(debugEnabled && process.env.NODE_ENV === 'development'){
         attendanceDate.value = _get(editPayload.value, 'date', nuxtApp.$moment('2025-01-10').format("YYYY-MM-DD"));
     } else {
         attendanceDate.value = _get(editPayload.value, 'date', nuxtApp.$moment().format("YYYY-MM-DD"));

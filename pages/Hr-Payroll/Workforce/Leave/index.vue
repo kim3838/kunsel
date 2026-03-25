@@ -667,6 +667,8 @@ const editPayload = ref({});
 
 const put = (row: TableRowT | null = null) => {
 
+    let debugEnabled = false;
+
     coreStore.resetServiceError();
 
     if(row){
@@ -689,7 +691,7 @@ const put = (row: TableRowT | null = null) => {
         leaveEmployeeNumber.value = '';
         leaveEmployeeFullName.value = '';
 
-        if(process.env.NODE_ENV === 'development'){
+        if(debugEnabled && process.env.NODE_ENV === 'development'){
             leaveDateFrom.value = nuxtApp.$moment().format("YYYY-MM-DD");
             leaveDateTo.value = nuxtApp.$moment().format("YYYY-MM-DD");
         } else {

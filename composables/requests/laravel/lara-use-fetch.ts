@@ -14,13 +14,17 @@ export function laraUseFetch<T>(
         onResponse: laraInterceptorOnResponse
     } = laraInterceptor();
     const {baseURL} = useRuntimeConfig().public;
+    const logEnabled = false;
 
     return useFetch(baseURL + path, {
         credentials: 'include',
         watch: false,
         server: false,
         async onRequest({ request, options }){
-            console.log({'LARA USEFETCH' : 'START: ' + baseURL + path})
+
+            if(logEnabled){
+                console.log({'LARA USEFETCH' : 'START: ' + baseURL + path})
+            }
 
             await laraInterceptorOnRequest(
                 callbacks,
@@ -29,7 +33,10 @@ export function laraUseFetch<T>(
             );
         },
         async onRequestError({ request, options, error }) {
-            console.log({'LARA USEFETCH ERROR' : error.message});
+
+            if(logEnabled){
+                console.log({'LARA USEFETCH ERROR' : error.message});
+            }
 
             await laraInterceptorOnRequestError(
                 callbacks,
@@ -38,7 +45,10 @@ export function laraUseFetch<T>(
             );
         },
         async onResponse({request, options, response}) {
-            console.log({'LARA USEFETCH ON-RESPONSE CODE' : response?._data?.code});
+
+            if(logEnabled){
+                console.log({'LARA USEFETCH ON-RESPONSE CODE' : response?._data?.code});
+            }
 
             await laraInterceptorOnResponse(
                 callbacks,
