@@ -10,8 +10,8 @@ export const useFormStore = defineStore('form',() => {
         monthValue: moment().format('YYYY-MM'),
         monthLabel: moment().format('YYYY MMMM'),
 
-        attendanceDateFrom: moment('2025-01-01').startOf('month').startOf('day').format('YYYY-MM-DD'),
-        attendanceDateTo: moment('2026-02-28').endOf('month').endOf('day').format('YYYY-MM-DD'),
+        attendanceDateFrom: moment().startOf('month').startOf('day').format('YYYY-MM-DD'),
+        attendanceDateTo: moment().endOf('month').endOf('day').format('YYYY-MM-DD'),
 
         fromMonthValue: moment().startOf('year').format('YYYY-MM'),
         fromMonthLabel: moment().startOf('year').format('YYYY MMMM'),
@@ -19,10 +19,10 @@ export const useFormStore = defineStore('form',() => {
         toMonthLabel: moment().endOf('year').format('YYYY MMMM'),
     });
 
-    filters.fromMonthValue = moment('2025-01').format('YYYY-MM');
-    filters.fromMonthLabel = moment('2025-01').format('YYYY MMMM');
-    filters.toMonthValue = moment('2026-12').format('YYYY-MM');
-    filters.toMonthLabel = moment('2026-12').format('YYYY MMMM');
+    filters.fromMonthValue = moment().startOf('month').format('YYYY-MM');
+    filters.fromMonthLabel = moment().startOf('month').format('YYYY MMMM');
+    filters.toMonthValue = moment().endOf('month').format('YYYY-MM');
+    filters.toMonthLabel = moment().endOf('month').format('YYYY MMMM');
 
     const fromMonthValueComputed = computed(() => {
         return filters.fromMonthValue;
