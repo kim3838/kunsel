@@ -137,6 +137,7 @@ const isAdminOverview = computed(() => props.type === PAYROLL_SUB_INFO_TYPE.ADMI
 
 const payrollStatusShade = computed<LabelTypeT>(() => {
     return {
+        [PAYROLL_STATUS.GENERATING as number]: 'caution',
         [PAYROLL_STATUS.DRAFT as number]: 'clear',
         [PAYROLL_STATUS.WORKFLOW_IN_PROGRESS as number]: 'info',
         [PAYROLL_STATUS.COMPLETED as number]: 'success',

@@ -37,13 +37,17 @@ export const PAY_FREQUENCY_SEQUENCE_NAME: StringEnumInterface = {
 };
 
 export const PAYROLL_STATUS: NumericEnumInterface ={
+    GENERATING: 10,
     DRAFT : 100,
     WORKFLOW_IN_PROGRESS : 200,
     COMPLETED : 300,
 }
 
 export const PAYROLL_STATUS_NAME: StringEnumInterface = {
+    [PAYROLL_STATUS.GENERATING as number]: 'Generating',
     [PAYROLL_STATUS.DRAFT as number]: 'Draft',
+    [PAYROLL_STATUS.WORKFLOW_IN_PROGRESS as number]: 'Wip',
+    [PAYROLL_STATUS.COMPLETED as number]: 'Complete',
 };
 
 export const  PAYROLL_SUB_INFO_TYPE: NumericEnumInterface = {
