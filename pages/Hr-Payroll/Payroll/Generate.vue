@@ -82,7 +82,9 @@
 
                                 <div class="lining-shadow rounded-sm tint-background">
 
-                                    <div class="lining-shadow rounded-t-sm text-lg font-medium font-header px-4 py-2">{{stagedPayrollPayload.summary}}</div>
+                                    <div class="lining-shadow rounded-t-sm px-4 py-2">
+                                        <ThemeHeader :type="'gray'" class="text-lg">{{stagedPayrollPayload.summary}}</ThemeHeader>
+                                    </div>
 
                                     <div class="p-4">
 
@@ -133,7 +135,7 @@
                                             :icon="modalSubmitPending ? 'eos-icons:loading' : ''"
                                             :size="'md'"
                                             :disabled="modalDisableActions"
-                                            :label="modalSubmitPending ? 'Generating...' : 'Submit'"
+                                            :label="modalSubmitPending ? 'Please wait...' : 'Submit'"
                                             @click="preGeneratePayroll"/>
                                     </div>
                                 </div>
@@ -371,8 +373,8 @@
                                 </div>
                             </template>
                             <template v-slot:cell.payroll_status="{cell,slot}">
-                                <div class="p-[3px]">
-                                    {{cell.payroll?.status?.text}}
+                                <div v-if="cell.payroll" class="flex space-x-1 px-[0.3rem] items-center">
+                                    <Label :size="slot.labelSize" :type="cell?._payload?.label_shade?.value as LabelTypeT" shade :label="cell.payroll?.status?.text" />
                                 </div>
                             </template>
                         </DataTable>
@@ -457,7 +459,7 @@ const payrollInquiriesHeaders = reactive<TableHeaderT[]>([
     { text: 'Month', value: 'month_readable', minWidth: '85px'},
     { text: 'Start', value: 'start_readable', minWidth: '100px'},
     { text: 'End', value: 'end_readable', minWidth: '100px'},
-    { text: '', value: 'actions',},
+    { text: '', value: 'actions', minWidth: '100px'},
     { text: 'Status', value: 'payroll_status', minWidth: '85px'},
 ]);
 
@@ -528,6 +530,8 @@ const payrollInquiriesExecute = async() =>{
                     shade = 'info';
                 } else if(statusSummary == PAYROLL_STATUS.COMPLETED){
                     shade = 'success';
+                } else if(statusSummary == PAYROLL_STATUS.GENERATING){
+                    shade = 'caution';
                 }
 
                 let isSelectable = [PAYROLL_STATUS.DRAFT].indexOf(statusSummary) >= 0;
@@ -556,6 +560,8 @@ const payrollInquiriesExecute = async() =>{
                     shade = 'info';
                 } else if(statusSummary == PAYROLL_STATUS.COMPLETED){
                     shade = 'success';
+                } else if(statusSummary == PAYROLL_STATUS.GENERATING){
+                    shade = 'caution';
                 }
 
                 let isSelectable = [PAYROLL_STATUS.DRAFT].indexOf(statusSummary) >= 0;
@@ -711,13 +717,12 @@ const generatePayroll = async() =>{
             modalSubmitPending.value = false;
         },
         onSuccessResponse: async (request, options, response) => {
-            generatedPayroll.value = _get(response, '_data.values.payroll', {}) as PayrollT;
 
             useNuxtApp().$promptStore.setPrompt({
                 resetable: false,
                 icon: null,
-                title: `Payroll Draft Generated`,
-                message: `Payroll#: ${_get(generatedPayroll.value, 'number', 'Not found')} see preview below.`,
+                title: `Payroll run started`,
+                message: `We'll notify you once the payroll generation is completed.`,
                 action: {
                     callback: () => {},
                     label: 'Okay'

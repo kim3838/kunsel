@@ -525,6 +525,8 @@ const payrollsExecute = async() =>{
                     shade = 'info';
                 } else if(statusSummary == PAYROLL_STATUS.COMPLETED){
                     shade = 'success';
+                } else if(statusSummary == PAYROLL_STATUS.GENERATING){
+                    shade = 'caution';
                 }
 
                 return {
