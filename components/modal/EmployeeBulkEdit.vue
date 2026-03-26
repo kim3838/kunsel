@@ -153,6 +153,7 @@
                                 <div>
                                     <InputLabel :size="'sm'" value="Keep current"/>
                                     <RadioGroup
+                                        :key="payFrequencyOptionsKey"
                                         :disabled="disableActions"
                                         :selections="payFrequencyKeepCurrentSelection"
                                         :size="'md'"
@@ -262,6 +263,12 @@ const rebuildSelections = (selection: string[] = []) => {
             managerOptions, managerOptionsKey, SELECT.SINGLE_PAGINATED
         );
     }
+
+    if(_isEmpty(selection) || selection.indexOf('pay_frequency') >= 0){
+        common.rebuildSelectionsOnSelectedCompanyChanged(
+            payFrequencyOptions, payFrequencyOptionsKey, SELECT.SINGLE_STATIC, companyOrganizationSelections.value.pay_frequencies
+        );
+    }
 }
 
 const emit = defineEmits(['completed']);
@@ -325,6 +332,7 @@ const designationOptions = reactive({
 const payFrequencyKeepCurrentComputed = computed(() => {return payFrequencyKeepCurrent.value == 1;})
 const payFrequencyKeepCurrent = ref(1);
 const payFrequencyKeepCurrentSelection = reactive([{text : 'Yes', value: 1}, {text : 'No', value: 0},]);
+const payFrequencyOptionsKey = shallowRef(0);
 const payFrequencyOptions = reactive({
     search: '',
     selection: companyOrganizationSelections.value.pay_frequencies,

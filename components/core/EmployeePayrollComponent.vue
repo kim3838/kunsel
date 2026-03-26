@@ -307,6 +307,7 @@ import type {PayFrequencyOptionT} from "@/public/js/common/type";
 const companyOrganizationSelections = companyOrganizationSelectionsState();
 const {isAuthenticated} = useAuth();
 const nuxtApp = useNuxtApp();
+const common = useCommon();
 const {
     updatedAssociatedCompanyFlag
 } = storeToRefs(nuxtApp.$associationStore);
@@ -317,9 +318,19 @@ const {
 
 watch(updatedAssociatedCompanyFlag, async (newValue) => {
     if(isAuthenticated.value && selectedAssociatedCompanyId.value){
+        rebuildSelections();
         await preSelectPayFrequency();
     }
 });
+
+const rebuildSelections = (selection: string[] = []) => {
+
+    if(_isEmpty(selection) || selection.indexOf('pay_frequency') >= 0){
+        common.rebuildSelectionsOnSelectedCompanyChanged(
+            payFrequencyOptions, payFrequencyOptionsKey, SELECT.SINGLE_STATIC, companyOrganizationSelections.value.pay_frequencies
+        );
+    }
+};
 
 const props = defineProps({
     creatingOrEditing: {
