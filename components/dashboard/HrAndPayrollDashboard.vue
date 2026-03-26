@@ -8,7 +8,7 @@
 
                 <div class="flex-auto lining-shadow rounded-sm tint-background p-4 min-w-max flex flex-col items-start gap-2">
                     <div class="flex flex-col items-start justify-start gap-2">
-                        <ThemeHeader class="text-lg">Recent payroll</ThemeHeader>
+                        <ThemeHeader :type="'gray'" class="text-lg">Recent payroll</ThemeHeader>
 
                         <div class="flex flex-row gap-1 items-start">
                             <Label v-if="recentPayroll.payroll" :size="'md'" :type="recentPayroll?._payload?.label_shade?.value as LabelTypeT" shade :label="recentPayroll.payroll?.status?.text" />
@@ -24,7 +24,7 @@
 
                 <div class="flex-auto lining-shadow rounded-sm tint-background p-4 min-w-max flex flex-col items-start gap-2">
                     <div class="flex flex-col items-start justify-start gap-2">
-                        <ThemeHeader class="text-lg">Current payroll</ThemeHeader>
+                        <ThemeHeader :type="'gray'" class="text-lg">Current payroll</ThemeHeader>
 
                         <div class="flex flex-row gap-1 items-start">
                             <Label v-if="currentPayroll.payroll" :size="'md'" :type="currentPayroll?._payload?.label_shade?.value as LabelTypeT" shade :label="currentPayroll.payroll?.status?.text" />
@@ -40,7 +40,7 @@
 
                 <div v-for="request in totalPendingRequestsMap" class="flex-auto lining-shadow rounded-sm tint-background p-4 min-w-12 min-h-20 flex flex-col items-center justify-center">
                     <div>
-                        <ThemeHeader class="text-lg">{{request.title}}</ThemeHeader>
+                        <ThemeHeader :type="'gray'" class="text-lg">{{request.title}}</ThemeHeader>
                         <div class="text-sm subtitle-color text-center">{{request.subtitle}}</div>
                     </div>
                     <UnorderedList
@@ -57,7 +57,7 @@
                 <!-- UR -->
                 <div class="lining-shadow rounded-sm grow tint-background">
                     <div class="lining-shadow rounded-t-sm px-4 py-2">
-                        <ThemeHeader class="text-lg">My Requests</ThemeHeader>
+                        <ThemeHeader :type="'gray'" class="text-lg">My Requests</ThemeHeader>
                     </div>
 
                     <div class="p-4 max-h-[408px] overflow-y-auto">
@@ -69,7 +69,7 @@
                 <!-- AP -->
                 <div class="lining-shadow rounded-sm grow tint-background">
                     <div class="lining-shadow rounded-t-sm px-4 py-2">
-                        <ThemeHeader class="text-lg">Awaiting my approval</ThemeHeader>
+                        <ThemeHeader :type="'gray'" class="text-lg">Awaiting my approval</ThemeHeader>
                     </div>
 
                     <div class="p-4 max-h-[408px] overflow-y-auto">
@@ -133,17 +133,17 @@ const totalPendingRequestsMap = computed(() => {
         },
         {
             title: 'Attendance adjust request',
-            subtitle: 'Pending attendance adjust request',
+            subtitle: 'Pending attendance adjust approval',
             count: totalPendingAttendanceAdjustment.value,
         },
         {
             title: 'Overtime request',
-            subtitle: 'Pending overtime',
+            subtitle: 'Pending overtime approval',
             count: totalPendingOvertime.value,
         },
         {
             title: 'Leave request',
-            subtitle: 'Pending leave',
+            subtitle: 'Pending leave approval',
             count: totalPendingLeave.value,
         }
     ];
