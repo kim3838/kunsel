@@ -13,7 +13,7 @@
 
                         <div class="mt-4 space-y-2">
 
-                            <table class="border-separate font-sans">
+                            <table class="border-separate">
                                 <tbody>
                                 <tr><td>Number:</td><td class="pl-2">{{resolvedAccount.number}}</td></tr>
                                 <tr><td>Email:</td><td class="pl-2">{{resolvedAccount.email}}</td></tr>

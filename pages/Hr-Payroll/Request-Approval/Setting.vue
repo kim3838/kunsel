@@ -1,7 +1,7 @@
 <template>
     <div>
         <DefaultWrapper>
-            <div class="mx-auto max-w-screen-lg">
+            <div class="mx-auto max-w-screen-md">
 
                 <DialogModal
                     :show="editing"

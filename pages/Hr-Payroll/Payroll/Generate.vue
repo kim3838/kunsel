@@ -1,7 +1,7 @@
 <template>
     <div>
         <DefaultWrapper>
-            <div class="mx-auto max-w-screen-2xl">
+            <div class="mx-auto max-w-screen-lg">
 
                 <div class="space-y-2 p-[20px]">
 
@@ -722,7 +722,7 @@ const generatePayroll = async() =>{
                 resetable: false,
                 icon: null,
                 title: `Payroll run started`,
-                message: `We'll notify you once the payroll generation is completed.`,
+                message: `You’ll receive a notification as soon as payroll generation is complete. You can also refresh payroll periods to verify.`,
                 action: {
                     callback: () => {},
                     label: 'Okay'

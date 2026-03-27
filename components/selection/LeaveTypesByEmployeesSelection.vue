@@ -1,7 +1,7 @@
 <template>
     <div :class="[compact ? '' : 'px-[20px]']">
         <form @submit.prevent="paginate(1, clearSelectionOnFormSubmit)" class="space-y-2" :class="[compact ? '' : 'pb-[20px]']">
-            <div class="grid gap-2 grid-cols-3 sm:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
+            <div class="grid gap-2 grid-cols-3 sm:grid-cols-4 lg:grid-cols-5">
                 <div>
                     <InputLabel :size="'sm'" value="Search" />
                     <Input :size="'md'" ref="searchInput" v-model="filters.search.keyword" class="w-full" placeholder="Search" :disabled="disableActions" type="text"/>
@@ -26,10 +26,7 @@
                     <InputLabel :size="'sm'" value="Designation" />
                     <MultiSelect :key="designationOptionsKey" glint drop-shadow :selection-max-viewable-line="15" :size="'md'" :options="designationOptions" :disabled="disableActions" :icon="'ic:baseline-inbox'"/>
                 </div>
-            </div>
-
-            <div class="grid gap-2 grid-cols-2 sm:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
-                <div class="col-span-2">
+                <div>
                     <InputLabel :size="'sm'" value="Assigned Leave Type" />
                     <MultiSelectPaginated
                         :key="assignedLeaveTypeSelectionsOptionsKey"
@@ -42,7 +39,7 @@
                         :payload="assignedLeaveTypeSelectionsOptions"
                     />
                 </div>
-                <div class="col-span-2">
+                <div>
                     <InputLabel :size="'sm'" value="Not Assigned Leave Type" />
                     <MultiSelectPaginated
                         :key="notAssignedLeaveTypeSelectionsOptionsKey"
