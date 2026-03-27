@@ -61,6 +61,7 @@
 
                     <div class="flex flex-row flex-wrap gap-2 items-center min-h-8">
                         <Button class="w-min" ref="submitButton" type="submit" :disabled="disableActions" :size="'md'" :icon="disableActions ? 'eos-icons:loading' : 'mdi:data'" :label="disableActions ? 'Loading' : 'Load'"></Button>
+                        <Button v-if="payrolls.successful" class="w-min" type="button" :disabled="disableActions" :size="'md'" :variant="'flat'" :icon="'ri:file-download-line'" @click="exportCsv" :override="{font_family_class: 'font-[Prociono]'}" :label="'Export .csv'"></Button>
                         <div class="h-8 flex flex-row items-center scaffold-border px-2">
                             <label class="flex items-center">
                                 <Checkbox
@@ -271,6 +272,7 @@ import type {LabelTypeT} from "@/public/js/types/theme";
 import type {PayrollT} from "@/public/js/types/payroll";
 import {storeToRefs} from "pinia";
 import {useClipboard } from '@vueuse/core'
+import {withQuery} from "ufo";
 
 useHead({titleTemplate: (titleChunk) => {return `Payrolls`}});
 definePageMeta({middleware: ['auth', 'verified', 'admin-of-selected-company']});
@@ -553,6 +555,38 @@ const payrollsExecute = async() =>{
     }, false);
 }
 payrollsExecute();
+
+const exportCsv = async () => {
+
+    if(import.meta.server || !selectedAssociatedCompanyAccountId.value|| !selectedAssociatedCompanyId.value){
+        return;
+    }
+
+    let params = {
+        filters: {
+            account_id: selectedAssociatedCompanyAccountId.value,
+            company_ids: [selectedAssociatedCompanyId.value],
+            search: filters.search.keyword,
+            from_month: formStore.filters.fromMonthValue,
+            to_month: formStore.filters.toMonthValue,
+            pay_frequencies: payFrequencyOptions.selected,
+            frequency_sequences: payFrequencySequenceOptions.selected,
+        },
+        account_id: selectedAssociatedCompanyAccountId.value,
+        company_id: selectedAssociatedCompanyId.value,
+    }
+
+    const urlWithParams = withQuery('/api/payrolls-export', params)
+
+    await laraBlobFetch({
+        path: urlWithParams,
+        filename: 'download.csv',
+        action: 'download'
+    }, {
+        onResponse: () => {},
+        onSuccessResponse: () => {}
+    });
+}
 
 function paginate(page = 1, clearSelection = false){
     clearTimeout(filters.search.callback);
