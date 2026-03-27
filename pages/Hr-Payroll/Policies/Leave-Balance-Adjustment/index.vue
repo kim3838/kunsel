@@ -225,11 +225,11 @@
 </template>
 
 <script setup lang="ts">
-import type {DataTableT, TableHeaderT, TableRowT, TableSupHeaderT} from "~/public/js/types/data";
-import type {EnumOption, EnumSelection, StringEnumInterface} from "~/public/js/common/type";
-import type {SelectDataType} from "~/public/js/types/form";
-import type {DateTimePickerOptionsT} from "~/public/js/datetimepicker/type";
-import type {SingleSelectPaginatedInstance} from "~/public/js/types/component-instance";
+import type {DataTableT, TableHeaderT, TableRowT, TableSupHeaderT} from "@/public/js/types/data";
+import type {EnumOption, EnumSelection, StringEnumInterface} from "@/public/js/common/type";
+import type {SelectDataType} from "@/public/js/types/form";
+import type {DateTimePickerOptionsT} from "@/public/js/datetimepicker/type";
+import type {SingleSelectPaginatedInstance} from "@/public/js/types/component-instance";
 import {storeToRefs} from "pinia";
 
 useHead({titleTemplate: (titleChunk) => {return `Leave Balance Adjustments`}});

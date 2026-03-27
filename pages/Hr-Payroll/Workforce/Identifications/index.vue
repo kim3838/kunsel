@@ -156,7 +156,7 @@
 <script setup lang="ts">
 import {storeToRefs} from "pinia";
 import type {DataTableT, TableHeaderT, TableRowT, TableSupHeaderT} from "@/public/js/types/data";
-import type {EmployeeSelectionItemT, EmployeeT} from "~/public/js/types/employee";
+import type {EmployeeSelectionItemT, EmployeeT} from "@/public/js/types/employee";
 
 useHead({titleTemplate: (titleChunk) => {return `Employee Identifications`}});
 definePageMeta({middleware: ['auth', 'verified', 'admin-of-selected-company']});

@@ -36,6 +36,24 @@
                         :label="'+63 00000 00000'"/>
                 </div>
             </div>
+
+            <div class="grow-0 neutral-border grow p-2">
+                <ThemeHeader :type="'gray'" class="text-lg">Core Modules</ThemeHeader>
+
+                <div class="mt-2 space-y-2">
+                    <UnorderedList
+                        class="flex"
+                        :size="listSize"
+                        :icon="'icon-park-outline:coordinate-system'"
+                        :label="'HR & payroll'"/>
+
+                    <UnorderedList
+                        class="flex"
+                        :size="listSize"
+                        :icon="'mdi:button-cursor'"
+                        :label="'Employee self-service portal'"/>
+                </div>
+            </div>
         </div>
     </div>
 </template>
