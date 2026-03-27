@@ -3,13 +3,13 @@
 
         <div v-if="topRuleDivider"></div>
 
-        <div class="space-y-16 pt-16">
+        <div class="space-y-8" :class="isAuthenticated ? 'pt-16' : ''">
 
             <LandingLinks v-if="landingLinks" />
 
             <div v-if="navigationLinks.length" class="mx-auto max-w-screen-lg">
 
-                <div class="flex flex-wrap gap-4">
+                <div class="neutral-border neutral-border flex flex-wrap gap-4">
 
                     <div v-for="navigationLink in navigationLinks" :key="navigationLink.key" class="flex-grow p-2 text-left">
                         <p class="text-lg font-medium font-business">
@@ -39,7 +39,7 @@
                 </div>
             </div>
 
-            <div class="mx-auto max-w-screen-lg mb-4" :class="footerClass">
+            <div class="neutral-border mx-auto max-w-screen-lg mb-4" :class="footerClass">
 
                 <div class="p-2">
                     <div class="flex flex-row flex-wrap justify-start items-center">

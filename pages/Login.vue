@@ -1,7 +1,8 @@
 <template>
     <div>
         <LandingWrapper>
-            <div class="mx-auto pt-4 max-w-screen-2xl">
+            <div class="mx-auto pt-4">
+
                 <div class="min-h-120 flex flex-row items-center justify-center lg:px-10 gap-20">
 
                     <AccentFrame class="h-[360px] max-w-min mx-auto lg:mx-0 ">
@@ -139,4 +140,12 @@ function handleLogin(){
 
 <style scoped>
 
+.hero-bg {
+    background-blend-mode: multiply;
+    background-repeat: no-repeat;
+    background-position: 50%;
+    background-size: cover;
+    background-image: url(/images/bg/background.webp);
+    background-color: rgb(55 65 81/0.6);
+}
 </style>
