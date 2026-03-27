@@ -1,16 +1,16 @@
 <template>
     <div class="flex">
-        <EmploymentProfileModal
+        <EmployeeIdentificationModal
             v-model:creatingOrEditing="proxyCreatingOrEditing"
             v-model:employeePayload="employeePayload"
             v-model:editPayloadIndex="editIndex"
             v-model:editPayload="editPayload"
-            @resolved="employmentProfileModalResolved"
-        ></EmploymentProfileModal>
+            @resolved="employeeIdentificationModalResolved"
+        ></EmployeeIdentificationModal>
 
         <div class="flex-1 lining-shadow rounded-sm tint-background">
 
-            <div v-if="!isolated" class="lining-shadow rounded-t-sm text-lg font-medium font-header px-4 py-2">Employment Profiles</div>
+            <div v-if="!isolated" class="lining-shadow rounded-t-sm text-lg font-medium font-header px-4 py-2">Identifications</div>
 
             <div class="p-4">
 
@@ -19,14 +19,14 @@
                     <span class="font-semibold">Employee Ulid:</span> {{employeeUlid}}<br>
                     <span class="font-semibold">Edit Payload Index:</span> {{editIndex}}<br>
                     <span class="font-semibold">Props Disable Actions:</span> {{props.disableActions}}<br>
-                    <span class="font-semibold">Employment Profiles:</span> {{employmentProfilesData}}<br>
-                    <span class="font-semibold">Employment Profiles[1]:</span> {{employmentProfilesData[1]}}<br>
-                    <span class="font-semibold">Selected Employment Profiles:</span> {{selectedEmploymentProfiles}}<br>
+                    <span class="font-semibold">Employment Profiles:</span> {{employeeIdentificationsData}}<br>
+                    <span class="font-semibold">Employment Profiles[1]:</span> {{employeeIdentificationsData[1]}}<br>
+                    <span class="font-semibold">Selected Employment Profiles:</span> {{selectedEmployeeIdentificationsData}}<br>
                 </div>
 
                 <div class="grid grid-cols-1 md:gap-2 lg:grid-cols-1">
                     <div class="space-y-2">
-                        <div v-if="employmentProfilesSuccessful" class="inline-flex gap-2 items-center">
+                        <div v-if="employeeIdentificationsSuccessful" class="inline-flex gap-2 items-center">
                             <Button
                                 class="w-min"
                                 :variant=" 'outline'"
@@ -49,7 +49,7 @@
                                 :size="'sm'"
                                 :icon="'ic:sharp-restart-alt'"
                                 :disabled="disableActions"
-                                @click="employmentProfilesExecute" />
+                                @click="employeeIdentificationsExecute" />
                             <UnorderedList
                                 v-if="disableActions"
                                 :icon="'eos-icons:loading'"
@@ -57,17 +57,17 @@
                                 :label="'Please wait...'"/>
                         </div>
 
-                        <div v-if="!employmentProfilesSuccessful" class="flex flex-row flex-wrap gap-2 items-center min-h-8">
-                            <Label invert :size="'md'" :type="'danger'" :label="employmentProfilesMessage" />
+                        <div v-if="!employeeIdentificationsSuccessful" class="flex flex-row flex-wrap gap-2 items-center min-h-8">
+                            <Label invert :size="'md'" :type="'danger'" :label="employeeIdentificationsMessage" />
                         </div>
 
                         <DataTable
-                            v-if="employmentProfilesSuccessful"
+                            v-if="employeeIdentificationsSuccessful"
                             :headers="employmentProfileHeaders"
                             :size="'lg'"
-                            :rows="employmentProfilesData"
+                            :rows="employeeIdentificationsData"
                             :disabled="disableDataTable"
-                            v-model="selectedEmploymentProfiles"
+                            v-model="selectedEmployeeIdentificationsData"
                             selection>
                             <template v-slot:cell.action="{cell,slot, headerIndex, rowIndex}">
                                 <div class="h-[32px] w-full flex items-center gap-2" :class="disableActions ? 'pointer-events-none' : ''">
@@ -87,20 +87,8 @@
                                     </div>
                                 </div>
                             </template>
-                            <template v-slot:cell.status="{cell, slot, scrollReference}">
-                                <div class="p-[3px]">{{cell.status.text}}</div>
-                            </template>
-                            <template v-slot:cell.employment_type="{cell, slot, scrollReference}">
-                                <div class="p-[3px]">{{cell.employment_type.text}}</div>
-                            </template>
-                            <template v-slot:cell.end_of_service_type="{cell, slot, scrollReference}">
-                                <div class="p-[3px]">{{cell.end_of_service_type?.text}}</div>
-                            </template>
-                            <template v-slot:cell.start_date="{cell, slot, scrollReference}">
-                                <div class="p-[3px]">{{cell.start_date_readable}}</div>
-                            </template>
-                            <template v-slot:cell.end_date="{cell, slot, scrollReference}">
-                                <div class="p-[3px]">{{cell.end_date_readable}}</div>
+                            <template v-slot:cell.type="{cell, slot, scrollReference}">
+                                <div class="p-[3px]">{{cell.type.text}}</div>
                             </template>
                         </DataTable>
                     </div>
@@ -135,11 +123,11 @@ const props = defineProps({
             return {};
         }
     },
-    employmentProfilesPending: {
+    employeeIdentificationsPending: {
         type: Boolean,
         default: false,
     },
-    employmentProfilesData: {
+    employeeIdentificationsData: {
         type: Array,
         default: () => {
             return [];
@@ -159,8 +147,8 @@ const employeePayload = toRef(props, 'childComponentEmployeePayload');
 
 const emit = defineEmits([
     'update:creatingOrEditing',
-    'update:employmentProfilesPending',
-    'update:employmentProfilesData',
+    'update:employeeIdentificationsPending',
+    'update:employeeIdentificationsData',
     'resolved'
 ]);
 
@@ -175,10 +163,10 @@ const proxyCreatingOrEditing = computed({
 
 watch(() => props.childComponentEmployeePayload, async (employeePayload) => {
 
-    if(props.isolated && Boolean(employeePayload.id) && props.employmentProfilesPending){
+    if(props.isolated && Boolean(employeePayload.id) && props.employeeIdentificationsPending){
 
-        await employmentProfilesExecute();
-        emit('update:employmentProfilesPending', false);
+        await employeeIdentificationsExecute();
+        emit('update:employeeIdentificationsPending', false);
     }
 });
 
@@ -208,28 +196,26 @@ const createOrEdit = (attributes = {}, rowIndex = -1) => {
 //DataTable
 const employmentProfileHeaders = reactive<TableHeaderT[]>([
     { text: '', value: 'action'},
-    { text: 'Status', value: 'status'},
-    { text: 'Employment Type', value: 'employment_type'},
-    { text: 'Start Date', value: 'start_date'},
-    { text: 'End Of Service Type', value: 'end_of_service_type'},
-    { text: 'End Date', value: 'end_date'},
+    { text: 'Type', value: 'type'},
+    { text: 'Number', value: 'number'},
+    { text: 'Readable number', value: 'readable_number'},
 ]);
 
-const employmentProfilesData = ref([]);
-const employmentProfilesSuccessful = ref(true);
-const employmentProfilesMessage = ref('');
-const selectedEmploymentProfiles = ref([]);
-const employmentProfilesPending = ref(false);
-const employmentProfilesExecute = async () => {
+const employeeIdentificationsData = ref([]);
+const employeeIdentificationsSuccessful = ref(true);
+const employeeIdentificationsMessage = ref('');
+const selectedEmployeeIdentificationsData = ref([]);
+const employeeIdentificationsPending = ref(false);
+const employeeIdentificationsExecute = async () => {
 
     if(import.meta.server || creatingEmployee.value){
-        emit('update:employmentProfilesPending', false);
+        emit('update:employeeIdentificationsPending', false);
         return;
     }
 
-    employmentProfilesPending.value = true;
+    employeeIdentificationsPending.value = true;
 
-    await laraFetch(`/api/employee-employment-profiles/${employeeId.value}`, {
+    await laraFetch(`/api/employee-employee-identifications/${employeeId.value}`, {
         method: 'GET',
         params: {
             account_id: selectedAssociatedCompanyAccountId.value,
@@ -237,38 +223,38 @@ const employmentProfilesExecute = async () => {
         }
     },{
         onRequestError: () => {
-            employmentProfilesPending.value = false;
-            emit('update:employmentProfilesPending', false);
+            employeeIdentificationsPending.value = false;
+            emit('update:employeeIdentificationsPending', false);
         },
         onResponse: (request, options, response) => {
-            employmentProfilesPending.value = false;
-            emit('update:employmentProfilesPending', false);
-            employmentProfilesSuccessful.value = _get(response, '_data.successful', false);
-            employmentProfilesMessage.value = _get(response, '_data.message', '');
+            employeeIdentificationsPending.value = false;
+            emit('update:employeeIdentificationsPending', false);
+            employeeIdentificationsSuccessful.value = _get(response, '_data.successful', false);
+            employeeIdentificationsMessage.value = _get(response, '_data.message', '');
         },
         onSuccessResponse: async (request, options, response) => {
-            employmentProfilesData.value = _get(response, '_data.values.employment_profiles', []);
-            emit('update:employmentProfilesData', employmentProfilesData.value);
+            employeeIdentificationsData.value = _get(response, '_data.values.identifications', []);
+            emit('update:employeeIdentificationsData', employeeIdentificationsData.value);
         }
     }, false);
 }
 
 if(!props.isolated && !creatingEmployee.value){
-    await employmentProfilesExecute();
+    await employeeIdentificationsExecute();
 }
 
 const disableActions = computed(() => {
-    return employmentProfilesPending.value || proxyCreatingOrEditing.value || deleting.value || props.disableActions;
+    return employeeIdentificationsPending.value || proxyCreatingOrEditing.value || deleting.value || props.disableActions;
 });
 const disableDataTable = computed(() => {
-    return employmentProfilesPending.value || proxyCreatingOrEditing.value || deleting.value || props.disableActions;
+    return employeeIdentificationsPending.value || proxyCreatingOrEditing.value || deleting.value || props.disableActions;
 });
 
 const deleteSelected = async () => {
 
     let selectedIds: number[] = [];
 
-    selectedIds = selectedEmploymentProfiles.value;
+    selectedIds = selectedEmployeeIdentificationsData.value;
 
     if(_isEmpty(selectedIds)){
         return;
@@ -276,70 +262,97 @@ const deleteSelected = async () => {
 
     deleting.value = true;
 
-    let batchDelete: Promise<any>[] = [];
+    await laraFetch("/api/employee-identifications", {
+        method: 'DELETE',
+        body: {
+            account_id: selectedAssociatedCompanyAccountId.value,
+            company_id: selectedAssociatedCompanyId.value,
+            employee_identification_ids: selectedIds,
+        },
+    },{
+        onRequestError: (request, options, error) => {
+            deleting.value = false;
+        },
+        onResponse: () => {
+            deleting.value = false;
+        },
+        onSuccessResponse: async (request, options, response) => {
 
-    selectedIds.forEach((id) => {
-        batchDelete.push(
-            new Promise((resolve, reject) => {
-                laraFetch(`/api/employment-profile/${id}`, {
-                    method: 'DELETE',
-                    body:{
-                        account_id: selectedAssociatedCompanyAccountId.value,
-                        company_id: selectedAssociatedCompanyId.value,
-                    }
-                },{
-                    onRequestError: (request, options, error) => {
-                        reject(error);
-                    },
-                    onResponse: (request, options, response) => {
-                        resolve(response);
-                    }
-                })
-            })
-        );
+            useNuxtApp().$promptStore.setPrompt({
+                resetable: false,
+                icon: null,
+                title: `Request successful`,
+                message: `Employee identification${selectedIds.length > 1 ? 's' : ''} deleted successfully.`,
+                action: {
+                    callback: () => {},
+                    label: 'Okay'
+                }
+            });
+        }
     });
 
-    await Promise.all(batchDelete);
-    selectedEmploymentProfiles.value = [];
-    await employmentProfilesExecute();
+    selectedEmployeeIdentificationsData.value = [];
+    await employeeIdentificationsExecute();
 
-    emit('resolved', employmentProfilesData.value);
+    emit('resolved', employeeIdentificationsData.value);
 
     deleting.value = false;
 }
 
 const deleteRow = async (rowIndex: number) => {
-    employmentProfilesData.value.splice(rowIndex, 1);
-    emit('update:employmentProfilesData', employmentProfilesData.value);
+    employeeIdentificationsData.value.splice(rowIndex, 1);
+    emit('update:employeeIdentificationsData', employeeIdentificationsData.value);
 }
 
-const employmentProfileModalResolved = (attributes, rowIndex = -1) => {
+const employeeIdentificationModalResolved = (attributes, rowIndex = -1) => {
 
     if(!creatingEmployee.value){
 
-        employmentProfilesExecute();
+        employeeIdentificationsExecute();
 
-        emit('resolved', employmentProfilesData.value);
+        emit('resolved', employeeIdentificationsData.value);
     } else {
 
         if(_isEmpty(attributes)){
             return 0;
         }
 
+        let identificationTypeValue = attributes.type.value;
+
         if(rowIndex >= 0){
-            employmentProfilesData.value.splice(rowIndex, 1, attributes);
-            emit('update:employmentProfilesData', employmentProfilesData.value);
+
+            let existingIdentificationType = employeeIdentificationsData.value.filter(identification => identification.type.value == identificationTypeValue);
+
+            if(existingIdentificationType.length > 0){
+                //Delete editing
+                employeeIdentificationsData.value.splice(rowIndex, 1);
+                //Remove all same identification types
+                employeeIdentificationsData.value = employeeIdentificationsData.value.filter(identification => identification.type.value !== identificationTypeValue);
+                //Add new identification as new record instead of patching existing record
+                employeeIdentificationsData.value.push(attributes);
+
+            } else {
+
+                employeeIdentificationsData.value.splice(rowIndex, 1, attributes);
+            }
+
+            emit('update:employeeIdentificationsData', employeeIdentificationsData.value);
+
         } else {
-            employmentProfilesData.value.push(attributes);
-            emit('update:employmentProfilesData', employmentProfilesData.value);
+
+            employeeIdentificationsData.value = employeeIdentificationsData.value.filter(identification => identification.type.value !== identificationTypeValue);
+
+            employeeIdentificationsData.value.push(attributes);
+
+            emit('update:employeeIdentificationsData', employeeIdentificationsData.value);
         }
     }
 };
 
 const reset = () => {
     proxyCreatingOrEditing.value = false;
-    employmentProfilesData.value = [];
-    selectedEmploymentProfiles.value = [];
+    employeeIdentificationsData.value = [];
+    selectedEmployeeIdentificationsData.value = [];
     editIndex.value = -1;
     editPayload.value = {};
 };
