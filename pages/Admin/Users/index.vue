@@ -43,6 +43,27 @@
                     </div>
                 </form>
 
+                <!-- Account Pending Mask -->
+                <DialogModal
+                    :show="selectedAccountChangePendingMask"
+                    :max-width="'410px'"
+                    :body-border-bottom="false"
+                    :closeable="false">
+                    <template #content>
+                        Setting account
+                    </template>
+                    <template #footer>
+                        <div class="flex space-x-2 justify-between">
+                            <div class="space-x-2 inline-flex">
+                                <div class="space-x-2 inline-flex items-center">
+                                    <UnorderedList :icon="'eos-icons:loading'" :size="'md'" :label="'Please wait...'"/>
+                                </div>
+                            </div>
+                            <div class="space-x-2 inline-flex items-center"></div>
+                        </div>
+                    </template>
+                </DialogModal>
+
                 <div class="px-[20px] space-y-2">
                     <div class="flex flex-row flex-wrap gap-2 items-center min-h-8" :class="[disableActions ? 'pointer-events-none' : '']">
                         <NuxtLink
@@ -201,12 +222,14 @@ const fetchAccounts = async() => {
 }
 await fetchAccounts();
 
+const selectedAccountChangePendingMask = ref(false);
 watch(() => accountOptions.selected, async () => {
     await selectedAccountChanged()
 },{ deep: true })
 
 const selectedAccountChanged = async() => {
 
+    selectedAccountChangePendingMask.value = true;
     usersPending.value = true;
 
     companyOptions.search = '';
@@ -216,6 +239,8 @@ const selectedAccountChanged = async() => {
     companyOptionsKey.value++;
 
     await usersExecute();
+
+    selectedAccountChangePendingMask.value = false;
 }
 
 const companyOptionsKey = shallowRef(0);
