@@ -1,7 +1,7 @@
 <template>
     <div>
         <DefaultWrapper>
-            <div class="mx-auto max-w-screen-2xl">
+            <div class="mx-auto max-w-screen-lg">
 
                 <div class="space-y-2 p-[20px]">
 
@@ -165,8 +165,8 @@
                             v-model:pending="employeeSelectionPending"
                             v-model:selected="selectedEmployees">
                             <template #selection-actions>
-                                <Button :disabled="disableLeaveTypeAssignmentActions || employeeSelectionPending" @click="assignLeaveTypes" class="inline-block" :size="'sm'" :icon="'mdi:plus'" :variant="'outline'" :label="'Assign leave type from selected employees'" />
-                                <Button :disabled="disableLeaveTypeAssignmentActions || employeeSelectionPending" @click="confirmLeaveTypeAssignmentBatchDetach" class="inline-block" :size="'sm'" :icon="'ph:trash-simple'" :variant="'outline'" :label="'Clear leave type from selected employees'" />
+                                <Button :disabled="disableLeaveTypeAssignmentActions || employeeSelectionPending" @click="assignLeaveTypes" class="inline-block" :size="'sm'" :icon="'mdi:plus'" :variant="'outline'" :label="'Assign leave types'" />
+                                <Button :disabled="disableLeaveTypeAssignmentActions || employeeSelectionPending" @click="confirmLeaveTypeAssignmentBatchDetach" class="inline-block" :size="'sm'" :icon="'ph:trash-simple'" :variant="'outline'" :label="'Clear leave types'" />
                             </template>
                         </LeaveTypesByEmployeesSelection>
 
@@ -190,8 +190,8 @@
                             v-model:pending="leaveTypeSelectionPending"
                             v-model:selected="selectedLeaveTypes">
                             <template #selection-actions>
-                                <Button :disabled="disableLeaveTypeAssignmentActions || leaveTypeSelectionPending" @click="assignLeaveTypes" class="inline-block" :size="'sm'" :icon="'mdi:plus'" :variant="'outline'" :label="'Assign selected leave types to employees'" />
-                                <Button :disabled="disableLeaveTypeAssignmentActions || leaveTypeSelectionPending" @click="confirmLeaveTypeAssignmentBatchDetach" class="inline-block" :size="'sm'" :icon="'ph:trash-simple'" :variant="'outline'" :label="'Remove selected leave types from employees'" />
+                                <Button :disabled="disableLeaveTypeAssignmentActions || leaveTypeSelectionPending" @click="assignLeaveTypes" class="inline-block" :size="'sm'" :icon="'mdi:plus'" :variant="'outline'" :label="'Assign leave types to employees'" />
+                                <Button :disabled="disableLeaveTypeAssignmentActions || leaveTypeSelectionPending" @click="confirmLeaveTypeAssignmentBatchDetach" class="inline-block" :size="'sm'" :icon="'ph:trash-simple'" :variant="'outline'" :label="'Remove leave types from employees'" />
                             </template>
                         </LeaveTypeSelection>
 

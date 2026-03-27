@@ -58,7 +58,7 @@
                             <Input :disabled="!creatingAssociatedUser || disableActions" :size="'md'" v-model="username" type="text"/>
                         </div>
                         <div class="md:col-span-2">
-                            <InputLabel :size="'sm'" :value="emailLabelComputed.label" :class="emailLabelComputed.class"/>
+                            <InputLabel :size="'sm'" :value="emailLabelComputed.label"/>
                             <Input :disabled="!creatingAssociatedUser || disableActions" :size="'md'" v-model="email" type="email"/>
                         </div>
                         <div class="md:col-span-2">
@@ -184,10 +184,8 @@ const emailVerifiedAt = ref('');
 const emailLabelComputed = computed(() => {
 
     let labelValue = creatingAssociatedUser.value ? 'Email' : (emailVerifiedAt.value ? 'Email Verified' : 'Email Not Verified');
-    let labelClass = creatingAssociatedUser.value ? '' : (emailVerifiedAt.value ? 'text-green-500' : 'text-red-500');
 
     return {
-        'class': labelClass,
         'label': labelValue
     };
 });

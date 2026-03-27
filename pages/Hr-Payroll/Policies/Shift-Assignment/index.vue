@@ -1,7 +1,7 @@
 <template>
     <div>
         <DefaultWrapper>
-            <div class="mx-auto max-w-screen-2xl">
+            <div class="mx-auto max-w-screen-lg">
 
                 <div class="space-y-2 p-[20px]">
 
@@ -235,8 +235,8 @@
                             v-model:pending="employeeSelectionPending"
                             v-model:selected="selectedEmployees">
                             <template #selection-actions>
-                                <Button :disabled="disableShiftAssignmentActions || employeeSelectionPending" @click="assignShifts" class="inline-block" :size="'sm'" :icon="'mdi:plus'" :variant="'outline'" :label="'Assign shift from selected employees'" />
-                                <Button :disabled="disableShiftAssignmentActions || employeeSelectionPending" @click="confirmShiftAssignmentBatchDetach" class="inline-block" :size="'sm'" :icon="'ph:trash-simple'" :variant="'outline'" :label="'Clear shift from selected employees'" />
+                                <Button :disabled="disableShiftAssignmentActions || employeeSelectionPending" @click="assignShifts" class="inline-block" :size="'sm'" :icon="'mdi:plus'" :variant="'outline'" :label="'Assign shift'" />
+                                <Button :disabled="disableShiftAssignmentActions || employeeSelectionPending" @click="confirmShiftAssignmentBatchDetach" class="inline-block" :size="'sm'" :icon="'ph:trash-simple'" :variant="'outline'" :label="'Clear shifts'" />
                             </template>
                         </ShiftsByEmployeesSelection>
 
