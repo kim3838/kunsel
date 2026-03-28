@@ -227,7 +227,7 @@
                                             class="w-min"
                                             :variant=" 'outline'"
                                             :size="'md'"
-                                            :label="'Confirm & Proceed payroll generation'"
+                                            :label="'Confirm & proceed payroll generation'"
                                             @click="confirmHasAtLeastOneFinalPay"/>
                                     </div>
                                 </div>
@@ -381,13 +381,6 @@
 
                         <div class="scaffold-border-top"></div>
                     </div>
-
-                    <div v-if="generatedPayroll.id" class="lining-shadow rounded-sm tint-background">
-
-                        <div class="p-4">
-                            <PayrollSalaryStatements :key="generatedPayroll.id" v-model:payroll="generatedPayroll" />
-                        </div>
-                    </div>
                 </div>
             </div>
         </DefaultWrapper>
@@ -396,11 +389,11 @@
 
 <script setup lang="ts">
 import {useLocalStorage} from '@vueuse/core';
+import {storeToRefs} from "pinia";
 import type {TableHeaderT, TableRowT, TableSupHeaderT} from "@/public/js/types/data";
 import type {PayrollInquiryT, PayrollT} from "@/public/js/types/payroll";
 import type {StringEnumInterface} from "@/public/js/common/type";
 import type {LabelTypeT} from "@/public/js/types/theme";
-import {storeToRefs} from "pinia";
 
 useHead({titleTemplate: (titleChunk) => {return `Generate Payroll`}});
 definePageMeta({middleware: ['auth', 'verified', 'admin-of-selected-company']});
@@ -692,8 +685,6 @@ const preGeneratePayroll = async() =>{
         }
     }, true);
 }
-
-const generatedPayroll = ref<PayrollT>({} as PayrollT);
 
 const generatePayroll = async() =>{
 

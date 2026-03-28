@@ -3,7 +3,7 @@
 
         <div v-if="topRuleDivider"></div>
 
-        <div class="space-y-16 pt-16">
+        <div class="space-y-8" :class="isAuthenticated ? 'pt-16' : ''">
 
             <LandingLinks v-if="landingLinks" />
 
@@ -11,7 +11,7 @@
 
                 <div class="flex flex-wrap gap-4">
 
-                    <div v-for="navigationLink in navigationLinks" :key="navigationLink.key" class="flex-grow p-2 text-left">
+                    <div v-for="navigationLink in navigationLinks" :key="navigationLink.key" class="neutral-border flex-grow p-2 text-left backdrop-blur-xs">
                         <p class="text-lg font-medium font-business">
                             <ThemeHeader :type="'gray'">
                                 <NuxtLink
@@ -39,12 +39,12 @@
                 </div>
             </div>
 
-            <div class="mx-auto max-w-screen-lg mb-4" :class="footerClass">
+            <div class="neutral-border mx-auto max-w-screen-lg mb-4" :class="footerClass">
 
                 <div class="p-2">
                     <div class="flex flex-row flex-wrap justify-start items-center">
-                        <div class="w-max text-xl font-medium font-[Overpass] flex flex-row items-center gap-2">
-                            Kunsel ERP
+                        <div class="w-max flex flex-row items-center gap-2">
+                            <ThemeHeader :type="'opaque'" class="text-base font-medium">Kunsel ERP</ThemeHeader>
                         </div>
                         <BreadCrumbs prefix-arrow :prefix-company="breadcrumbsPrefixCompany" />
                     </div>

@@ -50,7 +50,7 @@
                                             drop-shadow
                                             value-persist
                                             :selection-max-viewable-line="10"
-                                            :label="'Select Employee'"
+                                            :label="'Select employee'"
                                             :size="'md'"
                                             :icon="'mdi:badge-account-outline'"
                                             @valueChange="setSelectedEmployee"
@@ -169,7 +169,7 @@
 import {storeToRefs} from "pinia";
 import type {DataTableT, TableHeaderT, TableRowT, TableSupHeaderT} from "@/public/js/types/data";
 import type {EnumOption, EnumSelection, StringEnumInterface} from "@/public/js/common/type";
-import type {EmployeeSelectionItemT} from "~/public/js/types/employee";
+import type {EmployeeSelectionItemT} from "@/public/js/types/employee";
 
 useHead({titleTemplate: (titleChunk) => {return `Employment Profiles`}});
 definePageMeta({middleware: ['auth', 'verified', 'admin-of-selected-company']});

@@ -286,25 +286,48 @@
                             </div>
                         </div>
 
-                        <Suspense>
-                            <EmploymentProfiles
-                                ref="employeeEmploymentProfile"
-                                v-model:creating-or-editing="employeeEmploymentProfileCreatingOrEditing"
-                                v-model:employment-profiles-pending="employmentProfilesPending"
-                                v-model:employment-profiles-data="employmentProfiles"
-                                v-model:child-component-employee-payload="childComponentEmployeePayload"
-                                v-model:disable-actions="disableActions"
-                            />
+                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
 
-                            <template #fallback>
-                                <div class="flex items-center min-h-8">
-                                    <UnorderedList
-                                        :icon="'eos-icons:loading'"
-                                        :size="'md'"
-                                        :label="'Loading Employment Profiles...'"/>
-                                </div>
-                            </template>
-                        </Suspense>
+                            <Suspense>
+                                <EmploymentProfiles
+                                    ref="employeeEmploymentProfile"
+                                    v-model:creating-or-editing="employeeEmploymentProfileCreatingOrEditing"
+                                    v-model:employment-profiles-pending="employmentProfilesPending"
+                                    v-model:employment-profiles-data="employmentProfiles"
+                                    v-model:child-component-employee-payload="childComponentEmployeePayload"
+                                    v-model:disable-actions="disableActions"
+                                />
+
+                                <template #fallback>
+                                    <div class="flex items-center min-h-8">
+                                        <UnorderedList
+                                            :icon="'eos-icons:loading'"
+                                            :size="'md'"
+                                            :label="'Loading Employment Profiles...'"/>
+                                    </div>
+                                </template>
+                            </Suspense>
+
+                            <Suspense>
+                                <EmployeeIdentifications
+                                    ref="employeeEmployeeIdentification"
+                                    v-model:creating-or-editing="employeeEmployeeIdentificationCreatingOrEditing"
+                                    v-model:employee-identifications-pending="employeeIdentificationsPending"
+                                    v-model:employee-identifications-data="employeeIdentifications"
+                                    v-model:child-component-employee-payload="childComponentEmployeePayload"
+                                    v-model:disable-actions="disableActions"
+                                />
+
+                                <template #fallback>
+                                    <div class="flex items-center min-h-8">
+                                        <UnorderedList
+                                            :icon="'eos-icons:loading'"
+                                            :size="'md'"
+                                            :label="'Loading Identifications...'"/>
+                                    </div>
+                                </template>
+                            </Suspense>
+                        </div>
 
                         <div v-if="employeePayrollComponentsPending" class="flex items-center min-h-8"  >
                             <UnorderedList
@@ -347,7 +370,7 @@
 <script setup lang="ts">
 import {storeToRefs} from "pinia";
 import type {SelectionOptionsT} from "@/public/js/types/form";
-import type {EmployeePayrollComponentFormT, EmploymentProfileFormT} from "@/public/js/types/employee";
+import type {EmployeeIdentificationFormT, EmployeePayrollComponentFormT, EmploymentProfileFormT} from "@/public/js/types/employee";
 import type {StringEnumInterface} from "@/public/js/common/type";
 
 useHead({titleTemplate: (titleChunk) => {return `Employees`}});
@@ -550,6 +573,14 @@ if(creatingEmployee){
 }
 const employmentProfiles = ref([]);
 
+//Employee Identifications
+const employeeEmployeeIdentificationCreatingOrEditing = ref(false);
+const employeeIdentificationsPending = ref(true);
+if(creatingEmployee){
+    employeeIdentificationsPending.value = false;
+}
+const employeeIdentifications = ref([]);
+
 //Employee Organization
 const companyOrganizationSelections = companyOrganizationSelectionsState();
 
@@ -613,8 +644,6 @@ const fetchEmployee = async (callback: (() => void) | null = null) => {
 
             //Set user profile creation options to null if user_id exists
             employeeUserCreationOptions.selected = _get(response, '_data.values.employee.user_id', false) ? null : EMPLOYEE_USER_CREATION.NONE as number;
-
-            employmentProfiles.value = _get(response, '_data.values.employee.employment_profiles', []);
 
             if(callback !== null && typeof callback == 'function'){
                 callback();
@@ -1144,6 +1173,7 @@ const employeeAdditionalForms = (employee = null) => {
 
     formsTemp.push(payrollComponentFormPayload);
 
+    //Employment profiles
     let employmentProfileFormPayload: {
         api: string;
         forms: EmploymentProfileFormT[];
@@ -1176,6 +1206,31 @@ const employeeAdditionalForms = (employee = null) => {
     });
 
     formsTemp.push(employmentProfileFormPayload);
+
+    //Employee identifications
+    let employeeIdentificationFormPayload: {
+        api: string;
+        forms: EmployeeIdentificationFormT[];
+    } = {
+        api: '/api/employee-identification',
+        forms: []
+    };
+
+    employeeIdentifications.value.forEach((employeeIdentification) => {
+
+        let employeeEmploymentProfileFormBody: EmployeeIdentificationFormT = {
+            employee_id: employeeId,
+            account_id: selectedAssociatedCompanyAccountId.value,
+            company_id: selectedAssociatedCompanyId.value,
+            type: _get(employeeIdentification, 'type.value', null),
+            number: _get(employeeIdentification, 'number', ''),
+            readable_number: _get(employeeIdentification, 'readable_number', ''),
+        }
+
+        employeeIdentificationFormPayload.forms.push(employeeEmploymentProfileFormBody);
+    });
+
+    formsTemp.push(employeeIdentificationFormPayload);
 
     return formsTemp;
 }
@@ -1241,6 +1296,7 @@ const resolveEmployee = (employee) => {
 
 const employeePayrollComponentReference = useTemplateRef('employeePayrollComponent');
 const employeeEmploymentProfileReference = useTemplateRef('employeeEmploymentProfile');
+const employeeEmployeeIdentificationReference = useTemplateRef('employeeEmployeeIdentification');
 const resetPageToInitialState = async () => {
     validateForms.value = true;
 
@@ -1291,6 +1347,10 @@ const resetPageToInitialState = async () => {
     // Reset Employment Profiles
     employmentProfiles.value = [];
     employeeEmploymentProfileReference.value?.reset();
+
+    // Reset Employee Identifications
+    employeeIdentifications.value = [];
+    employeeEmployeeIdentificationReference.value?.reset();
 
     await nonEmployeeUsersExecute();
     resolvedEmployeeModal.value = false;

@@ -32,7 +32,7 @@
 
                     <div v-if="companies.successful" class="mx-auto max-w-screen-2xl flex flex-row flex-wrap gap-4">
 
-                        <div v-for="company in companies.data" :key="company.id" class="scaffold-border p-4 space-y-4 tint-background">
+                        <div v-for="company in companies.data" :key="company.id" class="neutral-border p-4 space-y-4 tint-background">
                             <div>
                                 <NuxtLink
                                     :class="[disableActions ? 'pointer-events-none' : '']"

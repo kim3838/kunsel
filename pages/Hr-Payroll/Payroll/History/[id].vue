@@ -15,8 +15,10 @@
                         <UnorderedList v-if="payrollPending" :icon="'eos-icons:loading'" :size="'md'" :label="'Loading payroll...'"/>
                         <Label v-else-if="!payrollSuccessful" invert :size="'md'" :type="'danger'" :label="payrollMessage" />
                     </div>
-                    <div v-else-if="payroll.id">
-                        <PayrollSalaryStatements :key="payroll.id" v-model:payroll="payroll" />
+                    <div v-else-if="payroll.id" class="lining-shadow rounded-sm tint-background">
+                        <div class="p-4">
+                            <PayrollSalaryStatements :key="payroll.id" v-model:payroll="payroll" />
+                        </div>
                     </div>
                 </div>
             </div>

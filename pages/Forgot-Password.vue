@@ -25,8 +25,11 @@
                                             autofocus />
                                     </div>
 
-                                    <div class="block mt-4">
-                                        <div class="flex mt-4 items-center justify-end">
+                                    <div class="flex mt-4 items-center justify-between">
+                                        <div class="block text-sm self-end">
+                                            <NuxtLink class="hover:underline" :to="'login'">Password login</NuxtLink>
+                                        </div>
+                                        <div>
                                             <Button
                                                 :disabled="pending"
                                                 :size="'md'"
@@ -35,6 +38,7 @@
                                                 :label="pending ? 'Requesting...' : 'Email password reset link'"></Button>
                                         </div>
                                     </div>
+
                                 </form>
                             </div>
                         </template>

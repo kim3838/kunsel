@@ -121,7 +121,7 @@
 import type {SelectDataType} from "@/public/js/types/form";
 import type {LeaveBalancePeriodSeriesT} from "@/public/js/types/leave";
 import {storeToRefs} from "pinia";
-import type {LabelTypeT} from "~/public/js/types/theme";
+import type {LabelTypeT} from "@/public/js/types/theme";
 
 const {isAuthenticated} = useAuth();
 const nuxtApp = useNuxtApp();

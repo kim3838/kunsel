@@ -77,7 +77,7 @@
                         <div ref='employmentProfilesContentContainer' :class="[employmentProfilesLoadingOverlay ? '' : 'space-y-4 ']" class="min-h-[100px]">
                             <div v-if="employmentProfilesLoadingOverlay" :style="employmentProfilesLoadingOverlayDimensionStyle" class="absolute tint-background z-50">
                                 <div class="h-full flex items-center justify-center">
-                                    <UnorderedList :size="'lg'" :icon="'eos-icons:loading'">Loading Employment Profiles...</UnorderedList>
+                                    <UnorderedList :size="'md'" :icon="'eos-icons:loading'">Loading Employment Profiles...</UnorderedList>
                                 </div>
                             </div>
                             <div v-else>
@@ -112,6 +112,52 @@
                     </template>
                 </DialogModal>
 
+                <!-- Employee Identifications -->
+                <DialogModal
+                    :max-width="'740px'"
+                    :show="employeeIdentificationsModal"
+                    :closeable="false">
+                    <template #title>
+                        {{!employeeIdentificationsLoadingOverlay ? 'Employee Identifications' : ''}}
+                    </template>
+                    <template #content>
+                        <div ref='employeeIdentificationsContentContainer' :class="[employeeIdentificationsLoadingOverlay ? '' : 'space-y-4 ']" class="min-h-[100px]">
+                            <div v-if="employeeIdentificationsLoadingOverlay" :style="employeeIdentificationsLoadingOverlayDimensionStyle" class="absolute tint-background z-50">
+                                <div class="h-full flex items-center justify-center">
+                                    <UnorderedList :size="'md'" :icon="'eos-icons:loading'">Loading Employee Identifications...</UnorderedList>
+                                </div>
+                            </div>
+                            <div v-else>
+                                <div class="text-base">
+                                    {{employeeIdentificationsModalTitle}}
+                                </div>
+                                <div class="text-sm subtitle-color">
+                                    Changes are autosave
+                                </div>
+                            </div>
+
+                            <EmployeeIdentifications
+                                v-show="!(employeeIdentificationsLoadingOverlay)"
+                                isolated
+                                v-model:creating-or-editing="employeeIdentificationCreatingOrEditing"
+                                v-model:employee-identifications-pending="employeeIdentificationsPending"
+                                v-model:employee-identifications-data="employeeIdentificationData"
+                                v-model:child-component-employee-payload="stagedEmployee"
+                                v-model:disable-actions="disableActions"
+                                @resolved="employeeIdentificationModalResolved"
+                            />
+                        </div>
+                    </template>
+                    <template #footer>
+                        <div class="flex space-x-2 justify-between">
+                            <div></div>
+                            <div class="space-x-2 inline-flex items-center">
+                                <Button :variant="'outline'" @click="closeEmployeeIdentificationsModal" :label="'Close'" />
+                            </div>
+                        </div>
+                    </template>
+                </DialogModal>
+
                 <!-- Payroll Components -->
                 <DialogModal
                     :max-width="'960px'"
@@ -124,7 +170,7 @@
                         <div ref='payrollComponentsContentContainer' :class="[payrollComponentsLoadingOverlay ? '' : 'space-y-4']" class="min-h-[100px]">
                             <div v-if="payrollComponentsLoadingOverlay" :style="payrollComponentsLoadingOverlayDimensionStyle" class="absolute tint-background z-50">
                                 <div class="h-full flex items-center justify-center">
-                                    <UnorderedList :size="'lg'" :icon="'eos-icons:loading'">Loading Payroll Components...</UnorderedList>
+                                    <UnorderedList :size="'md'" :icon="'eos-icons:loading'">Loading Payroll Components...</UnorderedList>
                                 </div>
                             </div>
                             <div v-else>
@@ -289,9 +335,10 @@
                                     :active-style="`clear-fluid`"
                                     :drop-active-style="`clear-fluid`"
                                     :drop-options="[
-                                        {type: 'link', icon: 'ix:open-external', title: 'Details',to: `/hr-payroll/workforce/employees/${cell.ulid}`},
-                                        {type: 'action', icon: 'ix:open-external', title: 'Employment Profiles',callback: () => {showEmploymentProfilesModal(cell);}},
-                                        {type: 'action', icon: 'ix:open-external', title: 'Payroll Items',callback: () => {showPayrollComponentsModal(cell);}},
+                                        {type: 'link', icon: 'gg:row-first', title: 'Details',to: `/hr-payroll/workforce/employees/${cell.ulid}`},
+                                        {type: 'action', icon: 'gg:loadbar-alt', title: 'Employment Profiles',callback: () => {showEmploymentProfilesModal(cell);}},
+                                        {type: 'action', icon: 'gg:loadbar-alt', title: 'Identifications',callback: () => {showEmployeeIdentificationsModal(cell);}},
+                                        {type: 'action', icon: 'gg:loadbar-alt', title: 'Payroll Items',callback: () => {showPayrollComponentsModal(cell);}},
                                     ]">
                                     <template v-slot="{slot}">
                                         <div
@@ -387,6 +434,7 @@
 import type {TableSupHeaderT, TableHeaderT, TableRowT, DataTableT} from "@/public/js/types/data";
 import type {EnumOption, EnumSelection, StringEnumInterface} from "@/public/js/common/type";
 import type {LabelTypeT} from "@/public/js/types/theme";
+import EmployeeIdentifications from "@/components/core/EmployeeIdentifications.vue";
 import {storeToRefs} from "pinia";
 
 useHead({titleTemplate: (titleChunk) => {return `Employees`}});
@@ -854,6 +902,68 @@ const showEmploymentProfilesModal = async (cell: TableRowT)=> {
 
             employmentProfilesModalTitle.value = `(${cell.number}) ${cell.full_name}`;
             employmentProfilesModal.value = true;
+        }
+    }, true);
+};
+
+/**
+ * Isolated component
+ *
+ * Employee Employee Identifications
+ **/
+const employeeIdentificationsLoadingOverlay = computed(()=>{
+    return employeeIdentificationsPending.value;
+});
+const {
+    width: employeeIdentificationsContentContainerWidth,
+    height: employeeIdentificationsContentContainerHeight
+} = useElementSize(useTemplateRef('employeeIdentificationsContentContainer'));
+const employeeIdentificationsLoadingOverlayDimensionStyle = computed(() => {
+    return {
+        width: `${employeeIdentificationsContentContainerWidth.value}px`,
+        height: `${employeeIdentificationsContentContainerHeight.value}px`
+    };
+});
+const employeeIdentificationsPending = ref(false);
+const employeeIdentificationCreatingOrEditing = ref(false);
+const employeeIdentificationData = ref([]);
+
+const employeeIdentificationModalResolved = (data) => {
+    employeesExecute();
+}
+
+const employeeIdentificationsModal = ref(false);
+const employeeIdentificationsModalTitle = ref('');
+const closeEmployeeIdentificationsModal = () => {
+    employeeIdentificationsModal.value = false;
+    employeeIdentificationsModalTitle.value = '';
+
+    stagedEmployee.value = {
+        'id': null,
+        'ulid': null,
+    };
+    employeeIdentificationsPending.value = false;
+};
+const showEmployeeIdentificationsModal = async (cell: TableRowT)=> {
+
+    await laraFetch(`/api/employee-identifications-gate`, {
+        method: 'GET',
+        params: {
+            account_id: selectedAssociatedCompanyAccountId.value,
+            company_id: selectedAssociatedCompanyId.value
+        }
+    }, {
+        onSuccessResponse: async (request, options, response) => {
+
+            employeeIdentificationsPending.value = true;
+
+            stagedEmployee.value = {
+                'id': _get(cell, 'id', null),
+                'ulid': _get(cell, 'ulid', null),
+            };
+
+            employeeIdentificationsModalTitle.value = `(${cell.number}) ${cell.full_name}`;
+            employeeIdentificationsModal.value = true;
         }
     }, true);
 };

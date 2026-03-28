@@ -51,7 +51,7 @@
                                     <UnorderedList
                                         :icon="'eos-icons:loading'"
                                         :size="'md'"
-                                        :label="'Loading Permissions...'"/>
+                                        :label="'Loading permissions...'"/>
                                 </div>
                             </template>
                         </Suspense>

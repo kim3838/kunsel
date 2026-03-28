@@ -1,6 +1,6 @@
 
 import type {EnumOption} from "@/public/js/common/type";
-import type {TableRowPayloadT} from "~/public/js/types/data";
+import type {TableRowPayloadT} from "@/public/js/types/data";
 
 export type PayrollT = {
     id: number,

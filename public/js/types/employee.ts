@@ -79,3 +79,12 @@ export type EmploymentProfileFormT = {
     end_of_service_type?: string | number | null,
     end_date?: string | number | null,
 }
+
+export type EmployeeIdentificationFormT = {
+    employee_id: string | number | null,
+    account_id: undefined | number,
+    company_id: string | number | null,
+    type: string | number | null,
+    number: string,
+    readable_number?: string,
+}

@@ -208,7 +208,7 @@ const disableActions = computed(() => {
 });
 
 const submitLabel = computed(() => {
-    return formPending.value ? 'Please wait' : 'Save Company Formula(s)';
+    return formPending.value ? 'Please wait' : 'Save company formula(s)';
 });
 const submitPath = computed(() => {
     return `/api/company-formula-assignment-sync/${company.value?.id}`;
