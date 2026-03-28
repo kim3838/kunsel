@@ -50,7 +50,7 @@
                                             drop-shadow
                                             value-persist
                                             :selection-max-viewable-line="10"
-                                            :label="'Select Employee'"
+                                            :label="'Select employee'"
                                             :size="'md'"
                                             :icon="'mdi:badge-account-outline'"
                                             @valueChange="setSelectedEmployee"

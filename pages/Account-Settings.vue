@@ -199,13 +199,13 @@
                         <div class="mt-4 grid gap-2 grid-cols-1 sm:grid-cols-2">
                             <div v-if="twoFactorEnabled && twoFactorConfirmed">
                                 <ConfirmsPassword v-if="!recoveryCodes.length" @confirmed="executeTwoFactorRecoveryCodes">
-                                    <Button class="w-min" :variant="'flat'" @click="" type="button" :disabled="pendingTwoFactorRecoveryCodes" :label="'Show Recovery Codes'" />
+                                    <Button class="w-min" :variant="'flat'" @click="" type="button" :disabled="pendingTwoFactorRecoveryCodes" :label="'Show recovery codes'" />
                                 </ConfirmsPassword>
                             </div>
                             <div v-if="twoFactorEnabled && twoFactorConfirmed"></div>
                             <div>
                                 <ConfirmsPassword v-if="twoFactorEnabled" @confirmed="executeDisableTwoFactor">
-                                    <Button class="w-min" :variant="'flat'" type="button" :disabled="confirmTwoFactorPending || disableTwoFactorPending" :label="'Disable 2 Factor Authentication'" />
+                                    <Button class="w-min" :variant="'flat'" type="button" :disabled="confirmTwoFactorPending || disableTwoFactorPending" :label="'Disable 2 factor authentication'" />
                                 </ConfirmsPassword>
                             </div>
                             <div>

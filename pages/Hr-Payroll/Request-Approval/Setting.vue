@@ -16,7 +16,7 @@
                                 <legend class="text-lg font-header">Approval Sequence</legend>
 
                                 <div class="mb-2 flex items-center min-h-8">
-                                    <Button class="w-min" :disabled="disableActions" :variant="'outline'" :size="'sm'" :icon="'mdi:plus'" :label="'Add Approver'" @click="addApprover"></Button>
+                                    <Button class="w-min" :disabled="disableActions" :variant="'outline'" :size="'sm'" :icon="'mdi:plus'" :label="'Add approver'" @click="addApprover"></Button>
                                 </div>
 
                                 <DataTable

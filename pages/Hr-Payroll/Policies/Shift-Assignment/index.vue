@@ -516,7 +516,7 @@ const submitStagedIcon = computed(() => {
     return disableShiftAssignmentActions.value ? 'eos-icons:loading' : stagedShiftAssignmentId.value ? 'ic:sharp-save' : 'mdi:plus'
 });
 const submitStagedLabel = computed(() => {
-    return disableShiftAssignmentActions.value ? 'Please wait' : stagedShiftAssignmentId.value ? 'Save Shift Settings' : 'Assign shift'
+    return disableShiftAssignmentActions.value ? 'Please wait' : stagedShiftAssignmentId.value ? 'Save shift settings' : 'Assign shift'
 });
 const submitStaged = () => {
 

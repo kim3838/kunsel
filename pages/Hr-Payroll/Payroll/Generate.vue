@@ -227,7 +227,7 @@
                                             class="w-min"
                                             :variant=" 'outline'"
                                             :size="'md'"
-                                            :label="'Confirm & Proceed payroll generation'"
+                                            :label="'Confirm & proceed payroll generation'"
                                             @click="confirmHasAtLeastOneFinalPay"/>
                                     </div>
                                 </div>
