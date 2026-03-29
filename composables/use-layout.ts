@@ -599,6 +599,13 @@ export const useLayout = () => {
                             to: `/${hrPayrollRouteSlug}/reports/contributions`,
                             route_active: `${hrPayrollRouteSlug}-reports-contributions`
                         },
+                        {
+                            key: `${hrPayrollRouteSlug}-reports-taxes`,
+                            type: 'link',
+                            title: 'Taxes',
+                            to: `/${hrPayrollRouteSlug}/reports/taxes`,
+                            route_active: `${hrPayrollRouteSlug}-reports-taxes`
+                        },
                     ],
                 }, {
                     key: `${hrPayrollRouteSlug}-import`,

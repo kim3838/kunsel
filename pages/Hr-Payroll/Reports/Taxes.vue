@@ -95,25 +95,25 @@
 
                     <div class="flex flex-row flex-wrap gap-2 items-center min-h-8">
                         <Button class="w-min" ref="submitButton" type="submit" :disabled="disableActions" :size="'md'" :icon="disableActions ? 'eos-icons:loading' : 'mdi:data'" :label="disableActions ? 'Loading' : 'Load'"></Button>
-                        <Button v-if="contributions.successful" class="w-min" type="button" :disabled="disableActions" :size="'md'" :variant="'flat'" :icon="'ri:file-download-line'" @click="exportCsv" :override="{font_family_class: 'font-[Prociono]'}" :label="'Export .csv'"></Button>
+                        <Button v-if="taxes.successful" class="w-min" type="button" :disabled="disableActions" :size="'md'" :variant="'flat'" :icon="'ri:file-download-line'" @click="exportCsv" :override="{font_family_class: 'font-[Prociono]'}" :label="'Export .csv'"></Button>
                     </div>
                 </form>
 
                 <div class="px-[20px] space-y-2">
                     <div class="flex flex-row flex-wrap gap-2 items-center min-h-8">
                         <div class="flex flex-row flex-wrap gap-2 items-center min-h-8" :class="[disableActions ? 'pointer-events-none' : '']">
-                            <Label v-if="!contributions.successful" invert :size="'md'" :type="'danger'" :label="contributions.message" />
+                            <Label v-if="!taxes.successful" invert :size="'md'" :type="'danger'" :label="taxes.message" />
                         </div>
                     </div>
 
                     <DataTable
-                        v-if="contributions.successful"
-                        :key="contributionsKey"
-                        :sup-headers="contributionsSupHeaders"
-                        :headers="contributionsHeaders"
+                        v-if="taxes.successful"
+                        :key="taxesKey"
+                        :sup-headers="taxesSupHeaders"
+                        :headers="taxesHeaders"
                         :size="'lg'"
-                        :rows="contributions.data"
-                        v-model="selectedContributions"
+                        :rows="taxes.data"
+                        v-model="selectedTaxes"
                         selection>
                         <template v-slot:cell.payroll_number="{cell,slot}">
                             <div class="px-[3px] font-medium">{{cell.payroll.number}}</div>
@@ -136,8 +136,8 @@
                     </DataTable>
 
                     <div>
-                        <PageInformation :pagination="contributions.meta.pagination" :pending="disableDataTable"/>
-                        <Pagination :size="'lg'" :pagination="contributions.meta.pagination" :pending="disableDataTable" v-model="pageComputed"/>
+                        <PageInformation :pagination="taxes.meta.pagination" :pending="disableDataTable"/>
+                        <Pagination :size="'lg'" :pagination="taxes.meta.pagination" :pending="disableDataTable" v-model="pageComputed"/>
                     </div>
                 </div>
             </div>
@@ -152,7 +152,7 @@ import type {StringEnumInterface} from "@/public/js/common/type";
 import { withQuery } from 'ufo';
 import {storeToRefs} from "pinia";
 
-useHead({titleTemplate: (titleChunk) => {return `Contributions`}});
+useHead({titleTemplate: (titleChunk) => {return `Taxes`}});
 definePageMeta({middleware: ['auth', 'verified', 'admin-of-selected-company']});
 useLayout().setNavigationMode('solid');
 
@@ -268,21 +268,19 @@ const employeeGroupOptions = reactive({
     selected: []
 });
 
-const contributionsSupHeaders = computed<TableSupHeaderT[]>(() => {
+const taxesSupHeaders = computed<TableSupHeaderT[]>(() => {
     return [
         {text: ''},
         {text: '', colspan: 3},
 
         {text: 'Employee', colspan: 2},
 
-        {text: 'Employee Share', colspan: 3},
-
-        {text: 'Employer Share', colspan: 1},
+        {text: '', colspan: 4},
 
     ] as TableSupHeaderT[];
 });
 
-const contributionsHeaders = computed<TableHeaderT[]>(() => {
+const taxesHeaders = computed<TableHeaderT[]>(() => {
     return [
         { text: '#', value: 'row_number'},
 
@@ -295,15 +293,14 @@ const contributionsHeaders = computed<TableHeaderT[]>(() => {
 
         { text: 'Type', value: 'component_type'},
         { text: 'Sub-type', value: 'component_name'},
-        { text: 'Amount', value: 'employee_contribution', alignData: 'left', isNumeric: true, alignData: 'right'},
 
-        { text: 'Amount', value: 'employer_share', alignData: 'left', isNumeric: true, alignData: 'right'},
+        { text: 'Tax Withheld', value: 'withholding_tax', alignData: 'left', isNumeric: true, alignData: 'right'},
+        { text: 'Tax Refund', value: 'nontaxable', alignData: 'left', isNumeric: true, alignData: 'right'},
 
     ] as TableHeaderT[];
 });
 
-
-const contributions = reactive<DataTableT>({
+const taxes = reactive<DataTableT>({
     'data': [],
     'meta': {
         pagination: {
@@ -385,42 +382,42 @@ let paramsComputed = computed(() => {
     };
 });
 
-const contributionsKey = shallowRef(0);
-const contributionsPending = ref(false)
+const taxesKey = shallowRef(0);
+const taxesPending = ref(false)
 const deleting = ref(false);
-const selectedContributions = ref([]);
+const selectedTaxes = ref([]);
 
 const disableActions = computed(() => {
-    return contributionsPending.value || deleting.value || companyAssociationPendingState().value;
+    return taxesPending.value || deleting.value || companyAssociationPendingState().value;
 });
 const disableDataTable = computed(() => {
-    return contributionsPending.value || companyAssociationPendingState().value;
+    return taxesPending.value || companyAssociationPendingState().value;
 });
 
-const contributionsExecute = async() =>{
+const taxesExecute = async() =>{
 
     if(import.meta.server || !selectedAssociatedCompanyAccountId.value|| !selectedAssociatedCompanyId.value){
         return;
     }
 
-    contributionsPending.value = true;
+    taxesPending.value = true;
 
-    await laraFetch(`/api/contributions`, {
+    await laraFetch(`/api/taxes`, {
         method: 'GET',
         params: paramsComputed.value
     }, {
         onRequestError: () => {
-            contributionsPending.value = false;
+            taxesPending.value = false;
         },
         onResponse: (request, options, response) => {
-            contributionsPending.value = false;
-            contributions.successful = _get(response, '_data.successful', false);
-            contributions.message = _get(response, '_data.message', '');
+            taxesPending.value = false;
+            taxes.successful = _get(response, '_data.successful', false);
+            taxes.message = _get(response, '_data.message', '');
         },
         onSuccessResponse: async (request, options, response) => {
 
-            contributions.data = _get(response, '_data.values.data', [])
-            contributions.meta = _get(response, '_data.values.meta', {
+            taxes.data = _get(response, '_data.values.data', [])
+            taxes.meta = _get(response, '_data.values.meta', {
                 pagination: {
                     total: 0,
                     count: 0,
@@ -429,11 +426,11 @@ const contributionsExecute = async() =>{
                     total_pages: 0
                 }
             });
-            contributionsKey.value += 1;
+            taxesKey.value += 1;
         }
     }, false);
 }
-contributionsExecute();
+taxesExecute();
 
 const exportCsv = async () => {
 
@@ -460,7 +457,7 @@ const exportCsv = async () => {
         company_id: selectedAssociatedCompanyId.value,
     }
 
-    const urlWithParams = withQuery('/api/contributions-export', params)
+    const urlWithParams = withQuery('/api/taxes-export', params)
 
     await laraBlobFetch({
         path: urlWithParams,
@@ -477,11 +474,11 @@ function paginate(page = 1, clearSelection = false){
     clearTimeout(filters.employee_search.callback);
 
     if(clearSelection){
-        selectedContributions.value = [];
+        selectedTaxes.value = [];
     }
 
     if(filters.page === page){
-        contributionsExecute();
+        taxesExecute();
     } else {
         filters.page = page;
     }
