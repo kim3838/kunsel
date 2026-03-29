@@ -519,7 +519,7 @@ let filters = reactive<{
     },
 }>({
     page: 1,
-    perPage: 25,
+    perPage: 10,
     payroll_search: {
         keyword: '',
         callback: 1

@@ -405,7 +405,7 @@ let filters = reactive<{
     }
 }>({
     page: 1,
-    perPage: 10,
+    perPage: 15,
     search: {
         keyword: '',
         callback: 1

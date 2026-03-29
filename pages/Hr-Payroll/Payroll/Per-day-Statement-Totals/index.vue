@@ -390,7 +390,7 @@ let filters = reactive<{
     perPage: number,
 }>({
     page: 1,
-    perPage: 25,
+    perPage: 10,
 });
 const totalRegularPay = ref(0);
 const totalNightDiffPay = ref(0);
