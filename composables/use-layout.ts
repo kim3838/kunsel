@@ -592,6 +592,13 @@ export const useLayout = () => {
                             to: `/${hrPayrollRouteSlug}/reports/leave-balance`,
                             route_active: `${hrPayrollRouteSlug}-reports-leave-balance`
                         },
+                        {
+                            key: `${hrPayrollRouteSlug}-reports-contributions`,
+                            type: 'link',
+                            title: 'Contributions',
+                            to: `/${hrPayrollRouteSlug}/reports/contributions`,
+                            route_active: `${hrPayrollRouteSlug}-reports-contributions`
+                        },
                     ],
                 }, {
                     key: `${hrPayrollRouteSlug}-import`,
