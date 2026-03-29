@@ -27,7 +27,7 @@
                         class="flex"
                         :size="listSize"
                         :icon="'ic:round-mail-outline'"
-                        :label="'info@kunsel-erp.com'"/>
+                        :label="'support@kunsel-erp.com'"/>
 
                     <UnorderedList
                         class="flex"

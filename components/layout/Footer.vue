@@ -44,12 +44,12 @@
                 <div class="p-2">
                     <div class="flex flex-row flex-wrap justify-start items-center">
                         <div class="w-max flex flex-row items-center gap-2">
-                            <ThemeHeader :type="'opaque'" class="text-base font-medium">Kunsel ERP</ThemeHeader>
+                            <ThemeHeader :type="'gray'" class="text-base font-medium">Kunsel ERP</ThemeHeader>
                         </div>
                         <BreadCrumbs prefix-arrow :prefix-company="breadcrumbsPrefixCompany" />
                     </div>
 
-                    <p class="mt-2 max-w-md text-sm sm:max-w-xs sm:text-left">
+                    <p class="mt-2 max-w-md text-sm sm:text-left">
                         Flexible ERP designed for modern, cloud-powered businesses.
                     </p>
 
@@ -72,7 +72,7 @@
                     </ul>
                 </div>
 
-                <div class="mx-auto max-w-screen-xl flex justify-start ">
+                <div v-if="false" class="mx-auto max-w-screen-xl flex justify-start ">
                     <div class="p-2 text-sm">
                         <div class="space-x-2">
                             <a class="inline-block hover:underline">
