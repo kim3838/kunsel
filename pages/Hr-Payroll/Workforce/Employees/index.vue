@@ -46,10 +46,20 @@
                             <label class="flex items-center">
                                 <Checkbox
                                     :disabled="disableActions"
-                                    name="show-contact-info"
+                                    name="show-contact-columns"
                                     v-model="showContactInfo"
                                     :size="'md'"
-                                    :label="'Show contact info.'" />
+                                    :label="'Show contact columns.'" />
+                            </label>
+                        </div>
+                        <div class="h-8 flex flex-row items-center scaffold-border px-2">
+                            <label class="flex items-center">
+                                <Checkbox
+                                    :disabled="disableActions"
+                                    name="show-user-columns"
+                                    v-model="showUserInfo"
+                                    :size="'md'"
+                                    :label="'Show user columns.'" />
                             </label>
                         </div>
                         <div class="h-8 flex flex-row items-center scaffold-border px-2">
@@ -57,9 +67,9 @@
                                 <Checkbox
                                     :disabled="disableActions"
                                     name="show-user-info"
-                                    v-model="showUserInfo"
+                                    v-model="showOnlyHasUserAccount"
                                     :size="'md'"
-                                    :label="'Show user info.'" />
+                                    :label="'Has user.'" />
                             </label>
                         </div>
                     </div>
@@ -568,6 +578,11 @@ const employeesSupHeaders = computed<TableSupHeaderT[]>(() => {
 
 const showContactInfo = ref(false);
 const showUserInfo = ref(false);
+const showOnlyHasUserAccount = ref(false);
+
+watch(showOnlyHasUserAccount, (newValue) => {
+    paginate(1, true);
+});
 
 const employeesHeaders = computed<TableHeaderT[]>(() => {
     return [
@@ -676,6 +691,7 @@ let paramsComputed = computed(() => {
             assigned_employee_group_ids: employeeGroupOptions.selected,
             department_ids: departmentOptions.selected,
             designation_ids: designationOptions.selected,
+            has_user_account: showOnlyHasUserAccount.value,
         }
     };
 });
