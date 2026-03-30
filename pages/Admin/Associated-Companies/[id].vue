@@ -46,6 +46,18 @@
                             <InputLabel :size="'sm'" value="Address line 2"/>
                             <Input :size="'md'" v-model="companyAddressLine2" type="text"/>
                         </div>
+                        <div>
+                            <InputLabel :size="'sm'" value="City"/>
+                            <Input :size="'md'" v-model="city" type="text"/>
+                        </div>
+                        <div>
+                            <InputLabel :size="'sm'" value="State"/>
+                            <Input :size="'md'" v-model="state" type="text"/>
+                        </div>
+                        <div>
+                            <InputLabel :size="'sm'" value="Postal code"/>
+                            <Input :size="'md'" v-model="postalCode" type="text"/>
+                        </div>
                     </div>
                     <div class="grid gap-2 grid-cols-1 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
                         <div>
@@ -96,6 +108,9 @@ const companyShortName = ref('');
 const companyName = ref('');
 const companyAddressLine1 = ref('');
 const companyAddressLine2 = ref('');
+const city = ref('');
+const state = ref('');
+const postalCode = ref('');
 
 const accountOptions = reactive<{
     search: string,
@@ -192,6 +207,9 @@ const fetchCompany = async () => {
             companyName.value = _get(response, '_data.values.company.name', '');
             companyAddressLine1.value = _get(response, '_data.values.company.address_line_1', '');
             companyAddressLine2.value = _get(response, '_data.values.company.address_line_2', '');
+            city.value = _get(response, '_data.values.company.city', '');
+            state.value = _get(response, '_data.values.company.state', '');
+            postalCode.value = _get(response, '_data.values.company.postal_code', '');
             countryOptions.selected = _get(response, '_data.values.company.country_id', null);
             currencyOptions.selected = _get(response, '_data.values.company.currency', null);
             timezoneOptions.selected = _get(response, '_data.values.company.timezone', null);
@@ -224,6 +242,9 @@ const formBody = computed(() => {
         name: companyName.value,
         address_line_1: companyAddressLine1.value,
         address_line_2: companyAddressLine2.value,
+        city: city.value,
+        state: state.value,
+        postal_code: postalCode.value,
         country_id: countryOptions.selected,
         currency: currencyOptions.selected,
         timezone: timezoneOptions.selected,

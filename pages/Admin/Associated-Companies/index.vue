@@ -65,6 +65,18 @@
                                     <div class="label-value text-sm font-sans">{{ _get(company, 'currency', null) }}</div>
                                 </div>
                                 <div>
+                                    <InputLabel :size="'sm'" value="City" />
+                                    <div class="label-value text-sm font-sans">{{ _get(company, 'city', null) }}</div>
+                                </div>
+                                <div>
+                                    <InputLabel :size="'sm'" value="State" />
+                                    <div class="label-value text-sm font-sans">{{ _get(company, 'state', null) }}</div>
+                                </div>
+                                <div>
+                                    <InputLabel :size="'sm'" value="Postal code" />
+                                    <div class="label-value text-sm font-sans">{{ _get(company, 'postal_code', null) }}</div>
+                                </div>
+                                <div>
                                     <InputLabel :size="'sm'" value="Timezone" />
                                     <div class="label-value text-sm font-sans">{{ _get(company, 'timezone', null) }}</div>
                                 </div>
