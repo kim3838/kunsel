@@ -135,7 +135,7 @@ export const useLayout = () => {
                 {
                     key: 'wtc-calculator',
                     type: 'link',
-                    title: 'Compensation tax (WTC) Calculator',
+                    title: 'Compensation tax calculator',
                     to: '/compensation-tax-calculator',
                     route_active: 'compensation-tax-calculator',
                     path_active: '/compensation-tax-calculator',
