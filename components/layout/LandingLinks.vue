@@ -1,7 +1,7 @@
 <template>
     <div class="mx-auto max-w-screen-lg">
         <div class="flex flex-wrap justify-center gap-2">
-            <div class="grow-0 neutral-border grow p-2">
+            <div class="grow-0 max-w-80 neutral-border grow p-2">
                 <ThemeHeader :type="'gray'" class="text-lg">Contact Us</ThemeHeader>
 
                 <div class="mt-2 space-y-2">
@@ -15,7 +15,7 @@
                         class="flex"
                         :size="listSize"
                         :icon="'ic:sharp-location-on'"
-                        :label="'Quezon City, Metro Manila, Philippines'"/>
+                        :label="'Mandaluyong City, Metro Manila, Philippines'"/>
                 </div>
             </div>
 
@@ -32,8 +32,8 @@
                     <UnorderedList
                         class="flex"
                         :size="listSize"
-                        :icon="'ic:sharp-phone'"
-                        :label="'+63 00000 00000'"/>
+                        :icon="'basil:viber-outline'"
+                        :label="'viber: +63 9916180206'"/>
                 </div>
             </div>
 
