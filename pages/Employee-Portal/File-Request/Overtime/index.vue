@@ -392,10 +392,6 @@ const overtimeRequests = reactive<DataTableT>({
 let filters = reactive<{
     page: number,
     perPage: number,
-    attendanceSearch: {
-        keyword: string,
-        callback: ReturnType<typeof setTimeout> | number
-    }
     search: {
         keyword: string,
         callback: ReturnType<typeof setTimeout> | number
@@ -403,10 +399,6 @@ let filters = reactive<{
 }>({
     page: 1,
     perPage: 10,
-    attendanceSearch: {
-        keyword: '',
-        callback: 1
-    },
     search: {
         keyword: '',
         callback: 1
@@ -454,9 +446,6 @@ let paramsComputed = computed(() => {
         company_id: selectedAssociatedCompanyId.value,
         filters: {
             company_id: selectedAssociatedCompanyId.value,
-            attendance_date_from: formStore.filters.attendanceDateFrom,
-            attendance_date_to: formStore.filters.attendanceDateTo,
-            attendance_search: filters.attendanceSearch.keyword,
             search: filters.search.keyword,
             requested_by_ids: [user.value?.id],
             statuses: requestApprovalStatusOptions.selected,
