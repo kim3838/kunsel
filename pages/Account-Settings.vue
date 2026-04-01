@@ -52,15 +52,15 @@
                             <div class="mt-4 grid gap-2 grid-cols-1 sm:grid-cols-3">
                                 <div>
                                     <InputLabel :size="'sm'" value="Current Password" />
-                                    <InputWithIcon :size="'md'" class="w-full" :disabled="updatePasswordPending" :type="'password'" v-model="updatePassword.currentPassword" required />
+                                    <Input :size="'md'" class="w-full" :disabled="updatePasswordPending" :type="'password'" v-model="updatePassword.currentPassword" required />
                                 </div>
                                 <div>
                                     <InputLabel :size="'sm'" value="New Password" />
-                                    <InputWithIcon :size="'md'" class="w-full" :disabled="updatePasswordPending" :type="'password'" v-model="updatePassword.newPassword" required />
+                                    <Input :size="'md'" class="w-full" :disabled="updatePasswordPending" :type="'password'" v-model="updatePassword.newPassword" required />
                                 </div>
                                 <div>
                                     <InputLabel :size="'sm'" value="Confirm New Password" />
-                                    <InputWithIcon :size="'md'" class="w-full" :disabled="updatePasswordPending" :type="'password'" v-model="updatePassword.confirmNewPassword" required />
+                                    <Input :size="'md'" class="w-full" :disabled="updatePasswordPending" :type="'password'" v-model="updatePassword.confirmNewPassword" required />
                                 </div>
                                 <div></div>
                                 <div>
