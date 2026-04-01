@@ -36,13 +36,13 @@
                     :max-width="'780px'"
                     :closeable="false">
                     <template #title>
-                        {{creatingExternalTaxHistory ? 'Create prior-employer consolidation' : 'Edit prior-employer consolidation'}}
+                        {{creatingExternalTaxHistory ? 'Create external tax consolidation' : 'Edit external tax consolidation'}}
                     </template>
                     <template #content>
                         <div ref='modalContentContainer' class="space-y-4">
 
                             <div class="text-base">
-                                Consolidate employee's previous employment and tax summary
+                                Employee's external tax summary
                             </div>
 
                             <div>
