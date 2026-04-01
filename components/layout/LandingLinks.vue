@@ -9,7 +9,7 @@
                         class="flex"
                         :size="listSize"
                         :icon="'ic:round-mail-outline'"
-                        :label="'info@kunsel-erp.com'"/>
+                        :label="'info@endeavier.com'"/>
 
                     <UnorderedList
                         class="flex"
