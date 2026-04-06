@@ -105,8 +105,8 @@ employeeFullName.value = _get(props.leaveRequestPayload, 'employee.full_name', '
 leaveTypeCode.value = _get(props.leaveRequestPayload, 'leave_type.code', '');
 leaveTypeName.value = _get(props.leaveRequestPayload, 'leave_type.name', '');
 
-leaveStart.value = _get(props.leaveRequestPayload, 'date_from', '');
-leaveEnd.value = _get(props.leaveRequestPayload, 'date_to', '');
+leaveStart.value = _get(props.leaveRequestPayload, 'date_from_readable', '');
+leaveEnd.value = _get(props.leaveRequestPayload, 'date_to_readable', '');
 remarks.value = _get(props.leaveRequestPayload, 'remarks', '');
 
 results.value = _get(props.leaveRequestPayload, 'results', []);
