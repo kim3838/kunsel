@@ -70,7 +70,7 @@
                         class="flex"
                         :size="listSize"
                         :icon="'ic:sharp-location-on'"
-                        :label="'Mandaluyong City, Metro Manila, Philippines'"/>
+                        :label="'41/F, Highlands Tower II, Pioneer West, Madison St. Mandaluyong City, Metro Manila, Philippines'"/>
                 </div>
             </div>
         </div>
