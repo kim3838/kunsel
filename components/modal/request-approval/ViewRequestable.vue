@@ -52,7 +52,7 @@
                             <Button
                                 v-if="requestableIsApprovable && approvalStatePayloadIsStillTheCurrentApprovalState"
                                 class="w-min"
-                                :variant=" 'outline'"
+                                :variant=" 'default'"
                                 :size="'md'"
                                 :disabled="pending"
                                 :label="'Approve'"
@@ -60,7 +60,7 @@
                             <Button
                                 v-if="requestableIsApprovable && approvalStatePayloadIsStillTheCurrentApprovalState"
                                 class="w-min"
-                                :variant=" 'outline'"
+                                :variant=" 'default'"
                                 :size="'md'"
                                 :disabled="pending"
                                 :label="'Decline'"
