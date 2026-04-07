@@ -57,6 +57,10 @@ const themeOption = reactive({
             value: 'light-slate',
         },
         {
+            text: 'Tulip',
+            value: 'light-tulip',
+        },
+        {
             text: 'Default Blue',
             value: 'default-blue',
         },

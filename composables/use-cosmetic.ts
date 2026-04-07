@@ -88,11 +88,12 @@ export const useCosmetic = () => {
     const activeClearFluidBackground = computed(() => {
 
         let isLightSlate = ['light-slate'].indexOf(appTheme.value) >= 0;
+        let isLightTulip = ['light-tulip'].indexOf(appTheme.value) >= 0;
         let isDefaultBlue = ['default-blue'].indexOf(appTheme.value) >= 0;
         let isDarkSilver = ['dark-silver'].indexOf(appTheme.value) >= 0;
         let isDarkEmerald = ['dark-emerald'].indexOf(appTheme.value) >= 0;
 
-        if(isDefaultBlue || isLightSlate){
+        if(isDefaultBlue || isLightSlate || isLightTulip){
             return `linear-gradient(to right, ${primaryColor90.value} 20%, ${primaryColor50.value} 80%, ${primaryColor80.value} 100%)`;
         }
 
@@ -118,7 +119,7 @@ export const useCosmetic = () => {
     const dateTimePickerColor = computed(() => {
 
         if(
-            ['light-slate', 'default-blue'].indexOf(appTheme.value) >= 0
+            ['light-slate', 'light-tulip', 'default-blue'].indexOf(appTheme.value) >= 0
         ){
             return textInvertColor90.value;
         } else {
