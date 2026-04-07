@@ -49,6 +49,15 @@ export interface TableHeaderT {
     justifyData?: 'top' | 'middle' | 'bottom';
 }
 
+export interface TableSortHeaderValueT {
+    field: string,
+    direction: number
+}
+
+export interface TableSortHeaderT {
+    [key: string]: TableSortHeaderValueT
+}
+
 export interface TableRowT {
     id?: string | number;
     isSelectable?: boolean;

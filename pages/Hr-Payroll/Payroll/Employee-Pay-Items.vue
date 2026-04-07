@@ -178,10 +178,14 @@
                         v-if="payrollComponents.successful"
                         :sup-headers="payrollComponentsSupHeaders"
                         :headers="payrollComponentsHeaders"
+                        v-model:sort-headers="payrollComponentsSortHeaders"
                         :size="'lg'"
+                        :sortable="true"
                         :rows="payrollComponents.data"
+                        v-model:rows-pending="payrollComponentsPending"
                         :disabled="disableDataTable"
                         v-model="selectedPayrollComponents"
+                        @sort="paginate(1, true)"
                         selection>
                         <template v-slot:cell.actions="{cell,slot: cellSlot}">
                             <div class="text-base h-[32px] px-2 gap-0.5 flex items-center justify-center cursor-pointer accent-hover" @click="put(cell)">
@@ -242,7 +246,7 @@
 
 <script setup lang="ts">
 import {storeToRefs} from "pinia";
-import type {DataTableT, TableHeaderT, TableRowT, TableSupHeaderT} from "@/public/js/types/data";
+import type {DataTableT, TableHeaderT, TableRowT, TableSortHeaderT, TableSupHeaderT} from "@/public/js/types/data";
 import type {EnumOption, EnumSelection, PayFrequencyOptionT, StringEnumInterface} from "@/public/js/common/type";
 import type {EmployeeSelectionItemT} from "@/public/js/types/employee";
 
@@ -347,6 +351,11 @@ const payrollComponentsHeaders = reactive<TableHeaderT[]>([
     { text: 'To', value: 'amountable_end', minWidth: '76px'},
 ]);
 
+const payrollComponentsSortHeaders = reactive<TableSortHeaderT[]>({
+    'employee_number': {field: 'employee_number', direction: DATA_SORT.DEFAULT},
+    'amount': {field: 'amount', direction: DATA_SORT.DEFAULT},
+});
+
 const payrollComponents = reactive<DataTableT>({
     'data': [],
     'meta': {
@@ -440,6 +449,7 @@ let paramsComputed = computed(() => {
         perPage: filters.perPage,
         account_id: selectedAssociatedCompanyAccountId.value,
         company_id: selectedAssociatedCompanyId.value,
+        orders: payrollComponentsSortHeaders,
         filters: {
             company_id: selectedAssociatedCompanyId.value,
             search: filters.search.keyword,

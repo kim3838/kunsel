@@ -59,12 +59,21 @@
                         :style="{'min-width': header.minWidth, 'width': header.width, 'max-width': header.maxWidth}"
                         style="padding:0.25rem;"
                         :class="[
+                            headerIsSortable(header.value) ? 'cursor-pointer' : '',
                             headerFontFamily,
                             headerFontClass,
                             cellAlignClass(header?.alignHeader),
                             cellJustifyClass(header?.justifyHeader),
-                        ]">
-                        <span>{{header.text}}</span>
+                        ]"
+                        @click="sortFromHeader(header.value)">
+                        <span class="flex items-center justify-between gap-2">
+                            {{header.text}}
+                            <icon
+                                v-if="headerIsSortable(header.value) && header.text !== ''"
+                                class="subtitle-color"
+                                :class="headerSortIconClass"
+                                :name="headerIcon(header.value)" />
+                        </span>
                     </td>
                 </tr>
             </thead>
@@ -171,7 +180,7 @@ import type {
     TableCellStyleT,
     TableHeaderT,
     TableRowPayloadShadeT,
-    TableRowT,
+    TableRowT, TableSortHeaderT, TableSortHeaderValueT,
     TableSupHeaderT,
     TableSupRowT
 } from "@/public/js/types/data";
@@ -279,6 +288,10 @@ const props = defineProps({
         type: Boolean,
         default: false,
     },
+    sortable: {
+        type: Boolean,
+        default: false,
+    },
     disableableLayer: {
         type: Boolean,
         default: true,
@@ -317,7 +330,10 @@ const props = defineProps({
 
 const dataTableScroll = ref<HTMLElement | null>(null);
 const checkboxCellReference = useTemplateRef('checkboxCell');
-const emit = defineEmits(["update:modelValue", "manualSorted", "selectionChanged"]);
+const emit = defineEmits(["update:modelValue", "manualSorted", "selectionChanged", "sort"]);
+
+const sortHeaders = defineModel('sortHeaders', {type: Object as PropType<TableSortHeaderT>, default: () => {}});
+const rowsPending = defineModel('rowsPending', {type: Boolean, default: false});
 
 const dataTableReference = useTemplateRef('dataTableScroll');
 const tableReference = useTemplateRef('tableReference');
@@ -472,6 +488,15 @@ const headerFontClass = computed(() => {
         'xl': 'font-semibold text-sm',
     }[props.size];
 });
+const headerSortIconClass = computed(() => {
+    return {
+        '2xs': 'h-4 w-4',
+        'xs': 'h-4 w-4',
+        'sm': 'h-4 w-4',
+        'md': 'h-4 w-4',
+        'lg': 'h-4 w-4'
+    }[props.size];
+});
 
 const bodyFontClass = computed(() => {
     return {
@@ -601,6 +626,58 @@ const cellStyle = (row: TableRowT | TableSupRowT, header: TableSupHeaderT) => {
 
     return style;
 };
+
+const headerIsSortable = (headerValue: string) => {
+
+    if(!props.sortable || _isEmpty(sortHeaders.value) || sortHeaders.value == undefined) return false;
+
+    return sortHeaders.value.hasOwnProperty(headerValue);
+};
+
+const headerIcon = (headerValue: string): string => {
+
+    if(rowsPending.value){
+        return 'eos-icons:loading';
+    }
+
+    if(_isEmpty(sortHeaders.value) || sortHeaders.value == undefined) return 'mdi:sort';
+
+    let sortHeader = sortHeaders.value[headerValue] as TableSortHeaderValueT;
+
+    return {
+        [DATA_SORT.DEFAULT as number]: 'mdi:sort',
+        [DATA_SORT.ASC as number]: 'mdi:sort-ascending',
+        [DATA_SORT.DESC as number]: 'mdi:sort-descending',
+    }[sortHeader.direction] as string;
+}
+
+const sortFromHeader = (headerValue: string, resetOthers: boolean = true) => {
+
+    if(!props.sortable || _isEmpty(sortHeaders.value) || sortHeaders.value == undefined) return;
+
+    let sortHeader = sortHeaders.value[headerValue] as TableSortHeaderValueT;
+
+    if(!sortHeader) return;
+
+    let currentOrder = sortHeader.direction;
+
+    //@ts-ignore
+    sortHeaders.value[headerValue].direction = currentOrder >= 2 ? 0 : currentOrder + 1;
+
+    //Reset other fields to default
+    if(resetOthers){
+
+        for(let key in sortHeaders.value){
+
+            if(key != headerValue){
+                //@ts-ignore
+                sortHeaders.value[key].direction = 0;
+            }
+        }
+    }
+
+    emit('sort');
+}
 </script>
 
 <style lang="scss" scoped>
