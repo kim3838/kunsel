@@ -62,24 +62,24 @@ export const useThemeStore = defineStore('theme', () => {
     const palletes = ref({
         'light-slate': {
             'type': 'light',
-            'primary': '#3b3b3b',
-            'secondary': '#777676',
+            'primary': '#000000',
+            'secondary': '#2a2626',
             'accent': '#efefef',
 
             'cell': '#ffffff',
-            'lining': '#b4b4b4',
+            'lining': '#938f8f',
             'thread': '#c7c7c7',
 
             'neutral': '#efefef',
 
-            'header': '#efefef',
-            'body': '#f4f4f4',
-            'shade': '#f6f6f6',
+            'header': '#ececec',
+            'body': '#f8f8f8',
+            'shade': '#f8f8f8',
             'tint': '#ffffff',
 
-            'text': '#282828',
+            'text': '#29303e',
             'subtitle': '#797e8a',
-            'text-invert': '#e0e8de',
+            'text-invert': '#ffffff',
             'text-secondary': '#b4b4b4',
         },
         'dark-silver': {

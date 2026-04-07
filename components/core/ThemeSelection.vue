@@ -53,6 +53,10 @@ const themeOption = reactive({
     search: '',
     selection: [
         {
+            text: 'Slate',
+            value: 'light-slate',
+        },
+        {
             text: 'Default Blue',
             value: 'default-blue',
         },
