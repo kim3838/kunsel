@@ -47,7 +47,7 @@ module.exports = {
                     'Gentium Plus',
                     'Tinos',
                     'Reddit Sans Condensed',
-                    'Rul    uko',
+                    'Ruluko',
                     'Sofia Sans Semi Condensed',
                 ],
                 header: [
