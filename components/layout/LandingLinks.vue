@@ -27,14 +27,32 @@
                     <UnorderedList
                         class="flex"
                         :size="listSize"
-                        :icon="'icon-park-outline:coordinate-system'"
+                        :icon="'mdi:crowd'"
                         :label="'HR & payroll'"/>
 
                     <UnorderedList
                         class="flex"
                         :size="listSize"
                         :icon="'mdi:button-cursor'"
-                        :label="'Employee self-service portal'"/>
+                        :label="'Employee self-service'"/>
+
+                    <UnorderedList
+                        class="flex"
+                        :size="listSize"
+                        :icon="'icon-park-outline:ad-product'"
+                        :label="'Inventory & logistics'"/>
+
+                    <UnorderedList
+                        class="flex"
+                        :size="listSize"
+                        :icon="'mdi:finance'"
+                        :label="'Finance'"/>
+
+                    <UnorderedList
+                        class="flex"
+                        :size="listSize"
+                        :icon="'icon-park-outline:coordinate-system'"
+                        :label="'Point of sale'"/>
                 </div>
             </div>
 
