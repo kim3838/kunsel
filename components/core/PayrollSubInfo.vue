@@ -141,6 +141,8 @@ const payrollStatusShade = computed<LabelTypeT>(() => {
         [PAYROLL_STATUS.DRAFT as number]: 'clear',
         [PAYROLL_STATUS.WORKFLOW_IN_PROGRESS as number]: 'info',
         [PAYROLL_STATUS.COMPLETED as number]: 'success',
+
+    //@ts-ignore
     }[props.payroll.status?.value] as LabelTypeT;
 })
 </script>

@@ -19,16 +19,9 @@ module.exports = {
                     'IBM Plex Sans Condensed',
                     'sans-serif',
                 ],
-                appearance:[
-                    'Merienda',
-                    'Protest Revolution',
-                ],
-                hero: [
-                    'Hedvig Letters Sans',
-                    'Amarna',
-                ],
                 business: [
                     'Noto Sans Display',
+                    'Cossette Texte',
                     'Geist',
                     'Prociono',
                     'Be Vietnam Pro',
@@ -54,7 +47,7 @@ module.exports = {
                     'Gentium Plus',
                     'Tinos',
                     'Reddit Sans Condensed',
-                    'Ruluko',
+                    'Rul    uko',
                     'Sofia Sans Semi Condensed',
                 ],
                 header: [
