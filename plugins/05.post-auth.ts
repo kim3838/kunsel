@@ -10,10 +10,10 @@ export default defineNuxtPlugin({
             const {isAuthenticated} = useAuth();
 
             if(isAuthenticated.value){
-                ssrFetchAssociatedCompanies();
-                ssrFetchUserIsAdminInAnyCompany();
-                ssrFetchPayrollComponentPaySelections();
+                await ssrFetchAssociatedCompanies();
+                await ssrFetchUserIsAdminInAnyCompany();
 
+                ssrFetchPayrollComponentPaySelections();
                 ssrFetchTimezoneSelections();
                 setStoredThemeType();
             }

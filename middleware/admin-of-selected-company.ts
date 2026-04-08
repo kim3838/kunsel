@@ -1,6 +1,7 @@
 import type {SelectedCompanyT} from "@/public/js/types/association";
 
 export default defineNuxtRouteMiddleware(async (to, from) => {
+    const debugEnabled = true;
     const {$authStore} = useNuxtApp();
     const {userIsSuperAdmin} = useAuth();
     const userIsAdminOfSelectedCompany = userIsAdminOfSelectedCompanyState();
@@ -8,6 +9,8 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
 
     if(!userIsSuperAdmin.value){
         if(import.meta.server){
+            if(debugEnabled){console.log('SSR MIDDLE');}
+
             await ssrFetchAssociatedCompanies();
         } else if(import.meta.client){
             await fetchAssociatedCompanies();

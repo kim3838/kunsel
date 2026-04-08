@@ -36,7 +36,7 @@ export const themeTypeState = () => {
 }
 
 export const useCommon = () => {
-    const debugEnabled = true;
+    const debugEnabled = false;
     const {sessionDomain} = useRuntimeConfig().public;
     const payrollComponentPaySelections = payrollComponentPaySelectionsState();
     const timezoneSelections = timezoneSelectionsState();
@@ -44,7 +44,7 @@ export const useCommon = () => {
     const themeType = themeTypeState();
 
     const ssrFetchPayrollComponentPaySelections = () => {
-        if(debugEnabled){console.log('1.0 SSR FETCH PAYROLL COMPONENT PAY SELECTIONS');}
+        if(debugEnabled){console.log('3.0 SSR FETCH');}
 
         const storedCompanyId = useCookie<PaletteName>('pc',{
             domain: sessionDomain,
@@ -65,7 +65,8 @@ export const useCommon = () => {
             params: params
         }, {
             onSuccessResponse: async (request, options, response) => {
-                if(debugEnabled){console.log('1.1 SSR FETCH PAYROLL COMPONENT PAY SELECTIONS RESPONSE');}
+                if(debugEnabled){console.log('3.2 SSR FETCH RESPONSE');}
+
                 payrollComponentPaySelections.value.pay_period = _get(response, '_data.values.pay_period', []);
                 payrollComponentPaySelections.value.pay_type = _get(response, '_data.values.pay_type', []);
             },
