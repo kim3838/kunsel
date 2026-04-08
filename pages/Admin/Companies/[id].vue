@@ -86,6 +86,7 @@
 import type {CompanyT} from "@/public/js/types/company";
 
 const {fetchAssociatedCompanies, storeAssociatedCompanies} = useAssociation();
+const {timezoneSelections} = useCommon();
 
 useHead({titleTemplate: (titleChunk) => {return `Companies`}});
 definePageMeta({middleware: ['auth', 'super-admin']});
@@ -124,7 +125,7 @@ const currencyOptions = reactive({
 });
 const timezoneOptions = reactive({
     search: '',
-    selection: [],
+    selection: timezoneSelections.value,
     selected: null
 });
 const fetchAccounts = async() => {
@@ -160,17 +161,6 @@ const fetchCurrencies = async() => {
 }
 await fetchCurrencies();
 await fetchAccounts();
-const fetchTimezones = async() => {
-
-    await laraFetch("/api/timezone-selections", {
-        method: 'GET',
-    }, {
-        onSuccessResponse: async (request, options, response) => {
-            timezoneOptions.selection = _get(response, '_data.values.selection', []);
-        }
-    })
-}
-await fetchTimezones();
 
 //Fetch Company Information
 const fetchCompany = async () => {

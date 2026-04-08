@@ -36,13 +36,15 @@ export const themeTypeState = () => {
 }
 
 export const useCommon = () => {
+    const debugEnabled = true;
     const {sessionDomain} = useRuntimeConfig().public;
     const payrollComponentPaySelections = payrollComponentPaySelectionsState();
     const timezoneSelections = timezoneSelectionsState();
     const companyOrganizationSelections = companyOrganizationSelectionsState();
     const themeType = themeTypeState();
 
-    const ssrFetchPayrollComponentPaySelections = async () => {
+    const ssrFetchPayrollComponentPaySelections = () => {
+        if(debugEnabled){console.log('1.0 SSR FETCH PAYROLL COMPONENT PAY SELECTIONS');}
 
         const storedCompanyId = useCookie<PaletteName>('pc',{
             domain: sessionDomain,
@@ -58,21 +60,21 @@ export const useCommon = () => {
             params.filters.company_id = storedCompanyId.value;
         }
 
-        await laraSsrUseFetch('/api/payroll-component-pay-selections', {
+        laraSsrUseFetch('/api/payroll-component-pay-selections', {
             method: 'GET',
             params: params
         }, {
             onSuccessResponse: async (request, options, response) => {
-
+                if(debugEnabled){console.log('1.1 SSR FETCH PAYROLL COMPONENT PAY SELECTIONS RESPONSE');}
                 payrollComponentPaySelections.value.pay_period = _get(response, '_data.values.pay_period', []);
                 payrollComponentPaySelections.value.pay_type = _get(response, '_data.values.pay_type', []);
             },
         });
     }
 
-    const ssrFetchTimezoneSelections = async () => {
+    const ssrFetchTimezoneSelections = () => {
 
-        await laraSsrUseFetch('/api/timezone-selections', {
+        laraSsrUseFetch('/api/timezone-selections', {
             method: 'GET',
         }, {
             onSuccessResponse: async (request, options, response) => {
@@ -326,7 +328,7 @@ export const useCommon = () => {
         };
     }
 
-    const setStoredThemeType = async () => {
+    const setStoredThemeType = () => {
 
         const storedTheme = useCookie<PaletteName>('pt',{
             domain: sessionDomain,

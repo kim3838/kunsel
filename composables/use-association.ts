@@ -40,7 +40,7 @@ export const userCompanyEmployeeState = () => {
 }
 
 export const useAssociation = () => {
-
+    const debugEnabled = true;
     const nuxtApp = useNuxtApp();
     const stringEnumerableValue = nuxtApp.$stringEnumerableValue as (enumerable: StringEnumInterface, value: number) => string;
     const user = userState();
@@ -116,23 +116,26 @@ export const useAssociation = () => {
         ];
     })
 
-    const ssrFetchAssociatedCompanies = async() => {
+    const ssrFetchAssociatedCompanies = () => {
+        if(debugEnabled){console.log('1.0 SSR FETCH ASSOCIATED COMPANIES');}
         const {userIsSuperAdmin} = useAuth();
 
-        await callOnce(async () => {
+        callOnce(() => {
+            if(debugEnabled){console.log('1.1 SSR FETCH ASSOCIATED COMPANIES ONCE');}
             let associatedCompaniesApi = userIsSuperAdmin.value ? '/api/company-selections' : '/api/associated-company-selections';
             let associatedCompaniesApiFilters = userIsSuperAdmin.value ? {} : {
                 user_id: user?.value?.id,
                 assignment_types: [COMPANY_ASSIGNMENT_TYPE.DEFAULT, COMPANY_ASSIGNMENT_TYPE.ADMIN],
             };
 
-            await laraSsrUseFetch(associatedCompaniesApi, {
+            laraSsrUseFetch(associatedCompaniesApi, {
                 method: 'GET',
                 params: {
                     filters: associatedCompaniesApiFilters
                 }
             }, {
                 onSuccessResponse: async (request, options, response) => {
+                    if(debugEnabled){console.log('1.2 SSR FETCH ASSOCIATED COMPANIES RESPONSE');}
                     let selection = _get(response, '_data.values.selection', []);
                     let selected = _get(response, '_data.values.selected', null);
 
@@ -174,14 +177,17 @@ export const useAssociation = () => {
         }, false);
     }
 
-    const ssrFetchUserIsAdminInAnyCompany = async() => {
+    const ssrFetchUserIsAdminInAnyCompany = () => {
+        if(debugEnabled){console.log('1.0 SSR FETCH USER IS ADMIN IN ANY COMPANY');}
 
-        await callOnce(async () => {
+        callOnce(() => {
+            if(debugEnabled){console.log('1.1 SSR FETCH USER IS ADMIN IN ANY COMPANY ONCE');}
 
-            await laraSsrUseFetch('/api/user-is-admin-in-any-company', {
+            laraSsrUseFetch('/api/user-is-admin-in-any-company', {
                 method: 'GET',
             }, {
                 onSuccessResponse: async (request, options, response) => {
+                    if(debugEnabled){console.log('1.2 SSR FETCH USER IS ADMIN IN ANY COMPANY RESPONSE');}
                     userIsAdminInAnyCompany.value = _get(response, '_data.values.user_is_admin_in_any_company', false);
                 }
             });
