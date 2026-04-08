@@ -9,7 +9,7 @@
                         <template #content>
                             <div class="relative py-4">
 
-                                <ThemeHeader class="text-xl">Password login</ThemeHeader>
+                                <div class="font-header text-xl">Password login</div>
 
                                 <form @submit.prevent="handleLogin" class="mt-4 w-80">
                                     <div class="block">

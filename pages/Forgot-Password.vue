@@ -7,7 +7,7 @@
                     <AccentFrame class="max-w-min mx-auto lg:mx-0 ">
                         <template #content>
                             <div class="relative py-4">
-                                <ThemeHeader class="text-xl">Forgot password</ThemeHeader>
+                                <div class="font-header text-xl">Forgot password</div>
 
                                 <form @submit.prevent="handleForgotPassword" class="mt-4 w-80">
                                     <div class="block">

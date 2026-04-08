@@ -1,7 +1,7 @@
 <template>
     <div class="space-y-6">
         <div class="space-y-4">
-            <ThemeHeader>Payroll #: {{_get(proxyPayroll, 'number', 'Payroll number not found')}}</ThemeHeader>
+            <div class="font-header">Payroll #: {{_get(proxyPayroll, 'number', 'Payroll number not found')}}</div>
 
             <PayrollSubInfo :type="PAYROLL_SUB_INFO_TYPE.ADMIN_OVERVIEW" :payroll="proxyPayroll"/>
         </div>

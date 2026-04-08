@@ -7,7 +7,7 @@
                         <template #content>
                             <div class="relative py-4">
                                 <form @submit.prevent="execute" class="w-80">
-                                    <ThemeHeader class="mb-4 text-xl">Verify your email</ThemeHeader>
+                                    <div class="mb-4 font-header text-xl">Verify your email</div>
 
                                     <p class="text-base">
                                         Please click the verification button sent to your email address.
