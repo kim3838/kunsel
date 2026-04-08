@@ -1,5 +1,5 @@
 export default defineNuxtRouteMiddleware(async (to, from) => {
-    const debugEnabled = true;
+    const debugEnabled = false;
     const {userIsSuperAdmin} = useAuth();
     const userIsAdminInAnyCompany = userIsAdminInAnyCompanyState();
     const {ssrFetchUserIsAdminInAnyCompany, fetchUserIsAdminInAnyCompany} = useAssociation();

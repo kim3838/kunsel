@@ -36,7 +36,7 @@ export const themeTypeState = () => {
 }
 
 export const useCommon = () => {
-    const debugEnabled = true;
+    const debugEnabled = false;
     const {sessionDomain} = useRuntimeConfig().public;
     const payrollComponentPaySelections = payrollComponentPaySelectionsState();
     const timezoneSelections = timezoneSelectionsState();

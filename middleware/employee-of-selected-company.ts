@@ -1,7 +1,7 @@
 import type {SelectedCompanyT} from "@/public/js/types/association";
 
 export default defineNuxtRouteMiddleware(async (to, from) => {
-    const debugEnabled = true;
+    const debugEnabled = false;
     const {$authStore} = useNuxtApp();
     const {userIsSuperAdmin} = useAuth();
     const userIsEmployeeOfSelectedCompany = userIsEmployeeOfSelectedCompanyState();
