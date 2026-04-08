@@ -33,7 +33,7 @@
                             <template v-slot:body="{frameBorderColor}">
                                 <div class="w-[80%] h-full relative pt-10 px-2 overflow-hidden flex flex-col">
 
-                                    <ThemeHeader :type="'gray'" class="text-lg">Compensation tax (WTC) calculator</ThemeHeader>
+                                    <div class="font-header text-lg">Compensation tax (WTC) calculator</div>
 
                                     <form @submit.prevent="calculateTax" class="mt-4">
                                         <div class="block">

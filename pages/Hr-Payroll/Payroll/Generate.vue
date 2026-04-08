@@ -83,7 +83,7 @@
                                 <div class="lining-shadow rounded-sm tint-background">
 
                                     <div class="lining-shadow rounded-t-sm px-4 py-2">
-                                        <ThemeHeader :type="'gray'" class="text-lg">{{stagedPayrollPayload.summary}}</ThemeHeader>
+                                        <div class="font-header text-lg">{{stagedPayrollPayload.summary}}</div>
                                     </div>
 
                                     <div class="p-4">

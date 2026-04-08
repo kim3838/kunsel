@@ -26,7 +26,7 @@
                     <div class="space-y-2">
 
                         <div class="flex justify-center">
-                            <ThemeHeader :type="'gray'" class="text-lg">Schedule</ThemeHeader>
+                            <div class="font-header text-lg">Schedule</div>
                         </div>
 
                         <DataTable
@@ -41,7 +41,7 @@
                     <div class="space-y-2">
 
                         <div class="flex justify-center">
-                            <ThemeHeader :type="'gray'" class="text-lg">Attendance</ThemeHeader>
+                            <div class="font-header text-lg">Attendance</div>
                         </div>
 
                         <DataTable
@@ -56,7 +56,7 @@
                     <div class="space-y-2">
 
                         <div class="flex justify-center">
-                            <ThemeHeader :type="'gray'" class="text-lg">Attendance Breakdown</ThemeHeader>
+                            <div class="font-header text-lg">Attendance Breakdown</div>
                         </div>
 
                         <DataTable
