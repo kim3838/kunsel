@@ -88,7 +88,9 @@ import type {SelectDataType} from "@/public/js/types/form";
 import type {CompanyT} from "@/public/js/types/company";
 
 const {fetchAssociatedCompanies, storeAssociatedCompanies} = useAssociation();
+const {ssrFetchTimezoneSelections} = useCommon();
 const {timezoneSelections} = useCommon();
+await ssrFetchTimezoneSelections();
 
 useHead({titleTemplate: (titleChunk) => {return `Companies`}});
 definePageMeta({middleware: ['auth', 'verified', 'admin-in-any-company']});

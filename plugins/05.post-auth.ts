@@ -6,15 +6,13 @@ export default defineNuxtPlugin({
         if(import.meta.server){
 
             const {ssrFetchAssociatedCompanies, ssrFetchUserIsAdminInAnyCompany} = useAssociation();
-            const {ssrFetchPayrollComponentPaySelections, ssrFetchTimezoneSelections, setStoredThemeType} = useCommon();
+            const {setStoredThemeType} = useCommon();
             const {isAuthenticated} = useAuth();
 
             if(isAuthenticated.value){
                 await ssrFetchAssociatedCompanies();
                 await ssrFetchUserIsAdminInAnyCompany();
 
-                ssrFetchPayrollComponentPaySelections();
-                ssrFetchTimezoneSelections();
                 setStoredThemeType();
             }
         }

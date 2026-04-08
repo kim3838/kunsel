@@ -40,7 +40,7 @@ export const userCompanyEmployeeState = () => {
 }
 
 export const useAssociation = () => {
-    const debugEnabled = true;
+    const debugEnabled = false;
     const nuxtApp = useNuxtApp();
     const stringEnumerableValue = nuxtApp.$stringEnumerableValue as (enumerable: StringEnumInterface, value: number) => string;
     const user = userState();

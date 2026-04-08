@@ -174,7 +174,10 @@ const $enumerableOption = nuxtApp.$enumerableOption as (enumerable: StringEnumIn
     value: number
 };
 const moment = useNuxtApp().$moment;
+const {ssrFetchPayrollComponentPaySelections} = useCommon();
 const {payrollComponentPaySelections} = useCommon();
+await ssrFetchPayrollComponentPaySelections();
+
 const {render} = dateTimePicker();
 
 const {

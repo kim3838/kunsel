@@ -36,52 +36,62 @@ export const themeTypeState = () => {
 }
 
 export const useCommon = () => {
-    const debugEnabled = false;
+    const debugEnabled = true;
     const {sessionDomain} = useRuntimeConfig().public;
     const payrollComponentPaySelections = payrollComponentPaySelectionsState();
     const timezoneSelections = timezoneSelectionsState();
     const companyOrganizationSelections = companyOrganizationSelectionsState();
     const themeType = themeTypeState();
 
-    const ssrFetchPayrollComponentPaySelections = () => {
+    const ssrFetchPayrollComponentPaySelections = async () => {
         if(debugEnabled){console.log('3.0 SSR FETCH');}
 
-        const storedCompanyId = useCookie<PaletteName>('pc',{
-            domain: sessionDomain,
-            sameSite: 'lax',
-        });
+        await callOnce(async () => {
+            if(debugEnabled){console.log('3.1 ONCE');}
 
-        const params = {
-            filters: {}
-        };
+            const storedCompanyId = useCookie<PaletteName>('pc',{
+                domain: sessionDomain,
+                sameSite: 'lax',
+            });
 
-        if(storedCompanyId.value !== undefined){
+            const params = {
+                filters: {}
+            };
 
-            params.filters.company_id = storedCompanyId.value;
-        }
+            if(storedCompanyId.value !== undefined){
 
-        laraSsrUseFetch('/api/payroll-component-pay-selections', {
-            method: 'GET',
-            params: params
-        }, {
-            onSuccessResponse: async (request, options, response) => {
-                if(debugEnabled){console.log('3.2 SSR FETCH RESPONSE');}
+                params.filters.company_id = storedCompanyId.value;
+            }
 
-                payrollComponentPaySelections.value.pay_period = _get(response, '_data.values.pay_period', []);
-                payrollComponentPaySelections.value.pay_type = _get(response, '_data.values.pay_type', []);
-            },
+            await laraSsrUseFetch('/api/payroll-component-pay-selections', {
+                method: 'GET',
+                params: params
+            }, {
+                onSuccessResponse: async (request, options, response) => {
+                    if(debugEnabled){console.log('3.2 SSR FETCH RESPONSE');}
+
+                    payrollComponentPaySelections.value.pay_period = _get(response, '_data.values.pay_period', []);
+                    payrollComponentPaySelections.value.pay_type = _get(response, '_data.values.pay_type', []);
+                },
+            });
         });
     }
 
-    const ssrFetchTimezoneSelections = () => {
+    const ssrFetchTimezoneSelections = async () => {
+        if(debugEnabled){console.log('4.0 SSR FETCH');}
 
-        laraSsrUseFetch('/api/timezone-selections', {
-            method: 'GET',
-        }, {
-            onSuccessResponse: async (request, options, response) => {
+        await callOnce(async () => {
+            if(debugEnabled){console.log('4.1 ONCE');}
 
-                timezoneSelections.value = _get(response, '_data.values.selection', []);
-            },
+            await laraSsrUseFetch('/api/timezone-selections', {
+                method: 'GET',
+            }, {
+                onSuccessResponse: async (request, options, response) => {
+                    if(debugEnabled){console.log('4.2 SSR FETCH RESPONSE');}
+
+                    timezoneSelections.value = _get(response, '_data.values.selection', []);
+                },
+            });
         });
     }
 

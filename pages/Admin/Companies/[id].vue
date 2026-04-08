@@ -86,7 +86,9 @@
 import type {CompanyT} from "@/public/js/types/company";
 
 const {fetchAssociatedCompanies, storeAssociatedCompanies} = useAssociation();
+const {ssrFetchTimezoneSelections} = useCommon();
 const {timezoneSelections} = useCommon();
+await ssrFetchTimezoneSelections();
 
 useHead({titleTemplate: (titleChunk) => {return `Companies`}});
 definePageMeta({middleware: ['auth', 'super-admin']});

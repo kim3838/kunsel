@@ -160,7 +160,10 @@ useLayout().setNavigationMode('solid');
 const route = useRoute();
 const user = userState();
 const {fetchAssociatedCompanies, storeAssociatedCompanies} = useAssociation();
+const {ssrFetchTimezoneSelections} = useCommon();
 const {timezoneSelections} = useCommon();
+await ssrFetchTimezoneSelections();
+
 const associatedUser = ref<UserT | null>(null);
 const associatedUserSuccessful = ref(true);
 const associatedUserMessage = ref('');

@@ -379,7 +379,10 @@ useLayout().setNavigationMode('solid');
 
 const {render} = dateTimePicker();
 const route = useRoute();
+const {ssrFetchTimezoneSelections} = useCommon();
 const {timezoneSelections} = useCommon();
+await ssrFetchTimezoneSelections();
+
 const {screenWidthBreakpoint, width: screenWidth} = useScreen();
 const {isAuthenticated} = useAuth();
 const {$authStore, $associationStore, $moment} = useNuxtApp();
