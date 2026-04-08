@@ -66,8 +66,7 @@ module.exports = {
                     'Sofia Sans Semi Condensed',
                 ],
                 label: [
-                    'Momo Trust Sans',
-                    'National Park',
+                    'Reddit Sans Condensed',
                 ],
                 serif : [
                     'Quintessential',
