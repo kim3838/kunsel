@@ -44,7 +44,7 @@
                 <div class="p-2">
                     <div class="flex flex-row flex-wrap justify-start items-center">
                         <div class="w-max flex flex-row items-center gap-2">
-                            <ThemeHeader :type="'gray'" class="text-base font-medium">Kunsel ERP</ThemeHeader>
+                            <div class="text-base font-medium">Kunsel ERP</div>
                         </div>
                         <BreadCrumbs prefix-arrow :prefix-company="breadcrumbsPrefixCompany" />
                     </div>

@@ -59,7 +59,6 @@
                                                 :justify-content="'center'"
                                                 :disabled="authPending || isAuthenticated"
                                                 :size="'md'"
-                                                :override="{font_family_class: `font-serif`}"
                                                 :icon="authPending ? 'eos-icons:loading' : ''"
                                                 :label="authPending ? 'Logging in...' : 'Login'"></Button>
                                         </div>

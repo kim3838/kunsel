@@ -2,12 +2,12 @@
     <!-- Nuxt Wrapper -->
     <div ref="nuxtWrapper" class="nuxt-page relative">
         <AppRenderingLoading/>
-        <div class="absolute inset-x-0 -z-10 overflow-hidden -top-40 sm:-top-80 blur-3xl" aria-hidden="true">
+        <div v-if="!themeIsLightSlate" class="absolute inset-x-0 -z-10 overflow-hidden -top-40 sm:-top-80 blur-3xl" aria-hidden="true">
             <div class="t-f relative w-[36.125rem] sm:w-[72.1875rem] left-[calc(50%-11rem)] sm:left-[calc(50%-30rem)] aspect-[1155/678] -translate-x-1/2 rotate-[30deg]" :class="fragmentOpacityComputed.top"></div>
         </div>
         <NuxtLoadingIndicator />
         <NuxtPage/>
-        <div class="absolute inset-x-0 -z-10 overflow-hidden top-[calc(20%)] sm:top-[calc(0%)] blur-3xl" aria-hidden="true">
+        <div v-if="!themeIsLightSlate" class="absolute inset-x-0 -z-10 overflow-hidden top-[calc(20%)] sm:top-[calc(0%)] blur-3xl" aria-hidden="true">
             <div class="b-f relative w-[36.125rem] sm:w-[72.1875rem] left-[calc(50%+3rem)] sm:left-[calc(50%+36rem)] aspect-[1155/678]  -translate-x-1/2" :class="fragmentOpacityComputed.bottom"></div>
         </div>
     </div>
@@ -23,14 +23,19 @@ const {$layoutStore, $themeStore} = useNuxtApp();
 const route = useRoute();
 const {
     type: storeThemeType,
+    appTheme: appTheme,
 } = storeToRefs($themeStore);
+
+const themeIsLightSlate = computed(() => {
+    return appTheme.value === 'light-slate';
+})
 
 const fragmentOpacityComputed = computed(() => {
 
     if (storeThemeType.value === 'dark'){
         return {
-            'top': 'opacity-20',
-            'bottom' : 'opacity-30'
+            'top': 'opacity-40',
+            'bottom' : 'opacity-60'
         }
     }
 
