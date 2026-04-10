@@ -8,11 +8,19 @@ export default defineNuxtConfig({
         baseURL: "/",
         head: {
             title: 'Kunsel',
-            "meta": [
-                {"name": "viewport", "content": "width=device-width, initial-scale=1"},
-                {"charset": "utf-8"}
+            meta: [
+                {name: 'viewport', content: 'width=device-width, initial-scale=1'},
+
+                {name: 'description', content: 'Manage HR & Payroll, Inventory, Finance, and POS in one integrated cloud platform.'},
+                {name: 'keywords', content: 'HR software, payroll system, employee management, payroll automation, automated payroll, tax compliant'},
+
+                {property: 'og:title', content: 'Integrated ERP Solutions'},
+                {property: 'og:description', content: 'All-in-one business management.'},
+
+                {name: 'robots', content: 'index, follow' },
+                {charset: "utf-8"}
             ],
-            "link": [
+            link: [
                 {rel: 'preconnect', href: 'https://fonts.googleapis.com'},
                 {rel: 'preconnect', href: 'https://fonts.gstatic.com', crossorigin: 'use-credentials'},
                 //Sans-Serif
