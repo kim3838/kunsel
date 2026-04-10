@@ -3,24 +3,6 @@
         <div class="flex flex-wrap justify-center gap-2">
 
             <div class="grow-0 neutral-border grow p-2">
-                <ThemeHeader :type="'gray'" class="text-lg">Support</ThemeHeader>
-
-                <div class="mt-2 space-y-2">
-                    <UnorderedList
-                        class="flex"
-                        :size="listSize"
-                        :icon="'ic:round-mail-outline'"
-                        :label="'support@kunsel-erp.com'"/>
-
-                    <UnorderedList
-                        class="flex"
-                        :size="listSize"
-                        :icon="'basil:viber-outline'"
-                        :label="'viber: +63 9916180206'"/>
-                </div>
-            </div>
-
-            <div class="grow-0 neutral-border grow p-2">
                 <ThemeHeader :type="'gray'" class="text-lg">Core Modules</ThemeHeader>
 
                 <div class="mt-2 space-y-2">
@@ -53,6 +35,24 @@
                         :size="listSize"
                         :icon="'icon-park-outline:coordinate-system'"
                         :label="'Point of sale'"/>
+                </div>
+            </div>
+
+            <div class="grow-0 neutral-border grow p-2">
+                <ThemeHeader :type="'gray'" class="text-lg">Support</ThemeHeader>
+
+                <div class="mt-2 space-y-2">
+                    <UnorderedList
+                        class="flex"
+                        :size="listSize"
+                        :icon="'ic:round-mail-outline'"
+                        :label="'support@kunsel-erp.com'"/>
+
+                    <UnorderedList
+                        class="flex"
+                        :size="listSize"
+                        :icon="'basil:viber-outline'"
+                        :label="'viber: +63 9916180206'"/>
                 </div>
             </div>
 
