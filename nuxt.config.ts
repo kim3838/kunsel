@@ -14,7 +14,7 @@ export default defineNuxtConfig({
                 {name: 'description', content: 'Manage HR & Payroll, Inventory, Finance, and POS in one integrated cloud platform.'},
                 {name: 'keywords', content: 'HR software, payroll system, employee management, payroll automation, automated payroll, tax compliant'},
 
-                {property: 'og:title', content: 'Integrated ERP Solutions'},
+                {property: 'og:title', content: 'Integrated Cloud ERP Solution'},
                 {property: 'og:description', content: 'All-in-one business management.'},
 
                 {name: 'robots', content: 'index, follow' },

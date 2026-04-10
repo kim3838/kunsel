@@ -24,6 +24,30 @@
 import type {CommonColorsT} from "@/stores/theme";
 import {storeToRefs} from "pinia";
 
+useHead({
+    script: [
+        {
+            type: 'application/ld+json',
+            children: JSON.stringify({
+                "@context": "https://schema.org",
+                "@type": "SoftwareApplication",
+                "name": "Kunsel ERP",
+                "operatingSystem": "Web",
+                "applicationCategory": "BusinessApplication",
+                "description": "Manage HR & Payroll, Inventory, Finance, and POS in one integrated cloud platform.",
+                "featureList": [
+                    "HR & Payroll",
+                    "Employee Self-Service",
+                    "Tax Compliance",
+                    "Inventory & Logistics",
+                    "Finance",
+                    "Point of Sale (POS)"
+                ]
+            })
+        }
+    ]
+})
+
 const clientReadyState = useClientReadyState();
 const themeType = themeTypeState();
 const {$layoutStore, $themeStore} = useNuxtApp();
