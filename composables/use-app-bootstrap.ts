@@ -31,7 +31,7 @@ export const useAppBootstrap = () => {
         });
 
         if(storedTheme.value == undefined){
-            storedTheme.value = 'default-blue';
+            storedTheme.value = 'light-slate';
         }
 
         $themeStore.setTheme(storedTheme.value);
