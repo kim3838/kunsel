@@ -63,7 +63,7 @@ export const useThemeStore = defineStore('theme', () => {
         'light-slate': {
             'type': 'light',
             'primary': '#0b2d43',
-            'secondary': '#6b758a',
+            'secondary': '#36425b',
             'accent': '#c9d8e1',
 
             'cell': '#dedede',
@@ -73,7 +73,7 @@ export const useThemeStore = defineStore('theme', () => {
             'neutral': '#efefef',
 
             'header': '#ffffff',
-            'body': '#f8f8f8',
+            'body': '#f9f9f9',
             'shade': '#f7f7f7',
             'tint': '#ffffff',
 
