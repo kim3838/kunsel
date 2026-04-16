@@ -3,7 +3,7 @@
 
         <div class="lining-shadow rounded-sm grow tint-background">
 
-            <div class="lining-shadow rounded-t-sm px-4 py-2 flex flex-row items-center justify-between">
+            <div class="rounded-t-sm px-4 py-2 flex flex-row items-center justify-between">
                 <div class="flex flex-row items-center gap-2">
 
                     <div class="font-header text-lg line-clamp-1">Leave Today</div>
@@ -18,11 +18,11 @@
                     class="cursor-pointer subtitle-color text-right"
                     @click="toggleShowLeaveToday"
                     :icon="showLeaveToday ? 'ic:outline-keyboard-arrow-left' : 'ic:outline-keyboard-arrow-down'"
-                    :label="'Show leave today'"
+                    :label="'on leave today'"
                     :size="'sm'"/>
             </div>
 
-            <div v-if="showLeaveToday" class="grid p-4">
+            <div class="grid p-4">
 
                 <Label v-if="!leaveTodayAndUpcomingSuccessful" invert :size="'md'" :type="'danger'" :label="leaveTodayAndUpcomingMessage" />
 
@@ -50,7 +50,7 @@
 
         <div class="lining-shadow rounded-sm grow tint-background">
 
-            <div class="lining-shadow rounded-t-sm px-4 py-2 flex flex-row items-center justify-between">
+            <div class="rounded-t-sm px-4 py-2 flex flex-row items-center justify-between">
                 <div class="flex flex-row items-center gap-2">
 
                     <div class="font-header text-lg line-clamp-1">Upcoming leaves</div>
@@ -65,11 +65,11 @@
                     class="cursor-pointer subtitle-color text-right"
                     @click="toggleShowUpcomingLeaves"
                     :icon="showUpcomingLeaves ? 'ic:outline-keyboard-arrow-left' : 'ic:outline-keyboard-arrow-down'"
-                    :label="'Show upcoming leaves'"
+                    :label="'upcoming leaves'"
                     :size="'sm'"/>
             </div>
 
-            <div v-if="showUpcomingLeaves" class="grid p-4">
+            <div class="grid p-4">
 
                 <Label v-if="!leaveTodayAndUpcomingSuccessful" invert :size="'md'" :type="'danger'" :label="leaveTodayAndUpcomingMessage" />
 

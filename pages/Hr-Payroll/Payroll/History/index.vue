@@ -87,7 +87,7 @@
 
                             <div class="lining-shadow rounded-sm tint-background">
 
-                                <div class="lining-shadow rounded-t-sm text-lg font-medium font-header px-4 py-2">{{stagedPayroll.number}}</div>
+                                <div class="neutral-border-bottom rounded-t-sm text-lg font-medium font-header px-4 py-2">{{stagedPayroll.number}}</div>
 
                                 <div class="p-4 space-y-6">
 

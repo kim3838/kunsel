@@ -82,7 +82,7 @@
 
                                 <div class="lining-shadow rounded-sm tint-background">
 
-                                    <div class="lining-shadow rounded-t-sm px-4 py-2">
+                                    <div class="neutral-border-bottom rounded-t-sm px-4 py-2">
                                         <div class="font-header text-lg">{{stagedPayrollPayload.summary}}</div>
                                     </div>
 
@@ -169,7 +169,7 @@
 
                                 <div class="lining-shadow rounded-sm tint-background">
 
-                                    <div class="lining-shadow rounded-t-sm text-lg font-header px-4 py-2 label-danger">Confirm Final Pay</div>
+                                    <div class="neutral-border-bottom rounded-t-sm text-lg font-header px-4 py-2 label-danger">Confirm Final Pay</div>
 
                                     <div class="p-4">
 
@@ -261,7 +261,7 @@
 
                                 <div class="lining-shadow rounded-sm tint-background">
 
-                                    <div class="lining-shadow rounded-t-sm text-lg font-header px-4 py-2 label-danger">No Salary Statement to Generate</div>
+                                    <div class="neutral-border-bottom rounded-t-sm text-lg font-header px-4 py-2 label-danger">No Salary Statement to Generate</div>
 
                                     <div class="p-4">
 

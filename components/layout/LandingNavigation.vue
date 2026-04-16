@@ -1,7 +1,7 @@
 <template>
     <nav
         ref="landingNavigation"
-        class="primary-navigation-parent z-40 fixed">
+        class="primary-navigation-parent z-40 fixed neutral-border-bottom">
         <div class="w-full font-business flex justify-center">
             <div class="max-w-screen-2xl w-full flex gap-1 justify-start lg:justify-around h-11">
                 <div class="flex">

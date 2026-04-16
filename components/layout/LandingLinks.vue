@@ -3,7 +3,7 @@
         <div class="flex flex-wrap justify-center gap-2">
 
             <div class="grow-0 neutral-border grow p-2">
-                <ThemeHeader :type="'gray'" class="text-lg">Core Modules</ThemeHeader>
+                <div class="font-medium font-header">Core Modules</div>
 
                 <div class="mt-2 space-y-2">
                     <UnorderedList
@@ -39,7 +39,7 @@
             </div>
 
             <div class="grow-0 neutral-border grow p-2">
-                <ThemeHeader :type="'gray'" class="text-lg">Support</ThemeHeader>
+                <div class="font-medium font-header">Support</div>
 
                 <div class="mt-2 space-y-2">
                     <UnorderedList
@@ -57,7 +57,7 @@
             </div>
 
             <div class="grow-0 max-w-80 neutral-border grow p-2">
-                <ThemeHeader :type="'gray'" class="text-lg">Contact Us</ThemeHeader>
+                <div class="font-medium font-header">Contact Us</div>
 
                 <div class="mt-2 space-y-2">
                     <UnorderedList

@@ -5,7 +5,7 @@
 
                 <div class="lining-shadow rounded-sm tint-background">
 
-                    <div class="lining-shadow rounded-t-sm px-4 py-2">
+                    <div class="neutral-border-bottom rounded-t-sm px-4 py-2">
 
                         <div class="font-header text-lg">Profile Information</div>
                     </div>
@@ -37,7 +37,7 @@
                     </div>
                 </div>
 
-                <div class="lining-shadow rounded-sm tint-background">
+                <div class="neutral-border-bottom rounded-sm tint-background">
 
                     <div class="lining-shadow rounded-t-sm px-4 py-2">
 
@@ -73,7 +73,7 @@
 
                 <div class="lining-shadow rounded-sm tint-background">
 
-                    <div class="lining-shadow rounded-t-sm px-4 py-2">
+                    <div class="neutral-border-bottom rounded-t-sm px-4 py-2">
 
                         <div class="font-header text-lg">Browser Sessions</div>
                     </div>
@@ -125,7 +125,7 @@
 
                 <div class="lining-shadow rounded-sm tint-background">
 
-                    <div class="lining-shadow rounded-t-sm px-4 py-2">
+                    <div class="neutral-border-bottom rounded-t-sm px-4 py-2">
 
                         <div class="font-header text-lg">Two Factor Authentication</div>
                     </div>

@@ -47,7 +47,7 @@
 
                                 <div class="lining-shadow rounded-sm tint-background">
 
-                                    <div class="lining-shadow rounded-t-sm text-lg font-medium font-header px-4 py-2">Leave Type Settings</div>
+                                    <div class="neutral-border-bottom rounded-t-sm text-lg font-medium font-header px-4 py-2">Leave Type Settings</div>
 
                                     <div class="p-4">
 
@@ -77,7 +77,7 @@
 
                                 <div v-if="leaveTypeAssignmentTab == LEAVE_TYPE_ASSIGNMENT_TAB.CREATE_LEAVE_TYPE_ASSIGNMENTS" class="lining-shadow rounded-sm tint-background">
 
-                                    <div class="lining-shadow rounded-t-sm text-lg font-medium font-header px-4 py-2">Select Leave Types</div>
+                                    <div class="neutral-border-bottom rounded-t-sm text-lg font-medium font-header px-4 py-2">Select Leave Types</div>
 
                                     <div class="p-4">
                                         <Suspense>
@@ -101,7 +101,7 @@
 
                                 <div v-if="leaveTypeAssignmentTab == LEAVE_TYPE_ASSIGNMENT_TAB.MANAGE_ASSIGNED_LEAVE_TYPES" class="lining-shadow rounded-sm tint-background">
 
-                                    <div class="lining-shadow rounded-t-sm text-lg font-medium font-header px-4 py-2">Select Employees</div>
+                                    <div class="neutral-border-bottom rounded-t-sm text-lg font-medium font-header px-4 py-2">Select Employees</div>
 
                                     <div class="p-4 max-h-[400px] overflow-y-scroll">
                                         <Suspense>

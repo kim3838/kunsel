@@ -56,7 +56,7 @@
 
                 <!-- UR -->
                 <div class="lining-shadow rounded-sm grow tint-background">
-                    <div class="lining-shadow rounded-t-sm px-4 py-2">
+                    <div class="neutral-border-bottom rounded-t-sm px-4 py-2">
                         <div class="font-header text-lg">My Requests</div>
                     </div>
 
@@ -68,7 +68,7 @@
 
                 <!-- AP -->
                 <div class="lining-shadow rounded-sm grow tint-background">
-                    <div class="lining-shadow rounded-t-sm px-4 py-2">
+                    <div class="neutral-border-bottom rounded-t-sm px-4 py-2">
                         <div class="font-header text-lg">Awaiting my approval</div>
                     </div>
 

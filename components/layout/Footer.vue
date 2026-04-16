@@ -11,9 +11,9 @@
 
                 <div class="flex flex-wrap gap-4">
 
-                    <div v-for="navigationLink in navigationLinks" :key="navigationLink.key" class="neutral-border flex-grow p-2 text-left backdrop-blur-xs">
-                        <p class="text-lg font-medium font-business">
-                            <ThemeHeader :type="'gray'">
+                    <div v-for="navigationLink in navigationLinks" :key="navigationLink.key" class="lining-shadow flex-grow space-y-2 p-2 text-left backdrop-blur-xs">
+                        <div class="text-lg font-medium font-business">
+                            <div class="font-header text-base">
                                 <NuxtLink
                                     v-if="navigationLink.type == 'link'"
                                     :to="navigationLink.to"
@@ -21,8 +21,10 @@
                                     {{navigationLink.title}}
                                 </NuxtLink>
                                 <span v-else>{{navigationLink.title}}</span>
-                            </ThemeHeader>
-                        </p>
+                            </div>
+                        </div>
+
+                        <div class="neutral-border-bottom"></div>
 
                         <div v-if="navigationLink?.options && navigationLink.options.length > 0" class="mt-2 space-y-2 text-base">
                             <div v-for="subLink in navigationLink.options" :key="subLink.key">

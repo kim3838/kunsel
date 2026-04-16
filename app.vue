@@ -150,7 +150,7 @@ watch(() => route.name,() => {
     color: v-bind(subtitleColorComputed);
 }
 
-.vertical-divider{
+.thread-vertical-divider{
     height: 1px;
     width: 100%;
     background: linear-gradient(
@@ -162,7 +162,7 @@ watch(() => route.name,() => {
     );
 }
 
-.horizontal-divider{
+.thread-horizontal-divider{
     height: 100%;
     width: 1px;
     background: linear-gradient(
@@ -204,6 +204,10 @@ watch(() => route.name,() => {
 
 .neutral-border{
     border: 1px solid v-bind(neutralColor);
+}
+
+.neutral-border-bottom{
+    border-bottom: 1px solid v-bind(neutralColor);
 }
 
 .lining-border{

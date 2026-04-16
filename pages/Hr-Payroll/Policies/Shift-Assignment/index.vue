@@ -47,7 +47,7 @@
 
                                 <div class="lining-shadow rounded-sm tint-background">
 
-                                    <div class="lining-shadow rounded-t-sm text-lg font-medium font-header px-4 py-2">Shift settings</div>
+                                    <div class="neutral-border-bottom rounded-t-sm text-lg font-medium font-header px-4 py-2">Shift settings</div>
 
                                     <div class="p-4">
 
@@ -90,7 +90,7 @@
 
                                 <div v-if="shiftAssignmentTab == SHIFT_ASSIGNMENT_TAB.CREATE_SHIFT_ASSIGNMENTS" class="lining-shadow rounded-sm tint-background">
 
-                                    <div class="lining-shadow rounded-t-sm text-lg font-medium font-header px-4 py-2">Select shift</div>
+                                    <div class="neutral-border-bottom rounded-t-sm text-lg font-medium font-header px-4 py-2">Select shift</div>
 
                                     <div class="p-4">
                                         <Suspense>
@@ -115,7 +115,7 @@
 
                                 <div v-if="shiftAssignmentTab == SHIFT_ASSIGNMENT_TAB.MANAGE_ASSIGNED_SHIFTS" class="lining-shadow rounded-sm tint-background">
 
-                                    <div class="lining-shadow rounded-t-sm text-lg font-medium font-header px-4 py-2">Select Employees</div>
+                                    <div class="neutral-border-bottom rounded-t-sm text-lg font-medium font-header px-4 py-2">Select Employees</div>
 
                                     <div class="p-4">
                                         <Suspense>
@@ -195,7 +195,7 @@
 
                             <div class="lining-shadow rounded-sm tint-background">
 
-                                <div class="lining-shadow rounded-t-sm text-lg font-medium font-header px-4 py-2">{{stagedShiftAssignmentId ? 'Shift settings update errors' : 'Shift assignment errors' }}</div>
+                                <div class="neutral-border-bottom rounded-t-sm text-lg font-medium font-header px-4 py-2">{{stagedShiftAssignmentId ? 'Shift settings update errors' : 'Shift assignment errors' }}</div>
 
                                 <div class="p-4">
                                     <DataTable

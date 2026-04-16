@@ -63,7 +63,7 @@
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
                 <!-- UR -->
                 <div class="lining-shadow rounded-sm grow tint-background">
-                    <div class="lining-shadow rounded-t-sm px-4 py-2">
+                    <div class="neutral-border-bottom rounded-t-sm px-4 py-2">
 
                         <div class="font-header text-lg">My Requests</div>
                     </div>
@@ -76,7 +76,7 @@
 
                 <!-- AP -->
                 <div class="lining-shadow rounded-sm grow tint-background">
-                    <div class="lining-shadow rounded-t-sm px-4 py-2">
+                    <div class="neutral-border-bottom rounded-t-sm px-4 py-2">
 
                         <div class="font-header text-lg">Awaiting my approval</div>
                     </div>
@@ -95,7 +95,7 @@
 
                         <!-- CS -->
                         <div class="lining-shadow rounded-sm grow tint-background">
-                            <div class="lining-shadow rounded-t-sm px-4 py-2 flex flex-row items-center justify-between">
+                            <div class="neutral-border-bottom rounded-t-sm px-4 py-2 flex flex-row items-center justify-between">
                                 <div>
                                     <div class="font-header text-lg">Current Shift</div>
                                     <div v-if="!employeePending && employeeHasCurrentShiftAssigned" class="text-sm subtitle-color">{{ _get(employee, 'current_shift.shift_assignment.readable_date_range', '') }}</div>
@@ -187,7 +187,7 @@
 
                         <!-- US -->
                         <div class="lining-shadow rounded-sm grow tint-background">
-                            <div class="lining-shadow rounded-t-sm px-4 py-2 flex flex-row items-center justify-between">
+                            <div class="neutral-border-bottom rounded-t-sm px-4 py-2 flex flex-row items-center justify-between">
                                 <div>
                                     <div class="font-header text-lg">Upcoming Shift</div>
                                     <div v-if="!employeePending && employeeHasUpcomingShiftAssigned" class="text-sm subtitle-color">{{ _get(employee, 'upcoming_shift.shift_assignment.readable_date_range', '') }}</div>
@@ -285,7 +285,7 @@
 
                         <!-- LC -->
                         <div class="lining-shadow rounded-sm grow tint-background">
-                            <div class="lining-shadow rounded-t-sm px-4 py-2 flex justify-between items-center">
+                            <div class="neutral-border-bottom rounded-t-sm px-4 py-2 flex justify-between items-center">
 
                                 <div class="font-header text-lg">Leave Credits</div>
 
@@ -319,7 +319,7 @@
 
                         <!-- PR -->
                         <div class="lining-shadow rounded-sm grow tint-background">
-                            <div class="lining-shadow rounded-t-sm px-4 py-2 flex justify-between items-center">
+                            <div class="neutral-border-bottom rounded-t-sm px-4 py-2 flex justify-between items-center">
 
                                 <div class="text-lg font-medium font-header">Payroll</div>
 

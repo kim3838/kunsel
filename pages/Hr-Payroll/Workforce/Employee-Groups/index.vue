@@ -29,7 +29,7 @@
 
                                 <div class="lining-shadow rounded-sm tint-background">
 
-                                    <div class="lining-shadow rounded-t-sm text-lg font-medium font-header px-4 py-2">Group</div>
+                                    <div class="neutral-border-bottom rounded-t-sm text-lg font-medium font-header px-4 py-2">Group</div>
 
                                     <div class="p-4">
 
@@ -47,7 +47,7 @@
 
                                 <div class="lining-shadow rounded-sm tint-background">
 
-                                    <div class="lining-shadow rounded-t-sm text-lg font-medium font-header px-4 py-2">{{employeeListTitle}}</div>
+                                    <div class="neutral-border-bottom rounded-t-sm text-lg font-medium font-header px-4 py-2">{{employeeListTitle}}</div>
 
                                     <div class="p-4 max-h-[400px] overflow-y-scroll">
 

@@ -1,7 +1,7 @@
 <template>
     <nav
         ref="navigation"
-        class="primary-navigation-parent z-40 fixed">
+        class="primary-navigation-parent z-40 fixed neutral-border-bottom">
         <div class="px-[20px] relative z-[42] w-full flex justify-center font-business">
             <div class="max-w-screen-2xl w-full flex gap-1 justify-end">
                 <NavLink

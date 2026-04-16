@@ -121,7 +121,7 @@
 
                                 <div class="lining-shadow rounded-sm tint-background">
 
-                                    <div class="lining-shadow rounded-t-sm text-lg font-medium font-header px-4 py-2">Select Approver</div>
+                                    <div class="neutral-border-bottom rounded-t-sm text-lg font-medium font-header px-4 py-2">Select Approver</div>
 
                                     <div class="p-4 max-h-[400px] overflow-y-scroll">
 

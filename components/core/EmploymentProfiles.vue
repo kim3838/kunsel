@@ -10,7 +10,7 @@
 
         <div class="flex-1 lining-shadow rounded-sm tint-background">
 
-            <div v-if="!isolated" class="lining-shadow rounded-t-sm text-lg font-medium font-header px-4 py-2">Employment Profiles</div>
+            <div v-if="!isolated" class="neutral-border-bottom rounded-t-sm text-lg font-medium font-header px-4 py-2">Employment Profiles</div>
 
             <div class="p-4">
 
