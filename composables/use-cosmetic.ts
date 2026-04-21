@@ -93,7 +93,7 @@ export const useCosmetic = () => {
         let isDarkEmerald = ['dark-emerald'].indexOf(appTheme.value) >= 0;
 
         if(isDefaultBlue || isLightSlate){
-            return `linear-gradient(to right, ${primaryColor90.value} 20%, ${primaryColor50.value} 80%, ${primaryColor80.value} 100%)`;
+            return `linear-gradient(to right, ${primaryColor90.value} 20%, ${primaryColor70.value} 80%, ${primaryColor80.value} 100%)`;
         }
 
         if(isDarkSilver){
