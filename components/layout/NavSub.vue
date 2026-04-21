@@ -131,7 +131,7 @@ const dropDownIconClass = computed(() => {
     z-index: 1;
     color: v-bind(navigationLinkColor);
     overflow: hidden;
-    @include fluid-gold-hover-before-effect();
+    @include fluid-gold-hover-before-effect($opacity: 0.4);
     @include ripple-hover-after-effect();
 }
 .nav-sub-inactive:hover{

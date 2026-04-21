@@ -756,7 +756,7 @@ watch(() => props.options.selected, newValue => {
     position: relative;
     z-index: 1;
     overflow: hidden;
-    @include fluid-gold-hover-before-effect();
+    @include fluid-gold-hover-before-effect($opacity: 0.4);
     @include ripple-hover-after-effect();
 }
 .navigation-mode:hover{
