@@ -2,7 +2,7 @@
     <div class="mx-auto max-w-screen-lg">
         <div class="flex flex-wrap justify-center gap-2">
 
-            <div class="grow-0 neutral-border grow p-2">
+            <div class="grow-0 grow p-2">
                 <div class="font-medium font-header">Core Modules</div>
 
                 <div class="mt-2 space-y-2">
@@ -38,7 +38,7 @@
                 </div>
             </div>
 
-            <div class="grow-0 neutral-border grow p-2">
+            <div class="grow-0 grow p-2">
                 <div class="font-medium font-header">Support</div>
 
                 <div class="mt-2 space-y-2">
@@ -56,7 +56,7 @@
                 </div>
             </div>
 
-            <div class="grow-0 max-w-80 neutral-border grow p-2">
+            <div class="grow-0 max-w-80 grow p-2">
                 <div class="font-medium font-header">Contact Us</div>
 
                 <div class="mt-2 space-y-2">
