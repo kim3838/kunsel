@@ -62,7 +62,7 @@
                         />
                     </div>
                     <div class="mx-1 flex justify-center items-center">
-                        <div class="horizontal-divider"></div>
+                        <div class="thread-horizontal-divider"></div>
                     </div>
                     <div class="flex">
                         <NavDrop
