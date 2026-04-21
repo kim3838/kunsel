@@ -346,9 +346,9 @@
                                     :drop-active-style="`clear-fluid`"
                                     :drop-options="[
                                         {type: 'link', icon: 'gg:row-first', title: 'Details',to: `/hr-payroll/workforce/employees/${cell.ulid}`},
-                                        {type: 'action', icon: 'gg:loadbar-alt', title: 'Employment Profiles',callback: () => {showEmploymentProfilesModal(cell);}},
-                                        {type: 'action', icon: 'gg:loadbar-alt', title: 'Identifications',callback: () => {showEmployeeIdentificationsModal(cell);}},
-                                        {type: 'action', icon: 'gg:loadbar-alt', title: 'Payroll Items',callback: () => {showPayrollComponentsModal(cell);}},
+                                        {type: 'action', icon: 'ic:baseline-arrow-right', title: 'Employment Profiles',callback: () => {showEmploymentProfilesModal(cell);}},
+                                        {type: 'action', icon: 'ic:baseline-arrow-right', title: 'Identifications',callback: () => {showEmployeeIdentificationsModal(cell);}},
+                                        {type: 'action', icon: 'ic:baseline-arrow-right', title: 'Payroll Items',callback: () => {showPayrollComponentsModal(cell);}},
                                     ]">
                                     <template v-slot="{slot}">
                                         <div
