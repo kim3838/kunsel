@@ -41,7 +41,7 @@
                 </div>
             </div>
 
-            <div class="neutral-border mx-auto max-w-screen-lg mb-4" :class="footerClass">
+            <div class="mx-auto max-w-screen-lg mb-4" :class="footerClass">
 
                 <div class="p-2">
                     <div class="flex flex-row flex-wrap justify-start items-center">
