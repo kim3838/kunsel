@@ -608,7 +608,7 @@ const dropDownIconClass = computed(() => {
 }
 .navigation-mode-nav-drop:hover .bg-film{
     background: v-bind(activeClearFluidBackground);
-    animation: initialBackgroundKeyFrames 150ms linear 1 forwards;
+    animation: initialBackgroundKeyFrames 0ms linear 1 forwards;
 }
 
 .navigation-mode-nav-drop-active-clear-fluid{

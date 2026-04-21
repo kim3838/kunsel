@@ -109,7 +109,7 @@ const iconClass = computed(() => {
 }
 .nav-link-inactive:hover .bg-film{
     background: v-bind(activeClearFluidBackground);
-    animation: initialBackgroundKeyFrames 150ms linear 1 forwards;
+    animation: initialBackgroundKeyFrames 0ms linear 1 forwards;
 }
 
 .nav-active-bg{
