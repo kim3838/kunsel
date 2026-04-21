@@ -57,8 +57,8 @@ const themeOption = reactive({
             value: 'light-slate',
         },
         {
-            text: 'Default Blue',
-            value: 'default-blue',
+            text: 'Blue',
+            value: 'light-blue',
         },
         {
             text: 'Dark Silver',

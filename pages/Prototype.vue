@@ -1001,7 +1001,7 @@
                             <Button :disabled="true" :icon="'eos-icons:compass'" :label="'Disabled'"></Button>
                         </div>
                         <div class="col-span-2 flex items-start justify-start block w-full neutral-border">
-                            <Button @click="$themeStore.setTheme('default-blue')" :size="'lg'" :icon="'mdi:palette-swatch-variant'" :label="'Blue Theme'"></Button>
+                            <Button @click="$themeStore.setTheme('light-blue')" :size="'lg'" :icon="'mdi:palette-swatch-variant'" :label="'Blue Theme'"></Button>
                         </div>
                         <div class="col-span-3 flex items-start justify-start block w-full neutral-border">
                             <Button @click="$themeStore.setTheme('light-tulip')" :size="'xl'" :icon="'eos-icons:atom-electron'" :label="'Tulip Theme'"></Button>

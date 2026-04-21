@@ -41,7 +41,7 @@ const headerClass = computed(() => {
         }[props.type];
     }
 
-    if(['light-slate', 'default-blue'].indexOf(appTheme.value) >= 0){
+    if(['light-slate', 'light-blue'].indexOf(appTheme.value) >= 0){
         return {
             'default': 'header-light',
             'gray': 'header-gray-light',

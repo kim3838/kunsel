@@ -251,7 +251,7 @@ const textClass = computed(() => {
         return `text-shadow`;
     }
 
-    if(['light-slate', 'default-blue'].indexOf(appTheme.value) >= 0 && className === 'default-background'){
+    if(['light-slate', 'light-blue'].indexOf(appTheme.value) >= 0 && className === 'default-background'){
         return `text-shadow`;
     }
 

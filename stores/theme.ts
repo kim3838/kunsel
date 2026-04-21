@@ -37,7 +37,7 @@ export const useThemeStore = defineStore('theme', () => {
 
     const SELECTED_THEME_STORAGE_KEY = 'pt';
 
-    const appTheme = ref<PaletteName>('default-blue');
+    const appTheme = ref<PaletteName>('light-slate');
     const common = ref<CommonColorsT>({
         'clear': {primary: 'transparent', secondary: 'transparent'},
         'default': {primary: '#777', secondary: '#e5e5e5'},
@@ -104,7 +104,7 @@ export const useThemeStore = defineStore('theme', () => {
             'text-invert': '#c7c7c7',
             'text-secondary': '#7a7a7a',
         },
-        'default-blue': {
+        'light-blue': {
             'type': 'light',
             'primary': '#18418c',
             'secondary': '#263b62',

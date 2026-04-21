@@ -88,7 +88,7 @@ export const useCosmetic = () => {
     const activeClearFluidBackground = computed(() => {
 
         let isLightSlate = ['light-slate'].indexOf(appTheme.value) >= 0;
-        let isDefaultBlue = ['default-blue'].indexOf(appTheme.value) >= 0;
+        let isDefaultBlue = ['light-blue'].indexOf(appTheme.value) >= 0;
         let isDarkSilver = ['dark-silver'].indexOf(appTheme.value) >= 0;
         let isDarkEmerald = ['dark-emerald'].indexOf(appTheme.value) >= 0;
 
@@ -118,7 +118,7 @@ export const useCosmetic = () => {
     const dateTimePickerColor = computed(() => {
 
         if(
-            ['light-slate', 'default-blue'].indexOf(appTheme.value) >= 0
+            ['light-slate', 'light-blue'].indexOf(appTheme.value) >= 0
         ){
             return textInvertColor90.value;
         } else {
