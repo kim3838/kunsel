@@ -3,7 +3,7 @@
         :to="to"
         :style="{'font-family': fontFamily}"
         class="relative box-border inline-flex items-center px-2 focus:outline-none rounded-[2px]"
-        :class="[classes, headerFontClass, 'nav-link']">
+        :class="[classes, headerFontClass]">
         <div class="bg-film"></div>
         <Icon class="flex-none mr-1" :class="[iconClass]" v-if="icon" :name="icon" />
         <slot></slot>
@@ -69,7 +69,7 @@ const navigationTextShadow = computed(()=>{
 const classes = computed(() => {
     return props.active
         ? `nav-active-${props.activeStyle}`
-        : ''
+        : 'nav-link-inactive'
 });
 
 const headerFontClass = computed(() => {
@@ -94,22 +94,22 @@ const iconClass = computed(() => {
 <style lang="scss" scoped>
 .bg-film{@extend .bg-film;}
 
-.nav-link{
+.nav-link-inactive{
     position: relative;
     z-index: 1;
     color: v-bind(navigationLinkColor);
     overflow: hidden;
-    @include fluid-gold-hover-before-effect();
+    @include fluid-gold-hover-before-effect($opacity: 0.4);
     @include ripple-hover-after-effect();
 }
 
-.nav-link:hover{
+.nav-link-inactive:hover{
     color: v-bind(textInvertColor) !important;
     @extend .text-shadow;
 }
-.nav-link:hover .bg-film{
+.nav-link-inactive:hover .bg-film{
     background: v-bind(activeClearFluidBackground);
-    animation: initialBackgroundKeyFrames 400ms linear 1 forwards;
+    animation: initialBackgroundKeyFrames 150ms linear 1 forwards;
 }
 
 .nav-active-bg{

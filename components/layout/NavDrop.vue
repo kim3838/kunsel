@@ -599,7 +599,7 @@ const dropDownIconClass = computed(() => {
     z-index: 1;
     color: v-bind(navigationLinkColor);
     overflow: hidden;
-    @include fluid-gold-hover-before-effect();
+    @include fluid-gold-hover-before-effect($opacity: 0.4);
     @include ripple-hover-after-effect();
 }
 .navigation-mode-nav-drop:hover{
@@ -608,7 +608,7 @@ const dropDownIconClass = computed(() => {
 }
 .navigation-mode-nav-drop:hover .bg-film{
     background: v-bind(activeClearFluidBackground);
-    animation: initialBackgroundKeyFrames 400ms linear 1 forwards;
+    animation: initialBackgroundKeyFrames 150ms linear 1 forwards;
 }
 
 .navigation-mode-nav-drop-active-clear-fluid{

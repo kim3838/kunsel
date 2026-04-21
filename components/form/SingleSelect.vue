@@ -765,7 +765,7 @@ watch(() => props.options.selected, newValue => {
 }
 .navigation-mode:hover .bg-film{
     background: v-bind(activeClearFluidBackground);
-    animation: initialBackgroundKeyFrames 400ms linear 1 forwards;
+    animation: initialBackgroundKeyFrames 150ms linear 1 forwards;
 }
 .background {
     background-color: v-bind(tintColor);

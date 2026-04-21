@@ -4,7 +4,7 @@
         tabindex="0"
         :style="{'font-family': fontFamily}"
         :class="[classes]"
-        class="nav-sub relative inline-flex items-center h-full px-2 py-1 cursor-pointer focus:outline-none rounded-[2px]">
+        class="relative inline-flex items-center h-full px-2 py-1 cursor-pointer focus:outline-none rounded-[2px]">
         <div class="bg-film"></div>
         <Icon v-if="icon" :name="icon" :class="[iconClass]" class="mr-1" />
         <span :class="[headerFontClass]">{{title}}</span>
@@ -91,7 +91,7 @@ watch(navigationFocused, focused => {
 const classes = computed(() => {
     return props.active
         ? `nav-sub-active-${props.activeStyle}`
-        : ''
+        : 'nav-sub-inactive'
 });
 
 const headerFontClass = computed(() => {
@@ -126,7 +126,7 @@ const dropDownIconClass = computed(() => {
 <style lang="scss" scoped>
 .bg-film{@extend .bg-film;}
 
-.nav-sub{
+.nav-sub-inactive{
     position: relative;
     z-index: 1;
     color: v-bind(navigationLinkColor);
@@ -134,13 +134,13 @@ const dropDownIconClass = computed(() => {
     @include fluid-gold-hover-before-effect();
     @include ripple-hover-after-effect();
 }
-.nav-sub:hover{
+.nav-sub-inactive:hover{
     color: v-bind(textInvertColor) !important;
     @extend .text-shadow;
 }
-.nav-sub:hover .bg-film{
+.nav-sub-inactive:hover .bg-film{
     background: v-bind(activeClearFluidBackground);
-    animation: initialBackgroundKeyFrames 400ms linear 1 forwards;
+    animation: initialBackgroundKeyFrames 150ms linear 1 forwards;
 }
 
 .nav-sub-active-dashed{
