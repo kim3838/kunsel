@@ -24,7 +24,7 @@
                             </div>
                         </div>
 
-                        <div class="neutral-border-bottom"></div>
+                        <div v-if="navigationLink?.options && navigationLink.options.length > 0" class="neutral-border-bottom"></div>
 
                         <div v-if="navigationLink?.options && navigationLink.options.length > 0" class="mt-2 space-y-2 text-base">
                             <div v-for="subLink in navigationLink.options" :key="subLink.key">

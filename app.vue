@@ -219,7 +219,7 @@ watch(() => route.name,() => {
 }
 
 .lining-shadow{
-    box-shadow: 0 0 1px v-bind(liningColor);
+    box-shadow: 0 0 2px v-bind(liningColor);
 }
 
 .scaffold{
