@@ -124,7 +124,7 @@
                                     <div class="space-x-2 inline-flex items-center">
                                         <Button
                                             class="w-min"
-                                            :variant=" 'outline'"
+                                            :variant=" 'flat'"
                                             :size="'md'"
                                             :disabled="modalDisableActions"
                                             :label="'Cancel'"
@@ -219,13 +219,13 @@
                                     <div class="space-x-2 inline-flex items-center">
                                         <Button
                                             class="w-min"
-                                            :variant=" 'outline'"
+                                            :variant=" 'flat'"
                                             :size="'md'"
                                             :label="'Cancel'"
                                             @click="closeConfirmHasAtLeastOneFinalPay"/>
                                         <Button
                                             class="w-min"
-                                            :variant=" 'outline'"
+                                            :variant=" 'flat'"
                                             :size="'md'"
                                             :label="'Confirm & proceed payroll generation'"
                                             @click="confirmHasAtLeastOneFinalPay"/>
@@ -293,7 +293,7 @@
                                     <div class="space-x-2 inline-flex items-center">
                                         <Button
                                             class="w-min"
-                                            :variant=" 'outline'"
+                                            :variant=" 'flat'"
                                             :size="'md'"
                                             :label="'Okay'"
                                             @click="closeNoSalaryStatementToBeGenerated"/>
@@ -338,7 +338,7 @@
                             </template>
                         </DataTable>
 
-                        <div class="scaffold-border-top"></div>
+                        <div class="neutral-border-bottom"></div>
 
                         <DataTable
                             :sup-headers="currentPayrollsSupHeaders"
@@ -378,8 +378,6 @@
                                 </div>
                             </template>
                         </DataTable>
-
-                        <div class="scaffold-border-top"></div>
                     </div>
                 </div>
             </div>
