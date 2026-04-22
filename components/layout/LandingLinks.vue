@@ -3,7 +3,7 @@
         <div class="flex flex-wrap justify-center gap-2">
 
             <div class="grow-0 grow p-2">
-                <div class="font-medium font-header">Core Modules</div>
+                <div class="text-base font-medium">Core Modules</div>
 
                 <div class="mt-2 space-y-2">
                     <UnorderedList
@@ -39,7 +39,7 @@
             </div>
 
             <div class="grow-0 grow p-2">
-                <div class="font-medium font-header">Support</div>
+                <div class="text-base font-medium">Support</div>
 
                 <div class="mt-2 space-y-2">
                     <UnorderedList
@@ -57,7 +57,7 @@
             </div>
 
             <div class="grow-0 max-w-80 grow p-2">
-                <div class="font-medium font-header">Contact Us</div>
+                <div class="text-base font-medium">Contact Us</div>
 
                 <div class="mt-2 space-y-2">
                     <UnorderedList

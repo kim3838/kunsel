@@ -12,8 +12,8 @@
                 <div class="flex flex-wrap gap-4">
 
                     <div v-for="navigationLink in navigationLinks" :key="navigationLink.key" class="lining-shadow rounded-sm flex-grow space-y-2 p-2 text-left backdrop-blur-xs">
-                        <div class="text-lg font-medium font-business">
-                            <div class="font-header text-base">
+                        <div class="text-lg font-medium">
+                            <div class="text-base">
                                 <NuxtLink
                                     v-if="navigationLink.type == 'link'"
                                     :to="navigationLink.to"
