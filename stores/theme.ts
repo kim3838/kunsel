@@ -77,7 +77,7 @@ export const useThemeStore = defineStore('theme', () => {
             'shade': '#f7f7f7',
             'tint': '#ffffff',
 
-            'text': '#0c2738',
+            'text': '#274e66',
             'subtitle': '#797e8a',
             'text-invert': '#ffffff',
             'text-secondary': '#b4b4b4',
