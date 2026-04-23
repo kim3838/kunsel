@@ -52,6 +52,8 @@ export default defineNuxtConfig({
 
                 //Serif
                 {rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=Source+Sans+3:ital,wght@0,200..900;1,200..900&display=swap'},
+                {rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=Tinos:ital,wght@0,400;0,700;1,400;1,700&display=swap'},
+
                 ...(process.env.NODE_ENV === 'development' ? [
                     {rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&display=swap'},
                     {rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=Oranienbaum&display=swap'},
@@ -61,7 +63,6 @@ export default defineNuxtConfig({
                     {rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=Joan&display=swap'},
                     {rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,200..900;1,8..60,200..900&display=swap'},
                     {rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=STIX+Two+Text:ital,wght@0,400..700;1,400..700&display=swap'},
-                    {rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=Tinos:ital,wght@0,400;0,700;1,400;1,700&display=swap'},
                 ]:[]),
 
                 //Monospace

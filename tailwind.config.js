@@ -43,11 +43,11 @@ module.exports = {
                     `'Source Sans 3'`,
                 ],
                 data: [
+                    'Tinos',
+                    'Ruluko',
                     'Aptos Narrow',
                     'Gentium Plus',
-                    'Tinos',
                     'Reddit Sans Condensed',
-                    'Ruluko',
                     'Sofia Sans Semi Condensed',
                 ],
                 header: [
@@ -58,11 +58,11 @@ module.exports = {
                     'Momo Trust Sans',
                 ],
                 standard: [
+                    'Tinos',
+                    'Ruluko',
                     'Aptos Narrow',
                     'Gentium Plus',
-                    'Tinos',
                     'Reddit Sans Condensed',
-                    'Ruluko',
                     'Sofia Sans Semi Condensed',
                 ],
                 label: [
