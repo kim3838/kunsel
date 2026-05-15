@@ -62,7 +62,7 @@ export const useThemeStore = defineStore('theme', () => {
     const palletes = ref({
         'light-slate': {
             'type': 'light',
-            'primary': '#0b2d43',
+            'primary': '#262d3b',
             'secondary': '#36425b',
             'accent': '#c9d8e1',
 
@@ -77,7 +77,7 @@ export const useThemeStore = defineStore('theme', () => {
             'shade': '#f7f7f7',
             'tint': '#ffffff',
 
-            'text': '#274e66',
+            'text': '#2c2c2c',
             'subtitle': '#797e8a',
             'text-invert': '#ffffff',
             'text-secondary': '#b4b4b4',
