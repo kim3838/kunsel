@@ -57,6 +57,7 @@
                                         <div class="flex-grow-[0.5]">
                                             <Button
                                                 :justify-content="'center'"
+                                                :variant="'flat'"
                                                 :disabled="authPending || isAuthenticated"
                                                 :size="'md'"
                                                 :icon="authPending ? 'eos-icons:loading' : ''"
