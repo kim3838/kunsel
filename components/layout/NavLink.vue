@@ -17,6 +17,7 @@ const {
 
 const {
     appTheme,
+    subtitleColor,
     primaryColor, primaryColor90, primaryColor80,
     textInvertColor,
     activeClearFluidBackground
@@ -49,8 +50,13 @@ const props = defineProps({
 });
 
 const navigationLinkColor = computed(()=>{
+
     if(navigationMode.value == 'clear-with-background'){
         return '#ffffff';
+    }
+
+    if(!props.active){
+        return subtitleColor.value;
     }
 
     return 'auto';

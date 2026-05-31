@@ -78,7 +78,7 @@ export const useThemeStore = defineStore('theme', () => {
             'tint': '#ffffff',
 
             'text': '#2c2c2c',
-            'subtitle': '#797e8a',
+            'subtitle': '#767779',
             'text-invert': '#ffffff',
             'text-secondary': '#b4b4b4',
         },
@@ -100,7 +100,7 @@ export const useThemeStore = defineStore('theme', () => {
             'tint': '#3b3b3b',
 
             'text': '#c7c7c7',
-            'subtitle': '#c7c7c7',
+            'subtitle': '#717275',
             'text-invert': '#c7c7c7',
             'text-secondary': '#7a7a7a',
         },
@@ -188,7 +188,7 @@ export const useThemeStore = defineStore('theme', () => {
             'tint': '#1e6444',
 
             'text': '#bcd0bd',
-            'subtitle': '#bcd0bd',
+            'subtitle': '#93a693',
             'text-invert': '#b3e5e8',
             'text-secondary': '#678369',
         }

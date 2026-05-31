@@ -19,6 +19,7 @@ const {
 
 const {
     liningColor,
+    subtitleColor,
     textInvertColor,
     activeClearFluidBackground
 } = useCosmetic();
@@ -72,8 +73,13 @@ const navHeaderIcon = computed(()=>{
     return 'ic:baseline-arrow-drop-down';
 });
 const navigationLinkColor = computed(()=>{
+
     if(navigationMode.value == 'clear-with-background'){
         return '#ffffff';
+    }
+
+    if(!props.active){
+        return subtitleColor.value;
     }
 
     return 'auto';
