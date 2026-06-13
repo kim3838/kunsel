@@ -122,7 +122,7 @@ export const useThemeStore = defineStore('theme', () => {
             'tint': '#fdfdfd',
 
             'text': '#2d3656',
-            'subtitle': '#797e8a',
+            'subtitle': '#535a6b',
             'text-invert': '#ffffff',
             'text-secondary': '#99aed0',
         },
