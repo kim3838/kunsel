@@ -77,8 +77,8 @@ export const useThemeStore = defineStore('theme', () => {
             'shade': '#f7f7f7',
             'tint': '#ffffff',
 
-            'text': '#2c2c2c',
-            'subtitle': '#575757',
+            'text': '#1f1f1f',
+            'subtitle': '#5e5e5e',
             'text-invert': '#ffffff',
             'text-secondary': '#b4b4b4',
         },
@@ -122,7 +122,7 @@ export const useThemeStore = defineStore('theme', () => {
             'tint': '#fdfdfd',
 
             'text': '#2d3656',
-            'subtitle': '#535a6b',
+            'subtitle': '#5e5e5e',
             'text-invert': '#ffffff',
             'text-secondary': '#99aed0',
         },

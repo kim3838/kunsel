@@ -49,13 +49,15 @@ const props = defineProps({
     }
 });
 
+const subtitleColorEnabled = ref(false);
+
 const navigationLinkColor = computed(()=>{
 
     if(navigationMode.value == 'clear-with-background'){
         return '#ffffff';
     }
 
-    if(!props.active){
+    if(subtitleColorEnabled.value && !props.active){
         return subtitleColor.value;
     }
 
