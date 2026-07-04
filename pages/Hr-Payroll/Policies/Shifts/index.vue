@@ -169,6 +169,7 @@ const shiftsHeaders = reactive<TableHeaderT[]>([
     { text: 'Work Start Grace', value: 'work_start_grace_time', alignData: 'left'},
     { text: 'Require Lunch Out/In', value: 'require_lunch_time_in_and_out'},
     { text: 'Lunch Start Grace', value: 'lunch_start_grace_time', alignData: 'left'},
+    { text: 'Automatic Overtime', value: 'automatic_overtime_readable', alignData: 'left'},
     { text: 'Max Overtime Hours', value: 'max_overtime', alignData: 'left'},
 ]);
 

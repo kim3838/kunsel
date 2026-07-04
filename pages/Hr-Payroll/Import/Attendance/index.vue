@@ -553,17 +553,17 @@ const save = async () => {
 
             if(!_isEmpty(saved)){
 
-                preImportData.value = _filter(preImportData.value, (item: AttendancePreImportT) => {
-                    return !_includes(saved, item.id);
-                });
-
-                selectedPreImportDataId.value = [];
-                resolvedModalMessage.value = `${saved.length} record(s) saved.`;
-                resolvedModal.value = true;
-
-                if(_isEmpty(preImportData.value)){
-                    await reset();
-                }
+                // preImportData.value = _filter(preImportData.value, (item: AttendancePreImportT) => {
+                //     return !_includes(saved, item.id);
+                // });
+                //
+                // selectedPreImportDataId.value = [];
+                // resolvedModalMessage.value = `${saved.length} record(s) saved.`;
+                // resolvedModal.value = true;
+                //
+                // if(_isEmpty(preImportData.value)){
+                //     await reset();
+                // }
             }
 
             pending.value = false;

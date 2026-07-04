@@ -27,6 +27,7 @@
                                         <tr v-if="_get(resolvedShift, 'require_lunch_time_in_and_out', false)">
                                             <td class="font-semibold">Lunch Start Grace</td><td class="pl-2">{{ _get(resolvedShift, 'lunch_start_grace_time_readable', null) }}</td>
                                         </tr>
+                                        <tr><td class="font-semibold">Automatic overtime</td><td class="pl-2">{{ _get(resolvedShift, 'automatic_overtime', false) ? 'Yes' : 'No' }}</td></tr>
                                         <tr><td class="font-semibold">Max Overtime</td><td class="pl-2">{{ _get(resolvedShift, 'max_overtime_readable', null) }}</td></tr>
                                     </tbody>
                                 </table>
@@ -114,6 +115,15 @@
                         <div v-if="shiftRequireLunchTimeInAndOut == 1">
                             <InputLabel :size="'sm'" value="Lunch Start Grace Time"/>
                             <Input :disabled="disableActions" :size="'md'" v-model="shiftLunchStartGraceTime" high-light-all-text-on-focus type-strict :type="'number'"/>
+                        </div>
+                        <div class="flex flex-col">
+                            <InputLabel :size="'sm'" value="Automatic Overtime"/>
+                            <RadioGroup
+                                :selections="shiftAutomaticOvertimeSelection"
+                                :size="'md'"
+                                :orientation="'horizontal'"
+                                :radio-key="'shift_automatic_overtime'"
+                                v-model="shiftAutomaticOvertime" />
                         </div>
                         <div>
                             <InputLabel :size="'sm'" value="Max Overtime Hours"/>
@@ -301,6 +311,11 @@ const shiftRequireLunchTimeInAndOutSelection = reactive([
 ]);
 
 const shiftLunchStartGraceTime = ref<number>(0);
+const shiftAutomaticOvertime = ref<number>(0);
+const shiftAutomaticOvertimeSelection = reactive([
+    {text : 'Yes', value: 1},
+    {text : 'No', value: 0},
+]);
 const shiftMaxOvertime = ref<string>('0.00');
 
 const shiftType = computed(() => {
@@ -388,6 +403,7 @@ const fetchShift = async () => {
             shiftWorkStartGraceTime.value = _get(response, '_data.values.shift.work_start_grace_time', 0) as number;
             shiftRequireLunchTimeInAndOut.value = _get(response, '_data.values.shift.require_lunch_time_in_and_out', 0) as number;
             shiftLunchStartGraceTime.value = _get(response, '_data.values.shift.lunch_start_grace_time', 0) as number;
+            shiftAutomaticOvertime.value = _get(response, '_data.values.shift.automatic_overtime', 0) as number;
             shiftMaxOvertime.value = _get(response, '_data.values.shift.max_overtime', '0.00');
 
             shiftIsDefault.selected = _get(response, '_data.values.shift.is_default', false) ? 1 : 0;
@@ -547,6 +563,7 @@ const formBody = computed(() => {
         ...(shiftRequireLunchTimeInAndOut.value == 1 ? {
             lunch_start_grace_time: shiftLunchStartGraceTime.value
         }: {}),
+        automatic_overtime: shiftAutomaticOvertime.value,
         max_overtime: shiftMaxOvertime.value,
         shift_schedules: shiftSchedules.value,
     };

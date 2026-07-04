@@ -17,6 +17,7 @@ export type AttendanceShiftT = {
     require_lunch_time_in_and_out: number,
     lunch_start_grace_time: number,
     lunch_start_grace_time_readable: string,
+    automatic_overtime: string,
     max_overtime: string,
     max_overtime_readable: string,
 }
