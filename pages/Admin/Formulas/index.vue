@@ -3,82 +3,89 @@
         <AdminWrapper>
             <div class="mx-auto max-w-screen-lg">
 
-                <form @submit.prevent="paginate(1, true)" class="space-y-2 p-[20px]">
-                    <div class="grid gap-2 grid-cols-1 sm:grid-cols-2 lg:grid-cols-5">
-                        <div>
-                            <InputLabel :size="'sm'" value="Search" />
-                            <Input :disabled="disableActions" :size="'md'" ref="searchInput" v-model="filters.search.keyword" class="w-full" placeholder="Search" type="text"/>
-                        </div>
-                        <div>
-                            <InputLabel :size="'sm'" value="Formulable Type" />
-                            <MultiSelect :disabled="disableActions" glint drop-shadow :selection-max-viewable-line="10" :size="'md'" :options="formulableOptions" :icon="'ri:formula'"/>
-                        </div>
-                        <div>
-                            <InputLabel :size="'sm'" value="Earning Component" />
-                            <MultiSelect :disabled="disableActions" glint drop-shadow :selection-max-viewable-line="10" :size="'md'" :options="earningComponentOptions" :icon="'tdesign:component-checkbox'"/>
-                        </div>
-                        <div>
-                            <InputLabel :size="'sm'" value="Deduction Component" />
-                            <MultiSelect :disabled="disableActions" glint drop-shadow :selection-max-viewable-line="10" :size="'md'" :options="deductionComponentOptions" :icon="'tdesign:component-checkbox'"/>
-                        </div>
-                        <div>
-                            <InputLabel :size="'sm'" value="Income Tax Component" />
-                            <MultiSelect :disabled="disableActions" glint drop-shadow :selection-max-viewable-line="10" :size="'md'" :options="incomeTaxComponentOptions" :icon="'tdesign:component-checkbox'"/>
-                        </div>
-                        <div>
-                            <InputLabel :size="'sm'" value="Aggregation" />
-                            <MultiSelect :disabled="disableActions" glint drop-shadow :selection-max-viewable-line="10" :size="'md'" :options="aggregationOptions" />
-                        </div>
-                    </div>
+                <div class="space-y-2 p-[20px]">
 
-                    <div class="grid gap-2 grid-cols-1 sm:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-8">
-                        <Button class="w-min" ref="submitButton" type="submit" :disabled="disableActions" :size="'md'" :icon="disableActions ? 'eos-icons:loading' : 'mdi:data'" :label="disableActions ? 'Loading' : 'Load'"></Button>
-                    </div>
-                </form>
+                    <div class="lining-shadow rounded-sm tint-background space-y-2 p-[20px]">
 
-                <div class="px-[20px] space-y-2">
-                    <div class="flex flex-row flex-wrap gap-2 items-center min-h-8" :class="[disableActions ? 'pointer-events-none' : '']">
-                        <NuxtLink
-                            v-if="formulas.successful"
-                            :to="`/admin/formulas/create-formula`">
-                            <Button class="w-min" :disabled="disableActions" :size="'sm'" :icon="'mdi:plus'"></Button>
-                        </NuxtLink>
-                        <Button v-if="formulas.successful" :variant="'outline'" :icon="'ph:trash-simple'" class="inline-block" :size="'sm'" :disabled="disableActions" :label="'Bulk delete'" @click="confirmDeleteSelected"/>
-                        <Label v-if="!formulas.successful" invert :size="'md'" :type="'danger'" :label="formulas.message" />
-                    </div>
-
-                    <DataTable
-                        v-if="formulas.successful"
-                        :headers="formulasHeaders"
-                        :size="'lg'"
-                        :rows="formulas.data"
-                        :disabled="disableDataTable"
-                        v-model="selectedFormulas"
-                        selection>
-                        <template v-slot:cell.actions="{cell,slot}">
-                            <NuxtLink :to="`/admin/formulas/${cell.ulid}`">
-                                <div class="text-base h-[32px] px-2 gap-0.5 flex items-center justify-center cursor-pointer accent-hover">
-                                    <span class="font-narrow-thin">Edit</span>
-                                    <Icon class="h-5 w-5" :name="'gg:external'"/>
+                        <form @submit.prevent="paginate(1, true)" class="space-y-2">
+                            <div class="grid gap-2 grid-cols-1 sm:grid-cols-2 lg:grid-cols-5">
+                                <div>
+                                    <InputLabel :size="'sm'" value="Search" />
+                                    <Input :disabled="disableActions" :size="'md'" ref="searchInput" v-model="filters.search.keyword" class="w-full" placeholder="Search" type="text"/>
                                 </div>
-                            </NuxtLink>
-                        </template>
-                        <template v-slot:cell.formulable_type="{cell,slot}">
-                            <div class="p-[3px]">{{cell.formulable_type?.text}}</div>
-                        </template>
-                        <template v-slot:cell.component_type="{cell,slot}">
-                            <div class="p-[3px]">{{cell.component_type?.text}}</div>
-                        </template>
-                        <template v-slot:cell.aggregation="{cell, slot, scrollReference}">
-                            <div class="flex justify-center">
-                                <NonModelCheckBox disabled :size="slot.checkBoxSize" :checked="cell.aggregation"></NonModelCheckBox>
+                                <div>
+                                    <InputLabel :size="'sm'" value="Formulable Type" />
+                                    <MultiSelect :disabled="disableActions" glint drop-shadow :selection-max-viewable-line="10" :size="'md'" :options="formulableOptions" :icon="'ri:formula'"/>
+                                </div>
+                                <div>
+                                    <InputLabel :size="'sm'" value="Earning Component" />
+                                    <MultiSelect :disabled="disableActions" glint drop-shadow :selection-max-viewable-line="10" :size="'md'" :options="earningComponentOptions" :icon="'tdesign:component-checkbox'"/>
+                                </div>
+                                <div>
+                                    <InputLabel :size="'sm'" value="Deduction Component" />
+                                    <MultiSelect :disabled="disableActions" glint drop-shadow :selection-max-viewable-line="10" :size="'md'" :options="deductionComponentOptions" :icon="'tdesign:component-checkbox'"/>
+                                </div>
+                                <div>
+                                    <InputLabel :size="'sm'" value="Income Tax Component" />
+                                    <MultiSelect :disabled="disableActions" glint drop-shadow :selection-max-viewable-line="10" :size="'md'" :options="incomeTaxComponentOptions" :icon="'tdesign:component-checkbox'"/>
+                                </div>
+                                <div>
+                                    <InputLabel :size="'sm'" value="Aggregation" />
+                                    <MultiSelect :disabled="disableActions" glint drop-shadow :selection-max-viewable-line="10" :size="'md'" :options="aggregationOptions" />
+                                </div>
                             </div>
-                        </template>
-                    </DataTable>
 
-                    <div>
-                        <PageInformation :pagination="formulas.meta.pagination" :pending="disableDataTable"/>
-                        <Pagination :size="'lg'" :pagination="formulas.meta.pagination" :pending="disableDataTable" v-model="pageComputed"/>
+                            <div class="grid gap-2 grid-cols-1 sm:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-8">
+                                <Button class="w-min" ref="submitButton" type="submit" :disabled="disableActions" :size="'md'" :icon="disableActions ? 'eos-icons:loading' : 'mdi:data'" :label="disableActions ? 'Loading' : 'Load'"></Button>
+                            </div>
+                        </form>
+
+                        <div class="space-y-2">
+                            <div class="flex flex-row flex-wrap gap-2 items-center min-h-8" :class="[disableActions ? 'pointer-events-none' : '']">
+                                <NuxtLink
+                                    v-if="formulas.successful"
+                                    :to="`/admin/formulas/create-formula`">
+                                    <Button class="w-min" :disabled="disableActions" :size="'sm'" :icon="'mdi:plus'"></Button>
+                                </NuxtLink>
+                                <Button v-if="formulas.successful" :variant="'outline'" :icon="'ph:trash-simple'" class="inline-block" :size="'sm'" :disabled="disableActions" :label="'Bulk delete'" @click="confirmDeleteSelected"/>
+                                <Label v-if="!formulas.successful" invert :size="'md'" :type="'danger'" :label="formulas.message" />
+                            </div>
+
+                            <DataTable
+                                v-if="formulas.successful"
+                                :headers="formulasHeaders"
+                                :size="'lg'"
+                                :rows="formulas.data"
+                                :disabled="disableDataTable"
+                                v-model="selectedFormulas"
+                                selection>
+                                <template v-slot:cell.actions="{cell,slot}">
+                                    <NuxtLink :to="`/admin/formulas/${cell.ulid}`">
+                                        <div class="text-base h-[32px] px-2 gap-0.5 flex items-center justify-center cursor-pointer accent-hover">
+                                            <span class="font-narrow-thin">Edit</span>
+                                            <Icon class="h-5 w-5" :name="'gg:external'"/>
+                                        </div>
+                                    </NuxtLink>
+                                </template>
+                                <template v-slot:cell.formulable_type="{cell,slot}">
+                                    <div class="p-[3px]">{{cell.formulable_type?.text}}</div>
+                                </template>
+                                <template v-slot:cell.component_type="{cell,slot}">
+                                    <div class="p-[3px]">{{cell.component_type?.text}}</div>
+                                </template>
+                                <template v-slot:cell.aggregation="{cell, slot, scrollReference}">
+                                    <div class="flex justify-center">
+                                        <NonModelCheckBox disabled :size="slot.checkBoxSize" :checked="cell.aggregation"></NonModelCheckBox>
+                                    </div>
+                                </template>
+                            </DataTable>
+
+                            <div>
+                                <PageInformation :pagination="formulas.meta.pagination" :pending="disableDataTable"/>
+                                <Pagination :size="'lg'" :pagination="formulas.meta.pagination" :pending="disableDataTable" v-model="pageComputed"/>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
             </div>

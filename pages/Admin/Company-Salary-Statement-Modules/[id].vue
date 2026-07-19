@@ -91,55 +91,65 @@
                     </template>
                 </DialogModal>
 
-                <div class="px-[20px]">
-                    <div class="mb-2 text-lg font-header">{{`${companyCode} ${companyName}`}}</div>
+                <div class="space-y-2 p-[20px]">
 
-                    <div class="mb-2 flex gap-2 items-center min-h-8">
-                        <Button :variant="'outline'" class="w-min" :disabled="disableActions" :size="'sm'" :icon="'mdi:plus'" @click="create"></Button>
-                        <Button :variant="'outline'" class="w-min" :disabled="disableActions" :size="'sm'" :icon="'ph:trash-simple'" @click="deleteSelected"></Button>
-                        <UnorderedList
-                            v-if="disableActions"
-                            :icon="'eos-icons:loading'"
-                            :size="'md'"
-                            :label="'Please wait...'"/>
+                    <div class="lining-shadow rounded-sm tint-background">
+
+                        <div class="neutral-border-bottom rounded-t-sm px-4 py-2">
+                            <div class="font-header text-lg">{{`${companyCode} ${companyName}`}}</div>
+                        </div>
+
+                        <div class="space-y-2 p-4">
+
+                            <div class="mb-2 flex gap-2 items-center min-h-8">
+                                <Button :variant="'outline'" class="w-min" :disabled="disableActions" :size="'sm'" :icon="'mdi:plus'" @click="create"></Button>
+                                <Button :variant="'outline'" class="w-min" :disabled="disableActions" :size="'sm'" :icon="'ph:trash-simple'" @click="deleteSelected"></Button>
+                                <UnorderedList
+                                    v-if="disableActions"
+                                    :icon="'eos-icons:loading'"
+                                    :size="'md'"
+                                    :label="'Please wait...'"/>
+                            </div>
+
+                            <DataTable
+                                :key="salaryStatementModulesKey"
+                                :headers="salaryStatementModulesHeaders"
+                                :size="'lg'"
+                                :rows="salaryStatementModulesData"
+                                :disabled="disableActions"
+                                v-model="selectedSalaryStatementModules"
+                                manual-sortable
+                                @manualSorted="manualSorted"
+                                selection
+                                :stripped="true">
+                                <template v-slot:cell.actions="{cell}">
+                                    <div class="text-base h-[32px] px-2 gap-0.5 flex items-center justify-center cursor-pointer accent-hover" @click="edit(cell)">
+                                        <span class="font-narrow-thin">Edit</span>
+                                        <Icon class="h-5 w-5" :name="'gg:external'"/>
+                                    </div>
+                                </template>
+                                <template v-slot:cell.formulable_type="{cell,slot}">
+                                    <div class="flex space-x-1 px-[0.3rem] items-center">
+                                        <Label :size="slot.labelSize" :type="cell?._payload?.label_shade?.value as LabelTypeT" shade :label="cell.formulable_type.text" />
+                                    </div>
+                                </template>
+                                <template v-slot:cell.aggregation="{cell, slot, scrollReference}">
+                                    <div class="flex justify-center">
+                                        <NonModelCheckBox disabled :size="slot.checkBoxSize" :checked="cell.aggregation" ></NonModelCheckBox>
+                                    </div>
+                                </template>
+                                <template v-slot:cell.statement_level="{cell, slot, scrollReference}">
+                                    <div class="flex justify-center">
+                                        <NonModelCheckBox disabled :size="slot.checkBoxSize" :checked="cell.statement_level" ></NonModelCheckBox>
+                                    </div>
+                                </template>
+                                <template v-slot:cell.conditions="{cell,slot}">
+                                    <div class="p-[3px] font-mono">{{cell.conditions ? JSON.stringify(cell.conditions): cell.conditions}}</div>
+                                </template>
+                            </DataTable>
+
+                        </div>
                     </div>
-
-                    <DataTable
-                        :key="salaryStatementModulesKey"
-                        :headers="salaryStatementModulesHeaders"
-                        :size="'lg'"
-                        :rows="salaryStatementModulesData"
-                        :disabled="disableActions"
-                        v-model="selectedSalaryStatementModules"
-                        manual-sortable
-                        @manualSorted="manualSorted"
-                        selection
-                        :stripped="true">
-                        <template v-slot:cell.actions="{cell}">
-                            <div class="text-base h-[32px] px-2 gap-0.5 flex items-center justify-center cursor-pointer accent-hover" @click="edit(cell)">
-                                <span class="font-narrow-thin">Edit</span>
-                                <Icon class="h-5 w-5" :name="'gg:external'"/>
-                            </div>
-                        </template>
-                        <template v-slot:cell.formulable_type="{cell,slot}">
-                            <div class="flex space-x-1 px-[0.3rem] items-center">
-                                <Label :size="slot.labelSize" :type="cell?._payload?.label_shade?.value as LabelTypeT" shade :label="cell.formulable_type.text" />
-                            </div>
-                        </template>
-                        <template v-slot:cell.aggregation="{cell, slot, scrollReference}">
-                            <div class="flex justify-center">
-                                <NonModelCheckBox disabled :size="slot.checkBoxSize" :checked="cell.aggregation" ></NonModelCheckBox>
-                            </div>
-                        </template>
-                        <template v-slot:cell.statement_level="{cell, slot, scrollReference}">
-                            <div class="flex justify-center">
-                                <NonModelCheckBox disabled :size="slot.checkBoxSize" :checked="cell.statement_level" ></NonModelCheckBox>
-                            </div>
-                        </template>
-                        <template v-slot:cell.conditions="{cell,slot}">
-                            <div class="p-[3px] font-mono">{{cell.conditions ? JSON.stringify(cell.conditions): cell.conditions}}</div>
-                        </template>
-                    </DataTable>
                 </div>
             </div>
         </AdminWrapper>
@@ -152,6 +162,7 @@ import type {LabelTypeT} from "@/public/js/types/theme";
 import type {SalaryStatementModuleT} from "@/public/js/types/company-component";
 import type {StringEnumInterface} from "@/public/js/common/type";
 import type {CompanyT} from "@/public/js/types/company";
+import type {CompanyFormulaSetting} from "~/public/js/types/formula";
 
 useHead({titleTemplate: (titleChunk) => {return `Salary Statement Modules`}});
 definePageMeta({middleware: ['auth', 'super-admin']});

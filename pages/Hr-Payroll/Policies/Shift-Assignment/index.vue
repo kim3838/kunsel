@@ -1,40 +1,7 @@
 <template>
     <div>
         <DefaultWrapper>
-            <div class="mx-auto max-w-screen-lg">
-
-                <div class="space-y-2 p-[20px]">
-
-                    <BreadCrumbs prefix-company :size="`sm`" />
-
-                    <div class="flex flex-row">
-                        <RadioGroup
-                            :disabled="disableShiftAssignmentActions"
-                            class="scaffold-border px-2"
-                            :selections="shiftAssignmentTabs"
-                            :size="'md'"
-                            :orientation="shiftAssignmentTabRadioGroupOrientation"
-                            :radio-key="`shift_assignment_tab`"
-                            v-model="shiftAssignmentTab" />
-                    </div>
-                </div>
-
-                <div v-if="shiftAssignmentTab == SHIFT_ASSIGNMENT_TAB.LIST">
-                    <Suspense>
-                        <ShiftAssignments
-                            ref="shiftAssignmentsReference"
-                            v-model:pending="shiftAssignmentPending"
-                            @editShiftSettings="editShiftSettings" />
-                            <template #fallback>
-                                <div class="px-[20px]">
-                                    <UnorderedList
-                                        :icon="'eos-icons:loading'"
-                                        :size="'md'"
-                                        :label="'Loading shift assignments...'"/>
-                                </div>
-                            </template>
-                    </Suspense>
-                </div>
+            <div class="mx-auto max-w-screen-2xl">
 
                 <DialogModal
                     :show="assignShiftModalShow || editShiftSettingsModalShow"
@@ -226,54 +193,94 @@
                     </template>
                 </DialogModal>
 
-                <div v-if="shiftAssignmentTab == SHIFT_ASSIGNMENT_TAB.CREATE_SHIFT_ASSIGNMENTS">
-                    <Suspense>
-                        <ShiftsByEmployeesSelection
-                            :clear-selection-on-form-submit="false"
-                            ref="employeeSelectionReference"
-                            :disable-actions="disableShiftAssignmentActions"
-                            v-model:pending="employeeSelectionPending"
-                            v-model:selected="selectedEmployees">
-                            <template #selection-actions>
-                                <Button :disabled="disableShiftAssignmentActions || employeeSelectionPending" @click="assignShifts" class="inline-block" :size="'sm'" :icon="'mdi:plus'" :variant="'outline'" :label="'Assign shift'" />
-                                <Button :disabled="disableShiftAssignmentActions || employeeSelectionPending" @click="confirmShiftAssignmentBatchDetach" class="inline-block" :size="'sm'" :icon="'ph:trash-simple'" :variant="'outline'" :label="'Clear shifts'" />
-                            </template>
-                        </ShiftsByEmployeesSelection>
+                <div class="space-y-2 p-[20px]">
 
-                        <template #fallback>
-                            <div class="px-[20px]">
-                                <UnorderedList
-                                    :icon="'eos-icons:loading'"
+                    <BreadCrumbs prefix-company :size="`sm`" />
+
+                    <div class="lining-shadow rounded-sm tint-background space-y-8 py-[20px]">
+
+                        <div class="px-[20px]">
+
+                            <div class="flex flex-row">
+                                <RadioGroup
+                                    :disabled="disableShiftAssignmentActions"
+                                    class="scaffold-border px-2"
+                                    :selections="shiftAssignmentTabs"
                                     :size="'md'"
-                                    :label="'Loading employee selections...'"/>
+                                    :orientation="shiftAssignmentTabRadioGroupOrientation"
+                                    :radio-key="`shift_assignment_tab`"
+                                    v-model="shiftAssignmentTab" />
                             </div>
-                        </template>
-                    </Suspense>
-                </div>
+                        </div>
 
-                <div v-if="shiftAssignmentTab == SHIFT_ASSIGNMENT_TAB.MANAGE_ASSIGNED_SHIFTS">
-                    <Suspense>
-                        <ShiftSelection
-                            :clear-selection-on-form-submit="false"
-                            ref="shiftSelectionReference"
-                            :disable-actions="disableShiftAssignmentActions"
-                            v-model:pending="shiftSelectionPending"
-                            v-model:selected="selectedShifts">
-                            <template #selection-actions>
-                                <Button v-if="false" :disabled="disableShiftAssignmentActions || shiftSelectionPending" @click="assignShifts" class="inline-block" :size="'sm'" :icon="'mdi:plus'" :variant="'outline'" :label="'Assign selected shifts to employees'" />
-                                <Button :disabled="disableShiftAssignmentActions || shiftSelectionPending" @click="confirmShiftAssignmentBatchDetach" class="inline-block" :size="'sm'" :icon="'ph:trash-simple'" :variant="'outline'" :label="'Remove selected shifts from employees'" />
-                            </template>
-                        </ShiftSelection>
+                        <div v-if="shiftAssignmentTab == SHIFT_ASSIGNMENT_TAB.LIST">
+                            <Suspense>
+                                <ShiftAssignments
+                                    ref="shiftAssignmentsReference"
+                                    v-model:pending="shiftAssignmentPending"
+                                    @editShiftSettings="editShiftSettings" />
+                                <template #fallback>
+                                    <div class="px-[20px]">
+                                        <UnorderedList
+                                            :icon="'eos-icons:loading'"
+                                            :size="'md'"
+                                            :label="'Loading shift assignments...'"/>
+                                    </div>
+                                </template>
+                            </Suspense>
+                        </div>
 
-                        <template #fallback>
-                            <div class="px-[20px]">
-                                <UnorderedList
-                                    :icon="'eos-icons:loading'"
-                                    :size="'md'"
-                                    :label="'Loading shift selections...'"/>
-                            </div>
-                        </template>
-                    </Suspense>
+                        <div v-if="shiftAssignmentTab == SHIFT_ASSIGNMENT_TAB.CREATE_SHIFT_ASSIGNMENTS">
+                            <Suspense>
+                                <ShiftsByEmployeesSelection
+                                    :clear-selection-on-form-submit="false"
+                                    ref="employeeSelectionReference"
+                                    :disable-actions="disableShiftAssignmentActions"
+                                    v-model:pending="employeeSelectionPending"
+                                    v-model:selected="selectedEmployees">
+                                    <template #selection-actions>
+                                        <Button :disabled="disableShiftAssignmentActions || employeeSelectionPending" @click="assignShifts" class="inline-block" :size="'sm'" :icon="'mdi:plus'" :variant="'outline'" :label="'Assign shift'" />
+                                        <Button :disabled="disableShiftAssignmentActions || employeeSelectionPending" @click="confirmShiftAssignmentBatchDetach" class="inline-block" :size="'sm'" :icon="'ph:trash-simple'" :variant="'outline'" :label="'Clear shifts'" />
+                                    </template>
+                                </ShiftsByEmployeesSelection>
+
+                                <template #fallback>
+                                    <div class="px-[20px]">
+                                        <UnorderedList
+                                            :icon="'eos-icons:loading'"
+                                            :size="'md'"
+                                            :label="'Loading employee selections...'"/>
+                                    </div>
+                                </template>
+                            </Suspense>
+                        </div>
+
+                        <div v-if="shiftAssignmentTab == SHIFT_ASSIGNMENT_TAB.MANAGE_ASSIGNED_SHIFTS">
+                            <Suspense>
+                                <ShiftSelection
+                                    :clear-selection-on-form-submit="false"
+                                    ref="shiftSelectionReference"
+                                    :disable-actions="disableShiftAssignmentActions"
+                                    v-model:pending="shiftSelectionPending"
+                                    v-model:selected="selectedShifts">
+                                    <template #selection-actions>
+                                        <Button v-if="false" :disabled="disableShiftAssignmentActions || shiftSelectionPending" @click="assignShifts" class="inline-block" :size="'sm'" :icon="'mdi:plus'" :variant="'outline'" :label="'Assign selected shifts to employees'" />
+                                        <Button :disabled="disableShiftAssignmentActions || shiftSelectionPending" @click="confirmShiftAssignmentBatchDetach" class="inline-block" :size="'sm'" :icon="'ph:trash-simple'" :variant="'outline'" :label="'Remove selected shifts from employees'" />
+                                    </template>
+                                </ShiftSelection>
+
+                                <template #fallback>
+                                    <div class="px-[20px]">
+                                        <UnorderedList
+                                            :icon="'eos-icons:loading'"
+                                            :size="'md'"
+                                            :label="'Loading shift selections...'"/>
+                                    </div>
+                                </template>
+                            </Suspense>
+                        </div>
+
+                    </div>
                 </div>
             </div>
         </DefaultWrapper>

@@ -7,45 +7,49 @@
 
                     <BreadCrumbs prefix-company :size="`sm`" />
 
-                    <div class="flex flex-row">
-                        <RadioGroup
-                            class="flex-none scaffold-border px-2"
-                            :selections="leaveBalanceTabs"
-                            :size="'md'"
-                            :orientation="leaveBalanceTabRadioGroupOrientation"
-                            :radio-key="`leave_balance_tab`"
-                            v-model="leaveBalanceTab" />
+                    <div class="lining-shadow rounded-sm tint-background space-y-8 py-[20px]">
+
+                        <div class="px-[20px] flex flex-row">
+                            <RadioGroup
+                                class="flex-none scaffold-border px-2"
+                                :selections="leaveBalanceTabs"
+                                :size="'md'"
+                                :orientation="leaveBalanceTabRadioGroupOrientation"
+                                :radio-key="`leave_balance_tab`"
+                                v-model="leaveBalanceTab" />
+                        </div>
+
+                        <div v-if="leaveBalanceTab == LEAVE_BALANCE_TAB.PERIOD_SERIES">
+                            <Suspense>
+                                <LeaveBalancePeriodSeries/>
+
+                                <template #fallback>
+                                    <div class="px-[20px]">
+                                        <UnorderedList
+                                            :icon="'eos-icons:loading'"
+                                            :size="'md'"
+                                            :label="'Loading period series...'"/>
+                                    </div>
+                                </template>
+                            </Suspense>
+                        </div>
+
+                        <div v-if="leaveBalanceTab == LEAVE_BALANCE_TAB.BALANCE_BY_TYPE">
+                            <Suspense>
+                                <LeaveBalanceByType/>
+
+                                <template #fallback>
+                                    <div class="px-[20px]">
+                                        <UnorderedList
+                                            :icon="'eos-icons:loading'"
+                                            :size="'md'"
+                                            :label="'Loading balance by type...'"/>
+                                    </div>
+                                </template>
+                            </Suspense>
+                        </div>
+
                     </div>
-                </div>
-
-                <div v-if="leaveBalanceTab == LEAVE_BALANCE_TAB.PERIOD_SERIES">
-                    <Suspense>
-                        <LeaveBalancePeriodSeries/>
-
-                        <template #fallback>
-                            <div class="px-[20px]">
-                                <UnorderedList
-                                    :icon="'eos-icons:loading'"
-                                    :size="'md'"
-                                    :label="'Loading period series...'"/>
-                            </div>
-                        </template>
-                    </Suspense>
-                </div>
-
-                <div v-if="leaveBalanceTab == LEAVE_BALANCE_TAB.BALANCE_BY_TYPE">
-                    <Suspense>
-                        <LeaveBalanceByType/>
-
-                        <template #fallback>
-                            <div class="px-[20px]">
-                                <UnorderedList
-                                    :icon="'eos-icons:loading'"
-                                    :size="'md'"
-                                    :label="'Loading balance by type...'"/>
-                            </div>
-                        </template>
-                    </Suspense>
                 </div>
             </div>
         </DefaultWrapper>

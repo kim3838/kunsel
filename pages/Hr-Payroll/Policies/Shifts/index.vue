@@ -2,70 +2,75 @@
     <div>
         <DefaultWrapper>
             <div class="mx-auto max-w-screen-2xl">
-                <form @submit.prevent="paginate(1, true)" class="space-y-2 p-[20px]">
+
+                <div class="space-y-2 p-[20px]">
 
                     <BreadCrumbs prefix-company :size="`sm`" />
 
-                    <div class="grid gap-2 grid-cols-3 sm:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-8">
-                        <div>
-                            <InputLabel :size="'sm'" value="Search" />
-                            <Input :disabled="disableActions" :size="'md'" ref="searchInput" v-model="filters.search.keyword" class="w-full" placeholder="Search" type="text"/>
-                        </div>
-                        <div>
-                            <InputLabel :size="'sm'" value="Type" />
-                            <MultiSelect :disabled="disableActions" glint drop-shadow :size="'md'" :options="shiftTypeOptions" :icon="'tdesign:component-checkbox'"/>
-                        </div>
+                    <div class="lining-shadow rounded-sm tint-background space-y-2 p-[20px]">
 
-                        <div class="flex flex-col">
-                            <div class="flex-none h-[1.25rem]"></div>
-                            <div class="grow">
-                                <div class="h-full px-2 scaffold-border flex items-center">
-                                    <label class="flex items-center">
-                                        <Checkbox
-                                            :disabled="disableActions"
-                                            name="remember"
-                                            v-model="showSchedulesPerShift"
-                                            clamp-label
-                                            :size="'md'"
-                                            :label="'Show shift schedules'" />
-                                    </label>
+                        <form @submit.prevent="paginate(1, true)" class="space-y-2">
+
+                            <div class="grid gap-2 grid-cols-3 sm:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-8">
+                                <div>
+                                    <InputLabel :size="'sm'" value="Search" />
+                                    <Input :disabled="disableActions" :size="'md'" ref="searchInput" v-model="filters.search.keyword" class="w-full" placeholder="Search" type="text"/>
+                                </div>
+                                <div>
+                                    <InputLabel :size="'sm'" value="Type" />
+                                    <MultiSelect :disabled="disableActions" glint drop-shadow :size="'md'" :options="shiftTypeOptions" :icon="'tdesign:component-checkbox'"/>
+                                </div>
+
+                                <div class="flex flex-col">
+                                    <div class="flex-none h-[1.25rem]"></div>
+                                    <div class="grow">
+                                        <div class="h-full px-2 scaffold-border flex items-center">
+                                            <label class="flex items-center">
+                                                <Checkbox
+                                                    :disabled="disableActions"
+                                                    name="remember"
+                                                    v-model="showSchedulesPerShift"
+                                                    clamp-label
+                                                    :size="'md'"
+                                                    :label="'Show shift schedules'" />
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="flex flex-col">
+                                    <div class="flex-none h-[1.25rem]"></div>
+                                    <Button class="w-min" ref="submitButton" type="submit" :disabled="disableActions" :size="'md'" :icon="disableActions ? 'eos-icons:loading' : 'mdi:data'" :label="disableActions ? 'Loading' : 'Load'"></Button>
                                 </div>
                             </div>
-                        </div>
+                        </form>
 
-                        <div class="flex flex-col">
-                            <div class="flex-none h-[1.25rem]"></div>
-                            <Button class="w-min" ref="submitButton" type="submit" :disabled="disableActions" :size="'md'" :icon="disableActions ? 'eos-icons:loading' : 'mdi:data'" :label="disableActions ? 'Loading' : 'Load'"></Button>
-                        </div>
-                    </div>
-                </form>
+                        <div class="space-y-2">
+                            <div class="flex flex-row flex-wrap gap-2 items-center min-h-8" :class="[disableActions ? 'pointer-events-none' : '']">
+                                <NuxtLink
+                                    v-if="shifts.successful"
+                                    :to="`/hr-payroll/policies/shifts/create-shift`">
+                                    <Button class="w-min" :disabled="disableActions" :size="'sm'" :icon="'mdi:plus'"></Button>
+                                </NuxtLink>
+                                <div v-if="shifts.successful" class="scaffold-border px-2 font-[National_Park]">
+                                    <span><span class="font-semibold">{{selectedShifts.length}}</span> Selected</span>
+                                </div>
+                                <Button v-if="shifts.successful" :variant="'outline'" :size="'sm'" :icon="'ph:backspace'" :disabled="disableActions" :label="'Clear selection'" @click="selectedShifts = []" />
+                                <Button v-if="shifts.successful" :variant="'outline'" :icon="'ph:trash-simple'" class="inline-block" :size="'sm'" :disabled="disableActions" :label="'Bulk delete'" @click="confirmDeleteSelected"/>
+                                <Label v-if="!shifts.successful" invert :size="'md'" :type="'danger'" :label="shifts.message" />
+                            </div>
 
-                <div class="px-[20px] space-y-2">
-                    <div class="flex flex-row flex-wrap gap-2 items-center min-h-8" :class="[disableActions ? 'pointer-events-none' : '']">
-                        <NuxtLink
-                            v-if="shifts.successful"
-                            :to="`/hr-payroll/policies/shifts/create-shift`">
-                            <Button class="w-min" :disabled="disableActions" :size="'sm'" :icon="'mdi:plus'"></Button>
-                        </NuxtLink>
-                        <div v-if="shifts.successful" class="scaffold-border px-2 font-[National_Park]">
-                            <span><span class="font-semibold">{{selectedShifts.length}}</span> Selected</span>
-                        </div>
-                        <Button v-if="shifts.successful" :variant="'outline'" :size="'sm'" :icon="'ph:backspace'" :disabled="disableActions" :label="'Clear selection'" @click="selectedShifts = []" />
-                        <Button v-if="shifts.successful" :variant="'outline'" :icon="'ph:trash-simple'" class="inline-block" :size="'sm'" :disabled="disableActions" :label="'Bulk delete'" @click="confirmDeleteSelected"/>
-                        <Label v-if="!shifts.successful" invert :size="'md'" :type="'danger'" :label="shifts.message" />
-                    </div>
-
-                    <DataTable
-                        v-if="shifts.successful"
-                        :key="shiftsKey"
-                        :headers="shiftsHeaders"
-                        :size="'lg'"
-                        :border-appearance="Boolean(shiftSubRowSlug)"
-                        :rows="shifts.data"
-                        :disabled="disableDataTable"
-                        v-model="selectedShifts"
-                        :sub-row-slug="shiftSubRowSlug"
-                        :sub-row-settings="{
+                            <DataTable
+                                v-if="shifts.successful"
+                                :key="shiftsKey"
+                                :headers="shiftsHeaders"
+                                :size="'lg'"
+                                :border-appearance="Boolean(shiftSubRowSlug)"
+                                :rows="shifts.data"
+                                :disabled="disableDataTable"
+                                v-model="selectedShifts"
+                                :sub-row-slug="shiftSubRowSlug"
+                                :sub-row-settings="{
                             type: DATATABLE_SUBROW_TYPE.TITLED,
                             containerPaddingTop: 0.25,
                             containerPaddingBottom: 0.75,
@@ -74,45 +79,47 @@
                             verticalBorderType: 'dashed',
                             horizontalBorderType: 'dashed',
                         }"
-                        :stripped="true"
-                        selection>
-                        <template v-slot:cell.actions="{cell,slot}">
-                            <NuxtLink :to="`/hr-payroll/policies/shifts/${cell.ulid}`">
-                                <div class="text-base h-[32px] px-2 gap-0.5 flex items-center justify-center cursor-pointer accent-hover">
-                                    <span class="font-narrow-thin">Details</span>
-                                    <Icon class="h-5 w-5" :name="'gg:external'"/>
-                                </div>
-                            </NuxtLink>
-                        </template>
-                        <template v-slot:cell.type="{cell,slot}">
-                            <div class="p-[3px]">{{cell.type.text}}</div>
-                        </template>
-                        <template v-slot:cell.name="{cell,slot}">
-                            <div class="p-[3px]" :title="cell.name">{{wordClamp(cell.name, 24)}}</div>
-                        </template>
-                        <template v-slot:cell.holiday_policy="{cell,slot}">
-                            <div class="p-[3px]">{{cell.holiday_policy.text}}</div>
-                        </template>
-                        <template v-slot:cell.is_default="{cell, slot, scrollReference}">
-                            <div class="flex justify-center">
-                                <NonModelCheckBox disabled :size="slot.checkBoxSize" :checked="cell.is_default" ></NonModelCheckBox>
-                            </div>
-                        </template>
-                        <template v-slot:sub_row_slot="{rowIndex, cell, slot}">
-                            <div class="inline-flex items-center scaffold-border pr-2">
-                                <Icon name="mdi:info-variant" :class="[slot.iconSizeClass]" /><div :class="[slot.titleSizeClass]">Shift Schedules</div>
-                            </div>
+                                :stripped="true"
+                                selection>
+                                <template v-slot:cell.actions="{cell,slot}">
+                                    <NuxtLink :to="`/hr-payroll/policies/shifts/${cell.ulid}`">
+                                        <div class="text-base h-[32px] px-2 gap-0.5 flex items-center justify-center cursor-pointer accent-hover">
+                                            <span class="font-narrow-thin">Details</span>
+                                            <Icon class="h-5 w-5" :name="'gg:external'"/>
+                                        </div>
+                                    </NuxtLink>
+                                </template>
+                                <template v-slot:cell.type="{cell,slot}">
+                                    <div class="p-[3px]">{{cell.type.text}}</div>
+                                </template>
+                                <template v-slot:cell.name="{cell,slot}">
+                                    <div class="p-[3px]" :title="cell.name">{{wordClamp(cell.name, 24)}}</div>
+                                </template>
+                                <template v-slot:cell.holiday_policy="{cell,slot}">
+                                    <div class="p-[3px]">{{cell.holiday_policy.text}}</div>
+                                </template>
+                                <template v-slot:cell.is_default="{cell, slot, scrollReference}">
+                                    <div class="flex justify-center">
+                                        <NonModelCheckBox disabled :size="slot.checkBoxSize" :checked="cell.is_default" ></NonModelCheckBox>
+                                    </div>
+                                </template>
+                                <template v-slot:sub_row_slot="{rowIndex, cell, slot}">
+                                    <div class="inline-flex items-center scaffold-border pr-2">
+                                        <Icon name="mdi:info-variant" :class="[slot.iconSizeClass]" /><div :class="[slot.titleSizeClass]">Shift Schedules</div>
+                                    </div>
 
-                            <ShiftSubRow
-                                :rows="cell[slot.slug]"
-                                :disabled="disableDataTable"
-                            ></ShiftSubRow>
-                        </template>
-                    </DataTable>
+                                    <ShiftSubRow
+                                        :rows="cell[slot.slug]"
+                                        :disabled="disableDataTable"
+                                    ></ShiftSubRow>
+                                </template>
+                            </DataTable>
 
-                    <div>
-                        <PageInformation :pagination="shifts.meta.pagination" :pending="disableDataTable" />
-                        <Pagination :size="'lg'" :pagination="shifts.meta.pagination" :pending="disableDataTable" v-model="pageComputed"/>
+                            <div>
+                                <PageInformation :pagination="shifts.meta.pagination" :pending="disableDataTable" />
+                                <Pagination :size="'lg'" :pagination="shifts.meta.pagination" :pending="disableDataTable" v-model="pageComputed"/>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

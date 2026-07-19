@@ -2,48 +2,6 @@
     <div>
         <DefaultWrapper>
             <div class="mx-auto max-w-screen-xl">
-                <form @submit.prevent="paginate(1, true)" class="space-y-2 p-[20px]">
-
-                    <BreadCrumbs prefix-company :size="`sm`" />
-
-                    <div class="grid gap-2 grid-cols-3 sm:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
-                        <div>
-                            <InputLabel :size="'sm'" value="Search" />
-                            <Input :disabled="disableActions" :size="'md'" ref="searchInput" v-model="filters.search.keyword" class="w-full" placeholder="Search Employee" type="text"/>
-                        </div>
-                        <div>
-                            <InputLabel :size="'sm'" value="Date From"/>
-                            <InputWithIcon :icon="'mdi:calendar-today-outline'" :id="'date_from'" readonly v-model="formStore.filters.attendanceDateFrom" :size="'md'" class="w-full" :override="{font_family_class: 'font-sans'}" :disabled="disableActions" />
-                        </div>
-                        <div>
-                            <InputLabel :size="'sm'" value="Date To"/>
-                            <InputWithIcon :icon="'mdi:calendar-outline'" :id="'date_to'" readonly v-model="formStore.filters.attendanceDateTo" :size="'md'" class="w-full" :override="{font_family_class: 'font-sans'}" :disabled="disableActions" />
-                        </div>
-                        <div>
-                            <InputLabel :size="'sm'" value="Employee Group" />
-                            <MultiSelect :key="employeeGroupOptionsKey" glint drop-shadow :selection-max-viewable-line="15" :size="'md'" :options="employeeGroupOptions" :disabled="disableActions" :icon="'tdesign:component-checkbox'"/>
-                        </div>
-                        <div>
-                            <InputLabel :size="'sm'" value="Department" />
-                            <MultiSelect :key="departmentOptionsKey" glint drop-shadow :selection-max-viewable-line="15" :size="'md'" :options="departmentOptions" :disabled="disableActions" :icon="'ic:baseline-all-inbox'"/>
-                        </div>
-                        <div>
-                            <InputLabel :size="'sm'" value="Designation" />
-                            <MultiSelect :key="designationOptionsKey" glint drop-shadow :selection-max-viewable-line="15" :size="'md'" :options="designationOptions" :disabled="disableActions" :icon="'ic:baseline-inbox'"/>
-                        </div>
-                    </div>
-
-                    <div class="flex flex-row flex-wrap gap-2 items-center min-h-8">
-                        <Button class="w-min" ref="submitButton" type="submit" :disabled="disableActions" :size="'md'" :icon="disableActions ? 'eos-icons:loading' : 'mdi:data'" :label="disableActions ? 'Loading' : 'Load'"></Button>
-                        <RadioGroup
-                            class="scaffold-border px-2"
-                            :disabled="disableActions"
-                            :selections="viewMode.selection"
-                            :size="'md'"
-                            :orientation="'horizontal'"
-                            v-model="viewMode.selected" />
-                    </div>
-                </form>
 
                 <DialogModal
                     :show="creatingOrEditing"
@@ -190,106 +148,156 @@
                     </template>
                 </DialogModal>
 
-                <div class="px-[20px] space-y-2">
-                    <div class="flex flex-row flex-wrap gap-2 items-center min-h-8" :class="[disableActions ? 'pointer-events-none' : '']">
-                        <AttendanceBulkCreate v-if="attendances.successful" ref="attendanceBulkCreate" @cancelled="bulkCreateCancelled" @completed="bulkCreateCompleted">
-                            <Button
-                                :disabled="disableActions"
-                                :variant="`outline`"
-                                :size="'sm'"
-                                :icon="'mdi:plus'"
-                                :label="`Bulk create`"
-                                @click="bulkCreate" />
-                        </AttendanceBulkCreate>
-                        <div v-if="attendances.successful" class="scaffold-border px-2 font-[National_Park]">
-                            <span><span class="font-semibold">{{selectedAttendances.length}}</span> Selected</span>
-                        </div>
-                        <Button
-                            v-if="attendances.successful"
-                            :variant="'outline'"
-                            :size="'sm'"
-                            :icon="'ph:backspace'"
-                            :disabled="disableActions"
-                            :label="'Clear selection'"
-                            @click="selectedAttendances = []" />
-                        <Button
-                            v-if="attendances.successful"
-                            :variant="'outline'"
-                            :size="'sm'"
-                            :icon="'ph:trash-simple'"
-                            :disabled="disableActions"
-                            :label="'Bulk delete'"
-                            @click="confirmDeleteSelected()" />
-                        <Label v-if="!attendances.successful" invert :size="'md'" :type="'danger'" :label="attendances.message" />
-                    </div>
+                <div class="space-y-2 p-[20px]">
 
-                    <DataTable
-                        v-if="attendances.successful"
-                        :sup-headers="attendancesSupHeaders"
-                        :headers="attendancesHeaders"
-                        :size="'lg'"
-                        :rows="attendances.data"
-                        :disabled="disableDataTable"
-                        v-model="selectedAttendances"
-                        selection>
-                        <template v-slot:cell.actions="{cell,slot: cellSlot}">
-                            <div class="flex items-center">
-                                <NavDrop
-                                    class="z-10"
+                    <BreadCrumbs prefix-company :size="`sm`" />
+
+                    <div class="lining-shadow rounded-sm tint-background space-y-2 p-[20px]">
+
+                        <form @submit.prevent="paginate(1, true)" class="space-y-2">
+
+                            <div class="grid gap-2 grid-cols-3 sm:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
+                                <div>
+                                    <InputLabel :size="'sm'" value="Search" />
+                                    <Input :disabled="disableActions" :size="'md'" ref="searchInput" v-model="filters.search.keyword" class="w-full" placeholder="Search Employee" type="text"/>
+                                </div>
+                                <div>
+                                    <InputLabel :size="'sm'" value="Date From"/>
+                                    <InputWithIcon :icon="'mdi:calendar-today-outline'" :id="'date_from'" readonly v-model="formStore.filters.attendanceDateFrom" :size="'md'" class="w-full" :override="{font_family_class: 'font-sans'}" :disabled="disableActions" />
+                                </div>
+                                <div>
+                                    <InputLabel :size="'sm'" value="Date To"/>
+                                    <InputWithIcon :icon="'mdi:calendar-outline'" :id="'date_to'" readonly v-model="formStore.filters.attendanceDateTo" :size="'md'" class="w-full" :override="{font_family_class: 'font-sans'}" :disabled="disableActions" />
+                                </div>
+                                <div>
+                                    <InputLabel :size="'sm'" value="Employee Group" />
+                                    <MultiSelect :key="employeeGroupOptionsKey" glint drop-shadow :selection-max-viewable-line="15" :size="'md'" :options="employeeGroupOptions" :disabled="disableActions" :icon="'tdesign:component-checkbox'"/>
+                                </div>
+                                <div>
+                                    <InputLabel :size="'sm'" value="Department" />
+                                    <MultiSelect :key="departmentOptionsKey" glint drop-shadow :selection-max-viewable-line="15" :size="'md'" :options="departmentOptions" :disabled="disableActions" :icon="'ic:baseline-all-inbox'"/>
+                                </div>
+                                <div>
+                                    <InputLabel :size="'sm'" value="Designation" />
+                                    <MultiSelect :key="designationOptionsKey" glint drop-shadow :selection-max-viewable-line="15" :size="'md'" :options="designationOptions" :disabled="disableActions" :icon="'ic:baseline-inbox'"/>
+                                </div>
+                            </div>
+
+                            <div class="flex flex-row flex-wrap gap-2 items-center min-h-8">
+                                <Button class="w-min" ref="submitButton" type="submit" :disabled="disableActions" :size="'md'" :icon="disableActions ? 'eos-icons:loading' : 'mdi:data'" :label="disableActions ? 'Loading' : 'Load'"></Button>
+                                <RadioGroup
+                                    class="scaffold-border px-2"
                                     :disabled="disableActions"
-                                    :parent-icon="'ic:baseline-arrow-right'"
-                                    in-horizontal-scrollable
-                                    divider
-                                    :size="`sm`"
-                                    :drop-shadow-size="`xl`"
-                                    :title="'Menu'"
-                                    :drop-align="'top'"
-                                    :drop-justify="'right'"
-                                    :active-style="`clear-fluid`"
-                                    :drop-active-style="`clear-fluid`"
-                                    :drop-options="[
+                                    :selections="viewMode.selection"
+                                    :size="'md'"
+                                    :orientation="'horizontal'"
+                                    v-model="viewMode.selected" />
+                            </div>
+                        </form>
+
+                        <div class="space-y-2">
+                            <div class="flex flex-row flex-wrap gap-2 items-center min-h-8" :class="[disableActions ? 'pointer-events-none' : '']">
+                                <AttendanceBulkCreate v-if="attendances.successful" ref="attendanceBulkCreate" @cancelled="bulkCreateCancelled" @completed="bulkCreateCompleted">
+                                    <Button
+                                        :disabled="disableActions"
+                                        :variant="`outline`"
+                                        :size="'sm'"
+                                        :icon="'mdi:plus'"
+                                        :label="`Bulk create`"
+                                        @click="bulkCreate" />
+                                </AttendanceBulkCreate>
+                                <div v-if="attendances.successful" class="scaffold-border px-2 font-[National_Park]">
+                                    <span><span class="font-semibold">{{selectedAttendances.length}}</span> Selected</span>
+                                </div>
+                                <Button
+                                    v-if="attendances.successful"
+                                    :variant="'outline'"
+                                    :size="'sm'"
+                                    :icon="'ph:backspace'"
+                                    :disabled="disableActions"
+                                    :label="'Clear selection'"
+                                    @click="selectedAttendances = []" />
+                                <Button
+                                    v-if="attendances.successful"
+                                    :variant="'outline'"
+                                    :size="'sm'"
+                                    :icon="'ph:trash-simple'"
+                                    :disabled="disableActions"
+                                    :label="'Bulk delete'"
+                                    @click="confirmDeleteSelected()" />
+                                <Label v-if="!attendances.successful" invert :size="'md'" :type="'danger'" :label="attendances.message" />
+                            </div>
+
+                            <DataTable
+                                v-if="attendances.successful"
+                                :sup-headers="attendancesSupHeaders"
+                                :headers="attendancesHeaders"
+                                :size="'lg'"
+                                :rows="attendances.data"
+                                :disabled="disableDataTable"
+                                v-model="selectedAttendances"
+                                selection>
+                                <template v-slot:cell.actions="{cell,slot: cellSlot}">
+                                    <div class="flex items-center">
+                                        <NavDrop
+                                            class="z-10"
+                                            :disabled="disableActions"
+                                            :parent-icon="'ic:baseline-arrow-right'"
+                                            in-horizontal-scrollable
+                                            divider
+                                            :size="`sm`"
+                                            :drop-shadow-size="`xl`"
+                                            :title="'Menu'"
+                                            :drop-align="'top'"
+                                            :drop-justify="'right'"
+                                            :active-style="`clear-fluid`"
+                                            :drop-active-style="`clear-fluid`"
+                                            :drop-options="[
                                         {type: 'link', icon: 'ix:open-external', title: 'Details',to: `/hr-payroll/workforce/attendance/${cell.ulid}`},
                                         {type: 'action', icon: 'mdi:edit', title: 'Edit Attendance',callback: () => {edit(cell);}},
                                     ]">
-                                    <template v-slot="{slot}">
-                                        <div
-                                            class="flex items-center pl-1 py-1 focus:outline-none">
-                                            <span :class="[slot.headerFontClass, 'font-narrow-thin']">Menu</span>
-                                            <Icon :class="[slot.dropDownIconClass]" :name="'ic:baseline-arrow-right'"/>
-                                        </div>
-                                    </template>
-                                </NavDrop>
-                            </div>
-                        </template>
-                        <template v-slot:cell.employee_number="{cell,slot}">
-                            <div class="p-[3px]">{{cell.employee.number}}</div>
-                        </template>
-                        <template v-slot:cell.employee_full_name="{cell,slot}">
-                            <div class="p-[3px]">{{cell.employee.full_name}}</div>
-                        </template>
-                        <template v-slot:cell.shift_code="{cell,slot}">
-                            <div class="p-[3px]">{{cell.shift.code}}</div>
-                        </template>
-                        <template v-slot:cell.shift_schedule_week_day_name="{cell,slot}">
-                            <div class="p-[3px]">{{cell.shift_schedule.week_day_name}}</div>
-                        </template>
-                        <template v-slot:cell.shift_schedule_work_start="{cell,slot}">
-                            <div class="p-[3px]">{{cell.shift_schedule.work_start}}</div>
-                        </template>
-                        <template v-slot:cell.shift_schedule_work_end="{cell,slot}">
-                            <div class="p-[3px]">{{cell.shift_schedule.work_end}}</div>
-                        </template>
-                        <template v-slot:cell.date_readable="{cell,slot}">
-                            <div class="p-[3px] font-medium">{{cell.date_readable}}</div>
-                        </template>
-                        <template v-slot:cell.status="{cell,slot}">
-                            <div class="p-[3px]">{{cell.status.text}}</div>
-                        </template>
-                    </DataTable>
+                                            <template v-slot="{slot}">
+                                                <div
+                                                    class="flex items-center pl-1 py-1 focus:outline-none">
+                                                    <span :class="[slot.headerFontClass, 'font-narrow-thin']">Menu</span>
+                                                    <Icon :class="[slot.dropDownIconClass]" :name="'ic:baseline-arrow-right'"/>
+                                                </div>
+                                            </template>
+                                        </NavDrop>
+                                    </div>
+                                </template>
+                                <template v-slot:cell.employee_number="{cell,slot}">
+                                    <div class="p-[3px]">{{cell.employee.number}}</div>
+                                </template>
+                                <template v-slot:cell.employee_full_name="{cell,slot}">
+                                    <div class="p-[3px]">{{cell.employee.full_name}}</div>
+                                </template>
+                                <template v-slot:cell.shift_code="{cell,slot}">
+                                    <div class="p-[3px]">{{cell.shift.code}}</div>
+                                </template>
+                                <template v-slot:cell.shift_schedule_week_day_name="{cell,slot}">
+                                    <div class="p-[3px]">{{cell.shift_schedule.week_day_name}}</div>
+                                </template>
+                                <template v-slot:cell.shift_schedule_work_start="{cell,slot}">
+                                    <div class="p-[3px]">{{cell.shift_schedule.work_start}}</div>
+                                </template>
+                                <template v-slot:cell.shift_schedule_work_end="{cell,slot}">
+                                    <div class="p-[3px]">{{cell.shift_schedule.work_end}}</div>
+                                </template>
+                                <template v-slot:cell.date_readable="{cell,slot}">
+                                    <div class="p-[3px] font-medium">{{cell.date_readable}}</div>
+                                </template>
+                                <template v-slot:cell.status="{cell,slot}">
+                                    <div class="p-[3px]">{{cell.status.text}}</div>
+                                </template>
+                            </DataTable>
 
-                    <div>
-                        <PageInformation :pagination="attendances.meta.pagination" :pending="disableDataTable"/>
-                        <Pagination :size="'lg'" :pagination="attendances.meta.pagination" :pending="disableDataTable" v-model="pageComputed"/>
+                            <div>
+                                <PageInformation :pagination="attendances.meta.pagination" :pending="disableDataTable"/>
+                                <Pagination :size="'lg'" :pagination="attendances.meta.pagination" :pending="disableDataTable" v-model="pageComputed"/>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
             </div>

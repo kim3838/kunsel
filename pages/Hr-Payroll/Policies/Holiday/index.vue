@@ -2,22 +2,6 @@
     <div>
         <DefaultWrapper>
             <div class="mx-auto max-w-screen-xl">
-                <form @submit.prevent="paginate(1, true)" class="space-y-2 p-[20px]">
-
-                    <BreadCrumbs prefix-company :size="`sm`" />
-
-                    <div class="grid gap-2 grid-cols-3 sm:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-8">
-                        <div>
-                            <InputLabel :size="'sm'" value="Search" />
-                            <Input :disabled="disableActions" :size="'md'" ref="searchInput" v-model="filters.search.keyword" class="w-full" placeholder="Search" type="text"/>
-                        </div>
-
-                        <div class="flex flex-col">
-                            <div class="flex-none h-[1.25rem]"></div>
-                            <Button class="w-min" ref="submitButton" type="submit" :disabled="disableActions" :size="'md'" :icon="disableActions ? 'eos-icons:loading' : 'mdi:data'" :label="disableActions ? 'Loading' : 'Load'"></Button>
-                        </div>
-                    </div>
-                </form>
 
                 <DialogModal
                     :show="showModalAsCreatingOrEditing"
@@ -135,62 +119,85 @@
                     </template>
                 </DialogModal>
 
-                <div class="px-[20px] space-y-2">
+                <div class="space-y-2 p-[20px]">
 
-                    <div class="flex flex-row flex-wrap gap-2 items-center min-h-8" :class="[disableActions ? 'pointer-events-none' : '']">
-                        <Button v-if="holidays.successful" @click="put(null)" class="w-min" :disabled="disableActions" :size="'sm'" :icon="'mdi:plus'"></Button>
-                        <div v-if="holidays.successful" class="scaffold-border px-2 font-[National_Park]">
-                            <span><span class="font-semibold">{{selectedHolidays.length}}</span> Selected</span>
+                    <BreadCrumbs prefix-company :size="`sm`" />
+
+                    <div class="lining-shadow rounded-sm tint-background space-y-2 p-[20px]">
+
+                        <form @submit.prevent="paginate(1, true)" class="space-y-2">
+
+                            <div class="grid gap-2 grid-cols-3 sm:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-8">
+                                <div>
+                                    <InputLabel :size="'sm'" value="Search" />
+                                    <Input :disabled="disableActions" :size="'md'" ref="searchInput" v-model="filters.search.keyword" class="w-full" placeholder="Search" type="text"/>
+                                </div>
+
+                                <div class="flex flex-col">
+                                    <div class="flex-none h-[1.25rem]"></div>
+                                    <Button class="w-min" ref="submitButton" type="submit" :disabled="disableActions" :size="'md'" :icon="disableActions ? 'eos-icons:loading' : 'mdi:data'" :label="disableActions ? 'Loading' : 'Load'"></Button>
+                                </div>
+                            </div>
+                        </form>
+
+                        <div class="space-y-2">
+
+                            <div class="flex flex-row flex-wrap gap-2 items-center min-h-8" :class="[disableActions ? 'pointer-events-none' : '']">
+                                <Button v-if="holidays.successful" @click="put(null)" class="w-min" :disabled="disableActions" :size="'sm'" :icon="'mdi:plus'"></Button>
+                                <div v-if="holidays.successful" class="scaffold-border px-2 font-[National_Park]">
+                                    <span><span class="font-semibold">{{selectedHolidays.length}}</span> Selected</span>
+                                </div>
+                                <Button v-if="holidays.successful" :variant="'outline'" :size="'sm'" :icon="'ph:backspace'" :disabled="disableActions" :label="'Clear selection'" @click="selectedHolidays = []" />
+                                <Button v-if="holidays.successful" :variant="'outline'" :size="'sm'" :icon="'ph:trash-simple'" :disabled="disableActions" :label="'Bulk delete'" @click="confirmDeleteSelected()" />
+                                <Label v-if="!holidays.successful" invert :size="'md'" :type="'danger'" :label="holidays.message" />
+                            </div>
+
+                            <DataTable
+                                v-if="holidays.successful"
+                                :headers="holidaysHeaders"
+                                :size="'lg'"
+                                :rows="holidays.data"
+                                :disabled="disableDataTable"
+                                v-model="selectedHolidays"
+                                selection>
+                                <template v-slot:cell.actions="{cell,slot: cellSlot}">
+                                    <div class="text-base h-[32px] px-2 gap-0.5 flex items-center justify-center cursor-pointer accent-hover" @click="put(cell)">
+                                        <span class="font-narrow-thin">Edit</span>
+                                        <Icon class="h-5 w-5" :name="'gg:external'"/>
+                                    </div>
+                                </template>
+                                <template v-slot:cell.type="{cell,slot}">
+                                    <div class="p-[3px]">{{cell.type.text}}</div>
+                                </template>
+                                <template v-slot:cell.holiday_pay_forfeiture="{cell, slot, scrollReference}">
+                                    <div v-if="[HOLIDAY.LEGAL, HOLIDAY.DOUBLE].indexOf(parseInt(cell.type.value)) >= 0" class="flex justify-center">
+                                        <NonModelCheckBox disabled :size="slot.checkBoxSize" :checked="Boolean(cell.holiday_pay_forfeiture)"></NonModelCheckBox>
+                                    </div>
+                                    <div v-else class="p-[3px]"></div>
+                                </template>
+                                <template v-slot:cell.date="{cell,slot}">
+                                    <div class="p-[3px]">{{cell.date_readable}}</div>
+                                </template>
+                                <template v-slot:cell.recurring="{cell, slot, scrollReference}">
+                                    <div class="flex justify-center">
+                                        <NonModelCheckBox disabled :size="slot.checkBoxSize" :checked="Boolean(cell.recurring)"></NonModelCheckBox>
+                                    </div>
+                                </template>
+                                <template v-slot:cell.active="{cell, slot, scrollReference}">
+                                    <div class="flex justify-center">
+                                        <NonModelCheckBox disabled :size="slot.checkBoxSize" :checked="Boolean(cell.active)"></NonModelCheckBox>
+                                    </div>
+                                </template>
+                                <template v-slot:cell.effective_date="{cell,slot}">
+                                    <div class="p-[3px]">{{cell.effective_date_readable}}</div>
+                                </template>
+                            </DataTable>
+
+                            <div>
+                                <PageInformation :pagination="holidays.meta.pagination" :pending="disableDataTable"/>
+                                <Pagination :size="'lg'" :pagination="holidays.meta.pagination" :pending="disableDataTable" v-model="pageComputed"/>
+                            </div>
                         </div>
-                        <Button v-if="holidays.successful" :variant="'outline'" :size="'sm'" :icon="'ph:backspace'" :disabled="disableActions" :label="'Clear selection'" @click="selectedHolidays = []" />
-                        <Button v-if="holidays.successful" :variant="'outline'" :size="'sm'" :icon="'ph:trash-simple'" :disabled="disableActions" :label="'Bulk delete'" @click="confirmDeleteSelected()" />
-                        <Label v-if="!holidays.successful" invert :size="'md'" :type="'danger'" :label="holidays.message" />
-                    </div>
-
-                    <DataTable
-                        v-if="holidays.successful"
-                        :headers="holidaysHeaders"
-                        :size="'lg'"
-                        :rows="holidays.data"
-                        :disabled="disableDataTable"
-                        v-model="selectedHolidays"
-                        selection>
-                        <template v-slot:cell.actions="{cell,slot: cellSlot}">
-                            <div class="text-base h-[32px] px-2 gap-0.5 flex items-center justify-center cursor-pointer accent-hover" @click="put(cell)">
-                                <span class="font-narrow-thin">Edit</span>
-                                <Icon class="h-5 w-5" :name="'gg:external'"/>
-                            </div>
-                        </template>
-                        <template v-slot:cell.type="{cell,slot}">
-                            <div class="p-[3px]">{{cell.type.text}}</div>
-                        </template>
-                        <template v-slot:cell.holiday_pay_forfeiture="{cell, slot, scrollReference}">
-                            <div v-if="[HOLIDAY.LEGAL, HOLIDAY.DOUBLE].indexOf(parseInt(cell.type.value)) >= 0" class="flex justify-center">
-                                <NonModelCheckBox disabled :size="slot.checkBoxSize" :checked="Boolean(cell.holiday_pay_forfeiture)"></NonModelCheckBox>
-                            </div>
-                            <div v-else class="p-[3px]"></div>
-                        </template>
-                        <template v-slot:cell.date="{cell,slot}">
-                            <div class="p-[3px]">{{cell.date_readable}}</div>
-                        </template>
-                        <template v-slot:cell.recurring="{cell, slot, scrollReference}">
-                            <div class="flex justify-center">
-                                <NonModelCheckBox disabled :size="slot.checkBoxSize" :checked="Boolean(cell.recurring)"></NonModelCheckBox>
-                            </div>
-                        </template>
-                        <template v-slot:cell.active="{cell, slot, scrollReference}">
-                            <div class="flex justify-center">
-                                <NonModelCheckBox disabled :size="slot.checkBoxSize" :checked="Boolean(cell.active)"></NonModelCheckBox>
-                            </div>
-                        </template>
-                        <template v-slot:cell.effective_date="{cell,slot}">
-                            <div class="p-[3px]">{{cell.effective_date_readable}}</div>
-                        </template>
-                    </DataTable>
-
-                    <div>
-                        <PageInformation :pagination="holidays.meta.pagination" :pending="disableDataTable"/>
-                        <Pagination :size="'lg'" :pagination="holidays.meta.pagination" :pending="disableDataTable" v-model="pageComputed"/>
                     </div>
                 </div>
             </div>

@@ -1,7 +1,7 @@
 <template>
     <div>
         <DefaultWrapper>
-            <div class="mx-auto max-w-screen-md">
+            <div class="mx-auto max-w-screen-lg">
 
                 <DialogModal
                     :show="editing"
@@ -167,29 +167,32 @@
 
                     <BreadCrumbs prefix-company :size="`sm`" />
 
-                    <div class="flex flex-row flex-wrap gap-2 items-center min-h-8">
-                        <Button
-                            class="w-min"
-                            :variant="'outline'"
-                            :size="'sm'"
-                            :icon="'ic:sharp-restart-alt'"
-                            :disabled="disableActions"
-                            @click="approvalSettingsExecute" />
-                        <Label v-if="!approvalSettingsSuccessful" invert :size="'md'" :type="'danger'" :label="approvalSettingsMessage" />
-                    </div>
+                    <div class="lining-shadow rounded-sm tint-background space-y-2 p-[20px]">
 
-                    <UnorderedList v-if="approvalSettingsPending" :icon="'eos-icons:loading'" :size="'md'" :label="'Please wait...'"/>
-                    <DataTable
-                        v-else-if="approvalSettingsSuccessful"
-                        :key="approvalSettingKey"
-                        :headers="approvalSettingsHeaders"
-                        :size="'lg'"
-                        :border-appearance="true"
-                        :stripped="false"
-                        :rows="approvalSettingsData"
-                        :disabled="disableDataTable"
-                        :sub-row-slug="'approvers'"
-                        :sub-row-settings="{
+                        <div class="flex flex-row flex-wrap gap-2 items-center min-h-8">
+                            <Button
+                                class="w-min"
+                                :variant="'outline'"
+                                :size="'sm'"
+                                :icon="'ic:sharp-restart-alt'"
+                                :disabled="disableActions"
+                                @click="approvalSettingsExecute" />
+                            <Label v-if="!approvalSettingsSuccessful" invert :size="'md'" :type="'danger'" :label="approvalSettingsMessage" />
+                        </div>
+
+                        <UnorderedList v-if="approvalSettingsPending" :icon="'eos-icons:loading'" :size="'md'" :label="'Please wait...'"/>
+
+                        <DataTable
+                            v-else-if="approvalSettingsSuccessful"
+                            :key="approvalSettingKey"
+                            :headers="approvalSettingsHeaders"
+                            :size="'lg'"
+                            :border-appearance="true"
+                            :stripped="false"
+                            :rows="approvalSettingsData"
+                            :disabled="disableDataTable"
+                            :sub-row-slug="'approvers'"
+                            :sub-row-settings="{
                             type: DATATABLE_SUBROW_TYPE.TITLED,
                             containerPaddingTop: 0.75,
                             containerPaddingBottom: 1.75,
@@ -198,24 +201,25 @@
                             verticalBorderType: 'dashed',
                             horizontalBorderType: 'dashed',
                         }">
-                        <template v-slot:cell.actions="{cell, slot, scrollReference}">
-                            <div class="text-base h-[32px] px-2 gap-0.5 flex items-center justify-center cursor-pointer accent-hover" @click="edit(cell)">
-                                <span class="font-narrow-thin">Edit</span>
-                                <Icon class="h-5 w-5" :name="'gg:external'"/>
-                            </div>
-                        </template>
-                        <template v-slot:sub_row_slot="{rowIndex, cell, slot}">
-                            <div class="inline-flex items-center scaffold-border pr-2">
-                                <Icon name="mdi:info-variant" :class="[slot.iconSizeClass]" /><div :class="[slot.titleSizeClass]">Approval Sequence</div>
-                            </div>
-                            <ApprovalSettingSubRow
-                                :rows="cell[slot.slug]"
-                                :disabled="disableDataTable"
-                            ></ApprovalSettingSubRow>
-                        </template>
-                    </DataTable>
-                </div>
+                            <template v-slot:cell.actions="{cell, slot, scrollReference}">
+                                <div class="text-base h-[32px] px-2 gap-0.5 flex items-center justify-center cursor-pointer accent-hover" @click="edit(cell)">
+                                    <span class="font-narrow-thin">Edit</span>
+                                    <Icon class="h-5 w-5" :name="'gg:external'"/>
+                                </div>
+                            </template>
+                            <template v-slot:sub_row_slot="{rowIndex, cell, slot}">
+                                <div class="inline-flex items-center scaffold-border pr-2">
+                                    <Icon name="mdi:info-variant" :class="[slot.iconSizeClass]" /><div :class="[slot.titleSizeClass]">Approval Sequence</div>
+                                </div>
+                                <ApprovalSettingSubRow
+                                    :rows="cell[slot.slug]"
+                                    :disabled="disableDataTable"
+                                ></ApprovalSettingSubRow>
+                            </template>
+                        </DataTable>
 
+                    </div>
+                </div>
             </div>
         </DefaultWrapper>
     </div>

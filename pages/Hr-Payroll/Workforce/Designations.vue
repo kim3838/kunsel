@@ -3,22 +3,6 @@
         <DefaultWrapper>
             <div class="mx-auto max-w-screen-lg">
 
-                <form @submit.prevent="designationsExecute" class="space-y-2 p-[20px]">
-
-                    <BreadCrumbs prefix-company :size="`sm`" />
-
-                    <div class="grid gap-2 grid-cols-3 sm:grid-cols-4 lg:grid-cols-5">
-                        <div>
-                            <InputLabel :size="'sm'" value="Search" />
-                            <Input :disabled="disableActions" :size="'md'" ref="searchInput" v-model="filters.search.keyword" class="w-full" placeholder="Search" type="text"/>
-                        </div>
-                        <div class="flex flex-col">
-                            <div class="flex-none h-[1.25rem]"></div>
-                            <Button class="w-min" ref="submitButton" type="submit" :disabled="disableActions" :size="'md'" :icon="disableActions ? 'eos-icons:loading' : 'mdi:data'" :label="disableActions ? 'Loading' : 'Load'"></Button>
-                        </div>
-                    </div>
-                </form>
-
                 <DialogModal
                     :max-width="'410px'"
                     :show="creatingOrEditing"
@@ -58,48 +42,71 @@
                     </template>
                 </DialogModal>
 
-                <div class="px-[20px] space-y-2">
-                    <div class="flex flex-row flex-wrap gap-2 items-center min-h-8" :class="[disableActions ? 'pointer-events-none' : '']">
-                        <Button
-                            v-if="designationsSuccessful"
-                            class="inline-block"
-                            :icon="'mdi:plus'"
-                            :size="'sm'"
-                            :disabled="disableActions"
-                            @click="create"/>
-                        <div v-if="designationsSuccessful" class="scaffold-border px-2 font-[National_Park]">
-                            <span><span class="font-semibold">{{selectedDesignations.length}}</span> Selected</span>
-                        </div>
-                        <Button
-                            v-if="designationsSuccessful"
-                            :variant="'outline'"
-                            :size="'sm'"
-                            :icon="'ph:trash-simple'"
-                            :disabled="disableActions"
-                            :label="'Bulk delete'"
-                            @click="confirmDeleteSelected()" />
-                        <div v-if="!designationsSuccessful" class="flex flex-row flex-wrap gap-2 items-center min-h-8">
-                            <Label invert :size="'md'" :type="'danger'" :label="designationsMessage" />
-                        </div>
-                    </div>
+                <div class="space-y-2 p-[20px]">
 
+                    <BreadCrumbs prefix-company :size="`sm`" />
 
+                    <div class="lining-shadow rounded-sm tint-background space-y-2 p-[20px]">
 
-                    <DataTable
-                        v-if="designationsSuccessful"
-                        :headers="designationsHeaders"
-                        :size="'lg'"
-                        :rows="designationsData"
-                        :disabled="disableDataTable"
-                        v-model="selectedDesignations"
-                        selection>
-                        <template v-slot:cell.actions="{cell, slot, scrollReference}">
-                            <div class="text-base h-[32px] px-2 gap-0.5 flex items-center justify-center cursor-pointer accent-hover" @click="edit(cell)">
-                                <span class="font-narrow-thin">Edit</span>
-                                <Icon class="h-5 w-5" :name="'gg:external'"/>
+                        <form @submit.prevent="designationsExecute" class="space-y-2">
+
+                            <div class="grid gap-2 grid-cols-3 sm:grid-cols-4 lg:grid-cols-5">
+                                <div>
+                                    <InputLabel :size="'sm'" value="Search" />
+                                    <Input :disabled="disableActions" :size="'md'" ref="searchInput" v-model="filters.search.keyword" class="w-full" placeholder="Search" type="text"/>
+                                </div>
+                                <div class="flex flex-col">
+                                    <div class="flex-none h-[1.25rem]"></div>
+                                    <Button class="w-min" ref="submitButton" type="submit" :disabled="disableActions" :size="'md'" :icon="disableActions ? 'eos-icons:loading' : 'mdi:data'" :label="disableActions ? 'Loading' : 'Load'"></Button>
+                                </div>
                             </div>
-                        </template>
-                    </DataTable>
+                        </form>
+
+                        <div class="space-y-2">
+                            <div class="flex flex-row flex-wrap gap-2 items-center min-h-8" :class="[disableActions ? 'pointer-events-none' : '']">
+                                <Button
+                                    v-if="designationsSuccessful"
+                                    class="inline-block"
+                                    :icon="'mdi:plus'"
+                                    :size="'sm'"
+                                    :disabled="disableActions"
+                                    @click="create"/>
+                                <div v-if="designationsSuccessful" class="scaffold-border px-2 font-[National_Park]">
+                                    <span><span class="font-semibold">{{selectedDesignations.length}}</span> Selected</span>
+                                </div>
+                                <Button
+                                    v-if="designationsSuccessful"
+                                    :variant="'outline'"
+                                    :size="'sm'"
+                                    :icon="'ph:trash-simple'"
+                                    :disabled="disableActions"
+                                    :label="'Bulk delete'"
+                                    @click="confirmDeleteSelected()" />
+                                <div v-if="!designationsSuccessful" class="flex flex-row flex-wrap gap-2 items-center min-h-8">
+                                    <Label invert :size="'md'" :type="'danger'" :label="designationsMessage" />
+                                </div>
+                            </div>
+
+
+
+                            <DataTable
+                                v-if="designationsSuccessful"
+                                :headers="designationsHeaders"
+                                :size="'lg'"
+                                :rows="designationsData"
+                                :disabled="disableDataTable"
+                                v-model="selectedDesignations"
+                                selection>
+                                <template v-slot:cell.actions="{cell, slot, scrollReference}">
+                                    <div class="text-base h-[32px] px-2 gap-0.5 flex items-center justify-center cursor-pointer accent-hover" @click="edit(cell)">
+                                        <span class="font-narrow-thin">Edit</span>
+                                        <Icon class="h-5 w-5" :name="'gg:external'"/>
+                                    </div>
+                                </template>
+                            </DataTable>
+                        </div>
+
+                    </div>
                 </div>
             </div>
         </DefaultWrapper>

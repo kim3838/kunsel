@@ -3,55 +3,62 @@
         <AdminWrapper>
             <div class="mx-auto max-w-screen-lg">
 
-                <form @submit.prevent="paginate(1, true)" class="space-y-2 p-[20px]">
-                    <div class="grid gap-2 grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-8">
-                        <div class="col-span-full md:col-span-2">
-                            <InputLabel :size="'sm'" value="Account" />
-                            <SingleSelect :disabled="disableActions" glint drop-shadow :selection-max-viewable-line="5" value-persist :size="'md'" :options="accountOptions" :icon="'tdesign:component-checkbox'" @valueChange="selectedAccountChanged"/>
-                        </div>
-                        <div>
-                            <InputLabel :size="'sm'" value="Search" />
-                            <Input :disabled="disableActions" :size="'md'" ref="searchInput" v-model="filters.search.keyword" class="w-full" placeholder="Search" type="text"/>
-                        </div>
-                    </div>
+                <div class="space-y-2 p-[20px]">
 
-                    <div class="grid gap-2 grid-cols-1 sm:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-8">
-                        <Button class="w-min" ref="submitButton" type="submit" :disabled="disableActions" :size="'md'" :icon="disableActions ? 'eos-icons:loading' : 'mdi:data'" :label="disableActions ? 'Loading' : 'Load'"></Button>
-                    </div>
-                </form>
+                    <div class="lining-shadow rounded-sm tint-background space-y-2 p-[20px]">
 
-                <div class="px-[20px] space-y-2">
-                    <div class="flex flex-row flex-wrap gap-2 items-center min-h-8" :class="[disableActions ? 'pointer-events-none' : '']">
-                        <NuxtLink
-                            v-if="roles.successful"
-                            :to="`/admin/roles/create-role`">
-                            <Button class="w-min" :disabled="disableActions" :size="'sm'" :icon="'mdi:plus'"></Button>
-                        </NuxtLink>
-                        <Button v-if="roles.successful" :variant="'outline'" :icon="'ph:trash-simple'" class="inline-block" :size="'sm'" :disabled="disableActions" :label="'Bulk delete'" @click="confirmDeleteSelected"/>
-                        <Label v-if="!roles.successful" invert :size="'md'" :type="'danger'" :label="roles.message" />
-                    </div>
-
-                    <DataTable
-                        v-if="roles.successful"
-                        :headers="rolesHeaders"
-                        :size="'lg'"
-                        :rows="roles.data"
-                        :disabled="disableDataTable"
-                        v-model="selectedRoles"
-                        selection>
-                        <template v-slot:cell.actions="{cell,slot}">
-                            <NuxtLink :to="`/admin/roles/${cell.ulid}`">
-                                <div class="text-base h-[32px] px-2 gap-0.5 flex items-center justify-center cursor-pointer accent-hover">
-                                    <span class="font-narrow-thin">Permissions</span>
-                                    <Icon class="h-5 w-5" :name="'gg:external'"/>
+                        <form @submit.prevent="paginate(1, true)" class="space-y-2">
+                            <div class="grid gap-2 grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-8">
+                                <div class="col-span-full md:col-span-2">
+                                    <InputLabel :size="'sm'" value="Account" />
+                                    <SingleSelect :disabled="disableActions" glint drop-shadow :selection-max-viewable-line="5" value-persist :size="'md'" :options="accountOptions" :icon="'tdesign:component-checkbox'" @valueChange="selectedAccountChanged"/>
                                 </div>
-                            </NuxtLink>
-                        </template>
-                    </DataTable>
+                                <div>
+                                    <InputLabel :size="'sm'" value="Search" />
+                                    <Input :disabled="disableActions" :size="'md'" ref="searchInput" v-model="filters.search.keyword" class="w-full" placeholder="Search" type="text"/>
+                                </div>
+                            </div>
 
-                    <div>
-                        <PageInformation :pagination="roles.meta.pagination" :pending="disableDataTable"/>
-                        <Pagination :size="'lg'" :pagination="roles.meta.pagination" :pending="disableDataTable" v-model="pageComputed"/>
+                            <div class="grid gap-2 grid-cols-1 sm:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-8">
+                                <Button class="w-min" ref="submitButton" type="submit" :disabled="disableActions" :size="'md'" :icon="disableActions ? 'eos-icons:loading' : 'mdi:data'" :label="disableActions ? 'Loading' : 'Load'"></Button>
+                            </div>
+                        </form>
+
+                        <div class="space-y-2">
+                            <div class="flex flex-row flex-wrap gap-2 items-center min-h-8" :class="[disableActions ? 'pointer-events-none' : '']">
+                                <NuxtLink
+                                    v-if="roles.successful"
+                                    :to="`/admin/roles/create-role`">
+                                    <Button class="w-min" :disabled="disableActions" :size="'sm'" :icon="'mdi:plus'"></Button>
+                                </NuxtLink>
+                                <Button v-if="roles.successful" :variant="'outline'" :icon="'ph:trash-simple'" class="inline-block" :size="'sm'" :disabled="disableActions" :label="'Bulk delete'" @click="confirmDeleteSelected"/>
+                                <Label v-if="!roles.successful" invert :size="'md'" :type="'danger'" :label="roles.message" />
+                            </div>
+
+                            <DataTable
+                                v-if="roles.successful"
+                                :headers="rolesHeaders"
+                                :size="'lg'"
+                                :rows="roles.data"
+                                :disabled="disableDataTable"
+                                v-model="selectedRoles"
+                                selection>
+                                <template v-slot:cell.actions="{cell,slot}">
+                                    <NuxtLink :to="`/admin/roles/${cell.ulid}`">
+                                        <div class="text-base h-[32px] px-2 gap-0.5 flex items-center justify-center cursor-pointer accent-hover">
+                                            <span class="font-narrow-thin">Permissions</span>
+                                            <Icon class="h-5 w-5" :name="'gg:external'"/>
+                                        </div>
+                                    </NuxtLink>
+                                </template>
+                            </DataTable>
+
+                            <div>
+                                <PageInformation :pagination="roles.meta.pagination" :pending="disableDataTable"/>
+                                <Pagination :size="'lg'" :pagination="roles.meta.pagination" :pending="disableDataTable" v-model="pageComputed"/>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
             </div>

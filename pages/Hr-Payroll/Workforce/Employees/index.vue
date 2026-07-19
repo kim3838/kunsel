@@ -2,78 +2,6 @@
     <div>
         <DefaultWrapper>
             <div class="mx-auto max-w-screen-2xl">
-                <form @submit.prevent="paginate(1, true)" class="space-y-2 p-[20px]">
-
-                    <BreadCrumbs prefix-company :size="`sm`" />
-
-                    <div class="grid gap-2 grid-cols-3 sm:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-8">
-                        <div>
-                            <InputLabel :size="'sm'" value="Search" />
-                            <Input :disabled="disableActions" :size="'md'" ref="searchInput" v-model="filters.search.keyword" class="w-full" placeholder="Search" type="text"/>
-                        </div>
-                        <div>
-                            <InputLabel :size="'sm'" value="Employee Status" />
-                            <MultiSelect :key="employmentStatusOptionsKey" :disabled="disableActions" glint drop-shadow :selection-max-viewable-line="5" :size="'md'" :options="employmentStatusOptions" :icon="'tdesign:component-checkbox'"/>
-                        </div>
-                        <div>
-                            <InputLabel :size="'sm'" value="Employment Type"/>
-                            <MultiSelect :key="employmentTypeOptionsKey" :disabled="disableActions" glint drop-shadow :selection-max-viewable-line="15" :size="'md'" :options="employmentTypeOptions" :icon="'tdesign:component-checkbox'"/>
-                        </div>
-                        <div>
-                            <InputLabel :size="'sm'" value="Employee Group" />
-                            <MultiSelect :key="employeeGroupOptionsKey" glint drop-shadow :selection-max-viewable-line="15" :size="'md'" :options="employeeGroupOptions" :disabled="disableActions" :icon="'tdesign:component-checkbox'"/>
-                        </div>
-                        <div>
-                            <InputLabel :size="'sm'" value="Department" />
-                            <MultiSelect :key="departmentOptionsKey" glint drop-shadow :selection-max-viewable-line="15" :size="'md'" :options="departmentOptions" :disabled="disableActions" :icon="'ic:baseline-all-inbox'"/>
-                        </div>
-                        <div>
-                            <InputLabel :size="'sm'" value="Designation" />
-                            <MultiSelect :key="designationOptionsKey" glint drop-shadow :selection-max-viewable-line="15" :size="'md'" :options="designationOptions" :disabled="disableActions" :icon="'ic:baseline-inbox'"/>
-                        </div>
-                    </div>
-
-                    <div class="flex flex-row flex-wrap gap-2 items-center min-h-8">
-                        <Button class="w-min" ref="submitButton" type="submit" :disabled="disableActions" :size="'md'" :icon="disableActions ? 'eos-icons:loading' : 'mdi:data'" :label="disableActions ? 'Loading' : 'Load'"></Button>
-                        <RadioGroup
-                            class="scaffold-border px-2"
-                            :disabled="disableActions"
-                            :selections="viewMode.selection"
-                            :size="'md'"
-                            :orientation="'horizontal'"
-                            v-model="viewMode.selected" />
-                        <div class="h-8 flex flex-row items-center scaffold-border px-2">
-                            <label class="flex items-center">
-                                <Checkbox
-                                    :disabled="disableActions"
-                                    name="show-contact-columns"
-                                    v-model="showContactInfo"
-                                    :size="'md'"
-                                    :label="'Show contact columns.'" />
-                            </label>
-                        </div>
-                        <div class="h-8 flex flex-row items-center scaffold-border px-2">
-                            <label class="flex items-center">
-                                <Checkbox
-                                    :disabled="disableActions"
-                                    name="show-user-columns"
-                                    v-model="showUserInfo"
-                                    :size="'md'"
-                                    :label="'Show user columns.'" />
-                            </label>
-                        </div>
-                        <div class="h-8 flex flex-row items-center scaffold-border px-2">
-                            <label class="flex items-center">
-                                <Checkbox
-                                    :disabled="disableActions"
-                                    name="show-user-info"
-                                    v-model="showOnlyHasUserAccount"
-                                    :size="'md'"
-                                    :label="'Has user.'" />
-                            </label>
-                        </div>
-                    </div>
-                </form>
 
                 <!-- Employment Profiles -->
                 <DialogModal
@@ -217,222 +145,299 @@
                     </template>
                 </DialogModal>
 
-                <div class="px-[20px] space-y-2">
+                <div class="space-y-2 p-[20px]">
 
-                    <div class="flex flex-row flex-wrap gap-2 items-center min-h-8" :class="[disableActions ? 'pointer-events-none' : '']">
-                        <NuxtLink
-                            v-if="employees.successful"
-                            :to="`/hr-payroll/workforce/employees/create-employee`">
-                            <Button class="w-min" :disabled="disableActions" :size="'sm'" :icon="'mdi:plus'"></Button>
-                        </NuxtLink>
-                        <div v-if="employees.successful" class="scaffold-border px-2 font-[National_Park]">
-                            <span><span class="font-semibold">{{selectedEmployees.length}}</span> Selected</span>
-                        </div>
-                        <Button
-                            v-if="employees.successful"
-                            :variant="'outline'"
-                            :size="'sm'"
-                            :icon="'ph:backspace'"
-                            :disabled="disableActions"
-                            :label="'Clear selection'"
-                            @click="selectedEmployees = []" />
-                        <EmployeeBulkEdit v-if="employees.successful" ref="employeeBulkEdit" v-model:selected-employee-ids="selectedEmployees" @completed="bulkEditCompleted">
+                    <BreadCrumbs prefix-company :size="`sm`" />
+
+                    <div class="lining-shadow rounded-sm tint-background space-y-2 p-[20px]">
+
+                        <form @submit.prevent="paginate(1, true)" class="space-y-2">
+
+                            <div class="grid gap-2 grid-cols-3 sm:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-8">
+                                <div>
+                                    <InputLabel :size="'sm'" value="Search" />
+                                    <Input :disabled="disableActions" :size="'md'" ref="searchInput" v-model="filters.search.keyword" class="w-full" placeholder="Search" type="text"/>
+                                </div>
+                                <div>
+                                    <InputLabel :size="'sm'" value="Employee Status" />
+                                    <MultiSelect :key="employmentStatusOptionsKey" :disabled="disableActions" glint drop-shadow :selection-max-viewable-line="5" :size="'md'" :options="employmentStatusOptions" :icon="'tdesign:component-checkbox'"/>
+                                </div>
+                                <div>
+                                    <InputLabel :size="'sm'" value="Employment Type"/>
+                                    <MultiSelect :key="employmentTypeOptionsKey" :disabled="disableActions" glint drop-shadow :selection-max-viewable-line="15" :size="'md'" :options="employmentTypeOptions" :icon="'tdesign:component-checkbox'"/>
+                                </div>
+                                <div>
+                                    <InputLabel :size="'sm'" value="Employee Group" />
+                                    <MultiSelect :key="employeeGroupOptionsKey" glint drop-shadow :selection-max-viewable-line="15" :size="'md'" :options="employeeGroupOptions" :disabled="disableActions" :icon="'tdesign:component-checkbox'"/>
+                                </div>
+                                <div>
+                                    <InputLabel :size="'sm'" value="Department" />
+                                    <MultiSelect :key="departmentOptionsKey" glint drop-shadow :selection-max-viewable-line="15" :size="'md'" :options="departmentOptions" :disabled="disableActions" :icon="'ic:baseline-all-inbox'"/>
+                                </div>
+                                <div>
+                                    <InputLabel :size="'sm'" value="Designation" />
+                                    <MultiSelect :key="designationOptionsKey" glint drop-shadow :selection-max-viewable-line="15" :size="'md'" :options="designationOptions" :disabled="disableActions" :icon="'ic:baseline-inbox'"/>
+                                </div>
+                            </div>
+
+                            <div class="flex flex-row flex-wrap gap-2 items-center min-h-8">
+                                <Button class="w-min" ref="submitButton" type="submit" :disabled="disableActions" :size="'md'" :icon="disableActions ? 'eos-icons:loading' : 'mdi:data'" :label="disableActions ? 'Loading' : 'Load'"></Button>
+                                <RadioGroup
+                                    class="scaffold-border px-2"
+                                    :disabled="disableActions"
+                                    :selections="viewMode.selection"
+                                    :size="'md'"
+                                    :orientation="'horizontal'"
+                                    v-model="viewMode.selected" />
+                                <div class="h-8 flex flex-row items-center scaffold-border px-2">
+                                    <label class="flex items-center">
+                                        <Checkbox
+                                            :disabled="disableActions"
+                                            name="show-contact-columns"
+                                            v-model="showContactInfo"
+                                            :size="'md'"
+                                            :label="'Show contact columns.'" />
+                                    </label>
+                                </div>
+                                <div class="h-8 flex flex-row items-center scaffold-border px-2">
+                                    <label class="flex items-center">
+                                        <Checkbox
+                                            :disabled="disableActions"
+                                            name="show-user-columns"
+                                            v-model="showUserInfo"
+                                            :size="'md'"
+                                            :label="'Show user columns.'" />
+                                    </label>
+                                </div>
+                                <div class="h-8 flex flex-row items-center scaffold-border px-2">
+                                    <label class="flex items-center">
+                                        <Checkbox
+                                            :disabled="disableActions"
+                                            name="show-user-info"
+                                            v-model="showOnlyHasUserAccount"
+                                            :size="'md'"
+                                            :label="'Has user.'" />
+                                    </label>
+                                </div>
+                            </div>
+                        </form>
+
+                        <div class="flex flex-row flex-wrap gap-2 items-center min-h-8" :class="[disableActions ? 'pointer-events-none' : '']">
+                            <NuxtLink
+                                v-if="employees.successful"
+                                :to="`/hr-payroll/workforce/employees/create-employee`">
+                                <Button class="w-min" :disabled="disableActions" :size="'sm'" :icon="'mdi:plus'"></Button>
+                            </NuxtLink>
+                            <div v-if="employees.successful" class="scaffold-border px-2 font-[National_Park]">
+                                <span><span class="font-semibold">{{selectedEmployees.length}}</span> Selected</span>
+                            </div>
                             <Button
-                                :disabled="disableActions || selectedEmployees.length == 0"
-                                :variant="`outline`"
+                                v-if="employees.successful"
+                                :variant="'outline'"
                                 :size="'sm'"
-                                :icon="'ph:terminal-window'"
-                                :label="`Bulk edit${selectedEmployees.length ? ' ' + selectedEmployees.length : ``}`"
-                                @click="bulkEdit" />
-                        </EmployeeBulkEdit>
-                        <div v-if="!employees.successful" class="flex flex-row flex-wrap gap-2 items-center min-h-8">
-                            <Label invert :size="'md'" :type="'danger'" :label="employees.message" />
+                                :icon="'ph:backspace'"
+                                :disabled="disableActions"
+                                :label="'Clear selection'"
+                                @click="selectedEmployees = []" />
+                            <EmployeeBulkEdit v-if="employees.successful" ref="employeeBulkEdit" v-model:selected-employee-ids="selectedEmployees" @completed="bulkEditCompleted">
+                                <Button
+                                    :disabled="disableActions || selectedEmployees.length == 0"
+                                    :variant="`outline`"
+                                    :size="'sm'"
+                                    :icon="'ph:terminal-window'"
+                                    :label="`Bulk edit${selectedEmployees.length ? ' ' + selectedEmployees.length : ``}`"
+                                    @click="bulkEdit" />
+                            </EmployeeBulkEdit>
+                            <div v-if="!employees.successful" class="flex flex-row flex-wrap gap-2 items-center min-h-8">
+                                <Label invert :size="'md'" :type="'danger'" :label="employees.message" />
+                            </div>
                         </div>
-                    </div>
 
-                    <div v-if="employees.successful && viewMode.selected == DATA_VIEW_MODE.FLEX" class="flex flex-row flex-wrap gap-4">
+                        <div v-if="employees.successful && viewMode.selected == DATA_VIEW_MODE.FLEX" class="flex flex-row flex-wrap gap-4">
 
-                        <div v-for="employee in employees.data" :key="employee.id" class="lining-shadow rounded-sm flex-grow tint-background p-4 space-y-2">
-                            <div class="space-y-2">
-                                <div class="flex justify-between">
-                                    <div>
-                                        <div class="text-sm font-sans">{{ _get(employee, 'number', '--') }}</div>
-                                        <NuxtLink
-                                            :to="`/hr-payroll/workforce/employees/${employee.ulid}`">
-                                            <span class="text-lg font-medium font-header cursor-pointer hover:underline">{{employee.full_name}}</span>
-                                        </NuxtLink>
-                                        <div class="text-sm subtitle-color">
-                                            {{ _get(employee, 'designation.name', '--') }}&nbsp;~&nbsp;{{ _get(employee, 'department.name', '--') }}
+                            <div v-for="employee in employees.data" :key="employee.id" class="lining-shadow rounded-sm flex-grow tint-background p-4 space-y-2">
+                                <div class="space-y-2">
+                                    <div class="flex justify-between">
+                                        <div>
+                                            <div class="text-sm font-sans">{{ _get(employee, 'number', '--') }}</div>
+                                            <NuxtLink
+                                                :to="`/hr-payroll/workforce/employees/${employee.ulid}`">
+                                                <span class="text-lg font-medium font-header cursor-pointer hover:underline">{{employee.full_name}}</span>
+                                            </NuxtLink>
+                                            <div class="text-sm subtitle-color">
+                                                {{ _get(employee, 'designation.name', '--') }}&nbsp;~&nbsp;{{ _get(employee, 'department.name', '--') }}
+                                            </div>
+                                        </div>
+                                        <div class="w-[68px] h-[68px] bg-gray-100">
+
                                         </div>
                                     </div>
-                                    <div class="w-[68px] h-[68px] bg-gray-100">
 
-                                    </div>
-                                </div>
-
-                                <div class="flex flex-row items-center justify-between gap-3">
-                                    <div>
-                                        <InputLabel :size="'xs'" value="Payroll group" />
-                                        <div>{{ _get(employee, 'payroll_group.type.text', '--') }}</div>
-                                    </div>
-                                    <div class="flex items-center">
-                                        <div class="p-1 pr-4 rounded-sm flex items-center gap-2" :style="cosmetic.shadedStyle(employee?._payload?.label_shade?.value as LabelTypeT)">
-                                            <Label :size="'md'" :type="employee?._payload?.label_shade?.value as LabelTypeT" shade :label="employee.current_employment_profile.status.text" />
-                                            <div>{{employee.current_employment_profile?.employment_type?.text}}</div>
+                                    <div class="flex flex-row items-center justify-between gap-3">
+                                        <div>
+                                            <InputLabel :size="'xs'" value="Payroll group" />
+                                            <div>{{ _get(employee, 'payroll_group.type.text', '--') }}</div>
+                                        </div>
+                                        <div class="flex items-center">
+                                            <div class="p-1 pr-4 rounded-sm flex items-center gap-2" :style="cosmetic.shadedStyle(employee?._payload?.label_shade?.value as LabelTypeT)">
+                                                <Label :size="'md'" :type="employee?._payload?.label_shade?.value as LabelTypeT" shade :label="employee.current_employment_profile.status.text" />
+                                                <div>{{employee.current_employment_profile?.employment_type?.text}}</div>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
 
-                                <div class="scaffold-border-top"></div>
+                                    <div class="scaffold-border-top"></div>
 
-                                <div class="grid grid-cols-2 gap-x-6 gap-y-3">
+                                    <div class="grid grid-cols-2 gap-x-6 gap-y-3">
 
-                                    <div>
-                                        <InputLabel :size="'xs'" value="Current shift" />
-                                        <div>{{ _get(employee, 'current_shift.shift.code', '--') }}</div>
-                                    </div>
-                                    <div>
-                                        <InputLabel :size="'xs'" value="Manager" />
-                                        <div class="cursor-pointer hover:underline">{{ _get(employee, 'manager.full_name', '--') }}</div>
-                                    </div>
-                                    <div>
-                                        <InputLabel :size="'xs'" value="Contact" />
-                                        <span v-if="_isEmpty(_compact([employee.contact?.office_email, employee.contact?.personal_email, employee.contact?.office_phone, employee.contact?.personal_phone]))">--</span>
-                                        <div v-else :class="index == 0 ? 'inline-block' : 'block'" v-for="(contact, index) in _compact([employee.contact?.office_email, employee.contact?.personal_email, employee.contact?.office_phone, employee.contact?.personal_phone])">{{contact}}</div>
-                                    </div>
-                                    <div>
-                                        <InputLabel :size="'xs'" value="Gender" />
-                                        <div>{{ _get(employee, 'gender.text', '--') }}</div>
-                                    </div>
-                                    <div>
-                                        <InputLabel :size="'xs'" value="Marital status" />
-                                        <div>{{ _get(employee, 'marital_status.text', '--') }}</div>
-                                    </div>
-                                    <div>
-                                        <InputLabel :size="'xs'" value="Birth date" />
-                                        <div>{{ _get(employee, 'birth_date_readable', '--') }}</div>
+                                        <div>
+                                            <InputLabel :size="'xs'" value="Current shift" />
+                                            <div>{{ _get(employee, 'current_shift.shift.code', '--') }}</div>
+                                        </div>
+                                        <div>
+                                            <InputLabel :size="'xs'" value="Manager" />
+                                            <div class="cursor-pointer hover:underline">{{ _get(employee, 'manager.full_name', '--') }}</div>
+                                        </div>
+                                        <div>
+                                            <InputLabel :size="'xs'" value="Contact" />
+                                            <span v-if="_isEmpty(_compact([employee.contact?.office_email, employee.contact?.personal_email, employee.contact?.office_phone, employee.contact?.personal_phone]))">--</span>
+                                            <div v-else :class="index == 0 ? 'inline-block' : 'block'" v-for="(contact, index) in _compact([employee.contact?.office_email, employee.contact?.personal_email, employee.contact?.office_phone, employee.contact?.personal_phone])">{{contact}}</div>
+                                        </div>
+                                        <div>
+                                            <InputLabel :size="'xs'" value="Gender" />
+                                            <div>{{ _get(employee, 'gender.text', '--') }}</div>
+                                        </div>
+                                        <div>
+                                            <InputLabel :size="'xs'" value="Marital status" />
+                                            <div>{{ _get(employee, 'marital_status.text', '--') }}</div>
+                                        </div>
+                                        <div>
+                                            <InputLabel :size="'xs'" value="Birth date" />
+                                            <div>{{ _get(employee, 'birth_date_readable', '--') }}</div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
+                            <div v-if="noEmployeeRecords">
+                                No Record Found.
+                            </div>
                         </div>
-                        <div v-if="noEmployeeRecords">
-                            No Record Found.
-                        </div>
-                    </div>
 
-                    <DataTable
-                        v-if="employees.successful && viewMode.selected == DATA_VIEW_MODE.LIST"
-                        :sup-headers="employeesSupHeaders"
-                        :headers="employeesHeaders"
-                        :size="'lg'"
-                        :rows="employees.data"
-                        :disabled="disableDataTable"
-                        v-model="selectedEmployees"
-                        selection>
-                        <template v-slot:cell.actions="{cell,slot: cellSlot}">
-                            <div class="flex items-center">
-                                <NavDrop
-                                    class="z-20"
-                                    :disabled="disableActions"
-                                    :parent-icon="'ic:baseline-arrow-right'"
-                                    in-horizontal-scrollable
-                                    divider
-                                    :size="`sm`"
-                                    :drop-shadow-size="`xl`"
-                                    :title="'Menu'"
-                                    :drop-align="'top'"
-                                    :drop-justify="'right'"
-                                    :active-style="`clear-fluid`"
-                                    :drop-active-style="`clear-fluid`"
-                                    :drop-options="[
+                        <DataTable
+                            v-if="employees.successful && viewMode.selected == DATA_VIEW_MODE.LIST"
+                            :sup-headers="employeesSupHeaders"
+                            :headers="employeesHeaders"
+                            :size="'lg'"
+                            :rows="employees.data"
+                            :disabled="disableDataTable"
+                            v-model="selectedEmployees"
+                            selection>
+                            <template v-slot:cell.actions="{cell,slot: cellSlot}">
+                                <div class="flex items-center">
+                                    <NavDrop
+                                        class="z-20"
+                                        :disabled="disableActions"
+                                        :parent-icon="'ic:baseline-arrow-right'"
+                                        in-horizontal-scrollable
+                                        divider
+                                        :size="`sm`"
+                                        :drop-shadow-size="`xl`"
+                                        :title="'Menu'"
+                                        :drop-align="'top'"
+                                        :drop-justify="'right'"
+                                        :active-style="`clear-fluid`"
+                                        :drop-active-style="`clear-fluid`"
+                                        :drop-options="[
                                         {type: 'link', icon: 'gg:row-first', title: 'Details',to: `/hr-payroll/workforce/employees/${cell.ulid}`},
                                         {type: 'action', icon: 'ic:baseline-arrow-right', title: 'Employment Profiles',callback: () => {showEmploymentProfilesModal(cell);}},
                                         {type: 'action', icon: 'ic:baseline-arrow-right', title: 'Identifications',callback: () => {showEmployeeIdentificationsModal(cell);}},
                                         {type: 'action', icon: 'ic:baseline-arrow-right', title: 'Payroll Items',callback: () => {showPayrollComponentsModal(cell);}},
                                     ]">
-                                    <template v-slot="{slot}">
-                                        <div
-                                            class="flex items-center pl-1 py-1 focus:outline-none">
-                                            <span :class="[slot.headerFontClass, 'font-narrow-thin']">Menu</span>
-                                            <Icon :class="[slot.dropDownIconClass]" :name="'ic:baseline-arrow-right'"/>
-                                        </div>
-                                    </template>
-                                </NavDrop>
-                            </div>
-                        </template>
-                        <template v-slot:cell.full_name="{cell,slot}">
-                            <div class="p-[3px]" :title="cell.full_name">{{wordClamp(cell.full_name, 24)}}</div>
-                        </template>
-                        <template v-slot:cell.current_employment_profile="{cell,slot}">
-                            <div class="flex space-x-1 px-[0.3rem] items-center">
-                                <Label :size="slot.labelSize" :type="cell?._payload?.label_shade?.value as LabelTypeT" shade :label="cell.current_employment_profile.status.text" />
-                            </div>
-                        </template>
-                        <template v-slot:cell.current_employment_type="{cell,slot}">
-                            <div class="px-[3px]">{{cell.current_employment_profile?.employment_type?.text}}</div>
-                        </template>
-                        <template v-slot:cell.gender="{cell,slot}">
-                            <div class="p-[3px]">{{cell.gender.text}}</div>
-                        </template>
-                        <template v-slot:cell.marital_status="{cell,slot}">
-                            <div class="p-[3px]">{{cell.marital_status.text}}</div>
-                        </template>
-                        <template v-slot:cell.department="{cell,slot}">
-                            <div class="p-[3px]" :title="cell.department?.name">{{wordClamp(cell.department?.name || '--', 12)}}</div>
-                        </template>
-                        <template v-slot:cell.payroll_group="{cell,slot}">
-                            <div class="p-[3px]">{{cell.payroll_group?.type?.text || '--'}}</div>
-                        </template>
-                        <template v-slot:cell.current_shift="{cell,slot}">
-                            <div class="p-[3px]">{{cell.current_shift?.shift?.code || '--'}}</div>
-                        </template>
-                        <template v-slot:cell.designation="{cell,slot}">
-                            <div class="p-[3px]" :title="cell.designation?.name">{{wordClamp(cell.designation?.name || '--', 12)}}</div>
-                        </template>
-                        <template v-slot:cell.manager="{cell,slot}">
-                            <div class="p-[3px]" :title="cell.manager?.full_name">{{wordClamp(cell.manager?.full_name_attribute || '--', 24)}}</div>
-                        </template>
-                        <template v-slot:cell.office_email="{cell,slot}">
-                            <div class="p-[3px]">
-                                {{cell.contact?.office_email || '--'}}
-                            </div>
-                        </template>
-                        <template v-slot:cell.personal_email="{cell,slot}">
-                            <div class="p-[3px]">
-                                {{cell.contact?.personal_email || '--'}}
-                            </div>
-                        </template>
-                        <template v-slot:cell.office_phone="{cell,slot}">
-                            <div class="p-[3px]">
-                                {{cell.contact?.office_phone || '--'}}
-                            </div>
-                        </template>
-                        <template v-slot:cell.personal_phone="{cell,slot}">
-                            <div class="p-[3px]">
-                                {{cell.contact?.personal_phone || '--'}}
-                            </div>
-                        </template>
-                        <template v-slot:cell.user_name="{cell,slot}">
-                            <div class="p-[3px]">
-                                {{cell.user?.username || '--'}}
-                            </div>
-                        </template>
-                        <template v-slot:cell.user_email="{cell,slot}">
-                            <div class="p-[3px]">
-                                {{cell.user?.email || '--'}}
-                            </div>
-                        </template>
-                        <template v-slot:cell.user_status="{cell,slot}">
-                            <div class="p-[3px]">{{cell.user?.status?.text || '--'}}</div>
-                        </template>
-                        <template v-slot:cell.email_verification="{cell,slot}">
-                            <div class="p-[3px]">{{cell.user?.email_verified_readable || '--'}}</div>
-                        </template>
-                    </DataTable>
+                                        <template v-slot="{slot}">
+                                            <div
+                                                class="flex items-center pl-1 py-1 focus:outline-none">
+                                                <span :class="[slot.headerFontClass, 'font-narrow-thin']">Menu</span>
+                                                <Icon :class="[slot.dropDownIconClass]" :name="'ic:baseline-arrow-right'"/>
+                                            </div>
+                                        </template>
+                                    </NavDrop>
+                                </div>
+                            </template>
+                            <template v-slot:cell.full_name="{cell,slot}">
+                                <div class="p-[3px]" :title="cell.full_name">{{wordClamp(cell.full_name, 24)}}</div>
+                            </template>
+                            <template v-slot:cell.current_employment_profile="{cell,slot}">
+                                <div class="flex space-x-1 px-[0.3rem] items-center">
+                                    <Label :size="slot.labelSize" :type="cell?._payload?.label_shade?.value as LabelTypeT" shade :label="cell.current_employment_profile.status.text" />
+                                </div>
+                            </template>
+                            <template v-slot:cell.current_employment_type="{cell,slot}">
+                                <div class="px-[3px]">{{cell.current_employment_profile?.employment_type?.text}}</div>
+                            </template>
+                            <template v-slot:cell.gender="{cell,slot}">
+                                <div class="p-[3px]">{{cell.gender.text}}</div>
+                            </template>
+                            <template v-slot:cell.marital_status="{cell,slot}">
+                                <div class="p-[3px]">{{cell.marital_status.text}}</div>
+                            </template>
+                            <template v-slot:cell.department="{cell,slot}">
+                                <div class="p-[3px]" :title="cell.department?.name">{{wordClamp(cell.department?.name || '--', 12)}}</div>
+                            </template>
+                            <template v-slot:cell.payroll_group="{cell,slot}">
+                                <div class="p-[3px]">{{cell.payroll_group?.type?.text || '--'}}</div>
+                            </template>
+                            <template v-slot:cell.current_shift="{cell,slot}">
+                                <div class="p-[3px]">{{cell.current_shift?.shift?.code || '--'}}</div>
+                            </template>
+                            <template v-slot:cell.designation="{cell,slot}">
+                                <div class="p-[3px]" :title="cell.designation?.name">{{wordClamp(cell.designation?.name || '--', 12)}}</div>
+                            </template>
+                            <template v-slot:cell.manager="{cell,slot}">
+                                <div class="p-[3px]" :title="cell.manager?.full_name">{{wordClamp(cell.manager?.full_name_attribute || '--', 24)}}</div>
+                            </template>
+                            <template v-slot:cell.office_email="{cell,slot}">
+                                <div class="p-[3px]">
+                                    {{cell.contact?.office_email || '--'}}
+                                </div>
+                            </template>
+                            <template v-slot:cell.personal_email="{cell,slot}">
+                                <div class="p-[3px]">
+                                    {{cell.contact?.personal_email || '--'}}
+                                </div>
+                            </template>
+                            <template v-slot:cell.office_phone="{cell,slot}">
+                                <div class="p-[3px]">
+                                    {{cell.contact?.office_phone || '--'}}
+                                </div>
+                            </template>
+                            <template v-slot:cell.personal_phone="{cell,slot}">
+                                <div class="p-[3px]">
+                                    {{cell.contact?.personal_phone || '--'}}
+                                </div>
+                            </template>
+                            <template v-slot:cell.user_name="{cell,slot}">
+                                <div class="p-[3px]">
+                                    {{cell.user?.username || '--'}}
+                                </div>
+                            </template>
+                            <template v-slot:cell.user_email="{cell,slot}">
+                                <div class="p-[3px]">
+                                    {{cell.user?.email || '--'}}
+                                </div>
+                            </template>
+                            <template v-slot:cell.user_status="{cell,slot}">
+                                <div class="p-[3px]">{{cell.user?.status?.text || '--'}}</div>
+                            </template>
+                            <template v-slot:cell.email_verification="{cell,slot}">
+                                <div class="p-[3px]">{{cell.user?.email_verified_readable || '--'}}</div>
+                            </template>
+                        </DataTable>
 
-                    <div>
-                        <PageInformation :pagination="employees.meta.pagination" :pending="disableDataTable"/>
-                        <Pagination :size="'lg'" :pagination="employees.meta.pagination" :pending="disableDataTable" v-model="pageComputed"/>
+                        <div>
+                            <PageInformation :pagination="employees.meta.pagination" :pending="disableDataTable"/>
+                            <Pagination :size="'lg'" :pagination="employees.meta.pagination" :pending="disableDataTable" v-model="pageComputed"/>
+                        </div>
+
                     </div>
                 </div>
             </div>
@@ -444,7 +449,6 @@
 import type {TableSupHeaderT, TableHeaderT, TableRowT, DataTableT} from "@/public/js/types/data";
 import type {EnumOption, EnumSelection, StringEnumInterface} from "@/public/js/common/type";
 import type {LabelTypeT} from "@/public/js/types/theme";
-import EmployeeIdentifications from "@/components/core/EmployeeIdentifications.vue";
 import {storeToRefs} from "pinia";
 
 useHead({titleTemplate: (titleChunk) => {return `Employees`}});

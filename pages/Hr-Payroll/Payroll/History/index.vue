@@ -2,78 +2,6 @@
     <div>
         <DefaultWrapper>
             <div class="mx-auto max-w-screen-2xl">
-                <form @submit.prevent="paginate(1, true)" class="space-y-2 p-[20px]">
-
-                    <BreadCrumbs prefix-company :size="`sm`" />
-
-                    <div class="grid gap-2 grid-cols-3 sm:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-8">
-                        <div>
-                            <InputLabel :size="'sm'" value="Search" />
-                            <Input :disabled="disableActions" :size="'md'" ref="searchInput" v-model="filters.search.keyword" class="w-full" placeholder="Search Payroll" type="text"/>
-                        </div>
-                        <div>
-                            <InputLabel :size="'sm'" for="month" value="From month" />
-                            <InputWithIcon
-                                glint
-                                :icon="'mdi:calendar-cursor-outline'"
-                                :size="'md'"
-                                :id="'from_month'"
-                                v-model="formStore.filters.fromMonthLabel"
-                                readonly />
-                        </div>
-                        <div>
-                            <InputLabel :size="'sm'" for="month" value="To month" />
-                            <InputWithIcon
-                                glint
-                                :icon="'mdi:calendar-cursor-outline'"
-                                :size="'md'"
-                                :id="'to_month'"
-                                v-model="formStore.filters.toMonthLabel"
-                                readonly />
-                        </div>
-                        <div>
-                            <InputLabel :size="'sm'" value="Pay Frequency" />
-                            <MultiSelect
-                                :key="payFrequencyOptionsKey"
-                                :icon="'tdesign:component-checkbox'"
-                                :disabled="disableActions"
-                                glint
-                                drop-shadow
-                                :selection-max-viewable-line="15"
-                                :size="'md'"
-                                :options="payFrequencyOptions"
-                            />
-                        </div>
-                        <div>
-                            <InputLabel :size="'sm'" value="Frequency Sequence" />
-                            <MultiSelect
-                                :key="payFrequencySequenceOptionsKey"
-                                :icon="'tdesign:component-checkbox'"
-                                :disabled="disableActions"
-                                glint
-                                drop-shadow
-                                :selection-max-viewable-line="15"
-                                :size="'md'"
-                                :options="payFrequencySequenceOptions"
-                            />
-                        </div>
-                    </div>
-
-                    <div class="flex flex-row flex-wrap gap-2 items-center min-h-8">
-                        <Button class="w-min" ref="submitButton" type="submit" :disabled="disableActions" :size="'md'" :icon="disableActions ? 'eos-icons:loading' : 'mdi:data'" :label="disableActions ? 'Loading' : 'Load'"></Button>
-                        <Button v-if="payrolls.successful" class="w-min" type="button" :disabled="disableActions" :size="'md'" :variant="'flat'" :icon="'ri:file-download-line'" @click="exportCsv" :override="{font_family_class: 'font-[Prociono]'}" :label="'Export .csv'"></Button>
-                        <div class="h-8 flex flex-row items-center scaffold-border px-2">
-                            <label class="flex items-center">
-                                <Checkbox
-                                    :disabled="disableActions"
-                                    name="show-statement-dates"
-                                    v-model="showPayrollColumns"
-                                    :size="'md'"
-                                    :label="'Show payroll columns'" />
-                            </label>
-                        </div>
-                    </div>
-                </form>
 
                 <DialogModal
                     :show="showConfirmSubmitForApproval"
@@ -137,126 +65,206 @@
                     </template>
                 </DialogModal>
 
-                <div class="px-[20px] space-y-2">
-                    <div class="flex flex-row flex-wrap gap-2 items-center min-h-8">
-                        <div class="flex flex-row flex-wrap gap-2 items-center min-h-8" :class="[disableActions ? 'pointer-events-none' : '']">
-                            <div v-if="payrolls.successful" class="scaffold-border px-2 font-[National_Park]">
-                                <span><span class="font-semibold">{{selectedPayrolls.length}}</span> Selected</span>
+                <div class="space-y-2 p-[20px]">
+
+                    <BreadCrumbs prefix-company :size="`sm`" />
+
+                    <div class="lining-shadow rounded-sm tint-background space-y-2 p-[20px]">
+
+                        <form @submit.prevent="paginate(1, true)" class="space-y-2">
+
+                            <div class="grid gap-2 grid-cols-3 sm:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-8">
+                                <div>
+                                    <InputLabel :size="'sm'" value="Search" />
+                                    <Input :disabled="disableActions" :size="'md'" ref="searchInput" v-model="filters.search.keyword" class="w-full" placeholder="Search Payroll" type="text"/>
+                                </div>
+                                <div>
+                                    <InputLabel :size="'sm'" for="month" value="From month" />
+                                    <InputWithIcon
+                                        glint
+                                        :icon="'mdi:calendar-cursor-outline'"
+                                        :size="'md'"
+                                        :id="'from_month'"
+                                        v-model="formStore.filters.fromMonthLabel"
+                                        readonly />
+                                </div>
+                                <div>
+                                    <InputLabel :size="'sm'" for="month" value="To month" />
+                                    <InputWithIcon
+                                        glint
+                                        :icon="'mdi:calendar-cursor-outline'"
+                                        :size="'md'"
+                                        :id="'to_month'"
+                                        v-model="formStore.filters.toMonthLabel"
+                                        readonly />
+                                </div>
+                                <div>
+                                    <InputLabel :size="'sm'" value="Pay Frequency" />
+                                    <MultiSelect
+                                        :key="payFrequencyOptionsKey"
+                                        :icon="'tdesign:component-checkbox'"
+                                        :disabled="disableActions"
+                                        glint
+                                        drop-shadow
+                                        :selection-max-viewable-line="15"
+                                        :size="'md'"
+                                        :options="payFrequencyOptions"
+                                    />
+                                </div>
+                                <div>
+                                    <InputLabel :size="'sm'" value="Frequency Sequence" />
+                                    <MultiSelect
+                                        :key="payFrequencySequenceOptionsKey"
+                                        :icon="'tdesign:component-checkbox'"
+                                        :disabled="disableActions"
+                                        glint
+                                        drop-shadow
+                                        :selection-max-viewable-line="15"
+                                        :size="'md'"
+                                        :options="payFrequencySequenceOptions"
+                                    />
+                                </div>
                             </div>
-                            <Button
+
+                            <div class="flex flex-row flex-wrap gap-2 items-center min-h-8">
+                                <Button class="w-min" ref="submitButton" type="submit" :disabled="disableActions" :size="'md'" :icon="disableActions ? 'eos-icons:loading' : 'mdi:data'" :label="disableActions ? 'Loading' : 'Load'"></Button>
+                                <Button v-if="payrolls.successful" class="w-min" type="button" :disabled="disableActions" :size="'md'" :variant="'flat'" :icon="'ri:file-download-line'" @click="exportCsv" :override="{font_family_class: 'font-[Prociono]'}" :label="'Export .csv'"></Button>
+                                <div class="h-8 flex flex-row items-center scaffold-border px-2">
+                                    <label class="flex items-center">
+                                        <Checkbox
+                                            :disabled="disableActions"
+                                            name="show-statement-dates"
+                                            v-model="showPayrollColumns"
+                                            :size="'md'"
+                                            :label="'Show payroll columns'" />
+                                    </label>
+                                </div>
+                            </div>
+                        </form>
+
+                        <div class="space-y-2">
+                            <div class="flex flex-row flex-wrap gap-2 items-center min-h-8">
+                                <div class="flex flex-row flex-wrap gap-2 items-center min-h-8" :class="[disableActions ? 'pointer-events-none' : '']">
+                                    <div v-if="payrolls.successful" class="scaffold-border px-2 font-[National_Park]">
+                                        <span><span class="font-semibold">{{selectedPayrolls.length}}</span> Selected</span>
+                                    </div>
+                                    <Button
+                                        v-if="payrolls.successful"
+                                        :variant="'outline'"
+                                        :size="'sm'"
+                                        :icon="'ph:backspace'"
+                                        :disabled="disableActions"
+                                        :label="'Clear selection'"
+                                        @click="selectedPayrolls = []" />
+                                    <Button
+                                        v-if="payrolls.successful"
+                                        :variant="'outline'"
+                                        :size="'sm'"
+                                        :icon="'ph:trash-simple'"
+                                        :disabled="disableActions"
+                                        :label="'Bulk delete'"
+                                        @click="confirmDeleteSelected()"/>
+                                    <Label v-if="!payrolls.successful" invert :size="'md'" :type="'danger'" :label="payrolls.message" />
+                                </div>
+
+                                <div v-if="!payrollsPending" class="flex flex-row flex-wrap gap-2 items-center min-h-8">
+                                    <Label :size="'md'" :type="'clear'" shade :label="`Employer Contr. Share: ${totalEmployerContributionShare}`" />
+                                    <Label :size="'md'" :type="'clear'" shade :label="`Taxable: ${totalTaxable}`" />
+                                    <Label :size="'md'" :type="'clear'" shade :label="`Tax Withheld: ${totalTaxWithheld}`" />
+                                    <Label :size="'md'" :type="'clear'" shade :label="`Tax Refund: ${totalTaxRefund}`" />
+                                    <Label :size="'md'" :type="'clear'" shade :label="`Net: ${totalNet}`" />
+                                </div>
+                            </div>
+
+
+                            <DataTable
                                 v-if="payrolls.successful"
-                                :variant="'outline'"
-                                :size="'sm'"
-                                :icon="'ph:backspace'"
-                                :disabled="disableActions"
-                                :label="'Clear selection'"
-                                @click="selectedPayrolls = []" />
-                            <Button
-                                v-if="payrolls.successful"
-                                :variant="'outline'"
-                                :size="'sm'"
-                                :icon="'ph:trash-simple'"
-                                :disabled="disableActions"
-                                :label="'Bulk delete'"
-                                @click="confirmDeleteSelected()"/>
-                            <Label v-if="!payrolls.successful" invert :size="'md'" :type="'danger'" :label="payrolls.message" />
-                        </div>
-
-                        <div v-if="!payrollsPending" class="flex flex-row flex-wrap gap-2 items-center min-h-8">
-                            <Label :size="'md'" :type="'clear'" shade :label="`Employer Contr. Share: ${totalEmployerContributionShare}`" />
-                            <Label :size="'md'" :type="'clear'" shade :label="`Taxable: ${totalTaxable}`" />
-                            <Label :size="'md'" :type="'clear'" shade :label="`Tax Withheld: ${totalTaxWithheld}`" />
-                            <Label :size="'md'" :type="'clear'" shade :label="`Tax Refund: ${totalTaxRefund}`" />
-                            <Label :size="'md'" :type="'clear'" shade :label="`Net: ${totalNet}`" />
-                        </div>
-                    </div>
-
-
-                    <DataTable
-                        v-if="payrolls.successful"
-                        :sup-headers="payrollsSupHeaders"
-                        :headers="payrollsHeaders"
-                        :size="'lg'"
-                        :rows="payrolls.data"
-                        :disabled="disableDataTable"
-                        v-model="selectedPayrolls"
-                        selection>
-                        <template v-slot:cell.actions="{cell,slot: cellSlot}">
-                            <div class="flex items-center">
-                                <NavDrop
-                                    class="z-20"
-                                    :disabled="disableActions"
-                                    :parent-icon="'ic:baseline-arrow-right'"
-                                    in-horizontal-scrollable
-                                    divider
-                                    :size="`sm`"
-                                    :drop-shadow-size="`xl`"
-                                    :title="'Menu'"
-                                    :drop-align="'top'"
-                                    :drop-justify="'right'"
-                                    :active-style="`clear-fluid`"
-                                    :drop-active-style="`clear-fluid`"
-                                    :drop-options="[
+                                :sup-headers="payrollsSupHeaders"
+                                :headers="payrollsHeaders"
+                                :size="'lg'"
+                                :rows="payrolls.data"
+                                :disabled="disableDataTable"
+                                v-model="selectedPayrolls"
+                                selection>
+                                <template v-slot:cell.actions="{cell,slot: cellSlot}">
+                                    <div class="flex items-center">
+                                        <NavDrop
+                                            class="z-20"
+                                            :disabled="disableActions"
+                                            :parent-icon="'ic:baseline-arrow-right'"
+                                            in-horizontal-scrollable
+                                            divider
+                                            :size="`sm`"
+                                            :drop-shadow-size="`xl`"
+                                            :title="'Menu'"
+                                            :drop-align="'top'"
+                                            :drop-justify="'right'"
+                                            :active-style="`clear-fluid`"
+                                            :drop-active-style="`clear-fluid`"
+                                            :drop-options="[
                                         {type: 'link', icon: 'ix:open-external', title: 'Salary statements', to: `/hr-payroll/payroll/history/${cell.ulid}`},
                                         ...(cell.status.value == PAYROLL_STATUS.DRAFT ? [
                                             {type: 'action', icon: 'ic:round-send', title: 'Submit for approval',callback: () => {confirmSubmitForApproval(cell)}},
                                         ] : []),
                                     ]">
-                                    <template v-slot="{slot}">
-                                        <div
-                                            class="flex items-center pl-1 py-1 focus:outline-none">
-                                            <span :class="[slot.headerFontClass, 'font-narrow-thin']">Menu</span>
-                                            <Icon :class="[slot.dropDownIconClass]" :name="'ic:baseline-arrow-right'"/>
-                                        </div>
-                                    </template>
-                                </NavDrop>
-                            </div>
-                        </template>
-                        <template v-slot:cell.number="{cell,slot}">
-                            <div class="p-[3px] font-medium hover:underline cursor-pointer" :title="cell.number" @click="copy(cell.number);">{{wordClamp(cell.number, showPayrollColumns ? 20 : 10)}}</div>
-                        </template>
-                        <template v-slot:cell.remarks="{cell,slot}">
-                            <div v-if="cell.remarks" class="flex items-center" :title="'Show remarks'">
-                                <NavDrop
-                                    class="z-10 w-full"
-                                    :disabled="disableActions"
-                                    :parent-icon="'ic:baseline-arrow-right'"
-                                    in-horizontal-scrollable
-                                    divider
-                                    :size="`sm`"
-                                    :drop-shadow-size="`xl`"
-                                    :title="'Remarks'"
-                                    :drop-align="'top'"
-                                    :drop-justify="'right'"
-                                    :drop-options="[
+                                            <template v-slot="{slot}">
+                                                <div
+                                                    class="flex items-center pl-1 py-1 focus:outline-none">
+                                                    <span :class="[slot.headerFontClass, 'font-narrow-thin']">Menu</span>
+                                                    <Icon :class="[slot.dropDownIconClass]" :name="'ic:baseline-arrow-right'"/>
+                                                </div>
+                                            </template>
+                                        </NavDrop>
+                                    </div>
+                                </template>
+                                <template v-slot:cell.number="{cell,slot}">
+                                    <div class="p-[3px] font-medium hover:underline cursor-pointer" :title="cell.number" @click="copy(cell.number);">{{wordClamp(cell.number, showPayrollColumns ? 20 : 10)}}</div>
+                                </template>
+                                <template v-slot:cell.remarks="{cell,slot}">
+                                    <div v-if="cell.remarks" class="flex items-center" :title="'Show remarks'">
+                                        <NavDrop
+                                            class="z-10 w-full"
+                                            :disabled="disableActions"
+                                            :parent-icon="'ic:baseline-arrow-right'"
+                                            in-horizontal-scrollable
+                                            divider
+                                            :size="`sm`"
+                                            :drop-shadow-size="`xl`"
+                                            :title="'Remarks'"
+                                            :drop-align="'top'"
+                                            :drop-justify="'right'"
+                                            :drop-options="[
                                         {type: 'action', icon: 'gg:comment', title: cell.remarks},
                                     ]">
-                                    <template v-slot="{slot}">
-                                        <div
-                                            :class="[slot.headerFontClass]"
-                                            class="h-[32px] flex items-center justify-center focus:outline-none">
-                                            <Icon :class="[slot.dropDownIconClass]" :name="'gg:loadbar-alt'"/>
-                                        </div>
-                                    </template>
-                                </NavDrop>
-                            </div>
-                        </template>
-                        <template v-slot:cell.status="{cell,slot}">
-                            <div class="flex space-x-1 px-[0.3rem] items-center">
-                                <Label :size="slot.labelSize" :type="cell?._payload?.label_shade?.value as LabelTypeT" shade :label="cell.status?.text" />
-                            </div>
-                        </template>
-                        <template v-slot:cell.pay_frequency="{cell,slot}">
-                            <div class="p-[3px]">{{cell.pay_frequency?.text}}</div>
-                        </template>
-                        <template v-slot:cell.frequency_sequence="{cell,slot}">
-                            <div class="p-[3px]">{{cell.frequency_sequence?.text}}</div>
-                        </template>
-                    </DataTable>
+                                            <template v-slot="{slot}">
+                                                <div
+                                                    :class="[slot.headerFontClass]"
+                                                    class="h-[32px] flex items-center justify-center focus:outline-none">
+                                                    <Icon :class="[slot.dropDownIconClass]" :name="'gg:loadbar-alt'"/>
+                                                </div>
+                                            </template>
+                                        </NavDrop>
+                                    </div>
+                                </template>
+                                <template v-slot:cell.status="{cell,slot}">
+                                    <div class="flex space-x-1 px-[0.3rem] items-center">
+                                        <Label :size="slot.labelSize" :type="cell?._payload?.label_shade?.value as LabelTypeT" shade :label="cell.status?.text" />
+                                    </div>
+                                </template>
+                                <template v-slot:cell.pay_frequency="{cell,slot}">
+                                    <div class="p-[3px]">{{cell.pay_frequency?.text}}</div>
+                                </template>
+                                <template v-slot:cell.frequency_sequence="{cell,slot}">
+                                    <div class="p-[3px]">{{cell.frequency_sequence?.text}}</div>
+                                </template>
+                            </DataTable>
 
-                    <div>
-                        <PageInformation :pagination="payrolls.meta.pagination" :pending="disableDataTable"/>
-                        <Pagination :size="'lg'" :pagination="payrolls.meta.pagination" :pending="disableDataTable" v-model="pageComputed"/>
+                            <div>
+                                <PageInformation :pagination="payrolls.meta.pagination" :pending="disableDataTable"/>
+                                <Pagination :size="'lg'" :pagination="payrolls.meta.pagination" :pending="disableDataTable" v-model="pageComputed"/>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
             </div>

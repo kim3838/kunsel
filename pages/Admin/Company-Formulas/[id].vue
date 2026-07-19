@@ -73,43 +73,53 @@
                     </template>
                 </DialogModal>
 
-                <div class="px-[20px]">
-                    <div class="mb-2 text-lg font-header">{{`${companyCode} ${companyName}`}}</div>
+                <div class="space-y-2 p-[20px]">
 
-                    <div class="mb-2 flex flex-row flex-wrap gap-2 items-center min-h-8">
-                        <UnorderedList v-if="disableActions" :icon="'eos-icons:loading'" :size="'md'" :label="'Please wait...'"/>
-                        <Button v-else :variant="'outline'" class="w-min" :disabled="disableActions" :size="'sm'" :icon="'mdi:plus'" :label="'Add Formula(s)'" @click="addFormula"></Button>
-                        <Button :variant="'outline'" class="w-min" ref="submitButton" type="submit" :disabled="disableActions" :size="'sm'" :icon="disableActions ? 'eos-icons:loading' : 'ic:baseline-cloud-sync'" :label="submitLabel" @click="confirmFormSubmit"></Button>
+                    <div class="lining-shadow rounded-sm tint-background">
+
+                        <div class="neutral-border-bottom rounded-t-sm px-4 py-2">
+                            <div class="font-header text-lg">{{`${companyCode} ${companyName}`}}</div>
+                        </div>
+
+                        <div class="space-y-2 p-4">
+
+                            <div class="flex flex-row flex-wrap gap-2 items-center min-h-8">
+                                <UnorderedList v-if="disableActions" :icon="'eos-icons:loading'" :size="'md'" :label="'Please wait...'"/>
+                                <Button v-else :variant="'outline'" class="w-min" :disabled="disableActions" :size="'sm'" :icon="'mdi:plus'" :label="'Add Formula(s)'" @click="addFormula"></Button>
+                                <Button :variant="'outline'" class="w-min" ref="submitButton" type="submit" :disabled="disableActions" :size="'sm'" :icon="disableActions ? 'eos-icons:loading' : 'ic:baseline-cloud-sync'" :label="submitLabel" @click="confirmFormSubmit"></Button>
+                            </div>
+
+                            <DataTable
+                                :headers="formulaSettingsHeaders"
+                                :disabled="disableActions"
+                                :size="'lg'"
+                                :rows="formulaSettingsData"
+                                selection
+                                :stripped="true">
+                                <template v-slot:cell.actions="{cell,slot, headerIndex, rowIndex}">
+                                    <div class="h-[32px] mx-0.5 space-x-0.5 w-full flex items-center">
+                                        <Button type="button" :variant="'outline'" :icon="'mdi:delete-forever'" :size="slot.buttonSize" @click="deleteRow(rowIndex)"/>
+                                        <Button type="button" :variant="'outline'" :icon="'ic:baseline-cloud-sync'" :size="slot.buttonSize" @click="confirmSyncWithDefaultSetting(cell)"></Button>
+                                        <Button type="button" :variant="'outline'" :icon="'ri:formula'" :size="slot.buttonSize" @click="viewFormulaSettings(cell as CompanyFormulaSetting)"></Button>
+                                    </div>
+                                </template>
+                                <template v-slot:cell.formulable_type="{cell,slot}">
+                                    <div class="p-[3px]">{{cell.formulable_type.text}}</div>
+                                </template>
+                                <template v-slot:cell.formulable_component_type="{cell,slot}">
+                                    <div class="flex space-x-1 px-[0.3rem] items-center">
+                                        <Label :size="slot.labelSize" :type="(cell._payload?.label_shade?.value || 'default') as LabelTypeT" shade :label="_get(cell, 'formulable_component_type.text', 'Non-component')" />
+                                    </div>
+                                </template>
+                                <template v-slot:cell.formula_is_aggregation="{cell, slot, scrollReference}">
+                                    <div class="flex justify-center">
+                                        <NonModelCheckBox disabled :size="slot.checkBoxSize" :checked="cell.formula_is_aggregation" ></NonModelCheckBox>
+                                    </div>
+                                </template>
+                            </DataTable>
+
+                        </div>
                     </div>
-
-                    <DataTable
-                        :headers="formulaSettingsHeaders"
-                        :disabled="disableActions"
-                        :size="'lg'"
-                        :rows="formulaSettingsData"
-                        selection
-                        :stripped="true">
-                        <template v-slot:cell.actions="{cell,slot, headerIndex, rowIndex}">
-                            <div class="h-[32px] mx-0.5 space-x-0.5 w-full flex items-center">
-                                <Button type="button" :variant="'outline'" :icon="'mdi:delete-forever'" :size="slot.buttonSize" @click="deleteRow(rowIndex)"/>
-                                <Button type="button" :variant="'outline'" :icon="'ic:baseline-cloud-sync'" :size="slot.buttonSize" @click="confirmSyncWithDefaultSetting(cell)"></Button>
-                                <Button type="button" :variant="'outline'" :icon="'ri:formula'" :size="slot.buttonSize" @click="viewFormulaSettings(cell as CompanyFormulaSetting)"></Button>
-                            </div>
-                        </template>
-                        <template v-slot:cell.formulable_type="{cell,slot}">
-                            <div class="p-[3px]">{{cell.formulable_type.text}}</div>
-                        </template>
-                        <template v-slot:cell.formulable_component_type="{cell,slot}">
-                            <div class="flex space-x-1 px-[0.3rem] items-center">
-                                <Label :size="slot.labelSize" :type="(cell._payload?.label_shade?.value || 'default') as LabelTypeT" shade :label="_get(cell, 'formulable_component_type.text', 'Non-component')" />
-                            </div>
-                        </template>
-                        <template v-slot:cell.formula_is_aggregation="{cell, slot, scrollReference}">
-                            <div class="flex justify-center">
-                                <NonModelCheckBox disabled :size="slot.checkBoxSize" :checked="cell.formula_is_aggregation" ></NonModelCheckBox>
-                            </div>
-                        </template>
-                    </DataTable>
                 </div>
 
             </div>

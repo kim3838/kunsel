@@ -2,132 +2,6 @@
     <div>
         <DefaultWrapper>
             <div class="mx-auto max-w-screen-2xl">
-                <form @submit.prevent="paginate(1, true)" class="space-y-2 p-[20px]">
-                    <BreadCrumbs prefix-company :size="`sm`" />
-
-                    <div class="grid gap-2 grid-cols-3 sm:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-8">
-                        <div>
-                            <InputLabel :size="'sm'" value="Search payroll" />
-                            <Input :disabled="disableActions" :size="'md'" ref="searchInput" v-model="filters.payroll_search.keyword" class="w-full" placeholder="Search payroll" type="text"/>
-                        </div>
-                        <div>
-                            <InputLabel :size="'sm'" value="Search employee" />
-                            <Input :disabled="disableActions" :size="'md'" ref="searchInput" v-model="filters.employee_search.keyword" class="w-full" placeholder="Search employee" type="text"/>
-                        </div>
-                        <div>
-                            <InputLabel :size="'sm'" for="month" value="From month" />
-                            <InputWithIcon
-                                glint
-                                :icon="'mdi:calendar-cursor-outline'"
-                                :size="'md'"
-                                :id="'from_month'"
-                                v-model="formStore.filters.fromMonthLabel"
-                                readonly />
-                        </div>
-                        <div>
-                            <InputLabel :size="'sm'" for="month" value="To month" />
-                            <InputWithIcon
-                                glint
-                                :icon="'mdi:calendar-cursor-outline'"
-                                :size="'md'"
-                                :id="'to_month'"
-                                v-model="formStore.filters.toMonthLabel"
-                                readonly />
-                        </div>
-                        <div>
-                            <InputLabel :size="'sm'" value="Pay Frequency" />
-                            <MultiSelect
-                                :key="payFrequencyOptionsKey"
-                                :icon="'tdesign:component-checkbox'"
-                                :disabled="disableActions"
-                                glint
-                                drop-shadow
-                                :selection-max-viewable-line="15"
-                                :size="'md'"
-                                :options="payFrequencyOptions"
-                            />
-                        </div>
-                        <div>
-                            <InputLabel :size="'sm'" value="Frequency Sequence" />
-                            <MultiSelect
-                                :key="payFrequencySequenceOptionsKey"
-                                :icon="'tdesign:component-checkbox'"
-                                :disabled="disableActions"
-                                glint
-                                drop-shadow
-                                :selection-max-viewable-line="15"
-                                :size="'md'"
-                                :options="payFrequencySequenceOptions"
-                            />
-                        </div>
-                        <div class="col-span-2">
-                            <InputLabel :size="'sm'" value="Filter payrolls" />
-                            <MultiSelectPaginated
-                                :key="payrollSelectionsOptionsKey"
-                                :selection-max-viewable-line="20"
-                                :icon="'tdesign:component-checkbox'"
-                                :disabled="disableActions"
-                                glint
-                                drop-shadow
-                                :size="'md'"
-                                :label="'Filter payroll(s)'"
-                                :payload="payrollSelectionsOptions"
-                            />
-                        </div>
-                        <div>
-                            <InputLabel :size="'sm'" value="Filter employees" />
-                            <MultiSelectPaginated
-                                :key="employeeOptionsKey"
-                                :icon="'tdesign:component-checkbox'"
-                                :disabled="disableActions"
-                                glint
-                                drop-shadow
-                                :size="'md'"
-                                :label="'Filter employee(s)'"
-                                :payload="employeeOptions"
-                            />
-                        </div>
-                        <div>
-                            <InputLabel :size="'sm'" value="Employee Group" />
-                            <MultiSelect :key="employeeGroupOptionsKey" glint drop-shadow :selection-max-viewable-line="15" :size="'md'" :options="employeeGroupOptions" :disabled="disableActions" :icon="'tdesign:component-checkbox'"/>
-                        </div>
-                    </div>
-
-                    <div class="flex flex-row flex-wrap gap-2 items-center min-h-8">
-                        <Button class="w-min" ref="submitButton" type="submit" :disabled="disableActions" :size="'md'" :icon="disableActions ? 'eos-icons:loading' : 'mdi:data'" :label="disableActions ? 'Loading' : 'Load'"></Button>
-                        <Button v-if="salaryStatements.successful" class="w-min" type="button" :disabled="disableActions" :size="'md'" :variant="'flat'" :icon="'ri:file-download-line'" @click="exportCsv" :override="{font_family_class: 'font-[Prociono]'}" :label="'Export .csv'"></Button>
-                        <div class="h-8 flex flex-row items-center scaffold-border px-2">
-                            <label class="flex items-center">
-                                <Checkbox
-                                    :disabled="disableActions"
-                                    name="show-statement-dates"
-                                    v-model="showPayrollColumns"
-                                    :size="'md'"
-                                    :label="'Show payroll columns'" />
-                            </label>
-                        </div>
-                        <div class="h-8 flex flex-row items-center scaffold-border px-2">
-                            <label class="flex items-center">
-                                <Checkbox
-                                    :disabled="disableActions"
-                                    name="show-days-total"
-                                    v-model="showDaysTotalColumns"
-                                    :size="'md'"
-                                    :label="'Show days total columns'" />
-                            </label>
-                        </div>
-                        <div class="h-8 flex flex-row items-center scaffold-border px-2">
-                            <label class="flex items-center">
-                                <Checkbox
-                                    :disabled="disableActions"
-                                    name="show-statement-dates"
-                                    v-model="showSalaryStatementDetails"
-                                    :size="'md'"
-                                    :label="'Show statement sub-details'" />
-                            </label>
-                        </div>
-                    </div>
-                </form>
 
                 <SalaryStatementManualAddDetails
                     v-model:show-manual-add-details="showManualAddDetails"
@@ -140,62 +14,194 @@
                     v-model:salary-statement-ulid="attemptPayslipPreviewSalaryStatementUlid"
                 />
 
-                <div class="px-[20px] space-y-2">
-                    <div class="flex flex-row flex-wrap gap-2 items-center min-h-8">
-                        <div class="flex flex-row flex-wrap gap-2 items-center min-h-8" :class="[disableActions ? 'pointer-events-none' : '']">
-                            <div v-if="salaryStatements.successful" class="scaffold-border px-2 font-[National_Park]">
-                                <span><span class="font-semibold">{{selectedSalaryStatements.length}}</span> Selected</span>
+                <div class="space-y-2 p-[20px]">
+
+                    <BreadCrumbs prefix-company :size="`sm`" />
+
+                    <div class="lining-shadow rounded-sm tint-background space-y-2 p-[20px]">
+
+                        <form @submit.prevent="paginate(1, true)" class="space-y-2">
+
+                            <div class="grid gap-2 grid-cols-3 sm:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-8">
+                                <div>
+                                    <InputLabel :size="'sm'" value="Search payroll" />
+                                    <Input :disabled="disableActions" :size="'md'" ref="searchInput" v-model="filters.payroll_search.keyword" class="w-full" placeholder="Search payroll" type="text"/>
+                                </div>
+                                <div>
+                                    <InputLabel :size="'sm'" value="Search employee" />
+                                    <Input :disabled="disableActions" :size="'md'" ref="searchInput" v-model="filters.employee_search.keyword" class="w-full" placeholder="Search employee" type="text"/>
+                                </div>
+                                <div>
+                                    <InputLabel :size="'sm'" for="month" value="From month" />
+                                    <InputWithIcon
+                                        glint
+                                        :icon="'mdi:calendar-cursor-outline'"
+                                        :size="'md'"
+                                        :id="'from_month'"
+                                        v-model="formStore.filters.fromMonthLabel"
+                                        readonly />
+                                </div>
+                                <div>
+                                    <InputLabel :size="'sm'" for="month" value="To month" />
+                                    <InputWithIcon
+                                        glint
+                                        :icon="'mdi:calendar-cursor-outline'"
+                                        :size="'md'"
+                                        :id="'to_month'"
+                                        v-model="formStore.filters.toMonthLabel"
+                                        readonly />
+                                </div>
+                                <div>
+                                    <InputLabel :size="'sm'" value="Pay Frequency" />
+                                    <MultiSelect
+                                        :key="payFrequencyOptionsKey"
+                                        :icon="'tdesign:component-checkbox'"
+                                        :disabled="disableActions"
+                                        glint
+                                        drop-shadow
+                                        :selection-max-viewable-line="15"
+                                        :size="'md'"
+                                        :options="payFrequencyOptions"
+                                    />
+                                </div>
+                                <div>
+                                    <InputLabel :size="'sm'" value="Frequency Sequence" />
+                                    <MultiSelect
+                                        :key="payFrequencySequenceOptionsKey"
+                                        :icon="'tdesign:component-checkbox'"
+                                        :disabled="disableActions"
+                                        glint
+                                        drop-shadow
+                                        :selection-max-viewable-line="15"
+                                        :size="'md'"
+                                        :options="payFrequencySequenceOptions"
+                                    />
+                                </div>
+                                <div class="col-span-2">
+                                    <InputLabel :size="'sm'" value="Filter payrolls" />
+                                    <MultiSelectPaginated
+                                        :key="payrollSelectionsOptionsKey"
+                                        :selection-max-viewable-line="20"
+                                        :icon="'tdesign:component-checkbox'"
+                                        :disabled="disableActions"
+                                        glint
+                                        drop-shadow
+                                        :size="'md'"
+                                        :label="'Filter payroll(s)'"
+                                        :payload="payrollSelectionsOptions"
+                                    />
+                                </div>
+                                <div>
+                                    <InputLabel :size="'sm'" value="Filter employees" />
+                                    <MultiSelectPaginated
+                                        :key="employeeOptionsKey"
+                                        :icon="'tdesign:component-checkbox'"
+                                        :disabled="disableActions"
+                                        glint
+                                        drop-shadow
+                                        :size="'md'"
+                                        :label="'Filter employee(s)'"
+                                        :payload="employeeOptions"
+                                    />
+                                </div>
+                                <div>
+                                    <InputLabel :size="'sm'" value="Employee Group" />
+                                    <MultiSelect :key="employeeGroupOptionsKey" glint drop-shadow :selection-max-viewable-line="15" :size="'md'" :options="employeeGroupOptions" :disabled="disableActions" :icon="'tdesign:component-checkbox'"/>
+                                </div>
                             </div>
-                            <Button
-                                v-if="salaryStatements.successful"
-                                :variant="'outline'"
-                                :size="'sm'"
-                                :icon="'ph:backspace'"
-                                :disabled="disableActions"
-                                :label="'Clear selection'"
-                                @click="selectedSalaryStatements = []" />
-                            <Button
-                                v-if="salaryStatements.successful"
-                                :variant="'outline'"
-                                :size="'sm'"
-                                :icon="'ph:trash-simple'"
-                                :disabled="disableActions"
-                                :label="'Bulk delete'"
-                                @click="confirmDeleteSelected()"/>
-                            <SalaryStatementBulkEdit v-if="salaryStatements.successful" ref="salaryStatementBulkEdit" v-model:selected-salary-statement-ids="selectedSalaryStatements" @completed="bulkEditCompleted">
-                                <Button
-                                    :disabled="disableActions || selectedSalaryStatements.length == 0"
-                                    :variant="`outline`"
-                                    :size="'sm'"
-                                    :icon="'ph:terminal-window'"
-                                    :label="`Bulk edit${selectedSalaryStatements.length ? ' ' + selectedSalaryStatements.length : ``}`"
-                                    @click="bulkEdit" />
-                            </SalaryStatementBulkEdit>
-                            <Label v-if="!salaryStatements.successful" invert :size="'md'" :type="'danger'" :label="salaryStatements.message" />
-                        </div>
 
-                        <div v-if="!salaryStatementsPending" class="flex flex-row flex-wrap gap-2 items-center min-h-8">
-                            <Label :size="'md'" :type="'clear'" shade :label="`Basic: ${totalBasicGross}`" />
-                            <Label :size="'md'" :type="'clear'" shade :label="`Taxable: ${totalTaxable}`" />
-                            <Label :size="'md'" :type="'clear'" shade :label="`Tax Withheld: ${totalTaxWithheld}`" />
-                            <Label :size="'md'" :type="'clear'" shade :label="`Tax Refund: ${totalTaxRefund}`" />
-                            <Label :size="'md'" :type="'clear'" shade :label="`Net: ${totalNet}`" />
-                        </div>
-                    </div>
+                            <div class="flex flex-row flex-wrap gap-2 items-center min-h-8">
+                                <Button class="w-min" ref="submitButton" type="submit" :disabled="disableActions" :size="'md'" :icon="disableActions ? 'eos-icons:loading' : 'mdi:data'" :label="disableActions ? 'Loading' : 'Load'"></Button>
+                                <Button v-if="salaryStatements.successful" class="w-min" type="button" :disabled="disableActions" :size="'md'" :variant="'flat'" :icon="'ri:file-download-line'" @click="exportCsv" :override="{font_family_class: 'font-[Prociono]'}" :label="'Export .csv'"></Button>
+                                <div class="h-8 flex flex-row items-center scaffold-border px-2">
+                                    <label class="flex items-center">
+                                        <Checkbox
+                                            :disabled="disableActions"
+                                            name="show-statement-dates"
+                                            v-model="showPayrollColumns"
+                                            :size="'md'"
+                                            :label="'Show payroll columns'" />
+                                    </label>
+                                </div>
+                                <div class="h-8 flex flex-row items-center scaffold-border px-2">
+                                    <label class="flex items-center">
+                                        <Checkbox
+                                            :disabled="disableActions"
+                                            name="show-days-total"
+                                            v-model="showDaysTotalColumns"
+                                            :size="'md'"
+                                            :label="'Show days total columns'" />
+                                    </label>
+                                </div>
+                                <div class="h-8 flex flex-row items-center scaffold-border px-2">
+                                    <label class="flex items-center">
+                                        <Checkbox
+                                            :disabled="disableActions"
+                                            name="show-statement-dates"
+                                            v-model="showSalaryStatementDetails"
+                                            :size="'md'"
+                                            :label="'Show statement sub-details'" />
+                                    </label>
+                                </div>
+                            </div>
+                        </form>
 
-                    <DataTable
-                        v-if="salaryStatements.successful"
-                        :key="salaryStatementsKey"
-                        :sup-headers="salaryStatementsSupHeaders"
-                        :headers="salaryStatementsHeaders"
-                        :size="'lg'"
-                        :rows="salaryStatements.data"
-                        v-model="selectedSalaryStatements"
-                        selection
-                        :border-appearance="Boolean(salaryStatementSubRowExtensionSlug)"
-                        :sub-row-slug="salaryStatementSubRowSlug"
-                        :sub-row-extension-slug="salaryStatementSubRowExtensionSlug"
-                        :sub-row-settings="{
+                        <div class="space-y-2">
+                            <div class="flex flex-row flex-wrap gap-2 items-center min-h-8">
+                                <div class="flex flex-row flex-wrap gap-2 items-center min-h-8" :class="[disableActions ? 'pointer-events-none' : '']">
+                                    <div v-if="salaryStatements.successful" class="scaffold-border px-2 font-[National_Park]">
+                                        <span><span class="font-semibold">{{selectedSalaryStatements.length}}</span> Selected</span>
+                                    </div>
+                                    <Button
+                                        v-if="salaryStatements.successful"
+                                        :variant="'outline'"
+                                        :size="'sm'"
+                                        :icon="'ph:backspace'"
+                                        :disabled="disableActions"
+                                        :label="'Clear selection'"
+                                        @click="selectedSalaryStatements = []" />
+                                    <Button
+                                        v-if="salaryStatements.successful"
+                                        :variant="'outline'"
+                                        :size="'sm'"
+                                        :icon="'ph:trash-simple'"
+                                        :disabled="disableActions"
+                                        :label="'Bulk delete'"
+                                        @click="confirmDeleteSelected()"/>
+                                    <SalaryStatementBulkEdit v-if="salaryStatements.successful" ref="salaryStatementBulkEdit" v-model:selected-salary-statement-ids="selectedSalaryStatements" @completed="bulkEditCompleted">
+                                        <Button
+                                            :disabled="disableActions || selectedSalaryStatements.length == 0"
+                                            :variant="`outline`"
+                                            :size="'sm'"
+                                            :icon="'ph:terminal-window'"
+                                            :label="`Bulk edit${selectedSalaryStatements.length ? ' ' + selectedSalaryStatements.length : ``}`"
+                                            @click="bulkEdit" />
+                                    </SalaryStatementBulkEdit>
+                                    <Label v-if="!salaryStatements.successful" invert :size="'md'" :type="'danger'" :label="salaryStatements.message" />
+                                </div>
+
+                                <div v-if="!salaryStatementsPending" class="flex flex-row flex-wrap gap-2 items-center min-h-8">
+                                    <Label :size="'md'" :type="'clear'" shade :label="`Basic: ${totalBasicGross}`" />
+                                    <Label :size="'md'" :type="'clear'" shade :label="`Taxable: ${totalTaxable}`" />
+                                    <Label :size="'md'" :type="'clear'" shade :label="`Tax Withheld: ${totalTaxWithheld}`" />
+                                    <Label :size="'md'" :type="'clear'" shade :label="`Tax Refund: ${totalTaxRefund}`" />
+                                    <Label :size="'md'" :type="'clear'" shade :label="`Net: ${totalNet}`" />
+                                </div>
+                            </div>
+
+                            <DataTable
+                                v-if="salaryStatements.successful"
+                                :key="salaryStatementsKey"
+                                :sup-headers="salaryStatementsSupHeaders"
+                                :headers="salaryStatementsHeaders"
+                                :size="'lg'"
+                                :rows="salaryStatements.data"
+                                v-model="selectedSalaryStatements"
+                                selection
+                                :border-appearance="Boolean(salaryStatementSubRowExtensionSlug)"
+                                :sub-row-slug="salaryStatementSubRowSlug"
+                                :sub-row-extension-slug="salaryStatementSubRowExtensionSlug"
+                                :sub-row-settings="{
                             type: DATATABLE_SUBROW_TYPE.TITLED,
                             containerPaddingTop: 0.75,
                             containerPaddingBottom: 1.75,
@@ -203,98 +209,101 @@
                             rowVerticalLine: true,
                             verticalBorderType: 'dashed'
                         }">
-                        <template v-slot:cell.actions="{cell,slot: cellSlot}">
-                            <div class="flex items-center">
-                                <NavDrop
-                                    class="z-20"
-                                    :disabled="disableActions"
-                                    :parent-icon="'ic:baseline-arrow-right'"
-                                    in-horizontal-scrollable
-                                    divider
-                                    :size="`sm`"
-                                    :drop-shadow-size="`xl`"
-                                    :title="'Menu'"
-                                    :drop-align="'top'"
-                                    :drop-justify="'right'"
-                                    :active-style="`clear-fluid`"
-                                    :drop-active-style="`clear-fluid`"
-                                    :drop-options="[
+                                <template v-slot:cell.actions="{cell,slot: cellSlot}">
+                                    <div class="flex items-center">
+                                        <NavDrop
+                                            class="z-20"
+                                            :disabled="disableActions"
+                                            :parent-icon="'ic:baseline-arrow-right'"
+                                            in-horizontal-scrollable
+                                            divider
+                                            :size="`sm`"
+                                            :drop-shadow-size="`xl`"
+                                            :title="'Menu'"
+                                            :drop-align="'top'"
+                                            :drop-justify="'right'"
+                                            :active-style="`clear-fluid`"
+                                            :drop-active-style="`clear-fluid`"
+                                            :drop-options="[
                                         {type: 'link', icon: 'gg:row-first', title: 'Statement breakdown', to: `/hr-payroll/payroll/salary-statements/${cell.ulid}`},
                                         ...(cell.payroll.status.value == PAYROLL_STATUS.DRAFT ? [
                                             {type: 'action', icon: 'mdi:plus', title: 'Manual add payroll items', callback: () => {manualAddPayrollItems(cell);}}
                                         ] : []),
                                         {type: 'action', icon: 'ic:outline-insert-drive-file', title: 'Preview payslip', callback: () => {attemptPayslipPreview(cell.ulid);}}
                                     ]">
-                                    <template v-slot="{slot}">
-                                        <div
-                                            class="flex items-center pl-1 py-1 focus:outline-none">
-                                            <span :class="[slot.headerFontClass, 'font-narrow-thin']">Menu</span>
-                                            <Icon :class="[slot.dropDownIconClass]" :name="'ic:baseline-arrow-right'"/>
-                                        </div>
-                                    </template>
-                                </NavDrop>
-                            </div>
-                        </template>
-                        <template v-slot:cell.payroll_number="{cell,slot}">
-                            <div class="px-[3px] font-medium" :title="cell.payroll?.number">{{wordClamp(cell.payroll?.number, showPayrollColumns ? 20 : 8)}}</div>
-                        </template>
-                        <template v-slot:cell.payroll_status="{cell,slot}">
-                            <div class="flex space-x-1 px-[0.3rem] items-center">
-                                <Label :size="slot.labelSize" :type="cell?._payload?.label_shade?.value as LabelTypeT" shade :label="cell?.payroll.status?.text" />
-                            </div>
-                        </template>
-                        <template v-slot:cell.year="{cell,slot}">
-                            <div class="p-[3px]">{{cell.payroll.year}}</div>
-                        </template>
-                        <template v-slot:cell.month_readable="{cell,slot}">
-                            <div class="p-[3px]">{{cell.payroll.month_readable}}</div>
-                        </template>
-                        <template v-slot:cell.pay_frequency="{cell,slot}">
-                            <div class="p-[3px]">{{cell.payroll.pay_frequency?.text}}</div>
-                        </template>
-                        <template v-slot:cell.frequency_sequence="{cell,slot}">
-                            <div class="p-[3px]">{{cell.payroll.frequency_sequence?.text}}</div>
-                        </template>
-                        <template v-slot:cell.date_range_readable="{cell,slot}">
-                            <div class="p-[3px]">{{cell.payroll.date_range_readable}}</div>
-                        </template>
-                        <template v-slot:cell.employee_full_name="{cell,slot}">
-                            <div class="px-[3px]" :title="cell.employee_full_name">{{wordClamp(cell.employee_full_name, 9)}}</div>
-                        </template>
-                        <template v-slot:cell.type="{cell,slot}">
-                            <div class="flex space-x-1 px-[0.3rem] items-center">
-                                <Label :size="slot.labelSize" :type="'clear'" shade :label="cell.type?.text" />
-                            </div>
-                        </template>
-                        <template v-slot:cell.is_paid="{cell,slot}">
-                            <div class="p-[3px]">{{cell.is_paid ? 'Yes' : 'No'}}</div>
-                        </template>
-                        <template v-slot:sub_row_slot="{rowIndex, cell, slot}">
-                            <div class="inline-flex items-center scaffold-border pr-2">
-                                <Icon name="ic:outline-keyboard-arrow-right" :class="[slot.iconSizeClass, slot.iconHolderClass]" /><div :class="[slot.titleSizeClass]">Statement dates</div>
-                            </div>
-                            <div :style="{'max-height': `270px`, 'overflow-y': 'scroll'}">
-                                <SalaryStatementAttendanceSubRow
-                                    :rows="cell[slot.slug]"
-                                ></SalaryStatementAttendanceSubRow>
-                            </div>
-                        </template>
-                        <template v-slot:sub_row_extension_slot="{rowIndex, cell, slot}">
-                            <div class="inline-flex items-center scaffold-border pr-2">
-                                <Icon name="ic:outline-keyboard-arrow-right" :class="[slot.iconSizeClass, slot.iconHolderClass]" /><div :class="[slot.titleSizeClass]">Statement details</div>
-                            </div>
-                            <div :style="{'max-height': slot.extensionSlugContentMaxHeight, 'overflow-y': 'scroll'}">
-                                <SalaryStatementDetailSubRow
-                                    v-if="cell[slot.slug].length"
-                                    :rows="cell[slot.extensionSlug]"
-                                ></SalaryStatementDetailSubRow>
-                            </div>
-                        </template>
-                    </DataTable>
+                                            <template v-slot="{slot}">
+                                                <div
+                                                    class="flex items-center pl-1 py-1 focus:outline-none">
+                                                    <span :class="[slot.headerFontClass, 'font-narrow-thin']">Menu</span>
+                                                    <Icon :class="[slot.dropDownIconClass]" :name="'ic:baseline-arrow-right'"/>
+                                                </div>
+                                            </template>
+                                        </NavDrop>
+                                    </div>
+                                </template>
+                                <template v-slot:cell.payroll_number="{cell,slot}">
+                                    <div class="px-[3px] font-medium" :title="cell.payroll?.number">{{wordClamp(cell.payroll?.number, showPayrollColumns ? 20 : 8)}}</div>
+                                </template>
+                                <template v-slot:cell.payroll_status="{cell,slot}">
+                                    <div class="flex space-x-1 px-[0.3rem] items-center">
+                                        <Label :size="slot.labelSize" :type="cell?._payload?.label_shade?.value as LabelTypeT" shade :label="cell?.payroll.status?.text" />
+                                    </div>
+                                </template>
+                                <template v-slot:cell.year="{cell,slot}">
+                                    <div class="p-[3px]">{{cell.payroll.year}}</div>
+                                </template>
+                                <template v-slot:cell.month_readable="{cell,slot}">
+                                    <div class="p-[3px]">{{cell.payroll.month_readable}}</div>
+                                </template>
+                                <template v-slot:cell.pay_frequency="{cell,slot}">
+                                    <div class="p-[3px]">{{cell.payroll.pay_frequency?.text}}</div>
+                                </template>
+                                <template v-slot:cell.frequency_sequence="{cell,slot}">
+                                    <div class="p-[3px]">{{cell.payroll.frequency_sequence?.text}}</div>
+                                </template>
+                                <template v-slot:cell.date_range_readable="{cell,slot}">
+                                    <div class="p-[3px]">{{cell.payroll.date_range_readable}}</div>
+                                </template>
+                                <template v-slot:cell.employee_full_name="{cell,slot}">
+                                    <div class="px-[3px]" :title="cell.employee_full_name">{{wordClamp(cell.employee_full_name, 9)}}</div>
+                                </template>
+                                <template v-slot:cell.type="{cell,slot}">
+                                    <div class="flex space-x-1 px-[0.3rem] items-center">
+                                        <Label :size="slot.labelSize" :type="'clear'" shade :label="cell.type?.text" />
+                                    </div>
+                                </template>
+                                <template v-slot:cell.is_paid="{cell,slot}">
+                                    <div class="p-[3px]">{{cell.is_paid ? 'Yes' : 'No'}}</div>
+                                </template>
+                                <template v-slot:sub_row_slot="{rowIndex, cell, slot}">
+                                    <div class="inline-flex items-center scaffold-border pr-2">
+                                        <Icon name="ic:outline-keyboard-arrow-right" :class="[slot.iconSizeClass, slot.iconHolderClass]" /><div :class="[slot.titleSizeClass]">Statement dates</div>
+                                    </div>
+                                    <div :style="{'max-height': `270px`, 'overflow-y': 'scroll'}">
+                                        <SalaryStatementAttendanceSubRow
+                                            :rows="cell[slot.slug]"
+                                        ></SalaryStatementAttendanceSubRow>
+                                    </div>
+                                </template>
+                                <template v-slot:sub_row_extension_slot="{rowIndex, cell, slot}">
+                                    <div class="inline-flex items-center scaffold-border pr-2">
+                                        <Icon name="ic:outline-keyboard-arrow-right" :class="[slot.iconSizeClass, slot.iconHolderClass]" /><div :class="[slot.titleSizeClass]">Statement details</div>
+                                    </div>
+                                    <div :style="{'max-height': slot.extensionSlugContentMaxHeight, 'overflow-y': 'scroll'}">
+                                        <SalaryStatementDetailSubRow
+                                            v-if="cell[slot.slug].length"
+                                            :rows="cell[slot.extensionSlug]"
+                                        ></SalaryStatementDetailSubRow>
+                                    </div>
+                                </template>
+                            </DataTable>
 
-                    <div>
-                        <PageInformation :pagination="salaryStatements.meta.pagination" :pending="disableDataTable"/>
-                        <Pagination :size="'lg'" :pagination="salaryStatements.meta.pagination" :pending="disableDataTable" v-model="pageComputed"/>
+                            <div>
+                                <PageInformation :pagination="salaryStatements.meta.pagination" :pending="disableDataTable"/>
+                                <Pagination :size="'lg'" :pagination="salaryStatements.meta.pagination" :pending="disableDataTable" v-model="pageComputed"/>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
             </div>

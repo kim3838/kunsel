@@ -2,46 +2,6 @@
     <div>
         <AdminWrapper>
             <div class="mx-auto max-w-screen-xl">
-                <form @submit.prevent="paginate(1, true)" class="space-y-2 p-[20px]">
-                    <div class="grid gap-2 grid-cols-3 sm:grid-cols-4 lg:grid-cols-5">
-                        <div class="col-span-full md:col-span-2">
-                            <InputLabel :size="'sm'" value="Account" />
-                            <MultiSelect :disabled="disableActions" glint drop-shadow :selection-max-viewable-line="5" :size="'md'" :options="accountOptions" :icon="'tdesign:component-checkbox'"/>
-                        </div>
-                        <div>
-                            <InputLabel :size="'sm'" value="Company" />
-                            <MultiSelect :key="companyOptionsKey" :disabled="disableActions" glint drop-shadow :max-viewable-summary-count="1" :selection-max-viewable-line="5" :size="'md'" :options="companyOptions" :icon="'tdesign:component-checkbox'"/>
-                        </div>
-                    </div>
-                    <div class="grid gap-2 grid-cols-3 sm:grid-cols-4 lg:grid-cols-5">
-                        <div>
-                            <InputLabel :size="'sm'" value="User Status" />
-                            <MultiSelect :disabled="disableActions" glint drop-shadow :selection-max-viewable-line="5" :size="'md'" :options="userStatusOptions" :icon="'tdesign:component-checkbox'"/>
-                        </div>
-                        <div>
-                            <InputLabel :size="'sm'" value="User Search" />
-                            <Input :disabled="disableActions" :size="'md'" ref="searchInput" v-model="filters.userSearch.keyword" class="w-full" placeholder="Search" type="text"/>
-                        </div>
-                        <div>
-                            <InputLabel :size="'sm'" value="Employee Search" />
-                            <Input :disabled="disableActions" :size="'md'" ref="searchInput" v-model="filters.employeeSearch.keyword" class="w-full" placeholder="Search" type="text"/>
-                        </div>
-                    </div>
-
-                    <div class="flex flex-row flex-wrap gap-2 items-center min-h-8">
-                        <Button class="w-min" ref="submitButton" type="submit" :disabled="disableActions" :size="'md'" :icon="disableActions ? 'eos-icons:loading' : 'mdi:data'" :label="disableActions ? 'Loading' : 'Load'"></Button>
-                        <div class="h-8 flex flex-row items-center scaffold-border px-2">
-                            <label class="flex items-center">
-                                <Checkbox
-                                    :disabled="disableActions"
-                                    name="remember"
-                                    v-model="showAssociatedCompanies"
-                                    :size="'md'"
-                                    :label="'Show associated companies'" />
-                            </label>
-                        </div>
-                    </div>
-                </form>
 
                 <!-- Account Pending Mask -->
                 <DialogModal
@@ -64,27 +24,72 @@
                     </template>
                 </DialogModal>
 
-                <div class="px-[20px] space-y-2">
-                    <div class="flex flex-row flex-wrap gap-2 items-center min-h-8" :class="[disableActions ? 'pointer-events-none' : '']">
-                        <NuxtLink
-                            v-if="users.successful"
-                            :to="`/admin/users/create-user`">
-                            <Button class="w-min" :disabled="disableActions" :size="'sm'" :icon="'mdi:plus'"></Button>
-                        </NuxtLink>
-                        <Label v-if="!users.successful" invert :size="'md'" :type="'danger'" :label="users.message" />
-                    </div>
+                <div class="space-y-2 p-[20px]">
 
-                    <DataTable
-                        v-if="users.successful"
-                        :key="usersKey"
-                        :headers="usersHeaders"
-                        :size="'lg'"
-                        :rows="users.data"
-                        :disabled="disableDataTable"
-                        v-model="selectedUsers"
-                        :border-appearance="Boolean($associationStore.associatedUserSubRowSlug)"
-                        :sub-row-slug="$associationStore.associatedUserSubRowSlug"
-                        :sub-row-settings="{
+                    <div class="lining-shadow rounded-sm tint-background space-y-2 p-[20px]">
+
+                        <form @submit.prevent="paginate(1, true)" class="space-y-2">
+                            <div class="grid gap-2 grid-cols-3 sm:grid-cols-4 lg:grid-cols-5">
+                                <div class="col-span-full md:col-span-2">
+                                    <InputLabel :size="'sm'" value="Account" />
+                                    <MultiSelect :disabled="disableActions" glint drop-shadow :selection-max-viewable-line="5" :size="'md'" :options="accountOptions" :icon="'tdesign:component-checkbox'"/>
+                                </div>
+                                <div>
+                                    <InputLabel :size="'sm'" value="Company" />
+                                    <MultiSelect :key="companyOptionsKey" :disabled="disableActions" glint drop-shadow :max-viewable-summary-count="1" :selection-max-viewable-line="5" :size="'md'" :options="companyOptions" :icon="'tdesign:component-checkbox'"/>
+                                </div>
+                            </div>
+                            <div class="grid gap-2 grid-cols-3 sm:grid-cols-4 lg:grid-cols-5">
+                                <div>
+                                    <InputLabel :size="'sm'" value="User Status" />
+                                    <MultiSelect :disabled="disableActions" glint drop-shadow :selection-max-viewable-line="5" :size="'md'" :options="userStatusOptions" :icon="'tdesign:component-checkbox'"/>
+                                </div>
+                                <div>
+                                    <InputLabel :size="'sm'" value="User Search" />
+                                    <Input :disabled="disableActions" :size="'md'" ref="searchInput" v-model="filters.userSearch.keyword" class="w-full" placeholder="Search" type="text"/>
+                                </div>
+                                <div>
+                                    <InputLabel :size="'sm'" value="Employee Search" />
+                                    <Input :disabled="disableActions" :size="'md'" ref="searchInput" v-model="filters.employeeSearch.keyword" class="w-full" placeholder="Search" type="text"/>
+                                </div>
+                            </div>
+
+                            <div class="flex flex-row flex-wrap gap-2 items-center min-h-8">
+                                <Button class="w-min" ref="submitButton" type="submit" :disabled="disableActions" :size="'md'" :icon="disableActions ? 'eos-icons:loading' : 'mdi:data'" :label="disableActions ? 'Loading' : 'Load'"></Button>
+                                <div class="h-8 flex flex-row items-center scaffold-border px-2">
+                                    <label class="flex items-center">
+                                        <Checkbox
+                                            :disabled="disableActions"
+                                            name="remember"
+                                            v-model="showAssociatedCompanies"
+                                            :size="'md'"
+                                            :label="'Show associated companies'" />
+                                    </label>
+                                </div>
+                            </div>
+                        </form>
+
+                        <div class="space-y-2">
+                            <div class="flex flex-row flex-wrap gap-2 items-center min-h-8" :class="[disableActions ? 'pointer-events-none' : '']">
+                                <NuxtLink
+                                    v-if="users.successful"
+                                    :to="`/admin/users/create-user`">
+                                    <Button class="w-min" :disabled="disableActions" :size="'sm'" :icon="'mdi:plus'"></Button>
+                                </NuxtLink>
+                                <Label v-if="!users.successful" invert :size="'md'" :type="'danger'" :label="users.message" />
+                            </div>
+
+                            <DataTable
+                                v-if="users.successful"
+                                :key="usersKey"
+                                :headers="usersHeaders"
+                                :size="'lg'"
+                                :rows="users.data"
+                                :disabled="disableDataTable"
+                                v-model="selectedUsers"
+                                :border-appearance="Boolean($associationStore.associatedUserSubRowSlug)"
+                                :sub-row-slug="$associationStore.associatedUserSubRowSlug"
+                                :sub-row-settings="{
                             type: DATATABLE_SUBROW_TYPE.TITLED,
                             containerPaddingTop: 0.75,
                             containerPaddingBottom: 1.75,
@@ -93,54 +98,57 @@
                             verticalBorderType: 'dashed',
                             horizontalBorderType: 'dashed',
                         }"
-                        :stripped="true"
-                        selection>
-                        <template v-slot:cell.actions="{cell,slot}">
-                            <NuxtLink :to="`/admin/users/${cell.ulid}`">
-                                <div class="text-base h-[32px] px-2 gap-0.5 flex items-center justify-center cursor-pointer accent-hover">
-                                    <span class="font-narrow-thin">Edit</span>
-                                    <Icon class="h-5 w-5" :name="'gg:external'"/>
-                                </div>
-                            </NuxtLink>
-                        </template>
-                        <template v-slot:cell.status="{cell,slot}">
-                            <div class="p-[3px]">{{cell.status?.text}}</div>
-                        </template>
-                        <template v-slot:cell.email_verification="{cell,slot}">
-                            <div class="flex space-x-1 px-[0.3rem] items-center">
-                                <Label :size="slot.labelSize" :type="cell?._payload?.label_shade?.value as LabelTypeT" shade :label="cell.email_verified ? `Verified` : `Not verified`" />
-                            </div>
-                        </template>
-                        <template v-slot:cell.associated_companies_summary="{cell,slot}">
-                            <div class="p-[3px] flex items-center gap-1">
-                                <div>{{cell.associated_companies_summary.value}}</div>
-                                <div v-if="cell.associated_companies_summary.extender" class="text-xs font-sans">{{cell.associated_companies_summary.extender}}</div>
-                            </div>
-                        </template>
-                        <template v-slot:cell.account_roles_summary="{cell,slot}">
-                            <div class="p-[3px] flex items-center gap-1">
-                                <div>{{cell.account_roles_summary?.value}}</div>
-                                <div v-if="cell.account_roles_summary?.extender" class="text-xs font-sans">{{cell.account_roles_summary?.extender}}</div>
-                            </div>
-                        </template>
-                        <template v-slot:cell.employable="{cell,slot}">
-                            <div class="p-[3px]">{{cell.employable ? 'Yes' : 'No'}}</div>
-                        </template>
-                        <template v-slot:sub_row_slot="{rowIndex, cell, slot}">
-                            <div class="inline-flex items-center scaffold-border pr-2">
-                                <Icon name="mdi:info-variant" :class="[slot.iconSizeClass]" /><div :class="[slot.titleSizeClass]">Associated Companies</div>
-                            </div>
+                                :stripped="true"
+                                selection>
+                                <template v-slot:cell.actions="{cell,slot}">
+                                    <NuxtLink :to="`/admin/users/${cell.ulid}`">
+                                        <div class="text-base h-[32px] px-2 gap-0.5 flex items-center justify-center cursor-pointer accent-hover">
+                                            <span class="font-narrow-thin">Edit</span>
+                                            <Icon class="h-5 w-5" :name="'gg:external'"/>
+                                        </div>
+                                    </NuxtLink>
+                                </template>
+                                <template v-slot:cell.status="{cell,slot}">
+                                    <div class="p-[3px]">{{cell.status?.text}}</div>
+                                </template>
+                                <template v-slot:cell.email_verification="{cell,slot}">
+                                    <div class="flex space-x-1 px-[0.3rem] items-center">
+                                        <Label :size="slot.labelSize" :type="cell?._payload?.label_shade?.value as LabelTypeT" shade :label="cell.email_verified ? `Verified` : `Not verified`" />
+                                    </div>
+                                </template>
+                                <template v-slot:cell.associated_companies_summary="{cell,slot}">
+                                    <div class="p-[3px] flex items-center gap-1">
+                                        <div>{{cell.associated_companies_summary.value}}</div>
+                                        <div v-if="cell.associated_companies_summary.extender" class="text-xs font-sans">{{cell.associated_companies_summary.extender}}</div>
+                                    </div>
+                                </template>
+                                <template v-slot:cell.account_roles_summary="{cell,slot}">
+                                    <div class="p-[3px] flex items-center gap-1">
+                                        <div>{{cell.account_roles_summary?.value}}</div>
+                                        <div v-if="cell.account_roles_summary?.extender" class="text-xs font-sans">{{cell.account_roles_summary?.extender}}</div>
+                                    </div>
+                                </template>
+                                <template v-slot:cell.employable="{cell,slot}">
+                                    <div class="p-[3px]">{{cell.employable ? 'Yes' : 'No'}}</div>
+                                </template>
+                                <template v-slot:sub_row_slot="{rowIndex, cell, slot}">
+                                    <div class="inline-flex items-center scaffold-border pr-2">
+                                        <Icon name="mdi:info-variant" :class="[slot.iconSizeClass]" /><div :class="[slot.titleSizeClass]">Associated Companies</div>
+                                    </div>
 
-                            <AssociatedUserSubRow
-                                :rows="cell[slot.slug]"
-                                :disabled="disableDataTable"
-                            ></AssociatedUserSubRow>
-                        </template>
-                    </DataTable>
+                                    <AssociatedUserSubRow
+                                        :rows="cell[slot.slug]"
+                                        :disabled="disableDataTable"
+                                    ></AssociatedUserSubRow>
+                                </template>
+                            </DataTable>
 
-                    <div>
-                        <PageInformation :pagination="users.meta.pagination" :pending="disableDataTable"/>
-                        <Pagination :size="'lg'" :pagination="users.meta.pagination" :pending="disableDataTable" v-model="pageComputed"/>
+                            <div>
+                                <PageInformation :pagination="users.meta.pagination" :pending="disableDataTable"/>
+                                <Pagination :size="'lg'" :pagination="users.meta.pagination" :pending="disableDataTable" v-model="pageComputed"/>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
             </div>

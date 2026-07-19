@@ -2,34 +2,6 @@
     <div>
         <DefaultWrapper>
             <div class="mx-auto max-w-screen-lg">
-                <form @submit.prevent="paginate(1, true)" class="space-y-2 p-[20px]">
-
-                    <BreadCrumbs prefix-company :size="`sm`" />
-
-                    <div class="grid gap-2 grid-cols-3 sm:grid-cols-4 lg:grid-cols-5">
-                        <div>
-                            <InputLabel :size="'sm'" value="Search" />
-                            <Input :disabled="disableActions" :size="'md'" ref="searchInput" v-model="filters.search.keyword" class="w-full" placeholder="Search Employee" type="text"/>
-                        </div>
-                        <div>
-                            <InputLabel :size="'sm'" value="Employee Group" />
-                            <MultiSelect :key="employeeGroupOptionsKey" glint drop-shadow :selection-max-viewable-line="15" :size="'md'" :options="employeeGroupOptions" :disabled="disableActions" :icon="'tdesign:component-checkbox'"/>
-                        </div>
-                        <div>
-                            <InputLabel :size="'sm'" value="Department" />
-                            <MultiSelect :key="departmentOptionsKey" glint drop-shadow :selection-max-viewable-line="15" :size="'md'" :options="departmentOptions" :disabled="disableActions" :icon="'ic:baseline-all-inbox'"/>
-                        </div>
-                        <div>
-                            <InputLabel :size="'sm'" value="Designation" />
-                            <MultiSelect :key="designationOptionsKey" glint drop-shadow :selection-max-viewable-line="15" :size="'md'" :options="designationOptions" :disabled="disableActions" :icon="'ic:baseline-inbox'"/>
-                        </div>
-
-                        <div class="flex flex-col">
-                            <div class="flex-none h-[1.25rem]"></div>
-                            <Button class="w-min" ref="submitButton" type="submit" :disabled="disableActions" :size="'md'" :icon="disableActions ? 'eos-icons:loading' : 'mdi:data'" :label="disableActions ? 'Loading' : 'Load'"></Button>
-                        </div>
-                    </div>
-                </form>
 
                 <DialogModal
                     :show="creatingOrEditing"
@@ -169,51 +141,86 @@
                     </template>
                 </DialogModal>
 
-                <div class="px-[20px] space-y-2">
+                <div class="space-y-2 p-[20px]">
 
-                    <div class="flex flex-row flex-wrap gap-2 items-center min-h-8" :class="[disableActions ? 'pointer-events-none' : '']">
-                        <Button v-if="externalTaxHistories.successful" @click="put(null)" class="w-min" :disabled="disableActions" :size="'sm'" :icon="'mdi:plus'"></Button>
-                        <div v-if="externalTaxHistories.successful" class="scaffold-border px-2 font-[National_Park]">
-                            <span><span class="font-semibold">{{selectedExternalTaxHistories.length}}</span> Selected</span>
-                        </div>
-                        <Button
-                            v-if="externalTaxHistories.successful"
-                            :variant="'outline'"
-                            :size="'sm'"
-                            :icon="'ph:backspace'"
-                            :disabled="disableActions"
-                            :label="'Clear selection'"
-                            @click="selectedExternalTaxHistories = []" />
-                        <Button v-if="externalTaxHistories.successful" :variant="'outline'" :size="'sm'" :icon="'ph:trash-simple'" :disabled="disableActions" :label="'Bulk delete'" @click="confirmDeleteSelected()" />
-                        <Label v-if="!externalTaxHistories.successful" invert :size="'md'" :type="'danger'" :label="externalTaxHistories.message" />
-                    </div>
+                    <BreadCrumbs prefix-company :size="`sm`" />
 
-                    <DataTable
-                        v-if="externalTaxHistories.successful"
-                        :sup-headers="externalTaxHistoriesSupHeaders"
-                        :headers="externalTaxHistoriesHeaders"
-                        :size="'lg'"
-                        :rows="externalTaxHistories.data"
-                        :disabled="disableDataTable"
-                        v-model="selectedExternalTaxHistories"
-                        selection>
-                        <template v-slot:cell.actions="{cell,slot: cellSlot}">
-                            <div class="text-base h-[32px] px-2 gap-0.5 flex items-center justify-center cursor-pointer accent-hover" @click="put(cell)">
-                                <span class="font-narrow-thin">Edit</span>
-                                <Icon class="h-5 w-5" :name="'gg:external'"/>
+                    <div class="lining-shadow rounded-sm tint-background space-y-2 p-[20px]">
+
+                        <form @submit.prevent="paginate(1, true)" class="space-y-2">
+
+                            <div class="grid gap-2 grid-cols-3 sm:grid-cols-4 lg:grid-cols-5">
+                                <div>
+                                    <InputLabel :size="'sm'" value="Search" />
+                                    <Input :disabled="disableActions" :size="'md'" ref="searchInput" v-model="filters.search.keyword" class="w-full" placeholder="Search Employee" type="text"/>
+                                </div>
+                                <div>
+                                    <InputLabel :size="'sm'" value="Employee Group" />
+                                    <MultiSelect :key="employeeGroupOptionsKey" glint drop-shadow :selection-max-viewable-line="15" :size="'md'" :options="employeeGroupOptions" :disabled="disableActions" :icon="'tdesign:component-checkbox'"/>
+                                </div>
+                                <div>
+                                    <InputLabel :size="'sm'" value="Department" />
+                                    <MultiSelect :key="departmentOptionsKey" glint drop-shadow :selection-max-viewable-line="15" :size="'md'" :options="departmentOptions" :disabled="disableActions" :icon="'ic:baseline-all-inbox'"/>
+                                </div>
+                                <div>
+                                    <InputLabel :size="'sm'" value="Designation" />
+                                    <MultiSelect :key="designationOptionsKey" glint drop-shadow :selection-max-viewable-line="15" :size="'md'" :options="designationOptions" :disabled="disableActions" :icon="'ic:baseline-inbox'"/>
+                                </div>
+
+                                <div class="flex flex-col">
+                                    <div class="flex-none h-[1.25rem]"></div>
+                                    <Button class="w-min" ref="submitButton" type="submit" :disabled="disableActions" :size="'md'" :icon="disableActions ? 'eos-icons:loading' : 'mdi:data'" :label="disableActions ? 'Loading' : 'Load'"></Button>
+                                </div>
                             </div>
-                        </template>
-                        <template v-slot:cell.employee_number="{cell,slot}">
-                            <div class="p-[3px]">{{cell.employee.number}}</div>
-                        </template>
-                        <template v-slot:cell.employee_full_name="{cell,slot}">
-                            <div class="p-[3px]">{{cell.employee.full_name}}</div>
-                        </template>
-                    </DataTable>
+                        </form>
 
-                    <div>
-                        <PageInformation :pagination="externalTaxHistories.meta.pagination" :pending="disableDataTable"/>
-                        <Pagination :size="'lg'" :pagination="externalTaxHistories.meta.pagination" :pending="disableDataTable" v-model="pageComputed"/>
+                        <div class="space-y-2">
+
+                            <div class="flex flex-row flex-wrap gap-2 items-center min-h-8" :class="[disableActions ? 'pointer-events-none' : '']">
+                                <Button v-if="externalTaxHistories.successful" @click="put(null)" class="w-min" :disabled="disableActions" :size="'sm'" :icon="'mdi:plus'"></Button>
+                                <div v-if="externalTaxHistories.successful" class="scaffold-border px-2 font-[National_Park]">
+                                    <span><span class="font-semibold">{{selectedExternalTaxHistories.length}}</span> Selected</span>
+                                </div>
+                                <Button
+                                    v-if="externalTaxHistories.successful"
+                                    :variant="'outline'"
+                                    :size="'sm'"
+                                    :icon="'ph:backspace'"
+                                    :disabled="disableActions"
+                                    :label="'Clear selection'"
+                                    @click="selectedExternalTaxHistories = []" />
+                                <Button v-if="externalTaxHistories.successful" :variant="'outline'" :size="'sm'" :icon="'ph:trash-simple'" :disabled="disableActions" :label="'Bulk delete'" @click="confirmDeleteSelected()" />
+                                <Label v-if="!externalTaxHistories.successful" invert :size="'md'" :type="'danger'" :label="externalTaxHistories.message" />
+                            </div>
+
+                            <DataTable
+                                v-if="externalTaxHistories.successful"
+                                :sup-headers="externalTaxHistoriesSupHeaders"
+                                :headers="externalTaxHistoriesHeaders"
+                                :size="'lg'"
+                                :rows="externalTaxHistories.data"
+                                :disabled="disableDataTable"
+                                v-model="selectedExternalTaxHistories"
+                                selection>
+                                <template v-slot:cell.actions="{cell,slot: cellSlot}">
+                                    <div class="text-base h-[32px] px-2 gap-0.5 flex items-center justify-center cursor-pointer accent-hover" @click="put(cell)">
+                                        <span class="font-narrow-thin">Edit</span>
+                                        <Icon class="h-5 w-5" :name="'gg:external'"/>
+                                    </div>
+                                </template>
+                                <template v-slot:cell.employee_number="{cell,slot}">
+                                    <div class="p-[3px]">{{cell.employee.number}}</div>
+                                </template>
+                                <template v-slot:cell.employee_full_name="{cell,slot}">
+                                    <div class="p-[3px]">{{cell.employee.full_name}}</div>
+                                </template>
+                            </DataTable>
+
+                            <div>
+                                <PageInformation :pagination="externalTaxHistories.meta.pagination" :pending="disableDataTable"/>
+                                <Pagination :size="'lg'" :pagination="externalTaxHistories.meta.pagination" :pending="disableDataTable" v-model="pageComputed"/>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

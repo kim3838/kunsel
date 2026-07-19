@@ -2,82 +2,6 @@
     <div>
         <DefaultWrapper>
             <div class="mx-auto max-w-screen-2xl">
-                <form @submit.prevent="paginate(1, true)" class="space-y-2 p-[20px]">
-
-                    <BreadCrumbs prefix-company :size="`sm`" />
-
-                    <div class="grid gap-2 grid-cols-3 sm:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-8">
-                        <div>
-                            <InputLabel :size="'sm'" value="Search" />
-                            <Input :disabled="disableActions" :size="'md'" ref="searchInput" v-model="filters.search.keyword" class="w-full" placeholder="Search Employee" type="text"/>
-                        </div>
-                        <div>
-                            <InputLabel :size="'sm'" value="Employee Group" />
-                            <MultiSelect :key="employeeGroupOptionsKey" glint drop-shadow :selection-max-viewable-line="15" :size="'md'" :options="employeeGroupOptions" :disabled="disableActions" :icon="'tdesign:component-checkbox'"/>
-                        </div>
-                        <div>
-                            <InputLabel :size="'sm'" value="Department" />
-                            <MultiSelect :key="departmentOptionsKey" glint drop-shadow :selection-max-viewable-line="15" :size="'md'" :options="departmentOptions" :disabled="disableActions" :icon="'ic:baseline-all-inbox'"/>
-                        </div>
-                        <div>
-                            <InputLabel :size="'sm'" value="Designation" />
-                            <MultiSelect :key="designationOptionsKey" glint drop-shadow :selection-max-viewable-line="15" :size="'md'" :options="designationOptions" :disabled="disableActions" :icon="'ic:baseline-inbox'"/>
-                        </div>
-                        <div>
-                            <InputLabel :size="'sm'" value="Formulable Type" />
-                            <MultiSelect
-                                :key="formulableTypeOptionsKey"
-                                :icon="'tdesign:component-checkbox'"
-                                :disabled="disableActions"
-                                glint
-                                drop-shadow
-                                :selection-max-viewable-line="5"
-                                :size="'md'"
-                                :label="'Filter Formulable Type'"
-                                :options="formulableTypeOptions"
-                            />
-                        </div>
-                        <div>
-                            <InputLabel :size="'sm'" value="Payroll Component Type" />
-                            <MultiSelect
-                                :key="payrollComponentTypeOptionsKey"
-                                :icon="'tdesign:component-checkbox'"
-                                :disabled="disableActions"
-                                glint
-                                drop-shadow
-                                :selection-max-viewable-line="20"
-                                :size="'md'"
-                                :label="'Filter Payroll Component Type'"
-                                :options="payrollComponentTypeOptions"
-                            />
-                        </div>
-                        <div>
-                            <InputLabel :size="'sm'" value="Payroll Item" />
-                            <MultiSelect
-                                :key="payrollComponentNameOptionsKey"
-                                :icon="'tdesign:component-checkbox'"
-                                :disabled="disableActions"
-                                glint
-                                drop-shadow
-                                :selection-max-viewable-line="20"
-                                :size="'md'"
-                                :label="'Filter Payroll Item'"
-                                :options="payrollComponentNameOptions"
-                            />
-                        </div>
-                    </div>
-
-                    <div class="flex flex-row flex-wrap gap-2 items-center min-h-8">
-                        <Button class="w-min" ref="submitButton" type="submit" :disabled="disableActions" :size="'md'" :icon="disableActions ? 'eos-icons:loading' : 'mdi:data'" :label="disableActions ? 'Loading' : 'Load'"></Button>
-                        <RadioGroup
-                            class="scaffold-border px-2"
-                            :disabled="disableActions"
-                            :selections="viewMode.selection"
-                            :size="'md'"
-                            :orientation="'horizontal'"
-                            v-model="viewMode.selected" />
-                    </div>
-                </form>
 
                 <DialogModal
                     :show="selectingEmployee"
@@ -149,94 +73,177 @@
                     @cancelled="payrollComponentCancelled"
                 ></PayrollComponentAssignmentModal>
 
-                <div class="px-[20px] space-y-2">
-                    <div class="flex flex-row flex-wrap gap-2 items-center min-h-8" :class="[disableActions ? 'pointer-events-none' : '']">
-                        <Button v-if="payrollComponents.successful" @click="selectEmployee" class="w-min" :disabled="disableActions" :size="'sm'" :icon="'mdi:plus'"></Button>
-                        <div v-if="payrollComponents.successful" class="scaffold-border px-2 font-[National_Park]">
-                            <span><span class="font-semibold">{{selectedPayrollComponents.length}}</span> Selected</span>
+                <div class="space-y-2 p-[20px]">
+
+                    <BreadCrumbs prefix-company :size="`sm`" />
+
+                    <div class="lining-shadow rounded-sm tint-background space-y-2 p-[20px]">
+
+                        <form @submit.prevent="paginate(1, true)" class="space-y-2">
+
+                            <div class="grid gap-2 grid-cols-3 sm:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-8">
+                                <div>
+                                    <InputLabel :size="'sm'" value="Search" />
+                                    <Input :disabled="disableActions" :size="'md'" ref="searchInput" v-model="filters.search.keyword" class="w-full" placeholder="Search Employee" type="text"/>
+                                </div>
+                                <div>
+                                    <InputLabel :size="'sm'" value="Employee Group" />
+                                    <MultiSelect :key="employeeGroupOptionsKey" glint drop-shadow :selection-max-viewable-line="15" :size="'md'" :options="employeeGroupOptions" :disabled="disableActions" :icon="'tdesign:component-checkbox'"/>
+                                </div>
+                                <div>
+                                    <InputLabel :size="'sm'" value="Department" />
+                                    <MultiSelect :key="departmentOptionsKey" glint drop-shadow :selection-max-viewable-line="15" :size="'md'" :options="departmentOptions" :disabled="disableActions" :icon="'ic:baseline-all-inbox'"/>
+                                </div>
+                                <div>
+                                    <InputLabel :size="'sm'" value="Designation" />
+                                    <MultiSelect :key="designationOptionsKey" glint drop-shadow :selection-max-viewable-line="15" :size="'md'" :options="designationOptions" :disabled="disableActions" :icon="'ic:baseline-inbox'"/>
+                                </div>
+                                <div>
+                                    <InputLabel :size="'sm'" value="Formulable Type" />
+                                    <MultiSelect
+                                        :key="formulableTypeOptionsKey"
+                                        :icon="'tdesign:component-checkbox'"
+                                        :disabled="disableActions"
+                                        glint
+                                        drop-shadow
+                                        :selection-max-viewable-line="5"
+                                        :size="'md'"
+                                        :label="'Filter Formulable Type'"
+                                        :options="formulableTypeOptions"
+                                    />
+                                </div>
+                                <div>
+                                    <InputLabel :size="'sm'" value="Payroll Component Type" />
+                                    <MultiSelect
+                                        :key="payrollComponentTypeOptionsKey"
+                                        :icon="'tdesign:component-checkbox'"
+                                        :disabled="disableActions"
+                                        glint
+                                        drop-shadow
+                                        :selection-max-viewable-line="20"
+                                        :size="'md'"
+                                        :label="'Filter Payroll Component Type'"
+                                        :options="payrollComponentTypeOptions"
+                                    />
+                                </div>
+                                <div>
+                                    <InputLabel :size="'sm'" value="Payroll Item" />
+                                    <MultiSelect
+                                        :key="payrollComponentNameOptionsKey"
+                                        :icon="'tdesign:component-checkbox'"
+                                        :disabled="disableActions"
+                                        glint
+                                        drop-shadow
+                                        :selection-max-viewable-line="20"
+                                        :size="'md'"
+                                        :label="'Filter Payroll Item'"
+                                        :options="payrollComponentNameOptions"
+                                    />
+                                </div>
+                            </div>
+
+                            <div class="flex flex-row flex-wrap gap-2 items-center min-h-8">
+                                <Button class="w-min" ref="submitButton" type="submit" :disabled="disableActions" :size="'md'" :icon="disableActions ? 'eos-icons:loading' : 'mdi:data'" :label="disableActions ? 'Loading' : 'Load'"></Button>
+                                <RadioGroup
+                                    class="scaffold-border px-2"
+                                    :disabled="disableActions"
+                                    :selections="viewMode.selection"
+                                    :size="'md'"
+                                    :orientation="'horizontal'"
+                                    v-model="viewMode.selected" />
+                            </div>
+                        </form>
+
+                        <div class="space-y-2">
+                            <div class="flex flex-row flex-wrap gap-2 items-center min-h-8" :class="[disableActions ? 'pointer-events-none' : '']">
+                                <Button v-if="payrollComponents.successful" @click="selectEmployee" class="w-min" :disabled="disableActions" :size="'sm'" :icon="'mdi:plus'"></Button>
+                                <div v-if="payrollComponents.successful" class="scaffold-border px-2 font-[National_Park]">
+                                    <span><span class="font-semibold">{{selectedPayrollComponents.length}}</span> Selected</span>
+                                </div>
+                                <Button
+                                    v-if="payrollComponents.successful"
+                                    :variant="'outline'"
+                                    :size="'sm'"
+                                    :icon="'ph:backspace'"
+                                    :disabled="disableActions"
+                                    :label="'Clear selection'"
+                                    @click="selectedPayrollComponents = []" />
+                                <Button
+                                    v-if="payrollComponents.successful"
+                                    :variant="'outline'"
+                                    :size="'sm'"
+                                    :icon="'ph:trash-simple'"
+                                    :disabled="disableActions"
+                                    :label="'Bulk delete'"
+                                    @click="confirmDeleteSelected()"/>
+                                <Label v-if="!payrollComponents.successful" invert :size="'md'" :type="'danger'" :label="payrollComponents.message" />
+                            </div>
+
+                            <DataTable
+                                v-if="payrollComponents.successful"
+                                :sup-headers="payrollComponentsSupHeaders"
+                                :headers="payrollComponentsHeaders"
+                                v-model:sort-headers="payrollComponentsSortHeaders"
+                                :size="'lg'"
+                                :sortable="true"
+                                :rows="payrollComponents.data"
+                                v-model:rows-pending="payrollComponentsPending"
+                                :disabled="disableDataTable"
+                                v-model="selectedPayrollComponents"
+                                @sort="paginate(1, true)"
+                                selection>
+                                <template v-slot:cell.actions="{cell,slot: cellSlot}">
+                                    <div class="text-base h-[32px] px-2 gap-0.5 flex items-center justify-center cursor-pointer accent-hover" @click="put(cell)">
+                                        <span class="font-narrow-thin">Edit</span>
+                                        <Icon class="h-5 w-5" :name="'gg:external'"/>
+                                    </div>
+                                </template>
+                                <template v-slot:cell.employee_number="{cell,slot}">
+                                    <div class="p-[3px]">{{cell.employee.number}}</div>
+                                </template>
+                                <template v-slot:cell.employee_full_name="{cell,slot}">
+                                    <div class="p-[3px]">{{cell.employee.full_name}}</div>
+                                </template>
+                                <template v-slot:cell.employee_payroll_group="{cell,slot}">
+                                    <div class="p-[3px]">{{cell.employee.payroll_group?.type?.text}}</div>
+                                </template>
+                                <template v-slot:cell.formulable="{cell, slot, scrollReference}">
+                                    <div class="p-[3px]">{{cell.formulable_type?.text}}</div>
+                                </template>
+                                <template v-slot:cell.type="{cell, slot, scrollReference}">
+                                    <div class="p-[3px]">{{cell.payroll_componentable.type?.text}}</div>
+                                </template>
+                                <template v-slot:cell.name="{cell, slot, scrollReference}">
+                                    <div class="p-[3px]">{{cell.payroll_componentable.name}}</div>
+                                </template>
+                                <template v-slot:cell.pay_period="{cell, slot, scrollReference}">
+                                    <div class="p-[3px]">{{cell.pay_period?.text}}</div>
+                                </template>
+                                <template v-slot:cell.pay_type="{cell, slot, scrollReference}">
+                                    <div class="p-[3px]">{{cell.pay_type?.text}}</div>
+                                </template>
+                                <template v-slot:cell.pay_frequency="{cell, slot, scrollReference}">
+                                    <div class="p-[3px]">{{cell.pay_frequency?.type?.text}}</div>
+                                </template>
+                                <template v-slot:cell.amountable_start="{cell, slot, scrollReference}">
+                                    <div class="p-[3px]">
+                                        <span v-if="cell.amountable_start?.value == AMOUNTABLE_PAYROLL_COMPONENT_START.CUSTOM_DATE">{{cell.start_date_readable}}</span>
+                                        <span v-else :title="cell.amountable_start?.text">--</span>
+                                    </div>
+                                </template>
+                                <template v-slot:cell.amountable_end="{cell, slot, scrollReference}">
+                                    <div class="p-[3px]">
+                                        <span v-if="cell.amountable_end?.value == AMOUNTABLE_PAYROLL_COMPONENT_END.CUSTOM_DATE">{{cell.end_date_readable}}</span>
+                                        <span v-else :title="cell.amountable_end?.text">--</span>
+                                    </div>
+                                </template>
+                            </DataTable>
+
+                            <div>
+                                <PageInformation :pagination="payrollComponents.meta.pagination" :pending="disableDataTable"/>
+                                <Pagination :size="'lg'" :pagination="payrollComponents.meta.pagination" :pending="disableDataTable" v-model="pageComputed"/>
+                            </div>
                         </div>
-                        <Button
-                            v-if="payrollComponents.successful"
-                            :variant="'outline'"
-                            :size="'sm'"
-                            :icon="'ph:backspace'"
-                            :disabled="disableActions"
-                            :label="'Clear selection'"
-                            @click="selectedPayrollComponents = []" />
-                        <Button
-                            v-if="payrollComponents.successful"
-                            :variant="'outline'"
-                            :size="'sm'"
-                            :icon="'ph:trash-simple'"
-                            :disabled="disableActions"
-                            :label="'Bulk delete'"
-                            @click="confirmDeleteSelected()"/>
-                        <Label v-if="!payrollComponents.successful" invert :size="'md'" :type="'danger'" :label="payrollComponents.message" />
-                    </div>
-
-                    <DataTable
-                        v-if="payrollComponents.successful"
-                        :sup-headers="payrollComponentsSupHeaders"
-                        :headers="payrollComponentsHeaders"
-                        v-model:sort-headers="payrollComponentsSortHeaders"
-                        :size="'lg'"
-                        :sortable="true"
-                        :rows="payrollComponents.data"
-                        v-model:rows-pending="payrollComponentsPending"
-                        :disabled="disableDataTable"
-                        v-model="selectedPayrollComponents"
-                        @sort="paginate(1, true)"
-                        selection>
-                        <template v-slot:cell.actions="{cell,slot: cellSlot}">
-                            <div class="text-base h-[32px] px-2 gap-0.5 flex items-center justify-center cursor-pointer accent-hover" @click="put(cell)">
-                                <span class="font-narrow-thin">Edit</span>
-                                <Icon class="h-5 w-5" :name="'gg:external'"/>
-                            </div>
-                        </template>
-                        <template v-slot:cell.employee_number="{cell,slot}">
-                            <div class="p-[3px]">{{cell.employee.number}}</div>
-                        </template>
-                        <template v-slot:cell.employee_full_name="{cell,slot}">
-                            <div class="p-[3px]">{{cell.employee.full_name}}</div>
-                        </template>
-                        <template v-slot:cell.employee_payroll_group="{cell,slot}">
-                            <div class="p-[3px]">{{cell.employee.payroll_group?.type?.text}}</div>
-                        </template>
-                        <template v-slot:cell.formulable="{cell, slot, scrollReference}">
-                            <div class="p-[3px]">{{cell.formulable_type?.text}}</div>
-                        </template>
-                        <template v-slot:cell.type="{cell, slot, scrollReference}">
-                            <div class="p-[3px]">{{cell.payroll_componentable.type?.text}}</div>
-                        </template>
-                        <template v-slot:cell.name="{cell, slot, scrollReference}">
-                            <div class="p-[3px]">{{cell.payroll_componentable.name}}</div>
-                        </template>
-                        <template v-slot:cell.pay_period="{cell, slot, scrollReference}">
-                            <div class="p-[3px]">{{cell.pay_period?.text}}</div>
-                        </template>
-                        <template v-slot:cell.pay_type="{cell, slot, scrollReference}">
-                            <div class="p-[3px]">{{cell.pay_type?.text}}</div>
-                        </template>
-                        <template v-slot:cell.pay_frequency="{cell, slot, scrollReference}">
-                            <div class="p-[3px]">{{cell.pay_frequency?.type?.text}}</div>
-                        </template>
-                        <template v-slot:cell.amountable_start="{cell, slot, scrollReference}">
-                            <div class="p-[3px]">
-                                <span v-if="cell.amountable_start?.value == AMOUNTABLE_PAYROLL_COMPONENT_START.CUSTOM_DATE">{{cell.start_date_readable}}</span>
-                                <span v-else :title="cell.amountable_start?.text">--</span>
-                            </div>
-                        </template>
-                        <template v-slot:cell.amountable_end="{cell, slot, scrollReference}">
-                            <div class="p-[3px]">
-                                <span v-if="cell.amountable_end?.value == AMOUNTABLE_PAYROLL_COMPONENT_END.CUSTOM_DATE">{{cell.end_date_readable}}</span>
-                                <span v-else :title="cell.amountable_end?.text">--</span>
-                            </div>
-                        </template>
-                    </DataTable>
-
-                    <div>
-                        <PageInformation :pagination="payrollComponents.meta.pagination" :pending="disableDataTable"/>
-                        <Pagination :size="'lg'" :pagination="payrollComponents.meta.pagination" :pending="disableDataTable" v-model="pageComputed"/>
                     </div>
                 </div>
             </div>

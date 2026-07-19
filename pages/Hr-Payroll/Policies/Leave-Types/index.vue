@@ -2,64 +2,69 @@
     <div>
         <DefaultWrapper>
             <div class="mx-auto max-w-screen-2xl">
-                <form @submit.prevent="paginate(1, true)" class="space-y-2 p-[20px]">
+
+                <div class="space-y-2 p-[20px]">
 
                     <BreadCrumbs prefix-company :size="`sm`" />
 
-                    <div class="grid gap-2 grid-cols-3 sm:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-8">
-                        <div>
-                            <InputLabel :size="'sm'" value="Search" />
-                            <Input :disabled="disableActions" :size="'md'" ref="searchInput" v-model="filters.search.keyword" class="w-full" placeholder="Search" type="text"/>
-                        </div>
-                        <div>
-                            <InputLabel :size="'sm'" value="Type" />
-                            <MultiSelect :disabled="disableActions" glint drop-shadow :size="'md'" :options="leaveTypeOptions" :icon="'tdesign:component-checkbox'"/>
-                        </div>
-                    </div>
+                    <div class="lining-shadow rounded-sm tint-background space-y-2 p-[20px]">
 
-                    <div class="flex flex-row flex-wrap gap-2 items-center min-h-8">
-                        <Button class="w-min" ref="submitButton" type="submit" :disabled="disableActions" :size="'md'" :icon="disableActions ? 'eos-icons:loading' : 'mdi:data'" :label="disableActions ? 'Loading' : 'Load'"></Button>
-                        <div class="h-8 flex flex-row items-center scaffold-border px-2">
-                            <label class="flex items-center">
-                                <Checkbox
-                                    :disabled="disableActions"
-                                    name="remember"
-                                    v-model="showBalancePerPeriod"
-                                    clamp-label
-                                    :size="'md'"
-                                    :label="'Show additional balance per period'" />
-                            </label>
-                        </div>
-                    </div>
-                </form>
+                        <form @submit.prevent="paginate(1, true)" class="space-y-2">
 
-                <div class="px-[20px] space-y-2">
-                    <div class="flex flex-row flex-wrap gap-2 items-center min-h-8" :class="[disableActions ? 'pointer-events-none' : '']">
-                        <NuxtLink
-                            v-if="leaveTypes.successful"
-                            :to="`/hr-payroll/policies/leave-types/create-leave-type`">
-                            <Button class="w-min" :disabled="disableActions" :size="'sm'" :icon="'mdi:plus'"></Button>
-                        </NuxtLink>
-                        <div v-if="leaveTypes.successful" class="scaffold-border px-2 font-[National_Park]">
-                            <span><span class="font-semibold">{{selectedLeaveTypes.length}}</span> Selected</span>
-                        </div>
-                        <Button v-if="leaveTypes.successful" :variant="'outline'" :size="'sm'" :icon="'ph:backspace'" :disabled="disableActions" :label="'Clear selection'" @click="selectedLeaveTypes = []" />
-                        <Button v-if="leaveTypes.successful" :variant="'outline'" :icon="'ph:trash-simple'" class="inline-block" :size="'sm'" :disabled="disableActions" :label="'Bulk delete'" @click="confirmDeleteSelected"/>
-                        <Label v-if="!leaveTypes.successful" invert :size="'md'" :type="'danger'" :label="leaveTypes.message" />
-                    </div>
+                            <div class="grid gap-2 grid-cols-3 sm:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-8">
+                                <div>
+                                    <InputLabel :size="'sm'" value="Search" />
+                                    <Input :disabled="disableActions" :size="'md'" ref="searchInput" v-model="filters.search.keyword" class="w-full" placeholder="Search" type="text"/>
+                                </div>
+                                <div>
+                                    <InputLabel :size="'sm'" value="Type" />
+                                    <MultiSelect :disabled="disableActions" glint drop-shadow :size="'md'" :options="leaveTypeOptions" :icon="'tdesign:component-checkbox'"/>
+                                </div>
+                            </div>
 
-                    <DataTable
-                        v-if="leaveTypes.successful"
-                        :key="leaveTypesKey"
-                        :sup-headers="leaveTypesSupHeaders"
-                        :headers="leaveTypesHeaders"
-                        :size="'lg'"
-                        :border-appearance="Boolean(leaveTypeSubRowSlug)"
-                        :rows="leaveTypes.data"
-                        :disabled="disableDataTable"
-                        v-model="selectedLeaveTypes"
-                        :sub-row-slug="leaveTypeSubRowSlug"
-                        :sub-row-settings="{
+                            <div class="flex flex-row flex-wrap gap-2 items-center min-h-8">
+                                <Button class="w-min" ref="submitButton" type="submit" :disabled="disableActions" :size="'md'" :icon="disableActions ? 'eos-icons:loading' : 'mdi:data'" :label="disableActions ? 'Loading' : 'Load'"></Button>
+                                <div class="h-8 flex flex-row items-center scaffold-border px-2">
+                                    <label class="flex items-center">
+                                        <Checkbox
+                                            :disabled="disableActions"
+                                            name="remember"
+                                            v-model="showBalancePerPeriod"
+                                            clamp-label
+                                            :size="'md'"
+                                            :label="'Show additional balance per period'" />
+                                    </label>
+                                </div>
+                            </div>
+                        </form>
+
+                        <div class="space-y-2">
+                            <div class="flex flex-row flex-wrap gap-2 items-center min-h-8" :class="[disableActions ? 'pointer-events-none' : '']">
+                                <NuxtLink
+                                    v-if="leaveTypes.successful"
+                                    :to="`/hr-payroll/policies/leave-types/create-leave-type`">
+                                    <Button class="w-min" :disabled="disableActions" :size="'sm'" :icon="'mdi:plus'"></Button>
+                                </NuxtLink>
+                                <div v-if="leaveTypes.successful" class="scaffold-border px-2 font-[National_Park]">
+                                    <span><span class="font-semibold">{{selectedLeaveTypes.length}}</span> Selected</span>
+                                </div>
+                                <Button v-if="leaveTypes.successful" :variant="'outline'" :size="'sm'" :icon="'ph:backspace'" :disabled="disableActions" :label="'Clear selection'" @click="selectedLeaveTypes = []" />
+                                <Button v-if="leaveTypes.successful" :variant="'outline'" :icon="'ph:trash-simple'" class="inline-block" :size="'sm'" :disabled="disableActions" :label="'Bulk delete'" @click="confirmDeleteSelected"/>
+                                <Label v-if="!leaveTypes.successful" invert :size="'md'" :type="'danger'" :label="leaveTypes.message" />
+                            </div>
+
+                            <DataTable
+                                v-if="leaveTypes.successful"
+                                :key="leaveTypesKey"
+                                :sup-headers="leaveTypesSupHeaders"
+                                :headers="leaveTypesHeaders"
+                                :size="'lg'"
+                                :border-appearance="Boolean(leaveTypeSubRowSlug)"
+                                :rows="leaveTypes.data"
+                                :disabled="disableDataTable"
+                                v-model="selectedLeaveTypes"
+                                :sub-row-slug="leaveTypeSubRowSlug"
+                                :sub-row-settings="{
                             type: DATATABLE_SUBROW_TYPE.TITLED,
                             containerPaddingTop: 0.25,
                             containerPaddingBottom: 0.75,
@@ -68,43 +73,46 @@
                             verticalBorderType: 'dashed',
                             horizontalBorderType: 'dashed',
                         }"
-                        :stripped="true"
-                        selection>
-                        <template v-slot:cell.actions="{cell,slot}">
-                            <NuxtLink :to="`/hr-payroll/policies/leave-types/${cell.ulid}`">
-                                <div class="text-base h-[32px] px-2 gap-0.5 flex items-center justify-center cursor-pointer accent-hover">
-                                    <span class="font-narrow-thin">Details</span>
-                                    <Icon class="h-5 w-5" :name="'gg:external'"/>
-                                </div>
-                            </NuxtLink>
-                        </template>
-                        <template v-slot:cell.type="{cell,slot}">
-                            <div class="p-[3px]">{{cell.type?.text}}</div>
-                        </template>
-                        <template v-slot:cell.is_paid="{cell,slot}">
-                            <div class="p-[3px]">{{cell.is_paid ? 'Yes' : 'No'}}</div>
-                        </template>
-                        <template v-slot:cell.monetizable="{cell,slot}">
-                            <div class="p-[3px]">{{cell.monetizable ? 'Yes' : 'No'}}</div>
-                        </template>
-                        <template v-slot:cell.period_type="{cell,slot}">
-                            <div class="p-[3px]">{{cell.period_type?.text}}</div>
-                        </template>
-                        <template v-slot:sub_row_slot="{rowIndex, cell, slot}">
-                            <div class="inline-flex items-center scaffold-border pr-2">
-                                <Icon name="mdi:info-variant" :class="[slot.iconSizeClass]" /><div :class="[slot.titleSizeClass]">Balance Per Period</div>
+                                :stripped="true"
+                                selection>
+                                <template v-slot:cell.actions="{cell,slot}">
+                                    <NuxtLink :to="`/hr-payroll/policies/leave-types/${cell.ulid}`">
+                                        <div class="text-base h-[32px] px-2 gap-0.5 flex items-center justify-center cursor-pointer accent-hover">
+                                            <span class="font-narrow-thin">Details</span>
+                                            <Icon class="h-5 w-5" :name="'gg:external'"/>
+                                        </div>
+                                    </NuxtLink>
+                                </template>
+                                <template v-slot:cell.type="{cell,slot}">
+                                    <div class="p-[3px]">{{cell.type?.text}}</div>
+                                </template>
+                                <template v-slot:cell.is_paid="{cell,slot}">
+                                    <div class="p-[3px]">{{cell.is_paid ? 'Yes' : 'No'}}</div>
+                                </template>
+                                <template v-slot:cell.monetizable="{cell,slot}">
+                                    <div class="p-[3px]">{{cell.monetizable ? 'Yes' : 'No'}}</div>
+                                </template>
+                                <template v-slot:cell.period_type="{cell,slot}">
+                                    <div class="p-[3px]">{{cell.period_type?.text}}</div>
+                                </template>
+                                <template v-slot:sub_row_slot="{rowIndex, cell, slot}">
+                                    <div class="inline-flex items-center scaffold-border pr-2">
+                                        <Icon name="mdi:info-variant" :class="[slot.iconSizeClass]" /><div :class="[slot.titleSizeClass]">Balance Per Period</div>
+                                    </div>
+
+                                    <BalancePerPeriodSubRow
+                                        :rows="cell[slot.slug]"
+                                        :disabled="disableDataTable"
+                                    ></BalancePerPeriodSubRow>
+                                </template>
+                            </DataTable>
+
+                            <div>
+                                <PageInformation :pagination="leaveTypes.meta.pagination" :pending="disableDataTable" />
+                                <Pagination :size="'lg'" :pagination="leaveTypes.meta.pagination" :pending="disableDataTable" v-model="pageComputed"/>
                             </div>
+                        </div>
 
-                            <BalancePerPeriodSubRow
-                                :rows="cell[slot.slug]"
-                                :disabled="disableDataTable"
-                            ></BalancePerPeriodSubRow>
-                        </template>
-                    </DataTable>
-
-                    <div>
-                        <PageInformation :pagination="leaveTypes.meta.pagination" :pending="disableDataTable" />
-                        <Pagination :size="'lg'" :pagination="leaveTypes.meta.pagination" :pending="disableDataTable" v-model="pageComputed"/>
                     </div>
                 </div>
             </div>

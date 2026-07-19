@@ -2,84 +2,89 @@
     <div>
         <DefaultWrapper>
             <div class="mx-auto max-w-screen-xl">
-                <form @submit.prevent="paginate(1, true)" class="space-y-2 p-[20px]">
-
-                    <BreadCrumbs prefix-company :size="`sm`" />
-
-                    <div class="grid gap-2 grid-cols-3 sm:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
-                        <div>
-                            <InputLabel :size="'sm'" value="Submitted by" />
-                            <MultiSelectPaginated
-                                :key="companyUserSelectionsOptionsKey"
-                                :icon="'tdesign:component-checkbox'"
-                                :disabled="disableActions"
-                                glint
-                                drop-shadow
-                                :size="'md'"
-                                :label="'Filter submitted by'"
-                                :payload="companyUserSelectionsOptions"
-                            />
-                        </div>
-                        <div>
-                            <InputLabel :size="'sm'" value="Status" />
-                            <MultiSelect :disabled="disableActions" glint drop-shadow :size="'md'" :options="requestApprovalStatusOptions" :icon="'tdesign:component-checkbox'"/>
-                        </div>
-                        <div>
-                            <InputLabel :size="'sm'" value="Request # Search" />
-                            <Input :disabled="disableActions" :size="'md'" ref="searchInput" v-model="filters.search.keyword" class="w-full" placeholder="Search Number" type="text"/>
-                        </div>
-                    </div>
-
-                    <div class="flex flex-row flex-wrap gap-2 items-center min-h-8">
-                        <Button class="w-min" ref="submitButton" type="submit" :disabled="disableActions" :size="'md'" :icon="disableActions ? 'eos-icons:loading' : 'mdi:data'" :label="disableActions ? 'Loading' : 'Load'"></Button>
-                        <div class="h-8 flex flex-row items-center scaffold-border px-2">
-                            <label class="flex items-center">
-                                <Checkbox
-                                    :disabled="disableActions"
-                                    name="show-approval-sequence"
-                                    v-model="showApprovalStates"
-                                    :size="'md'"
-                                    :label="'Show approval sequence'" />
-                            </label>
-                        </div>
-                    </div>
-                </form>
 
                 <ViewRequestable
                     v-model:view-requestable="showRequestable"
                     v-model:requestable-payload="requestablePayload"/>
 
-                <div class="px-[20px] space-y-2">
-                    <div class="flex flex-row flex-wrap gap-2 items-center min-h-8" :class="[disableActions ? 'pointer-events-none' : '']">
-                        <div v-if="payrollRequests.successful" class="scaffold-border px-2 font-[National_Park]">
-                            <span><span class="font-semibold">{{selectedPayrollRequests.length}}</span> Selected</span>
-                        </div>
-                        <Button
-                            v-if="payrollRequests.successful"
-                            :variant="'outline'"
-                            :size="'sm'"
-                            :icon="'ph:backspace'"
-                            :disabled="disableActions"
-                            :label="'Clear selection'"
-                            @click="selectedPayrollRequests = []" />
-                        <Button v-if="payrollRequests.successful" :variant="'outline'" :size="'sm'" :icon="'ph:trash-simple'" :disabled="disableActions" :label="'Bulk delete'" @click="confirmDeleteSelected()" />
-                        <Label v-if="!payrollRequests.successful" invert :size="'md'" :type="'danger'" :label="payrollRequests.message" />
-                    </div>
+                <div class="space-y-2 p-[20px]">
 
-                    <DataTable
-                        v-if="payrollRequests.successful"
-                        :key="payrollRequestsKey"
-                        :sup-headers="payrollRequestsSupHeaders"
-                        :headers="payrollRequestsHeaders"
-                        :size="'lg'"
-                        :rows="payrollRequests.data"
-                        :disabled="disableDataTable"
-                        v-model="selectedPayrollRequests"
-                        selection
-                        :border-appearance="showApprovalStates"
-                        :stripped="!showApprovalStates"
-                        :sub-row-slug="payrollRequestSubRowSlug"
-                        :sub-row-settings="{
+                    <BreadCrumbs prefix-company :size="`sm`" />
+
+                    <div class="lining-shadow rounded-sm tint-background space-y-2 p-[20px]">
+
+                        <form @submit.prevent="paginate(1, true)" class="space-y-2">
+
+                            <div class="grid gap-2 grid-cols-3 sm:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
+                                <div>
+                                    <InputLabel :size="'sm'" value="Submitted by" />
+                                    <MultiSelectPaginated
+                                        :key="companyUserSelectionsOptionsKey"
+                                        :icon="'tdesign:component-checkbox'"
+                                        :disabled="disableActions"
+                                        glint
+                                        drop-shadow
+                                        :size="'md'"
+                                        :label="'Filter submitted by'"
+                                        :payload="companyUserSelectionsOptions"
+                                    />
+                                </div>
+                                <div>
+                                    <InputLabel :size="'sm'" value="Status" />
+                                    <MultiSelect :disabled="disableActions" glint drop-shadow :size="'md'" :options="requestApprovalStatusOptions" :icon="'tdesign:component-checkbox'"/>
+                                </div>
+                                <div>
+                                    <InputLabel :size="'sm'" value="Request # Search" />
+                                    <Input :disabled="disableActions" :size="'md'" ref="searchInput" v-model="filters.search.keyword" class="w-full" placeholder="Search Number" type="text"/>
+                                </div>
+                            </div>
+
+                            <div class="flex flex-row flex-wrap gap-2 items-center min-h-8">
+                                <Button class="w-min" ref="submitButton" type="submit" :disabled="disableActions" :size="'md'" :icon="disableActions ? 'eos-icons:loading' : 'mdi:data'" :label="disableActions ? 'Loading' : 'Load'"></Button>
+                                <div class="h-8 flex flex-row items-center scaffold-border px-2">
+                                    <label class="flex items-center">
+                                        <Checkbox
+                                            :disabled="disableActions"
+                                            name="show-approval-sequence"
+                                            v-model="showApprovalStates"
+                                            :size="'md'"
+                                            :label="'Show approval sequence'" />
+                                    </label>
+                                </div>
+                            </div>
+                        </form>
+
+                        <div class="space-y-2">
+                            <div class="flex flex-row flex-wrap gap-2 items-center min-h-8" :class="[disableActions ? 'pointer-events-none' : '']">
+                                <div v-if="payrollRequests.successful" class="scaffold-border px-2 font-[National_Park]">
+                                    <span><span class="font-semibold">{{selectedPayrollRequests.length}}</span> Selected</span>
+                                </div>
+                                <Button
+                                    v-if="payrollRequests.successful"
+                                    :variant="'outline'"
+                                    :size="'sm'"
+                                    :icon="'ph:backspace'"
+                                    :disabled="disableActions"
+                                    :label="'Clear selection'"
+                                    @click="selectedPayrollRequests = []" />
+                                <Button v-if="payrollRequests.successful" :variant="'outline'" :size="'sm'" :icon="'ph:trash-simple'" :disabled="disableActions" :label="'Bulk delete'" @click="confirmDeleteSelected()" />
+                                <Label v-if="!payrollRequests.successful" invert :size="'md'" :type="'danger'" :label="payrollRequests.message" />
+                            </div>
+
+                            <DataTable
+                                v-if="payrollRequests.successful"
+                                :key="payrollRequestsKey"
+                                :sup-headers="payrollRequestsSupHeaders"
+                                :headers="payrollRequestsHeaders"
+                                :size="'lg'"
+                                :rows="payrollRequests.data"
+                                :disabled="disableDataTable"
+                                v-model="selectedPayrollRequests"
+                                selection
+                                :border-appearance="showApprovalStates"
+                                :stripped="!showApprovalStates"
+                                :sub-row-slug="payrollRequestSubRowSlug"
+                                :sub-row-settings="{
                             type: DATATABLE_SUBROW_TYPE.TITLED,
                             containerPaddingTop: 0.75,
                             containerPaddingBottom: 1.75,
@@ -87,49 +92,52 @@
                             rowVerticalLine: true,
                             verticalBorderType: 'dashed'
                         }">
-                        <template v-slot:cell.number="{cell,slot}">
-                            <div class="p-[3px] font-medium hover:underline cursor-pointer" @click="viewRequestable(cell)">{{cell.number}}</div>
-                        </template>
-                        <template v-slot:cell.status_summary="{cell,slot}">
-                            <div class="flex space-x-1 px-[0.3rem] items-center">
-                                <Label :size="slot.labelSize" :type="cell?._payload?.label_shade?.value as LabelTypeT" shade :label="cell.status_summary?.text" />
-                            </div>
-                        </template>
-                        <template v-slot:cell.requested_by="{cell,slot}">
-                            <div class="p-[3px]">{{cell.requested_by?.username}}</div>
-                        </template>
-                        <template v-slot:cell.payroll_number="{cell,slot}">
-                            <div class="p-[3px] font-medium">{{cell.payroll?.number}}</div>
-                        </template>
-                        <template v-slot:cell.payroll_period="{cell,slot}">
-                            <div class="p-[3px]">{{cell.payroll?.date_range_readable}}</div>
-                        </template>
-                        <template v-slot:cell.total_employer_contribution_share="{cell,slot}">
-                            <div class="p-[3px]">{{cell.payroll?.total_employer_contribution_share}}</div>
-                        </template>
-                        <template v-slot:cell.total_withholding_tax="{cell,slot}">
-                            <div class="p-[3px]">{{cell.payroll?.total_withholding_tax}}</div>
-                        </template>
-                        <template v-slot:cell.total_tax_refund="{cell,slot}">
-                            <div class="p-[3px]">{{cell.payroll?.total_tax_refund}}</div>
-                        </template>
-                        <template v-slot:cell.total_net="{cell,slot}">
-                            <div class="p-[3px]">{{cell.payroll?.total_net}}</div>
-                        </template>
-                        <template v-slot:sub_row_slot="{rowIndex, cell, slot}">
-                            <div class="inline-flex items-center scaffold-border pr-2">
-                                <Icon name="mdi:info-variant" :class="[slot.iconSizeClass]" /><div :class="[slot.titleSizeClass]">Approval Sequence</div>
-                            </div>
-                            <ApprovalStateSubRow
-                                :rows="cell[slot.slug]"
-                                :disabled="disableDataTable"
-                            ></ApprovalStateSubRow>
-                        </template>
-                    </DataTable>
+                                <template v-slot:cell.number="{cell,slot}">
+                                    <div class="p-[3px] font-medium hover:underline cursor-pointer" @click="viewRequestable(cell)">{{cell.number}}</div>
+                                </template>
+                                <template v-slot:cell.status_summary="{cell,slot}">
+                                    <div class="flex space-x-1 px-[0.3rem] items-center">
+                                        <Label :size="slot.labelSize" :type="cell?._payload?.label_shade?.value as LabelTypeT" shade :label="cell.status_summary?.text" />
+                                    </div>
+                                </template>
+                                <template v-slot:cell.requested_by="{cell,slot}">
+                                    <div class="p-[3px]">{{cell.requested_by?.username}}</div>
+                                </template>
+                                <template v-slot:cell.payroll_number="{cell,slot}">
+                                    <div class="p-[3px] font-medium">{{cell.payroll?.number}}</div>
+                                </template>
+                                <template v-slot:cell.payroll_period="{cell,slot}">
+                                    <div class="p-[3px]">{{cell.payroll?.date_range_readable}}</div>
+                                </template>
+                                <template v-slot:cell.total_employer_contribution_share="{cell,slot}">
+                                    <div class="p-[3px]">{{cell.payroll?.total_employer_contribution_share}}</div>
+                                </template>
+                                <template v-slot:cell.total_withholding_tax="{cell,slot}">
+                                    <div class="p-[3px]">{{cell.payroll?.total_withholding_tax}}</div>
+                                </template>
+                                <template v-slot:cell.total_tax_refund="{cell,slot}">
+                                    <div class="p-[3px]">{{cell.payroll?.total_tax_refund}}</div>
+                                </template>
+                                <template v-slot:cell.total_net="{cell,slot}">
+                                    <div class="p-[3px]">{{cell.payroll?.total_net}}</div>
+                                </template>
+                                <template v-slot:sub_row_slot="{rowIndex, cell, slot}">
+                                    <div class="inline-flex items-center scaffold-border pr-2">
+                                        <Icon name="mdi:info-variant" :class="[slot.iconSizeClass]" /><div :class="[slot.titleSizeClass]">Approval Sequence</div>
+                                    </div>
+                                    <ApprovalStateSubRow
+                                        :rows="cell[slot.slug]"
+                                        :disabled="disableDataTable"
+                                    ></ApprovalStateSubRow>
+                                </template>
+                            </DataTable>
 
-                    <div>
-                        <PageInformation :pagination="payrollRequests.meta.pagination" :pending="disableDataTable"/>
-                        <Pagination :size="'lg'" :pagination="payrollRequests.meta.pagination" :pending="disableDataTable" v-model="pageComputed"/>
+                            <div>
+                                <PageInformation :pagination="payrollRequests.meta.pagination" :pending="disableDataTable"/>
+                                <Pagination :size="'lg'" :pagination="payrollRequests.meta.pagination" :pending="disableDataTable" v-model="pageComputed"/>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
             </div>

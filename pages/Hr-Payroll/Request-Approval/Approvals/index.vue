@@ -2,44 +2,6 @@
     <div>
         <DefaultWrapper>
             <div class="mx-auto max-w-screen-xl">
-                <form @submit.prevent="paginate(1, true)" class="space-y-2 p-[20px]">
-
-                    <BreadCrumbs prefix-company :size="`sm`" />
-
-                    <div class="grid gap-2 grid-cols-3 sm:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
-                        <div>
-                            <InputLabel :size="'sm'" value="Request # Search" />
-                            <Input :disabled="disableActions" :size="'md'" ref="searchInput" v-model="filters.search.keyword" class="w-full" placeholder="Search Number" type="text"/>
-                        </div>
-                        <div>
-                            <InputLabel :size="'sm'" value="Filter approver" />
-                            <MultiSelectPaginated
-                                :key="companyUserSelectionsOptionsKey"
-                                :icon="'tdesign:component-checkbox'"
-                                :disabled="disableActions"
-                                glint
-                                drop-shadow
-                                :size="'md'"
-                                :label="'Filter approver'"
-                                :payload="companyUserSelectionsOptions"
-                            />
-                        </div>
-                    </div>
-
-                    <div class="flex flex-row flex-wrap gap-2 items-center min-h-8">
-                        <Button class="w-min" ref="submitButton" type="submit" :disabled="disableActions" :size="'md'" :icon="disableActions ? 'eos-icons:loading' : 'mdi:data'" :label="disableActions ? 'Loading' : 'Load'"></Button>
-                        <div class="h-8 flex flex-row items-center scaffold-border px-2">
-                            <label class="flex items-center">
-                                <Checkbox
-                                    :disabled="disableActions"
-                                    name="remember"
-                                    v-model="showOnlyAwaitingApproval"
-                                    :size="'md'"
-                                    :label="'Show only waiting approval'" />
-                            </label>
-                        </div>
-                    </div>
-                </form>
 
                 <SetRequestableApprovalWorkFlow
                     v-model:create-requestable-work-flow="createRequestableWorkFlow"
@@ -53,93 +15,139 @@
                     v-model:requestable-is-approvable="requestableIsApprovable"
                     @applyApprovalWorkFlowFromViewable="applyApprovalWorkFlowFromViewable"/>
 
-                <div class="px-[20px] space-y-2">
-                    <div class="flex flex-row flex-wrap gap-2 items-center min-h-8" :class="[disableActions ? 'pointer-events-none' : '']">
-                        <div v-if="approvalStates.successful" class="scaffold-border px-2 font-[National_Park]">
-                            <span><span class="font-semibold">{{selectedApprovalStates.length}}</span> Selected</span>
+                <div class="space-y-2 p-[20px]">
+
+                    <BreadCrumbs prefix-company :size="`sm`" />
+
+                    <div class="lining-shadow rounded-sm tint-background space-y-2 p-[20px]">
+
+                        <form @submit.prevent="paginate(1, true)" class="space-y-2">
+
+                            <div class="grid gap-2 grid-cols-3 sm:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
+                                <div>
+                                    <InputLabel :size="'sm'" value="Request # Search" />
+                                    <Input :disabled="disableActions" :size="'md'" ref="searchInput" v-model="filters.search.keyword" class="w-full" placeholder="Search Number" type="text"/>
+                                </div>
+                                <div>
+                                    <InputLabel :size="'sm'" value="Filter approver" />
+                                    <MultiSelectPaginated
+                                        :key="companyUserSelectionsOptionsKey"
+                                        :icon="'tdesign:component-checkbox'"
+                                        :disabled="disableActions"
+                                        glint
+                                        drop-shadow
+                                        :size="'md'"
+                                        :label="'Filter approver'"
+                                        :payload="companyUserSelectionsOptions"
+                                    />
+                                </div>
+                            </div>
+
+                            <div class="flex flex-row flex-wrap gap-2 items-center min-h-8">
+                                <Button class="w-min" ref="submitButton" type="submit" :disabled="disableActions" :size="'md'" :icon="disableActions ? 'eos-icons:loading' : 'mdi:data'" :label="disableActions ? 'Loading' : 'Load'"></Button>
+                                <div class="h-8 flex flex-row items-center scaffold-border px-2">
+                                    <label class="flex items-center">
+                                        <Checkbox
+                                            :disabled="disableActions"
+                                            name="remember"
+                                            v-model="showOnlyAwaitingApproval"
+                                            :size="'md'"
+                                            :label="'Show only waiting approval'" />
+                                    </label>
+                                </div>
+                            </div>
+                        </form>
+
+                        <div class="space-y-2">
+                            <div class="flex flex-row flex-wrap gap-2 items-center min-h-8" :class="[disableActions ? 'pointer-events-none' : '']">
+                                <div v-if="approvalStates.successful" class="scaffold-border px-2 font-[National_Park]">
+                                    <span><span class="font-semibold">{{selectedApprovalStates.length}}</span> Selected</span>
+                                </div>
+                                <Button
+                                    v-if="approvalStates.successful"
+                                    :variant="'outline'"
+                                    :size="'sm'"
+                                    :icon="'ph:backspace'"
+                                    :disabled="disableActions"
+                                    :label="'Clear selection'"
+                                    @click="selectedApprovalStates = []; selectedApprovalStatesProxy = []" />
+                                <Button
+                                    v-if="approvalStates.successful && selectedApprovalStatesProxy.length"
+                                    :size="'sm'"
+                                    :disabled="disableActions"
+                                    :label="`Approve ${selectedApprovalStatesProxy.length}`"
+                                    @click="applyApprovalWorkFlow(APPROVAL_ACTION.APPROVE as number)" />
+                                <Button
+                                    v-if="approvalStates.successful && selectedApprovalStatesProxy.length"
+                                    :size="'sm'"
+                                    :disabled="disableActions"
+                                    :label="`Decline ${selectedApprovalStatesProxy.length}`"
+                                    @click="applyApprovalWorkFlow(APPROVAL_ACTION.DECLINE as number)" />
+                                <Label v-if="!approvalStates.successful" invert :size="'md'" :type="'danger'" :label="approvalStates.message" />
+                            </div>
+
+                            <DataTable
+                                v-if="approvalStates.successful"
+                                :sup-headers="approvalStatesSupHeaders"
+                                :headers="approvalStatesHeaders"
+                                :size="'lg'"
+                                :rows="approvalStates.data"
+                                :disabled="disableDataTable"
+                                v-model="selectedApprovalStates"
+                                @selectionChanged="syncSelectedApprovalStatesProxy"
+                                selection>
+                                <template v-slot:cell.request_number="{cell,slot}">
+                                    <div class="p-[3px] font-medium hover:underline cursor-pointer" @click="viewRequestable(cell)">{{cell.requestable.number}}</div>
+                                </template>
+                                <template v-slot:cell.requestable_type_readable="{cell,slot}">
+                                    <div class="p-[3px]" :title="cell.requestable.type_readable">{{wordClamp(cell.requestable.type_readable, 20)}}</div>
+                                </template>
+                                <template v-slot:cell.date_requested_diff="{cell,slot}">
+                                    <div class="p-[3px]">{{cell.requestable.date_requested_diff}}</div>
+                                </template>
+
+                                <template v-slot:cell.status="{cell,slot}">
+                                    <div class="flex space-x-1 px-[0.3rem] items-center">
+                                        <Label :size="slot.labelSize" :type="cell?._payload?.label_shade?.value as LabelTypeT" shade :label="cell.status?.text" />
+                                    </div>
+                                </template>
+                                <template v-slot:cell.order="{cell,slot}">
+                                    <div class="p-[3px]">{{ordinal(cell.order)}}</div>
+                                </template>
+                                <template v-slot:cell.user_status="{cell,slot}">
+                                    <div class="p-[3px]">{{cell.approver.status?.text}}</div>
+                                </template>
+                                <template v-slot:cell.company_timezone="{cell,slot}">
+                                    <div class="p-[3px]">{{cell.requestable.company_timezone}}</div>
+                                </template>
+                                <template v-slot:cell.username="{cell,slot}">
+                                    <div class="p-[3px]">{{cell.approver.username}}</div>
+                                </template>
+                                <template v-slot:cell.company_employee_number="{cell,slot}">
+                                    <div class="p-[3px]">{{cell.approver.company_employee_number}}</div>
+                                </template>
+                                <template v-slot:cell.company_employee_full_name="{cell,slot}">
+                                    <div class="p-[3px]">{{cell.approver.company_employee_full_name}}</div>
+                                </template>
+                                <template v-slot:cell.company_assignment_type="{cell,slot}">
+                                    <div class="px-[3px]">
+                                        <span v-if="cell.approver.company_assignment_type?.value">{{cell.approver.company_assignment_type?.text}}</span>
+                                    </div>
+                                </template>
+                                <template v-slot:cell.approved_by_username="{cell,slot}">
+                                    <div class="p-[3px]">{{cell.approved_by.username}}</div>
+                                </template>
+                                <template v-slot:cell.approved_at_diff="{cell,slot}">
+                                    <div class="p-[3px]">{{cell.approved_by.approved_at_diff}}</div>
+                                </template>
+                            </DataTable>
+
+                            <div>
+                                <PageInformation :pagination="approvalStates.meta.pagination" :pending="disableDataTable"/>
+                                <Pagination :size="'lg'" :pagination="approvalStates.meta.pagination" :pending="disableDataTable" v-model="pageComputed"/>
+                            </div>
                         </div>
-                        <Button
-                            v-if="approvalStates.successful"
-                            :variant="'outline'"
-                            :size="'sm'"
-                            :icon="'ph:backspace'"
-                            :disabled="disableActions"
-                            :label="'Clear selection'"
-                            @click="selectedApprovalStates = []; selectedApprovalStatesProxy = []" />
-                        <Button
-                            v-if="approvalStates.successful && selectedApprovalStatesProxy.length"
-                            :size="'sm'"
-                            :disabled="disableActions"
-                            :label="`Approve ${selectedApprovalStatesProxy.length}`"
-                            @click="applyApprovalWorkFlow(APPROVAL_ACTION.APPROVE as number)" />
-                        <Button
-                            v-if="approvalStates.successful && selectedApprovalStatesProxy.length"
-                            :size="'sm'"
-                            :disabled="disableActions"
-                            :label="`Decline ${selectedApprovalStatesProxy.length}`"
-                            @click="applyApprovalWorkFlow(APPROVAL_ACTION.DECLINE as number)" />
-                        <Label v-if="!approvalStates.successful" invert :size="'md'" :type="'danger'" :label="approvalStates.message" />
-                    </div>
 
-                    <DataTable
-                        v-if="approvalStates.successful"
-                        :sup-headers="approvalStatesSupHeaders"
-                        :headers="approvalStatesHeaders"
-                        :size="'lg'"
-                        :rows="approvalStates.data"
-                        :disabled="disableDataTable"
-                        v-model="selectedApprovalStates"
-                        @selectionChanged="syncSelectedApprovalStatesProxy"
-                        selection>
-                        <template v-slot:cell.request_number="{cell,slot}">
-                            <div class="p-[3px] font-medium hover:underline cursor-pointer" @click="viewRequestable(cell)">{{cell.requestable.number}}</div>
-                        </template>
-                        <template v-slot:cell.requestable_type_readable="{cell,slot}">
-                            <div class="p-[3px]" :title="cell.requestable.type_readable">{{wordClamp(cell.requestable.type_readable, 20)}}</div>
-                        </template>
-                        <template v-slot:cell.date_requested_diff="{cell,slot}">
-                            <div class="p-[3px]">{{cell.requestable.date_requested_diff}}</div>
-                        </template>
-
-                        <template v-slot:cell.status="{cell,slot}">
-                            <div class="flex space-x-1 px-[0.3rem] items-center">
-                                <Label :size="slot.labelSize" :type="cell?._payload?.label_shade?.value as LabelTypeT" shade :label="cell.status?.text" />
-                            </div>
-                        </template>
-                        <template v-slot:cell.order="{cell,slot}">
-                            <div class="p-[3px]">{{ordinal(cell.order)}}</div>
-                        </template>
-                        <template v-slot:cell.user_status="{cell,slot}">
-                            <div class="p-[3px]">{{cell.approver.status?.text}}</div>
-                        </template>
-                        <template v-slot:cell.company_timezone="{cell,slot}">
-                            <div class="p-[3px]">{{cell.requestable.company_timezone}}</div>
-                        </template>
-                        <template v-slot:cell.username="{cell,slot}">
-                            <div class="p-[3px]">{{cell.approver.username}}</div>
-                        </template>
-                        <template v-slot:cell.company_employee_number="{cell,slot}">
-                            <div class="p-[3px]">{{cell.approver.company_employee_number}}</div>
-                        </template>
-                        <template v-slot:cell.company_employee_full_name="{cell,slot}">
-                            <div class="p-[3px]">{{cell.approver.company_employee_full_name}}</div>
-                        </template>
-                        <template v-slot:cell.company_assignment_type="{cell,slot}">
-                            <div class="px-[3px]">
-                                <span v-if="cell.approver.company_assignment_type?.value">{{cell.approver.company_assignment_type?.text}}</span>
-                            </div>
-                        </template>
-                        <template v-slot:cell.approved_by_username="{cell,slot}">
-                            <div class="p-[3px]">{{cell.approved_by.username}}</div>
-                        </template>
-                        <template v-slot:cell.approved_at_diff="{cell,slot}">
-                            <div class="p-[3px]">{{cell.approved_by.approved_at_diff}}</div>
-                        </template>
-                    </DataTable>
-
-                    <div>
-                        <PageInformation :pagination="approvalStates.meta.pagination" :pending="disableDataTable"/>
-                        <Pagination :size="'lg'" :pagination="approvalStates.meta.pagination" :pending="disableDataTable" v-model="pageComputed"/>
                     </div>
                 </div>
             </div>

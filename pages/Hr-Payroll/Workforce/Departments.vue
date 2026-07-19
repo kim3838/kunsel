@@ -3,23 +3,6 @@
         <DefaultWrapper>
             <div class="mx-auto max-w-screen-lg">
 
-                <form @submit.prevent="departmentsExecute" class="space-y-2 p-[20px]">
-
-                    <BreadCrumbs prefix-company :size="`sm`" />
-
-                    <div class="grid gap-2 grid-cols-3 sm:grid-cols-4 lg:grid-cols-5">
-                        <div>
-                            <InputLabel :size="'sm'" value="Search" />
-                            <Input :disabled="disableActions" :size="'md'" ref="searchInput" v-model="filters.search.keyword" class="w-full" placeholder="Search" type="text"/>
-                        </div>
-
-                        <div class="flex flex-col">
-                            <div class="flex-none h-[1.25rem]"></div>
-                            <Button class="w-min" ref="submitButton" type="submit" :disabled="disableActions" :size="'md'" :icon="disableActions ? 'eos-icons:loading' : 'mdi:data'" :label="disableActions ? 'Loading' : 'Load'"></Button>
-                        </div>
-                    </div>
-                </form>
-
                 <DialogModal
                     :max-width="'410px'"
                     :show="creatingOrEditing"
@@ -38,32 +21,32 @@
                             <div>
                                 <table class="w-full border-separate border-spacing-y-2">
                                     <tbody>
-                                        <tr>
-                                            <td></td>
-                                            <td>
-                                                <RadioGroup
-                                                    :selections="departmentOptions.selection"
-                                                    :radio-key="`department_org_type`"
-                                                    v-model="departmentOptions.selected" />
-                                            </td>
-                                        </tr>
-                                        <tr v-if="departmentOptions.selected == 1">
-                                            <td><InputLabel :size="'md'" value="Parent Department" /></td>
-                                            <td class="my-2">
-                                                <SingleSelect
-                                                    :searchable="false"
-                                                    drop-shadow
-                                                    :selection-max-viewable-line="6"
-                                                    :size="'md'"
-                                                    :label="'Select'"
-                                                    :options="parentDepartmentSelectionOption"
-                                                    @value-change=""/>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td><InputLabel :size="'md'" value="Department" /></td>
-                                            <td><Input v-model="departmentName" placeholder="Enter department name" type="text" /></td>
-                                        </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td>
+                                            <RadioGroup
+                                                :selections="departmentOptions.selection"
+                                                :radio-key="`department_org_type`"
+                                                v-model="departmentOptions.selected" />
+                                        </td>
+                                    </tr>
+                                    <tr v-if="departmentOptions.selected == 1">
+                                        <td><InputLabel :size="'md'" value="Parent Department" /></td>
+                                        <td class="my-2">
+                                            <SingleSelect
+                                                :searchable="false"
+                                                drop-shadow
+                                                :selection-max-viewable-line="6"
+                                                :size="'md'"
+                                                :label="'Select'"
+                                                :options="parentDepartmentSelectionOption"
+                                                @value-change=""/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><InputLabel :size="'md'" value="Department" /></td>
+                                        <td><Input v-model="departmentName" placeholder="Enter department name" type="text" /></td>
+                                    </tr>
                                     </tbody>
                                 </table>
                             </div>
@@ -88,44 +71,65 @@
                     </template>
                 </DialogModal>
 
-                <div class="px-[20px] space-y-2">
-                    <div class="flex flex-row flex-wrap gap-2 items-center min-h-8" :class="[disableActions ? 'pointer-events-none' : '']">
-                        <Button
-                            v-if="departmentsSuccessful"
-                            class="inline-block"
-                            :icon="'mdi:plus'"
-                            :size="'sm'"
-                            :disabled="disableActions"
-                            @click="create"/>
-                        <div v-if="departmentsSuccessful" class="scaffold-border px-2 font-[National_Park]">
-                            <span><span class="font-semibold">{{allSelectedComputed.length}}</span> Selected</span>
-                        </div>
-                        <Button
-                            v-if="departmentsSuccessful"
-                            :variant="'outline'"
-                            :size="'sm'"
-                            :icon="'ph:trash-simple'"
-                            :disabled="disableActions"
-                            :label="'Bulk delete'"
-                            @click="confirmDeleteSelected()" />
-                        <div v-if="!departmentsSuccessful" class="flex flex-row flex-wrap gap-2 items-center min-h-8">
-                            <Label invert :size="'md'" :type="'danger'" :label="departmentsMessage" />
-                        </div>
-                    </div>
+                <div class="space-y-2 p-[20px]">
 
-                    <DataTable
-                        v-if="departmentsSuccessful"
-                        :key="departmentsKey"
-                        :sup-headers="departmentsSupHeaders"
-                        :headers="departmentsHeaders"
-                        :size="'lg'"
-                        :border-appearance="true"
-                        :stripped="false"
-                        :rows="departmentsData"
-                        :disabled="disableDataTable"
-                        v-model="selectedDepartments"
-                        :sub-row-slug="'sub_departments'"
-                        :sub-row-settings="{
+                    <BreadCrumbs prefix-company :size="`sm`" />
+
+                    <div class="lining-shadow rounded-sm tint-background space-y-2 p-[20px]">
+
+                        <form @submit.prevent="departmentsExecute" class="space-y-2">
+
+                            <div class="grid gap-2 grid-cols-3 sm:grid-cols-4 lg:grid-cols-5">
+                                <div>
+                                    <InputLabel :size="'sm'" value="Search" />
+                                    <Input :disabled="disableActions" :size="'md'" ref="searchInput" v-model="filters.search.keyword" class="w-full" placeholder="Search" type="text"/>
+                                </div>
+
+                                <div class="flex flex-col">
+                                    <div class="flex-none h-[1.25rem]"></div>
+                                    <Button class="w-min" ref="submitButton" type="submit" :disabled="disableActions" :size="'md'" :icon="disableActions ? 'eos-icons:loading' : 'mdi:data'" :label="disableActions ? 'Loading' : 'Load'"></Button>
+                                </div>
+                            </div>
+                        </form>
+
+                        <div class="space-y-2">
+                            <div class="flex flex-row flex-wrap gap-2 items-center min-h-8" :class="[disableActions ? 'pointer-events-none' : '']">
+                                <Button
+                                    v-if="departmentsSuccessful"
+                                    class="inline-block"
+                                    :icon="'mdi:plus'"
+                                    :size="'sm'"
+                                    :disabled="disableActions"
+                                    @click="create"/>
+                                <div v-if="departmentsSuccessful" class="scaffold-border px-2 font-[National_Park]">
+                                    <span><span class="font-semibold">{{allSelectedComputed.length}}</span> Selected</span>
+                                </div>
+                                <Button
+                                    v-if="departmentsSuccessful"
+                                    :variant="'outline'"
+                                    :size="'sm'"
+                                    :icon="'ph:trash-simple'"
+                                    :disabled="disableActions"
+                                    :label="'Bulk delete'"
+                                    @click="confirmDeleteSelected()" />
+                                <div v-if="!departmentsSuccessful" class="flex flex-row flex-wrap gap-2 items-center min-h-8">
+                                    <Label invert :size="'md'" :type="'danger'" :label="departmentsMessage" />
+                                </div>
+                            </div>
+
+                            <DataTable
+                                v-if="departmentsSuccessful"
+                                :key="departmentsKey"
+                                :sup-headers="departmentsSupHeaders"
+                                :headers="departmentsHeaders"
+                                :size="'lg'"
+                                :border-appearance="true"
+                                :stripped="false"
+                                :rows="departmentsData"
+                                :disabled="disableDataTable"
+                                v-model="selectedDepartments"
+                                :sub-row-slug="'sub_departments'"
+                                :sub-row-settings="{
                             type: DATATABLE_SUBROW_TYPE.TITLED,
                             containerPaddingTop: 0.75,
                             containerPaddingBottom: 1.75,
@@ -134,40 +138,43 @@
                             verticalBorderType: 'dashed',
                             horizontalBorderType: 'dashed',
                         }"
-                        selection>
-                        <template v-slot:cell.actions="{cell, slot, scrollReference}">
-                            <div class="text-base h-[32px] px-2 gap-0.5 flex items-center justify-center cursor-pointer accent-hover" @click="edit(cell)">
-                                <span class="font-narrow-thin">Edit</span>
-                                <Icon class="h-5 w-5" :name="'gg:external'"/>
-                            </div>
-                        </template>
-                        <template v-slot:cell.department_head_number="{cell,slot}">
-                            <div class="p-[3px]">
-                                <span v-if="cell.head">{{`${cell.head?.number}`}}</span>
-                            </div>
-                        </template>
-                        <template v-slot:cell.department_head_full_name="{cell,slot}">
-                            <div class="p-[3px]">
-                                <span v-if="cell.head">{{`${cell.head?.full_name}`}}</span>
-                            </div>
-                        </template>
-                        <template v-slot:cell.department_head_designation="{cell,slot}">
-                            <div class="p-[3px]">
-                                <span v-if="cell.head && cell.head?.designation">{{`${cell.head?.designation?.name}`}}</span>
-                            </div>
-                        </template>
-                        <template v-slot:sub_row_slot="{rowIndex, cell, slot}">
-                            <div class="inline-flex items-center scaffold-border pr-2">
-                                <Icon name="mdi:info-variant" :class="[slot.iconSizeClass]" /><div :class="[slot.titleSizeClass]">Sub-Departments</div>
-                            </div>
-                            <DepartmentSubRow
-                                :rows="cell[slot.slug]"
-                                @proxy-edit="edit"
-                                @sync-selected="syncSelectedSubDepartments"
-                                :disabled="disableDataTable"
-                            ></DepartmentSubRow>
-                        </template>
-                    </DataTable>
+                                selection>
+                                <template v-slot:cell.actions="{cell, slot, scrollReference}">
+                                    <div class="text-base h-[32px] px-2 gap-0.5 flex items-center justify-center cursor-pointer accent-hover" @click="edit(cell)">
+                                        <span class="font-narrow-thin">Edit</span>
+                                        <Icon class="h-5 w-5" :name="'gg:external'"/>
+                                    </div>
+                                </template>
+                                <template v-slot:cell.department_head_number="{cell,slot}">
+                                    <div class="p-[3px]">
+                                        <span v-if="cell.head">{{`${cell.head?.number}`}}</span>
+                                    </div>
+                                </template>
+                                <template v-slot:cell.department_head_full_name="{cell,slot}">
+                                    <div class="p-[3px]">
+                                        <span v-if="cell.head">{{`${cell.head?.full_name}`}}</span>
+                                    </div>
+                                </template>
+                                <template v-slot:cell.department_head_designation="{cell,slot}">
+                                    <div class="p-[3px]">
+                                        <span v-if="cell.head && cell.head?.designation">{{`${cell.head?.designation?.name}`}}</span>
+                                    </div>
+                                </template>
+                                <template v-slot:sub_row_slot="{rowIndex, cell, slot}">
+                                    <div class="inline-flex items-center scaffold-border pr-2">
+                                        <Icon name="mdi:info-variant" :class="[slot.iconSizeClass]" /><div :class="[slot.titleSizeClass]">Sub-Departments</div>
+                                    </div>
+                                    <DepartmentSubRow
+                                        :rows="cell[slot.slug]"
+                                        @proxy-edit="edit"
+                                        @sync-selected="syncSelectedSubDepartments"
+                                        :disabled="disableDataTable"
+                                    ></DepartmentSubRow>
+                                </template>
+                            </DataTable>
+                        </div>
+
+                    </div>
                 </div>
             </div>
         </DefaultWrapper>

@@ -2,142 +2,151 @@
     <div>
         <DefaultWrapper>
             <div class="mx-auto max-w-screen-lg">
-                <form @submit.prevent="paginate(1, true)" class="space-y-2 p-[20px]">
+
+                <div class="space-y-2 p-[20px]">
+
                     <BreadCrumbs prefix-company :size="`sm`" />
 
-                    <div class="grid gap-2 grid-cols-3 sm:grid-cols-4 lg:grid-cols-5">
-                        <div>
-                            <InputLabel :size="'sm'" value="Search payroll" />
-                            <Input :disabled="disableActions" :size="'md'" ref="searchInput" v-model="filters.payroll_search.keyword" class="w-full" placeholder="Search payroll" type="text"/>
-                        </div>
-                        <div>
-                            <InputLabel :size="'sm'" value="Search employee" />
-                            <Input :disabled="disableActions" :size="'md'" ref="searchInput" v-model="filters.employee_search.keyword" class="w-full" placeholder="Search employee" type="text"/>
-                        </div>
-                        <div>
-                            <InputLabel :size="'sm'" for="month" value="From month" />
-                            <InputWithIcon
-                                glint
-                                :icon="'mdi:calendar-cursor-outline'"
-                                :size="'md'"
-                                :id="'from_month'"
-                                v-model="formStore.filters.fromMonthLabel"
-                                readonly />
-                        </div>
-                        <div>
-                            <InputLabel :size="'sm'" for="month" value="To month" />
-                            <InputWithIcon
-                                glint
-                                :icon="'mdi:calendar-cursor-outline'"
-                                :size="'md'"
-                                :id="'to_month'"
-                                v-model="formStore.filters.toMonthLabel"
-                                readonly />
-                        </div>
-                        <div>
-                            <InputLabel :size="'sm'" value="Pay Frequency" />
-                            <MultiSelect
-                                :key="payFrequencyOptionsKey"
-                                :icon="'tdesign:component-checkbox'"
-                                :disabled="disableActions"
-                                glint
-                                drop-shadow
-                                :selection-max-viewable-line="15"
-                                :size="'md'"
-                                :options="payFrequencyOptions"
-                            />
-                        </div>
-                        <div>
-                            <InputLabel :size="'sm'" value="Frequency Sequence" />
-                            <MultiSelect
-                                :key="payFrequencySequenceOptionsKey"
-                                :icon="'tdesign:component-checkbox'"
-                                :disabled="disableActions"
-                                glint
-                                drop-shadow
-                                :selection-max-viewable-line="15"
-                                :size="'md'"
-                                :options="payFrequencySequenceOptions"
-                            />
-                        </div>
-                        <div class="col-span-2">
-                            <InputLabel :size="'sm'" value="Filter payrolls" />
-                            <MultiSelectPaginated
-                                :key="payrollSelectionsOptionsKey"
-                                :selection-max-viewable-line="20"
-                                :icon="'tdesign:component-checkbox'"
-                                :disabled="disableActions"
-                                glint
-                                drop-shadow
-                                :size="'md'"
-                                :label="'Filter payroll(s)'"
-                                :payload="payrollSelectionsOptions"
-                            />
-                        </div>
-                        <div>
-                            <InputLabel :size="'sm'" value="Filter employees" />
-                            <MultiSelectPaginated
-                                :key="employeeOptionsKey"
-                                :icon="'tdesign:component-checkbox'"
-                                :disabled="disableActions"
-                                glint
-                                drop-shadow
-                                :size="'md'"
-                                :label="'Filter employee(s)'"
-                                :payload="employeeOptions"
-                            />
-                        </div>
-                        <div>
-                            <InputLabel :size="'sm'" value="Employee Group" />
-                            <MultiSelect :key="employeeGroupOptionsKey" glint drop-shadow :selection-max-viewable-line="15" :size="'md'" :options="employeeGroupOptions" :disabled="disableActions" :icon="'tdesign:component-checkbox'"/>
-                        </div>
-                    </div>
+                    <div class="lining-shadow rounded-sm tint-background space-y-2 p-[20px]">
 
-                    <div class="flex flex-row flex-wrap gap-2 items-center min-h-8">
-                        <Button class="w-min" ref="submitButton" type="submit" :disabled="disableActions" :size="'md'" :icon="disableActions ? 'eos-icons:loading' : 'mdi:data'" :label="disableActions ? 'Loading' : 'Load'"></Button>
-                        <Button v-if="taxes.successful" class="w-min" type="button" :disabled="disableActions" :size="'md'" :variant="'flat'" :icon="'ri:file-download-line'" @click="exportCsv" :override="{font_family_class: 'font-[Prociono]'}" :label="'Export .csv'"></Button>
-                    </div>
-                </form>
+                        <form @submit.prevent="paginate(1, true)" class="space-y-2">
 
-                <div class="px-[20px] space-y-2">
-                    <div class="flex flex-row flex-wrap gap-2 items-center min-h-8">
-                        <div class="flex flex-row flex-wrap gap-2 items-center min-h-8" :class="[disableActions ? 'pointer-events-none' : '']">
-                            <Label v-if="!taxes.successful" invert :size="'md'" :type="'danger'" :label="taxes.message" />
+                            <div class="grid gap-2 grid-cols-3 sm:grid-cols-4 lg:grid-cols-5">
+                                <div>
+                                    <InputLabel :size="'sm'" value="Search payroll" />
+                                    <Input :disabled="disableActions" :size="'md'" ref="searchInput" v-model="filters.payroll_search.keyword" class="w-full" placeholder="Search payroll" type="text"/>
+                                </div>
+                                <div>
+                                    <InputLabel :size="'sm'" value="Search employee" />
+                                    <Input :disabled="disableActions" :size="'md'" ref="searchInput" v-model="filters.employee_search.keyword" class="w-full" placeholder="Search employee" type="text"/>
+                                </div>
+                                <div>
+                                    <InputLabel :size="'sm'" for="month" value="From month" />
+                                    <InputWithIcon
+                                        glint
+                                        :icon="'mdi:calendar-cursor-outline'"
+                                        :size="'md'"
+                                        :id="'from_month'"
+                                        v-model="formStore.filters.fromMonthLabel"
+                                        readonly />
+                                </div>
+                                <div>
+                                    <InputLabel :size="'sm'" for="month" value="To month" />
+                                    <InputWithIcon
+                                        glint
+                                        :icon="'mdi:calendar-cursor-outline'"
+                                        :size="'md'"
+                                        :id="'to_month'"
+                                        v-model="formStore.filters.toMonthLabel"
+                                        readonly />
+                                </div>
+                                <div>
+                                    <InputLabel :size="'sm'" value="Pay Frequency" />
+                                    <MultiSelect
+                                        :key="payFrequencyOptionsKey"
+                                        :icon="'tdesign:component-checkbox'"
+                                        :disabled="disableActions"
+                                        glint
+                                        drop-shadow
+                                        :selection-max-viewable-line="15"
+                                        :size="'md'"
+                                        :options="payFrequencyOptions"
+                                    />
+                                </div>
+                                <div>
+                                    <InputLabel :size="'sm'" value="Frequency Sequence" />
+                                    <MultiSelect
+                                        :key="payFrequencySequenceOptionsKey"
+                                        :icon="'tdesign:component-checkbox'"
+                                        :disabled="disableActions"
+                                        glint
+                                        drop-shadow
+                                        :selection-max-viewable-line="15"
+                                        :size="'md'"
+                                        :options="payFrequencySequenceOptions"
+                                    />
+                                </div>
+                                <div class="col-span-2">
+                                    <InputLabel :size="'sm'" value="Filter payrolls" />
+                                    <MultiSelectPaginated
+                                        :key="payrollSelectionsOptionsKey"
+                                        :selection-max-viewable-line="20"
+                                        :icon="'tdesign:component-checkbox'"
+                                        :disabled="disableActions"
+                                        glint
+                                        drop-shadow
+                                        :size="'md'"
+                                        :label="'Filter payroll(s)'"
+                                        :payload="payrollSelectionsOptions"
+                                    />
+                                </div>
+                                <div>
+                                    <InputLabel :size="'sm'" value="Filter employees" />
+                                    <MultiSelectPaginated
+                                        :key="employeeOptionsKey"
+                                        :icon="'tdesign:component-checkbox'"
+                                        :disabled="disableActions"
+                                        glint
+                                        drop-shadow
+                                        :size="'md'"
+                                        :label="'Filter employee(s)'"
+                                        :payload="employeeOptions"
+                                    />
+                                </div>
+                                <div>
+                                    <InputLabel :size="'sm'" value="Employee Group" />
+                                    <MultiSelect :key="employeeGroupOptionsKey" glint drop-shadow :selection-max-viewable-line="15" :size="'md'" :options="employeeGroupOptions" :disabled="disableActions" :icon="'tdesign:component-checkbox'"/>
+                                </div>
+                            </div>
+
+                            <div class="flex flex-row flex-wrap gap-2 items-center min-h-8">
+                                <Button class="w-min" ref="submitButton" type="submit" :disabled="disableActions" :size="'md'" :icon="disableActions ? 'eos-icons:loading' : 'mdi:data'" :label="disableActions ? 'Loading' : 'Load'"></Button>
+                                <Button v-if="taxes.successful" class="w-min" type="button" :disabled="disableActions" :size="'md'" :variant="'flat'" :icon="'ri:file-download-line'" @click="exportCsv" :override="{font_family_class: 'font-[Prociono]'}" :label="'Export .csv'"></Button>
+                            </div>
+                        </form>
+
+                        <div class="space-y-2">
+                            <div class="flex flex-row flex-wrap gap-2 items-center min-h-8">
+                                <div class="flex flex-row flex-wrap gap-2 items-center min-h-8" :class="[disableActions ? 'pointer-events-none' : '']">
+                                    <Label v-if="!taxes.successful" invert :size="'md'" :type="'danger'" :label="taxes.message" />
+                                </div>
+                            </div>
+
+                            <DataTable
+                                v-if="taxes.successful"
+                                :key="taxesKey"
+                                :sup-headers="taxesSupHeaders"
+                                :headers="taxesHeaders"
+                                :size="'lg'"
+                                :rows="taxes.data"
+                                v-model="selectedTaxes"
+                                selection>
+                                <template v-slot:cell.payroll_number="{cell,slot}">
+                                    <div class="px-[3px] font-medium">{{cell.payroll.number}}</div>
+                                </template>
+                                <template v-slot:cell.payroll_year="{cell,slot}">
+                                    <div class="px-[3px]">{{cell.payroll.year}}</div>
+                                </template>
+                                <template v-slot:cell.payroll_month_readable="{cell,slot}">
+                                    <div class="px-[3px]">{{cell.payroll.month_readable}}</div>
+                                </template>
+                                <template v-slot:cell.employee_number="{cell,slot}">
+                                    <div class="px-[3px]">{{cell.employee.number}}</div>
+                                </template>
+                                <template v-slot:cell.employee_full_name="{cell,slot}">
+                                    <div class="px-[3px]">{{cell.employee.full_name}}</div>
+                                </template>
+                                <template v-slot:cell.component_type="{cell,slot}">
+                                    <div class="p-[3px]">{{cell.component_type.text}}</div>
+                                </template>
+                            </DataTable>
+
+                            <div>
+                                <PageInformation :pagination="taxes.meta.pagination" :pending="disableDataTable"/>
+                                <Pagination :size="'lg'" :pagination="taxes.meta.pagination" :pending="disableDataTable" v-model="pageComputed"/>
+                            </div>
                         </div>
-                    </div>
 
-                    <DataTable
-                        v-if="taxes.successful"
-                        :key="taxesKey"
-                        :sup-headers="taxesSupHeaders"
-                        :headers="taxesHeaders"
-                        :size="'lg'"
-                        :rows="taxes.data"
-                        v-model="selectedTaxes"
-                        selection>
-                        <template v-slot:cell.payroll_number="{cell,slot}">
-                            <div class="px-[3px] font-medium">{{cell.payroll.number}}</div>
-                        </template>
-                        <template v-slot:cell.payroll_year="{cell,slot}">
-                            <div class="px-[3px]">{{cell.payroll.year}}</div>
-                        </template>
-                        <template v-slot:cell.payroll_month_readable="{cell,slot}">
-                            <div class="px-[3px]">{{cell.payroll.month_readable}}</div>
-                        </template>
-                        <template v-slot:cell.employee_number="{cell,slot}">
-                            <div class="px-[3px]">{{cell.employee.number}}</div>
-                        </template>
-                        <template v-slot:cell.employee_full_name="{cell,slot}">
-                            <div class="px-[3px]">{{cell.employee.full_name}}</div>
-                        </template>
-                        <template v-slot:cell.component_type="{cell,slot}">
-                            <div class="p-[3px]">{{cell.component_type.text}}</div>
-                        </template>
-                    </DataTable>
-
-                    <div>
-                        <PageInformation :pagination="taxes.meta.pagination" :pending="disableDataTable"/>
-                        <Pagination :size="'lg'" :pagination="taxes.meta.pagination" :pending="disableDataTable" v-model="pageComputed"/>
                     </div>
                 </div>
             </div>

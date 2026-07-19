@@ -3,75 +3,82 @@
         <AdminWrapper>
             <div class="mx-auto max-w-screen-2xl">
 
-                <form @submit.prevent="paginate(1, true)" class="space-y-2 p-[20px]">
-                    <div class="grid gap-2 grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-8">
-                        <div class="col-span-full md:col-span-2">
-                            <InputLabel :size="'sm'" value="Account" />
-                            <MultiSelect :disabled="disableActions" glint drop-shadow :selection-max-viewable-line="5" :size="'md'" :options="accountOptions" :icon="'tdesign:component-checkbox'"/>
-                        </div>
-                        <div>
-                            <InputLabel :size="'sm'" value="Search" />
-                            <Input :disabled="disableActions" :size="'md'" ref="searchInput" v-model="filters.search.keyword" class="w-full" placeholder="Search" type="text"/>
-                        </div>
-                    </div>
+                <div class="space-y-2 p-[20px]">
 
-                    <div class="grid gap-2 grid-cols-1 sm:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-8">
-                        <Button class="w-min" ref="submitButton" type="submit" :disabled="disableActions" :size="'md'" :icon="disableActions ? 'eos-icons:loading' : 'mdi:data'" :label="disableActions ? 'Loading' : 'Load'"></Button>
-                    </div>
-                </form>
+                    <div class="lining-shadow rounded-sm tint-background space-y-2 p-[20px]">
 
-                <div class="px-[20px] space-y-2">
-                    <div class="flex flex-row flex-wrap gap-2 items-center min-h-8" :class="[disableActions ? 'pointer-events-none' : '']">
-                        <NuxtLink
-                            v-if="companies.successful"
-                            :to="`/admin/companies/create-company`">
-                            <Button class="w-min" :disabled="disableActions" :size="'sm'" :icon="'mdi:plus'"></Button>
-                        </NuxtLink>
-                        <Label v-if="!companies.successful" invert :size="'md'" :type="'danger'" :label="companies.message" />
-                    </div>
+                        <form @submit.prevent="paginate(1, true)" class="space-y-2">
+                            <div class="grid gap-2 grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-8">
+                                <div class="col-span-full md:col-span-2">
+                                    <InputLabel :size="'sm'" value="Account" />
+                                    <MultiSelect :disabled="disableActions" glint drop-shadow :selection-max-viewable-line="5" :size="'md'" :options="accountOptions" :icon="'tdesign:component-checkbox'"/>
+                                </div>
+                                <div>
+                                    <InputLabel :size="'sm'" value="Search" />
+                                    <Input :disabled="disableActions" :size="'md'" ref="searchInput" v-model="filters.search.keyword" class="w-full" placeholder="Search" type="text"/>
+                                </div>
+                            </div>
 
-                    <DataTable
-                        v-if="companies.successful"
-                        :headers="companiesHeaders"
-                        :size="'lg'"
-                        :rows="companies.data"
-                        :disabled="disableDataTable"
-                        v-model="selectedCompanies"
-                        selection>
-                        <template v-slot:cell.actions="{cell,slot}">
-                            <div class="flex items-center">
-                                <NavDrop
-                                    class="z-20"
-                                    :disabled="disableActions"
-                                    :parent-icon="'ic:baseline-arrow-right'"
-                                    in-horizontal-scrollable
-                                    :size="`sm`"
-                                    :drop-shadow-size="`lg`"
-                                    :title="'Menu'"
-                                    :drop-align="'top'"
-                                    :drop-justify="'right'"
-                                    :active-style="`clear-fluid`"
-                                    :drop-active-style="`clear-fluid`"
-                                    :drop-options="[
+                            <div class="grid gap-2 grid-cols-1 sm:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-8">
+                                <Button class="w-min" ref="submitButton" type="submit" :disabled="disableActions" :size="'md'" :icon="disableActions ? 'eos-icons:loading' : 'mdi:data'" :label="disableActions ? 'Loading' : 'Load'"></Button>
+                            </div>
+                        </form>
+
+                        <div class="space-y-2">
+                            <div class="flex flex-row flex-wrap gap-2 items-center min-h-8" :class="[disableActions ? 'pointer-events-none' : '']">
+                                <NuxtLink
+                                    v-if="companies.successful"
+                                    :to="`/admin/companies/create-company`">
+                                    <Button class="w-min" :disabled="disableActions" :size="'sm'" :icon="'mdi:plus'"></Button>
+                                </NuxtLink>
+                                <Label v-if="!companies.successful" invert :size="'md'" :type="'danger'" :label="companies.message" />
+                            </div>
+
+                            <DataTable
+                                v-if="companies.successful"
+                                :headers="companiesHeaders"
+                                :size="'lg'"
+                                :rows="companies.data"
+                                :disabled="disableDataTable"
+                                v-model="selectedCompanies"
+                                selection>
+                                <template v-slot:cell.actions="{cell,slot}">
+                                    <div class="flex items-center">
+                                        <NavDrop
+                                            class="z-20"
+                                            :disabled="disableActions"
+                                            :parent-icon="'ic:baseline-arrow-right'"
+                                            in-horizontal-scrollable
+                                            :size="`sm`"
+                                            :drop-shadow-size="`lg`"
+                                            :title="'Menu'"
+                                            :drop-align="'top'"
+                                            :drop-justify="'right'"
+                                            :active-style="`clear-fluid`"
+                                            :drop-active-style="`clear-fluid`"
+                                            :drop-options="[
                                         {type: 'link',icon: 'mdi:pen',title: 'Edit',to: `/admin/companies/${cell.ulid}`},
                                         {type: 'link',icon: 'ri:formula',title: 'Formulas',to: `/admin/company-formulas/${cell.ulid}`},
                                         {type: 'link',icon: 'tdesign:component-checkbox', title: 'Salary Statement Modules',to: `/admin/company-salary-statement-modules/${cell.ulid}`},
                                     ]">
-                                    <template v-slot="{slot}">
-                                        <div
-                                            class="flex items-center pl-1 py-1 focus:outline-none">
-                                            <span :class="[slot.headerFontClass, 'font-narrow-thin']">Menu</span>
-                                            <Icon :class="[slot.dropDownIconClass]" :name="'ic:baseline-arrow-right'"/>
-                                        </div>
-                                    </template>
-                                </NavDrop>
-                            </div>
-                        </template>
-                    </DataTable>
+                                            <template v-slot="{slot}">
+                                                <div
+                                                    class="flex items-center pl-1 py-1 focus:outline-none">
+                                                    <span :class="[slot.headerFontClass, 'font-narrow-thin']">Menu</span>
+                                                    <Icon :class="[slot.dropDownIconClass]" :name="'ic:baseline-arrow-right'"/>
+                                                </div>
+                                            </template>
+                                        </NavDrop>
+                                    </div>
+                                </template>
+                            </DataTable>
 
-                    <div>
-                        <PageInformation :pagination="companies.meta.pagination" :pending="disableDataTable"/>
-                        <Pagination :size="'lg'" :pagination="companies.meta.pagination" :pending="disableDataTable" v-model="pageComputed"/>
+                            <div>
+                                <PageInformation :pagination="companies.meta.pagination" :pending="disableDataTable"/>
+                                <Pagination :size="'lg'" :pagination="companies.meta.pagination" :pending="disableDataTable" v-model="pageComputed"/>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
             </div>

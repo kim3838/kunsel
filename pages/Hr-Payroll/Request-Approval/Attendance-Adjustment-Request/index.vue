@@ -2,64 +2,6 @@
     <div>
         <DefaultWrapper>
             <div class="mx-auto max-w-screen-xl">
-                <form @submit.prevent="paginate(1, true)" class="space-y-2 p-[20px]">
-
-                    <BreadCrumbs prefix-company :size="`sm`" />
-
-                    <div class="grid gap-2 grid-cols-3 sm:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
-                        <div>
-                            <InputLabel :size="'sm'" value="Requested by" />
-                            <MultiSelectPaginated
-                                :key="companyUserSelectionsOptionsKey"
-                                :icon="'tdesign:component-checkbox'"
-                                :disabled="disableActions"
-                                glint
-                                drop-shadow
-                                :size="'md'"
-                                :label="'Filter requested by'"
-                                :payload="companyUserSelectionsOptions"
-                            />
-                        </div>
-                        <div>
-                            <InputLabel :size="'sm'" value="Status" />
-                            <MultiSelect :disabled="disableActions" glint drop-shadow :size="'md'" :options="requestApprovalStatusOptions" :icon="'tdesign:component-checkbox'"/>
-                        </div>
-                        <div>
-                            <InputLabel :size="'sm'" value="Request # Search" />
-                            <Input :disabled="disableActions" :size="'md'" ref="searchInput" v-model="filters.search.keyword" class="w-full" placeholder="Search Number" type="text"/>
-                        </div>
-                        <div>
-                            <InputLabel :size="'sm'" value="Employee Attendance Search" />
-                            <Input :disabled="disableActions" :size="'md'" ref="attendanceSearchInput" v-model="filters.attendanceSearch.keyword" class="w-full" placeholder="Search Attendance" type="text"/>
-                        </div>
-                        <div>
-                            <InputLabel :size="'sm'" value="Attendance Date From"/>
-                            <InputWithIcon :icon="'mdi:calendar-today-outline'" :id="'date_from'" readonly v-model="formStore.filters.attendanceDateFrom" :size="'md'" class="w-full" :override="{font_family_class: 'font-sans'}" :disabled="disableActions" />
-                        </div>
-                        <div>
-                            <InputLabel :size="'sm'" value="Attendance Date To"/>
-                            <InputWithIcon :icon="'mdi:calendar-outline'" :id="'date_to'" readonly v-model="formStore.filters.attendanceDateTo" :size="'md'" class="w-full" :override="{font_family_class: 'font-sans'}" :disabled="disableActions" />
-                        </div>
-                        <div>
-                            <InputLabel :size="'sm'" value="Employee Group" />
-                            <MultiSelect :key="employeeGroupOptionsKey" glint drop-shadow :selection-max-viewable-line="15" :size="'md'" :options="employeeGroupOptions" :disabled="disableActions" :icon="'tdesign:component-checkbox'"/>
-                        </div>
-                    </div>
-
-                    <div class="flex flex-row flex-wrap gap-2 items-center min-h-8">
-                        <Button class="w-min" ref="submitButton" type="submit" :disabled="disableActions" :size="'md'" :icon="disableActions ? 'eos-icons:loading' : 'mdi:data'" :label="disableActions ? 'Loading' : 'Load'"></Button>
-                        <div class="h-8 flex flex-row items-center scaffold-border px-2">
-                            <label class="flex items-center">
-                                <Checkbox
-                                    :disabled="disableActions"
-                                    name="show-approval-sequence"
-                                    v-model="showApprovalStates"
-                                    :size="'md'"
-                                    :label="'Show approval sequence'" />
-                            </label>
-                        </div>
-                    </div>
-                </form>
 
                 <ViewRequestable
                     v-model:view-requestable="showRequestable"
@@ -270,38 +212,101 @@
                     </template>
                 </DialogModal>
 
-                <div class="px-[20px] space-y-2">
-                    <div class="flex flex-row flex-wrap gap-2 items-center min-h-8" :class="[disableActions ? 'pointer-events-none' : '']">
-                        <Button v-if="attendanceAdjustments.successful" @click="create()" class="w-min" :disabled="disableActions" :size="'sm'" :icon="'mdi:plus'"></Button>
-                        <div v-if="attendanceAdjustments.successful" class="scaffold-border px-2 font-[National_Park]">
-                            <span><span class="font-semibold">{{selectedAttendanceAdjustments.length}}</span> Selected</span>
-                        </div>
-                        <Button
-                            v-if="attendanceAdjustments.successful"
-                            :variant="'outline'"
-                            :size="'sm'"
-                            :icon="'ph:backspace'"
-                            :disabled="disableActions"
-                            :label="'Clear selection'"
-                            @click="selectedAttendanceAdjustments = []" />
-                        <Button v-if="attendanceAdjustments.successful" :variant="'outline'" :size="'sm'" :icon="'ph:trash-simple'" :disabled="disableActions" :label="'Bulk delete'" @click="confirmDeleteSelected()" />
-                        <Label v-if="!attendanceAdjustments.successful" invert :size="'md'" :type="'danger'" :label="attendanceAdjustments.message" />
-                    </div>
+                <div class="space-y-2 p-[20px]">
 
-                    <DataTable
-                        v-if="attendanceAdjustments.successful"
-                        :key="attendanceAdjustmentsKey"
-                        :sup-headers="attendanceAdjustmentsSupHeaders"
-                        :headers="attendanceAdjustmentsHeaders"
-                        :size="'lg'"
-                        :rows="attendanceAdjustments.data"
-                        :disabled="disableDataTable"
-                        v-model="selectedAttendanceAdjustments"
-                        selection
-                        :border-appearance="showApprovalStates"
-                        :stripped="!showApprovalStates"
-                        :sub-row-slug="attendanceAdjustmentSubRowSlug"
-                        :sub-row-settings="{
+                    <BreadCrumbs prefix-company :size="`sm`" />
+
+                    <div class="lining-shadow rounded-sm tint-background space-y-2 p-[20px]">
+
+                        <form @submit.prevent="paginate(1, true)" class="space-y-2">
+
+                            <div class="grid gap-2 grid-cols-3 sm:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
+                                <div>
+                                    <InputLabel :size="'sm'" value="Requested by" />
+                                    <MultiSelectPaginated
+                                        :key="companyUserSelectionsOptionsKey"
+                                        :icon="'tdesign:component-checkbox'"
+                                        :disabled="disableActions"
+                                        glint
+                                        drop-shadow
+                                        :size="'md'"
+                                        :label="'Filter requested by'"
+                                        :payload="companyUserSelectionsOptions"
+                                    />
+                                </div>
+                                <div>
+                                    <InputLabel :size="'sm'" value="Status" />
+                                    <MultiSelect :disabled="disableActions" glint drop-shadow :size="'md'" :options="requestApprovalStatusOptions" :icon="'tdesign:component-checkbox'"/>
+                                </div>
+                                <div>
+                                    <InputLabel :size="'sm'" value="Request # Search" />
+                                    <Input :disabled="disableActions" :size="'md'" ref="searchInput" v-model="filters.search.keyword" class="w-full" placeholder="Search Number" type="text"/>
+                                </div>
+                                <div>
+                                    <InputLabel :size="'sm'" value="Employee Attendance Search" />
+                                    <Input :disabled="disableActions" :size="'md'" ref="attendanceSearchInput" v-model="filters.attendanceSearch.keyword" class="w-full" placeholder="Search Attendance" type="text"/>
+                                </div>
+                                <div>
+                                    <InputLabel :size="'sm'" value="Attendance Date From"/>
+                                    <InputWithIcon :icon="'mdi:calendar-today-outline'" :id="'date_from'" readonly v-model="formStore.filters.attendanceDateFrom" :size="'md'" class="w-full" :override="{font_family_class: 'font-sans'}" :disabled="disableActions" />
+                                </div>
+                                <div>
+                                    <InputLabel :size="'sm'" value="Attendance Date To"/>
+                                    <InputWithIcon :icon="'mdi:calendar-outline'" :id="'date_to'" readonly v-model="formStore.filters.attendanceDateTo" :size="'md'" class="w-full" :override="{font_family_class: 'font-sans'}" :disabled="disableActions" />
+                                </div>
+                                <div>
+                                    <InputLabel :size="'sm'" value="Employee Group" />
+                                    <MultiSelect :key="employeeGroupOptionsKey" glint drop-shadow :selection-max-viewable-line="15" :size="'md'" :options="employeeGroupOptions" :disabled="disableActions" :icon="'tdesign:component-checkbox'"/>
+                                </div>
+                            </div>
+
+                            <div class="flex flex-row flex-wrap gap-2 items-center min-h-8">
+                                <Button class="w-min" ref="submitButton" type="submit" :disabled="disableActions" :size="'md'" :icon="disableActions ? 'eos-icons:loading' : 'mdi:data'" :label="disableActions ? 'Loading' : 'Load'"></Button>
+                                <div class="h-8 flex flex-row items-center scaffold-border px-2">
+                                    <label class="flex items-center">
+                                        <Checkbox
+                                            :disabled="disableActions"
+                                            name="show-approval-sequence"
+                                            v-model="showApprovalStates"
+                                            :size="'md'"
+                                            :label="'Show approval sequence'" />
+                                    </label>
+                                </div>
+                            </div>
+                        </form>
+
+                        <div class="space-y-2">
+                            <div class="flex flex-row flex-wrap gap-2 items-center min-h-8" :class="[disableActions ? 'pointer-events-none' : '']">
+                                <Button v-if="attendanceAdjustments.successful" @click="create()" class="w-min" :disabled="disableActions" :size="'sm'" :icon="'mdi:plus'"></Button>
+                                <div v-if="attendanceAdjustments.successful" class="scaffold-border px-2 font-[National_Park]">
+                                    <span><span class="font-semibold">{{selectedAttendanceAdjustments.length}}</span> Selected</span>
+                                </div>
+                                <Button
+                                    v-if="attendanceAdjustments.successful"
+                                    :variant="'outline'"
+                                    :size="'sm'"
+                                    :icon="'ph:backspace'"
+                                    :disabled="disableActions"
+                                    :label="'Clear selection'"
+                                    @click="selectedAttendanceAdjustments = []" />
+                                <Button v-if="attendanceAdjustments.successful" :variant="'outline'" :size="'sm'" :icon="'ph:trash-simple'" :disabled="disableActions" :label="'Bulk delete'" @click="confirmDeleteSelected()" />
+                                <Label v-if="!attendanceAdjustments.successful" invert :size="'md'" :type="'danger'" :label="attendanceAdjustments.message" />
+                            </div>
+
+                            <DataTable
+                                v-if="attendanceAdjustments.successful"
+                                :key="attendanceAdjustmentsKey"
+                                :sup-headers="attendanceAdjustmentsSupHeaders"
+                                :headers="attendanceAdjustmentsHeaders"
+                                :size="'lg'"
+                                :rows="attendanceAdjustments.data"
+                                :disabled="disableDataTable"
+                                v-model="selectedAttendanceAdjustments"
+                                selection
+                                :border-appearance="showApprovalStates"
+                                :stripped="!showApprovalStates"
+                                :sub-row-slug="attendanceAdjustmentSubRowSlug"
+                                :sub-row-settings="{
                             type: DATATABLE_SUBROW_TYPE.TITLED,
                             containerPaddingTop: 0.75,
                             containerPaddingBottom: 1.75,
@@ -309,40 +314,43 @@
                             rowVerticalLine: true,
                             verticalBorderType: 'dashed'
                         }">
-                        <template v-slot:cell.number="{cell,slot}">
-                            <div class="p-[3px] font-medium hover:underline cursor-pointer" @click="viewRequestable(cell)">{{cell.number}}</div>
-                        </template>
-                        <template v-slot:cell.status_summary="{cell,slot}">
-                            <div class="flex space-x-1 px-[0.3rem] items-center">
-                                <Label :size="slot.labelSize" :type="cell?._payload?.label_shade?.value as LabelTypeT" shade :label="cell.status_summary?.text" />
-                            </div>
-                        </template>
-                        <template v-slot:cell.requested_by="{cell,slot}">
-                            <div class="p-[3px]">{{cell.requested_by?.username}}</div>
-                        </template>
-                        <template v-slot:cell.employee_number="{cell,slot}">
-                            <div class="p-[3px]">{{cell.attendance?.employee?.number}}</div>
-                        </template>
-                        <template v-slot:cell.employee_full_name="{cell,slot}">
-                            <div class="p-[3px]">{{cell.attendance?.employee?.full_name}}</div>
-                        </template>
-                        <template v-slot:cell.attendance_date="{cell,slot}">
-                            <div class="p-[3px] font-medium">{{cell.attendance?.date_readable}}</div>
-                        </template>
-                        <template v-slot:sub_row_slot="{rowIndex, cell, slot}">
-                            <div class="inline-flex items-center scaffold-border pr-2">
-                                <Icon name="mdi:info-variant" :class="[slot.iconSizeClass]" /><div :class="[slot.titleSizeClass]">Approval Sequence</div>
-                            </div>
-                            <ApprovalStateSubRow
-                                :rows="cell[slot.slug]"
-                                :disabled="disableDataTable"
-                            ></ApprovalStateSubRow>
-                        </template>
-                    </DataTable>
+                                <template v-slot:cell.number="{cell,slot}">
+                                    <div class="p-[3px] font-medium hover:underline cursor-pointer" @click="viewRequestable(cell)">{{cell.number}}</div>
+                                </template>
+                                <template v-slot:cell.status_summary="{cell,slot}">
+                                    <div class="flex space-x-1 px-[0.3rem] items-center">
+                                        <Label :size="slot.labelSize" :type="cell?._payload?.label_shade?.value as LabelTypeT" shade :label="cell.status_summary?.text" />
+                                    </div>
+                                </template>
+                                <template v-slot:cell.requested_by="{cell,slot}">
+                                    <div class="p-[3px]">{{cell.requested_by?.username}}</div>
+                                </template>
+                                <template v-slot:cell.employee_number="{cell,slot}">
+                                    <div class="p-[3px]">{{cell.attendance?.employee?.number}}</div>
+                                </template>
+                                <template v-slot:cell.employee_full_name="{cell,slot}">
+                                    <div class="p-[3px]">{{cell.attendance?.employee?.full_name}}</div>
+                                </template>
+                                <template v-slot:cell.attendance_date="{cell,slot}">
+                                    <div class="p-[3px] font-medium">{{cell.attendance?.date_readable}}</div>
+                                </template>
+                                <template v-slot:sub_row_slot="{rowIndex, cell, slot}">
+                                    <div class="inline-flex items-center scaffold-border pr-2">
+                                        <Icon name="mdi:info-variant" :class="[slot.iconSizeClass]" /><div :class="[slot.titleSizeClass]">Approval Sequence</div>
+                                    </div>
+                                    <ApprovalStateSubRow
+                                        :rows="cell[slot.slug]"
+                                        :disabled="disableDataTable"
+                                    ></ApprovalStateSubRow>
+                                </template>
+                            </DataTable>
 
-                    <div>
-                        <PageInformation :pagination="attendanceAdjustments.meta.pagination" :pending="disableDataTable"/>
-                        <Pagination :size="'lg'" :pagination="attendanceAdjustments.meta.pagination" :pending="disableDataTable" v-model="pageComputed"/>
+                            <div>
+                                <PageInformation :pagination="attendanceAdjustments.meta.pagination" :pending="disableDataTable"/>
+                                <Pagination :size="'lg'" :pagination="attendanceAdjustments.meta.pagination" :pending="disableDataTable" v-model="pageComputed"/>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
             </div>

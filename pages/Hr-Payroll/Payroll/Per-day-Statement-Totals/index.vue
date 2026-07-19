@@ -2,165 +2,173 @@
     <div>
         <DefaultWrapper>
             <div class="mx-auto max-w-screen-2xl">
-                <form @submit.prevent="paginate(1, true)" class="space-y-2 p-[20px]">
+
+                <div class="space-y-2 p-[20px]">
+
                     <BreadCrumbs prefix-company :size="`sm`" />
 
-                    <div class="grid gap-2 grid-cols-3 sm:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-8">
-                        <div>
-                            <InputLabel :size="'sm'" value="Date From"/>
-                            <InputWithIcon :icon="'mdi:calendar-today-outline'" :id="'date_from'" readonly v-model="formStore.filters.attendanceDateFrom" :size="'md'" class="w-full" :override="{font_family_class: 'font-sans'}" :disabled="disableActions" />
-                        </div>
-                        <div>
-                            <InputLabel :size="'sm'" value="Date To"/>
-                            <InputWithIcon :icon="'mdi:calendar-outline'" :id="'date_to'" readonly v-model="formStore.filters.attendanceDateTo" :size="'md'" class="w-full" :override="{font_family_class: 'font-sans'}" :disabled="disableActions" />
-                        </div>
-                        <div>
-                            <InputLabel :size="'sm'" value="Status" />
-                            <MultiSelect
-                                :key="dayStatusOptionsKey"
-                                :icon="'tdesign:component-checkbox'"
-                                :disabled="disableActions"
-                                glint
-                                drop-shadow
-                                :selection-max-viewable-line="15"
-                                :size="'md'"
-                                :label="'Filter Status'"
-                                :options="dayStatusOptions"
-                            />
-                        </div>
-                        <div>
-                            <InputLabel :size="'sm'" value="Day Type" />
-                            <MultiSelect
-                                :key="dayTypeOptionsKey"
-                                :icon="'tdesign:component-checkbox'"
-                                :disabled="disableActions"
-                                glint
-                                drop-shadow
-                                :selection-max-viewable-line="15"
-                                :size="'md'"
-                                :label="'Filter Day Type'"
-                                :options="dayTypeOptions"
-                            />
-                        </div>
-                        <div>
-                            <InputLabel :size="'sm'" value="Filter employees" />
-                            <MultiSelectPaginated
-                                :key="employeeOptionsKey"
-                                :icon="'tdesign:component-checkbox'"
-                                :disabled="disableActions"
-                                glint
-                                drop-shadow
-                                :size="'md'"
-                                :label="'Filter employee(s)'"
-                                :payload="employeeOptions"
-                            />
-                        </div>
-                        <div>
-                            <InputLabel :size="'sm'" value="Employee Group" />
-                            <MultiSelect :key="employeeGroupOptionsKey" glint drop-shadow :selection-max-viewable-line="15" :size="'md'" :options="employeeGroupOptions" :disabled="disableActions" :icon="'tdesign:component-checkbox'"/>
-                        </div>
-                    </div>
+                    <div class="lining-shadow rounded-sm tint-background space-y-2 p-[20px]">
 
-                    <div class="grid gap-2 grid-cols-3 sm:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-8">
-                        <div>
-                            <InputLabel :size="'sm'" value="Formulable Type" />
-                            <MultiSelect
-                                :key="formulableTypeOptionsKey"
-                                :icon="'tdesign:component-checkbox'"
-                                :disabled="disableActions"
-                                glint
-                                drop-shadow
-                                :selection-max-viewable-line="5"
-                                :size="'md'"
-                                :label="'Filter Formulable Type'"
-                                :options="formulableTypeOptions"
-                            />
-                        </div>
-                        <div>
-                            <InputLabel :size="'sm'" value="Payroll Component Type" />
-                            <MultiSelect
-                                :key="payrollComponentTypeOptionsKey"
-                                :icon="'tdesign:component-checkbox'"
-                                :disabled="disableActions"
-                                glint
-                                drop-shadow
-                                :selection-max-viewable-line="20"
-                                :size="'md'"
-                                :label="'Filter Component Type'"
-                                :options="payrollComponentTypeOptions"
-                            />
-                        </div>
-                        <div>
-                            <InputLabel :size="'sm'" value="Payroll Item" />
-                            <MultiSelect
-                                :key="payrollComponentNameOptionsKey"
-                                :icon="'tdesign:component-checkbox'"
-                                :disabled="disableActions"
-                                glint
-                                drop-shadow
-                                :selection-max-viewable-line="20"
-                                :size="'md'"
-                                :label="'Filter Payroll Item'"
-                                :options="payrollComponentNameOptions"
-                            />
-                        </div>
-                    </div>
+                        <form @submit.prevent="paginate(1, true)" class="space-y-2">
 
-                    <div class="flex flex-row flex-wrap gap-2 items-center min-h-8">
-                        <Button class="w-min" ref="submitButton" type="submit" :disabled="disableActions" :size="'md'" :icon="disableActions ? 'eos-icons:loading' : 'mdi:data'" :label="disableActions ? 'Loading' : 'Load'"></Button>
-                        <Button v-if="perDayStatements.successful" class="w-min" type="button" :disabled="disableActions" :size="'md'" :variant="'flat'" :icon="'ri:file-download-line'" @click="exportCsv"  :override="{font_family_class: 'font-[Prociono]'}" :label="'Export .csv'"></Button>
-                    </div>
-                </form>
-
-                <div class="px-[20px] space-y-2">
-                    <div class="flex flex-row flex-wrap gap-2 items-center min-h-8">
-
-                        <div v-if="!perDayStatements.successful" class="flex flex-row flex-wrap gap-2 items-center min-h-8" :class="[disableActions ? 'pointer-events-none' : '']">
-                            <Label invert :size="'md'" :type="'danger'" :label="perDayStatements.message" />
-                        </div>
-
-                        <div v-if="!perDayStatementsPending" class="flex flex-row flex-wrap gap-2 items-center min-h-8">
-                            <Label :size="'md'" :type="'clear'" shade :label="`Regular pay: ${totalRegularPay}`" />
-                            <Label :size="'md'" :type="'clear'" shade :label="`Night diff. pay: ${totalNightDiffPay}`" />
-                            <Label :size="'md'" :type="'clear'" shade :label="`Rest day pay: ${totalRestDayPay}`" />
-                            <Label :size="'md'" :type="'clear'" shade :label="`Total: ${grandTotal}`" />
-                        </div>
-                    </div>
-
-                    <DataTable
-                        v-if="perDayStatements.successful"
-                        :key="perDayStatementsKey"
-                        :sup-headers="perDayStatementsSupHeaders"
-                        :headers="perDayStatementsHeaders"
-                        :size="'lg'"
-                        :rows="perDayStatements.data"
-                        v-model="selectedPerDayStatements"
-                        selection>
-                        <template v-slot:cell.employee_full_name="{cell,slot}">
-                            <div class="px-[3px]" :title="cell.employee_full_name">{{wordClamp(cell.employee_full_name, 16)}}</div>
-                        </template>
-                        <template v-slot:cell.date_readable="{cell,slot}">
-                            <div class="p-[3px] font-medium">{{cell.date_readable}}</div>
-                        </template>
-                        <template v-slot:cell.status="{cell,slot}">
-                            <div class="flex space-x-1 px-[0.3rem] items-center">
-                                <Label :size="slot.labelSize" :type="cell?._payload?.label_shade?.value as LabelTypeT" shade :label="cell.status?.text" />
+                            <div class="grid gap-2 grid-cols-3 sm:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-8">
+                                <div>
+                                    <InputLabel :size="'sm'" value="Date From"/>
+                                    <InputWithIcon :icon="'mdi:calendar-today-outline'" :id="'date_from'" readonly v-model="formStore.filters.attendanceDateFrom" :size="'md'" class="w-full" :override="{font_family_class: 'font-sans'}" :disabled="disableActions" />
+                                </div>
+                                <div>
+                                    <InputLabel :size="'sm'" value="Date To"/>
+                                    <InputWithIcon :icon="'mdi:calendar-outline'" :id="'date_to'" readonly v-model="formStore.filters.attendanceDateTo" :size="'md'" class="w-full" :override="{font_family_class: 'font-sans'}" :disabled="disableActions" />
+                                </div>
+                                <div>
+                                    <InputLabel :size="'sm'" value="Status" />
+                                    <MultiSelect
+                                        :key="dayStatusOptionsKey"
+                                        :icon="'tdesign:component-checkbox'"
+                                        :disabled="disableActions"
+                                        glint
+                                        drop-shadow
+                                        :selection-max-viewable-line="15"
+                                        :size="'md'"
+                                        :label="'Filter Status'"
+                                        :options="dayStatusOptions"
+                                    />
+                                </div>
+                                <div>
+                                    <InputLabel :size="'sm'" value="Day Type" />
+                                    <MultiSelect
+                                        :key="dayTypeOptionsKey"
+                                        :icon="'tdesign:component-checkbox'"
+                                        :disabled="disableActions"
+                                        glint
+                                        drop-shadow
+                                        :selection-max-viewable-line="15"
+                                        :size="'md'"
+                                        :label="'Filter Day Type'"
+                                        :options="dayTypeOptions"
+                                    />
+                                </div>
+                                <div>
+                                    <InputLabel :size="'sm'" value="Filter employees" />
+                                    <MultiSelectPaginated
+                                        :key="employeeOptionsKey"
+                                        :icon="'tdesign:component-checkbox'"
+                                        :disabled="disableActions"
+                                        glint
+                                        drop-shadow
+                                        :size="'md'"
+                                        :label="'Filter employee(s)'"
+                                        :payload="employeeOptions"
+                                    />
+                                </div>
+                                <div>
+                                    <InputLabel :size="'sm'" value="Employee Group" />
+                                    <MultiSelect :key="employeeGroupOptionsKey" glint drop-shadow :selection-max-viewable-line="15" :size="'md'" :options="employeeGroupOptions" :disabled="disableActions" :icon="'tdesign:component-checkbox'"/>
+                                </div>
                             </div>
-                        </template>
-                        <template v-slot:cell.day_type="{cell,slot}">
-                            <div class="p-[3px]">{{cell.day_type?.text}}</div>
-                        </template>
-                        <template v-slot:cell.formulable_type="{cell,slot}">
-                            <div class="p-[3px]">{{cell.formulable_type?.text}}</div>
-                        </template>
-                        <template v-slot:cell.component_type="{cell,slot}">
-                            <div class="p-[3px]">{{cell.component_type?.text}}</div>
-                        </template>
-                    </DataTable>
 
-                    <div>
-                        <PageInformation :pagination="perDayStatements.meta.pagination" :pending="disableDataTable"/>
-                        <Pagination :size="'lg'" :pagination="perDayStatements.meta.pagination" :pending="disableDataTable" v-model="pageComputed"/>
+                            <div class="grid gap-2 grid-cols-3 sm:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-8">
+                                <div>
+                                    <InputLabel :size="'sm'" value="Formulable Type" />
+                                    <MultiSelect
+                                        :key="formulableTypeOptionsKey"
+                                        :icon="'tdesign:component-checkbox'"
+                                        :disabled="disableActions"
+                                        glint
+                                        drop-shadow
+                                        :selection-max-viewable-line="5"
+                                        :size="'md'"
+                                        :label="'Filter Formulable Type'"
+                                        :options="formulableTypeOptions"
+                                    />
+                                </div>
+                                <div>
+                                    <InputLabel :size="'sm'" value="Payroll Component Type" />
+                                    <MultiSelect
+                                        :key="payrollComponentTypeOptionsKey"
+                                        :icon="'tdesign:component-checkbox'"
+                                        :disabled="disableActions"
+                                        glint
+                                        drop-shadow
+                                        :selection-max-viewable-line="20"
+                                        :size="'md'"
+                                        :label="'Filter Component Type'"
+                                        :options="payrollComponentTypeOptions"
+                                    />
+                                </div>
+                                <div>
+                                    <InputLabel :size="'sm'" value="Payroll Item" />
+                                    <MultiSelect
+                                        :key="payrollComponentNameOptionsKey"
+                                        :icon="'tdesign:component-checkbox'"
+                                        :disabled="disableActions"
+                                        glint
+                                        drop-shadow
+                                        :selection-max-viewable-line="20"
+                                        :size="'md'"
+                                        :label="'Filter Payroll Item'"
+                                        :options="payrollComponentNameOptions"
+                                    />
+                                </div>
+                            </div>
+
+                            <div class="flex flex-row flex-wrap gap-2 items-center min-h-8">
+                                <Button class="w-min" ref="submitButton" type="submit" :disabled="disableActions" :size="'md'" :icon="disableActions ? 'eos-icons:loading' : 'mdi:data'" :label="disableActions ? 'Loading' : 'Load'"></Button>
+                                <Button v-if="perDayStatements.successful" class="w-min" type="button" :disabled="disableActions" :size="'md'" :variant="'flat'" :icon="'ri:file-download-line'" @click="exportCsv"  :override="{font_family_class: 'font-[Prociono]'}" :label="'Export .csv'"></Button>
+                            </div>
+                        </form>
+
+                        <div class="space-y-2">
+                            <div class="flex flex-row flex-wrap gap-2 items-center min-h-8">
+
+                                <div v-if="!perDayStatements.successful" class="flex flex-row flex-wrap gap-2 items-center min-h-8" :class="[disableActions ? 'pointer-events-none' : '']">
+                                    <Label invert :size="'md'" :type="'danger'" :label="perDayStatements.message" />
+                                </div>
+
+                                <div v-if="!perDayStatementsPending" class="flex flex-row flex-wrap gap-2 items-center min-h-8">
+                                    <Label :size="'md'" :type="'clear'" shade :label="`Regular pay: ${totalRegularPay}`" />
+                                    <Label :size="'md'" :type="'clear'" shade :label="`Night diff. pay: ${totalNightDiffPay}`" />
+                                    <Label :size="'md'" :type="'clear'" shade :label="`Rest day pay: ${totalRestDayPay}`" />
+                                    <Label :size="'md'" :type="'clear'" shade :label="`Total: ${grandTotal}`" />
+                                </div>
+                            </div>
+
+                            <DataTable
+                                v-if="perDayStatements.successful"
+                                :key="perDayStatementsKey"
+                                :sup-headers="perDayStatementsSupHeaders"
+                                :headers="perDayStatementsHeaders"
+                                :size="'lg'"
+                                :rows="perDayStatements.data"
+                                v-model="selectedPerDayStatements">
+                                <template v-slot:cell.employee_full_name="{cell,slot}">
+                                    <div class="px-[3px]" :title="cell.employee_full_name">{{wordClamp(cell.employee_full_name, 16)}}</div>
+                                </template>
+                                <template v-slot:cell.date_readable="{cell,slot}">
+                                    <div class="p-[3px] font-medium">{{cell.date_readable}}</div>
+                                </template>
+                                <template v-slot:cell.status="{cell,slot}">
+                                    <div class="flex space-x-1 px-[0.3rem] items-center">
+                                        <Label :size="slot.labelSize" :type="cell?._payload?.label_shade?.value as LabelTypeT" shade :label="cell.status?.text" />
+                                    </div>
+                                </template>
+                                <template v-slot:cell.day_type="{cell,slot}">
+                                    <div class="p-[3px]">{{cell.day_type?.text}}</div>
+                                </template>
+                                <template v-slot:cell.formulable_type="{cell,slot}">
+                                    <div class="p-[3px]">{{cell.formulable_type?.text}}</div>
+                                </template>
+                                <template v-slot:cell.component_type="{cell,slot}">
+                                    <div class="p-[3px]">{{cell.component_type?.text}}</div>
+                                </template>
+                            </DataTable>
+
+                            <div>
+                                <PageInformation :pagination="perDayStatements.meta.pagination" :pending="disableDataTable"/>
+                                <Pagination :size="'lg'" :pagination="perDayStatements.meta.pagination" :pending="disableDataTable" v-model="pageComputed"/>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
             </div>

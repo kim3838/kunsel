@@ -1,40 +1,7 @@
 <template>
     <div>
         <DefaultWrapper>
-            <div class="mx-auto max-w-screen-lg">
-
-                <div class="space-y-2 p-[20px]">
-
-                    <BreadCrumbs prefix-company :size="`sm`" />
-
-                    <div class="flex flex-row">
-                        <RadioGroup
-                            :disabled="disableLeaveTypeAssignmentActions"
-                            class="flex-none scaffold-border px-2"
-                            :selections="leaveTypeAssignmentTabs"
-                            :size="'md'"
-                            :orientation="leaveTypeSelectionsRadioGroupOrientation"
-                            :radio-key="`leave_type_assignment_tab`"
-                            v-model="leaveTypeAssignmentTab" />
-                    </div>
-                </div>
-
-                <div v-if="leaveTypeAssignmentTab == LEAVE_TYPE_ASSIGNMENT_TAB.LIST">
-                    <Suspense>
-                        <LeaveTypeAssignments
-                            ref="leaveTypeAssignmentsReference"
-                            v-model:pending="leaveTypeAssignmentPending"
-                            @editLeaveTypeSettings="editLeaveTypeSettings" />
-                            <template #fallback>
-                                <div class="px-[20px]">
-                                    <UnorderedList
-                                        :icon="'eos-icons:loading'"
-                                        :size="'md'"
-                                        :label="'Loading leave type assignments...'"/>
-                                </div>
-                            </template>
-                    </Suspense>
-                </div>
+            <div class="mx-auto max-w-screen-2xl">
 
                 <DialogModal
                     :show="assignLeaveTypeModalShow || editLeaveTypeSettingsModalShow"
@@ -156,54 +123,94 @@
                     </template>
                 </DialogModal>
 
-                <div v-if="leaveTypeAssignmentTab == LEAVE_TYPE_ASSIGNMENT_TAB.CREATE_LEAVE_TYPE_ASSIGNMENTS">
-                    <Suspense>
-                        <LeaveTypesByEmployeesSelection
-                            :clear-selection-on-form-submit="false"
-                            ref="employeeSelectionReference"
-                            :disable-actions="disableLeaveTypeAssignmentActions"
-                            v-model:pending="employeeSelectionPending"
-                            v-model:selected="selectedEmployees">
-                            <template #selection-actions>
-                                <Button :disabled="disableLeaveTypeAssignmentActions || employeeSelectionPending" @click="assignLeaveTypes" class="inline-block" :size="'sm'" :icon="'mdi:plus'" :variant="'outline'" :label="'Assign leave types'" />
-                                <Button :disabled="disableLeaveTypeAssignmentActions || employeeSelectionPending" @click="confirmLeaveTypeAssignmentBatchDetach" class="inline-block" :size="'sm'" :icon="'ph:trash-simple'" :variant="'outline'" :label="'Clear leave types'" />
-                            </template>
-                        </LeaveTypesByEmployeesSelection>
+                <div class="space-y-2 p-[20px]">
 
-                        <template #fallback>
-                            <div class="px-[20px]">
-                                <UnorderedList
-                                    :icon="'eos-icons:loading'"
+                    <BreadCrumbs prefix-company :size="`sm`" />
+
+                    <div class="lining-shadow rounded-sm tint-background space-y-8 py-[20px]">
+
+                        <div class="px-[20px]">
+
+                            <div class="flex flex-row">
+                                <RadioGroup
+                                    :disabled="disableLeaveTypeAssignmentActions"
+                                    class="flex-none scaffold-border px-2"
+                                    :selections="leaveTypeAssignmentTabs"
                                     :size="'md'"
-                                    :label="'Loading employee selections...'"/>
+                                    :orientation="leaveTypeSelectionsRadioGroupOrientation"
+                                    :radio-key="`leave_type_assignment_tab`"
+                                    v-model="leaveTypeAssignmentTab" />
                             </div>
-                        </template>
-                    </Suspense>
-                </div>
+                        </div>
 
-                <div v-if="leaveTypeAssignmentTab == LEAVE_TYPE_ASSIGNMENT_TAB.MANAGE_ASSIGNED_LEAVE_TYPES">
-                    <Suspense>
-                        <LeaveTypeSelection
-                            :clear-selection-on-form-submit="false"
-                            ref="leaveTypeSelectionReference"
-                            :disable-actions="disableLeaveTypeAssignmentActions"
-                            v-model:pending="leaveTypeSelectionPending"
-                            v-model:selected="selectedLeaveTypes">
-                            <template #selection-actions>
-                                <Button :disabled="disableLeaveTypeAssignmentActions || leaveTypeSelectionPending" @click="assignLeaveTypes" class="inline-block" :size="'sm'" :icon="'mdi:plus'" :variant="'outline'" :label="'Assign leave types to employees'" />
-                                <Button :disabled="disableLeaveTypeAssignmentActions || leaveTypeSelectionPending" @click="confirmLeaveTypeAssignmentBatchDetach" class="inline-block" :size="'sm'" :icon="'ph:trash-simple'" :variant="'outline'" :label="'Remove leave types from employees'" />
-                            </template>
-                        </LeaveTypeSelection>
+                        <div v-if="leaveTypeAssignmentTab == LEAVE_TYPE_ASSIGNMENT_TAB.LIST">
+                            <Suspense>
+                                <LeaveTypeAssignments
+                                    ref="leaveTypeAssignmentsReference"
+                                    v-model:pending="leaveTypeAssignmentPending"
+                                    @editLeaveTypeSettings="editLeaveTypeSettings" />
+                                <template #fallback>
+                                    <div class="px-[20px]">
+                                        <UnorderedList
+                                            :icon="'eos-icons:loading'"
+                                            :size="'md'"
+                                            :label="'Loading leave type assignments...'"/>
+                                    </div>
+                                </template>
+                            </Suspense>
+                        </div>
 
-                        <template #fallback>
-                            <div class="px-[20px]">
-                                <UnorderedList
-                                    :icon="'eos-icons:loading'"
-                                    :size="'md'"
-                                    :label="'Loading leave type selections...'"/>
-                            </div>
-                        </template>
-                    </Suspense>
+                        <div v-if="leaveTypeAssignmentTab == LEAVE_TYPE_ASSIGNMENT_TAB.CREATE_LEAVE_TYPE_ASSIGNMENTS">
+                            <Suspense>
+                                <LeaveTypesByEmployeesSelection
+                                    :clear-selection-on-form-submit="false"
+                                    ref="employeeSelectionReference"
+                                    :disable-actions="disableLeaveTypeAssignmentActions"
+                                    v-model:pending="employeeSelectionPending"
+                                    v-model:selected="selectedEmployees">
+                                    <template #selection-actions>
+                                        <Button :disabled="disableLeaveTypeAssignmentActions || employeeSelectionPending" @click="assignLeaveTypes" class="inline-block" :size="'sm'" :icon="'mdi:plus'" :variant="'outline'" :label="'Assign leave types'" />
+                                        <Button :disabled="disableLeaveTypeAssignmentActions || employeeSelectionPending" @click="confirmLeaveTypeAssignmentBatchDetach" class="inline-block" :size="'sm'" :icon="'ph:trash-simple'" :variant="'outline'" :label="'Clear leave types'" />
+                                    </template>
+                                </LeaveTypesByEmployeesSelection>
+
+                                <template #fallback>
+                                    <div class="px-[20px]">
+                                        <UnorderedList
+                                            :icon="'eos-icons:loading'"
+                                            :size="'md'"
+                                            :label="'Loading employee selections...'"/>
+                                    </div>
+                                </template>
+                            </Suspense>
+                        </div>
+
+                        <div v-if="leaveTypeAssignmentTab == LEAVE_TYPE_ASSIGNMENT_TAB.MANAGE_ASSIGNED_LEAVE_TYPES">
+                            <Suspense>
+                                <LeaveTypeSelection
+                                    :clear-selection-on-form-submit="false"
+                                    ref="leaveTypeSelectionReference"
+                                    :disable-actions="disableLeaveTypeAssignmentActions"
+                                    v-model:pending="leaveTypeSelectionPending"
+                                    v-model:selected="selectedLeaveTypes">
+                                    <template #selection-actions>
+                                        <Button :disabled="disableLeaveTypeAssignmentActions || leaveTypeSelectionPending" @click="assignLeaveTypes" class="inline-block" :size="'sm'" :icon="'mdi:plus'" :variant="'outline'" :label="'Assign leave types to employees'" />
+                                        <Button :disabled="disableLeaveTypeAssignmentActions || leaveTypeSelectionPending" @click="confirmLeaveTypeAssignmentBatchDetach" class="inline-block" :size="'sm'" :icon="'ph:trash-simple'" :variant="'outline'" :label="'Remove leave types from employees'" />
+                                    </template>
+                                </LeaveTypeSelection>
+
+                                <template #fallback>
+                                    <div class="px-[20px]">
+                                        <UnorderedList
+                                            :icon="'eos-icons:loading'"
+                                            :size="'md'"
+                                            :label="'Loading leave type selections...'"/>
+                                    </div>
+                                </template>
+                            </Suspense>
+                        </div>
+
+                    </div>
                 </div>
             </div>
         </DefaultWrapper>

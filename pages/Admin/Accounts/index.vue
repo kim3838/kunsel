@@ -3,94 +3,101 @@
         <AdminWrapper>
             <div class="mx-auto max-w-screen-sm">
 
-                <form @submit.prevent="paginate(1, true)" class="space-y-2 p-[20px]">
-                    <div class="grid gap-2 grid-cols-1 sm:grid-cols-2">
-                        <div>
-                            <InputLabel :size="'sm'" value="Search" />
-                            <Input :disabled="disableActions" :size="'md'" ref="searchInput" v-model="filters.search.keyword" class="w-full" placeholder="Search" type="text"/>
-                        </div>
-                    </div>
+                <div class="space-y-2 p-[20px]">
 
-                    <div class="flex flex-row flex-wrap gap-2">
-                        <Button class="w-min" ref="submitButton" type="submit" :disabled="disableActions" :size="'md'" :icon="disableActions ? 'eos-icons:loading' : 'mdi:data'" :label="disableActions ? 'Loading' : 'Load'"></Button>
-                    </div>
-                </form>
+                    <div class="lining-shadow rounded-sm tint-background space-y-2 p-[20px]">
 
-                <div class="px-[20px] space-y-2">
-                    <div class="flex flex-row flex-wrap gap-2 items-center min-h-8" :class="[disableActions ? 'pointer-events-none' : '']">
-                        <NuxtLink
-                            v-if="accounts.successful"
-                            :to="`/admin/accounts/create-account`">
-                            <Button class="w-min" :disabled="disableActions" :size="'sm'" :icon="'mdi:plus'"></Button>
-                        </NuxtLink>
-                        <Label v-if="!accounts.successful" invert :size="'md'" :type="'danger'" :label="accounts.message" />
-                    </div>
+                        <form @submit.prevent="paginate(1, true)" class="space-y-2">
+                            <div class="grid gap-2 grid-cols-1 sm:grid-cols-2">
+                                <div>
+                                    <InputLabel :size="'sm'" value="Search" />
+                                    <Input :disabled="disableActions" :size="'md'" ref="searchInput" v-model="filters.search.keyword" class="w-full" placeholder="Search" type="text"/>
+                                </div>
+                            </div>
 
-                    <div v-if="accounts.successful && viewMode.selected == DATA_VIEW_MODE.FLEX" class="flex flex-row flex-wrap gap-4">
+                            <div class="flex flex-row flex-wrap gap-2">
+                                <Button class="w-min" ref="submitButton" type="submit" :disabled="disableActions" :size="'md'" :icon="disableActions ? 'eos-icons:loading' : 'mdi:data'" :label="disableActions ? 'Loading' : 'Load'"></Button>
+                            </div>
+                        </form>
 
-                        <div v-for="account in accounts.data" :key="account.id" class="scaffold-border p-4 space-y-2">
+                        <div class="space-y-2">
+                            <div class="flex flex-row flex-wrap gap-2 items-center min-h-8" :class="[disableActions ? 'pointer-events-none' : '']">
+                                <NuxtLink
+                                    v-if="accounts.successful"
+                                    :to="`/admin/accounts/create-account`">
+                                    <Button class="w-min" :disabled="disableActions" :size="'sm'" :icon="'mdi:plus'"></Button>
+                                </NuxtLink>
+                                <Label v-if="!accounts.successful" invert :size="'md'" :type="'danger'" :label="accounts.message" />
+                            </div>
+
+                            <div v-if="accounts.successful && viewMode.selected == DATA_VIEW_MODE.FLEX" class="flex flex-row flex-wrap gap-4">
+
+                                <div v-for="account in accounts.data" :key="account.id" class="scaffold-border p-4 space-y-2">
+
+                                    <div>
+                                        <InputLabel :size="'sm'" value="Account #" />
+                                        <div class="text-lg font-sans cursor-pointer hover:underline">
+                                            <NuxtLink :to="`/admin/accounts/${account.ulid}`">
+                                                <span>{{account.number}}</span>
+                                            </NuxtLink>
+                                        </div>
+                                    </div>
+
+                                    <div class="space-y-2">
+
+                                        <div class="grid grid-cols-2 gap-6">
+                                            <div>
+                                                <InputLabel :size="'sm'" value="Email" />
+                                                <div>{{account.email}}</div>
+                                            </div>
+                                            <div>
+                                                <InputLabel :size="'sm'" value="Date registered" />
+                                                <div>{{account.date_registered}}</div>
+                                            </div>
+                                        </div>
+
+                                        <table class="border-separate">
+                                            <tbody>
+                                            <tr><td colspan="2">Subscriptions:</td></tr>
+                                            <tr><td colspan="2">
+                                                <div v-for="subscription in account.subscriptions" class="flex flex-row items-center gap-4">
+                                                    <UnorderedList
+                                                        :icon="'ic:sharp-radio-button-checked'"
+                                                        :label="subscription.module.text" />
+
+                                                    <div class="text-sm font-[STIX_Two_Text]">{{subscription.plan.text}}</div>
+                                                </div>
+                                            </td></tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <DataTable
+                                v-if="accounts.successful && viewMode.selected == DATA_VIEW_MODE.LIST"
+                                :headers="accountsHeaders"
+                                :size="'lg'"
+                                :rows="accounts.data"
+                                :disabled="disableDataTable"
+                                v-model="selectedAccounts"
+                                selection>
+                                <template v-slot:cell.actions="{cell,slot}">
+                                    <NuxtLink :to="`/admin/accounts/${cell.ulid}`">
+                                        <div class="text-base h-[32px] px-2 gap-0.5 flex items-center justify-center cursor-pointer accent-hover">
+                                            <span class="font-narrow-thin">Edit</span>
+                                            <Icon class="h-5 w-5" :name="'gg:external'"/>
+                                        </div>
+                                    </NuxtLink>
+                                </template>
+                            </DataTable>
 
                             <div>
-                                <InputLabel :size="'sm'" value="Account #" />
-                                <div class="text-lg font-sans cursor-pointer hover:underline">
-                                    <NuxtLink :to="`/admin/accounts/${account.ulid}`">
-                                        <span>{{account.number}}</span>
-                                    </NuxtLink>
-                                </div>
-                            </div>
-
-                            <div class="space-y-2">
-
-                                <div class="grid grid-cols-2 gap-6">
-                                    <div>
-                                        <InputLabel :size="'sm'" value="Email" />
-                                        <div>{{account.email}}</div>
-                                    </div>
-                                    <div>
-                                        <InputLabel :size="'sm'" value="Date registered" />
-                                        <div>{{account.date_registered}}</div>
-                                    </div>
-                                </div>
-
-                                <table class="border-separate">
-                                    <tbody>
-                                        <tr><td colspan="2">Subscriptions:</td></tr>
-                                        <tr><td colspan="2">
-                                            <div v-for="subscription in account.subscriptions" class="flex flex-row items-center gap-4">
-                                                <UnorderedList
-                                                    :icon="'ic:sharp-radio-button-checked'"
-                                                    :label="subscription.module.text" />
-
-                                                <div class="text-sm font-[STIX_Two_Text]">{{subscription.plan.text}}</div>
-                                            </div>
-                                        </td></tr>
-                                    </tbody>
-                                </table>
+                                <PageInformation :pagination="accounts.meta.pagination" :pending="disableDataTable"/>
+                                <Pagination :size="'lg'" :pagination="accounts.meta.pagination" :pending="disableDataTable" v-model="pageComputed"/>
                             </div>
                         </div>
-                    </div>
 
-                    <DataTable
-                        v-if="accounts.successful && viewMode.selected == DATA_VIEW_MODE.LIST"
-                        :headers="accountsHeaders"
-                        :size="'lg'"
-                        :rows="accounts.data"
-                        :disabled="disableDataTable"
-                        v-model="selectedAccounts"
-                        selection>
-                        <template v-slot:cell.actions="{cell,slot}">
-                            <NuxtLink :to="`/admin/accounts/${cell.ulid}`">
-                                <div class="text-base h-[32px] px-2 gap-0.5 flex items-center justify-center cursor-pointer accent-hover">
-                                    <span class="font-narrow-thin">Edit</span>
-                                    <Icon class="h-5 w-5" :name="'gg:external'"/>
-                                </div>
-                            </NuxtLink>
-                        </template>
-                    </DataTable>
-
-                    <div>
-                        <PageInformation :pagination="accounts.meta.pagination" :pending="disableDataTable"/>
-                        <Pagination :size="'lg'" :pagination="accounts.meta.pagination" :pending="disableDataTable" v-model="pageComputed"/>
                     </div>
                 </div>
 

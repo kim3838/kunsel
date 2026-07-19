@@ -3,381 +3,384 @@
         <DefaultWrapper>
             <div class="mx-auto max-w-screen-lg">
 
+                <DialogModal
+                    :show="generatingPayroll"
+                    :closeable="false">
+                    <template #title>
+
+                    </template>
+                    <template #content>
+                        <div class="pt-2 flex flex-row gap-4">
+
+                            <div class="lining-shadow rounded-sm tint-background">
+
+                                <div class="neutral-border-bottom rounded-t-sm px-4 py-2">
+                                    <div class="font-header text-lg">{{stagedPayrollPayload.summary}}</div>
+                                </div>
+
+                                <div class="p-4">
+
+                                    <div class="grid gap-2 grid-cols-4">
+                                        <div class="col-span-2">
+                                            <InputLabel :size="'sm'" value="Payroll period"/>
+                                            <Input
+                                                :disabled="true"
+                                                :size="'md'"
+                                                v-model="stagedPayrollPayload.date_range_readable"/>
+                                        </div>
+                                        <div>
+                                            <InputLabel :size="'sm'" value="Remarks"/>
+                                            <Input
+                                                ref="remarksReference"
+                                                :disabled="modalDisableActions"
+                                                :size="'md'"
+                                                v-model="stagedPayrollPayload.remarks"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </template>
+                    <template #footer>
+                        <div class="mx-auto max-w-screen-xl">
+                            <div class="flex space-x-2 justify-between">
+                                <div class="space-x-2 inline-flex">
+                                    <div class="space-x-2 inline-flex items-center">
+                                        <UnorderedList
+                                            v-if="modalDisableActions"
+                                            :icon="'eos-icons:loading'"
+                                            :size="'md'"
+                                            :label="'Please wait...'"/>
+                                    </div>
+                                </div>
+                                <div class="space-x-2 inline-flex items-center">
+                                    <Button
+                                        class="w-min"
+                                        :variant=" 'flat'"
+                                        :size="'md'"
+                                        :disabled="modalDisableActions"
+                                        :label="'Cancel'"
+                                        @click="closeModal"/>
+                                    <Button
+                                        class="w-min"
+                                        :variant="'default'"
+                                        :icon="modalSubmitPending ? 'eos-icons:loading' : ''"
+                                        :size="'md'"
+                                        :disabled="modalDisableActions"
+                                        :label="modalSubmitPending ? 'Please wait...' : 'Submit'"
+                                        @click="preGeneratePayroll"/>
+                                </div>
+                            </div>
+                        </div>
+                    </template>
+                </DialogModal>
+
+                <DialogModal
+                    :show="showConfirmHasAtLeastOneFinalPay"
+                    :closeable="false">
+                    <template #title>
+
+                    </template>
+                    <template #content>
+                        <div class="pt-4 space-y-4">
+
+                            <div class="flex flex-row gap-6 flex-wrap">
+                                <div>
+                                    <InputLabel :size="'sm'" value="Pay frequency"/>
+                                    <div class="text-base font-data">
+                                        {{stagedPayrollPayload.summary}}
+                                    </div>
+                                </div>
+                                <div>
+                                    <InputLabel :size="'sm'" value="Payroll period"/>
+                                    <div class="text-base font-data">
+                                        {{stagedPayrollPayload.date_range_readable}}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="lining-shadow rounded-sm tint-background">
+
+                                <div class="neutral-border-bottom rounded-t-sm text-lg font-header px-4 py-2 label-danger">Confirm Final Pay</div>
+
+                                <div class="p-4">
+
+                                    <div class="grid grid-cols-1 md:gap-2 lg:grid-cols-1">
+                                        <div class="space-y-2">
+
+                                            <DataTable
+                                                :landscape="true"
+                                                :headers="employmentProfilesFinalPaySalaryStatementsHeaders"
+                                                :size="'md'"
+                                                :rows="employmentProfilesFinalPaySalaryStatementsData"
+                                                v-model="selectedEmploymentProfilesFinalPaySalaryStatements">
+                                                <template v-slot:cell.employee_number="{cell,slot}">
+                                                    <div class="p-[3px]">{{cell.employee.number}}</div>
+                                                </template>
+                                                <template v-slot:cell.employee_full_name="{cell,slot}">
+                                                    <div class="p-[3px]">{{cell.employee.full_name}}</div>
+                                                </template>
+                                                <template v-slot:cell.status="{cell, slot, scrollReference}">
+                                                    <div class="p-[3px]">{{cell.status.text}}</div>
+                                                </template>
+                                                <template v-slot:cell.employment_type="{cell, slot, scrollReference}">
+                                                    <div class="p-[3px]">{{cell.employment_type.text}}</div>
+                                                </template>
+                                                <template v-slot:cell.end_of_service_type="{cell, slot, scrollReference}">
+                                                    <div class="p-[3px]">{{cell.end_of_service_type?.text}}</div>
+                                                </template>
+                                                <template v-slot:cell.start_date="{cell, slot, scrollReference}">
+                                                    <div class="p-[3px]">{{cell.start_date_readable}}</div>
+                                                </template>
+                                                <template v-slot:cell.end_date="{cell, slot, scrollReference}">
+                                                    <div class="p-[3px]">{{cell.end_date_readable}}</div>
+                                                </template>
+                                            </DataTable>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </template>
+                    <template #footer>
+                        <div class="mx-auto max-w-screen-xl">
+                            <div class="flex space-x-2 justify-between">
+                                <div class="space-x-2 inline-flex items-center">
+
+                                </div>
+                                <div class="space-x-2 inline-flex items-center">
+                                    <Button
+                                        class="w-min"
+                                        :variant=" 'flat'"
+                                        :size="'md'"
+                                        :label="'Cancel'"
+                                        @click="closeConfirmHasAtLeastOneFinalPay"/>
+                                    <Button
+                                        class="w-min"
+                                        :variant=" 'flat'"
+                                        :size="'md'"
+                                        :label="'Confirm & proceed payroll generation'"
+                                        @click="confirmHasAtLeastOneFinalPay"/>
+                                </div>
+                            </div>
+                        </div>
+                    </template>
+                </DialogModal>
+
+                <DialogModal
+                    :show="showNoSalaryStatementToBeGenerated"
+                    :closeable="false">
+                    <template #title>
+
+                    </template>
+                    <template #content>
+                        <div class="pt-4 space-y-4">
+
+                            <div class="flex flex-row gap-6 flex-wrap">
+                                <div>
+                                    <InputLabel :size="'sm'" value="Pay frequency"/>
+                                    <div class="text-base font-data">
+                                        {{stagedPayrollPayload.summary}}
+                                    </div>
+                                </div>
+                                <div>
+                                    <InputLabel :size="'sm'" value="Payroll period"/>
+                                    <div class="text-base font-data">
+                                        {{stagedPayrollPayload.date_range_readable}}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="lining-shadow rounded-sm tint-background">
+
+                                <div class="neutral-border-bottom rounded-t-sm text-lg font-header px-4 py-2 label-danger">No Salary Statement to Generate</div>
+
+                                <div class="p-4">
+
+                                    <div class="grid grid-cols-1 md:gap-2 lg:grid-cols-1">
+                                        <div class="space-y-2">
+
+                                            <DataTable
+                                                :landscape="true"
+                                                :headers="noSalaryStatementToBeGeneratedCausesHeaders"
+                                                :size="'md'"
+                                                :rows="noSalaryStatementToBeGeneratedCausesData"
+                                                v-model="selectedNoSalaryStatementToBeGeneratedCauses">
+                                                <template v-slot:cell.cause="{cell,slot}">
+                                                    <div class="p-[3px] label-danger">{{cell.cause}}</div>
+                                                </template>
+                                            </DataTable>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </template>
+                    <template #footer>
+                        <div class="mx-auto max-w-screen-xl">
+                            <div class="flex space-x-2 justify-between">
+                                <div class="space-x-2 inline-flex items-center">
+
+                                </div>
+                                <div class="space-x-2 inline-flex items-center">
+                                    <Button
+                                        class="w-min"
+                                        :variant=" 'flat'"
+                                        :size="'md'"
+                                        :label="'Okay'"
+                                        @click="closeNoSalaryStatementToBeGenerated"/>
+                                </div>
+                            </div>
+                        </div>
+                    </template>
+                </DialogModal>
+
                 <div class="space-y-2 p-[20px]">
 
                     <BreadCrumbs prefix-company :size="`sm`" />
 
-                    <form @submit.prevent="payrollInquiriesExecute">
+                    <div class="lining-shadow rounded-sm tint-background space-y-2 p-[20px]">
 
-                        <div class="flex flex-row flex-wrap items-center gap-2">
-                            <div class="flex flex-col">
-                                <InputLabel :size="'sm'" value="Pay frequency" />
-                                <div class="grow">
-                                    <RadioGroup
-                                        :disabled="disableActions"
-                                        class="scaffold-border px-2"
-                                        :selections="payFrequencyOptions"
-                                        :size="'md'"
-                                        :orientation="'horizontal'"
-                                        :radio-key="`pay_frequency_options`"
-                                        v-model="payFrequency" />
+                        <form @submit.prevent="payrollInquiriesExecute">
+
+                            <div class="flex flex-row flex-wrap items-center gap-2">
+                                <div class="flex flex-col">
+                                    <InputLabel :size="'sm'" value="Pay frequency" />
+                                    <div class="grow">
+                                        <RadioGroup
+                                            :disabled="disableActions"
+                                            class="scaffold-border px-2"
+                                            :selections="payFrequencyOptions"
+                                            :size="'md'"
+                                            :orientation="'horizontal'"
+                                            :radio-key="`pay_frequency_options`"
+                                            v-model="payFrequency" />
+                                    </div>
+                                </div>
+                                <div>
+                                    <InputLabel :size="'sm'" value="Recent payrolls" />
+                                    <Input :type="'number'" high-light-all-text-on-focus type-strict v-model="recentCount" :size="'md'" />
+                                </div>
+                                <div class="flex flex-col">
+                                    <div class="flex-none h-[1.25rem]"></div>
+                                    <div class="grow">
+                                        <Button
+                                            class="w-min"
+                                            :variant="'flat'"
+                                            ref="submitButton"
+                                            type="submit"
+                                            :disabled="disableActions"
+                                            :size="'md'"
+                                            :icon="disableActions ? 'eos-icons:loading' : ''"
+                                            :label="disableActions ? 'Loading' : 'Load periods'"/>
+                                    </div>
                                 </div>
                             </div>
-                            <div>
-                                <InputLabel :size="'sm'" value="Recent payrolls" />
-                                <Input :type="'number'" high-light-all-text-on-focus type-strict v-model="recentCount" :size="'md'" />
-                            </div>
-                            <div class="flex flex-col">
-                                <div class="flex-none h-[1.25rem]"></div>
-                                <div class="grow">
-                                    <Button
-                                        class="w-min"
-                                        :variant="'flat'"
-                                        ref="submitButton"
-                                        type="submit"
-                                        :disabled="disableActions"
+                            <div v-if="false" class="grid gap-2 grid-cols-3 sm:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-8">
+                                <div>
+                                    <InputLabel :size="'sm'" value="Filter employees by group" />
+                                    <MultiSelect
+                                        :key="employeeGroupOptionsKey"
+                                        drop-shadow
+                                        :selection-max-viewable-line="15"
                                         :size="'md'"
-                                        :icon="disableActions ? 'eos-icons:loading' : ''"
-                                        :label="disableActions ? 'Loading' : 'Load periods'"/>
+                                        :options="employeeGroupOptions"
+                                        :disabled="disableActions"
+                                        :icon="'tdesign:component-checkbox'"/>
+                                </div>
+                                <div class="flex flex-col">
+                                    <div class="flex-none h-[1.25rem]"></div>
+                                    <div class="grow">
+                                        <Button
+                                            class="w-min"
+                                            :variant="'outline'"
+                                            ref="submitButton"
+                                            type="submit"
+                                            :disabled="disableActions"
+                                            :size="'md'"
+                                            :icon="disableActions ? 'eos-icons:loading' : ''"
+                                            :label="'Generate payroll'"/>
+                                    </div>
                                 </div>
                             </div>
+                        </form>
+
+                        <div class="space-y-6">
+                            <DataTable
+                                :sup-headers="recentPayrollsSupHeaders"
+                                :headers="payrollInquiriesHeaders"
+                                :size="'lg'"
+                                :rows="recentPayrollsData"
+                                v-model="selectedRecentPayrolls"
+                                selection>
+                                <template v-slot:cell.remarks="{cell,slot}">
+                                    <div class="mx-0.5 flex items-center">
+                                        <Input
+                                            v-model="cell.remarks"
+                                            in-cell
+                                            :size="slot.inputSize"
+                                            class="w-full" />
+                                    </div>
+                                </template>
+                                <template v-slot:cell.actions="{cell,slot}">
+                                    <div class="mx-0.5 space-x-0.5 flex items-center">
+                                        <Button
+                                            v-if="cell.isSelectable"
+                                            @click="stagePayrollPayload(cell)"
+                                            :size="slot.buttonSize"
+                                            :variant="'flat'"
+                                            :icon="cell.payroll ? 'mdi:repeat' : ''"
+                                            :label="cell.payroll ? 'Regenerate payroll' : 'Run payroll'" />
+                                    </div>
+                                </template>
+                                <template v-slot:cell.payroll_status="{cell,slot}">
+                                    <div v-if="cell.payroll" class="flex space-x-1 px-[0.3rem] items-center">
+                                        <Label :size="slot.labelSize" :type="cell?._payload?.label_shade?.value as LabelTypeT" shade :label="cell.payroll?.status?.text" />
+                                    </div>
+                                </template>
+                            </DataTable>
+
+                            <div class="neutral-border-bottom"></div>
+
+                            <DataTable
+                                :sup-headers="currentPayrollsSupHeaders"
+                                :headers="payrollInquiriesHeaders"
+                                :size="'lg'"
+                                :rows="currentPayrollsData"
+                                v-model="selectedLatestPayrolls"
+                                selection>
+                                <template v-slot:cell.remarks="{cell,slot}">
+                                    <div v-if="cell.payroll">
+                                        <div class="p-[3px]">
+                                            {{cell.remarks}}
+                                        </div>
+                                    </div>
+                                    <div v-else class="mx-0.5 flex items-center">
+                                        <Input
+                                            v-model="cell.remarks"
+                                            in-cell
+                                            :size="slot.inputSize"
+                                            class="w-full" />
+                                    </div>
+                                </template>
+                                <template v-slot:cell.actions="{cell,slot}">
+                                    <div class="mx-0.5 space-x-0.5 flex items-center">
+                                        <Button
+                                            v-if="cell.isSelectable"
+                                            @click="stagePayrollPayload(cell)"
+                                            :size="slot.buttonSize"
+                                            :variant="'flat'"
+                                            :icon="cell.payroll ? 'mdi:repeat' : ''"
+                                            :label="cell.payroll ? 'Regenerate payroll' : 'Run payroll'" />
+                                    </div>
+                                </template>
+                                <template v-slot:cell.payroll_status="{cell,slot}">
+                                    <div v-if="cell.payroll" class="flex space-x-1 px-[0.3rem] items-center">
+                                        <Label :size="slot.labelSize" :type="cell?._payload?.label_shade?.value as LabelTypeT" shade :label="cell.payroll?.status?.text" />
+                                    </div>
+                                </template>
+                            </DataTable>
                         </div>
-                        <div v-if="false" class="grid gap-2 grid-cols-3 sm:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-8">
-                            <div>
-                                <InputLabel :size="'sm'" value="Filter employees by group" />
-                                <MultiSelect
-                                    :key="employeeGroupOptionsKey"
-                                    drop-shadow
-                                    :selection-max-viewable-line="15"
-                                    :size="'md'"
-                                    :options="employeeGroupOptions"
-                                    :disabled="disableActions"
-                                    :icon="'tdesign:component-checkbox'"/>
-                            </div>
-                            <div class="flex flex-col">
-                                <div class="flex-none h-[1.25rem]"></div>
-                                <div class="grow">
-                                    <Button
-                                        class="w-min"
-                                        :variant="'outline'"
-                                        ref="submitButton"
-                                        type="submit"
-                                        :disabled="disableActions"
-                                        :size="'md'"
-                                        :icon="disableActions ? 'eos-icons:loading' : ''"
-                                        :label="'Generate payroll'"/>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
-
-                    <DialogModal
-                        :show="generatingPayroll"
-                        :closeable="false">
-                        <template #title>
-
-                        </template>
-                        <template #content>
-                            <div class="pt-2 flex flex-row gap-4">
-
-                                <div class="lining-shadow rounded-sm tint-background">
-
-                                    <div class="neutral-border-bottom rounded-t-sm px-4 py-2">
-                                        <div class="font-header text-lg">{{stagedPayrollPayload.summary}}</div>
-                                    </div>
-
-                                    <div class="p-4">
-
-                                        <div class="grid gap-2 grid-cols-4">
-                                            <div class="col-span-2">
-                                                <InputLabel :size="'sm'" value="Payroll period"/>
-                                                <Input
-                                                    :disabled="true"
-                                                    :size="'md'"
-                                                    v-model="stagedPayrollPayload.date_range_readable"/>
-                                            </div>
-                                            <div>
-                                                <InputLabel :size="'sm'" value="Remarks"/>
-                                                <Input
-                                                    ref="remarksReference"
-                                                    :disabled="modalDisableActions"
-                                                    :size="'md'"
-                                                    v-model="stagedPayrollPayload.remarks"/>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </template>
-                        <template #footer>
-                            <div class="mx-auto max-w-screen-xl">
-                                <div class="flex space-x-2 justify-between">
-                                    <div class="space-x-2 inline-flex">
-                                        <div class="space-x-2 inline-flex items-center">
-                                            <UnorderedList
-                                                v-if="modalDisableActions"
-                                                :icon="'eos-icons:loading'"
-                                                :size="'md'"
-                                                :label="'Please wait...'"/>
-                                        </div>
-                                    </div>
-                                    <div class="space-x-2 inline-flex items-center">
-                                        <Button
-                                            class="w-min"
-                                            :variant=" 'flat'"
-                                            :size="'md'"
-                                            :disabled="modalDisableActions"
-                                            :label="'Cancel'"
-                                            @click="closeModal"/>
-                                        <Button
-                                            class="w-min"
-                                            :variant="'default'"
-                                            :icon="modalSubmitPending ? 'eos-icons:loading' : ''"
-                                            :size="'md'"
-                                            :disabled="modalDisableActions"
-                                            :label="modalSubmitPending ? 'Please wait...' : 'Submit'"
-                                            @click="preGeneratePayroll"/>
-                                    </div>
-                                </div>
-                            </div>
-                        </template>
-                    </DialogModal>
-
-                    <DialogModal
-                        :show="showConfirmHasAtLeastOneFinalPay"
-                        :closeable="false">
-                        <template #title>
-
-                        </template>
-                        <template #content>
-                            <div class="pt-4 space-y-4">
-
-                                <div class="flex flex-row gap-6 flex-wrap">
-                                    <div>
-                                        <InputLabel :size="'sm'" value="Pay frequency"/>
-                                        <div class="text-base font-data">
-                                            {{stagedPayrollPayload.summary}}
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <InputLabel :size="'sm'" value="Payroll period"/>
-                                        <div class="text-base font-data">
-                                            {{stagedPayrollPayload.date_range_readable}}
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="lining-shadow rounded-sm tint-background">
-
-                                    <div class="neutral-border-bottom rounded-t-sm text-lg font-header px-4 py-2 label-danger">Confirm Final Pay</div>
-
-                                    <div class="p-4">
-
-                                        <div class="grid grid-cols-1 md:gap-2 lg:grid-cols-1">
-                                            <div class="space-y-2">
-
-                                                <DataTable
-                                                    :landscape="true"
-                                                    :headers="employmentProfilesFinalPaySalaryStatementsHeaders"
-                                                    :size="'md'"
-                                                    :rows="employmentProfilesFinalPaySalaryStatementsData"
-                                                    v-model="selectedEmploymentProfilesFinalPaySalaryStatements">
-                                                    <template v-slot:cell.employee_number="{cell,slot}">
-                                                        <div class="p-[3px]">{{cell.employee.number}}</div>
-                                                    </template>
-                                                    <template v-slot:cell.employee_full_name="{cell,slot}">
-                                                        <div class="p-[3px]">{{cell.employee.full_name}}</div>
-                                                    </template>
-                                                    <template v-slot:cell.status="{cell, slot, scrollReference}">
-                                                        <div class="p-[3px]">{{cell.status.text}}</div>
-                                                    </template>
-                                                    <template v-slot:cell.employment_type="{cell, slot, scrollReference}">
-                                                        <div class="p-[3px]">{{cell.employment_type.text}}</div>
-                                                    </template>
-                                                    <template v-slot:cell.end_of_service_type="{cell, slot, scrollReference}">
-                                                        <div class="p-[3px]">{{cell.end_of_service_type?.text}}</div>
-                                                    </template>
-                                                    <template v-slot:cell.start_date="{cell, slot, scrollReference}">
-                                                        <div class="p-[3px]">{{cell.start_date_readable}}</div>
-                                                    </template>
-                                                    <template v-slot:cell.end_date="{cell, slot, scrollReference}">
-                                                        <div class="p-[3px]">{{cell.end_date_readable}}</div>
-                                                    </template>
-                                                </DataTable>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </template>
-                        <template #footer>
-                            <div class="mx-auto max-w-screen-xl">
-                                <div class="flex space-x-2 justify-between">
-                                    <div class="space-x-2 inline-flex items-center">
-
-                                    </div>
-                                    <div class="space-x-2 inline-flex items-center">
-                                        <Button
-                                            class="w-min"
-                                            :variant=" 'flat'"
-                                            :size="'md'"
-                                            :label="'Cancel'"
-                                            @click="closeConfirmHasAtLeastOneFinalPay"/>
-                                        <Button
-                                            class="w-min"
-                                            :variant=" 'flat'"
-                                            :size="'md'"
-                                            :label="'Confirm & proceed payroll generation'"
-                                            @click="confirmHasAtLeastOneFinalPay"/>
-                                    </div>
-                                </div>
-                            </div>
-                        </template>
-                    </DialogModal>
-
-                    <DialogModal
-                        :show="showNoSalaryStatementToBeGenerated"
-                        :closeable="false">
-                        <template #title>
-
-                        </template>
-                        <template #content>
-                            <div class="pt-4 space-y-4">
-
-                                <div class="flex flex-row gap-6 flex-wrap">
-                                    <div>
-                                        <InputLabel :size="'sm'" value="Pay frequency"/>
-                                        <div class="text-base font-data">
-                                            {{stagedPayrollPayload.summary}}
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <InputLabel :size="'sm'" value="Payroll period"/>
-                                        <div class="text-base font-data">
-                                            {{stagedPayrollPayload.date_range_readable}}
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="lining-shadow rounded-sm tint-background">
-
-                                    <div class="neutral-border-bottom rounded-t-sm text-lg font-header px-4 py-2 label-danger">No Salary Statement to Generate</div>
-
-                                    <div class="p-4">
-
-                                        <div class="grid grid-cols-1 md:gap-2 lg:grid-cols-1">
-                                            <div class="space-y-2">
-
-                                                <DataTable
-                                                    :landscape="true"
-                                                    :headers="noSalaryStatementToBeGeneratedCausesHeaders"
-                                                    :size="'md'"
-                                                    :rows="noSalaryStatementToBeGeneratedCausesData"
-                                                    v-model="selectedNoSalaryStatementToBeGeneratedCauses">
-                                                    <template v-slot:cell.cause="{cell,slot}">
-                                                        <div class="p-[3px] label-danger">{{cell.cause}}</div>
-                                                    </template>
-                                                </DataTable>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </template>
-                        <template #footer>
-                            <div class="mx-auto max-w-screen-xl">
-                                <div class="flex space-x-2 justify-between">
-                                    <div class="space-x-2 inline-flex items-center">
-
-                                    </div>
-                                    <div class="space-x-2 inline-flex items-center">
-                                        <Button
-                                            class="w-min"
-                                            :variant=" 'flat'"
-                                            :size="'md'"
-                                            :label="'Okay'"
-                                            @click="closeNoSalaryStatementToBeGenerated"/>
-                                    </div>
-                                </div>
-                            </div>
-                        </template>
-                    </DialogModal>
-
-                    <div class="space-y-6">
-                        <DataTable
-                            :sup-headers="recentPayrollsSupHeaders"
-                            :headers="payrollInquiriesHeaders"
-                            :size="'lg'"
-                            :rows="recentPayrollsData"
-                            v-model="selectedRecentPayrolls"
-                            selection>
-                            <template v-slot:cell.remarks="{cell,slot}">
-                                <div class="mx-0.5 flex items-center">
-                                    <Input
-                                        v-model="cell.remarks"
-                                        in-cell
-                                        :size="slot.inputSize"
-                                        class="w-full" />
-                                </div>
-                            </template>
-                            <template v-slot:cell.actions="{cell,slot}">
-                                <div class="mx-0.5 space-x-0.5 flex items-center">
-                                    <Button
-                                        v-if="cell.isSelectable"
-                                        @click="stagePayrollPayload(cell)"
-                                        :size="slot.buttonSize"
-                                        :variant="'flat'"
-                                        :icon="cell.payroll ? 'mdi:repeat' : ''"
-                                        :label="cell.payroll ? 'Regenerate payroll' : 'Run payroll'" />
-                                </div>
-                            </template>
-                            <template v-slot:cell.payroll_status="{cell,slot}">
-                                <div v-if="cell.payroll" class="flex space-x-1 px-[0.3rem] items-center">
-                                    <Label :size="slot.labelSize" :type="cell?._payload?.label_shade?.value as LabelTypeT" shade :label="cell.payroll?.status?.text" />
-                                </div>
-                            </template>
-                        </DataTable>
-
-                        <div class="neutral-border-bottom"></div>
-
-                        <DataTable
-                            :sup-headers="currentPayrollsSupHeaders"
-                            :headers="payrollInquiriesHeaders"
-                            :size="'lg'"
-                            :rows="currentPayrollsData"
-                            v-model="selectedLatestPayrolls"
-                            selection>
-                            <template v-slot:cell.remarks="{cell,slot}">
-                                <div v-if="cell.payroll">
-                                    <div class="p-[3px]">
-                                        {{cell.remarks}}
-                                    </div>
-                                </div>
-                                <div v-else class="mx-0.5 flex items-center">
-                                    <Input
-                                        v-model="cell.remarks"
-                                        in-cell
-                                        :size="slot.inputSize"
-                                        class="w-full" />
-                                </div>
-                            </template>
-                            <template v-slot:cell.actions="{cell,slot}">
-                                <div class="mx-0.5 space-x-0.5 flex items-center">
-                                    <Button
-                                        v-if="cell.isSelectable"
-                                        @click="stagePayrollPayload(cell)"
-                                        :size="slot.buttonSize"
-                                        :variant="'flat'"
-                                        :icon="cell.payroll ? 'mdi:repeat' : ''"
-                                        :label="cell.payroll ? 'Regenerate payroll' : 'Run payroll'" />
-                                </div>
-                            </template>
-                            <template v-slot:cell.payroll_status="{cell,slot}">
-                                <div v-if="cell.payroll" class="flex space-x-1 px-[0.3rem] items-center">
-                                    <Label :size="slot.labelSize" :type="cell?._payload?.label_shade?.value as LabelTypeT" shade :label="cell.payroll?.status?.text" />
-                                </div>
-                            </template>
-                        </DataTable>
                     </div>
                 </div>
             </div>
