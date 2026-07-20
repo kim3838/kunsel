@@ -7,7 +7,7 @@ export default defineNuxtConfig({
     app: {
         baseURL: "/",
         head: {
-            title: 'Kunsel',
+            title: 'Kunsel ERP',
             meta: [
                 {name: 'viewport', content: 'width=device-width, initial-scale=1'},
 

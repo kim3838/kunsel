@@ -98,7 +98,7 @@ import {storeToRefs} from "pinia";
 import type {TableHeaderT} from "@/public/js/types/data";
 const {$themeStore} = useNuxtApp();
 
-useHead({titleTemplate: (titleChunk) => {return `${titleChunk} - WTC Calculator`}});
+useHead({titleTemplate: (titleChunk) => {return `${titleChunk} - Compensation Tax Calculator`}});
 definePageMeta({middleware: 'guest'});
 useLayout().setNavigationMode('solid');
 
