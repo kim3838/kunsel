@@ -4,8 +4,8 @@
             <div class="mx-auto pt-4 max-w-screen-2xl space-y-12">
 
                 <div class="mt-8 flex justify-center">
-                    <div>
-                        <h4>Compensation Tax Calculator</h4>
+                    <div class="space-y-2">
+                        <h3 class="font-header text-xl font-medium">Compensation Tax Calculator</h3>
 
                         <div class="subtitle-color">
                             <p>Built-in 2026 TRAIN Law brackets and government contribution rules.</p>

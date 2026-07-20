@@ -8,7 +8,7 @@
 
                         <section aria-labelledby="heading-workforce">
                             <div>
-                                <h2 id="heading-workforce" class="font-header text-lg font-medium">
+                                <h2 id="heading-workforce" class="font-header text-xl font-medium">
                                     User & Employees
                                 </h2>
                                 <p class="subtitle-color mt-2 text-base">
@@ -63,7 +63,7 @@
 
                         <section aria-labelledby="heading-policies" class="pt-4">
                             <div>
-                                <h2 id="heading-policies" class="font-header text-lg font-medium">
+                                <h2 id="heading-policies" class="font-header text-xl font-medium">
                                     Policies
                                 </h2>
                                 <p class="subtitle-color mt-2 text-base">
@@ -141,7 +141,7 @@
 
                         <section aria-labelledby="heading-approvals" class="pt-4">
                             <div>
-                                <h2 id="heading-approvals" class="font-header text-lg font-medium">
+                                <h2 id="heading-approvals" class="font-header text-xl font-medium">
                                     Request & Approval
                                 </h2>
                                 <p class="subtitle-color mt-2 text-base">
@@ -185,7 +185,7 @@
 
                         <section aria-labelledby="heading-payroll" class="pt-12">
                             <div>
-                                <h2 id="heading-payroll" class="font-header text-lg font-medium">
+                                <h2 id="heading-payroll" class="font-header text-xl font-medium">
                                     Automated Payroll Processing, Taxes, & Compliance Engine
                                 </h2>
                                 <p class="subtitle-color mt-2 text-base">
@@ -246,7 +246,7 @@
 
                         <section aria-labelledby="heading-ess" class="pt-12">
                             <div>
-                                <h2 id="heading-ess" class="font-header text-lg font-medium">
+                                <h2 id="heading-ess" class="font-header text-xl font-medium">
                                     Employee Self-Service Portal
                                 </h2>
                                 <p class="subtitle-color mt-2 text-base">
