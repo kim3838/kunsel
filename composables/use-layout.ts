@@ -133,6 +133,14 @@ export const useLayout = () => {
                 route_active: 'index'
             }] : [
                 {
+                    key: 'features',
+                    type: 'link',
+                    title: 'Features',
+                    to: '/features',
+                    route_active: 'features',
+                    path_active: '/features',
+                },
+                {
                     key: 'wtc-calculator',
                     type: 'link',
                     title: 'Compensation tax calculator',
