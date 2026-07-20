@@ -1,8 +1,20 @@
 <template>
     <div>
         <LandingWrapper>
-            <div class="mx-auto pt-4 max-w-screen-2xl">
-                <div class="min-h-120 flex flex-row items-center justify-center lg:px-10 gap-20">
+            <div class="mx-auto pt-4 max-w-screen-2xl space-y-12">
+
+                <div class="mt-8 flex justify-center">
+                    <div>
+                        <h4>Compensation Tax Calculator</h4>
+
+                        <div class="subtitle-color">
+                            <p>Built-in 2026 TRAIN Law brackets and government contribution rules.</p>
+                            <p>Estimate your monthly net salary and government deductions instantly.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex flex-row items-center justify-center lg:px-10">
 
                     <div class="w-[620px] h-[360px] mx-auto lg:mx-0">
                         <HexagonFrame
@@ -74,6 +86,8 @@
                     </div>
 
                 </div>
+
+                <div class="neutral-border-bottom"></div>
             </div>
         </LandingWrapper>
     </div>
