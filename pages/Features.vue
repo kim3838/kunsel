@@ -48,7 +48,7 @@
 
                             <div class="mt-4 lining-shadow rounded-sm tint-background">
                                 <div class="neutral-border-bottom rounded-t-sm px-4 py-2">
-                                    <h3 class="font-header text-lg">Advanced User Security Features</h3>
+                                    <h3 class="font-header text-lg">User Features</h3>
                                 </div>
                                 <div class="p-4">
                                     <ul class="list-disc pl-5 space-y-1 subtitle-color">
@@ -186,7 +186,7 @@
                         <section aria-labelledby="heading-payroll" class="pt-12">
                             <div>
                                 <h2 id="heading-payroll" class="font-header text-xl font-medium">
-                                    Automated Payroll Processing, Taxes, & Compliance Engine
+                                    Automated Payroll Processing, Taxes, & Compliance
                                 </h2>
                                 <p class="subtitle-color mt-2 text-base">
                                     Calculate salaries, taxes, and benefits automatically to process accurate disbursements and generate precise payroll.
@@ -256,7 +256,7 @@
 
                             <div class="mt-6 lining-shadow rounded-sm tint-background">
                                 <div class="neutral-border-bottom rounded-t-sm px-4 py-2">
-                                    <h3 class="font-header text-lg">Self service and request & approvals</h3>
+                                    <h3 class="font-header text-lg">Self service and Request & Approvals</h3>
                                 </div>
                                 <div class="p-4">
                                     <ul class="list-disc pl-5 space-y-1 subtitle-color">
