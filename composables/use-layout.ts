@@ -186,7 +186,7 @@ export const useLayout = () => {
                     },
                 ]:[]
             ) as NavigationLinkInterface[],
-            ...(false ? [
+            ...(!isAuthenticated.value ? [
                     {
                         key: 'about',
                         type: 'drop',

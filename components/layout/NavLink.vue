@@ -112,12 +112,7 @@ const iconClass = computed(() => {
 }
 
 .nav-link-inactive:hover{
-    color: v-bind(textInvertColor) !important;
-    @extend .text-shadow;
-}
-.nav-link-inactive:hover .bg-film{
-    background: v-bind(activeClearFluidBackground);
-    animation: initialBackgroundKeyFrames 0ms linear 1 forwards;
+    text-decoration: underline;
 }
 
 .nav-active-bg{

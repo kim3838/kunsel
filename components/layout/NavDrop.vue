@@ -603,12 +603,7 @@ const dropDownIconClass = computed(() => {
     @include ripple-hover-after-effect();
 }
 .navigation-mode-nav-drop:hover{
-    color: v-bind(textInvertColor) !important;
-    @extend .text-shadow;
-}
-.navigation-mode-nav-drop:hover .bg-film{
-    background: v-bind(activeClearFluidBackground);
-    animation: initialBackgroundKeyFrames 0ms linear 1 forwards;
+
 }
 
 .navigation-mode-nav-drop-active-clear-fluid{
@@ -657,14 +652,14 @@ const dropDownIconClass = computed(() => {
     color: v-bind(navigationLinkColor);
     overflow: hidden;
     @include ripple-hover-after-effect();
-    @include fluid-gold-hover-before-effect();
+    @include fluid-gold-hover-before-effect($opacity: 0.4);
 }
 
 .child-non-drop-clear-fluid:hover{
+    position: relative;
     z-index: 1;
-    color: v-bind(textInvertColor) !important;
-    @extend .text-shadow;
-    background: v-bind(activeClearFluidBackground);
+    text-decoration: underline;
+    overflow: hidden;
 }
 
 .transparent-border-bottom{

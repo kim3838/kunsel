@@ -759,14 +759,7 @@ watch(() => props.options.selected, newValue => {
     @include fluid-gold-hover-before-effect($opacity: 0.4);
     @include ripple-hover-after-effect();
 }
-.navigation-mode:hover{
-    color: v-bind(textInvertColor) !important;
-    @extend .text-shadow;
-}
-.navigation-mode:hover .bg-film{
-    background: v-bind(activeClearFluidBackground);
-    animation: initialBackgroundKeyFrames 0ms linear 1 forwards;
-}
+
 .background {
     background-color: v-bind(tintColor);
 }

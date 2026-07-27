@@ -101,15 +101,13 @@ const classes = computed(() => {
     z-index: 1;
     color: v-bind(navigationLinkColor);
     overflow: hidden;
-    @include fluid-gold-hover-before-effect();
+    @include fluid-gold-hover-before-effect($opacity: 0.4);
     @include ripple-hover-after-effect();
 }
 .nav-link-clear-fluid:hover{
     position: relative;
     z-index: 1;
-    color: v-bind(textInvertColor) !important;
-    @extend .text-shadow;
-    background: v-bind(activeClearFluidBackground);
+    text-decoration: underline;
     overflow: hidden;
 }
 

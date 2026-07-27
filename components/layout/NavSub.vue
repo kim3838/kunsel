@@ -143,12 +143,7 @@ const dropDownIconClass = computed(() => {
     @include ripple-hover-after-effect();
 }
 .nav-sub-inactive:hover{
-    color: v-bind(textInvertColor) !important;
-    @extend .text-shadow;
-}
-.nav-sub-inactive:hover .bg-film{
-    background: v-bind(activeClearFluidBackground);
-    animation: initialBackgroundKeyFrames 0ms linear 1 forwards;
+    text-decoration: underline;
 }
 
 .nav-sub-active-dashed{
