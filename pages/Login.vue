@@ -54,10 +54,10 @@
                                         <div class="block text-sm self-end">
                                             <NuxtLink class="hover:underline" :to="'forgot-password'">Forgot password.</NuxtLink>
                                         </div>
-                                        <div class="flex-grow-[0.5]">
+                                        <div>
                                             <Button
                                                 :justify-content="'center'"
-                                                :variant="'flat'"
+                                                :variant="'default'"
                                                 :disabled="authPending || isAuthenticated"
                                                 :size="'md'"
                                                 :icon="authPending ? 'eos-icons:loading' : ''"
