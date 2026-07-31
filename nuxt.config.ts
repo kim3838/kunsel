@@ -75,6 +75,7 @@ export default defineNuxtConfig({
                 {src: '/js/datetimepicker/index.js'}
             ],
             "htmlAttrs": {
+                lang: 'en',
                 class: ''
             },
             "bodyAttrs": {
