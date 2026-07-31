@@ -4,7 +4,7 @@
             <div class="mx-auto pt-4 max-w-screen-2xl space-y-12">
 
                 <section class="mt-16 text-center">
-                    <h1 class="text-2xl font-semibold font-header">
+                    <h1 class="text-4xl font-semibold font-header">
                         Compensation Tax Calculator
                     </h1>
 

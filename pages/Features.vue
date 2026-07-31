@@ -4,14 +4,14 @@
             <div>
                 <div class="mx-auto pt-4 max-w-screen-lg">
 
-                    <div class="space-y-16">
+                    <div class="space-y-16 px-2">
 
                         <section class="mt-16 text-center">
-                            <h1 class="text-2xl font-semibold font-header">
-                                Explore our unified cloud modules:
+                            <h1 class="text-4xl font-semibold font-header">
+                                Kunsel ERP Features
                             </h1>
-                            <h2 class="text-xl font-header subtitle-color">
-                                HR, automated Payroll, Inventory tracking, robust Finance analytics, and POS. Streamline your enterprise architecture.
+                            <h2 class="text-lg font-header subtitle-color max-w-160 mx-auto">
+                                Explore our unified cloud modules: HR, automated Payroll, Inventory tracking, robust Finance analytics, and POS. Streamline your enterprise architecture.
                             </h2>
                         </section>
 
