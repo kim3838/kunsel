@@ -157,6 +157,7 @@ function demoLogin(){
     login({
         identifier: identifier.value,
         password: password.value,
+        remember: false
     });
 }
 </script>
