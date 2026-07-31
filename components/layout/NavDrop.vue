@@ -46,11 +46,11 @@
                         v-if="dropOption.type == 'anchor-link'"
                        :href="dropOption.to"
                         class="w-full h-full flex">
-                        <NuxtLink
+                        <span
                             class="px-2 py-1 w-full inline-flex items-center focus:outline-none"
                             :class="[childNonDropClasses, childNonDropFontClass]">
                             <Icon v-if="dropOption.icon" :class="[dropDownIconClass]" :name="dropOption.icon" class="mr-1" /><span>{{dropOption.title}}</span>
-                        </NuxtLink>
+                        </span>
                     </a>
 
                     <div v-if="dropOption.type === 'action'"
