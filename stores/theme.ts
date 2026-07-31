@@ -37,7 +37,7 @@ export const useThemeStore = defineStore('theme', () => {
 
     const SELECTED_THEME_STORAGE_KEY = 'pt';
 
-    const appTheme = ref<PaletteName>('light-slate');
+    const appTheme = ref<PaletteName>('light-blue');
     const common = ref<CommonColorsT>({
         'clear': {primary: 'transparent', secondary: 'transparent'},
         'default': {primary: '#777', secondary: '#e5e5e5'},
