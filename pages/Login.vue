@@ -152,7 +152,7 @@ function handleLogin(){
 
 function demoLogin(){
     identifier.value = 'dc.admin';
-    password.value = 'dc.password.1234';
+    password.value = 'dc.admin.1234';
 
     login({
         identifier: identifier.value,
