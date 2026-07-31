@@ -6,6 +6,17 @@
 
                     <div class="space-y-16">
 
+                        <section class="mt-16 text-center">
+                            <h1 class="text-2xl font-semibold font-header">
+                                Explore our unified cloud modules:
+                            </h1>
+                            <h2 class="text-xl font-header subtitle-color">
+                                HR, automated Payroll, Inventory tracking, robust Finance analytics, and POS. Streamline your enterprise architecture.
+                            </h2>
+                        </section>
+
+                        <div class="neutral-border-bottom"></div>
+
                         <section aria-labelledby="heading-workforce">
                             <div>
                                 <h2 id="heading-workforce" class="font-header text-xl font-medium">

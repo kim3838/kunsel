@@ -3,16 +3,15 @@
         <LandingWrapper>
             <div class="mx-auto pt-4 max-w-screen-2xl space-y-12">
 
-                <div class="mt-8 flex justify-center">
-                    <div class="space-y-2">
-                        <h3 class="font-header text-xl font-medium">Compensation Tax Calculator</h3>
+                <section class="mt-16 text-center">
+                    <h1 class="text-2xl font-semibold font-header">
+                        Compensation Tax Calculator
+                    </h1>
 
-                        <div class="subtitle-color">
-                            <p>Built-in 2026 TRAIN Law brackets and government contribution rules.</p>
-                            <p>Estimate your monthly net salary and government deductions instantly.</p>
-                        </div>
-                    </div>
-                </div>
+                    <h2 class="text-xl font-header subtitle-color">Built-in 2026 TRAIN Law brackets and government contribution rules.</h2>
+                    <h2 class="text-xl font-header subtitle-color">Estimate your monthly net salary and government deductions instantly.</h2>
+
+                </section>
 
                 <div class="flex flex-row items-center justify-center lg:px-10">
 

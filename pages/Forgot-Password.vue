@@ -8,7 +8,7 @@
                         <template #content>
                             <div class="relative py-4">
 
-                                <div class="font-header text-lg font-medium">Forgot password</div>
+                                <h1 class="font-header text-lg font-medium">Forgot password</h1>
 
                                 <form @submit.prevent="handleForgotPassword" class="mt-4 w-80">
                                     <div class="block">

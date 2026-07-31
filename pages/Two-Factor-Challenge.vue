@@ -8,7 +8,7 @@
                         <template #content>
                             <div class="relative py-4">
 
-                                <div class="font-header text-lg font-medium">Two Factor Auth Challenge</div>
+                                <h1 class="font-header text-lg font-medium">Two Factor Auth Challenge</h1>
 
                                 <form @submit.prevent="handleLogin" class="mt-4 w-80">
                                     <template v-if="! recovery">

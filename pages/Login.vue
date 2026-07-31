@@ -9,7 +9,7 @@
                         <template #content>
                             <div class="relative py-4">
 
-                                <div class="font-header text-lg font-medium">Password login</div>
+                                <h1 class="font-header text-lg font-medium">Password login</h1>
 
                                 <form @submit.prevent="handleLogin" class="mt-4 w-80">
                                     <div class="block">

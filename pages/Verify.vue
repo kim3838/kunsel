@@ -8,7 +8,7 @@
                             <div class="relative py-4">
                                 <form @submit.prevent="execute" class="w-80">
 
-                                    <div class="mb-4 font-header text-lg font-medium">Verify your email</div>
+                                    <h1 class="mb-4 font-header text-lg font-medium">Verify your email</h1>
 
                                     <p class="text-base">
                                         Please click the verification button sent to your email address.
