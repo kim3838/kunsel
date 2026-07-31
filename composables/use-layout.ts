@@ -197,6 +197,7 @@ export const useLayout = () => {
                                 type: 'anchor-link',
                                 title: 'Latest news',
                                 icon: 'ic:baseline-arrow-right',
+                                to: '/#',
                             },
                         ]
                     },
@@ -209,11 +210,13 @@ export const useLayout = () => {
                                 key: 'faq',
                                 type: 'anchor-link',
                                 title: 'FAQ',
+                                to: '/#',
                             },
                             {
                                 key: 'support',
                                 type: 'link',
                                 title: 'Support',
+                                to: '/#',
                             },
                             {
                                 key: 'help',
@@ -224,6 +227,7 @@ export const useLayout = () => {
                                         key: 'ease-of-access',
                                         type: 'anchor-link',
                                         title: 'Ease of access',
+                                        to: '/#',
                                     },
                                     {
                                         key: 'rma',
@@ -234,26 +238,31 @@ export const useLayout = () => {
                                                 key: 'refund',
                                                 type: 'anchor-link',
                                                 title: 'Refund',
+                                                to: '/#',
                                             },
                                             {
                                                 key: 'return-exchange',
                                                 type: 'link',
                                                 title: 'Return Exchange',
+                                                to: '/#',
                                             },
                                             {
                                                 key: 'warranty',
                                                 type: 'link',
                                                 title: 'Warranty',
+                                                to: '/#',
                                             },
                                             {
                                                 key: 'wrong-delivery',
                                                 type: 'link',
                                                 title: 'Wrong delivery',
+                                                to: '/#',
                                             },
                                             {
                                                 key: 'disfunctional',
                                                 type: 'link',
                                                 title: 'Disfunctional',
+                                                to: '/#',
                                             },
                                         ]
                                     }
