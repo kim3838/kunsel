@@ -14,8 +14,8 @@ export default defineNuxtConfig({
                 {name: 'description', content: 'Manage HR and Payroll, Inventory, Finance, and POS in one integrated cloud platform.'},
                 {name: 'keywords', content: 'HR software, payroll system, employee management, payroll automation, automated payroll, tax compliant, erp, sme, cloud-based, management solution, kunsel erp, kunsel-erp'},
 
-                {property: 'og:title', content: 'Integrated Cloud ERP Solution'},
-                {property: 'og:description', content: 'All-in-one business management.'},
+                {property: 'og:title', content: 'Enterprise Cloud ERP Software'},
+                {property: 'og:description', content: 'Discover the leading Cloud ERP platform designed to unify your payroll, finances, supply chain, and operations.'},
 
                 {name: 'robots', content: 'index, follow' },
                 {charset: "utf-8"}

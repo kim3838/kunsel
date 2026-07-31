@@ -97,8 +97,24 @@
 import {storeToRefs} from "pinia";
 import type {TableHeaderT} from "@/public/js/types/data";
 const {$themeStore} = useNuxtApp();
+const config = useRuntimeConfig()
+const route = useRoute()
 
 useHead({titleTemplate: (titleChunk) => {return `${titleChunk} - Compensation Tax Calculator`}});
+useSeoMeta({
+    description: `Estimate gross-to-net pay, employee benefits packages, and company tax liabilities instantly. Ensure automated payroll compliance. Try our free calculator.`,
+    canonical: `${config.public.siteUrl}${route.path}`,
+
+    ogTitle: `Free Corporate Compensation & Tax Calculator | ${config.public.siteName}`,
+    ogDescription: `Estimate gross-to-net pay, employee benefits packages, and company tax liabilities instantly. Ensure automated payroll compliance.`,
+    ogType: 'website',
+    ogUrl: `${config.public.siteUrl}${route.path}`,
+
+    twitterTitle: `Corporate Compensation & Tax Calculator`,
+    twitterDescription: `Estimate gross-to-net pay, employee benefits packages, and company tax liabilities instantly.`,
+
+    robots: 'index, follow'
+})
 definePageMeta({middleware: 'guest'});
 useLayout().setNavigationMode('solid');
 

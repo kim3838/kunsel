@@ -285,7 +285,25 @@
 </template>
 
 <script setup lang="ts">
+const config = useRuntimeConfig()
+const route = useRoute()
+
 useHead({titleTemplate: (titleChunk) => {return `${titleChunk} - Features`}});
+useSeoMeta({
+    description: `Explore our unified cloud modules: HR, automated Payroll, Inventory tracking, robust Finance analytics, and POS. Streamline your enterprise architecture.`,
+    canonical: `${config.public.siteUrl}${route.path}`,
+
+    ogTitle: `Modules & Features | ${config.public.siteName}`,
+    ogDescription: `Explore our unified cloud modules: HR, automated Payroll, Inventory tracking, robust Finance analytics, and POS.`,
+    ogType: 'website',
+    ogUrl: `${config.public.siteUrl}${route.path}`,
+
+    twitterTitle: `Modules & Features | ${config.public.siteName}`,
+    twitterDescription: `Explore our unified cloud modules: HR, automated Payroll, Inventory tracking, robust Finance analytics, and POS.`,
+
+    robots: 'index, follow'
+})
+
 definePageMeta({middleware: 'guest'});
 useLayout().setNavigationMode('solid');
 </script>
