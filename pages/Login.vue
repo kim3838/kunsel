@@ -54,7 +54,15 @@
                                         <div class="block text-sm self-end">
                                             <NuxtLink class="hover:underline" :to="'forgot-password'">Forgot password.</NuxtLink>
                                         </div>
-                                        <div>
+                                        <div class="flex gap-2">
+                                            <Button
+                                                @click="demoLogin"
+                                                v-if="!authPending"
+                                                :justify-content="'center'"
+                                                :variant="'outline'"
+                                                :disabled="authPending || isAuthenticated"
+                                                :size="'md'"
+                                                :label="`Demo login`"></Button>
                                             <Button
                                                 :justify-content="'center'"
                                                 :variant="'default'"
@@ -139,6 +147,16 @@ function handleLogin(){
         identifier: identifier.value,
         password: password.value,
         remember: remember.value
+    });
+}
+
+function demoLogin(){
+    identifier.value = 'dc.admin';
+    password.value = 'dc.password.1234';
+
+    login({
+        identifier: identifier.value,
+        password: password.value,
     });
 }
 </script>
