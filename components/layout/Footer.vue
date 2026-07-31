@@ -57,17 +57,17 @@
 
                     <ul class="mt-2 flex justify-start gap-2 sm:justify-start md:gap-4">
                         <li>
-                            <a href="/" rel="noreferrer" target="_blank">
+                            <a href="https://www.facebook.com/profile.php?id=61572027000119" rel="noreferrer" target="_blank">
                                 <Icon class="h-5 w-5" name="famicons:logo-facebook"></Icon>
                             </a>
                         </li>
                         <li>
-                            <a href="/" rel="noreferrer" target="_blank">
+                            <a href="/#" rel="noreferrer" target="_blank">
                                 <Icon class="h-5 w-5" name="famicons:logo-youtube"></Icon>
                             </a>
                         </li>
                         <li>
-                            <a href="/" rel="noreferrer" target="_blank">
+                            <a href="https://www.tiktok.com/@endeaviertech" rel="noreferrer" target="_blank">
                                 <Icon class="h-5 w-5" name="famicons:logo-tiktok"></Icon>
                             </a>
                         </li>
