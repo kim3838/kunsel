@@ -1,6 +1,5 @@
 <template>
     <div
-        v-if="clientReadyState"
         id="layoutScroll"
         style="clip-path: inset(0 0 0 0);"
         class="relative scroll-smooth h-screen max-h-screen overflow-y-scroll snap-none">
