@@ -90,7 +90,7 @@ const config = useRuntimeConfig()
 useHead({titleTemplate: (titleChunk) => {return `${titleChunk} - Login`}});
 useSeoMeta({
     description: `Securely access your account dashboard. Manage your workforce, review finances, and check business operations in real-time.`,
-    robots: 'noindex, nofollow'
+    robots: 'index, follow'
 });
 definePageMeta({middleware: 'guest'});
 useLayout().setNavigationMode('solid');
