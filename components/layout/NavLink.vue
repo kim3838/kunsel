@@ -18,6 +18,7 @@ const {
 const {
     appTheme,
     subtitleColor,
+    accentColor70,
     primaryColor, primaryColor90, primaryColor80,
     textInvertColor,
     activeClearFluidBackground
