@@ -190,6 +190,8 @@ export default defineNuxtConfig({
     runtimeConfig: {
         // Keys within public are also exposed client-side
         public: {
+            siteUrl: 'https://kunsel-erp.com',
+            siteName: 'Kunsel ERP',
             version: process.env.VERSION || '1.0.0',
             baseURL: process.env.BASE_URL || 'http://api.server.local',
             sessionDomain: process.env.SESSION_DOMAIN || '.server.local',
