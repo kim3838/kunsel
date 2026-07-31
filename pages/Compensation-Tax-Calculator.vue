@@ -8,8 +8,9 @@
                         Compensation Tax Calculator
                     </h1>
 
-                    <h2 class="text-xl font-header subtitle-color">Built-in 2026 TRAIN Law brackets and government contribution rules.</h2>
-                    <h2 class="text-xl font-header subtitle-color">Estimate your monthly net salary and government deductions instantly.</h2>
+                    <h2 class="text-lg font-header subtitle-color max-w-160 mx-auto">
+                        Built-in 2026 TRAIN Law brackets and government contribution rules. Estimate your monthly net salary and government deductions instantly.
+                    </h2>
 
                 </section>
 
