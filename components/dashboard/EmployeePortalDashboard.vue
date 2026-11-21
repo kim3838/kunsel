@@ -385,7 +385,7 @@ const employeePending = ref(false);
 const employeePendingOrNotSuccessful = computed(() => employeePending.value || !employeeSuccessful.value)
 
 const employeeHasCurrentShiftAssigned = ref(false);
-const showEmployeeHasCurrentShiftAssigned = ref(false);
+const showEmployeeHasCurrentShiftAssigned = ref(true);
 const toggleShowEmployeeHasCurrentShiftAssigned = () => {
     showEmployeeHasCurrentShiftAssigned.value = !showEmployeeHasCurrentShiftAssigned.value;
 }
