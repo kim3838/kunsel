@@ -11,7 +11,7 @@
                                 Kunsel ERP Features
                             </h1>
                             <h2 class="text-lg font-header subtitle-color max-w-160 mx-auto">
-                                Explore our unified cloud modules: HR, automated Payroll, Inventory tracking, robust Finance analytics, and POS. Streamline your enterprise architecture.
+                                Explore our unified cloud modules: HR, automated Payroll, Inventory tracking, robust Finance analytics, and POS. Centralize your enterprise architecture.
                             </h2>
                         </section>
 

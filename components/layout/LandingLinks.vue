@@ -5,7 +5,7 @@
             <div class="grow-0 grow p-2">
                 <h3 class="font-header text-lg">Core Modules</h3>
 
-                <div class="mt-2 space-y-2 subtitle-color">
+                <div class="mt-2 space-y-2">
                     <UnorderedList
                         class="flex"
                         :size="listSize"
@@ -41,7 +41,7 @@
             <div class="grow-0 grow p-2">
                 <h3 class="font-header text-lg">Support</h3>
 
-                <div class="mt-2 space-y-2 subtitle-color">
+                <div class="mt-2 space-y-2">
                     <UnorderedList
                         class="flex"
                         :size="listSize"
@@ -59,7 +59,7 @@
             <div class="grow-0 max-w-80 grow p-2">
                 <h3 class="font-header text-lg">Contact Us</h3>
 
-                <div class="mt-2 space-y-2 subtitle-color">
+                <div class="mt-2 space-y-2">
                     <UnorderedList
                         class="flex"
                         :size="listSize"
